@@ -326,7 +326,7 @@ If you do not update the application to trust the Cloudflare certificate, the ap
 All of the applications below first require downloading a Cloudflare certificate with [the instructions above](#download-the-cloudflare-root-certificate). On macOS, the default path to the system keychain database file is `/Library/Keychains/System.keychain`. On Windows, the default path is `\Cert:\CurrentUser\Root`.
 
 :::note
-Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for the domains or IPs that the application relies on.
+Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) for the domains or IPs that the application relies on.
 :::
 
 :::caution

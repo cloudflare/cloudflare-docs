@@ -127,7 +127,7 @@ You can create an [Access self-hosted application](/cloudflare-one/access-contro
 
 #### Option 2: Gateway firewall policies
 
-If you prefer to secure the application using a traditional firewall model, you can build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
+If you prefer to secure the application using a traditional firewall model, you can build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/policy-types/dns-policies/selectors/#host) or [Domain](/cloudflare-one/traffic-policies/policy-types/dns-policies/selectors/#domain) from resolving.
 
     <Details header="Example network policies">
     The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
@@ -150,7 +150,7 @@ If you prefer to secure the application using a traditional firewall model, you 
 
 <Render file="gateway/selectors/sni-443" product="cloudflare-one" />
 
-Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
+Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/#destination-ip) selector instead of SNI.
 :::
 
 ### 4. Test the connection
@@ -176,7 +176,7 @@ If you cannot connect, verify the following:
    Address: 100.80.200.48
    ```
 
-   The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+   The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/).
 
 2. **Check Gateway logs** - Review your [Gateway network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) to see if the connection is being blocked by a policy.
 

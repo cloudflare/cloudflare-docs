@@ -29,9 +29,9 @@ To review Gateway analytics:
 
 ## HTTP request analytics
 
-Your [Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/) power the HTTP request analytics dashboard. If you are not using Gateway HTTP policies, the dashboard will appear empty.
+Your [Gateway HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/) power the HTTP request analytics dashboard. If you are not using Gateway HTTP policies, the dashboard will appear empty.
 
-The HTTP request analytics dashboard helps you identify trends in how your HTTP policies apply over time. By visualizing allowed, [isolated](/cloudflare-one/remote-browser-isolation/) (rendered in a remote browser), and [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) (bypassing TLS decryption) requests, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
+The HTTP request analytics dashboard helps you identify trends in how your HTTP policies apply over time. By visualizing allowed, [isolated](/cloudflare-one/remote-browser-isolation/) (rendered in a remote browser), and [Do Not Inspect](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/#do-not-inspect) (bypassing TLS decryption) requests, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
 To review a detailed description of an HTTP request and its associated policy:
 
@@ -53,7 +53,7 @@ To review a detailed description of an HTTP request and its associated policy:
 
 ## DNS query analytics
 
-Your [Gateway DNS policies](/cloudflare-one/traffic-policies/dns-policies/) power the DNS query analytics dashboard. If you are not using Gateway DNS policies, the dashboard will appear empty.
+Your [Gateway DNS policies](/cloudflare-one/traffic-policies/policy-types/dns-policies/) power the DNS query analytics dashboard. If you are not using Gateway DNS policies, the dashboard will appear empty.
 
 The DNS query analytics dashboard helps you identify trends in how your DNS policies apply over time. By visualizing allowed, blocked, and overridden (DNS response replaced by a policy-defined address) queries, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
@@ -76,7 +76,7 @@ To review a detailed description of a DNS query and its associated policy:
 
 ## Network policy analytics
 
-Your [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) power the Network policy analytics dashboard. If you are not using Gateway network policies, the dashboard will appear empty.
+Your [Gateway network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/) power the Network policy analytics dashboard. If you are not using Gateway network policies, the dashboard will appear empty.
 
 The Network policy analytics dashboard helps you identify trends in how your Gateway network policies apply over time. By visualizing allowed, blocked, and overridden (traffic rerouted by a policy-defined rule) sessions, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
@@ -111,7 +111,7 @@ You can use the [GraphQL Analytics API](/analytics/graphql-api/) to query your G
 | `gatewayResolverQueriesAdaptiveGroups`                    | Metrics for Gateway DNS queries with adaptive sampling.                                                                                  |
 | `gatewayResolverByRuleExecutionPerformanceAdaptiveGroups` | Time to execute Gateway DNS policies on the Cloudflare global network.                                                                   |
 | `gatewayResolverByCustomResolverGroups`                   | Metrics for Gateway DNS queries resolved using custom resolvers.                                                                         |
-| `gatewayResolverByCategoryAdaptiveGroups`                 | Metrics for Gateway DNS queries sorted by [domain category](/cloudflare-one/traffic-policies/domain-categories/) with adaptive sampling. |
+| `gatewayResolverByCategoryAdaptiveGroups`                 | Metrics for Gateway DNS queries sorted by [domain category](/cloudflare-one/traffic-policies/reference/domain-categories/) with adaptive sampling. |
 
 To explore the schema, you can use a GraphQL client such as [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) or [Altair](https://altairgraphql.dev/).
 

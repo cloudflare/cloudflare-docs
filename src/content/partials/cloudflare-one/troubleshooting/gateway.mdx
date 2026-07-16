@@ -68,7 +68,7 @@ A common point of confusion is how Gateway evaluates its different policy types 
 
 You have a high-precedence Allow or Do Not Scan policy for a specific application (such as Allow finance.example.com), but Gateway still block traffic with a low-precedence Block policy (such as Block All High-Risk Sites).
 
-The most important concept is [Gateway policy precedence](/cloudflare-one/traffic-policies/order-of-enforcement/), which Gateway enforces based on the policy's order number. A lower order number in the list means a higher precedence. Gateway stops processing further policies when it encounters the first rule that matches.
+The most important concept is [Gateway policy precedence](/cloudflare-one/traffic-policies/reference/order-of-enforcement/), which Gateway enforces based on the policy's order number. A lower order number in the list means a higher precedence. Gateway stops processing further policies when it encounters the first rule that matches.
 
 To resolve Gateway policy precedence issues:
 
@@ -79,7 +79,7 @@ To resolve Gateway policy precedence issues:
 
 ## TLS decryption breaks applications
 
-Turning on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is required for Gateway features such as Data Loss Prevention (DLP), Browser Isolation, and application-aware HTTP policies. However, it can cause issues with certain types of software.
+Turning on [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/) is required for Gateway features such as Data Loss Prevention (DLP), Browser Isolation, and application-aware HTTP policies. However, it can cause issues with certain types of software.
 
 ### Symptom: command-line tools (CLI tools) or native applications fail with certificate errors
 

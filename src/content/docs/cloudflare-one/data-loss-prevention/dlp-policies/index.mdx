@@ -23,8 +23,8 @@ To scan AI prompts and responses without Gateway HTTP filtering, you can also en
 ## Prerequisites
 
 - Set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/). This routes your users' web traffic through Cloudflare Gateway so it can be inspected.
-  - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP traffic.
-- Turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#turn-on-tls-decryption). Because most web traffic is encrypted with HTTPS, Gateway must decrypt it before DLP can scan the request body for sensitive data.
+  - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/traffic-policies/send-traffic-to-gateway/#turn-on-the-gateway-proxy) for TCP traffic.
+- Turn on [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/#turn-on-tls-decryption). Because most web traffic is encrypted with HTTPS, Gateway must decrypt it before DLP can scan the request body for sensitive data.
 
 ## 1. Configure a DLP profile
 
@@ -37,13 +37,13 @@ A DLP profile only defines detection patterns. DLP scans will not start until yo
 
 ## 2. Create a DLP policy
 
-DLP Profiles may be used alongside other Cloudflare One rules in a [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/). To start logging or blocking traffic, create a policy for DLP:
+DLP Profiles may be used alongside other Cloudflare One rules in a [Gateway HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/). To start logging or blocking traffic, create a policy for DLP:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**. Select **HTTP**.
 
 2. Select **Add a policy**.
 
-3. Build an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) selector. For example, the following policy blocks users from uploading sensitive data to any location other than an approved corporate application. It combines three conditions: the request content matches a DLP profile, the HTTP method is `POST`, and the destination is not an approved application:
+3. Build an [HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/#dlp-profile) selector. For example, the following policy blocks users from uploading sensitive data to any location other than an approved corporate application. It combines three conditions: the request content matches a DLP profile, the HTTP method is `POST`, and the destination is not an approved application:
 
    | Selector    | Operator | Value                                                     | Logic | Action |
    | ----------- | -------- | --------------------------------------------------------- | ----- | ------ |

@@ -1,0 +1,138 @@
+---
+pcx_content_type: concept
+description: Choose how devices, networks, and private resources send traffic to Cloudflare Gateway for inspection and filtering.
+products:
+  - cloudflare-one
+title: Send traffic to Gateway
+sidebar:
+  order: 1
+tags:
+  - TCP
+  - UDP
+  - ICMP
+---
+
+import { Tabs, TabItem, Details } from "~/components";
+
+Cloudflare Gateway can inspect traffic after it reaches Cloudflare. The connection method you choose determines which traffic Gateway receives and which policy types Gateway can enforce.
+
+You can send traffic to Gateway from individual devices, DNS resolvers, browsers, offices, data centers, and private networks. You can also combine methods. For example, use the Cloudflare One Client for roaming users and Cloudflare WAN for branch offices.
+
+## Choose a connection method
+
+The following table summarizes the main ways to send traffic to Gateway:
+
+| Connection method | Traffic sent to Gateway | Best for | Next step |
+| --- | --- | --- | --- |
+| [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) | Device DNS, network, and HTTP traffic | Managed laptops, phones, and desktops | [Set up the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/) |
+| [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) | DNS queries | Networks, unmanaged devices, or DNS-only filtering | [Add a DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) |
+| [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) | Browser HTTP and HTTPS traffic | Browser-level filtering without a device client | [Create a proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#1-create-a-proxy-endpoint) |
+| [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) | Site traffic through GRE, IPsec, CNI, or the Cloudflare One Appliance | Offices, data centers, and private networks | [Choose a Cloudflare WAN on-ramp](/cloudflare-one/networks/connectors/cloudflare-wan/on-ramps/) |
+| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) | Private IP traffic between Mesh participants | Device-to-device, site-to-site, and mesh connectivity | [Create a Mesh node](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) |
+
+## Connect private resources
+
+Gateway can also inspect traffic that is directed to private resources connected to Cloudflare. Use the method that matches how users and services need to reach those resources:
+
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connects specific private applications, hostnames, or IP routes to Cloudflare with `cloudflared`.
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) connects devices, servers, and subnets through Mesh IPs.
+- [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) connects sites and networks with Cloudflare WAN on-ramps.
+
+## Supported protocols
+
+Gateway supports proxying TCP, UDP, and ICMP traffic.
+
+### TCP
+
+When the proxy is enabled, Gateway will always forward TCP traffic.
+
+By default, TCP connection attempts will timeout after 30 seconds and idle connections will disconnect after 8 hours.
+
+### UDP
+
+The UDP proxy forwards UDP traffic such as VoIP, [internal DNS requests](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/private-dns/), and thick client applications.
+
+HTTP/3 uses the QUIC protocol over UDP. To inspect HTTP/3 traffic, turn on both TLS decryption and the UDP proxy. Gateway will then intercept the HTTP/3 connection and connect to the origin server over HTTP/2. Otherwise, HTTP/3 traffic will bypass inspection. For more information on browser-specific behavior, refer to [HTTP/3 inspection](/cloudflare-one/traffic-policies/tls-decryption/http3/).
+
+### ICMP (Internet Control Message Protocol)
+
+The ICMP proxy allows ICMP traffic to reach your private network through Gateway. For example, this would allow a Cloudflare One Client user to run diagnostic commands such as `ping` and `traceroute` to an internal server IP.
+
+:::caution[Limitation]
+Gateway cannot log or filter ICMP traffic.
+:::
+
+<Details header="Allow ICMP traffic through cloudflared">
+
+To use the ICMP proxy with Cloudflare Tunnel, you may need to configure the `cloudflared` host to allow ICMP traffic through `cloudflared`.
+
+<Tabs> <TabItem label="Linux" icon="linux">
+
+1.  Ensure that `ping_group_range` includes the Group ID (GID) of the user running `cloudflared`:
+
+    a. Find the user that owns the `cloudflared` process:
+
+        ```sh
+        ps -aux | grep cloudflared
+        ```
+
+        ```sh output
+        johndoe         407  0.8  1.7 1259904 35296 ?       Ssl  21:02   0:00 /usr/bin/cloudflared --no-autoupdate tunnel run --token eyJhI...
+        ```
+
+    b. Get the Group ID of the `cloudflared` user:
+
+        ```sh
+        id -g johndoe
+        ```
+
+        ```sh output
+        10001
+        ```
+
+    c. Determine the Group IDs that are allowed to use ICMP:
+
+    ```sh
+    sudo sysctl net.ipv4.ping_group_range
+    ```
+
+    ```sh output
+    net.ipv4.ping_group_range= 0 10000
+    ```
+
+    d. Either add the user to a group within that range, or update the range to encompass a group the user is already in. To update `ping_group_range`:
+
+    ```sh
+    echo 0 10001 | sudo tee /proc/sys/net/ipv4/ping_group_range
+    ```
+
+    e. If you need to make the change apply to an already running process, you need to restart `cloudflared`. To make the change persist on reboot, update your `systcl` parameters:
+
+    ```sh
+    echo "net.ipv4.ping_group_range = 0 10001" | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
+    ```
+
+2.  If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
+
+    ```sh
+    cloudflared tunnel run --icmpv4-src <IP of primary interface>
+    ```
+
+</TabItem> <TabItem label="Docker" icon="seti:docker">
+
+In your environment, modify the `ping_group_range` parameter to include the Group ID (GID) of the user running `cloudflared`.
+
+By default the [`cloudflared` Docker container](https://github.com/cloudflare/cloudflared/blob/master/Dockerfile#L29C6-L29C13) executes as a user called `nonroot` inside of the container. `nonroot` is a specific user that exists in the [base image](https://github.com/GoogleContainerTools/distroless/blob/859eeea1f9b3b7d59bdcd7e24a977f721e4a406c/base/base.bzl#L8) we use, and its Group ID is hardcoded to 65532.
+
+</TabItem> </Tabs>
+
+</Details>
+
+## Turn on the Gateway proxy
+
+The Gateway proxy toggle only applies to traffic from Cloudflare One Client devices. Gateway will always proxy traffic sent with [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Browser Isolation](/cloudflare-one/remote-browser-isolation/) regardless of this setting.
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings**.
+2. In **Proxy and inspection settings**, turn on **Allow Secure Web Gateway to proxy traffic**.
+3. Select **TCP**.
+4. (Optional) Depending on your use case, you can select **UDP** and/or **ICMP**.

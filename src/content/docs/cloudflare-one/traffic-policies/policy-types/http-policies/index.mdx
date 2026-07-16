@@ -1,0 +1,83 @@
+---
+pcx_content_type: configuration
+description: Configure HTTP policies in Gateway.
+products:
+  - cloudflare-one
+title: HTTP policies
+sidebar:
+  order: 4
+tags:
+  - TLS
+  - SAML
+---
+
+import { Details, InlineBadge, Render } from "~/components";
+
+:::note
+To use HTTP policies, install a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/).
+:::
+
+HTTP policies allow you to filter all HTTP and HTTPS requests based on URLs, hostnames, HTTP methods, file types, and other request attributes. Unlike [network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/) which operate at Layer 4 (TCP/UDP), HTTP policies operate at Layer 7 and can inspect the full content of web traffic.
+
+By default, Gateway inspects HTTP traffic on port `80` and, with [TLS decryption](/cloudflare-one/traffic-policies/tls-decryption/) turned on, HTTPS traffic on port `443`. You can also configure Gateway to [inspect HTTP/HTTPS traffic on all ports](/cloudflare-one/traffic-policies/policy-types/network-policies/protocol-detection/#inspect-on-all-ports). Gateway supports HTTP/3 inspection with the [UDP proxy](/cloudflare-one/traffic-policies/tls-decryption/http3/) turned on.
+
+An HTTP policy consists of an **Action** and a logical expression that determines the scope of the policy. To build an expression, choose a **Selector** and an **Operator**, then enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
+
+For example, the following policy blocks requests to social media sites for users who are not in the Marketing group. In the dashboard, you build it from a selector, operator, value, and action:
+
+| Selector           | Operator | Value          | Logic | Action |
+| ------------------ | -------- | -------------- | ----- | ------ |
+| Content Categories | in       | _Social Media_ | And   | Block  |
+| User Group         | not in   | _Marketing_    |       |        |
+
+Gateway stores that policy as a single wire-filter expression:
+
+```txt
+any(http.request.uri.content_category[*] in {148}) and not(identity.groups.name[*] in {"Marketing"})
+```
+
+To build a policy, combine the following building blocks:
+
+- **[Actions](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/)** — what Gateway does when traffic matches (for example, Allow or Block).
+- **[Selectors](/cloudflare-one/traffic-policies/policy-types/http-policies/selectors/)** — the request attributes you match on (domain, URL, application, and so on).
+- [Comparison operators](#comparison-operators), [Value](#value), and [Logical operators](#logical-operators) — how you compare selectors to values and combine multiple conditions.
+
+<Render
+	file="gateway/response"
+	product="cloudflare-one"
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
+/>
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
+## Comparison operators
+
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
+
+## Value
+
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{
+		selector: "Host",
+		selectordescription: "hostname",
+		operator: "matches regex",
+		valueOne: ".*whispersystems.org",
+		valueTwo: ".*signal.org",
+	}}
+/>
+
+## Logical operators
+
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "**Identity** or **Device Posture**" }}
+/>
+
+<Render
+	file="gateway/response"
+	product="cloudflare-one"
+	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
+/>

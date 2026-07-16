@@ -1,0 +1,200 @@
+---
+title: DNS policy selectors
+pcx_content_type: reference
+description: Selectors available in Cloudflare Gateway DNS policies.
+products:
+  - cloudflare-one
+sidebar:
+  order: 4
+  label: Selectors
+---
+
+import { Render } from "~/components";
+
+Gateway matches DNS queries against the following selectors, or criteria.
+
+Each selector is evaluated during a specific phase of the DNS resolution process:
+
+- **Before DNS resolution** — Gateway inspects properties of the incoming query (for example, the domain name or source IP) before looking up the answer.
+- **During DNS resolution** — Gateway inspects information discovered while resolving the query (for example, the authoritative nameserver IP).
+- **After DNS resolution** — Gateway inspects the DNS answer (for example, the resolved IP or CNAME record) after resolution completes.
+
+The Override action cannot be used with selectors evaluated during or after DNS resolution, because the override must be applied before the answer is returned. For more information on how evaluation phase interacts with precedence, refer to [order of enforcement](/cloudflare-one/traffic-policies/reference/order-of-enforcement/#dns-policies).
+
+## Application
+
+<Render
+	file="gateway/selectors/application-dns"
+	product="cloudflare-one"
+	params={{ policyType: "DNS" }}
+/>
+
+## Authoritative Nameserver IP
+
+Use this selector to match against the IP address of the authoritative nameserver IP address.
+
+| UI name                     | API example                                | Evaluation phase      |
+| --------------------------- | ------------------------------------------ | --------------------- |
+| Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` | During DNS resolution |
+
+## Content Categories
+
+<Render
+	file="gateway/selectors/dns-content-categories"
+	product="cloudflare-one"
+/>
+
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
+
+## DNS CNAME Record
+
+Use this selector to filter DNS responses by their `CNAME` records.
+
+| UI name                  | API example                                                   | Evaluation phase     |
+| ------------------------ | ------------------------------------------------------------- | -------------------- |
+| DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})` | After DNS resolution |
+
+:::note
+
+If one CNAME record points to another CNAME record, each record in the chain will be evaluated. For example, if `abc.example.com` points to `xyz.example.com`, then your DNS policy will evaluate both `abc.example.com` and `xyz.example.com`.
+:::
+
+## DNS MX Record
+
+Use this selector to filter DNS responses by their `MX` records.
+
+| UI name               | API example                                                 | Evaluation phase     |
+| --------------------- | ----------------------------------------------------------- | -------------------- |
+| DNS MX Response Value | `any(dns.response.mx[*] in {"gmail-smtp-in.l.google.com"})` | After DNS resolution |
+
+## DNS PTR Record
+
+Use this selector to filter DNS responses by their `PTR` records.
+
+| UI name                | API example                                                | Evaluation phase     |
+| ---------------------- | ---------------------------------------------------------- | -------------------- |
+| DNS PTR Response Value | `any(dns.response.ptr[*] in {"255.2.0.192.in-addr.arpa"})` | After DNS resolution |
+
+## DNS Resolver IP
+
+<Render file="gateway/selectors/dns-resolver-ip" product="cloudflare-one" />
+
+## DNS TXT Record
+
+Use this selector to filter DNS responses by their `TXT` records.
+
+| UI name                | API example                                 | Evaluation phase     |
+| ---------------------- | ------------------------------------------- | -------------------- |
+| DNS TXT Response Value | `any(dns.response.txt[*] in {"your_text"})` | After DNS resolution |
+
+## DoH Subdomain (DNS over HTTPS)
+
+<Render file="gateway/selectors/doh-subdomain" product="cloudflare-one" />
+
+## Domain
+
+<Render
+	file="gateway/selectors/domain-dns"
+	product="cloudflare-one"
+	params={{ APIendpoint: "dns.domains" }}
+/>
+
+## Host
+
+<Render
+	file="gateway/selectors/host-dns"
+	product="cloudflare-one"
+	params={{ APIendpoint: "dns.fqdn" }}
+/>
+
+## Indicator Feeds
+
+Use this selector to match against custom indicator feeds.
+
+You can use a [publicly available indicator feed](/security-center/indicator-feeds/#publicly-available-feeds) or a custom indicator feed assigned to your account by a designated third-party vendor. For more information on indicator feeds, refer to [Custom Indicator Feeds](/security-center/indicator-feeds/).
+
+| UI name         | API example          | Evaluation phase      |
+| --------------- | -------------------- | --------------------- |
+| Indicator Feeds | `dns.indicator_feed` | Before DNS resolution |
+
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
+
+## Location
+
+<Render file="gateway/selectors/location" product="cloudflare-one" />
+
+## Query Record Type
+
+<Render file="gateway/selectors/query-record-type" product="cloudflare-one" />
+
+## Resolved Continent
+
+Use this selector to filter based on the continent that the query resolves to. Geolocation is determined from the IP address in the response. To specify a continent, enter its two-letter code into the **Value** field:
+
+- AF - Africa
+- AN - Antarctica
+- AS - Asia
+- EU - Europe
+- NA - North America
+- OC - Oceania
+- SA - South America
+- T1 - Tor network
+
+| UI name                           | API example                     | Evaluation phase     |
+| --------------------------------- | ------------------------------- | -------------------- |
+| Resolved Continent IP Geolocation | `dns.dst.geo.continent == "EU"` | After DNS resolution |
+
+## Resolved Country
+
+Use this selector to filter based on the country that the query resolves to. Geolocation is determined from the IP address in the response. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
+
+| UI name                         | API example                   | Evaluation phase     |
+| ------------------------------- | ----------------------------- | -------------------- |
+| Resolved Country IP Geolocation | `dns.dst.geo.country == "RU"` | After DNS resolution |
+
+## Resolved IP
+
+Use this selector to filter based on the IP addresses that the query resolves to.
+
+| UI name     | API example                                | Evaluation phase     |
+| ----------- | ------------------------------------------ | -------------------- |
+| Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` | After DNS resolution |
+
+## Request Context Categories
+
+Use this selector to match a dynamic list of [category IDs](/cloudflare-one/traffic-policies/reference/domain-categories/#category-and-subcategory-ids) sent in the [EDNS (Extension Mechanisms for DNS)](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. EDNS allows extra metadata to be attached to a DNS query beyond the standard fields. Gateway reads category IDs from the EDNS OPT code `65050`.
+
+| UI name                    | API example                                 | Evaluation phase      |
+| -------------------------- | ------------------------------------------- | --------------------- |
+| Request Context Categories | `dns.categories_in_request_context_matches` | Before DNS resolution |
+
+## Security Categories
+
+<Render file="gateway/selectors/security-categories" product="cloudflare-one" />
+
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
+
+## Source Continent
+
+Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent-dns" product="cloudflare-one" params={{ one: "dns.src" }} />
+
+## Source Country
+
+Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country-dns" product="cloudflare-one" params={{ one: "dns.src" }} />
+
+## Source IP
+
+<Render file="gateway/selectors/source-ip-resolver" product="cloudflare-one" />
+
+## Source Internal IP
+
+Use this selector to apply policies to the source internal IP address of a DNS query. For example, this could be the private IP address of the hosts behind [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (formerly Magic WAN) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) used by your organization to send queries to Gateway.
+
+| UI name            | API example                        | Evaluation phase      |
+| ------------------ | ---------------------------------- | --------------------- |
+| Source Internal IP | `dns.src_internal_ip == 10.10.0.1` | Before DNS resolution |
+
+## Users
+
+<Render file="gateway/selectors/users-dns" product="cloudflare-one" />
+

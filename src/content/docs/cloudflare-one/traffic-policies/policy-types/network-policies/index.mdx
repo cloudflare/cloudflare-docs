@@ -1,0 +1,80 @@
+---
+pcx_content_type: configuration
+description: Configure Network policies in Gateway.
+products:
+  - cloudflare-one
+title: Network policies
+tags:
+  - Geolocation
+sidebar:
+  order: 3
+---
+
+import { Details, InlineBadge, Render, Badge } from "~/components";
+
+:::note
+To enable this feature, download and deploy the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on your devices.
+:::
+
+Network policies control TCP and UDP traffic between your users and network destinations. Use them to allow or block non-HTTP traffic such as SSH, RDP, and database connections based on IP addresses, ports, and protocols.
+
+Because Cloudflare One [integrates with your identity provider](/cloudflare-one/integrations/identity-providers/), you can also create identity-based network policies. This allows you to control access to non-HTTP resources on a per-user basis regardless of the user's location or device.
+
+A network policy consists of an **Action** and a logical expression that determines the scope of the action. To build an expression, choose a **Selector** and an **Operator**, then enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
+
+
+For example, to block traffic to a specific destination IP for everyone in your organization:
+
+| Selector       | Operator | Value       | Action |
+| -------------- | -------- | ----------- | ------ |
+| Destination IP | is       | `192.0.2.1` | Block  |
+
+Gateway stores that policy as a wire-filter expression:
+
+```txt
+net.dst.ip == 192.0.2.1
+```
+
+To build a policy, combine the following building blocks:
+
+- **[Actions](/cloudflare-one/traffic-policies/policy-types/network-policies/actions/)** — what Gateway does when traffic matches (for example, Allow or Block).
+- **[Selectors](/cloudflare-one/traffic-policies/policy-types/network-policies/selectors/)** — the connection attributes you match on (IP, port, protocol, SNI, and so on).
+- [Comparison operators](#comparison-operators), [Value](#value), and [Logical operators](#logical-operators) — how you compare selectors to values and combine multiple conditions.
+
+	file="gateway/response"
+	product="cloudflare-one"
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
+/>
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
+
+## Comparison operators
+
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
+
+:::note
+The _in_ operator allows you to specify IP addresses or networks using CIDR notation (for example, `10.0.0.0/8` matches all IPs from `10.0.0.0` to `10.255.255.255`).
+:::
+
+## Value
+
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{
+		selector: "SNI",
+		selectordescription: "SNI host",
+		operator: "matches regex",
+		valueOne: ".*whispersystems.org",
+		valueTwo: ".*signal.org",
+	}}
+/>
+
+## Logical operators
+
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "**Identity** or **Device Posture**" }}
+/>

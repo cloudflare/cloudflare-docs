@@ -86,7 +86,7 @@ Connections to Zero Trust will always appear in your [Zero Trust network session
 
 ### Filter TCP SYN packets with Cloudflare Network Firewall
 
-Because Gateway sends a TCP SYN to the destination server before evaluating policies, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-one/traffic-policies/packet-filtering/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#order-of-enforcement), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
+Because Gateway sends a TCP SYN to the destination server before evaluating policies, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-one/traffic-policies/policy-types/packet-filtering/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#order-of-enforcement), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
 
 :::note
 Cloudflare Network Firewall is available to Enterprise users only.
@@ -99,7 +99,7 @@ To block TCP SYN packets to a specific destination:
 3. Create a rule with the destination IP address or CIDR range you want to block. For example, to block all traffic to `10.0.0.0/8`, use the expression `ip.dst in {10.0.0.0/8}` with a **Block** action.
 4. Select **Add new policy**.
 
-For more information on creating packet filtering rules, refer to [Add policies](/cloudflare-one/traffic-policies/packet-filtering/add-policies/).
+For more information on creating packet filtering rules, refer to [Add policies](/cloudflare-one/traffic-policies/policy-types/packet-filtering/add-policies/).
 
 ## Priority between policy builders
 
@@ -116,7 +116,7 @@ DNS and resolver policies are standalone. For example, if you block a site with 
 
 ### HTTP/3 traffic
 
-For proxied [HTTP/3 traffic](/cloudflare-one/traffic-policies/http-policies/http3/), Gateway applies your policies in the following order:
+For proxied [HTTP/3 traffic](/cloudflare-one/traffic-policies/tls-decryption/http3/), Gateway applies your policies in the following order:
 
 1. DNS policies
 2. Network policies
@@ -137,7 +137,7 @@ When DNS queries are received, Gateway evaluates policies with pre-resolution se
 
 Despite an explicit Allow policy ordered first, policy 2 takes precedence because the _Domain_ selector is evaluated before DNS resolution.
 
-If a policy contains both pre-resolution and post-resolution selectors, Gateway will evaluate the entire policy after DNS resolution. For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/traffic-policies/dns-policies/#selectors).
+If a policy contains both pre-resolution and post-resolution selectors, Gateway will evaluate the entire policy after DNS resolution. For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/traffic-policies/policy-types/dns-policies/selectors/).
 
 ### Network policies
 
@@ -145,7 +145,7 @@ Gateway evaluates network policies in [order of precedence](#order-of-precedence
 
 ### HTTP policies
 
-Gateway applies HTTP policies based on a combination of [action type](/cloudflare-one/traffic-policies/http-policies/#actions) and [order of precedence](#order-of-precedence):
+Gateway applies HTTP policies based on a combination of [action type](/cloudflare-one/traffic-policies/policy-types/http-policies/actions/) and [order of precedence](#order-of-precedence):
 
 1. All Do Not Inspect policies are evaluated first, in order of precedence.
 2. If no policies match, all Isolate policies are evaluated in order of precedence.
@@ -166,7 +166,7 @@ Lastly, Gateway inspects the body of the HTTP request by evaluating it against D
 
 ### Resolver policies
 
-When [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, and lastly evaluates any DNS policies with post-resolution selectors.
+When [resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, and lastly evaluates any DNS policies with post-resolution selectors.
 
 ### Default behavior when no policy matches
 
@@ -176,7 +176,7 @@ If traffic does not match any explicit Allow or Block policy, Gateway applies th
 | --- | --- | --- |
 | DNS | Allow | DNS queries resolve normally through the configured resolver. |
 | Network | Allow | TCP and UDP connections are allowed through the Gateway proxy. |
-| HTTP | Allow | HTTP and HTTPS requests are allowed. However, if you have configured a default Block action in your [HTTP policy settings](/cloudflare-one/traffic-policies/http-policies/), unmatched traffic is blocked instead. |
+| HTTP | Allow | HTTP and HTTPS requests are allowed. However, if you have configured a default Block action in your [HTTP policy settings](/cloudflare-one/traffic-policies/policy-types/http-policies/), unmatched traffic is blocked instead. |
 
 Because the default is to allow unmatched traffic, Gateway follows a permissive model. To switch to a restrictive model (block by default, allow by exception), create a catch-all Block policy at the lowest precedence in the relevant policy builder and add specific Allow policies above it.
 

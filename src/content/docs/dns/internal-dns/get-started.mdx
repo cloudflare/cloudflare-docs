@@ -25,7 +25,7 @@ Follow this guide to get started with Internal DNS.
 
 ## Before you begin
 
-- Make sure you have an Enterprise account with access to [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) and [Internal DNS](/dns/internal-dns/).
+- Make sure you have an Enterprise account with access to [Gateway resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) and [Internal DNS](/dns/internal-dns/).
 - Consider the different ways in which you can [connect to Gateway resolver](/dns/internal-dns/connectivity/).
 
   :::caution
@@ -145,7 +145,7 @@ Besides selecting an internal DNS view when setting up your resolver policies, y
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **Resolver policies**.
 2. Select **Add a policy** and enter a name and description.
-3. Create an expression for the traffic you wish to route. For guidance about selectors, operators, and values, refer to [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/#selectors).
+3. Create an expression for the traffic you wish to route. For guidance about selectors, operators, and values, refer to [Gateway resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/#selectors).
 4. Select **Use Internal DNS**. Choose the view that queries matching the expression should be sent to.
 5. (Optional) Adjust the option to **Fallback through public DNS** according to your use case.
 
@@ -156,7 +156,7 @@ Besides selecting an internal DNS view when setting up your resolver policies, y
 
 </TabItem> <TabItem label="API">
 
-Use the API endpoints under [Zero Trust > Gateway > Rules](/api/resources/zero_trust/subresources/gateway/subresources/rules/) to set up resolver policies. For guidance about selectors, operators, and values, refer to [Gateway](/cloudflare-one/traffic-policies/resolver-policies/#selectors).
+Use the API endpoints under [Zero Trust > Gateway > Rules](/api/resources/zero_trust/subresources/gateway/subresources/rules/) to set up resolver policies. For guidance about selectors, operators, and values, refer to [Gateway](/cloudflare-one/traffic-policies/policy-types/resolver-policies/#selectors).
 
 Use the rule settings object to define `resolve_dns_internally`, specifying `view_id` and `fallback` option. The fallback options behave as follows:
 

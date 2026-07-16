@@ -1,0 +1,93 @@
+---
+pcx_content_type: configuration
+description: Configure DNS policies in Gateway.
+products:
+  - cloudflare-one
+title: DNS policies
+tags:
+  - DNS
+sidebar:
+  order: 2
+---
+
+import { Details, InlineBadge, Render } from "~/components";
+
+DNS policies let you control which websites and services your users can reach by inspecting their DNS queries — the lookups that translate domain names into IP addresses. Because DNS policies act at the lookup stage, they work across all protocols and applications, not just web browsers.
+
+When a user makes a DNS request, [Gateway](/cloudflare-one/traffic-policies/) matches the request against the DNS policies you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Allow or Override policy, the user's client receives an address based on DNS resolution from Cloudflare's public DNS resolver (1.1.1.1). You can also use a [resolver policy](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) to redirect DNS requests to a custom server.
+
+A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
+
+For example, to block a domain for everyone in your organization, match on the fully qualified domain name:
+
+| Selector | Operator | Value             | Action |
+| -------- | -------- | ----------------- | ------ |
+| Domain   | is       | `www.example.com` | Block  |
+
+Gateway stores that policy as a wire-filter expression:
+
+```txt
+dns.fqdn == "www.example.com"
+```
+
+To build a policy, combine the following building blocks:
+
+- **[Actions](/cloudflare-one/traffic-policies/policy-types/dns-policies/actions/)** — what Gateway does when a query matches (for example, Allow, Block, or Override).
+- **[Selectors](/cloudflare-one/traffic-policies/policy-types/dns-policies/selectors/)** — the query attributes you match on (domain, content category, source, and so on).
+- [Comparison operators](#comparison-operators), [Value](#value), and [Logical operators](#logical-operators) — how you compare selectors to values and combine multiple conditions.
+
+When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. Unless a more specific selector is configured in a policy (for example, _User Email_ or _Source IP_), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
+
+<Render
+	file="gateway/response"
+	product="cloudflare-one"
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
+/>
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
+## Comparison operators
+
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
+
+## Value
+
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{
+		selector: "Host",
+		selectordescription: "hostname",
+		operator: "matches regex",
+		valueOne: ".*whispersystems.org",
+		valueTwo: ".*signal.org",
+	}}
+/>
+
+## Logical operators
+
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "Identity" }}
+/>
+
+## Limitations
+
+### Third-party filtering conflict
+
+<Render file="gateway/third-party-warning" product="cloudflare-one" />
+
+### Cloudflare WAN forwarding
+
+To apply DNS policies to queries forwarded through [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/), you can either point your organization's DNS resolver to an IPv6, DNS over HTTPS (DoH), or DNS over TLS (DoT) endpoint or request a dedicated resolver IPv4 address. For more information, refer to [DNS resolver IPs and hostnames](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
+
+### Fallback DNS
+
+Some applications (for example, WhatsApp and Android Studio) have backup DNS servers built into their code. If their primary DNS query is blocked by Gateway, these apps automatically retry the query against their built-in DNS servers (for example, Google's `8.8.8.8`), which bypasses your policies entirely. To mitigate this behavior, you create a [Gateway Network policy](/cloudflare-one/traffic-policies/policy-types/network-policies/) to block outbound DNS traffic on TCP/UDP port `53` to the fallback DNS servers. For example, to block Google's fallback DNS servers:
+
+| Selector         | Operator | Value                | Logic | Action |
+| ---------------- | -------- | -------------------- | ----- | ------ |
+| Protocol         | in       | _TCP_, _UDP_         | And   | Block  |
+| Destination Port | in       | `53`                 | And   |        |
+| Destination IP   | in       | `8.8.8.8`, `8.8.4.4` |       |        |
