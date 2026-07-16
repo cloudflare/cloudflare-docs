@@ -1,0 +1,23 @@
+src/content/docs/ssl/post-quantum-cryptography/pqc-cloudflare-products.mdx
+  031f781baf34bc69 21-22,27-30,34,36-40,47,60,73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "aaaba9778f1c092aaf778825886fb68f409f3f0c",
+  "prompts": {
+    "031f781baf34bc69": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_21c29db30ffeMPfhZyH903MCgO",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Luke Valenta",
+      "messages": [],
+      "total_additions": 83,
+      "total_deletions": 29,
+      "accepted_lines": 68,
+      "overriden_lines": 0
+    }
+  }
+}
