@@ -8,9 +8,11 @@ products:
   - artifacts
 ---
 
-Run your [continuous integration](/workers/ci-cd/) (CI) pipeline for your artifacts on Cloudflare using [Cloudflare Workflows](/workflows/), a durable execution engine for multi-step applications.
+Run your [continuous integration](/workers/ci-cd/) (CI) pipeline for your artifacts on Cloudflare using [Cloudflare Workflows](/workflows/). 
 
-You can use a Workflow to orchestrate your CI pipeline within your project. Here are the components you will need.
+A CI pipeline is a series of steps like `build`, `lint`, and `deploy`. Workflows allows you to define a series of steps and execute them durably, meaning that if your application crashes or fails, it will resume at the point of failure without losing any information or metadata.
+
+This allows you to orchestrate your CI pipeline within your project, using a Workflow. Here are the components you will need.
 
 ### Dependency caching
 
