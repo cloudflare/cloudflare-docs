@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Hyperdrive with Dynamic Workers
-description: Connect Dynamic Workers to per-tenant databases.
+description: Connect Dynamic Workers to external databases via Hyperdrive.
 sidebar:
   order: 5
 products:
@@ -12,32 +12,28 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 ## Overview
 
-Hyperdrive with Dynamic Workers lets a [loader Worker](/dynamic-workers/getting-started/#configure-worker-loader) create [Dynamic Workers](/dynamic-workers/) that connect to tenant-specific external databases through [Hyperdrive](/hyperdrive/), without pre-provisioning a separate Hyperdrive configuration for every tenant.
+Hyperdrive lets you connect to external databases from Dynamic Workers(/dynamic-workers/). 
 
-Use this when you operate a multi-tenant platform where tenant code runs in Dynamic Workers and each tenant may bring or own a different database. The loader Worker passes the Dynamic Worker a tenant-specific placeholder connection string. When the database driver opens a TCP connection to that placeholder host, the loader Worker's outbound interceptor verifies the destination and connects through Hyperdrive using the real tenant database connection string.
+In this model, a [loader Worker](/dynamic-workers/getting-started/#configure-worker-loader) creates each Dynamic Worker and controls its outbound network access by providing the database connection details for that Dynamic Worker. Each Dynamic Worker can then connect to the provided database through Hyperdrive.
 
-This lets your platform keep the real database hostname, region hint, and routing logic in the trusted loader Worker while still allowing Dynamic Worker code to use normal database clients. The Dynamic Worker connects with a valid connection string for its tenant, but the loader Worker decides whether that connection is allowed and whether it is routed through Hyperdrive.
+When a Dynamic Worker connects to a database, Cloudflare creates a Hyperdrive configuration for that database at runtime using the database connection details. Hyperdrive reuses that per-database configuration for connection pooling and query caching across Dynamic Worker requests that connect to the same database.
 
-In this model, the loader Worker creates each Dynamic Worker and controls its outbound network access. Each Dynamic Worker can connect to the database associated with its tenant through Hyperdrive.
+This means you do not need to pre-provision a separate Hyperdrive configuration for every database that your Dynamic Workers use. Instead, Dynamic Workers can connect to specific databases provided by the loader Worker, while Hyperdrive manages the runtime configuration, pooling, and caching for each database.
 
 ![A loader Worker creates each Dynamic Worker, and each Dynamic Worker connects to its tenant database through Hyperdrive.](~/assets/images/hyperdrive/configuration/hyperdrive-dynamic-workers.svg)
 
 ## How it works
 
-Hyperdrive with Dynamic Workers uses the Dynamic Workers [egress control model](/dynamic-workers/usage/egress-control/#intercept-outbound-requests). The `globalOutbound` option lets the loader Worker intercept outbound `connect()` calls from Dynamic Workers and decide how those connections are handled.
+Hyperdrive with Dynamic Workers uses Dynamic Workers [egress control model](/dynamic-workers/usage/egress-control/#intercept-outbound-requests). The `globalOutbound` option lets the loader Worker define a `WorkerEntrypoint` (`OutboundInterceptor`) to intercept outbound `connect()` calls from Dynamic Workers and to handle database connections with Hyperdrive. 
 
 At request time:
 
-1. The loader Worker identifies the tenant.
-2. The loader Worker retrieves the tenant's real database connection string and tenant-specific placeholder connection string from trusted storage.
-3. The loader Worker starts or retrieves the Dynamic Worker and passes only the placeholder connection string as `env.CONNECTION_STRING`.
-4. The Dynamic Worker's database driver calls `connect()` using the placeholder connection string.
-5. `globalOutbound` routes the outbound TCP connection to `OutboundInterceptor.connect()`.
-6. The interceptor verifies that the intercepted host matches the host in the tenant's placeholder connection string.
-7. The interceptor calls `HYPERDRIVE_FACTORY.get()` with the real connection string and target region.
-8. Hyperdrive opens or reuses a pooled connection to the real tenant database.
+1. Loader Worker retrieves database connection details for a Dynamic Worker. 
+2. Loader Worker loads a Dynamic Worker and provides the database a Dynamic Worker can access as `env.CONNECTION_STRING`.
+3. The Dynamic Worker's database client calls `connect()` when querying the database. `globalOutbound` routes the outbound TCP connection to `OutboundInterceptor.connect()`.
+4. `OutboundInterceptor` verifies that the Dynamic Worker is connecting to a specific database that the loader Worker has allowed. If allowed, `HYPERDRIVE.get()` retrieves the Hyperdrive configuration at runtime, and Hyperdrive opens or reuses a pooled connection to the database to execute the database query.
 
-## Configure bindings
+### Configure bindings
 
 Your loader Worker needs a Worker Loader binding to create Dynamic Workers. Configure it in your Wrangler file:
 
@@ -51,85 +47,50 @@ Your loader Worker needs a Worker Loader binding to create Dynamic Workers. Conf
 
 </WranglerConfig>
 
-## Store tenant database metadata
+### 1. Get database details for each Dynamic Worker
 
-The loader Worker needs tenant database metadata in trusted storage, such as Workers KV, D1, or your own control plane. The Dynamic Worker should not receive this full record.
+The loader Worker needs database connection information for each Dynamic Worker in a configuration store, such as Workers KV or your own control plane. Examples below use Workers KV.
 
-For example, a tenant record can include:
+If each Dynamic Worker is a tenant that connects to a seperate tenant database, a tenant record with the database details should include:
 
 ```json
 {
-	"id": "tenant_123",
-	"connectionString": "postgresql://tenant_user:tenant_password@db.example.com:5432/app?sslmode=require",
-	"placeholderConnectionString": "postgresql://tenant_user:tenant_password@tenant-123.example:5432/app?sslmode=require",
+	"id": "tenant_A",
+	"connectionString": "...", // actual database credentials used by OutboundInterceptor
+	"placeholderConnectionString": "...", // connection string used by Dynamic Worker
 	"databaseRegion": "aws:us-east-1"
 }
 ```
 
-The loader Worker passes `placeholderConnectionString` to the Dynamic Worker as `env.CONNECTION_STRING`. It passes the full tenant record to the outbound interceptor through `props`, so only the trusted loader Worker and interceptor can access the real database hostname and region hint.
-
-## Dynamic Hyperdrive factory API
-
-The `HYPERDRIVE_FACTORY` binding creates a Hyperdrive connection target at runtime from a database connection string and region hint:
+<TypeScriptExample filename="loader-worker.ts">
 
 ```ts
-const hyperdrive = this.env.HYPERDRIVE_FACTORY.get({
-	connectionString: this.ctx.props.tenant.connectionString,
-	targetRegion: this.ctx.props.tenant.databaseRegion,
-});
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Lookup per-tenant database details in configuration store like Workers KV
+		const tenant = await env.KV.get<Tenant>("tenant_A", { type: "json" });
 
-const socket = hyperdrive.connect();
-```
-
-| Field | Type | Required | Description |
-| - | - | - | - |
-| `connectionString` | `string` | Yes | The real database connection string for the tenant database. Keep this value in the loader Worker or another trusted system. Do not expose the real database hostname to untrusted Dynamic Worker code. |
-| `targetRegion` | `string` | Yes | Cloud region hint for where Hyperdrive should place the database connection pool. Use the same [cloud region hints as Tiered Cache](/cache/how-to/tiered-cache/#set-a-cloud-region-hint), for example `aws:us-east-1`. |
-
-`HYPERDRIVE_FACTORY.get()` returns a Hyperdrive object for that database target. Call `hyperdrive.connect()` without passing the intercepted host. Hyperdrive uses the real connection string passed to `get()` and opens or reuses a pooled connection to the tenant database.
-
-With a regular Hyperdrive configuration, Hyperdrive probes Cloudflare locations to decide where to run your database connection pool for low-latency queries. With Hyperdrive and Dynamic Workers, Hyperdrive creates the connection target at runtime and uses `targetRegion` to place the pool near the database.
-
-## Configure outbound interception
-
-Your loader Worker defines an `OutboundInterceptor` class and passes it as [`globalOutbound`](/dynamic-workers/api-reference/#globaloutbound) when it creates the Dynamic Worker. This routes outbound `connect()` calls from the Dynamic Worker through your interceptor.
-
-The interceptor only receives the host and port of the outbound connection. It compares that value against the host parsed from the tenant's placeholder connection string. When they match, it calls `HYPERDRIVE_FACTORY.get()` and returns `hyperdrive.connect()`.
-
-<TypeScriptExample filename="outbound-interceptor.ts">
-
-```ts
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-export class OutboundInterceptor extends WorkerEntrypoint {
-	async connect(host) {
-		const placeholderHost = new URL(
-			this.ctx.props.tenant.placeholderConnectionString,
-		).host;
-
-		if (host === placeholderHost) {
-			const hyperdrive = this.env.HYPERDRIVE_FACTORY.get({
-				connectionString: this.ctx.props.tenant.connectionString,
-				targetRegion: this.ctx.props.tenant.databaseRegion,
-			});
-
-			// Do not pass host into connect(). Hyperdrive connects using the
-			// real connection string from the binding above.
-			return hyperdrive.connect();
+		if (tenant === null) {
+			return new Response("Tenant not found", { status: 404 });
 		}
-
-		throw new Error("Outbound TCP connections are not allowed.");
-	}
-}
+	},
+};
+type Tenant = {
+	placeholderConnectionString: string;
+	connectionString: string;
+	databaseRegion: string;
+};
 ```
 
 </TypeScriptExample>
 
-Keep `globalOutbound` restrictive. Unmatched outbound connections should be denied unless you intentionally want to allow direct network access.
+### 2. Load Dynamic Worker
 
-## Create the Dynamic Worker
+The loader Worker creates Dynamic Workers with `env.LOADER.load()` or `env.LOADER.get()`. 
 
-The loader Worker creates or retrieves a Dynamic Worker with `env.LOADER.load()` or `env.LOADER.get()`. The Dynamic Worker receives only the tenant-specific placeholder connection string in its environment.
+The loader Worker passes `placeholderConnectionString` to the Dynamic Worker as `env.CONNECTION_STRING`, allowing the Dynamic Worker to connect to only that database. 
+
+Your loader Worker defines an `OutboundInterceptor` class and passes it as [`globalOutbound`](/dynamic-workers/api-reference/#globaloutbound) when it creates the Dynamic Worker. This routes outbound `connect()` calls from the Dynamic Worker through `OutboundInterceptor`. The full tenant record with actual database credentials is passed to `OutboundInterceptor` via `props`, so that Hyperdrive can connect to the database.
 
 <TypeScriptExample filename="loader-worker.ts">
 
@@ -150,7 +111,9 @@ const worker = env.LOADER.load({
 
 </TypeScriptExample>
 
-The Dynamic Worker uses your preferred database client with `env.CONNECTION_STRING`.
+### 3. Dynamic Worker queries database
+
+The Dynamic Worker uses your preferred database client, such as [`pg`](https://www.npmjs.com/package/pg), with `env.CONNECTION_STRING` provider by the loader Worker.
 
 <TypeScriptExample filename="dynamic-worker.ts">
 
@@ -173,35 +136,50 @@ export default {
 
 </TypeScriptExample>
 
-## Placeholder connection string requirements
+### 4. OutboundInterceptor connects to database via Hyperdrive API
 
-The placeholder connection string must be a valid connection string that your database driver can parse and use. Database drivers still parse the URI and send its username, password, database name, hostname, port, and TLS settings over the returned socket.
+`OutboundInterceptor` intercepts outbound connections made by the Dynamic Worker code and receives the host and port of the outbound connection. It compares outbound connection host against the host parsed from the tenant's placeholder connection string to ensure that the Dynamic Worker accessed a database the loader Worker has allowed - value passed to Dynamic Worker as `env.CONNECTION_STRING`.
 
-Use a tenant-specific placeholder host and port. The outbound interceptor compares the intercepted host against `new URL(tenant.placeholderConnectionString).host` to decide which connections to route through Hyperdrive.
+If they match, `OutboundInterceptor` calls `HYPERDRIVE.get()` and returns `hyperdrive.connect()` to connect to the database using Hyperdrive's connection pool. 
 
-:::caution
+`HYPERDRIVE.get()` returns a Hyperdrive configuration at runtime for the database target. `hyperdrive.connect()` does not require a host value because `HYPERDRIVE.get()` provided the database host throught the actual database connection string.
 
-Do not use the real database hostname in the placeholder connection string. The placeholder host should be a hostname that your interceptor recognizes. Keep `globalOutbound` restrictive so unmatched outbound connections are denied instead of falling back to the public network.
+With a regular, pre-provisioned Hyperdrive configuration, Hyperdrive probes Cloudflare locations to decide where to run your database connection pool for low-latency queries. With Hyperdrive and Dynamic Workers, Hyperdrive creates the Hyperdrive configuration at runtime and uses `targetRegion` you provide to place the pool near the database.
 
-:::
+<TypeScriptExample filename="outbound-interceptor.ts">
 
-For PostgreSQL drivers, the placeholder must be a valid PostgreSQL connection string. Follow this structure:
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
 
-```txt
-postgresql://<USER>:<PASSWORD>@<PLACEHOLDER_HOST>:<PORT>/<DATABASE_NAME>?sslmode=require
+export class OutboundInterceptor extends WorkerEntrypoint {
+	async connect(host) {
+		const placeholderHost = new URL(
+			this.ctx.props.tenant.placeholderConnectionString,
+		).host;
+
+		if (host === placeholderHost) {
+			const hyperdrive = this.env.HYPERDRIVE.get({
+				connectionString: this.ctx.props.tenant.connectionString,
+				targetRegion: this.ctx.props.tenant.databaseRegion,
+			});
+
+			// Do not pass host into connect(). Hyperdrive connects using the
+			// Hyperdrive configuration returned from HYPERDRIVE.get()
+			return hyperdrive.connect();
+		}
+
+		throw new Error("Outbound TCP connections are not allowed.");
+	}
+}
 ```
 
-For example:
+</TypeScriptExample>
 
-```txt
-postgresql://tenant_user:tenant_password@tenant-123.example:5432/database?sslmode=require
-```
+It is recommended to keep `globalOutbound` restrictive. Unmatched outbound connections should be denied unless you intentionally want to allow direct network access.
 
-The hostname and port let the outbound interceptor decide whether to route the TCP connection through Hyperdrive. The remaining fields must be valid for your database driver and compatible with the connection Hyperdrive opens to the tenant database.
+### Full example
 
-## Full example
-
-This example shows the loader Worker and Dynamic Worker code together.
+This example shows the loader Worker with `OutboundInterceptor` and Dynamic Worker code together.
 
 <TypeScriptExample filename="loader-worker.ts">
 
@@ -215,11 +193,13 @@ export class OutboundInterceptor extends WorkerEntrypoint {
 		).host;
 
 		if (host === placeholderHost) {
-			const hyperdrive = this.env.HYPERDRIVE_FACTORY.get({
+			const hyperdrive = this.env.HYPERDRIVE.get({
 				connectionString: this.ctx.props.tenant.connectionString,
 				targetRegion: this.ctx.props.tenant.databaseRegion,
 			});
 
+			// Do not pass host into connect(). Hyperdrive connects using the
+      // Hyperdrive configuration returned from HYPERDRIVE.get()
 			return hyperdrive.connect();
 		}
 
@@ -229,8 +209,8 @@ export class OutboundInterceptor extends WorkerEntrypoint {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Look up per-tenant database context in a system like Workers KV.
-		const tenant = await env.KV.get<Tenant>("<TENANT_ID>", { type: "json" });
+		// Lookup per-tenant database details in configuration store like Workers KV
+		const tenant = await env.KV.get<Tenant>("tenant_A", { type: "json" });
 
 		if (tenant === null) {
 			return new Response("Tenant not found", { status: 404 });
@@ -245,7 +225,7 @@ export default {
 					import { Client } from "pg";
 
 					export default {
-						async fetch(request, env) {
+						async fetch(request, env): Promise<Response> {
 							const client = new Client({
 								connectionString: env.CONNECTION_STRING,
 							});
@@ -278,3 +258,27 @@ type Tenant = {
 ```
 
 </TypeScriptExample>
+
+## Placeholder connection string
+
+The placeholder connection string used by Dynamic Worker code must be a valid connection string that your database driver can parse and use. Database drivers still parse the connection string and send its username, password, database name, hostname, port, and TLS settings over the returned socket.
+
+Use a separate placeholder host and port for each database. The `OutboundInterceptor` compares the intercepted outbound connection host against the value it recieved via `props` to decide which connections to route through Hyperdrive.
+
+:::caution
+
+Do not use the real database hostname in the placeholder connection string, which exposes database credentials to Dynamic Workers. The placeholder host should be a hostname that your `OutboundInterceptor` recognizes. Keep `globalOutbound` restrictive so unmatched outbound connections are denied.
+
+:::
+
+For PostgreSQL drivers, the placeholder must be a valid PostgreSQL connection string. Follow this structure:
+
+```txt
+postgresql://<USER>:<PASSWORD>@<PLACEHOLDER_HOST>:<PORT>/<DATABASE_NAME>?sslmode=require
+```
+
+For example:
+
+```txt
+postgresql://tenant_user:tenant_password@tenant-A.example:5432/database?sslmode=require
+```
