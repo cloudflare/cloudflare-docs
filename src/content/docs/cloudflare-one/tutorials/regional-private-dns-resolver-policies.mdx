@@ -124,13 +124,13 @@ To test your configuration, deploy the Cloudflare One Client on a device in each
 
 - **Use backup resolvers**: Configure secondary DNS resolvers for each region to ensure high availability.
 - **Monitor DNS performance**: Use [Gateway Analytics](/cloudflare-one/insights/analytics/gateway/) to track DNS query performance and identify any issues with regional routing.
-- **Implement network policies**: Combine resolver policies with [network policies](/cloudflare-one/traffic-policies/network-policies/) to control access to internal resources based on user identity and device posture.
+- **Implement network policies**: Combine resolver policies with [network policies](/cloudflare-one/traffic-policies/policy-types/network-policies/) to control access to internal resources based on user identity and device posture.
 - **Consider virtual networks**: If you have overlapping IP address spaces across regions, use [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) to isolate traffic.
 - **Test failover scenarios**: Regularly test what happens when a regional DNS server becomes unavailable to ensure your backup resolvers work as expected.
 
 ## Related resources
 
-- [Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/)
+- [Resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/)
 - [Connect private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Gateway Analytics](/cloudflare-one/insights/analytics/gateway/)
 - [Virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/)

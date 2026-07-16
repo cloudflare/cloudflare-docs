@@ -15,7 +15,7 @@ Workers using a [VPC Network](/workers-vpc/configuration/vpc-networks/) binding 
 
 What you get by default:
 
-- **Visibility.** Worker egress shows up in Gateway [DNS](/cloudflare-one/traffic-policies/dns-policies/), [HTTP](/cloudflare-one/traffic-policies/http-policies/), and [Network](/cloudflare-one/traffic-policies/network-policies/) logs alongside your other traffic, so you can audit what your Workers are calling and when.
+- **Visibility.** Worker egress shows up in Gateway [DNS](/cloudflare-one/traffic-policies/policy-types/dns-policies/), [HTTP](/cloudflare-one/traffic-policies/policy-types/http-policies/), and [Network](/cloudflare-one/traffic-policies/policy-types/network-policies/) logs alongside your other traffic, so you can audit what your Workers are calling and when.
 - **Enforcement.** Any existing Gateway policy whose selectors match a Worker request will apply — including allow / block lists, DNS category filtering, and HTTP destination rules. If you have already blocked a category for your workforce, your Workers inherit that block.
 
 <WranglerConfig>

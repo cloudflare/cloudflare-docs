@@ -15,7 +15,7 @@ import { Render } from "~/components";
 Requires [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/).
 :::
 
-With Access policies, you can require users to open self-hosted applications in a secure [remote browser](/cloudflare-one/remote-browser-isolation/). Because the remote browser is directly integrated into our Secure Web Gateway platform, [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) can be applied to isolated applications without needing to install the Cloudflare One Client. This allows you to distribute internal applications to unmanaged users while retaining control over sensitive data.
+With Access policies, you can require users to open self-hosted applications in a secure [remote browser](/cloudflare-one/remote-browser-isolation/). Because the remote browser is directly integrated into our Secure Web Gateway platform, [HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/) can be applied to isolated applications without needing to install the Cloudflare One Client. This allows you to distribute internal applications to unmanaged users while retaining control over sensitive data.
 
 ## Prerequisites
 
@@ -27,7 +27,7 @@ With Access policies, you can require users to open self-hosted applications in 
 
 ## Policies for isolated applications
 
-Traffic to the isolated Access application is filtered by your Gateway [HTTP policies](/cloudflare-one/traffic-policies/http-policies/). Useful policies include:
+Traffic to the isolated Access application is filtered by your Gateway [HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/). Useful policies include:
 
 - [Identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) to allow or block requests based on user identity.
 - [Data Loss Prevention policies](/cloudflare-one/data-loss-prevention/) to log or block transmission of sensitive data.

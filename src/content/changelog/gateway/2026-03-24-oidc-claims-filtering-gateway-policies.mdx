@@ -10,9 +10,9 @@ Cloudflare Gateway now supports [OIDC Claims](/cloudflare-one/traffic-policies/i
 
 With this update, you can:
 
-- Filter traffic in [DNS](/cloudflare-one/traffic-policies/dns-policies/), [HTTP](/cloudflare-one/traffic-policies/http-policies/), and [Network](/cloudflare-one/traffic-policies/network-policies/) firewall policies based on OIDC claim values.
-- Apply custom [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to route DNS queries to specific resolvers depending on a user's OIDC claims.
-- Control [egress policies](/cloudflare-one/traffic-policies/egress-policies/) to assign dedicated egress IPs based on OIDC claim attributes.
+- Filter traffic in [DNS](/cloudflare-one/traffic-policies/policy-types/dns-policies/), [HTTP](/cloudflare-one/traffic-policies/policy-types/http-policies/), and [Network](/cloudflare-one/traffic-policies/policy-types/network-policies/) firewall policies based on OIDC claim values.
+- Apply custom [resolver policies](/cloudflare-one/traffic-policies/policy-types/resolver-policies/) to route DNS queries to specific resolvers depending on a user's OIDC claims.
+- Control [egress policies](/cloudflare-one/traffic-policies/policy-types/egress-policies/) to assign dedicated egress IPs based on OIDC claim attributes.
 
 For example, you can create a policy that routes traffic differently for users with `department=engineering` in their OIDC claims, or restrict access to certain destinations based on a user's role claim.
 

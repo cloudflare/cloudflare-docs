@@ -55,7 +55,7 @@ When integrating with an XDR platform such as Crowdstrike, Sentinel One or Micro
 
 The following is an example set of policies which demonstrate how you can use Cloudflare to secure access to Salesforce.
 
-The first step is using an [egress IP policy under Cloudflare Gateway](/cloudflare-one/traffic-policies/egress-policies/). This allows you to purchase and assign specific IPs to users that have their traffic filtered via Gateway. Then in Salesforce, you enforce that access is only permitted for traffic with a source IP that matches the one in your egress policy. This combination ensures that the only way to get access to Salesforce is via Cloudflare.
+The first step is using an [egress IP policy under Cloudflare Gateway](/cloudflare-one/traffic-policies/policy-types/egress-policies/). This allows you to purchase and assign specific IPs to users that have their traffic filtered via Gateway. Then in Salesforce, you enforce that access is only permitted for traffic with a source IP that matches the one in your egress policy. This combination ensures that the only way to get access to Salesforce is via Cloudflare.
 
 | Egress Policy                       |                |
 | :---------------------------------- | :------------- |

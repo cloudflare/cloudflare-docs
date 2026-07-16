@@ -225,7 +225,7 @@ To deploy proxy settings to managed Chrome browsers on any operating system:
 After you configure a PAC file on your device, verify that traffic routes through Gateway:
 
 1. Open a browser on the configured device.
-2. Create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block a test domain (for example, `example.com`).
+2. Create an [HTTP policy](/cloudflare-one/traffic-policies/policy-types/http-policies/) to block a test domain (for example, `example.com`).
 3. Visit the blocked domain in your browser.
 4. Verify that the Gateway block page appears.
 
@@ -233,6 +233,6 @@ If the block page does not appear, refer to the [PAC file troubleshooting sectio
 
 ## Next steps
 
-- [Create HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to filter proxy endpoint traffic.
+- [Create HTTP policies](/cloudflare-one/traffic-policies/policy-types/http-policies/) to filter proxy endpoint traffic.
 - Review [PAC file best practices](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/) for formatting, performance optimization, and bypass rules.
-- Use the [Proxy Endpoint selector](/cloudflare-one/traffic-policies/http-policies/#proxy-endpoint) in HTTP and network policies to apply rules to proxy traffic.
+- Use the [Proxy Endpoint selector](/cloudflare-one/traffic-policies/policy-types/http-policies/#proxy-endpoint) in HTTP and network policies to apply rules to proxy traffic.
