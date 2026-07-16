@@ -1,0 +1,77 @@
+---
+title: R2 SQL now supports over 190 new functions, expressions, and complex types
+description: Query Iceberg tables with CASE expressions, column aliases, scalar functions, statistical aggregates, and full struct/array/map support.
+products:
+  - r2-sql
+date: 2026-03-23
+---
+
+[R2 SQL](/r2-sql/) now supports an expanded SQL grammar so you can write richer analytical queries without exporting data. This release adds CASE expressions, column aliases, arithmetic in clauses, 163 scalar functions, 33 aggregate functions, EXPLAIN, Common Table Expressions (CTEs),and full struct/array/map access. R2 SQL is Cloudflare's serverless, distributed, analytics query engine for querying [Apache Iceberg](https://iceberg.apache.org/) tables stored in [R2 Data Catalog](/r2/data-catalog/). This page documents the supported SQL syntax.
+
+
+## Highlights
+
+- **Column aliases** — `SELECT col AS alias` now works in all clauses
+- **CASE expressions** — conditional logic directly in SQL (searched and simple forms)
+- **Scalar functions** — 163 new functions across math, string, datetime, regex, crypto, encoding, and type inspection categories
+- **Aggregate functions** — statistical (variance, stddev, correlation, regression), bitwise, boolean, and positional aggregates join the existing basic and approximate functions
+- **Complex types** — query struct fields with bracket notation, use 46 array functions, and extract map keys/values
+- **Common table expressions (CTEs)** — use `WITH ... AS` to define named temporary result sets. Chained CTEs are supported. All CTEs must reference the same single table.
+- **Full expression support** — arithmetic, type casting (`CAST`, `TRY_CAST`, `::` shorthand), and `EXTRACT` in SELECT, WHERE, GROUP BY, HAVING, and ORDER BY
+
+## Examples
+
+### CASE expressions with statistical aggregates
+
+```sql
+SELECT source,
+    CASE
+        WHEN AVG(price) > 30 THEN 'premium'
+        WHEN AVG(price) > 10 THEN 'mid-tier'
+        ELSE 'budget'
+    END AS tier,
+    round(stddev(price), 2) AS price_volatility,
+    approx_percentile_cont(price, 0.95) AS p95_price
+FROM my_namespace.sales_data
+GROUP BY source
+```
+
+### Struct and array access
+
+```sql
+SELECT product_name,
+    pricing['price'] AS price,
+    array_to_string(tags, ', ') AS tag_list
+FROM my_namespace.products
+WHERE array_has(tags, 'Action')
+ORDER BY pricing['price'] DESC
+LIMIT 10
+```
+
+### Chained CTEs with time-series analysis
+
+```sql
+WITH monthly AS (
+    SELECT date_trunc('month', sale_timestamp) AS month,
+        department,
+        COUNT(*) AS transactions,
+        round(AVG(total_amount), 2) AS avg_amount
+    FROM my_namespace.sales_data
+    WHERE sale_timestamp BETWEEN '2025-01-01T00:00:00Z' AND '2025-12-31T23:59:59Z'
+    GROUP BY date_trunc('month', sale_timestamp), department
+),
+ranked AS (
+    SELECT month, department, transactions, avg_amount,
+        CASE
+            WHEN avg_amount > 1000 THEN 'high-value'
+            WHEN avg_amount > 500 THEN 'mid-value'
+            ELSE 'standard'
+        END AS tier
+    FROM monthly
+    WHERE transactions > 100
+)
+SELECT * FROM ranked
+ORDER BY month, avg_amount DESC
+```
+
+For the full function reference and syntax details, refer to the [SQL reference](/r2-sql/sql-reference/). For limitations and best practices, refer to [Limitations and best practices](/r2-sql/reference/limitations-best-practices/).

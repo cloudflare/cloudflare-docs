@@ -18,17 +18,11 @@ Runtime does not update time until I/O events take place. This means that some s
 
 The Cloudflare Workers team is exploring security measures that would allow exposing time lengths at millisecond-level granularity in these cases.
 
-### Trace context propagation not yet supported
+### Trace context propagation to external services
 
-Currently, Workers tracing does not propagate trace IDs to different platforms or accept trace IDs from other platforms.
+When exporting traces to external platforms, trace IDs are not propagated to services outside of Cloudflare. This means traces from your Workers will not link with traces from non-Cloudflare services in your observability tools.
 
-This means that spans from Workers will not be nested within traces from services that call Workers (or vice versa).
-
-Ideally, trace context can flow across service boundaries and automatically link spans together to create complete, end-to-end visibility.
-When fully implemented, our automatic trace context propagation will follow [W3C standards](https://www.w3.org/TR/trace-context/) to ensure compatibility across your existing tools and services.
-This will allow for traces to include spans from both Workers and other services.
-
-Without trace context propagation, calls to separate Workers and to Durable Objects create separate traces, rather than nested spans.
+We are working on automatic trace context propagation using [W3C Trace Context standards](https://www.w3.org/TR/trace-context/), which will enable complete end-to-end visibility across your existing tools and services.
 
 ### Incomplete spans attributes
 
@@ -36,10 +30,6 @@ We are planning to add more detailed attributes on each span. You can find a com
 
 Your feedback on any missing information will help us prioritize additions and changes. Please comment on the [Workers tracing GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/11062)
 if specific attributes would be helpful to use tracing effectively.
-
-### Support for custom spans and attributes
-
-Automatic instrumentation covers many platform interactions, but we know you need visibility into your own application logic too. We're working to support the [OpenTelemetry API](https://www.npmjs.com/package/@opentelemetry/api) to make it easier for you to instrument custom spans within your application.
 
 ### Span and attribute names subject to change
 

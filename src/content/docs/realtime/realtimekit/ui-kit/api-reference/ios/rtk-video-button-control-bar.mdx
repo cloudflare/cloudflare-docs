@@ -1,0 +1,27 @@
+---
+pcx_content_type: reference
+title: RtkVideoButtonControlBar
+description: API reference for RtkVideoButtonControlBar component (iOS Library)
+products:
+  - realtime
+---
+
+A control bar button that toggles the local camera on and off.
+Checks camera permissions before toggling.
+
+## Initializer parameters
+
+| Parameter   | Type                | Required | Default | Description                     |
+| ----------- | ------------------- | -------- | ------- | ------------------------------- |
+| `rtkClient` | `RealtimeKitClient` | ✅       | -       | The RealtimeKit client instance |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let videoButton = RtkVideoButtonControlBar(rtkClient: rtkClient)
+view.addSubview(videoButton)
+```

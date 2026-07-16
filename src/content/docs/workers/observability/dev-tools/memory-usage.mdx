@@ -1,9 +1,12 @@
 ---
 title: Profiling Memory
+description: Profile memory usage with DevTools snapshots to optimize Workers and avoid OOM errors.
 weight: 4
 pcx_content_type: concept
 meta:
   description: Learn how to profile Memory usage to avoid out-of-memory errors and optimize your Worker
+products:
+  - workers
 ---
 
 Understanding Worker memory usage can help you optimize performance, avoid Out of Memory (OOM) errors
@@ -16,7 +19,7 @@ objects in memory.
 When using DevTools to profile memory, it may be difficult to replicate specific behavior you are
 seeing in production. To mimic production behavior, make sure the requests you send to the local Worker
 are similar to requests in production. This might mean sending a large volume of requests, making requests
-to specific routes, or using production-like data with the [--remote flag](/workers/development-testing/#remote-bindings).
+to specific routes, or using production-like data with the [--remote flag](/workers/local-development/#remote-bindings).
 
 ## Taking a snapshot
 

@@ -1,0 +1,43 @@
+---
+title: AI dashboard experience improvements
+description: Navigation redesign, improved onboarding, analytics fixes, and accessibility updates
+products:
+  - ai-gateway
+  - workers-ai
+date: 2026-02-19
+---
+
+[Workers AI](/workers-ai/) and [AI Gateway](/ai-gateway/) have received a series of dashboard improvements to help you get started faster and manage your AI workloads more easily.
+
+**Navigation and discoverability**
+
+AI now has its own top-level section in the Cloudflare dashboard sidebar, so you can find AI features without digging through menus.
+
+![AI sidebar navigation in the Cloudflare dashboard](~/assets/images/ai-gateway/sidebar-navigation.png)
+_The new top-level AI section in the dashboard sidebar._
+
+**Onboarding and getting started**
+
+[Getting started](/ai-gateway/get-started/) with AI Gateway is now simpler. When you create your first gateway, we now show your gateway's OpenAI-compatible endpoint and step-by-step guidance to help you configure it. The Playground also includes helpful prompts, and usage pages have clear next steps if you have not made any requests yet.
+
+![AI Gateway onboarding flow](~/assets/images/ai-gateway/onboarding-flow.png)
+_The first-run setup experience for new gateways._
+
+We've also combined the previously separate code example sections into one view with dropdown selectors for API type, provider, SDK, and authentication method so you can now customize the exact code snippet you need from one place.
+
+**Dynamic Routing**
+
+- The [route builder](/ai-gateway/features/dynamic-routing/) is now more performant and responsive.
+- You can now copy route names to your clipboard with a single click.
+- Code examples use the [Universal Endpoint](/ai-gateway/usage/universal/) format, making it easier to integrate routes into your application.
+
+**Observability and analytics**
+
+- Small monetary values now display correctly in [cost analytics](/ai-gateway/observability/costs/) charts, so you can accurately track spending at any scale.
+
+**Accessibility**
+
+- Improvements to keyboard navigation within the AI Gateway, specifically when exploring usage by [provider](/ai-gateway/usage/providers/).
+- Improvements to sorting and filtering components on the [Workers AI](/workers-ai/models/) models page.
+
+For more information, refer to the [AI Gateway documentation](/ai-gateway/).

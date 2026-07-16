@@ -1,0 +1,22 @@
+---
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
+import { ResourcesBySelector } from "~/components";
+
+export const prerender = true;
+---
+
+<SplashLayout title="Videos">
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader title="Videos" />
+
+			<section class="mt-12 pt-10" aria-label="Videos">
+				<ResourcesBySelector types={["video"]} columns={3} />
+			</section>
+		</PageShell>
+	</div>
+</SplashLayout>

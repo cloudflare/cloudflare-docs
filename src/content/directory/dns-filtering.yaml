@@ -3,7 +3,7 @@ name: dns-filtering
 
 entry:
   title: DNS filtering
-  url: /cloudflare-one/traffic-policies/initial-setup/dns/
+  url: /cloudflare-one/traffic-policies/get-started/dns/
   show: false
 
 meta:

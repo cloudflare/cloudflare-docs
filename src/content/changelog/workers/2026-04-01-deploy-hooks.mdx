@@ -1,0 +1,45 @@
+---
+title: Deploy Hooks are now available for Workers Builds
+description: Trigger a build for a specific branch by sending a POST request to a unique URL.
+products:
+  - workers
+date: 2026-04-01
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Workers Builds](/workers/ci-cd/builds/) now supports Deploy Hooks — trigger builds from your headless CMS, a Cron Trigger, a Slack bot, or any system that can send an HTTP request.
+
+Each Deploy Hook is a unique URL tied to a specific branch. Send it a `POST` and your Worker builds and deploys.
+
+```sh
+curl -X POST "https://api.cloudflare.com/client/v4/workers/builds/deploy_hooks/<DEPLOY_HOOK_ID>"
+```
+
+To create one, go to **Workers & Pages** > your Worker > **Settings** > **Builds** > **Deploy Hooks**.
+
+Since a Deploy Hook is a URL, you can also call it from another Worker. For example, a Worker with a [Cron Trigger](/workers/configuration/cron-triggers/) can rebuild your project on a schedule:
+
+<TypeScriptExample>
+
+```ts
+export default {
+  async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(fetch(env.DEPLOY_HOOK_URL, { method: "POST" }));
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+You can also use Deploy Hooks to [rebuild when your CMS publishes new content](/workers/ci-cd/builds/deploy-hooks/#cms-integration) or [deploy from a Slack slash command](/workers/ci-cd/builds/deploy-hooks/#deploy-from-a-slack-slash-command).
+
+## Built-in optimizations
+
+- **Automatic deduplication**: If a Deploy Hook fires multiple times before the first build starts running, redundant builds are automatically skipped. This keeps your build queue clean when webhooks retry or CMS events arrive in bursts.
+- **Last triggered**: The dashboard shows when each hook was last triggered.
+- **Build source**: Your Worker's build history shows which Deploy Hook started each build by name.
+
+Deploy Hooks are rate limited to 10 builds per minute per Worker and 100 builds per minute per account. For all limits, see [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
+
+To get started, read the [Deploy Hooks documentation](/workers/ci-cd/builds/deploy-hooks/).

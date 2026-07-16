@@ -1,6 +1,9 @@
 ---
 title: Limits
+description: Account, bucket, and object limits for Cloudflare R2 storage.
 pcx_content_type: concept
+products:
+  - r2
 ---
 
 import { Render } from "~/components";
@@ -8,9 +11,10 @@ import { Render } from "~/components";
 | Feature                                                      | Limit                                             |
 | ------------------------------------------------------------ | ------------------------------------------------- |
 | Data storage per bucket                                      | Unlimited                                         |
+| Number of objects per bucket                                 | Unlimited                                         |
 | Maximum number of buckets per account                        | 1,000,000                                         |
 | Maximum rate of bucket management operations per bucket [^1] | 50 per second                                     |
-| Number of custom domains per bucket                          | 50                                                |
+| Number of custom domains per bucket                          | 100                                                |
 | Object key length                                            | 1,024 bytes                                       |
 | Object metadata size                                         | 8,192 bytes                                       |
 | Object size                                                  | 5 TiB per object [^2]                             |
@@ -40,3 +44,9 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 - Bandwidth (throughput) may also be throttled when using the `r2.dev` endpoint.
 
 For production use cases, connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket. Custom domains allow you to serve content from a domain you control (for example, `assets.example.com`), configure fine-grained caching, set up redirect and rewrite rules, mutate content via [Cloudflare Workers](/workers/), and get detailed URL-level analytics for content served from your R2 bucket.
+
+## Cloudflare REST API
+
+The [Cloudflare REST API](/api/resources/r2/) is rate limited to 1,200 requests per five minutes across all R2 REST API operations on your account.
+
+For high-throughput object operations, use the [S3-compatible API](/r2/api/s3/api/) or [Workers API](/r2/api/workers/workers-api-reference/) instead. The Cloudflare REST API is best suited for lower-volume management and configuration operations.

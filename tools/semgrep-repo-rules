@@ -5,6 +5,41 @@ repo_root_dir="$(git rev-parse --show-toplevel)"
 
 pushd "${repo_root_dir}" > /dev/null || return
 
+scan_all=false
+scan_path=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --all) scan_all=true; shift ;;
+    --path) scan_path="$2"; shift 2 ;;
+    *) shift ;;
+  esac
+done
+
+if [ -n "$scan_path" ]; then
+  echo "Scanning all files in ${scan_path}..."
+  docker run --rm -v "${PWD}:/src" semgrep/semgrep \
+    semgrep scan \
+      --config .semgrep --metrics=off \
+      --include "*.mdx" --include "*.md" --include "*.html" --include "*.htm" --include "*.yaml" --include "*.yml" \
+      --error \
+      "$scan_path"
+  semgrep_return_code=$?
+  echo "return code: $semgrep_return_code"
+  exit $semgrep_return_code
+fi
+
+if [ "$scan_all" = true ]; then
+  echo "Scanning all files..."
+  docker run --rm -v "${PWD}:/src" semgrep/semgrep \
+    semgrep scan \
+      --config .semgrep --metrics=off \
+      --include "*.mdx" --include "*.md" --include "*.html" --include "*.htm" --include "*.yaml" --include "*.yml" \
+      --error
+  semgrep_return_code=$?
+  echo "return code: $semgrep_return_code"
+  exit $semgrep_return_code
+fi
+
 base_commit=$(git merge-base HEAD origin/production)
 git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/relevant_changed_files.txt || true
 

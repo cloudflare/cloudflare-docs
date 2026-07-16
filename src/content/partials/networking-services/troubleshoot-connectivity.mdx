@@ -1,0 +1,119 @@
+---
+params:
+  - productName
+  - tunnelHealthLink
+  - routingBgpLink
+  - checkHealthDashLink
+  - tunnelHealthChecksLink
+  - networkAnalyticsLink
+---
+
+import { DashButton } from "~/components";
+
+This guide helps you determine whether a tunnel health alert is actually affecting your traffic. A degraded or down tunnel only matters if your traffic is currently routing through the Cloudflare data center where that tunnel is unhealthy.
+
+:::note
+Cloudflare does not synchronize health checks among global network servers. A tunnel can be healthy in one data center and degraded in another at the same time. This is normal behavior, not an outage.
+:::
+
+## Before you begin
+
+Understand how {props.productName} health checks and traffic routing work:
+
+- Health checks run independently from every Cloudflare data center.
+- Each data center evaluates tunnel health based on its own probes.
+- Traffic enters Cloudflare at the data center closest to the source (anycast routing).
+- A degraded tunnel in a data center that is not handling your traffic has no impact on your connectivity.
+
+If you are experiencing actual tunnel health issues (tunnels flapping, all tunnels down, or IPsec errors), refer to <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a> instead.
+
+## Diagnostic flowchart
+
+Use this flowchart to determine whether a tunnel health alert requires action.
+
+```mermaid
+flowchart TD
+accTitle: Connectivity troubleshooting flowchart
+accDescr: A decision tree to determine whether a degraded tunnel alert is affecting your traffic.
+
+A["You received a tunnel<br>health alert"] --> B{"Is your traffic<br>affected?"}
+B -- "Yes, I have<br>connectivity issues" --> C["Identify your ingress<br>data center and check<br>tunnel health there"]
+B -- "No, traffic<br>flows normally" --> D{"Does the alert match<br>a data center carrying<br>your traffic?"}
+D -- "No" --> E["No action required.<br>The degraded tunnel is in<br>a data center not serving<br>your traffic."]
+D -- "Yes" --> C
+C --> G{"Are tunnels healthy<br>at your ingress<br>data center?"}
+G -- "Yes" --> H["The issue is not<br>tunnel-related. Check<br>Cloudflare Status and<br>your origin network."]
+G -- "No" --> I["Tunnels at your ingress<br>data center are unhealthy.<br>Refer to Troubleshoot<br>tunnel health."]
+```
+
+## 1. Identify your ingress data center
+
+Determine which Cloudflare data center your traffic is entering. This is the only data center whose tunnel health status matters for your current connectivity.
+
+### Use traceroute
+
+Run a `traceroute` from the source network to your {props.productName} prefix. Look for the Cloudflare data center hostname in the trace output, which contains a three-letter [IATA airport code](https://en.wikipedia.org/wiki/IATA_airport_code) that identifies the data center.
+
+```sh
+traceroute 203.0.113.1
+```
+
+```txt
+ 1  192.168.1.1 (192.168.1.1)  1.234 ms
+ 2  10.0.0.1 (10.0.0.1)  5.678 ms
+ 3  198.51.100.1 (198.51.100.1)  10.123 ms
+ 4  198.51.100.10 (198.51.100.10)  12.345 ms
+ 5  lhr01.cf (198.51.100.11)  15.678 ms
+```
+
+In this example, `lhr` indicates that traffic enters Cloudflare at the London (Heathrow) data center.
+
+### Use the Cloudflare dashboard
+
+You can identify which data centers handle your traffic by using **Network Analytics**.
+
+1. Go to the **Network Analytics** page.
+
+	<DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics" />
+
+2. Select **Add filter** and filter traffic by your source IP addresses to isolate your traffic.
+3. Under **Packets summary**, select the **Source data center** tab. If the tab is not visible, select the three-dot menu (`...`) to reveal additional view options and select **Source data center**.
+4. Review the per-data-center traffic breakdown to identify which Cloudflare data centers are handling your traffic.
+5. Cross-reference these data centers with the tunnel health status on the <a href={props.checkHealthDashLink}><strong>Connector health</strong> page</a>. If tunnels are healthy at the data centers carrying your traffic, a degraded tunnel alert for a different data center is not the cause of your connectivity issue.
+
+## 2. Correlate with Cloudflare status
+
+If your tunnels are healthy at the relevant data center but you still experience connectivity issues, check for broader platform issues.
+
+1. Go to [Cloudflare Status](https://www.cloudflarestatus.com/).
+2. Look for any active incidents or maintenance at the data center you identified.
+3. Check for any incidents that might affect your traffic, such as outages related to networking, BYOIP, or the services your configuration depends on.
+
+## 3. Gather information for support
+
+If you have worked through this guide and cannot resolve the issue, gather the following information before contacting Cloudflare support.
+
+### Required information
+
+1. **Account ID** and **tunnel name(s)** affected
+2. **Timestamps** (in UTC) when the issue started
+3. **Ingress data center** you identified (airport code, for example `LHR`, `IAD`)
+4. **Symptoms observed:**
+   - Whether user traffic is affected or only health check alerts fired
+   - Which tunnels and data centers show degraded or down status
+   - Whether the issue is intermittent or persistent
+
+### Helpful diagnostic data
+
+- **Traceroute output** from your source network to your {props.productName} prefix
+- **Dashboard screenshots** showing tunnel health at the relevant data center
+- **Distributed traceroutes** using tools like [ping.pe](https://ping.pe) to test reachability from multiple global locations
+- **Packet captures** from your router if traffic loss is confirmed
+
+## Related resources
+
+- <a href={props.tunnelHealthLink}>Troubleshoot tunnel health</a>: Resolve common tunnel health issues (flapping, IPsec errors, stateful firewall drops).
+- <a href={props.routingBgpLink}>Troubleshoot routing and BGP</a>: Diagnose routing and BGP issues that affect traffic delivery.
+- <a href={props.checkHealthDashLink}>Check tunnel health in the dashboard</a>: Monitor tunnel status per data center.
+- <a href={props.tunnelHealthChecksLink}>Tunnel health checks</a>: Technical details on how health checks work.
+- <a href={props.networkAnalyticsLink}>Network Analytics</a>: Analyze traffic patterns over time.

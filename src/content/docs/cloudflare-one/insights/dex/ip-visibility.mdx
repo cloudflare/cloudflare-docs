@@ -1,15 +1,24 @@
 ---
 pcx_content_type: reference
+description: Reference information for IP visibility in Zero Trust analytics.
+products:
+  - cloudflare-one
 title: IP visibility
 sidebar:
   order: 7
+tags:
+  - IPv4
+  - IPv6
+  - Windows
+  - Linux
+  - MacOS
 ---
 
 import { Render, Details } from "~/components";
 
 <Details header="Feature availability">
 
-| System   | Availability | Minimum WARP version |
+| System   | Availability | Minimum client version |
 | -------- | ------------ | -------------------- |
 | Windows  | ✅           | 2025.1.861.0         |
 | macOS    | ✅           | 2025.1.861.0         |
@@ -34,13 +43,13 @@ The ISP IP is only visible to users with the [Zero Trust PII role](/cloudflare-o
 
 DEX's IP visibility supports both IPv6 and IPv4 addresses.
 
-IP information is crucial for IT administrators to accurately troubleshoot network issues and identify user locations. IT administrators face challenges like:
+IP information helps IT administrators troubleshoot network issues and identify device locations. Common uses include:
 
-- Pinpointing the exact location of a user experiencing issues ("AP 87 is bad.")
-- Identifying network access control policy violations ("NAC Policies is not applied properly.")
-- Troubleshooting firewall restrictions ("Firewall on VLAN 93 is blocking.")
-- Resolving Layer 2 and DHCP related problems.
-- Indirectly determining user identity and device location.
+- Identifying which access point or network segment a user is connected to
+- Verifying that network access control (NAC) policies are applied correctly
+- Diagnosing firewall restrictions on specific VLANs (virtual local area networks)
+- Troubleshooting Layer 2 (data link layer) and DHCP (Dynamic Host Configuration Protocol) issues
+- Indirectly determining user identity and device location
 
 ## View a device's IP information
 
@@ -61,10 +70,10 @@ DEX's IP visibility allows you to review an event log of a device's IP history f
 
 ## Troubleshoot with IP visibility
 
-While IP visibility allows you to inspect a device's IP information, use [DEX's live analytics](/cloudflare-one/insights/dex/monitoring/#available-metrics) to review which Cloudflare data center the device is connected to. When traffic leaves a WARP-connected end-user device, it will hit a [Cloudflare data center](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request).
+While IP visibility allows you to inspect a device's IP information, use [DEX's live analytics](/cloudflare-one/insights/dex/monitoring/#available-metrics) to review which Cloudflare data center the device is connected to. When traffic leaves a Cloudflare One Client-connected end-user device, it will hit a [Cloudflare data center](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request).
 
 To find which Cloudflare data center a device is connected to:
 
 1. Follow the steps listed in [View IP information](#view-a-devices-ip-history) to find a device's IP information.
 2. On the device page, select **Colocation & client** or find the **Client** table at the top of the page.
-3. In the **Client** table, find **Colocation** to review which Cloudflare data center your selected device's egress traffic is connected to.
+3. In the **Client** table, find **Colocation** to review which Cloudflare data center your selected device's outbound (egress) traffic is routed through.

@@ -1,0 +1,11 @@
+---
+title: Return up to 50 query results with values or metadata
+description: Vectorize increases the `topK` limit to 50 when queries return values or full metadata.
+products:
+  - vectorize
+date: 2026-03-16
+---
+
+You can now set `topK` up to `50` when a Vectorize query returns values or full metadata. This raises the previous limit of `20` for queries that use `returnValues: true` or `returnMetadata: "all"`.
+
+Use the higher limit when you need more matches in a single query response without dropping values or metadata. Refer to the [Vectorize API reference](/vectorize/reference/client-api/) for query options and current `topK` limits.

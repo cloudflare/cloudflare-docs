@@ -4,9 +4,11 @@ title: API
 sidebar:
   order: 3
 description: Vite plugin API
+products:
+  - workers
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, TypeScriptExample } from "~/components";
 
 ## `cloudflare()`
 
@@ -27,8 +29,15 @@ It accepts an optional `PluginConfig` parameter.
 
 - `configPath` <Type text='string' /> <MetaInfo text='optional' />
 
-  An optional path to your Worker config file.
-  By default, a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` file in the root of your application will be used as the Worker config.
+  An optional path to your entry Worker config file.
+
+  For the entry Worker, the plugin resolves the config path in this order:
+
+  1. `configPath`
+  2. `CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH` (typically set by a framework or other external tool)
+  3. `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` in the root of your application
+
+  This applies in `vite dev` and `vite build`.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
@@ -67,6 +76,29 @@ It accepts an optional `PluginConfig` parameter.
 
   See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
 
+- `tunnel` <Type text='boolean | { name?: string; autoStart?: boolean }' /> <MetaInfo text='optional' />
+
+  Expose your local dev server over a [Cloudflare Tunnel](/tunnel/).
+
+  Provide an object to configure a named tunnel or control whether the tunnel starts automatically. Press `t + Enter` to start or close the tunnel. Set `tunnel.autoStart` to `true` if you want the tunnel to open when Vite starts.
+
+  <TypeScriptExample filename="vite.config.ts">
+  ```ts
+  import { defineConfig } from "vite";
+  import { cloudflare } from "@cloudflare/vite-plugin";
+
+  export default defineConfig({
+  	plugins: [
+  		cloudflare({
+  			tunnel: { name: "my-tunnel" },
+  		}),
+  	],
+  });
+  ```
+  </TypeScriptExample>
+
+  See [Share a local dev server](/workers/local-development/local-dev-tunnels/) for more information.
+
 - `auxiliaryWorkers` <Type text='Array<AuxiliaryWorkerConfig>' /> <MetaInfo text='optional' />
 
   An optional array of auxiliary Workers.
@@ -81,9 +113,15 @@ It accepts an optional `PluginConfig` parameter.
   You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
   :::
 
+- `remoteBindings` <Type text='boolean' /> <MetaInfo text='optional' />
+
+  Whether or not [remote bindings](/workers/local-development/#remote-bindings) should be enabled. Defaults to `true`.
+
+
 ## `interface AuxiliaryWorkerConfig`
 
 Auxiliary Workers require a `configPath`, a `config` option, or both.
+`CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH` only applies to the entry Worker. Auxiliary Workers do not use this environment variable. If you use a config file for an auxiliary Worker, set `configPath` explicitly.
 
 - `configPath` <Type text='string' /> <MetaInfo text='optional' />
 

@@ -1,0 +1,50 @@
+---
+title: AI Search now has hybrid search and relevance boosting
+description: Combine vector and keyword search in a single query, and boost results by metadata fields like timestamp or priority.
+products:
+  - ai-search
+date: 2026-04-16T12:00:00Z
+publish_future_dated_entry: true
+---
+
+[AI Search](/ai-search/) now supports hybrid search and relevance boosting, giving you more control over how results are found and ranked.
+
+## Hybrid search
+
+Hybrid search combines vector (semantic) search with BM25 keyword search in a single query. Vector search finds chunks with similar meaning, even when the exact words differ. Keyword search matches chunks that contain your query terms exactly. When you enable hybrid search, both run in parallel and the results are fused into a single ranked list.
+
+You can configure the tokenizer (`porter` for natural language, `trigram` for code), keyword match mode (`and` for precision, `or` for recall), and fusion method (`rrf` or `max`) per instance:
+
+```ts
+const instance = await env.AI_SEARCH.create({
+	id: "my-instance",
+	index_method: { vector: true, keyword: true },
+	fusion_method: "rrf",
+	indexing_options: { keyword_tokenizer: "porter" },
+	retrieval_options: { keyword_match_mode: "and" },
+});
+```
+
+Refer to [Search modes](/ai-search/concepts/search-modes/) for an overview and [Hybrid search](/ai-search/configuration/indexing/hybrid-search/) for configuration details.
+
+## Relevance boosting
+
+Relevance boosting lets you nudge search rankings based on document metadata. For example, you can prioritize recent documents by boosting on `timestamp`, or surface high-priority content by boosting on a custom metadata field like `priority`.
+
+Configure up to 3 boost fields per instance or override them per request:
+
+```ts
+const results = await env.AI_SEARCH.get("my-instance").search({
+	messages: [{ role: "user", content: "deployment guide" }],
+	ai_search_options: {
+		retrieval: {
+			boost_by: [
+				{ field: "timestamp", direction: "desc" },
+				{ field: "priority", direction: "desc" },
+			],
+		},
+	},
+});
+```
+
+Refer to [Relevance boosting](/ai-search/configuration/retrieval/boosting/) for configuration details.

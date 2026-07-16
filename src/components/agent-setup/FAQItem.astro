@@ -1,0 +1,22 @@
+---
+// Single FAQ accordion item for use from MDX. The answer is authored as
+// MDX children, so it can use `<code>`, links, and inline markdown naturally:
+//
+//   <FAQItem question="How do I give Claude Code access to my Cloudflare account?">
+//     The first time Claude calls a Cloudflare tool, you'll be redirected
+//     to authorize via OAuth and choose what permissions to grant.
+//   </FAQItem>
+
+interface Props {
+	question: string;
+}
+
+const { question } = Astro.props;
+---
+
+<details class="agent-setup-faq-item">
+	<summary>{question}</summary>
+	<div class="agent-setup-faq-answer">
+		<slot />
+	</div>
+</details>

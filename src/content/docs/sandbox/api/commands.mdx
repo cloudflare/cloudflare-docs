@@ -1,8 +1,11 @@
 ---
 title: Commands
+description: Execute commands and manage background processes in Sandbox SDK containers.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - sandbox
 ---
 
 import { Details, TypeScriptExample } from "~/components";
@@ -70,6 +73,12 @@ await sandbox.exec('python process_login.py', {
 });
 ```
 </TypeScriptExample>
+
+:::note[Timeout behavior]
+When a command times out, the SDK raises an error on the caller side and closes the connection. The underlying process **continues running** inside the container. To stop a timed-out process, delete the session with [`deleteSession()`](/sandbox/api/sessions/#deletesession) or destroy the sandbox with [`destroy()`](/sandbox/api/lifecycle/#destroy).
+
+Timeout precedence: per-command `timeout` on `exec()` > session-level `commandTimeoutMs` on [`createSession()`](/sandbox/api/sessions/#createsession) > global [`COMMAND_TIMEOUT_MS`](/sandbox/configuration/environment-variables/#command_timeout_ms) environment variable. If none are set, commands run without a timeout.
+:::
 
 ### `execStream()`
 

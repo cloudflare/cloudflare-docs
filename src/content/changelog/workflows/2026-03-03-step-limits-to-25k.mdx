@@ -1,0 +1,29 @@
+---
+title: Workflows step limit increased to 25,000 steps per instance
+description: Each Workflow instance supports 10,000 steps by default, configurable up to 25,000 steps
+products:
+  - workflows
+  - workers
+date: 2026-03-03 12:00:00 UTC
+---
+
+Each Workflow on Workers Paid now supports 10,000 steps by default, configurable up to 25,000 steps in your `wrangler.jsonc` file:
+
+```json
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"limits": {
+				"steps": 25000
+			}
+		}
+	]
+}
+```
+
+Previously, each instance was limited to 1,024 steps. Now, Workflows can support more complex, long-running executions without the additional complexity of recursive or child workflow calls.
+
+Note that the maximum persisted state limit per Workflow instance remains **100 MB** for Workers Free and **1 GB** for Workers Paid. Refer to [Workflows limits](/workflows/reference/limits/) for more information.

@@ -1,26 +1,37 @@
 ---
 pcx_content_type: how-to
+description: Connect to RDP with client-side cloudflared in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Connect to RDP with client-side cloudflared
+tags:
+  - RDP
 sidebar:
   order: 5
   label: RDP with client-side cloudflared
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
-End users can connect to an RDP server without the WARP client by authenticating through `cloudflared` in their native terminal. This method requires having `cloudflared` installed on both the server machine and on the client machine, as well as an active zone on Cloudflare. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
+End users can connect to an RDP server without the Cloudflare One Client by authenticating through `cloudflared` in their native terminal. This method requires having `cloudflared` installed on both the server machine and on the client machine, as well as an active zone on Cloudflare. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
 
-Client-side `cloudflared` can be used in conjunction with [routing over WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/) and [Browser-based RDP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-browser/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
+Client-side `cloudflared` can be used in conjunction with [the Cloudflare One Client](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-device-client/) and [Browser-based RDP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-browser/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
 
 ## 1. Connect the server to Cloudflare
 
 1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
 
-2. In the **Published application routes** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
+2. In the Cloudflare dashboard, go to **Networking** > **Tunnels** and select your tunnel.
 
-3. For **Service**, select _RDP_ and enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server (for example, `localhost:3389`). It will likely be port `3389`.
+   <DashButton url="/?to=/:account/tunnels" />
 
-4. Select **Save**.
+3. On the **Routes** tab, select **Add route**, then select **Published application**.
+
+4. Choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
+
+5. For **Service**, select _RDP_ and enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server (for example, `localhost:3389`). It will likely be port `3389`.
+
+6. Select **Add route**.
 
 ## 2. (Recommended) Create an Access application
 

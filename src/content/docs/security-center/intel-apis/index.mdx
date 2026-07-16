@@ -1,6 +1,11 @@
 ---
 pcx_content_type: navigation
 title: Threat Intelligence APIs
+description: Query Cloudflare threat intelligence data for IPs, domains, ASNs, and more.
+products:
+  - security-center
+tags:
+  - REST API
 sidebar:
   order: 3
 ---
@@ -12,7 +17,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 | Intelligence Endpoint                                                                                 | Definition                                                                                                                                                       |
 | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [ASN Intelligence](/api/resources/intel/subresources/asn/methods/get/)                                 | Provides an overview of the Autonomous System Number (ASN) and a list of subnets for it.                                                                         |
-| [Custom Indicator Feed Download](/api/resources/intel/subresources/indicator_feeds/subresources/downloads/methods/get/) | Provides the ability to download any custom indicator feeds that users create.                                                                                   |
+| [Custom Indicator Feed Download](/api/resources/intel/subresources/indicator_feeds/subresources/downloads/) | Provides the ability to download any custom indicator feeds that users create.                                                                                   |
 | [Domain Intelligence](/api/resources/intel/subresources/domains/methods/get/)                         | Provides security details and statistics about a domain.                                                                                                         |
 | [Domain History](/api/resources/intel/subresources/domain_history/methods/get/)                                   | Provides historical security threat and content categories that are currently and previously assigned to a domain.                                               |
 | [IP Intelligence](/api/resources/intel/subresources/ips/methods/get/)                                    | Provides the geolocation, ASN, infrastructure type of the ASN, and any security threat categories of an IP address.                                              |
@@ -21,7 +26,7 @@ Cloudflare provides a series of endpoints covering various areas of internet sec
 | [Miscategorization Intelligence](/api/resources/intel/subresources/miscategorizations/methods/create/)          | Enables users to submit requests for modifying a domain's category, subsequently undergoing review by the Cloudflare Intelligence team.                          |
 | [Priority Intelligence Requirements](/api/resources/cloudforce_one/subresources/requests/subresources/priority/methods/create/)                     | Provides a structured approach to identifying intelligence gaps, formulating precise requirements, and organizing them into categories.                          |
 | [Request for Information](/api/resources/cloudforce_one/subresources/requests/methods/create/)                                 | Creates a targeted inquiry for specific intelligence insights to help organizations understand and respond to imminent security threats and vulnerabilities.     |
-| [Threat Events](/api/resources/cloudforce_one/subresources/scans/subresources/results/methods/get/)     |  Allows customers to look into the Cloudflare telemetry and threat actor activity on the Cloudflare network. |
+| [Threat Events](/api/resources/cloudforce_one/subresources/threat_events)     |  Allows customers to look into the Cloudflare telemetry and threat actor activity on the Cloudflare network. |
 | [WHOIS](/api/resources/intel/subresources/whois/methods/get/)                                                | Provides the WHOIS registration information for a specific domain.                                                                                               |
 | [DDoS Botnet Threat Feed](/ddos-protection/botnet-threat-feed/)<br/>(early access)                    | Provides information to service providers about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. |
 | [Cloudforce One](/api/resources/cloudforce_one/subresources/requests/subresources/assets/methods/create/)| Enable users to list, delete, get, or update a request asset. | 

@@ -1,6 +1,9 @@
 ---
 title: FAQ
 pcx_content_type: faq
+description: Answers to common questions about WAF configuration and behavior.
+products:
+  - waf
 sidebar:
   order: 10
 ---
@@ -30,6 +33,7 @@ If you are using a regular expression, it is recommended that you test it with a
 
 If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
 
+These automatic bypasses do not appear in [Trace](/rules/trace-request/) results.
 ### Why have I been blocked?
 
 Cloudflare may block requests when it detects activity that could be unsafe. Common reasons include:
@@ -61,7 +65,7 @@ ISP-level blocks are distinct from Cloudflare or site-owner security restriction
 
 #### Caution about potentially blocking bots
 
-When you create a custom rule with a _Block_, _Interactive Challenge_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+When you create a custom rule with a _Block_, _Non-Interactive Challenge_, _Managed Challenge_, or _Interactive Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
 Refer to the [Challenges documentation](/cloudflare-challenges/troubleshooting/#allowlist-traffic-from-mitigation-actions) for more information.
 

@@ -16,7 +16,7 @@ To create a new target:</p>) :
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Targets**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Targets**.
 2. Select **Add a target**.
 3. In **Target hostname**, enter a user-friendly name for the <GlossaryTooltip term="target">target</GlossaryTooltip>. We recommend using the server hostname, for example `production-server`. The target hostname does not need to be unique and can be reused for multiple targets. Hostnames are used to define the targets secured by an Access application; they are not used for DNS address resolution.
 	<Details header="Hostname format restrictions">
@@ -27,7 +27,7 @@ To create a new target:</p>) :
 	</Details>
 4. In **IP addresses**, enter the IPv4 and/or IPv6 address of the target resource. The dropdown menu will not populate until you type in the full IP address.
 :::note
-If the target IP does not appear in the dropdown, go to **Networks** > **Routes** and confirm that the IP routes through Cloudflare Tunnel.
+If the target IP does not appear in the dropdown, go to **Networking** > **Routes** and confirm that the IP routes through Cloudflare Tunnel.
 :::
 5. In the dropdown menu, select the IP address and [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
 6. Select **Add target**.

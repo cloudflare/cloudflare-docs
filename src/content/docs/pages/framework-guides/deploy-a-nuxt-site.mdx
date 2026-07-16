@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Nuxt
 head: []
 description: Web framework making Vue.js-based development simple and powerful.
+products:
+  - pages
 ---
 
 import {
@@ -11,7 +13,6 @@ import {
 	TabItem,
 	Tabs,
 	ResourcesBySelector,
-	ExternalResources,
 	PackageManagers,
 	YouTube,
 } from "~/components";
@@ -106,7 +107,7 @@ This module is powered by the [`getPlatformProxy` helper function](/workers/wran
 
 :::note
 
-Wrangler configuration is used primarily for local development. Bindings specified in it are not available remotely, unless they are created as [remote bindings](/workers/development-testing/#remote-bindings).
+Wrangler configuration is used primarily for local development. Bindings specified in it are not available remotely, unless they are created as [remote bindings](/workers/local-development/#remote-bindings).
 
 :::
 
@@ -172,17 +173,3 @@ export default defineEventHandler(({ context }) => {
 	product="pages"
 	params={{ one: "Nuxt" }}
 />
-
-## Related resources
-
-### Tutorials
-
-For more tutorials involving Nuxt, refer to the following resources:
-
-<ResourcesBySelector tags={["Nuxt"]} types={["tutorial"]} />
-
-### Demo apps
-
-For demo applications using Nuxt, refer to the following resources:
-
-<ExternalResources tags={["Nuxt"]} type="apps" />

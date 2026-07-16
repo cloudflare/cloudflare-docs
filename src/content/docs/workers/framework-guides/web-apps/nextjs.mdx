@@ -5,9 +5,12 @@ sidebar:
   order: 4
 tags: ["full-stack"]
 description: Create an Next.js application and deploy it to Cloudflare Workers with Workers Assets.
+products:
+  - workers
 ---
 
 import {
+	AutoconfigDiagram,
 	Description,
 	Details,
 	Render,
@@ -25,6 +28,8 @@ import {
 />
 
 This is a simple getting started guide. For detailed documentation on how to use the Cloudflare OpenNext adapter, visit the [OpenNext website](https://opennext.js.org/cloudflare).
+
+
 
 ## What is Next.js?
 
@@ -106,7 +111,7 @@ Most Next.js features are supported by the Cloudflare OpenNext adapter:
     [**Workers Builds**](/workers/ci-cd/builds/) requires you to configure environment variables in the ["Build Variables and secrets"](/workers/ci-cd/builds/configuration/#:~:text=Build%20variables%20and%20secrets) section. 
 
 
-    This ensures the Next build has the necessary access to both public `NEXT_PUBLC...` variables and [non-`NEXT_PUBLIC_...`](https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser), which are essential for tasks like inlining and building SSG pages.
+    This ensures the Next build has the necessary access to both public `NEXT_PUBLIC_...` variables and [non-`NEXT_PUBLIC_...`](https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser), which are essential for tasks like inlining and building SSG pages.
 
 
     Learn more in the [OpenNext environment variable guide](https://opennext.js.org/cloudflare/howtos/env-vars#workers-builds)
@@ -116,7 +121,28 @@ Most Next.js features are supported by the Cloudflare OpenNext adapter:
 
 ## Deploy an existing Next.js project on Workers
 
-You can convert an existing Next.js application to run on Cloudflare
+:::tip[Automatic configuration]
+Run `wrangler deploy` in a project without a Wrangler configuration file and Wrangler will automatically detect Next.js, generate the necessary configuration, and deploy your project.
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+:::
+
+<AutoconfigDiagram
+	framework="Next.js"
+	configs={[
+		{ label: "main", file: "wrangler.jsonc", value: ".open-next/worker.js" },
+		{ label: "assets", file: "wrangler.jsonc", value: "directory: .open-next/assets" },
+		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
+		{ label: "adapter", file: "package.json", value: "@opennextjs/cloudflare" },
+	]}
+/>
+
+## Manual configuration
+
+If you prefer to configure your project manually, follow the steps below.
 
 <Steps>
 
@@ -212,7 +238,7 @@ You can convert an existing Next.js application to run on Cloudflare
     [**Workers Builds**](/workers/ci-cd/builds/) requires you to configure environment variables in the ["Build Variables and secrets"](/workers/ci-cd/builds/configuration/#:~:text=Build%20variables%20and%20secrets) section. 
 
 
-    This ensures the Next build has the necessary access to both public `NEXT_PUBLC...` variables and [non-`NEXT_PUBLIC_...`](https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser), which are essential for tasks like inlining and building SSG pages.
+    This ensures the Next build has the necessary access to both public `NEXT_PUBLIC_...` variables and [non-`NEXT_PUBLIC_...`](https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser), which are essential for tasks like inlining and building SSG pages.
 
 
     Learn more in the [OpenNext environment variable guide](https://opennext.js.org/cloudflare/howtos/env-vars#workers-builds)

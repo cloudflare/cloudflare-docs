@@ -1,0 +1,37 @@
+---
+title: Create, manage, search AI Search instances with Wrangler CLI
+description: Use the wrangler ai-search command namespace to manage AI Search instances from the CLI.
+products:
+  - ai-search
+date: 2026-04-01
+---
+
+[AI Search](/ai-search/) supports a `wrangler ai-search` command namespace. Use it to manage instances from the command line.
+
+The following commands are available:
+
+| Command                     | Description                                      |
+| --------------------------- | ------------------------------------------------ |
+| `wrangler ai-search create` | Create a new instance with an interactive wizard |
+| `wrangler ai-search list`   | List all instances in your account               |
+| `wrangler ai-search get`    | Get details of a specific instance               |
+| `wrangler ai-search update` | Update the configuration of an instance          |
+| `wrangler ai-search delete` | Delete an instance                               |
+| `wrangler ai-search search` | Run a search query against an instance           |
+| `wrangler ai-search stats`  | Get usage statistics for an instance             |
+
+The `create` command guides you through setup, choosing a name, source type (`r2` or `web`), and data source. You can also pass all options as flags for non-interactive use:
+
+```sh
+wrangler ai-search create my-instance --type r2 --source my-bucket
+```
+
+Use `wrangler ai-search search` to query an instance directly from the CLI:
+
+```sh
+wrangler ai-search search my-instance --query "how do I configure caching?"
+```
+
+All commands support `--json` for structured output that scripts and AI agents can parse directly.
+
+For full usage details, refer to the [Wrangler commands documentation](/ai-search/wrangler-commands/).

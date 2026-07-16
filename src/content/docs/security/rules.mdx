@@ -2,11 +2,13 @@
 title: Security rules
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 6
 description: Security rules perform security actions on incoming requests that match specified filters.
+products:
+  - security
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Security rules perform security-related actions on incoming requests that match specified filters. Rules are evaluated and executed in order, from first to last.
 
@@ -32,13 +34,13 @@ To create a security rule:
    - [API sequence rules](/api-shield/security/sequence-mitigation/#rule-form)
    - [API JWT validation rules](/api-shield/security/jwt-validation/#rule-form) (requires a [token configuration](/security/settings/#all-settings))
    - [Managed rules exceptions](/waf/managed-rules/waf-exceptions/define-dashboard/#2-define-basic-exception-parameters)
-   - [Content security rules](/page-shield/policies/create-dashboard/#rule-form) (previously known as Page Shield policies)
+   - [Content security rules](/client-side-security/rules/create-dashboard/#rule-form) (previously known as policies)
 
 :::note[Notes]
 
 To deploy a managed ruleset, go to the Security **Settings** page. For more information, refer to [Deploy a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset).
 
-The **Security rules** tab includes functionality available in different products in the previous dashboard navigation structure, such as the [WAF](/waf/), [API Shield](/api-shield/), and [Page Shield](/page-shield/).
+The **Security rules** tab includes functionality available in different products in the previous dashboard navigation structure, such as the [WAF](/waf/), [API Shield](/api-shield/), and [client-side security](/client-side-security/).
 
 The tab may show additional rule types if you have configured at least one of the following:
 
@@ -60,3 +62,7 @@ To learn more about DDoS protection overrides, refer to the following resources:
 :::note
 You define [overrides for the Network-layer DDoS attack protection managed ruleset](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/) at the account level.
 :::
+
+## Interaction between different app security features
+
+<Render file="app-security-interoperability" product="waf" />

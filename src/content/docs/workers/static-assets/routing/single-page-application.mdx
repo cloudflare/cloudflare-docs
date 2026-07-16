@@ -4,6 +4,8 @@ title: Single Page Application (SPA)
 description: How to configure and use a Single Page Application (SPA) with Workers.
 sidebar:
   order: 2
+products:
+  - workers
 ---
 
 import { WranglerConfig, TypeScriptExample, Render } from "~/components";
@@ -87,6 +89,8 @@ export default {
 ```
 
 </TypeScriptExample>
+
+You can also use `run_worker_first` to inject data into your SPA shell before it reaches the browser. For a full example using HTMLRewriter to prefetch API data and embed it in the HTML stream, refer to [SPA shell with bootstrap data](/workers/examples/spa-shell/).
 
 ## Local Development
 

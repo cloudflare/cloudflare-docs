@@ -8,11 +8,14 @@ params:
   - ipsecReferenceUrl
   - ipsecReferenceConfigParams
   - mtuReferenceURL
+  - wanTransformationUrl
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
 
 {props.productNameManual} (formerly Magic WAN) allows you to achieve any-to-any connectivity across branch and retail sites and data centers, with the Cloudflare connectivity cloud.
+
+If you are migrating from MPLS or a traditional WAN, refer to <a href={props.wanTransformationUrl}>WAN transformation</a> to compare approaches and plan an incremental migration.
 
 ## Before you begin
 

@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Bot scores
+description: Scores from 1 to 99 indicating the likelihood a request came from a bot.
+products:
+  - bots
 sidebar:
   order: 2
 ---
@@ -11,7 +14,7 @@ A bot score is a score from _1_ to _99_ that indicates how likely that request c
 
 For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
 
-Bot scores are available to be used in rule expressions and with Workers to customize application behavior. For more details, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
+You can use bot scores in [WAF custom rules](/waf/custom-rules/) to block, challenge, or allow requests based on their score. Bot scores are also available in [Workers](/workers/) to customize application behavior. For more details, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
 :::note
 
@@ -37,26 +40,31 @@ Bot scores are not computed for requests to paths that are handled by Cloudflare
 
 ## How Cloudflare generates bot scores
 
-:::note
-
 The following detection engines only apply to Enterprise Bot Management. For specific details about the engines included in your plan, refer to [Plans](/bots/plans/).
-:::
 
 ### Heuristics
 
+Catches automated traffic through pattern matching against a database of known malicious fingerprints.
+
 <Render file="bots-heuristics" product="bots" />
 
-The Heuristics engine immediately gives automated requests a score of 1.
+The Heuristics engine gives automated requests a score of 1 for high-confidence, deterministic detections. Occasionally, heuristics will set a score of 29 in cases where Cloudflare has identified automated traffic and is still assessing traffic overlap.
 
 ### Machine learning
+
+Catches sophisticated bots by analyzing request features across billions of daily requests. Produces most scores between 2 and 99.
 
 <Render file="bots-ml" product="bots" />
 
 ### Anomaly detection
 
+Detects outlier requests by comparing traffic against a learned baseline for your specific site.
+
 <Render file="bots-ad" product="bots" />
 
 ### JavaScript detections
+
+Catches headless browsers (browsers controlled by software, with no visible window or human operator) and other automation tools.
 
 <Render file="bots-jsd" product="bots" />
 
@@ -68,7 +76,7 @@ JSD is enabled by default but completely optional. To adjust your settings, open
 
 ### Not computed
 
-A bot score of 0 means Bot Management did not run on the request. Cloudflare does not run Bot Management on internal service requests that Bot Management has no interest in blocking.
+A bot score of 0 means Bot Management did not evaluate the request. This applies to internal Cloudflare service requests and requests that were redirected or handled by another feature (such as [Redirect Rules](/rules/url-forwarding/)) before Bot Management could run. A score of 0 does not indicate the request is safe or human.
 
 ### Notes on detection
 

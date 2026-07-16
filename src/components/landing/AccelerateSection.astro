@@ -1,0 +1,46 @@
+---
+import ProductCard from "./ProductCard.astro";
+import ProductCardGrid from "./ProductCardGrid.astro";
+import SectionHeading from "./SectionHeading.astro";
+import ViewAllLink from "./ViewAllLink.astro";
+import { products } from "./accelerate-data";
+---
+
+<section
+	class="pt-10 pb-10"
+	aria-labelledby="accelerate-heading"
+	id="accelerate"
+>
+	<div class="mb-6 flex items-center justify-between sm:mb-8">
+		<div>
+			<SectionHeading id="accelerate-heading" class="mb-2">
+				Faster web performance
+			</SectionHeading>
+			<p
+				class="text-foreground-muted max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
+			>
+				Accelerate websites and applications with Cloudflare CDN caching, image
+				optimization, smart routing, load balancing, and web analytics.
+			</p>
+		</div>
+		<ViewAllLink href="/directory/?product-group=Application+performance">
+			Explore Directory
+		</ViewAllLink>
+	</div>
+
+	<ProductCardGrid>
+		{
+			products.map((p) => (
+				<ProductCard
+					icon={p.icon}
+					product={p.product}
+					scenario={p.outcome}
+					detail={p.detail}
+					href={p.href}
+					cta={p.cta}
+					category={p.category}
+				/>
+			))
+		}
+	</ProductCardGrid>
+</section>

@@ -10,6 +10,16 @@ button#scroll-to-top-button .scroll-progress-ring {
 	transform: translate(-50%, -50%) scale(0.85) !important;
 }
 
+@media (max-width: 768px) {
+	button#scroll-to-top-button {
+		transform: none !important;
+	}
+
+	.DocSearch-Container {
+		position: fixed !important;
+	}
+}
+
 :root[data-theme="dark"] {
 	button#scroll-to-top-button {
 		background-color: var(--color-cl1-brand-orange);

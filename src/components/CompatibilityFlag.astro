@@ -1,7 +1,7 @@
 ---
 import { Aside } from "@astrojs/starlight/components";
 import { reference, getEntry } from "astro:content";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const props = z.object({
 	flag: reference("compatibility-flags"),

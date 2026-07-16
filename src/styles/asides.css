@@ -26,10 +26,10 @@
 
 :root[data-theme="dark"] {
 	.starlight-aside--note {
-		background-color: rgb(0, 28, 67);
+		background-color: var(--color-cl1-blue-1);
 	}
 
 	.starlight-aside--caution {
-		background-color: rgb(98, 73, 10);
+		background-color: var(--color-cl1-gold-0);
 	}
 }

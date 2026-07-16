@@ -10,6 +10,10 @@
       {
          "property_id" : "context_window",
          "value" : "24000"
+      },
+      {
+         "property_id" : "planned_deprecation_date",
+         "value" : "2026-05-30"
       }
    ],
    "schema" : {

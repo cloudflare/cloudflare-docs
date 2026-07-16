@@ -3,7 +3,10 @@ pcx_content_type: reference
 title: Confidence Intervals
 sidebar:
   order: 3
-
+description: Request confidence intervals for sampled data.
+products:
+  - analytics
+  - graphql-api
 ---
 
 Confidence intervals help assess accuracy and quantify uncertainty in results from sampled datasets. When querying sum or count fields on adaptive datasets, you can request a confidence interval to understand the possible range around an estimate. For example, specifying a confidence level of `0.95` returns the estimate, along with the range of values that likely contains the true value 95% of the time. 

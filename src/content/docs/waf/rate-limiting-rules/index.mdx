@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Rate limiting rules
+description: Define rate limits for requests matching an expression and the action when limits are reached.
+products:
+  - rate-limiting
 sidebar:
   order: 6
 tableOfContents: false
@@ -8,7 +11,11 @@ tableOfContents: false
 
 import { Render } from "~/components";
 
-Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
+Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached. Use rate limiting rules to prevent abuse of your websites and APIs — for example, to protect a login endpoint from brute-force attacks or to cap how many API calls a single client can make in a given time window.
+
+:::note[Were you blocked from accessing a website?]
+If you are a visitor who received an error while trying to access a website, please refer to the [error 1015 documentation](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1015).
+:::
 
 In the [new security dashboard](/security/), rate limiting rules are one of the available types of [security rules](/security/rules/). Security rules perform security-related actions on incoming requests that match specified filters.
 
@@ -24,11 +31,15 @@ Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for mo
 
 Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
+## Interaction with other app security features
+
+<Render file="app-security-interoperability" product="waf" />
+
 ## Important remarks
 
 - Rate limiting rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to [Actions](/ruleset-engine/rules-language/actions/).
 
-- Rate limiting rules are not designed to allow a precise number of requests to reach the origin server. In some situations, there may be a delay (up to a few seconds) between detecting a request and updating internal counters. Due to this delay, excess requests could still reach the origin server before Cloudflare enforces a mitigation action (such as blocking or challenging) in our global network.
+- Rate limiting rules are not designed to allow a precise number of requests to reach your origin server. There may be a delay of up to a few seconds between detecting a request and updating rate counters. Due to this delay, excess requests could still reach the origin before Cloudflare enforces a mitigation action such as blocking or challenging. For more information on how counters work, including their per-data-center scope, refer to [Request rate calculation](/waf/rate-limiting-rules/request-rate/).
 
 - Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/performance/improve-seo/).
 
@@ -55,4 +66,4 @@ For Terraform examples, refer to [Rate limiting rules configuration using Terraf
 
 - [Learning Center: What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/)
 
-- [Cloudflare Rate Limiting (previous version, now deprecated)](/waf/reference/legacy/old-rate-limiting/): Documentation for the previous version of rate limiting rules (billed based on usage).
+- [Cloudflare Rate Limiting (previous version, no longer available)](/waf/reference/legacy/old-rate-limiting/): Documentation for the previous version of rate limiting rules (billed based on usage).

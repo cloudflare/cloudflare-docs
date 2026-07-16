@@ -1,49 +1,69 @@
 ---
-
 summary: Draw a watermark from KV on an image from R2
 pcx_content_type: example
 title: Watermarks
 sidebar:
   order: 5
 description: Draw a watermark from KV on an image from R2
-reviewed: 2025-04-03
+reviewed: 2026-07-06
+products:
+  - images
+  - r2
+  - kv
 ---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Enable [Workers Cache](/workers/cache/) so repeat requests for the same watermarked image are served from cache without re-running the Worker or re-transforming the image:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"cache": {
+		"enabled": true,
+	},
+}
+```
+
+</WranglerConfig>
+
+Then set `Cache-Control` headers on your response to control the cache lifetime:
+
+<TypeScriptExample>
 
 ```ts
 interface Env {
-    BUCKET: R2Bucket,
-    NAMESPACE: KVNamespace,
-    IMAGES: ImagesBinding,
+	BUCKET: R2Bucket;
+	NAMESPACE: KVNamespace;
+	IMAGES: ImagesBinding;
 }
 export default {
-    async fetch(request, env, ctx): Promise<Response> {
-        const watermarkKey = "my-watermark";
-        const sourceKey = "my-source-image";
+	async fetch(request, env): Promise<Response> {
+		const watermarkKey = "my-watermark";
+		const sourceKey = "my-source-image";
 
-        const cache = await caches.open("transformed-images");
-        const cacheKey = new URL(sourceKey + "/" + watermarkKey, request.url);
-        const cacheResponse = await cache.match(cacheKey);
+		const watermark = await env.NAMESPACE.get(watermarkKey, "stream");
+		const source = await env.BUCKET.get(sourceKey);
 
-        if (cacheResponse) {
-            return cacheResponse;
-        }
+		if (!watermark || !source) {
+			return new Response("Not found", { status: 404 });
+		}
 
-        let watermark = await env.NAMESPACE.get(watermarkKey, "stream");
-        let source = await env.BUCKET.get(sourceKey);
+		const result = await env.IMAGES.input(source.body)
+			.draw(watermark)
+			.output({ format: "image/jpeg" });
 
-        if (!watermark || !source) {
-            return new Response("Not found", { status: 404 });
-        }
+		const response = result.response();
 
-        const result = await env.IMAGES.input(source.body)
-            .draw(watermark)
-            .output({ format: "image/jpeg" });
-
-        const response = result.response();
-
-        ctx.waitUntil(cache.put(cacheKey, response.clone()));
-
-        return result.response();
-  },
+		return new Response(response.body, {
+			headers: {
+				...Object.fromEntries(response.headers),
+				"Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+			},
+		});
+	},
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>

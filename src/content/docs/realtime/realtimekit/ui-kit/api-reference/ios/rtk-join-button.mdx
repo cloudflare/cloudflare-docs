@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkJoinButton
+description: API reference for RtkJoinButton component (iOS Library)
+products:
+  - realtime
+---
+
+A pre-configured button that joins the meeting.
+Validates the participant name before joining.
+
+## Initializer parameters
+
+| Parameter    | Type                               | Required | Default | Description                                                                                               |
+| ------------ | ---------------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `meeting`    | `RealtimeKitClient`                | ✅       | -       | The RealtimeKit client instance                                                                           |
+| `onClick`    | `((RtkJoinButton, Bool) -> Void)?` | ❌       | `nil`   | Closure called when the button is tapped. The `Bool` parameter indicates whether the join was successful. |
+| `appearance` | `RtkButtonAppearance`              | ❌       | -       | Appearance configuration for the button                                                                   |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let joinButton = RtkJoinButton(meeting: rtkClient)
+view.addSubview(joinButton)
+```
+
+### With tap handler
+
+```swift
+import RealtimeKitUI
+
+let joinButton = RtkJoinButton(
+    meeting: rtkClient,
+    onClick: { button, success in
+        if success {
+            print("Joined meeting")
+        } else {
+            print("Join failed")
+        }
+    }
+)
+view.addSubview(joinButton)
+```

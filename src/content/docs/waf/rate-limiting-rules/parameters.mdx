@@ -1,6 +1,9 @@
 ---
 pcx_content_type: reference
 title: Rate limiting parameters
+description: Configurable parameters for rate limiting rules, including expressions and characteristics.
+products:
+  - rate-limiting
 sidebar:
   order: 18
 ---
@@ -28,6 +31,8 @@ Defines the criteria for the rate limiting rule to match a request.
 If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
 
 In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
+
+Depending on your [Cloudflare plan](/waf/rate-limiting-rules/#availability), this rule parameter might not be available. In that case, Cloudflare will also apply rate limiting to cached assets (the parameter is enabled by default).
 
 ### With the same characteristics
 
@@ -132,7 +137,7 @@ Name of HTTP header in the response, set by the origin server, with the score fo
 
 Action to perform when the rate specified in the rule is reached.
 
-Use one of the following values in the API: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+Use one of the following values in the API: `block`, `js_challenge` (Non-Interactive Challenge), `managed_challenge` (Managed Challenge), `challenge` (Interactive Challenge), or `log`.
 
 If you select the _Block_ action, you can define a custom response using the following parameters:
 
@@ -216,6 +221,13 @@ The action behavior can be one of the following:
 ### Use cases of IP with NAT support
 
 Use **IP with NAT support** to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/) for details.
+
+#### Considerations when using IP with NAT support
+
+**IP with NAT support** relies on a cookie-based visitor identification mechanism ([`_cfuvid` cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#_cfuvid-for-rate-limiting-rules)). Keep the following in mind:
+
+- Visitors who clear cookies, use private browsing, or do not accept cookies will not be individually identified. Requests from these visitors share a single counter bucket, which can cause false positives in high-traffic NAT environments.
+- For security-critical rate limiting (such as protecting login or payment endpoints), combine **IP with NAT support** with other characteristics like **Path** or **Header value of** to reduce the impact of identification gaps.
 
 ### Incompatible characteristics
 

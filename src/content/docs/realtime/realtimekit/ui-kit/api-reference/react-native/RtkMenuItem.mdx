@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkMenuItem
+description: API reference for RtkMenuItem component (React Native Library)
+products:
+  - realtime
+---
+
+A pressable menu item within a menu.
+
+## Properties
+
+| Property   | Type                                  | Required | Default | Description            |
+| ---------- | ------------------------------------- | -------- | ------- | ---------------------- |
+| `children` | `ReactNode`                           | ✅       | -       | Menu item content      |
+| `onClick`  | `(ev) => {}` | ❌       | -       | Press handler callback |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'`        | ❌       | -       | Size variant           |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMenuItem } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMenuItem onClick={() => ({})}>
+			<Text>Option 1</Text>
+		</RtkMenuItem>
+	);
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMenuItem } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMenuItem onClick={(ev) => ({})} size="md">
+			<Text>Option 1</Text>
+		</RtkMenuItem>
+	);
+}
+```

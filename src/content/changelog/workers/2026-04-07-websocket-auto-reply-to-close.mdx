@@ -1,0 +1,44 @@
+---
+title: WebSockets now automatically reply to Close frames
+description: The Workers runtime now automatically sends a reciprocal Close frame when it receives a Close frame from the peer, matching standard WebSocket behavior.
+products:
+  - workers
+date: 2026-04-07
+---
+
+The Workers runtime now automatically sends a reciprocal Close frame when it receives a Close frame from the peer. The `readyState` transitions to `CLOSED` before the `close` event fires. This matches the [WebSocket specification](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close_event) and standard browser behavior.
+
+This change is enabled by default for Workers using compatibility dates on or after `2026-04-07` (via the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag). Existing code that manually calls `close()` inside the `close` event handler will continue to work — the call is silently ignored when the WebSocket is already closed.
+
+```js
+const [client, server] = Object.values(new WebSocketPair());
+server.accept();
+
+server.addEventListener("close", (event) => {
+	// readyState is already CLOSED — no need to call server.close().
+	console.log(server.readyState); // WebSocket.CLOSED
+	console.log(event.code); // 1000
+	console.log(event.wasClean); // true
+});
+```
+
+### Half-open mode for WebSocket proxying
+
+The automatic close behavior can interfere with WebSocket proxying, where a Worker sits between a client and a backend and needs to coordinate the close on both sides independently. To support this use case, pass `{ allowHalfOpen: true }` to `accept()`:
+
+```js
+const [client, server] = Object.values(new WebSocketPair());
+
+server.accept({ allowHalfOpen: true });
+
+server.addEventListener("close", (event) => {
+	// readyState is still CLOSING here, giving you time
+	// to coordinate the close on the other side.
+	console.log(server.readyState); // WebSocket.CLOSING
+
+	// Manually close when ready.
+	server.close(event.code, "done");
+});
+```
+
+For more information, refer to [WebSockets Close behavior](/workers/runtime-apis/websockets/#close-behavior).

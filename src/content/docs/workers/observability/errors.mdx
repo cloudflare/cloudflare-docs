@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: Errors and exceptions
 head: []
 description: Review Workers errors and exceptions.
+products:
+  - workers
 ---
 
 import { TabItem, Tabs, DashButton } from "~/components";
@@ -13,23 +15,20 @@ Review Workers errors and exceptions.
 
 When a Worker running in production has an error that prevents it from returning a response, the client will receive an error page with an error code, defined as follows:
 
-| Error code | Meaning                                                                                                                                         |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `1101`     | Worker threw a JavaScript exception.                                                                                                            |
-| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                           |
-| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                                         |
-| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                                                        |
-| `1019`     | Worker hit [loop limit](#loop-limit).                                                                                                           |
-| `1021`     | Worker has requested a host it cannot access.                                                                                                   |
-| `1022`     | Cloudflare has failed to route the request to the Worker.                                                                                       |
-| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                                               |
-| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                                                       |
+| Error code | Meaning                                                                                                                                                                                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1101`     | Worker threw a JavaScript exception.                                                                                                                                                                                                                                |
+| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                                                                                                                                               |
+| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                                                                                                                                                             |
+| `1019`     | Worker hit [loop limit](#loop-limit).                                                                                                                                                                                                                               |
+| `1021`     | Worker has requested a host it cannot access.                                                                                                                                                                                                                       |
+| `1022`     | Cloudflare has failed to route the request to the Worker.                                                                                                                                                                                                           |
+| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                                                                                                                                                                   |
+| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-requests).                                                                                                                                                                          |
 | `1042`     | Worker tried to fetch from another Worker on the same zone, which is only [supported](/workers/runtime-apis/fetch/) when the [`global_fetch_strictly_public` compatibility flag](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) is used. |
-| `10162`    | Module has an unsupported Content-Type.                                                                                                         |
+| `10162`    | Module has an unsupported Content-Type.                                                                                                                                                                                                                             |
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
-
-Errors in the `11xx` range can also be related with [Snippets](/rules/snippets/).
 
 ### Loop limit
 
@@ -68,6 +67,12 @@ You can prevent this by enforcing the [`no-floating-promises` eslint rule](https
 #### Cause 2: WebSocket connections that are never closed
 
 If a WebSocket is missing the proper code to close its server-side connection, the Workers runtime will throw a `script will never generate a response` error. In the example below, the `'close'` event from the client is not properly handled by calling `server.close()`, and the error is thrown. In order to avoid this, ensure that the WebSocket's server-side connection is properly closed via an event listener or other server-side logic.
+
+:::note
+
+With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the runtime automatically completes the WebSocket close handshake. This specific error scenario is less likely to occur because the runtime handles the close for you. The example below applies to Workers on older compatibility dates.
+
+:::
 
 ```js null {10}
 async function handleRequest(request) {
@@ -185,23 +190,23 @@ If you need to share state across requests, consider using [Durable Objects](/du
 
 These errors occur when a Worker is uploaded or modified.
 
-| Error code | Meaning                                                                                                                         |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `10006`    | Could not parse your Worker's code.                                                                                             |
-| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                       |
-| `10015`    | Account is not entitled to use Workers.                                                                                         |
-| `10016`    | Invalid Worker name.                                                                                                            |
-| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.             |
-| `10026`    | Could not parse request body.                                                                                                   |
-| `10027`    | The uploaded Worker exceeded the [Worker size limits](/workers/platform/limits/#worker-size). |
-| `10035`    | Multiple attempts to modify a resource at the same time                                                                         |
-| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                           |
-| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                        |
-| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                     |
-| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables).     |
-| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                           |
-| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                        |
-| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.              |
+| Error code | Meaning                                                                                                                     |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `10006`    | Could not parse your Worker's code.                                                                                         |
+| `10007`    | Worker or [workers.dev subdomain](/workers/configuration/routing/workers-dev/) not found.                                   |
+| `10015`    | Account is not entitled to use Workers.                                                                                     |
+| `10016`    | Invalid Worker name.                                                                                                        |
+| `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.         |
+| `10026`    | Could not parse request body.                                                                                               |
+| `10027`    | The uploaded Worker exceeded the [Worker size limits](/workers/platform/limits/#worker-size).                               |
+| `10035`    | Multiple attempts to modify a resource at the same time                                                                     |
+| `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                       |
+| `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                    |
+| `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                 |
+| `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables). |
+| `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                       |
+| `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                    |
+| `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.          |
 
 ### Validation Errors (10021)
 
@@ -230,6 +235,7 @@ Runtime errors will occur within the runtime, do not throw up an error page, and
 ## Identify errors: Workers Metrics
 
 To review whether your application is experiencing any downtime or returning any errors:
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -272,7 +278,7 @@ Exceptions will show up under the `exceptions` field in the JSON returned by `wr
 
 A Worker can make HTTP requests to any HTTP service on the public Internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
 
-When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
+When using an external logging strategy, remember that floating promises (promises that are neither `await`ed, `return`ed, nor passed to `ctx.waitUntil()`) may be canceled when the Worker invocation completes. A Worker invocation has not completed while it is still streaming a response body to the client. To run logging after the response is complete, pass the request promise to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil). For example:
 
 <Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
@@ -330,7 +336,9 @@ Configure the [Wasm Coredump Service](https://github.com/cloudflare/wasm-coredum
 
 ## Go to origin on error
 
-By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+By using [`passThroughOnException()`](/workers/runtime-apis/context/#passthroughonexception), a Workers application can forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+
+`ctx.passThroughOnException()` forwards requests for unhandled exceptions in your Worker code, not for errors from the origin `fetch()`. When proxying requests to an origin, wrap `fetch(request)` in `try...catch` and return a `5xx` response on failure. If the origin `fetch()` throws after consuming the request body, `passThroughOnException()` cannot replay the body.
 
 <Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 

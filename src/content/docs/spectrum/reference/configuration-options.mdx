@@ -1,23 +1,21 @@
 ---
 pcx_content_type: reference
 title: Configuration options
+description: Configurable options for Spectrum applications, including edge and origin ports and protocols.
+products:
+  - spectrum
 weight: 0
-
 ---
 
 Spectrum is a global TCP and UDP proxy running on Cloudflare's edge nodes. It does not terminate the connection in the application-layer sense. However, at Layer 4, Spectrum does terminate the TCP and UDP sockets in both directions. The L4 payloads of TCP segments and UDP datagrams are passed back and forth as-is, without modifications.
 
 :::note
-
-
 Some of these features require an Enterprise plan. If you would like to upgrade, contact your account team.
-
-
 :::
 
 ## Application type
 
-The application type determines the protocol by which data travels from the edge to your origin. Select *TCP/UDP* if you want to proxy directly to the origin. If you want to set up products like CDN, Workers, or Bot management, you need to select *HTTP/HTTPS*. In this case, traffic is routed through Cloudflare's pipeline instead of connecting directly to your origin.
+The application type determines the protocol by which data travels from the edge to your origin. Select _TCP/UDP_ if you want to proxy directly to the origin. If you want to set up products like CDN, Workers, or Bot management, you need to select _HTTP/HTTPS_. In this case, traffic is routed through Cloudflare's pipeline instead of connecting directly to your origin.
 
 ## IP addresses
 
@@ -33,10 +31,10 @@ SMTP servers may perform a series of checks on servers attempting to send messag
 
 Messages may be rejected if:
 
-* A reverse DNS lookup on the IP address of the connecting server returns a negative response.
-* The reverse DNS lookup produces a different hostname than what was sent in the SMTP `HELO`/`EHLO` message.
-* The reverse DNS lookup produces a different hostname than what is advertised in your SMTP server's banner.
-* The result of a reverse DNS lookup does not match a corresponding forward DNS lookup.
+- A reverse DNS lookup on the IP address of the connecting server returns a negative response.
+- The reverse DNS lookup produces a different hostname than what was sent in the SMTP `HELO`/`EHLO` message.
+- The reverse DNS lookup produces a different hostname than what is advertised in your SMTP server's banner.
+- The result of a reverse DNS lookup does not match a corresponding forward DNS lookup.
 
 Spectrum applications do not have reverse DNS entries.
 
@@ -54,12 +52,12 @@ For direct origins:
 
 ```json
 {
-  "protocol": "tcp/1000-2000",
-  "dns": {
-    "type": "CNAME",
-    "name": "range.example.com"
-  },
-  "origin_direct": ["tcp://192.0.2.1:3000-4000"]
+	"protocol": "tcp/1000-2000",
+	"dns": {
+		"type": "CNAME",
+		"name": "range.example.com"
+	},
+	"origin_direct": ["tcp://192.0.2.1:3000-4000"]
 }
 ```
 
@@ -67,26 +65,26 @@ For DNS origins:
 
 ```json
 {
-  "protocol": "tcp/1000-2000",
-  "dns": {
-    "type": "CNAME",
-    "name": "range.example.com"
-  },
-  "origin_dns": {
-    "name": "origin.example.com",
-    "ttl": 1200
-  },
-  "origin_port": "3000-4000"
+	"protocol": "tcp/1000-2000",
+	"dns": {
+		"type": "CNAME",
+		"name": "range.example.com"
+	},
+	"origin_dns": {
+		"name": "origin.example.com",
+		"ttl": 1200
+	},
+	"origin_port": "3000-4000"
 }
 ```
 
 The number of ports in an origin port range must match the number of ports specified in the `protocol` field.
 Connections to a port within a port range at the edge will be proxied to the equivalent port offset in the origin range.
-For example, in the configurations above, a connection to `range.example.com:1005` would be proxied to port 3005 on the origin.
+For example, in the configurations above, a connection to `range.example.com:1005` would be proxied to port `3005` on the origin.
 
 ## IP Access rules
 
-If IP Access rules are enabled for a Spectrum application, Cloudflare will respect the IP Access rules created under **Security** > **WAF** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
+If [IP Access rules](/waf/tools/ip-access-rules/create/) are enabled for a Spectrum application, Cloudflare will respect the IP Access rules configured for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
 
 :::note
 Network analytics data for Spectrum does not reflect the outcomes of IP Access rules. Instead, to verify whether traffic was allowed or blocked based on these rules, consult the Spectrum event logs.
@@ -95,6 +93,25 @@ Network analytics data for Spectrum does not reflect the outcomes of IP Access r
 ## Argo Smart Routing
 
 Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Argo Smart Routing is available for TCP and UDP (beta) applications.
+
+## Virtual network origin
+
+Spectrum applications can route `origin_direct` traffic to a private origin through a Cloudflare Tunnel [virtual network](/cloudflare-one/networks/virtual-networks/). Set `virtual_network_id` on the application to the ID of the virtual network that the origin IP is routable within. Traffic to the application is delivered through the connector associated with that virtual network — typically a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or a [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) connection.
+
+To create the virtual network and attach a route covering your origin IP, refer to [Manage virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) and [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
+
+The following restrictions apply when `virtual_network_id` is set:
+
+- Application type must be TCP or UDP. HTTP/HTTPS applications do not support virtual network origins.
+- The origin must be specified with `origin_direct`. Hostname origins (`origin_dns`) are not supported.
+- `origin_direct` must contain exactly one address. Multiple addresses are not supported.
+- The origin port must be a single port. Port ranges are not supported.
+- The origin IP must be routable within the specified virtual network. The virtual network must already have a route covering the IP.
+- [Proxy Protocol](/spectrum/how-to/enable-proxy-protocol/) is not supported. `proxy_protocol` must be set to `off`.
+
+For the validation error codes returned when these constraints are violated, refer to [Error codes](/spectrum/reference/error-codes/).
+
+Spectrum virtual network origins are for TCP and UDP traffic only. For HTTP/HTTPS traffic to private origins, use [Application Services for Private Origins](/dns/private-origins/), which provides WAF, CDN caching, and the full Cloudflare proxy stack.
 
 ## Edge TLS Termination
 
@@ -110,7 +127,7 @@ TLS versions supported by Spectrum include TLS 1.1, TLS 1.2, and TLS 1.3.
 
 You can manage this through the Spectrum app at the Cloudflare dashboard, or using the [Spectrum API endpoint](/api/resources/spectrum/subresources/apps/methods/update/).
 
-:::note[Note]
+:::note
 
 If you have the TLS termination setting configured to **off**, this means that Spectrum will then proxy connections to the origin without decrypting. The certificate that is presented in this case will be the certificate installed at your origin server, instead of the Edge Certificate from Cloudflare.
 
@@ -121,33 +138,32 @@ If you have the TLS termination setting configured to **off**, this means that S
 If you need to control TLS settings, like the minimum TLS version or cipher suites, you need to use an HTTPS application.
 For TCP applications, default settings will apply. The minimum TLS version will be 1.1 and the cipher suites are:
 
-| OpenSSL Name                      |
-| --------------------------------- |
-|AEAD-CHACHA20-POLY1305-SHA256|
-|AEAD-AES128-GCM-SHA256|
-|AEAD-AES256-GCM-SHA384|
-|ECDHE-RSA-CHACHA20-POLY1305|
-|ECDHE-ECDSA-CHACHA20-POLY1305|
-|ECDHE-RSA-AES128-GCM-SHA256|
-|ECDHE-ECDSA-AES128-GCM-SHA256|
-|ECDHE-RSA-AES256-GCM-SHA384|
-|ECDHE-ECDSA-AES256-GCM-SHA384|
-|ECDHE-RSA-AES128-SHA256|
-|ECDHE-RSA-AES128-SHA|
-|CDHE-ECDSA-AES128-SHA256|
-|ECDHE-ECDSA-AES128-SHA|
-|ECDHE-RSA-AES256-SHA|
-|ECDHE-ECDSA-AES256-SHA|
-|AES128-GCM-SHA256|
-|AES256-GCM-SHA384|
-|AES128-SHA256|
-|AES128-SHA|
-|AES256-SHA|
-|ECDHE-RSA-DES-CBC3-SHA|
-|DES-CBC3-SHA|
+| OpenSSL Name                  |
+| ----------------------------- |
+| AEAD-CHACHA20-POLY1305-SHA256 |
+| AEAD-AES128-GCM-SHA256        |
+| AEAD-AES256-GCM-SHA384        |
+| ECDHE-RSA-CHACHA20-POLY1305   |
+| ECDHE-ECDSA-CHACHA20-POLY1305 |
+| ECDHE-RSA-AES128-GCM-SHA256   |
+| ECDHE-ECDSA-AES128-GCM-SHA256 |
+| ECDHE-RSA-AES256-GCM-SHA384   |
+| ECDHE-ECDSA-AES256-GCM-SHA384 |
+| ECDHE-RSA-AES128-SHA256       |
+| ECDHE-RSA-AES128-SHA          |
+| CDHE-ECDSA-AES128-SHA256      |
+| ECDHE-ECDSA-AES128-SHA        |
+| ECDHE-RSA-AES256-SHA          |
+| ECDHE-ECDSA-AES256-SHA        |
+| AES128-GCM-SHA256             |
+| AES256-GCM-SHA384             |
+| AES128-SHA256                 |
+| AES128-SHA                    |
+| AES256-SHA                    |
+| ECDHE-RSA-DES-CBC3-SHA        |
+| DES-CBC3-SHA                  |
 
 :::
-
 
 ## Origin TLS Termination
 
@@ -159,14 +175,14 @@ The cipher suites below are ordered based on how they appear in the ClientHello,
 
 | OpenSSL Name                      | TLS 1.1 | TLS 1.2 | TLS 1.3 |
 | --------------------------------- | ------- | ------- | ------- |
-| AEAD-AES128-GCM-SHA256[^1]        | ❌       | ❌       | ✅       |
-| AEAD-AES256-GCM-SHA384[^1]        | ❌       | ❌       | ✅       |
-| AEAD-CHACHA20-POLY1305-SHA256[^1] | ❌       | ❌       | ✅       |
-| ECDHE-ECDSA-AES128-GCM-SHA256     | ❌       | ✅       | ❌       |
-| ECDHE-RSA-AES128-GCM-SHA256       | ❌       | ✅       | ❌       |
-| ECDHE-RSA-AES128-SHA              | ✅       | ✅       | ❌       |
-| AES128-GCM-SHA256                 | ❌       | ✅       | ❌       |
-| AES128-SHA                        | ✅       | ✅       | ❌       |
-| AES256-SHA                        | ✅       | ✅       | ❌       |
+| AEAD-AES128-GCM-SHA256[^1]        | ❌      | ❌      | ✅      |
+| AEAD-AES256-GCM-SHA384[^1]        | ❌      | ❌      | ✅      |
+| AEAD-CHACHA20-POLY1305-SHA256[^1] | ❌      | ❌      | ✅      |
+| ECDHE-ECDSA-AES128-GCM-SHA256     | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES128-GCM-SHA256       | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES128-SHA              | ✅      | ✅      | ❌      |
+| AES128-GCM-SHA256                 | ❌      | ✅      | ❌      |
+| AES128-SHA                        | ✅      | ✅      | ❌      |
+| AES256-SHA                        | ✅      | ✅      | ❌      |
 
 [^1]: Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently, only specifying the symmetric ciphers, and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 ([RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html)). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3. Refer to [TLS 1.3 cipher suites](/ssl/origin-configuration/cipher-suites/#tls-13-cipher-suites) for details.

@@ -3,14 +3,20 @@ title: Layer security methods
 pcx_content_type: learning-unit
 sidebar:
   order: 3
-
+description: Combine device posture and browser isolation.
+products:
+  - gateway
+  - cloudflare-one
+  - dlp
+  - casb
+  - browser-isolation
 ---
 
 Once you have decided on a model (or mixture of models) to secure front door access to your SaaS applications, you can address other common SaaS security areas of concern by layering multiple Cloudflare controls.
 
 ## Device posture controls for managed endpoints
 
-You can control endpoint access to your SaaS applications with device posture controls via either [Access for SaaS](/learning-paths/secure-internet-traffic/secure-saas-applications/sso-front-door/) or [WARP enrollment settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/) in Zero Trust. Device posture can determine what constitutes a managed endpoint accessing a SaaS application.
+You can control endpoint access to your SaaS applications with device posture controls via either [Access for SaaS](/learning-paths/secure-internet-traffic/secure-saas-applications/sso-front-door/) or [WARP enrollment settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/) in Zero Trust. Device posture can determine what constitutes a managed endpoint accessing a SaaS application.
 
 You can also define what constitutes a healthy or semi-healthy managed endpoint and invoke step-up security policies based on potential security concerns. These controls are separate from the controls enacted for unmanaged endpoints.
 
@@ -21,11 +27,11 @@ You can deliver inline security through Browser Isolation, but it requires a [fr
 
 ## Browser Isolation
 
-Cloudflare can deliver isolate SaaS apps in via either the WARP client or static links with Clientless Web Isolation.
+Cloudflare can deliver isolate SaaS apps in via either the Cloudflare One Client or static links with Clientless Web Isolation.
 
-### WARP client
+### Cloudflare One Client
 
-When your users' devices are enrolled with the WARP client, Cloudflare will transparently isolate browser sessions. In other words, a user's browser will display `example.com`, but Cloudflare will isolate the traffic by rendering it in an isolated browser.
+When your users' devices are enrolled with the Cloudflare One Client, Cloudflare will transparently isolate browser sessions. In other words, a user's browser will display `example.com`, but Cloudflare will isolate the traffic by rendering it in an isolated browser.
 
 ### Clientless Web Isolation
 

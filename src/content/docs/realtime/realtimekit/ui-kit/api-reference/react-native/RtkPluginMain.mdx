@@ -1,0 +1,45 @@
+---
+pcx_content_type: reference
+title: RtkPluginMain
+description: API reference for RtkPluginMain component (React Native Library)
+products:
+  - realtime
+---
+
+Renders an active plugin by loading `plugin.component.src` in a `WebView`. Includes a header bar with the plugin name, a fullscreen toggle, and an optional close button (shown when `plugin.permissions.canDeactivate` is `true`). Pressing close calls `plugin.deactivate()`.
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `plugin`   | `RTKPlugin`         | ✅       | -                 | The plugin to render             |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPluginMain } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPluginMain meeting={meeting} plugin={activePlugin} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPluginMain } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkPluginMain
+			meeting={meeting}
+			plugin={activePlugin}
+			iconPack={customIconPack}
+		/>
+	);
+}
+```

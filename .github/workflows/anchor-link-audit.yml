@@ -14,38 +14,62 @@ jobs:
     permissions:
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          node-version: 22
+          version: 11
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-
-      - uses: actions/cache@v4
-        id: npm-cache
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 24.x
+          cache: pnpm
 
-      - run: npm ci
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
-      - run: npm run build
+      - name: Install node_modules (cache miss)
+        run: pnpm install --frozen-lockfile
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - run: pnpm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
-        run: curl https://htmltest.wjdp.uk | bash
+      - name: Install htmltest
+        run: |
+          HTMLTEST_VERSION="0.17.0"
+          HTMLTEST_ARCHIVE="htmltest_${HTMLTEST_VERSION}_linux_amd64.tar.gz"
+          HTMLTEST_URL="https://github.com/wjdp/htmltest/releases/download/v${HTMLTEST_VERSION}/${HTMLTEST_ARCHIVE}"
+          # Checksum from https://github.com/wjdp/htmltest/releases/download/v0.17.0/htmltest_0.17.0_checksums.txt
+          HTMLTEST_CHECKSUM="775c597ee74899d6002cd2d93076f897f4ba68686bceabe2e5d72e84c57bc0fb"
+
+          curl -sL -o "${HTMLTEST_ARCHIVE}" "${HTMLTEST_URL}"
+          echo "${HTMLTEST_CHECKSUM}  ${HTMLTEST_ARCHIVE}" | sha256sum --check
+          tar -xzf "${HTMLTEST_ARCHIVE}"
+          chmod +x htmltest
+          mv htmltest ./bin/htmltest
 
       - name: Check - Broken header links
         id: header-link-check
-        run: ./bin/htmltest -c ./bin/.htmltest.yml
+        run: |
+          ./bin/htmltest -c ./bin/.htmltest.yml 2>&1 | grep -v "#_top" | tee /tmp/htmltest-filtered.txt || true
+          if grep -q "hash does not exist" /tmp/htmltest-filtered.txt; then exit 1; fi
+
+      - name: Save node_modules cache
+        if: always()
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Create issue on failure
         if: ${{ failure() }}
@@ -54,7 +78,15 @@ jobs:
           WORKFLOW_LINK: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
         run: |
           echo "Specific header links in the [Workflow Run]($WORKFLOW_LINK).\n\nGenerally, we expect you to address at least 10-15 links before closing this out." > issue_body.txt
+
+          # Use jq to safely construct JSON payload
+          BODY=$(cat issue_body.txt)
+          JSON_PAYLOAD=$(jq -n \
+            --arg title "Broken Header Links Found" \
+            --arg body "$BODY" \
+            '{title: $title, body: $body}')
+
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
-            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat issue_body.txt)\"}"
+            -d "$JSON_PAYLOAD"

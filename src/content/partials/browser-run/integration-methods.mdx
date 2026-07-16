@@ -1,0 +1,19 @@
+---
+{}
+---
+
+Browser Run offers two categories of integration methods:
+
+- **[Quick Actions](/browser-run/quick-actions/)**: Simple, stateless browser tasks like screenshots, PDFs, and scraping. No code deployment needed.
+- **Browser Sessions**: Direct browser control via [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [CDP](/browser-run/cdp/), or [Stagehand](/browser-run/stagehand/). Deploy within Cloudflare Workers or connect from any environment via CDP.
+
+| Use case                                    | Recommended                                                                                                        | Why                                                              |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| Simple screenshot, PDF, or scrape           | [Quick Actions](/browser-run/quick-actions/)                                                                       | No code deployment; single HTTP request                          |
+| Browser automation                          | [Playwright](/browser-run/playwright/), [Puppeteer](/browser-run/puppeteer/), or [CDP](/browser-run/cdp/)          | Full browser control with scripting                              |
+| Porting existing scripts                    | [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [CDP](/browser-run/cdp/)          | Minimal code changes from standard libraries                     |
+| AI-powered data extraction                  | [JSON endpoint](/browser-run/quick-actions/json-endpoint/)                                                         | Structured data via natural language prompts                     |
+| Site-wide crawling                          | [Crawl endpoint](/browser-run/quick-actions/crawl-endpoint/)                                                       | Multi-page content extraction with async results                 |
+| AI agent browsing                           | [Playwright MCP](/browser-run/playwright/playwright-mcp/) or [CDP with MCP clients](/browser-run/cdp/mcp-clients/) | LLMs control browsers via MCP                                    |
+| Resilient scraping                          | [Stagehand](/browser-run/stagehand/)                                                                               | AI finds elements by intent, not selectors                       |
+| Direct browser control from any environment | [CDP](/browser-run/cdp/)                                                                                           | WebSocket access from local machines, CI/CD, or external servers |

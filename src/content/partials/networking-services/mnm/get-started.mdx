@@ -6,7 +6,7 @@ import { APIRequest, Badge, DashButton, GlossaryTooltip } from "~/components";
 
 Network Flow (formerly Magic Network Monitoring) includes an onboarding workflow that guides you step-by-step through the product configuration process. If you are unable to complete the configuration in one session, you can exit the workflow and resume it at any time.
 
-To begin using Network Flow for network and/or cloud traffic visibility, complete the list of tasks below.
+After completing the setup, you can view traffic analytics, create rules to monitor traffic thresholds, and receive alerts when those thresholds are exceeded. To begin, complete the list of tasks below.
 
 - [NetFlow and sFlow guide](#netflow-and-sflow-guide)
 - [VPC flow log guide (beta)](#vpc-flow-log-guide)
@@ -25,7 +25,7 @@ Refer to [Supported routers](/network-flow/routers/supported-routers) to view a 
 
 ### 2. Register your router with Cloudflare
 
-When you register your router with Cloudflare, your router links your NetFlow or sFlow data to your Cloudflare account.
+Register your router so that Cloudflare knows which IP address to expect flow data from and can associate it with your account.
 
 1. Go to the **Network flow** page.
 
@@ -80,10 +80,10 @@ AWS VPC flow logs can only be configured through the Cloudflare API for Network 
 
 1. Create an authorization token using [Cloudflare's API for Network Flow](/api/resources/magic_network_monitoring/subresources/vpc_flows/subresources/tokens/methods/create/). This authorization token allows Cloudflare to identify and verify the account sending VPC flow logs to our endpoint.
 
-	<APIRequest
-		path="/accounts/{account_id}/mnm/vpc-flows/token"
-		method="POST"
-	/>
+   <APIRequest
+   	path="/accounts/{account_id}/mnm/vpc-flows/token"
+   	method="POST"
+   />
 
 2. In your AWS Firehose stream configuration, set the `HTTP Headers - X-Amz-Firehose-Access-Key` to the authorization token generated in the previous step.
 

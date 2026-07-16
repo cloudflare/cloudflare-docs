@@ -41,6 +41,8 @@ Private resources, usually self hosted applications on private networks with no 
 
 ![Figure 2: Various methods of connecting and routing traffic to Cloudflare to secure private traffic.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg "Figure 2: Various methods of connecting and routing traffic to Cloudflare to secure private traffic.")
 
+_Note: Labels in this image may reflect a previous product name._
+
 Once private applications and networks have been connected to Cloudflare, devices can then be connected securely via our device agent such that data from a user device, all the way across the network to an application can be secured.
 
 When traffic from the device, to the hosted application, all flows via Cloudflare, it's possible for us to inspect the traffic and apply further security based on the content of the data.
@@ -49,7 +51,7 @@ When traffic from the device, to the hosted application, all flows via Cloudflar
 
 A common challenge is trying to determine what data is sensitive and requires policy intervention. Data Loss Prevention services are used to inspect the contents of a piece of traffic, and then provide metadata to the policy to impact enforcement.
 
-For example, when a user attempts to upload a file to a SaaS application and the traffic route has been configured to always go via the Cloudflare network, [Cloudflare DLP](/cloudflare-one/data-loss-prevention/) inspects the file by using DLP profiles assigned to a Gateway policy. After a DLP profile matches, the Gateway policy will allow or block the traffic, and the activity will be written to the logs. A DLP profile is a collection of regular expressions (also known as detection entries) that define the data patterns you want to detect. Cloudflare DLP provides [predefined profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/#configure-a-predefined-profile) for common detections, or you can build [custom profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile) specific to your data, and even the ability to leverage [Exact Data Match](/cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match) (EDM).
+For example, when a user attempts to upload a file to a SaaS application and the traffic route has been configured to always go via the Cloudflare network, [Cloudflare DLP](/cloudflare-one/data-loss-prevention/) inspects the file by using DLP profiles assigned to a Gateway policy. After a DLP profile matches, the Gateway policy will allow or block the traffic, and the activity will be written to the logs. A DLP profile is built from detection entries that define the sensitive content you want to detect. Cloudflare DLP provides [predefined profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/#configure-a-predefined-profile) for common detections, or you can build [custom profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile) specific to your data, and even the ability to leverage [Exact Data Match](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/#exact-data-match-datasets) (EDM).
 
 DLP profiles are then used in combination with other policy attributes to specifically identify the traffic, such as only enforcing the policy when sensitive data is being uploaded to approved Cloud based storage services.
 
@@ -59,7 +61,7 @@ The following diagram shows a common flow for how Cloudflare inspects a request 
 
 ![Figure 4: Upload of file containing sensitive data blocked by Cloudflare DLP](~/assets/images/reference-architecture/securing-data-in-transit/securing-data-in-transit-fig4.svg "Figure 4: Upload of file containing sensitive data blocked by Cloudflare DLP")
 
-1. User attempts to upload a file to a SaaS application (via a secure tunnel to Cloudflare created by our [device agent](/cloudflare-one/team-and-resources/devices/warp/download-warp/)). [Clientless](/cloudflare-one/networks/resolvers-and-proxies/) options are supported as well.
+1. User attempts to upload a file to a SaaS application (via a secure tunnel to Cloudflare created by our [device agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/)). [Clientless](/cloudflare-one/networks/resolvers-and-proxies/) options are supported as well.
 2. Cloudflare's [Secure Web Gateway](/cloudflare-one/traffic-policies/) (SWG) will first verify that the user is permitted to use the requested SaaS application, and then scrutinize the file's payload for [malicious code](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/) and [sensitive data](/cloudflare-one/data-loss-prevention/).
 3. The DLP profile determines the file contains national identifiers like US Social Security Numbers (SSN).
 4. The Gateway policy is configured with a [Block action](/cloudflare-one/traffic-policies/http-policies/#block), so the attempt is [logged](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) and a [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) returned to the end user's web browser.

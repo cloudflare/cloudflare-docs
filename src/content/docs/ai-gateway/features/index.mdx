@@ -1,9 +1,12 @@
 ---
 title: Features
+description: Explore AI Gateway features including caching, rate limiting, guardrails, dynamic routing, and data loss prevention.
 pcx_content_type: overview
 order: 1
 sidebar:
   order: 4
+products:
+  - ai-gateway
 ---
 
 import { CardGrid, Feature, LinkTitleCard, Badge } from "~/components";
@@ -24,6 +27,19 @@ Serve identical requests directly from Cloudflare's global cache, reducing laten
 - Lower API costs through cache hits
 - Configurable TTL and per-request cache control
 - Works across all supported AI providers
+
+</Feature>
+
+<Feature header="Spend Limits" href="/ai-gateway/features/spend-limits/">
+
+Set cost-based budgets that track cumulative dollar spend across requests. Scope limits by model, provider, or custom metadata dimensions like user, team, or application.
+
+**Key benefits:**
+
+- Per-provider or per-model budgets
+- Per-user or per-team budgets using [custom metadata](/ai-gateway/observability/custom-metadata/)
+- Configurable time windows (daily, weekly, monthly)
+- Automatic request blocking when budget is exceeded
 
 </Feature>
 
@@ -173,7 +189,7 @@ Override default pricing with your negotiated rates or custom cost models. Apply
 
 | Use Case                   | Recommended Features                            |
 | -------------------------- | ----------------------------------------------- |
-| **Cost Optimization**      | Caching, Rate Limiting, Custom Costs            |
+| **Cost Optimization**      | Caching, Spend Limits, Rate Limiting, Custom Costs |
 | **High Availability**      | Fallbacks using Dynamic Routing                 |
 | **Security & Compliance**  | Guardrails, DLP, Authentication, BYOK, Logging  |
 | **Performance Monitoring** | Analytics, Logging, Custom Metadata             |

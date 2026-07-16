@@ -1,0 +1,27 @@
+---
+title: Manage Cloudflare Tunnels with Wrangler
+description: Create, run, and manage Cloudflare Tunnels directly from the Wrangler CLI without leaving your terminal.
+products:
+  - tunnel
+  - workers
+date: 2026-03-19
+---
+
+You can now manage [Cloudflare Tunnels](/tunnel/) directly from [Wrangler](/workers/wrangler/), the CLI for the Cloudflare Developer Platform. The new [`wrangler tunnel`](/workers/wrangler/commands/tunnel/) commands let you create, run, and manage tunnels without leaving your terminal.
+
+![Wrangler tunnel commands demo](~/assets/images/changelog/cloudflare-tunnel/wrangler-tunnel.gif)
+
+Available commands:
+
+- `wrangler tunnel create` — Create a new remotely managed tunnel.
+- `wrangler tunnel list` — List all tunnels in your account.
+- `wrangler tunnel info` — Display details about a specific tunnel.
+- `wrangler tunnel delete` — Delete a tunnel.
+- `wrangler tunnel run` — Run a tunnel using the cloudflared daemon.
+- `wrangler tunnel quick-start` — Start a free, temporary tunnel without an account using [Quick Tunnels](/tunnel/setup/#quick-tunnels-development).
+
+Wrangler handles downloading and managing the [cloudflared](/tunnel/downloads/) binary automatically. On first use, you will be prompted to download `cloudflared` to a local cache directory.
+
+These commands are currently experimental and may change without notice.
+
+To get started, refer to the [Wrangler tunnel commands documentation](/workers/wrangler/commands/tunnel/).

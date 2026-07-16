@@ -15,6 +15,20 @@
 				}
 			}
 		},
+		"self_managed_oauth": {
+			"title": "Self-managed OAuth Apps",
+			"link": "/fundamentals/oauth/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				}
+			}
+		},
 		"version_management": {
 			"title": "Version Management",
 			"link": "/version-management/",
@@ -549,6 +563,20 @@
 				}
 			}
 		},
+		"vary": {
+			"title": "Vary",
+			"link": "/cache/concepts/vary/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				}
+			}
+		},
 		"vary_for_images": {
 			"title": "Vary for images",
 			"link": "/cache/advanced-configuration/vary-for-images/",
@@ -615,21 +643,13 @@
 					"biz": "No",
 					"ent": "Yes"
 				},
-				"t_open_proxies_list": {
-					"title": "Managed IP List: Cloudflare Open Proxies",
+				"t_managed_ip_lists": {
+					"title": "Managed IP Lists",
 					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
 					"ent": "Yes"
-				},
-				"u_all_managed_ip_lists": {
-					"title": "All Managed IP Lists",
-					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "With separate add-on"
 				}
 			}
 		}
@@ -953,7 +973,7 @@
 		"title": "Email",
 		"email_routing": {
 			"title": "Email Routing",
-			"link": "/email-routing/",
+			"link": "/email-service/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -1624,11 +1644,18 @@
 					"ent": "Yes"
 				},
 				"historical_data": {
-					"title": "Historical time",
+					"title": "Historical time (data retention)",
 					"free": "Up to the last 24 hours",
 					"pro": "Up to the last 24 hours",
-					"biz": "Up to the last 72 hours",
+					"biz": "Up to the last 3 days",
 					"ent": "Up to the last 30 days"
+				},
+				"i_max_query_window": {
+					"title": "Max query window",
+					"free": "24 hours",
+					"pro": "24 hours",
+					"biz": "3 days",
+					"ent": "31 days"
 				},
 				"export_records": {
 					"title": "Export report",
@@ -1659,18 +1686,18 @@
 					"ent": "Yes"
 				},
 				"retention": {
-					"title": "Retention",
-					"free": "7",
-					"pro": "7",
-					"biz": "31",
-					"ent": "90"
+					"title": "Historical time (data retention)",
+					"free": "Up to the last 7 days",
+					"pro": "Up to the last 7 days",
+					"biz": "Up to the last 31 days",
+					"ent": "Up to the last 90 days"
 				},
 				"query_window": {
-					"title": "Query window",
-					"free": "1",
-					"pro": "7",
-					"biz": "31",
-					"ent": "31"
+					"title": "Max query window",
+					"free": "24 hours",
+					"pro": "7 days",
+					"biz": "31 days",
+					"ent": "31 days"
 				}
 			}
 		},
@@ -1779,7 +1806,7 @@
 					"ent": "Yes"
 				},
 				"managed_ruleset_3": {
-					"title": "Cloudflare Exposed Credentials Check",
+					"title": "Cloudflare Exposed Credentials Check (deprecated)",
 					"summary": "Available on paid plans",
 					"link": "/waf/managed-rules/reference/exposed-credentials-check/",
 					"free": "No",
@@ -1789,12 +1816,11 @@
 				},
 				"managed_rulesets_response": {
 					"title": "Cloudflare Sensitive Data Detection",
-					"summary": "Enterprise with add-on",
 					"link": "/waf/managed-rules/reference/sensitive-data-detection/",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Yes"
 				}
 			}
 		},
@@ -1853,9 +1879,9 @@
 					"ent": "Yes"
 				},
 				"g_fw_for_ai": {
-					"title": "Firewall for AI (beta)",
+					"title": "AI Security for Apps",
 					"summary": "Enterprise-only",
-					"link": "/waf/detections/firewall-for-ai/",
+					"link": "/waf/detections/ai-security-for-apps/",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1910,18 +1936,17 @@
 				"z_custom_rulesets_account": {
 					"title": "Account-level custom rulesets",
 					"link": "/waf/account/custom-rulesets/",
-					"summary": "Enterprise with add-on",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Yes"
 				}
 			}
 		},
 		"page_shield": {
-			"title": "Page Shield",
-			"link": "/page-shield/",
-			"ent_plus": "Enterprise with add-on",
+			"title": "Client-side security",
+			"link": "/client-side-security/",
+			"ent_plus": "Advanced",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -1979,7 +2004,7 @@
 				},
 				"h_malicious_scripts": {
 					"title": "Malicious script detection\n and alerting",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1988,7 +2013,7 @@
 				},
 				"j_code_change_detection": {
 					"title": "Code change detection\n and alerting",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -1997,7 +2022,7 @@
 				},
 				"k_malicious_connections": {
 					"title": "Malicious connection detection\n and alerting",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -2006,7 +2031,7 @@
 				},
 				"l_cookie_advanced_fields": {
 					"title": "Cookie monitoring\n advanced fields",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
@@ -2014,8 +2039,8 @@
 					"ent_plus": "Yes"
 				},
 				"m_policies": {
-					"title": "Number of policies\n(positive blocking)",
-					"summary": "Enterprise with add-on",
+					"title": "Number of content security rules (positive blocking)",
+					"summary": "Advanced",
 					"free": 0,
 					"pro": 0,
 					"biz": 0,
@@ -2024,7 +2049,7 @@
 				},
 				"n_logpush_jobs": {
 					"title": "Number of Logpush jobs",
-					"summary": "Enterprise with add-on",
+					"summary": "Advanced",
 					"free": 0,
 					"pro": 0,
 					"biz": 0,
@@ -2198,7 +2223,7 @@
 					"ent": "Yes"
 				},
 				"compliance": {
-					"title": "WCAG 2.1 AA compliance",
+					"title": "WCAG 2.2 AAA compliance",
 					"free": "Yes",
 					"ent": "Yes"
 				},
@@ -2491,6 +2516,20 @@
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
+				}
+			}
+		},
+		"shared_dictionaries": {
+			"title": "Shared dictionaries",
+			"link": "/speed/optimization/content/shared-dictionaries/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans (beta)",
+					"free": "Yes (beta)",
+					"pro": "Yes (beta)",
+					"biz": "Yes (beta)",
+					"ent": "Yes (beta)"
 				}
 			}
 		},

@@ -1,8 +1,11 @@
 ---
 title: Prepared statement methods
+description: Bind parameters and run D1 prepared statements using the run, all, first, and raw methods.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - d1
 ---
 
 import { Type, MetaInfo, Details, Tabs, TabItem } from "~/components";
@@ -310,7 +313,6 @@ return Response.json(returnValue)
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
 ```py
-from pyodide.ffi import to_js
 from workers import Response
 
 some_variable = "Bs Beverages"

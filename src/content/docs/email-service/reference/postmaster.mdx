@@ -1,0 +1,216 @@
+---
+pcx_content_type: reference
+title: Postmaster
+sidebar:
+  order: 1
+head: []
+description: Reference page with postmaster information for professionals, as
+  well as configuration details for Email Service.
+products:
+  - email-service
+---
+
+This page provides technical information about Email Service to professionals who administer email systems, and other email providers.
+
+Here you will find information regarding Email Service, along with best practices, rules, guidelines, troubleshooting tools, as well as configuration details for Email Service.
+
+## Postmaster
+
+### Contact information
+
+The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.cloudflare.com).
+
+To report email abuse, contact us at [mailabuse@cloudflare.com](mailto:mailabuse@cloudflare.com).
+
+### Authenticated Received Chain (ARC)
+
+Email Service supports [Authenticated Received Chain (ARC)](https://arc-spec.org/). ARC allows intermediate email servers, such as forwarders, to attach a record of the original authentication results to a message. The destination server can then verify the authenticity of forwarded messages even when SPF or DKIM would otherwise fail due to forwarding. Major providers, including Google, also support ARC.
+
+### DKIM signature
+
+[DKIM (DomainKeys Identified Mail)](https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail) ensures that email messages are not altered in transit between the sender and the recipient's SMTP servers through public-key cryptography.
+
+Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in transit.
+
+Email Service adds DKIM signatures to outgoing emails on behalf of the customer's sending domain to ensure email authenticity and improve deliverability.
+
+Email Sending and Email Routing use separate DKIM selectors. You can find the DKIM keys for your domain by querying the following:
+
+```sh
+# Email Sending DKIM
+dig TXT cf-bounce._domainkey.example.com +short
+
+# Email Routing DKIM
+dig TXT cf2024-1._domainkey.example.com +short
+```
+
+For forwarded emails, Email Routing adds two DKIM signatures: one for `email.cloudflare.net`, which covers [sender rewriting](#sender-rewriting), and one for the recipient domain configured by the customer. You can query the Cloudflare sender rewriting key directly:
+
+```sh
+dig TXT cf2024-1._domainkey.email.cloudflare.net +short
+```
+
+### DMARC enforcing
+
+Email Service supports Domain-based Message Authentication, Reporting & Conformance (DMARC). When sending emails, Email Service ensures proper SPF and DKIM alignment to pass DMARC authentication. For Email Routing, incoming emails are rejected if they fail authentication according to the sender's DMARC policy. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+
+It is recommended that all domains implement the DMARC protocol for optimal email deliverability.
+
+### Mail authentication requirement
+
+Cloudflare requires incoming emails to pass some form of authentication. The email must either pass SPF or be correctly signed with DKIM. Emails that fail both checks are rejected.
+
+Outbound emails sent through Email Service are always authenticated with both SPF and DKIM to maximize deliverability and maintain sender reputation.
+
+### IPv6 support
+
+Email Service supports IPv6 for both inbound and outbound email delivery. For outbound, the service connects to recipient SMTP servers over IPv6 when the recipient has AAAA records for their MX servers, and falls back to IPv4 otherwise. For inbound, Email Routing accepts mail over IPv6 on its MX servers.
+
+You can verify IPv6 connectivity for any destination using `dig`:
+
+```sh
+dig mx gmail.com
+dig AAAA gmail-smtp-in.l.google.com
+```
+
+### MX and SPF records
+
+When using Email Service for sending emails, no special MX records are required on your domain. However, if you are also using Email Routing for inbound emails, the appropriate MX records are configured automatically.
+
+For SPF records, Email Service uses `_spf.mx.cloudflare.net`. Email Sending configures SPF on the `cf-bounce` subdomain, while Email Routing configures SPF on the root domain:
+
+```txt
+v=spf1 include:_spf.mx.cloudflare.net ~all
+```
+
+For inbound mail, Email Routing announces multiple MX servers under the `*.mx.cloudflare.net` zone with different priorities. For example:
+
+```txt
+example.com.    IN    MX    13 amir.mx.cloudflare.net.
+example.com.    IN    MX    86 linda.mx.cloudflare.net.
+example.com.    IN    MX    24 isaac.mx.cloudflare.net.
+```
+
+### Outbound prefixes
+
+Email Service sends its traffic using both IPv4 and IPv6 prefixes, when supported by the recipient SMTP server.
+
+If you are a postmaster and are having trouble receiving Email Service emails, allow the following outbound IP addresses in your server configuration:
+
+**IPv4**
+
+`104.30.0.0/19`
+
+**IPv6**
+
+`2405:8100:c000::/38`
+
+To verify the current authoritative ranges, query the SPF record directly:
+
+```sh
+dig TXT _spf.mx.cloudflare.net +short
+```
+
+### Outbound hostnames
+
+Email Service will use the following outbound domains for the `HELO/EHLO` command:
+
+- `cloudflare-email.net`
+- `cloudflare-email.org`
+- `cloudflare-email.com`
+
+PTR records (reverse DNS) ensure that each hostname has a corresponding IP. For example:
+
+```sh
+dig a-h.cloudflare-email.net +short
+```
+
+```sh output
+104.30.0.7
+```
+
+```sh
+dig -x 104.30.0.7 +short
+```
+
+```sh output
+a-h.cloudflare-email.net.
+```
+
+### Sender rewriting
+
+For forwarded emails, Email Routing uses the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme) to rewrite the envelope sender (the SMTP `MAIL FROM` address) to a Cloudflare-controlled forwarding domain. This rewriting allows SPF to pass at the destination server even though the message is being relayed. The `From:` header of the message is not modified.
+
+### SMTP errors
+
+Email Service provides detailed SMTP error responses to help diagnose delivery issues. For Email Routing, upstream SMTP errors returned by the destination mail server are forwarded back to the sending server in-session rather than as a separate bounce message.
+
+### Realtime Block Lists
+
+Email Service monitors sender reputation and may temporarily delay or block emails from IPs that appear on Realtime Block Lists (RBLs). This helps maintain the service's overall reputation and deliverability.
+
+For Email Routing, inbound mail from senders on RBLs is rejected with an SMTP error similar to:
+
+```txt
+554 <YOUR_IP_ADDRESS> found on one or more RBLs (abusixip). Refer to https://developers.cloudflare.com/email-service/reference/postmaster/#realtime-block-lists
+```
+
+You can use tools like [MxToolbox](https://mxtoolbox.com/blacklists.aspx) to check a sending IP against multiple block lists at once. If you believe your emails are being incorrectly blocked, contact the RBL maintainer directly or reach out through Cloudflare support channels.
+
+### SPF record breakdown
+
+Email Service publishes its SPF data under `_spf.mx.cloudflare.net`. You can resolve the underlying record directly:
+
+```sh
+dig TXT _spf.mx.cloudflare.net +short
+```
+
+The record uses the format defined in [RFC 7208](https://datatracker.ietf.org/doc/html/rfc7208):
+
+```txt
+"v=spf1 ip4:104.30.0.0/20 ~all"
+```
+
+The `~all` mechanism is a SoftFail. Receiving servers should treat mail from IPs not listed in the record as suspicious but should not reject it outright on SPF alone.
+
+---
+
+## Related configuration
+
+For full configuration details, refer to:
+
+- [Domain configuration](/email-service/configuration/domains/) — DNS records, sending and routing setup
+- [Limits](/email-service/platform/limits/) — rate limits, sending quotas, and message size limits
+- [Deliverability](/email-service/concepts/deliverability/) — bounce handling and reputation management
+- [Suppression lists](/email-service/concepts/suppressions/) — automatic and manual suppression management
+
+---
+
+## Known limitations
+
+Below, you will find information regarding known limitations for Email Service, particularly Email Routing functionality.
+
+### Email address internationalization (EAI)
+
+Email Routing does not support [internationalized email addresses](https://en.wikipedia.org/wiki/International_email). Email Routing only supports [internationalized domain names](https://en.wikipedia.org/wiki/Internationalized_domain_name).
+
+This means that you can have email addresses with an internationalized domain, but not an internationalized local-part (the first part of your email address, before the @ symbol). Refer to the following examples:
+
+- `info@piñata.es` - **Supported**
+- `piñata@piñata.es` - **Not supported**
+
+### Non-delivery reports (NDRs)
+
+Email Routing does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
+
+### Restrictive DMARC policies can make forwarded emails fail
+
+Due to the nature of email forwarding, restrictive DMARC policies might make forwarded emails fail to be delivered. Refer to [dmarc.org](https://dmarc.org/) for more information.
+
+### Sending or replying to an email from your Cloudflare domain
+
+Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not from the email pattern of the routing rule that delivered the message (like `info@yourdomain.com`).
+
+### "." is treated as a normal character in email patterns
+
+The `.` character, which performs special actions in email providers like Gmail, is treated as a normal character in routing rule email patterns.

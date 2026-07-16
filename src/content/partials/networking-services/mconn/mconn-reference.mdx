@@ -23,7 +23,7 @@ The Cloudflare One Appliance (formerly Magic WAN Connector) software is certifie
 ## Security and other information
 
 - Cloudflare ensures the Cloudflare One Appliance device is secure and is not altered via TPM/Secure boot (does not apply to Virtual Appliance).
-- Connectivity to the Cloudflare global network is secure and all traffic is encrypted through <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunneling. The Cloudflare One Appliance uses ESP-in-UDP with GCM-AES-256 encryption. Cloudflare uses a non-IKE keying protocol built into our control plane, secured with TLS.
+- Connectivity to the Cloudflare global network is secure and all traffic is encrypted through <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunneling. The Cloudflare One Appliance uses ESP-in-UDP with GCM-AES-256 encryption. Cloudflare uses a non-IKE keying protocol built into our control plane, secured with TLS, that establishes the keys used to encrypt dataplane traffic in the IPsec ESP protocol. From Appliance version 2026.2.0, the control plane provides post-quantum protection for traffic with hybrid ML-KEM (X25519MLKEM768) over TLS 1.3 to establish the dataplane keys used in IPsec ESP.
 - The Cloudflare One Appliance does not support fail open.
 - Customers have the ability to layer on additional security features/policies that are enforced at the Cloudflare network.
 

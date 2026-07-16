@@ -1,20 +1,29 @@
 ---
 title: Security Events
 pcx_content_type: concept
+description: Review individual security events triggered by WAF rules.
+products:
+  - waf
 sidebar:
   order: 2
+tags:
+  - Logging
+  - SIEM
 ---
 
 import {
 	FeatureTable,
 	GlossaryTooltip,
+	Render,
 	Steps,
 	Tabs,
 	TabItem,
 	DashButton,
 } from "~/components";
 
-Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations.
+Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations. Use Security Events to investigate requests that Cloudflare security products acted on or flagged, identify false positives, and fine-tune your security rules.
+
+If you want to analyze all incoming traffic, including requests that Cloudflare did not act on, refer to [Security Analytics](/waf/analytics/security-analytics/) instead.
 
 The main elements of the dashboard are the following:
 
@@ -23,7 +32,7 @@ The main elements of the dashboard are the following:
 - [Top events by source](#top-events-by-source): Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
 - [Sampled logs](#sampled-logs): Summarizes security events by date to show the action taken and the applied Cloudflare security product.
 
-Security Events displays information about requests actioned or flagged by Cloudflare security products, including features such as [Browser Integrity Check](/waf/tools/browser-integrity-check/). Each incoming HTTP request might generate one or more security events. The Security Events dashboard only shows these events, not the HTTP requests themselves.
+Security Events displays information about requests actioned or flagged by Cloudflare security products, including features such as [Browser Integrity Check](/waf/tools/browser-integrity-check/). A single HTTP request can generate one or more security events when it triggers security features. The Security Events dashboard shows these individual events, not the HTTP requests themselves.
 
 ## Availability
 
@@ -68,7 +77,7 @@ To manually add a filter:
 <Steps>
 
 1. Select **Add filter**.
-2. Select a field, an operator, and a value. For example, to filter events by IP address, select _IP_ for **Action**, select _equals_ for the operator, and enter the IP address.
+2. Select a field, an operator, and a value. For example, to filter events by IP address, select _IP_ for the field, select _equals_ for the operator, and enter the IP address.
 3. Select **Apply**.
 
 </Steps>
@@ -81,7 +90,7 @@ Take the following into account when entering filter values:
 
 ### Adjust report duration
 
-To adjust report duration, select the desired duration from the dropdown. The default value is `Previous 24 hours`.
+To adjust report duration, select the desired duration from the dropdown. The default value is `Last 24 hours`.
 
 The available report duration values depend on your Cloudflare plan. Refer to [Availability](#availability) for details.
 
@@ -113,12 +122,12 @@ In **Top events by source** you can find details of the traffic flagged or actio
 You can adjust the scope of Security Events to one of the listed source values by selecting **Filter** or **Exclude** when hovering the value.
 
 :::note
-A deleted custom rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account/account-security/review-audit-logs/).
+A deleted custom rule or rate limiting rule will show as `Rule unavailable` under **Custom rules** or **Rate limiting rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account/account-security/review-audit-logs/).
 :::
 
 ## Sampled logs
 
-**Sampled logs** summarizes security events by date to show the action taken and the applied Cloudflare security feature.
+**Sampled logs** shows a subset of security events for the selected time period, listed by date with the action taken and the applied Cloudflare security feature. For large volumes of traffic, Cloudflare uses [sampling](/analytics/graphql-api/sampling/) to return results faster. This means that not every individual event may appear in the list.
 
 ![Example list of events in Sampled logs, with one of the events expanded to show its details](~/assets/images/waf/events-sampled-logs.png)
 
@@ -143,7 +152,7 @@ Besides the actions you can select when configuring rules in Cloudflare security
 
 For details on these actions, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/#action).
 
-The [_Managed Challenge (Recommended)_](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended) action that may appear in **Sampled logs** is available in the following security features and products: WAF custom rules, rate limiting rules, Bot Fight Mode, IP Access rules, User Agent Blocking rules, and firewall rules (deprecated).
+The [_Managed Challenge_](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge) action that may appear in **Sampled logs** is available in the following security features and products: WAF custom rules, rate limiting rules, Bot Fight Mode, IP Access rules, User Agent Blocking rules, and firewall rules (deprecated).
 
 ### Export event log data
 
@@ -155,9 +164,9 @@ To export the displayed events (up to 500), select **Export** in **Sampled logs*
 
 When you add a filter and specify a report duration (time window) in Security Events, the Cloudflare dashboard URL changes to reflect the parameters you configured. You can share that URL with other users so that they can analyze the same information that you see.
 
-For example, after adding a filter for `Action equals Managed Challenge` and setting the report duration to 72 hours, the URL should look like the following:
+For example, after adding a filter for `Action equals Managed Challenge` and setting the report duration to `Last 3 days`, the URL should look like the following:
 
-`https://dash.cloudflare.com/{account_id}/example.net/security/events?action=managed_challenge&time-window=4320`
+`https://dash.cloudflare.com/{account_id}/example.net/security/analytics/events?action=managed_challenge&time-window=4320`
 
 ## Print or download PDF report
 
@@ -174,8 +183,26 @@ The generated report will reflect all applied filters.
 
 Security Events currently has these limitations:
 
-- Security Events may use sampled data to improve performance. If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame.
+- Security Events may use sampled data to improve performance. Refer to [Sampling](#sampling) for more information.
 
 - The Cloudflare dashboard may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work because the source data may have been sampled. The GraphQL Analytics API does not have this pagination issue.
 
-- Triggered OWASP rules appear in the Security Events page under **Additional logs**, but they are not included in exported JSON files.
+- Triggered [OWASP rules](/waf/managed-rules/reference/owasp-core-ruleset/) appear in the Security Events page under **Additional logs**, but they are not included in exported JSON files.
+
+## Sampling
+
+Security Events may use [sampled data](/analytics/graphql-api/sampling/). If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame (a narrower time range reduces the volume of data, which reduces or eliminates sampling).
+
+## Query using GraphQL
+
+If you query Security Events data through the [GraphQL Analytics API](/analytics/graphql-api/), the underlying dataset is `firewallEventsAdaptive`. For more information, refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/).
+
+For more information on querying the `firewallEventsAdaptive` dataset, refer to [Querying Firewall Events with GraphQL](/analytics/graphql-api/tutorials/querying-firewall-events/).
+
+## Limits
+
+The retention and query window for the `firewallEventsAdaptive` dataset differ from the datasets that power [Security Analytics](/waf/analytics/security-analytics/#sampling).
+
+The following tables show the different limits per Cloudflare plan:
+
+<Render file="analytics-dataset-limits" product="waf" />

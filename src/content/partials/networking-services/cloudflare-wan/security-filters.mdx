@@ -3,8 +3,8 @@ params:
   - gatewayURL
 ---
 
-Cloudflare WAN (formerly Magic WAN) customers have <a href="/cloudflare-network-firewall/plans/">automatic access to Cloudflare Network Firewall</a>. Cloudflare Network Firewall is Cloudflare's firewall-as-a-service solution that allows you to protect your infrastructure. Cloudflare Network Firewall supports layers three and four of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), and enables you to allow or block traffic on a variety of packet characteristics.
+Once your traffic flows through Cloudflare's network, you can apply security policies to it without deploying additional hardware. Cloudflare WAN (formerly Magic WAN) integrates with two primary security services, each operating at different layers of the network stack.
 
-Refer to <a href="/cloudflare-network-firewall/">Cloudflare Network Firewall</a> for more information about this product.
+**[Cloudflare Network Firewall](/cloudflare-network-firewall/)** filters traffic at layers 3 and 4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) — the network and transport layers. You can allow or block traffic based on packet characteristics such as source and destination IP addresses, ports, protocols, and packet length. All Cloudflare WAN customers have <a href="/cloudflare-network-firewall/plans/">automatic access to Cloudflare Network Firewall</a>.
 
-As a Cloudflare WAN customer, you can also use Cloudflare Gateway to set up policies to inspect network and HTTP traffic to the Internet or your private network infrastructure. Refer to <a href={props.gatewayURL}>Connect to Cloudflare Gateway with Cloudflare WAN</a> to learn how to filter Cloudflare WAN traffic with Gateway policies.
+**[Cloudflare Gateway]({props.gatewayURL})** inspects traffic at higher layers, including DNS queries, network sessions, and HTTP requests. Use Gateway to set up policies that control Internet-bound traffic and access to your private network infrastructure. Refer to <a href={props.gatewayURL}>Connect to Cloudflare Gateway with Cloudflare WAN</a> to learn how to filter Cloudflare WAN traffic with Gateway policies.

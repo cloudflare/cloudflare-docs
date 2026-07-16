@@ -7,23 +7,23 @@ export default function SubtractIPCalculator({
 }: {
 	defaults: {
 		base?: string;
-		exclude?: string[];
+		subtract?: string[];
 	};
 }) {
 	const [base, setBase] = useState(defaults?.base ?? "");
-	const [exclude, setExclude] = useState<string[]>(defaults?.exclude ?? []);
+	const [subtract, setSubtract] = useState<string[]>(defaults?.subtract ?? []);
 
 	const [result, setResult] = useState<string[]>([]);
 
 	function calculate() {
-		setResult(excludeCidr(base, exclude));
+		setResult(excludeCidr(base, subtract));
 		track("interacted with docs calculator", { value: "split ip calculator" });
 	}
 
 	function disableButton() {
 		try {
 			parseCidr(base);
-			exclude.map((cidr) => parseCidr(cidr));
+			subtract.map((cidr) => parseCidr(cidr));
 
 			return false;
 		} catch {
@@ -49,11 +49,11 @@ export default function SubtractIPCalculator({
 					/>
 				</label>
 				<label>
-					<strong>Excluded CIDRs: </strong>
+					<strong>Subtracted CIDRs: </strong>
 					<input
 						type="text"
-						value={exclude}
-						onChange={(e) => setExclude(e.target.value.split(","))}
+						value={subtract}
+						onChange={(e) => setSubtract(e.target.value.split(","))}
 					/>
 				</label>
 			</div>

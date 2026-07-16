@@ -1,0 +1,50 @@
+---
+title: Better Windows support for Python Workers
+description: Pywrangler, the CLI tool for managing Python Workers and packages, now runs natively on Windows.
+products:
+  - workers
+date: 2026-02-25
+---
+
+[Pywrangler](https://github.com/cloudflare/workers-py?tab=readme-ov-file#pywrangler), the CLI tool for managing Python Workers and packages,
+now supports Windows, allowing you to develop and deploy Python Workers from Windows environments.
+Previously, Pywrangler was only available on macOS and Linux.
+
+You can install and use Pywrangler on Windows the same way you would on other platforms.
+[Specify your Worker's Python dependencies](/workers/languages/python/packages/) in your `pyproject.toml` file,
+then use the following commands to develop and deploy:
+
+```bash
+uvx --from workers-py pywrangler dev
+uvx --from workers-py pywrangler deploy
+```
+
+All existing Pywrangler functionality, including package management, local development, and deployment, works on Windows without any additional configuration.
+
+### Requirements
+
+This feature requires the following minimum versions:
+
+- `wrangler` >= 4.64.0
+- `workers-py` >= 1.72.0
+- `uv` >= 0.29.8
+
+To upgrade `workers-py` (which includes Pywrangler) in your project, run:
+
+```bash
+uv tool upgrade workers-py
+```
+
+To upgrade `wrangler`, run:
+
+```bash
+npm install -g wrangler@latest
+```
+
+To upgrade `uv`, run:
+
+```bash
+uv self update
+```
+
+To get started with Python Workers on Windows, refer to the [Python packages documentation](/workers/languages/python/packages/) for full details on Pywrangler.

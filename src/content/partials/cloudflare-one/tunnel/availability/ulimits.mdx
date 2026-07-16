@@ -1,0 +1,22 @@
+---
+---
+
+On Linux and macOS, `ulimit` settings determine the system resources available to a logged-in user. We recommend configuring the following ulimits on the `cloudflared` server:
+
+| ulimit | Description                                      | Value    |
+| ------ | ------------------------------------------------ | -------- |
+| `-n`   | Maximum number of open files or file descriptors | ≥ 70,000 |
+
+To view your current ulimits, open a terminal and run:
+
+```sh
+ulimit -a
+```
+
+To set the open files `ulimit`:
+
+```sh
+ulimit -n 70000
+```
+
+The command above sets the open files limit only for the current terminal session and will not persist after a reboot or new login. To apply this limit permanently, configure it using the persistent method appropriate for your operating system.

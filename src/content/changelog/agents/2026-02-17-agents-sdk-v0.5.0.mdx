@@ -20,11 +20,11 @@ A new `this.retry()` method lets you retry any async operation with exponential 
 ```ts
 class MyAgent extends Agent {
 	async onRequest(request: Request) {
-		const result = await this.retry(() => fetch("https://example.com/api"), {
-			maxRetries: 3,
-			shouldRetry: (error) => error.status !== 404,
+		const data = await this.retry(() => callUnreliableService(), {
+			maxAttempts: 4,
+			shouldRetry: (err) => !(err instanceof PermanentError),
 		});
-		return result;
+		return Response.json(data);
 	}
 }
 ```
@@ -37,14 +37,14 @@ Retry options are also available per-task on `queue()`, `schedule()`, `scheduleE
 
 ```ts
 // Per-task retry configuration, persisted in SQLite alongside the task
-await this.schedule("sendReport", Date.now() + 60_000, {
-	retry: { maxRetries: 5 },
+await this.schedule(Date.now() + 60_000, "sendReport", { userId: "abc" }, {
+	retry: { maxAttempts: 5 },
 });
 
 // Class-level retry defaults
 class MyAgent extends Agent {
 	static options = {
-		retry: { maxRetries: 3 },
+		retry: { maxAttempts: 3 },
 	};
 }
 ```
@@ -73,7 +73,7 @@ class MyAgent extends Agent {
 
 Connections with protocol messages disabled still fully participate in RPC and regular messaging. Use `isConnectionProtocolEnabled(connection)` to check a connection's status at any time. The flag persists across Durable Object hibernation.
 
-See [Protocol messages](/agents/api-reference/protocol-messages/) for full documentation.
+See [Protocol messages](/agents/runtime/communication/protocol-messages/) for full documentation.
 
 ## `@cloudflare/ai-chat` v0.1.0
 
@@ -81,7 +81,7 @@ The first stable release of `@cloudflare/ai-chat` ships alongside this release w
 
 Key new features:
 
-- **Data parts** — Attach typed JSON blobs (`data-*`) to messages alongside text. Supports reconciliation (type+id updates in-place), append, and transient parts (ephemeral via `onData` callback). See [Data parts](/agents/api-reference/chat-agents/#data-parts).
+- **Data parts** — Attach typed JSON blobs (`data-*`) to messages alongside text. Supports reconciliation (type+id updates in-place), append, and transient parts (ephemeral via `onData` callback). See [Data parts](/agents/communication-channels/chat/chat-agents/#data-parts).
 - **Tool approval persistence** — The `needsApproval` approval UI now survives page refresh and DO hibernation. The streaming message is persisted to SQLite when a tool enters `approval-requested` state.
 - **`maxPersistedMessages`** — Cap SQLite message storage with automatic oldest-message deletion.
 - **`body` option on `useAgentChat`** — Send custom data with every request (static or dynamic).

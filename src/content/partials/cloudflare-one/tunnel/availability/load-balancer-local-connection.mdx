@@ -1,0 +1,10 @@
+---
+params:
+  - replicasURL
+---
+
+If you notice traffic imbalances across endpoints in different locations, you may need to adjust your load balancer configuration.
+
+Cloudflare uses [Anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) to direct end user requests to the nearest data center. `cloudflared` prefers to serve requests using connections in the same data center, which can affect how traffic is distributed across endpoints.
+
+If you run <a href={props.replicasURL}>`cloudflared` replicas</a> on the same tunnel UUID, consider switching to separate tunnels for more granular control over [traffic steering](/load-balancing/understand-basics/traffic-steering/).

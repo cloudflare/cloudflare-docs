@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Pricing
+description: Durable Objects compute and storage billing, including pricing examples and free tier limits.
 sidebar:
   order: 1
+products:
+  - durable-objects
 ---
 
 import { Render } from "~/components";
@@ -27,7 +30,8 @@ On Workers Free plan:
 These examples exclude the costs for the Workers calling the Durable Objects. When modelling the costs of a Durable Object, note that:
 
 - Inactive objects receiving no requests do not incur any duration charges.
-- The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occasionally at sparse intervals.
+- The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occasionally at sparse intervals.
+  - An active outbound connection (via [`connect()`](/workers/runtime-apis/tcp-sockets/) or an outbound WebSocket) keeps a Durable Object in memory and causes it to incur duration charges for up to 15 minutes per connection, even with no incoming requests. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
 
 ### Example 1
 

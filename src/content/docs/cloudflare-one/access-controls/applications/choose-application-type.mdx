@@ -1,0 +1,124 @@
+---
+pcx_content_type: concept
+title: Choose an application type
+description: Learn which Cloudflare Access application type fits your deployment.
+sidebar:
+  order: 2
+products:
+  - cloudflare-one
+---
+
+Cloudflare Access sits in front of your applications and checks every request against your Access policies before letting users through. It supports several application types, each designed for a different use case. Your choice depends on where your application is hosted, how users connect to it, and what level of control you need over sessions and authorization.
+
+Most teams start with self-hosted applications and expand to SaaS applications, infrastructure targets, or a combination over time.
+
+## Compare application types
+
+The following table summarizes the key differences between each application type. For detailed setup instructions, refer to the section for each type.
+
+|                                      | Self-hosted application                                                                             | SaaS application                                                                   | Infrastructure application                                                              | Bookmark                                                                         |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **What it protects**                 | Resources you own and manage: public web apps, private network destinations, and Cloudflare Workers | Third-party SaaS tools your team uses (Salesforce, Atlassian, Workday)             | Individual servers and infrastructure targets, reachable over public or private network | External URLs displayed in the App Launcher (not gated by Access authentication) |
+| **Requires Cloudflare One Client**   | Depends on destination type and [policy requirements](/cloudflare-one/access-controls/policies/)    | No                                                                                 | Yes                                                                                     | No                                                                               |
+| **Clientless access available**      | Yes (public hostnames, browser isolation, `cloudflared access` CLI)                                 | Not applicable — users access the SaaS app directly                                | No                                                                                      | Not applicable                                                                   |
+| **Authentication and authorization** | Access policies with session management and application tokens signed to the application            | Access policies with SAML/OIDC assertion                                           | Infrastructure policies with protocol-aware authorization (ports, usernames)            | Visibility-only policies for the App Launcher                                    |
+| **Private network routing required** | Only for private destinations                                                                       | No                                                                                 | Yes                                                                                     | No                                                                               |
+| **Session and token management**     | Full (application tokens, session duration, forced re-authentication)                               | Full                                                                               | Full                                                                                    | None                                                                             |
+| **Audit logging**                    | Authentication events and per-request Access logs                                                   | Authentication events                                                              | Authentication events, SSH command logs                                                 | App Launcher authentication only                                                 |
+| **Use when**                         | Most use cases — web apps, private apps, Zero Trust networking, Workers                             | Enforcing compliance for SaaS apps, supporting multiple identity providers for SSO | Granular server access control with protocol-level authorization                        | Organizing links in a single portal                                              |
+
+## Self-hosted applications
+
+Self-hosted applications are the most versatile application type and account for the majority of Access deployments. A self-hosted application represents any resource where you control where traffic goes — whether that is a public website on Cloudflare DNS, a non-web service on your private network connected with a Cloudflare Tunnel, or a Worker running on Cloudflare.
+
+Self-hosted applications use the full Access policy engine, including session management, application tokens, forced re-authentication, device posture checks, and identity provider groups.
+
+### Public hostname applications
+
+If your application is already on the public Internet with DNS managed through Cloudflare (or a partial CNAME setup, where your DNS is hosted elsewhere but Cloudflare proxies the traffic), you can place Access in front of it by matching the application's hostname. Cloudflare proxies the request, presents a login page, and only forwards traffic to your origin after the user passes your Access policies.
+
+This is the most common starting point. You do not need to install anything on the user's device — authentication happens entirely in the browser.
+
+For setup instructions, refer to [Add a self-hosted public application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
+
+### Private applications
+
+You can also use self-hosted applications to protect resources on your private network by targeting specific private IPs, hostnames, or CIDR ranges (blocks of IP addresses, for example `10.0.0.0/8`) with an attached port or port range. This is the primary method for building Zero Trust network access on Cloudflare.
+
+Private network applications require that users route traffic through Cloudflare — typically by running the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device. You must also connect your private network to Cloudflare using a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+
+With private network applications, you define the same types of Access policies as you do for public applications, but apply them to private destinations. This gives you granular, identity-aware control over who can reach what on your network — replacing broad VPN-level access with per-application or per-service policies. Access policies are reusable, so you can apply the same policy across multiple applications.
+
+For setup instructions, refer to [Add a self-hosted private application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
+
+### Protecting Workers
+
+Self-hosted applications can also protect a Cloudflare Worker directly by name, rather than by hostname or IP. When you select a Worker as the destination, you can cover the Worker together with all of its preview deployments, or cover the preview deployments only.
+
+This is the safest and most straightforward way to put authentication in front of a Worker. Instead of configuring individual routes on the Worker and managing authentication at the route level, you link the entire Worker (and optionally its preview deployments) to an Access application. Any request to the Worker on any route passes through Access first.
+
+### CLI access with cloudflared
+
+Self-hosted applications support client-side `cloudflared` authentication. Users can install `cloudflared` on their device and run `cloudflared access login <hostname>` from the command line to authenticate through your Access policies without the Cloudflare One Client installed. This is useful for SSH sessions, API calls, and other command-line workflows where a browser-based login flow is impractical.
+
+For more information, refer to [cloudflared authentication](/cloudflare-one/access-controls/applications/non-http/cloudflared-authentication/).
+
+## SaaS applications
+
+SaaS applications are for third-party tools that your organization uses but does not host — services like Salesforce, Atlassian, Slack, or Workday. With a SaaS application, you configure Cloudflare Access as the single sign-on (SSO) provider for the third-party service using SAML or OIDC, the two most common identity federation protocols.
+
+When users sign in to the SaaS application, they are redirected to Cloudflare. Cloudflare redirects to your configured identity provider for authentication, then evaluates your Access policies against the authenticated user. If the user passes both checks, Cloudflare issues a signed credential (a SAML assertion or OIDC token) back to the SaaS application confirming the user's identity.
+
+### When to use SaaS applications
+
+Use a SaaS application when you want to:
+
+- **Enforce consistent Access policies across third-party tools.** Apply the same identity, device posture, and location requirements that you use for your internal applications to external SaaS tools.
+- **Aggregate multiple identity providers.** Cloudflare can federate authentication across multiple identity providers (IdPs), which means you can swap or add identity providers without reconfiguring each SaaS application individually. This is not typically possible with direct SSO integrations.
+- **Apply Cloudflare-specific controls.** Enforce requirements that your SaaS provider cannot check on its own — for example, requiring the Cloudflare One Client or passing a device posture check before granting access to the SaaS tool.
+
+### Limitations
+
+SaaS applications require that the third-party tool supports SAML or OIDC federation. Not all SaaS tools offer this, and some impose restrictions on the number of SSO integrations or the features available through federated authentication. Check your SaaS vendor's documentation for SSO compatibility.
+
+For setup instructions, refer to [SaaS applications](/cloudflare-one/access-controls/applications/http-apps/saas-apps/).
+
+## Infrastructure applications
+
+Infrastructure applications provide protocol-aware access control for servers and infrastructure targets, whether reachable over a public hostname or a private network. Unlike self-hosted applications, which evaluate whether a user can reach a destination, infrastructure applications also control what a user can do after connecting — which usernames they can authenticate as, which ports they can access, and which commands they can run.
+
+Infrastructure applications require the Cloudflare One Client. For targets on your private network, you must also connect the network to Cloudflare through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+
+### When to use infrastructure applications
+
+Use an infrastructure application when you need:
+
+- **Protocol-level authorization.** Define policies that grant specific users access to specific ports and usernames on a target server.
+- **Command logging.** All SSH sessions and commands are logged for compliance and auditing. You can export logs to a storage service or SIEM using [Logpush](/cloudflare-one/insights/logs/logpush/).
+- **Short-lived certificates.** Eliminate long-lived SSH keys by authenticating users with certificates that expire quickly. This removes the risk of a stolen or forgotten key granting permanent access to your servers.
+
+Infrastructure applications support SSH. You can still use [self-hosted applications](#self-hosted-applications) to secure access to servers over other protocols (including SSH), but infrastructure applications are the only way to supplementally control user authorization.
+
+For setup instructions, refer to [Add an infrastructure application](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/).
+
+## Bookmarks
+
+Bookmarks are not secured by Access. A bookmark is a link to any URL that you want to display in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) alongside your other applications. You can assign Access policies to bookmarks, but those policies only control whether the bookmark tile is visible in the App Launcher — they do not protect the destination URL.
+
+Use bookmarks to give users a single portal where they can find all of the tools they use, including external applications that are not integrated with Cloudflare.
+
+For setup instructions, refer to [Add bookmarks](/cloudflare-one/access-controls/applications/bookmarks/).
+
+## Private network applications (legacy)
+
+:::note
+Not recommended for new deployments. Use a [self-hosted application](#private-applications) to secure private network destinations instead.
+:::
+
+The legacy private network application type creates Gateway Network policies to control access to a private IP address. When you add a legacy private network application, Cloudflare generates two Gateway rules — one Allow rule and one Block rule — because Gateway Network policies are not default-deny (unlike Access policies, which require an explicit Allow rule before any user can reach a protected application).
+
+Legacy private network applications do not support per-session management, application tokens, or the full set of features available in Access policies. This application type is deprecated for new customers and remains available to existing customers.
+
+If you are currently using legacy private network applications, we strongly recommend migrating to [self-hosted private network applications](#private-applications) for more comprehensive policy controls and session management.
+
+For more information, refer to [Private network applications (legacy)](/cloudflare-one/access-controls/applications/non-http/legacy-private-network-app/).

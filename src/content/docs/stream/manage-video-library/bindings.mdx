@@ -1,0 +1,934 @@
+---
+pcx_content_type: how-to
+title: Bind to Workers API
+sidebar:
+  badge:
+    text: Beta
+  order: 1
+---
+
+import { WranglerConfig, TypeScriptExample, Type, MetaInfo } from "~/components";
+
+A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Stream](/stream/), [R2 buckets](/r2/buckets/), or [KV namespaces](/kv/concepts/kv-namespaces/).
+
+For example, when you use Stream within Workers, you can:
+
+- Upload videos from a URL and manage their lifecycle
+- Create direct uploads for client-side uploads without having to expose API keys
+- List and search videos
+- Manage captions and downloads for videos
+- Create and manage watermark profiles
+
+## Setup
+
+The Stream binding is enabled on a per-Worker basis.
+
+To bind Stream to your Worker, add the following to the end of your Wrangler configuration file:
+
+<WranglerConfig>
+
+```json
+{
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+
+</WranglerConfig>
+
+For more detailed information on configuring your Worker, refer to the [Wrangler Configuration documentation](/workers/wrangler/configuration/).
+
+## Methods
+
+### Binding-level methods
+
+The following methods are available on the `env.STREAM` binding directly.
+
+#### `upload(url, params?)`
+
+Upload a video from a URL. Returns `Promise<`[`StreamVideo`](#streamvideo)`>`.
+
+- `url` (required): The URL of the video to upload.
+- `params` (optional): A [`StreamUrlUploadParams`](#streamurluploadparams) object with the following properties:
+  - `allowedOrigins`: Array of allowed origins for the video.
+  - `creator`: Creator identifier.
+  - `meta`: Arbitrary metadata object.
+  - `requireSignedURLs`: Whether signed URLs are required.
+  - `scheduledDeletion`: ISO 8601 timestamp for scheduled deletion.
+  - `thumbnailTimestampPct`: Thumbnail timestamp as a percentage (0.0 to 1.0).
+  - `watermarkId`: ID of a watermark profile to apply.
+
+Throws: `BadRequestError`, `QuotaReachedError`, `MaxFileSizeError`, `RateLimitedError`, `AlreadyUploadedError`, `InternalError`.
+
+#### `createDirectUpload(params)`
+
+Create a basic direct upload URL for client-side uploads without an API key. Returns `Promise<`[`StreamDirectUpload`](#streamdirectupload)`>` with `uploadURL` and `id`.
+
+_This method does not currently support files over 200MB._ For larger direct uploads, refer to the [API request for provisioning a TUS endpoint](http://localhost:1111/stream/uploading-videos/direct-creator-uploads/#direct-creator-uploads-with-tus-protocol)._
+
+- `params` (required): A [`StreamDirectUploadCreateParams`](#streamdirectuploadcreateparams) object with the following properties:
+  - `maxDurationSeconds` (required): Maximum duration of the uploaded video in seconds.
+  - `expiry` (optional): ISO 8601 timestamp when the upload URL expires.
+  - `creator` (optional): Creator identifier.
+  - `meta` (optional): Arbitrary metadata object.
+  - `allowedOrigins` (optional): Array of allowed origins for the video.
+  - `requireSignedURLs` (optional): Whether signed URLs are required.
+  - `thumbnailTimestampPct` (optional): Thumbnail timestamp as a percentage (0.0 to 1.0).
+  - `scheduledDeletion` (optional): ISO 8601 timestamp for scheduled deletion.
+  - `watermark` (optional): ID of a watermark profile to apply.
+
+#### `videos.list(params?)`
+
+List all videos in the account. Returns `Promise<`[`StreamVideo`](#streamvideo)`[]>`.
+
+- `params` (optional): A [`StreamVideosListParams`](#streamvideoslistparams) object with the following properties:
+  - `limit`: Maximum number of videos to return.
+  - `before`: Return videos created before this ISO 8601 timestamp.
+  - `beforeComp`: Comparison operator for `before` — `eq`, `gt`, `gte`, `lt`, or `lte`.
+  - `after`: Return videos created after this ISO 8601 timestamp.
+  - `afterComp`: Comparison operator for `after` — `eq`, `gt`, `gte`, `lt`, or `lte`.
+
+### Video-scoped methods
+
+Calling `env.STREAM.video(id)` returns a handle scoped to a single video, with the following methods.
+
+#### `details()`
+
+Get full video details. Returns `Promise<`[`StreamVideo`](#streamvideo)`>`.
+
+#### `update(params)`
+
+Update video metadata. Returns `Promise<`[`StreamVideo`](#streamvideo)`>`.
+
+- `params` (required): A [`StreamUpdateVideoParams`](#streamupdatevideoparams) object with the following properties:
+  - `allowedOrigins`: Array of allowed origins for the video.
+  - `creator`: Creator identifier.
+  - `maxDurationSeconds`: Maximum duration in seconds.
+  - `meta`: Arbitrary metadata object.
+  - `requireSignedURLs`: Whether signed URLs are required.
+  - `scheduledDeletion`: ISO 8601 timestamp for scheduled deletion.
+  - `thumbnailTimestampPct`: Thumbnail timestamp as a percentage (0.0 to 1.0).
+
+#### `delete()`
+
+Delete a video and its copies. Returns `Promise<void>`.
+
+#### `generateToken()`
+
+Create a signed URL token for a video. Returns `Promise<string>`.
+
+#### `downloads`
+
+Namespace for download operations on a video.
+
+- `generate(downloadType?)`: Generate a download. `downloadType` is a [`StreamDownloadType`](#streamdownloadtype) of `default` or `audio`. Defaults to `default`. Returns `Promise<`[`StreamDownloadGetResponse`](#streamdownloadgetresponse)`>`.
+- `get()`: List existing downloads. Returns `Promise<`[`StreamDownloadGetResponse`](#streamdownloadgetresponse)`>`.
+- `delete(downloadType?)`: Delete downloads. `downloadType` is `default` or `audio`.
+
+#### `captions`
+
+Namespace for caption operations on a video.
+
+- `upload(language, input)`: Upload a caption file for a BCP 47 language tag. `input` is a `ReadableStream`. Returns `Promise<`[`StreamCaption`](#streamcaption)`>`.
+- `generate(language)`: Generate captions via AI for a BCP 47 language tag. Returns `Promise<`[`StreamCaption`](#streamcaption)`>`.
+- `list(language?)`: List captions, optionally filtered by language. Returns `Promise<`[`StreamCaption`](#streamcaption)`[]>`.
+- `delete(language)`: Delete captions for a language. Returns `Promise<void>`.
+
+### Watermark methods
+
+The following methods are available on the `env.STREAM.watermarks` namespace.
+
+#### `watermarks.generate(input, params)`
+
+Create a watermark profile. Accepts either a `ReadableStream` or a URL string. Returns `Promise<`[`StreamWatermark`](#streamwatermark)`>`.
+
+- `input` (required): A `ReadableStream` or URL string of the watermark image.
+- `params` (optional): A [`StreamWatermarkCreateParams`](#streamwatermarkcreateparams) object with the following properties:
+  - `name`: Name of the watermark profile.
+  - `opacity`: Opacity of the watermark (0.0 to 1.0).
+  - `padding`: Padding around the watermark as a proportion of the video resolution.
+  - `scale`: Scale of the watermark as a proportion of the video resolution.
+  - `position`: Position of the watermark — `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, or `center`.
+
+#### `watermarks.list()`
+
+List all watermark profiles. Returns `Promise<`[`StreamWatermark`](#streamwatermark)`[]>`.
+
+#### `watermarks.get(watermarkId)`
+
+Get a single watermark profile. Returns `Promise<`[`StreamWatermark`](#streamwatermark)`>`.
+
+- `watermarkId` (required): The ID of the watermark profile.
+
+#### `watermarks.delete(watermarkId)`
+
+Delete a watermark profile. Returns `Promise<void>`.
+
+- `watermarkId` (required): The ID of the watermark profile.
+
+## Examples
+
+### Upload a video from a URL
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = await env.STREAM.upload("https://example.com/video.mp4", {
+			creator: "user-123",
+			meta: { category: "tutorial" },
+			allowedOrigins: ["example.com"],
+		});
+		return Response.json(video);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Create a direct upload
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const directUpload = await env.STREAM.createDirectUpload({
+			maxDurationSeconds: 300,
+			creator: "user-123",
+			meta: { source: "browser-upload" },
+		});
+		return Response.json(directUpload);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### List videos
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const videos = await env.STREAM.videos.list({
+			limit: 10,
+			after: "2025-01-01T00:00:00Z",
+		});
+		return Response.json(videos);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Get video details
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const videoDetails = await env.STREAM.video("VIDEO_ID").details();
+		return Response.json(videoDetails);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Update video metadata
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const videoDetails = await env.STREAM.video("VIDEO_ID").update({
+			meta: { category: "updated-tutorial" },
+			allowedOrigins: ["example.com", "*.example.com"],
+		});
+		return Response.json(videoDetails);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Delete a video
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		await env.STREAM.video("VIDEO_ID").delete();
+		return new Response("Video deleted", { status: 200 });
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Generate a signed URL token
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const token = await env.STREAM.video("VIDEO_ID").generateToken();
+		return Response.json({ token });
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Upload captions
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const captionResponse = await fetch("https://example.com/captions-en.vtt");
+		const caption = await env.STREAM.video("VIDEO_ID").captions.upload(
+			"en",
+			captionResponse.body,
+		);
+		return Response.json(caption);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Generate AI captions
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const caption = await env.STREAM.video("VIDEO_ID").captions.generate("en");
+		return Response.json(caption);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### List and delete captions
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = env.STREAM.video("VIDEO_ID");
+		const captions = await video.captions.list();
+		await video.captions.delete("en");
+		return Response.json(captions);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Generate and list downloads
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const video = env.STREAM.video("VIDEO_ID");
+		const downloads = await video.downloads.generate();
+		const audioDownloads = await video.downloads.generate("audio");
+		const allDownloads = await video.downloads.get();
+		return Response.json({ downloads, audioDownloads, allDownloads });
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Create a watermark profile
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const watermark = await env.STREAM.watermarks.generate(
+			"https://example.com/watermark.png",
+			{
+				name: "My Watermark",
+				opacity: 0.5,
+				position: "lowerRight",
+				padding: 0.05,
+				scale: 0.1,
+			},
+		);
+		return Response.json(watermark);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### List and delete watermark profiles
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		const watermarks = await env.STREAM.watermarks.list();
+		const watermark = await env.STREAM.watermarks.get("WATERMARK_ID");
+		await env.STREAM.watermarks.delete("WATERMARK_ID");
+		return Response.json({ watermarks, watermark });
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Type definitions
+
+### StreamVideo
+
+`StreamVideo` is returned by operations that retrieve or create a video. It contains the full metadata for a video.
+
+- `id` <Type text="string" />
+
+  - The unique identifier for the video.
+
+- `creator` <Type text="string | null" />
+
+  - A user-defined identifier for the media creator.
+
+- `thumbnail` <Type text="string" />
+
+  - The thumbnail URL for the video.
+
+- `thumbnailTimestampPct` <Type text="number" />
+
+  - The thumbnail timestamp percentage.
+
+- `readyToStream` <Type text="boolean" />
+
+  - Indicates whether the video is ready to stream.
+
+- `readyToStreamAt` <Type text="string | null" />
+
+  - The date and time the video became ready to stream.
+
+- `status` <Type text="StreamVideoStatus" />
+
+  - Processing status information. Refer to [StreamVideoStatus](#streamvideostatus).
+
+- `meta` <Type text="Record&lt;string, string&gt;" />
+
+  - A user modifiable key-value store.
+
+- `created` <Type text="string" />
+
+  - The date and time the video was created.
+
+- `modified` <Type text="string" />
+
+  - The date and time the video was last modified.
+
+- `scheduledDeletion` <Type text="string | null" />
+
+  - The date and time at which the video will be deleted.
+
+- `size` <Type text="number" />
+
+  - The size of the video in bytes.
+
+- `preview` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The preview URL for the video.
+
+- `allowedOrigins` <Type text="Array&lt;string&gt;" />
+
+  - Origins allowed to display the video.
+
+- `requireSignedURLs` <Type text="boolean | null" />
+
+  - Indicates whether signed URLs are required.
+
+- `uploaded` <Type text="string | null" />
+
+  - The date and time the video was uploaded.
+
+- `uploadExpiry` <Type text="string | null" />
+
+  - The date and time when the upload URL expires.
+
+- `maxSizeBytes` <Type text="number | null" />
+
+  - The maximum size in bytes for direct uploads.
+
+- `maxDurationSeconds` <Type text="number | null" />
+
+  - The maximum duration in seconds for direct uploads.
+
+- `duration` <Type text="number" />
+
+  - The video duration in seconds. `-1` indicates unknown.
+
+- `input` <Type text="StreamVideoInput" />
+
+  - Input metadata for the original upload. Refer to [StreamVideoInput](#streamvideoinput).
+
+- `hlsPlaybackUrl` <Type text="string" />
+
+  - The HLS playback URL for the video.
+
+- `dashPlaybackUrl` <Type text="string" />
+
+  - The DASH playback URL for the video.
+
+- `watermark` <Type text="StreamWatermark | null" />
+
+  - The watermark applied to the video, if any. Refer to [StreamWatermark](#streamwatermark).
+
+- `liveInputId` <Type text="string | null" /> <MetaInfo text="optional" />
+
+  - The live input ID associated with the video, if any.
+
+- `clippedFromId` <Type text="string | null" />
+
+  - The source video ID if this is a clip.
+
+- `publicDetails` <Type text="StreamPublicDetails | null" />
+
+  - Public details associated with the video. Refer to [StreamPublicDetails](#streampublicdetails).
+
+### StreamVideoStatus
+
+Processing status information for a video.
+
+- `state` <Type text="string" />
+
+  - The current processing state.
+
+- `step` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The current processing step.
+
+- `pctComplete` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The percent complete as a string.
+
+- `errorReasonCode` <Type text="string" />
+
+  - An error reason code, if applicable.
+
+- `errorReasonText` <Type text="string" />
+
+  - An error reason text, if applicable.
+
+### StreamVideoInput
+
+Input metadata for the original upload.
+
+- `width` <Type text="number" />
+
+  - The input width in pixels.
+
+- `height` <Type text="number" />
+
+  - The input height in pixels.
+
+### StreamPublicDetails
+
+Public details associated with a video.
+
+- `title` <Type text="string | null" />
+
+  - The public title for the video.
+
+- `share_link` <Type text="string | null" />
+
+  - The public share link.
+
+- `channel_link` <Type text="string | null" />
+
+  - The public channel link.
+
+- `logo` <Type text="string | null" />
+
+  - The public logo URL.
+
+### StreamDirectUpload
+
+Returned by `createDirectUpload()`. Contains the upload URL and video identifier for a direct upload.
+
+- `uploadURL` <Type text="string" />
+
+  - The URL an unauthenticated upload can use for a single multipart request.
+
+- `id` <Type text="string" />
+
+  - A Cloudflare-generated unique identifier for a media item.
+
+- `watermark` <Type text="StreamWatermark | null" />
+
+  - The watermark profile applied to the upload. Refer to [StreamWatermark](#streamwatermark).
+
+- `scheduledDeletion` <Type text="string | null" />
+
+  - The scheduled deletion time, if any.
+
+### StreamCaption
+
+Represents a caption or subtitle track for a video.
+
+- `generated` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Whether the caption was generated via AI.
+
+- `label` <Type text="string" />
+
+  - The language label displayed in the native language to users.
+
+- `language` <Type text="string" />
+
+  - The language tag in BCP 47 format.
+
+- `status` <Type text="'ready' | 'inprogress' | 'error'" /> <MetaInfo text="optional" />
+
+  - The status of a generated caption.
+
+### StreamDownloadGetResponse
+
+An object with download type keys. Each key is optional and only present if that download type has been created.
+
+- `default` <Type text="StreamDownload" /> <MetaInfo text="optional" />
+
+  - The default video download. Only present if this download type has been created. Refer to [StreamDownload](#streamdownload).
+
+- `audio` <Type text="StreamDownload" /> <MetaInfo text="optional" />
+
+  - The audio-only download. Only present if this download type has been created. Refer to [StreamDownload](#streamdownload).
+
+### StreamDownload
+
+Represents a generated download for a video.
+
+- `percentComplete` <Type text="number" />
+
+  - Indicates the progress as a percentage between 0 and 100.
+
+- `status` <Type text="StreamDownloadStatus" />
+
+  - The status of a generated download.
+
+- `url` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The URL to access the generated download.
+
+### StreamWatermark
+
+Represents a watermark profile.
+
+- `id` <Type text="string" />
+
+  - The unique identifier for a watermark profile.
+
+- `name` <Type text="string" />
+
+  - A short description of the watermark profile.
+
+- `opacity` <Type text="number" />
+
+  - The translucency of the image. A value of `0.0` makes the image completely transparent, and `1.0` makes the image completely opaque. Note that if the image is already semi-transparent, setting this to `1.0` will not make the image completely opaque.
+
+- `padding` <Type text="number" />
+
+  - The whitespace between the adjacent edges (determined by position) of the video and the image. `0.0` indicates no padding, and `1.0` indicates a fully padded video width or length.
+
+- `scale` <Type text="number" />
+
+  - The size of the image relative to the overall size of the video. `0.0` indicates no scaling, and `1.0` fills the entire video.
+
+- `position` <Type text="StreamWatermarkPosition" />
+
+  - The location of the image. Refer to [StreamWatermarkPosition](#streamwatermarkposition).
+
+- `size` <Type text="number" />
+
+  - The size of the image in bytes.
+
+- `height` <Type text="number" />
+
+  - The height of the image in pixels.
+
+- `width` <Type text="number" />
+
+  - The width of the image in pixels.
+
+- `created` <Type text="string" />
+
+  - The date and time a watermark profile was created.
+
+- `downloadedFrom` <Type text="string | null" />
+
+  - The source URL for a downloaded image. If the watermark profile was created via direct upload, this field is `null`.
+
+### StreamWatermarkPosition
+
+The position of a watermark on a video.
+
+<Type text="'upperRight' | 'upperLeft' | 'lowerLeft' | 'lowerRight' | 'center'" />
+
+- `upperRight` — Top-right corner of the video.
+- `upperLeft` — Top-left corner of the video.
+- `lowerLeft` — Bottom-left corner of the video.
+- `lowerRight` — Bottom-right corner of the video.
+- `center` — Center of the video. Note that `center` ignores the `padding` parameter.
+
+### StreamDownloadStatus
+
+The status of a generated download.
+
+<Type text="'ready' | 'inprogress' | 'error'" />
+
+- `ready` — The download is ready.
+- `inprogress` — The download is being generated.
+- `error` — An error occurred during generation.
+
+### StreamDownloadType
+
+The type of download to generate.
+
+<Type text="'default' | 'audio'" />
+
+- `default` — A video download.
+- `audio` — An audio-only download.
+
+### StreamUrlUploadParams
+
+Parameters for uploading a video from a URL.
+
+- `allowedOrigins` <Type text="Array&lt;string&gt;" /> <MetaInfo text="optional" />
+
+  - Lists the origins allowed to display the video. Enter allowed origin domains in an array and use `*` for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+
+- `creator` <Type text="string" /> <MetaInfo text="optional" />
+
+  - A user-defined identifier for the media creator.
+
+- `meta` <Type text="Record&lt;string, string&gt;" /> <MetaInfo text="optional" />
+
+  - A user modifiable key-value store used to reference other systems of record for managing videos.
+
+- `requireSignedURLs` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Indicates whether the video can be accessed using the ID. When set to `true`, a signed token must be generated with a signing key to view the video.
+
+- `scheduledDeletion` <Type text="string | null" /> <MetaInfo text="optional" />
+
+  - Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a `null` value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+
+- `thumbnailTimestampPct` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video. If this value is not set, the default thumbnail image is taken from 0s of the video.
+
+- `watermarkId` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The identifier for the watermark profile.
+
+### StreamDirectUploadCreateParams
+
+Parameters for creating a direct upload.
+
+- `maxDurationSeconds` <Type text="number" />
+
+  - The maximum duration in seconds for a video upload.
+
+- `expiry` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The date and time after upload when videos will not be accepted.
+
+- `creator` <Type text="string" /> <MetaInfo text="optional" />
+
+  - A user-defined identifier for the media creator.
+
+- `meta` <Type text="Record&lt;string, string&gt;" /> <MetaInfo text="optional" />
+
+  - A user modifiable key-value store used to reference other systems of record for managing videos.
+
+- `allowedOrigins` <Type text="Array&lt;string&gt;" /> <MetaInfo text="optional" />
+
+  - Lists the origins allowed to display the video.
+
+- `requireSignedURLs` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Indicates whether the video can be accessed using the ID. When set to `true`, a signed token must be generated with a signing key to view the video.
+
+- `thumbnailTimestampPct` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The timestamp for a thumbnail image calculated as a percentage value of the video's duration.
+
+- `scheduledDeletion` <Type text="string | null" /> <MetaInfo text="optional" />
+
+  - The date and time at which the video will be deleted. Include `null` to remove a scheduled deletion.
+
+- `watermark` <Type text="StreamDirectUploadWatermark" /> <MetaInfo text="optional" />
+
+  - The watermark profile to apply. Refer to [StreamDirectUploadWatermark](#streamdirectuploadwatermark).
+
+### StreamDirectUploadWatermark
+
+Watermark configuration for a direct upload.
+
+- `id` <Type text="string" />
+
+  - The unique identifier for the watermark profile.
+
+### StreamUpdateVideoParams
+
+Parameters for updating a video.
+
+- `allowedOrigins` <Type text="Array&lt;string&gt;" /> <MetaInfo text="optional" />
+
+  - Lists the origins allowed to display the video. Enter allowed origin domains in an array and use `*` for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+
+- `creator` <Type text="string" /> <MetaInfo text="optional" />
+
+  - A user-defined identifier for the media creator.
+
+- `maxDurationSeconds` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The maximum duration in seconds for a video upload. Can be set for a video that is not yet uploaded to limit its duration. Uploads that exceed the specified duration will fail during processing. A value of `-1` means the value is unknown.
+
+- `meta` <Type text="Record&lt;string, string&gt;" /> <MetaInfo text="optional" />
+
+  - A user modifiable key-value store used to reference other systems of record for managing videos.
+
+- `requireSignedURLs` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Indicates whether the video can be accessed using the ID. When set to `true`, a signed token must be generated with a signing key to view the video.
+
+- `scheduledDeletion` <Type text="string | null" /> <MetaInfo text="optional" />
+
+  - Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a `null` value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+
+- `thumbnailTimestampPct` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video. If this value is not set, the default thumbnail image is taken from 0s of the video.
+
+### StreamVideosListParams
+
+Parameters for listing videos.
+
+- `limit` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The maximum number of videos to return.
+
+- `before` <Type text="string" /> <MetaInfo text="optional" />
+
+  - Return videos created before this timestamp (RFC3339/RFC3339Nano).
+
+- `beforeComp` <Type text="StreamPaginationComparison" /> <MetaInfo text="optional" />
+
+  - Comparison operator for the `before` field. Defaults to `lt`. Refer to [StreamPaginationComparison](#streampaginationcomparison).
+
+- `after` <Type text="string" /> <MetaInfo text="optional" />
+
+  - Return videos created after this timestamp (RFC3339/RFC3339Nano).
+
+- `afterComp` <Type text="StreamPaginationComparison" /> <MetaInfo text="optional" />
+
+  - Comparison operator for the `after` field. Defaults to `gte`. Refer to [StreamPaginationComparison](#streampaginationcomparison).
+
+### StreamPaginationComparison
+
+Comparison operators for pagination queries.
+
+<Type text="'eq' | 'gt' | 'gte' | 'lt' | 'lte'" />
+
+- `eq` — Equal to
+- `gt` — Greater than
+- `gte` — Greater than or equal to
+- `lt` — Less than
+- `lte` — Less than or equal to
+
+### StreamWatermarkCreateParams
+
+Parameters for creating a watermark profile.
+
+- `name` <Type text="string" /> <MetaInfo text="optional" />
+
+  - A short description of the watermark profile.
+
+- `opacity` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The translucency of the image. A value of `0.0` makes the image completely transparent, and `1.0` makes the image completely opaque. Note that if the image is already semi-transparent, setting this to `1.0` will not make the image completely opaque.
+
+- `padding` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The whitespace between the adjacent edges (determined by position) of the video and the image. `0.0` indicates no padding, and `1.0` indicates a fully padded video width or length.
+
+- `scale` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The size of the image relative to the overall size of the video. `0.0` indicates no scaling, and `1.0` fills the entire video.
+
+- `position` <Type text="StreamWatermarkPosition" /> <MetaInfo text="optional" />
+
+  - The location of the image. Refer to [StreamWatermarkPosition](#streamwatermarkposition).
+
+## Error handling
+
+Errors throw a `StreamError`, which extends the standard `Error` interface with additional information:
+
+- `code`: A numeric error code.
+- `statusCode`: An HTTP status code.
+- `message`: A description of the error.
+- `stack`: Optional stack trace.
+
+The following error subtypes may be thrown:
+
+| Error type | Description |
+| --- | --- |
+| `InternalError` | An internal server error occurred. |
+| `BadRequestError` | The request was malformed or contained invalid parameters. |
+| `NotFoundError` | The requested resource was not found. |
+| `ForbiddenError` | The request was not authorized. |
+| `RateLimitedError` | The request was rate limited. |
+| `QuotaReachedError` | The account has reached its video quota. |
+| `MaxFileSizeError` | The uploaded file exceeds the maximum allowed size. |
+| `InvalidURLError` | The provided URL is invalid or unreachable. |
+| `AlreadyUploadedError` | The video has already been uploaded. |
+| `TooManyWatermarksError` | The account has reached the watermark profile limit. |
+
+Use a `try...catch` block to handle errors:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env) {
+		try {
+			const videoDetails = await env.STREAM.upload("https://example.com/video.mp4");
+			return Response.json(videoDetails);
+		} catch (e) {
+			if (e instanceof Error) {
+				return new Response(`Stream error: ${e.message}`, { status: 500 });
+			}
+			throw e;
+		}
+	},
+};
+```
+
+</TypeScriptExample>

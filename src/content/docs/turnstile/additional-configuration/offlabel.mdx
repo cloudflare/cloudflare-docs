@@ -1,17 +1,22 @@
 ---
 title: Remove Cloudflare branding with Offlabel
 pcx_content_type: reference
+description: Remove Cloudflare branding from Turnstile widgets with Offlabel mode.
+products:
+  - turnstile
 sidebar:
   order: 4
   label: Offlabel
 ---
 
-Offlabel is an Enterprise-only feature that removes Cloudflare branding and logo from Turnstile widgets. When enabled, widgets display without any visual references to Cloudflare, allowing for a seamless integration with your brand identity.
+import { Render } from "~/components";
+
+Offlabel is an Enterprise-only feature that removes Cloudflare branding and logo from Turnstile widgets. When enabled, widgets display without any visual references to Cloudflare.
 
 When Offlabel is enabled:
 
 - The Cloudflare logo and color schemes are removed from all widget states.
-- The widget maintains the same functionality, behavior, and WCAG 2.1 AA accessibility compliance.
+- The widget maintains the same functionality, behavior, and WCAG 2.2 AA accessibility compliance.
 - All security features remain unchanged.
 
 The widget will display with a clean, unbranded appearance that integrates seamlessly with your website's design.
@@ -59,6 +64,13 @@ Confirm Offlabel is enabled by checking your widget configuration.
     ```
 
 The response will include `"offlabel": true` when the feature is active.
+
+### Link to Cloudflare's Turnstile Privacy Policy
+
+As a condition of enabling offlabel, you must reference Cloudflare's [Turnstile Privacy Addendum](https://www.cloudflare.com/turnstile-privacy-policy/) in one of two ways:
+
+1. Link to it in your own privacy policy.
+2. Configure the widget to display a link to Cloudflare's privacy policy using the [JavaScript Render Parameters](/turnstile/get-started/client-side-rendering/widget-configurations/#complete-configuration-reference).
 
 ---
 

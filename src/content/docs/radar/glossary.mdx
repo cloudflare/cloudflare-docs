@@ -1,8 +1,11 @@
 ---
 pcx_content_type: reference
 title: Glossary
+description: Definitions of key terms and concepts used across Cloudflare Radar, including traffic types, attack categories, and ranking methodologies.
 sidebar:
   order: 6
+products:
+  - radar
 ---
 
 This page provides a list of terms and concepts to help you understand Radar and the information shown.
@@ -92,6 +95,12 @@ Hovering over a link in the diagram reveals a tooltip with the connected ASNs, t
 [rpki]: https://blog.cloudflare.com/rpki-details/
 [tier-1]: https://en.wikipedia.org/wiki/Tier_1_network
 
+## Bot vs. human traffic
+
+The percentage of HTTP requests classified as bot versus human, based on [bot scores](/bots/concepts/bot-score/). Requests with a bot score between 1 and 29 are classified as likely automated (bot), while requests with a score of 30 or above are classified as likely human. For more information, refer to [Bot classes](/radar/concepts/bot-classes/).
+
+By default, Radar shows bot vs. human traffic for requests to HTML content. This filter is meant to represent traditional web traffic by excluding API calls, asset requests (images, scripts, fonts), and other machine-to-machine requests.
+
 ## Certificates
 
 Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a client and a server.
@@ -165,6 +174,8 @@ Countries contributing traffic to this AS, and their relative contribution as pe
 
 HTTP origins trends provide visibility into the status of traffic between [Cloudflare's global network](https://www.cloudflare.com/network/) and cloud-based [origin infrastructure](https://www.cloudflare.com/learning/cdn/glossary/origin-server/). This data comes from requests sent by Cloudflare to origin servers. The metrics track key indicators such as HTTP status codes, response times, and traffic volume over time, allowing us to identify degradations, outages, or anomalies in origin server performance and availability.
 
+Measurements are aggregated across requests from all Cloudflare data centers made to cloud-based origin infrastructure. Performance data is median-based (p50) for all views, including overall and provider-level breakdowns. Region-specific views additionally show quartile distributions (25th, 50th, and 75th percentiles).
+
 ## Internet outages
 
 Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government directed shutdowns. Outages may be sub-national or national in geographic scope, or may impact one or more [ASNs](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). Some outages may be brief, lasting just a few minutes, while others can stretch on for months — the duration can be related, in part, to the underlying cause. Internet outages listed in the Cloudflare Radar Outage Center are notable drops in traffic that have generally been corroborated with third party-information, which may include a social media or status page post from a telecommunications provider, a news report, or industry/community mailing lists.
@@ -229,6 +240,10 @@ Network-level DDoS attacks graphs are based on traffic measured in bytes.
 
 The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to Cloudflare that are encrypted with post-quantum (PQ) cryptography. Additional details about Cloudflare's support for PQ cryptography can be found at [Cloudflare Research](https://pq.cloudflareresearch.com/).
 
+## Post-quantum origin support
+
+The post-quantum origin support dataset provides insights into the TLS key exchange algorithms supported by scanned customer origin servers. Additional details about post-quantum cryptography between Cloudflare and origin servers can be found in the [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/) documentation.
+
 ## Robots.txt
 
 A [robots.txt](https://www.cloudflare.com/learning/bots/what-is-robots-txt/) file contains instructions for bots that tell them which webpages they can and cannot access.
@@ -252,6 +267,10 @@ On Cloudflare Radar’s [Security & Attacks page](https://radar.cloudflare.com/s
 - **None**: All other connections.
 
 Learn more about the TCP resets and timeouts dataset in our [blog post](https://blog.cloudflare.com/tcp-resets-timeouts).
+
+## TLD nameserver performance
+
+TLD nameserver performance measures the response time (latency) of authoritative nameservers for top-level domains, as observed from Cloudflare's [1.1.1.1](/1.1.1.1/) resolver infrastructure. When the resolver forwards a DNS query upstream to a TLD's nameserver, the round-trip time is captured from the issuing Cloudflare data center. For anycasted authoritative nameservers, upstream queries are generally handled by a topologically close data center, resulting in lower median latencies compared to nameservers not deployed using anycast. This data reveals which nameservers are fastest, how latency varies across Cloudflare's global network, and how TLD infrastructure performance trends over time.
 
 ## Threat categories
 
@@ -299,4 +318,4 @@ WHOIS is a standard for publishing the contact and nameserver information for al
 
 ## Workers AI
 
-[Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from Workers, Pages, or anywhere via the Cloudflare API. The data displayed for Workers AI is based on the number of Cloudflare accounts using a model during a specific time interval.
+[Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from Workers, Pages, or anywhere via the Cloudflare API. The data displayed for Workers AI is based on the number of inferences run on a model during a specific time interval.

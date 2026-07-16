@@ -4,12 +4,18 @@ pcx_content_type: how-to
 sidebar:
   order: 4
 description: Create preview URLs and expose ports for web services.
+products:
+  - sandbox
 ---
 
 import { TypeScriptExample } from "~/components";
 
 :::note[Production requires custom domain]
 Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/) for setup instructions.
+:::
+
+:::note[Prefer `sandbox.tunnels` for public URLs]
+[`sandbox.tunnels`](/sandbox/api/tunnels/) is the recommended option for most public-URL use cases, including production. Quick tunnels give you a zero-config `*.trycloudflare.com` URL; named tunnels bind a stable `<name>.<your-zone>` hostname. Follow this guide when you specifically want the Worker itself to front the request (for example, to inject authentication or rewrite responses).
 :::
 
 This guide shows you how to expose services running in your sandbox to the internet via preview URLs.
@@ -54,11 +60,11 @@ export default {
     const exposed = await sandbox.exposePort(8000, { hostname });
 
     // 4. Preview URL is now available (public by default)
-    console.log('Server accessible at:', exposed.exposedAt);
+    console.log('Server accessible at:', exposed.url);
     // Production: https://8000-abc123.yourdomain.com
     // Local dev: http://localhost:8787/...
 
-    return Response.json({ url: exposed.exposedAt });
+    return Response.json({ url: exposed.url });
   }
 };
 ```
@@ -155,8 +161,8 @@ const frontend = await sandbox.exposePort(5173, {
 });
 
 console.log('Services:');
-console.log('- API:', api.exposedAt);
-console.log('- Frontend:', frontend.exposedAt);
+console.log('- API:', api.url);
+console.log('- Frontend:', frontend.url);
 ```
 </TypeScriptExample>
 
@@ -230,8 +236,8 @@ const api = await sandbox.exposePort(8080, { hostname, name: 'api' });
 const frontend = await sandbox.exposePort(5173, { hostname, name: 'frontend' });
 
 return Response.json({
-  api: api.exposedAt,
-  frontend: frontend.exposedAt
+  api: api.url,
+  frontend: frontend.url
 });
 ```
 </TypeScriptExample>
@@ -247,7 +253,7 @@ const { ports, count } = await sandbox.getExposedPorts();
 console.log(`${count} ports currently exposed:`);
 
 for (const port of ports) {
-  console.log(`  Port ${port.port}: ${port.exposedAt}`);
+  console.log(`  Port ${port.port}: ${port.url}`);
   if (port.name) {
     console.log(`    Name: ${port.name}`);
   }
@@ -391,3 +397,4 @@ See [Sandbox options - normalizeId](/sandbox/configuration/sandbox-options/#norm
 - [Ports API reference](/sandbox/api/ports/) - Complete port exposure API
 - [Background processes guide](/sandbox/guides/background-processes/) - Managing services
 - [Execute commands guide](/sandbox/guides/execute-commands/) - Starting services
+- [Tunnels API reference](/sandbox/api/tunnels/) - Recommended alternative for most public-URL use cases (quick or named tunnels)

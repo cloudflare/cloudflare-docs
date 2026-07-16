@@ -1,0 +1,18 @@
+---
+{}
+
+---
+```kotlin
+meeting.connectedMeetings.createMeetings(
+    titles = listOf("Breakout Room 1", "Breakout Room 2", "Breakout Room 3")
+) { result ->
+    result.onSuccess { breakoutRooms ->
+        val roomInfo = breakoutRooms.joinToString("\n") { "Id:: ${it.id} --- Title:: ${it.title}" }
+        println("Created Breakout Rooms: $roomInfo")
+    }.onFailure { error ->
+        println("Failed to create breakout rooms: ${error.value.message}")
+    }
+}
+```
+
+`breakoutRooms` is a list of basic meeting information such as `id` and `title`. You can use the `id` of these objects to move participants to the breakout room.

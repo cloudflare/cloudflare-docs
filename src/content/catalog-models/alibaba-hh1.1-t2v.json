@@ -1,0 +1,124 @@
+{
+	"model_id": "alibaba/hh1.1-t2v",
+	"provider_id": "alibaba",
+	"name": "HappyHorse 1.1 T2V",
+	"description": "Alibaba's HappyHorse 1.1 text-to-video model. Generates videos from a text prompt with stronger dynamic expressiveness, better visual quality, and improved instruction following over 1.0. Configurable resolution, aspect ratio, and duration (3-15s).",
+	"task": "Text-to-Video",
+	"tags": [
+		"Text-to-Video",
+		"Video Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Text-to-Video",
+			"description": "Generate a short video from a text prompt",
+			"input": {
+				"prompt": "A little girl walking on the road"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/alibaba/hh1.1-t2v/simple-text-to-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/alibaba/hh1.1-t2v/simple-text-to-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1.1-t2v',\n  { prompt: 'A little girl walking on the road' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/hh1.1-t2v\",\n  \"input\": {\n    \"prompt\": \"A little girl walking on the road\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://modelstudio.console.alibabacloud.com/",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": null,
+	"metadata": {
+		"Aspect Ratios": "16:9, 9:16, 1:1, 4:3, 3:4",
+		"Max Duration": "15 seconds",
+		"Resolutions": "720P, 1080P"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-24 01:03:23",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 2500
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"720P",
+						"1080P"
+					]
+				},
+				"ratio": {
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"1:1",
+						"4:3",
+						"3:4"
+					]
+				},
+				"duration": {
+					"type": "integer",
+					"minimum": 3,
+					"maximum": 15
+				},
+				"seed": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 2147483647
+				},
+				"watermark": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

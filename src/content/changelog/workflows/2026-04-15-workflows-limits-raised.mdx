@@ -1,0 +1,20 @@
+---
+title: Increased concurrency, creation rate, and queued instance limits for Workflows instances
+description: Concurrency limit for Workflows instances is now 50,000. Instance creation rate limit has been raised to 300 instances per second per account, maintaining a limit of 100 instances per second per workflow.
+products:
+  - workflows
+  - workers
+date: 2026-04-15 13:00:00 UTC
+---
+
+[Workflows](/workflows/) limits have been raised to the following:
+
+| Limit                                      | Previous               | New                                             |
+| ------------------------------------------ | ---------------------- | ----------------------------------------------- |
+| Concurrent instances (running in parallel) | 10,000                 | 50,000                                          |
+| Instance creation rate (per account)       | 100/second per account | 300/second per account, 100/second per workflow |
+| Queued instances per Workflow [^1]         | 1 million              | 2 million                                       |
+
+[^1]: Queued instances are instances that have been created or awoken and are waiting for a concurrency slot.
+
+These increases apply to all users on the [Workers Paid plan](/workers/platform/pricing/). Refer to the [Workflows limits documentation](/workflows/reference/limits/) for more details.

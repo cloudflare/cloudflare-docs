@@ -1,6 +1,11 @@
 ---
 pcx_content_type: how-to
+description: Validate JWTs in Access.
+products:
+  - cloudflare-one
 title: Validate JWTs
+tags:
+  - JSON web token (JWT)
 sidebar:
   order: 1
 ---
@@ -96,9 +101,9 @@ Cloudflare Access assigns a unique AUD tag to each application. The `aud` claim 
 
 To get the AUD tag:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 2. Select **Configure** for your application.
-3. From the **Basic information** tab, copy the **Application Audience (AUD) Tag**.
+3. From **Additional settings**, copy the **Application Audience (AUD) Tag**.
 
 You can now paste the AUD tag into your token validation script. The AUD tag will never change unless you delete or recreate the Access application.
 

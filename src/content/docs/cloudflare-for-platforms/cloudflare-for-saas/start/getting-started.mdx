@@ -1,6 +1,8 @@
 ---
 title: Configuring Cloudflare for SaaS
 pcx_content_type: get-started
+products:
+  - cloudflare-for-saas
 sidebar:
   order: 2
 head: []
@@ -31,6 +33,10 @@ import { Example, Render } from "~/components";
 
 <Render file="get-started-fallback-origin" product="cloudflare-for-platforms" />
 
+:::note
+Changing the fallback origin hostname is non-disruptive. Existing custom hostname traffic continues to flow while the fallback origin is updated, and the change propagates across Cloudflare's edge within seconds.
+:::
+
 ### 2. (Optional) Create CNAME target
 
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#3-have-customer-create-cname-record). You may want to use a subdomain such as `customers.<SAAS_PROVIDER>.com`.
@@ -50,6 +56,23 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 ## Per-hostname setup
 
 <Render file="get-started-per-hostname" product="cloudflare-for-platforms" />
+
+### Check when a custom hostname is ready
+
+A custom hostname uses separate validation flows for hostname activation and certificate issuance.
+
+| API field           | What it means                                                        | Ready value |
+| ------------------- | -------------------------------------------------------------------- | ----------- |
+| `result.status`     | Cloudflare has validated the hostname and can proxy traffic for it.  | `active`    |
+| `result.ssl.status` | Cloudflare has issued and deployed the certificate for the hostname. | `active`    |
+
+Treat a custom hostname as ready for production traffic when:
+
+- `result.status` is `active`.
+- `result.ssl.status` is `active`.
+- The hostname's DNS record points to your SaaS target.
+
+A successful TLS handshake can happen before `result.ssl.status` changes to `active` if Cloudflare can present another matching certificate. Use the [Custom hostname details endpoint](/api/resources/custom_hostnames/methods/get/) as the source of truth for onboarding state. For more information, refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/).
 
 ### 3. Have customer create CNAME record
 

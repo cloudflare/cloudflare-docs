@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkScreenShareToggle
+description: API reference for RtkScreenShareToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to start or stop screen sharing. Automatically hides based on permissions and screenshare limits.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Icon size                        |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | `'button'`        | Layout variant                   |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkScreenShareToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkScreenShareToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkScreenShareToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkScreenShareToggle meeting={meeting} size="md" variant="button" />;
+}
+```

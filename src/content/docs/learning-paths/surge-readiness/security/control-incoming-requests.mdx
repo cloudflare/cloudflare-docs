@@ -3,6 +3,11 @@ title: Control incoming requests
 pcx_content_type: overview
 sidebar:
   order: 3
+description: Filter incoming requests with WAF rules.
+products:
+  - waf
+  - cache
+  - ddos-protection
 ---
 
 Use [Custom rules](/waf/custom-rules/) to allow you to control incoming traffic by filtering requests to a zone. They work as customized web application firewall (WAF) rules that you can use to perform actions like Block or Managed Challenge on incoming requests.
@@ -27,5 +32,5 @@ To help you define the best rate limiting setting for your use case, refer to [H
 - Log: Test rule effectiveness before committing to a more severe action.
 - Allow: Allow matching requests to access the site.
 - Block: Block matching requests from accessing the site.
-- CAPTCHA Challenge: Rules will be shown a CAPTCHA before proceeding.
-- Javascript Challenge: Rules will be shown a five second Javascript confirmation before proceeding.
+- Non-Interactive Challenge: Visitors will be shown a non-interactive challenge before proceeding.
+- Interactive Challenge: Visitors will be shown an interactive challenge before proceeding.

@@ -2,6 +2,9 @@
 title: Directory listing
 styleGuide:
   component: DirectoryListing
+description: Auto-generate listings of child pages.
+products:
+  - style-guide
 ---
 
 import { Render } from "~/components";
@@ -10,7 +13,7 @@ import { Render } from "~/components";
 
 ## Usage
 
-```mdx live
+```mdx
 import { DirectoryListing } from "~/components";
 
 <p>
@@ -29,6 +32,11 @@ import { DirectoryListing } from "~/components";
 	<strong>Descriptions</strong>
 </p>
 <DirectoryListing folder="workers/wrangler" descriptions />
+
+<p>
+	<strong>Button</strong>
+</p>
+<DirectoryListing folder="workers/wrangler" button />
 ```
 
 ## Props
@@ -38,6 +46,13 @@ import { DirectoryListing } from "~/components";
 **type:** `string`
 
 The folder path to list contents from. If not provided, defaults to the current page's path.
+
+### `button`
+
+**type:** `boolean`
+**default:** `false`
+
+When enabled, displays the listing as a 3-column grid of button-style cards (sorted alphabetically) instead of a bullet list. The cards match the style of Starlight's `LinkCard` component.
 
 ### `descriptions`
 

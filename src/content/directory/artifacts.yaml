@@ -1,0 +1,12 @@
+id: divzKy
+name: Artifacts
+
+entry:
+  title: Artifacts
+  url: /artifacts/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Artifacts docs
+  description: Store, version, and share filesystem artifacts across Workers, APIs, and git-compatible tools
+  author: "@cloudflare"

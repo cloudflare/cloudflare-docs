@@ -1,10 +1,13 @@
 ---
 pcx_content_type: navigation
 title: Build using Core SDK
+description: Initialize and build with the RealtimeKit Core SDK for full control over video calls.
 slug: realtime/realtimekit/core
 sidebar:
   order: 6
   label: Getting Started
+products:
+  - realtime
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
@@ -12,7 +15,7 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 
 ### Initialize Core SDK
 
-To integrate the Core SDK, you will need to initialize it with a [participant's auth token](/api/resources/realtime_kit/#create-a-participant), and then use the provided SDK APIs to control the peer in the session.
+To integrate the Core SDK, you will need to initialize it with a [participant's auth token](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/), and then use the provided SDK APIs to control the peer in the session.
 
 Initialization might differ slightly based on your tech stack. Please choose your preferred tech stack below.
 
@@ -54,7 +57,7 @@ export default function App() {
 
 ```
 
-Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 </RTKCodeSnippet>
 
@@ -89,7 +92,7 @@ You can initialise the SDK using `RealtimeKitClient.init`.
 	});
 ```
 
-Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 </RTKCodeSnippet>
 
@@ -120,7 +123,7 @@ class AppComponent {
 }
 ```
 
-Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 </RTKCodeSnippet>
 
@@ -131,7 +134,7 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
     val meeting = RealtimeKitMeetingBuilder.build(activity)
     ```
 
-    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Create Participant API](/api/resources/realtime_kit/#create-a-participant).
+    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/).
 
     ```kotlin
     val meetingInfo =
@@ -169,7 +172,7 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
     meeting.addSelfEventListener(selfEventListener: self)
     ```
 
-    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Create Participant API](/api/resources/realtime_kit/#create-a-participant).
+    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/).
 
     ```swift
     let meetingInfo = RtkMeetingInfo(authToken: authToken,
@@ -192,7 +195,7 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
     final meeting = RealtimeKitClient();
     ```
 
-    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Create Participant API](/api/resources/realtime_kit/#create-a-participant).
+    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/).
 
     ```dart
     final meetingInfo = RtkMeetingInfo(
@@ -257,7 +260,7 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
     }
     ```
 
-    Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 </RTKCodeSnippet>
 
@@ -346,7 +349,7 @@ Reference for the types:
 ```ts
 interface AudioQualityConstraints {
 	echoCancellation?: boolean;
-	noiseSupression?: boolean;
+	noiseSuppression?: boolean;
 	autoGainControl?: boolean;
 	enableStereo?: boolean;
 	enableHighBitrate?: boolean;

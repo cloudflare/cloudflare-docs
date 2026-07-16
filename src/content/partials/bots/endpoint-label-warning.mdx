@@ -1,0 +1,12 @@
+---
+inputParameters: endpoint
+
+---
+
+:::caution[Login {props.one} endpoints]
+Not all login {props.one} endpoints are automatically detected. 
+
+Cloudflare evaluates and automatically detects your website or application's login {props.one} endpoint, but non-traditional login {props.one} endpoints may not be recognized. 
+
+For example, if you have a non-traditional login endpoint, you should label it with `cf-log-in` using the [endpoint labeling service](/api-shield/management-and-monitoring/endpoint-labels/). Once you have applied the `cf-log-in` label, Cloudflare will use the labeled endpoint for account takeover detection decisions.
+:::

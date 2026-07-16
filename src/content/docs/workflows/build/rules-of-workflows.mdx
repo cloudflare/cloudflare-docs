@@ -1,8 +1,11 @@
 ---
 title: Rules of Workflows
+description: Best practices for building resilient Workflows, including idempotency, state management, and error handling.
 pcx_content_type: concept
 sidebar:
   order: 10
+products:
+  - workflows
 ---
 
 import { WranglerConfig, TypeScriptExample } from "~/components";
@@ -223,6 +226,10 @@ For example, a `console.log()` outside of workflow steps may cause the logs to p
 
 However, logic involving non-serializable resources, like a database connection, should be executed outside of steps. Operations outside of a `step.do` might be repeated more than once, due to the nature of the Workflows' instance lifecycle.
 
+:::note
+If you use [Hyperdrive](/hyperdrive/) in a Workflow, create a new connection inside each `step.do()` and run your queries in that same step. Do not reuse a Hyperdrive-backed connection across steps.
+:::
+
 <TypeScriptExample filename="index.ts">
 
 ```ts
@@ -258,6 +265,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		});
 
 		// ✅ Good: calls that have no side effects can be done outside of steps
+		// For Hyperdrive, create the connection inside each step instead of here.
 		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
 
 		// ✅ Good: run functions with side effects inside of a step
@@ -593,11 +601,25 @@ export default {
 
 When setting a [WorkflowStep timeout](/workflows/build/workers-api/#workflowstep), ensure that its duration is 30 minutes or less. If your use case requires a timeout greater than 30 minutes, consider using `step.waitForEvent()` instead.
 
-### Keep step return values under 1 MiB
+### Keep non-stream step return values under 1 MiB
 
-Each step can persist up to 1 MiB (2^20 bytes) of state. If your step returns data exceeding this limit, the step will fail. This is a common issue when fetching large API responses or processing large files.
+A non-stream `step.do()` return value can persist up to 1 MiB (2^20 bytes). If your step returns structured data exceeding this limit, the step will fail. This is a common issue when fetching large API responses or processing large files.
 
-To work around this limit, store large data externally (for example, in R2 or KV) and return only a reference:
+In JavaScript Workflows, `ReadableStream<Uint8Array>` is a supported serializable return type for larger binary output. When persisting this kind of output, you should:
+
+- Return a new stream from the step callback.
+- Keep individual chunks under 16 MB.
+- Do not return a locked stream or a stream that has already been read.
+- Rely only on streams returned from steps.
+  :::note
+  Only byte streams are supported - use `ReadableStream<Uint8Array>`.
+
+BYOB streams and BYOB readers are not supported.
+:::
+
+Note that streamed outputs are still considered part of the Workflow instance storage limit.
+
+If these storage limits still do not work for you, consider storing your step outputs externally (for example, in [R2](/r2)) and saving a reference to it.
 
 <TypeScriptExample filename="index.ts">
 
@@ -610,7 +632,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 			return await response.json(); // Could exceed 1 MiB
 		});
 
-		// ✅ Good: Store large data externally and return a reference
+		// ✅ Good: Store large structured data externally and return a reference
 		const dataRef = await step.do("fetch and store large dataset", async () => {
 			const response = await fetch("https://api.example.com/large-dataset");
 			const data = await response.json();

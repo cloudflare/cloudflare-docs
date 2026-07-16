@@ -1,8 +1,11 @@
 ---
 title: Durable Object Base Class
+description: API reference for the DurableObject abstract base class and its handler methods.
 pcx_content_type: concept
 sidebar:
   order: 1
+products:
+  - durable-objects
 ---
 
 import {
@@ -56,9 +59,7 @@ class MyDurableObject(DurableObject):
 
 ### `fetch`
 
-- <code>
-  	fetch(request <Type text="Request" />)
-  </code>
+- <code>fetch(request <Type text="Request" />)</code>
   : <Type text="Response" /> | <Type text="Promise<Response>" />- Takes an HTTP
   [Request](https://developers.cloudflare.com/workers/runtime-apis/request/) and
   returns an HTTP
@@ -77,7 +78,9 @@ class MyDurableObject(DurableObject):
 
 #### Example
 
-<TypeScriptExample>
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	async fetch(request: Request): Promise<Response> {
@@ -91,18 +94,29 @@ export class MyDurableObject extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject, Response
+from urllib.parse import urlparse
+
+class MyDurableObject(DurableObject):
+    async def fetch(self, request):
+        path = urlparse(request.url).path
+        if path == "/hello":
+            return Response("Hello, World!")
+        return Response("Not found", status=404)
+```
+
+</TabItem> </Tabs>
+
 ### `alarm`
 
-- <code>
-  	alarm(alarmInfo? <Type text="AlarmInvocationInfo" />)
-  </code>
+- <code>alarm(alarmInfo? <Type text="AlarmInvocationInfo" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />
   - Called by the system when a scheduled alarm time is reached.
-
   - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
-
   - This method can be `async`.
-
   - Refer to [Alarms](/durable-objects/api/alarms/) for more information.
 
 #### Parameters
@@ -117,7 +131,9 @@ export class MyDurableObject extends DurableObject<Env> {
 
 #### Example
 
-<TypeScriptExample>
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	async alarm(alarmInfo?: AlarmInvocationInfo): Promise<void> {
@@ -130,12 +146,23 @@ export class MyDurableObject extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    async def alarm(self, alarm_info=None):
+        if alarm_info and alarm_info.isRetry:
+            print(f"Alarm retry attempt {alarm_info.retryCount}")
+        await self.process_scheduled_task()
+```
+
+</TabItem> </Tabs>
+
 ### `webSocketMessage`
 
-- <code>
-  	webSocketMessage(ws <Type text="WebSocket" />, message{" "}
-  	<Type text="string | ArrayBuffer" />)
-  </code>
+- <code>webSocketMessage(ws <Type text="WebSocket" />, message <Type text="string | ArrayBuffer" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
   when an accepted WebSocket receives a message. - This method is not called for
   WebSocket control frames. The system will respond to an incoming [WebSocket
@@ -154,7 +181,9 @@ export class MyDurableObject extends DurableObject<Env> {
 
 #### Example
 
-<TypeScriptExample>
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
@@ -168,17 +197,28 @@ export class MyDurableObject extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    async def webSocketMessage(self, ws, message):
+        if isinstance(message, str):
+            ws.send(f"Received: {message}")
+        else:
+            ws.send(f"Received {len(message)} bytes")
+```
+
+</TabItem> </Tabs>
+
 ### `webSocketClose`
 
-- <code>
-  	webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />,
-  	reason <Type text="string" />, wasClean <Type text="boolean" />)
-  </code>
+- <code>webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />, reason <Type text="string" />, wasClean <Type text="boolean" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
-  when a WebSocket connection is closed. - You **must** call `ws.close(code,
-  reason)` inside this handler to complete the WebSocket close handshake.
-  Failing to reciprocate the close will result in `1006` errors on the client,
-  representing an abnormal closure per the WebSocket specification.
+  when a WebSocket connection is closed.
+  - With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the runtime automatically sends a reciprocal Close frame and transitions `readyState` to `CLOSED` before this handler is called. You do not need to call `ws.close()` — but doing so is safe (the call is silently ignored).
+  - On older compatibility dates (before `2026-04-07`), you **must** call `ws.close(code, reason)` inside this handler to complete the WebSocket close handshake. Failing to reciprocate the close will result in `1006` errors on the client, representing an abnormal closure per the WebSocket specification.
   - This method can be `async`.
 
 #### Parameters
@@ -194,11 +234,15 @@ export class MyDurableObject extends DurableObject<Env> {
 
 #### Example
 
-<TypeScriptExample>
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-		// Complete the WebSocket close handshake
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07),
+		// the runtime has already completed the close handshake.
+		// On older compat dates, call ws.close(code, reason) here.
 		ws.close(code, reason);
 		console.log(`WebSocket closed: code=${code}, reason=${reason}`);
 	}
@@ -206,11 +250,22 @@ export class MyDurableObject extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    async def webSocketClose(self, ws, code, reason, was_clean):
+        ws.close(code, reason)
+        print(f"WebSocket closed: code={code}, reason={reason}")
+```
+
+</TabItem> </Tabs>
+
 ### `webSocketError`
 
-- <code>
-  	webSocketError(ws <Type text="WebSocket" />, error <Type text="unknown" />)
-  </code>
+- <code>webSocketError(ws <Type text="WebSocket" />, error <Type text="unknown" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
   when a non-disconnection error occurs on a WebSocket connection. - This method
   can be `async`.
@@ -226,7 +281,9 @@ export class MyDurableObject extends DurableObject<Env> {
 
 #### Example
 
-<TypeScriptExample>
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	async webSocketError(ws: WebSocket, error: unknown) {
@@ -236,6 +293,18 @@ export class MyDurableObject extends DurableObject<Env> {
 }
 ```
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    async def webSocketError(self, ws, error):
+        print(f"WebSocket error: {error}")
+```
+
+</TabItem> </Tabs>
 
 ## Properties
 

@@ -1,0 +1,26 @@
+---
+title: Hyperdrive support for private databases with Workers VPC
+description: Connect Hyperdrive to private databases through a Workers VPC service, with TLS verification, observability, and reusable services across configurations.
+products:
+  - hyperdrive
+date: 2026-04-29
+---
+
+You can now connect Hyperdrive to a private database through a [Workers VPC service](/workers-vpc/). This is the recommended way to connect Hyperdrive to a private database that is not exposed to the public Internet.
+
+When creating a Hyperdrive configuration in the Cloudflare dashboard, choose **Connect to private database** and then **Workers VPC**. From there, you can select an existing VPC service or create a new one inline by picking a Cloudflare Tunnel and entering your origin host and TCP port.
+
+You can also create a Hyperdrive configuration backed by a Workers VPC service from the command line:
+
+```sh
+npx wrangler hyperdrive create my-vpc-database \
+  --service-id <YOUR_VPC_SERVICE_ID> \
+  --database <DATABASE_NAME> \
+  --user <DATABASE_USER> \
+  --password <DATABASE_PASSWORD> \
+  --scheme postgresql
+```
+
+Workers VPC services are reusable across Hyperdrive configurations and can also be bound directly to Workers, so you can share the same private connection across multiple products.
+
+To get started, refer to [Connect Hyperdrive to a private database using Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/).

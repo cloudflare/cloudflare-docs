@@ -1,0 +1,18 @@
+---
+pcx_content_type: integration-guide
+description: Connect Azure VPN Gateway to Cloudflare WAN.
+products:
+  - cloudflare-wan
+title: Microsoft Azure VPN Gateway
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/azure-vpn-gateway"
+  product="networking-services"
+  params={{
+  ipsecTunnelUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+  tunnelEndpointsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+  staticRoutesUrl: "/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route",
+  tunnelHealthChecksUrl: "/cloudflare-wan/reference/tunnel-health-checks/"
+  }} />

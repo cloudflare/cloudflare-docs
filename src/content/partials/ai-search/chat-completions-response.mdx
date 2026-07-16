@@ -1,0 +1,61 @@
+---
+{}
+---
+
+When `stream` is set to `false` (default), the response is returned as a single JSON object:
+
+```json
+{
+	"id": "chatcmpl-abc123",
+	"object": "chat.completion",
+	"created": 1771886959,
+	"model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	"choices": [
+		{
+			"index": 0,
+			"message": {
+				"role": "assistant",
+				"content": "To train a llama to deliver coffee, start by building trust...",
+				"refusal": null
+			},
+			"logprobs": null,
+			"finish_reason": "stop"
+		}
+	],
+	"usage": {
+		"prompt_tokens": 6507,
+		"completion_tokens": 137,
+		"total_tokens": 6644
+	},
+	"chunks": [
+		{
+			"id": "chunk001",
+			"type": "text",
+			"score": 0.85,
+			"text": "Llamas can carry up to 3 drinks.",
+			"item": {
+				"key": "llama-logistics.md",
+				"timestamp": 1735689600
+			},
+			"scoring_details": {
+				"vector_score": 0.85
+			}
+		}
+	]
+}
+```
+
+When `stream` is set to `true`, the response is returned as server-sent events (SSE). The retrieved chunks are sent first as a single `chunks` event, followed by multiple `data` events containing the generated response in incremental pieces:
+
+```txt
+event: chunks
+data: [{"id":"chunk001","type":"text","score":0.85,"text":"...","item":{...},"scoring_details":{...}}]
+
+data: {"id":"id-123","created":1771887723,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"To"}}]}
+
+data: {"id":"id-123","created":1771887723,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" train a llama"}}]}
+
+data: [DONE]
+```
+
+This allows you to display the source chunks immediately while streaming the generated response to the user.

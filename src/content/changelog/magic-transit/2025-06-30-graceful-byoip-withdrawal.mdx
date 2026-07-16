@@ -1,0 +1,11 @@
+---
+title: Graceful withdrawal of BYOIP prefixes
+description: Configure AS prepending on BYOIP prefixes for smoother traffic migration
+date: 2025-06-30
+---
+
+Magic Transit customers can now configure AS prepending on their BYOIP prefixes advertised at the Cloudflare edge. This allows for smoother traffic migration and minimizes packet loss when changing providers.
+
+AS prepending makes the Cloudflare route less preferred by increasing the AS path length. You can use this to gradually shift traffic away from Cloudflare before withdrawing a prefix, avoiding abrupt routing changes.
+
+Prepending can be configured via the API or through BGP community values when peering with the Magic Transit routing table. For more information, refer to [Advertise prefixes](/magic-transit/how-to/advertise-prefixes/).

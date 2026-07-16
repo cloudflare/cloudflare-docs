@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Skip WAF managed rules for specific requests with exceptions.
+products:
+  - waf
 title: Create exceptions
 sidebar:
   order: 10
@@ -19,6 +22,21 @@ An exception can have one of the following behaviors (from highest to lowest pri
 - Skip one or more rules of WAF managed rulesets
 
 For more information on exceptions, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/) in the Ruleset Engine documentation.
+
+## Scope and execution order
+
+You can define exceptions at the account level and at the zone level. The scope of an exception determines which rules it affects:
+
+- An account-level exception only skips rules configured at the account level. It does not affect zone-level rules.
+- A zone-level exception only skips rules configured at the zone level. It does not affect account-level rules.
+
+Within each phase, account-level rulesets run before zone-level rulesets. This means that if you deploy managed rules at both the account level and the zone level, a request is evaluated against account-level rules first. An exception defined at the zone level will not prevent a match at the account level.
+
+For more information on how WAF features run in sequence, refer to [Security features interoperability](/waf/feature-interoperability/).
+
+:::note
+Exceptions apply to WAF managed rulesets only. To skip other security features such as [Browser Integrity Check](/waf/tools/browser-integrity-check/) or [Zone Lockdown](/waf/tools/zone-lockdown/), create a custom rule with the [skip action](/waf/custom-rules/skip/) and select the specific products you want to skip.
+:::
 
 ## Next steps
 

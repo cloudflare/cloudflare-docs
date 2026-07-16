@@ -1,0 +1,22 @@
+---
+---
+
+The `cloudflared` daemon can stream logs from any tunnel in your account to the local command line. `cloudflared` must be installed on both your local machine and the origin server.
+
+1. On your local machine, authenticate `cloudflared` to your Cloudflare account:
+
+   ```sh
+   cloudflared tunnel login
+   ```
+
+2. Run `cloudflared tail` for a specific tunnel:
+
+   ```sh
+   cloudflared tail <UUID>
+   ```
+
+   For a more structured view of the JSON message, you can pipe the output to tools like [jq](https://stedolan.github.io/jq/):
+
+   ```sh
+   cloudflared tail --output=json <UUID> | jq .
+   ```

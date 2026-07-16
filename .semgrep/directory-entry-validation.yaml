@@ -1,0 +1,49 @@
+rules:
+  - id: directory-entry-wrong-extension
+    languages: [generic]
+    message: >-
+      Directory entry files must use the .yaml extension, not .yml.
+      Rename this file to use .yaml instead.
+      (add [skip style guide checks] to commit message to skip)
+    severity: MEDIUM
+    paths:
+      include:
+        - "/src/content/directory/*.yml"
+    patterns:
+      # Match the name field — every directory entry has one, so this fires
+      # once per .yml file to flag the wrong extension.
+      - pattern-regex: "^name: "
+
+  - id: directory-entry-missing-id
+    languages: [yaml]
+    message: >-
+      Directory entry is missing a required id field.
+      Run "tools/directory-entry-ids" to generate one automatically.
+      (add [skip style guide checks] to commit message to skip)
+    severity: MEDIUM
+    paths:
+      include:
+        - "/src/content/directory/*.yaml"
+        - "/src/content/directory/*.yml"
+    patterns:
+      - pattern: |
+          name: $NAME
+      - pattern-not-inside: |
+          id: ...
+          ...
+
+  - id: directory-entry-invalid-id
+    languages: [generic]
+    message: >-
+      Directory entry has an invalid id. The id must be exactly 6 characters
+      composed only of: abcdefghijkmnopqrstuvwxyzACDEFGHJKLMNPQRTUVWXY34679.
+      Run "tools/directory-entry-ids" to generate a valid id.
+      (add [skip style guide checks] to commit message to skip)
+    severity: MEDIUM
+    paths:
+      include:
+        - "/src/content/directory/*.yaml"
+        - "/src/content/directory/*.yml"
+    patterns:
+      - pattern-regex: "^id: "
+      - pattern-not-regex: "^id: [abcdefghijkmnopqrstuvwxyzACDEFGHJKLMNPQRTUVWXY34679]{6}$"

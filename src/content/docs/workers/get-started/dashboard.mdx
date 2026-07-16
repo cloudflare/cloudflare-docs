@@ -1,11 +1,14 @@
 ---
 title: Dashboard
+description: Create and deploy a Cloudflare Worker using the Cloudflare dashboard.
 pcx_content_type: get-started
 sidebar:
   order: 3
 head:
   - tag: title
     content: Get started - Dashboard
+products:
+  - workers
 ---
 
 import { Render, DashButton } from "~/components";
@@ -37,14 +40,14 @@ To get started with a new Workers application:
 Applications started in the dashboard are set up with Git to help kickstart your development workflow. To continue developing on your repository, you can run:
 
 ```bash
-# clone you repository locally
+# clone your repository locally
 git clone <git repo URL>
 
-# be sure you are in the root directory
+# make sure you are in the root directory
 cd <directory>
 ```
 
-Now, you can preview and test your changes by [running Wrangler in your local development environment](/workers/development-testing/). Once you are ready to deploy you can run:
+Now, you can preview and test your changes by [running Wrangler in your local development environment](/workers/local-development/). Once you are ready to deploy you can run:
 
 ```bash
 # adds the files to git tracking

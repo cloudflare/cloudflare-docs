@@ -27,6 +27,12 @@ Type: `string`
 
 Name of the application the domain belongs to (for example, 'Cloudflare Dashboard').
 
+## AppliedMaxTTL
+
+Type: `int`
+
+Maximum TTL cap applied to the response records, in seconds. Set to 0 when no cap was applied.
+
 ## AuthoritativeNameServerIPs
 
 Type: `array[string]`
@@ -170,6 +176,12 @@ Name or names of category that the queried domains belongs to (for example, ['Ph
 Type: `array[string]`
 
 The IPs used to correlate existing FQDN matching policy between Gateway DNS and Gateway proxy.
+
+## InternalDNSDurationMs
+
+Type: `int`
+
+The time it took for the internal DNS to respond.
 
 ## InternalDNSFallbackStrategy
 
@@ -429,6 +441,12 @@ Type: `string`
 
 String that represents the JSON array with the returned resource records (for example, '[{"name": "example.com", "type": "CNAME", "class": "IN", "ttl": 3600, "rdata": "cname.example.com."}]').
 
+## ResponseTimeMs
+
+Type: `int`
+
+Total response time of the DNS request in milliseconds.
+
 ## SrcIP
 
 Type: `string`
@@ -453,6 +471,12 @@ Type: `int`
 
 The port used by the client when they sent the DNS request (for example, 0).
 
+## TenantID
+
+Type: `string`
+
+The tenant ID of the DNS request, if exists.
+
 ## TimeZone
 
 Type: `string`
@@ -464,6 +488,12 @@ Time zone used to calculate the current time, if a matched rule was scheduled wi
 Type: `string`
 
 Method used to pick the time zone for the schedule (from rule/ from user ip/ from local time).
+
+## UpstreamRecordTTLs
+
+Type: `array[int]`
+
+TTL of each record in the upstream response, in seconds. Maps one-to-one with the resource records (for example, [3600, 300]).
 
 ## UserID
 

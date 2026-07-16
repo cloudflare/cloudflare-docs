@@ -1,0 +1,125 @@
+---
+/**
+ * TypeScriptExample — author one ```ts block, render synced JS + TS tabs.
+ * The JS variant is generated at build time, so the MDX stays single-source.
+ *
+ * CF source: cloudflare-docs/src/components/TypeScriptExample.astro
+ *
+ * Mapping notes:
+ *   - Upstream scrapes the raw code from Expressive Code's copy-button
+ *     `data-code` attribute. Nimbus renders fenced blocks with Shiki and
+ *     attaches copy buttons client-side, so the raw source is recovered
+ *     from the rendered `<pre><code>` text instead.
+ *   - With a `filename`, both tabs render through `<Code>` so the title
+ *     bar matches upstream; without one, the TS tab re-uses the
+ *     already-rendered slot HTML untouched.
+ *   - `playground` appends a "Run Worker in Playground" link built from the
+ *     generated JS (upstream's Expressive Code plugin has no Shiki analogue,
+ *     so the link is rendered directly via the shared LinkButton).
+ *   - `code` is spread onto every rendered `<Code>` block, mirroring upstream.
+ */
+import { parse } from "node-html-parser";
+import { format } from "prettier";
+import tsBlankSpace from "ts-blank-space";
+import lzstring from "lz-string";
+import type { ComponentProps } from "astro/types";
+import { Code } from "../ui/code";
+import { LinkButton } from "../ui/link-button";
+import { TabItem, Tabs } from "../ui/tabs";
+
+interface Props {
+	filename?: string;
+	omitTabs?: boolean;
+	playground?: boolean;
+	code?: ComponentProps<typeof Code>;
+}
+
+const { filename, omitTabs = false, playground = false, code } = Astro.props;
+
+const slot = await Astro.slots.render("default");
+// `blockTextElements: {}` — by default node-html-parser keeps <pre> content
+// as an unparsed raw-text blob, which makes `pre code` unmatchable.
+const codeEl = parse(slot, { blockTextElements: {} }).querySelector("pre code");
+
+if (!codeEl) {
+	throw new Error(
+		`[TypeScriptExample] Expected a fenced \`\`\`ts code block as the only child (on "${Astro.url.pathname}").`,
+	);
+}
+
+// `.text` is node-html-parser's entity-decoded text content; Shiki keeps
+// the newlines between line spans, so this round-trips the original source.
+let raw = codeEl.text;
+
+// Upstream convention: `compatibilityDate: "$today"` becomes the build date.
+raw = raw.replaceAll(
+	/(?<=compatibilityDate:\s*)"\$today"/gi,
+	`"${new Date().toISOString().split("T")[0]}"`,
+);
+
+const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
+
+// Serialise the generated JS into a Workers module bundle and lz-compress it
+// into the playground fragment, matching upstream's workers-playground plugin.
+let playgroundHref: string | undefined;
+if (playground) {
+	const worker = new FormData();
+	worker.set(
+		"index.js",
+		new Blob([js], { type: "application/javascript+module" }),
+		"index.js",
+	);
+	worker.set(
+		"metadata",
+		new Blob([JSON.stringify({ main_module: "index.js" })], {
+			type: "application/json",
+		}),
+	);
+	const serialised = new Response(worker);
+	const encoded = lzstring.compressToEncodedURIComponent(
+		`${serialised.headers.get("content-type")}:${await serialised.text()}`,
+	);
+	playgroundHref = `https://workers.cloudflare.com/playground#${encoded}`;
+}
+
+const Wrapper = omitTabs ? Fragment : Tabs;
+const wrapperProps = omitTabs ? {} : { syncKey: "workersExamples" };
+---
+
+<div>
+	<Wrapper {...wrapperProps}>
+		<TabItem label="JavaScript">
+			<Code
+				{...code}
+				lang="js"
+				code={js}
+				meta={filename
+					? `title="${filename.replace(".ts", ".js")}"`
+					: undefined}
+			/>
+			{
+				playgroundHref && (
+					<div class="flex justify-end pt-3">
+						<LinkButton
+							href={playgroundHref}
+							variant="primary"
+							target="_blank"
+							rel="noopener"
+						>
+							Run Worker in Playground
+						</LinkButton>
+					</div>
+				)
+			}
+		</TabItem>
+		<TabItem label="TypeScript">
+			{
+				filename ? (
+					<Code {...code} lang="ts" code={raw} meta={`title="${filename}"`} />
+				) : (
+					<Fragment set:html={slot} />
+				)
+			}
+		</TabItem>
+	</Wrapper>
+</div>

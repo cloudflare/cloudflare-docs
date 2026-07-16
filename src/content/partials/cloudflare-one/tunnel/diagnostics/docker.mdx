@@ -1,0 +1,53 @@
+---
+params:
+  - metricsURL
+  - defaultMetricsURL
+---
+
+`cloudflared` reads diagnostic data from the <a href={props.metricsURL}>tunnel metrics server</a>. To get diagnostic logs, the metrics server must be exposed from the Docker container and reachable from the host machine.
+
+1. Determine the <a href={props.defaultMetricsURL}>metrics server port</a> for the `cloudflared` instance running in Docker.
+
+2. Ensure the container is deployed with port forwarding enabled. The diagnostic feature will request information from the Docker instance using local port `20241`, therefore you should forward port `20241` to the container port obtained in Step 1:
+
+   ```sh
+   docker run -d -p 20241:<metrics_port> docker.io/cloudflare/cloudflared tunnel ...
+   ```
+
+3. Verify that you can reach the metrics server address from the Docker host environment:
+
+   ```sh
+   curl localhost:20241/diag/tunnel
+   ```
+
+   This command should return a JSON:
+
+   ```json
+   {
+     "tunnelID": "ef96b330-a7f5-4bce-a00e-827ce5be077f",
+     "connectorID": "d236670a-9f74-422f-adf1-030f5c5f0523",
+     "connections": [
+       { "isConnected": true, "protocol": 1, "edgeAddress": "198.41.192.167"},
+       {"isConnected": true, "protocol": 1, "edgeAddress": "198.41.200.113", "index": 1},
+       {"isConnected": true, "protocol": 1, "edgeAddress": "198.41.192.47", "index": 2},
+       {"isConnected": true, "protocol": 1, "edgeAddress": "198.41.200.73", "index": 3}
+     ],
+     "icmp_sources": ["192.168.1.243", "fe80::c59:bd4a:e815:ed6"]
+   }
+   ```
+
+4. Run the diagnostic using the Docker container ID:
+
+   ```sh
+   cloudflared tunnel diag --diag-container-id=<containerID>
+   ```
+
+   Alternatively, you can specify the container's name instead of its ID:
+
+   ```sh
+   cloudflared tunnel diag --diag-container-id=<containerName>
+   ```
+
+   Running the diagnostic command with the container ID allows `cloudflared` to collect information from the Docker environment such as logs and container details.
+
+This command will output the status of each diagnostic task and place a `cloudflared-diag-YYYY-MM-DDThh-mm-ss.zip` file in your working directory.

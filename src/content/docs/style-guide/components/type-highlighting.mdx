@@ -3,11 +3,13 @@ title: Type highlighting
 description: Components for styling type information for CLI/function parameters.
 styleGuide:
   component: Type
+products:
+  - style-guide
 ---
 
 ## Type
 
-```mdx live
+```mdx
 import { Type } from "~/components";
 
 <Type text="Promise<T | string | ArrayBuffer>" />
@@ -15,7 +17,7 @@ import { Type } from "~/components";
 
 ## MetaInfo
 
-```mdx live
+```mdx
 import { MetaInfo } from "~/components";
 
 <MetaInfo text="(default: false) optional" />
@@ -23,7 +25,7 @@ import { MetaInfo } from "~/components";
 
 ## Combined example
 
-```mdx live
+```mdx
 import { Type, MetaInfo } from "~/components";
 
 - `name` <Type text="string" />

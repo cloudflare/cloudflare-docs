@@ -1,24 +1,40 @@
 ---
 pcx_content_type: concept
+description: Redirect large numbers of URLs with Bulk Redirects at the account level.
+products:
+  - rules
 title: Bulk Redirects
 sidebar:
   order: 3
 head:
   - tag: title
     content: Bulk Redirects
+tags:
+  - Redirects
 ---
 
 import { Render } from "~/components";
 
-Bulk Redirects allow you to define a large number of URL redirects at the account level. These redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
+Bulk Redirects allow you to define a large number of URL redirects at the account level, which can apply across domains in your account. These redirects navigate the user from a source URL to a target URL using a given HTTP status code. URL redirection is also known as URL forwarding.
 
-Unlike dynamic URL redirects created in [Single Redirects](/rules/url-forwarding/single-redirects/), Bulk Redirects are essentially static — they do not support string replacement operations or regular expressions. However, you can configure URL redirect parameters that affect their URL matching behavior and their runtime behavior.
+Unlike dynamic URL redirects created in [Single Redirects](/rules/url-forwarding/single-redirects/), Bulk Redirects are essentially static. They do not support string replacement operations or regular expressions. However, you can configure URL redirect parameters that affect how source URLs are matched and how the redirect is performed.
 
 <Render
 	file="snippets-alternative"
 	product="rules"
 	params={{ suffix: "and customized redirect logic" }}
 />
+
+---
+
+## Bulk Redirects and the WAF
+
+Bulk Redirects run after the WAF in the request processing pipeline. This means that:
+
+- If a [WAF custom rule](/waf/custom-rules/) or [rate limiting rule](/waf/rate-limiting-rules/) blocks a request, the Bulk Redirect will not execute.
+- If a WAF rule logs or challenges a request that subsequently passes, the firewall event will still appear in [Security Events](/waf/analytics/security-events/) and [Logpush](/logs/) — even though the request is later redirected. This is expected behavior.
+
+For the complete request processing order, refer to [Rules execution order](/rules/url-forwarding/#execution-order).
 
 ---
 

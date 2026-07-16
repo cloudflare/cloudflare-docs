@@ -1,6 +1,11 @@
 ---
 pcx_content_type: how-to
+description: Citrix ADC (SAML) in Zero Trust integrations.
+products:
+  - cloudflare-one
 title: Citrix ADC (SAML)
+tags:
+  - SAML
 ---
 
 Cloudflare One can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Cloudflare One.
@@ -67,7 +72,7 @@ To set up Citrix ADC (SAML) as your identity provider:
    bind authentication vserver nsidp -policy samlPol_CloudflareAccess
    ```
 
-3. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+3. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
 
 4. Under **Your identity providers**, select **Add new identity provider**.
 

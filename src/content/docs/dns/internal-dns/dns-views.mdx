@@ -1,9 +1,14 @@
 ---
 pcx_content_type: how-to
+description: Manage DNS views to return different responses by network.
+products:
+  - dns
 title: Manage DNS views
 sidebar:
   order: 3
   label: Views
+tags:
+  - Private networks
 ---
 
 import { Details, Render, Tabs, TabItem, DashButton } from "~/components";
@@ -28,6 +33,10 @@ When setting up DNS views, observe the following conditions:
 <TabItem label="API">
 
 Use the [Create Internal DNS View](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/create/) endpoint. For each view you create, list all the internal zones that should be grouped under that view.
+
+:::note
+DNS views are managed at the account level. Make sure your API token includes **Account** > **DNS Views** > **Edit** permission.
+:::
 
 </TabItem> </Tabs>
 

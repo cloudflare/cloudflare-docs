@@ -2,7 +2,40 @@
 {}
 ---
 
-Use the `cloudflare_managed_headers` Terraform resource to configure Managed Transforms. For example:
+import { Tabs, TabItem, Details } from "~/components";
+
+<Tabs syncKey="terraformVersion">
+<TabItem label="Terraform (v5)">
+
+<Details header="Required API token permissions">
+
+All of the following [token permissions](/fundamentals/api/reference/permissions/) are required:
+
+- `Managed headers Write`
+- `Account Rulesets Read`
+
+</Details>
+
+Configure the [`cloudflare_managed_transforms`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/managed_transforms) resource:
+
+```tf
+resource "cloudflare_managed_transforms" "tf_example" {
+  zone_id = var.cloudflare_zone_id
+
+  managed_request_headers = [{
+    id      = "add_visitor_location_headers"
+    enabled = true
+  }]
+
+  managed_response_headers = [{
+    id      = "remove_x-powered-by_header"
+    enabled = true
+  }]
+}
+```
+
+</TabItem>
+<TabItem label="Terraform (v4)">
 
 ```tf
 resource "cloudflare_managed_headers" "tf_example" {
@@ -19,5 +52,8 @@ resource "cloudflare_managed_headers" "tf_example" {
   }
 }
 ```
+
+</TabItem>
+</Tabs>
 
 Make sure you include the Managed Transforms you are updating in the correct object (`managed_request_headers` or `managed_response_headers`).

@@ -1,6 +1,10 @@
 import { useState } from "react";
+import {
+	MdOutlineThumbUp,
+	MdOutlineThumbDown,
+	MdCheckCircleOutline,
+} from "react-icons/md";
 import { Turnstile } from "@marsidev/react-turnstile";
-import { MdOutlineThumbUp, MdOutlineThumbDown } from "react-icons/md";
 import { track } from "~/util/zaraz";
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
@@ -30,26 +34,28 @@ function Buttons({
 	setOption: SetState<"yes" | "no" | undefined>;
 }) {
 	return (
-		<>
+		<div className="mt-3 flex gap-2">
 			<button
 				onClick={() => {
 					setTitle("What did you like?");
 					setOption("yes");
 				}}
-				className="cursor-pointer bg-transparent"
+				className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border-0 bg-[var(--sl-color-bg-nav)] px-3 text-[13px] font-medium text-[var(--sl-color-text)] shadow-none ring-1 ring-[var(--sl-color-hairline)] transition-colors duration-150 hover:bg-[var(--color-cl1-gray-9)] hover:ring-[var(--sl-color-gray-3)] dark:hover:bg-[var(--color-cl1-gray-2)]"
 			>
-				<MdOutlineThumbUp className="text-sl hover:text-accent text-2xl" />
+				<MdOutlineThumbUp size={18} className="opacity-70" />
+				<span>Yes</span>
 			</button>
 			<button
 				onClick={() => {
 					setTitle("What went wrong?");
 					setOption("no");
 				}}
-				className="cursor-pointer bg-transparent"
+				className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border-0 bg-[var(--sl-color-bg-nav)] px-3 text-[13px] font-medium text-[var(--sl-color-text)] shadow-none ring-1 ring-[var(--sl-color-hairline)] transition-colors duration-150 hover:bg-[var(--color-cl1-gray-9)] hover:ring-[var(--sl-color-gray-3)] dark:hover:bg-[var(--color-cl1-gray-2)]"
 			>
-				<MdOutlineThumbDown className="text-sl hover:text-accent text-2xl" />
+				<MdOutlineThumbDown size={18} className="opacity-70" />
+				<span>No</span>
 			</button>
-		</>
+		</div>
 	);
 }
 
@@ -89,36 +95,62 @@ function Form({
 	}
 
 	return (
-		<form action={submit}>
-			{questions[option].map(([label, value]) => (
-				<label key={value} className="mb-2 block text-xs">
-					<input
-						type="radio"
-						name="reason"
-						value={value}
-						onChange={() => setSelectedReason(true)}
-						className="mr-2 align-middle"
-					/>
-					{label}
-				</label>
-			))}
+		<form action={submit} className="mt-3 flex flex-col gap-2">
+			<fieldset className="m-0 border-0 p-0">
+				<legend className="sr-only">
+					{option === "yes" ? "What did you like?" : "What went wrong?"}
+				</legend>
+				<div className="flex flex-col gap-1.5">
+					{questions[option].map(([label, value]) => (
+						<label
+							key={value}
+							className="relative flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] text-[var(--sl-color-text)] ring-1 ring-[var(--sl-color-hairline)] transition-colors duration-150 select-none hover:bg-[var(--color-cl1-gray-9)] hover:ring-[var(--sl-color-gray-3)] has-[:checked]:ring-[var(--sl-color-text-accent)] has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[var(--sl-color-text-accent)] has-[:focus-visible]:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
+						>
+							<input
+								type="radio"
+								name="reason"
+								value={value}
+								onChange={() => setSelectedReason(true)}
+								className="peer absolute top-0 left-0 h-full w-full cursor-pointer opacity-0"
+							/>
+							{/* Outer ring — becomes accent-colored when checked or focused */}
+							<span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full ring-1 ring-[var(--sl-color-gray-3)] transition-all duration-150 peer-checked:ring-2 peer-checked:ring-[var(--sl-color-text-accent)] peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--sl-color-text-accent)]">
+								{/* Inner dot — visible when checked or focused */}
+								<span className="h-2 w-2 scale-0 rounded-full bg-[var(--sl-color-text-accent)] transition-transform duration-150 [label:has(:checked)_&]:scale-100 [label:has(:focus-visible)_&]:scale-100" />
+							</span>
+							<span className="leading-tight">{label}</span>
+						</label>
+					))}
+				</div>
+			</fieldset>
 			<textarea
 				name="info"
+				rows={2}
 				placeholder="Tell us more about your experience."
-				className="mb-2 block resize-none text-xs"
+				className="mt-1 w-full resize-none rounded-lg border-0 bg-white px-3 py-2 text-[13px] text-[var(--sl-color-text)] ring-1 ring-[var(--sl-color-hairline)] transition-all duration-150 outline-none placeholder:text-[var(--sl-color-gray-3)] focus:ring-2 focus:ring-[var(--sl-color-text-accent)] dark:bg-[var(--sl-color-bg-nav)]"
 			/>
 			<Turnstile
 				siteKey="0x4AAAAAAA645TGhxiBMQ7Gu"
 				options={{ size: "compact" }}
 				onSuccess={() => setPassedTurnstile(true)}
 			/>
-			<input
+			<button
 				type="submit"
-				value="Submit"
 				disabled={!selectedReason || !passedTurnstile}
-				className="mt-2"
-			/>
+				className="mt-1 inline-flex h-8 w-max cursor-pointer items-center justify-center rounded-lg border-0 bg-[var(--sl-color-text-accent)] px-4 text-[13px] font-medium text-white shadow-none transition-colors duration-150 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+			>
+				Submit
+			</button>
 		</form>
+	);
+}
+
+function SuccessState() {
+	return (
+		<div className="mt-3 flex items-center gap-2 rounded-lg bg-[var(--color-cl1-green-9)] px-3 py-2.5 text-[13px] text-[var(--color-cl1-green-5)] dark:bg-[var(--color-cl1-green-0)] dark:text-[var(--color-cl1-green-7)]">
+			<MdCheckCircleOutline size={16} />
+			<span>Thank you for your feedback!</span>
+		</div>
 	);
 }
 
@@ -129,11 +161,18 @@ export default function FeedbackPrompt() {
 
 	return (
 		<div id="feedback-form">
-			<h2>{title}</h2>
-			{!option && <Buttons setTitle={setTitle} setOption={setOption} />}
+			{!submitted && (
+				<p className="m-0 text-[11px] font-semibold tracking-widest text-[var(--sl-color-gray-3)] uppercase">
+					{title}
+				</p>
+			)}
+			{!option && !submitted && (
+				<Buttons setTitle={setTitle} setOption={setOption} />
+			)}
 			{!submitted && (
 				<Form setTitle={setTitle} setSubmitted={setSubmitted} option={option} />
 			)}
+			{submitted && <SuccessState />}
 		</div>
 	);
 }

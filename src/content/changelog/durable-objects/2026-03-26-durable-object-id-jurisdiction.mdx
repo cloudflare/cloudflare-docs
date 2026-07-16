@@ -1,0 +1,30 @@
+---
+title: Access Durable Object jurisdiction via `ctx.id.jurisdiction`
+description: Read the jurisdiction of a Durable Object from within the object itself.
+products:
+  - durable-objects
+  - workers
+date: 2026-03-26
+---
+
+`ctx.id.jurisdiction` inside a Durable Object now reports the [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) the object was created in — for example `"eu"` when accessed through `env.MY_DURABLE_OBJECT.jurisdiction("eu")` — so you can make region-aware decisions without passing the jurisdiction through method arguments or persisting it in storage. For the full list of ID-construction paths that preserve `jurisdiction`, refer to the [Durable Object ID documentation](/durable-objects/api/id/#jurisdiction).
+
+```js
+export class RegionalRoom extends DurableObject {
+	async fetch(request) {
+		// "eu" when accessed through env.MY_DURABLE_OBJECT.jurisdiction("eu")
+		const region = this.ctx.id.jurisdiction;
+		return new Response(`Hello from ${region ?? "the default region"}!`);
+	}
+}
+
+// Worker
+export default {
+	async fetch(request, env) {
+		const stub = env.MY_DURABLE_OBJECT.jurisdiction("eu").getByName("general");
+		return stub.fetch(request);
+	},
+};
+```
+
+`ctx.id.jurisdiction` is `undefined` for Durable Objects that were not created in a jurisdiction-restricted namespace. Alarms scheduled before 2026-03-15 also do not have `jurisdiction` stored; to backfill the value, reschedule the alarm from a `fetch()` or RPC handler.

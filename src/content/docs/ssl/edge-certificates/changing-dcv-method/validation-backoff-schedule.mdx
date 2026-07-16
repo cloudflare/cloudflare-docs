@@ -1,5 +1,7 @@
 ---
 pcx_content_type: reference
+products:
+  - ssl
 title: Validation backoff schedule
 sidebar:
   order: 1
@@ -55,6 +57,10 @@ As presented in the following table, most of the checks take place on the first 
 In manual processes, it is possible that you fall behind schedule when you place the token, meaning that it may not be validated immediately.
 
 In automatic processes, most validations complete within the first five minutes, unless there is a setup misconfiguration.
+
+### Cloudflare for SaaS
+
+For [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/), the same backoff schedule applies to automatic DCV retries. If you need to trigger an immediate recheck — for example, after your customer has placed the DCV token — send a [PATCH request](/api/resources/custom_hostnames/methods/edit/) to the custom hostname with the current `ssl` settings. This resets the backoff timer and triggers a new validation attempt immediately.
 
 | Retry Attempt | In Seconds | In Minutes | In Hours |
 | ------------- | ---------- | ---------- | -------- |

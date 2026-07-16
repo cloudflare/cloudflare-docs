@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Available DNS zone setup types and how to configure them.
+products:
+  - dns
 title: DNS setups
 sidebar:
   order: 3
@@ -64,6 +67,28 @@ If you are on an Enterprise plan, you can use [subdomain setup](/dns/zone-setups
 
 
 </Details>
+
+## Configure DNS-only zones via API
+
+You can configure zones to operate in DNS-only mode (no HTTP proxying) at the account level or per zone using the API.
+
+**Account-level default** (applies to zones created after the setting is applied):
+
+```bash
+curl --request PATCH \
+  https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings \
+  --header "Content-Type: application/json" \
+  --data '{"zone_defaults":{"zone_mode":"dns_only"}}'
+```
+
+**Per-zone** (for existing zones):
+
+```bash
+curl --request PATCH \
+  https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings \
+  --header "Content-Type: application/json" \
+  --data '{"zone_mode":"dns_only"}'
+```
 
 :::note
 If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycast network, check out [DNS Firewall](/dns/dns-firewall/).

@@ -1,0 +1,41 @@
+---
+params:
+  - metricsURL
+  - defaultMetricsURL
+---
+
+The diagnostic feature will request data from the <a href={props.metricsURL}>tunnel metrics server</a> using ports `20241` to `20245`. You will need to use port forwarding to allow the local `cloudflared` instance to connect to the metrics server on one of these ports.
+
+1. Determine the tunnel's <a href={props.defaultMetricsURL}>metrics server port</a>.
+
+2. Enable port forwarding:
+
+   ```sh
+   kubectl port-forward <pod> <diagnostic_port>:<metrics_port>
+   ```
+
+   - `<pod>`: Name of the pod where the tunnel is running
+   - `<diagnostic_port>` is any local port in the range `20241` to `20245`.
+   - `<metrics_port>` is the Kubernetes pod port for the `cloudflared` instance you want to diagnose (obtained in Step 1).
+
+   For example, if you set the metrics server address to `0.0.0.0:12345`:
+
+   ```sh
+   kubectl port-forward cloudflared-6d4897585b-r8kfz 20244:12345
+   ```
+
+   Connections made to local port `20244` are forwarded to port `12345` of the pod that is running the tunnel.
+
+3. Run the diagnostic:
+
+   ```sh
+   cloudflared tunnel diag --diag-pod-id=<podID>
+   ```
+
+   If the pod has multiple applications/services running and `cloudflared` is not the first in the pod, you must specify either the container ID or name:
+
+   ```sh
+   cloudflared tunnel diag --diag-pod-id=<podID> --diag-container-id=<containerName>
+   ```
+
+This command will output the status of each diagnostic task and place a `cloudflared-diag-YYYY-MM-DDThh-mm-ss.zip` file in your working directory.

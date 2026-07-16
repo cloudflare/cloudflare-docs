@@ -1,13 +1,20 @@
 ---
 pcx_content_type: how-to
+description: One-time PIN login in Zero Trust integrations.
+products:
+  - cloudflare-one
 title: One-time PIN login
 sidebar:
   order: 1
+tags:
+  - REST API
 ---
 
 import { Tabs, TabItem, Render, APIRequest } from "~/components";
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
+
+New Zero Trust organizations use the [Cloudflare identity provider](/cloudflare-one/integrations/identity-providers/cloudflare/) as their default login method. OTP is no longer added automatically, but you can set it up at any time using the following steps.
 
 For example, if your team uses Okta but you are collaborating with someone outside your organization, you can use OTP to grant access to guests.
 
@@ -17,7 +24,7 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
 2. Under **Your identity providers**, select **Add new identity provider**.
 3. Select **One-time PIN**.
 
@@ -64,7 +71,7 @@ To grant a user access to an application, simply add their email address to an [
 To log in to Access using the one-time PIN:
 
 1. Go to the application protected by Access.
-2. On the Access login page, enter your email address and select **Send me a code**.
+2. On the Access login page, enter your email address and select **Send login code**.
    ![Enter email to sign in with OTP.](~/assets/images/cloudflare-one/identity/otp/otp1.png)
 3. If the email is allowed by an Access policy, you will receive a PIN in your inbox. This secure PIN expires 10 minutes after the initial request.
 
@@ -77,8 +84,20 @@ By design, blocked users will not receive an email. The login page will always s
    ![Enter PIN to sign in.](~/assets/images/cloudflare-one/identity/otp/otp2.png)
    - If the code was valid, you will be redirected to the application.
    - If the code was invalid, you will see **That account does not have access.**
+   - If you see **This One-Time PIN has already been used**, the code was already consumed. This typically occurs when an email security tool on your network automatically scans the email and follows the link before you enter the code. Select **Request new code** and try again.
 
 :::note
 
-Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-logs).
+Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#authentication-logs).
 :::
+
+## OTP behavior and limits
+
+Keep the following behavior in mind when troubleshooting OTP logins:
+
+- Each PIN is single-use.
+- Requesting a new PIN invalidates the previous PIN.
+- Cloudflare only sends the email if the user is allowed by an Access policy.
+- Third-party mail security tools may consume the link before the user does, which makes the code appear already used.
+
+If users repeatedly fail to sign in, request a fresh code and verify that your mail filtering or link-scanning product is allowlisting `noreply@notify.cloudflare.com`.

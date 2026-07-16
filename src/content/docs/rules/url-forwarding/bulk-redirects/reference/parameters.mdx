@@ -1,11 +1,16 @@
 ---
 pcx_content_type: reference
+description: Configurable parameters for Bulk Redirect rules.
+products:
+  - rules
 title: URL redirect parameters
 sidebar:
   order: 3
+tags:
+  - Redirects
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, Render } from "~/components";
 
 A URL redirect has a source URL, a target URL, a status code, and some additional parameters that affect its URL matching behavior and runtime behavior.
 
@@ -60,6 +65,10 @@ If `true`, the redirect URL will keep the query string of the original request.
 
 For example, a URL redirect from `/my-folder/` to `/other-folder/` with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value` to `/other-folder/?name=value`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value` to `/other-folder/`.
 
+:::caution
+When **Preserve query string** is enabled, the final redirect URL uses the original request's query string. Any query string on the target URL is discarded — even when the original request has no query string of its own. To add a fixed query parameter to redirected URLs, leave **Preserve query string** disabled and include the parameter directly in the target URL.
+:::
+
 ## Preserve path suffix
 
 API field: `preserve_path_suffix` <Type text="Boolean" /> <MetaInfo text="default: true" />
@@ -70,13 +79,9 @@ For example, when both **Subpath matching** and **Preserve path suffix** are ena
 
 ## Status code
 
-API field: `status_code` <Type text="Integer" /> <MetaInfo text="default: 301" />
+API field: `status_code` <Type text="Integer" /> <MetaInfo text="default: 301" /><br/>
+API values: `301`, `302`, `307`, or `308`.
 
-The HTTP status code returned to the client when redirecting.
+The HTTP status code returned to the client when redirecting:
 
-The value must be one of the following:
-
-- `301` (Moved permanently)
-- `302` (Found, also known as Moved temporarily)
-- `307` (Temporary redirect)
-- `308` (Permanent redirect)
+<Render file="redirects-status-codes" product="rules" />

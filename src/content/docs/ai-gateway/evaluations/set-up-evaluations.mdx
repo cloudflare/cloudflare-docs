@@ -1,9 +1,12 @@
 ---
 pcx_content_type: how-to
 title: Set up Evaluations
+description: Create datasets, select evaluators, and run evaluations for your AI Gateway logs.
 sidebar:
   order: 2
   hidden: true
+products:
+  - ai-gateway
 ---
 
 This guide walks you through the process of setting up an evaluation in AI Gateway. These steps are done in the [Cloudflare dashboard](https://dash.cloudflare.com/).
@@ -34,7 +37,7 @@ Please keep in mind that datasets currently use `AND` joins, so there can only b
 | Provider        | specific providers                                           | the selected AI provider.                 |
 | AI Models       | specific models                                              | the selected AI model.                    |
 | Cost            | less than, greater than                                      | cost, specifying a threshold.             |
-| Request type    | Universal, Workers AI Binding, WebSockets                    | the type of request.                      |
+| Request type    | Workers AI Binding, WebSockets                               | the type of request.                      |
 | Tokens          | Total tokens, Tokens In, Tokens Out                          | token count (less than or greater than).  |
 | Duration        | less than, greater than                                      | request duration.                         |
 | Feedback        | equals, does not equal (thumbs up, thumbs down, no feedback) | feedback type.                            |

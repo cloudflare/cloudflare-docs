@@ -15,11 +15,11 @@ A jurisdiction can only be set at database creation time via wrangler, REST API 
 npx wrangler@latest d1 create db-with-jurisdiction --jurisdiction eu
 ```
 
-```
+```sh
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/d1/database" \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     --data '{"name": "db-wth-jurisdiction", "jurisdiction": "eu" }'
+     --data '{"name": "db-with-jurisdiction", "jurisdiction": "eu" }'
 ```
 
 To learn more, visit D1's data location [documentation](/d1/configuration/data-location/).

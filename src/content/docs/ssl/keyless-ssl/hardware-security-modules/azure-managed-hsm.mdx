@@ -1,8 +1,13 @@
 ---
 pcx_content_type: tutorial
+difficulty: Advanced
+products:
+  - ssl
 title: Azure Managed HSM
 description: >-
-  This tutorial uses Microsoft Azure’s Managed HSM to deploy a VM with the Keyless SSL daemon. Follow these instructions to deploy your keyless server.
+  This tutorial uses Microsoft Azure's Managed HSM to deploy a VM with the Keyless SSL daemon. Follow these instructions to deploy your keyless server.
+tags:
+  - Azure
 ---
 
 This tutorial uses [Microsoft Azure’s Managed HSM](https://azure.microsoft.com/en-us/updates/akv-managed-hsm-public-preview/) — a FIPS 140-2 Level 3 certified implementation — to deploy a VM with the Keyless SSL daemon.
@@ -36,7 +41,7 @@ Set up the Azure CLI (used to access the private key).
 
 For example, if you were using macOS:
 
-```
+```bash
 brew install azure-cli
 ```
 
@@ -78,7 +83,7 @@ brew install azure-cli
 
 Once you save the config file, restart `gokeyless` and verify that it started successfully:
 
-```
+```bash
 sudo systemctl restart gokeyless.service
 sudo systemctl status gokeyless.service -l
 ```

@@ -1,8 +1,11 @@
 ---
 title: Events and parameters
+description: Pass data to Workflows using events and parameters, including request details, database records, and webhook payloads.
 pcx_content_type: concept
 sidebar:
   order: 6
+products:
+  - workflows
 ---
 
 import {
@@ -21,7 +24,7 @@ Events are a powerful part of a Workflow, as you often want a Workflow to act on
 
 You can pass parameters to a Workflow in three ways:
 
-- As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/#trigger) when triggering a Workflow from a Worker.
+- As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/general/#trigger) when triggering a Workflow from a Worker.
 - Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
 - Via the `step.waitForEvent` API, which allows a Workflow instance to wait for an event (and optional data) to be received _while it is running_. Workflow instances can be sent events from external services over HTTP or via the Workers API for Workflows.
 
@@ -81,7 +84,7 @@ Because `waitForEvent` is part of the `WorkflowStep` API, you can call it multip
 Calling `waitForEvent` requires you to specify an `type` (up to 100 characters [^1]), which is used to match the corresponding `type` when sending an event to a Workflow instance.
 
 :::caution
-The `waitForEvent` type parameter only supports letters, digits, `-`, and `_`. Currently including `.` is not supported and will result in a `workflow.invalid_event_type` error. 
+The `waitForEvent` type parameter only supports letters, digits, `-`, and `_`. Currently including `.` is not supported and will result in a `workflow.invalid_event_type` error.
 :::
 
 For example, to wait for billing webhook:
@@ -126,7 +129,7 @@ You can specify a timeout between 1 second and up to 365 days.
 
 :::caution[Timeout behavior]
 
-When `waitForEvent` times out, the Workflow will throw an error and the instance will fail. If you want your Workflow to continue even if the event is not received, wrap the `waitForEvent` call in a try-catch block:
+When `waitForEvent` times out, the Workflow will throw an error and the instance will fail. If you want your Workflow to continue even if the event is not received, wrap the `waitForEvent` call in a `try...catch` block:
 
 <TypeScriptExample>
 
@@ -188,17 +191,41 @@ You can send an event to a Workflow instance _before_ it reaches the correspondi
 
 ## TypeScript and type parameters
 
-By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following, with `payload` (your data), `timestamp`, and `instanceId` properties:
+By default, the `WorkflowEvent` passed to the `run` method of your Workflow definition has a type that conforms to the following:
 
 ```ts
-export type WorkflowEvent<T> = {
-	// The data passed as the parameter when the Workflow instance was triggered
-	payload: T;
-	// The timestamp that the Workflow was triggered
-	timestamp: Date;
-	// ID of the current Workflow instance
-	instanceId: string;
+export type WorkflowCronSchedule = {
+	/** Cron expression that triggered this event. */
+	cron: string;
+	/** Timestamp of the scheduled trigger, in milliseconds since the Unix epoch. */
+	scheduledTime: number;
 };
+
+export type WorkflowEvent<T> = {
+	/** The data passed as the parameter when the Workflow instance was triggered. */
+	payload: Readonly<T>;
+	/** The timestamp that the Workflow was triggered. */
+	timestamp: Date;
+	/** ID of the current Workflow instance. */
+	instanceId: string;
+	/** Name of the current Workflow. */
+	workflowName: string;
+	/** Metadata for Workflow instances created by a cron schedule. */
+	schedule?: WorkflowCronSchedule;
+};
+```
+
+When a Workflow instance is created by a cron schedule configured on a Workflow binding, `event.schedule` includes the cron expression that created the instance and the scheduled trigger time:
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env> {
+	async run(event: WorkflowEvent<unknown>, step: WorkflowStep) {
+		if (event.schedule) {
+			console.log(event.schedule.cron);
+			console.log(new Date(event.schedule.scheduledTime));
+		}
+	}
+}
 ```
 
 You can optionally type these events by defining your own type and passing it as a [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables) to the `WorkflowEvent`:
@@ -220,17 +247,17 @@ When you pass your `YourEventType` to `WorkflowEvent` as a type parameter, the `
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
 
 export class MyWorkflow extends WorkflowEntrypoint {
-    // Pass your type as a type parameter to WorkflowEvent
-    // The 'payload' property will have the type of your parameter.
-    async run(event: WorkflowEvent<YourEventType>, step: WorkflowStep) {
-        let state = await step.do("my first step", async () => {
-          // Access your properties via event.payload
+	// Pass your type as a type parameter to WorkflowEvent
+	// The 'payload' property will have the type of your parameter.
+	async run(event: WorkflowEvent<YourEventType>, step: WorkflowStep) {
+		let state = await step.do("my first step", async () => {
+			// Access your properties via event.payload
           let userEmail = event.payload.userEmail
           let createdTimestamp = event.payload.createdTimestamp
         })
 
         await step.do("my second step", async () => { /* your code here */ })
-    }
+	}
 }
 ```
 

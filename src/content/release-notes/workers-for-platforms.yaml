@@ -6,7 +6,7 @@ entries:
   - publish_date: "2024-04-16"
     title: Workers for Platforms available to all users
     description: |-
-      Workers for Platforms will be available for all users through the new pay-as-you-go plan. For more information, refer to the [blog post](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans/).
+      Workers for Platforms will be available for all users through the new Pay-as-you-go plan. For more information, refer to the [blog post](https://blog.cloudflare.com/browser-rendering-api-ga-rolling-out-cloudflare-snippets-swr-and-bringing-workers-for-platforms-to-our-paygo-plans/).
   - publish_date: "2023-05-18"
     title: Outbound Workers, Custom Limits and Tail Workers
     description: |-

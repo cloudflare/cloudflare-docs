@@ -1,8 +1,11 @@
 ---
 title: Download objects
+description: Download objects from R2 using the dashboard, Workers API, S3 API, or CLI tools.
 pcx_content_type: how-to
 sidebar:
   order: 4
+products:
+  - r2
 ---
 
 import { Render, Tabs, TabItem, DashButton } from "~/components";
@@ -99,7 +102,7 @@ For details on generating and using presigned URLs, refer to [Presigned URLs](/r
 
 ## Download via Wrangler
 
-Use [Wrangler](/workers/wrangler/install-and-update/) to download objects. Run the [`r2 object get` command](/workers/wrangler/commands/#r2-object-get):
+Use [Wrangler](/workers/wrangler/install-and-update/) to download objects. Run the [`r2 object get` command](/workers/wrangler/commands/r2/#r2-object-get):
 
 ```sh
 wrangler r2 object get test-bucket/image.png

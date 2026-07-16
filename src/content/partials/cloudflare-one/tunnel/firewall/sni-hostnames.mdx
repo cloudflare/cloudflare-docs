@@ -1,0 +1,11 @@
+---
+---
+
+If your firewall enforces Server Name Indication (SNI), also allow these hostnames on port `7844`:
+
+| Hostname                                | Port | Protocols                |
+| --------------------------------------- | ---- | ------------------------ |
+| `_v2-origintunneld._tcp.argotunnel.com` | 7844 | TCP (`http2`)            |
+| `cftunnel.com`                          | 7844 | TCP/UDP (`http2`/`quic`) |
+| `h2.cftunnel.com`                       | 7844 | TCP (`http2`)            |
+| `quic.cftunnel.com`                     | 7844 | UDP (`quic`)             |

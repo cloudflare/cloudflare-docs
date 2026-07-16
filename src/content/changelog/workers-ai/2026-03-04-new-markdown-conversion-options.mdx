@@ -1,0 +1,45 @@
+---
+title: New conversion options for Markdown Conversion
+description: Control how images, HTML, and PDFs are processed when converting to Markdown
+date: 2026-03-04
+---
+
+import { Badge, MetaInfo, Render, TypeScriptExample } from "~/components";
+
+You can now customize how the [Markdown Conversion](/workers-ai/features/markdown-conversion/) service processes different file types by passing a `conversionOptions` object.
+
+Available options:
+
+- **Images**: Set the language for AI-generated image descriptions
+- **HTML**: Use CSS selectors to extract specific content, or provide a hostname to resolve relative links
+- **PDF**: Exclude metadata from the output
+
+Use the [`env.AI`](/workers-ai/features/markdown-conversion/usage/binding/) binding:
+
+<TypeScriptExample>
+
+
+```typescript
+await env.AI.toMarkdown(
+	{ name: "page.html", blob: new Blob([html]) },
+	{
+		conversionOptions: {
+			html: { cssSelector: "article.content" },
+			image: { descriptionLanguage: "es" },
+		},
+	},
+);
+```
+
+</TypeScriptExample>
+
+Or call the REST API:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
+  -H 'Authorization: Bearer {API_TOKEN}' \
+  -F 'files=@index.html' \
+  -F 'conversionOptions={"html": {"cssSelector": "article.content"}}'
+```
+
+For more details, refer to [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/).

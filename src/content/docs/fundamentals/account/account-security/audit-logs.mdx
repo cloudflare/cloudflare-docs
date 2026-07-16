@@ -1,37 +1,38 @@
 ---
 pcx_content_type: reference
-title: Audit Logs - version 2 (beta)
+title: Audit Logs - version 2
+description: Use Cloudflare Audit Logs v2 to track user-initiated and system-initiated actions across your account via the dashboard, API, or Logpush.
 sidebar:
   order: 6
   label: Audit Logs - v2
-  badge: 
-    text: Beta
-
+products:
+  - fundamentals
+  - audit-logs
 ---
 
-import { DashButton, APIRequest } from "~/components"
+import { DashButton, APIRequest } from "~/components";
 
 Cloudflare Audit Logs are account-based. All user-initiated actions are recorded automatically across both the Cloudflare API and dashboard. System-initiated logs are also captured to reflect actions taken automatically by Cloudflare systems, such as configuration updates, background processes, or internal policy enforcement.
 
-When a user-initiated action triggers additional automated behavior, corresponding system-initiated logs may be generated. In some cases, these system-initiated logs include additional enrichments that provide more context about what was changed, offering deeper visibility into the full lifecycle of the action.
+When a user-initiated action triggers additional automated behavior, corresponding system-initiated logs will be generated. In some cases, user-initiated logs include additional enrichments that provide more context about what was changed, offering deeper visibility into the full lifecycle of the action.
 
 When an action occurs, it is streamed through Cloudflare's audit logging pipeline and stored. This ensures consistent visibility into activity across all products.
 
 For more detailed information about how the user-initiated actions are logged automatically, refer to the [Cloudflare Blog](https://blog.cloudflare.com/introducing-automatic-audit-logs/).
 
 :::note
-A transition plan from Audit Logs v1 to Audit Logs v2 will be communicated in due course. 
+A transition plan from Audit Logs v1 to Audit Logs v2 will be communicated in due course.
 :::
 
 ## Key features
 
-Audit Logs (version 2) provide a unified and standardized system for tracking and recording actions across Cloudflare products. This system enhances transparency and accountability by offering comprehensive insights into user-initiated and system-initiated activities within your Cloudflare environment. 
+Audit Logs (version 2) provide a unified and standardized system for tracking and recording actions across Cloudflare products. This system enhances transparency and accountability by offering comprehensive insights into user-initiated and system-initiated activities within your Cloudflare environment.
 
 - **Standardized logging**: Audit logs are automatically generated in a consistent format across all Cloudflare services, ensuring uniformity and eliminating inconsistencies.
-- **Expanded product coverage**: Audit Logs covers 111 products, capturing actions from key endpoints, such as `/accounts`, `/zones`, `/user`, and `/memberships` APIs.
+- **Expanded product coverage**: Audit Logs covers ~95% of Cloudflare products, capturing actions from key endpoints, such as `/accounts`, `/zones`, `/user`, and `/memberships` APIs.
 - **Granular filtering**: Uniformly formatted logs allow for precise filtering by actions, actors, methods, and resources, facilitating efficient investigations.
 - **Enhanced context and transparency**: Each log entry includes detailed context, such as the authentication method used, the interface (API or dashboard) through which the action was performed, and mappings to Cloudflare Ray IDs for improved traceability.
-- **Comprehensive activity capture**: Beyond create, edit, and delete actions, Audit Logs records GET requests and failed attempts, ensuring no critical activity is overlooked. 
+- **Comprehensive activity capture**: Audit Logs records create, update, and delete actions across all supported products. Selective logging of `GET` requests for sensitive read operations is planned for a future release.
 
 ## Retention
 
@@ -41,9 +42,13 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 
 - Enterprise customers can use [Logpush](/logs/logpush/) to store audit logs beyond 18 months.
 
+:::note
+Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) are available at GA. These Beta logs will expire on ~April 9, 2026. Logs generated after GA will be retained for the full 18 months. Older logs remain available in Audit Logs v1.
+:::
+
 ## Access Audit Logs
 
-You can retrieve audit logs using either the API or the Cloudflare dashboard. 
+You can retrieve audit logs using the Cloudflare dashboard, the API, or Logpush.
 
 ### API
 
@@ -56,8 +61,8 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/audit
 Below is an example request to retrieve audit logs for a certain period of time along with its corresponding response. Replace the example values in the URL with your actual values:
 
 - `account_id`: Your Cloudflare account identifier.
-- `Since` (required): Start date for the audit log retrieval in the format yyyy-mm-dd.​
-- `Before` (required) : End date for the audit log retrieval in the format yyyy-mm-dd.
+- `since` (required): Start date for the audit log retrieval. Accepts `yyyy-mm-dd` (interpreted as UTC) or RFC3339 timestamp (`yyyy-mm-ddTHH:MM:SSZ`).
+- `before` (required): End date for the audit log retrieval. Same format as `since`.
 
 ```bash
 GET https://api.cloudflare.com/client/v4/accounts/1234567890abcdef/logs/audit?since=2025-03-01T00:00:00Z&before=2025-03-26T23:59:59Z
@@ -65,39 +70,37 @@ GET https://api.cloudflare.com/client/v4/accounts/1234567890abcdef/logs/audit?si
 
 ```json title="Example response"
 {
-  "result": [
-    {
-      "action": "zone.settings.change",
-      "actor": {
-        "email": "user@example.com",
-        "id": "0987654321abcdef"
-      },
-      "ip": "192.0.2.1",
-      "method": "PUT",
-      "interface": "dashboard",
-      "resources": [
-        {
-          "resource_id": "zone123",
-          "resource_type": "zone"
-        }
-      ],
-      "timestamp": "2025-03-15T14:25:37Z"
-    }
-    // Additional log entries
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"action": "zone.settings.change",
+			"actor": {
+				"email": "user@example.com",
+				"id": "0987654321abcdef"
+			},
+			"ip": "192.0.2.1",
+			"method": "PUT",
+			"interface": "dashboard",
+			"resources": [
+				{
+					"resource_id": "zone123",
+					"resource_type": "zone"
+				}
+			],
+			"timestamp": "2025-03-15T14:25:37Z"
+		}
+		// Additional log entries
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
-For more information refer to the [API documentation](https://developers.cloudflare.com/api/resources/accounts/subresources/logs/subresources/audit/methods/list/#(params)%20default%20%3E%20(param)%20since%20%3E%20(schema)). 
+For more information refer to the [API documentation](<https://developers.cloudflare.com/api/resources/accounts/subresources/logs/subresources/audit/methods/list/#(params)%20default%20%3E%20(param)%20since%20%3E%20(schema)>).
 
 ### Dashboard
 
-To access audit logs in the Cloudflare dashboard:
-
-In the Cloudflare dashboard, go to the **Audit Logs** page.
+To access audit logs in the Cloudflare dashboard, go to **Manage Account** > **Audit Logs**.
 
 <DashButton url="/?to=/:account/audit-log" />
 
@@ -105,7 +108,7 @@ In the Cloudflare dashboard, go to the **Audit Logs** page.
 The Audit Logs v2 is shown by default. You can switch between Audit Logs v2 and v1 as needed.
 :::
 
-## Logpush job
+### Logpush
 
 :::note
 For customers who already have a Logpush job set up for Audit Logs v1, note that a separate Logpush job must be configured for [Audit Logs v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/) (dataset). We will communicate the timeline for when Logpush Audit Logs v1 will be deprecated and turned off.
@@ -115,7 +118,7 @@ To create a Logpush job:
 
 1. In the Cloudflare dashboard, go to the **Logpush** page.
 
-    <DashButton url="/?to=/:account/logs" />
+   <DashButton url="/?to=/:account/logs" />
 
 2. Select **Create a Logpush job**.
 3. In **Select a destination**, select the destination of your choice and add the destination details.
@@ -132,7 +135,7 @@ Audit logs can be initiated either by users or the system. Understanding the typ
 
 #### User initiated Audit Logs
 
-Track actions performed directly by users through Cloudflare interfaces (dashboard or API). These logs capture who performed the action, when it occurred, and what resource was affected. User initiated actions can be performed by three actors: 
+Track actions performed directly by users through Cloudflare interfaces (dashboard or API). These logs capture who performed the action, when it occurred, and what resource was affected. User initiated actions can be performed by three actors:
 
 - `actor_type="user"`: Action was performed by an individual user.
 - `actor_type="Cloudflare_admin"`: Action was performed by Cloudflare.
@@ -142,7 +145,7 @@ Track actions performed directly by users through Cloudflare interfaces (dashboa
 
 Record changes made automatically by Cloudflare systems, without direct user input. These logs provide visibility into internal processes, automated tasks, and security events. Some entries may include associated user context for traceability (`actor_type="system"`).
 
-### Activity Scope 
+### Activity Scope
 
 #### Account Activity Logs
 
@@ -150,73 +153,100 @@ Contain events scoped to a single Cloudflare account. These logs are filterable 
 
 #### User Profile Activity Logs
 
-Reflect actions associated with a user's login (email) across multiple accounts. These logs enable cross-account tracking and can be filtered by `user ID` or `email`. They are visible on any account the user had access to at the time of the activity. User Profile Activity Logs can be filtered using `resource_scope ="user"`. 
+Reflect actions associated with a user's login (email) across multiple accounts. These logs enable cross-account tracking and can be filtered by `user ID` or `email`. They are visible on any account the user had access to at the time of the activity. User Profile Activity Logs can be filtered using `resource_scope ="user"`.
 
 The `GET /memberships` endpoint supports cross-account access. To query memberships, use the parameter `resource_scope=memberships`.
 
+#### Organization Activity Logs
+
+Contain events scoped to specific [Cloudflare Organizations](/fundamentals/organizations/). These logs capture user-initiated actions performed by Org Admins through organization-level APIs.
+
+:::note
+Cloudflare Organizations is Enterprise-only and currently in public beta.
+:::
+
+You can retrieve Organization audit logs using either the API or the Cloudflare dashboard.
+
+##### API access
+
+Retrievable via the Audit Logs v2 API:
+
+```bash
+GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit
+```
+
+##### Dashboard access
+
+To access organization audit logs in the Cloudflare dashboard, go to **Organizations** > _(select your organization)_ > **Manage Organization** > **Audit Logs**.
+
+If you are viewing account-level audit logs and the account belongs to an organization where you are an Organization Super Administrator, you can navigate to the parent organization's audit logs using the **View Organization Audit Logs** button.
+
+:::note
+Organization-level audit logs are separate from account-level audit logs. Actions performed within a specific account continue to be available via the account-level Audit Logs UI, Audit Logs v2 API, and Logpush.
+
+This release covers user-initiated actions only. Support for system-initiated actions and Logpush for organizations will be added in future releases.
+:::
+
 ## Example how to query Audit Logs
 
-Use the following example to get a list of audit logs for a user account.
+Use the following example to get a list of audit logs for a Cloudflare account.
 
-<APIRequest
-  method="GET"
-  path="/accounts/{account_id}/logs/audit"
-/>
+<APIRequest method="GET" path="/accounts/{account_id}/logs/audit" />
 
 ```json title="Example response"
 {
-  "errors": [
-    {
-      "message": "message"
-    }
-  ],
-  "result": [
-    {
-      "account": {
-        "id": "4bb334f7c94c4a29a045f03944f072e5",
-        "name": "Example Account"
-      },
-      "action": {
-        "description": "Add Member",
-        "result": "success",
-        "time": "2024-04-26T17:31:07Z",
-        "type": "create"
-      },
-      "actor": {
-        "id": "f6b5de0326bb5182b8a4840ee01ec774",
-        "context": "dash",
-        "email": "alice@example.com",
-        "ip_address": "198.41.129.166",
-        "token_id": "token_id",
-        "token_name": "token_name",
-        "type": "user"
-      },
-      "raw": {
-        "cf_ray_id": "8e9b1c60ef9e1c9a",
-        "method": "POST",
-        "status_code": 200,
-        "uri": "/accounts/4bb334f7c94c4a29a045f03944f072e5/members",
-        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1.15"
-      },
-      "resource": {
-        "id": "id",
-        "product": "members",
-        "request": {},
-        "response": {},
-        "scope": {},
-        "type": "type"
-      },
-      "zone": {
-        "id": "id",
-        "name": "example.com"
-      }
-    }
-  ],
-  "result_info": {
-    "count": "1",
-    "cursor": "ASqdKd7dKgxh-aZ8bm0mZos1BtW4BdEqifCzNkEeGRzi_5SN_-362Y8sF-C1TRn60_6rd3z2dIajf9EAPyQ_NmIeAMkacmaJPXipqvP7PLU4t72wyqBeJfjmjdE="
-  },
-  "success": true
+	"errors": [
+		{
+			"message": "message"
+		}
+	],
+	"result": [
+		{
+			"account": {
+				"id": "4bb334f7c94c4a29a045f03944f072e5",
+				"name": "Example Account"
+			},
+			"action": {
+				"description": "Add Member",
+				"result": "success",
+				"time": "2024-04-26T17:31:07Z",
+				"type": "create"
+			},
+			"actor": {
+				"id": "f6b5de0326bb5182b8a4840ee01ec774",
+				"context": "dash",
+				"email": "alice@example.com",
+				"ip_address": "198.41.129.166",
+				"token_id": "token_id",
+				"token_name": "token_name",
+				"type": "user"
+			},
+			"raw": {
+				"cf_ray_id": "8e9b1c60ef9e1c9a",
+				"method": "POST",
+				"status_code": 200,
+				"uri": "/accounts/4bb334f7c94c4a29a045f03944f072e5/members",
+				"user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1.15"
+			},
+			"resource": {
+				"id": "id",
+				"product": "members",
+				"request": {},
+				"response": {},
+				"scope": {},
+				"type": "type"
+			},
+			"zone": {
+				"id": "id",
+				"name": "example.com"
+			}
+		}
+	],
+	"result_info": {
+		"count": "1",
+		"cursor": "ASqdKd7dKgxh-aZ8bm0mZos1BtW4BdEqifCzNkEeGRzi_5SN_-362Y8sF-C1TRn60_6rd3z2dIajf9EAPyQ_NmIeAMkacmaJPXipqvP7PLU4t72wyqBeJfjmjdE="
+	},
+	"success": true
 }
 ```
 
@@ -227,10 +257,10 @@ Use the following example to get a list of audit logs for a user account.
 The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action, such as API or dashboard (`dash`).
 
 ### Action
- 
-The action field captures the nature of the event and whether it was successful. It includes a high-level type (e.g., `view`, `create`, `update`, `delete`), a specific description (such as `SSO_LOGIN`), the timestamp of when the action occurred, and the result (`success` or `failure`).  
 
-All `GET` requests are captured as `view` actions in Audit Logs.
+The action field captures the nature of the event and whether it was successful. It includes a high-level type (e.g., `create`, `update`, `delete`), a specific description (such as `SSO_LOGIN`), the timestamp of when the action occurred, and the result (`success` or `failure`).
+
+`view` actions correspond to `GET` requests. These are defined in the schema but not currently captured in Audit Logs. Selective `GET` logging for sensitive read operations is planned for a future release.
 
 ### Account
 
@@ -243,5 +273,3 @@ The resource identifies the object impacted by the action. It includes the resou
 ### Audit Log ID
 
 This is a unique identifier for the log record itself. It can be used for deduplication, correlation, or referencing specific actions during investigations.
-
-

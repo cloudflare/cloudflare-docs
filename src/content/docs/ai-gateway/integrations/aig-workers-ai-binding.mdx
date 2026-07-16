@@ -1,9 +1,13 @@
 ---
-title: Workers AI
+title: Set up Workers AI with AI Gateway
 pcx_content_type: tutorial
-reviewed: 2024-10-17
+difficulty: Beginner
+sidebar:
+  order: 4
 description: >-
   This guide will walk you through setting up and deploying a Workers AI project. You will use Workers, an AI Gateway binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
+products:
+  - ai-gateway
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
@@ -56,8 +60,8 @@ To bind Workers AI to your Worker, add the following to the end of your [Wrangle
 ```jsonc
 {
 	"ai": {
-		"binding": "AI"
-	}
+		"binding": "AI",
+	},
 }
 ```
 
@@ -65,11 +69,11 @@ To bind Workers AI to your Worker, add the following to the end of your [Wrangle
 
 Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
-You will need to have your `gateway id` for the next step. You can learn [how to create an AI Gateway in this tutorial](/ai-gateway/get-started/).
+You can use `"default"` as the gateway ID in the next step. AI Gateway automatically creates a default gateway on the first authenticated request. Alternatively, you can [create a gateway manually](/ai-gateway/get-started/) and use its ID.
 
 ## 3. Run an inference task containing AI Gateway in your Worker
 
-You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct-fast`](/workers-ai/models/llama-3.1-8b-instruct-fast/), to answer a question. Your gateway ID is found on the dashboard.
+You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`llama-3.1-8b-instruct-fast`](/workers-ai/models/llama-3.1-8b-instruct-fast/), to answer a question.
 
 Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
@@ -90,7 +94,7 @@ export default {
 			},
 			{
 				gateway: {
-					id: "GATEWAYID", // Use your gateway label here
+					id: "default", // Uses the default gateway, or replace with your gateway ID
 					skipCache: true, // Optional: Skip cache if needed
 				},
 			},
@@ -108,7 +112,7 @@ Up to this point, you have created an AI binding for your Worker and configured 
 
 ## 4. Develop locally with Wrangler
 
-While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
+While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/general/#dev):
 
 ```bash
 npx wrangler dev
@@ -120,12 +124,7 @@ You will be prompted to log in after you run `wrangler dev`. When you run `npx w
 
 ```json
 {
-  "response": "A fascinating question!\n\nThe phrase \"Hello, World!\" originates from a simple computer program written in the early days of programming. It is often attributed to Brian Kernighan, a Canadian computer scientist and a pioneer in the field of computer programming.\n\nIn the early 1970s, Kernighan, along with his colleague Dennis Ritchie, were working on the C programming language. They wanted to create a simple program that would output a message to the screen to demonstrate the basic structure of a program. They chose the phrase \"Hello, World!\" because it was a simple and recognizable message that would illustrate how a program could print text to the screen.\n\nThe exact code was written in the 5th edition of Kernighan and Ritchie's book \"The C Programming Language,\" published in 1988. The code, literally known as \"Hello, World!\" is as follows:\n\n```
-main()
-{
-  printf(\"Hello, World!\");
-}
-```\n\nThis code is still often used as a starting point for learning programming languages, as it demonstrates how to output a simple message to the console.\n\nThe phrase \"Hello, World!\" has since become a catch-all phrase to indicate the start of a new program or a small test program, and is widely used in computer science and programming education.\n\nSincerely, I'm glad I could help clarify the origin of this iconic phrase for you!"
+  "response": "A fascinating question!\n\nThe phrase \"Hello, World!\" originates from a simple computer program written in the early days of programming. It is often attributed to Brian Kernighan, a Canadian computer scientist and a pioneer in the field of computer programming.\n\nIn the early 1970s, Kernighan, along with his colleague Dennis Ritchie, were working on the C programming language. They wanted to create a simple program that would output a message to the screen to demonstrate the basic structure of a program. They chose the phrase \"Hello, World!\" because it was a simple and recognizable message that would illustrate how a program could print text to the screen.\n\nThe exact code was written in the 5th edition of Kernighan and Ritchie's book \"The C Programming Language,\" published in 1988. The code, literally known as \"Hello, World!\" is as follows:\n\n    main()\n    {\n      printf(\"Hello, World!\");\n    }\n\nThis code is still often used as a starting point for learning programming languages, as it demonstrates how to output a simple message to the console.\n\nThe phrase \"Hello, World!\" has since become a catch-all phrase to indicate the start of a new program or a small test program, and is widely used in computer science and programming education.\n\nSincerely, I'm glad I could help clarify the origin of this iconic phrase for you!"
 }
 ```
 
@@ -154,3 +153,7 @@ https://hello-ai.<YOUR_SUBDOMAIN>.workers.dev
 Your Worker will be deployed to your custom [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain. You can now visit the URL to run your AI Worker.
 
 By completing this tutorial, you have created a Worker, connected it to Workers AI through an AI Gateway binding, and successfully ran an inference task using the Llama 3.1 model.
+
+## Next steps
+
+- [Workers bindings](/ai-gateway/usage/worker-binding-methods/) — Call third-party models, access gateway methods, and integrate with AI SDKs.

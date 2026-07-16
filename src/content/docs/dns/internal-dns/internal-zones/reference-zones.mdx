@@ -1,9 +1,13 @@
 ---
 pcx_content_type: how-to
+products:
+  - dns
 title: Reference zones
 description: Learn about reference zones. Cloudflare Internal DNS allows zones to reference others for query resolution when no direct record is found.
 sidebar:
   order: 4
+tags:
+  - Private networks
 ---
 
 import { Example, Render, Tabs, TabItem, DashButton } from "~/components";
@@ -38,6 +42,10 @@ A wildcard record (`*.example.local`) in the matching internal zone will take pr
 <TabItem label="API">
 
 Use the [Update DNS settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint. In `--json`, specify the `internal_dns` object with the parameter `reference_zone_id`.
+
+:::note
+If your API token is scoped to specific zones, make sure it includes both the zone you are updating and the zone you are referencing.
+:::
 
 <Example>
 <Render file="internal-reference-zone-api" product="dns" />

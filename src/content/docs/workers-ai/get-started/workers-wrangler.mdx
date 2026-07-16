@@ -7,6 +7,8 @@ head:
   - tag: title
     content: Get started - Workers and Wrangler
 description: Deploy your first Cloudflare Workers AI project using the CLI.
+products:
+  - workers-ai
 ---
 
 import { Render, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
@@ -101,7 +103,7 @@ Up to this point, you have created an AI binding for your Worker and configured 
 
 ## 4. Develop locally with Wrangler
 
-While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/#dev):
+While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/general/#dev):
 
 ```sh
 npx wrangler dev

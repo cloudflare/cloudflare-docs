@@ -1,15 +1,21 @@
 ---
 title: Data persistence with R2
 pcx_content_type: tutorial
+difficulty: Intermediate
 sidebar:
   order: 6
 description: Mount R2 buckets as local filesystem paths to persist data across sandbox lifecycles.
 reviewed: 2025-11-18
+products:
+  - sandbox
+  - r2
 ---
 
 import { Render, PackageManagers, TypeScriptExample } from "~/components";
 
 Mount object storage buckets as local filesystem paths to persist data across sandbox lifecycles. This tutorial uses Cloudflare R2, but the same approach works with any S3-compatible provider.
+
+This tutorial shows how to persist an external data directory mounted at `/data`. If you want the working project in `/workspace` to persist, refer to [Backup and restore](/sandbox/guides/backup-restore/).
 
 **Time to complete:** 20 minutes
 
@@ -176,13 +182,7 @@ Try this flow:
 Replace `YOUR_ACCOUNT_ID` in the endpoint URL with your Cloudflare account ID. Find it in the [dashboard](https://dash.cloudflare.com/) under **R2** > **Overview**.
 :::
 
-## 4. Local development limitation
-
-:::caution[Requires production deployment]
-Bucket mounting does not work with `wrangler dev` because it requires FUSE support that wrangler does not currently provide. You must deploy to production to test this feature. All other Sandbox SDK features work locally - only `mountBucket()` and `unmountBucket()` require production deployment.
-:::
-
-## 5. Deploy to production
+## 4. Deploy to production
 
 **Generate R2 API tokens:**
 1. Go to **R2** > **Overview** in the [Cloudflare dashboard](https://dash.cloudflare.com/)
@@ -210,7 +210,7 @@ npx wrangler deploy
 
 After deployment, wrangler outputs your Worker URL (e.g., `https://data-pipeline.yourname.workers.dev`).
 
-## 6. Test the persistence flow
+## 5. Test the persistence flow
 
 Now test against your deployed Worker. Replace `YOUR_WORKER_URL` with your actual Worker URL:
 
@@ -241,6 +241,7 @@ In this tutorial, you built a data pipeline that demonstrates filesystem persist
 - **Mounting buckets**: Use `mountBucket()` to make R2 accessible as a local directory
 - **Standard file operations**: Access mounted buckets using familiar filesystem commands (`cat`, Python `open()`, etc.)
 - **Automatic persistence**: Data written to mounted directories survives sandbox destruction
+- **Choose the right persistence model**: Use bucket mounts for external storage directories such as `/data`, and consider backup and restore when you need a persistent workspace under `/workspace`
 - **Credential management**: Configure R2 access using environment variables or explicit credentials
 
 ## Next steps

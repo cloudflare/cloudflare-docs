@@ -1,8 +1,11 @@
 ---
 title: Use your own player
+description: Play Cloudflare Stream videos with any HLS/DASH-compatible player on web, iOS, or Android.
 pcx_content_type: how-to
 sidebar:
   order: 1
+products:
+  - stream
 ---
 
 import { Render, Badge, DashButton } from "~/components";
@@ -15,7 +18,13 @@ Platform-specific guides:
 - [iOS (AVPlayer)](/stream/viewing-videos/using-own-player/ios/)
 - [Android (ExoPlayer)](/stream/viewing-videos/using-own-player/android/)
 
-## Fetch HLS and Dash manifests
+## Use HLS and Dash manifests
+
+:::caution
+
+Manifests are dynamic assets that may be updated at any time. Do not cache, proxy, or store manifests; always read them directly from Stream. Outdated manifests may be missing features or refer to assets which have been moved.
+
+:::
 
 ### URL
 
@@ -31,7 +40,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 #### LL-HLS playback <Badge text="Beta" variant="caution" size="small" />
 
-If a Live Inputs is enabled for the Low-Latency HLS beta, add the query string `?protocol=llhls` to the HLS manifest URL to test the low latency manifest in a custom player. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.
+If a Live Input is enabled for the Low-Latency HLS beta, add the query string `?protocol=llhls` to the HLS manifest URL to test the low latency manifest in a custom player. Refer to [Start a Live Stream](/stream/stream-live/start-stream-live/#use-the-api) to enable this option.
 
 ```txt title="HLS"
 https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.m3u8?protocol=llhls

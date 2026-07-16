@@ -1,0 +1,9 @@
+---
+title: Capture Wrangler command output in structured format
+description: New environment variables allow CI/CD pipelines to programmatically access deployment information
+products:
+  - workers
+date: 2025-11-03
+---
+
+You can now capture Wrangler command output in a structured [ND-JSON](https://github.com/ndjson/ndjson-spec) format by setting the [`WRANGLER_OUTPUT_FILE_PATH`](/workers/wrangler/system-environment-variables/#supported-environment-variables) or [`WRANGLER_OUTPUT_FILE_DIRECTORY`](/workers/wrangler/system-environment-variables/#supported-environment-variables) environment variables. This feature is particularly useful for CI/CD pipelines and automation tools that need programmatic access to deployment information such as worker names, version IDs, deployment URLs, and error details. Commands that support this feature include [`wrangler deploy`](/workers/wrangler/commands/#deploy), [`wrangler versions upload`](/workers/wrangler/commands/#versions), [`wrangler versions deploy`](/workers/wrangler/commands/#versions), and [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1).

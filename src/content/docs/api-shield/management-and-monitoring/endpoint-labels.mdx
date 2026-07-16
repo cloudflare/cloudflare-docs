@@ -1,17 +1,28 @@
 ---
 pcx_content_type: how-to
-
+description: Organize API endpoints and address vulnerabilities with managed and custom labels.
+products:
+  - api-shield
 title: Endpoint labeling service
 sidebar:
   order: 2
   label: Labeling service
+tags:
+  - GraphQL
 ---
 
-import { Render, Steps, Tabs, TabItem, DashButton } from "~/components";
+import {
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+	GlossaryTooltip,
+} from "~/components";
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
-Today, managed labels are useful for organizing endpoints by use case. In a future release, managed labels will automatically label endpoints by use case and those with informative or security risks, alerting you on endpoints that need attention.
+Managed labels help you organize endpoints by use case. Managed labels will also automatically identify endpoints with informative or security risks, alerting you on endpoints that need attention.
 
 User-defined labels can also be added to endpoints in API Shield by creating a label and adding it to an individual endpoint or multiple endpoints. User-defined labels will be useful for organizing your endpoints by owner, version, or type.
 
@@ -45,9 +56,13 @@ Use managed labels to identify endpoints by use case. Cloudflare may automatical
 
 `cf-llm`: Services that are (partially) powered by Large Language Model (LLM).
 
+`cf-mcp`: Add this label to endpoints that implement the [Model Context Protocol (MCP)](/agents/model-context-protocol/) for AI tool and data access.
+
 `cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
 
 `cf-web-page`: Add this label to endpoints that serve HTML pages.
+
+`cf-contains-ads`: Add this label to endpoints that serve web pages containing advertisements.
 
 :::note
 [Bot Fight Mode](/bots/get-started/bot-fight-mode/) will not block requests to endpoints labeled as `cf-rss-feed`.
@@ -77,6 +92,8 @@ Cloudflare automatically runs risk scans every 24 hours on your saved endpoints.
 
 `cf-risk-bola-pollution`: Automatically added when an endpoint experiences successful responses where parameters are found in multiple places in the request, as opposed to what is expected from the API's schema.
 
+`cf-risk-zombie`: Automatically added when a saved endpoint has not received traffic in 32 days.
+
 :::note
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
 :::
@@ -86,9 +103,9 @@ Cloudflare will only add authentication labels to endpoints with successful resp
 How you address risks to your endpoints will depend on its label(s). The following steps provide you with general guidelines on how to take action on them.
 
 <Steps>
-1. Review risks to endpoints. 
-   
-   View the endpoints labeled as risks and identify if they have been labeled for other risks. 
+1. Review risks to endpoints.
+
+   View the endpoints labeled as risks and identify if they have been labeled for other risks.
 
    For example, endpoints labeled `cf-risk-sensitive` and `cf-risk-missing-auth` or `cf-risk-mixed-auth` may contain sensitive data that is available to unauthenticated users.
 
@@ -98,7 +115,7 @@ How you address risks to your endpoints will depend on its label(s). The followi
 
 2. Review traffic to these labeled endpoints in Security Analytics.
 
-   Check for unexpected traffic sources and note any irregular traffic patterns. 
+   Check for unexpected traffic sources and note any irregular traffic patterns.
 
    :::caution[Filtering]
    Filtering by risk label includes all traffic to all endpoints labeled with that risk, not only the traffic that prompted Cloudflare to apply the label.
@@ -108,11 +125,56 @@ How you address risks to your endpoints will depend on its label(s). The followi
 
 3. Review your origin's authorization and authentication policies with your development team.
 
-   Speak with your developers or application owners in your organization to understand whether or not all requests to these endpoints should be authenticated. Modify your application to consistently enforce the authentication requirement for all traffic accessing these endpoints. 
+   Speak with your developers or application owners in your organization to understand whether or not all requests to these endpoints should be authenticated. Modify your application to consistently enforce the authentication requirement for all traffic accessing these endpoints.
 
-	Refer to [Authentication Posture](/api-shield/security/authentication-posture/) for more information.
-   
+   Refer to [Authentication Posture](/api-shield/security/authentication-posture/) for more information.
+
 </Steps>
+
+---
+
+## Analytics
+
+### GraphQL Analytics API
+
+You can query the matched operation and managed labels for individual requests using the [GraphQL Analytics API](/analytics/graphql-api/). The `webAssetsOperationId` and `webAssetsLabelsManaged` fields are available in the `httpRequestsAdaptive` and `httpRequestsAdaptiveGroups` datasets. Use [introspection](/analytics/graphql-api/features/discovery/introspection/) to explore the full schema and available filter operators.
+
+`webAssetsLabelsManaged` returns at most 10 labels per request.
+
+#### Example: query requests by managed label
+
+The following query returns the count of requests per operation ID and managed label set, filtered to requests where the matched operation carries the `cf-log-in` managed label.
+
+```graphql
+query GetAdaptiveGroups($start: DateTime!, $end: DateTime!) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			httpRequestsAdaptiveGroups(
+				filter: {
+					datetime_geq: $start
+					datetime_leq: $end
+					requestSource: "eyeball"
+					webAssetsLabelsManaged_hasany: ["cf-log-in"]
+				}
+				limit: 25
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					webAssetsOperationId
+					webAssetsLabelsManaged
+				}
+			}
+		}
+	}
+}
+```
+
+Replace `cf-log-in` with any [managed label](#managed-labels) or [risk label](#risk-labels). You can also omit the `webAssetsLabelsManaged_hasany` filter and use `webAssetsOperationId` as the sole dimension to group traffic by matched operation regardless of label.
+
+### Logpush
+
+You can export per-request Web Assets data to your storage or <GlossaryTooltip term="SIEM">SIEM system</GlossaryTooltip> of choice using [Logpush](/logs/logpush/). The `WebAssetsOperationID` and `WebAssetsLabelsManaged` fields are available in the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/#webassetslabelsmanaged).
 
 ---
 

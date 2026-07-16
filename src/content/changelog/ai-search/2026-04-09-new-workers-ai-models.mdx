@@ -1,0 +1,31 @@
+---
+title: New Workers AI models for text generation and embedding in AI Search
+description: AI Search adds four new Workers AI models including GLM, Qwen, and EmbeddingGemma.
+products:
+  - ai-search
+date: 2026-04-08
+---
+
+[AI Search](/ai-search/) now supports four additional [Workers AI](/workers-ai/) models across text generation and embedding.
+
+### Text generation
+
+| Model                        | Context window (tokens) |
+| ---------------------------- | ----------------------- |
+| `@cf/zai-org/glm-4.7-flash`  | 131,072                 |
+| `@cf/qwen/qwen3-30b-a3b-fp8` | 32,000                  |
+
+GLM-4.7-Flash is a lightweight model from Zhipu AI with a 131,072 token context window, suitable for long-document summarization and retrieval tasks. Qwen3-30B-A3B is a mixture-of-experts model from Alibaba that activates only 3 billion parameters per forward pass, keeping inference fast while maintaining strong response quality.
+
+### Embedding
+
+| Model                            | Vector dims | Input tokens | Metric |
+| -------------------------------- | ----------- | ------------ | ------ |
+| `@cf/qwen/qwen3-embedding-0.6b`  | 1,024       | 4,096        | cosine |
+| `@cf/google/embeddinggemma-300m` | 768         | 512          | cosine |
+
+Qwen3-Embedding-0.6B supports up to 4,096 input tokens, making it a good fit for indexing longer text chunks. EmbeddingGemma-300M from Google produces 768-dimension vectors and is optimized for low-latency embedding workloads.
+
+All four models are available without additional provider keys since they run on Workers AI. Select them when creating or updating an AI Search instance in the dashboard or through the API.
+
+For the full list of supported models, refer to [Supported models](/ai-search/configuration/models/supported-models/).

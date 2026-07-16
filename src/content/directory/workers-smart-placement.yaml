@@ -3,7 +3,7 @@ name: workers-smart-placement
 
 entry:
   title: Placement
-  url: /workers/configuration/smart-placement/
+  url: /workers/configuration/placement/
   show: false
 
 meta:

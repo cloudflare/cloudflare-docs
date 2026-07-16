@@ -1,0 +1,45 @@
+---
+pcx_content_type: reference
+title: RtkButton
+description: API reference for RtkButton component (iOS Library)
+products:
+  - realtime
+---
+
+A versatile button that follows the RTK Design System.
+Supports multiple styles, states, and sizes.
+
+## Initializer parameters
+
+| Parameter        | Type                  | Required | Default   | Description                                           |
+| ---------------- | --------------------- | -------- | --------- | ----------------------------------------------------- |
+| `style`          | `Style`               | ❌       | `.solid`  | The button style (solid, line, icon-left, and others) |
+| `rtkButtonState` | `States`              | ❌       | `.active` | The initial state of the button                       |
+| `size`           | `Size`                | ❌       | `.large`  | The size of the button                                |
+| `appearance`     | `RtkButtonAppearance` | ❌       | -         | Appearance configuration for colors and fonts         |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let button = RtkButton()
+button.setTitle("Join", for: .normal)
+view.addSubview(button)
+```
+
+### With custom style
+
+```swift
+import RealtimeKitUI
+
+let button = RtkButton(
+    style: .line,
+    rtkButtonState: .active,
+    size: .large
+)
+button.setTitle("Cancel", for: .normal)
+view.addSubview(button)
+```

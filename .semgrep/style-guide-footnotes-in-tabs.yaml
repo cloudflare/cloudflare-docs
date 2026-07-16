@@ -1,0 +1,19 @@
+rules:
+  - id: style-guide-footnotes-in-tabs
+    languages: [generic]
+    message: >
+      Hover-style footnote syntax found inside a <Tabs> block. It generates a '## Footnotes'
+      heading inside each tab panel; when the same footnote appears in multiple tabs, that
+      heading repeats across tab groups and fails the section-header-quality agent-friendliness
+      check. Use plain text footnotes (<sup>n</sup>) or inline the text instead.
+      (add [skip style guide checks] to commit message to skip)
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+    patterns:
+      - pattern-inside: |
+          <Tabs ...>
+          ... ... ... ... ...
+          </Tabs>
+      - pattern-regex: '\[\^\w+\]'

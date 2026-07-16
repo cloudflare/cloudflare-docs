@@ -1,0 +1,174 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+The following configuration will modify settings in your Cloudflare account.
+
+1.  In your configuration directory, create a `.tf` file:
+
+    ```sh
+    touch Cloudflare-config.tf
+    ```
+
+2.  Add the following resources to `Cloudflare-config.tf`:
+
+        <Tabs syncKey="dashPlusAPI">
+        <TabItem label="Terraform (v5)">
+
+        ```tf
+
+        # Creates a new remotely-managed tunnel for the GCP VM.
+        resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
+        	account_id    = var.cloudflare_account_id
+        	name          = "Terraform GCP tunnel"
+        	config_src    = "cloudflare"
+        }
+
+        # Reads the token used to run the tunnel on the server.
+        data "cloudflare_zero_trust_tunnel_cloudflared_token" "gcp_tunnel_token" {
+        	account_id 	= var.cloudflare_account_id
+        	tunnel_id 	= cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        }
+
+        # Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
+        resource "cloudflare_dns_record" "http_app" {
+        	zone_id = var.cloudflare_zone_id
+        	name    = "http_app"
+        	content = "${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id}.cfargotunnel.com"
+        	type    = "CNAME"
+        	ttl     = 1
+        	proxied = true
+        }
+
+        # Configures tunnel with a published application for clientless access.
+        resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
+        	tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        	account_id = var.cloudflare_account_id
+        	config     = {
+        		ingress 	= [
+        			{
+        				hostname = "http_app.${var.cloudflare_zone}"
+        				service  = "http://httpbin:80"
+        			},
+        			{
+        				service  = "http_status:404"
+        			}
+        		]
+        	}
+        }
+
+        # (Optional) Routes internal IP of GCP instance through the tunnel for private network access using WARP.
+        resource "cloudflare_zero_trust_tunnel_cloudflared_route" "example_tunnel_route" {
+        account_id         = var.cloudflare_account_id
+        tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        network            = google_compute_instance.http_server.network_interface.0.network_ip
+        comment            = "Example tunnel route"
+        }
+
+        # Creates a reusable Access policy.
+        resource "cloudflare_zero_trust_access_policy" "allow_emails" {
+        	account_id   = var.cloudflare_account_id
+        	name         = "Allow email addresses"
+        	decision     = "allow"
+        	include      = [
+        		{
+        			email = {
+        				email = var.cloudflare_email
+        			}
+        		},
+        		{
+        			email_domain = {
+        				domain = "@example.com"
+        			}
+        		}
+        	]
+        }
+
+        # Creates an Access application to control who can connect to the public hostname.
+        resource "cloudflare_zero_trust_access_application" "http_app" {
+        	account_id       = var.cloudflare_account_id
+        	type             = "self_hosted"
+        	name             = "Access application for http_app.${var.cloudflare_zone}"
+        	domain           = "http_app.${var.cloudflare_zone}"
+        	policies = [
+        		{
+        			id = cloudflare_zero_trust_access_policy.allow_emails.id
+        			precedence = 1
+        		}
+        	]
+        }
+        ```
+
+        </TabItem>
+        <TabItem label="Terraform (v4)">
+
+        ```tf
+        # Generates a 32-byte secret for the tunnel.
+        resource "random_bytes" "tunnel_secret" {
+        	byte_length = 32
+        }
+
+        # Creates a new remotely-managed tunnel for the GCP VM.
+        resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
+        	account_id = var.cloudflare_account_id
+        	name       = "Terraform GCP tunnel"
+        	secret     = random_bytes.tunnel_secret.base64
+        }
+
+        # Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
+        resource "cloudflare_record" "http_app" {
+        	zone_id = var.cloudflare_zone_id
+        	name    = "http_app"
+        	content   = "${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.cname}"
+        	type    = "CNAME"
+        	proxied = true
+        }
+
+        # Configures tunnel with a published application for clientless access.
+        resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
+        	tunnel_id = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        	account_id = var.cloudflare_account_id
+        	config {
+        		ingress_rule {
+        			hostname = "${cloudflare_record.http_app.hostname}"
+        			service  = "http://httpbin:80"
+        		}
+        		ingress_rule {
+        			service  = "http_status:404"
+        		}
+        	}
+        }
+
+        # (Optional) Route internal IP of GCP instance through the tunnel for private network access using WARP.
+        resource "cloudflare_zero_trust_tunnel_route" "example_tunnel_route" {
+        account_id         = var.cloudflare_account_id
+        tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        network            = google_compute_instance.http_server.network_interface.0.network_ip
+        comment            = "Example tunnel route"
+        }
+
+        # Creates an Access application to control who can connect to the public hostname.
+        resource "cloudflare_zero_trust_access_application" "http_app" {
+        	account_id          = var.cloudflare_account_id
+        	name             = "Access application for http_app.${var.cloudflare_zone}"
+        	domain           = "http_app.${var.cloudflare_zone}"
+        }
+
+        # Creates a (legacy) Access policy for the Access application.
+        resource "cloudflare_zero_trust_access_policy" "allow_emails" {
+        	application_id = cloudflare_zero_trust_access_application.http_app.id
+        	account_id        = var.cloudflare_account_id
+        	name           = "Example policy for http_app.${var.cloudflare_zone}"
+        	precedence     = "1"
+        	decision       = "allow"
+        	include {
+        		email = [var.cloudflare_email]
+        	}
+        }
+        ```
+        </TabItem>
+        </Tabs>
+
+To learn more about these resources, refer to the [Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).

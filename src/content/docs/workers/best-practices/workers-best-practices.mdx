@@ -4,6 +4,8 @@ pcx_content_type: concept
 description: Code patterns and configuration guidance for building fast, reliable, observable, and secure Workers.
 sidebar:
   order: 1
+products:
+  - workers
 ---
 
 import {
@@ -56,7 +58,7 @@ For more information, refer to [Node.js compatibility](/workers/runtime-apis/nod
 
 ### Generate binding types with wrangler types
 
-Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/#types) to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
+Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/general/#types) to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
 
 Re-run `wrangler types` whenever you add or rename a binding.
 
@@ -79,7 +81,7 @@ export default {
 
 </TypeScriptExample>
 
-For more information, refer to [wrangler types](/workers/wrangler/commands/#types).
+For more information, refer to [wrangler types](/workers/wrangler/commands/general/#types).
 
 ### Store secrets with wrangler secret, not in source
 
@@ -275,9 +277,11 @@ For more information, refer to [Streams](/workers/runtime-apis/streams/).
 
 ### Use waitUntil for work after the response
 
-[`ctx.waitUntil()`](/workers/runtime-apis/context/) lets you perform work after the response is sent to the client, such as analytics, cache writes, non-critical logging, or webhook notifications. This keeps your response fast while still completing background tasks.
+[`ctx.waitUntil()`](/workers/runtime-apis/context/) lets you perform work after the response is sent to the client, such as analytics, cache writes, logging, or webhook notifications. This keeps your response fast while still completing background tasks.
 
-There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second `waitUntil` time limit after the response is sent.
+Use `ctx.waitUntil()` only for work that does not affect the response. If the response depends on the work, `await` it before returning the response or stream the response as the work completes. A Worker that is still streaming a response body remains active without `ctx.waitUntil()`.
+
+There are two common pitfalls: destructuring `ctx` (which loses the `this` binding and throws "Illegal invocation"), and exceeding the 30-second `waitUntil()` time limit after the response is sent or the client disconnects.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -569,6 +573,8 @@ export class ChatRoom extends DurableObject {
 		reason: string,
 		wasClean: boolean,
 	) {
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+		// auto-replies to Close frames. Calling close() is safe but no longer required.
 		ws.close(code, reason);
 	}
 }
@@ -743,6 +749,8 @@ For more information, refer to [Workers errors](/workers/observability/errors/#c
 
 A `Promise` that is not `await`ed, `return`ed, or passed to `ctx.waitUntil()` is a floating promise. Floating promises cause silent bugs: dropped results, swallowed errors, and unfinished work. The Workers runtime may terminate your isolate before a floating promise completes.
 
+Choose based on whether the response depends on the work. Use `await` or `return` for work that must complete before the response is correct. Use `ctx.waitUntil()` for work that can run after the response is sent and can finish within the `waitUntil()` time limit.
+
 Enable the `no-floating-promises` lint rule to catch these at development time. If you use ESLint, enable [`@typescript-eslint/no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises/). If you use oxlint, enable [`typescript/no-floating-promises`](https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-floating-promises.html).
 
 ```bash
@@ -855,7 +863,7 @@ function verifyTokenInsecure(provided: string, expected: string): boolean {
 
 ### Do not use passThroughOnException as error handling
 
-`passThroughOnException()` is a fail-open mechanism that sends requests to your origin when your Worker throws an unhandled exception. While it can be useful during migration from an origin server, it hides bugs and makes debugging difficult. Use explicit try/catch blocks with structured error responses instead.
+`passThroughOnException()` is a fail-open mechanism that sends requests to your origin when your Worker throws an unhandled exception. While it can be useful during migration from an origin server, it hides bugs and makes debugging difficult. Use explicit `try...catch` blocks with structured error responses instead.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -918,7 +926,7 @@ One known pitfall: the Vitest pool automatically injects `nodejs_compat`, so tes
 
 ```ts
 import { describe, it, expect } from "vitest";
-import { env } from "cloudflare:test";
+import { env } from "cloudflare:workers";
 
 describe("KV operations", () => {
 	it("should store and retrieve a value", async () => {

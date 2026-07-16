@@ -1,21 +1,25 @@
 ---
 pcx_content_type: overview
 title: Infrastructure
+description: View IT assets, domains, and IP addresses associated with your Cloudflare account.
+products:
+  - security-center
 sidebar:
   order: 5
-
 ---
 
 :::note[User permission]
 Only Super Admin users with edit permissions can start scans, turn scans off, or manage issues.
 :::
 
-After [enabling Security Insights](/security-center/get-started/) and letting the first scan run, the **Infrastructure** tab displays an overview of the infrastructure associated with your Cloudflare account.
+The **Infrastructure** tab provides an overview of the IT assets associated with your Cloudflare account, including domains, IP addresses, and related configurations.
+
+[Security Insights](/security/security-insights/) scans populate Infrastructure data. Initial scan time depends on the number of IT assets across the domains in your account.
 
 To open the **Infrastructure** tab, go to Account Home > **Security Center** > **Infrastructure**.
 
-You can perform the following actions:
+From the Infrastructure tab, you can:
 
-* Filter the displayed information
-* Print or download a PDF report
-* Manage your security.txt file
+- **Filter the displayed information** — Narrow results by specific assets, domains, or configurations to focus on areas of interest.
+- **Print or download a PDF report** — Generate a report of your infrastructure overview for offline review or sharing with your team.
+- **Manage your security.txt file** — Create or update a [`security.txt`](/security-center/infrastructure/security-file/) file that provides security researchers with a standardized way to report vulnerabilities.

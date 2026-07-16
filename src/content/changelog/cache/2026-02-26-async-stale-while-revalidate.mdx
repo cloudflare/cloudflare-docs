@@ -1,0 +1,25 @@
+---
+title: Asynchronous stale-while-revalidate
+description: The first request after cache expiry now receives stale content immediately with an UPDATING status while revalidation happens asynchronously, instead of blocking until the origin responds.
+products:
+  - cache
+date: 2026-02-26
+---
+
+Cloudflare's [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) support is now fully asynchronous. Previously, the first request for a stale (expired) asset in cache had to wait for an origin response, after which that visitor received a REVALIDATED or EXPIRED status. Now, the first request after the asset expires triggers revalidation in the background and immediately receives stale content with an UPDATING status. All following requests also receive stale content with an `UPDATING` status until the origin responds, after which subsequent requests receive fresh content with a `HIT` status.
+
+`stale-while-revalidate` is a `Cache-Control` directive set by your origin server that allows Cloudflare to serve an expired cached asset while a fresh copy is fetched from the origin.
+
+Asynchronous revalidation brings:
+
+- **Lower latency**: No visitor is waiting for the origin when the asset is already in cache. Every request is served from cache during revalidation.
+- **Consistent experience**: All visitors receive the same cached response during revalidation.
+- **Reduced error exposure**: The first request is no longer vulnerable to origin timeouts or errors. All visitors receive a cached response while revalidation happens in the background.
+
+## Availability
+
+This change is live for all Free, Pro, and Business zones. Approximately 75% of Enterprise zones have been migrated, with the remaining zones rolling out throughout the quarter.
+
+## Get started
+
+To use this feature, make sure your origin includes the `stale-while-revalidate` directive in the `Cache-Control` header. Refer to the [Cache-Control documentation](/cache/concepts/cache-control/#revalidation) for details.

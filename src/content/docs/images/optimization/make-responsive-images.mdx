@@ -1,0 +1,212 @@
+---
+pcx_content_type: reference
+title: Make responsive images
+description: Automatically resize images for optimal display on every device.
+sidebar:
+  order: 7
+products:
+  - images
+---
+
+import dpr1Img from "~/assets/images/images/examples/dpr-1.jpg";
+import dpr2Img from "~/assets/images/images/examples/dpr-2.jpg";
+
+Responsive design scales media elements to fit the screen they are displayed on.
+
+Without it, images can overflow their container and break the layout on small screens, look blurry on high-density displays, and waste bandwidth by forcing every device to download the same oversized file.
+
+You can use Images to automatically resize images for optimal display on every device. Cloudflare supports two ways to serve responsive images on request:
+
+| Approach                                     | How it works                                                                                                      | Best for                                                                   |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [HTML `srcset`](#using-the-srcset-attribute) | List multiple sizes in markup and let the browser pick the best match based on viewport size and display density. | Full control over which sizes are available. Works in all browsers.        |
+| [`width=auto`](#using-widthauto)             | Cloudflare automatically selects the best width from a single URL — no markup changes required.                   | Simplest implementation, especially when you don't have control over HTML. |
+
+## Optimize for high-DPI displays
+
+A screen displays images using physical pixels (the individual dots that you see), while the browser uses CSS pixels (an abstract unit used for layout).
+
+On a standard display, these map 1:1. On high-density displays (for example, Retina, 4K), each CSS pixel is rendered using multiple physical pixels — for example, 4 physical pixels on a 2x display, 9 on a 3x display.
+
+This ratio — the device pixel ratio (DPR) — determines how sharp an image will appear. When you serve a 960px image on a 2x display, the browser stretches it across 1920 physical pixels, making it appear blurry.
+
+To keep images sharp, you can provide a separate, higher-resolution version for high-DPI screens using the [`dpr`](/images/optimization/features/#dpr) parameter:
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+	<tr style="border:none; background:none">
+		<td style="width:50%; border:none; vertical-align:bottom">
+			<img
+				src={dpr1Img.src}
+				alt="dpr=1 output"
+				style="width:100%; height:auto"
+			/>
+		</td>
+		<td style="width:50%; border:none; vertical-align:bottom">
+			<img
+				src={dpr2Img.src}
+				alt="dpr=2 output"
+				style="width:100%; height:auto"
+			/>
+		</td>
+	</tr>
+	<tr style="border:none; background:none">
+		<td style="border:none;">
+			<code>width=300,height=200,dpr=1</code>
+		</td>
+		<td style="border:none;">
+			<code>width=300,height=200,dpr=2</code>
+		</td>
+	</tr>
+</table>
+
+## Use the `srcset` attribute
+
+When you embed an image using an `<img>` element, you can use its [`srcset`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#srcset) attribute to give the browser a list of the same image at different sizes.
+
+The browser evaluates screen size, pixel density, and network conditions, then selects the single best match.
+
+The snippet below shows how `srcset` can be used within an `<img>` tag to serve one of two possible sizes, depending on the user's device pixel ratio:
+
+```html
+<img
+	src="portrait-800w.jpg"
+	srcset="
+		portrait-1600.jpg 2x,
+	"
+/>
+```
+
+Instead of pre-generating each size, use Images to point every `srcset` entry at the same source image with a different `width` parameter and pixel density descriptor (for example, `2x`). Once the browser selects the right width for the user's device pixel ratio, Cloudflare dynamically generates the resized version on request:
+
+```html
+<img
+	src="/cdn-cgi/image/fit=contain,width=960/assets/product.jpg"
+	srcset="/cdn-cgi/image/fit=contain,width=1920/assets/product.jpg 2x"
+/>
+```
+
+In the example above, the `src` attribute contains the image for 1x displays (for example, HD/1080p monitors). The `srcset` attribute adds a larger, high-DPI image for 2x displays (for example, most mobile devices, 4K desktop displays). Use high-resolution source images, as scaling a low-resolution image increases file size without improving quality.
+
+### Create responsive layouts
+
+Pixel density descriptors are used when the image has a fixed CSS size (e.g. a 960px product photo) and the viewport width doesn't matter. Here, you know exactly how many CSS pixels the image will be, and you want to provide higher-resolution versions for high-DPI screens.
+
+However, if the image scales with the viewport — that is, its CSS size changes based on the screen width (for example, `width: 100%`, `width: 50vw`) — then use the width descriptor (`w`) instead to provide a range of widths:
+
+```html
+<img
+	width="100%"
+	srcset="
+		/cdn-cgi/image/fit=contain,width=320/assets/hero.jpg   320w,
+		/cdn-cgi/image/fit=contain,width=640/assets/hero.jpg   640w,
+		/cdn-cgi/image/fit=contain,width=960/assets/hero.jpg   960w,
+		/cdn-cgi/image/fit=contain,width=1280/assets/hero.jpg 1280w,
+		/cdn-cgi/image/fit=contain,width=2560/assets/hero.jpg 2560w
+	"
+	src="/cdn-cgi/image/width=960/assets/hero.jpg"
+/>
+```
+
+The `w` values tell the browser the pixel width of each option. The browser factors in both viewport width and display density to choose the best match.
+
+#### Use the `sizes` attribute
+
+By default, the browser assumes the image fills the full viewport. If the image only occupies part of the screen, then you can use `sizes` to tell the browser how wide it actually is:
+
+```html
+<!-- Image fills 50% of the viewport -->
+<img style="width: 50vw" srcset="..." sizes="50vw" />
+```
+
+If the image can have a different size depending on media queries or other CSS properties (for example, `max-width`), then specify all the conditions in the `sizes` attribute:
+
+```html
+<img
+	style="max-width: 640px"
+	srcset="
+		/cdn-cgi/image/fit=contain,width=320/assets/hero.jpg   320w,
+		/cdn-cgi/image/fit=contain,width=480/assets/hero.jpg   480w,
+		/cdn-cgi/image/fit=contain,width=640/assets/hero.jpg   640w,
+		/cdn-cgi/image/fit=contain,width=1280/assets/hero.jpg 1280w
+	"
+	sizes="(max-width: 640px) 100vw, 640px"
+/>
+```
+
+In the example above:
+
+- If the screen size is below 640px, then the image fills the entire viewport.
+- If the screen size is above 640px, then the image scales with the viewport and caps at 640px.
+- On a 2x display above 640px, the browser needs 1280 physical pixels to fill the 640px layout width, so it selects the 1280w entry.
+
+## Use `width=auto`
+
+With `srcset`, you control exactly which sizes are available, which requires updating your HTML for every image.
+
+On the other hand, `width=auto` takes a different approach, where Cloudflare determines the right width for each request from a single URL:
+
+```html
+/cdn-cgi/image/width=auto/assets/hero.jpg
+```
+
+This is especially useful when optimizing remote images with [transformation flows](/images/optimization/transformations/flows/), where you can apply `width=auto` across your entire zone without modifying any markup.
+
+When a request includes `width=auto`, Cloudflare determines the width based on screen size using client hints, if sent, or user-agent detection as a fallback.
+
+### Client hints (preferred)
+
+Browsers that support client hints (Chrome, Edge, Opera) send the viewport width in a request header. Then, Cloudflare reads this value and selects the right image size.
+
+Rather than generating a unique image for every possible viewport width, Cloudflare snaps to the smallest breakpoint that is equal to or greater than the detected screen width.
+
+The default breakpoints for client hints are: `320`, `768`, `960`, and `1200` pixels.
+
+The following table shows the widths that Cloudflare will pick based on the default breakpoints. If the detected viewport width exceeds the largest breakpoint, the image is served at that largest breakpoint.
+
+| Detected viewport width | Served image width |
+| ---------- | ------------- |
+| 280px          | 320px         |
+| 500px          | 768px         |
+| 960px          | 960px         |
+| 1500px          | 1200px        |
+
+You can override the default breakpoints using the [`wbreakpoints`](/images/optimization/features/#width) sub-parameter, which accepts positive integers separated by semicolons.
+
+#### Enabling client hints
+
+Client hints give Cloudflare the most accurate information, but require opt-in from your site. Without them, `width=auto` falls back to user-agent detection.
+
+You can enable client hints using one of the following methods:
+
+**HTML `<meta>` tag**
+
+Add the following in the `<head>` of your page before any other elements:
+
+```html
+<meta
+	http-equiv="Delegate-CH"
+	content="sec-ch-dpr {ZONE}; sec-ch-viewport-width {ZONE}"
+/>
+```
+
+**HTTP response headers**
+
+Add these headers to your HTML response:
+
+```txt
+critical-ch: sec-ch-viewport-width, sec-ch-dpr
+permissions-policy: ch-dpr=("{ZONE}"), ch-viewport-width=("{ZONE}")
+```
+
+### User-agent detection (fallback)
+
+When client hints are not available, Cloudflare classifies the device as mobile or desktop based on the user-agent string and selects the corresponding size.
+
+The default sizes for user-agent detection are:
+
+| Device type                                  | Default size |
+| -------------------------------------------- | ------------ |
+| Mobile (`iPhone` or `Android` in user-agent) | 768px        |
+| Desktop (all other user-agents)              | 1200px       |
+
+You can override the default sizes using the [`wmobile` and `wdesktop`](/images/optimization/features/#width) sub-parameters, which accept positive integers.

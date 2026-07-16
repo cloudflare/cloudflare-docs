@@ -1,8 +1,11 @@
 ---
 title: Durable Object Container
+description: Access and manage containers associated with a Durable Object, including start, stop, and interaction methods.
 pcx_content_type: concept
 sidebar:
   order: 1
+products:
+  - durable-objects
 ---
 
 import {
@@ -17,13 +20,11 @@ import {
 
 ## Description
 
-When using a [Container-enabled Durable Object](/containers), you can access the Durable Object's associated container via
-the `container` object which is on the `ctx` property. This allows you to start, stop, and interact with the container.
+Each [container](/containers/) is managed by a Durable Object. The [`Container` class](/containers/container-class/) from `@cloudflare/containers` extends `DurableObject` and handles lifecycle management, port readiness, and sleep timeouts for you. The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM.
 
-:::note
-It is likely preferable to use the official `Container` class, which provides helper methods and
-a more idiomatic API for working with containers on top of Durable Objects.
-:::
+The low-level API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it when you need direct control over the container process or cannot use the `Container` class.
+
+Because the `Container` class extends `DurableObject`, you also have access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) via `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -39,7 +40,7 @@ export class MyDurableObject extends DurableObject {
 
 }
 
-```
+````
 </TypeScriptExample>
 
 
@@ -51,7 +52,7 @@ export class MyDurableObject extends DurableObject {
 
 ```js
 	this.ctx.container.running;
-```
+````
 
 ## Methods
 
@@ -80,6 +81,87 @@ this.ctx.container.start({
 #### Return values
 
 - None.
+
+### `exec`
+
+`exec` starts another process inside an already-running Container. It does not start a stopped Container.
+
+The following example calls `this.ctx.container.exec()` inside a class extending `Container` from `@cloudflare/containers`. In RPC methods, check `this.ctx.container.running` and call `await this.start()` when needed. You can also use the `onStart()` hook to run any series of commands whenever the Container starts.
+
+```ts
+exec(
+  cmd: string[],
+  options?: ContainerExecOptions,
+): Promise<ExecProcess>
+```
+
+The `exec` operation starts the executable directly with the provided arguments. It does not start a shell or interpret pipes, redirects, expansion, or other shell syntax. Invoke Bash explicitly with `["bash", "-lc", "<COMMAND>"]` when Bash exists in the image. Use `["sh", "-c", "<COMMAND>"]` for images with only a Portable Operating System Interface (POSIX) shell.
+
+The following RPC method starts the Container before executing a command:
+
+<TypeScriptExample>
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async runCommand() {
+		if (!this.ctx.container.running) {
+			await this.start();
+		}
+
+		const process = await this.ctx.container.exec(["node", "--version"]);
+		const output = await process.output();
+
+		return {
+			pid: process.pid,
+			exitCode: output.exitCode,
+			stdout: new TextDecoder().decode(output.stdout),
+		};
+	}
+}
+```
+</TypeScriptExample>
+
+#### Parameters
+
+- `cmd` (`string[]`) — executable followed by its arguments.
+- `options` (`ContainerExecOptions`, optional) — process configuration:
+  - `stdin` (`ReadableStream | "pipe"`) — source for standard input. Use `"pipe"` to write through the returned `stdin` stream. When omitted, standard input closes and sends end-of-file (EOF).
+  - `stdout` (`"pipe" | "ignore"`, default `"pipe"`) — captures or discards standard output.
+  - `stderr` (`"pipe" | "ignore" | "combined"`, default `"pipe"`) — captures, discards, or merges standard error into standard output. The `"combined"` value requires `stdout: "pipe"`. Combined output does not guarantee ordering between its source streams.
+  - `cwd` (`string`) — working directory for the process.
+  - `env` (`Record<string, string>`) — environment additions and overrides. The process inherits existing Container variables. Matching keys use the per-execution value.
+  - `user` (`string`) — image user for the process.
+
+#### Return values
+
+Returns `Promise<ExecProcess>`.
+
+An `ExecProcess` has these fields and methods:
+
+- `stdin` (`WritableStream | null`) — writable standard input when `stdin` is `"pipe"`.
+- `stdout` (`ReadableStream | null`) — readable standard output when piped.
+- `stderr` (`ReadableStream | null`) — readable standard error when piped separately.
+- `pid` (`number`) — process identifier.
+- `exitCode` (`Promise<number>`) — resolves when the process exits. Nonzero codes resolve normally instead of rejecting.
+- `output()` (`Promise<ExecOutput>`) — reads buffered output once. `ExecOutput` contains `stdout` (`ArrayBuffer`), `stderr` (`ArrayBuffer`), and `exitCode` (`number`). Ignored streams produce empty buffers. Use `TextDecoder` to decode text.
+- `kill(signal?: number)` (`void`) — queues a signal for the process. The default is `SIGTERM`, signal `15`. The signal must be from `1` through `64`.
+
+With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `ArrayBuffer` on `ExecOutput`. Read both output channels from `stdout`.
+
+`output()` throws a `TypeError` when called more than once or after either readable stream starts being consumed. For large output, consume both readable streams concurrently instead of buffering them with `output()`.
+
+`exec` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
+
+#### Exceptions
+
+- `exec()` throws when the Container is not running.
+- `exec()` throws a `TypeError` when `cmd` is empty, an option mode is invalid, or `stderr: "combined"` is used with `stdout: "ignore"`.
+- `exec()` rejects if the runtime cannot create or start the process.
+- Environment variable names cannot contain `=` or null characters. Environment values, `cwd`, and `user` cannot contain null characters.
+- `kill()` throws a `RangeError` when the signal is outside the supported range.
+
+For task-oriented examples, refer to [Execute commands](/containers/execute-commands/).
 
 ### `destroy`
 
@@ -127,17 +209,17 @@ const res = await port.fetch("http://container/set-state", {
 ```
 
 ```js
-const conn = this.ctx.container.getTcpPort(8080).connect('10.0.0.1:8080');
+const conn = this.ctx.container.getTcpPort(8080).connect("10.0.0.1:8080");
 await conn.opened;
 
 try {
-  if (request.body) {
-    await request.body.pipeTo(conn.writable);
-  }
-  return new Response(conn.readable);
+	if (request.body) {
+		await request.body.pipeTo(conn.writable);
+	}
+	return new Response(conn.readable);
 } catch (err) {
-  console.error("Request body piping failed:", err);
-  return new Response("Failed to proxy request body", { status: 502 });
+	console.error("Request body piping failed:", err);
+	return new Response("Failed to proxy request body", { status: 502 });
 }
 ```
 
@@ -181,7 +263,83 @@ class MyContainer extends DurableObject {
 
 - A promise that resolves when the container exits.
 
+### `interceptOutboundHttp`
+
+`interceptOutboundHttp` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `WorkerEntrypoint`. Can be called before or after starting the container. Open connections pick up the new handler without being dropped.
+
+```js
+const worker = this.ctx.exports.MyWorker({ props: { message: "hello" } });
+
+// Match a specific hostname
+this.ctx.container.interceptOutboundHttp("api.example.com", worker);
+
+// Match a hostname glob pattern
+this.ctx.container.interceptOutboundHttp("*.example.com", worker);
+
+// Match an IP:port
+await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
+
+// Match a CIDR range (IPv4 and IPv6)
+await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
+```
+
+#### Parameters
+
+- `target` (string): A hostname, hostname glob (for example, `*.example.com`), IP address, IP:port, or CIDR range to match.
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle matching requests.
+
+#### Return values
+
+- None.
+
+### `interceptAllOutboundHttp`
+
+`interceptAllOutboundHttp` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination.
+
+```js
+await this.ctx.container.interceptAllOutboundHttp(worker);
+```
+
+#### Parameters
+
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle all outbound HTTP requests.
+
+#### Return values
+
+- A promise that resolves once the intercept rule is installed.
+
+### `interceptOutboundHttps`
+
+`interceptOutboundHttps` routes outbound HTTPS requests matching a hostname or hostname glob through a `WorkerEntrypoint`. Works the same way as `interceptOutboundHttp` but for HTTPS traffic. The container must trust the CA certificate at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` for HTTPS interception to work.
+
+Supports glob patterns where `*` matches any sequence of characters.
+
+```js
+const worker = this.ctx.exports.MyWorker({ props: {} });
+
+// Match a specific hostname
+this.ctx.container.interceptOutboundHttps("api.example.com", worker);
+
+// Match a hostname glob pattern
+this.ctx.container.interceptOutboundHttps("*.example.com", worker);
+
+// Intercept all HTTPS traffic
+this.ctx.container.interceptOutboundHttps("*", worker);
+```
+
+#### Parameters
+
+- `target` (string): A hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle matching requests.
+
+#### Return values
+
+- None.
+
 ## Related resources
 
-- [Containers](/containers)
-- [Get Started With Containers](/containers/get-started)
+- [Container class reference](/containers/container-class/) — the recommended high-level API built on top of this interface
+- [Containers overview](/containers/)
+- [Get started with Containers](/containers/get-started/)
+- [SQLite storage API](/durable-objects/api/sqlite-storage-api/) — persist state across container restarts
+- [Durable Objects](/durable-objects/) — the underlying platform that powers Containers
