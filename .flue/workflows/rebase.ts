@@ -30,6 +30,7 @@ import {
 	removeReactionFromComment,
 	updatePullRequestBranch,
 	updateRef,
+	type TreeUpdate,
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow } from "../lib/poll-run";
@@ -106,9 +107,11 @@ export async function run({
 	// we check head.ref ownership indirectly: if head.repo would differ we can't push.
 	// The safest heuristic: if the PR author is not in the same org context (forks
 	// always have a different head.label format "user:branch" vs "cloudflare:branch").
+	// GitHub's head.label format is "owner:branch" (e.g. "cloudflare:my-branch").
+	// Fork PRs have a different owner prefix (e.g. "contributor:my-branch").
 	const headLabel =
 		(pr as unknown as { head: { label?: string } }).head.label ?? "";
-	const isFork = !headLabel.startsWith("cloudflare/");
+	const isFork = !headLabel.startsWith("cloudflare:");
 
 	if (isFork) {
 		const body = renderRebaseStatusUpdate(
@@ -268,7 +271,7 @@ export async function run({
 		action: "ai_resolution_start",
 	});
 
-	let resolution: ConflictResolution;
+	let resolution: Awaited<ReturnType<typeof resolveConflictsWithAI>>;
 	try {
 		resolution = await resolveConflictsWithAI(token, pr, typedEnv);
 	} catch (resolveErr) {
@@ -463,72 +466,93 @@ async function swapReaction(
  *   3. Present both versions of each potentially conflicting file, plus the
  *      PR description and production commit messages, to the AI agent.
  *   4. Ask the agent to resolve and report its confidence.
+ *
+ * Also returns allPrFiles so that applyResolution can include non-conflicting
+ * PR changes in the final tree (preventing them from being silently dropped).
  */
 async function resolveConflictsWithAI(
 	token: string,
 	pr: Awaited<ReturnType<typeof getPullRequest>>,
 	typedEnv: Record<string, string & unknown>,
-): Promise<ConflictResolution> {
-	const env = typedEnv;
-	// Get the compare data: merge base + commits on each side.
+): Promise<
+	ConflictResolution & {
+		allPrFiles: Array<{ path: string; status: string }>;
+		mergeBaseSha: string;
+		productionRefSha: string;
+	}
+> {
+	// Get the merge base and current production HEAD in parallel.
 	const [prVsProduction, productionRef] = await Promise.all([
 		compareCommits(token, "production", pr.head.sha),
 		getRef(token, "production"),
 	]);
 
 	const mergeBaseSha = prVsProduction.mergeBaseSha;
+
+	// compareCommits("production", pr.head.sha) returns the PR's commits
+	// (commits reachable from prHead but not from production). We need the
+	// production-side commits separately to populate the prompt correctly.
 	const prCommits = prVsProduction.commits;
 
-	// Files changed in the PR since merge base.
-	const prMergeBase = await compareCommits(token, mergeBaseSha, pr.head.sha);
-	const prChangedPaths = new Set(
-		prMergeBase.commits.flatMap((_c) => [] as string[]),
-	);
-
-	// Simpler: use the compare endpoint files list which GitHub provides.
-	// compareCommits returns commits but not file lists. We re-use
-	// comparePullRequestHeads (already in github.ts) to get the changed files.
-	// But since we want to avoid code duplication, we fetch it via the REST path.
-	const prFilesRes = await fetch(
-		`https://api.github.com/repos/cloudflare/cloudflare-docs/compare/${mergeBaseSha}...${pr.head.sha}`,
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-				Accept: "application/vnd.github+json",
-				"X-GitHub-Api-Version": "2022-11-28",
-				"User-Agent": "cloudflare-docs-agents",
+	// Helper to fetch files changed between two SHAs via the compare endpoint.
+	// Throws on non-ok responses so errors (rate limits, auth) surface visibly.
+	// Returns files with `path` (renamed from the API's `filename`) and `status`.
+	const fetchCompareFiles = async (
+		base: string,
+		head: string,
+	): Promise<Array<{ path: string; status: string }>> => {
+		const res = await fetch(
+			`https://api.github.com/repos/cloudflare/cloudflare-docs/compare/${base}...${head}`,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+					Accept: "application/vnd.github+json",
+					"X-GitHub-Api-Version": "2022-11-28",
+					"User-Agent": "cloudflare-docs-agents",
+				},
 			},
-		},
-	);
-	const prFilesData = prFilesRes.ok
-		? ((await prFilesRes.json()) as {
-				files?: Array<{ filename: string }>;
-			})
-		: { files: [] };
-	for (const f of prFilesData.files ?? []) {
-		prChangedPaths.add(f.filename);
-	}
+		);
+		if (!res.ok) {
+			throw new Error(
+				`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
+			);
+		}
+		const data = (await res.json()) as {
+			files?: Array<{ filename: string; status: string }>;
+		};
+		// Normalise `filename` → `path` for internal consistency.
+		return (data.files ?? []).map((f) => ({
+			path: f.filename,
+			status: f.status,
+		}));
+	};
 
-	// Files changed on production since merge base.
-	const productionFilesRes = await fetch(
-		`https://api.github.com/repos/cloudflare/cloudflare-docs/compare/${mergeBaseSha}...${productionRef.sha}`,
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-				Accept: "application/vnd.github+json",
-				"X-GitHub-Api-Version": "2022-11-28",
-				"User-Agent": "cloudflare-docs-agents",
+	// Fetch files changed on each side since the merge base in parallel.
+	const [prFiles, productionFiles, productionCommitsData] = await Promise.all([
+		fetchCompareFiles(mergeBaseSha, pr.head.sha),
+		fetchCompareFiles(mergeBaseSha, productionRef.sha),
+		// Fetch production commits separately for accurate prompt context.
+		fetch(
+			`https://api.github.com/repos/cloudflare/cloudflare-docs/compare/${mergeBaseSha}...${productionRef.sha}`,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+					Accept: "application/vnd.github+json",
+					"X-GitHub-Api-Version": "2022-11-28",
+					"User-Agent": "cloudflare-docs-agents",
+				},
 			},
-		},
-	);
-	const productionFilesData = productionFilesRes.ok
-		? ((await productionFilesRes.json()) as {
-				files?: Array<{ filename: string }>;
-			})
-		: { files: [] };
-	const productionChangedPaths = new Set(
-		(productionFilesData.files ?? []).map((f) => f.filename),
-	);
+		).then(async (res) => {
+			if (!res.ok) return [];
+			const data = (await res.json()) as {
+				commits?: Array<{ commit: { message: string } }>;
+			};
+			return (data.commits ?? []).map((c) => c.commit.message);
+		}),
+	]);
+
+	const prChangedPaths = new Set(prFiles.map((f) => f.path));
+	const productionChangedPaths = new Set(productionFiles.map((f) => f.path));
 
 	// Intersection = files changed on both sides = potential conflict zone.
 	const conflictCandidates = [...prChangedPaths].filter((p) =>
@@ -543,12 +567,29 @@ async function resolveConflictsWithAI(
 			reason:
 				"Could not identify specific conflicting files. Please resolve manually.",
 			files: [],
+			allPrFiles: prFiles,
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
 		};
 	}
 
-	// Fetch both versions of each conflicting file.
+	// Hard cap at 10 conflict candidates to bound AI prompt size and cost.
+	// Surface an explicit halted status rather than silently truncating.
+	const CONFLICT_CAP = 10;
+	if (conflictCandidates.length > CONFLICT_CAP) {
+		return {
+			confidence: "low",
+			reason: `Too many conflicting files (${conflictCandidates.length}) to resolve automatically — limit is ${CONFLICT_CAP}. Please resolve conflicts manually.`,
+			files: [],
+			allPrFiles: prFiles,
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
+		};
+	}
+
+	// Fetch all three versions of each conflicting file.
 	const fileContents = await Promise.all(
-		conflictCandidates.slice(0, 10).map(async (path) => {
+		conflictCandidates.map(async (path) => {
 			const [prVersion, productionVersion, baseVersion] = await Promise.all([
 				getRepoFileContent(token, path, pr.head.sha),
 				getRepoFileContent(token, path, productionRef.sha),
@@ -558,13 +599,13 @@ async function resolveConflictsWithAI(
 		}),
 	);
 
-	// Build the AI prompt context.
-	const productionCommitMessages = prVsProduction.commits
+	// Build the AI prompt context with correctly attributed commit messages.
+	const prCommitMessages = prCommits
 		.map((c) => `- ${c.message.split("\n")[0]}`)
 		.join("\n");
 
-	const prCommitMessages = prCommits
-		.map((c) => `- ${c.message.split("\n")[0]}`)
+	const productionCommitMessages = productionCommitsData
+		.map((msg) => `- ${msg.split("\n")[0]}`)
 		.join("\n");
 
 	const filesContext = fileContents
@@ -639,7 +680,7 @@ async function resolveConflictsWithAI(
 
 	// One-shot AI call via Workers AI binding — no tools or file system access
 	// needed, just structured JSON reasoning over the file contents.
-	const ai = env.AI as unknown as Ai;
+	const ai = typedEnv.AI as unknown as Ai;
 	const aiResponse = await ai.run(
 		"@cf/moonshotai/kimi-k2.7-code" as Parameters<typeof ai.run>[0],
 		{
@@ -671,6 +712,9 @@ async function resolveConflictsWithAI(
 			reason:
 				"AI did not return a parseable JSON response. Please resolve manually.",
 			files: [],
+			allPrFiles: prFiles,
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
 		};
 	}
 
@@ -684,49 +728,80 @@ async function resolveConflictsWithAI(
 				: "low",
 		reason: parsed.reason ?? "",
 		files: Array.isArray(parsed.files) ? parsed.files : [],
+		allPrFiles: prFiles,
+		mergeBaseSha,
+		productionRefSha: productionRef.sha,
 	};
 }
 
 /**
- * Apply the AI-resolved file contents to the PR branch using the Git Data API.
+ * Apply the AI-resolved conflict files to the PR branch using the Git Data API.
  *
- * Creates new blobs for each resolved file, builds a new tree on top of the
- * current production HEAD tree, creates a new commit, then force-updates the
- * PR branch ref to point to it.
+ * Builds the new tree from the production HEAD, applying:
+ *   - All non-conflicting PR changes (preserving additions, deletions, modifications)
+ *   - AI-resolved content for the conflict files
  *
- * This effectively rebases the PR onto production with the conflicts resolved.
+ * This correctly rebases the full PR onto production without silently dropping
+ * any of the PR's changes.
  */
 async function applyResolution(
 	token: string,
 	pr: Awaited<ReturnType<typeof getPullRequest>>,
-	resolution: ConflictResolution,
+	resolution: ConflictResolution & {
+		allPrFiles: Array<{ path: string; status: string }>;
+		mergeBaseSha: string;
+		productionRefSha: string;
+	},
 ): Promise<void> {
 	if (resolution.files.length === 0) {
 		throw new Error("No resolved files to apply.");
 	}
 
-	// Get the current production HEAD to rebase onto.
-	const productionRef = await getRef(token, "production");
-	const productionCommit = await getGitCommit(token, productionRef.sha);
+	// Build a map of AI-resolved content keyed by path for fast lookup.
+	const resolvedByPath = new Map(
+		resolution.files.map(({ path, content }) => [path, content]),
+	);
+
+	// Get the current production HEAD commit (tree to build on top of).
+	const productionCommit = await getGitCommit(
+		token,
+		resolution.productionRefSha,
+	);
 
 	// Get the PR head commit for the commit message.
 	const prCommit = await getGitCommit(token, pr.head.sha);
 
-	// Build new blobs for each resolved file.
+	// For every file changed by the PR:
+	//   - If it's a conflict file: use the AI-resolved content.
+	//   - If it's a deletion (status === "removed"): remove from the tree (sha: null).
+	//   - Otherwise: fetch the PR's version and use that.
 	const treeUpdates = await Promise.all(
-		resolution.files.map(async ({ path, content }) => {
+		resolution.allPrFiles.map(async ({ path, status }): Promise<TreeUpdate> => {
+			// Conflict file — use AI-resolved content.
+			const resolvedContent = resolvedByPath.get(path);
+			if (resolvedContent !== undefined) {
+				const blobSha = await createBlob(token, resolvedContent);
+				return { path, mode: "100644", type: "blob", sha: blobSha };
+			}
+
+			// Deleted file — remove from tree.
+			if (status === "removed") {
+				return { path, mode: "100644", type: "blob", sha: null };
+			}
+
+			// Non-conflicting addition or modification — fetch PR version.
+			const content = await getRepoFileContent(token, path, pr.head.sha);
+			if (content === null) {
+				// File is not text-readable (binary, etc.) — skip it; the
+				// production version will be inherited from the base tree.
+				return { path, mode: "100644", type: "blob", sha: null };
+			}
 			const blobSha = await createBlob(token, content);
-			return {
-				path,
-				mode: "100644" as const,
-				type: "blob" as const,
-				sha: blobSha,
-			};
+			return { path, mode: "100644", type: "blob", sha: blobSha };
 		}),
 	);
 
-	// Create a new tree based on the production HEAD tree, applying only the
-	// resolved files on top.
+	// Create a new tree rooted at the production HEAD tree with all PR changes applied.
 	const newTreeSha = await createTree(
 		token,
 		productionCommit.treeSha,
@@ -741,7 +816,7 @@ async function applyResolution(
 	].join("\n");
 
 	const newCommitSha = await createGitCommit(token, commitMessage, newTreeSha, [
-		productionRef.sha,
+		resolution.productionRefSha,
 	]);
 
 	// Force-update the PR branch to point to the new commit.

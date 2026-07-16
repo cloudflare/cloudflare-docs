@@ -615,6 +615,15 @@ export async function postOrUpdateComment(
 // ── Rebase status rendering ───────────────────────────────────────────────────
 
 /**
+ * Sanitize a detail string for safe interpolation into Markdown blockquotes.
+ * Collapses newlines to a space so the text stays on one line, preventing
+ * the blockquote from breaking mid-content.
+ */
+function sanitizeRebaseDetail(detail: string): string {
+	return detail.replace(/\r?\n/g, " ").trim();
+}
+
+/**
  * Build the one-line rebase status text for a given status value.
  * detail carries context-specific text (e.g. conflict info, base branch name).
  */
@@ -632,16 +641,16 @@ function rebaseStatusLine(
 		case "halted-conflict":
 			return [
 				`⚠️ **Rebase:** Rebase halted — conflicts detected. Resolve manually or use \`/rebaseWithConflicts\`.`,
-				...(detail ? ["", `> ${detail}`] : []),
+				...(detail ? [`> ${sanitizeRebaseDetail(detail)}`] : []),
 			].join("\n");
 		case "halted-wrong-base":
-			return `⚠️ **Rebase:** Rebase skipped — this PR targets \`${detail ?? "a non-production branch"}\`, not \`production\`. Rebase is only supported for PRs targeting \`production\`.`;
+			return `⚠️ **Rebase:** Rebase skipped — this PR targets \`${sanitizeRebaseDetail(detail ?? "a non-production branch")}\`, not \`production\`. Rebase is only supported for PRs targeting \`production\`.`;
 		case "halted-fork":
 			return `⚠️ **Rebase:** Rebase skipped — cannot push to fork branches. The PR author must rebase locally.`;
 		case "halted-confidence":
 			return [
 				`⚠️ **Rebase:** AI conflict resolution stopped — confidence not high enough to auto-resolve.`,
-				...(detail ? ["", `> ${detail}`] : []),
+				...(detail ? [`> ${sanitizeRebaseDetail(detail)}`] : []),
 			].join("\n");
 		case "failed":
 			return `❌ **Rebase:** Failed unexpectedly. ${detail ?? "Check the worker logs."}`;
@@ -650,10 +659,11 @@ function rebaseStatusLine(
 
 const REBASE_STATUS_MARKER_RE = /^<!-- rebase-status: [^\s]+ -->\n?/m;
 // Matches the status line we produce: starts with one of our known emoji
-// prefixes and contains **Rebase:**, plus any trailing > blockquote lines.
+// prefixes and contains **Rebase:**, then optionally an immediately-following
+// blockquote line (no blank line between them after the sanitizeRebaseDetail fix).
 // Avoids a character class with multi-codepoint emoji (no-misleading-character-class).
 const REBASE_STATUS_LINE_RE =
-	/^(?:⏳|✅|⚠️|❌).+\*\*Rebase:\*\*[^\n]*(\n>[^\n]*)*/m;
+	/^(?:⏳|✅|⚠️|❌).+\*\*Rebase:\*\*[^\n]*(\n\n?>[^\n]*)*/m;
 
 /**
  * Strip any existing rebase status block from a comment body so we can

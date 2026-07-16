@@ -22,14 +22,28 @@ export type RebaseStatus =
 
 const REBASE_STATUS_RE = /<!-- rebase-status: ([^\s]+) -->/;
 
+const KNOWN_REBASE_STATUSES: readonly RebaseStatus[] = [
+	"in-progress",
+	"complete",
+	"halted-conflict",
+	"halted-wrong-base",
+	"halted-fork",
+	"halted-confidence",
+	"failed",
+] as const;
+
 /**
  * Extract the rebase status marker from a bot comment body.
- * Returns null if absent (no rebase has been run on this PR).
+ * Returns null if absent or if the embedded value is not a known status.
  */
 export function extractRebaseStatus(body: string | null): RebaseStatus | null {
 	if (!body) return null;
 	const match = body.match(REBASE_STATUS_RE);
-	return (match?.[1] as RebaseStatus) ?? null;
+	const value = match?.[1];
+	if (!value) return null;
+	return KNOWN_REBASE_STATUSES.includes(value as RebaseStatus)
+		? (value as RebaseStatus)
+		: null;
 }
 
 // Regexes to extract metadata embedded in bot comment bodies.

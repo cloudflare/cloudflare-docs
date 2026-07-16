@@ -554,8 +554,9 @@ export interface GitRef {
 }
 
 export async function getRef(token: string, branch: string): Promise<GitRef> {
+	const encodedBranch = branch.split("/").map(encodeURIComponent).join("/");
 	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/git/refs/heads/${branch}`,
+		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodedBranch}`,
 		{ headers: apiHeaders(token) },
 	);
 	if (!res.ok) {
@@ -622,7 +623,15 @@ export async function getTree(
 			`Failed to get tree ${treeSha} (HTTP ${res.status}): ${await res.text()}`,
 		);
 	}
-	const data = (await res.json()) as { tree: GitTreeEntry[] };
+	const data = (await res.json()) as {
+		tree: GitTreeEntry[];
+		truncated?: boolean;
+	};
+	if (data.truncated) {
+		throw new Error(
+			`Git tree ${treeSha} is too large and was returned truncated by the GitHub API. Cannot safely enumerate files.`,
+		);
+	}
 	return data.tree;
 }
 
@@ -738,8 +747,9 @@ export async function updateRef(
 	branch: string,
 	sha: string,
 ): Promise<void> {
+	const encodedBranch = branch.split("/").map(encodeURIComponent).join("/");
 	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/git/refs/heads/${branch}`,
+		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodedBranch}`,
 		{
 			method: "PATCH",
 			headers: apiHeaders(token),

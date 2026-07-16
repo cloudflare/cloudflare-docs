@@ -463,9 +463,27 @@ export async function run({ payload, env, req }: FlueContext) {
 			return { acted: false, summary: "Commenter is not a codeowner." };
 		}
 
-		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
 		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url).origin;
+
+		// Add 👀 reaction to acknowledge receipt. Non-fatal: if the reaction API
+		// fails we still dispatch the workflow.
+		let eyesReactionId: number | null = null;
+		try {
+			eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		} catch (reactionErr) {
+			console.log({
+				message: `${commandName}: failed to add 👀 reaction to comment ${commentId} — continuing`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error:
+					reactionErr instanceof Error
+						? reactionErr.message
+						: String(reactionErr),
+				action: `${commandName}_reaction_failed`,
+			});
+		}
 
 		try {
 			const runId = await admitWorkflow({
