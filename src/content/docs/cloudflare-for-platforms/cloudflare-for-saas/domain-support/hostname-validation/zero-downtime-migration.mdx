@@ -82,7 +82,7 @@ Use this method when the end customer cannot update their authoritative DNS, or 
 2. Have the end customer serve the `http_body` value at the `http_url` path on their origin server. For example, in nginx:
 
    ```nginx title="nginx example"
-   location "/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630" {
+   location /.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630 {
        return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";
    }
    ```
@@ -99,7 +99,7 @@ Use this method when the end customer cannot update their authoritative DNS, or 
 
 Use this method when the end customer can add a DNS record at their authoritative DNS provider.
 
-1. Copy the `name` and `value` from the `ownership_verification` object in the response above.
+1. Copy the `name` and `value` from the `ownership_verification` object in the Create Custom Hostname response.
 
 2. Have the end customer add a `TXT` record at their DNS provider:
 
@@ -122,7 +122,7 @@ Pre-issuing the certificate ensures there is no TLS error during cutover. Withou
 - [**Manual HTTP validation**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-manual) - Serve a DCV token file at a `/.well-known/` path on the origin. No action required from the end customer.
 
 :::note
-Hostname validation (`ownership_verification`) and certificate validation (`ssl.validation_records`) use separate tokens and API fields. Completing hostname pre-validation does not automatically pre-issue the certificate - you must also complete one of the above certificate validation methods if you want a pre-issued certificate.
+Hostname validation (`ownership_verification`) and certificate validation (`ssl.validation_records`) use separate tokens and API fields. Completing hostname pre-validation does not automatically pre-issue the certificate - you must also complete one of Delegated DCV, TXT validation, or manual HTTP validation if you want a pre-issued certificate.
 :::
 
 ---
@@ -159,7 +159,7 @@ If you skipped Step 3, `ssl.status` will remain `pending` until after DNS cutove
 
 ## Step 5: Update the end customer's CNAME
 
-Once both statuses are `active`, have the end customer update their CNAME to point to your fallback origin:
+Once `result.status` is `active` (and `ssl.status` is `active` too, if you pre-issued the certificate in Step 3), have the end customer update their CNAME to point to your fallback origin:
 
 | Type | Name | Value |
 | ---- | ---- | ----- |
