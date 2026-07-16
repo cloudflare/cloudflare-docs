@@ -16,7 +16,7 @@ The sections below summarize third-party software support for the post-quantum a
 Two classes of algorithm are tracked:
 
 - **Key agreement** — the [X25519MLKEM768](https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/) hybrid, which protects against [harvest-now-decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks on encrypted traffic. Refer to [hybrid key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement) for background.
-- **Signatures** — [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final), the post-quantum digital signature algorithm standardized by NIST. Defined with three parameter sets (ML-DSA-44, ML-DSA-65, ML-DSA-87), of which **ML-DSA-44 is the variant Cloudflare is currently evaluating for deployment**. Refer to [post-quantum signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) for background.
+- **Signatures** — [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final), the post-quantum digital signature algorithm standardized by NIST, defined with three parameter sets (ML-DSA-44, ML-DSA-65, ML-DSA-87). Refer to [PQC in Cloudflare products](/ssl/post-quantum-cryptography/pqc-cloudflare-products/) for the list of products that support ML-DSA, and to [post-quantum signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) for background.
 
 :::caution
 The listings below are for reference only. Responsibility for third-party software lies with their respective maintainers. Use them at your own discretion.

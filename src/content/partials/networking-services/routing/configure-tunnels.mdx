@@ -22,13 +22,15 @@ params:
 
 import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Cloudflare assigns two endpoint addresses to your account that you can use as the tunnel destinations on your network location's routers/endpoints. You can find these addresses in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
+Cloudflare assigns an IPv4 anycast address to your account for use as the tunnel destination for your network's routers. You can find this address in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space). To request additional endpoint addresses, contact your account team.
+
+Cloudflare handles failures on its network automatically by advertising your endpoint IP from multiple nodes across many globally distributed data centers. To handle failures on your network, configure two tunnels from separate routers.
 
 ## Before you begin
 
 Before creating a tunnel, make sure you have the following information:
 
-- **Cloudflare endpoint addresses**: The anycast IP addresses assigned to your account. You can find them in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
+- **Cloudflare endpoint address**: The anycast IP address assigned to your account. You can find it in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 - **Customer endpoint IP**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf (typically provided by your ISP). Not required if using [Cloudflare Network Interconnect](/network-interconnect/) or for <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (unless your router uses an <GlossaryTooltip term="Internet key exchange (IKE)">IKE</GlossaryTooltip> ID of type `ID_IPV4_ADDR`).
 - **Interface address**: A `/31` (recommended) or `/30` subnet from RFC 1918 private IP space (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) or `169.254.240.0/20`{props.ipRange}.
 

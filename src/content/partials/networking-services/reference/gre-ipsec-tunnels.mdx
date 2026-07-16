@@ -98,7 +98,7 @@ For information on how to set up an IPsec tunnel, refer to <a href={props.tunnel
 
 {props.productName} uses the following stages to establish an IPsec tunnel:
 
-- **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret for key derivation, and when relevant, signal support for post-quantum key exchange with [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/). After this exchange, the peers have a secure communication channel but they have not yet authenticated each other.
+- **Initial Exchange** (`IKE_SA_INIT`): IKE peers negotiate parameters for the IKE Security Association (SA) and establish a shared secret for key derivation, and when relevant, signal support for post-quantum key exchange with [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/). When [downgrade protection](#improved-downgrade-protection-beta) is enabled, Cloudflare also sends an `IKE_SA_INIT_FULL_TRANSCRIPT_AUTH` notification during this exchange to signal support for full transcript authentication. After this exchange, the peers have a secure communication channel but they have not yet authenticated each other.
 - **Intermediate Exchange** (`IKE_INTERMEDIATE`): If both peers support RFC 9370, they perform an additional key exchange using ML-KEM (Module-Lattice-based Key-Encapsulation Mechanism), a post-quantum key exchange specified in [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/). This creates a hybrid shared secret by combining a secret derived from classical Diffie-Hellman (established during the `IKE_SA_INIT`) with post-quantum ML-KEM to protect against [harvest-now, decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks.
 - **Auth Exchange** (`IKE_AUTH`): Using the keys established from both the `IKE_SA_INIT` and the `IKE_INTERMEDIATE` exchange, IKE peers mutually authenticate each other. After authentication, they establish the IKE security association (SA). Next, the peers negotiate and establish an IPsec tunnel, known as a Child SA.
 - **Rekeying**: Periodically, or through manual intervention, IKE SAs can be rekeyed to generate new SAs with fresh keys for the session. This rekey operation is performed for both the IKE SA (to refresh the control plane) and the Child SAs (to refresh the data plane). When a hybrid exchange is in use (RFC 9370), the rekey process for the IKE SA will once again perform the parallel classical (DH) and post-quantum (ML-KEM) exchanges to ensure continued quantum resistance.
@@ -257,6 +257,26 @@ If route-based VPNs are not an option and you must use policy-based VPNs, be awa
 - Cloudflare only supports a single set of traffic selectors per Child SA.
 - A policy must cover reply-style health checks — that is, they must match traffic selectors — otherwise, Cloudflare drops them, just like any other traffic from an IPsec tunnel that does not match a policy.
 - A single IPsec tunnel can only contain around 100 Child SAs. Therefore, there is effectively a limit on the number of different policies per tunnel.
+
+### Improved downgrade protection (beta)
+
+:::note[Beta]
+This feature is in beta. Contact your account team to turn on the `ipsec_downgrade_protection` flag for your account.
+:::
+
+IKEv2's original authentication design has each endpoint sign only its own outbound messages, not the full handshake transcript. A quantum-capable [on-path attacker](https://www.cloudflare.com/learning/security/threats/on-path-attack/) can exploit this to create a "split view" of the handshake, tricking the endpoints into downgrading a post-quantum connection back to classical cryptography even when both sides support post-quantum key exchange. 
+
+To address this, Cloudflare supports the [`IKE_SA_INIT_FULL_TRANSCRIPT_AUTH`](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/) IKEv2 extension. When enabled, both IKEv2 peers sign the entire handshake transcript during the authentication exchange, rather than only their own messages. This prevents an attacker from downgrading the connection without being detected. 
+
+**How it works:**
+
+- When the feature flag is enabled, Cloudflare (acting as IKE responder) unconditionally includes an `IKE_SA_INIT_FULL_TRANSCRIPT_AUTH` notification in its `IKE_SA_INIT` response.
+- If the initiator also supports the extension, both sides use full transcript authentication, which improves protection again downgrade attacks.
+- If the initiator does not support the extension, the handshake proceeds with standard IKEv2 authentication. Both parties must support the extension for downgrade protection to be effective.
+
+**Requirements:**
+
+- Your IKEv2 initiator must support the `IKE_SA_INIT_FULL_TRANSCRIPT_AUTH` notification as defined in [draft-ietf-ipsecme-ikev2-downgrade-prevention](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/).
 
 ### Troubleshooting
 

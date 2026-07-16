@@ -1,0 +1,20 @@
+---
+title: R2 Data Catalog pricing announced
+description: Usage-based pricing for R2 Data Catalog catalog operations and compaction, with a free tier for each dimension.
+products:
+  - r2
+date: 2026-05-28
+---
+
+[R2 Data Catalog](/r2/data-catalog/) is a managed [Apache Iceberg](https://iceberg.apache.org/) data catalog built directly into R2 buckets, queryable by any Iceberg-compatible engine such as Spark, Snowflake, and DuckDB. R2 Data Catalog now has published pricing for catalog operations and table compaction, in addition to standard [R2 storage and operations](/r2/pricing/).
+
+Billing is not yet enabled. We will provide at least 30 days notice before we start charging for R2 Data Catalog usage.
+
+Pricing is based on two dimensions:
+
+- **Catalog operations**: $9.00 / million operations for metadata requests such as creating tables, reading table metadata, and updating table properties.
+- **Compaction**: $0.005 / GB processed and $2.00 / million objects processed. These charges only apply when automatic compaction is turned on for a table.
+
+Both dimensions include a monthly free tier: 1 million catalog operations, 10 GB of compaction data processed, and 1 million compaction objects processed.
+
+For full pricing details and billing examples, refer to [R2 Data Catalog pricing](/r2/data-catalog/platform/pricing/).

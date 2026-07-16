@@ -1,0 +1,33 @@
+---
+/**
+ * Markdown — render a markdown string prop to HTML.
+ *
+ * CF source: cloudflare-docs/src/components/Markdown.astro
+ *
+ * Mapping notes:
+ *   - Upstream uses the `dedent` package; reproduced here with a minimal
+ *     common-leading-whitespace strip to avoid adding a dependency.
+ */
+import { z } from "astro/zod";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+function dedent(input: string): string {
+  const lines = input.replace(/^[ \t]*\n/, "").replace(/\n[ \t]*$/, "").split("\n");
+  const indents = lines
+    .filter((l) => l.trim().length > 0)
+    .map((l) => l.match(/^[ \t]*/)?.[0].length ?? 0);
+  const min = indents.length ? Math.min(...indents) : 0;
+  return lines.map((l) => l.slice(min)).join("\n");
+}
+
+const props = z.object({
+  text: z.string().transform((val) => dedent(val)),
+  inline: z.boolean().default(true),
+});
+
+const { text, inline } = props.parse(Astro.props);
+---
+
+<Fragment set:html={inline ? marked.parseInline(text) : marked.parse(text)} />

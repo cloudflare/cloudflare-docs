@@ -64,6 +64,22 @@ const content = await client.browserRendering.content.create({
 console.log(content);
 ```
 
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("content", {
+			url: "https://developers.cloudflare.com/",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
 </TabItem> </Tabs>
 
 ## Advanced usage

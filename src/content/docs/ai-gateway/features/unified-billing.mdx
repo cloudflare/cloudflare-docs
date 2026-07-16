@@ -11,11 +11,15 @@ products:
   - ai-gateway
 ---
 
-import { DashButton, TabItem, Tabs } from "~/components";
+import { DashButton, Render, TabItem, Tabs } from "~/components";
 
 Unified Billing allows users to connect to various AI providers (such as OpenAI, Anthropic, and Google AI Studio) and receive a single Cloudflare bill. To use Unified Billing, you must purchase and load credits into your Cloudflare account in the Cloudflare dashboard, which you can then spend with AI Gateway.
 
 A 5% fee is applied to all credits purchased through Unified Billing. For example, a $100 credit purchase will result in a $105 charge. Inference pricing from providers is passed through with no markup — you pay the same per-token rates as you would directly with the provider.
+
+:::caution
+In rare instances, your credit balance may go negative. If this happens, Cloudflare will charge the payment method on file for the outstanding amount. Charges occur at the beginning of each month for the previous month.
+:::
 
 ## Pre-requisites
 
@@ -75,7 +79,7 @@ const resp = await env.AI.run(
 );
 ```
 
-Refer to the [binding reference](/ai-gateway/integrations/worker-binding-methods/) for the full API surface.
+Refer to the [binding reference](/ai-gateway/usage/worker-binding-methods/) for the full API surface.
 
 ### HTTP API
 
@@ -86,6 +90,8 @@ Call a supported provider through the AI Gateway REST API without passing a prov
 Use the Cloudflare API to call third-party models. Pass your Cloudflare API token in the `Authorization` header:
 
 ```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -112,7 +118,7 @@ The HTTP API supports the following providers:
 
 ### Spend limits
 
-Set spend limits to prevent unexpected charges on your loaded credits. You can define daily, weekly, or monthly limits. When a limit is reached, the AI Gateway automatically stops processing requests until the period resets or you increase the limit.
+Set [spend limit rules](/ai-gateway/features/spend-limits/) on individual gateways to cap spend, scoped by model, provider, or custom metadata dimensions like user or team.
 
 ### Zero Data Retention (ZDR)
 
@@ -155,6 +161,8 @@ To set ZDR as the default for Unified Billing using the API:
 Use the `cf-aig-zdr` header to override the gateway default for a single Unified Billing request. Set it to `true` to force ZDR, or `false` to disable ZDR for the request.
 
 ```bash title="Unified Billing request with ZDR"
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

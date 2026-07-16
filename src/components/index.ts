@@ -5,7 +5,13 @@ export { Icon as StarlightIcon } from "@astrojs/starlight/components";
 export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
+export { default as AiSearchIndexingDiagram } from "./AiSearchIndexingDiagram.astro";
+export { default as AiSearchNamespacesDiagram } from "./AiSearchNamespacesDiagram.astro";
+export { default as AiSearchOverviewDiagram } from "./AiSearchOverviewDiagram.astro";
+export { default as AiSearchQueryingDiagram } from "./AiSearchQueryingDiagram.astro";
+export { default as AiSearchVoiceDiagram } from "./AiSearchVoiceDiagram.astro";
 export { default as AnimatedWorkflowDiagram } from "./AnimatedWorkflowDiagram.astro";
+export { default as AgentsPlatformDiagram } from "./AgentsPlatformDiagram.astro";
 export { default as APIRequest } from "./APIRequest.astro";
 export { default as AutoconfigDiagram } from "./AutoconfigDiagram.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
@@ -30,10 +36,10 @@ export { default as GlossaryTooltip } from "./GlossaryTooltip.astro";
 export { default as GranularControlApplicationsList } from "./GranularControlApplicationsList.astro";
 export { default as HomepageHero } from "./HomepageHero.astro";
 export { default as InlineBadge } from "./InlineBadge.astro";
-export { default as LastReviewed } from "./LastReviewed.astro";
 export { default as LinkTitleCard } from "./LinkTitleCard.astro";
 export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
+export { default as MeshHostnameRoutingDiagram } from "./MeshHostnameRoutingDiagram.astro";
 export { default as MetaInfo } from "./MetaInfo.astro";
 export { default as PackageManagers } from "./PackageManagers.astro";
 export { default as LayerCard } from "./LayerCard.astro";
@@ -43,7 +49,6 @@ export { default as PagesBuildEnvironmentTools } from "./PagesBuildEnvironmentTo
 export { default as PagesBuildPreset } from "./PagesBuildPreset.astro";
 export { default as PagesBuildPresetsTable } from "./PagesBuildPresetsTable.astro";
 export { default as PagesLanguageSupport } from "./PagesLanguageSupport.astro";
-export { default as PartialsUsage } from "./PartialsUsage.astro";
 export { default as Plan } from "./Plan.astro";
 export { default as ProductChangelog } from "./ProductChangelog.astro";
 export { default as ProductReleaseNotes } from "./ProductReleaseNotes.astro";
@@ -68,6 +73,8 @@ export { default as Width } from "./Width.astro";
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkersTemplates } from "./WorkersTemplates.astro";
+export { default as WorkersVPCEgressDiagram } from "./WorkersVPCEgressDiagram.astro";
+export { default as WorkersVPCOverviewDiagram } from "./WorkersVPCOverviewDiagram.astro";
 export { default as YouTube } from "./YouTube.astro";
 
 // Taken from Astro

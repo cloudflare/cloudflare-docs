@@ -50,10 +50,10 @@ Cloudflare runs managed remote MCP servers that give your agent the ability to s
 
 There are two approaches:
 
-- **[Code Mode](/agents/api-reference/codemode/)**: A single MCP server that covers the entire Cloudflare API (over 2,500 endpoints). Use this when your agent needs broad access across multiple Cloudflare products.
+- **[Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/)**: A Code Mode server that covers the entire Cloudflare API (over 2,500 endpoints). Use this when your agent needs broad access across multiple Cloudflare products.
 - **Domain-specific servers**: Focused servers for documentation, observability, DNS analytics, and more. Use these when your agent only needs access to a specific area. The full catalog is in the [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) repository.
 
-Each agent's [Agent setup](#set-up-your-agent) guide includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+Each agent's [Agent setup](#set-up-your-agent) guide includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/).
 
 ### Model flexibility
 
@@ -103,7 +103,7 @@ curl "https://developers.cloudflare.com/workers/get-started/" \
   --header "Accept: text/markdown"
 ```
 
-The response includes an `x-markdown-tokens` header with an estimated token count for the document, useful for context window planning (a context window is the maximum number of tokens an AI model can consider at once).
+The response includes `x-markdown-tokens` and `x-original-tokens` headers with estimated token counts for the Markdown document and original HTML document, useful for context window planning (a context window is the maximum number of tokens an AI model can consider at once).
 
 ### Site-wide endpoints
 

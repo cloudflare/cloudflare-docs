@@ -9,6 +9,12 @@ export interface PullRequestFile {
 	deletions: number;
 	changes: number;
 	patch?: string;
+	/**
+	 * The previous filename for renamed files (status === "renamed").
+	 * Present in the GitHub API response; absent for all other statuses.
+	 * Use this — not filename — when computing the old path of a rename.
+	 */
+	previous_filename?: string;
 }
 
 export interface GitHubUser {
@@ -36,8 +42,9 @@ export interface GitHubPullRequest {
 	user: GitHubUser | null;
 	author_association: string;
 	draft: boolean;
-	base: { ref: string };
-	head: { ref: string };
+	labels: { name: string }[];
+	base: { ref: string; sha: string };
+	head: { ref: string; sha: string };
 }
 
 export async function getInstallationToken(
@@ -138,6 +145,44 @@ export async function getPullRequest(
 	return (await res.json()) as GitHubPullRequest;
 }
 
+/**
+ * Fetch the decoded text content of a repo file at a given ref via the
+ * GitHub contents API. Returns null when the file is missing (404) or not
+ * base64 text; throws on other non-2xx responses (rate limit, auth, 5xx) so
+ * callers can distinguish "absent" from "failed to load". Used to load
+ * repo-level context (e.g. the root AGENTS.md) into agents.
+ */
+export async function getRepoFileContent(
+	token: string,
+	path: string,
+	ref: string,
+): Promise<string | null> {
+	// Encode each path segment but preserve the slashes the contents API needs.
+	const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (res.status === 404) return null;
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get repo file ${path}@${ref} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as {
+		encoding?: string;
+		content?: string;
+	};
+	if (data.encoding !== "base64" || typeof data.content !== "string") {
+		return null;
+	}
+	// atob yields a Latin-1 byte string; decode those bytes as UTF-8 so
+	// non-ASCII content (e.g. em dashes in AGENTS.md) is not mojibake.
+	const binary = atob(data.content.replace(/\n/g, ""));
+	const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+	return new TextDecoder().decode(bytes);
+}
+
 export async function getPullRequestFiles(
 	token: string,
 	pullNumber: number,
@@ -174,6 +219,179 @@ export async function addLabels(
 			`Failed to add labels to ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
 		);
 	}
+}
+
+export interface GitHubIssueComment {
+	id: number;
+	body: string | null;
+	created_at: string;
+	updated_at: string;
+	user: GitHubUser | null;
+}
+
+export async function getIssueComments(
+	token: string,
+	issueNumber: number,
+): Promise<GitHubIssueComment[]> {
+	// Fetch newest comments first so recent human replies aren't missed on
+	// busy PRs that exceed the 100-comment page limit.
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100&direction=desc`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get comments for ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	// Reverse so callers get oldest-first order (consistent with previous behavior
+	// and safe for findLast() / botComment detection).
+	const comments = (await res.json()) as GitHubIssueComment[];
+	return comments.reverse();
+}
+
+export async function updateIssueComment(
+	token: string,
+	commentId: number,
+	body: string,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
+		{
+			method: "PATCH",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ body }),
+		},
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to update comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+}
+
+export async function comparePullRequestHeads(
+	token: string,
+	base: string,
+	head: string,
+): Promise<{ files: PullRequestFile[] } | null> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/compare/${base}...${head}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (res.status === 404) return null;
+	if (!res.ok) {
+		throw new Error(
+			`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { files?: PullRequestFile[] };
+	return { files: data.files ?? [] };
+}
+
+export async function addReactionToComment(
+	token: string,
+	commentId: number,
+	reaction:
+		| "+1"
+		| "-1"
+		| "laugh"
+		| "confused"
+		| "heart"
+		| "hooray"
+		| "rocket"
+		| "eyes",
+): Promise<number | null> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}/reactions`,
+		{
+			method: "POST",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ content: reaction }),
+		},
+	);
+	if (res.status === 422) return null; // already exists
+	if (!res.ok) {
+		throw new Error(
+			`Failed to add reaction to comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { id: number };
+	return data.id;
+}
+
+export async function removeReactionFromComment(
+	token: string,
+	commentId: number,
+	reactionId: number,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}/reactions/${reactionId}`,
+		{
+			method: "DELETE",
+			headers: apiHeaders(token),
+		},
+	);
+	// 204 = success, 404 = already gone — both are fine
+	if (!res.ok && res.status !== 404) {
+		throw new Error(
+			`Failed to remove reaction ${reactionId} from comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+}
+
+/**
+ * Check whether `username` is a codeowner in .github/CODEOWNERS on the
+ * production branch. Always reads from the production branch so ad-hoc
+ * CODEOWNERS changes on feature branches don't grant access.
+ *
+ * @param installationToken - GitHub App installation token (for repo contents API)
+ * @param orgToken - Personal/org token with read:org scope (for team membership API)
+ * @param username - GitHub username to check
+ */
+export async function isCodeOwner(
+	installationToken: string,
+	orgToken: string,
+	username: string,
+): Promise<boolean> {
+	// Fetch CODEOWNERS from the production branch via the GitHub contents API
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/contents/.github/CODEOWNERS?ref=production`,
+		{ headers: apiHeaders(installationToken) },
+	);
+	if (!res.ok) return false;
+
+	const data = (await res.json()) as { content?: string; encoding?: string };
+	if (!data.content || data.encoding !== "base64") return false;
+
+	const content = atob(data.content.replace(/\n/g, ""));
+
+	// Extract all @mentions from non-comment lines
+	const mentions = new Set<string>();
+	for (const line of content.split("\n")) {
+		const trimmed = line.trim();
+		if (!trimmed || trimmed.startsWith("#")) continue;
+		for (const match of trimmed.matchAll(/@([\w.-]+\/[\w.-]+|[\w.-]+)/g)) {
+			mentions.add(match[1]);
+		}
+	}
+
+	for (const mention of mentions) {
+		if (mention.includes("/")) {
+			// Team mention: @org/team — check membership using org token (needs read:org)
+			const [org, team] = mention.split("/");
+			const memberRes = await fetch(
+				`https://api.github.com/orgs/${org}/teams/${team}/memberships/${username}`,
+				{ headers: apiHeaders(orgToken) },
+			);
+			if (memberRes.ok) return true;
+		} else {
+			// Direct user mention
+			if (mention.toLowerCase() === username.toLowerCase()) return true;
+		}
+	}
+
+	return false;
 }
 
 export async function verifyGitHubSignature(

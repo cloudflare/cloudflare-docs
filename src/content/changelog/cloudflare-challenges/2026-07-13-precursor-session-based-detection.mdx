@@ -1,0 +1,26 @@
+---
+title: Precursor introduces session-based bot detection
+description: Precursor brings continuous, session-based behavioral detection to Cloudflare Challenges.
+date: 2026-07-13
+---
+
+Precursor is rolling out to all customers starting today. Precursor is client-side JavaScript that enables session-based bot detection.
+
+You can [read the announcement blog](https://blog.cloudflare.com/introducing-precursor) for background on why we built Precursor and how session-level behavioral detection works.
+
+With Precursor enabled, Cloudflare can:
+
+- Continuously evaluate behavioral signals across a session
+- Re-validate challenge clearance as behavior changes
+- Update bot scores with session context
+- Provide client-side visibility where none previously existed
+
+It integrates with existing protections, including Security Rules, and can be enabled directly from the Cloudflare dashboard with configurable modes to balance security and user experience.
+
+<img
+	src="/images/precursor/enabling_precursor.gif"
+	alt="Animated walkthrough of enabling Precursor in the Cloudflare dashboard"
+	style="border:1px solid #e5e7eb;border-radius:6px;display:block;margin:16px 0;"
+/>
+
+To learn more, refer to the [Precursor documentation](/cloudflare-challenges/precursor/).

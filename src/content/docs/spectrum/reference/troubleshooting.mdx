@@ -1,0 +1,29 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+description: Where to find logs and diagnostics for Spectrum applications.
+products:
+  - spectrum
+tags:
+  - Debugging
+---
+
+To investigate issues with a Spectrum application, use the logs and diagnostics described on this page. For API validation errors returned when creating or updating an application, refer to [Error codes](/spectrum/reference/error-codes/).
+
+## Spectrum event logs
+
+Spectrum logs the lifecycle of every connection it proxies, including status codes for edge-to-origin failures (for example, `521` connection refused, `522` timeout, `523` unreachable). Refer to [Event logs](/spectrum/reference/logs/).
+
+## Virtual network origins
+
+When a Spectrum application uses a [virtual network origin](/spectrum/reference/configuration-options/#virtual-network-origin), traffic to the origin flows through the connector associated with the virtual network. Diagnose origin connectivity from the connector side using the sources for your connector type.
+
+### Cloudflare Tunnel as the connector
+
+- **Tunnel logs** record activity between `cloudflared` and Cloudflare's network and between `cloudflared` and your origin. Refer to [Log streams](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/).
+- **Tunnel diagnostic logs** collect a diagnostic report from a single `cloudflared` instance. Refer to [Diagnostic logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/diag-logs/).
+- **Private network connectivity** covers common causes when traffic does not reach a private origin through a tunnel. Refer to [Private network connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/private-networks/).
+
+### Cloudflare WAN as the connector
+
+For tunnel health, BGP, and routing diagnostics on WAN-connected origins, refer to [Troubleshoot Cloudflare WAN](/cloudflare-wan/troubleshooting/).

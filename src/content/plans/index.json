@@ -15,6 +15,20 @@
 				}
 			}
 		},
+		"self_managed_oauth": {
+			"title": "Self-managed OAuth Apps",
+			"link": "/fundamentals/oauth/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				}
+			}
+		},
 		"version_management": {
 			"title": "Version Management",
 			"link": "/version-management/",
@@ -549,6 +563,20 @@
 				}
 			}
 		},
+		"vary": {
+			"title": "Vary",
+			"link": "/cache/concepts/vary/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				}
+			}
+		},
 		"vary_for_images": {
 			"title": "Vary for images",
 			"link": "/cache/advanced-configuration/vary-for-images/",
@@ -945,7 +973,7 @@
 		"title": "Email",
 		"email_routing": {
 			"title": "Email Routing",
-			"link": "/email-routing/",
+			"link": "/email-service/",
 			"properties": {
 				"availability": {
 					"title": "Availability",

@@ -80,6 +80,12 @@ await meeting.leave();
 - **Possible reason**: SDK API that you are calling is being called too often
 - **Possible solution**: API rate limiting generally occurs when the webpage is making an unusually high number of requests within a short period. To resolve this, analyze your code to determine why so many requests are being sent and implement optimizations to reduce unnecessary calls.
 
+#### Error code: 0014
+
+- **Error message**: Media connection failed
+- **Possible reason**: ICE (Interactive Connectivity Establishment) connection failed
+- **Possible solution**: Make sure your network allows WebRTC connections and turn.cloudflare.com & stun.cloudflare.com are accessible.
+
 ## Controller
 
 #### Error code: 0100

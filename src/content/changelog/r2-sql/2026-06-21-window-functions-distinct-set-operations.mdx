@@ -1,0 +1,48 @@
+---
+title: R2 SQL now supports window functions, DISTINCT, and set operations
+description: Use window functions, QUALIFY, SELECT DISTINCT, set operations, and exact aggregates in R2 SQL.
+products:
+  - r2-sql
+date: 2026-06-22
+---
+
+R2 SQL now supports window functions, `SELECT DISTINCT`, set operations, and additional aggregates, making it easier to write analytical queries without preprocessing your data elsewhere.
+
+[R2 SQL](/r2-sql/) is Cloudflare's serverless, distributed SQL engine for querying [Apache Iceberg](https://iceberg.apache.org/) tables stored in [R2 Data Catalog](/r2/data-catalog/).
+
+## New capabilities
+
+- **Window functions** — `ROW_NUMBER`, `RANK`, `DENSE_RANK`, `PERCENT_RANK`, `CUME_DIST`, `NTILE`, `LAG`, `LEAD`, `FIRST_VALUE`, `LAST_VALUE`, `NTH_VALUE`, and aggregates with an `OVER (...)` clause, including `PARTITION BY` and explicit frames
+- **QUALIFY** — filter rows based on a window function result
+- **DISTINCT** — `SELECT DISTINCT`, `DISTINCT ON (...)`, and the `DISTINCT` modifier on aggregates such as `COUNT(DISTINCT ...)`
+- **Set operations** — `UNION`, `UNION ALL`, `INTERSECT`, and `EXCEPT`
+- **Grouping extensions** — `GROUPING SETS`, `ROLLUP`, and `CUBE`
+- **Exact aggregates** — `MEDIAN`, `PERCENTILE_CONT`, `ARRAY_AGG`, and `STRING_AGG`
+
+## Examples
+
+### Rank rows with a window function
+
+```sql
+SELECT customer_id, region,
+       ROW_NUMBER() OVER (PARTITION BY region ORDER BY total_amount DESC) AS rank_in_region
+FROM my_namespace.sales_data
+```
+
+### Filter with QUALIFY
+
+```sql
+SELECT customer_id, region, total_amount
+FROM my_namespace.sales_data
+QUALIFY ROW_NUMBER() OVER (PARTITION BY region ORDER BY total_amount DESC) <= 3
+```
+
+### Combine tables with a set operation
+
+```sql
+SELECT customer_id FROM my_namespace.sales_data
+EXCEPT
+SELECT customer_id FROM my_namespace.archived_sales
+```
+
+The named `WINDOW` clause is not supported — inline the `OVER (...)` specification at each call site. For the full syntax reference, refer to the [SQL reference](/r2-sql/sql-reference/). For supported features and performance guidance, refer to [Limitations and best practices](/r2-sql/reference/limitations-best-practices/).

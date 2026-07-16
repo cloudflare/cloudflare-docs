@@ -1,6 +1,9 @@
 #!/bin/sh
-# Convert CRLF to LF in all staged files before committing.
-# This guards against AI tooling and Windows environments introducing CRLF.
+# 1. Format staged files with prettier (lint-staged).
+# 2. Convert CRLF to LF in all staged files before committing.
+#    This guards against AI tooling and Windows environments introducing CRLF.
+
+pnpm exec lint-staged
 
 STAGED=$(git diff --cached --name-only)
 

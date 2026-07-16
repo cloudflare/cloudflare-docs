@@ -1,0 +1,17 @@
+---
+title: R2 SQL pricing announced
+description: Usage-based pricing for R2 SQL at $2.50/TB of data scanned, with a free tier included on all plans.
+products:
+  - r2-sql
+date: 2026-05-28
+---
+
+[R2 SQL](/r2-sql/) is a serverless, distributed query engine that runs SQL against [Apache Iceberg](https://iceberg.apache.org/) tables stored in [R2 Data Catalog](/r2/data-catalog/). R2 SQL now has published pricing based on a single dimension: the volume of compressed data scanned to execute your queries. At $2.50 / TB ($0.0025 / GB), R2 SQL is priced at half the cost of AWS Athena and less than half of Google BigQuery on-demand.
+
+Billing is not yet enabled. We will provide at least 30 days notice before we start charging for R2 SQL usage.
+
+Data scanned is measured on compressed bytes read from R2 object storage. This matches what you see in your R2 bucket — if a Parquet file is 100 MB on disk, scanning that file bills for 100 MB. Each query has a minimum billing increment of 10 MB.
+
+Free plans include 1 GB / month and Paid plans include 10 GB / month. Standard [R2 storage and operations](/r2/pricing/) and [R2 Data Catalog](/r2/data-catalog/platform/pricing/) charges apply separately.
+
+For full pricing details and billing examples, refer to [R2 SQL pricing](/r2-sql/platform/pricing/).

@@ -131,6 +131,8 @@ To route traffic between Cloudflare Mesh and [Cloudflare WAN](/cloudflare-wan/) 
 
 Cloudflare Workers can connect to your Mesh network using [VPC Network bindings](/workers-vpc/configuration/vpc-networks/). Bind to `cf1:network` to reach any Mesh node, client device, or subnet route in your account — without specifying a particular tunnel UUID.
 
+The same binding also handles outbound traffic to public Internet destinations: requests egress through [Cloudflare Gateway](/cloudflare-one/traffic-policies/), so your existing Zero Trust traffic policies are enforced and Worker traffic appears in Gateway DNS, HTTP, and Network logs alongside the rest of your traffic.
+
 For setup instructions and examples, refer to [Connect Workers to Cloudflare Mesh](/workers-vpc/examples/connect-to-cloudflare-mesh/).
 
 ## Source IPs for Cloudflare services

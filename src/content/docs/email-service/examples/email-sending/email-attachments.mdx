@@ -1,5 +1,4 @@
 ---
-type: example
 summary: Send emails with various types of attachments including PDFs, images, and file uploads with proper validation.
 pcx_content_type: example
 title: Email attachments
@@ -10,7 +9,24 @@ products:
   - email-service
 ---
 
+import { WranglerConfig } from "~/components";
+
 This example demonstrates how to send emails with various types of attachments including PDFs, inline images, and file uploads.
+
+Configure the email binding in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"send_email": [{ "name": "EMAIL" }],
+	"vars": {
+		"DOMAIN": "yourdomain.com",
+	},
+}
+```
+
+</WranglerConfig>
 
 ```typescript
 interface Env {
@@ -39,7 +55,7 @@ export default {
 };
 ```
 
-## PDF Attachments
+## PDF attachments
 
 Generate and send PDF documents as email attachments:
 
@@ -52,7 +68,6 @@ async function sendInvoiceWithPDF(
 
 	// Generate PDF content
 	const pdfContent = generateInvoicePDF(invoiceData);
-	const pdfBase64 = btoa(pdfContent);
 
 	await env.EMAIL.send({
 		to: customerEmail,
@@ -78,8 +93,8 @@ async function sendInvoiceWithPDF(
 		attachments: [
 			{
 				filename: `invoice-${invoiceData.number}.pdf`,
-				content: pdfBase64,
-				contentType: "application/pdf",
+				content: new TextEncoder().encode(pdfContent).buffer,
+				type: "application/pdf",
 				disposition: "attachment",
 			},
 		],
@@ -129,7 +144,7 @@ startxref
 }
 ```
 
-## Inline Images
+## Inline images
 
 Embed images directly in email content using Content-ID references:
 
@@ -140,7 +155,7 @@ async function sendReportWithImages(
 ): Promise<Response> {
 	const { recipientEmail, reportData } = await request.json();
 
-	// Generate chart and logo images (base64 encoded)
+	// Generate chart and logo images as SVG
 	const chartImage = generateChartImage(reportData);
 	const logoImage = getCompanyLogo();
 
@@ -177,16 +192,16 @@ async function sendReportWithImages(
     `,
 		attachments: [
 			{
-				filename: "company-logo.png",
+				filename: "company-logo.svg",
 				content: logoImage,
-				contentType: "image/png",
+				type: "image/svg+xml",
 				disposition: "inline",
 				contentId: "company-logo",
 			},
 			{
-				filename: "performance-chart.png",
+				filename: "performance-chart.svg",
 				content: chartImage,
-				contentType: "image/png",
+				type: "image/svg+xml",
 				disposition: "inline",
 				contentId: "performance-chart",
 			},
@@ -198,7 +213,7 @@ async function sendReportWithImages(
 	);
 }
 
-function generateChartImage(reportData: any): string {
+function generateChartImage(reportData: any): ArrayBuffer {
 	// Generate simple SVG chart (in practice, use a chart library)
 	const chartSVG = `
     <svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
@@ -211,24 +226,24 @@ function generateChartImage(reportData: any): string {
     </svg>
   `;
 
-	return btoa(chartSVG);
+	return new TextEncoder().encode(chartSVG).buffer;
 }
 
-function getCompanyLogo(): string {
+function getCompanyLogo(): ArrayBuffer {
 	// Simple SVG logo
 	const logoSVG = `
     <svg width="200" height="60" xmlns="http://www.w3.org/2000/svg">
       <rect width="200" height="60" fill="#2563eb" rx="8"/>
-      <text x="100" y="35" text-anchor="middle" font-family="Arial" 
+      <text x="100" y="35" text-anchor="middle" font-family="Arial"
             font-size="24" font-weight="bold" fill="white">Company</text>
     </svg>
   `;
 
-	return btoa(logoSVG);
+	return new TextEncoder().encode(logoSVG).buffer;
 }
 ```
 
-## File Uploads
+## File uploads
 
 Handle file uploads and send them as email attachments with validation:
 
@@ -263,35 +278,31 @@ async function sendEmailWithUpload(
 		);
 	}
 
-	// Convert file to base64
-	const fileBuffer = await file.arrayBuffer();
-	const fileBase64 = btoa(String.fromCharCode(...new Uint8Array(fileBuffer)));
-
 	await env.EMAIL.send({
 		to: recipientEmail,
 		from: `uploads@${env.DOMAIN}`,
 		subject: `File shared: ${file.name}`,
 		html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #2563eb;">📎 File Shared</h1>
-        
+        <h1 style="color: #2563eb;">File Shared</h1>
+
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <p><strong>${senderName}</strong> has shared a file with you.</p>
           ${message ? `<p><em>"${message}"</em></p>` : ""}
         </div>
-        
+
         <div style="border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px 0;">
           <h3 style="margin: 0 0 15px 0;">File Details</h3>
           <p><strong>Filename:</strong> ${file.name}</p>
           <p><strong>Size:</strong> ${formatFileSize(file.size)}</p>
           <p><strong>Type:</strong> ${getFileTypeDescription(file.type)}</p>
         </div>
-        
+
         <p>The file is attached to this email for download.</p>
-        
+
         <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 4px;">
           <p style="margin: 0; color: #856404;">
-            <strong>⚠️ Security Notice:</strong> Always verify the source before opening attachments.
+            <strong>Security notice:</strong> Always verify the source before opening attachments.
           </p>
         </div>
       </div>
@@ -299,8 +310,8 @@ async function sendEmailWithUpload(
 		attachments: [
 			{
 				filename: file.name,
-				content: fileBase64,
-				contentType: file.type,
+				content: await file.arrayBuffer(),
+				type: file.type,
 				disposition: "attachment",
 			},
 		],
@@ -315,7 +326,10 @@ async function sendEmailWithUpload(
 }
 
 function validateFile(file: File): { valid: boolean; error?: string } {
-	const maxSize = 25 * 1024 * 1024; // 25MB limit
+	// 5 MiB matches the general outbound message size limit. Messages up to
+	// 25 MiB are accepted only when sent to verified destination addresses.
+	// Refer to /email-service/platform/limits/ for details.
+	const maxSize = 5 * 1024 * 1024;
 	const allowedTypes = [
 		"image/jpeg",
 		"image/png",
@@ -381,3 +395,9 @@ function getFileTypeDescription(mimeType: string): string {
 	return typeMap[mimeType] || "Unknown";
 }
 ```
+
+## Next steps
+
+- [Send method](/email-service/api/send-emails/workers-api/) — full reference for the `Attachment` interface and the `send()` method.
+- [Limits](/email-service/platform/limits/) — message size and attachment limits.
+- [Email headers](/email-service/reference/headers/) — set custom headers alongside attachments.

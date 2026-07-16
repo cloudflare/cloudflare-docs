@@ -8,7 +8,7 @@ products:
   - browser-run
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 Cloudflare Browser Run (formerly Browser Rendering) allows you to programmatically control a headless browser, enabling you to do things like take screenshots, generate PDFs, and perform automated browser tasks. This guide will help you choose the right integration method and get you started with your first project.
 
@@ -16,14 +16,31 @@ Cloudflare Browser Run (formerly Browser Rendering) allows you to programmatical
 
 ## Quick Actions
 
+Quick Actions can be used via the REST API or directly from a Cloudflare Worker using a browser binding.
+
+<Tabs> <TabItem label="REST API">
+
 ### Prerequisites
 
 - Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
 - Create a [Cloudflare API Token](/fundamentals/api/get-started/create-token/) with `Browser Rendering - Edit` permissions.
 
-### Example: Take a screenshot of the Cloudflare homepage
+### Example: Take a screenshot
 
 <Render file="example-screenshot-from-url" product="browser-run" />
+
+</TabItem> <TabItem label="Workers binding">
+
+### Prerequisites
+
+- Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
+- Install [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
+### Example: Take a screenshot from a Worker
+
+<Render file="example-quick-action-binding" product="browser-run" />
+
+</TabItem> </Tabs>
 
 Other Quick Actions endpoints include:
 

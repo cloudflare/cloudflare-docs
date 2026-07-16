@@ -1,0 +1,126 @@
+---
+interface Props {
+	id: string;
+	command: string;
+	showPrompt?: boolean;
+	rounded?: boolean;
+	class?: string;
+}
+
+const {
+	id,
+	command,
+	showPrompt = false,
+	rounded = false,
+	class: className = "",
+} = Astro.props;
+---
+
+<div
+	class:list={[
+		"flex items-stretch overflow-hidden border border-zinc-200 dark:border-[#2a2a2a]",
+		rounded && "rounded",
+		className,
+	]}
+>
+	{
+		showPrompt && (
+			<span
+				class="bg-background text-accent flex shrink-0 items-center border-r border-zinc-200 px-3 font-mono text-sm leading-none select-none dark:border-[#2a2a2a]"
+				aria-hidden="true"
+			>
+				$
+			</span>
+		)
+	}
+
+	<code
+		id={id}
+		class="bg-background min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none text-zinc-700 select-all dark:text-zinc-300"
+	>
+		{command}
+	</code>
+
+	<button
+		type="button"
+		data-copy-target={id}
+		aria-label="Copy to clipboard"
+		class="cmd-copy-btn focus-visible:outline-accent flex w-10 shrink-0 cursor-pointer items-center justify-center border-l border-zinc-200 text-zinc-500 transition-colors duration-150 hover:bg-zinc-100 hover:text-zinc-700 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:border-[#2a2a2a] dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
+	>
+		<svg
+			class="cmd-copy-default"
+			xmlns="http://www.w3.org/2000/svg"
+			width="18"
+			height="18"
+			fill="currentColor"
+			viewBox="0 0 256 256"
+			aria-hidden="true"
+		>
+			<path
+				d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"
+			></path>
+		</svg>
+		<svg
+			class="cmd-copy-done"
+			xmlns="http://www.w3.org/2000/svg"
+			width="18"
+			height="18"
+			fill="currentColor"
+			viewBox="0 0 256 256"
+			aria-hidden="true"
+		>
+			<path
+				d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"
+			></path>
+		</svg>
+	</button>
+</div>
+
+<style>
+	.cmd-copy-default {
+		display: block;
+	}
+	.cmd-copy-done {
+		display: none;
+	}
+	.cmd-copy-btn[data-copied="true"] .cmd-copy-default {
+		display: none;
+	}
+	.cmd-copy-btn[data-copied="true"] .cmd-copy-done {
+		display: block;
+		color: #10a37f;
+	}
+</style>
+
+<script>
+	function bindCommandCopy() {
+		document
+			.querySelectorAll<HTMLButtonElement>(".cmd-copy-btn")
+			.forEach((btn) => {
+				if (btn.dataset.bound === "true") return;
+				btn.dataset.bound = "true";
+
+				btn.addEventListener("click", async () => {
+					const targetId = btn.dataset.copyTarget;
+					if (!targetId) return;
+					const codeEl = document.getElementById(targetId);
+					if (!codeEl) return;
+					const text = codeEl.textContent?.trim() ?? "";
+					try {
+						await navigator.clipboard.writeText(text);
+					} catch {
+						return;
+					}
+					btn.dataset.copied = "true";
+					btn.setAttribute("aria-label", "Copied");
+					setTimeout(() => {
+						delete btn.dataset.copied;
+						btn.setAttribute("aria-label", "Copy to clipboard");
+					}, 1500);
+				});
+			});
+	}
+
+	bindCommandCopy();
+	document.addEventListener("astro:page-load", bindCommandCopy);
+</script>

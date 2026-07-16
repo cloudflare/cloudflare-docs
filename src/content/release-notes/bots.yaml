@@ -3,6 +3,14 @@ link: "/bots/changelog/"
 productName: Bots
 productLink: "/bots/"
 entries:
+  - publish_date: "2026-07-01"
+    title: New options to manage AI traffic
+    description: |-
+      All customers can now manage AI crawlers by behavior — [Search, Agent, and Training](/bots/concepts/bot/#ai-bots) — instead of a single Block AI bots toggle. Configure these options from [Block AI Bots](/bots/additional-configurations/block-ai-bots/). New defaults, in which Training and Agent are blocked on pages that display ads while Search remains allowed, take effect for new domains on September 15, 2026.
+  - publish_date: "2026-07-01"
+    title: BotBase and Attribution Business Insights for Enterprise Bot Management
+    description: |-
+      Enterprise Bot Management customers can now use [BotBase](/bots/botbase/), a searchable directory of all tracked bots and agents with their behavior classification and detection IDs, and [Attribution Business Insights](/bots/attribution-business-insights/), a dashboard showing site-wide and per-operator crawl-to-referral ratios alongside bot traffic to your content.
   - publish_date: "2025-07-02"
     title: Managed robots.txt will prepend existing files
     description: Cloudflare will prepend our managed `robots.txt` before your existing `robots.txt`, combining both into a single response.

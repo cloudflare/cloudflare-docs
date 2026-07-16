@@ -1,0 +1,22 @@
+releaseNotes: |-
+  This release introduces the new Cloudflare One Client UI for macOS! You can expect a cleaner and more intuitive design as well as easier access to common actions and information. Here are some of the many things we have found our users appreciate:
+
+  - Right click context menu to access the most common client actions quickly
+  - Built-in captive portal login experience
+
+  **Additional Changes and improvements**
+
+
+  - Added a new CLI command: warp-cli mdm refresh. This command executes an immediate refresh of the Mobile Device Management (MDM) configuration file.
+  - Fixed a proxy mode connection stall issue.
+
+  **Known issues**
+
+
+  - Registration may hang at "Checking your organization configuration" due to IPC errors. A system reboot should resolve the error, allowing registration to proceed.
+  - Split tunnel list configuration is not available in the new UI. Management of split tunnel entries is currently only possible via `warp-cli tunnel ip` and `warp-cli tunnel host`. UI support will be added in a future release.
+version: 2026.4.1390.0
+releaseDate: 2026-05-26T22:26:01.690Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.4.1390.0
+packageSize: 133267836
+platformName: macOS

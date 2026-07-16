@@ -69,6 +69,12 @@ Type: `string`
 
 Cache status. <br />Possible values are <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> \| <em>dynamic</em> \| <em>stream_hit</em> \| <em>deferred</em> <br />"dynamic" means that a request is not eligible for cache. This can mean, for example that it was blocked by the firewall. Refer to [Cloudflare cache responses](/cache/concepts/cache-responses/) for more details.
 
+## CacheLockWaitedMs
+
+Type: `int`
+
+Maximum time spent waiting on a cache lock across all cache tiers, in milliseconds.
+
 ## CacheReserveUsed
 
 Type: `bool`
@@ -453,6 +459,12 @@ Type: `string`
 
 Result of the check for [leaked credentials](/waf/detections/leaked-credentials/). <br />Possible results are: <em>password_leaked</em> \| <em>username_and_password_leaked</em> \| <em>username_password_similar</em> \| <em>username_leaked</em> \| <em>clean</em>.
 
+## MatchedRules
+
+Type: `array[object]`
+
+Array of matched Cloudflare Rules product rules grouped by product. Each object contains: <em>product</em> (string, for example snippets, transform, redirects), <em>rulesetId</em> (string), <em>rulesetVersion</em> (int), and <em>rules</em> (array of objects, each with <em>id</em> (string) and optional <em>metadata</em> (object with string key-value pairs)).
+
 ## OriginDNSResponseTimeMs
 
 Type: `int`
@@ -475,7 +487,7 @@ Time taken to send request headers to origin after establishing a connection. No
 
 Type: `int`
 
-Number of bytes returned by the origin server.
+Number of bytes returned by the origin server. Consider using CacheResponseBytes and filtering out OriginResponseStatus with values 0 and 304, which indicate a revalidated response. Refer to [Calculating origin-served bytes](/logs/faq/common-calculations/#how-can-i-calculate-bytes-served-by-the-origin-from-cloudflare-logs).
 
 ## OriginResponseDurationMs
 
@@ -571,7 +583,7 @@ Action of the security rule that triggered a terminating action, if any.
 
 Type: `array[string]`
 
-Array of actions the Cloudflare security products performed on this request. The individual security products associated with this action can be found in SecuritySources and their respective rule IDs can be found in SecurityRuleIDs. The length of the array is the same as SecurityRuleIDs and SecuritySources. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionClose</em> \| <em>challengeSolved</em> \| <em>challengeBypassed</em> \| <em>jschallengeSolved</em> \| <em>jschallengeBypassed</em> \| <em>bypass</em> \| <em>managedChallenge</em> \| <em>managedChallengeNonInteractiveSolved</em> \| <em>managedChallengeInteractiveSolved</em> \| <em>managedChallengeBypassed</em> \| <em>rewrite</em> \| <em>forceConnectionClose</em> \| <em>skip</em>.
+Array of actions the Cloudflare security products performed on this request. The individual security products associated with this action can be found in SecuritySources and their respective rule IDs can be found in SecurityRuleIDs. The length of the array is the same as SecurityRuleIDs and SecuritySources. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionClose</em> \| <em>challengeSolved</em> \| <em>challengeBypassed</em> \| <em>jschallengeSolved</em> \| <em>jschallengeBypassed</em> \| <em>bypass</em> \| <em>managedChallenge</em> \| <em>managedChallengeNonInteractiveSolved</em> \| <em>managedChallengeInteractiveSolved</em> \| <em>managedChallengeBypassed</em> \| <em>rewrite</em> \| <em>forceConnectionClose</em> \| <em>skip</em> \| <em>precursorInterstitialPageIssued</em> \| <em>precursorInterstitialPageBypassed</em> \| <em>precursorInterstitialPageSolved</em>.
 
 ## SecurityRuleDescription
 
@@ -595,7 +607,7 @@ Array of rule IDs of the security product that matched the request. The security
 
 Type: `array[string]`
 
-Array of security products that matched the request. The same product can appear multiple times, which indicates different rules or actions that were activated. The rule IDs can be found in SecurityRuleIDs, and the actions can be found in SecurityActions. The length of the array is the same as SecurityRuleIDs and SecurityActions. <br />Possible sources are <em>unknown</em> \| <em>asn</em> \| <em>country</em> \| <em>ip</em> \| <em>ipRange</em> \| <em>securityLevel</em> \| <em>zoneLockdown</em> \| <em>waf</em> \| <em>firewallRules</em> \| <em>uaBlock</em> \| <em>rateLimit</em> \| <em>bic</em> \| <em>hot</em> \| <em>l7ddos</em> \| <em>validation</em> \| <em>botFight</em> \| <em>apiShield</em> \| <em>botManagement</em> \| <em>dlp</em> \| <em>firewallManaged</em> \| <em>firewallCustom</em> \| <em>apiShieldSchemaValidation</em> \| <em>apiShieldTokenValidation</em> \| <em>apiShieldSequenceMitigation</em>.
+Array of security products that matched the request. The same product can appear multiple times, which indicates different rules or actions that were activated. The rule IDs can be found in SecurityRuleIDs, and the actions can be found in SecurityActions. The length of the array is the same as SecurityRuleIDs and SecurityActions. <br />Possible sources are <em>unknown</em> \| <em>asn</em> \| <em>country</em> \| <em>ip</em> \| <em>ipRange</em> \| <em>securityLevel</em> \| <em>zoneLockdown</em> \| <em>waf</em> \| <em>firewallRules</em> \| <em>uaBlock</em> \| <em>rateLimit</em> \| <em>bic</em> \| <em>hot</em> \| <em>l7ddos</em> \| <em>validation</em> \| <em>botFight</em> \| <em>apiShield</em> \| <em>botManagement</em> \| <em>dlp</em> \| <em>firewallManaged</em> \| <em>firewallCustom</em> \| <em>apiShieldSchemaValidation</em> \| <em>apiShieldTokenValidation</em> \| <em>apiShieldSequenceMitigation</em> \| <em>precursor</em>.
 
 ## SmartRouteColoID
 

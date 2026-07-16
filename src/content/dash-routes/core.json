@@ -422,6 +422,16 @@
 		"parent": ["Manage account"]
 	},
 	{
+		"name": "OAuth clients",
+		"deeplink": "/?to=/:account/oauth-clients",
+		"parent": ["Manage account"]
+	},
+	{
+		"name": "Manage OAuth authorizations",
+		"deeplink": "/?to=/profile/access-management/authorization",
+		"parent": ["Manage account"]
+	},
+	{
 		"name": "Audit logs",
 		"deeplink": "/?to=/:account/audit-log",
 		"parent": ["Manage account"]
@@ -481,6 +491,11 @@
 	{
 		"name": "HTTP Traffic",
 		"deeplink": "/?to=/:account/:zone/analytics/traffic",
+		"parent": ["Analytics & logs"]
+	},
+	{
+		"name": "Attribution Business Insights",
+		"deeplink": "/?to=/:account/:zone/analytics/attribution-business-insights",
 		"parent": ["Analytics & logs"]
 	},
 	{

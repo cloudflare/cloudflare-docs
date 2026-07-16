@@ -12,7 +12,21 @@ R2 Data Catalog exposes metrics that allow you to monitor Iceberg REST API reque
 
 The metrics displayed in the Cloudflare dashboard are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or any HTTP client.
 
-## Metrics
+## Dashboard metrics
+
+The **Metrics** tab on each catalog's detail page displays five charts that summarize catalog activity over a configurable time range:
+
+| Chart | Description |
+| --- | --- |
+| **Bytes Compacted** | Total bytes written by compaction jobs |
+| **Files Compacted** | Number of input files processed and output files created by compaction |
+| **Catalog Requests** | Total Iceberg REST API requests (for example, `load-table`, `list-namespaces`, `commit-table`) |
+| **Storage Size** | Current bucket storage size |
+| **Snapshots Expired** | Number of snapshots removed by snapshot expiration jobs |
+
+The overview page also shows **Catalog Requests** and **Bucket Size** columns in the catalogs table, giving you a quick summary across all your catalogs.
+
+## GraphQL datasets
 
 ### Data operations metrics
 

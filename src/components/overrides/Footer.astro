@@ -2,7 +2,6 @@
 import { Icon } from "@astrojs/starlight/components";
 import type { StarlightIcon } from "@astrojs/starlight/types";
 import EditLink from "@astrojs/starlight/components/EditLink.astro";
-import LastUpdated from "@astrojs/starlight/components/LastUpdated.astro";
 import Pagination from "@astrojs/starlight/components/Pagination.astro";
 
 import OneTrust from "../OneTrust.astro";
@@ -21,6 +20,7 @@ const groups = Object.entries({
 			href: "/sponsorships/",
 		},
 		{ text: "Open Source", href: "https://github.com/cloudflare" },
+		{ text: "Cloudflare Research", href: "https://research.cloudflare.com/" },
 	],
 	Support: [
 		{ text: "Help Center", href: "https://support.cloudflare.com/" },
@@ -38,16 +38,21 @@ const groups = Object.entries({
 	],
 	Tools: [
 		{ text: "Cloudflare Radar", href: "https://radar.cloudflare.com/" },
+		{ text: "Cloudflare Labs", href: "https://labs.cloudflare.dev/" },
 		{ text: "Speed Test", href: "https://speed.cloudflare.com/" },
 		{ text: "Is BGP Safe Yet?", href: "https://isbgpsafeyet.com/" },
-		{ text: "RPKI Toolkit", href: "https://rpki.cloudflare.com/" },
 		{ text: "Certificate Transparency", href: "https://ct.cloudflare.com/" },
 	],
 	Community: [
+		{
+			text: "Community forum",
+			href: "https://community.cloudflare.com/",
+			icon: "cloudflare",
+		},
 		{ text: "X", href: "https://x.com/cloudflare", icon: "x.com" },
 		{
 			text: "Discord",
-			href: "http://discord.cloudflare.com/",
+			href: "https://discord.cloudflare.com/",
 			icon: "discord",
 		},
 		{
@@ -142,7 +147,6 @@ if (
 				<Pagination />
 				<div class="meta sl-flex">
 					<EditLink />
-					<LastUpdated />
 				</div>
 			</div>
 		)

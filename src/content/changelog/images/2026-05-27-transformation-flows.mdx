@@ -1,0 +1,18 @@
+---
+title: Transformation flows in Images
+description: >
+  Set up automated rules to optimize remote images across your zone without writing code or changing URLs.
+date: 2026-05-27
+---
+![Custom flow configuration panel](~/assets/images/images/custom-flow.png)
+
+Flows are automated rules that pair conditions (such as file extension, URL path, or query parameter) with parameters. Set up a flow to automatically apply image optimization to matching requests on your zone without writing code or changing URLs.
+
+There are two modes for transformation flows:
+
+- **[Provider flows](/images/optimization/transformations/flows/#set-up-a-provider-flow)** — Migrate from another image optimization service. Your existing URLs continue to work while Cloudflare rewrites provider-specific parameters to their Cloudflare equivalents. Currently, Cloudflare supports provider flows for Fastly Image Optimizer.
+- **[Custom flows](/images/optimization/transformations/flows/#set-up-a-custom-flow)** — Define your own conditions and actions for use cases like automatic format conversion, [responsive sizing](/images/optimization/make-responsive-images/#using-widthauto) with `width=auto`, or directory-based optimization.
+
+To get started, go to **Images** > **Transformations** > **Automation** in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/images/transformations).
+
+Learn more about [transformation flows](/images/optimization/transformations/flows/).
