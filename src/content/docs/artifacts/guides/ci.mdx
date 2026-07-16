@@ -8,62 +8,87 @@ products:
   - artifacts
 ---
 
-Run your [continuous integration](/workers/ci-cd/) (CI) pipeline for your artifacts on Cloudflare using [Cloudflare Workflows](/workflows/). 
+[Artifacts](/artifacts/) stores versioned file trees, such as a Git repository, behind a Git-compatible interface. You can run a [continuous integration](/workers/ci-cd/) (CI) pipeline against an artifact on Cloudflare using [Cloudflare Workflows](/workflows/).
 
-A CI pipeline is a series of steps like `build`, `lint`, and `deploy`. Workflows allows you to define a series of steps and execute them durably, meaning that if your application crashes or fails, it will resume at the point of failure without losing any information or metadata.
+A CI pipeline is a series of steps, such as `build`, `lint`, and `deploy`, that run automatically when your code changes. Workflows lets you define these steps and execute them durably. Durable execution means that if your application crashes or fails, the pipeline resumes at the point of failure without losing progress or state.
 
-This allows you to orchestrate your CI pipeline within your project, using a Workflow. Here are the components you will need.
+This guide uses the CI SDK, a library that builds on Workflows. It gives you a starting point through a class called `CIWorkflow` which is a template pre-built for running CI, plus CI-specific steps like `step.cache()` and `step.runner()`.
+
+## Components
 
 ### Dependency caching
 
-The first step to run a CI job is downloading and installing all of the external code on which your project depends, which can add latency. This is your install step, for example, `pnpm install`.
+Most projects use libraries or tools that are not stored directly in the repository, such as `react` or `vitest`. The first CI step usually downloads and installs those dependencies by running, for example, pnpm install. To make your CI runs more efficient, you can cache the dependencies and only re-run the install if they change.
 
-By caching those dependencies, you will not need to re-download and re-install every run.
-
-You can cache your dependencies with `step.cache()`, an extension of the [Workflow step API](/workflows/build/workers-api/#workflowstep) which takes a snapshot of your dependencies.
+Cache your dependencies with `step.cache()`. This method extends the standard [Workflow step API](/workflows/build/workers-api/#workflowstep) and stores a saved copy of your installed dependencies for reuse.
 
 ### Runner step
 
-Then you will need to execute the steps in your CI job. For this, use `step.runner()`, another extension of the Workflow step API. Each `step.runner()` should include:
+Next, run each step in your CI job with `step.runner()`, another extension of the Workflow step API. Each `step.runner()` takes:
 
-- `name`: Name of the step, meaning what action you want the step to take, i.e. `build`
-- `exec`: The execution command for that step, i.e. `pnpm run 'build'"`
+- `name`: The name of the step, describing the action it performs, for example `build`.
+- `exec`: The command to run for that step, for example `pnpm run build`.
+
+`step.runner()` runs a command as an isolated Workflow step. 
+
+If you want to define your runner so that it will run the command with your cached dependencies available, create a new object on your `install` step (which should be your first step, as discussed above).
+
+Define the object using `step.cache(...).runner("install",...)`, i.e. `const deps = step.cache(...).runner("install",...)`. This is useful if, for example, your CI steps will require access to `vitest`, installed by `pnpm install`. 
 
 ### Pipeline
 
-The CI SDK includes a core method called `pipeline`, which calls your CI job every time an event happens in your repository (for example, `push`). The `pipeline` method defines your event payload and step definition. For a `CIWorkflow`, include the following:
+The `pipeline` method runs your CI steps whenever an event occurs in your repository, such as an Artifact `push`. It receives the event data and defines which step types you have access to run. When you implement `pipeline` on your `CIWorkflow`, it takes:
 
-- `event: WorkflowEvent<CiParams>`, which defines the event type as a Workflow trigger
-- `step: CiRunnerStep`, which pulls in `step.cache()` and `step.runner()`
+- `event: WorkflowEvent<CiParams>`: The event that triggers the Workflow, including its payload (the data the repository sends about the event)
+- `step: CiRunnerStep`: The step object that provides the extended `step.cache()` and `step.runner()` methods
 
 ## Write your CI Workflow
 
-1. Define your [Workflow entrypoint](/workflows/build/workers-api/#workflowentrypoint) by extending the `CIWorkflow` class. Use the `pipeline` method to specify event and step type. This is how your Workflow gains access to the extended Workflow steps, `step.cache()` and `step.runner()`.
+1. Define your [Workflow entrypoint](/workflows/build/workers-api/#workflowentrypoint) as a class that extends (inherits from) the `CIWorkflow` class. Implement the `pipeline` method to specify the event and step types. 
+
+Extending `CIWorkflow` is how your Workflow gains access to the extended Workflow steps, `step.cache()` and `step.runner()`.
 
    ```ts
    export class CI extends CIWorkflow {
      protected async pipeline(
        event: WorkflowEvent<CiParams>,
        step: CiRunnerStep
-     ):...
+     ): {...}
    }
    ```
 
-2. Set up your dependencies in the Workflow entrypoint. Include your lockfile (which tracks whether dependencies change) and define the `runner` step for running the CI job.
+2. Optionally set up your dependencies in the Workflow entrypoint. 
 
-   ```ts
+If you would like to run your commands with the cached dependencies available, configure your runner to access dependencies according to the pattern discussed earlier: `step.cache(...).runner("install",...)`. Otherwise, skip to the next step.
+
+Pass your lockfile, which is the file that records the exact versions of your dependencies, to `step.cache()` so the cache updates only when those versions change.
+
+Then define the install `runner` step:
+
+```ts
    const deps = await step
-     .cache(["pnpm-lock.yaml"])
-     .runner("install", { exec: "pnpm install --frozen-lockfile" });
-   ```
+   	.cache(["pnpm-lock.yaml"])
+   	.runner("install", { exec: "pnpm install --frozen-lockfile" });
+```
 
-3. Define the steps in your CI job as `step.runner()`. To ensure that all steps complete before the job continues, wrap them in a `Promise.all()`:
+:::note
+Your lockfile is defined according to the package or frameowrk you are using. To find your lockile, look at the root directory of your project. Some examples include:
+- npm: `package-lock.json`
+- yarn: `yarn.lock`
+- pnpm: `pnpm-lock.yaml`
+
+The `--frozen-lockfile` flag installs the exact versions from the lockfile and fails if the lockfile is out of date.
+:::
+
+3. Define each step in your pipeline as a `deps.runner()` call. If you are not using dependency caching, you can define your steps with `step.runner()` alone. 
+
+Wrap the steps in `Promise.all()` to run them in parallel and wait for all of them to finish before the pipeline continues:
 
    ```ts
    await Promise.all([
-     deps.runner("build", { exec: "pnpm run 'build'", capture: false }),
-     deps.runner("check", { exec: "pnpm run 'check'", capture: false }),
-     deps.runner("format", { exec: "pnpm run 'format'", capture: false }),
+   	deps.runner("build", { exec: "pnpm run 'build'", capture: false }),
+   	deps.runner("check", { exec: "pnpm run 'check'", capture: false }),
+   	deps.runner("format", { exec: "pnpm run 'format'", capture: false }),
    ]);
    ```
 
@@ -71,20 +96,20 @@ Putting it together, a full CI Workflow with `build`, `check`, and `format` step
 
 ```ts
 export class CI extends CIWorkflow {
-  protected async pipeline(
-    event: WorkflowEvent<CiParams>,
-    step: CiRunnerStep
-  ): Promise<void> {
-    const p = event.payload;
-    const deps = await step
-      .cache(['pnpm-lock.yaml'])
-      .runner('install', { exec: 'pnpm install --frozen-lockfile' });
+	protected async pipeline(
+		event: WorkflowEvent<CiParams>,
+		step: CiRunnerStep,
+	): Promise<void> {
+		const p = event.payload;
+		const deps = await step
+			.cache(["pnpm-lock.yaml"])
+			.runner("install", { exec: "pnpm install --frozen-lockfile" });
 
-    await Promise.all([
-      deps.runner("build", { exec: "pnpm run 'build'", capture: false }),
-      deps.runner("check", { exec: "pnpm run 'check'", capture: false }),
-      deps.runner("format", { exec: "pnpm run 'format'", capture: false })
-    ]);
-  }
+		await Promise.all([
+			deps.runner("build", { exec: "pnpm run 'build'", capture: false }),
+			deps.runner("check", { exec: "pnpm run 'check'", capture: false }),
+			deps.runner("format", { exec: "pnpm run 'format'", capture: false }),
+		]);
+	}
 }
 ```
