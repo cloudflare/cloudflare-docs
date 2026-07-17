@@ -105,9 +105,9 @@ export async function run({
 	}
 
 	// A fork PR has head.repo.full_name !== base.repo.full_name.
-	// This is more reliable than the label heuristic (head.label starts with owner:)
-	// and correctly handles forks created inside the cloudflare org.
-	const isFork = pr.head.repo.full_name !== pr.base.repo.full_name;
+	// head.repo can be null when the fork has been deleted — treat that as a
+	// fork (we can't push to it regardless).
+	const isFork = (pr.head.repo?.full_name ?? "") !== pr.base.repo.full_name;
 
 	if (isFork) {
 		const body = renderRebaseStatusUpdate(
@@ -734,12 +734,19 @@ async function resolveConflictsWithAI(
 				let renameNote = "";
 				let productionHeader =
 					"**Production version (what production has now):**";
-				if (isProductionRename) {
+				// Case 4: both the PR and production renamed the same base file.
+				// meta.writePath (production's new name) differs from path (PR's new name).
+				const isBothSidesRenamed = isPrRename && meta.writePath !== path;
+				if (isBothSidesRenamed) {
+					const entry = prFiles.find((f) => f.path === path);
+					renameNote = `Note: both sides renamed this file. This PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`; production renamed it to \`${meta.writePath}\`. The production content is shown at \`${meta.productionReadPath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
+					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, where production moved this file):**`;
+				} else if (isProductionRename) {
 					renameNote = `Note: production renamed \`${path}\` to \`${meta.productionReadPath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
 					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, where production moved this file):**`;
 				} else if (isPrRename) {
 					const entry = prFiles.find((f) => f.path === path);
-					renameNote = `Note: this PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`. Return the resolved content at path \`${meta.writePath}\`.`;
+					renameNote = `Note: this PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`. Production's content is at \`${meta.productionReadPath}\` (the original path). Return the resolved content at path \`${meta.writePath}\`.`;
 					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, the original path before this PR renamed it):**`;
 				}
 				return [
@@ -836,62 +843,94 @@ async function resolveConflictsWithAI(
 				? (aiResponse as { response: string }).response
 				: JSON.stringify(aiResponse);
 
-	// Extract JSON from the response (may be wrapped in a ```json fence).
-	// Use non-greedy matching for the bare-object fallback to avoid spanning
-	// multiple JSON objects if the model returns prose after the response.
-	const jsonMatch =
-		text.match(/```json\s*([\s\S]+?)\s*```/) ?? text.match(/(\{[\s\S]+?\})/);
+	// Parse the AI response. Try strategies in order:
+	//   1. Whole-response JSON.parse (model followed the system prompt and returned
+	//      only JSON — most reliable, handles `}` inside string values correctly).
+	//   2. ```json fence extraction (model wrapped its response in a fence).
+	// The bare-object regex fallback is intentionally omitted: non-greedy `}` stops
+	// at the first closing brace, truncating any object whose content contains `}`.
+	const lowConfidenceFallback = {
+		confidence: "low" as const,
+		reason:
+			"AI did not return a parseable JSON response. Please resolve manually.",
+		files: [] as { path: string; content: string }[],
+		allPrFiles: prFiles,
+		conflictCandidateSet: new Set(conflictCandidates),
+		conflictWritePathMap,
+		mergeBaseSha,
+		productionRefSha: productionRef.sha,
+	};
 
-	if (!jsonMatch) {
-		return {
-			confidence: "low",
-			reason:
-				"AI did not return a parseable JSON response. Please resolve manually.",
-			files: [],
-			allPrFiles: prFiles,
-			conflictCandidateSet: new Set(conflictCandidates),
-			conflictWritePathMap,
-			mergeBaseSha,
-			productionRefSha: productionRef.sha,
-		};
-	}
+	type ParsedResponse = {
+		confidence?: unknown;
+		reason?: unknown;
+		files?: unknown;
+	};
+	let parsed: ParsedResponse | null = null;
 
-	let parsed: { confidence?: unknown; reason?: unknown; files?: unknown };
+	// Strategy 1: try parsing the whole response directly.
 	try {
-		parsed = JSON.parse(jsonMatch[1]) as typeof parsed;
+		parsed = JSON.parse(text.trim()) as ParsedResponse;
 	} catch {
-		// Model returned something that matched our JSON regex but isn't valid
-		// JSON — treat it the same as a missing response.
-		return {
-			confidence: "low",
-			reason:
-				"AI did not return a parseable JSON response. Please resolve manually.",
-			files: [],
-			allPrFiles: prFiles,
-			conflictCandidateSet: new Set(conflictCandidates),
-			conflictWritePathMap,
-			mergeBaseSha,
-			productionRefSha: productionRef.sha,
-		};
+		// not plain JSON — try fence extraction below
 	}
+
+	// Strategy 2: extract from a ```json ... ``` fence.
+	if (!parsed) {
+		const fenceMatch = text.match(/```json\s*([\s\S]+?)\s*```/);
+		if (!fenceMatch) return lowConfidenceFallback;
+		try {
+			parsed = JSON.parse(fenceMatch[1]) as ParsedResponse;
+		} catch {
+			return lowConfidenceFallback;
+		}
+	}
+
+	// Both strategies either returned or set parsed; null is impossible here.
+	const parsedResponse = parsed as ParsedResponse;
 
 	// Validate each file entry — malformed entries from the model are dropped
 	// rather than passed to createBlob with undefined arguments.
-	const rawFiles = Array.isArray(parsed.files) ? parsed.files : [];
-	const validatedFiles = rawFiles.filter(
+	const rawFiles = Array.isArray(parsedResponse.files)
+		? parsedResponse.files
+		: [];
+	const validatedFiles = (rawFiles as unknown[]).filter(
 		(entry): entry is { path: string; content: string } =>
 			typeof (entry as Record<string, unknown>)?.path === "string" &&
 			typeof (entry as Record<string, unknown>)?.content === "string",
 	);
 
+	let confidence: ConflictResolution["confidence"] =
+		parsedResponse.confidence === "high" ||
+		parsedResponse.confidence === "medium" ||
+		parsedResponse.confidence === "low"
+			? parsedResponse.confidence
+			: "low";
+	let reason =
+		typeof parsedResponse.reason === "string" ? parsedResponse.reason : "";
+
+	// If the model claimed high confidence but omitted one or more conflict
+	// candidates from the files array, downgrade to medium before returning so
+	// the user gets a clear "halted-confidence" status rather than a cryptic
+	// "failed" error from the completeness check inside applyResolution.
+	if (confidence === "high") {
+		const resolvedResponsePaths = new Set(validatedFiles.map((f) => f.path));
+		const missingCandidates = conflictCandidates.filter((candidate) => {
+			const writePath = conflictWritePathMap.get(candidate) ?? candidate;
+			return (
+				!resolvedResponsePaths.has(candidate) &&
+				!resolvedResponsePaths.has(writePath)
+			);
+		});
+		if (missingCandidates.length > 0) {
+			confidence = "medium";
+			reason = `AI claimed high confidence but omitted ${missingCandidates.length} conflict candidate(s): ${missingCandidates.join(", ")}. Please resolve manually.`;
+		}
+	}
+
 	return {
-		confidence:
-			parsed.confidence === "high" ||
-			parsed.confidence === "medium" ||
-			parsed.confidence === "low"
-				? parsed.confidence
-				: "low",
-		reason: typeof parsed.reason === "string" ? parsed.reason : "",
+		confidence,
+		reason,
 		files: validatedFiles,
 		allPrFiles: prFiles,
 		conflictCandidateSet: new Set(conflictCandidates),
@@ -1028,10 +1067,14 @@ async function applyResolution(
 							sha: null,
 						});
 					}
+					// Preserve the original file mode (100755 for executables, etc.)
+					// by looking it up from the PR head tree. Fall back to 100644.
+					const originalMode =
+						(prEntryMap.get(path)?.mode as TreeUpdate["mode"]) ?? "100644";
 					const blobSha = await createBlob(token, resolvedContent);
 					treeUpdates.push({
 						path: productionPath,
-						mode: "100644",
+						mode: originalMode,
 						type: "blob",
 						sha: blobSha,
 					});
@@ -1095,8 +1138,11 @@ async function applyResolution(
 	);
 
 	// Create a new commit whose parent is the (re-verified) production HEAD.
+	// Use the PR title rather than the last commit message — for multi-commit PRs
+	// the last commit is often something like "address review feedback", which
+	// is uninformative in history.
 	const commitMessage = [
-		prCommit.message,
+		pr.title,
 		"",
 		`Conflicts resolved by cloudflare-docs-bot during rebase onto production.`,
 	].join("\n");

@@ -44,7 +44,8 @@ export interface GitHubPullRequest {
 	draft: boolean;
 	labels: { name: string }[];
 	base: { ref: string; sha: string; repo: { full_name: string } };
-	head: { ref: string; sha: string; repo: { full_name: string } };
+	/** head.repo can be null when the fork has been deleted. */
+	head: { ref: string; sha: string; repo: { full_name: string } | null };
 }
 
 export async function getInstallationToken(
