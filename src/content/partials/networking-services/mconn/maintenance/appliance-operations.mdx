@@ -1,6 +1,4 @@
 ---
-params:
-  - dashName
 ---
 
 import { Aside, DashButton, Markdown, Tabs, TabItem } from '~/components';
@@ -20,43 +18,18 @@ Operations may disrupt service. Only one operation can be pending at a time.
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-{ props.dashName === "CF1 Cloudflare WAN" ? (
-	<>
-		<Markdown
-	text={`
-		1. Log in to the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a>, and go to **Networking** > **Connectors**.
-		2. In **Appliances** > **Appliances**, select the Cloudflare One Appliance you want to manage > **Edit**.
-	`}
-	inline={false}
-	/>
-	</>
-) : (
-	<>
+1. Go to the **Connectors** page.
 
-<Markdown
-	text={`
-		1. Go to the **Connectors** page.
-		`}
-	inline={false}
-	/>
-		<DashButton url="/?to=/:account/magic-networks/connections" />
+<DashButton url="/?to=/:account/magic-networks/connections" />
 
-		<Markdown
-	text={`
-		2. Go to the **Appliances** tab > **Appliances**.
-		3. Find the Cloudflare One Appliance you want to manage > **Edit**.
-	`}
-	inline={false}
-	/>
-	</>
-)
-}
-3. Scroll down to the **Operations** section.
-4. Select **Restart**, **Reboot**, or **Shutdown**.
-5. In the confirmation dialog:
+2. Go to the **Appliances** tab > **Appliances**.
+3. Find the Cloudflare One Appliance you want to manage > **Edit**.
+4. Scroll down to the **Operations** section.
+5. Select **Restart**, **Reboot**, or **Shutdown**.
+6. In the confirmation dialog:
    - Check **I understand this operation may disrupt service** (required).
    - Optionally, check **Purge persistent state** to clear persistent data in addition to temporary state.
-6. Select **Confirm**.
+7. Select **Confirm**.
 
 The operation is submitted and runs when the appliance next checks in. A banner shows the pending operation status until the appliance executes it.
 
