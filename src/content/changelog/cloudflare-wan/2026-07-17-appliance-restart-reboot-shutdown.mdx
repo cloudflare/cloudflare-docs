@@ -1,0 +1,20 @@
+---
+title: Restart, reboot, or shut down a Cloudflare One Appliance from the dashboard
+description: Remotely restart managed services, power cycle, or shut down a Cloudflare One Appliance — with optional persistent state purge.
+date: 2026-07-17
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+You can now restart, reboot, or shut down a [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/) directly from the dashboard or via API.
+
+![Restarting a Cloudflare One Appliance from the Operations section of the Edit Appliance page](~/assets/images/changelog/cloudflare-wan/2026-07-17-appliance-restart-reboot-shutdown.gif)
+
+- **Restart** — Restart managed services. Purges temporary and (optionally) persistent state.
+- **Reboot** — Power cycle the appliance. Optionally, purge persistent state. Re-applies configuration starting from scratch.
+- **Shutdown** — Power off the appliance. Optionally, purge persistent state. The machine will be offline until manually powered on again.
+
+In the dashboard, go to **Networking** > **Connectors** > **Appliances**, select an appliance, then **Edit** > **Operations** to send an operation. Via API, `POST` to `/accounts/{account_id}/magic/connectors/{connector_id}/interrupts`.
+
+For details, refer to [Appliance operations](/cloudflare-wan/configuration/appliance/maintenance/appliance-operations/).
