@@ -1068,9 +1068,15 @@ async function applyResolution(
 						});
 					}
 					// Preserve the original file mode (100755 for executables, etc.)
-					// by looking it up from the PR head tree. Fall back to 100644.
+					// by looking it up from the PR head tree. For rename conflicts the
+					// write path (productionPath) does not exist in the PR tree, but the
+					// PR-side candidate path or its previousPath do — try both before
+					// defaulting to 100644.
 					const originalMode =
-						(prEntryMap.get(path)?.mode as TreeUpdate["mode"]) ?? "100644";
+						((prEntryMap.get(path)?.mode ??
+							(previousPath
+								? prEntryMap.get(previousPath)?.mode
+								: undefined)) as TreeUpdate["mode"] | undefined) ?? "100644";
 					const blobSha = await createBlob(token, resolvedContent);
 					treeUpdates.push({
 						path: productionPath,
