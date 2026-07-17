@@ -1,0 +1,201 @@
+---
+title: CI Workflows
+description: Run a CI pipeline for your Artifact using Cloudflare Workflows.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - artifacts
+---
+
+import { Badge, Steps, TypeScriptExample, WranglerConfig } from "~/components";
+
+Cloudflare CI runs a [continuous integration](/workers/ci-cd/) (CI) pipeline for your [Artifact](/artifacts/) using [Cloudflare Workflows](/workflows/). Using the [Workflows API](/workflows/build/workers-api/), you can define a series of CI steps, such as `build`, `lint`, and `deploy` to run on `push` actions taken on your repo.
+
+This is useful to:
+
+- Build and test your project on every push.
+- Run linting and formatting checks in parallel.
+- Deploy automatically once all checks pass.
+
+Cloudflare CI uses the following components:
+
+- CI Workflows: a Cloudflare Workflow with specific step types for running CI
+- Dependency caching: take a snapshot of your project's dependencies (any external tools or libraries) to use in your CI steps via `step.cache()`
+- Runners: execute a command (i.e. `pnpm run build`) as a distinct Workflow step in a sandboxed (isolated) environment via `step.runner()`
+
+## Write your CI Workflow
+
+<Steps>
+
+1. Create a file called `cloudflare.ci.ts` in your Artifact repository.
+
+2. Import `CIWorkflow` and the CI types from `@repo/ci`.
+
+   <TypeScriptExample>
+
+   ```ts
+   import { CIWorkflow } from '@repo/ci';
+   import type { CiParams, CiRunnerStep, WorkflowEvent } from '@repo/ci';
+   ```
+
+3. Define your Workflow.
+
+   Your Workflow definition consists of a `class` and a `run` method.
+
+   3.a. A CI Workflow is defined by the `CIWorkflow` class. Extending `CIWorkflow` (i.e. `export class CI extends CIWorkflow {...}`) is how your Workflow gains access to the CI-specific step types, `step.cache()` and `step.runner()`.
+
+   3.b. The `run` method contains the steps for your Workflow. This methods **runs** when your Workflow is triggered.
+
+   - `event`: The event passed to the Workflow, including an optional `payload` containing data such as the trigger (for example, `artifact push`) or the branch name. For CI Workflows, set `event` to `WorkflowEvent<CiParams>` to accept the CI parameters.
+   - `step`: The `WorkflowStep` type that provides the step methods for your Workflow. For CI Workflows, set `step` to `CiRunnerStep`, which extends `WorkflowStep`, so that you have access to the CI-specific step types, `step.cache()` and `step.runner()`.
+
+   <TypeScriptExample>
+
+   ```ts
+   export class CI extends CIWorkflow {
+     protected async run(
+       event: WorkflowEvent<CiParams>,
+       step: CiRunnerStep,
+     ): Promise<void> {...}
+   }
+   ```
+
+   </TypeScriptExample>
+
+4. Cache your dependencies
+
+   Most projects use libraries or tools that are not stored directly in the repository, such as `react` or `vitest`. The first CI step usually downloads and installs those dependencies by running, for example, `pnpm install`. To make your CI runs more efficient, you can cache the dependencies and only re-run the install when they change.
+
+   Cache your dependencies with `step.cache()`. This method extends the standard [Workflow step API](/workflows/build/workers-api/#workflowstep) and stores a saved copy of your installed dependencies for reuse in your `runner()` steps.
+
+   Pass your lockfile, the file that records the exact versions of your dependencies, to `step.cache()` so the cache updates only when those versions change:
+
+   <TypeScriptExample>
+
+   ```ts
+   await step.cache("package-lock.json")
+   ```
+
+   </TypeScriptExample>
+
+   :::note
+   Your lockfile is defined according to the package manager or framework you are using. To find your lockfile, look at the root directory of your project. Some examples include:
+   - npm: `package-lock.json`
+   - yarn: `yarn.lock`
+   - pnpm: `pnpm-lock.yaml`
+
+   The `--frozen-lockfile` flag installs the exact versions from the lockfile and fails if the lockfile is out of date.
+   :::
+
+5. Define your runners.
+
+   A runner is a type of step, also extended from the Workflow step API, which executes commands in a sandbox environment. You can pass any command in your project's package manager (for example, `pnpm run build` if you are using `pnpm`), and the runner executes it on your behalf.
+
+   Each `step.runner()` takes:
+
+   - `name`: The name of the step, describing the action it performs (for example, `build`).
+   - `exec`: The command to run for that step (for example, `pnpm run build`).
+   - `capture`: An optional boolean that captures the output of the step in `step.output()` (`true` by default).
+
+   To run the `exec` command with your cached dependencies available, define your runner on your `install` step (usually the first step).
+
+   Create the object by chaining together `step.cache()` and `step.runner()`:
+
+   <TypeScriptExample>
+
+   ```ts
+   const deps = await step
+     .cache(["pnpm-lock.yaml"])
+     .runner("install", { exec: "pnpm install --frozen-lockfile" });
+   ```
+
+   </TypeScriptExample>
+
+   Then call your steps on the new object, `deps.runner()` for your steps. This is useful when your CI steps require access to a dependency, such as `vitest`, installed by `pnpm install`.
+
+   Wrap the steps in `Promise.all()` to run them in parallel and wait for all of them to finish before the CI pipeline continues:
+
+   <TypeScriptExample>
+
+   ```ts
+   await Promise.all([
+     deps.runner("build", { exec: "pnpm run build" }),
+     deps.runner("check", { exec: "pnpm run check", capture: false }),
+     deps.runner("format", { exec: "pnpm run format", capture: false }),
+   ]);
+   ```
+
+   </TypeScriptExample>
+
+</Steps>
+
+Putting it together, a full CI Workflow with `build`, `check`, and `format` steps before a `deploy` could look like this:
+
+<TypeScriptExample>
+
+```ts
+import { CIWorkflow } from "@repo/ci";
+import type { CiParams, CiRunnerStep, WorkflowEvent } from "@repo/ci";
+
+export class CI extends CIWorkflow {
+	protected async run(
+		event: WorkflowEvent<CiParams>,
+		step: CiRunnerStep,
+	): Promise<void> {
+		const deps = await step
+			.cache(["pnpm-lock.yaml"])
+			.runner("install", { exec: "pnpm install --frozen-lockfile" });
+
+		await Promise.all([
+			deps.runner("build", { exec: "pnpm run build" }),
+			deps.runner("check", { exec: "pnpm run check", capture: false }),
+			deps.runner("format", { exec: "pnpm run format", capture: false }),
+		]);
+
+		await deps.runner("deploy", { exec: "pnpm run deploy", capture: false });
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Trigger a CI run <Badge text="Beta" size="large" />
+
+First add a [Workflows binding](/workflows/build/workers-api/#bindings) for your Workflow class, like any other Workflow:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			// The name of the Workflow
+			"name": "CI",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Then register the Workflow to trigger on `artifacts.push`. The trigger runs the `pipeline` method whenever a matching event, such as an Artifact `push`, occurs.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"triggers": [
+		{
+			"type": "artifacts.push",
+			"class_name": "CIWorkflow",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Once configured, your CI triggers automatically on any `artifact push`.
