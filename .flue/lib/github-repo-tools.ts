@@ -374,14 +374,15 @@ function makeGetCommitPrTool(token: string): ToolDefinition {
 			"Given a commit SHA from the production branch, return the pull request(s) that introduced that commit — including the PR title, description (body), number, and URL. Use this to understand WHY a production change was made and what the author intended, which helps determine the correct merge resolution.",
 		parameters: Type.Object({
 			commit_sha: Type.String({
-				description: "The full or abbreviated git commit SHA to look up.",
+				description: "The full 40-character git commit SHA to look up.",
 			}),
 		}),
 		async execute(args) {
 			const sha = String(args.commit_sha ?? "").trim();
-			// Validate before URL-interpolation: git SHAs are hex, 7–40 chars.
-			if (!/^[0-9a-f]{7,40}$/i.test(sha)) {
-				return `Invalid commit SHA: "${sha}". Provide a hex SHA between 7 and 40 characters.`;
+			// Validate before URL-interpolation: the GitHub commits/{sha}/pulls
+			// endpoint requires a full 40-character SHA.
+			if (!/^[0-9a-f]{40}$/i.test(sha)) {
+				return `Invalid commit SHA: "${sha}". Provide a full 40-character hex SHA.`;
 			}
 			const res = await fetch(
 				`https://api.github.com/repos/${REPO}/commits/${encodeURIComponent(sha)}/pulls`,
