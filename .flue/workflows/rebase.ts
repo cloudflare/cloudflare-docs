@@ -69,7 +69,7 @@ export const route: WorkflowRouteHandler = async (_c, next) => next();
 
 interface RebasePayload {
 	prNumber: number;
-	mode: "rebase" | "rebaseWithConflicts";
+	mode: "rebase" | "rebase_with_conflicts";
 	triggerCommentId: number;
 	triggerEyesReactionId: number | null;
 	senderLogin: string;
@@ -274,7 +274,7 @@ export async function run({
 	}
 
 	// ── 6. Handle conflicts ────────────────────────────────────────────────────
-	if (input.mode === "rebase") {
+	if (input.mode !== "rebase_with_conflicts") {
 		// Plain /rebase: just report and stop.
 		const haltedBody = renderRebaseStatusUpdate(
 			"halted-conflict",
@@ -460,7 +460,7 @@ function parsePayload(payload: unknown): RebasePayload {
 	const input = payload as Partial<RebasePayload>;
 	if (
 		typeof input.prNumber !== "number" ||
-		(input.mode !== "rebase" && input.mode !== "rebaseWithConflicts") ||
+		(input.mode !== "rebase" && input.mode !== "rebase_with_conflicts") ||
 		typeof input.triggerCommentId !== "number" ||
 		typeof input.senderLogin !== "string"
 	) {
@@ -669,7 +669,21 @@ async function resolveConflictsWithAI(
 						},
 					];
 				}
-				// Case 2: PR renamed A→B, production changed A.
+				// Check whether production changed the PR's new path (p=B) directly,
+				// rather than the old path (A). If so, production's content is at B,
+				// not A — use B as the productionReadPath.
+				if (productionChangedPaths.has(p)) {
+					// PR renamed A→B, production also changed B directly.
+					return [
+						p,
+						{
+							writePath: p,
+							productionReadPath: p,
+							baseReadPath: entry.previousPath,
+						},
+					];
+				}
+				// Case 2: PR renamed A→B, production changed A (the original path).
 				return [
 					p,
 					{
@@ -1067,8 +1081,18 @@ async function applyResolution(
 		`Conflicts resolved by cloudflare-docs-bot during rebase onto production.`,
 	].join("\n");
 
+	// Re-verify production hasn't advanced while the tree was being built
+	// (getGitCommit, getTree, createBlob calls above can take seconds).
+	// If it moved, the generated tree is based on a stale parent — abort.
+	const preCommitProductionRef = await getRef(token, "production");
+	if (preCommitProductionRef.sha !== freshProductionRef.sha) {
+		throw new Error(
+			`Production branch moved during tree construction (was ${freshProductionRef.sha.slice(0, 7)}, now ${preCommitProductionRef.sha.slice(0, 7)}). Please retry /rebaseWithConflicts.`,
+		);
+	}
+
 	const newCommitSha = await createGitCommit(token, commitMessage, newTreeSha, [
-		freshProductionRef.sha,
+		preCommitProductionRef.sha,
 	]);
 
 	// Guard against a concurrent push to the PR branch during the AI resolution.

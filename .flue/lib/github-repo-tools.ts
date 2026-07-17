@@ -391,10 +391,11 @@ function makeGetCommitPrTool(token: string): ToolDefinition {
 				},
 			);
 			if (!res.ok) {
-				if (res.status === 422)
-					return "No pull requests found for that commit.";
+				// 422 means the SHA is invalid/malformed — surface the real error
+				// rather than masking it as "no PRs found" (200 + empty array is
+				// how the API signals an empty result).
 				throw new Error(
-					`get_commit_pr failed for ${sha}: ${res.status} ${await res.text()}`,
+					`get_commit_pr failed for ${sha}: HTTP ${res.status} — ${await res.text()}`,
 				);
 			}
 			const prs = (await res.json()) as Array<{
@@ -432,9 +433,9 @@ function makeGetCommitPrTool(token: string): ToolDefinition {
 // The agent CANNOT make arbitrary GitHub calls — only these two.
 
 export function makeRebaseConflictTools(token: string): ToolDefinition[] {
-	// read_repo_file with no default ref — the agent must always supply the ref
-	// (merge base SHA, PR head SHA, or production head SHA) so it reads the
-	// version it actually intends to inspect.
+	// read_repo_file defaults to "production" but the agent can override the
+	// ref parameter to read files at the merge base SHA, PR head SHA, or
+	// production head SHA as needed for conflict resolution.
 	const readTool = makeReadRepoFileTool(token, "production");
 	return [readTool, makeGetCommitPrTool(token)];
 }

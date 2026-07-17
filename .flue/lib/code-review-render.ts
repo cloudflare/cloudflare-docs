@@ -615,12 +615,18 @@ export async function postOrUpdateComment(
 // ── Rebase status rendering ───────────────────────────────────────────────────
 
 /**
- * Sanitize a detail string for safe interpolation into Markdown blockquotes.
- * Collapses newlines to a space so the text stays on one line, preventing
- * the blockquote from breaking mid-content.
+ * Sanitize a detail string for safe interpolation into Markdown.
+ * - Collapses newlines to a space (prevents blockquote breaks).
+ * - Escapes backticks (prevents breaking inline code spans when detail is
+ *   placed inside `\`...\`` as in the halted-wrong-base status line).
+ * - Removes leading `>` characters (prevents unintended nested blockquotes).
  */
 function sanitizeRebaseDetail(detail: string): string {
-	return detail.replace(/\r?\n/g, " ").trim();
+	return detail
+		.replace(/\r?\n/g, " ") // collapse newlines
+		.replace(/`/g, "\\`") // escape backticks
+		.replace(/^>+\s*/g, "") // strip leading blockquote markers
+		.trim();
 }
 
 /**
