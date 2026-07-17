@@ -28,57 +28,35 @@ When a Spectrum application uses a [virtual network origin](/spectrum/reference/
 
 For tunnel health, BGP, and routing diagnostics on WAN-connected origins, refer to [Troubleshoot Cloudflare WAN](/cloudflare-wan/troubleshooting/).
 
-## Health checks fail when IP Access Rules are enabled
-
-### Symptoms
-
-- Cloudflare Load Balancer health checks report all endpoints as unhealthy with the error `Connection reset by peer`.
-- Removing IP Access Rules from the Spectrum application causes health checks to succeed.
-- The Spectrum application itself works correctly for client traffic that is allowed by the IP Access Rules.
-
-### Cause
-
-When you turn on [IP Access Rules](/spectrum/reference/configuration-options/#ip-access-rules) on a Spectrum application, all incoming connections are evaluated against your rules — including connections from Cloudflare's own health check probes. If your IP Access Rules use an allowlist model (allow specific IPs, block everything else), Cloudflare's health check source IPs will be blocked, causing health checks to fail.
-
-### Solution
-
-Add Cloudflare's IP ranges to your IP Access Rules allowlist. You can find the current list of Cloudflare IP addresses at [cloudflare.com/ips](https://www.cloudflare.com/ips/).
-
-Alternatively, if you only need to restrict client access (not health check access), consider configuring health checks to use a TCP check type that validates the connection can be established, and manage your access control at the origin level instead.
-
-:::note
-
-[Custom rules](/waf/custom-rules/) (WAF rules) do not apply to Spectrum applications configured with the TCP/UDP application type. For Spectrum, IP Access Rules are the only supported mechanism for IP-based filtering. Refer to [Spectrum Limitations](/spectrum/reference/limitations/#ip-access-control).
-
-:::
-
 ## Cannot create Spectrum application — DNS record already exists
 
 ### Symptoms
 
 - When creating a Spectrum application in the dashboard, you receive the error: **"An A, AAAA or CNAME record already exists with that host."**
-- You are trying to use the same hostname for both an HTTP-proxied service (through Cloudflare's CDN/WAF) and a Spectrum TCP or UDP application on a different port.
+- You already have a manually-created proxied DNS record (`A`, `AAAA`, or `CNAME`) for the hostname you are trying to use for a new Spectrum application.
 
 ### Cause
 
-Cloudflare does not support having both a proxied DNS record (used for HTTP/HTTPS traffic through the CDN and WAF) and a Spectrum application on the same hostname. This is a platform limitation, not a dashboard-only restriction.
+Cloudflare does not support having both a manually-created proxied DNS record (`A`, `AAAA`, or `CNAME`) and a Spectrum application on the same hostname. This is because Spectrum provisions and manages its own DNS record for the application, which conflicts with the existing manually-created record. This is a platform limitation, not a dashboard-only restriction.
 
-When a Spectrum application is created, it provisions its own DNS record for the hostname. This conflicts with any existing proxied A, AAAA, or CNAME record for that same hostname.
+This limitation only applies to manually-created proxied records. Multiple Spectrum applications — including a mix of HTTP/HTTPS and TCP/UDP application types — can share the same hostname, because Spectrum manages the DNS record for each of them.
 
 ### Solution
 
-Use a **split-hostname architecture** where HTTP/HTTPS traffic and TCP/UDP traffic use different hostnames:
+If you only need Spectrum applications on the hostname (for example, an HTTP/HTTPS Spectrum application alongside a TCP/UDP Spectrum application), you do not need a workaround — create the additional Spectrum application on the same hostname.
+
+If you need to keep a manually-created proxied DNS record on the hostname (for example, to route standard HTTP/HTTPS traffic through the CDN and WAF instead of through Spectrum), use a **split-hostname architecture** instead, where the manually-created proxied record and the Spectrum application use different hostnames:
 
 | Traffic type | Hostname | Cloudflare service |
 |---|---|---|
-| HTTPS (web UI, APIs) | `app.example.com` | Proxied DNS record with CDN/WAF |
+| HTTPS (web UI, APIs) | `app.example.com` | Manually-created proxied DNS record with CDN/WAF |
 | TCP (custom protocol, ICA/HDX, and similar) | `app-tcp.example.com` | Spectrum application |
 
 Configure your application or client to use the appropriate hostname for each traffic type.
 
 :::note[Common use case: Citrix Gateway / VDI]
 
-A common scenario where this limitation is encountered is Citrix Gateway deployments, where the web UI and authentication flow use HTTPS (requiring WAF protection) while ICA/HDX session traffic uses TCP on a different port. In this case, configure the Citrix StoreFront to generate ICA files pointing to the Spectrum hostname (for example, `citrix-ica.example.com:4443`) while keeping the web UI on the WAF-protected hostname (`citrix.example.com:443`).
+A common scenario where this limitation is encountered is Citrix Gateway deployments, where the web UI and authentication flow use HTTPS through a manually-created proxied record (requiring WAF protection) while ICA/HDX session traffic uses TCP on a different port through a Spectrum application. In this case, configure the Citrix StoreFront to generate ICA files pointing to the Spectrum hostname (for example, `citrix-ica.example.com:4443`) while keeping the web UI on the WAF-protected hostname (`citrix.example.com:443`).
 
 :::
 

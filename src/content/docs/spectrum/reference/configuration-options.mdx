@@ -94,14 +94,6 @@ If [IP Access rules](/waf/tools/ip-access-rules/create/) are enabled for a Spect
 Network analytics data for Spectrum does not reflect the outcomes of IP Access rules. Instead, to verify whether traffic was allowed or blocked based on these rules, consult the Spectrum event logs.
 :::
 
-:::caution[Health checks and IP Access Rules]
-When IP Access Rules are enabled with an allowlist model (allow specific IPs, block all others), Cloudflare Load Balancer health check probes may be blocked, causing all endpoints to appear unhealthy. To prevent this, add [Cloudflare IP addresses](https://www.cloudflare.com/ips/) to your allowlist. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#health-checks-fail-when-ip-access-rules-are-enabled) for details.
-:::
-
-:::note
-[Custom rules](/waf/custom-rules/) (WAF rules) do not apply to Spectrum applications configured with the TCP/UDP application type. IP Access Rules are the only supported IP-based filtering mechanism for these applications. Refer to [Spectrum Limitations](/spectrum/reference/limitations/#ip-access-control) for details.
-:::
-
 ## Argo Smart Routing
 
 Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Argo Smart Routing is available for TCP and UDP (beta) applications.
@@ -153,7 +145,7 @@ If you have the TLS termination setting configured to **off**, this means that S
 
 :::caution
 
-Do not configure a TCP-type Spectrum application's origin to point to another Cloudflare-proxied hostname (for example, `origin.example.com.cdn.cloudflare.net`). This creates an unsupported double-proxy path that may result in TLS handshake failures (error `525`). Use a direct origin IP address or a DNS hostname that resolves to your origin server without passing through Cloudflare's proxy. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#tls-handshake-failures-error-525) for details.
+Do not configure a TCP-type Spectrum application's origin to point to another Cloudflare-proxied hostname (for example, `origin.example.com.cdn.cloudflare.net`). This creates an unsupported double-proxy path that may result in TLS handshake failures at the origin. For TCP applications, a failed TLS handshake to the origin is reported as an origin connection failure (`521` or `522`), not error `525` — `525` applies to HTTP/HTTPS applications. Use a direct origin IP address or a DNS hostname that resolves to your origin server without passing through Cloudflare's proxy. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#tls-handshake-failures-error-525) for details.
 
 :::
 
