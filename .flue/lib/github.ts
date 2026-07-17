@@ -337,29 +337,32 @@ export interface CompareResult {
 	behindBy: number;
 }
 
-export async function comparePullRequestHeads(
+/** Raw response shape returned by each page of /compare/{base}...{head}. */
+interface ComparePageData {
+	files?: PullRequestFile[];
+	commits?: { sha: string; commit: { message: string } }[];
+	merge_base_commit?: { sha: string };
+	status?: string;
+	ahead_by?: number;
+	behind_by?: number;
+}
+
+/**
+ * Shared pagination helper for the GitHub compare endpoint.
+ * Fetches all pages of `/compare/{base}...{head}?per_page=100` and returns
+ * the raw page objects. Returns null if the comparison does not exist (404).
+ *
+ * Both `comparePullRequestHeads` and `compareCommits` use this to avoid
+ * duplicating the pagination loop, Link header parsing, and error handling.
+ */
+async function fetchComparePages(
 	token: string,
 	base: string,
 	head: string,
-): Promise<CompareResult | null> {
-	// Paginate the compare endpoint's file list, following Link headers. The
-	// comparison metadata (status/ahead_by/behind_by) is identical on every
-	// page, so it is captured from the first page only; `files` is accumulated
-	// across pages. Refs are encoded (preserving `/`) so branch names with
-	// special characters produce a well-formed URL. Note: GitHub caps the
-	// compare files list at 300 — for a delta larger than that the list is
-	// truncated, but fetchFilesForDiffMode's containment check errs toward the
-	// safe full-diff fallback in that case.
+): Promise<ComparePageData[] | null> {
+	const pages: ComparePageData[] = [];
 	let url: string | null =
 		`https://api.github.com/repos/${REPO}/compare/${encodeRef(base)}...${encodeRef(head)}?per_page=100`;
-	// Accumulate by filename: the compare endpoint paginates primarily over
-	// commits, so the same file can appear on multiple pages. Deduping by
-	// filename (last write wins) yields one entry per changed file regardless
-	// of how GitHub slices the pages.
-	const filesByName = new Map<string, PullRequestFile>();
-	let status: CompareResult["status"] | undefined;
-	let aheadBy = 0;
-	let behindBy = 0;
 
 	while (url) {
 		const res: Response = await fetch(url, { headers: apiHeaders(token) });
@@ -369,16 +372,33 @@ export async function comparePullRequestHeads(
 				`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
 			);
 		}
-		const data = (await res.json()) as {
-			files?: PullRequestFile[];
-			status?: string;
-			ahead_by?: number;
-			behind_by?: number;
-		};
+		pages.push((await res.json()) as ComparePageData);
+		url = parseNextLink(res.headers.get("Link"));
+	}
+
+	return pages;
+}
+
+export async function comparePullRequestHeads(
+	token: string,
+	base: string,
+	head: string,
+): Promise<CompareResult | null> {
+	// Pages from the compare endpoint; returns null for 404.
+	// Note: GitHub caps the compare files list at 300 even when paginated.
+	// Callers that care about truncation should check files.length === 300.
+	const pages = await fetchComparePages(token, base, head);
+	if (!pages) return null;
+
+	// Accumulate files by filename across pages (last write wins for duplicates).
+	// Capture status/ahead_by/behind_by from the first page only.
+	const filesByName = new Map<string, PullRequestFile>();
+	let status: CompareResult["status"] | undefined;
+	let aheadBy = 0;
+	let behindBy = 0;
+
+	for (const data of pages) {
 		if (status === undefined) {
-			// Normalize the status; anything unexpected is treated as "diverged" so
-			// the caller self-heals to the full diff rather than trusting a partial
-			// list.
 			status =
 				data.status === "ahead" ||
 				data.status === "behind" ||
@@ -391,7 +411,6 @@ export async function comparePullRequestHeads(
 		for (const file of data.files ?? []) {
 			filesByName.set(file.filename, file);
 		}
-		url = parseNextLink(res.headers.get("Link"));
 	}
 
 	return {
@@ -596,12 +615,35 @@ export async function pollForBranchUpdate(
 			if (res.ok) {
 				const pr = (await res.json()) as GitHubPullRequest;
 				if (pr.head.sha !== priorSha) return pr.head.sha;
-			} else if (status === 401 || status === 403 || status === 404) {
-				// Permanent failure — rethrow immediately rather than burning the
-				// full timeout retrying an error that will not resolve itself.
+			} else if (status === 401 || status === 404) {
+				// Permanent authentication or not-found failure — abort immediately.
 				throw new Error(
 					`pollForBranchUpdate: permanent failure fetching PR #${pullNumber} (HTTP ${status}): ${await res.text()}`,
 				);
+			} else if (status === 403) {
+				// 403 can be either a permanent auth failure OR a transient rate-limit
+				// (GitHub sends 403 with X-RateLimit-Remaining: 0 or a Retry-After
+				// header). Distinguish by inspecting the response headers.
+				const isRateLimit =
+					res.headers.get("X-RateLimit-Remaining") === "0" ||
+					res.headers.get("Retry-After") !== null;
+				if (isRateLimit) {
+					const retryAfter = res.headers.get("Retry-After");
+					console.log({
+						message: `pollForBranchUpdate: rate-limited (HTTP 403) for PR #${pullNumber}, retrying`,
+						event: "poll_for_branch_update",
+						pullNumber,
+						retryAfter,
+						action: "rate_limit_retry",
+					});
+					// Honour Retry-After if present; otherwise the normal 3 s sleep fires.
+					const retryMs = retryAfter ? parseInt(retryAfter, 10) * 1000 : 0;
+					if (retryMs > 0) await new Promise((r) => setTimeout(r, retryMs));
+				} else {
+					throw new Error(
+						`pollForBranchUpdate: permanent failure fetching PR #${pullNumber} (HTTP 403): ${await res.text()}`,
+					);
+				}
 			} else {
 				// Transient (429, 5xx, etc.) — log and retry.
 				console.log({
@@ -617,7 +659,6 @@ export async function pollForBranchUpdate(
 			// or if status indicates a permanent failure. Network errors are retried.
 			if (
 				status === 401 ||
-				status === 403 ||
 				status === 404 ||
 				(err instanceof Error &&
 					err.message.startsWith("pollForBranchUpdate: permanent"))
@@ -847,31 +888,26 @@ export async function compareCommits(
 	base: string,
 	head: string,
 ): Promise<{ mergeBaseSha: string; commits: CompareCommit[] }> {
-	// Paginate using per_page=100 + Link headers so branches with more than the
-	// default page size of commits are not silently truncated.
-	let url: string | null =
-		`https://api.github.com/repos/${REPO}/compare/${encodeRef(base)}...${encodeRef(head)}?per_page=100`;
+	// Uses the shared fetchComparePages helper to avoid duplicating the
+	// pagination loop. compareCommits is always called with SHAs that exist
+	// so 404 is treated as an error.
+	const pages = await fetchComparePages(token, base, head);
+	if (!pages || pages.length === 0) {
+		throw new Error(
+			`Failed to compare ${base}...${head}: comparison not found`,
+		);
+	}
+
 	let mergeBaseSha = "";
 	const commits: CompareCommit[] = [];
 
-	while (url) {
-		const res = await fetch(url, { headers: apiHeaders(token) });
-		if (!res.ok) {
-			throw new Error(
-				`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
-			);
-		}
-		const data = (await res.json()) as {
-			merge_base_commit: { sha: string };
-			commits: { sha: string; commit: { message: string } }[];
-		};
-		if (!mergeBaseSha) {
+	for (const data of pages) {
+		if (!mergeBaseSha && data.merge_base_commit?.sha) {
 			mergeBaseSha = data.merge_base_commit.sha;
 		}
-		for (const c of data.commits) {
+		for (const c of data.commits ?? []) {
 			commits.push({ sha: c.sha, message: c.commit.message });
 		}
-		url = parseNextLink(res.headers.get("Link"));
 	}
 
 	return { mergeBaseSha, commits };

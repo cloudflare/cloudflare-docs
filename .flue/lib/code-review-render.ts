@@ -622,11 +622,17 @@ export async function postOrUpdateComment(
  * - Removes leading `>` characters (prevents unintended nested blockquotes).
  */
 function sanitizeRebaseDetail(detail: string): string {
-	return detail
-		.replace(/\r?\n/g, " ") // collapse newlines
-		.replace(/`/g, "\\`") // escape backticks
-		.replace(/^>+\s*/g, "") // strip leading blockquote markers
-		.trim();
+	return (
+		detail
+			.replace(/\r?\n/g, " ") // collapse newlines
+			// Remove backticks rather than escaping: CommonMark does NOT honour
+			// backslash escapes inside inline code spans, so \\` inside `...` would
+			// render the backslash literally. Backtick-containing branch names are
+			// not valid git refs, so stripping is safe.
+			.replace(/`/g, "")
+			.replace(/^>+\s*/g, "") // strip leading blockquote markers
+			.trim()
+	);
 }
 
 /**

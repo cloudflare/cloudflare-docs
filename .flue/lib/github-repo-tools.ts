@@ -384,7 +384,12 @@ function makeGetCommitPrTool(token: string): ToolDefinition {
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
-						Accept: "application/vnd.github+json",
+						// The commit-pulls endpoint historically required the groot-preview
+						// media type. It has since graduated to the stable API, but
+						// including the preview type ensures compatibility with any
+						// GitHub Enterprise instances that may still require it.
+						Accept:
+							"application/vnd.github.groot-preview+json, application/vnd.github+json",
 						"X-GitHub-Api-Version": "2022-11-28",
 						"User-Agent": "cloudflare-docs-agents",
 					},

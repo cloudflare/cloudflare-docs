@@ -155,20 +155,47 @@ export async function run({
 	}
 
 	// ── 3. Post "in progress" status ──────────────────────────────────────────
-	const inProgressBody = renderRebaseStatusUpdate(
-		"in-progress",
-		undefined,
-		input.senderLogin,
-		existingBody,
-	);
-	await postOrUpdateComment(token, input.prNumber, botComment, inProgressBody);
+	// Wrap in a try/catch: if posting or re-fetching fails we still need to
+	// clean up the 👀 reaction rather than leaving the PR in a stuck state.
+	let liveBot: typeof botComment = null;
+	try {
+		const inProgressBody = renderRebaseStatusUpdate(
+			"in-progress",
+			undefined,
+			input.senderLogin,
+			existingBody,
+		);
+		await postOrUpdateComment(
+			token,
+			input.prNumber,
+			botComment,
+			inProgressBody,
+		);
 
-	// Re-fetch the comment we just created/updated so we have its id for
-	// subsequent updates.
-	const updatedComments = await getIssueComments(token, input.prNumber);
-	const liveBot =
-		updatedComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ??
-		null;
+		// Re-fetch the comment we just created/updated so we have its id for
+		// subsequent updates.
+		const updatedComments = await getIssueComments(token, input.prNumber);
+		liveBot =
+			updatedComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ??
+			null;
+	} catch (setupErr) {
+		const errMsg =
+			setupErr instanceof Error ? setupErr.message : String(setupErr);
+		console.log({
+			message: `Failed to post in-progress status for PR #${input.prNumber}: ${errMsg}`,
+			event: "rebase_workflow",
+			number: input.prNumber,
+			error: errMsg,
+			action: "in_progress_setup_failed",
+		});
+		await swapReaction(
+			token,
+			input.triggerCommentId,
+			input.triggerEyesReactionId,
+			false,
+		);
+		return { acted: false, reason: "setup_error", error: errMsg };
+	}
 
 	// ── 4. Attempt the rebase ─────────────────────────────────────────────────
 	let rebaseResult: Awaited<ReturnType<typeof updatePullRequestBranch>>;
@@ -480,7 +507,6 @@ function parsePayload(payload: unknown): RebasePayload {
 	};
 }
 
-/** Remove the 👀 reaction and add 👍 to the trigger comment. Non-fatal. */
 /**
  * Replace the 👀 reaction on the trigger comment with a result indicator.
  * @param success true → 👍 (rebase completed); false → 👎 (halted or failed)
@@ -592,6 +618,24 @@ async function resolveConflictsWithAI(
 			(r) => r.commits,
 		),
 	]);
+
+	// GitHub's compare API caps the file list at 300 entries even when paginated.
+	// If we hit the cap, allPrFiles will be silently incomplete, which would cause
+	// applyResolution to omit files from the rebased commit. Halt with a clear
+	// message rather than committing an incomplete tree.
+	const GITHUB_FILE_CAP = 300;
+	if (prFiles.length >= GITHUB_FILE_CAP) {
+		return {
+			confidence: "low",
+			reason: `This PR changes at least ${GITHUB_FILE_CAP} files, which exceeds the GitHub compare API cap. The AI cannot safely resolve conflicts without a complete file list. Please rebase manually.`,
+			files: [],
+			allPrFiles: prFiles,
+			conflictCandidateSet: new Set<string>(),
+			conflictWritePathMap: new Map<string, string>(),
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
+		};
+	}
 
 	const prChangedPaths = new Set(prFiles.map((f) => f.path));
 	const productionChangedPaths = new Set(productionFiles.map((f) => f.path));
