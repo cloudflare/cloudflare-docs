@@ -94,6 +94,7 @@ export async function run({
 			token,
 			input.triggerCommentId,
 			input.triggerEyesReactionId,
+			false,
 		);
 		console.log({
 			message: `Rebase skipped: PR #${input.prNumber} targets ${pr.base.ref}, not production`,
@@ -121,6 +122,7 @@ export async function run({
 			token,
 			input.triggerCommentId,
 			input.triggerEyesReactionId,
+			false,
 		);
 		console.log({
 			message: `Rebase skipped: PR #${input.prNumber} is from a fork`,
@@ -168,6 +170,7 @@ export async function run({
 			token,
 			input.triggerCommentId,
 			input.triggerEyesReactionId,
+			false,
 		);
 		console.log({
 			message: `Rebase failed for PR #${input.prNumber}: ${errMsg}`,
@@ -207,6 +210,7 @@ export async function run({
 			token,
 			input.triggerCommentId,
 			input.triggerEyesReactionId,
+			true,
 		);
 
 		// Trigger a full review — rebase changes the head SHA so incremental
@@ -249,13 +253,11 @@ export async function run({
 	}
 
 	// ── 6. Handle conflicts ────────────────────────────────────────────────────
-	const conflictMessage = rebaseResult.message ?? "Merge conflict";
-
 	if (input.mode === "rebase") {
 		// Plain /rebase: just report and stop.
 		const haltedBody = renderRebaseStatusUpdate(
 			"halted-conflict",
-			conflictMessage,
+			undefined,
 			input.senderLogin,
 			liveBot?.body ?? null,
 		);
@@ -264,6 +266,7 @@ export async function run({
 			token,
 			input.triggerCommentId,
 			input.triggerEyesReactionId,
+			false,
 		);
 		console.log({
 			message: `Rebase halted (conflicts) for PR #${input.prNumber}`,
@@ -299,6 +302,7 @@ export async function run({
 			token,
 			input.triggerCommentId,
 			input.triggerEyesReactionId,
+			false,
 		);
 		console.log({
 			message: `AI resolution threw for PR #${input.prNumber}: ${errMsg}`,
@@ -337,6 +341,7 @@ export async function run({
 				token,
 				input.triggerCommentId,
 				input.triggerEyesReactionId,
+				false,
 			);
 			console.log({
 				message: `Failed to apply AI resolution for PR #${input.prNumber}: ${errMsg}`,
@@ -359,6 +364,7 @@ export async function run({
 			token,
 			input.triggerCommentId,
 			input.triggerEyesReactionId,
+			true,
 		);
 
 		// Trigger a full review after successful AI-assisted rebase.
@@ -410,6 +416,7 @@ export async function run({
 		token,
 		input.triggerCommentId,
 		input.triggerEyesReactionId,
+		false,
 	);
 	console.log({
 		message: `AI resolution halted (${resolution.confidence} confidence) for PR #${input.prNumber}`,
@@ -453,17 +460,24 @@ function parsePayload(payload: unknown): RebasePayload {
 }
 
 /** Remove the 👀 reaction and add 👍 to the trigger comment. Non-fatal. */
+/**
+ * Replace the 👀 reaction on the trigger comment with a result indicator.
+ * @param success true → 👍 (rebase completed); false → 👎 (halted or failed)
+ */
 async function swapReaction(
 	token: string,
 	commentId: number,
 	eyesReactionId: number | null,
+	success: boolean,
 ): Promise<void> {
 	if (eyesReactionId) {
 		await removeReactionFromComment(token, commentId, eyesReactionId).catch(
 			() => {},
 		);
 	}
-	await addReactionToComment(token, commentId, "+1").catch(() => {});
+	await addReactionToComment(token, commentId, success ? "+1" : "-1").catch(
+		() => {},
+	);
 }
 
 /**
