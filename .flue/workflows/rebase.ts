@@ -15,6 +15,9 @@
  * POST /workflows/rebase  (internal — admitted by orchestrate)
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
+import { createAgent } from "@flue/runtime";
+import rebaseConflictSkill from "../.agents/skills/rebase-conflict/SKILL.md" with { type: "skill" };
+import * as v from "valibot";
 import {
 	addReactionToComment,
 	compareCommits,
@@ -35,6 +38,11 @@ import {
 	updateRef,
 	type TreeUpdate,
 } from "../lib/github";
+import {
+	getDefaultWorkspace,
+	getShellSandbox,
+} from "../connectors/cloudflare-shell";
+import { makeRebaseConflictTools } from "../lib/github-repo-tools";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow } from "../lib/poll-run";
 import {
@@ -45,6 +53,17 @@ import {
 	postOrUpdateComment,
 	renderRebaseStatusUpdate,
 } from "../lib/code-review-render";
+
+const ConflictResolutionFromModelSchema = v.object({
+	confidence: v.picklist(["high", "medium", "low"]),
+	reason: v.string(),
+	files: v.array(
+		v.object({
+			path: v.string(),
+			content: v.string(),
+		}),
+	),
+});
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -64,6 +83,8 @@ interface ConflictResolution {
 }
 
 export async function run({
+	id: runId,
+	init,
 	payload,
 	env,
 	req,
@@ -287,7 +308,7 @@ export async function run({
 
 	let resolution: Awaited<ReturnType<typeof resolveConflictsWithAI>>;
 	try {
-		resolution = await resolveConflictsWithAI(token, pr, typedEnv);
+		resolution = await resolveConflictsWithAI(token, pr, typedEnv, init, runId);
 	} catch (resolveErr) {
 		const errMsg =
 			resolveErr instanceof Error ? resolveErr.message : String(resolveErr);
@@ -508,6 +529,8 @@ async function resolveConflictsWithAI(
 	token: string,
 	pr: Awaited<ReturnType<typeof getPullRequest>>,
 	typedEnv: Record<string, string & unknown>,
+	init: FlueContext["init"],
+	runId: string,
 ): Promise<
 	ConflictResolution & {
 		allPrFiles: PrFileEntry[];
@@ -539,7 +562,8 @@ async function resolveConflictsWithAI(
 	// compareCommits("production", pr.head.sha) returns the PR's commits
 	// (commits reachable from prHead but not from production). We need the
 	// production-side commits separately to populate the prompt correctly.
-	const prCommits = prVsProduction.commits;
+	// prCommits are available if needed; the agent gets pr.title/body as its primary context.
+	const _prCommits = prVsProduction.commits;
 
 	// Use comparePullRequestHeads which already paginates via Link headers and
 	// handles ref encoding. Returns null on 404 (no common history), which we
@@ -698,179 +722,61 @@ async function resolveConflictsWithAI(
 	}
 
 	// Fetch all three versions of each conflicting file using the correct read
-	// paths from conflictMetaMap. Using p directly for all three fetches was
-	// wrong for rename cases where the file lives at a different path on
-	// production or in the base.
+	// paths from conflictMetaMap.
 	const fileContents = await Promise.all(
 		conflictCandidates.map(async (path) => {
 			const meta = conflictMetaMap.get(path)!;
-			const isProductionRename =
-				meta.productionReadPath !== path &&
-				!prFiles.find((f) => f.path === path)?.previousPath;
 			const isPrRename = !!prFiles.find((f) => f.path === path)?.previousPath;
+			const isProductionRename =
+				meta.productionReadPath !== path && !isPrRename;
 			const [prVersion, productionVersion, baseVersion] = await Promise.all([
 				getRepoFileContent(token, path, pr.head.sha),
 				getRepoFileContent(token, meta.productionReadPath, productionRef.sha),
 				getRepoFileContent(token, meta.baseReadPath, mergeBaseSha),
 			]);
+			// Build a human-readable rename note for the agent.
+			let renameNote: string | undefined;
+			const isBothSidesRenamed = isPrRename && meta.writePath !== path;
+			if (isBothSidesRenamed) {
+				const entry = prFiles.find((f) => f.path === path);
+				renameNote = `Both sides renamed this file. This PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`; production renamed it to \`${meta.writePath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
+			} else if (isProductionRename) {
+				renameNote = `Production renamed \`${path}\` to \`${meta.productionReadPath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
+			} else if (isPrRename) {
+				const entry = prFiles.find((f) => f.path === path);
+				renameNote = `This PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`. Production's content is at the original path \`${meta.productionReadPath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
+			}
 			return {
 				path,
-				meta,
-				isProductionRename,
-				isPrRename,
-				prVersion,
-				productionVersion,
-				baseVersion,
+				writePath: meta.writePath,
+				renameNote,
+				baseVersion: baseVersion ?? null,
+				prVersion: prVersion ?? null,
+				productionVersion: productionVersion ?? null,
 			};
 		}),
 	);
 
-	// Build the AI prompt context with correctly attributed commit messages.
-	const prCommitMessages = prCommits
-		.map((c) => `- ${c.message.split("\n")[0]}`)
-		.join("\n");
+	// ── Run the Flue agent with bounded tools ─────────────────────────────────
+	const loader = typedEnv.LOADER as unknown as Parameters<
+		typeof getShellSandbox
+	>[0]["loader"];
+	const workspace = getDefaultWorkspace();
+	const agent = createAgent(() => ({
+		sandbox: getShellSandbox({ workspace, loader }),
+		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+		tools: makeRebaseConflictTools(token),
+		skills: [rebaseConflictSkill],
+	}));
+	const harness = await init(agent, { name: "rebase-conflict" });
+	const sessionKey = `rebase-conflict:${pr.number}:${pr.head.sha}:${runId}`;
+	let session: Awaited<ReturnType<typeof harness.sessions.create>> | null =
+		null;
 
-	const productionCommitMessages = productionCommits
-		.map((c) => `- ${c.message.split("\n")[0]}`)
-		.join("\n");
-
-	const filesContext = fileContents
-		.map(
-			({
-				path,
-				meta,
-				isProductionRename,
-				isPrRename,
-				prVersion,
-				productionVersion,
-				baseVersion,
-			}) => {
-				let renameNote = "";
-				let productionHeader =
-					"**Production version (what production has now):**";
-				// Case 4: both the PR and production renamed the same base file.
-				// meta.writePath (production's new name) differs from path (PR's new name).
-				const isBothSidesRenamed = isPrRename && meta.writePath !== path;
-				if (isBothSidesRenamed) {
-					const entry = prFiles.find((f) => f.path === path);
-					renameNote = `Note: both sides renamed this file. This PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`; production renamed it to \`${meta.writePath}\`. The production content is shown at \`${meta.productionReadPath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
-					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, where production moved this file):**`;
-				} else if (isProductionRename) {
-					renameNote = `Note: production renamed \`${path}\` to \`${meta.productionReadPath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
-					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, where production moved this file):**`;
-				} else if (isPrRename) {
-					const entry = prFiles.find((f) => f.path === path);
-					renameNote = `Note: this PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`. Production's content is at \`${meta.productionReadPath}\` (the original path). Return the resolved content at path \`${meta.writePath}\`.`;
-					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, the original path before this PR renamed it):**`;
-				}
-				return [
-					`### File: ${path}`,
-					...(renameNote ? ["", renameNote] : []),
-					"",
-					"**Common ancestor (merge base):**",
-					"```",
-					baseVersion ?? "(file did not exist at merge base)",
-					"```",
-					"",
-					"**PR version (what this PR changes it to):**",
-					"```",
-					prVersion ?? "(file deleted in PR)",
-					"```",
-					"",
-					productionHeader,
-					"```",
-					productionVersion ?? "(file deleted on production)",
-					"```",
-				].join("\n");
-			},
-		)
-		.join("\n\n---\n\n");
-
-	const prompt = [
-		"You are resolving merge conflicts for a documentation pull request.",
-		"",
-		`PR title: ${pr.title}`,
-		`PR description: ${pr.body ?? "(none)"}`,
-		"",
-		`Commits on this PR since merge base:`,
-		prCommitMessages,
-		"",
-		`Commits on production since merge base (these created the conflicts):`,
-		productionCommitMessages,
-		"",
-		"The following files were changed by BOTH the PR and production, creating conflicts.",
-		"For each file, you are given the merge base version, the PR version, and the production version.",
-		"",
-		filesContext,
-		"",
-		"Your task:",
-		"1. For each file, produce the correctly merged version that incorporates both the PR's intent and the production changes.",
-		"2. Assess your confidence in the resolution: high, medium, or low.",
-		"   - high: the changes are clearly orthogonal (they edit different parts of the file or sentence),",
-		"     OR one side added content that the other did not touch, so the merge is unambiguous.",
-		"     Most single-file, single-sentence conflicts in documentation are high confidence.",
-		"     When in doubt between high and medium, choose high if you can see exactly what both sides intended.",
-		"   - medium: there is genuine ambiguity about which version to prefer, or the changes overlap",
-		"     in a way that requires editorial judgement.",
-		"   - low: you cannot determine the correct resolution.",
-		"3. Always explain your reasoning in `reason`, regardless of confidence level.",
-		"",
-		"Respond with valid JSON matching this exact schema:",
-		"```json",
-		JSON.stringify(
-			{
-				confidence: "high | medium | low",
-				reason:
-					"Explanation of why you chose this confidence level and how you resolved the conflict.",
-				files: [
-					{
-						path: "path/to/file",
-						content: "full resolved file content",
-					},
-				],
-			},
-			null,
-			2,
-		),
-		"```",
-		"",
-		"Only include files in the `files` array if confidence is high. Otherwise files can be an empty array.",
-	].join("\n");
-
-	// One-shot AI call via Workers AI binding — no tools or file system access
-	// needed, just structured JSON reasoning over the file contents.
-	const ai = typedEnv.AI as unknown as Ai;
-	const aiResponse = await ai.run(
-		"@cf/moonshotai/kimi-k2.7-code" as Parameters<typeof ai.run>[0],
-		{
-			messages: [
-				{
-					role: "system",
-					content:
-						"You are an expert in resolving documentation merge conflicts. Respond only with the requested JSON. No prose outside the JSON.",
-				},
-				{ role: "user", content: prompt },
-			],
-		} as Parameters<typeof ai.run>[1],
-	);
-
-	const text =
-		typeof aiResponse === "string"
-			? aiResponse
-			: typeof (aiResponse as { response?: string }).response === "string"
-				? (aiResponse as { response: string }).response
-				: JSON.stringify(aiResponse);
-
-	// Parse the AI response. Try strategies in order:
-	//   1. Whole-response JSON.parse (model followed the system prompt and returned
-	//      only JSON — most reliable, handles `}` inside string values correctly).
-	//   2. ```json fence extraction (model wrapped its response in a fence).
-	// The bare-object regex fallback is intentionally omitted: non-greedy `}` stops
-	// at the first closing brace, truncating any object whose content contains `}`.
 	const lowConfidenceFallback = {
 		confidence: "low" as const,
 		reason:
-			"AI did not return a parseable JSON response. Please resolve manually.",
+			"AI conflict resolution did not return a usable result. Please resolve manually.",
 		files: [] as { path: string; content: string }[],
 		allPrFiles: prFiles,
 		conflictCandidateSet: new Set(conflictCandidates),
@@ -879,71 +785,60 @@ async function resolveConflictsWithAI(
 		productionRefSha: productionRef.sha,
 	};
 
-	type ParsedResponse = {
-		confidence?: unknown;
-		reason?: unknown;
-		files?: unknown;
-	};
-	let parsed: ParsedResponse | null = null;
+	let confidence: ConflictResolution["confidence"] = "low";
+	let reason = "";
+	let validatedFiles: { path: string; content: string }[] = [];
 
-	// Strategy 1: try parsing the whole response directly.
 	try {
-		parsed = JSON.parse(text.trim()) as ParsedResponse;
-	} catch {
-		// not plain JSON — try fence extraction below
+		session = await harness.sessions.create(sessionKey);
+		const skillResult = await session.skill("rebase-conflict", {
+			model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+			args: {
+				prTitle: pr.title,
+				prDescription: pr.body ?? null,
+				prHeadSha: pr.head.sha,
+				mergeBaseSha,
+				productionHeadSha: productionRef.sha,
+				productionCommits: productionCommits.map((c) => ({
+					sha: c.sha,
+					message: c.message.split("\n")[0],
+				})),
+				conflictFiles: fileContents,
+			},
+			result: ConflictResolutionFromModelSchema,
+		});
+
+		const data = skillResult.data;
+		if (!data) return lowConfidenceFallback;
+
+		confidence = data.confidence;
+		reason = data.reason;
+		validatedFiles = data.files;
+	} catch (err) {
+		console.log({
+			message: `rebase-conflict skill failed for PR #${pr.number}: ${err instanceof Error ? err.message : String(err)}`,
+			event: "rebase_workflow",
+			number: pr.number,
+			action: "skill_error",
+		});
+		return lowConfidenceFallback;
+	} finally {
+		await session?.delete().catch(() => {});
 	}
 
-	// Strategy 2: extract from a ```json ... ``` fence.
-	if (!parsed) {
-		const fenceMatch = text.match(/```json\s*([\s\S]+?)\s*```/);
-		if (!fenceMatch) return lowConfidenceFallback;
-		try {
-			parsed = JSON.parse(fenceMatch[1]) as ParsedResponse;
-		} catch {
-			return lowConfidenceFallback;
-		}
-	}
-
-	// Both strategies either returned or set parsed; null is impossible here.
-	const parsedResponse = parsed as ParsedResponse;
-
-	// Validate each file entry — malformed entries from the model are dropped
-	// rather than passed to createBlob with undefined arguments.
-	const rawFiles = Array.isArray(parsedResponse.files)
-		? parsedResponse.files
-		: [];
-	const validatedFiles = (rawFiles as unknown[]).filter(
-		(entry): entry is { path: string; content: string } =>
-			typeof (entry as Record<string, unknown>)?.path === "string" &&
-			typeof (entry as Record<string, unknown>)?.content === "string",
-	);
-
-	let confidence: ConflictResolution["confidence"] =
-		parsedResponse.confidence === "high" ||
-		parsedResponse.confidence === "medium" ||
-		parsedResponse.confidence === "low"
-			? parsedResponse.confidence
-			: "low";
-	let reason =
-		typeof parsedResponse.reason === "string" ? parsedResponse.reason : "";
-
-	// If the model claimed high confidence but omitted one or more conflict
-	// candidates from the files array, downgrade to medium before returning so
-	// the user gets a clear "halted-confidence" status rather than a cryptic
-	// "failed" error from the completeness check inside applyResolution.
+	// If the agent claimed high confidence but omitted conflict candidates,
+	// downgrade to medium so the user gets a clear halted-confidence status
+	// instead of a cryptic failure from the completeness check in applyResolution.
 	if (confidence === "high") {
-		const resolvedResponsePaths = new Set(validatedFiles.map((f) => f.path));
+		const resolvedPaths = new Set(validatedFiles.map((f) => f.path));
 		const missingCandidates = conflictCandidates.filter((candidate) => {
 			const writePath = conflictWritePathMap.get(candidate) ?? candidate;
-			return (
-				!resolvedResponsePaths.has(candidate) &&
-				!resolvedResponsePaths.has(writePath)
-			);
+			return !resolvedPaths.has(candidate) && !resolvedPaths.has(writePath);
 		});
 		if (missingCandidates.length > 0) {
 			confidence = "medium";
-			const originalReason = reason ? ` Model reason: "${reason}"` : "";
-			reason = `AI claimed high confidence but omitted ${missingCandidates.length} conflict candidate(s): ${missingCandidates.join(", ")}.${originalReason} Please resolve manually.`;
+			const originalReason = reason ? ` Agent reason: "${reason}"` : "";
+			reason = `Agent claimed high confidence but omitted ${missingCandidates.length} conflict candidate(s): ${missingCandidates.join(", ")}.${originalReason} Please resolve manually.`;
 		}
 	}
 

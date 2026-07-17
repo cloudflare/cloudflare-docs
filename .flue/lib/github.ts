@@ -877,6 +877,38 @@ export async function compareCommits(
 	return { mergeBaseSha, commits };
 }
 
+export interface CommitPullRequest {
+	number: number;
+	title: string;
+	body: string | null;
+	state: string;
+	html_url: string;
+}
+
+/**
+ * Return the pull requests associated with a specific commit SHA.
+ * Uses the GitHub commit-pulls API (requires `application/vnd.github+json`).
+ * Returns an empty array if the commit has no associated PRs.
+ */
+export async function getCommitPullRequests(
+	token: string,
+	commitSha: string,
+): Promise<CommitPullRequest[]> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/commits/${commitSha}/pulls`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		// 422 means the commit is not in the repo — return empty rather than throw.
+		if (res.status === 422) return [];
+		throw new Error(
+			`Failed to get PRs for commit ${commitSha} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as CommitPullRequest[];
+	return data;
+}
+
 export async function verifyGitHubSignature(
 	body: string,
 	signature: string,

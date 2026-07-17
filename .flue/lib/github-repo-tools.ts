@@ -364,3 +364,77 @@ export function makeCodeReviewTools(
 ): ToolDefinition[] {
 	return [makeReadRepoFileTool(token, headSha), makeSearchRepoTool(token)];
 }
+
+// ── Tool: get_commit_pr ───────────────────────────────────────────────────────
+
+function makeGetCommitPrTool(token: string): ToolDefinition {
+	return {
+		name: "get_commit_pr",
+		description:
+			"Given a commit SHA from the production branch, return the pull request(s) that introduced that commit — including the PR title, description (body), number, and URL. Use this to understand WHY a production change was made and what the author intended, which helps determine the correct merge resolution.",
+		parameters: Type.Object({
+			commit_sha: Type.String({
+				description: "The full or abbreviated git commit SHA to look up.",
+			}),
+		}),
+		async execute(args) {
+			const sha = String(args.commit_sha ?? "").trim();
+			const res = await fetch(
+				`https://api.github.com/repos/${REPO}/commits/${sha}/pulls`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+						Accept: "application/vnd.github+json",
+						"X-GitHub-Api-Version": "2022-11-28",
+						"User-Agent": "cloudflare-docs-agents",
+					},
+				},
+			);
+			if (!res.ok) {
+				if (res.status === 422)
+					return "No pull requests found for that commit.";
+				throw new Error(
+					`get_commit_pr failed for ${sha}: ${res.status} ${await res.text()}`,
+				);
+			}
+			const prs = (await res.json()) as Array<{
+				number: number;
+				title: string;
+				body: string | null;
+				html_url: string;
+				state: string;
+			}>;
+			if (prs.length === 0) return "No pull requests found for that commit.";
+			return JSON.stringify(
+				prs.map((pr) => ({
+					number: pr.number,
+					title: pr.title,
+					body: pr.body
+						? pr.body.slice(0, 2000) +
+							(pr.body.length > 2000 ? "\n[...truncated]" : "")
+						: null,
+					url: pr.html_url,
+					state: pr.state,
+				})),
+			);
+		},
+	};
+}
+
+// ── Factory: rebase-conflict tools ────────────────────────────────────────────
+//
+// Tools for the AI conflict-resolution agent in /rebaseWithConflicts.
+//
+// Bounded to:
+//   - read_repo_file: read any file at any ref (merge base, PR head, prod head)
+//   - get_commit_pr: look up the PR title+description for a production commit
+//
+// The agent CANNOT make arbitrary GitHub calls — only these two.
+
+export function makeRebaseConflictTools(token: string): ToolDefinition[] {
+	// read_repo_file with no default ref — the agent must always supply the ref
+	// (merge base SHA, PR head SHA, or production head SHA) so it reads the
+	// version it actually intends to inspect.
+	const readTool = makeReadRepoFileTool(token, "production");
+	return [readTool, makeGetCommitPrTool(token)];
+}
