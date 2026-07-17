@@ -91,7 +91,25 @@ export async function run({
 }: FlueContext): Promise<Record<string, unknown>> {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
-	const token = await getInstallationToken(typedEnv as Record<string, string>);
+	// Token acquisition must succeed before anything else. If it fails we cannot
+	// swap the 👀 reaction (no token), so we log and return early rather than
+	// letting the error propagate unhandled.
+	let token: string;
+	try {
+		token = await getInstallationToken(typedEnv as Record<string, string>);
+	} catch (tokenErr) {
+		const errMsg =
+			tokenErr instanceof Error ? tokenErr.message : String(tokenErr);
+		console.log({
+			message: `Rebase workflow: failed to acquire installation token for PR #${input.prNumber}: ${errMsg}`,
+			event: "rebase_workflow",
+			number: input.prNumber,
+			error: errMsg,
+			action: "token_acquisition_failed",
+		});
+		// 👀 cannot be cleaned up without a token — best we can do is return early.
+		return { acted: false, reason: "token_error", error: errMsg };
+	}
 
 	// ── 1. Fetch PR metadata ──────────────────────────────────────────────────
 	const [pr, allComments] = await Promise.all([
@@ -476,7 +494,10 @@ export async function run({
 	});
 	return {
 		acted: false,
-		reason: "low_confidence",
+		reason:
+			resolution.confidence === "medium"
+				? "medium_confidence"
+				: "low_confidence",
 		confidence: resolution.confidence,
 	};
 }

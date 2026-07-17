@@ -379,8 +379,12 @@ function makeGetCommitPrTool(token: string): ToolDefinition {
 		}),
 		async execute(args) {
 			const sha = String(args.commit_sha ?? "").trim();
+			// Validate before URL-interpolation: git SHAs are hex, 7–40 chars.
+			if (!/^[0-9a-f]{7,40}$/i.test(sha)) {
+				return `Invalid commit SHA: "${sha}". Provide a hex SHA between 7 and 40 characters.`;
+			}
 			const res = await fetch(
-				`https://api.github.com/repos/${REPO}/commits/${sha}/pulls`,
+				`https://api.github.com/repos/${REPO}/commits/${encodeURIComponent(sha)}/pulls`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,

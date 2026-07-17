@@ -732,10 +732,12 @@ export function renderRebaseStatusUpdate(
 		const after = stripped.slice(headingEnd);
 
 		// Insert the rebase-status HTML marker alongside the other <!-- ... --> lines
-		// that live above ## Review.
+		// that live above ## Review. All renderers emit a blank line between the
+		// marker block and "## Review" (via a "" element in the lines array), so
+		// the regex must allow an optional \n before the heading.
 		const beforeWithMarker = before.replace(
-			/^((?:<!-- [^\n]+ -->\n)*)## Review/m,
-			`$1${statusMarker}\n## Review`,
+			/^((?:<!-- [^\n]+ -->\n)*)\n?## Review/m,
+			`$1${statusMarker}\n\n## Review`,
 		);
 
 		updatedBody = `${beforeWithMarker}\n\n${statusLine}${after}`;

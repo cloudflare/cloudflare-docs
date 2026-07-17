@@ -636,9 +636,18 @@ export async function pollForBranchUpdate(
 						retryAfter,
 						action: "rate_limit_retry",
 					});
-					// Honour Retry-After if present; otherwise the normal 3 s sleep fires.
+					// Honour Retry-After if present, clamped to the remaining deadline so
+					// we never sleep past the poll window. Set a flag to skip the regular
+					// 3 s inter-poll sleep — Retry-After already serves that purpose.
 					const retryMs = retryAfter ? parseInt(retryAfter, 10) * 1000 : 0;
-					if (retryMs > 0) await new Promise((r) => setTimeout(r, retryMs));
+					if (retryMs > 0) {
+						const remaining = deadline - Date.now();
+						const clampedMs = Math.min(retryMs, Math.max(0, remaining));
+						if (clampedMs > 0)
+							await new Promise((r) => setTimeout(r, clampedMs));
+						// Skip the inter-poll sleep below — we already waited.
+						if (Date.now() < deadline) continue;
+					}
 				} else {
 					throw new Error(
 						`pollForBranchUpdate: permanent failure fetching PR #${pullNumber} (HTTP 403): ${await res.text()}`,
