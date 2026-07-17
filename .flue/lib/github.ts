@@ -560,8 +560,13 @@ export async function updatePullRequestBranch(
 
 /**
  * Poll until the PR's head SHA changes from `priorSha`, indicating an async
- * `update-branch` has completed. Checks every 3 seconds for up to `timeoutMs`
- * (default 60 s). Returns the new head SHA on success, null on timeout.
+ * `update-branch` has completed. Checks immediately, then every 3 seconds, for
+ * up to `timeoutMs` (default 60 s). Returns the new head SHA on success, null
+ * on timeout.
+ *
+ * Transient errors from `getPullRequest` (rate limits, 5xx) are caught and
+ * retried rather than aborting the loop, since the async operation may still
+ * be in progress.
  *
  * **Limitation:** any push to the PR branch while polling (e.g. a concurrent
  * force-push by the author) will also change the head SHA and be treated as
@@ -576,11 +581,23 @@ export async function pollForBranchUpdate(
 	timeoutMs = 60_000,
 ): Promise<string | null> {
 	const deadline = Date.now() + timeoutMs;
-	while (Date.now() < deadline) {
-		await new Promise((r) => setTimeout(r, 3_000));
-		const pr = await getPullRequest(token, pullNumber);
-		if (pr.head.sha !== priorSha) return pr.head.sha;
-	}
+	do {
+		try {
+			const pr = await getPullRequest(token, pullNumber);
+			if (pr.head.sha !== priorSha) return pr.head.sha;
+		} catch {
+			// Transient error — log and continue polling.
+			console.log({
+				message: `pollForBranchUpdate: transient error fetching PR #${pullNumber}, retrying`,
+				event: "poll_for_branch_update",
+				pullNumber,
+				action: "transient_error_retry",
+			});
+		}
+		if (Date.now() < deadline) {
+			await new Promise((r) => setTimeout(r, 3_000));
+		}
+	} while (Date.now() < deadline);
 	return null;
 }
 
@@ -776,6 +793,15 @@ export async function createGitCommit(
 
 /**
  * Force-update a branch ref to point to a new commit SHA.
+ */
+/**
+ * Force-update a branch ref to point to a new commit SHA.
+ *
+ * **Pre-condition:** callers are responsible for verifying the branch's current
+ * head SHA before invoking this function. Because `force: true` is always sent,
+ * any commits pushed to the branch between reading its state and calling
+ * `updateRef` will be silently overwritten. Fetch the current ref and compare
+ * it against the expected SHA immediately before this call.
  */
 export async function updateRef(
 	token: string,

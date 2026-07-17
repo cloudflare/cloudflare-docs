@@ -452,9 +452,25 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 
 		const typedEnv = env as Record<string, string>;
-		const token = await getInstallationToken(typedEnv);
-		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
-		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+		let token: string;
+		let codeowner: boolean;
+		try {
+			token = await getInstallationToken(typedEnv);
+			const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+			codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+		} catch (authErr) {
+			const errMsg =
+				authErr instanceof Error ? authErr.message : String(authErr);
+			console.log({
+				message: `${commandName} auth failed for PR #${number}: ${errMsg}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: `${logAction}_auth_failed`,
+			});
+			return { acted: false, summary: `${commandName} auth failed: ${errMsg}` };
+		}
 
 		if (!codeowner) {
 			console.log({

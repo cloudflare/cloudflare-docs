@@ -860,11 +860,24 @@ async function resolveConflictsWithAI(
 		};
 	}
 
-	const parsed = JSON.parse(jsonMatch[1]) as {
-		confidence?: unknown;
-		reason?: unknown;
-		files?: unknown;
-	};
+	let parsed: { confidence?: unknown; reason?: unknown; files?: unknown };
+	try {
+		parsed = JSON.parse(jsonMatch[1]) as typeof parsed;
+	} catch {
+		// Model returned something that matched our JSON regex but isn't valid
+		// JSON — treat it the same as a missing response.
+		return {
+			confidence: "low",
+			reason:
+				"AI did not return a parseable JSON response. Please resolve manually.",
+			files: [],
+			allPrFiles: prFiles,
+			conflictCandidateSet: new Set(conflictCandidates),
+			conflictWritePathMap,
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
+		};
+	}
 
 	// Validate each file entry — malformed entries from the model are dropped
 	// rather than passed to createBlob with undefined arguments.
@@ -1073,6 +1086,16 @@ async function applyResolution(
 	const newCommitSha = await createGitCommit(token, commitMessage, newTreeSha, [
 		freshProductionRef.sha,
 	]);
+
+	// Guard against a concurrent push to the PR branch during the AI resolution.
+	// If the author pushed between when we read pr.head.sha and now, silently
+	// overwriting that push would lose their work. Abort and let them retry.
+	const currentPr = await getPullRequest(token, pr.number);
+	if (currentPr.head.sha !== pr.head.sha) {
+		throw new Error(
+			`PR branch moved during AI resolution (was ${pr.head.sha.slice(0, 7)}, now ${currentPr.head.sha.slice(0, 7)}). Please retry /rebaseWithConflicts.`,
+		);
+	}
 
 	// Force-update the PR branch to point to the new commit.
 	await updateRef(token, pr.head.ref, newCommitSha);

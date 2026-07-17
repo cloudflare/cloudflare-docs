@@ -653,7 +653,7 @@ function rebaseStatusLine(
 				...(detail ? [`> ${sanitizeRebaseDetail(detail)}`] : []),
 			].join("\n");
 		case "failed":
-			return `❌ **Rebase:** Failed unexpectedly. ${detail ?? "Check the worker logs."}`;
+			return `❌ **Rebase:** Failed unexpectedly. ${sanitizeRebaseDetail(detail ?? "Check the worker logs.")}`;
 	}
 }
 
