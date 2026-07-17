@@ -552,15 +552,27 @@ async function resolveConflictsWithAI(
 	const prChangedPaths = new Set(prFiles.map((f) => f.path));
 	const productionChangedPaths = new Set(productionFiles.map((f) => f.path));
 
+	// Build a set of old paths that production renamed away from, so we can
+	// detect the symmetric case: production renamed A→C, PR modified A.
+	// productionChangedPaths contains C (the new path), not A, so without this
+	// set the overlap would be missed entirely.
+	const productionPreviousPaths = new Set(
+		productionFiles.flatMap((f) => (f.previousPath ? [f.previousPath] : [])),
+	);
+
 	// Intersection = files changed on both sides = potential conflict zone.
-	// Also check previousPath: a PR rename (A → B) where production changed A
-	// is a conflict even though the new path B isn't in productionChangedPaths.
+	// Four cases:
+	//   1. Same path changed on both sides (common case).
+	//   2. PR renamed A→B, production changed A (PR previousPath in production paths).
+	//   3. Production renamed A→C, PR changed A (PR path in production previousPaths).
+	//   4. Both sides renamed the same file differently — caught by cases 2 or 3.
 	const conflictCandidates = [...prChangedPaths].filter((p) => {
 		if (productionChangedPaths.has(p)) return true;
-		// Check whether the file's old name (before rename) was changed on production.
+		if (productionPreviousPaths.has(p)) return true;
 		const entry = prFiles.find((f) => f.path === p);
 		return entry?.previousPath
-			? productionChangedPaths.has(entry.previousPath)
+			? productionChangedPaths.has(entry.previousPath) ||
+					productionPreviousPaths.has(entry.previousPath)
 			: false;
 	});
 
@@ -823,6 +835,17 @@ async function applyResolution(
 				// Conflict file — use AI-resolved content.
 				const resolvedContent = resolvedByPath.get(path);
 				if (resolvedContent !== undefined) {
+					// If the file was also renamed in the PR, remove the old path from
+					// the tree before writing the resolved content at the new path.
+					// Without this the original path stays in the rebased tree.
+					if (status === "renamed" && previousPath) {
+						treeUpdates.push({
+							path: previousPath,
+							mode: "100644",
+							type: "blob",
+							sha: null,
+						});
+					}
 					const blobSha = await createBlob(token, resolvedContent);
 					treeUpdates.push({
 						path,

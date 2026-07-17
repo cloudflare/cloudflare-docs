@@ -562,6 +562,12 @@ export async function updatePullRequestBranch(
  * Poll until the PR's head SHA changes from `priorSha`, indicating an async
  * `update-branch` has completed. Checks every 3 seconds for up to `timeoutMs`
  * (default 60 s). Returns the new head SHA on success, null on timeout.
+ *
+ * **Limitation:** any push to the PR branch while polling (e.g. a concurrent
+ * force-push by the author) will also change the head SHA and be treated as
+ * completion of the async rebase. This is an accepted race condition — a
+ * concurrent push invalidates the rebase anyway, and the subsequent
+ * /full-review will run against whatever head SHA is current.
  */
 export async function pollForBranchUpdate(
 	token: string,
