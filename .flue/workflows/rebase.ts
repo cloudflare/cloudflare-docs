@@ -506,11 +506,16 @@ async function resolveConflictsWithAI(
 		conflictCandidateSet: ReadonlySet<string>;
 		/**
 		 * Maps each conflict candidate (PR path) to the path where the resolved
-		 * content should be written in the rebased tree. For most files this is
-		 * the same path. When production renamed a file (A→C) and the PR changed
-		 * A, this maps A→C so the resolution is written to C (not re-created at A).
+		 * content should be written in the rebased tree.
+		 *
+		 * - Normal (same path on both sides): A → A
+		 * - Production renamed A→C, PR changed A: A → C (write to production's new path)
+		 * - PR renamed A→B, production changed A: B → B (write to PR's new path)
+		 * - Both sides renamed A differently (A→B by PR, A→C by prod): B → C
+		 *
+		 * Separate from the read paths used when fetching file content.
 		 */
-		conflictProductionPathMap: ReadonlyMap<string, string>;
+		conflictWritePathMap: ReadonlyMap<string, string>;
 		mergeBaseSha: string;
 		productionRefSha: string;
 	}
@@ -585,21 +590,71 @@ async function resolveConflictsWithAI(
 			: false;
 	});
 
-	// For each conflict candidate, determine which production path holds the
-	// current content. For case 3 (production renamed A→C, PR changed A), the
-	// production content lives at C, not A, so we must fetch and write there.
-	// For all other cases the PR path and the production path are the same.
-	const conflictProductionPathMap = new Map<string, string>(
+	// Per-candidate metadata: separate read paths (where to fetch content from)
+	// from the write path (where to store the resolution in the rebased tree).
+	//
+	// Case 1 – same path changed on both sides (A modified by both):
+	//   writePath=A, productionReadPath=A, baseReadPath=A
+	// Case 2 – PR renamed A→B, production changed A (candidate=B, previousPath=A):
+	//   writePath=B, productionReadPath=A, baseReadPath=A
+	//   (production still has A; B doesn't exist on production or base)
+	// Case 3 – production renamed A→C, PR changed A (candidate=A):
+	//   writePath=C, productionReadPath=C, baseReadPath=A
+	//   (production's content is at C; base is still at A)
+	// Case 4 – both sides renamed A (PR: A→B, production: A→C) (candidate=B):
+	//   writePath=C, productionReadPath=C, baseReadPath=A
+	//   (production's rename wins for the write destination)
+	interface ConflictMeta {
+		writePath: string;
+		productionReadPath: string;
+		baseReadPath: string;
+	}
+	const conflictMetaMap = new Map<string, ConflictMeta>(
 		conflictCandidates.map((p) => {
+			// Case 3/4: production renamed the PR's original path (or PR's new path).
 			const productionNewPath = productionRenameMap.get(p);
-			if (productionNewPath) return [p, productionNewPath];
+			if (productionNewPath) {
+				return [
+					p,
+					{
+						writePath: productionNewPath,
+						productionReadPath: productionNewPath,
+						baseReadPath: p,
+					},
+				];
+			}
 			const entry = prFiles.find((f) => f.path === p);
 			if (entry?.previousPath) {
 				const fromPrevious = productionRenameMap.get(entry.previousPath);
-				if (fromPrevious) return [p, fromPrevious];
+				if (fromPrevious) {
+					// Case 4: both sides renamed the same original file.
+					return [
+						p,
+						{
+							writePath: fromPrevious,
+							productionReadPath: fromPrevious,
+							baseReadPath: entry.previousPath,
+						},
+					];
+				}
+				// Case 2: PR renamed A→B, production changed A.
+				return [
+					p,
+					{
+						writePath: p,
+						productionReadPath: entry.previousPath,
+						baseReadPath: entry.previousPath,
+					},
+				];
 			}
-			return [p, p];
+			// Case 1: same path on both sides.
+			return [p, { writePath: p, productionReadPath: p, baseReadPath: p }];
 		}),
+	);
+
+	// Derive the write-path map passed to applyResolution (prPath → writePath).
+	const conflictWritePathMap = new Map<string, string>(
+		[...conflictMetaMap.entries()].map(([p, m]) => [p, m.writePath]),
 	);
 
 	if (conflictCandidates.length === 0) {
@@ -612,7 +667,7 @@ async function resolveConflictsWithAI(
 			files: [],
 			allPrFiles: prFiles,
 			conflictCandidateSet: new Set(conflictCandidates),
-			conflictProductionPathMap,
+			conflictWritePathMap,
 			mergeBaseSha,
 			productionRefSha: productionRef.sha,
 		};
@@ -628,28 +683,33 @@ async function resolveConflictsWithAI(
 			files: [],
 			allPrFiles: prFiles,
 			conflictCandidateSet: new Set(conflictCandidates),
-			conflictProductionPathMap,
+			conflictWritePathMap,
 			mergeBaseSha,
 			productionRefSha: productionRef.sha,
 		};
 	}
 
-	// Fetch all three versions of each conflicting file.
-	// When production renamed a file (A→C), fetch its production version from
-	// the new path C — fetching A from productionRef would return null.
+	// Fetch all three versions of each conflicting file using the correct read
+	// paths from conflictMetaMap. Using p directly for all three fetches was
+	// wrong for rename cases where the file lives at a different path on
+	// production or in the base.
 	const fileContents = await Promise.all(
 		conflictCandidates.map(async (path) => {
-			const productionFetchPath = conflictProductionPathMap.get(path) ?? path;
-			const isProductionRename = productionFetchPath !== path;
+			const meta = conflictMetaMap.get(path)!;
+			const isProductionRename =
+				meta.productionReadPath !== path &&
+				!prFiles.find((f) => f.path === path)?.previousPath;
+			const isPrRename = !!prFiles.find((f) => f.path === path)?.previousPath;
 			const [prVersion, productionVersion, baseVersion] = await Promise.all([
 				getRepoFileContent(token, path, pr.head.sha),
-				getRepoFileContent(token, productionFetchPath, productionRef.sha),
-				getRepoFileContent(token, path, mergeBaseSha),
+				getRepoFileContent(token, meta.productionReadPath, productionRef.sha),
+				getRepoFileContent(token, meta.baseReadPath, mergeBaseSha),
 			]);
 			return {
 				path,
-				productionFetchPath,
+				meta,
 				isProductionRename,
+				isPrRename,
 				prVersion,
 				productionVersion,
 				baseVersion,
@@ -670,21 +730,27 @@ async function resolveConflictsWithAI(
 		.map(
 			({
 				path,
-				productionFetchPath,
+				meta,
 				isProductionRename,
+				isPrRename,
 				prVersion,
 				productionVersion,
 				baseVersion,
 			}) => {
-				const productionHeader = isProductionRename
-					? `**Production version (production renamed this file to \`${productionFetchPath}\`; content at new path):**`
-					: `**Production version (what production has now):**`;
-				const resolveNote = isProductionRename
-					? `Note: production renamed \`${path}\` to \`${productionFetchPath}\`. Your resolved content should be returned at path \`${productionFetchPath}\`.`
-					: "";
+				let renameNote = "";
+				let productionHeader =
+					"**Production version (what production has now):**";
+				if (isProductionRename) {
+					renameNote = `Note: production renamed \`${path}\` to \`${meta.productionReadPath}\`. Return the resolved content at path \`${meta.writePath}\`.`;
+					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, where production moved this file):**`;
+				} else if (isPrRename) {
+					const entry = prFiles.find((f) => f.path === path);
+					renameNote = `Note: this PR renamed \`${entry?.previousPath ?? "?"}\` to \`${path}\`. Return the resolved content at path \`${meta.writePath}\`.`;
+					productionHeader = `**Production version (at \`${meta.productionReadPath}\`, the original path before this PR renamed it):**`;
+				}
 				return [
 					`### File: ${path}`,
-					...(resolveNote ? ["", resolveNote] : []),
+					...(renameNote ? ["", renameNote] : []),
 					"",
 					"**Common ancestor (merge base):**",
 					"```",
@@ -788,7 +854,7 @@ async function resolveConflictsWithAI(
 			files: [],
 			allPrFiles: prFiles,
 			conflictCandidateSet: new Set(conflictCandidates),
-			conflictProductionPathMap,
+			conflictWritePathMap,
 			mergeBaseSha,
 			productionRefSha: productionRef.sha,
 		};
@@ -820,7 +886,7 @@ async function resolveConflictsWithAI(
 		files: validatedFiles,
 		allPrFiles: prFiles,
 		conflictCandidateSet: new Set(conflictCandidates),
-		conflictProductionPathMap,
+		conflictWritePathMap,
 		mergeBaseSha,
 		productionRefSha: productionRef.sha,
 	};
@@ -842,7 +908,7 @@ async function applyResolution(
 	resolution: ConflictResolution & {
 		allPrFiles: PrFileEntry[];
 		conflictCandidateSet: ReadonlySet<string>;
-		conflictProductionPathMap: ReadonlyMap<string, string>;
+		conflictWritePathMap: ReadonlyMap<string, string>;
 		mergeBaseSha: string;
 		productionRefSha: string;
 	},
@@ -860,15 +926,14 @@ async function applyResolution(
 	for (const { path, content } of resolution.files) {
 		// Accept if `path` is a conflict candidate (normal case).
 		if (resolution.conflictCandidateSet.has(path)) {
-			const productionPath =
-				resolution.conflictProductionPathMap.get(path) ?? path;
+			const productionPath = resolution.conflictWritePathMap.get(path) ?? path;
 			resolvedByProductionPath.set(productionPath, content);
 			continue;
 		}
 		// Also accept if `path` is the production-side new path of a rename
 		// conflict (the model returned the renamed path directly).
 		const isProductionNewPath = [
-			...resolution.conflictProductionPathMap.values(),
+			...resolution.conflictWritePathMap.values(),
 		].includes(path);
 		if (isProductionNewPath) {
 			resolvedByProductionPath.set(path, content);
@@ -910,7 +975,7 @@ async function applyResolution(
 				// For a production-renamed conflict (A→C, PR changed A), productionPath
 				// is C: we write resolved content to C and delete A from the tree.
 				const productionPath =
-					resolution.conflictProductionPathMap.get(path) ?? path;
+					resolution.conflictWritePathMap.get(path) ?? path;
 				const resolvedContent = resolvedByProductionPath.get(productionPath);
 				if (resolvedContent !== undefined) {
 					// Remove the PR's old path if it differs from the production path.
@@ -977,11 +1042,25 @@ async function applyResolution(
 		),
 	);
 
+	// Deduplicate and sort treeUpdates. Because the entries are pushed from
+	// concurrent async callbacks the array order is nondeterministic, and the
+	// same path may appear more than once (e.g. a conflict file that is also
+	// renamed generates both a deletion and a blob entry). Deduplicate by keeping
+	// the last entry per path (last-write-wins) so deletions are not overridden
+	// by stale blob entries, then sort lexicographically for deterministic output.
+	const seenPaths = new Map<string, TreeUpdate>();
+	for (const u of treeUpdates) {
+		seenPaths.set(u.path, u);
+	}
+	const dedupedUpdates = [...seenPaths.values()].sort((a, b) =>
+		a.path.localeCompare(b.path),
+	);
+
 	// Create a new tree rooted at the production HEAD tree with all PR changes applied.
 	const newTreeSha = await createTree(
 		token,
 		productionCommit.treeSha,
-		treeUpdates,
+		dedupedUpdates,
 	);
 
 	// Create a new commit whose parent is the (re-verified) production HEAD.
