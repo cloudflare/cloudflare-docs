@@ -806,10 +806,14 @@ async function resolveConflictsWithAI(
 		"Your task:",
 		"1. For each file, produce the correctly merged version that incorporates both the PR's intent and the production changes.",
 		"2. Assess your confidence in the resolution: high, medium, or low.",
-		"   - high: you are certain the resolution is correct and preserves both intents without ambiguity.",
-		"   - medium: the resolution is your best guess but there is ambiguity.",
-		"   - low: you cannot confidently resolve the conflict.",
-		"3. If confidence is medium or low, explain specifically why.",
+		"   - high: the changes are clearly orthogonal (they edit different parts of the file or sentence),",
+		"     OR one side added content that the other did not touch, so the merge is unambiguous.",
+		"     Most single-file, single-sentence conflicts in documentation are high confidence.",
+		"     When in doubt between high and medium, choose high if you can see exactly what both sides intended.",
+		"   - medium: there is genuine ambiguity about which version to prefer, or the changes overlap",
+		"     in a way that requires editorial judgement.",
+		"   - low: you cannot determine the correct resolution.",
+		"3. Always explain your reasoning in `reason`, regardless of confidence level.",
 		"",
 		"Respond with valid JSON matching this exact schema:",
 		"```json",
@@ -817,7 +821,7 @@ async function resolveConflictsWithAI(
 			{
 				confidence: "high | medium | low",
 				reason:
-					"Explanation. If high, say why you are confident. If medium/low, explain the ambiguity.",
+					"Explanation of why you chose this confidence level and how you resolved the conflict.",
 				files: [
 					{
 						path: "path/to/file",
@@ -938,7 +942,8 @@ async function resolveConflictsWithAI(
 		});
 		if (missingCandidates.length > 0) {
 			confidence = "medium";
-			reason = `AI claimed high confidence but omitted ${missingCandidates.length} conflict candidate(s): ${missingCandidates.join(", ")}. Please resolve manually.`;
+			const originalReason = reason ? ` Model reason: "${reason}"` : "";
+			reason = `AI claimed high confidence but omitted ${missingCandidates.length} conflict candidate(s): ${missingCandidates.join(", ")}.${originalReason} Please resolve manually.`;
 		}
 	}
 
