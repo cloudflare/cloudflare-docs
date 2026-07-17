@@ -582,16 +582,53 @@ export async function pollForBranchUpdate(
 ): Promise<string | null> {
 	const deadline = Date.now() + timeoutMs;
 	do {
+		let status = 0;
 		try {
-			const pr = await getPullRequest(token, pullNumber);
-			if (pr.head.sha !== priorSha) return pr.head.sha;
-		} catch {
-			// Transient error — log and continue polling.
+			// Inline the fetch so we can inspect the HTTP status and distinguish
+			// permanent failures (401/403/404) from transient ones (429/5xx/network).
+			const res = await fetch(
+				`https://api.github.com/repos/${REPO}/pulls/${pullNumber}`,
+				{ headers: apiHeaders(token) },
+			);
+			status = res.status;
+
+			if (res.ok) {
+				const pr = (await res.json()) as GitHubPullRequest;
+				if (pr.head.sha !== priorSha) return pr.head.sha;
+			} else if (status === 401 || status === 403 || status === 404) {
+				// Permanent failure — rethrow immediately rather than burning the
+				// full timeout retrying an error that will not resolve itself.
+				throw new Error(
+					`pollForBranchUpdate: permanent failure fetching PR #${pullNumber} (HTTP ${status}): ${await res.text()}`,
+				);
+			} else {
+				// Transient (429, 5xx, etc.) — log and retry.
+				console.log({
+					message: `pollForBranchUpdate: transient HTTP ${status} for PR #${pullNumber}, retrying`,
+					event: "poll_for_branch_update",
+					pullNumber,
+					status,
+					action: "transient_error_retry",
+				});
+			}
+		} catch (err) {
+			// Only rethrow if it's the permanent-failure error we threw above,
+			// or if status indicates a permanent failure. Network errors are retried.
+			if (
+				status === 401 ||
+				status === 403 ||
+				status === 404 ||
+				(err instanceof Error &&
+					err.message.startsWith("pollForBranchUpdate: permanent"))
+			) {
+				throw err;
+			}
 			console.log({
-				message: `pollForBranchUpdate: transient error fetching PR #${pullNumber}, retrying`,
+				message: `pollForBranchUpdate: network error for PR #${pullNumber}, retrying`,
 				event: "poll_for_branch_update",
 				pullNumber,
-				action: "transient_error_retry",
+				error: err instanceof Error ? err.message : String(err),
+				action: "network_error_retry",
 			});
 		}
 		if (Date.now() < deadline) {
@@ -791,9 +828,6 @@ export async function createGitCommit(
 	return data.sha;
 }
 
-/**
- * Force-update a branch ref to point to a new commit SHA.
- */
 /**
  * Force-update a branch ref to point to a new commit SHA.
  *
