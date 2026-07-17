@@ -3,6 +3,13 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-07-17"
+    title: RealtimeKit Web UI Kit 2.0.1
+    description: |-
+      **Fix**
+
+      - The `rtk-idle-screen` now displays user-friendly error messages instead of just an infinite loader, helping customers identify issues and retry.
+
   - publish_date: "2026-06-18"
     title: RealtimeKit Web UI Kit 2.0.0
     description: |-
