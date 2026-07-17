@@ -1,6 +1,6 @@
 ---
 name: turnstile-spin
-description: Set up Cloudflare Turnstile end-to-end in a project — scan the codebase, create the widget via the Cloudflare API, embed it on the right forms, wire canonical server-side siteverify in the customer's existing backend, validate, and persist the skill. Load this when a user asks to add Turnstile, set up CAPTCHA, protect a form from bots, or fix a Turnstile integration. Mirrors developers.cloudflare.com/turnstile/spin.
+description: Set up Cloudflare Turnstile end-to-end in a project. Scan the codebase, create the widget via the Cloudflare API, embed it on the right forms, wire canonical server-side siteverify in the customer's existing backend, validate, and persist the skill. Load this when a user asks to add Turnstile, set up CAPTCHA, protect a form from bots, or fix a Turnstile integration. Mirrors developers.cloudflare.com/turnstile/spin.
 references:
   - vanilla-html
   - nextjs-app
@@ -104,13 +104,14 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 - Do not call siteverify from the browser. Always: browser → user's backend → siteverify.
 - Do not deploy any extra infrastructure (Workers, proxies, sidecars). The customer's existing backend calls siteverify directly.
 - Do not use `sudo` or install global packages without asking.
+- Do not propose features outside the wizard (custom Workers, custom domains, advanced WAF rules) unless asked.
 
 ### Hard scope boundary: DO NOT ask the user about
 
 Spin validates the Turnstile token via canonical siteverify before the user's existing form handler runs. Everything else is out of scope:
 
 - **Email / SMS / notification delivery.** Leave the existing submit handler alone (just gate it on `success === true`). Don't propose Resend, Mailchannels, SMTP, mailto.
-- **Adding a new backend.** If the form has no backend handler today (pure-static site, mailto-only contact form), say so and exit — Spin requires a server-side place to put siteverify.
+- **Adding a new backend.** If the form has no backend handler today (pure-static site, mailto-only contact form), say so and exit. Spin requires a server-side place to put siteverify.
 - **Database / payment / OAuth / form persistence.** Out of scope.
 - **Frontend framework migration, refactoring, or styling.** Edit only what's needed.
 - **reCAPTCHA v3 score thresholds.** Turnstile returns `success: true/false`.
@@ -129,7 +130,7 @@ If the user tells you they already have a Turnstile widget set up and want to wi
 3. Check `clearance_level` from the response (or the user's answer):
    - `no_clearance`: standard wire-up (Step 9).
    - anything else: ask whether they want siteverify on top of pre-clearance, or exit per the scope boundary.
-4. Continue from Step 9 (Wire the integration). Site key does not change. Dashboard's `Deployment` column flips from `Manual` to `Spin` on the first request carrying `data-action="turnstile-spin-v2"`.
+4. Continue from Step 9 (Wire the integration). Site key does not change; the existing widget keeps working throughout.
 5. Never recreate the widget to get a fresh secret. That breaks the existing sitekey everywhere it's deployed.
 
 ### The frontend-edit contract
@@ -141,33 +142,25 @@ Frontend (embeds the widget; submits to the user's existing endpoint):
 ```html
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-<form action="/signup" method="POST">
+<form action="/signup" method="POST" id="cf-form">
   <!-- existing inputs unchanged -->
   <div class="cf-turnstile" data-sitekey="<SITEKEY>" data-action="turnstile-spin-v2"></div>
   <button type="submit">Sign up</button>
 </form>
+<script>
+  // Turnstile tokens are single-use. If the page does not navigate after
+  // submit (server returned an inline error, client-side validation
+  // caught something), reset the widget so a retry gets a fresh token
+  // instead of being rejected as timeout-or-duplicate.
+  document.getElementById('cf-form').addEventListener('submit', () => {
+    setTimeout(() => window.turnstile?.reset(), 0);
+  });
+</script>
 ```
 
-Backend (inside the existing handler; reads the token from the request and gates):
+Backend: use the canonical siteverify fetch from Step 9 inside the existing handler. Read the token from `req.body['cf-turnstile-response']`, gate on `success === true`, and leave the rest of the handler alone. If the existing handler was a stub, Spin leaves it a stub gated on success. The user can replace the stub later; that's not Spin's job.
 
-```js
-// In the existing POST /signup handler
-const token = req.body['cf-turnstile-response'];
-const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  body: new URLSearchParams({
-    secret: process.env.TURNSTILE_SECRET,
-    response: token,
-    remoteip: req.ip,
-  }),
-});
-const { success } = await r.json();
-if (!success) return res.status(403).end();
-// existing handler logic runs here, unchanged
-```
-
-If the existing handler was a stub, Spin leaves it a stub gated on success. The user can replace the stub later; that's not Spin's job.
+**Token lifecycle: tokens are single-use.** A `cf-turnstile-response` token is redeemed exactly once at siteverify. If the server rejects (non-2xx or `success: false`), the browser still holds the redeemed token in the DOM; a naive retry submits the same token and Cloudflare's edge rejects the second attempt with `timeout-or-duplicate`. Always call `window.turnstile.reset()` before the user is allowed to retry. The framework references show the per-framework hook (submit listener for native forms, response handler for AJAX/SPA submits, `onError` for React components).
 
 ## Migrating from another CAPTCHA
 
@@ -207,10 +200,4 @@ Every `cf-turnstile` div this skill writes must include `data-action="turnstile-
 
 Older widgets stamped `turnstile-spin-v1` (from the V1 agent flow that deployed a managed Worker) still exist in production accounts; preserve that marker if you encounter it on an existing widget you are modifying. Do not retag.
 
-## Do not
 
-- Do not write the secret to disk (other than the user's own env store).
-- Do not skip validation (Step 10).
-- Do not propose features outside the wizard (custom Workers, custom domains, advanced WAF rules) unless asked.
-- Do not call siteverify from the browser.
-- Do not deploy any extra infrastructure on the user's behalf.
