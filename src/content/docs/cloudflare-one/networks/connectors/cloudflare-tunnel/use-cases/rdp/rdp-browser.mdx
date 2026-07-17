@@ -27,6 +27,7 @@ Browser-based RDP can be used in conjunction with [the Cloudflare One Client](/c
 - An [active domain on Cloudflare](/fundamentals/manage-domains/add-site/).
 - The domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/).
 - An RDP server running a supported [Windows operating system](#rdp-server-operating-systems).
+- The RDP server's [security layer](#known-limitations) allows TLS (set to **Negotiate** or **SSL**, not the legacy **RDP** option).
 
 ## 1. Connect the server to Cloudflare
 
@@ -303,7 +304,11 @@ To transfer files from the remote Windows session to your local machine:
 3. Select one of the following options:
    - **Download**: Download the file to your local machine.
    - **Download zip**: Download multiple files at once as a zipped folder to your local machine.
-   - **Print** (PDF files only): Print the file to a local printer on your network.
+   - **Print**: [Print PDF files](#print-pdfs) to a local printer on your network.
+
+#### Print PDFs
+
+You can print PDF files from the clipboard panel to a local printer. To print a single file, select the print icon next to the PDF. To print multiple files at once, copy the files together into the clipboard on the remote machine, then select **Print all PDFs** in the clipboard panel. The files are combined into a single PDF and sent to your browser as one print job.
 
 :::note
 Printing to a local printer is available for PDF files in Chromium-based browsers and Firefox. In Safari, download the PDF and print from your system viewer.
@@ -407,8 +412,9 @@ The login flow differs slightly when using an Microsoft Entra ID-bound username:
 - **Clipboard size limit**: Data copied between the local machine and the browser-based RDP session may not exceed 500 KB.
 - **Clipboard data types**: Text clipboard controls only support text data. Image clipboard transfers are not supported.
 - **File transfer availability**: File transfer is in beta. Refer to [Transfer files](#transfer-files) for supported functionality and limitations.
-- **Print to local printer**: Local printing from a browser-based RDP session is only supported for PDF files through the [file transfer control panel](#download-files-remote-to-local).
-- **Network Level Authentication for Entra-joined accounts**: Browser-based RDP does not support PKU2U authentication which is required for [Network Level Authentication (NLA)](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-allow-access#why-allow-connections-only-with-network-level-authentication) with Entra-joined accounts. Connecting to Entra-joined accounts requires disabling enforcement of NLA on the remote Windows machine. You can disable NLA from **Settings** > **System** > **Remote Desktop**, or use the Local Group Policy Editor to disable **Require user authentication for remote connections by using Network Level Authentication**.
+- **Print to local printer**: Local printing from a browser-based RDP session is only supported for PDF files through the [file transfer control panel](#print-pdfs).
+- **Network Level Authentication for Entra-joined accounts**: Browser-based RDP does not support PKU2U authentication which is required for [Network Level Authentication (NLA)](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-allow-access#why-allow-connections-only-with-network-level-authentication) with Entra-joined accounts. Connecting to Entra-joined accounts requires disabling enforcement of NLA on the remote Windows machine. You can disable NLA from **Settings** > **System** > **Remote Desktop**, or use the Local Group Policy Editor to disable **Require user authentication for remote connections by using Network Level Authentication**. When disabling NLA, only turn off NLA itself — do not switch the security layer to the legacy **RDP** option, because browser-based RDP still requires TLS (refer to the **RDP security layer must allow TLS** limitation).
+- **RDP security layer must allow TLS**: Browser-based RDP connects to the remote machine over TLS, so the machine's RDP security layer must be set to at least **Negotiate** (or **SSL**). If the server is set to use the legacy **RDP** security layer, connections will fail. You can configure this in the Local Group Policy Editor by setting **Require use of specific security layer for remote (RDP) connections** to **Negotiate** or **SSL**.
 - **Clipboard browser compatibility**: Automatic clipboard sharing between the local and remote machine is only available in Chromium-based browsers by default (Google Chrome, Microsoft Edge, Opera, Brave). To enable this functionality in Firefox:
     1. Type `about:config` into the browser address bar and press **Enter**.
     2. Accept the warning prompt if displayed.

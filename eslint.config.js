@@ -35,9 +35,8 @@ export default [
 			"dist/",
 			"dist-nimbus/",
 			".github/",
-			// Nimbus migration target (vendored, behind BUILD_TARGET=nimbus).
-			// Excluded from repo lint during priming; re-enable before cutover.
-			"src/nimbus/",
+			// Generated at prebuild/predev by bin/fetch-skills.ts (gitignored).
+			"skills/",
 		],
 	},
 	{

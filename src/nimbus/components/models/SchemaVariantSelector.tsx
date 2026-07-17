@@ -74,7 +74,7 @@ export default function SchemaVariantSelector({
 
 			{/* Selected variant content */}
 			{selectedVariant.rows.length === 0 ? (
-				<p className="text-sm text-muted-foreground">No parameters defined.</p>
+				<p className="text-muted-foreground text-sm">No parameters defined.</p>
 			) : (
 				<SchemaTree
 					rows={selectedVariant.rows}

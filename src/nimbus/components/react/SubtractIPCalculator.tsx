@@ -67,10 +67,10 @@ export default function SubtractIPCalculator({
 	}
 
 	return (
-		<div className="my-4 space-y-5 rounded-lg bg-card p-6 text-foreground no-underline shadow-sm ring ring-border">
+		<div className="bg-card text-foreground ring-border my-4 space-y-5 rounded-lg p-6 no-underline shadow-sm ring">
 			<div className="grid gap-4 sm:grid-cols-2">
 				<label className="block">
-					<span className="mb-1.5 block text-sm font-medium text-foreground">
+					<span className="text-foreground mb-1.5 block text-sm font-medium">
 						Base CIDR
 					</span>
 					<input
@@ -82,7 +82,7 @@ export default function SubtractIPCalculator({
 					/>
 				</label>
 				<label className="block">
-					<span className="mb-1.5 block text-sm font-medium text-foreground">
+					<span className="text-foreground mb-1.5 block text-sm font-medium">
 						Subtracted CIDRs
 					</span>
 					<input
@@ -105,14 +105,14 @@ export default function SubtractIPCalculator({
 
 			{result.length > 0 && (
 				<div className="space-y-2">
-					<span className="block text-sm font-medium text-foreground">
+					<span className="text-foreground block text-sm font-medium">
 						Results
 					</span>
 					<div className="flex flex-wrap gap-1.5">
 						{result.map((cidr) => (
 							<code
 								key={cidr}
-								className="rounded-md bg-muted px-2 py-1 font-mono text-sm text-foreground"
+								className="bg-muted text-foreground rounded-md px-2 py-1 font-mono text-sm"
 							>
 								{cidr}
 							</code>

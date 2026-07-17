@@ -8,9 +8,9 @@ import autolinkHeadings from "../../plugins/satteri/autolink-headings";
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-  title: z.string(),
-  slug: z.string().optional(),
-  depth: z.number().min(1).max(6),
+	title: z.string(),
+	slug: z.string().optional(),
+	depth: z.number().min(1).max(6),
 });
 
 const { title, slug, depth } = props.parse(Astro.props);
@@ -18,18 +18,18 @@ const slugified = GithubSlug(slug ?? title);
 const headingTitle = title.replace(/\r?\n/g, " ");
 
 const setHeadingId = defineHastPlugin({
-  name: "cf-anchor-heading-id",
-  element: {
-    filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
-    visit(node, ctx) {
-      ctx.setProperty(node, "id", slugified);
-    },
-  },
+	name: "cf-anchor-heading-id",
+	element: {
+		filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
+		visit(node, ctx) {
+			ctx.setProperty(node, "id", slugified);
+		},
+	},
 });
 
 const { html } = markdownToHtml(`${"#".repeat(depth)} ${headingTitle}`, {
-  features: { gfm: true, smartPunctuation: false },
-  hastPlugins: [setHeadingId, autolinkHeadings],
+	features: { gfm: true, smartPunctuation: false },
+	hastPlugins: [setHeadingId, autolinkHeadings],
 });
 ---
 

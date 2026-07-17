@@ -16,31 +16,31 @@ import { marked } from "marked";
 type Props = z.infer<typeof props>;
 
 const props = z
-  .object({
-    term: z.string(),
-    prepend: z.string().optional(),
-  })
-  .strict();
+	.object({
+		term: z.string(),
+		prepend: z.string().optional(),
+	})
+	.strict();
 
 const { term, prepend } = props.parse(Astro.props);
 
 const glossaries = await getCollection("glossary");
 const entry = glossaries
-  .flatMap((g) => g.data.entries)
-  .find((e) => e.term === term);
+	.flatMap((g) => g.data.entries)
+	.find((e) => e.term === term);
 
 if (!entry) {
-  throw new Error(`[GlossaryDefinition] Unable to find entry for ${term}`);
+	throw new Error(`[GlossaryDefinition] Unable to find entry for ${term}`);
 }
 
 let general_definition = entry.general_definition;
 
 if (prepend) {
-  general_definition = prepend.concat(general_definition);
+	general_definition = prepend.concat(general_definition);
 }
 
 general_definition =
-  general_definition.charAt(0).toUpperCase() + general_definition.slice(1);
+	general_definition.charAt(0).toUpperCase() + general_definition.slice(1);
 ---
 
 <Fragment set:html={marked.parse(general_definition)} />

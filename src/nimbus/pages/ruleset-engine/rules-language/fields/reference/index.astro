@@ -19,19 +19,22 @@ if (!entry) throw new Error("Failed to load fields data");
 const fields = entry.data.entries;
 
 const sectionSlug = "/ruleset-engine/rules-language/fields/reference/";
-const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: externalAppLinksTransform,
+});
 const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
 <DocsLayout
-  title="Fields reference"
-  sidebar={sidebar}
-  headings={false}
-  breadcrumbs={breadcrumbs}
-  prevNext={{}}
-  collection="docs"
-  wide
+	title="Fields reference"
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={breadcrumbs}
+	prevNext={{}}
+	collection="docs"
+	wide
 >
-  <Fragment slot="pagination" />
-  <FieldCatalog fields={fields} client:load />
+	<Fragment slot="pagination"></Fragment>
+	<FieldCatalog fields={fields} client:load />
 </DocsLayout>

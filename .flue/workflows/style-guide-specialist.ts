@@ -3,8 +3,10 @@
  *
  * A stateless specialist dispatched by the code-review orchestrator. It runs in
  * its own Durable Object (its own isolate and memory budget), self-fetches the
- * PR diff for the requested mode, stages it into its own workspace, runs the
- * per-file style-guide fan-out, and returns the findings as its run result.
+ * PR diff for the requested mode (self-healing incremental → full when the
+ * branch was rebased, force-pushed, or had production merged in — see
+ * fetchFilesForDiffMode), stages it into its own workspace, runs the per-file
+ * style-guide fan-out, and returns the findings as its run result.
  *
  * POST /workflows/style-guide-specialist  (internal — admitted by the orchestrator)
  */
@@ -14,11 +16,8 @@ import {
 	getDefaultWorkspace,
 	removeWorkspacePath,
 } from "../connectors/cloudflare-shell";
-import {
-	comparePullRequestHeads,
-	getInstallationToken,
-	getPullRequestFiles,
-} from "../lib/github";
+import { getInstallationToken } from "../lib/github";
+import { fetchFilesForDiffMode } from "../lib/diff-fetch";
 import { writeDiffToWorkspace } from "../lib/code-review-diff";
 import {
 	runStyleGuideReviewInProcess,
@@ -89,18 +88,24 @@ export async function run({
 			STYLE_GUIDE_FILE_TIMEOUT_MS,
 		);
 
-		let files: Awaited<ReturnType<typeof getPullRequestFiles>>;
-		if (input.diffMode.type === "incremental") {
-			const compare = await comparePullRequestHeads(
-				token,
-				input.diffMode.fromSha,
-				input.diffMode.toSha,
-			);
-			files = compare
-				? compare.files
-				: await getPullRequestFiles(token, input.number);
-		} else {
-			files = await getPullRequestFiles(token, input.number);
+		// Self-fetch the diff for the requested mode. Incremental self-heals to
+		// the full PR diff when the compare cannot be trusted (base SHA gone,
+		// branch diverged via rebase/force-push, or upstream files pulled in by
+		// an "Update branch" merge) — see fetchFilesForDiffMode.
+		const { files, effectiveMode, reason } = await fetchFilesForDiffMode(
+			token,
+			input.number,
+			input.diffMode,
+		);
+		if (input.diffMode.type === "incremental" && effectiveMode === "full") {
+			console.log({
+				message: `Style-guide specialist: incremental diff self-healed to full for PR #${input.number} (${reason})`,
+				event: "style_guide_specialist",
+				number: input.number,
+				runId,
+				reason,
+				action: "diff_self_healed",
+			});
 		}
 
 		const selected = selectStyleGuideFiles(files);
@@ -118,7 +123,8 @@ export async function run({
 			event: "style_guide_specialist",
 			number: input.number,
 			files: selected.length,
-			diffMode: input.diffMode.type,
+			diffMode: effectiveMode,
+			requestedDiffMode: input.diffMode.type,
 			runId,
 			action: "started",
 		});

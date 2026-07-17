@@ -21,8 +21,6 @@ import {
 
 Follow this guide to get started with Internal DNS.
 
-<Render file="internal-dns-beta-note" product="dns" />
-
 ## Before you begin
 
 - Make sure you have an Enterprise account with access to [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) and [Internal DNS](/dns/internal-dns/).
@@ -49,10 +47,18 @@ Follow this guide to get started with Internal DNS.
 
 **Zone Resources**
 
-- _Include_ - _All zones_
+- _Include_ - _Specific zones_
+
+  When creating a token for Internal DNS, we recommend scoping it to specific internal zones rather than using "All zones". This follows the principle of least privilege. If you create new internal zones later, you will need to update the token scope to include them. Support for automatic zone-type scoping (for example, "all internal zones") is planned for a future release.
 
 </ Example>
 </ Details>
+
+:::note[About authentication]
+Internal DNS uses the same authentication model as the rest of Cloudflare DNS. There is no separate role or special permission group for internal zones. You use standard DNS permissions scoped to the specific zones you want to manage.
+
+One important distinction: a zone-scoped token cannot create a zone because the zone does not exist yet to be scoped to. To create an internal zone via API, you need a token with **Zone > Zone > Edit** scoped to **All zones** or at the account level. After the zone exists, switch to a zone-scoped token for managing records and settings.
+:::
 
 ## 1. Set up your internal DNS zone
 
@@ -166,3 +172,9 @@ Use the rule settings object to define `resolve_dns_internally`, specifying `vie
 </TabItem> </Tabs>
 
 Once you add the Gateway resolver policy, it will be listed in the respective internal view under **Resolver policies referencing this view**.
+
+## Manage with Terraform
+
+You can also manage Internal DNS resources with the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). The patterns are identical to public DNS zones — the only difference is setting `type = "internal"` on the `cloudflare_zone` resource.
+
+Use a zone-scoped API token for day-to-day management and an account-level token for creating new zones. If your token is scoped to specific zones, remember to update it when you add new internal zones. For a complete working example, refer to the [Terraform provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).

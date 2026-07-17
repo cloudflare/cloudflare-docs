@@ -18,19 +18,22 @@ export const prerender = true;
 const models = (await getResolvedModels()).map(toModelCardData);
 
 const sectionSlug = "/ai/models/";
-const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: docsSidebarTransform });
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: docsSidebarTransform,
+});
 const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
 <DocsLayout
-  title="Models"
-  sidebar={sidebar}
-  headings={false}
-  breadcrumbs={breadcrumbs}
-  prevNext={{}}
-  collection="docs"
-  wide
+	title="Models"
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={breadcrumbs}
+	prevNext={{}}
+	collection="docs"
+	wide
 >
-  <Fragment slot="pagination" />
-  <ModelCatalog models={models} />
+	<Fragment slot="pagination"></Fragment>
+	<ModelCatalog models={models} />
 </DocsLayout>

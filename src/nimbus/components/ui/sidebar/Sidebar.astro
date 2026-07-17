@@ -12,9 +12,9 @@ import type { SidebarItem } from "nimbus-docs/types";
 import { sidebarHash } from "nimbus-docs";
 
 interface Props extends HTMLAttributes<"div"> {
-  items: SidebarItem[];
-  /** Persist open/scroll state to sessionStorage. Desktop sidebar only. */
-  persist?: boolean;
+	items: SidebarItem[];
+	/** Persist open/scroll state to sessionStorage. Desktop sidebar only. */
+	persist?: boolean;
 }
 
 const { items, persist = false, class: className, ...attrs } = Astro.props;
@@ -22,42 +22,57 @@ const hash = sidebarHash(items);
 ---
 
 <div
-  data-nb-sidebar
-  data-nb-sidebar-hash={hash}
-  data-nb-sidebar-persist={persist ? "" : undefined}
-  class={cn(className)}
-  {...attrs}
+	data-nb-sidebar
+	data-nb-sidebar-hash={hash}
+	data-nb-sidebar-persist={persist ? "" : undefined}
+	class={cn(className)}
+	{...attrs}
 >
-  <ul class="top-level flex list-none flex-col gap-0.5 p-0">
-    {items.map((item) =>
-      item.type === "group" ? (
-        <li>
-          <SidebarGroup
-            label={item.label}
-            items={item.children}
-            collapsed={item.collapsed}
-            badge={item.badge}
-            indexHref={item.indexHref}
-            indexIsCurrent={item.indexIsCurrent}
-          />
-        </li>
-      ) : item.type === "external" ? (
-        <li>
-          <SidebarLink label={item.label} href={item.href} badge={item.badge} target="_blank" rel="noopener" />
-        </li>
-      ) : (
-        <li>
-          <SidebarLink label={item.label} href={item.href} isCurrent={item.isCurrent} badge={item.badge} />
-        </li>
-      ),
-    )}
-  </ul>
+	<ul class="top-level flex list-none flex-col gap-0.5 p-0">
+		{
+			items.map((item) =>
+				item.type === "group" ? (
+					<li>
+						<SidebarGroup
+							label={item.label}
+							items={item.children}
+							collapsed={item.collapsed}
+							badge={item.badge}
+							indexHref={item.indexHref}
+							indexIsCurrent={item.indexIsCurrent}
+						/>
+					</li>
+				) : item.type === "external" ? (
+					<li>
+						<SidebarLink
+							label={item.label}
+							href={item.href}
+							badge={item.badge}
+							target="_blank"
+							rel="noopener"
+						/>
+					</li>
+				) : (
+					<li>
+						<SidebarLink
+							label={item.label}
+							href={item.href}
+							isCurrent={item.isCurrent}
+							badge={item.badge}
+						/>
+					</li>
+				),
+			)
+		}
+	</ul>
 </div>
 
 <script>
-  import "./sidebar.client";
+	import "./sidebar.client";
 </script>
 
 <style is:global>
-  [data-nb-sidebar-hidden] { display: none; }
+	[data-nb-sidebar-hidden] {
+		display: none;
+	}
 </style>
