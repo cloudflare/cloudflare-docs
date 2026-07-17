@@ -1,0 +1,12 @@
+---
+title: AI Search API returns more specific error responses
+description: Common AI Gateway and validation failures now return specific client errors instead of generic upstream errors.
+products:
+  - ai-search
+date: 2026-07-19
+publish_future_dated_entry: true
+---
+
+AI Search now returns specific client errors for common AI Gateway failures. These include invalid models, exceeded context windows, blocked prompts or responses, and missing provider credentials. These failures no longer appear as generic upstream errors.
+
+Instance list searches now treat URL punctuation and SQL wildcard characters as literal text. Searches longer than 64 characters return a validation error. Web source validation also rejects unsupported URL schemes before crawling.
