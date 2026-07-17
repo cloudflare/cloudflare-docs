@@ -1,27 +1,37 @@
 ---
 /**
- * LinkCard — full-card link with title and optional description.
+ * LinkCard — full-card link with an optional icon, a title, and a description.
  *
- * CF source: re-exported from `@astrojs/starlight/components` via their
- * barrel. Queues usage: `<LinkCard title href description />`.
- * Mapping notes: rendered with the Nimbus ui/card Card (same approach
- * as LinkTitleCard) — stretched overlay link, title underlines on hover.
- * Starlight's trailing arrow is dropped.
+ * The single card-link component for the docs: both the <LinkCard> and
+ * <LinkTitleCard> names resolve here (see mdx-components.ts / components.ts),
+ * so the historical usages of each keep working.
+ *
+ * Description may be supplied either way:
+ *   - `description` string prop  (classic LinkCard usage)
+ *   - slotted children           (classic LinkTitleCard usage)
+ *
+ * NOTE: `description` is rendered with `set:html`, so it must be trusted,
+ * author-written markup (as it always is in our MDX). Never pass user- or
+ * data-derived strings — use the slot for anything untrusted.
+ *
+ * Built on the shared ui/card Card primitive: `group/card` lights up the
+ * interactive states (hover wash, boxed-icon accent) and passing `href` turns
+ * the title into a card-stretching link (body links stay reachable).
  */
 import { Card } from "../ui/card";
 
 interface Props {
-  title: string;
-  href: string;
-  description?: string;
+	title: string;
+	href: string;
+	/** Iconify icon name, e.g. `ph:rocket-launch`. */
+	icon?: string;
+	/** Description as a string (alternative to slotted children). */
+	description?: string;
 }
 
-const { title, href, description } = Astro.props;
+const { title, href, icon, description } = Astro.props;
 ---
 
-<div class="relative my-3 [&:hover_h3]:underline">
-  <Card {title} class="my-0">
-    {description && <Fragment set:html={description} />}
-  </Card>
-  <a {href} class="absolute inset-0" aria-label={title}></a>
-</div>
+<Card {title} {href} {icon} class="group/card hover:bg-muted/30 my-3">
+	{description ? <Fragment set:html={description} /> : <slot />}
+</Card>

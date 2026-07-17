@@ -46,7 +46,7 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 		}
 	}
 
-  return paths;
+	return paths;
 }
 
 const sidebarItems = await autogenSections();
@@ -113,16 +113,16 @@ const iconAlias = {
 			javascript: "vscode-icons:file-type-js-official",
 			typescript: "vscode-icons:file-type-typescript-official",
 			python: "vscode-icons:file-type-python",
-			shell: "vscode-icons:file-type-shell",
+			shell: "ph:terminal-window",
 			rust: "vscode-icons:file-type-rust",
-			video: "vscode-icons:file-type-video",
-			db: "vscode-icons:file-type-db",
+			video: "ph:play-circle",
+			db: "ph:database",
 			php: "vscode-icons:file-type-php",
 			html: "vscode-icons:file-type-html",
-			docker: "vscode-icons:file-type-docker",
+			docker: "simple-icons:docker",
 			svelte: "vscode-icons:file-type-svelte",
 			powershell: "vscode-icons:file-type-powershell",
-			notebook: "vscode-icons:file-type-jupyter",
+			notebook: "ph:notebook",
 			nix: "vscode-icons:file-type-nix",
 			json: "vscode-icons:file-type-json",
 			java: "vscode-icons:file-type-java",
@@ -159,21 +159,21 @@ const iconAlias = {
 			email: "ph:envelope-simple",
 			error: "ph:warning-circle",
 			external: "ph:arrow-square-out",
-			github: "ph:github-logo",
+			github: "simple-icons:github",
 			heart: "ph:heart",
 			information: "ph:info",
 			key: "ph:key",
 			laptop: "ph:laptop",
-			linux: "ph:linux-logo",
+			linux: "simple-icons:linux",
 			"list-format": "ph:list-bullets",
 			magnifier: "ph:magnifying-glass",
-			mastodon: "ph:mastodon-logo",
+			mastodon: "simple-icons:mastodon",
 			moon: "ph:moon",
 			puzzle: "ph:puzzle-piece",
 			rocket: "ph:rocket-launch",
 			setting: "ph:gear",
 			star: "ph:star",
-			terminal: "ph:terminal",
+			terminal: "ph:terminal-window",
 		};
 
 		let out = code;
@@ -332,7 +332,13 @@ const aliasResolver = {
 	},
 	// Defense-in-depth fallback for any context the alias array doesn't cover.
 	async resolveId(
-		this: { resolve: (s: string, i?: string, o?: object) => Promise<{ id: string } | null> },
+		this: {
+			resolve: (
+				s: string,
+				i?: string,
+				o?: object,
+			) => Promise<{ id: string } | null>;
+		},
 		source: string,
 		importer: string | undefined,
 		options: object,
@@ -355,7 +361,10 @@ const aliasResolver = {
 		else if (source === "@" || source.startsWith("@/"))
 			mapped = nimbusDir + source.slice(1);
 		if (mapped === null) return null;
-		const resolved = await this.resolve(mapped, importer, { ...options, skipSelf: true });
+		const resolved = await this.resolve(mapped, importer, {
+			...options,
+			skipSelf: true,
+		});
 		return resolved ?? { id: mapped };
 	},
 };

@@ -40,6 +40,7 @@ cloudflare-docs/
 │                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
 │                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
 │                           # skills/ is in .gitignore and is NOT committed to the repository.
+├── .flue/                  # Flue cloudflare-docs-bot — see .flue/AGENTS.md
 ├── astro.config.ts         # Astro + Starlight configuration
 ├── ec.config.mjs           # Expressive Code (syntax highlighting) configuration
 ├── package.json
@@ -243,6 +244,12 @@ New web components in this codebase should use the `cfdocs-` prefix for custom e
 ### Existing components
 
 Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `r2-local-uploads-diagram`, `animated-workflow-diagram`, `autoconfig-diagram`) are exempt from the `cfdocs-` prefix requirement and do not need to be renamed.
+
+## Flue cloudflare-docs-bot
+
+The PR review bot for this repository lives in `.flue/`. It is a Cloudflare Worker (`cloudflare-docs-flue`) built with the Flue framework that reviews pull requests and posts structured feedback as GitHub comments.
+
+**If the bot is relevant to the task, read `.flue/AGENTS.md` first.** That file covers the worker architecture, workflow routing, specialist agents (code review, conventions, style-guide), R2 state management, local dev scripts, and deployment. All bot-related npm scripts are prefixed `flue:` in the root `package.json` (e.g. `pnpm run flue:dev`, `pnpm run flue:deploy`).
 
 ## Agent skills, commands, and agents
 

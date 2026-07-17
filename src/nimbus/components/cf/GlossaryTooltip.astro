@@ -1,28 +1,32 @@
 ---
+/* The term span is deliberately focusable (tabindex=0) so keyboard users can
+   trigger the Tippy definition tooltip on focus, not just hover. Suppressing
+   no-noninteractive-tabindex is intentional here. */
+/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */
 // Dashed-underlined term; reveals its glossary definition via Tippy.
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 
 interface Props {
-  term: string;
-  prepend?: string;
-  link?: string;
+	term: string;
+	prepend?: string;
+	link?: string;
 }
 
 const { term, prepend, link } = Astro.props;
 
 const glossaries = await getCollection("glossary");
 const entry = glossaries
-  .flatMap((g) => g.data.entries)
-  .find((e) => e.term === term);
+	.flatMap((g) => g.data.entries)
+	.find((e) => e.term === term);
 
 if (!entry) {
-  throw new Error(`[GlossaryTooltip] Unable to find entry for ${term}`);
+	throw new Error(`[GlossaryTooltip] Unable to find entry for ${term}`);
 }
 
 let definition = prepend
-  ? prepend.concat(entry.general_definition)
-  : entry.general_definition;
+	? prepend.concat(entry.general_definition)
+	: entry.general_definition;
 definition = definition.charAt(0).toUpperCase() + definition.slice(1);
 definition = definition.split(/\r?\n/)[0]!;
 ---
@@ -35,26 +39,26 @@ definition = definition.split(/\r?\n/)[0]!;
   class="glossary-tooltip"
   tabindex="0"
   >{link ? <a href={link}><slot /></a> : <slot />}</span><script>
-  import { addTooltip } from "~/util/tippy";
+	import { addTooltip } from "~/util/tippy";
 
-  function initTooltips() {
-    const tooltips = document.querySelectorAll<HTMLSpanElement>(
-      "[data-tooltip][data-content]",
-    );
+	function initTooltips() {
+		const tooltips = document.querySelectorAll<HTMLSpanElement>(
+			"[data-tooltip][data-content]",
+		);
 
-    for (const tooltip of tooltips) {
-      if ((tooltip as unknown as { _tippy?: unknown })._tippy) continue;
-      addTooltip(tooltip, tooltip.dataset.content as string);
-    }
-  }
+		for (const tooltip of tooltips) {
+			if ((tooltip as unknown as { _tippy?: unknown })._tippy) continue;
+			addTooltip(tooltip, tooltip.dataset.content as string);
+		}
+	}
 
-  initTooltips();
-  document.addEventListener("astro:page-load", initTooltips);
+	initTooltips();
+	document.addEventListener("astro:page-load", initTooltips);
 </script>
 
 <style>
-  .glossary-tooltip {
-    border-bottom: 2px dashed var(--nb-border-strong);
-    cursor: help;
-  }
+	.glossary-tooltip {
+		border-bottom: 2px dashed var(--nb-border-strong);
+		cursor: help;
+	}
 </style>

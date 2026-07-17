@@ -10,16 +10,16 @@ import { getChangelogs, getRSSItems } from "~/util/changelog";
 export const prerender = true;
 
 export const GET: APIRoute = async ({ locals }) => {
-  const notes = await getChangelogs({
-    filter: (entry) => !entry.data.hidden,
-  });
+	const notes = await getChangelogs({
+		filter: (entry) => !entry.data.hidden,
+	});
 
-  const items = await getRSSItems({ notes, locals });
+	const items = await getRSSItems({ notes, locals });
 
-  return rss({
-    title: "Cloudflare changelogs",
-    description: "Updates to various Cloudflare products",
-    site: new URL("/changelog/", config.site).href,
-    items,
-  });
+	return rss({
+		title: "Cloudflare changelogs",
+		description: "Updates to various Cloudflare products",
+		site: new URL("/changelog/", config.site).href,
+		items,
+	});
 };

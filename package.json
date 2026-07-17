@@ -179,7 +179,7 @@
 		"vite": "7.3.5",
 		"vite-tsconfig-paths": "6.1.1",
 		"vitest": "4.1.9",
-		"wrangler": "4.106.0",
+		"wrangler": "4.107.0",
 		"zod": "4.4.3"
 	},
 	"lint-staged": {

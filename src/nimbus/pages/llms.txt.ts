@@ -46,7 +46,9 @@ export const GET: APIRoute = async ({ url }) => {
 	);
 
 	const groupedMap = new Map<string, typeof directory>();
-	for (const entry of directory.filter((entry) => productsWithDocs.has(entry.id))) {
+	for (const entry of directory.filter((entry) =>
+		productsWithDocs.has(entry.id),
+	)) {
 		const group = entry.data.entry?.group;
 		if (!group) continue;
 		if (!groupedMap.has(group)) {

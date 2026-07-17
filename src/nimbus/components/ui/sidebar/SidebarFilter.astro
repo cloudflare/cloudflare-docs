@@ -4,23 +4,32 @@ import { cn } from "@/lib/cn";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"div"> {
-  placeholder?: string;
+	placeholder?: string;
 }
 
 const {
-  class: className,
-  placeholder = "Search sidebar...",
-  ...attrs
+	class: className,
+	placeholder = "Filter sidebar",
+	...attrs
 } = Astro.props;
 ---
 
-<div class={cn("mb-5", className)} {...attrs}>
-  <input
-    data-nb-sidebar-filter-input
-    type="search"
-    placeholder={placeholder}
-    class="w-full rounded-md border border-border bg-card px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus-visible:border-brand focus-visible:outline-2 focus-visible:outline-ring"
-    aria-label="Filter navigation"
-    autocomplete="off"
-  />
+<div class={cn("relative mb-5", className)} {...attrs}>
+	<input
+		data-nb-sidebar-filter-input
+		type="search"
+		placeholder={placeholder}
+		class="peer border-border bg-card text-foreground placeholder:text-muted-foreground focus-visible:border-brand focus-visible:outline-ring w-full rounded-md border py-1.5 pr-9 pl-3 text-sm transition-colors focus-visible:outline-2 [&:not(:placeholder-shown)]:pr-2"
+		aria-label="Filter navigation"
+		autocomplete="off"
+	/>
+	{
+		/* Shortcut hint — press "/" to focus. Hidden once the input is focused or
+      has a value, matching the production sidebar search. */
+	}
+	<kbd
+		aria-hidden="true"
+		class="border-border bg-muted text-muted-foreground pointer-events-none absolute top-1/2 right-2 flex h-5 min-w-5 -translate-y-1/2 items-center justify-center rounded border px-1 font-mono text-[0.6875rem] leading-none font-semibold transition-opacity duration-150 peer-focus:opacity-0 peer-[:not(:placeholder-shown)]:opacity-0 motion-reduce:transition-none"
+		>/</kbd
+	>
 </div>

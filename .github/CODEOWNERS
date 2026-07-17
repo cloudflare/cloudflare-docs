@@ -20,7 +20,7 @@ package.json @cloudflare/content-engineering
 
 # AI
 
-/src/content/docs/agent-lee/ @asomaiah-cf @kczajkowski @dmmulroy @Brayden @cloudflare/product-owners
+/src/content/docs/agent-lee/ @kczajkowski @Brayden @cloudflare/ax @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @thomasgauvin @cloudflare/product-owners
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @adriandlam @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
@@ -280,8 +280,10 @@ package.json @cloudflare/content-engineering
 
 # Privacy
 
-/src/content/docs/key-transparency/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/privacy-gateway/ @cloudflare/product-owners
+/src/content/docs/key-transparency/ @mgalicer @lschull @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/privacy-gateway/ @mgalicer @lschull @cloudflare/product-owners 
+/src/content/docs/privacy-proxy/ @mgalicer @lschull @cloudflare/product-owners
+/src/content/docs/privacy-pass/ @mgalicer @lschull @cloudflare/product-owners
 
 # Radar
 
@@ -321,7 +323,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/security-center/ @jwcrisp @alexmoraru7 @cloudflare/appsec-reviewers @elithrar @danielegm @cloudflare/product-owners @davejbax @zrkn @hemanthk1099 @bseel-cfone
 /src/content/changelog/security-center/ @jwcrisp @alexmoraru7 @cloudflare/appsec-reviewers @elithrar @danielegm @cloudflare/pm-changelogs @cloudflare/product-owners @davejbax @zrkn @hemanthk1099 @bseel-cfone
 /src/content/partials/security-center/ @cloudflare/appsec-reviewers @danielegm @cloudflare/product-owners @davejbax @zrkn @hemanthk1099 @bseel-cfone
-/src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @Lekensteyn @goldbe-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/waf/ @worenga @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF @danielegm
 /src/content/docs/waf/change-log/ @worenga @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF @danielegm @ay-cf
 /src/content/partials/waf/ @worenga @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/product-owners

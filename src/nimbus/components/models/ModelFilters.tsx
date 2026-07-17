@@ -89,7 +89,7 @@ function FilterDropdown({
 		<span className="inline-flex items-center gap-1.5">
 			{label}
 			{hasSelection && (
-				<span className="grid min-w-[1.25rem] place-items-center rounded-full bg-primary px-1.5 text-[0.6875rem] font-semibold text-primary-foreground">
+				<span className="bg-primary text-primary-foreground grid min-w-[1.25rem] place-items-center rounded-full px-1.5 text-[0.6875rem] font-semibold">
 					{selected.length}
 				</span>
 			)}
@@ -109,7 +109,7 @@ function FilterDropdown({
 			isItemEqualToValue={(a, b) => a.value === b.value}
 		>
 			<Combobox.Trigger
-				className={`flex h-10 cursor-pointer items-center gap-1.5 rounded-lg border bg-card px-3 text-sm whitespace-nowrap transition-colors select-none ${
+				className={`bg-card flex h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-sm whitespace-nowrap transition-colors select-none ${
 					hasSelection
 						? "border-primary text-primary"
 						: "border-border text-foreground hover:border-border-strong"
@@ -129,17 +129,17 @@ function FilterDropdown({
 					sideOffset={8}
 				>
 					<Combobox.Popup
-						className="max-h-[24rem] max-w-[var(--available-width)] origin-[var(--transform-origin)] rounded-lg border border-border bg-card shadow-lg transition-[transform,scale,opacity] [--input-height:2.75rem] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0"
+						className="border-border bg-card max-h-[24rem] max-w-[var(--available-width)] origin-[var(--transform-origin)] rounded-lg border shadow-lg transition-[transform,scale,opacity] [--input-height:2.75rem] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0"
 						aria-label={label}
 					>
 						<div className="w-64 p-2">
 							<Combobox.Input
 								placeholder={`Search ${label.toLowerCase()}...`}
-								className="h-9 w-full rounded-md border border-border bg-card px-3 text-sm font-normal text-foreground placeholder:text-muted-foreground focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+								className="border-border bg-card text-foreground placeholder:text-muted-foreground focus-visible:outline-ring h-9 w-full rounded-md border px-3 text-sm font-normal focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2"
 							/>
 						</div>
 						<Combobox.Empty>
-							<div className="px-4 py-3 text-sm text-muted-foreground">
+							<div className="text-muted-foreground px-4 py-3 text-sm">
 								No results found.
 							</div>
 						</Combobox.Empty>
@@ -148,14 +148,14 @@ function FilterDropdown({
 								<Combobox.Item
 									key={item.value}
 									value={item}
-									className="group grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none data-[highlighted]:bg-accent"
+									className="group data-[highlighted]:bg-accent grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none"
 								>
-									<span className="col-start-1 flex h-4 w-4 items-center justify-center rounded border border-border group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[selected]:text-primary-foreground">
+									<span className="border-border group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[selected]:text-primary-foreground col-start-1 flex h-4 w-4 items-center justify-center rounded border">
 										<Combobox.ItemIndicator>
 											<CheckIcon />
 										</Combobox.ItemIndicator>
 									</span>
-									<span className="col-start-2 text-foreground">
+									<span className="text-foreground col-start-2">
 										{item.label}
 									</span>
 								</Combobox.Item>
@@ -181,7 +181,7 @@ function SortSelect({
 			onValueChange={(value) => onChange(value as SortOrder)}
 			items={sortOptions}
 		>
-			<Select.Trigger className="flex h-10 cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-card px-3 text-sm whitespace-nowrap text-foreground transition-colors select-none hover:border-border-strong">
+			<Select.Trigger className="border-border bg-card text-foreground hover:border-border-strong flex h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-sm whitespace-nowrap transition-colors select-none">
 				<Select.Value>
 					{() =>
 						sortOptions.find((o) => o.value === sortOrder)?.label ??
@@ -199,17 +199,17 @@ function SortSelect({
 					align="start"
 					alignItemWithTrigger={false}
 				>
-					<Select.Popup className="min-w-[var(--anchor-width)] origin-[var(--transform-origin)] rounded-lg border border-border bg-card py-1 shadow-lg transition-[transform,scale,opacity] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
+					<Select.Popup className="border-border bg-card min-w-[var(--anchor-width)] origin-[var(--transform-origin)] rounded-lg border py-1 shadow-lg transition-[transform,scale,opacity] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
 						{sortOptions.map((option) => (
 							<Select.Item
 								key={option.value}
 								value={option.value}
-								className="grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none data-[highlighted]:bg-accent"
+								className="data-[highlighted]:bg-accent grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none"
 							>
 								<Select.ItemIndicator className="col-start-1">
 									<CheckIcon />
 								</Select.ItemIndicator>
-								<Select.ItemText className="col-start-2 text-foreground">
+								<Select.ItemText className="text-foreground col-start-2">
 									{option.label}
 								</Select.ItemText>
 							</Select.Item>
@@ -349,7 +349,6 @@ export default function ModelFilters({
 		setCount(
 			relayout({ search: nextSearch, selected: nextSelected, sortOrder }),
 		);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Reflow + URL sync on every change after init.
@@ -364,7 +363,6 @@ export default function ModelFilters({
 		for (const key of facetKeys)
 			for (const v of selected[key] ?? []) params.append(key, v);
 		setSearchParams(params);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, selected, sortOrder]);
 
 	// Below `lg` the grid is 1 column, so corner marks must be recomputed on
@@ -377,10 +375,11 @@ export default function ModelFilters({
 		};
 		mq.addEventListener("change", onChange);
 		return () => mq.removeEventListener("change", onChange);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [search, selected, sortOrder]);
 
-	const hasActiveFilters = facetKeys.some((k) => (selected[k] ?? []).length > 0);
+	const hasActiveFilters = facetKeys.some(
+		(k) => (selected[k] ?? []).length > 0,
+	);
 
 	return (
 		<div ref={rootRef}>
@@ -389,7 +388,7 @@ export default function ModelFilters({
 				{/* Search */}
 				<div className="relative flex-1 md:min-w-[300px]">
 					<svg
-						className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+						className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
@@ -403,7 +402,7 @@ export default function ModelFilters({
 					</svg>
 					<input
 						type="text"
-						className="h-10 w-full rounded-lg border border-border bg-card pr-3 pl-9 text-sm text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+						className="border-border bg-card text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:outline-ring h-10 w-full rounded-lg border pr-3 pl-9 text-sm focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2"
 						placeholder="Search models"
 						aria-label="Search models"
 						value={search}
@@ -429,17 +428,17 @@ export default function ModelFilters({
 			</div>
 
 			{/* Count + clear */}
-			<div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
+			<div className="text-muted-foreground mb-4 flex items-center gap-3 text-sm">
 				<span aria-live="polite">
 					We found{" "}
-					<span className="font-semibold text-foreground">{count}</span>{" "}
+					<span className="text-foreground font-semibold">{count}</span>{" "}
 					{count === 1 ? "model" : "models"}
 				</span>
 				{hasActiveFilters && (
 					<button
 						type="button"
 						onClick={() => setSelected({})}
-						className="cursor-pointer text-primary underline-offset-2 hover:underline"
+						className="text-primary cursor-pointer underline-offset-2 hover:underline"
 					>
 						Clear filters
 					</button>
