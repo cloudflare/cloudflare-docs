@@ -777,26 +777,34 @@ export async function compareCommits(
 	base: string,
 	head: string,
 ): Promise<{ mergeBaseSha: string; commits: CompareCommit[] }> {
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/compare/${encodeURIComponent(base)}...${encodeURIComponent(head)}`,
-		{ headers: apiHeaders(token) },
-	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
-		);
+	// Paginate using per_page=100 + Link headers so branches with more than the
+	// default page size of commits are not silently truncated.
+	let url: string | null =
+		`https://api.github.com/repos/${REPO}/compare/${encodeRef(base)}...${encodeRef(head)}?per_page=100`;
+	let mergeBaseSha = "";
+	const commits: CompareCommit[] = [];
+
+	while (url) {
+		const res = await fetch(url, { headers: apiHeaders(token) });
+		if (!res.ok) {
+			throw new Error(
+				`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
+			);
+		}
+		const data = (await res.json()) as {
+			merge_base_commit: { sha: string };
+			commits: { sha: string; commit: { message: string } }[];
+		};
+		if (!mergeBaseSha) {
+			mergeBaseSha = data.merge_base_commit.sha;
+		}
+		for (const c of data.commits) {
+			commits.push({ sha: c.sha, message: c.commit.message });
+		}
+		url = parseNextLink(res.headers.get("Link"));
 	}
-	const data = (await res.json()) as {
-		merge_base_commit: { sha: string };
-		commits: { sha: string; commit: { message: string } }[];
-	};
-	return {
-		mergeBaseSha: data.merge_base_commit.sha,
-		commits: data.commits.map((c) => ({
-			sha: c.sha,
-			message: c.commit.message,
-		})),
-	};
+
+	return { mergeBaseSha, commits };
 }
 
 export async function verifyGitHubSignature(

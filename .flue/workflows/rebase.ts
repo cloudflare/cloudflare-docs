@@ -18,6 +18,7 @@ import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import {
 	addReactionToComment,
 	compareCommits,
+	comparePullRequestHeads,
 	createBlob,
 	createGitCommit,
 	createTree,
@@ -470,13 +471,22 @@ async function swapReaction(
  * Also returns allPrFiles so that applyResolution can include non-conflicting
  * PR changes in the final tree (preventing them from being silently dropped).
  */
+
+/** A file entry with rename metadata preserved from the GitHub compare API. */
+interface PrFileEntry {
+	path: string;
+	status: string;
+	/** Set when status === "renamed"; the path the file had before the rename. */
+	previousPath?: string;
+}
+
 async function resolveConflictsWithAI(
 	token: string,
 	pr: Awaited<ReturnType<typeof getPullRequest>>,
 	typedEnv: Record<string, string & unknown>,
 ): Promise<
 	ConflictResolution & {
-		allPrFiles: Array<{ path: string; status: string }>;
+		allPrFiles: PrFileEntry[];
 		mergeBaseSha: string;
 		productionRefSha: string;
 	}
@@ -494,61 +504,32 @@ async function resolveConflictsWithAI(
 	// production-side commits separately to populate the prompt correctly.
 	const prCommits = prVsProduction.commits;
 
-	// Helper to fetch files changed between two SHAs via the compare endpoint.
-	// Throws on non-ok responses so errors (rate limits, auth) surface visibly.
-	// Returns files with `path` (renamed from the API's `filename`) and `status`.
-	const fetchCompareFiles = async (
-		base: string,
-		head: string,
-	): Promise<Array<{ path: string; status: string }>> => {
-		const res = await fetch(
-			`https://api.github.com/repos/cloudflare/cloudflare-docs/compare/${base}...${head}`,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-					Accept: "application/vnd.github+json",
-					"X-GitHub-Api-Version": "2022-11-28",
-					"User-Agent": "cloudflare-docs-agents",
-				},
-			},
-		);
-		if (!res.ok) {
-			throw new Error(
-				`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
-			);
-		}
-		const data = (await res.json()) as {
-			files?: Array<{ filename: string; status: string }>;
-		};
-		// Normalise `filename` → `path` for internal consistency.
-		return (data.files ?? []).map((f) => ({
+	// Use comparePullRequestHeads which already paginates via Link headers and
+	// handles ref encoding. Returns null on 404 (no common history), which we
+	// treat as an empty file list.
+	const toPrFileEntries = (
+		result: Awaited<ReturnType<typeof comparePullRequestHeads>>,
+	): PrFileEntry[] => {
+		if (!result) return [];
+		return result.files.map((f) => ({
 			path: f.filename,
 			status: f.status,
+			previousPath: f.previous_filename,
 		}));
 	};
 
-	// Fetch files changed on each side since the merge base in parallel.
-	const [prFiles, productionFiles, productionCommitsData] = await Promise.all([
-		fetchCompareFiles(mergeBaseSha, pr.head.sha),
-		fetchCompareFiles(mergeBaseSha, productionRef.sha),
-		// Fetch production commits separately for accurate prompt context.
-		fetch(
-			`https://api.github.com/repos/cloudflare/cloudflare-docs/compare/${mergeBaseSha}...${productionRef.sha}`,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-					Accept: "application/vnd.github+json",
-					"X-GitHub-Api-Version": "2022-11-28",
-					"User-Agent": "cloudflare-docs-agents",
-				},
-			},
-		).then(async (res) => {
-			if (!res.ok) return [];
-			const data = (await res.json()) as {
-				commits?: Array<{ commit: { message: string } }>;
-			};
-			return (data.commits ?? []).map((c) => c.commit.message);
-		}),
+	// Fetch files changed on each side since the merge base in parallel, plus
+	// production commits for the AI prompt.
+	const [prFiles, productionFiles, productionCommits] = await Promise.all([
+		comparePullRequestHeads(token, mergeBaseSha, pr.head.sha).then(
+			toPrFileEntries,
+		),
+		comparePullRequestHeads(token, mergeBaseSha, productionRef.sha).then(
+			toPrFileEntries,
+		),
+		compareCommits(token, mergeBaseSha, productionRef.sha).then(
+			(r) => r.commits,
+		),
 	]);
 
 	const prChangedPaths = new Set(prFiles.map((f) => f.path));
@@ -604,8 +585,8 @@ async function resolveConflictsWithAI(
 		.map((c) => `- ${c.message.split("\n")[0]}`)
 		.join("\n");
 
-	const productionCommitMessages = productionCommitsData
-		.map((msg) => `- ${msg.split("\n")[0]}`)
+	const productionCommitMessages = productionCommits
+		.map((c) => `- ${c.message.split("\n")[0]}`)
 		.join("\n");
 
 	const filesContext = fileContents
@@ -718,7 +699,21 @@ async function resolveConflictsWithAI(
 		};
 	}
 
-	const parsed = JSON.parse(jsonMatch[1]) as ConflictResolution;
+	const parsed = JSON.parse(jsonMatch[1]) as {
+		confidence?: unknown;
+		reason?: unknown;
+		files?: unknown;
+	};
+
+	// Validate each file entry — malformed entries from the model are dropped
+	// rather than passed to createBlob with undefined arguments.
+	const rawFiles = Array.isArray(parsed.files) ? parsed.files : [];
+	const validatedFiles = rawFiles.filter(
+		(entry): entry is { path: string; content: string } =>
+			typeof (entry as Record<string, unknown>)?.path === "string" &&
+			typeof (entry as Record<string, unknown>)?.content === "string",
+	);
+
 	return {
 		confidence:
 			parsed.confidence === "high" ||
@@ -726,8 +721,8 @@ async function resolveConflictsWithAI(
 			parsed.confidence === "low"
 				? parsed.confidence
 				: "low",
-		reason: parsed.reason ?? "",
-		files: Array.isArray(parsed.files) ? parsed.files : [],
+		reason: typeof parsed.reason === "string" ? parsed.reason : "",
+		files: validatedFiles,
 		allPrFiles: prFiles,
 		mergeBaseSha,
 		productionRefSha: productionRef.sha,
@@ -748,7 +743,7 @@ async function applyResolution(
 	token: string,
 	pr: Awaited<ReturnType<typeof getPullRequest>>,
 	resolution: ConflictResolution & {
-		allPrFiles: Array<{ path: string; status: string }>;
+		allPrFiles: PrFileEntry[];
 		mergeBaseSha: string;
 		productionRefSha: string;
 	},
@@ -771,34 +766,62 @@ async function applyResolution(
 	// Get the PR head commit for the commit message.
 	const prCommit = await getGitCommit(token, pr.head.sha);
 
-	// For every file changed by the PR:
-	//   - If it's a conflict file: use the AI-resolved content.
-	//   - If it's a deletion (status === "removed"): remove from the tree (sha: null).
-	//   - Otherwise: fetch the PR's version and use that.
-	const treeUpdates = await Promise.all(
-		resolution.allPrFiles.map(async ({ path, status }): Promise<TreeUpdate> => {
-			// Conflict file — use AI-resolved content.
-			const resolvedContent = resolvedByPath.get(path);
-			if (resolvedContent !== undefined) {
-				const blobSha = await createBlob(token, resolvedContent);
-				return { path, mode: "100644", type: "blob", sha: blobSha };
-			}
+	// For every file changed by the PR build a tree update:
+	//   - Conflict file:   use the AI-resolved content.
+	//   - Deleted file:    remove from the tree (sha: null).
+	//   - Renamed file:    add at new path + emit a deletion for the old path.
+	//   - Addition/mod:    fetch the PR's version. Throw if binary (non-text)
+	//                      so the caller surfaces a failure rather than silently
+	//                      dropping the file from the tree.
+	const treeUpdates: TreeUpdate[] = [];
 
-			// Deleted file — remove from tree.
-			if (status === "removed") {
-				return { path, mode: "100644", type: "blob", sha: null };
-			}
+	await Promise.all(
+		resolution.allPrFiles.map(
+			async ({ path, status, previousPath }): Promise<void> => {
+				// Conflict file — use AI-resolved content.
+				const resolvedContent = resolvedByPath.get(path);
+				if (resolvedContent !== undefined) {
+					const blobSha = await createBlob(token, resolvedContent);
+					treeUpdates.push({
+						path,
+						mode: "100644",
+						type: "blob",
+						sha: blobSha,
+					});
+					return;
+				}
 
-			// Non-conflicting addition or modification — fetch PR version.
-			const content = await getRepoFileContent(token, path, pr.head.sha);
-			if (content === null) {
-				// File is not text-readable (binary, etc.) — skip it; the
-				// production version will be inherited from the base tree.
-				return { path, mode: "100644", type: "blob", sha: null };
-			}
-			const blobSha = await createBlob(token, content);
-			return { path, mode: "100644", type: "blob", sha: blobSha };
-		}),
+				// Deleted file — remove from tree.
+				if (status === "removed") {
+					treeUpdates.push({ path, mode: "100644", type: "blob", sha: null });
+					return;
+				}
+
+				// Renamed file — add at new path and remove old path.
+				if (status === "renamed" && previousPath) {
+					treeUpdates.push({
+						path: previousPath,
+						mode: "100644",
+						type: "blob",
+						sha: null,
+					});
+				}
+
+				// Non-conflicting addition or modification (including the new path of a
+				// rename) — fetch the PR's version.
+				const content = await getRepoFileContent(token, path, pr.head.sha);
+				if (content === null) {
+					// getRepoFileContent returns null for binary/non-base64-text files.
+					// Silently inheriting the production version would lose the PR's
+					// change, so we throw and let the caller surface a failure status.
+					throw new Error(
+						`Cannot apply changes to binary or non-text file: ${path}. Please resolve manually.`,
+					);
+				}
+				const blobSha = await createBlob(token, content);
+				treeUpdates.push({ path, mode: "100644", type: "blob", sha: blobSha });
+			},
+		),
 	);
 
 	// Create a new tree rooted at the production HEAD tree with all PR changes applied.
