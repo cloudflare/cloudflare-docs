@@ -607,6 +607,10 @@ declare abstract class WorkflowInstance {
 	 */
 	public restart(options?: WorkflowInstanceRestartOptions): Promise<void>;
 	/**
+	 * Delete the instance.
+	 */
+	public delete(): Promise<void>;
+	/**
 	 * Returns the current status of the instance.
 	 */
 	public status(): Promise<InstanceStatus>;
@@ -718,6 +722,18 @@ interface WorkflowInstanceTerminateOptions {
 	 */
 	rollback?: boolean;
 }
+```
+
+### delete
+
+Delete a Workflow instance, removing its stored state.
+
+- <code>delete(): Promise&lt;void&gt;</code>
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+
+await instance.delete();
 ```
 
 ### sendEvent

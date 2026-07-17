@@ -248,6 +248,23 @@ Restarting an instance will immediately cancel any in-progress steps, erase any 
 
 To restart an instance from a specific step instead of the beginning, refer to [`restart`](/workflows/build/workers-api/#restart) in the Workers API reference.
 
+### Delete a Workflow instance
+
+You can delete a Workflow instance, removing its stored state, by calling `delete` against a specific instance ID.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+await instance.delete(); // Returns Promise<void>
+```
+
+You can also delete an instance from Wrangler:
+
+```sh
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID>
+# For a local Workflows instance during wrangler dev:
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> --local
+```
+
 ### Trigger a Workflow from another Workflow
 
 You can create a new Workflow instance from within a step of another Workflow. The parent Workflow will not block waiting for the child Workflow to complete — it continues execution immediately after the child instance is successfully created.
