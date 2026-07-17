@@ -43,8 +43,8 @@ export interface GitHubPullRequest {
 	author_association: string;
 	draft: boolean;
 	labels: { name: string }[];
-	base: { ref: string; sha: string };
-	head: { ref: string; sha: string };
+	base: { ref: string; sha: string; repo: { full_name: string } };
+	head: { ref: string; sha: string; repo: { full_name: string } };
 }
 
 export async function getInstallationToken(
@@ -722,31 +722,6 @@ export async function getTree(
 		);
 	}
 	return data.tree;
-}
-
-/**
- * Fetch the decoded text content of a git blob by its SHA.
- * Returns null if the blob is not base64-encoded text.
- */
-export async function getGitBlob(
-	token: string,
-	blobSha: string,
-): Promise<string | null> {
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/git/blobs/${blobSha}`,
-		{ headers: apiHeaders(token) },
-	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to get blob ${blobSha} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
-	const data = (await res.json()) as { encoding?: string; content?: string };
-	if (data.encoding !== "base64" || typeof data.content !== "string")
-		return null;
-	const binary = atob(data.content.replace(/\n/g, ""));
-	const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
-	return new TextDecoder().decode(bytes);
 }
 
 /**

@@ -11,35 +11,14 @@ import type { GitHubIssueComment } from "./github";
 export const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
 
 // Rebase status values embedded in the bot comment as HTML comments.
-// The type is derived from the array so both stay in sync — adding a status
-// to one without updating the other is a compile error.
-const KNOWN_REBASE_STATUSES = [
-	"in-progress",
-	"complete",
-	"halted-conflict",
-	"halted-wrong-base",
-	"halted-fork",
-	"halted-confidence",
-	"failed",
-] as const;
-
-export type RebaseStatus = (typeof KNOWN_REBASE_STATUSES)[number];
-
-const REBASE_STATUS_RE = /<!-- rebase-status: ([^\s]+) -->/;
-
-/**
- * Extract the rebase status marker from a bot comment body.
- * Returns null if absent or if the embedded value is not a known status.
- */
-export function extractRebaseStatus(body: string | null): RebaseStatus | null {
-	if (!body) return null;
-	const match = body.match(REBASE_STATUS_RE);
-	const value = match?.[1];
-	if (!value) return null;
-	return KNOWN_REBASE_STATUSES.includes(value as RebaseStatus)
-		? (value as RebaseStatus)
-		: null;
-}
+export type RebaseStatus =
+	| "in-progress"
+	| "complete"
+	| "halted-conflict"
+	| "halted-wrong-base"
+	| "halted-fork"
+	| "halted-confidence"
+	| "failed";
 
 // Regexes to extract metadata embedded in bot comment bodies.
 const REVIEWED_HEAD_SHA_RE = /<!-- reviewed-head-sha: ([0-9a-f]{40}) -->/;

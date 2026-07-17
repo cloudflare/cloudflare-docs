@@ -28,6 +28,7 @@ import {
 	getPullRequest,
 	getRepoFileContent,
 	getRef,
+	getTree,
 	pollForBranchUpdate,
 	removeReactionFromComment,
 	updatePullRequestBranch,
@@ -103,17 +104,10 @@ export async function run({
 		return { acted: false, reason: "wrong_base", base: pr.base.ref };
 	}
 
-	// A fork PR has a different repository for the head.
-	// GitHub exposes this as head.repo.fork === true OR head.repo.full_name !== base.repo.full_name.
-	// The API response on GitHubPullRequest does not include nested repo info so
-	// we check head.ref ownership indirectly: if head.repo would differ we can't push.
-	// The safest heuristic: if the PR author is not in the same org context (forks
-	// always have a different head.label format "user:branch" vs "cloudflare:branch").
-	// GitHub's head.label format is "owner:branch" (e.g. "cloudflare:my-branch").
-	// Fork PRs have a different owner prefix (e.g. "contributor:my-branch").
-	const headLabel =
-		(pr as unknown as { head: { label?: string } }).head.label ?? "";
-	const isFork = !headLabel.startsWith("cloudflare:");
+	// A fork PR has head.repo.full_name !== base.repo.full_name.
+	// This is more reliable than the label heuristic (head.label starts with owner:)
+	// and correctly handles forks created inside the cloudflare org.
+	const isFork = pr.head.repo.full_name !== pr.base.repo.full_name;
 
 	if (isFork) {
 		const body = renderRebaseStatusUpdate(
@@ -843,8 +837,10 @@ async function resolveConflictsWithAI(
 				: JSON.stringify(aiResponse);
 
 	// Extract JSON from the response (may be wrapped in a ```json fence).
+	// Use non-greedy matching for the bare-object fallback to avoid spanning
+	// multiple JSON objects if the model returns prose after the response.
 	const jsonMatch =
-		text.match(/```json\s*([\s\S]+?)\s*```/) ?? text.match(/(\{[\s\S]+\})/);
+		text.match(/```json\s*([\s\S]+?)\s*```/) ?? text.match(/(\{[\s\S]+?\})/);
 
 	if (!jsonMatch) {
 		return {
@@ -953,6 +949,19 @@ async function applyResolution(
 		}
 	}
 
+	// Assert every conflict candidate has an AI-resolved entry. If the model
+	// omitted one, falling through to the PR version would silently drop
+	// production changes, so we abort instead.
+	for (const candidate of resolution.conflictCandidateSet) {
+		const writePath =
+			resolution.conflictWritePathMap.get(candidate) ?? candidate;
+		if (!resolvedByProductionPath.has(writePath)) {
+			throw new Error(
+				`AI resolution is missing conflict candidate: ${candidate} (expected at ${writePath}). Aborting to avoid data loss.`,
+			);
+		}
+	}
+
 	// Re-fetch the production HEAD immediately before committing so the new
 	// commit is parented on the current tip rather than a snapshot taken before
 	// the (potentially long) AI resolution call.
@@ -968,16 +977,23 @@ async function applyResolution(
 	// Get the production commit's tree to build on top of.
 	const productionCommit = await getGitCommit(token, freshProductionRef.sha);
 
-	// Get the PR head commit for the commit message.
+	// Get the PR head commit and its full tree. We use the tree to look up blob
+	// SHAs and modes for non-conflicting files rather than going through the
+	// contents API, which (a) can't handle binary files and (b) strips mode info.
 	const prCommit = await getGitCommit(token, pr.head.sha);
+	const prTree = await getTree(token, prCommit.treeSha);
+	const prEntryMap = new Map(
+		prTree
+			.filter((e) => e.type === "blob")
+			.map((e) => [e.path, { sha: e.sha, mode: e.mode as TreeUpdate["mode"] }]),
+	);
 
 	// For every file changed by the PR build a tree update:
-	//   - Conflict file:   use the AI-resolved content.
+	//   - Conflict file:   use the AI-resolved content (text, via createBlob).
 	//   - Deleted file:    remove from the tree (sha: null).
 	//   - Renamed file:    add at new path + emit a deletion for the old path.
-	//   - Addition/mod:    fetch the PR's version. Throw if binary (non-text)
-	//                      so the caller surfaces a failure rather than silently
-	//                      dropping the file from the tree.
+	//   - Addition/mod:    copy blob SHA + mode directly from the PR head tree,
+	//                      handling binary files and executable bits correctly.
 	const treeUpdates: TreeUpdate[] = [];
 
 	await Promise.all(
@@ -1028,7 +1044,7 @@ async function applyResolution(
 					return;
 				}
 
-				// Renamed file — add at new path and remove old path.
+				// Renamed file — remove old path before adding new path below.
 				if (status === "renamed" && previousPath) {
 					treeUpdates.push({
 						path: previousPath,
@@ -1039,18 +1055,20 @@ async function applyResolution(
 				}
 
 				// Non-conflicting addition or modification (including the new path of a
-				// rename) — fetch the PR's version.
-				const content = await getRepoFileContent(token, path, pr.head.sha);
-				if (content === null) {
-					// getRepoFileContent returns null for binary/non-base64-text files.
-					// Silently inheriting the production version would lose the PR's
-					// change, so we throw and let the caller surface a failure status.
+				// rename) — copy the blob SHA and mode directly from the PR head tree.
+				// This preserves binary files (no base64 round-trip) and executable bits.
+				const entry = prEntryMap.get(path);
+				if (!entry || entry.sha === null) {
 					throw new Error(
-						`Cannot apply changes to binary or non-text file: ${path}. Please resolve manually.`,
+						`File ${path} expected in PR tree but not found. Cannot apply non-conflicting change.`,
 					);
 				}
-				const blobSha = await createBlob(token, content);
-				treeUpdates.push({ path, mode: "100644", type: "blob", sha: blobSha });
+				treeUpdates.push({
+					path,
+					mode: entry.mode,
+					type: "blob",
+					sha: entry.sha,
+				});
 			},
 		),
 	);
