@@ -1,7 +1,7 @@
 ---
 title: RTKParticipant
 sidebar_position: 7
-web_core_version: 1.2.4
+web_core_version: 2.0.1-staging.2
 ---
 
 <!-- Auto Generated Below -->
@@ -15,7 +15,8 @@ present in the `meeting.participants` object. For example,
 const participant1 = meeting.participants.active.get(participantId);
 const participant2 = meeting.participants.joined.get(participantId);
 const participant3 = meeting.participants.active.toArray()[0];
-const participant4 = meeting.participants.active.toArray().filter((p) => p.name === 'John');
+const participant4 = meeting.participants.active.toArray()
+  .filter((p) => p.name === 'John');
 ```
 
 
@@ -27,7 +28,6 @@ const participant4 = meeting.participants.active.toArray().filter((p) => p.name 
         * [.name](#module_RTKParticipant--module.exports+name)
         * [.picture](#module_RTKParticipant--module.exports+picture)
         * [.customRTKParticipantId](#module_RTKParticipant--module.exports+customRTKParticipantId)
-        * ~~[.clientSpecificId](#module_RTKParticipant--module.exports+clientSpecificId)~~
         * [.device](#module_RTKParticipant--module.exports+device)
         * [.videoTrack](#module_RTKParticipant--module.exports+videoTrack)
         * [.audioTrack](#module_RTKParticipant--module.exports+audioTrack)
@@ -99,12 +99,6 @@ The picture of the participant.
 
 #### module.exports.customRTKParticipantId
 The custom id of the participant set during Add RTKParticipant REST API
-
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+clientSpecificId"></a>
-
-#### ~~module.exports.clientSpecificId~~
-***Deprecated***
 
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
 <a name="module_RTKParticipant--module.exports+device"></a>

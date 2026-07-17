@@ -1,7 +1,7 @@
 ---
 title: RTKParticipants
 sidebar_position: 8
-web_core_version: 1.2.4
+web_core_version: 2.0.1-staging.2
 ---
 
 <!-- Auto Generated Below -->
@@ -9,7 +9,7 @@ web_core_version: 1.2.4
 <a name="module_RTKParticipants"></a>
 
 This module represents all the participants in the meeting (except the local user).
-It consists of 4 maps:
+It consists of participant maps:
 - `joined`: A map of all participants that have joined the meeting.
 - `waitlisted`: A map of all participants that have been added to the waitlist.
 - `active`: A map of active participants who should be displayed in the meeting grid.
@@ -21,7 +21,7 @@ It consists of 4 maps:
         * [new module.exports(context, self, roomSocketHandler)](#new_module_RTKParticipants--module.exports_new)
         * [.waitlisted](#module_RTKParticipants--module.exports+waitlisted)
         * [.joined](#module_RTKParticipants--module.exports+joined)
-        * ~~[.active](#module_RTKParticipants--module.exports+active)~~
+        * [.active](#module_RTKParticipants--module.exports+active)
         * [.videoSubscribed](#module_RTKParticipants--module.exports+videoSubscribed)
         * [.audioSubscribed](#module_RTKParticipants--module.exports+audioSubscribed)
         * [.pinned](#module_RTKParticipants--module.exports+pinned)
@@ -45,9 +45,6 @@ It consists of 4 maps:
         * [.setPage(page)](#module_RTKParticipants--module.exports+setPage)
         * [.disableAllAudio(allowUnmute)](#module_RTKParticipants--module.exports+disableAllAudio)
         * [.disableAllVideo()](#module_RTKParticipants--module.exports+disableAllVideo)
-        * ~~[.disableAudio(participantId)](#module_RTKParticipants--module.exports+disableAudio)~~
-        * ~~[.disableVideo(participantId)](#module_RTKParticipants--module.exports+disableVideo)~~
-        * ~~[.kick(participantId)](#module_RTKParticipants--module.exports+kick)~~
         * [.kickAll()](#module_RTKParticipants--module.exports+kickAll)
         * [.broadcastMessage(type, payload, target)](#module_RTKParticipants--module.exports+broadcastMessage)
         * [.getAllJoinedPeers(searchQuery, limit, offset)](#module_RTKParticipants--module.exports+getAllJoinedPeers)
@@ -85,8 +82,8 @@ Returns a list of all participants in the meeting.
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
 <a name="module_RTKParticipants--module.exports+active"></a>
 
-#### ~~module.exports.active~~
-***Deprecated***
+#### module.exports.active
+Returns a list of participants whose streams are currently consumed.
 
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
 <a name="module_RTKParticipants--module.exports+videoSubscribed"></a>
@@ -287,39 +284,6 @@ Disables audio for all participants in the meeting.
 Disables video for all participants in the meeting.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-<a name="module_RTKParticipants--module.exports+disableAudio"></a>
-
-#### ~~module.exports.disableAudio(participantId)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| participantId | <code>string</code> | ID of participant to be muted. |
-
-<a name="module_RTKParticipants--module.exports+disableVideo"></a>
-
-#### ~~module.exports.disableVideo(participantId)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| participantId | <code>string</code> | ID of participant to be muted. |
-
-<a name="module_RTKParticipants--module.exports+kick"></a>
-
-#### ~~module.exports.kick(participantId)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| participantId | <code>string</code> | ID of participant to be kicked. |
-
 <a name="module_RTKParticipants--module.exports+kickAll"></a>
 
 #### module.exports.kickAll()

@@ -1,7 +1,7 @@
 ---
 title: RTKStore
 sidebar_position: 18
-web_core_version: 1.2.4
+web_core_version: 2.0.1-staging.2
 ---
 
 <!-- Auto Generated Below -->
@@ -27,6 +27,7 @@ const handRaiseRTKStore = meeting.stores.stores.get('handRaise');
         * [.bulkDelete(data)](#module_RTKStore--module.exports+bulkDelete) ⇒ <code>Promise.&lt;void&gt;</code>
         * [.get(key)](#module_RTKStore--module.exports+get) ⇒ <code>any</code>
         * [.getAll()](#module_RTKStore--module.exports+getAll) ⇒ <code>RTKStoreData</code>
+        * [.clear()](#module_RTKStore--module.exports+clear)
         * [.updateRateLimits(num, period)](#module_RTKStore--module.exports+updateRateLimits)
         * [.updateBulkRateLimits(num, period)](#module_RTKStore--module.exports+updateBulkRateLimits)
         * [.subscribe(key, cb)](#module_RTKStore--module.exports+subscribe) ⇒ <code>void</code>
@@ -45,7 +46,7 @@ const handRaiseRTKStore = meeting.stores.stores.get('handRaise');
 | --- | --- |
 | args | <code>Object</code> | 
 | args.name | <code>string</code> | 
-| args.socketHandler | <code>PluginSocketHandler</code> | 
+| args.socketHandler | <code>RTKStoresSocketHandler</code> | 
 | args.meetingId | <code>string</code> | 
 
 <a name="module_RTKStore--module.exports+set"></a>
@@ -137,6 +138,12 @@ Returns the entire store.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
 **Returns**: <code>RTKStoreData</code> - An instance of RTKStoreData.  
+<a name="module_RTKStore--module.exports+clear"></a>
+
+#### module.exports.clear()
+Clears all data in the store.
+
+**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
 <a name="module_RTKStore--module.exports+updateRateLimits"></a>
 
 #### module.exports.updateRateLimits(num, period)

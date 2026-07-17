@@ -1,7 +1,7 @@
 ---
 title: RTKPip
 sidebar_position: 11
-web_core_version: 1.2.4
+web_core_version: 2.0.1-staging.2
 ---
 
 <!-- Auto Generated Below -->
