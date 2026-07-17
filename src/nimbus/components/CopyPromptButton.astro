@@ -1,6 +1,10 @@
 ---
 import { AGENTS, type AgentId } from "./agents";
 import { Button } from "@/components/ui/button";
+import type {
+	ButtonVariant,
+	ButtonSize,
+} from "@/components/ui/button/variants";
 
 interface Props {
 	/** Agent ids shown in the icon row. */
@@ -8,12 +12,18 @@ interface Props {
 	class?: string;
 	/** Optional native title tooltip. */
 	tooltip?: string;
+	/** Button variant — defaults to `secondary` (home hero). */
+	variant?: ButtonVariant;
+	/** Button size — defaults to `lg`. */
+	size?: ButtonSize;
 }
 
 const {
 	agentIds = ["claude", "cursor", "codex", "opencode"] as const,
 	class: className = "",
 	tooltip,
+	variant = "secondary",
+	size = "lg",
 } = Astro.props;
 
 const featuredAgents = AGENTS.filter((a) =>
@@ -23,8 +33,8 @@ const featuredAgents = AGENTS.filter((a) =>
 
 <Button
 	class:list={["copy-prompt-btn group/copy cursor-copy", className]}
-	variant="secondary"
-	size="lg"
+	variant={variant}
+	size={size}
 	type="button"
 	data-tooltip={tooltip}
 >

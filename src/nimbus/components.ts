@@ -24,7 +24,7 @@ export { default as Feature } from "./components/cf/Feature.astro";
 export { default as Glossary } from "./components/cf/Glossary.astro";
 export { default as GlossaryTooltip } from "./components/cf/GlossaryTooltip.astro";
 export { default as LinkCard } from "./components/cf/LinkCard.astro";
-export { default as LinkTitleCard } from "./components/cf/LinkTitleCard.astro";
+export { default as LinkTitleCard } from "./components/cf/LinkCard.astro";
 export { default as ListTutorials } from "./components/cf/ListTutorials.astro";
 export { default as Plan } from "./components/cf/Plan.astro";
 export { default as ProductReleaseNotes } from "./components/cf/ProductReleaseNotes.astro";
@@ -65,6 +65,11 @@ export { default as PagesBuildEnvironmentTools } from "./components/cf/PagesBuil
 export { default as WARPReleases } from "./components/cf/WARPReleases.astro";
 export { default as WARPRelease } from "./components/cf/WARPRelease.astro";
 export { default as CompatibilityFlags } from "./components/cf/CompatibilityFlags.astro";
+export { default as AiSearchIndexingDiagram } from "../components/AiSearchIndexingDiagram.astro";
+export { default as AiSearchNamespacesDiagram } from "../components/AiSearchNamespacesDiagram.astro";
+export { default as AiSearchOverviewDiagram } from "../components/AiSearchOverviewDiagram.astro";
+export { default as AiSearchQueryingDiagram } from "../components/AiSearchQueryingDiagram.astro";
+export { default as AiSearchVoiceDiagram } from "../components/AiSearchVoiceDiagram.astro";
 export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
 export { default as WorkersArchitectureDiagram } from "./components/cf/WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./components/cf/WorkersIsolateDiagram.astro";
@@ -76,3 +81,4 @@ export { default as WorkersVPCOverviewDiagram } from "./components/cf/WorkersVPC
 export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelector.astro";
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
 export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
+export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";

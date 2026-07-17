@@ -51,7 +51,7 @@ export async function assignFindingIds(
 			const hex = Array.from(new Uint8Array(buf))
 				.map((b) => b.toString(16).padStart(2, "0"))
 				.join("");
-			return { ...f, id: `SG-${hex.slice(0, 6)}` };
+			return { ...f, id: `SG-${hex.slice(0, 12)}` };
 		}),
 	);
 }

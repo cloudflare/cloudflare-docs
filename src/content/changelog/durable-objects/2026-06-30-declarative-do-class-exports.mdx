@@ -1,0 +1,52 @@
+---
+title: Declare Durable Object class lifecycle with `exports`
+description: A new declarative `exports` field in your Wrangler configuration replaces the imperative `migrations` array for managing Durable Object class lifecycle.
+products:
+  - durable-objects
+  - workers
+date: 2026-07-04
+---
+
+A new declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field in your Wrangler configuration file replaces the imperative [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array for managing Durable Object class lifecycle. Instead of writing an ordered list of migration steps with unique tags, you declare each Durable Object class your Worker exports and Cloudflare compares that against what's already deployed to determine what Durable Object state needs to be created, renamed, or deleted.
+
+With legacy migrations, renaming `ChatRoom` to `Room` requires retaining both tagged steps:
+
+```jsonc title="Before — legacy migrations"
+{
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["ChatRoom"] },
+		{
+			"tag": "v2",
+			"renamed_classes": [{ "from": "ChatRoom", "to": "Room" }],
+		},
+	],
+}
+```
+
+With `exports`, you instead declare `Room` as the current class and mark `ChatRoom` as renamed:
+
+```jsonc title="After — declarative exports"
+{
+	"exports": {
+		"ChatRoom": {
+			"type": "durable-object",
+			"state": "renamed",
+			"renamed_to": "Room",
+		},
+		"Room": { "type": "durable-object", "storage": "sqlite" },
+	},
+}
+```
+
+Each entry is keyed by class name. The `state` field carries the lifecycle (`created` by default — a live class — plus tombstone states `deleted`, `renamed`, and `transferred`, and the `expecting-transfer` receiving state for cross-Worker transfers).
+
+Key improvements over the legacy `migrations` array:
+
+- **No migration tags.** The current `exports` map is the source of truth — there is no historical chain of `v1`, `v2`, `v3` entries to maintain.
+- **Structured deployment output.** Wrangler reports when it creates, updates, deletes, renames, or transfers Durable Object classes. It also identifies stale configuration entries that are safe to remove. Deployments with no changes or notices do not print this output.
+- **Zero-downtime rename and transfer patterns are first-class.** Tombstones may coexist with the source class still in code, enabling a [three-deploy rename](/durable-objects/reference/durable-objects-migrations/#avoid-downtime-during-a-rename) and a [four-deploy cross-Worker transfer](/durable-objects/reference/durable-objects-migrations/#transfer-a-durable-object-class-between-workers) without runtime errors during the rollout window.
+- **Cross-Worker safety.** When you delete or rename a class, Cloudflare lists every other Worker in your account whose bindings still reference the namespace, so you can redeploy them before the change goes live.
+
+Existing Workers using the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array continue to work unchanged. To move to `exports`, refer to the [migration guide](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow). `exports` and `migrations` are mutually exclusive within a single Worker.
+
+For the full reference, refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/).

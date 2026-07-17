@@ -10,20 +10,27 @@
  *     module's rail when that module has a `directory` entry, passed to
  *     `getSidebar`.
  */
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { getBreadcrumbs, getRouteNavigation } from "nimbus-docs";
 import type { SectionTitleResolver } from "nimbus-docs";
-import type { SidebarItem, SidebarTransform } from "nimbus-docs/types";
+import type {
+	SidebarBadge,
+	SidebarItem,
+	SidebarTransform,
+} from "nimbus-docs/types";
 
-export const sectionTitleResolver: SectionTitleResolver = async ({ sectionSlug, module }) => {
-  if (sectionSlug === "learning-paths") {
-    if (!module) return undefined;
-    const entry = await getEntry("learning-paths", module);
-    return entry ? { rail: `${entry.data.title} (Learning Paths)` } : undefined;
-  }
+export const sectionTitleResolver: SectionTitleResolver = async ({
+	sectionSlug,
+	module,
+}) => {
+	if (sectionSlug === "learning-paths") {
+		if (!module) return undefined;
+		const entry = await getEntry("learning-paths", module);
+		return entry ? { rail: `${entry.data.title} (Learning Paths)` } : undefined;
+	}
 
-  const entry = await getEntry("directory", sectionSlug);
-  return entry ? { rail: entry.data.entry.title } : undefined;
+	const entry = await getEntry("directory", sectionSlug);
+	return entry ? { rail: entry.data.entry.title } : undefined;
 };
 
 // Display title for a top-level product, from the `directory` collection — the
@@ -31,22 +38,22 @@ export const sectionTitleResolver: SectionTitleResolver = async ({ sectionSlug, 
 // once. (Not cleared by clearNavCaches, so dev edits to a title need a restart.)
 const sectionTitleCache = new Map<string, string | undefined>();
 async function directoryTitle(seg0: string): Promise<string | undefined> {
-  if (sectionTitleCache.has(seg0)) return sectionTitleCache.get(seg0);
-  const entry = await getEntry("directory", seg0);
-  const title = entry?.data.entry.title;
-  sectionTitleCache.set(seg0, title);
-  return title;
+	if (sectionTitleCache.has(seg0)) return sectionTitleCache.get(seg0);
+	const entry = await getEntry("directory", seg0);
+	const title = entry?.data.entry.title;
+	sectionTitleCache.set(seg0, title);
+	return title;
 }
 
 function firstSegment(path: string): string | undefined {
-  return path.replace(/^\/+|\/+$/g, "").split("/")[0] || undefined;
+	return path.replace(/^\/+|\/+$/g, "").split("/")[0] || undefined;
 }
 
-// Mirrors nimbus-docs' internal `nodeHref`.
+// Resolve a sidebar node to its href (internal links only).
 function nodeHref(node: SidebarItem): string | undefined {
-  if (node.type === "link") return node.href;
-  if (node.type === "external") return undefined;
-  return node.indexIsExternal ? undefined : node.indexHref;
+	if (node.type === "link") return node.href;
+	if (node.type === "external") return undefined;
+	return node.indexIsExternal ? undefined : node.indexHref;
 }
 
 /**
@@ -57,71 +64,95 @@ function nodeHref(node: SidebarItem): string | undefined {
  * `node.label` (page titles), short-circuiting before any lookup.
  */
 async function breadcrumbLabelResolver({
-  node,
-  slug,
+	node,
+	slug,
 }: {
-  node: SidebarItem;
-  slug: string;
+	node: SidebarItem;
+	slug: string;
 }): Promise<string | undefined> {
-  const seg0 = firstSegment(slug);
-  if (!seg0) return undefined;
-  const href = nodeHref(node);
-  const isSectionCrumb = href
-    ? firstSegment(href) === seg0 && !href.replace(/^\/+|\/+$/g, "").includes("/")
-    : node.type === "group" && node.label === seg0;
-  if (!isSectionCrumb) return undefined;
-  return directoryTitle(seg0);
+	const seg0 = firstSegment(slug);
+	if (!seg0) return undefined;
+	const href = nodeHref(node);
+	const isSectionCrumb = href
+		? firstSegment(href) === seg0 &&
+			!href.replace(/^\/+|\/+$/g, "").includes("/")
+		: node.type === "group" && node.label === seg0;
+	if (!isSectionCrumb) return undefined;
+	return directoryTitle(seg0);
 }
 
 /** `getBreadcrumbs` with the CF section-title resolver always applied. */
 export function getCfBreadcrumbs(
-  slug: Parameters<typeof getBreadcrumbs>[0],
-  options?: Parameters<typeof getBreadcrumbs>[1],
+	slug: Parameters<typeof getBreadcrumbs>[0],
+	options?: Parameters<typeof getBreadcrumbs>[1],
 ): ReturnType<typeof getBreadcrumbs> {
-  return getBreadcrumbs(slug, { ...options, resolveLabel: breadcrumbLabelResolver });
+	return getBreadcrumbs(slug, {
+		...options,
+		resolveLabel: breadcrumbLabelResolver,
+	});
 }
 
 /** `getRouteNavigation` with the CF section-title resolver always applied. */
 export function getCfRouteNavigation(
-  options: Parameters<typeof getRouteNavigation>[0],
+	options: Parameters<typeof getRouteNavigation>[0],
 ): ReturnType<typeof getRouteNavigation> {
-  return getRouteNavigation({ ...options, resolveLabel: breadcrumbLabelResolver });
+	return getRouteNavigation({
+		...options,
+		resolveLabel: breadcrumbLabelResolver,
+	});
 }
 
 const EXTERNAL_LINK_ARROW = " \u2197";
 
-export const agentResourcesTransform: SidebarTransform = async ({ tree, module }) => {
-  if (!module) return tree;
+// Append the external-link arrow, unless already present.
+function appendExternalArrow(label: string): string {
+	return label.endsWith(EXTERNAL_LINK_ARROW)
+		? label
+		: label + EXTERNAL_LINK_ARROW;
+}
 
-  const product = await getEntry("directory", module);
-  if (!product) return tree;
+// `docs-for-agents` is itself the agent-facing surface, so it gets no group.
+const NO_LLM_RESOURCES = new Set(["docs-for-agents"]);
 
-  const baseUrl = product.data.entry.url ?? `/${module}/`;
-  const links: Array<[string, string]> = [
-    ["Agent setup", "/agent-setup/"],
-    ["Cloudflare Skills", "https://github.com/cloudflare/skills"],
-    ["Code Mode MCP Server", "https://github.com/cloudflare/mcp"],
-    ["Domain-specific MCP Servers", "https://github.com/cloudflare/mcp-server-cloudflare"],
-    [`${product.data.name} llms.txt`, `${baseUrl}llms.txt`],
-    [`${product.data.name} llms-full.txt`, `${baseUrl}llms-full.txt`],
-    ["Cloudflare Docs llms.txt", "/llms.txt"],
-    ["Cloudflare Docs llms-full.txt", "/llms-full.txt"],
-  ];
+// `sectionSlug` is seg0 (the product); key off its `directory` entry.
+export const agentResourcesTransform: SidebarTransform = async ({
+	tree,
+	sectionSlug,
+}) => {
+	if (!sectionSlug || NO_LLM_RESOURCES.has(sectionSlug)) return tree;
 
-  const agentResources: SidebarItem = {
-    type: "group",
-    label: "Agent resources",
-    order: Number.MAX_VALUE,
-    collapsed: true,
-    children: links.map(([label, href], i) => ({
-      type: "external",
-      label: label + EXTERNAL_LINK_ARROW,
-      href,
-      order: i,
-    })),
-  };
+	const product = await getEntry("directory", sectionSlug);
+	if (!product) return tree;
 
-  return [...tree, agentResources];
+	const baseUrl = product.data.entry.url ?? `/${sectionSlug}/`;
+	const links: Array<[string, string]> = [
+		["Agent setup", "/agent-setup/"],
+		["Cloudflare Skills", "https://github.com/cloudflare/skills"],
+		["Code Mode MCP Server", "https://github.com/cloudflare/mcp"],
+		[
+			"Domain-specific MCP Servers",
+			"https://github.com/cloudflare/mcp-server-cloudflare",
+		],
+		[`${product.data.name} llms.txt`, `${baseUrl}llms.txt`],
+		[`${product.data.name} llms-full.txt`, `${baseUrl}llms-full.txt`],
+		["Cloudflare Docs llms.txt", "/llms.txt"],
+		["Cloudflare Docs llms-full.txt", "/llms-full.txt"],
+	];
+
+	const agentResources: SidebarItem = {
+		type: "group",
+		label: "Agent resources",
+		order: Number.MAX_VALUE,
+		collapsed: true,
+		children: links.map(([label, href], i) => ({
+			type: "external",
+			label: label + EXTERNAL_LINK_ARROW,
+			href,
+			order: i,
+		})),
+	};
+
+	return [...tree, agentResources];
 };
 
 // Same-origin sibling apps that live OUTSIDE the docs build — separate
@@ -130,54 +161,139 @@ export const agentResourcesTransform: SidebarTransform = async ({ tree, module }
 const EXTERNAL_APP_PREFIXES = ["/api/"];
 
 function isExternalAppHref(href: string): boolean {
-  return EXTERNAL_APP_PREFIXES.some(
-    (prefix) => href === prefix || href.startsWith(prefix),
-  );
+	return EXTERNAL_APP_PREFIXES.some(
+		(prefix) => href === prefix || href.startsWith(prefix),
+	);
 }
 
-/**
- * Re-mark sidebar leaves that point at a separate same-origin app (the
- * `/api/` reference) as **external** — new tab + `↗` arrow — matching
- * Starlight, which gives every `external_link` the external treatment.
- *
- * nimbus-docs classifies a *relative* `external_link` (`/api/`) as an
- * internal cross-section redirect (same tab, no arrow). That's correct for
- * in-docs redirects, but wrong for `/api/`, which is a separate application,
- * not another docs page. This transform restores the Starlight affordance
- * for those leaves only, leaving genuine in-docs redirects untouched.
- */
+// Mark leaves pointing at a separate same-origin app (`/api/`) as external:
+// new tab + `↗` arrow. In-docs redirects are left as same-tab links.
 function markExternalAppLinks(items: SidebarItem[]): SidebarItem[] {
-  return items.map((item) => {
-    if (item.type === "group") {
-      return { ...item, children: markExternalAppLinks(item.children) };
-    }
-    if (item.type === "link" && isExternalAppHref(item.href)) {
-      return {
-        type: "external",
-        label: item.label.endsWith(EXTERNAL_LINK_ARROW)
-          ? item.label
-          : item.label + EXTERNAL_LINK_ARROW,
-        href: item.href,
-        badge: item.badge,
-        order: item.order,
-      };
-    }
-    return item;
-  });
+	return items.map((item) => {
+		if (item.type === "group") {
+			return { ...item, children: markExternalAppLinks(item.children) };
+		}
+		if (item.type === "link" && isExternalAppHref(item.href)) {
+			return {
+				type: "external",
+				label: appendExternalArrow(item.label),
+				href: item.href,
+				badge: item.badge,
+				order: item.order,
+			};
+		}
+		return item;
+	});
+}
+
+// Append the external-link arrow to internal cross-section redirects
+// (relative `external_link` → same-tab `type: "link"` flagged `_neverActive`).
+function markInternalRedirects(items: SidebarItem[]): SidebarItem[] {
+	return items.map((item) => {
+		if (item.type === "group") {
+			return { ...item, children: markInternalRedirects(item.children) };
+		}
+		if (item.type === "link" && item._neverActive) {
+			return {
+				...item,
+				label: appendExternalArrow(item.label),
+			};
+		}
+		return item;
+	});
+}
+
+// External-app (`/api/`) re-marking + internal-redirect arrows, without the
+// Agent resources group. The "Overview" convention is applied by nimbus-docs
+// via `sidebar.indexDisplay: "overview-leaf"`.
+export const externalAppLinksTransform: SidebarTransform = ({ tree }) =>
+	markInternalRedirects(markExternalAppLinks(tree));
+
+// --- Badges -----------------------------------------------------------------
+
+// Map a default-variant badge's text to its variant; non-default variants and
+// unmapped text pass through unchanged.
+function inferBadgeVariant(badge: SidebarBadge): SidebarBadge {
+	const text = typeof badge === "string" ? badge : badge.text;
+	const variant =
+		typeof badge === "string" ? "default" : (badge.variant ?? "default");
+	if (variant !== "default") return badge;
+	switch (text) {
+		case "Beta":
+			return { text, variant: "caution" };
+		case "New":
+			return { text, variant: "note" };
+		case "Deprecated":
+		case "Legacy":
+			return { text, variant: "danger" };
+		default:
+			return badge;
+	}
+}
+
+// Fixed badge for external-app links by URL shape (`/api` → "API", MCP server
+// repo → "MCP"). Takes precedence over authored/auto-Beta badges.
+function getExternalBadge(href: string): SidebarBadge | undefined {
+	if (href.startsWith("/api")) return { text: "API", variant: "note" };
+	if (href.includes("/mcp-server-cloudflare"))
+		return { text: "MCP", variant: "note" };
+	return undefined;
+}
+
+// URL → "Beta" badge, from directory entries whose product-availability is
+// "beta". Built once per build (the collections don't change mid-build).
+let betaBadgeUrlsPromise: Promise<Map<string, SidebarBadge>> | undefined;
+function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
+	betaBadgeUrlsPromise ??= (async () => {
+		const [directory, productAvailability] = await Promise.all([
+			getCollection("directory"),
+			getCollection("product-availability"),
+		]);
+		const map = new Map<string, SidebarBadge>();
+		for (const dirEntry of directory) {
+			const avail = productAvailability.find((e) => e.id === dirEntry.data.id);
+			if (avail?.data.availability?.toLowerCase() === "beta") {
+				map.set(dirEntry.data.entry.url, { text: "Beta", variant: "caution" });
+			}
+		}
+		return map;
+	})();
+	return betaBadgeUrlsPromise;
 }
 
 /**
- * Standalone transform for routes that don't append the Agent resources
- * group — just the external-app (`/api/`) re-marking.
+ * Walk the tree: remap an existing badge's variant, or inject the auto-Beta
+ * badge when a node has none and its URL is a beta product. A group keys off
+ * its landing (`indexHref`); links/externals off `href`.
  */
-export const externalAppLinksTransform: SidebarTransform = ({ tree }) =>
-  markExternalAppLinks(tree);
+function applyBadges(
+	items: SidebarItem[],
+	betaUrls: Map<string, SidebarBadge>,
+): SidebarItem[] {
+	return items.map((item) => {
+		if (item.type === "group") {
+			const badge = item.badge
+				? inferBadgeVariant(item.badge)
+				: item.indexHref
+					? betaUrls.get(item.indexHref)
+					: undefined;
+			return { ...item, badge, children: applyBadges(item.children, betaUrls) };
+		}
+		const badge =
+			getExternalBadge(item.href) ??
+			(item.badge ? inferBadgeVariant(item.badge) : betaUrls.get(item.href));
+		return { ...item, badge };
+	});
+}
 
-/**
- * The transform used by the main docs route: Agent resources group +
- * external-app (`/api/`) re-marking, applied to the full tree.
- */
+// Agent resources + external-app re-marking + badges. The "Overview" convention
+// (leaf lift + section-root pinning) is applied downstream by nimbus-docs via
+// `sidebar.indexDisplay: "overview-leaf"`, which runs after this transform — so
+// `applyBadges` still keys group badges off `indexHref` before it is cleared.
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
-  const withAgentResources = await agentResourcesTransform(ctx);
-  return markExternalAppLinks(withAgentResources);
+	const withAgentResources = await agentResourcesTransform(ctx);
+	const withExternal = markExternalAppLinks(withAgentResources);
+	const withRedirects = markInternalRedirects(withExternal);
+	const betaUrls = await getBetaBadgeUrls();
+	return applyBadges(withRedirects, betaUrls);
 };

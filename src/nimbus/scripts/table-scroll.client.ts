@@ -6,27 +6,25 @@
 // those (and any other component-rendered tables) inside `.docs-content`.
 //
 // Idempotent: skips tables already inside `.table-scroll`, and only touches
-// unclassed tables (the `table:not([class])` prose convention). Re-runs on
-// `astro:page-load` for the view-transitions ClientRouter.
+// unclassed tables (the `table:not([class])` prose convention).
 
 function wrapDocsTables() {
-  const tables = document.querySelectorAll<HTMLTableElement>(
-    ".docs-content table:not([class])",
-  );
-  for (const table of tables) {
-    const parent = table.parentElement;
-    if (!parent || parent.classList.contains("table-scroll")) continue;
+	const tables = document.querySelectorAll<HTMLTableElement>(
+		".docs-content table:not([class])",
+	);
+	for (const table of tables) {
+		const parent = table.parentElement;
+		if (!parent || parent.classList.contains("table-scroll")) continue;
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "table-scroll";
-    wrapper.tabIndex = 0;
-    wrapper.setAttribute("role", "region");
-    wrapper.setAttribute("aria-label", "Table");
+		const wrapper = document.createElement("div");
+		wrapper.className = "table-scroll";
+		wrapper.tabIndex = 0;
+		wrapper.setAttribute("role", "region");
+		wrapper.setAttribute("aria-label", "Table");
 
-    parent.insertBefore(wrapper, table);
-    wrapper.appendChild(table);
-  }
+		parent.insertBefore(wrapper, table);
+		wrapper.appendChild(table);
+	}
 }
 
 wrapDocsTables();
-document.addEventListener("astro:page-load", wrapDocsTables);

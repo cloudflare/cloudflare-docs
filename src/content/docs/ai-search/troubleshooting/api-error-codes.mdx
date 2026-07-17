@@ -1,0 +1,225 @@
+---
+pcx_content_type: reference
+title: API error codes
+description: Troubleshoot API and public endpoint errors.
+sidebar:
+  order: 1
+products:
+  - ai-search
+---
+
+When a request to the AI Search API or a public endpoint fails, it returns one of the errors documented on this page.
+
+Errors that occur while an item is indexing are handled separately. See [Indexing error codes](/ai-search/troubleshooting/indexing-error-codes/).
+
+## How errors are returned
+
+The REST API and public endpoints return errors in a JSON envelope:
+
+```json
+{
+	"success": false,
+	"errors": [
+		{
+			"code": 7002,
+			"message": "ai_search_not_found"
+		}
+	],
+	"result": {}
+}
+```
+
+The [Workers binding](/ai-search/api/search/workers-binding/) throws exceptions. The exception `message` contains the AI Search error message, such as `ai_search_not_found`.
+
+For Workers binding calls, the thrown error class depends on the upstream HTTP status:
+
+| HTTP status | Workers binding error   |
+| ----------- | ----------------------- |
+| 404         | `AiSearchNotFoundError` |
+| 5xx         | `AiSearchInternalError` |
+| Other       | `AiSearchError`         |
+
+## Common errors
+
+These errors can occur across most AI Search API paths.
+
+| Code  | Message                          | HTTP status | Details                                             | Recommended action                                                                                                                                                   |
+| ----- | -------------------------------- | ----------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 10000 | `Authentication error`           | 401         | Authentication failed.                              | Check your [API token](/ai-search/get-started/api/#1-create-an-api-token) and AI Search permissions.                                                                 |
+| 7001  | `Internal Error`                 | 500         | An internal error occurred.                         | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists. |
+| 7002  | `ai_search_not_found`            | 404         | The requested instance does not exist.              | Check the instance name and namespace.                                                                                                                               |
+| 7017  | `unable_to_connect_to_ai_search` | 503         | AI Search could not connect to an internal service. | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists. |
+| 7063  | `namespace_not_found`            | 404         | The requested namespace does not exist.             | Check the [namespace](/ai-search/concepts/namespaces/) name.                                                                                                         |
+| 7068  | `Internal Error`                 | 500         | An internal invariant failed.                       | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists. |
+
+## Instances
+
+These errors can occur when you create, read, update, delete, or get stats for AI Search instances through the REST API or Workers binding.
+
+| Code | Message                                                   | HTTP status | Details                                                                             | Recommended action                                                                                                                                                               |
+| ---- | --------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7002 | `ai_search_not_found`                                     | 404         | The requested instance does not exist.                                              | Check the instance name and namespace.                                                                                                                                           |
+| 7017 | `unable_to_connect_to_ai_search`                          | 503         | AI Search could not connect to the indexing engine.                                 | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists.             |
+| 7010 | `invalid_model`                                           | 400         | The configured or requested model is invalid.                                       | Use a [supported model](/ai-search/configuration/models/supported-models/).                                                                                                      |
+| 7018 | `ai_gateway_not_found`                                    | 400         | The AI Gateway configured for the instance was not found.                           | Set `ai_gateway_id` to an existing gateway when you [create or update the instance](/ai-search/api/instances/rest-api/), or create the gateway in [AI Gateway](/ai-gateway/).    |
+| 7012 | `ai_search_instance_invalid_token`                        | 400         | The service API token configured for the instance is invalid.                       | Create or update the [service API token](/ai-search/configuration/indexing/service-api-token/) used by the instance.                                                             |
+| 7013 | `max_instances_reached`                                   | 403         | The account reached its instance limit.                                             | Delete unused instances or [request a higher limit](/ai-search/platform/limits-pricing/#limits).                                                                                 |
+| 7022 | `ai_search_with_this_name_already_exist`                  | 400         | An instance with this name already exists in the namespace.                         | Use a different instance name or [namespace](/ai-search/concepts/namespaces/).                                                                                                   |
+| 7023 | `domain_not_owned_by_user`                                | 400         | AI Search could not confirm ownership of a website data source domain.              | Check that the domain is [onboarded to Cloudflare](/fundamentals/manage-domains/add-site/).                                                                                      |
+| 7024 | `invalid_domain`                                          | 400         | The website data source domain is invalid.                                          | Check the [website data source](/ai-search/configuration/data-source/website/) URL.                                                                                              |
+| 7028 | `missing_sitemap`                                         | 400         | AI Search could not find a valid sitemap for the website data source.               | Add or update the website [sitemap](/ai-search/configuration/data-source/website/#sitemap).                                                                                      |
+| 7029 | `missing_robots_txt`                                      | 400         | AI Search could not fetch `robots.txt` for the website data source.                 | Add a valid [`robots.txt`](/ai-search/configuration/data-source/website/#robotstxt) file with sitemap information.                                                               |
+| 7034 | `forbidden_robots_txt`                                    | 400         | `robots.txt` blocks AI Search from crawling the website data source.                | Allow the [AI Search crawler](/ai-search/configuration/data-source/website/#robotstxt) to crawl the site.                                                                        |
+| 7035 | `forbidden_sitemap`                                       | 400         | AI Search cannot access the website data source sitemap.                            | Allow the AI Search crawler to access the [sitemap URL](/ai-search/configuration/data-source/website/#specific-sitemap).                                                         |
+| 7036 | `invalid_chunk_size`                                      | 400         | The chunk size exceeds the embedding model input token limit.                       | Use a smaller [chunk size](/ai-search/configuration/indexing/chunking/) based on the [embedding model limit](/ai-search/configuration/models/supported-models/#embedding).       |
+| 7040 | `invalid_custom_header`                                   | 400         | A website data source crawl header is invalid or not allowed.                       | Review [extra headers](/ai-search/configuration/data-source/website/#extra-headers) and remove unsupported headers.                                                              |
+| 7045 | `specific_sitemaps_only_valid_when_parse_type_is_sitemap` | 400         | Specific sitemaps were provided for an incompatible website data source parse type. | Use [specific sitemaps](/ai-search/configuration/data-source/website/#specific-sitemap) only with sitemap parsing.                                                               |
+| 7047 | `invalid_url_location`                                    | 400         | A website data source URL location is invalid.                                      | Check the [website data source](/ai-search/configuration/data-source/website/) URL.                                                                                              |
+| 7050 | `fail_while_provisioning_managed_resources`               | 500         | AI Search could not create managed resources for an instance.                       | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if provisioning continues to fail. |
+| 7052 | `type_and_source_are_required_for_non_managed_instances`  | 400         | A non-managed instance is missing a `type` or `source`.                             | Provide the required [data source](/ai-search/configuration/data-source/) fields.                                                                                                |
+
+## Namespaces
+
+These errors can occur when you create, list, read, update, or delete namespaces, or move instances between namespaces.
+
+| Code | Message                                  | HTTP status | Details                                                                                                 | Recommended action                                                                                |
+| ---- | ---------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| 7022 | `ai_search_with_this_name_already_exist` | 400         | An instance with this name already exists in the target namespace.                                      | Use a different instance name or [namespace](/ai-search/concepts/namespaces/).                    |
+| 7062 | `max_namespaces_reached`                 | 403         | The account reached the limit of 100 namespaces.                                                        | Delete unused namespaces or [request a higher limit](/ai-search/platform/limits-pricing/#limits). |
+| 7063 | `namespace_not_found`                    | 404         | The requested namespace does not exist.                                                                 | Check the [namespace](/ai-search/concepts/namespaces/) name.                                      |
+| 7064 | `namespace_already_exists`               | 409         | The namespace already exists.                                                                           | Use a different namespace name or update the existing namespace.                                  |
+| 7065 | `cannot_modify_default_namespace`        | 400         | The default namespace is created for every account and cannot be deleted or modified by this operation. | Use a non-default [namespace](/ai-search/concepts/namespaces/) for this operation.                |
+| 7066 | `namespace_not_empty`                    | 400         | The namespace still contains instances.                                                                 | Move or delete instances before deleting the [namespace](/ai-search/concepts/namespaces/).        |
+| 7067 | `namespace_same_name`                    | 400         | The source and target namespace names are the same.                                                     | Choose a different target [namespace](/ai-search/concepts/namespaces/).                           |
+
+## Tokens
+
+These errors can occur when you create, list, read, update, or delete service API tokens for AI Search.
+
+| Code | Message                            | HTTP status | Details                                    | Recommended action                                                                                                              |
+| ---- | ---------------------------------- | ----------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| 7012 | `ai_search_instance_invalid_token` | 400         | The token is invalid.                      | Create or update the [service API token](/ai-search/configuration/indexing/service-api-token/).                                 |
+| 7075 | `token_not_found`                  | 404         | The requested token does not exist.        | Create a new [service API token](/ai-search/configuration/indexing/service-api-token/).                                         |
+| 7076 | `token_in_use_by_instances`        | 409         | One or more instances still use the token. | Update or delete those instances before deleting the [service API token](/ai-search/configuration/indexing/service-api-token/). |
+
+## Items
+
+These errors can occur when you upload, list, read, download, delete, sync, filter, or inspect indexed items through the Items API or Workers binding.
+
+| Code | Message                                                    | HTTP status | Details                                                                    | Recommended action                                                                                                   |
+| ---- | ---------------------------------------------------------- | ----------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| 7032 | `ai_search_is_paused`                                      | 400         | The instance is paused.                                                    | Resume the instance before uploading items.                                                                          |
+| 7041 | `item_not_found`                                           | 404         | The requested item does not exist.                                         | Check the item ID.                                                                                                   |
+| 7042 | `item_key_already_exist`                                   | 409         | An item with this key already exists.                                      | Use a different filename or manage the existing item with the [Items API](/ai-search/api/items/workers-binding/).    |
+| 7044 | `unable_to_sync_item`                                      | 503         | AI Search could not sync the item.                                         | Retry the operation. Check [indexing error codes](/ai-search/troubleshooting/indexing-error-codes/) for details.     |
+| 7053 | `this_operation_requires_a_managed_instance`               | 400         | The operation only works on managed instances.                             | Use an instance with [built-in storage](/ai-search/configuration/data-source/built-in-storage/).                     |
+| 7054 | `file_exceeds_maximum_size`                                | 413         | The uploaded file is too large.                                            | Reduce the file size before uploading. Review [file size limits](/ai-search/platform/limits-pricing/#limits).        |
+| 7055 | `file_field_is_required`                                   | 400         | The upload request is missing the `file` field.                            | Include a `file` field in the multipart form data.                                                                   |
+| 7056 | `invalid_metadata_format`                                  | 400         | The upload metadata is not valid.                                          | Send upload metadata as a valid JSON object. See [metadata attributes](/ai-search/configuration/indexing/metadata/). |
+| 7058 | `invalid_metadata_filter`                                  | 400         | The metadata filter is not valid.                                          | Check the [filter syntax](/ai-search/configuration/retrieval/filtering/#filter-syntax) and field names.              |
+| 7059 | `content_download_not_available_for_external_source_items` | 400         | The original content is not available for an item from an external source. | Download the file from the original [data source](/ai-search/configuration/data-source/).                            |
+| 7060 | `unsupported_file_type`                                    | 400         | AI Search could not determine a supported content type.                    | Upload a [supported file type](/ai-search/configuration/data-source/#supported-file-types).                          |
+| 7072 | `filename_exceeds_maximum_length`                          | 400         | The filename or item key is longer than 128 characters.                    | Use a filename or item key that is 128 characters or fewer.                                                          |
+
+## Jobs
+
+These errors can occur when you create, list, read, cancel, or list logs for sync jobs through the REST API or Workers binding.
+
+| Code | Message                   | HTTP status | Details                                                                           | Recommended action                                         |
+| ---- | ------------------------- | ----------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| 7020 | `sync_in_cooldown`        | 429         | A user-triggered sync job was requested within 30 seconds of a previous sync job. | Wait at least 30 seconds before starting another sync job. |
+| 7021 | `job_not_found`           | 404         | The requested job does not exist.                                                 | Check the job ID.                                          |
+| 7046 | `job_cannot_be_cancelled` | 400         | The job has already ended and cannot be cancelled.                                | Refresh the job status before cancelling.                  |
+
+## Search and chat
+
+### Search
+
+These errors can occur when you run instance search, cross-instance search, public endpoint search, or `instance.search()` through the REST API, Workers binding, or public endpoints.
+
+| Code | Message                                              | HTTP status | Details                                                                                                                                          | Recommended action                                                                                                                                                                          |
+| ---- | ---------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7010 | `invalid_model`                                      | 400         | The configured or requested model is invalid.                                                                                                    | Use a [supported model](/ai-search/configuration/models/supported-models/).                                                                                                                 |
+| 7015 | `filter_or_operator_only_supports_eq_filters`        | 400         | The `or` filter contains unsupported operators.                                                                                                  | Use supported [filter syntax](/ai-search/configuration/retrieval/filtering/#filter-syntax).                                                                                                 |
+| 7016 | `filter_or_operator_does_not_support_different_keys` | 400         | The `or` filter includes multiple metadata keys.                                                                                                 | Use the same [metadata attribute](/ai-search/configuration/indexing/metadata/) for every comparison inside the `or` filter.                                                                 |
+| 7039 | `missing_user_query`                                 | 400         | A search request does not include a user query.                                                                                                  | Include `query` or a user message in the [messages format](/ai-search/api/search/rest-api/#search-and-chat).                                                                                |
+| 7057 | `invalid_datetime_filter_value`                      | 400         | A datetime metadata filter value is invalid.                                                                                                     | Use a valid datetime value in your [metadata filter](/ai-search/configuration/retrieval/filtering/).                                                                                        |
+| 7058 | `invalid_metadata_filter`                            | 400         | The metadata filter is not valid.                                                                                                                | Check the [filter syntax](/ai-search/configuration/retrieval/filtering/#filter-syntax) and field names.                                                                                     |
+| 7069 | `monthly_query_quota_exceeded`                       | 429         | The account reached the monthly query quota for its Workers plan.                                                                                | Review [AI Search limits](/ai-search/platform/limits-pricing/#limits), wait for the quota to reset, or upgrade your [Workers plan](/workers/platform/pricing/).                             |
+| 7070 | `invalid_retrieval_type`                             | 400         | The request set `retrieval_type` to a mode the instance's `index_method` does not support. Both `keyword` and `hybrid` require keyword indexing. | Enable the required [index method](/ai-search/configuration/indexing/hybrid-search/) on the instance, which triggers a reindex. If the override was unintentional, remove `retrieval_type`. |
+| 7071 | `vectorize_authentication_failed`                    | 401         | AI Search could not authenticate with Vectorize.                                                                                                 | Check the instance configuration and [service API token](/ai-search/configuration/indexing/service-api-token/).                                                                             |
+| 7073 | `all_search_methods_failed`                          | 500         | All retrieval methods failed.                                                                                                                    | Retry the request. Check [indexing error codes](/ai-search/troubleshooting/indexing-error-codes/) and instance configuration.                                                               |
+| 7080 | `vectorize_filter_not_serializable`                  | 400         | A filter cannot be sent to Vectorize.                                                                                                            | Use JSON-serializable filter values.                                                                                                                                                        |
+| 7089 | `image_query_requires_vector_index`                  | 400         | An image query requires vector indexing.                                                                                                         | Turn on [vector search](/ai-search/configuration/indexing/vector-search/) for the instance and reindex your content, or use an instance that already has vector search enabled.             |
+
+### Chat
+
+These errors can occur when AI Search retrieves context and generates a response through instance chat completions, cross-instance chat completions, public endpoint chat completions, or `instance.chatCompletions()`.
+
+| Code | Message                             | HTTP status | Details                                                                                                                                          | Recommended action                                                                                                                                                                          |
+| ---- | ----------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7010 | `invalid_model`                     | 400         | The configured or requested model is invalid.                                                                                                    | Use a [supported model](/ai-search/configuration/models/supported-models/).                                                                                                                 |
+| 7038 | `missing_user_query`                | 400         | A chat completions request does not include a user query.                                                                                        | Include at least one user message in the [messages format](/ai-search/api/search/rest-api/#search-and-chat).                                                                                |
+| 7069 | `monthly_query_quota_exceeded`      | 429         | The account reached the monthly query quota for its Workers plan.                                                                                | Review [AI Search limits](/ai-search/platform/limits-pricing/#limits), wait for the quota to reset, or upgrade your [Workers plan](/workers/platform/pricing/).                             |
+| 7070 | `invalid_retrieval_type`            | 400         | The request set `retrieval_type` to a mode the instance's `index_method` does not support. Both `keyword` and `hybrid` require keyword indexing. | Enable the required [index method](/ai-search/configuration/indexing/hybrid-search/) on the instance, which triggers a reindex. If the override was unintentional, remove `retrieval_type`. |
+| 7073 | `all_search_methods_failed`         | 500         | All retrieval methods failed.                                                                                                                    | Retry the request. Check [indexing error codes](/ai-search/troubleshooting/indexing-error-codes/) and instance configuration.                                                               |
+| 7089 | `image_query_requires_vector_index` | 400         | An image query requires vector indexing.                                                                                                         | Turn on [vector search](/ai-search/configuration/indexing/vector-search/) for the instance and reindex your content, or use an instance that already has vector search enabled.             |
+
+### Cross-instance search and chat
+
+These errors can occur when you use [cross-instance search or chat](/ai-search/api/search/rest-api/#cross-instance-search-and-chat) to query multiple instances in one request.
+
+| Code | Message                                | HTTP status | Details                                                             | Recommended action                                                                                     |
+| ---- | -------------------------------------- | ----------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| 7049 | `one_or_more_instance_searches_failed` | 500         | A cross-instance search failed and `return_on_failure` is disabled. | Retry the request, or allow partial results with `return_on_failure`.                                  |
+| 7074 | `too_many_multi_search_instances`      | 400         | A cross-instance search includes too many instances.                | Reduce `instance_ids` to 10 or fewer, the [allowed limit](/ai-search/platform/limits-pricing/#limits). |
+
+When `return_on_failure` is enabled, cross-instance search can return partial results with `errors: [{ instance_id, message: "search_failed" }]`. That response does not use a numeric error code.
+
+### Models and AI Gateway
+
+These errors can occur when a search or chat request calls Workers AI, AI Gateway, or an external model provider.
+
+| Code | Message                                           | HTTP status | Details                                                      | Recommended action                                                                                                                                                   |
+| ---- | ------------------------------------------------- | ----------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2003 | `Rate limited`                                    | 429         | AI Gateway rate limited the request.                         | Retry with backoff and review [public endpoint rate limits](/ai-search/configuration/retrieval/public-endpoint/#rate-limiting), if applicable.                       |
+| 2016 | `Prompt blocked due to security configurations`   | 424         | AI Gateway Guardrails blocked the prompt.                    | Review [AI Gateway Guardrails](/ai-gateway/features/guardrails/set-up-guardrail/) prompt settings and the prompt content.                                            |
+| 2017 | `Response blocked due to security configurations` | 424         | AI Gateway Guardrails blocked the response.                  | Review [AI Gateway Guardrails](/ai-gateway/features/guardrails/set-up-guardrail/) response settings and the retrieved content.                                       |
+| 7011 | `workers_ai_fail_to_return_a_valid_response`      | 500         | Workers AI returned an invalid response.                     | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists. |
+| 7019 | `workers_ai_error`                                | 400         | Workers AI returned an error for the request.                | Check the [model](/ai-search/configuration/models/), input, and AI Search options.                                                                                   |
+| 7030 | `workers_ai_timeout`                              | 400         | Workers AI timed out.                                        | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists. |
+| 7031 | `ai_gateway_timeout`                              | 400         | AI Gateway timed out.                                        | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists. |
+| 7033 | `ai_gateway_exception`                            | 502         | AI Gateway or the upstream model returned an error.          | Retry the request. Check [AI Gateway](/ai-gateway/) and provider configuration.                                                                                      |
+| 7077 | `ai_gateway_authentication_error`                 | 401         | AI Gateway or the upstream provider rejected authentication. | Check provider credentials in [AI Gateway](/ai-gateway/configuration/bring-your-own-keys/).                                                                          |
+| 7078 | `ai_gateway_billing_error`                        | 402         | The upstream provider reported a billing issue.              | Check provider billing status in [AI Gateway](/ai-gateway/configuration/bring-your-own-keys/).                                                                       |
+| 7079 | `ai_gateway_context_window_exceeded`              | 413         | The request exceeds the model context window.                | Reduce message history, retrieved context, or [result count](/ai-search/configuration/retrieval/result-controls/#maximum-number-of-results).                         |
+
+## Public endpoints
+
+These errors can occur when public search, public chat completions, Model Context Protocol (MCP), snippet analytics, assets, or public endpoint routing fails before the request is proxied to AI Search. Public endpoint `/search` and `/chat/completions` can also return the AI Search API errors listed above.
+
+| Code  | Message                                                         | HTTP status | Details                                                                                             | Recommended action                                                                                                                                                                      |
+| ----- | --------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 60001 | `asset not found`                                               | 404         | The requested UI snippet asset path does not exist, such as an incorrect or outdated asset version. | Use the `<script>` tag from the [UI snippet library](/ai-search/configuration/retrieval/embed-search-snippets/) without changes, and update the asset version if it is outdated.        |
+| 60002 | `hash not found on url`                                         | 404         | The public endpoint hash is missing from the URL.                                                   | Use the [public endpoint URL](/ai-search/configuration/retrieval/public-endpoint/#public-url-format) copied from the dashboard.                                                         |
+| 60003 | `config not found`                                              | 404         | The public endpoint configuration was not found.                                                    | Confirm that the [public endpoint](/ai-search/configuration/retrieval/public-endpoint/) is enabled.                                                                                     |
+| 60004 | `ai search not enabled`                                         | 404         | The public endpoint is disabled.                                                                    | Enable the [public endpoint](/ai-search/configuration/retrieval/public-endpoint/#enabling-and-disabling-public-endpoints) for the instance.                                             |
+| 60005 | `rate limited`                                                  | 429         | The public endpoint rate limit was exceeded.                                                        | Retry after the [rate limit](/ai-search/configuration/retrieval/public-endpoint/#rate-limiting) resets.                                                                                 |
+| 60006 | `endpoint not found`                                            | 404         | The requested public endpoint route does not exist.                                                 | Use a supported [public endpoint](/ai-search/configuration/retrieval/public-endpoint/#available-endpoints).                                                                             |
+| 60007 | `mcp endpoint disabled`                                         | 401         | The MCP endpoint is disabled.                                                                       | Enable MCP for the [public endpoint](/ai-search/configuration/retrieval/public-endpoint/).                                                                                              |
+| 60008 | `search endpoint disabled`                                      | 401         | The search endpoint is disabled.                                                                    | Enable the search endpoint in [public endpoint settings](/ai-search/configuration/retrieval/public-endpoint/).                                                                          |
+| 60009 | `chat completions endpoint disabled`                            | 401         | The chat completions endpoint is disabled.                                                          | Enable the chat completions endpoint in [public endpoint settings](/ai-search/configuration/retrieval/public-endpoint/).                                                                |
+| 60010 | `method not allowed`                                            | 405         | The public endpoint snippet analytics `/stats` endpoint received an unsupported HTTP method.        | Send snippet analytics requests to `/stats` with `POST`.                                                                                                                                |
+| 60011 | `invalid stats request body`                                    | 400         | The public endpoint snippet analytics `/stats` request body is invalid.                             | Send a valid JSON body with a non-empty `events` array.                                                                                                                                 |
+| 60012 | `invalid instance_ids query parameter`                          | 400         | A namespace public endpoint received a malformed `instance_ids` query parameter.                    | Use a comma-separated `instance_ids` value, or omit it to search the configured namespace endpoint instances.                                                                           |
+| 60013 | `instance_ids contains values outside the configured allowlist` | 400         | A namespace public endpoint request includes instance IDs outside its allowlist.                    | Use only instance IDs configured for the namespace public endpoint.                                                                                                                     |
+| 60014 | `path not supported for namespace-kind hash`                    | 404         | A namespace public endpoint received an unsupported path.                                           | Use `/search`, `/chat/completions`, or `/mcp`.                                                                                                                                          |
+| 60015 | `request body must be a JSON object`                            | 400         | The public endpoint request body is not a JSON object.                                              | Send the request body as a JSON object with `Content-Type: application/json`, not an array, string, or empty body. See [public endpoint usage](/ai-search/api/search/public-endpoint/). |
+| 60016 | `method not allowed; this MCP endpoint only accepts POST`       | 405         | The MCP endpoint received a non-`POST` request.                                                     | Send [MCP](/ai-search/api/search/mcp/) requests with `POST`.                                                                                                                            |
+| 60100 | `internal error`                                                | 500         | The public endpoint returned an unexpected error.                                                   | Retry the request. Check [Cloudflare Status](https://www.cloudflarestatus.com) and [contact support](/support/contacting-cloudflare-support/) if the error persists.                    |
+
+## Troubleshoot API errors
+
+If an API request fails, check the `code` and `message` fields in the error response. For Workers binding calls, check the thrown error `name` and `message`.
+
+For transient service errors, retry with exponential backoff. If an internal or service error persists, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the error code, instance ID, and request timestamp.

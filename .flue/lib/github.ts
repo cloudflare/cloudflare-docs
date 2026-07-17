@@ -9,6 +9,12 @@ export interface PullRequestFile {
 	deletions: number;
 	changes: number;
 	patch?: string;
+	/**
+	 * The previous filename for renamed files (status === "renamed").
+	 * Present in the GitHub API response; absent for all other statuses.
+	 * Use this — not filename — when computing the old path of a rename.
+	 */
+	previous_filename?: string;
 }
 
 export interface GitHubUser {
@@ -62,6 +68,54 @@ function apiHeaders(token: string): Record<string, string> {
 		"Content-Type": "application/json",
 		"User-Agent": "cloudflare-docs-agents",
 	};
+}
+
+/**
+ * Parse the `rel="next"` URL out of a GitHub `Link` response header.
+ * Returns null when there is no next page.
+ */
+function parseNextLink(link: string | null): string | null {
+	if (!link) return null;
+	for (const part of link.split(",")) {
+		const match = part.match(/<([^>]+)>\s*;\s*rel="next"/);
+		if (match) return match[1];
+	}
+	return null;
+}
+
+/**
+ * Encode a git ref (branch, tag, or SHA) for use in a URL path segment while
+ * preserving the `/` separators branch names can contain (e.g. `feature/foo`).
+ * SHAs contain no special characters, so this is a no-op for them.
+ */
+function encodeRef(ref: string): string {
+	return ref.split("/").map(encodeURIComponent).join("/");
+}
+
+/**
+ * Fetch every page of a GitHub list endpoint whose response body is a JSON
+ * array, following `Link: rel="next"` pagination. `firstUrl` should already
+ * include `per_page=100`. `context` is used only for error messages.
+ */
+async function fetchAllPages<T>(
+	token: string,
+	firstUrl: string,
+	context: string,
+): Promise<T[]> {
+	const items: T[] = [];
+	let url: string | null = firstUrl;
+	while (url) {
+		const res: Response = await fetch(url, { headers: apiHeaders(token) });
+		if (!res.ok) {
+			throw new Error(
+				`Failed to ${context} (HTTP ${res.status}): ${await res.text()}`,
+			);
+		}
+		const page = (await res.json()) as T[];
+		items.push(...page);
+		url = parseNextLink(res.headers.get("Link"));
+	}
+	return items;
 }
 
 export async function closeIssue(
@@ -139,22 +193,56 @@ export async function getPullRequest(
 	return (await res.json()) as GitHubPullRequest;
 }
 
+/**
+ * Fetch the decoded text content of a repo file at a given ref via the
+ * GitHub contents API. Returns null when the file is missing (404) or not
+ * base64 text; throws on other non-2xx responses (rate limit, auth, 5xx) so
+ * callers can distinguish "absent" from "failed to load". Used to load
+ * repo-level context (e.g. the root AGENTS.md) into agents.
+ */
+export async function getRepoFileContent(
+	token: string,
+	path: string,
+	ref: string,
+): Promise<string | null> {
+	// Encode each path segment but preserve the slashes the contents API needs.
+	const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (res.status === 404) return null;
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get repo file ${path}@${ref} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as {
+		encoding?: string;
+		content?: string;
+	};
+	if (data.encoding !== "base64" || typeof data.content !== "string") {
+		return null;
+	}
+	// atob yields a Latin-1 byte string; decode those bytes as UTF-8 so
+	// non-ASCII content (e.g. em dashes in AGENTS.md) is not mojibake.
+	const binary = atob(data.content.replace(/\n/g, ""));
+	const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+	return new TextDecoder().decode(bytes);
+}
+
 export async function getPullRequestFiles(
 	token: string,
 	pullNumber: number,
 ): Promise<PullRequestFile[]> {
-	const res = await fetch(
+	// Paginate: the PR files endpoint returns at most 100 files per page. A PR
+	// with more than 100 changed files would otherwise be silently truncated,
+	// which breaks the net-diff containment check in fetchFilesForDiffMode.
+	return fetchAllPages<PullRequestFile>(
+		token,
 		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/files?per_page=100`,
-		{
-			headers: apiHeaders(token),
-		},
+		`get PR files for ${pullNumber}`,
 	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to get PR files for ${pullNumber} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
-	return (await res.json()) as PullRequestFile[];
 }
 
 export async function addLabels(
@@ -226,23 +314,91 @@ export async function updateIssueComment(
 	}
 }
 
+/**
+ * Result of a `base...head` three-dot compare.
+ *
+ * `status` reflects how head relates to base (GitHub's comparison status):
+ *   - "ahead"     — head is a strict forward extension of base (normal push).
+ *                   `files` is exactly the new commits' diff.
+ *   - "identical" — head === base (no new commits).
+ *   - "behind"    — base is ahead of head.
+ *   - "diverged"  — base is NOT an ancestor of head (rebase / force-push).
+ *
+ * When status is "diverged" the merge-base regresses to where the branch
+ * originally forked, so `files` includes every upstream commit absorbed by the
+ * rebase — files that are not part of the PR. Callers must not trust `files`
+ * for an incremental review unless status is "ahead" or "identical".
+ */
+export interface CompareResult {
+	files: PullRequestFile[];
+	status: "ahead" | "behind" | "identical" | "diverged";
+	aheadBy: number;
+	behindBy: number;
+}
+
 export async function comparePullRequestHeads(
 	token: string,
 	base: string,
 	head: string,
-): Promise<{ files: PullRequestFile[] } | null> {
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/compare/${base}...${head}`,
-		{ headers: apiHeaders(token) },
-	);
-	if (res.status === 404) return null;
-	if (!res.ok) {
-		throw new Error(
-			`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
-		);
+): Promise<CompareResult | null> {
+	// Paginate the compare endpoint's file list, following Link headers. The
+	// comparison metadata (status/ahead_by/behind_by) is identical on every
+	// page, so it is captured from the first page only; `files` is accumulated
+	// across pages. Refs are encoded (preserving `/`) so branch names with
+	// special characters produce a well-formed URL. Note: GitHub caps the
+	// compare files list at 300 — for a delta larger than that the list is
+	// truncated, but fetchFilesForDiffMode's containment check errs toward the
+	// safe full-diff fallback in that case.
+	let url: string | null =
+		`https://api.github.com/repos/${REPO}/compare/${encodeRef(base)}...${encodeRef(head)}?per_page=100`;
+	// Accumulate by filename: the compare endpoint paginates primarily over
+	// commits, so the same file can appear on multiple pages. Deduping by
+	// filename (last write wins) yields one entry per changed file regardless
+	// of how GitHub slices the pages.
+	const filesByName = new Map<string, PullRequestFile>();
+	let status: CompareResult["status"] | undefined;
+	let aheadBy = 0;
+	let behindBy = 0;
+
+	while (url) {
+		const res: Response = await fetch(url, { headers: apiHeaders(token) });
+		if (res.status === 404) return null;
+		if (!res.ok) {
+			throw new Error(
+				`Failed to compare ${base}...${head} (HTTP ${res.status}): ${await res.text()}`,
+			);
+		}
+		const data = (await res.json()) as {
+			files?: PullRequestFile[];
+			status?: string;
+			ahead_by?: number;
+			behind_by?: number;
+		};
+		if (status === undefined) {
+			// Normalize the status; anything unexpected is treated as "diverged" so
+			// the caller self-heals to the full diff rather than trusting a partial
+			// list.
+			status =
+				data.status === "ahead" ||
+				data.status === "behind" ||
+				data.status === "identical"
+					? data.status
+					: "diverged";
+			aheadBy = data.ahead_by ?? 0;
+			behindBy = data.behind_by ?? 0;
+		}
+		for (const file of data.files ?? []) {
+			filesByName.set(file.filename, file);
+		}
+		url = parseNextLink(res.headers.get("Link"));
 	}
-	const data = (await res.json()) as { files?: PullRequestFile[] };
-	return { files: data.files ?? [] };
+
+	return {
+		files: [...filesByName.values()],
+		status: status ?? "diverged",
+		aheadBy,
+		behindBy,
+	};
 }
 
 export async function addReactionToComment(

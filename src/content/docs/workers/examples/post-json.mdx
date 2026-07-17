@@ -132,14 +132,8 @@ export default {
 
 ```py
 import json
-from workers import WorkerEntrypoint
-from pyodide.ffi import to_js as _to_js
-from js import Object, fetch, Response, Headers
+from workers import WorkerEntrypoint, Response, fetch
 
-def to_js(obj):
-    return _to_js(obj, dict_converter=Object.fromEntries)
-
-# gather_response returns both content-type & response body as a string
 async def gather_response(response):
     headers = response.headers
     content_type = headers["content-type"] or ""
@@ -150,27 +144,23 @@ async def gather_response(response):
 
 class Default(WorkerEntrypoint):
     async def fetch(self, _request):
-		url = "https://jsonplaceholder.typicode.com/todos/1"
+        url = "https://jsonplaceholder.typicode.com/todos/1"
 
-		body = {
-		"results": ["default data to send"],
-		"errors": None,
-		"msg": "I sent this to the fetch",
-		}
+        body = {
+            "results": ["default data to send"],
+            "errors": None,
+            "msg": "I sent this to the fetch",
+        }
 
-		options = {
-		"body": json.dumps(body),
-		"method": "POST",
-		"headers": {
-			"content-type": "application/json;charset=UTF-8",
-		},
-		}
+        response = await fetch(
+            url,
+            method="POST",
+            body=json.dumps(body),
+            headers={"content-type": "application/json;charset=UTF-8"},
+        )
+        content_type, result = await gather_response(response)
 
-		response = await fetch(url, to_js(options))
-		content_type, result = await gather_response(response)
-
-		headers = Headers.new({"content-type": content_type}.items())
-		return Response.new(result, headers=headers)
+        return Response(result, headers={"content-type": content_type})
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

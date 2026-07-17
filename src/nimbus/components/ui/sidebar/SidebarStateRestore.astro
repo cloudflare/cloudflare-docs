@@ -1,0 +1,73 @@
+---
+/**
+ * SidebarStateRestore — pre-sets sidebar data attributes before the disclosure
+ * module loads so collapsed/scrolled state survives navigation.
+ *
+ * Render this only when the desktop sidebar is present; the inline script is
+ * dead code otherwise (the `desktop-sidebar` element doesn't exist). Kept as a
+ * standalone component so the `is:inline` script lives at the template top
+ * level — prettier's Astro parser cannot handle an inline script body nested
+ * inside a JSX expression container.
+ */
+---
+
+<script is:inline>
+	(function () {
+		try {
+			if (!matchMedia("(min-width: 64rem)").matches) return;
+			const sidebar = document.getElementById("desktop-sidebar");
+			if (!sidebar) return;
+			const content = sidebar.querySelector("[data-nb-sidebar]");
+			if (!content) return;
+
+			function setGroupOpen(group, open) {
+				group.setAttribute("data-nb-default-open", open ? "true" : "false");
+				const trigger = group.querySelector("[data-nb-collapsible-trigger]");
+				const panel = group.querySelector("[data-nb-collapsible-content]");
+				const state = open ? "open" : "closed";
+				if (trigger) {
+					trigger.setAttribute("data-nb-state", state);
+					trigger.setAttribute("aria-expanded", String(open));
+				}
+				if (panel) panel.setAttribute("data-nb-state", state);
+			}
+
+			const raw = sessionStorage.getItem("sidebar-state");
+			let state;
+			if (raw) {
+				state = JSON.parse(raw);
+				if (state && content.dataset.nbSidebarHash === state.hash) {
+					const groups = content.querySelectorAll("[data-nb-sidebar-group]");
+					for (let i = 0; i < groups.length; i++) {
+						if (typeof state.open[i] === "boolean") {
+							setGroupOpen(groups[i], state.open[i]);
+						}
+					}
+				}
+			}
+
+			// Active page's group must always be open, regardless of stored state
+			const active = sidebar.querySelector("[aria-current='page']");
+			if (active) {
+				let d = active.closest("[data-nb-sidebar-group]");
+				while (d) {
+					setGroupOpen(d, true);
+					d =
+						d.parentElement &&
+						d.parentElement.closest("[data-nb-sidebar-group]");
+				}
+			}
+
+			// Restore scroll or center active item
+			if (raw && state && state.scroll) {
+				sidebar.scrollTop = state.scroll;
+			} else if (active) {
+				const sr = sidebar.getBoundingClientRect();
+				const ar = active.getBoundingClientRect();
+				sidebar.scrollTop += ar.top - sr.top - sr.height / 2 + ar.height / 2;
+			}
+		} catch {
+			// Never let state restore break navigation.
+		}
+	})();
+</script>

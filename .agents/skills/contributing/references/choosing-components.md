@@ -58,7 +58,7 @@ Two rules first:
 ### Code and configuration
 
 - **`TypeScriptExample`** — any Workers JS/TS. Auto-generates the JS tab from TS, so there is one source to maintain. Do not use bare `ts`/`js` fences.
-- **`WranglerConfig`** — any Wrangler config. Provide TOML; JSON is generated. Use `$today` for `compatibility_date`. Note minimum compatibility dates in a `:::note`.
+- **`WranglerConfig`** — any Wrangler config. Provide TOML or JSON; the other is generated. Use `$today` for `compatibility_date`. Note minimum compatibility dates in a `:::note`.
 - **`PackageManagers`** — install/exec commands, so npm/yarn/pnpm tabs render automatically.
 - **`GitHubCode`** — show real code from a Cloudflare repo without copying it into the page; pin a full 40-character commit so it stays stable.
 - **`WranglerCommand` / `WranglerNamespace`** — auto-generated Wrangler CLI reference for a command or a whole namespace. Use `ExtraFlagDetails` as a child of `WranglerCommand` to add or replace a flag's help text.

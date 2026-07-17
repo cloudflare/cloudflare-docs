@@ -3,7 +3,17 @@ link: "/realtime/realtimekit/release-notes/ios-ui-kit/"
 productName: RealtimeKit iOS UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
-  - publish_date: "2026-06-24"
+  - publish_date: "2026-07-17"
+    title: RealtimeKit iOS UI Kit 3.1.0
+    description: |-
+      **Enhancements**
+
+      - Aligned the version with [RealtimeKit iOS Core v3.1.0](/realtime/realtimekit/release-notes/ios-core/#2026-07-17). This release has no breaking changes.
+
+      **Fixes**
+
+      - Audio and video toggle buttons no longer check permissions or disable themselves. The core SDK handles permission requests.
+  - publish_date: "2026-06-30"
     title: RealtimeKit iOS UI Kit 2.0.0
     description: |-
       **Breaking changes**

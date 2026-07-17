@@ -1,0 +1,41 @@
+---
+title: Workers fetch requests now support cf.vary
+description: Use the `cf.vary` request option to control cache variants for Workers subrequests that receive origin Vary responses.
+products:
+  - workers
+date: 2026-06-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+Workers `fetch()` requests now support the `cf.vary` request option. Use `cf.vary` to control how Cloudflare caches origin responses with a `Vary` header for a single subrequest.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		return fetch(request, {
+			cf: {
+				vary: {
+					default: { action: "bypass" },
+					headers: {
+						accept: {
+							action: "normalize",
+							media_types: ["text/html", "application/json"],
+						},
+						"accept-language": {
+							action: "normalize",
+							languages: ["en", "fr", "de"],
+						},
+					},
+				},
+			},
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+For more information, refer to [`cf.vary`](/workers/runtime-apis/request/#the-cfvary-property).
