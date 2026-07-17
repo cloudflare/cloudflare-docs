@@ -11,18 +11,9 @@ import type { GitHubIssueComment } from "./github";
 export const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
 
 // Rebase status values embedded in the bot comment as HTML comments.
-export type RebaseStatus =
-	| "in-progress"
-	| "complete"
-	| "halted-conflict"
-	| "halted-wrong-base"
-	| "halted-fork"
-	| "halted-confidence"
-	| "failed";
-
-const REBASE_STATUS_RE = /<!-- rebase-status: ([^\s]+) -->/;
-
-const KNOWN_REBASE_STATUSES: readonly RebaseStatus[] = [
+// The type is derived from the array so both stay in sync — adding a status
+// to one without updating the other is a compile error.
+const KNOWN_REBASE_STATUSES = [
 	"in-progress",
 	"complete",
 	"halted-conflict",
@@ -31,6 +22,10 @@ const KNOWN_REBASE_STATUSES: readonly RebaseStatus[] = [
 	"halted-confidence",
 	"failed",
 ] as const;
+
+export type RebaseStatus = (typeof KNOWN_REBASE_STATUSES)[number];
+
+const REBASE_STATUS_RE = /<!-- rebase-status: ([^\s]+) -->/;
 
 /**
  * Extract the rebase status marker from a bot comment body.

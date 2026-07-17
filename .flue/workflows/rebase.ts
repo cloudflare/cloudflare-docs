@@ -28,6 +28,7 @@ import {
 	getPullRequest,
 	getRepoFileContent,
 	getRef,
+	pollForBranchUpdate,
 	removeReactionFromComment,
 	updatePullRequestBranch,
 	updateRef,
@@ -186,6 +187,21 @@ export async function run({
 
 	// ── 5. Handle clean rebase ────────────────────────────────────────────────
 	if (rebaseResult.ok) {
+		// If GitHub accepted the request asynchronously (202), poll until the
+		// branch's head SHA changes before declaring success. A timeout is
+		// treated as success (the operation is still likely completing) — the
+		// subsequent /full-review will run against whatever head SHA is current.
+		if (rebaseResult.async) {
+			const priorSha = pr.head.sha;
+			console.log({
+				message: `Rebase async for PR #${input.prNumber} — polling for branch update`,
+				event: "rebase_workflow",
+				number: input.prNumber,
+				action: "rebase_polling",
+			});
+			await pollForBranchUpdate(token, input.prNumber, priorSha);
+		}
+
 		const completeBody = renderRebaseStatusUpdate(
 			"complete",
 			undefined,
@@ -487,6 +503,7 @@ async function resolveConflictsWithAI(
 ): Promise<
 	ConflictResolution & {
 		allPrFiles: PrFileEntry[];
+		conflictCandidateSet: ReadonlySet<string>;
 		mergeBaseSha: string;
 		productionRefSha: string;
 	}
@@ -536,9 +553,16 @@ async function resolveConflictsWithAI(
 	const productionChangedPaths = new Set(productionFiles.map((f) => f.path));
 
 	// Intersection = files changed on both sides = potential conflict zone.
-	const conflictCandidates = [...prChangedPaths].filter((p) =>
-		productionChangedPaths.has(p),
-	);
+	// Also check previousPath: a PR rename (A → B) where production changed A
+	// is a conflict even though the new path B isn't in productionChangedPaths.
+	const conflictCandidates = [...prChangedPaths].filter((p) => {
+		if (productionChangedPaths.has(p)) return true;
+		// Check whether the file's old name (before rename) was changed on production.
+		const entry = prFiles.find((f) => f.path === p);
+		return entry?.previousPath
+			? productionChangedPaths.has(entry.previousPath)
+			: false;
+	});
 
 	if (conflictCandidates.length === 0) {
 		// No overlapping files — rebase should be clean (shouldn't normally reach
@@ -549,6 +573,7 @@ async function resolveConflictsWithAI(
 				"Could not identify specific conflicting files. Please resolve manually.",
 			files: [],
 			allPrFiles: prFiles,
+			conflictCandidateSet: new Set(conflictCandidates),
 			mergeBaseSha,
 			productionRefSha: productionRef.sha,
 		};
@@ -563,6 +588,7 @@ async function resolveConflictsWithAI(
 			reason: `Too many conflicting files (${conflictCandidates.length}) to resolve automatically — limit is ${CONFLICT_CAP}. Please resolve conflicts manually.`,
 			files: [],
 			allPrFiles: prFiles,
+			conflictCandidateSet: new Set(conflictCandidates),
 			mergeBaseSha,
 			productionRefSha: productionRef.sha,
 		};
@@ -694,6 +720,7 @@ async function resolveConflictsWithAI(
 				"AI did not return a parseable JSON response. Please resolve manually.",
 			files: [],
 			allPrFiles: prFiles,
+			conflictCandidateSet: new Set(conflictCandidates),
 			mergeBaseSha,
 			productionRefSha: productionRef.sha,
 		};
@@ -724,6 +751,7 @@ async function resolveConflictsWithAI(
 		reason: typeof parsed.reason === "string" ? parsed.reason : "",
 		files: validatedFiles,
 		allPrFiles: prFiles,
+		conflictCandidateSet: new Set(conflictCandidates),
 		mergeBaseSha,
 		productionRefSha: productionRef.sha,
 	};
@@ -744,6 +772,7 @@ async function applyResolution(
 	pr: Awaited<ReturnType<typeof getPullRequest>>,
 	resolution: ConflictResolution & {
 		allPrFiles: PrFileEntry[];
+		conflictCandidateSet: ReadonlySet<string>;
 		mergeBaseSha: string;
 		productionRefSha: string;
 	},
@@ -752,16 +781,29 @@ async function applyResolution(
 		throw new Error("No resolved files to apply.");
 	}
 
-	// Build a map of AI-resolved content keyed by path for fast lookup.
+	// Build a map of AI-resolved content keyed by path, restricted to files
+	// that were actually identified as conflict candidates. This prevents the
+	// model from quietly replacing a non-conflicting PR file with AI output.
 	const resolvedByPath = new Map(
-		resolution.files.map(({ path, content }) => [path, content]),
+		resolution.files
+			.filter(({ path }) => resolution.conflictCandidateSet.has(path))
+			.map(({ path, content }) => [path, content]),
 	);
 
-	// Get the current production HEAD commit (tree to build on top of).
-	const productionCommit = await getGitCommit(
-		token,
-		resolution.productionRefSha,
-	);
+	// Re-fetch the production HEAD immediately before committing so the new
+	// commit is parented on the current tip rather than a snapshot taken before
+	// the (potentially long) AI resolution call.
+	const freshProductionRef = await getRef(token, "production");
+	if (freshProductionRef.sha !== resolution.productionRefSha) {
+		// Production advanced while the AI was working. Abort so we don't
+		// silently parent the commit on a stale SHA — the user can retry.
+		throw new Error(
+			`Production branch moved during AI resolution (was ${resolution.productionRefSha.slice(0, 7)}, now ${freshProductionRef.sha.slice(0, 7)}). Please retry /rebaseWithConflicts.`,
+		);
+	}
+
+	// Get the production commit's tree to build on top of.
+	const productionCommit = await getGitCommit(token, freshProductionRef.sha);
 
 	// Get the PR head commit for the commit message.
 	const prCommit = await getGitCommit(token, pr.head.sha);
@@ -831,7 +873,7 @@ async function applyResolution(
 		treeUpdates,
 	);
 
-	// Create a new commit whose parent is the production HEAD.
+	// Create a new commit whose parent is the (re-verified) production HEAD.
 	const commitMessage = [
 		prCommit.message,
 		"",
@@ -839,7 +881,7 @@ async function applyResolution(
 	].join("\n");
 
 	const newCommitSha = await createGitCommit(token, commitMessage, newTreeSha, [
-		resolution.productionRefSha,
+		freshProductionRef.sha,
 	]);
 
 	// Force-update the PR branch to point to the new commit.

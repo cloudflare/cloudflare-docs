@@ -440,6 +440,10 @@ export async function run({ payload, env, req }: FlueContext) {
 	// ── 5c. Handle /rebase and /rebaseWithConflicts commands ─────────────────────
 	if (isRebaseCommand || isRebaseWithConflictsCommand) {
 		const commandName = isRebaseCommand ? "rebase" : "rebaseWithConflicts";
+		// Log action names use snake_case to match the rest of the orchestrator's
+		// telemetry (e.g. "disable_auto_review_set"). camelCase command names are
+		// kept in user-facing summaries only.
+		const logAction = isRebaseCommand ? "rebase" : "rebase_with_conflicts";
 		const commentId = (body.comment as Record<string, unknown> | undefined)
 			?.id as number | undefined;
 
@@ -458,7 +462,7 @@ export async function run({ payload, env, req }: FlueContext) {
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
-				action: `${commandName}_ignored_not_codeowner`,
+				action: `${logAction}_ignored_not_codeowner`,
 			});
 			return { acted: false, summary: "Commenter is not a codeowner." };
 		}
@@ -481,7 +485,7 @@ export async function run({ payload, env, req }: FlueContext) {
 					reactionErr instanceof Error
 						? reactionErr.message
 						: String(reactionErr),
-				action: `${commandName}_reaction_failed`,
+				action: `${logAction}_reaction_failed`,
 			});
 		}
 
@@ -504,7 +508,7 @@ export async function run({ payload, env, req }: FlueContext) {
 				delivery,
 				number,
 				runId,
-				action: `${commandName}_admitted`,
+				action: `${logAction}_admitted`,
 			});
 			return {
 				acted: true,
@@ -518,7 +522,7 @@ export async function run({ payload, env, req }: FlueContext) {
 				delivery,
 				number,
 				error: errMsg,
-				action: `${commandName}_dispatch_failed`,
+				action: `${logAction}_dispatch_failed`,
 			});
 			return {
 				acted: false,

@@ -510,6 +510,12 @@ export async function isCodeOwner(
 
 export interface UpdateBranchResult {
 	ok: boolean;
+	/**
+	 * True when GitHub accepted the request asynchronously (202 Accepted).
+	 * The caller should poll the PR's head SHA to detect when the operation
+	 * has completed before relying on the branch state.
+	 */
+	async?: boolean;
 	/** Present when ok=false (conflict or other API error message). */
 	message?: string;
 }
@@ -517,8 +523,11 @@ export interface UpdateBranchResult {
 /**
  * Update a pull request's branch against its base using the GitHub API.
  * Pass update_method "rebase" to attempt a rebase rather than a merge commit.
- * Returns { ok: false, message } on 422 (conflict) instead of throwing, so
- * callers can inspect the failure without a try/catch.
+ *
+ * - 200 OK: branch was updated synchronously. { ok: true }
+ * - 202 Accepted: GitHub queued the work asynchronously. { ok: true, async: true }
+ *   Callers should poll the PR's head SHA before treating the branch as ready.
+ * - 422: conflict or validation error. { ok: false, message }
  */
 export async function updatePullRequestBranch(
 	token: string,
@@ -533,6 +542,7 @@ export async function updatePullRequestBranch(
 			body: JSON.stringify({ update_method: updateMethod }),
 		},
 	);
+	if (res.status === 202) return { ok: true, async: true };
 	if (res.ok) return { ok: true };
 	const text = await res.text();
 	let message = text;
@@ -548,15 +558,34 @@ export async function updatePullRequestBranch(
 	);
 }
 
+/**
+ * Poll until the PR's head SHA changes from `priorSha`, indicating an async
+ * `update-branch` has completed. Checks every 3 seconds for up to `timeoutMs`
+ * (default 60 s). Returns the new head SHA on success, null on timeout.
+ */
+export async function pollForBranchUpdate(
+	token: string,
+	pullNumber: number,
+	priorSha: string,
+	timeoutMs = 60_000,
+): Promise<string | null> {
+	const deadline = Date.now() + timeoutMs;
+	while (Date.now() < deadline) {
+		await new Promise((r) => setTimeout(r, 3_000));
+		const pr = await getPullRequest(token, pullNumber);
+		if (pr.head.sha !== priorSha) return pr.head.sha;
+	}
+	return null;
+}
+
 export interface GitRef {
 	sha: string;
 	ref: string;
 }
 
 export async function getRef(token: string, branch: string): Promise<GitRef> {
-	const encodedBranch = branch.split("/").map(encodeURIComponent).join("/");
 	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodedBranch}`,
+		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodeRef(branch)}`,
 		{ headers: apiHeaders(token) },
 	);
 	if (!res.ok) {
@@ -747,9 +776,8 @@ export async function updateRef(
 	branch: string,
 	sha: string,
 ): Promise<void> {
-	const encodedBranch = branch.split("/").map(encodeURIComponent).join("/");
 	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodedBranch}`,
+		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodeRef(branch)}`,
 		{
 			method: "PATCH",
 			headers: apiHeaders(token),
