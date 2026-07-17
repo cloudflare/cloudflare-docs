@@ -30,7 +30,7 @@ You can configure up to 20 header operations per policy. Header names are limite
 
 Adding a header appends a value to the request. If the header already exists, the value is added alongside the existing value rather than replacing it.
 
-### Overwite headers
+### Overwrite headers
 
 Overwriting a header overwrites any existing value. If the header does not already exist on the request, it is created. Use this operation when you need to guarantee a specific header value regardless of what the client sent.
 
@@ -59,7 +59,7 @@ The following dynamic variables are available:
 | `@{device.id}`        | Cloudflare One Client device UUID.                                          |
 | `@{device.posture}`   | Device posture check results (serialized as a JSON string).|
 
-Dynamic variables require an active identity session. If Gateway cannot resolve a variable (for example, the user is not authenticated), the variable is replaced with an empty string and a warning is logged.
+Dynamic variables require an active identity session. If Gateway cannot resolve a variable (for example, the user is not authenticated), the variable is replaced with a warning string such as `cf-unresolved` or `cf-invalid`, and a warning is added to the HTTP log.
 
 ## Configure header operations
 
@@ -71,8 +71,8 @@ To create an HTTP policy with header operations:
 2. Select **Add a policy**.
 3. Build an expression to match the traffic you want to modify.
 4. In **Action**, select _Allow_.
-5. Under **Modify request headers**, select **Add** or **Overwrite** to add or set headers. To delete a header, select **Remove**.
-6. For each header operation, enter the header name and value. To use a dynamic variable, enter the `@{...}` syntax in the value field, or click the `</>` button to see the list of available values.
+5. Under **Modify request headers**, select **Add** or **Overwrite** to add or overwrite headers, or select **Remove** to delete a header.
+6. For Add and Overwrite operations, enter the header name and value. To use a dynamic variable, enter the `@{...}` syntax in the value field, or select the `{}` button to see the list of available values. For Remove operations, enter only the header name.
 7. Save your policy.
 
 ### API
