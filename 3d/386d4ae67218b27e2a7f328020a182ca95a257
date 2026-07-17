@@ -1,0 +1,35 @@
+src/assets/images/workers/previews/do-isolation-v3.svg
+  84dff175abac85ac 1-51
+src/content/changelog/workers/2026-05-12-domains-tab.mdx
+  84dff175abac85ac 1-40
+src/content/docs/workers/previews/concepts.mdx
+  84dff175abac85ac 100
+src/content/docs/workers/previews/guides/durable-object-isolation.mdx
+  84dff175abac85ac 11,13,15,17,19-22,24,26-29,31,33-35,40-45,47-55,57,59,61,66,76,91-92,98-99,101,104-128,130-165,167,176-177
+src/content/docs/workers/previews/configuring-previews.mdx
+  84dff175abac85ac 110-112,125-126,247,257
+src/assets/images/workers/previews/do-isolation.svg
+  84dff175abac85ac 1-53
+src/assets/images/workers/previews/do-isolation-v2.svg
+  84dff175abac85ac 1-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "3d386d4ae67218b27e2a7f328020a182ca95a257",
+  "prompts": {
+    "84dff175abac85ac": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1dc4b173dffexXQYtBgTG90jS9",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "yomna",
+      "messages": [],
+      "total_additions": 331,
+      "total_deletions": 34,
+      "accepted_lines": 331,
+      "overriden_lines": 0
+    }
+  }
+}
