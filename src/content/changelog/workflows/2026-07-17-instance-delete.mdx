@@ -1,0 +1,26 @@
+---
+title: Delete Workflow instances
+description: Delete a Workflow instance and its stored state using the binding or Wrangler.
+products:
+  - workflows
+  - workers
+date: 2026-07-17 12:00:00 UTC
+---
+
+You can now delete a Workflow instance, removing its stored state, using the Workflows binding or Wrangler.
+
+From a Worker, call `delete()` on an instance handle:
+
+```ts
+const instance = await env.MY_WORKFLOW.get("abc-123");
+await instance.delete();
+```
+
+Or from Wrangler (also works against a local `wrangler dev` session with `--local`):
+
+```sh
+npx wrangler workflows instances delete my-workflow <INSTANCE_ID>
+npx wrangler workflows instances delete my-workflow <INSTANCE_ID> --local
+```
+
+For more information, refer to [Delete a Workflow instance](/workflows/build/trigger-workflows/#delete-a-workflow-instance) and the [`delete`](/workflows/build/workers-api/#delete) Workers API reference.
