@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: overview
 title: Testing
 description: Choose testing tools for Cloudflare Workers, including createTestHarness and the Vitest integration.
 sidebar:
@@ -8,11 +8,11 @@ products:
   - workers
 ---
 
-The Workers platform offers multiple testing tools for different parts of your application. For most projects, use the [Workers Vitest integration](/workers/testing/vitest-integration/) for unit tests and [`createTestHarness()`](/workers/testing/test-harness/) for integration tests. These tools can be used together in the same project.
+The Workers platform provides complementary tools for testing different parts of your application. For most projects, use the [Workers Vitest integration](/workers/testing/vitest-integration/) for unit tests and the [`createTestHarness()`](/workers/testing/test-harness/) API for integration tests.
 
 ## Unit tests
 
-Use the [Workers Vitest integration](/workers/testing/vitest-integration/) when you want fast feedback on functions and modules. Tests run inside the Workers runtime, so your test code can access bindings and runtime APIs directly.
+Use the [Workers Vitest integration](/workers/testing/vitest-integration/) for fast feedback while testing individual functions and modules. Tests run inside the Workers runtime, so your test code can access bindings and runtime APIs directly.
 
 The Workers Vitest integration provides:
 
@@ -24,12 +24,12 @@ To set up unit tests, refer to [Write your first Vitest test](/workers/testing/v
 
 ## Integration tests
 
-Use [`createTestHarness()`](/workers/testing/test-harness/) when you want tests to run against Workers built by Wrangler or the [Cloudflare Vite plugin](/workers/vite-plugin/). It lets any Node.js test runner dispatch requests to a running local Worker.
+Use the [`createTestHarness()`](/workers/testing/test-harness/) API to exercise one or more Workers as a whole and test how they interact with each other and with external services.
 
-`createTestHarness()` provides:
+The test harness provides:
 
-- Tests that run the production build output produced by Wrangler or Vite.
-- Requests dispatched through configured Worker routes.
-- Coverage for a multi-Worker application as a whole.
+- Confidence from exercising production Worker builds.
+- Coverage through configured HTTP routes across Workers.
+- Compatibility with any Node.js test runner and tools such as Playwright or MSW.
 
-To set up integration tests, refer to [Write your first integration test](/workers/testing/test-harness/write-your-first-test/).
+To set up integration tests, refer to [Get started with the test harness](/workers/testing/test-harness/get-started/).

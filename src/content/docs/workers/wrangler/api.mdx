@@ -25,13 +25,13 @@ Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 - [`createTestHarness`](#createtestharness) - Start one or more Workers for integration tests in any Node.js test runner.
 - [`experimental_generateTypes`](#experimental_generatetypes) - Generate TypeScript type definitions from your Worker configuration.
+- [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
+- [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
-- [`unstable_startWorker`](#unstable_startworker) - Deprecated lower-level Wrangler dev server API.
-- [`unstable_dev`](#unstable_dev) - Deprecated API for starting a Worker dev server.
 
 ## `createTestHarness`
 
-Start one or more Workers for integration tests in any Node.js test runner. `createTestHarness()` runs production build output from Wrangler configuration files, Vite-generated Wrangler configuration files, or inline Wrangler configuration objects. It is a higher-level wrapper around Miniflare that provides methods for dispatching requests and scheduled events.
+`createTestHarness()` starts one or more Workers for integration tests from any Node.js test runner. It runs production build output from Wrangler configuration files, Vite-generated configuration files, or inline Wrangler configuration objects. The API wraps Miniflare and provides methods for dispatching requests and scheduled events.
 
 For setup guidance and examples, refer to [Test harness](/workers/testing/test-harness/).
 
@@ -114,9 +114,9 @@ const server = createTestHarness({
 `createTestHarness()` returns a <Type text="TestHarness" /> object with these methods:
 
 - `listen()` <Type text="Promise<{ url: URL }>" />
-  - Starts the server and returns its current URL. Calling this more than once returns the same running server session until the server is closed or reset.
+  - Starts the server and returns its current URL. Repeated calls return the same session until the server is closed or reset.
 - `fetch(input, init)` <Type text="Promise<Response>" />
-  - Dispatches a fetch request through the server. Relative URLs are resolved against the current server URL. Absolute URLs are matched against the configured routes for each Worker and dispatched to the first matching Worker, or to the primary Worker if no routes match.
+  - Dispatches a fetch request through the server. Relative URLs resolve against the current server URL. Absolute URLs follow the configured Worker routes and fall back to the primary Worker.
 - `getWorker(name?)` <Type text="WorkerHandle" />
   - Returns a handle for dispatching events directly to a Worker. When no name is provided, this returns the primary Worker.
 - `getLogs()` <Type text="WorkerdStructuredLog[]" />
@@ -139,7 +139,7 @@ const server = createTestHarness({
 - `scheduled(options)` <Type text={'Promise<{ outcome: "ok" | "canceled" | "exception"; noRetry: boolean }>'} />
   - Dispatches a scheduled event directly to this Worker.
 - `getEnv()` <Type text="Promise<Env>" />
-  - Returns the full environment object configured on this Worker, including vars, secrets, and bindings.
+  - Returns the full environment object configured for this Worker, including variables, secrets, and bindings.
 - `getExport()` <Type text={"Promise<Service<Module['default']>>"} />
   - Returns the default Worker export, including RPC methods.
 - `applyD1Migrations(bindingName)` <Type text="Promise<void>" />
@@ -190,7 +190,9 @@ describe("Worker", () => {
 	});
 
 	test("calls a specific Worker directly", async () => {
-		const response = await apiWorker.fetch("http://api.example.com/v1/users/123");
+		const response = await apiWorker.fetch(
+			"http://api.example.com/v1/users/123",
+		);
 		assert.equal(response.status, 200);
 	});
 
@@ -324,11 +326,11 @@ const result = await experimental_generateTypes({
 
 :::caution
 
-`unstable_startWorker()` is deprecated. Cloudflare now recommends [`createTestHarness()`](#createtestharness), which provides a harness specifically designed for integration testing. If you need to start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+`unstable_startWorker()` is deprecated. Cloudflare recommends [`createTestHarness()`](#createtestharness) for integration testing. To start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 :::
 
-This API exposes the internals of the Wrangler dev server, and allows you to customize how it runs. This example uses `node:test`, but should apply to any testing framework:
+This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
 
 ```js
 import assert from "node:assert";
@@ -359,7 +361,7 @@ describe("worker", () => {
 
 :::caution
 
-`unstable_dev()` is deprecated. For integration tests, Cloudflare now recommends [`createTestHarness()`](#createtestharness), which provides a harness specifically designed for integration testing. If you need to start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+`unstable_dev()` is deprecated. Cloudflare recommends [`createTestHarness()`](#createtestharness) for integration testing. To start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 :::
 
