@@ -1,0 +1,471 @@
+---
+// ThemeSelect.astro — Custom floating dropdown theme select override
+const uniqueId = Math.random().toString(36).substring(2, 9);
+---
+
+<starlight-theme-select class="relative inline-block">
+	<button
+		type="button"
+		id={`theme-select-btn-${uniqueId}`}
+		class="theme-select-btn relative flex h-9 w-[calc(6.25em+1rem)] cursor-pointer items-center rounded-lg border-0 bg-transparent text-sm font-medium text-[var(--color-header-text)] transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)]"
+		aria-label="Select theme"
+		aria-haspopup="listbox"
+		aria-controls={`theme-select-menu-${uniqueId}`}
+		aria-expanded="false"
+	>
+		<!-- Active Icons (hidden by default, toggled by script) -->
+		<svg
+			data-theme-icon="light"
+			class="theme-icon pointer-events-none absolute top-1/2 left-[8%] hidden h-3.5 w-3.5 shrink-0 -translate-y-1/2"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+		>
+			<path
+				d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"
+			></path>
+		</svg>
+		<svg
+			data-theme-icon="dark"
+			class="theme-icon pointer-events-none absolute top-1/2 left-[8%] hidden h-3.5 w-3.5 shrink-0 -translate-y-1/2"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+		>
+			<path
+				d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"
+			></path>
+		</svg>
+		<svg
+			data-theme-icon="auto"
+			class="theme-icon pointer-events-none absolute top-1/2 left-[8%] hidden h-3.5 w-3.5 shrink-0 -translate-y-1/2"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+		>
+			<path
+				d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"
+			></path>
+		</svg>
+
+		<span
+			id={`theme-select-label-${uniqueId}`}
+			class="theme-select-label block w-full text-left text-ellipsis select-none"
+			style="padding-left: calc(0.875rem + 0.5rem + 0.5rem); padding-right: calc(1.25rem + 0.5rem + 0.25rem); appearance: none;"
+		>
+			Auto
+		</span>
+
+		<!-- PiCaretDownBold SVG Path -->
+		<svg
+			class="pointer-events-none absolute top-1/2 right-[8%] h-2.5 w-2.5 shrink-0 -translate-y-1/2"
+			viewBox="0 0 256 256"
+			fill="currentColor"
+		>
+			<path
+				d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"
+			></path>
+		</svg>
+	</button>
+
+	<ul
+		id={`theme-select-menu-${uniqueId}`}
+		class="theme-select-menu z-50 max-w-64 min-w-44 list-none rounded-lg border border-[var(--color-header-overlay-line)] bg-[var(--color-header-overlay-bg)] p-1 shadow-[0_4px_16px_var(--color-header-overlay-shadow)]"
+		role="listbox"
+		aria-labelledby={`theme-select-btn-${uniqueId}`}
+	>
+		<li
+			role="option"
+			data-theme-value="light"
+			tabindex="0"
+			aria-selected="false"
+			class="flex w-full cursor-pointer items-center gap-3 rounded-md px-2.5 py-1.5 text-sm text-[var(--color-header-text)] no-underline transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)] focus-visible:bg-[var(--color-header-fill)] focus-visible:outline-none"
+		>
+			<svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+				<path
+					d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"
+				></path>
+			</svg>
+			<span class="flex-1 text-left select-none">Light</span>
+			<svg
+				data-theme-check="light"
+				class="hidden size-3.5 shrink-0 text-[var(--sl-color-accent)]"
+				viewBox="0 0 256 256"
+				fill="currentColor"
+			>
+				<path
+					d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"
+				></path>
+			</svg>
+		</li>
+		<li
+			role="option"
+			data-theme-value="dark"
+			tabindex="0"
+			aria-selected="false"
+			class="flex w-full cursor-pointer items-center gap-3 rounded-md px-2.5 py-1.5 text-sm text-[var(--color-header-text)] no-underline transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)] focus-visible:bg-[var(--color-header-fill)] focus-visible:outline-none"
+		>
+			<svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+				<path
+					d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"
+				></path>
+			</svg>
+			<span class="flex-1 text-left select-none">Dark</span>
+			<svg
+				data-theme-check="dark"
+				class="hidden size-3.5 shrink-0 text-[var(--sl-color-accent)]"
+				viewBox="0 0 256 256"
+				fill="currentColor"
+			>
+				<path
+					d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"
+				></path>
+			</svg>
+		</li>
+		<li
+			role="option"
+			data-theme-value="auto"
+			tabindex="0"
+			aria-selected="false"
+			class="flex w-full cursor-pointer items-center gap-3 rounded-md px-2.5 py-1.5 text-sm text-[var(--color-header-text)] no-underline transition-colors duration-150 hover:bg-[var(--color-header-fill)] hover:text-[var(--color-header-hover-text)] focus-visible:bg-[var(--color-header-fill)] focus-visible:outline-none"
+		>
+			<svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+				<path
+					d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"
+				></path>
+			</svg>
+			<span class="flex-1 text-left select-none">Auto</span>
+			<svg
+				data-theme-check="auto"
+				class="hidden size-3.5 shrink-0 text-[var(--sl-color-accent)]"
+				viewBox="0 0 256 256"
+				fill="currentColor"
+			>
+				<path
+					d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"
+				></path>
+			</svg>
+		</li>
+	</ul>
+</starlight-theme-select>
+
+<style>
+	.theme-select-menu {
+		display: none;
+		position: absolute;
+		right: 0;
+		bottom: 100%;
+		margin-bottom: 0.5rem;
+	}
+
+	starlight-theme-select[open] .theme-select-menu {
+		display: block;
+	}
+
+	@media (min-width: 50rem) {
+		.theme-select-menu {
+			top: 100%;
+			bottom: auto;
+			margin-top: 0.5rem;
+			margin-bottom: 0;
+		}
+	}
+</style>
+
+<script is:inline>
+	// 1. Immediately read theme on first parse to prevent flash-of-unstyled-content (FOUC)
+	(() => {
+		try {
+			const storageKey = "starlight-theme";
+			const raw = localStorage.getItem(storageKey) || "auto";
+			const stored =
+				raw === "light" || raw === "dark" || raw === "auto" ? raw : "auto";
+			document.querySelectorAll("starlight-theme-select").forEach((select) => {
+				const activeIcon = select.querySelector(
+					`[data-theme-icon="${stored}"]`,
+				);
+				if (activeIcon) activeIcon.classList.remove("hidden");
+
+				const label = select.querySelector(".theme-select-label");
+				if (label) {
+					label.textContent =
+						stored === "auto" ? "Auto" : stored === "dark" ? "Dark" : "Light";
+				}
+
+				const check = select.querySelector(`[data-theme-check="${stored}"]`);
+				if (check) check.classList.remove("hidden");
+			});
+		} catch (_) {}
+	})();
+</script>
+
+<script>
+	type Theme = "auto" | "dark" | "light";
+	const storageKey = "starlight-theme";
+
+	// Validate theme values strictly before selector insertion
+	const parseTheme = (theme: unknown): Theme =>
+		theme === "auto" || theme === "dark" || theme === "light" ? theme : "auto";
+
+	// Module-level theme loader — avoids capturing any instance in closures
+	const loadThemeFromStorage = (): Theme => {
+		try {
+			return parseTheme(localStorage.getItem(storageKey));
+		} catch {
+			return "auto";
+		}
+	};
+
+	// Central helper to update all theme pickers currently mounted in the document
+	const updateAllThemePickers = (theme: Theme) => {
+		document.querySelectorAll("starlight-theme-select").forEach((picker) => {
+			if (
+				picker instanceof HTMLElement &&
+				typeof (picker as any).updateUI === "function"
+			) {
+				try {
+					(picker as any).updateUI(theme);
+				} catch {}
+			}
+		});
+	};
+
+	class StarlightThemeSelect extends HTMLElement {
+		private btn!: HTMLButtonElement;
+		private menu!: HTMLUListElement;
+		private label!: HTMLSpanElement;
+
+		// Bound event listeners stored for exact cleanup
+		private btnClick = (e: Event) => {
+			e.stopPropagation();
+			this.toggleMenu();
+		};
+
+		private menuClick = (e: Event) => {
+			e.stopPropagation();
+			const opt = (e.target as HTMLElement).closest("[data-theme-value]");
+			if (opt) {
+				this.onOptSelected(opt as HTMLElement);
+			}
+		};
+
+		private menuKeyDown = (e: KeyboardEvent) => {
+			const opt = (e.target as HTMLElement).closest("[data-theme-value]");
+			const options = Array.from(
+				this.menu.querySelectorAll("[data-theme-value]"),
+			) as HTMLElement[];
+
+			if (opt) {
+				const idx = options.indexOf(opt as HTMLElement);
+
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					e.stopPropagation();
+					this.onOptSelected(opt as HTMLElement);
+				} else if (e.key === "ArrowDown") {
+					e.preventDefault();
+					options[(idx + 1) % options.length].focus();
+				} else if (e.key === "ArrowUp") {
+					e.preventDefault();
+					options[(idx - 1 + options.length) % options.length].focus();
+				} else if (e.key === "Home") {
+					e.preventDefault();
+					options[0].focus();
+				} else if (e.key === "End") {
+					e.preventDefault();
+					options[options.length - 1].focus();
+				} else if (e.key === "Escape") {
+					e.stopPropagation();
+					this.toggleMenu(false, true);
+				}
+			}
+		};
+
+		private windowClick = () => {
+			this.toggleMenu(false, false);
+		};
+
+		private windowScroll = () => {
+			this.toggleMenu(false, false);
+		};
+
+		private focusOut = (e: FocusEvent) => {
+			// Close the menu when focus leaves the entire component
+			if (!this.contains(e.relatedTarget as Node)) {
+				this.toggleMenu(false, false);
+			}
+		};
+
+		private mediaChange = () => {
+			if (this.loadTheme() === "auto") {
+				this.applyTheme("auto");
+			}
+		};
+
+		private mediaQuery = matchMedia("(prefers-color-scheme: light)");
+
+		private loadTheme(): Theme {
+			return loadThemeFromStorage();
+		}
+
+		private storeTheme(theme: Theme) {
+			try {
+				localStorage.setItem(storageKey, theme);
+				localStorage.setItem("ui-mode", theme);
+			} catch {}
+		}
+
+		private getPreferredColorScheme(): "light" | "dark" {
+			try {
+				return matchMedia("(prefers-color-scheme: light)").matches
+					? "light"
+					: "dark";
+			} catch {
+				return "light";
+			}
+		}
+
+		// Public method called by global updatePickers wrapper
+		public updateUI(theme: Theme) {
+			if (!this.label) return;
+
+			// Toggle active icon in button
+			this.querySelectorAll("[data-theme-icon]").forEach((icon) => {
+				if (icon.getAttribute("data-theme-icon") === theme) {
+					icon.classList.remove("hidden");
+				} else {
+					icon.classList.add("hidden");
+				}
+			});
+
+			// Set text label
+			this.label.textContent =
+				theme === "auto" ? "Auto" : theme === "dark" ? "Dark" : "Light";
+
+			// Toggle checks and aria-selected in menu
+			this.querySelectorAll("[data-theme-value]").forEach((opt) => {
+				const isSelected = opt.getAttribute("data-theme-value") === theme;
+				opt.setAttribute("aria-selected", isSelected ? "true" : "false");
+			});
+
+			this.querySelectorAll("[data-theme-check]").forEach((check) => {
+				if (check.getAttribute("data-theme-check") === theme) {
+					check.classList.remove("hidden");
+				} else {
+					check.classList.add("hidden");
+				}
+			});
+		}
+
+		private applyTheme(theme: Theme) {
+			const resolved =
+				theme === "auto" ? this.getPreferredColorScheme() : theme;
+			document.documentElement.dataset.theme = resolved;
+			this.storeTheme(theme);
+
+			// Synchronize with external Starlight components if provider is loaded;
+			// the wrapped provider already calls updateAllThemePickers internally,
+			// so we only call updateAllThemePickers directly when no provider exists.
+			if (
+				typeof window !== "undefined" &&
+				(window as any).StarlightThemeProvider
+			) {
+				const provider = (window as any).StarlightThemeProvider;
+				try {
+					provider.updatePickers.call(provider, theme);
+				} catch {}
+			} else {
+				updateAllThemePickers(theme);
+			}
+		}
+
+		private focusActiveOption() {
+			const activeTheme = this.loadTheme();
+			const activeOpt = this.menu.querySelector(
+				`[data-theme-value="${activeTheme}"]`,
+			) as HTMLElement;
+			if (activeOpt) {
+				activeOpt.focus();
+			}
+		}
+
+		private toggleMenu(show = !this.hasAttribute("open"), restoreFocus = true) {
+			if (show) {
+				this.setAttribute("open", "");
+				this.btn.setAttribute("aria-expanded", "true");
+				// Accessibility: Move focus to the active option on open
+				setTimeout(() => this.focusActiveOption(), 0);
+			} else {
+				const wasOpen = this.hasAttribute("open");
+				this.removeAttribute("open");
+				this.btn.setAttribute("aria-expanded", "false");
+				// Accessibility: Only return focus to the trigger button on
+				// intentional close (Escape key, option selection), not on
+				// outside-click or scroll which would steal user focus.
+				if (wasOpen && restoreFocus) {
+					this.btn.focus();
+				}
+			}
+		}
+
+		private onOptSelected(opt: HTMLElement) {
+			const val = opt.getAttribute("data-theme-value");
+			const validatedTheme = parseTheme(val);
+			this.applyTheme(validatedTheme);
+			this.toggleMenu(false, true);
+		}
+
+		connectedCallback() {
+			this.btn = this.querySelector(".theme-select-btn") as HTMLButtonElement;
+			this.menu = this.querySelector(".theme-select-menu") as HTMLUListElement;
+			this.label = this.querySelector(".theme-select-label") as HTMLSpanElement;
+
+			if (!this.btn || !this.menu || !this.label) return;
+
+			// Initialize
+			this.applyTheme(this.loadTheme());
+
+			// Register event listeners
+			this.btn.addEventListener("click", this.btnClick);
+			this.menu.addEventListener("click", this.menuClick);
+			this.menu.addEventListener("keydown", this.menuKeyDown);
+			this.addEventListener("focusout", this.focusOut);
+			window.addEventListener("click", this.windowClick);
+			window.addEventListener("scroll", this.windowScroll, { passive: true });
+			this.mediaQuery.addEventListener("change", this.mediaChange);
+
+			// Intercept StarlightThemeProvider.updatePickers EXACTLY ONCE globally
+			if (
+				typeof window !== "undefined" &&
+				(window as any).StarlightThemeProvider &&
+				!(window as any).StarlightThemeProvider.isWrapped
+			) {
+				const provider = (window as any).StarlightThemeProvider;
+				const originalUpdate = provider.updatePickers;
+				provider.isWrapped = true;
+				provider.updatePickers = (theme: Theme = loadThemeFromStorage()) => {
+					try {
+						originalUpdate.call(provider, theme);
+					} catch {}
+					updateAllThemePickers(parseTheme(theme));
+				};
+			}
+		}
+
+		disconnectedCallback() {
+			if (this.btn) {
+				this.btn.removeEventListener("click", this.btnClick);
+			}
+			if (this.menu) {
+				this.menu.removeEventListener("click", this.menuClick);
+				this.menu.removeEventListener("keydown", this.menuKeyDown);
+			}
+			this.removeEventListener("focusout", this.focusOut);
+			window.removeEventListener("click", this.windowClick);
+			window.removeEventListener("scroll", this.windowScroll);
+			this.mediaQuery.removeEventListener("change", this.mediaChange);
+		}
+	}
+
+	// Register the element conditionally to prevent duplicate registration throws
+	if (!customElements.get("starlight-theme-select")) {
+		customElements.define("starlight-theme-select", StarlightThemeSelect);
+	}
+</script>

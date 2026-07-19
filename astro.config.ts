@@ -185,6 +185,7 @@ export default defineConfig({
 						PageTitle: "./src/components/overrides/PageTitle.astro",
 						SkipLink: "./src/components/overrides/SkipLink.astro",
 						TableOfContents: "./src/components/overrides/TableOfContents.astro",
+						ThemeSelect: "./src/components/overrides/ThemeSelect.astro",
 					},
 					sidebar,
 					customCss,

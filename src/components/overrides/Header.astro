@@ -2,7 +2,7 @@
 import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
 import DocSearch from "@astrojs/starlight-docsearch/DocSearch.astro";
 import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
-import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+import ThemeSelect from "./ThemeSelect.astro";
 
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
 import AgentDirective from "../AgentDirective.astro";
@@ -153,29 +153,6 @@ import AgentDirective from "../AgentDirective.astro";
 
 	:global(.site-title img) {
 		height: 1.25rem;
-	}
-
-	:global(starlight-theme-select > label > select) {
-		line-height: 1.25rem;
-		margin: 1px;
-		color: var(--color-header-text-subtle);
-	}
-
-	:global(
-		starlight-theme-select > label > select:focus,
-		starlight-theme-select > label > select:focus-visible
-	) {
-		margin: 1px;
-		outline-offset: -4px;
-	}
-
-	:global(starlight-theme-select > label > .label-icon) {
-		left: 8%;
-		color: var(--color-header-text-subtle);
-	}
-
-	:global(starlight-theme-select > label > .caret) {
-		left: 75%;
 	}
 
 	#right-group {
