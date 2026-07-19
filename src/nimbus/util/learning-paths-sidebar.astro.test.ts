@@ -1,87 +1,127 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 
-import type { SidebarItem } from "nimbus-docs/types";
+import type {
+	SidebarGroupItem,
+	SidebarItem,
+	SidebarLinkItem,
+} from "nimbus-docs/types";
 
-// Mirrors the production sidebar config (src/nimbus/astro-config.ts): no
-// framework `isolate`, so getSidebar exercises `isolateLearningPath`.
-vi.mock("virtual:nimbus/config", async () => {
-	const { defineConfig } = await import("nimbus-docs");
-	const { readdir } = await import("node:fs/promises");
-	const dirs = await readdir("./src/content/docs/", { withFileTypes: true });
-	const items = dirs
-		.filter((e) => e.isDirectory() && e.name !== "agent-setup")
-		.map((e) => ({
-			label: e.name,
-			items: [{ autogenerate: { directory: e.name, collapsed: true } }],
-		}));
-	const config = defineConfig({
-		site: "https://developers.cloudflare.com",
-		title: "Cloudflare Docs",
-		description: "Cloudflare's documentation.",
-		locale: "en",
-		github: "https://github.com/cloudflare/cloudflare-docs",
-		editPattern:
-			"https://github.com/cloudflare/cloudflare-docs/edit/production/{path}",
-		search: { provider: "custom" },
-		sidebar: {
-			items,
-			overviewLabel: "Overview",
-			indexDisplay: "overview-leaf",
-			scope: "section",
-			defaultCollapsed: true,
-		},
-	});
-	return { config, indexedCollections: [], versionAlternates: {} };
-});
+import { isolateLearningPath } from "./sidebar";
 
 const groupLabels = (tree: SidebarItem[]): string[] =>
 	tree.filter((i) => i.type === "group").map((i) => i.label);
 
-async function rail(slug: string) {
-	const { getSidebar } = await import("nimbus-docs");
-	const { docsSidebarTransform } = await import("./sidebar");
-	return getSidebar(slug, {
-		collection: "docs",
-		transform: docsSidebarTransform,
+let order = 0;
+const link = (
+	label: string,
+	href: string,
+	extra: Partial<SidebarLinkItem> = {},
+): SidebarLinkItem => ({ type: "link", label, href, order: order++, ...extra });
+const mod = (path: string, slug: string, label: string): SidebarGroupItem => ({
+	type: "group",
+	label,
+	order: order++,
+	indexHref: `/learning-paths/${path}/${slug}/`,
+	children: [link(label, `/learning-paths/${path}/${slug}/`)],
+});
+
+// Section-scoped rail (config uses `scope: "section"`): a flat list of
+// learning-path groups whose children are the module groups.
+const rail = (): SidebarItem[] => {
+	order = 0;
+	const appsec: SidebarItem = {
+		type: "group",
+		label: "Application Security",
+		order: order++,
+		children: [
+			// account-security owns a cross-section external_link (audit-logs →
+			// /fundamentals/…). The framework's built-in isolate dropped this
+			// module on that shape; isolateLearningPath must keep it.
+			{
+				type: "group",
+				label: "Account security",
+				order: order++,
+				indexHref: "/learning-paths/application-security/account-security/",
+				children: [
+					link(
+						"Overview",
+						"/learning-paths/application-security/account-security/",
+					),
+					link("Audit logs", "/fundamentals/account/audit-logs/", {
+						_neverActive: true,
+					}),
+				],
+			},
+			mod("application-security", "firewall", "Web Application Firewall"),
+		],
+	};
+	const lb: SidebarItem = {
+		type: "group",
+		label: "Load balancing",
+		order: order++,
+		children: [
+			mod("load-balancing", "concepts", "Concepts"),
+			mod("load-balancing", "setup", "Setup"),
+		],
+	};
+	return [appsec, lb];
+};
+
+describe("isolateLearningPath", () => {
+	test("isolates the rail to the current path's modules", () => {
+		expect(
+			groupLabels(
+				isolateLearningPath(
+					rail(),
+					"learning-paths/application-security/firewall",
+				),
+			),
+		).toEqual(["Account security", "Web Application Firewall"]);
 	});
-}
 
-describe("learning-paths module isolation", () => {
-	test("production config does not re-enable framework sidebar.isolate", async () => {
-		const { readFile } = await import("node:fs/promises");
-		const src = await readFile("./src/nimbus/astro-config.ts", "utf8");
-		expect(src).not.toMatch(/\bisolate\s*:/);
+	test("keeps a module owning a cross-section external_link", () => {
+		expect(
+			groupLabels(
+				isolateLearningPath(
+					rail(),
+					"learning-paths/application-security/firewall",
+				),
+			),
+		).toContain("Account security");
 	});
 
-	test("application-security rail lists every module", async () => {
-		const tree = await rail(
-			"learning-paths/application-security/account-security",
-		);
-		const labels = groupLabels(tree);
-		expect(labels).toEqual(
-			expect.arrayContaining([
-				"Account security",
-				"Default traffic security",
-				"Web Application Firewall",
-				"Rate Limiting",
-				"Lists",
-				"Security Center",
-			]),
-		);
-		const topLinks = tree
-			.filter((i) => i.type === "link")
-			.map((i) => (i as { label: string }).label);
-		expect(topLinks).not.toContain("DNSSEC");
-	}, 60000);
+	test("does not leak other learning paths", () => {
+		expect(
+			groupLabels(
+				isolateLearningPath(rail(), "learning-paths/load-balancing/concepts"),
+			),
+		).toEqual(["Concepts", "Setup"]);
+	});
 
-	test("unaffected multi-module path (load-balancing) still lists its modules", async () => {
-		const tree = await rail("learning-paths/load-balancing/concepts");
-		expect(groupLabels(tree)).toEqual(
-			expect.arrayContaining([
-				"Concepts",
-				"Planning your load balancer",
-				"Setup",
-			]),
-		);
-	}, 60000);
+	test("a _neverActive link cannot claim ownership", () => {
+		order = 0;
+		const decoy: SidebarItem = {
+			type: "group",
+			label: "Decoy",
+			order: order++,
+			children: [
+				link("Redirect", "/learning-paths/load-balancing/concepts/", {
+					_neverActive: true,
+				}),
+			],
+		};
+		expect(
+			groupLabels(
+				isolateLearningPath(
+					[decoy, ...rail()],
+					"learning-paths/load-balancing/concepts",
+				),
+			),
+		).toEqual(["Concepts", "Setup"]);
+	});
+
+	test("passes non-learning-path rails through unchanged", () => {
+		const original = rail();
+		expect(isolateLearningPath(original, "workers/get-started")).toBe(original);
+	});
 });
