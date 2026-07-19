@@ -79,7 +79,8 @@ const nimbusConfig = defineNimbusConfig({
 	github: "https://github.com/cloudflare/cloudflare-docs",
 	editPattern:
 		"https://github.com/cloudflare/cloudflare-docs/edit/production/{path}",
-	socialImageAlt: "Cloudflare documentation",
+	socialImage: "/og-docs.png",
+	socialImageAlt: "Cloudflare Docs",
 	// "custom" renders the search UI slot but skips the built-in Pagefind index;
 	// Nimbus mounts Algolia DocSearch instead (see ui/search/DocSearch.astro).
 	search: { provider: "custom" },
@@ -88,7 +89,6 @@ const nimbusConfig = defineNimbusConfig({
 		overviewLabel: "Overview",
 		indexDisplay: "overview-leaf",
 		scope: "section",
-		isolate: { boundaries: ["learning-paths/*"] },
 		defaultCollapsed: true,
 	},
 });
@@ -313,6 +313,10 @@ const aliasResolver = {
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
 						// Shared: the Zaraz `track()` shim is byte-identical to root and
 						{ find: /^~\/util\/zaraz$/, replacement: `${rootUtil}/zaraz` },
+						{
+							find: /^~\/util\/package-managers$/,
+							replacement: `${rootUtil}/package-managers`,
+						},
 						// Shared: the OneTrust cookie-consent component is portable
 						{
 							find: /^~\/components\/OneTrust\.astro$/,
@@ -354,6 +358,8 @@ const aliasResolver = {
 		else if (source === "~/content" || source.startsWith("~/content/"))
 			mapped = rootContent + source.slice("~/content".length);
 		else if (source === "~/util/zaraz") mapped = rootUtil + "/zaraz";
+		else if (source === "~/util/package-managers")
+			mapped = rootUtil + "/package-managers";
 		else if (source === "~/components/OneTrust.astro")
 			mapped = rootComponents + "/OneTrust.astro";
 		else if (source === "~" || source.startsWith("~/"))
