@@ -15,6 +15,7 @@ import { getBreadcrumbs, getRouteNavigation } from "nimbus-docs";
 import type { SectionTitleResolver } from "nimbus-docs";
 import type {
 	SidebarBadge,
+	SidebarGroupItem,
 	SidebarItem,
 	SidebarTransform,
 } from "nimbus-docs/types";
@@ -155,6 +156,53 @@ export const agentResourcesTransform: SidebarTransform = async ({
 	return [...tree, agentResources];
 };
 
+const LEARNING_PATHS_SECTION = "learning-paths";
+
+const trimSlashes = (href: string): string => href.replace(/^\/+|\/+$/g, "");
+
+function someInternalHref(
+	item: SidebarItem,
+	pred: (href: string) => boolean,
+): boolean {
+	if (item.type === "external") return false;
+	if (item.type === "link") {
+		return !item._neverActive && pred(item.href);
+	}
+	const ownIndexMatches =
+		!!item.indexHref &&
+		!item.indexIsExternal &&
+		!item._indexNeverActive &&
+		pred(item.indexHref);
+	return (
+		ownIndexMatches ||
+		item.children.some((child) => someInternalHref(child, pred))
+	);
+}
+
+// Isolate the rail to the current learning path's modules. Replaces the
+// framework's `sidebar.isolate`, whose boundary check drops any module holding
+// a cross-section `external_link`, collapsing the rail to one wrong module.
+export function isolateLearningPath(
+	tree: SidebarItem[],
+	currentSlug: string,
+): SidebarItem[] {
+	const segs = currentSlug.split("/").filter(Boolean);
+	if (segs[0] !== LEARNING_PATHS_SECTION || !segs[1]) return tree;
+	const prefix = `/${segs[0]}/${segs[1]}/`;
+	const currentKey = trimSlashes(`/${segs.join("/")}`);
+
+	const groups = tree.filter(
+		(item): item is SidebarGroupItem => item.type === "group",
+	);
+	const owner =
+		groups.find((g) =>
+			someInternalHref(g, (href) => trimSlashes(href) === currentKey),
+		) ??
+		groups.find((g) => someInternalHref(g, (href) => href.startsWith(prefix)));
+
+	return owner ? owner.children : tree;
+}
+
 // Same-origin sibling apps that live OUTSIDE the docs build — separate
 // deploys served at the same origin (today just the `/api/` OpenAPI
 // reference). A link into one of these leaves the docs app entirely.
@@ -291,7 +339,8 @@ function applyBadges(
 // `sidebar.indexDisplay: "overview-leaf"`, which runs after this transform — so
 // `applyBadges` still keys group badges off `indexHref` before it is cleared.
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
-	const withAgentResources = await agentResourcesTransform(ctx);
+	const tree = isolateLearningPath(ctx.tree, ctx.currentSlug);
+	const withAgentResources = await agentResourcesTransform({ ...ctx, tree });
 	const withExternal = markExternalAppLinks(withAgentResources);
 	const withRedirects = markInternalRedirects(withExternal);
 	const betaUrls = await getBetaBadgeUrls();
