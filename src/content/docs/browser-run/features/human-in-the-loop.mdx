@@ -9,6 +9,8 @@ products:
   - browser-run
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 Some browser automation workflows require manual intervention. A login page may need multi-factor authentication, a form may require sensitive credentials you do not want to pass to an automation script, or a task may be too complex to fully automate. Human in the Loop lets a human step into a live browser session through [Live View](/browser-run/features/live-view/) to handle what automation cannot, then hand control back to the script.
 
 ## Use cases
@@ -137,8 +139,10 @@ console.log(`Live View URL: ${devtoolsFrontendUrl}`);
 
 This example demonstrates the structured handoff flow. The script requests human intervention using the Cloudflare CDP commands and waits for a completion event before resuming:
 
-```js
-import puppeteer from "puppeteer-core";
+<Tabs syncKey="browser-driver"> <TabItem label="Puppeteer">
+
+```ts
+import puppeteer, { type HandoffCompleteResponse } from "@cloudflare/puppeteer";
 
 const ACCOUNT_ID = "<your-account-id>";
 const API_TOKEN = "<your-api-token>";
@@ -166,8 +170,74 @@ const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
 console.log(`Human input needed. Open this URL: ${devtoolsFrontendUrl}`);
 
 // Set up completion listener before initiating handoff
-const handoffCompletePromise = new Promise((resolve) => {
-	cdp.once("Cloudflare.handoffComplete", resolve);
+const handoffCompletePromise = new Promise<HandoffCompleteResponse>((resolve) => {
+	cdp.once("Cloudflare.handoffComplete", (event) => resolve(event as HandoffCompleteResponse));
+});
+
+// Request human intervention with specific instructions
+const { handoffId } = await cdp.send("Cloudflare.handoff", {
+	instructions: "Please log in with your GitHub credentials",
+	timeout: 600_000, // 10 minute timeout
+});
+
+console.log(`Human intervention requested (ID: ${handoffId})`);
+
+// Wait for human to complete the task
+const result = await handoffCompletePromise;
+
+if (result.success) {
+	console.log("Login successful, continuing automation...");
+
+	// Continue with your automation...
+	await page.goto("https://github.com/settings/profile");
+} else {
+	console.error(`Human intervention failed: ${result.reason}`);
+}
+
+await browser.close();
+```
+
+</TabItem> <TabItem label="Playwright">
+
+```ts
+import type { HandoffCompleteResponse } from "@cloudflare/playwright";
+import { chromium } from "playwright-core";
+// If using a Cloudflare Worker, import { launch } from "@cloudflare/playwright" and use launch(env.MYBROWSER) instead.
+
+const ACCOUNT_ID = "<your-account-id>";
+const API_TOKEN = "<your-api-token>";
+
+// Connect to Browser Run
+const browser = await chromium.connectOverCDP(
+	`wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser?keep_alive=600000`,
+	{ headers: { Authorization: `Bearer ${API_TOKEN}` } },
+);
+
+const context = browser.contexts()[0] ?? (await browser.newContext());
+const page = await context.newPage();
+await page.goto("https://github.com/login");
+
+// Create a CDP session to send Browser Run commands
+const cdp = await context.newCDPSession(page);
+
+// Get the Live View URL for the human operator
+const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
+	mode: "tab", // Options: "devtools", "tab", or "full"
+	expiresInMs: 300000, // optional, default is 5 minutes
+});
+
+// Share the Live View URL with the human operator (for example, send it via Slack, email, or display it in a UI)
+console.log(`Human input needed. Open this URL: ${devtoolsFrontendUrl}`);
+
+// Set up completion listener before initiating handoff.
+// `cdp.once` for Cloudflare.* events needs a call-site cast because
+// Playwright's `CDPSession.on/once/off` are declared as arrow-property
+// signatures that TypeScript can't merge overloads into.
+const handoffCompletePromise = new Promise<HandoffCompleteResponse>((resolve) => {
+	(cdp.once as (event: string, listener: (p: HandoffCompleteResponse) => void) => void)(
+		"Cloudflare.handoffComplete",
+		resolve,
+	);
 });
 
 // Request human intervention with specific instructions
@@ -193,12 +263,16 @@ if (result.success) {
 await browser.close();
 ```
 
+</TabItem> </Tabs>
+
 ## Example: manual detection
 
 This example uses the manual approach of sharing a Live View URL and polling for completion:
 
-```js
-import puppeteer from "puppeteer-core";
+<Tabs syncKey="browser-driver"> <TabItem label="Puppeteer">
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
 
 const ACCOUNT_ID = "<your-account-id>";
 const API_TOKEN = "<your-api-token>";
@@ -246,6 +320,65 @@ await page.goto("https://github.com/");
 
 await browser.close();
 ```
+
+</TabItem> <TabItem label="Playwright">
+
+```ts
+import type { GetLiveViewResponse } from "@cloudflare/playwright";
+import { chromium } from "playwright-core";
+// If using a Cloudflare Worker, import { launch } from "@cloudflare/playwright" and use launch(env.MYBROWSER) instead.
+
+const ACCOUNT_ID = "<your-account-id>";
+const API_TOKEN = "<your-api-token>";
+
+// Connect to Browser Run
+const browser = await chromium.connectOverCDP(
+	`wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser?keep_alive=600000`,
+	{ headers: { Authorization: `Bearer ${API_TOKEN}` } },
+);
+
+const context = browser.contexts()[0] ?? (await browser.newContext());
+const page = await context.newPage();
+await page.goto("https://github.com/login");
+
+// Create CDP session and get Live View URL
+const cdp = await context.newCDPSession(page);
+const { devtoolsFrontendUrl }: GetLiveViewResponse = await cdp.send(
+	"Cloudflare.getLiveView",
+	{ expiresInMs: 300000 }, // 5 minutes
+);
+
+// Share the Live View URL with the human operator (for example, send it via Slack, email, or display it in a UI)
+console.log(`Human input needed. Open this URL: ${devtoolsFrontendUrl}`);
+
+// Wait until GitHub reports a non-empty `<meta name="user-login">` in the
+// page head. This meta tag is always present, but its content is empty
+// for logged-out viewers and set to the username after login. Waiting for
+// content to be populated is a reliable "human finished logging in" signal.
+await page.waitForFunction(
+	() =>
+		document
+			.querySelector('meta[name="user-login"]')
+			?.getAttribute("content") !== "",
+	null,
+	{ timeout: 300000 },
+);
+
+// Login complete, continue automation
+console.log("Login complete. Continuing automation...");
+
+// Verify we're logged in and read the username
+const username = await page.$eval('meta[name="user-login"]', (el) =>
+	el.getAttribute("content"),
+);
+console.log(`Logged in as: ${username}`);
+
+await page.goto("https://github.com/");
+
+await browser.close();
+```
+
+</TabItem> </Tabs>
 
 ## Best practices
 
