@@ -1,0 +1,59 @@
+---
+/**
+ * Dots — dot-grid pattern fill (Astro). The single source of truth for the
+ * site's dot-grid decoration; used by the footer `Separator`, `BackgroundLines`,
+ * and `FullPageLines`. Renders an absolutely-positioned SVG that tiles a
+ * `<circle>` pattern across its container.
+ *
+ * Colors default to the nimbus theme token `--nb-grid-line` (theme-aware:
+ * light/dark handled in globals.css) so the dots match the rest of the
+ * blueprint decoration.
+ */
+import { nextDecorId } from "./_id";
+
+interface Props {
+	/** Dot color. Defaults to the nimbus grid-line token. */
+	color?: string;
+	class?: string;
+	/** Grid pitch in px. */
+	size?: number;
+	/** Offset alternating rows for a staggered lattice. */
+	stagger?: boolean;
+}
+
+const {
+	color = "var(--nb-grid-line)",
+	class: className,
+	size = 12,
+	stagger = false,
+} = Astro.props;
+
+const r = 0.75;
+// Deterministic, unique-per-instance id so multiple grids on one page don't
+// collide and build output stays reproducible.
+const patternId = nextDecorId("nb-dots");
+const patternWidth = stagger ? size + r * 2 : size;
+const patternHeight = stagger ? size * 2 : size;
+---
+
+<svg
+	class:list={[
+		"pointer-events-none absolute inset-0 z-0 h-full w-full",
+		className,
+	]}
+	aria-hidden="true"
+>
+	<pattern
+		id={patternId}
+		x="0"
+		y="0"
+		width={patternWidth}
+		height={patternHeight}
+		patternUnits="userSpaceOnUse"
+	>
+		<circle cx={size / 2} cy={size / 2} r={r} fill={color}></circle>
+		{stagger && <circle cx={size} cy={size + size / 2} r={r} fill={color} />}
+	</pattern>
+	<rect x="0" y="0" width="100%" height="100%" fill={`url(#${patternId})`}
+	></rect>
+</svg>

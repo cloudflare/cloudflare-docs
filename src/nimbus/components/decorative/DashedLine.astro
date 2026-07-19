@@ -1,0 +1,37 @@
+---
+/**
+ * DashedLine — horizontal dashed divider stroke (Astro). The canonical
+ * horizontal rule; matches the 16/16 dash pattern used by `Separator` so every
+ * divider reads as one family.
+ *
+ * Defaults to the nimbus hairline token `--nb-border` (theme-aware).
+ */
+interface Props {
+	class?: string;
+	/** Stroke color. Defaults to the nimbus hairline token. */
+	color?: string;
+	/** Stroke width in px. */
+	strokeWidth?: number;
+}
+
+const {
+	class: className,
+	color = "var(--nb-border)",
+	strokeWidth = 1,
+} = Astro.props;
+---
+
+<svg
+	class:list={["block h-px w-full", className]}
+	preserveAspectRatio="none"
+	aria-hidden="true"
+>
+	<line
+		x1="0"
+		y1="0.5"
+		x2="100%"
+		y2="0.5"
+		stroke={color}
+		stroke-width={strokeWidth}
+		stroke-dasharray="16,16"></line>
+</svg>
