@@ -154,7 +154,7 @@ const showFeedback = feedback !== false && !isCustom;
 					<main id="main-content" class="flex-1">
 						<slot />
 					</main>
-					<Footer class="mt-16" />
+					<Footer />
 				</Fragment>
 			) : (
 				<div class="mx-auto flex w-full flex-1 flex-col">
@@ -203,9 +203,9 @@ const showFeedback = feedback !== false && !isCustom;
 						{/* Only emit when the sidebar is rendered; see SidebarStateRestore. */}
 						{showSidebar && <SidebarStateRestore />}
 
-						{/* Right column: the content row (main + TOC) with the footer beneath
-              it, so the footer sits under the body only — not under the sidebar,
-              whose border runs the full page height alongside it. */}
+						{/* Right column: the content row (main + TOC). The footer is a
+              sibling of this whole row (below), so it spans the full page
+              width — under the sidebar as well as the body. */}
 						<div class="flex min-w-0 flex-1 flex-col">
 							<div class="flex min-w-0 flex-1">
 								<main id="main-content" class="min-w-0 flex-1">
@@ -350,16 +350,9 @@ const showFeedback = feedback !== false && !isCustom;
 									</aside>
 								)}
 							</div>
-							<Footer
-								class:list={[
-									"mt-16",
-									headings !== false && "xl:mr-(--nb-toc-width)",
-								]}
-								envelope="docs"
-								wide={wide}
-							/>
 						</div>
 					</div>
+					<Footer />
 				</div>
 			)
 		}
