@@ -1,16 +1,8 @@
 ---
-/**
- * DashedLine — horizontal dashed divider stroke (Astro). The canonical
- * horizontal rule; matches the 16/16 dash pattern used by `Separator` so every
- * divider reads as one family.
- *
- * Defaults to the nimbus hairline token `--nb-border` (theme-aware).
- */
+// Horizontal dashed divider (16/16 dash), matching Separator.
 interface Props {
 	class?: string;
-	/** Stroke color. Defaults to the nimbus hairline token. */
 	color?: string;
-	/** Stroke width in px. */
 	strokeWidth?: number;
 }
 

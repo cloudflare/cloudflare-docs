@@ -1,23 +1,11 @@
 ---
-/**
- * Dots — dot-grid pattern fill (Astro). The single source of truth for the
- * site's dot-grid decoration; used by the footer `Separator`, `BackgroundLines`,
- * and `FullPageLines`. Renders an absolutely-positioned SVG that tiles a
- * `<circle>` pattern across its container.
- *
- * Colors default to the nimbus theme token `--nb-grid-line` (theme-aware:
- * light/dark handled in globals.css) so the dots match the rest of the
- * blueprint decoration.
- */
+// Dot-grid pattern fill. Shared by Separator, BackgroundLines, FullPageLines.
 import { nextDecorId } from "./_id";
 
 interface Props {
-	/** Dot color. Defaults to the nimbus grid-line token. */
 	color?: string;
 	class?: string;
-	/** Grid pitch in px. */
 	size?: number;
-	/** Offset alternating rows for a staggered lattice. */
 	stagger?: boolean;
 }
 
@@ -29,8 +17,6 @@ const {
 } = Astro.props;
 
 const r = 0.75;
-// Deterministic, unique-per-instance id so multiple grids on one page don't
-// collide and build output stays reproducible.
 const patternId = nextDecorId("nb-dots");
 const patternWidth = stagger ? size + r * 2 : size;
 const patternHeight = stagger ? size * 2 : size;

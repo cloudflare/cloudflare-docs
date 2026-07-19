@@ -293,14 +293,9 @@ const aliasResolver = {
 			return {
 				resolve: {
 					alias: [
-						// Shared content imports component barrels by name — both
-						// Starlight's (`@astrojs/starlight/components`) and Expressive
-						// Code's (`astro-expressive-code/components`, e.g. the workers
-						// terraform changelog). Map both to the Nimbus barrel (which
-						// re-exports those names, incl. `Code`) so byte-identical content
-						// resolves without pulling in Starlight + Expressive Code (whose
-						// `renderer.ts` needs `virtual:astro-expressive-code/config`, a
-						// module only the EC integration — which Nimbus omits — provides).
+						// Map Starlight's and Expressive Code's component barrels to the
+						// Nimbus barrel, so shared content resolves without pulling in the
+						// Starlight/EC integrations Nimbus omits.
 						{
 							find: /^@astrojs\/starlight\/components$/,
 							replacement: `${nimbusDir}/components`,
@@ -309,20 +304,18 @@ const aliasResolver = {
 							find: /^astro-expressive-code\/components$/,
 							replacement: `${nimbusDir}/components`,
 						},
+						// Shared modules: resolve to the root src/ tree, not the nimbus dir.
 						{ find: /^~\/assets(\/.*)?$/, replacement: `${rootAssets}$1` },
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
-						// Shared: the Zaraz `track()` shim is byte-identical to root and
 						{ find: /^~\/util\/zaraz$/, replacement: `${rootUtil}/zaraz` },
 						{
 							find: /^~\/util\/package-managers$/,
 							replacement: `${rootUtil}/package-managers`,
 						},
-						// Shared: the OneTrust cookie-consent component is portable
 						{
 							find: /^~\/components\/OneTrust\.astro$/,
 							replacement: `${rootComponents}/OneTrust.astro`,
 						},
-						// Shared: generated WARP platform list
 						{
 							find: /^~\/util\/warp-platforms\.json$/,
 							replacement: `${rootUtil}/warp-platforms.json`,
