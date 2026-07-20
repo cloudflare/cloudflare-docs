@@ -39,12 +39,6 @@ CNAME records are the only IP resolution record with this type of limitation. Yo
 
 :::
 
-:::note[Spectrum applications]
-
-This DNS record conflict also applies when creating a [Spectrum](/spectrum/) application for a hostname that already has a manually-created proxied `A`, `AAAA`, or `CNAME` record. Cloudflare does not support having both a manually-created proxied DNS record and a Spectrum application on the same hostname — Spectrum provisions and manages its own DNS record for the application. Multiple Spectrum applications can share the same hostname. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#cannot-create-spectrum-application--dns-record-already-exists) for details and recommended workarounds.
-
-:::
-
 [^1]:
     <Render file="cname-definition" product="dns" />
 
