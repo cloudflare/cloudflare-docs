@@ -8,9 +8,11 @@ sidebar:
   order: 4
 ---
 
-This guide covers obtaining a token from your Cloudflare-operated deployment. By this point, you and Cloudflare have already worked together to build and provision the pieces below. Use this guide to confirm the deployment issues and redeems tokens end to end.
+import { TypeScriptExample } from "~/components";
 
-Privacy Pass is not a self-serve product at the moment: a production deployment is a managed engagement with Cloudflare. If you just want to see Privacy Pass work without any setup, see [Getting started](/privacy-pass/getting-started/).
+This guide covers obtaining a token from your Cloudflare-operated deployment. By this point, you and Cloudflare have already worked together to build and provision the following components. Use this guide to confirm the deployment issues and redeems tokens end to end.
+
+Privacy Pass is not a self-serve product at the moment: a production deployment is a managed engagement with Cloudflare. If you just want to see Privacy Pass work without any setup, refer to [Getting started](/privacy-pass/getting-started/).
 
 [Contact us](https://www.cloudflare.com/lp/privacy-edge/) to request access and receive your issuer configuration.
 
@@ -26,7 +28,7 @@ Privacy Pass is not a self-serve product at the moment: a production deployment 
 
 **What you operate or need in place:**
 
-- A working **Attester** — the service that verifies your claim and, once the Client is verified, proxies the blinded token request to the Issuer. In Cloudflare Issuer deployments, the Client never contacts the Issuer directly. You operate the Attester to keep roles separate; Cloudflare can help build it. See [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) for an implementation for Cloudflare Workers.
+- A working **Attester** — the service that verifies your claim and, once the Client is verified, proxies the blinded token request to the Issuer. In Cloudflare Issuer deployments, the Client never contacts the Issuer directly. You operate the Attester to keep roles separate; Cloudflare can help build it. Refer to [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) for an implementation for Cloudflare Workers.
 - The **Origin** (the web service, application, or website a Client is trying to access) configured to verify tokens against the issuer's public key (or Cloudflare redemption at the edge).
 - The **mTLS client certificate** your Attester uses to authenticate to the issuer.
 - The **client library** for running the issuance protocol. Library options include TypeScript, Go, and Rust. 
@@ -89,6 +91,8 @@ In this deployment the Client never contacts the issuer directly. Getting a toke
 
 Using the TypeScript library for this example, the Client builds the blinded token request, then sends it to your Attester, which proxies it to the issuer and returns the signed response:
 
+<TypeScriptExample>
+
 ```ts
 import { publicVerif } from '@cloudflare/privacypass-ts';
 const { BlindRSAMode, Client } = publicVerif;
@@ -110,7 +114,9 @@ const tokenResponse = client.deserializeTokenResponse(tokenResponseBytes);
 const token = await client.finalize(tokenResponse);
 ```
 
-The Client then redeems the token by sending it to the Origin in an `Authorization` header. The Origin (or Cloudflare at the edge – see [Deployment Models](/privacy-pass/concepts/deployment-models/)) verifies the signature against the issuer's public key and responds with `200 OK`.
+</TypeScriptExample>
+
+The Client then redeems the token by sending it to the Origin in an `Authorization` header. The Origin (or Cloudflare at the edge – refer to [Deployment Models](/privacy-pass/concepts/deployment-models/)) verifies the signature against the issuer's public key and responds with `200 OK`.
 
 :::note
 `sendToAttester` is your own transport function and is not part of the library. How the Client and Attester exchange the token request is up to you; the Privacy Pass standard does not define this interface. The key point is that the issuer-facing call happens inside your Attester, not in the Client.
