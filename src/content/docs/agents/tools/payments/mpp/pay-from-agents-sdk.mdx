@@ -3,16 +3,20 @@ title: Pay from the Agents SDK
 pcx_content_type: how-to
 sidebar:
   order: 2
-description: Give a Cloudflare Agent payment-aware HTTP fetch and MCP clients with mppx.
+description: Configure a Cloudflare Agent to pay HTTP requests and Model Context Protocol (MCP) tools with Machine Payments Protocol (MPP).
 products:
   - agents
 ---
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Use [`Mppx.create`](https://mpp.dev/sdk/typescript/client/Mppx.create) for paid HTTP requests and [`McpClient.wrap`](https://mpp.dev/sdk/typescript/client/McpClient.wrap) for paid MCP tool calls. Free requests pass through unchanged. When a paid service returns a compatible Challenge, `mppx` creates a Credential, retries the call, and returns the result with its Receipt.
+Use the Cloudflare Agents SDK with Machine Payments Protocol (MPP) services. An Agent can pay for HTTP requests and Model Context Protocol (MCP) tools. The `mppx` SDK handles the payment retry and returns a Receipt.
 
-## Set up payment methods
+## Prerequisites
+
+Create a [Cloudflare Agents project](/agents/getting-started/). Configure a funded account for the selected MPP payment method.
+
+## Configure Agent payments
 
 <Steps>
 
@@ -20,7 +24,7 @@ Use [`Mppx.create`](https://mpp.dev/sdk/typescript/client/Mppx.create) for paid 
 
    <PackageManagers pkg="agents mppx viem" />
 
-2. Store the Agent's private key as a [Worker secret](/workers/configuration/secrets/):
+2. Store the payment private key as a [Worker secret](/workers/configuration/secrets/):
 
    <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_PRIVATE_KEY" />
 
@@ -44,12 +48,12 @@ Use [`Mppx.create`](https://mpp.dev/sdk/typescript/client/Mppx.create) for paid 
 </Steps>
 
 :::note
-The examples use an environment private key for brevity. For a long-running Agent, use a scoped access key with spending limits, call scopes, recipient restrictions, and independent revocation. Refer to [managing agent spend](https://mpp.dev/guides/managing-agent-spend).
+The examples use an environment private key. For production Agents, use a scoped access key with spending limits and recipient restrictions. Refer to [managing agent spend](https://mpp.dev/guides/managing-agent-spend).
 :::
 
 ## Pay for HTTP requests
 
-Create a scoped payment-aware fetch inside `onStart()`. Setting `polyfill: false` keeps the wrapper local to this Agent instance. `acceptPaymentPolicy` restricts which origins can receive the Agent's `Accept-Payment` header and trigger automatic payment.
+Create a scoped payment-aware client inside `onStart()`. Setting `polyfill: false` keeps the wrapper local to this Agent. `acceptPaymentPolicy` limits which origins can request automatic payment.
 
 <TypeScriptExample filename="src/agent.ts">
 
@@ -84,11 +88,13 @@ export class BuyerAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-If your runtime should make every later `fetch` payment-aware, omit `polyfill: false` and call `Mppx.create` once before those requests. The returned `payments.fetch` is easier to scope and test in an Agent.
+Call `buyReport()` to test the client. Free endpoints pass through unchanged. Paid endpoints trigger the MPP payment retry.
+
+To wrap every later `fetch`, omit `polyfill: false`. The scoped `payments.fetch` remains easier to test in an Agent.
 
 ### Require approval before HTTP payment
 
-Use `onChallenge` to enforce an application policy or request human approval before creating a Credential:
+Use `onChallenge` to require approval before creating a Credential:
 
 <TypeScriptExample>
 
@@ -110,7 +116,7 @@ const payments = Mppx.create({
 
 ## Pay for MCP tools
 
-First connect the Agent with `addMcpServer()`. Then wrap the MCP client stored on that connection. Calls through the same client become payment-aware without replacing the Cloudflare MCP connection.
+Connect the Agent with `addMcpServer()`. Then wrap the client stored on that connection. This keeps the Cloudflare MCP connection and adds payment handling.
 
 <TypeScriptExample filename="src/agent.ts">
 
@@ -145,11 +151,13 @@ export class BuyerAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-`onPaymentRequired` runs before the wrapper creates a Credential. Return `false` to decline. You can also pass a different approval callback in the options for an individual `callTool` request.
+Call the tool to test the wrapper. `onPaymentRequired` runs before payment. Return `false` to decline the payment.
+
+You can pass another approval callback to an individual `callTool` request.
 
 ## Pay MPP and x402 endpoints
 
-Add an EVM charge method next to your MPP methods when the Agent calls HTTP APIs that may return either MPP or x402 `exact` Challenges:
+Add an Ethereum Virtual Machine (EVM) charge method for x402. Keep it beside the native MPP method:
 
 <TypeScriptExample filename="src/payments.ts">
 
@@ -173,19 +181,21 @@ const methods = [
 
 </TypeScriptExample>
 
-The payment-aware HTTP client reads native MPP `WWW-Authenticate` Challenges and x402 `PAYMENT-REQUIRED` Challenges, then retries with the matching header. The MCP wrapper handles MPP's MCP transport; it does not convert an x402 HTTP service into an MCP service.
+The HTTP client recognizes MPP and x402 Challenges. It retries each request with the matching header. The MCP wrapper only handles the MPP transport.
 
 ## Know which calls are covered
+
+The following table shows where to add payment handling:
 
 | Agent call surface               | Add payment handling with | What it covers                                     |
 | -------------------------------- | ------------------------- | -------------------------------------------------- |
 | HTTP `fetch`                     | `Mppx.create`             | Native MPP and configured x402 HTTP Challenges.    |
 | Agents SDK MCP connection        | `McpClient.wrap`          | MPP Challenges returned by MCP tool calls.         |
-| Another library's private client | Its transport adapter     | Only calls made through that library's own client. |
+| Private client from another SDK  | Its transport adapter     | Only calls made through that client.               |
 
-Configuring payment-aware fetch does not automatically wrap an MCP client that the Agents SDK already owns. Configure both surfaces when the same Agent pays HTTP APIs and MCP tools.
+Payment-aware fetch does not wrap an existing MCP client. Configure both surfaces when an Agent pays HTTP APIs and MCP tools.
 
-## Related resources
+## Next steps
 
 - [Accept payments with MPP](/agents/tools/payments/mpp/accept-payments/)
 - [Cloudflare Agents integration](https://mpp.dev/partner-integrations/cloudflare-agents)

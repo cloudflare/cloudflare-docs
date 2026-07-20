@@ -3,7 +3,7 @@ title: Accept payments with MPP
 pcx_content_type: how-to
 sidebar:
   order: 1
-description: Accept MPP payments from an existing origin, a custom Worker endpoint, or an MCP tool.
+description: Accept payments through Machine Payments Protocol (MPP) from a Cloudflare Worker, origin proxy, or Model Context Protocol (MCP) tool.
 products:
   - agents
 ---
@@ -15,19 +15,25 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Choose the integration that matches the service you want to sell:
+Use Cloudflare Workers to accept Machine Payments Protocol (MPP) payments. Protect an existing origin, a Worker route, or a Model Context Protocol (MCP) tool.
 
-| Service                    | Integration                                                                        |
+## Prerequisites
+
+[Create a Cloudflare account](/fundamentals/account/create-account/), if you have not already. The examples also require a payment recipient and an MPP secret key.
+
+Choose a Cloudflare integration for the service:
+
+| Service                    | Cloudflare integration                                                             |
 | -------------------------- | ---------------------------------------------------------------------------------- |
 | Existing website or API    | Put [`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) in front of the origin. |
-| New or existing Worker API | Add `mppx` middleware directly to a route.                                         |
-| MCP server                 | Add the MPP MCP transport inside a tool handler.                                   |
+| New or existing Worker API | Add `mppx` middleware to a Worker route.                                           |
+| MCP server                 | Add the MPP transport to an `McpAgent` tool handler.                               |
 
-All three approaches return a payment Challenge, verify the retry Credential, and attach a Receipt to the paid response.
+Each workflow challenges unpaid requests. It verifies the payment retry and returns an MPP Receipt.
 
 ## Gate an existing origin with `mpp-proxy`
 
-[`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) is a Cloudflare Worker that adds MPP to an existing HTTP backend. Unprotected traffic passes through. A paid request receives an MPP Challenge, and a verified request reaches the origin. The proxy also issues a secure cookie that reuses access for one hour.
+Deploy [`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) when you cannot change the origin code. The Worker passes unprotected requests to the origin. It challenges paid paths and verifies payment before forwarding. A secure cookie reuses access for one hour.
 
 <Steps>
 
@@ -66,15 +72,17 @@ All three approaches return a payment Challenge, verify the retry Credential, an
 
    <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
 
-4. Request `/__mpp/protected` or another protected route. An unpaid request should return `402 Payment Required` with a `WWW-Authenticate: Payment` header.
+4. Request `/__mpp/health` to confirm that the Worker is available. Then request `/__mpp/protected` or another paid route. The unpaid request returns `402 Payment Required` with a `WWW-Authenticate: Payment` header.
 
 </Steps>
 
-The proxy supports DNS-based origins, external origin URLs, and [service bindings](/workers/runtime-apis/bindings/service-bindings/). Refer to the [`mpp-proxy` README](https://github.com/cloudflare/mpp-proxy) for the full configuration.
+The Worker now protects matching routes before forwarding them. It supports DNS origins, external URLs, and [service bindings](/workers/runtime-apis/bindings/service-bindings/).
+
+For all settings, refer to the [`mpp-proxy` README](https://github.com/cloudflare/mpp-proxy).
 
 ### Charge crawlers with Bot Management
 
-With [Bot Management](/bots/), a protected pattern can charge automated traffic while leaving the same content free for people:
+With [Cloudflare Bot Management](/bots/), a paid pattern can target automated traffic. The same content remains free for people:
 
 <WranglerConfig>
 
@@ -100,115 +108,139 @@ Requests with a bot score at or below `bot_score_threshold` reach the paywall. U
 
 ## Charge for a Worker route
 
-Use the Hono middleware when you control the Worker application.
+Add `mppx` middleware when you control the Worker application:
 
-<PackageManagers pkg="hono mppx" />
+<Steps>
 
-Store the MPP signing key as a [Worker secret](/workers/configuration/secrets/):
+1. Install Hono and `mppx` in the Worker project:
 
-<PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
+   <PackageManagers pkg="hono mppx" />
 
-Then add `mppx.charge` before the route handler:
+2. Store the MPP signing key as a [Worker secret](/workers/configuration/secrets/):
 
-<TypeScriptExample filename="src/index.ts">
+   <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
 
-```ts
-import { env } from "cloudflare:workers";
-import { Hono } from "hono";
-import { Mppx, tempo } from "mppx/hono";
+3. Add `mppx.charge` before the paid route handler:
 
-const app = new Hono();
+   <TypeScriptExample filename="src/index.ts">
 
-const mppx = Mppx.create({
-	methods: [tempo.charge()],
-	secretKey: env.MPP_SECRET_KEY,
-});
+   ```ts
+   import { env } from "cloudflare:workers";
+   import { Hono } from "hono";
+   import { Mppx, tempo } from "mppx/hono";
 
-app.get(
-	"/premium",
-	mppx.charge({
-		amount: "0.10",
-		currency: "0x20c000000000000000000000b9537d11c60e8b50",
-		description: "Premium API access",
-		recipient: "0xYourWalletAddress",
-	}),
-	(c) => c.json({ data: "Thanks for paying!" }),
-);
+   const app = new Hono();
 
-export default app;
-```
+   const mppx = Mppx.create({
+     methods: [tempo.charge()],
+     secretKey: env.MPP_SECRET_KEY,
+   });
 
-</TypeScriptExample>
+   app.get(
+     "/premium",
+     mppx.charge({
+       amount: "0.10",
+       currency: "0x20c000000000000000000000b9537d11c60e8b50",
+       description: "Premium API access",
+       recipient: "0xYourWalletAddress",
+     }),
+     (c) => c.json({ data: "Thanks for paying!" }),
+   );
 
-You can parse the verified Credential to read the payer DID, offer several methods from the same `Mppx` instance, or set different prices on different routes.
+   export default app;
+   ```
+
+   </TypeScriptExample>
+
+4. Request `/premium` without payment. The Worker returns `402 Payment Required` and an MPP Challenge.
+
+</Steps>
+
+After payment, the Worker runs the route handler and returns a Receipt. You can also read the decentralized identifier (DID) for the payer.
 
 ## Charge for an MCP tool
 
-MPP carries its Challenge, Credential, and Receipt as MCP JSON-RPC data. Add `Transport.mcpSdk()` to an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/) and check payment inside the tool handler:
+Add the MPP transport to an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/):
 
-<PackageManagers pkg="agents mppx @modelcontextprotocol/sdk zod" />
+<Steps>
 
-<TypeScriptExample filename="src/index.ts">
+1. Install the Agents SDK, `mppx`, MCP SDK, and Zod:
 
-```ts
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { McpAgent } from "agents/mcp";
-import { Mppx, tempo, Transport } from "mppx/server";
-import { z } from "zod";
+   <PackageManagers pkg="agents mppx @modelcontextprotocol/sdk zod" />
 
-export class PaidMCP extends McpAgent<Env> {
-	server = new McpServer({ name: "paid-search", version: "1.0.0" });
+2. Store `MPP_SECRET_KEY` as a [Worker secret](/workers/configuration/secrets/):
 
-	async init() {
-		const mppx = Mppx.create({
-			methods: [tempo.charge({ testnet: true })],
-			secretKey: this.env.MPP_SECRET_KEY,
-			transport: Transport.mcpSdk(),
-		});
+   <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
 
-		this.server.tool(
-			"search",
-			"Search the web",
-			{ query: z.string() },
-			async ({ query }, extra) => {
-				const payment = await mppx.charge({
-					amount: "0.01",
-					currency: "0x20c0000000000000000000000000000000000000",
-					description: "Web search query",
-					recipient: "0xYourWalletAddress",
-				})(extra);
+3. Add `Transport.mcpSdk()` and check payment in the tool handler:
 
-				if (payment.status === 402) throw payment.challenge;
+   <TypeScriptExample filename="src/index.ts">
 
-				return payment.withReceipt({
-					content: [{ type: "text", text: `Results for: ${query}` }],
-				});
-			},
-		);
-	}
-}
+   ```ts
+   import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+   import { McpAgent } from "agents/mcp";
+   import { Mppx, tempo, Transport } from "mppx/server";
+   import { z } from "zod";
 
-export default PaidMCP.serve("/mcp");
-```
+   export class PaidMCP extends McpAgent<Env> {
+     server = new McpServer({ name: "paid-search", version: "1.0.0" });
 
-</TypeScriptExample>
+     async init() {
+       const mppx = Mppx.create({
+         methods: [tempo.charge({ testnet: true })],
+         secretKey: this.env.MPP_SECRET_KEY,
+         transport: Transport.mcpSdk(),
+       });
 
-Free tools do not call `mppx.charge`. Paid tools can set different prices, and the returned Receipt is attached to the tool result in `_meta`.
+       this.server.tool(
+         "search",
+         "Search the web",
+         { query: z.string() },
+         async ({ query }, extra) => {
+           const payment = await mppx.charge({
+             amount: "0.01",
+             currency: "0x20c0000000000000000000000000000000000000",
+             description: "Web search query",
+             recipient: "0xYourWalletAddress",
+           })(extra);
+
+           if (payment.status === 402) throw payment.challenge;
+
+           return payment.withReceipt({
+             content: [{ type: "text", text: `Results for: ${query}` }],
+           });
+         },
+       );
+     }
+   }
+
+   export default PaidMCP.serve("/mcp");
+   ```
+
+   </TypeScriptExample>
+
+4. Call the `search` tool without payment. The MCP server returns an MPP Challenge through JSON-RPC.
+
+</Steps>
+
+After payment, the tool result includes the MPP Receipt in `_meta`. Free tools do not call `mppx.charge`.
 
 ## Add other billing patterns
 
-Use the same server architecture for more than one-time charges:
+After a one-time Worker flow succeeds, add another billing pattern:
 
 | Pattern                      | Server API                              | Production requirement                                                |
 | ---------------------------- | --------------------------------------- | --------------------------------------------------------------------- |
 | Usage-based access           | `mppx.session()`                        | An atomic store that persists the payment channel across requests.    |
 | Recurring access             | `mppx.subscription()`                   | An atomic store for subscription state and a stable subscription key. |
-| Native MPP and x402 together | `evm.charge()` with an x402 facilitator | An EVM asset, recipient, and facilitator configuration.               |
+| Native MPP and x402 together | `evm.charge()` with an x402 facilitator | An Ethereum Virtual Machine (EVM) asset, recipient, and facilitator.  |
 | Zero-dollar payer proof      | `mppx.charge({ amount: "0" })`          | An atomic store if proofs must be single-use across Worker instances. |
 
-Use `Store.memory()` only for local development. Use a durable implementation such as `Store.cloudflare()` for concurrent Worker deployments. Refer to the [session intent](https://mpp.dev/intents/session), [subscription guide](https://mpp.dev/guides/subscription-payments), and [MPP with x402 guide](https://mpp.dev/guides/use-mpp-with-x402) for complete configurations.
+Use `Store.memory()` only for local development. Concurrent Workers need a durable implementation such as `Store.cloudflare()`.
 
-## Related resources
+For complete configurations, refer to the [session intent](https://mpp.dev/intents/session), [subscription guide](https://mpp.dev/guides/subscription-payments), and [MPP with x402 guide](https://mpp.dev/guides/use-mpp-with-x402).
+
+## Next steps
 
 - [Pay from the Agents SDK](/agents/tools/payments/mpp/pay-from-agents-sdk/)
 - [Monetize an MCP server](https://mpp.dev/guides/monetize-mcp-server)

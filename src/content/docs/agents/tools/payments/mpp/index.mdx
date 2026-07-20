@@ -5,16 +5,14 @@ sidebar:
   order: 9
   group:
     hideIndex: false
-description: Accept and make HTTP and MCP payments with MPP and the Cloudflare Agents SDK.
+description: Use Machine Payments Protocol (MPP) with Cloudflare Workers and the Agents SDK to accept and make payments.
 products:
   - agents
 ---
 
 import { CardGrid, LinkCard } from "~/components";
 
-[Machine Payments Protocol (MPP)](https://mpp.dev) is an open protocol for machine-to-machine payments. It turns HTTP `402 Payment Required` into a complete Challenge, Credential, and Receipt flow for agents, apps, and people.
-
-MPP is payment-method agnostic. The same endpoint can offer stablecoins, cards, Bitcoin Lightning, or custom payment methods.
+[Machine Payments Protocol (MPP)](https://mpp.dev) adds payments to HTTP requests and Model Context Protocol (MCP) tool calls. Use it with Cloudflare Workers to sell access. Use it with the Agents SDK to pay for services.
 
 <CardGrid>
 	<LinkCard
@@ -29,74 +27,54 @@ MPP is payment-method agnostic. The same endpoint can offer stablecoins, cards, 
 	/>
 </CardGrid>
 
-## What MPP can do
+## Choose a Cloudflare workflow
 
-| Use case                       | MPP capability                                                                                        |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| Charge once                    | Set a fixed price for an HTTP request or MCP tool call.                                               |
-| Meter usage                    | Use sessions for streamed tokens, bytes, or other pay-as-you-go usage.                                |
-| Sell recurring access          | Use subscriptions for paid plans, memberships, recurring MCP tools, and usage bundles.                |
-| Gate an existing application   | Put [`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) in front of an origin without changing it. |
-| Identify the payer             | Read the payer DID from the verified MPP Credential.                                                  |
-| Offer several payment methods  | Publish multiple Challenges and let the client select a compatible method.                            |
-| Support native MPP and x402    | Add an EVM charge method and x402 facilitator alongside native MPP methods.                           |
-| Let an Agent pay automatically | Use `Mppx.create` for HTTP requests and `McpClient.wrap` for MCP tool calls.                          |
+Choose a workflow based on where payment happens:
 
-## How it works
+| Goal                       | Cloudflare integration                                           |
+| -------------------------- | ---------------------------------------------------------------- |
+| Protect an existing origin | Deploy `mpp-proxy` as a Worker in front of the origin.            |
+| Charge for a Worker route  | Add `mppx` middleware to a Hono route.                            |
+| Charge for an MCP tool     | Add the MPP transport to an `McpAgent` tool handler.              |
+| Pay an HTTP endpoint       | Create a payment-aware client in the Agent lifecycle.            |
+| Pay for an MCP tool        | Wrap the MCP connection created by the Agents SDK.               |
 
-1. A client requests a resource or calls a tool.
-2. The server returns a payment Challenge. HTTP uses `402` and `WWW-Authenticate: Payment`; MCP uses JSON-RPC error code `-32042`.
-3. The client selects a supported method and creates a payment Credential.
-4. The client retries with the Credential.
-5. The server verifies and settles the payment, then returns the result with a Receipt.
+## How payments move through Cloudflare
 
-## Payment intents
+1. An Agent or HTTP client requests a paid resource.
+2. The Worker or MCP server returns an MPP Challenge.
+3. The client creates a payment Credential.
+4. The client retries the same request.
+5. The server verifies payment and returns a Receipt.
 
-MPP provides three billing patterns:
+HTTP services return the Challenge with `402 Payment Required`. MCP tools return the same payment data through JSON-RPC.
 
-| Intent             | Use it for                                                                                          |
-| ------------------ | --------------------------------------------------------------------------------------------------- |
-| **`charge`**       | One-time, fixed-price payments that settle immediately.                                             |
-| **`session`**      | Usage-based payments whose cost changes during a request, such as streamed tokens or bytes.         |
-| **`subscription`** | Recurring access with a fixed price per billing period, such as paid plans, memberships, or quotas. |
+## Add billing beyond one request
 
-Sessions and subscriptions keep state across requests. Back them with a durable, atomic store in production.
+Choose an MPP intent based on the billing model:
 
-## Payment methods
+| Intent             | Cloudflare use case                                      |
+| ------------------ | -------------------------------------------------------- |
+| **`charge`**       | Set a fixed price for a Worker route or MCP tool.        |
+| **`session`**      | Meter streamed tokens, bytes, or other changing usage.   |
+| **`subscription`** | Sell recurring access, plans, memberships, or allowances. |
 
-Servers can offer several methods at the same time. Clients choose a compatible Challenge.
+Sessions and subscriptions keep state across requests. Use a durable, atomic store for production Workers.
 
-| Method                                                 | Description                                                             |
-| ------------------------------------------------------ | ----------------------------------------------------------------------- |
-| [Stablecoins](https://mpp.dev/payment-methods/tempo)   | Stablecoin payments with fast settlement, sessions, and subscriptions.  |
-| [Stripe](https://mpp.dev/payment-methods/stripe)       | Cards, wallets, and other Stripe methods through Shared Payment Tokens. |
-| [Lightning](https://mpp.dev/payment-methods/lightning) | Bitcoin payments over the Lightning Network.                            |
-| [Card](https://mpp.dev/payment-methods/card)           | Card payments through encrypted network tokens.                         |
-| [Custom](https://mpp.dev/payment-methods/custom)       | A custom payment method implemented with an MPP SDK.                    |
+## Choose a payment method
 
-## Compatibility with x402
+MPP separates the payment protocol from the payment method. A Worker can offer one or more compatible methods. The examples use one stablecoin method so that the code remains executable.
 
-MPP and x402 both use the `402 Payment Required` pattern, but use different Challenge and Credential encodings. `mppx` can handle native MPP and x402 `exact` flows through one payment-aware HTTP client when you register both the native method and an EVM charge method. Servers can expose both formats from one endpoint by configuring the EVM method with an x402 facilitator.
+For other methods, refer to [MPP payment methods](https://mpp.dev/payment-methods).
 
-Refer to [use MPP with x402](https://mpp.dev/guides/use-mpp-with-x402) for the shared client and server setup.
+## Pay MPP and x402 services
 
-## SDKs
+The same `mppx` HTTP client can pay MPP and x402 services. Add an x402-compatible charge method beside the native MPP method.
 
-MPP has official client and server SDKs in five languages:
-
-| Language   | SDK                                      |
-| ---------- | ---------------------------------------- |
-| TypeScript | [`mppx`](https://mpp.dev/sdk/typescript) |
-| Python     | [`pympp`](https://mpp.dev/sdk/python)    |
-| Rust       | [`mpp`](https://mpp.dev/sdk/rust)        |
-| Go         | [`mpp-go`](https://mpp.dev/sdk/go)       |
-| Ruby       | [`mpp-rb`](https://mpp.dev/sdk/ruby)     |
-
-The TypeScript SDK includes middleware for [Hono](https://mpp.dev/sdk/typescript/middlewares/hono), Express, Next.js, and Elysia, an MCP transport, a payment-aware fetch client, and an [`mppx` CLI](https://mpp.dev/sdk/typescript/cli).
+For the shared setup, refer to [use MPP with x402](https://mpp.dev/guides/use-mpp-with-x402).
 
 ## Related resources
 
 - [Cloudflare Agents integration](https://mpp.dev/partner-integrations/cloudflare-agents)
 - [MPP protocol documentation](https://mpp.dev)
-- [Payment HTTP Authentication specification](https://paymentauth.org)
 - [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/)
