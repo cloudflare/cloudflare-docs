@@ -17,15 +17,17 @@ import BaseLayout from "./BaseLayout.astro";
 import Header from "@/components/Header.astro";
 import type { BasePageProps } from "nimbus-docs/types";
 import type { PageMeta } from "@/components/PageHead.astro";
+import { CHANGELOG_OG_IMAGE } from "~/util/page-head";
 
 type Props = BasePageProps & {
 	meta?: PageMeta;
 };
 
-const baseProps = Astro.props;
+const { socialImage, ...baseProps } = Astro.props;
+const resolvedSocialImage = socialImage ?? CHANGELOG_OG_IMAGE;
 ---
 
-<BaseLayout {...baseProps}>
+<BaseLayout socialImage={resolvedSocialImage} {...baseProps}>
 	<div class="flex min-h-screen flex-col">
 		<Header showSidebar={false} />
 		<main id="main-content" class="flex-1">

@@ -36,9 +36,9 @@ export function resolveFavicon(exists: (file: string) => boolean): {
 	return candidates.find((c) => exists(c.file)) ?? candidates[0];
 }
 
-const CHANGELOG_OG_IMAGE = "/og-changelog.png";
+export const CHANGELOG_OG_IMAGE = "/og-changelog.png";
 
-const DEFAULT_OG_IMAGE = "/og-docs.png";
+export const DEFAULT_OG_IMAGE = "/og-docs.png";
 
 /** OG image path: prop > changelog card > config > opengraph.png > logo.png >
  *  default docs card. */

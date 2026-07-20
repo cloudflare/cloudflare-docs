@@ -93,9 +93,6 @@ const legalText = legalLinks
 	})
 	.join(" ");
 
-// Gate the OneTrust SDK loader to production. It injects `window.OneTrust`
-// along with OneTrust's own consent button, which we render inline so its
-// label and behaviour stay geo-aware and managed by the SDK.
 let isProduction = false;
 if (
 	import.meta.env.CF_PAGES_BRANCH === "production" ||
