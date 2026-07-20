@@ -14,7 +14,7 @@
 		{ "type": "Text", "globs": ["**/__redirects"], "fallthrough": true },
 	],
 	"assets": {
-		"directory": "./dist",
+		"directory": "./dist-nimbus",
 		"binding": "ASSETS",
 		"not_found_handling": "404-page",
 		"run_worker_first": true,
