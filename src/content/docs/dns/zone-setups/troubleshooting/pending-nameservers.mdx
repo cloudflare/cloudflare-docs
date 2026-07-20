@@ -49,10 +49,10 @@ The last section of the output should return **only** the Cloudflare nameservers
 
 ### Option B - `nslookup`
 
-If you are on Windows or prefer `nslookup`, query the parent zone the same way:
+If you are on Windows or prefer `nslookup`, query the parent zone the same way. Add the `-debug` flag so the output includes the authoritative response, not just the cached answer from your local resolver:
 
 ```sh
-nslookup -type=ns example.com
+nslookup -type=ns -debug example.com
 ```
 
 If the output shows nameservers other than the ones assigned to your Cloudflare zone, the delegation is not yet correct.
