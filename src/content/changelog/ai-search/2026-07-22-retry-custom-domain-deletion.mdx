@@ -1,0 +1,12 @@
+---
+title: Retry AI Search instance deletion when custom domain cleanup fails
+description: AI Search now keeps an instance intact when its custom domain cannot be removed, allowing deletion to be retried safely.
+products:
+  - ai-search
+date: 2026-07-22
+publish_future_dated_entry: true
+---
+
+When you delete an AI Search instance with a custom domain, AI Search now keeps the instance intact if custom domain cleanup cannot complete. The request returns an error instead of reporting a successful deletion, so you can retry without losing the configuration needed to remove the domain.
+
+For more information, refer to [managing AI Search instances with the REST API](/ai-search/api/instances/rest-api/).
