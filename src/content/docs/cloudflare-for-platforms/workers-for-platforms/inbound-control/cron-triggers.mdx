@@ -1,0 +1,106 @@
+---
+pcx_content_type: how-to
+title: Cron triggers
+description: Configure scheduled user Worker invocations while keeping platform inbound policy in front of scheduled handlers.
+sidebar:
+  order: 4
+products:
+  - cloudflare-for-platforms
+---
+
+Cron triggers let user Workers run on a schedule. In Workers for Platforms, your platform configures the schedule on the user Worker through the API, and inbound control runs before the user Worker's `scheduled()` handler.
+
+Use cron triggers when you want user Workers to:
+
+- Run recurring jobs such as syncs, cleanup tasks, or report generation.
+- Let customers choose schedules in your product while your platform applies those schedules to their user Workers.
+- Apply platform policy before scheduled user code runs.
+
+## How it works
+
+A cron trigger is configured on a user Worker. There is no hostname and no routing decision for the dispatcher to make.
+
+```txt
+Cron trigger on user Worker
+  -> Inbound control runs platform policy
+  -> User Worker handles scheduled()
+```
+
+Do not put customer cron triggers on the dispatch Worker just so the dispatcher can call into a user Worker. Configure the trigger on the user Worker, the same way you would for a regular Worker. Because the user Worker is in a namespace with inbound control, the scheduled invocation passes through inbound control first.
+
+## Platform side
+
+Your customer can choose a schedule in your platform UI. Your platform then calls the Workers for Platforms API to apply that schedule to the customer's user Worker.
+
+The schedule is configured on the user Worker, not on the dispatcher or inbound Worker. This keeps the user Worker behavior the same as a regular Worker: the user Worker owns the `scheduled()` handler, and the schedule determines how often Cloudflare invokes it.
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/schedules" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  --data '[
+    {
+      "cron": "*/30 * * * *"
+    }
+  ]'
+```
+
+When the cron trigger fires, inbound control runs before the user Worker's `scheduled()` handler. This lets your platform log the run, apply rate limits, or block the operation before user code runs.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class PlatformInbound extends WorkerEntrypoint {
+	async scheduled(controller) {
+		this.ctx.waitUntil(
+			fetch("https://audit.example.com/events", {
+				method: "POST",
+				body: JSON.stringify({
+					type: "scheduled",
+					cron: controller.cron,
+				}),
+			}),
+		);
+
+		return this.ctx
+			.next({
+				props: { source: "cron" },
+			})
+			.scheduled(controller);
+	}
+}
+```
+
+The inbound Worker does not look up which user Worker should receive the cron event. Cloudflare already selected the user Worker because the trigger is configured on that Worker.
+
+## User Worker side
+
+The user Worker defines `scheduled()` the same way a regular Worker does.
+
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		await env.DB.runNightlyJob();
+	},
+};
+```
+
+From the user Worker's perspective, this is a normal scheduled Worker. Your platform manages the schedule through the API, and inbound control runs before `scheduled()` when the trigger fires.
+
+## Add customer context
+
+If the scheduled job needs platform-managed customer context, pass it through `ctx.next({ props })`.
+
+```js
+return this.ctx
+	.next({
+		props: {
+			customerId: "customer-123",
+			source: "cron",
+		},
+	})
+	.scheduled(controller);
+```
+
+The user Worker can read this context through `this.ctx.props` if it uses a `WorkerEntrypoint` class. The user Worker cannot change the props your platform passes.

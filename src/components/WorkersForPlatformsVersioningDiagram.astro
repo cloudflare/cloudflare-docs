@@ -1,0 +1,344 @@
+---
+const versions = [
+	{ name: "Version A", percentage: "90%" },
+	{ name: "Version B", percentage: "10%" },
+];
+---
+
+<figure
+	class="workers-versioning-diagram not-content"
+	aria-label="Workers for Platforms versioning and gradual deployment flow"
+>
+	<div class="versioning-map">
+		<svg
+			class="connection-layer"
+			viewBox="0 0 860 250"
+			preserveAspectRatio="none"
+			aria-hidden="true"
+		>
+			<defs>
+				<marker
+					id="workers-versioning-arrow"
+					viewBox="0 0 10 10"
+					refX="8"
+					refY="5"
+					markerWidth="5"
+					markerHeight="5"
+					orient="auto-start-reverse"
+				>
+					<path d="M 0 0 L 10 5 L 0 10 z"></path>
+				</marker>
+			</defs>
+
+			<path class="connection" d="M 226 125 C 236 125 242 125 252 125"></path>
+			<path class="connection" d="M 462 125 C 472 125 478 125 488 125"></path>
+		</svg>
+
+		<section class="flow-card request-card" aria-label="Client request">
+			<header class="card-header">
+				<div class="card-title">Request</div>
+			</header>
+			<div class="card-body">
+				<span class="data-pill">customer-a.example.com</span>
+			</div>
+		</section>
+
+		<section class="flow-card dispatcher-card" aria-label="Dispatcher">
+			<header class="card-header">
+				<div class="card-title">Dispatcher</div>
+			</header>
+			<div class="card-body dispatcher-body">
+				<code>DISPATCHER.get(name)</code>
+			</div>
+		</section>
+
+		<section class="namespace-card" aria-label="Dispatch namespace">
+			<header class="card-header namespace-header">
+				<div class="card-title">Dispatch namespace</div>
+			</header>
+
+			<div class="worker-card">
+				<div class="worker-title">Worker: customer-a</div>
+
+				<div class="deployment-card">
+					<div class="section-title">Active deployment</div>
+					<div class="deployment-list">
+						{
+							versions.map((version) => (
+								<div class="version-row">
+									<span>{version.name}</span>
+									<strong>{version.percentage}</strong>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</figure>
+
+<style>
+	.workers-versioning-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-dot: light-dark(rgb(0 0 0 / 7%), rgb(255 255 255 / 8%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-subtle: light-dark(#737373, #d4d4d4);
+		--map-brand: #f6821f;
+		margin: 1rem 0;
+		padding-bottom: 0.35rem;
+		overflow-x: auto;
+		overflow-y: hidden;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+		scrollbar-color: light-dark(rgb(0 0 0 / 28%), rgb(255 255 255 / 28%))
+			transparent;
+		scrollbar-width: thin;
+	}
+
+	.workers-versioning-diagram::-webkit-scrollbar {
+		height: 10px;
+	}
+
+	.workers-versioning-diagram::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.workers-versioning-diagram::-webkit-scrollbar-thumb {
+		border: 2px solid transparent;
+		border-radius: 9999px;
+		background: light-dark(rgb(0 0 0 / 24%), rgb(255 255 255 / 24%));
+		background-clip: content-box;
+	}
+
+	.workers-versioning-diagram::-webkit-scrollbar-thumb:hover {
+		background: light-dark(rgb(0 0 0 / 34%), rgb(255 255 255 / 34%));
+		background-clip: content-box;
+	}
+
+	.versioning-map {
+		box-sizing: border-box;
+		position: relative;
+		display: grid;
+		grid-template-columns: 210px 210px 330px;
+		grid-template-areas: "request dispatcher namespace";
+		align-items: center;
+		gap: 26px;
+		min-width: 0;
+		min-height: 250px;
+		width: max(860px, 100%);
+		max-width: none;
+		padding: 16px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-dot) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 12px 12px;
+		overflow: hidden;
+	}
+
+	.connection-layer {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+	}
+
+	.connection-layer marker path {
+		fill: var(--map-line);
+	}
+
+	.connection {
+		fill: none;
+		stroke: var(--map-line);
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		vector-effect: non-scaling-stroke;
+		marker-end: url(#workers-versioning-arrow);
+	}
+
+	.flow-card,
+	.namespace-card {
+		position: relative;
+		z-index: 1;
+		min-width: 0;
+	}
+
+	.request-card {
+		grid-area: request;
+	}
+
+	.dispatcher-card {
+		grid-area: dispatcher;
+	}
+
+	.namespace-card {
+		grid-area: namespace;
+		padding: 4px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+	}
+
+	.flow-card {
+		padding: 4px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background: var(--map-elevated);
+	}
+
+	.card-header {
+		display: flex;
+		align-items: center;
+		min-height: 38px;
+		padding: 0 10px;
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	}
+
+	.card-title,
+	.section-title {
+		margin: 0;
+		color: var(--map-strong);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		text-transform: uppercase;
+	}
+
+	.card-body {
+		display: grid;
+		gap: 8px;
+		padding: 8px 4px 4px;
+	}
+
+	.dispatcher-body {
+		margin-top: 8px;
+		padding: 10px;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	}
+
+	.data-pill,
+	.dispatcher-body code,
+	.version-row {
+		display: flex;
+		align-items: center;
+		min-height: 30px;
+		min-width: 0;
+		padding: 0 12px;
+		overflow: hidden;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+		color: var(--map-text);
+		font-size: 12px;
+		font-weight: 500;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.dispatcher-body code {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		box-shadow: none;
+	}
+
+	.namespace-header {
+		margin-bottom: 8px;
+	}
+
+	.worker-card {
+		display: grid;
+		gap: 8px;
+		padding: 10px;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+	}
+
+	.worker-title {
+		color: var(--map-text);
+		font-size: 17px;
+		font-weight: 600;
+		line-height: 1.25;
+	}
+
+	.deployment-card {
+		display: grid;
+		gap: 7px;
+		padding-top: 10px;
+		border-top: 1px solid var(--map-line);
+	}
+
+	.deployment-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 6px;
+	}
+
+	.version-row {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 8px;
+		min-height: 36px;
+		padding: 0 10px;
+		box-shadow: none;
+	}
+
+	.version-row span {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.version-row strong {
+		color: var(--map-brand);
+		font-size: 13px;
+	}
+
+	@media (max-width: 48rem) {
+		.workers-versioning-diagram {
+			overflow-x: visible;
+		}
+
+		.versioning-map {
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				"request"
+				"dispatcher"
+				"namespace";
+			min-width: 0;
+			min-height: 0;
+			width: 100%;
+			max-width: 100%;
+			gap: 12px;
+		}
+
+		.connection-layer {
+			display: none;
+		}
+	}
+
+	@media (max-width: 34rem) {
+		.deployment-list {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

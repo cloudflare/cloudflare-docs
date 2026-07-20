@@ -55,7 +55,7 @@ For many use cases, it makes sense to retrieve additional metadata, user data, o
 
 ![Figure 3: Workers for Platforms: Egress Control](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-3.svg "Figure 3: Workers for Platforms: Egress Control")
 
-Data observability and control is crucial for security. [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) allow for interception of all outgoing requests in User Worker scripts.
+Data observability and control is crucial for security. [Outbound control](/cloudflare-for-platforms/workers-for-platforms/outbound-control/) allows for interception of outgoing `fetch()` requests in user Worker scripts.
 
 1. **Worker Invocation**: Route requests to the appropriate User Worker in the Dispatch Namespace. Optionally pass additional parameters to the Outbound Worker during User Worker invocation.
 
@@ -108,5 +108,5 @@ Cloudflare Workers for Platforms provides a robust foundation for building multi
 ## Related resources
 
 - [Workers for Platforms: Get started](/cloudflare-for-platforms/workers-for-platforms/get-started/)
-- [Workers for Platforms: Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/)
+- [Workers for Platforms: Outbound control](/cloudflare-for-platforms/workers-for-platforms/outbound-control/)
 - [Workers for Platforms: Observability](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/)

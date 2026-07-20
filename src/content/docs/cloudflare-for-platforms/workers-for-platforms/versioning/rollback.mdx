@@ -1,0 +1,51 @@
+---
+pcx_content_type: how-to
+title: Roll back a version
+description: Move traffic back to a stable Worker version in Workers for Platforms.
+sidebar:
+  order: 3
+  label: Rollback
+products:
+  - cloudflare-for-platforms
+---
+
+If a new version causes errors during a [rollout](/cloudflare-for-platforms/workers-for-platforms/versioning/rollout/), your platform can move all traffic back to the stable version by creating a new deployment.
+
+Rolling back is the same API call as any other deployment change. Create a deployment that sends `100%` of traffic to the stable version:
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/deployments" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  --data '{
+    "strategy": "percentage",
+    "versions": [
+      {
+        "version_id": "<stable-version-id>",
+        "percentage": 100
+      }
+    ]
+  }'
+```
+
+After this deployment is created, all traffic returns to the stable version immediately.
+
+## What rollback does not cover
+
+Rolling back a deployment changes which version receives traffic. It does not roll back state stored outside the Worker version, such as:
+
+- KV
+- R2
+- D1
+- Durable Objects
+- Queues
+- External databases
+
+If the new version wrote data to any of these stores during the rollout, that data remains after rollback. Your platform should account for this when deciding how to handle rollback in your product.
+
+## Related resources
+
+- [Versions](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/)
+- [Rollout](/cloudflare-for-platforms/workers-for-platforms/versioning/rollout/)
+- [Version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/)

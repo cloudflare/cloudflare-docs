@@ -42,7 +42,7 @@ When you deployed the template, it created a dispatch namespace automatically. Y
 
 ### Dispatch Worker
 
-The dispatch Worker receives incoming requests and routes them to the correct user Worker. It uses a [binding](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) to access the dispatch namespace.
+The dispatch Worker receives incoming requests and routes them to the correct user Worker. It uses a dispatch namespace binding to access the namespace.
 
 ```js
 export default {
@@ -72,10 +72,11 @@ In the template, user Workers are deployed programmatically through the API. In 
 
 Now that you understand how the components work together, customize the template for your use case:
 
-- [Dynamic dispatch](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) — Route requests by subdomain or hostname
-- [Hostname routing](/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/) — Let customers use [custom domains](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) with their applications
-- [Bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) — Give each customer access to their own [database](/d1/), [key-value store](/kv/), or [object storage](/r2/)
-- [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) — Configure egress policies on outgoing requests from customer code
+- [Inbound control](/cloudflare-for-platforms/workers-for-platforms/inbound-control/) — Run platform policy before user Workers receive requests, previews, cron triggers, or queue messages
+- [Hostname routing](/cloudflare-for-platforms/workers-for-platforms/inbound-control/hostname-routing/) — Route requests by subdomain, path, or custom hostname
+- [Bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) — Give each customer access to their own [database](/d1/), [key-value store](/kv/), object storage, or custom platform API
+- [Outbound control](/cloudflare-for-platforms/workers-for-platforms/outbound-control/) — Configure egress policies and secrets injection for outgoing requests from user Workers
+- [Versioning](/cloudflare-for-platforms/workers-for-platforms/versioning/) — Upload versions of user Workers and control which deployments serve traffic
 - [Custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) — Set CPU time and subrequest limits per customer
 - [API examples](/cloudflare-for-platforms/workers-for-platforms/reference/platform-examples/) — Examples for deploying and managing customer code programmatically
 

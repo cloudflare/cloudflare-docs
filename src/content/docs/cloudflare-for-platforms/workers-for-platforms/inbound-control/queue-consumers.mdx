@@ -1,0 +1,113 @@
+---
+pcx_content_type: how-to
+title: Queue consumers
+description: Configure user Workers as queue consumers while keeping platform inbound policy in front of queue handlers.
+sidebar:
+  order: 5
+products:
+  - cloudflare-for-platforms
+---
+
+Queue consumers let user Workers process messages from [Cloudflare Queues](/queues/). In Workers for Platforms, your platform connects the queue consumer to the user Worker through the API, and inbound control runs before the user Worker's `queue()` handler.
+
+Use queue consumers when you want user Workers to:
+
+- Process background jobs.
+- React to events from your platform or customer applications.
+- Let customers configure background work in your product while your platform connects the queue consumer to their user Worker.
+
+## How it works
+
+A queue consumer is configured on a user Worker. The dispatcher does not need to route the message.
+
+```txt
+Queue message batch
+  -> Inbound control runs platform policy
+  -> User Worker handles queue()
+```
+
+Configure the queue consumer on the user Worker the same way you would for a regular Worker. Because the user Worker is in a namespace with inbound control, Cloudflare runs the inbound Worker before the `queue()` handler.
+
+## Platform side
+
+Your platform connects a queue consumer to the user Worker through the Workers for Platforms API. The queue consumer is configured on the user Worker, not on the dispatcher or inbound Worker.
+
+The following example uses the same `queues.consumers` shape as a regular Worker configuration, scoped to a user Worker in a namespace:
+
+```bash
+curl -X PATCH \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/settings" \
+  -H "Content-Type: multipart/form-data" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F 'settings={
+    "queues": {
+      "consumers": [
+        {
+          "queue": "customer-jobs",
+          "max_batch_size": 10,
+          "max_batch_timeout": 30,
+          "max_retries": 3
+        }
+      ]
+    }
+  }'
+```
+
+When a queue message batch is delivered, inbound control runs before the user Worker's `queue()` handler. This lets your platform audit, authorize, rate limit, or reject the batch before user code runs.
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class PlatformInbound extends WorkerEntrypoint {
+	async queue(batch) {
+		this.ctx.waitUntil(
+			fetch("https://audit.example.com/events", {
+				method: "POST",
+				body: JSON.stringify({
+					type: "queue",
+					queue: batch.queue,
+					messageCount: batch.messages.length,
+				}),
+			}),
+		);
+
+		return this.ctx
+			.next({
+				props: { source: "queue" },
+			})
+			.queue(batch);
+	}
+}
+```
+
+The inbound Worker forwards the same message batch to the selected user Worker only after platform policy runs.
+
+## User Worker side
+
+The user Worker defines a `queue()` handler the same way a regular Worker does.
+
+```js
+export default {
+	async queue(batch, env) {
+		for (const message of batch.messages) {
+			await env.DB.processMessage(message.body);
+		}
+	},
+};
+```
+
+The user Worker does not need to call the dispatcher or know that inbound control exists. Your platform manages the queue consumer through the API, and inbound control runs before `queue()` when messages are delivered.
+
+## Block unsupported queues
+
+If your platform only supports specific queue consumers, enforce that in the inbound Worker before calling `ctx.next()`.
+
+```js
+if (batch.queue !== "allowed-queue") {
+	throw new Error("Unsupported queue");
+}
+
+return this.ctx.next().queue(batch);
+```
+
+This keeps queue policy in platform-owned code instead of requiring every user Worker to implement the same checks.

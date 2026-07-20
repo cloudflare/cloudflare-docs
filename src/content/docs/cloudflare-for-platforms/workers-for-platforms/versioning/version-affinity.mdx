@@ -1,0 +1,219 @@
+---
+pcx_content_type: how-to
+title: Version affinity
+description: Keep related requests on a consistent Worker version during gradual deployments.
+sidebar:
+  order: 4
+products:
+  - cloudflare-for-platforms
+---
+
+Version affinity keeps related requests on a consistent Worker version during a gradual deployment. Your dispatcher derives a stable key from the request — such as a session ID, account ID, or cookie — and injects `Cloudflare-Workers-Version-Key`. Cloudflare uses that key to assign requests to a version deterministically, so related requests land on the same version for the life of a deployment.
+
+Use version affinity when you want to:
+
+- Keep a logged-in user on the same version during a rollout.
+- Keep requests for the same account, project, or customer on the same version.
+- Keep HTML and static asset requests on a consistent version.
+- Avoid version skew between incompatible Worker versions.
+- Give customers a more stable rollout experience than per-request percentage routing.
+
+## How version affinity works
+
+By default, percentage-based deployments operate per request. If a Worker has a 90/10 deployment, each request independently has a 10% chance of hitting the new version. A user can move between versions across requests.
+
+When your dispatcher injects `Cloudflare-Workers-Version-Key`, Cloudflare hashes the key and uses the result to assign requests with that key to a version. Requests with the same key are handled by the same version for a given deployment.
+
+```txt
+Dispatcher receives request
+  -> Strips incoming version headers
+  -> Derives a stable affinity key
+  -> Injects Cloudflare-Workers-Version-Key: <key>
+  -> Calls env.DISPATCHER.get(workerName).fetch(request)
+  -> Cloudflare hashes the key and selects a version
+  -> Selected version handles fetch()
+```
+
+The key does not target a specific version. It makes the percentage-based selection deterministic for a stable identifier. If you create a new deployment with different percentages, Cloudflare may reassign keys according to the new deployment.
+
+## Set up version affinity in your dispatcher
+
+Your dispatcher derives the affinity key and injects the header before forwarding to the user Worker. External clients must not control the version key.
+
+### Strip incoming version headers
+
+Delete any `Cloudflare-Workers-Version-Overrides` and `Cloudflare-Workers-Version-Key` headers from the incoming request before doing anything else. By default, external clients should not influence bucket assignment.
+
+```js
+const headers = new Headers(request.headers);
+headers.delete("Cloudflare-Workers-Version-Overrides");
+headers.delete("Cloudflare-Workers-Version-Key");
+```
+
+### Derive a stable affinity key
+
+Your dispatcher derives the key from a stable identifier it controls. The key should include the Worker name or customer scope so unrelated Workers do not share bucket assignment.
+
+| What to keep consistent | Recommended key                               |
+| ----------------------- | --------------------------------------------- |
+| Logged-in user          | `workerName:sessionId` or `workerName:userId` |
+| Customer account        | `workerName:accountId`                        |
+| Project                 | `workerName:projectId`                        |
+| Static assets and build | `workerName:buildId`                          |
+| Anonymous browser user  | `workerName:<dispatcher-generated-cookie-id>` |
+
+The key must be stable for the set of requests that need consistency. If the key changes on every request, affinity does not help.
+
+### Inject the version key header
+
+Once you have the key, set it on the request:
+
+```js
+headers.set("Cloudflare-Workers-Version-Key", versionKey);
+```
+
+### Forward the request
+
+Forward the modified request through the dispatcher binding:
+
+```js
+return env.DISPATCHER.get(workerName).fetch(new Request(request, { headers }));
+```
+
+## Example: dispatcher with version affinity
+
+This example derives the affinity key from a session cookie when one is present, and falls back to the customer ID from the hostname. It strips incoming version headers before injecting the platform-derived key.
+
+```js
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const workerName = url.hostname.split(".")[0];
+
+		const headers = new Headers(request.headers);
+
+		// Strip untrusted incoming version headers.
+		headers.delete("Cloudflare-Workers-Version-Overrides");
+		headers.delete("Cloudflare-Workers-Version-Key");
+
+		// Derive a stable affinity key scoped to this Worker.
+		const sessionId = getCookie(request.headers.get("Cookie"), "session_id");
+		const versionKey = sessionId ? `${workerName}:${sessionId}` : workerName;
+
+		headers.set("Cloudflare-Workers-Version-Key", versionKey);
+
+		return env.DISPATCHER.get(workerName).fetch(
+			new Request(request, { headers }),
+		);
+	},
+};
+
+function getCookie(cookieHeader, name) {
+	if (!cookieHeader) return null;
+	for (const part of cookieHeader.split(";")) {
+		const [key, value] = part.trim().split("=");
+		if (key === name) return value;
+	}
+	return null;
+}
+```
+
+From the customer's perspective, rollout traffic stays consistent. A logged-in user sees the same version across requests for the life of the deployment. The user does not need to know about the header — your dispatcher sets it on every request automatically.
+
+## Use version affinity with static assets
+
+Version skew is the main risk during gradual rollouts for applications that serve static assets. A user might receive HTML from version B that references `/assets/app-b.js`, and then a later asset request is routed to version A where that file does not exist.
+
+Version affinity solves this by keeping HTML and asset requests on the same version. For browser sessions, the safest approach is to have your dispatcher generate an affinity cookie on the first request and use that generated value immediately on the same request. This avoids the first-page-load gap where HTML is assigned to one version but the browser's subsequent asset requests use a different key.
+
+```js
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+		const workerName = url.hostname.split(".")[0];
+
+		const headers = new Headers(request.headers);
+
+		// Strip untrusted incoming version headers.
+		headers.delete("Cloudflare-Workers-Version-Overrides");
+		headers.delete("Cloudflare-Workers-Version-Key");
+
+		// Use an existing affinity cookie, or generate one for this session.
+		const existingKey = getCookie(request.headers.get("Cookie"), "__cf_wfp_vk");
+		const affinityId = existingKey ?? crypto.randomUUID();
+		const versionKey = `${workerName}:${affinityId}`;
+
+		headers.set("Cloudflare-Workers-Version-Key", versionKey);
+
+		const response = await env.DISPATCHER.get(workerName).fetch(
+			new Request(request, { headers }),
+		);
+
+		// If this is a new session, set the affinity cookie on the response
+		// so browser asset requests carry the same key.
+		if (existingKey) {
+			return response;
+		}
+
+		const next = new Response(response.body, response);
+		next.headers.append(
+			"Set-Cookie",
+			`__cf_wfp_vk=${affinityId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=31536000`,
+		);
+		return next;
+	},
+};
+
+function getCookie(cookieHeader, name) {
+	if (!cookieHeader) return null;
+	for (const part of cookieHeader.split(";")) {
+		const [key, value] = part.trim().split("=");
+		if (key === name) return value;
+	}
+	return null;
+}
+```
+
+Because the dispatcher generates the affinity ID and uses it on the same request before returning the response, the first HTML request and all subsequent asset requests share the same version key. The cookie persists in the browser so future visits also stay on the same version until the cookie expires or a new deployment is created.
+
+## What to expose to customers
+
+Your platform can surface version affinity as a rollout option without exposing version routing details. For example:
+
+- **Per session**: Keep each logged-in user on one version.
+- **Per account**: Keep each customer account on one version.
+- **Per project**: Keep each project on one version.
+- **Per build**: Keep HTML and assets on one version.
+
+Version affinity improves consistency during a rollout, but traffic is still assigned according to the deployment percentages. It does not let a customer choose a specific version. To let customers test a specific version, use `Cloudflare-Workers-Version-Overrides`. Refer to [Versions](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/#test-a-version) for the full setup.
+
+## Version affinity vs version overrides
+
+| Use case                                                   | Header                                 |
+| ---------------------------------------------------------- | -------------------------------------- |
+| Keep related requests on the same version during a rollout | `Cloudflare-Workers-Version-Key`       |
+| Send a request to a specific version                       | `Cloudflare-Workers-Version-Overrides` |
+
+Version overrides take precedence. If your dispatcher sets `Cloudflare-Workers-Version-Overrides`, Cloudflare routes to that specific version and ignores the version key.
+
+`Cloudflare-Workers-Version-Key` does not target a version. It gives Cloudflare a stable key so related requests stay on the same version for a deployment.
+
+## Notes and limits
+
+Version affinity applies within a deployment. When you create a new deployment with different percentages, Cloudflare may reassign keys according to the new configuration.
+
+The affinity key should not contain secrets or sensitive user data. Treat it as routing metadata.
+
+Include the Worker name or customer scope in the key. Without scoping, unrelated Workers that happen to use the same session identifier could share bucket assignment.
+
+Version affinity does not replace rollback. If a version causes errors, create a deployment that routes all traffic back to the stable version.
+
+## Related resources
+
+- [Versioning overview](/cloudflare-for-platforms/workers-for-platforms/versioning/)
+- [Versions](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/)
+- [Rollout](/cloudflare-for-platforms/workers-for-platforms/versioning/rollout/)
+- [Rollback](/cloudflare-for-platforms/workers-for-platforms/versioning/rollback/)
+- [Static assets](/cloudflare-for-platforms/workers-for-platforms/configuration/static-assets/)
+- [Workers gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/)
+- [Workers version overrides](/workers/configuration/versions-and-deployments/version-overrides/)

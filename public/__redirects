@@ -68,6 +68,17 @@
 /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/warp/ /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 /dynamic-workers/examples/dynamic-workflows/ /dynamic-workers/usage/dynamic-workflows/ 301
+
+# Workers for Platforms restructure
+/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/ /cloudflare-for-platforms/workers-for-platforms/inbound-control/hostname-routing/ 301
+/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/ /cloudflare-for-platforms/workers-for-platforms/inbound-control/hostname-routing/ 301
+/cloudflare-for-platforms/workers-for-platforms/configuration/inbound-workers/ /cloudflare-for-platforms/workers-for-platforms/inbound-control/ 301
+/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/outbound-control/ 301
+/cloudflare-for-platforms/workers-for-platforms/configuration/custom-binding/ /cloudflare-for-platforms/workers-for-platforms/configuration/bindings/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform-templates/ /cloudflare-for-platforms/workers-for-platforms/examples/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform-templates/platform-starter-kit/ /cloudflare-for-platforms/workers-for-platforms/examples/platform-starter-kit/ 301
+/cloudflare-for-platforms/workers-for-platforms/platform-templates/vibesdk/ /cloudflare-for-platforms/workers-for-platforms/examples/vibesdk/ 301
+
 /docs/ /directory/ 301
 /mesh/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 302
 /support/ai/ / 301

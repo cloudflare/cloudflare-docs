@@ -1,0 +1,242 @@
+---
+pcx_content_type: concept
+title: Inbound control
+description: Run platform policy before user Workers receive requests, previews, cron triggers, queue messages, email events, or RPC calls.
+sidebar:
+  order: 5
+  label: Overview
+  group:
+    label: Inbound control
+products:
+  - cloudflare-for-platforms
+---
+
+Inbound control lets your platform run logic before user Worker code runs. Use it to put authentication, logging, request checks, or other platform-owned behavior in front of every way a user Worker can be invoked.
+
+Your platform manages user Worker configuration through the Workers for Platforms API. For example, a customer can choose a cron schedule in your product, and your platform can apply that schedule to the user's Worker. That user Worker configuration is separate from the platform Worker that handles routing, inbound control, and outbound control.
+
+Use inbound control when you want to:
+
+- Run authentication checks before requests reach user Workers.
+- Log or audit an invocation before user Worker code runs.
+- Add platform context, such as customer ID or plan, before forwarding to the user Worker.
+- Run platform logic before previews, cron triggers, queue consumers, email handlers, or RPC methods invoke user code.
+
+## How it works
+
+Inbound control applies to user Workers in a namespace. When a request, preview, cron trigger, queue consumer, email handler, or RPC call invokes a user Worker in that namespace, Cloudflare runs your platform-owned inbound Worker first.
+
+Use inbound control to decide what your platform does before user code runs:
+
+- For previews, require platform authentication before someone can access the preview URL.
+- For cron triggers, enforce rate limits or log the scheduled operation before `scheduled()` runs.
+- For queue consumers, audit or reject a message batch before `queue()` runs.
+- For HTTP requests, add platform context such as customer ID or plan before `fetch()` runs.
+
+Your inbound Worker decides whether to run user code, block the invocation, or add platform context before the user Worker runs.
+
+For HTTP requests, your platform usually has two layers:
+
+1. The dispatcher decides which user Worker should run. For example, it can route `customer-a.example.com` or `/customer-a` to the `customer-a` user Worker.
+2. Inbound control runs platform logic before that selected user Worker handles the request.
+
+The request flow looks like this:
+
+```txt
+HTTP request
+  -> Dispatcher selects a user Worker
+  -> Inbound control runs platform logic
+  -> User Worker handles fetch()
+```
+
+Other invocation types do not need the dispatcher to choose a Worker. The user Worker's own setup determines when and how it runs. For example, a cron trigger on the user Worker determines when `scheduled()` runs, and a queue consumer on the user Worker determines which queue invokes `queue()`.
+
+This lets you configure previews, cron triggers, queue consumers, and other invocation sources directly on the user Worker, the same way you would for a regular Worker. The difference is that inbound control runs before those handlers, so those invocations still go through your platform checks first.
+
+```txt
+Preview request, cron trigger, queue message, email event, or RPC call
+  -> Inbound control runs platform checks
+  -> User Worker handler runs
+```
+
+Because inbound control is configured on the namespace, these invocation types cannot bypass the authentication, logging, rate limiting, or context you put in the inbound Worker.
+
+## Platform side
+
+To set up inbound control, create a Worker that contains the logic you want to run before user Workers. Then attach that Worker to the namespace as the inbound Worker.
+
+In that Worker, add a method for each invocation type your platform supports:
+
+- `fetch()` for HTTP requests and preview requests.
+- `scheduled()` for cron triggers.
+- `queue()` for queue messages.
+- RPC methods for direct calls your platform allows.
+
+Each method should run your platform logic first. For example, check auth, log the invocation, enforce rate limits, or add customer context.
+
+If user code should run, call `ctx.next()` to continue to the user Worker. If user code should not run, return a response or throw an error.
+
+You can put the dispatcher, inbound control, and outbound control in the same Worker as separate exports, or manage them as separate Workers. If you keep them in one Worker, the dispatcher handles HTTP routing, and the inbound export handles platform logic before selected user Workers run.
+
+This example keeps the dispatcher and inbound control in one Worker:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+// Dispatcher: chooses a user Worker for HTTP requests.
+export default class Dispatcher extends WorkerEntrypoint {
+	async fetch(request) {
+		// customer-a.example.com -> customer-a user Worker
+		const workerName = new URL(request.url).hostname.split(".")[0];
+		const userWorker = this.env.DISPATCHER.get(workerName);
+
+		return userWorker.fetch(request);
+	}
+}
+
+// Inbound control: runs before user Worker handlers.
+// Add one method for each invocation type your platform allows.
+export class PlatformInbound extends WorkerEntrypoint {
+	async fetch(request) {
+		// Run auth before HTTP or preview requests reach the user Worker.
+		const customerId = new URL(request.url).hostname.split(".")[0];
+
+		if (!(await this.isAuthorized(request, customerId))) {
+			return new Response("Forbidden", { status: 403 });
+		}
+
+		this.audit("fetch", { customerId, url: request.url });
+
+		return this.ctx
+			.next({
+				props: { customerId },
+			})
+			.fetch(request);
+	}
+
+	async scheduled(controller) {
+		// Run logging or rate limits before the user Worker's cron handler.
+		this.audit("scheduled", { cron: controller.cron });
+
+		return this.ctx
+			.next({
+				props: { source: "cron" },
+			})
+			.scheduled(controller);
+	}
+
+	async queue(batch) {
+		// Audit or reject the queue batch before the user Worker processes it.
+		this.audit("queue", {
+			queue: batch.queue,
+			messages: batch.messages.length,
+		});
+
+		return this.ctx
+			.next({
+				props: { source: "queue" },
+			})
+			.queue(batch);
+	}
+
+	async runTask(name) {
+		// Allow this RPC method and forward it to the user Worker.
+		this.audit("runTask", { name });
+
+		return this.ctx
+			.next({
+				props: { source: "rpc" },
+			})
+			.runTask(name);
+	}
+
+	async isAuthorized(request, customerId) {
+		const token = request.headers.get("Authorization");
+		return token === `Bearer ${this.env.PLATFORM_TOKEN}`;
+	}
+
+	audit(type, fields) {
+		this.ctx.waitUntil(
+			fetch("https://audit.example.com/events", {
+				method: "POST",
+				body: JSON.stringify({ type, ...fields }),
+			}),
+		);
+	}
+}
+```
+
+The inbound Worker does not call `env.DISPATCHER.get()`. For HTTP requests, the dispatcher has already selected the user Worker. For cron triggers, queue consumers, previews, and direct calls, Cloudflare already knows which user Worker to run because those features are configured on a specific user Worker. `ctx.next()` continues to that already-selected user Worker.
+
+Configure the namespace to use the inbound entrypoint:
+
+```jsonc
+{
+	"namespace": "my-platform",
+	"inbound": {
+		"service": "platform-worker",
+		"entrypoint": "PlatformInbound"
+	}
+}
+```
+
+Configure the platform Worker with a dispatch binding to the same namespace:
+
+```jsonc
+{
+	"name": "platform-worker",
+	"dispatch_namespaces": [
+		{
+			"binding": "DISPATCHER",
+			"namespace": "my-platform"
+		}
+	]
+}
+```
+
+## User Worker side
+
+User Workers do not configure inbound control directly. They configure handlers, triggers, previews, queues, bindings, and other Worker behavior the same way regular Workers do. Your platform applies that configuration to the user Worker in the namespace.
+
+For example, a user Worker can define `fetch()`, `scheduled()`, `queue()`, and RPC methods as normal:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export default class UserWorker extends WorkerEntrypoint {
+	async fetch() {
+		return new Response(`hello from ${this.ctx.props.customerId}`);
+	}
+
+	async scheduled() {
+		await this.env.DB.runNightlyJob();
+	}
+
+	async queue(batch) {
+		for (const message of batch.messages) {
+			await this.env.DB.processMessage(message.body);
+		}
+	}
+
+	async runTask(name) {
+		return this.env.TASKS.run(name);
+	}
+}
+```
+
+The user Worker does not need to know that inbound control exists. When it is invoked, inbound control runs first because the Worker is in a namespace with an inbound Worker configured.
+
+## Block unsupported invocations
+
+Inbound control is an explicit allowlist. If the inbound Worker does not define a handler or RPC method that forwards to `ctx.next()`, that invocation does not reach the user Worker.
+
+For example, if your inbound Worker defines `fetch()`, `scheduled()`, and `queue()`, then those invocation types can reach the user Worker. Other handlers and RPC methods are blocked unless you add methods that forward them.
+
+This keeps new entrypoints from becoming accidental bypasses around platform policy.
+
+## Next steps
+
+- [Route HTTP requests by hostname](/cloudflare-for-platforms/workers-for-platforms/inbound-control/hostname-routing/)
+- [Configure cron triggers](/cloudflare-for-platforms/workers-for-platforms/inbound-control/cron-triggers/)
+- [Configure queue consumers](/cloudflare-for-platforms/workers-for-platforms/inbound-control/queue-consumers/)
+- [Control outbound requests](/cloudflare-for-platforms/workers-for-platforms/outbound-control/)

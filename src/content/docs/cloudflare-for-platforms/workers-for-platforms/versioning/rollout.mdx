@@ -1,0 +1,138 @@
+---
+pcx_content_type: how-to
+title: Roll out a version
+description: Gradually shift production traffic to a new Worker version in Workers for Platforms.
+sidebar:
+  order: 2
+  label: Rollout
+products:
+  - cloudflare-for-platforms
+---
+
+Once you have [created and tested a version](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/), start sending production traffic to it by creating a deployment that splits traffic between the stable version and the new version by percentage.
+
+Your platform controls the rollout pace. Start with a small percentage, monitor for errors, increase the percentage over time, and complete the rollout when the new version is stable.
+
+## How it works
+
+The dispatcher routes requests to a Worker, not to a specific version. The deployment on that Worker decides which version runs.
+
+```txt
+HTTP request
+  -> Dispatcher selects a Worker with env.DISPATCHER.get()
+  -> Cloudflare checks the selected Worker's active deployment
+  -> Cloudflare selects a version based on the deployment percentages
+  -> Selected version handles fetch()
+```
+
+Your dispatcher does not need to change for rollouts. It still selects a Worker the same way:
+
+```js
+export default {
+	async fetch(request, env) {
+		const workerName = new URL(request.url).hostname.split(".")[0];
+		const worker = env.DISPATCHER.get(workerName);
+
+		return worker.fetch(request);
+	},
+};
+```
+
+After `.get()` selects the Worker, Cloudflare checks that Worker's active deployment. If the deployment splits traffic between two versions, Cloudflare routes each request to a version based on the configured percentages.
+
+Your platform needs to store the version IDs returned when you [create versions](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/#upload-a-version). Every deployment API call requires the version IDs for the stable version and the new version. When a customer starts, increases, completes, or rolls back a rollout, your platform uses those stored IDs to build the `versions` payload.
+
+## Expose rollouts in your platform
+
+Your platform can let customers choose how a new Worker version moves into production. A customer can start with a small percentage, increase the rollout over time, complete the rollout, or roll back — all from your product's UI.
+
+Your platform converts those choices into deployment API calls. The customer does not need to know how the dispatcher routes traffic or how deployments work.
+
+| Customer action                 | What your customer does                                               | What your platform does                                                                                                                                                   |
+| ------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Start rollout                   | Choose an initial traffic percentage, such as 10%.                    | Create a deployment that sends 10% of traffic to the new version and 90% to the stable version.                                                                           |
+| Increase rollout                | Change the rollout percentage, such as from 10% to 50%.               | Create a new deployment with updated version percentages.                                                                                                                 |
+| Complete rollout                | Move the new version to 100%.                                         | Create a deployment that sends all traffic to the new version.                                                                                                            |
+| Roll back                       | Select the previous stable version.                                   | Create a deployment that sends all traffic back to the stable version.                                                                                                    |
+| Keep rollout traffic consistent | Continue to send related requests to the same version during rollout. | Set `Cloudflare-Workers-Version-Key` from a stable identifier. Refer to [Version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/). |
+
+## Start the rollout
+
+Once the new version passes testing, start sending production traffic to it by creating a deployment with a small percentage. This is the first time real customer traffic reaches the new version. Monitor errors, logs, and behavior before increasing the percentage.
+
+All deployment changes use the same endpoint and request shape. Only the `versions` payload changes.
+
+**10% rollout:**
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME/deployments" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  --data '{
+    "strategy": "percentage",
+    "versions": [
+      {
+        "version_id": "<stable-version-id>",
+        "percentage": 90
+      },
+      {
+        "version_id": "<new-version-id>",
+        "percentage": 10
+      }
+    ]
+  }'
+```
+
+## Increase the rollout
+
+To increase the rollout, create another deployment with updated percentages. Each new deployment replaces the previous one.
+
+**50% rollout:**
+
+```json
+{
+	"strategy": "percentage",
+	"versions": [
+		{
+			"version_id": "<stable-version-id>",
+			"percentage": 50
+		},
+		{
+			"version_id": "<new-version-id>",
+			"percentage": 50
+		}
+	]
+}
+```
+
+## Complete the rollout
+
+To send all traffic to the new version, create a deployment at 100%:
+
+```json
+{
+	"strategy": "percentage",
+	"versions": [
+		{
+			"version_id": "<new-version-id>",
+			"percentage": 100
+		}
+	]
+}
+```
+
+## Use version affinity during rollouts
+
+By default, percentage-based deployments operate per request. A user or session may move between versions across requests.
+
+To keep related requests on a consistent version during a rollout, refer to [Version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/).
+
+## Related resources
+
+- [Versions](/cloudflare-for-platforms/workers-for-platforms/versioning/versions/)
+- [Rollback](/cloudflare-for-platforms/workers-for-platforms/versioning/rollback/)
+- [Version affinity](/cloudflare-for-platforms/workers-for-platforms/versioning/version-affinity/)
+- [Workers gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/)
+- [Workers version overrides](/workers/configuration/versions-and-deployments/version-overrides/)
+- [Observability](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/)
