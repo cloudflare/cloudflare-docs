@@ -501,10 +501,12 @@ export async function run({
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function parsePayload(payload: unknown): RebasePayload {
-	const input = payload as Partial<RebasePayload & { mode?: unknown }>;
+	const input = payload as Partial<RebasePayload>;
 	if (
-		typeof input.prNumber !== "number" ||
-		typeof input.triggerCommentId !== "number" ||
+		!Number.isInteger(input.prNumber) ||
+		(input.prNumber as number) <= 0 ||
+		!Number.isInteger(input.triggerCommentId) ||
+		(input.triggerCommentId as number) <= 0 ||
 		typeof input.senderLogin !== "string"
 	) {
 		throw new Error(
@@ -512,11 +514,12 @@ function parsePayload(payload: unknown): RebasePayload {
 		);
 	}
 	return {
-		prNumber: input.prNumber,
-		triggerCommentId: input.triggerCommentId,
+		prNumber: input.prNumber as number,
+		triggerCommentId: input.triggerCommentId as number,
 		triggerEyesReactionId:
-			typeof input.triggerEyesReactionId === "number"
-				? input.triggerEyesReactionId
+			Number.isInteger(input.triggerEyesReactionId) &&
+			(input.triggerEyesReactionId as number) > 0
+				? (input.triggerEyesReactionId as number)
 				: null,
 		senderLogin: input.senderLogin,
 	};

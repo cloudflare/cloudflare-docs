@@ -743,11 +743,17 @@ export function renderRebaseStatusUpdate(
 		updatedBody = `${beforeWithMarker}\n\n${statusLine}${after}`;
 	} else {
 		// Defensive fallback: no ## Review heading — build a fresh wrapper.
-		// `stripped` still contains BOT_COMMENT_MARKER from the original body;
-		// remove it so we don't emit two markers in the same comment.
+		// Strip BOT_COMMENT_MARKER and all <!-- ... --> metadata lines so that
+		// stale markers (reviewed-head-sha, reviewed-at, updated-at, etc.) from
+		// the original body are not appended below the separator, where
+		// extractReviewedHeadSha / extractReviewedAt would pick them up instead
+		// of the freshly-emitted ones above.
 		const strippedBody = stripped
 			.replace(BOT_COMMENT_MARKER + "\n", "")
-			.replace(BOT_COMMENT_MARKER, "");
+			.replace(BOT_COMMENT_MARKER, "")
+			.replace(/^<!-- [^\n]+ -->\n?/gm, "")
+			.replace(/\n{3,}/g, "\n\n")
+			.trim();
 		updatedBody = [
 			BOT_COMMENT_MARKER,
 			`<!-- updated-at: ${new Date().toISOString()} -->`,
