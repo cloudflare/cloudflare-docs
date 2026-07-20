@@ -3,7 +3,7 @@ title: Workers Preview URL default behavior now matches your workers.dev setting
 description: If a Workers Preview URL setting is not explicitly configured, its default behavior will now match the setting of the workers.dev subdomain.
 date: 2025-10-23
 ---
-We have updated the default behavior for Cloudflare Workers [Preview URLs](/workers/configuration/previews/). **Going forward, if a preview URL setting is not [explicitly configured](/workers/configuration/previews/#toggle-preview-urls-enable-or-disable) during deployment, its default behavior will automatically match the setting of your [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/).**
+We have updated the default behavior for Cloudflare Workers [Preview URLs](/workers/versions-and-deployments/preview-urls/). **Going forward, if a preview URL setting is not [explicitly configured](/workers/versions-and-deployments/preview-urls/#toggle-preview-urls-enable-or-disable) during deployment, its default behavior will automatically match the setting of your [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/).**
 
 This change is intended to provide a more intuitive and secure experience by aligning your preview URL's default state with your `workers.dev` configuration to prevent cases where a preview URL might remain public even after you disabled your `workers.dev` route.
 
@@ -12,7 +12,7 @@ This change is intended to provide a more intuitive and secure experience by ali
 - **If your workers.dev route is enabled and you do not explicitly set Preview URLs to enabled or disabled:** Preview URLs will default to enabled
 - **If your workers.dev route is disabled and you do not explicitly set Preview URLs to enabled or disabled:** Preview URLs will default to disabled
 
-You can override the default setting by explicitly enabling or disabling the preview URL in your Worker's configuration through the [API](/api/resources/workers/subresources/scripts/subresources/subdomain/), [Dashboard](/workers/configuration/previews/#from-the-dashboard), or [Wrangler](/workers/configuration/previews/#from-the-wrangler-configuration-file). 
+You can override the default setting by explicitly enabling or disabling the preview URL in your Worker's configuration through the [API](/api/resources/workers/subresources/scripts/subresources/subdomain/), [Dashboard](/workers/versions-and-deployments/preview-urls/#from-the-dashboard), or [Wrangler](/workers/versions-and-deployments/preview-urls/#from-the-wrangler-configuration-file). 
 
 **Wrangler Version Behavior**
 

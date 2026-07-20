@@ -1,0 +1,42 @@
+---
+title: Workflows now supports delay functions when retrying
+description: Workflows step retries now support delay functions, so you can change the next retry delay based on the failed attempt and error.
+products:
+  - workflows
+date: 2026-07-09 12:00:00 UTC
+---
+
+import { TypeScriptExample } from "~/components";
+
+With [Workflows](/workflows/), you can configure built-in retry behavior for each step. Previously, you could configure step retries with fixed delay durations, such as seconds, minutes, or hours, and backoff strategies such as `constant`, `linear`, or `exponential`.
+
+Step retries now support dynamic delay functions. Instead of choosing only a base delay and backoff strategy, pass a function to `retries.delay` and calculate the next delay from the failed attempt and thrown error.
+
+This is useful when retries should depend on the failure. Your Workflow may need to wait longer after a rate-limit error, but retry sooner after a short network failure. The delay function can also accommodate provider guidance if, for example, a downstream API returns a `Retry-After` value in its error messaging.
+
+<TypeScriptExample>
+
+```ts
+await step.do(
+	"sync customer",
+	{
+		retries: {
+			limit: 5,
+			delay: ({ ctx, error }) => {
+				if (error.message.includes("rate limit")) {
+					return `${ctx.attempt * 30} seconds`;
+				}
+
+				return "10 seconds";
+			},
+		},
+	},
+	async () => {
+		await syncCustomer();
+	},
+);
+```
+
+</TypeScriptExample>
+
+Dynamic delay functions can return a duration string, a number, or a promise that resolves to a duration. Use them to add adaptive retry behavior without writing separate queue or scheduling logic. For more information, refer to [Sleeping and retrying](/workflows/build/sleeping-and-retrying/).

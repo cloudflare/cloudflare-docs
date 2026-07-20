@@ -65,6 +65,10 @@ If `true`, the redirect URL will keep the query string of the original request.
 
 For example, a URL redirect from `/my-folder/` to `/other-folder/` with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value` to `/other-folder/?name=value`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value` to `/other-folder/`.
 
+:::caution
+When **Preserve query string** is enabled, the final redirect URL uses the original request's query string. Any query string on the target URL is discarded — even when the original request has no query string of its own. To add a fixed query parameter to redirected URLs, leave **Preserve query string** disabled and include the parameter directly in the target URL.
+:::
+
 ## Preserve path suffix
 
 API field: `preserve_path_suffix` <Type text="Boolean" /> <MetaInfo text="default: true" />

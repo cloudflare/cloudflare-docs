@@ -68,70 +68,70 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"disable_safety_checker": {
-					"default": false,
-					"description": "Disable safety checker for generated videos.",
-					"type": "boolean"
-				},
-				"ignore_audio": {
-					"default": false,
-					"description": "Ignore source audio during generation.",
-					"type": "boolean"
+				"video": {
+					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI.",
+					"type": "string"
 				},
 				"images": {
 					"description": "Identity reference image(s), 1 to 3, to place into the video. Each entry is an HTTP(S) URL or a data URI.",
+					"minItems": 1,
+					"maxItems": 3,
+					"type": "array",
 					"items": {
 						"type": "string"
-					},
-					"maxItems": 3,
-					"minItems": 1,
-					"type": "array"
+					}
 				},
-				"instruction_prompt": {
-					"default": "",
-					"description": "Further instruction on how to place people from the reference images into the scene.",
-					"type": "string"
+				"turbo": {
+					"description": "Turbo mode: faster generation for slightly lower quality.",
+					"default": false,
+					"type": "boolean"
 				},
 				"resolution": {
-					"default": "720p",
 					"description": "Target resolution.",
+					"default": "720p",
+					"type": "string",
 					"enum": [
 						"720p",
 						"1080p"
-					],
-					"type": "string"
+					]
 				},
 				"save_audio": {
-					"default": true,
 					"description": "Save the video with audio.",
+					"default": true,
 					"type": "boolean"
 				},
-				"seed": {
-					"description": "Random seed for reproducible generation.",
-					"maximum": 9007199254740991,
-					"minimum": -9007199254740991,
-					"type": "integer"
+				"ignore_audio": {
+					"description": "Ignore source audio during generation.",
+					"default": false,
+					"type": "boolean"
 				},
 				"target_fps": {
-					"default": "original",
 					"description": "Target FPS for the working video.",
+					"default": "original",
+					"type": "string",
 					"enum": [
 						"24",
 						"48",
 						"original"
-					],
+					]
+				},
+				"instruction_prompt": {
+					"description": "Further instruction on how to place people from the reference images into the scene.",
+					"default": "",
 					"type": "string"
 				},
-				"turbo": {
+				"seed": {
+					"description": "Random seed for reproducible generation.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"disable_safety_checker": {
+					"description": "Disable safety checker for generated videos.",
 					"default": false,
-					"description": "Turbo mode: faster generation for slightly lower quality.",
 					"type": "boolean"
-				},
-				"video": {
-					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI.",
-					"type": "string"
 				}
 			},
 			"required": [
@@ -145,22 +145,22 @@
 				"instruction_prompt",
 				"disable_safety_checker"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
 				"video": {
 					"description": "Presigned URL for the replacement video.",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

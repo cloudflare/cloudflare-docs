@@ -64,7 +64,7 @@ As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/cer
 
 If you are using a Let's Encrypt certificate uploaded by yourself as a custom certificate, consider the following:
 
-- If you use **compatible** or **modern** [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) and have uploaded your certificate before September 9, 2024, [update your custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-an-existing-custom-certificate) so that it can be bundled with the new chain.
+- If you use **compatible** or **modern** [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) and have uploaded your certificate before September 9, 2024, [update your custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) so that it can be bundled with the new chain.
 - If you use **user-defined** bundle method, make sure that your certificates uploaded after September 30, 2024, do not use the Let's Encrypt cross-signed chain.
 
 ## Error codes
@@ -95,7 +95,13 @@ You have used up your custom certificate quota.
 
 **Solution**
 
-Delete some existing certificates to add a new one. If you are an Enterprise customer, you can contact your account team to acquire more custom certificates.
+If you are renewing an existing certificate, [update the existing certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) instead of uploading a new one. Updating an existing certificate via the dashboard (or the API `PATCH` method) reuses its quota slot and avoids downtime.
+
+If you genuinely need a new certificate for a different hostname, delete an unused certificate first or contact your account team (Enterprise) to increase your quota.
+
+:::caution
+Deleting a certificate removes it from Cloudflare's edge immediately. If no other certificate covers the same hostnames, visitors will see TLS errors until a replacement is uploaded and active.
+:::
 
 ### This certificate has already been submitted. (Code: 1220)
 
@@ -105,7 +111,7 @@ You are trying to upload a custom certificate that you have already uploaded.
 
 **Solution**
 
-Delete the existing one and try again.
+If you are renewing the certificate with updated expiry or key material, [update the existing certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) instead of uploading a new one. Updating via the dashboard (or the API `PATCH` method) avoids downtime and does not consume an additional quota slot.
 
 ### You already have a certificate of this signature type. (Code: 1228)
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Setup
-description: Enable automatic mitigation of random prefix attacks via the API.
+description: Enable automatic mitigation of random prefix attacks in the Cloudflare dashboard or via the API.
 products:
   - dns-firewall
 sidebar:
@@ -12,30 +12,44 @@ head:
 
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, Tabs, TabItem, DashButton } from "~/components";
 
 In order to enable automatic mitigation of [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/):
 
 1. Set up [DNS Firewall](/dns/dns-firewall/setup/).
-2. Send a [`PATCH` request](/api/resources/dns_firewall/methods/edit/) to update your DNS Firewall cluster.
+2. Enable attack mitigation on your DNS Firewall cluster.
+
+   <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+   1. In the Cloudflare dashboard, go to the **DNS Firewall Clusters** page.
+
+      <DashButton url="/?to=/:account/dns-firewall/clusters" />
+
+   2. Select the cluster you want to update, then select **Edit**.
+   3. Turn on **Attack mitigation** and choose whether Cloudflare should only mitigate attacks when the upstream is unhealthy.
+   4. Select **Save**.
+
+   </TabItem> <TabItem label="API">
+
+   Send a [`PATCH` request](/api/resources/dns_firewall/methods/edit/) to update your DNS Firewall cluster:
 
    <APIRequest
    	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
    	method="PATCH"
    	json={{
-      "attack_mitigation": {
-        "enabled": true,
-        "only_when_upstream_unhealthy": true,
-      }
+         "attack_mitigation": {
+           "enabled": true,
+           "only_when_upstream_unhealthy": true,
+         }
    	}}
    />
 
-Once you receive a `200` success response from the API, queries identified as being part of a random prefix attack will receive a `REFUSED` response.
+   </TabItem> </Tabs>
+
+Once you turn on attack mitigation, Cloudflare returns a `REFUSED` response to queries that are part of a random prefix attack.
 
 :::note
 
-
-If you do not specify otherwise in your API call, Cloudflare automatically sets the `"only_when_upstream_unhealthy"` parameter to true, which means that Cloudflare will only mitigate attacks when we detect that the upstream is unresponsive (possibly as a result of an attack). This setting can also be changed via the API, using a request similar to the ones shown above.
-
+If you do not specify otherwise, Cloudflare automatically sets the `only_when_upstream_unhealthy` parameter to true, which means that Cloudflare will only mitigate attacks when we detect that the upstream is unresponsive (possibly as a result of an attack).
 
 :::

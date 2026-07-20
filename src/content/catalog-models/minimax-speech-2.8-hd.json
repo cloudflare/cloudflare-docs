@@ -181,10 +181,42 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"text": {
+					"description": "The text to convert to speech. Maximum 10,000 characters.",
+					"type": "string",
+					"maxLength": 10000
+				},
+				"voice_id": {
+					"description": "The voice ID to use for synthesis",
+					"default": "English_expressive_narrator",
+					"type": "string"
+				},
+				"speed": {
+					"description": "Speech speed (0.5 to 2)",
+					"default": 1,
+					"type": "number",
+					"minimum": 0.5,
+					"maximum": 2
+				},
+				"volume": {
+					"description": "Speech volume (0 to 10)",
+					"default": 1,
+					"type": "number",
+					"minimum": 0,
+					"maximum": 10
+				},
+				"pitch": {
+					"description": "Pitch adjustment (-12 to 12)",
+					"default": 0,
+					"type": "integer",
+					"minimum": -12,
+					"maximum": 12
+				},
 				"emotion": {
 					"description": "Emotion control for synthesized speech",
+					"type": "string",
 					"enum": [
 						"happy",
 						"sad",
@@ -194,78 +226,46 @@
 						"surprised",
 						"calm",
 						"fluent"
-					],
-					"type": "string"
+					]
 				},
 				"format": {
-					"default": "mp3",
 					"description": "Output audio format",
+					"default": "mp3",
+					"type": "string",
 					"enum": [
 						"mp3",
 						"flac",
 						"wav"
-					],
-					"type": "string"
-				},
-				"pitch": {
-					"default": 0,
-					"description": "Pitch adjustment (-12 to 12)",
-					"maximum": 12,
-					"minimum": -12,
-					"type": "integer"
+					]
 				},
 				"sample_rate": {
+					"description": "Audio sample rate",
 					"anyOf": [
 						{
-							"const": 8000,
-							"type": "number"
+							"type": "number",
+							"const": 8000
 						},
 						{
-							"const": 16000,
-							"type": "number"
+							"type": "number",
+							"const": 16000
 						},
 						{
-							"const": 22050,
-							"type": "number"
+							"type": "number",
+							"const": 22050
 						},
 						{
-							"const": 24000,
-							"type": "number"
+							"type": "number",
+							"const": 24000
 						},
 						{
-							"const": 32000,
-							"type": "number"
+							"type": "number",
+							"const": 32000
 						},
 						{
-							"const": 44100,
-							"type": "number"
+							"type": "number",
+							"const": 44100
 						}
-					],
-					"description": "Audio sample rate"
-				},
-				"speed": {
-					"default": 1,
-					"description": "Speech speed (0.5 to 2)",
-					"maximum": 2,
-					"minimum": 0.5,
-					"type": "number"
-				},
-				"text": {
-					"description": "The text to convert to speech. Maximum 10,000 characters.",
-					"maxLength": 10000,
-					"type": "string"
-				},
-				"voice_id": {
-					"default": "English_expressive_narrator",
-					"description": "The voice ID to use for synthesis",
-					"type": "string"
-				},
-				"volume": {
-					"default": 1,
-					"description": "Speech volume (0 to 10)",
-					"maximum": 10,
-					"minimum": 0,
-					"type": "number"
+					]
 				}
 			},
 			"required": [
@@ -276,11 +276,11 @@
 				"pitch",
 				"format"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"audio": {
 					"description": "URL to the generated audio file",
@@ -290,7 +290,7 @@
 			"required": [
 				"audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

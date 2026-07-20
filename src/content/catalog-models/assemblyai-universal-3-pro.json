@@ -916,101 +916,15 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"audio_end_at": {
-					"description": "Timestamp (in milliseconds) to end transcription at.",
-					"maximum": 9007199254740991,
-					"minimum": 0,
-					"type": "integer"
-				},
-				"audio_start_from": {
-					"description": "Timestamp (in milliseconds) to start transcription from.",
-					"maximum": 9007199254740991,
-					"minimum": 0,
-					"type": "integer"
-				},
 				"audio_url": {
 					"description": "The URL of the audio file to transcribe. Can be a publicly accessible URL or a data URI (data:audio/...;base64,...). For data URIs, the audio will be uploaded to AssemblyAI automatically. Required for pre-recorded transcription (when stream is false or not set).",
 					"type": "string"
 				},
-				"auto_chapters": {
-					"description": "Enable automatic chapter detection.",
+				"websocket": {
+					"description": "Enable real-time WebSocket streaming for live audio transcription. When true, a WebSocket connection is established instead of submitting a pre-recorded transcription job. Cannot be used with audio_url.",
 					"type": "boolean"
-				},
-				"auto_highlights": {
-					"description": "Enable automatic extraction of key phrases and highlights.",
-					"type": "boolean"
-				},
-				"boost_param": {
-					"description": "How much to boost the words in word_boost.",
-					"enum": [
-						"low",
-						"default",
-						"high"
-					],
-					"type": "string"
-				},
-				"content_safety": {
-					"description": "Enable content safety detection for sensitive content.",
-					"type": "boolean"
-				},
-				"custom_spelling": {
-					"description": "Custom spelling rules to replace specific words or phrases in the transcription output.",
-					"items": {
-						"additionalProperties": false,
-						"properties": {
-							"from": {
-								"items": {
-									"type": "string"
-								},
-								"type": "array"
-							},
-							"to": {
-								"type": "string"
-							}
-						},
-						"required": [
-							"from",
-							"to"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"disfluencies": {
-					"description": "Include filler words like \"um\", \"uh\", etc. in the transcript.",
-					"type": "boolean"
-				},
-				"domain": {
-					"description": "Domain-specific transcription mode. \"medical-v1\" enables medical terminology optimization.",
-					"enum": [
-						"medical-v1"
-					],
-					"type": "string"
-				},
-				"dual_channel": {
-					"description": "Process audio as dual-channel (stereo) for better accuracy.",
-					"type": "boolean"
-				},
-				"entity_detection": {
-					"description": "Enable detection of entities like names, organizations, and locations.",
-					"type": "boolean"
-				},
-				"filter_profanity": {
-					"description": "Filter profanity from the transcription.",
-					"type": "boolean"
-				},
-				"iab_categories": {
-					"description": "Enable IAB (Interactive Advertising Bureau) content taxonomy classification.",
-					"type": "boolean"
-				},
-				"keyterms_prompt": {
-					"description": "An array of up to 1,000 words or phrases (max 6 words per phrase) to improve transcription accuracy. Cannot be used with the prompt parameter.",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
 				},
 				"language_code": {
 					"description": "The language code for the audio file (e.g., \"en\", \"es\", \"fr\"). Defaults to automatic language detection.",
@@ -1020,13 +934,128 @@
 					"description": "Enable automatic language detection. When enabled with speech_models, the system will automatically select the best model for the detected language.",
 					"type": "boolean"
 				},
+				"prompt": {
+					"description": "A custom prompt to guide transcription style, formatting, and output characteristics. Maximum 1,500 words.",
+					"type": "string"
+				},
+				"keyterms_prompt": {
+					"description": "An array of up to 1,000 words or phrases (max 6 words per phrase) to improve transcription accuracy. Cannot be used with the prompt parameter.",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"temperature": {
+					"description": "Controls randomness in model output (0.0-1.0). Lower values make output more deterministic. Default is 0.0.",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"speaker_labels": {
+					"description": "Enable speaker diarization to identify different speakers in the audio.",
+					"type": "boolean"
+				},
+				"speakers_expected": {
+					"description": "Expected number of speakers for speaker diarization.",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 9007199254740991
+				},
+				"auto_chapters": {
+					"description": "Enable automatic chapter detection.",
+					"type": "boolean"
+				},
+				"entity_detection": {
+					"description": "Enable detection of entities like names, organizations, and locations.",
+					"type": "boolean"
+				},
+				"sentiment_analysis": {
+					"description": "Enable sentiment analysis for each sentence.",
+					"type": "boolean"
+				},
+				"auto_highlights": {
+					"description": "Enable automatic extraction of key phrases and highlights.",
+					"type": "boolean"
+				},
+				"content_safety": {
+					"description": "Enable content safety detection for sensitive content.",
+					"type": "boolean"
+				},
+				"iab_categories": {
+					"description": "Enable IAB (Interactive Advertising Bureau) content taxonomy classification.",
+					"type": "boolean"
+				},
+				"custom_spelling": {
+					"description": "Custom spelling rules to replace specific words or phrases in the transcription output.",
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"from": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							},
+							"to": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"from",
+							"to"
+						],
+						"additionalProperties": false
+					}
+				},
+				"disfluencies": {
+					"description": "Include filler words like \"um\", \"uh\", etc. in the transcript.",
+					"type": "boolean"
+				},
 				"multichannel": {
 					"description": "Process each audio channel separately for multi-channel audio files.",
 					"type": "boolean"
 				},
-				"prompt": {
-					"description": "A custom prompt to guide transcription style, formatting, and output characteristics. Maximum 1,500 words.",
-					"type": "string"
+				"dual_channel": {
+					"description": "Process audio as dual-channel (stereo) for better accuracy.",
+					"type": "boolean"
+				},
+				"webhook_url": {
+					"description": "URL to receive webhook notifications when transcription is complete.",
+					"type": "string",
+					"format": "uri"
+				},
+				"audio_start_from": {
+					"description": "Timestamp (in milliseconds) to start transcription from.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 9007199254740991
+				},
+				"audio_end_at": {
+					"description": "Timestamp (in milliseconds) to end transcription at.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 9007199254740991
+				},
+				"word_boost": {
+					"description": "Array of words to boost recognition accuracy (legacy - use keyterms_prompt instead).",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"boost_param": {
+					"description": "How much to boost the words in word_boost.",
+					"type": "string",
+					"enum": [
+						"low",
+						"default",
+						"high"
+					]
+				},
+				"filter_profanity": {
+					"description": "Filter profanity from the transcription.",
+					"type": "boolean"
 				},
 				"redact_pii": {
 					"description": "Redact personally identifiable information.",
@@ -1038,154 +1067,61 @@
 				},
 				"redact_pii_policies": {
 					"description": "Specific PII policies to apply for redaction.",
+					"type": "array",
 					"items": {
 						"type": "string"
-					},
-					"type": "array"
+					}
 				},
 				"redact_pii_sub": {
 					"description": "Strategy for substituting redacted PII.",
+					"type": "string",
 					"enum": [
 						"entity_name",
 						"hash"
-					],
-					"type": "string"
-				},
-				"sentiment_analysis": {
-					"description": "Enable sentiment analysis for each sentence.",
-					"type": "boolean"
-				},
-				"speaker_labels": {
-					"description": "Enable speaker diarization to identify different speakers in the audio.",
-					"type": "boolean"
-				},
-				"speakers_expected": {
-					"description": "Expected number of speakers for speaker diarization.",
-					"maximum": 9007199254740991,
-					"minimum": 1,
-					"type": "integer"
+					]
 				},
 				"speech_threshold": {
 					"description": "Confidence threshold for speech detection.",
-					"maximum": 1,
+					"type": "number",
 					"minimum": 0,
-					"type": "number"
+					"maximum": 1
 				},
-				"temperature": {
-					"description": "Controls randomness in model output (0.0-1.0). Lower values make output more deterministic. Default is 0.0.",
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
-				},
-				"webhook_url": {
-					"description": "URL to receive webhook notifications when transcription is complete.",
-					"format": "uri",
-					"type": "string"
-				},
-				"websocket": {
-					"description": "Enable real-time WebSocket streaming for live audio transcription. When true, a WebSocket connection is established instead of submitting a pre-recorded transcription job. Cannot be used with audio_url.",
-					"type": "boolean"
-				},
-				"word_boost": {
-					"description": "Array of words to boost recognition accuracy (legacy - use keyterms_prompt instead).",
-					"items": {
-						"type": "string"
-					},
-					"type": "array"
+				"domain": {
+					"description": "Domain-specific transcription mode. \"medical-v1\" enables medical terminology optimization.",
+					"type": "string",
+					"enum": [
+						"medical-v1"
+					]
 				}
 			},
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"confidence": {
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
-					],
-					"description": "Overall confidence score for the transcription."
-				},
-				"language_code": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
-					],
-					"description": "Detected or specified language code."
-				},
-				"language_confidence": {
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
-					],
-					"description": "Confidence score for language detection."
-				},
 				"text": {
 					"description": "The transcribed text.",
 					"type": "string"
 				},
-				"utterances": {
+				"words": {
+					"description": "Word-level timestamps and confidence scores.",
 					"anyOf": [
 						{
+							"type": "array",
 							"items": {
-								"additionalProperties": false,
+								"type": "object",
 								"properties": {
-									"confidence": {
-										"type": "number"
-									},
-									"end": {
-										"type": "number"
-									},
-									"speaker": {
+									"text": {
 										"type": "string"
 									},
 									"start": {
 										"type": "number"
 									},
-									"text": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"text",
-									"start",
-									"end",
-									"confidence",
-									"speaker"
-								],
-								"type": "object"
-							},
-							"type": "array"
-						},
-						{
-							"type": "null"
-						}
-					],
-					"description": "Speaker-separated utterances (when speaker_labels is enabled)."
-				},
-				"words": {
-					"anyOf": [
-						{
-							"items": {
-								"additionalProperties": false,
-								"properties": {
-									"confidence": {
+									"end": {
 										"type": "number"
 									},
-									"end": {
+									"confidence": {
 										"type": "number"
 									},
 									"speaker": {
@@ -1197,12 +1133,6 @@
 												"type": "null"
 											}
 										]
-									},
-									"start": {
-										"type": "number"
-									},
-									"text": {
-										"type": "string"
 									}
 								},
 								"required": [
@@ -1211,21 +1141,91 @@
 									"end",
 									"confidence"
 								],
-								"type": "object"
-							},
-							"type": "array"
+								"additionalProperties": false
+							}
 						},
 						{
 							"type": "null"
 						}
-					],
-					"description": "Word-level timestamps and confidence scores."
+					]
+				},
+				"utterances": {
+					"description": "Speaker-separated utterances (when speaker_labels is enabled).",
+					"anyOf": [
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"text": {
+										"type": "string"
+									},
+									"start": {
+										"type": "number"
+									},
+									"end": {
+										"type": "number"
+									},
+									"confidence": {
+										"type": "number"
+									},
+									"speaker": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"text",
+									"start",
+									"end",
+									"confidence",
+									"speaker"
+								],
+								"additionalProperties": false
+							}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"confidence": {
+					"description": "Overall confidence score for the transcription.",
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"language_code": {
+					"description": "Detected or specified language code.",
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"language_confidence": {
+					"description": "Confidence score for language detection.",
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
 				}
 			},
 			"required": [
 				"text"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

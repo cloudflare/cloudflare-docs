@@ -1,7 +1,6 @@
 ---
 title: RTKSelf
 sidebar_position: 15
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->

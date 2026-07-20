@@ -241,56 +241,34 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"text": {
+					"description": "Text to convert to speech. Maximum 15,000 characters. Supports inline speech tags: [pause], [laugh], <whisper>\u2026</whisper>, etc. Required for REST mode, mutually exclusive with websocket.",
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 15000
+				},
 				"language": {
 					"description": "BCP-47 language code (e.g. \"en\", \"zh\", \"pt-BR\") or \"auto\" for automatic language detection. Required for both REST and WebSocket modes. Supported codes: auto, en, ar-EG, ar-SA, ar-AE, bn, zh, fr, de, hi, id, it, ja, ko, pt-BR, pt-PT, ru, es-MX, es-ES, tr, vi.",
 					"type": "string"
 				},
-				"optimize_streaming_latency": {
-					"anyOf": [
-						{
-							"const": 0,
-							"type": "number"
-						},
-						{
-							"const": 1,
-							"type": "number"
-						}
-					],
-					"description": "Latency optimization for streaming synthesis. 0 (default): no optimization, best audio quality. 1: reduced first-chunk size for lower time-to-first-audio with minor quality tradeoff."
+				"websocket": {
+					"description": "Enable WebSocket streaming for text-to-speech. When true, establishes a bidirectional WebSocket connection. Mutually exclusive with text.",
+					"type": "boolean"
+				},
+				"voice_id": {
+					"description": "Voice for synthesis. Defaults to \"eve\". Built-in voices: eve (energetic), ara (warm), rex (confident), sal (balanced), leo (authoritative). Custom voice IDs from /v1/tts/voices are also accepted. Case-insensitive \u2014 \"Eve\", \"EVE\", and \"eve\" are equivalent.",
+					"type": "string",
+					"minLength": 1
 				},
 				"output_format": {
-					"additionalProperties": false,
 					"description": "Output audio format. Defaults to MP3 at 24 kHz / 128 kbps when omitted.",
+					"type": "object",
 					"properties": {
-						"bit_rate": {
-							"anyOf": [
-								{
-									"const": 32000,
-									"type": "number"
-								},
-								{
-									"const": 64000,
-									"type": "number"
-								},
-								{
-									"const": 96000,
-									"type": "number"
-								},
-								{
-									"const": 128000,
-									"type": "number"
-								},
-								{
-									"const": 192000,
-									"type": "number"
-								}
-							],
-							"description": "Bit rate in bps. MP3 only. Defaults to 128000. Supported: 32000, 64000, 96000, 128000, 192000."
-						},
 						"codec": {
 							"description": "Audio codec. Defaults to \"mp3\". mp3 \u2192 audio/mpeg (general use); wav \u2192 audio/wav (lossless); pcm \u2192 audio/pcm (raw 16-bit LE, real-time pipelines); mulaw/ulaw \u2192 audio/basic (G.711 \u03bc-law, telephony); alaw \u2192 audio/alaw (G.711 A-law, telephony).",
+							"type": "string",
 							"enum": [
 								"mp3",
 								"wav",
@@ -298,75 +276,97 @@
 								"mulaw",
 								"ulaw",
 								"alaw"
-							],
-							"type": "string"
+							]
 						},
 						"sample_rate": {
+							"description": "Sample rate in Hz. Defaults to 24000. Supported: 8000, 16000, 22050, 24000, 44100, 48000. Telephony codecs (mulaw, alaw) typically use 8000.",
 							"anyOf": [
 								{
-									"const": 8000,
-									"type": "number"
+									"type": "number",
+									"const": 8000
 								},
 								{
-									"const": 16000,
-									"type": "number"
+									"type": "number",
+									"const": 16000
 								},
 								{
-									"const": 22050,
-									"type": "number"
+									"type": "number",
+									"const": 22050
 								},
 								{
-									"const": 24000,
-									"type": "number"
+									"type": "number",
+									"const": 24000
 								},
 								{
-									"const": 44100,
-									"type": "number"
+									"type": "number",
+									"const": 44100
 								},
 								{
-									"const": 48000,
-									"type": "number"
+									"type": "number",
+									"const": 48000
 								}
-							],
-							"description": "Sample rate in Hz. Defaults to 24000. Supported: 8000, 16000, 22050, 24000, 44100, 48000. Telephony codecs (mulaw, alaw) typically use 8000."
+							]
+						},
+						"bit_rate": {
+							"description": "Bit rate in bps. MP3 only. Defaults to 128000. Supported: 32000, 64000, 96000, 128000, 192000.",
+							"anyOf": [
+								{
+									"type": "number",
+									"const": 32000
+								},
+								{
+									"type": "number",
+									"const": 64000
+								},
+								{
+									"type": "number",
+									"const": 96000
+								},
+								{
+									"type": "number",
+									"const": 128000
+								},
+								{
+									"type": "number",
+									"const": 192000
+								}
+							]
 						}
 					},
-					"type": "object"
+					"additionalProperties": false
 				},
-				"speed": {
-					"description": "Speech speed multiplier. 1.0 is normal speed. Range: 0.7 to 1.5. Defaults to 1.0. Only used in WebSocket mode.",
-					"maximum": 1.5,
-					"minimum": 0.7,
-					"type": "number"
-				},
-				"text": {
-					"description": "Text to convert to speech. Maximum 15,000 characters. Supports inline speech tags: [pause], [laugh], <whisper>\u2026</whisper>, etc. Required for REST mode, mutually exclusive with websocket.",
-					"maxLength": 15000,
-					"minLength": 1,
-					"type": "string"
+				"optimize_streaming_latency": {
+					"description": "Latency optimization for streaming synthesis. 0 (default): no optimization, best audio quality. 1: reduced first-chunk size for lower time-to-first-audio with minor quality tradeoff.",
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 0
+						},
+						{
+							"type": "number",
+							"const": 1
+						}
+					]
 				},
 				"text_normalization": {
 					"description": "When true, normalizes written-form text into spoken-form before synthesis (e.g. \"Dr.\" \u2192 \"Doctor\", \"100\" \u2192 \"one hundred\"). Defaults to false.",
 					"type": "boolean"
 				},
-				"voice_id": {
-					"description": "Voice for synthesis. Defaults to \"eve\". Built-in voices: eve (energetic), ara (warm), rex (confident), sal (balanced), leo (authoritative). Custom voice IDs from /v1/tts/voices are also accepted. Case-insensitive \u2014 \"Eve\", \"EVE\", and \"eve\" are equivalent.",
-					"minLength": 1,
-					"type": "string"
-				},
-				"websocket": {
-					"description": "Enable WebSocket streaming for text-to-speech. When true, establishes a bidirectional WebSocket connection. Mutually exclusive with text.",
-					"type": "boolean"
+				"speed": {
+					"description": "Speech speed multiplier. 1.0 is normal speed. Range: 0.7 to 1.5. Defaults to 1.0. Only used in WebSocket mode.",
+					"type": "number",
+					"minimum": 0.7,
+					"maximum": 1.5
 				}
 			},
 			"required": [
 				"language"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"audio": {
 					"description": "Presigned R2 URL for the generated audio file. MIME type reflects the requested codec (audio/mpeg for mp3, audio/wav for wav, etc.).",
@@ -376,7 +376,7 @@
 			"required": [
 				"audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

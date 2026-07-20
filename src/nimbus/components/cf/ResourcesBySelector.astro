@@ -1,0 +1,195 @@
+---
+/**
+ * ResourcesBySelector — aggregates docs + videos + learning-paths into a
+ * filterable/sortable card grid (React island, hydrated `client:load`).
+ *
+ * CF source: cloudflare-docs/src/components/ResourcesBySelector.astro.
+ *
+ * [DEVIATION D4] The products resolver is THREE-way (vs upstream's single
+ * `getEntries`) and guards undefined, because cf-nimbus schemas differ:
+ *   - `docs.products` is `z.array(z.string()).optional()` (NO `.default([])`)
+ *     → raw strings, possibly undefined.
+ *   - `stream.products` is passthrough raw strings.
+ *   - `learning-paths.products` is `reference("directory")` refs.
+ *   - the docs auto-inject (`:69` upstream) pushes a FULL CollectionEntry.
+ * So each product item is resolved by: string → getEntry("directory", item);
+ * reference `{collection,id}` or full entry → getEntry keyed on `item.id`.
+ * `resource.data.products` is defaulted to `[]` before the push and before
+ * resolution so a docs/stream page lacking a `products` field doesn't throw.
+ * Output (`data.name`, facets, filtering) is identical → parity preserved.
+ */
+import { z } from "astro/zod";
+import {
+	getCollection,
+	type CollectionEntry,
+	getEntry,
+	reference,
+} from "astro:content";
+import ResourcesBySelectorReact from "./ResourcesBySelector";
+
+type Props = z.input<typeof props>;
+
+type DocsData = keyof CollectionEntry<"docs">["data"];
+type VideosData = keyof CollectionEntry<"stream">["data"];
+type LearningPathsData = keyof CollectionEntry<"learning-paths">["data"];
+
+type ResourcesData = DocsData | VideosData | LearningPathsData;
+
+const props = z.object({
+	types: z.string().array(),
+	products: reference("directory").array().optional(),
+	directory: z.string().optional(),
+	filterables: z.custom<ResourcesData>().array().optional(),
+	columns: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(2),
+	showDescriptions: z.boolean().default(true),
+	showLastUpdated: z.boolean().default(false),
+	filterPlacement: z.enum(["left", "top"]).default("top"),
+});
+
+const {
+	types,
+	products,
+	directory,
+	filterables,
+	columns,
+	showDescriptions,
+	showLastUpdated,
+	filterPlacement,
+} = props.parse(Astro.props);
+
+const docs = await getCollection("docs");
+const videos = await getCollection("stream");
+const learningPaths = await getCollection("learning-paths");
+
+const filteredResources = [...docs, ...videos, ...learningPaths].filter(
+	({ id, collection, data }) => {
+		const type =
+			"pcx_content_type" in data ? data.pcx_content_type : collection;
+		return (
+			types.includes(type ?? "") &&
+			(directory ? id.startsWith(directory) : true) &&
+			(products
+				? data.products?.some((v: any) =>
+						products.some((p) => p.id === (typeof v === "object" ? v.id : v)),
+					)
+				: true)
+		);
+	},
+);
+
+// Enhance resources with resolved product titles
+const resources = await Promise.all(
+	filteredResources.map(async (resource) => {
+		if (resource.collection === "docs") {
+			const currentSection = resource.id.split("/")[0].replaceAll(".", "");
+			const currentProduct = await getEntry("directory", currentSection);
+			if (currentProduct) {
+				// [D4] default to [] before pushing (docs.products is optional,
+				// no .default([])).
+				(resource.data as any).products ??= [];
+				(resource.data as any).products.push(currentProduct);
+			}
+		}
+
+		// [D4] default to [] before resolution (stream.products may be absent).
+		(resource.data as any).products ??= [];
+
+		// [D4] three-way resolver: a product item may be a raw string, a
+		// reference `{collection,id}`, or a full CollectionEntry (the docs
+		// auto-inject above). Strings resolve by value; refs/entries by `id`.
+		const productEntries = await Promise.all(
+			((resource.data as any).products as any[]).map((item) =>
+				typeof item === "string"
+					? getEntry("directory", item)
+					: getEntry("directory", item.id),
+			),
+		);
+		const productTitles = productEntries.map((p) => {
+			if (p === undefined) {
+				throw new Error(
+					`Directory entry was not found. Check the filenames defined at https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/directory to make sure they match what's defined in your frontmatter.products field.`,
+				);
+			}
+			return p.data.name as string;
+		});
+
+		return {
+			...resource,
+			data: {
+				...resource.data,
+				productTitles,
+			},
+		};
+	}),
+);
+
+// Check for duplicate IDs
+const idCounts = new Map<string, number>();
+const duplicateIds: string[] = [];
+
+for (const resource of resources) {
+	const count = idCounts.get(resource.id) || 0;
+	idCounts.set(resource.id, count + 1);
+	if (count === 1) {
+		duplicateIds.push(resource.id);
+	}
+}
+
+if (duplicateIds.length > 0) {
+	throw new Error(
+		`[ResourcesBySelector] Found duplicate resource IDs: ${duplicateIds.join(", ")}`,
+	);
+}
+
+if (resources.length === 0) {
+	throw new Error(
+		`[ResourcesBySelector] Couldn't find resources related to your filtered options`,
+	);
+}
+
+const facets = resources.reduce(
+	(acc, page) => {
+		if (!filterables) return acc;
+
+		for (const filter of filterables) {
+			const val = page.data[filter as keyof typeof page.data];
+			if (val) {
+				// [D4 facet fix] `products` must ALWAYS resolve to directory titles.
+				// Upstream's `products` are `reference("directory")` (objects), so the
+				// generic string-array branch never caught them; cf-nimbus keeps them as
+				// raw strings (D4), which would leak unresolved ids ("china-network") and
+				// duplicate already-resolved names. So check `products` BEFORE the
+				// string-array branch and use the resolved `productTitles`.
+				if (filter === "products" && page.data.productTitles) {
+					acc[filter] = [
+						...new Set([...(acc[filter] || []), ...page.data.productTitles]),
+					];
+				} else if (
+					Array.isArray(val) &&
+					val.every((v) => typeof v === "string")
+				) {
+					acc[filter] = [...new Set([...(acc[filter] || []), ...val])];
+				} else if (typeof val === "string") {
+					acc[filter] = [...new Set([...(acc[filter] || []), val])];
+				}
+			}
+		}
+
+		return acc;
+	},
+	{} as Record<string, string[]>,
+);
+---
+
+<div>
+	<ResourcesBySelectorReact
+		resources={resources}
+		facets={facets}
+		filters={filterables}
+		columns={columns}
+		showDescriptions={showDescriptions}
+		showLastUpdated={showLastUpdated}
+		filterPlacement={filterPlacement}
+		client:load
+	/>
+</div>

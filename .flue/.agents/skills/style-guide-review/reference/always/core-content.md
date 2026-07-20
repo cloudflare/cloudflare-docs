@@ -55,6 +55,22 @@ description: Always load for any MDX file with added content lines.
 
 ---
 
+## Marketing Language
+
+**Suggestion** when prose contains any of these phrases: `Perfect for`, `Best for`, `Best-in-class`, `Empowers you to`, `Enables you to`, `Essential for`, `Critical for`, or `Modern <noun>` / `Built for <noun>` patterns → replace with direct language that states what the thing actually does. Exception: inside code blocks or backtick spans.
+
+---
+
+## Time-Sensitive Content
+
+These rules fire only on files **outside** `src/content/changelog/` paths. Exceptions: code blocks, backtick spans, frontmatter fields (e.g. `reviewed:`, `compatibility_date:`), URLs, and example data.
+
+- If prose contains `Coming soon`, `recently added`, `newly available`, `now available`, or `just released` → **suggestion**: remove the phrase; docs must read as timeless.
+- If prose contains a month name (`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`) → **suggestion**: remove or rewrite without a month reference.
+- If prose contains a four-digit year (e.g. `2024`, `2025`) → **suggestion**: remove or rewrite without the year.
+
+---
+
 ## File Locations
 
 - If an image file is added to `src/content/` → **warning**: images must go in `src/assets/images/{product}/`, not in `src/content/`.

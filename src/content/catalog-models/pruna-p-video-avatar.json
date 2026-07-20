@@ -66,61 +66,20 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"audio": {
-					"description": "URL of uploaded audio to drive speech. HTTP(S) URL or data URI. If both audio and voice_script are provided, audio takes priority.",
-					"type": "string"
-				},
-				"disable_prompt_upsampling": {
-					"default": false,
-					"description": "When true, skip the prompt upsampler and pass the raw user prompt.",
-					"type": "boolean"
-				},
-				"disable_safety_filter": {
-					"default": true,
-					"description": "Disable safety filter for prompts and input image.",
-					"type": "boolean"
-				},
 				"image": {
 					"description": "Input portrait image (first frame). HTTP(S) URL or data URI. Supports jpg, jpeg, png, webp.",
 					"type": "string"
 				},
-				"negative_prompt": {
-					"default": "",
-					"description": "Mention what you do NOT want in the video. Disabled if empty.",
-					"type": "string"
-				},
-				"resolution": {
-					"default": "720p",
-					"description": "Resolution of the video.",
-					"enum": [
-						"720p",
-						"1080p"
-					],
-					"type": "string"
-				},
-				"seed": {
-					"description": "Random seed for reproducible generation.",
-					"maximum": 9007199254740991,
-					"minimum": -9007199254740991,
-					"type": "integer"
-				},
-				"strength_negative_prompt": {
-					"default": 0.5,
-					"description": "Strength of the negative prompt (0-4).",
-					"maximum": 4,
-					"minimum": 0,
-					"type": "number"
-				},
-				"video_prompt": {
-					"default": "The person is talking.",
-					"description": "Optional prompt for the video.",
+				"audio": {
+					"description": "URL of uploaded audio to drive speech. HTTP(S) URL or data URI. If both audio and voice_script are provided, audio takes priority.",
 					"type": "string"
 				},
 				"voice": {
-					"default": "Zephyr (Female)",
 					"description": "Voice for generated speech.",
+					"default": "Zephyr (Female)",
+					"type": "string",
 					"enum": [
 						"Zephyr (Female)",
 						"Puck (Male)",
@@ -152,12 +111,17 @@
 						"Sulafat (Female)",
 						"Alnilam (Male)",
 						"Rasalgethi (Male)"
-					],
+					]
+				},
+				"voice_script": {
+					"description": "Script for the person to say when no audio is uploaded.",
+					"default": "",
 					"type": "string"
 				},
 				"voice_language": {
-					"default": "English (US)",
 					"description": "Output language.",
+					"default": "English (US)",
+					"type": "string",
 					"enum": [
 						"English (US)",
 						"English (UK)",
@@ -169,18 +133,54 @@
 						"Japanese",
 						"Korean",
 						"Hindi"
-					],
+					]
+				},
+				"resolution": {
+					"description": "Resolution of the video.",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"720p",
+						"1080p"
+					]
+				},
+				"video_prompt": {
+					"description": "Optional prompt for the video.",
+					"default": "The person is talking.",
 					"type": "string"
 				},
 				"voice_prompt": {
-					"default": "Say the following.",
 					"description": "Optional speaking style, tone, pacing or emotion instructions.",
+					"default": "Say the following.",
 					"type": "string"
 				},
-				"voice_script": {
+				"negative_prompt": {
+					"description": "Mention what you do NOT want in the video. Disabled if empty.",
 					"default": "",
-					"description": "Script for the person to say when no audio is uploaded.",
 					"type": "string"
+				},
+				"strength_negative_prompt": {
+					"description": "Strength of the negative prompt (0-4).",
+					"default": 0.5,
+					"type": "number",
+					"minimum": 0,
+					"maximum": 4
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"disable_safety_filter": {
+					"description": "Disable safety filter for prompts and input image.",
+					"default": true,
+					"type": "boolean"
+				},
+				"disable_prompt_upsampling": {
+					"description": "When true, skip the prompt upsampler and pass the raw user prompt.",
+					"default": false,
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -196,22 +196,22 @@
 				"disable_safety_filter",
 				"disable_prompt_upsampling"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
 				"video": {
 					"description": "Presigned URL for the generated avatar video.",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

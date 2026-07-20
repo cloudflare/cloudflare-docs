@@ -1,0 +1,17 @@
+---
+title: R2 Data Catalog compaction now optimizes manifest files
+description: Compaction automatically rewrites and clusters Apache Iceberg manifest files to reduce metadata overhead and speed up query planning
+products:
+  - r2-data-catalog
+date: 2026-07-13
+---
+
+[R2 Data Catalog](/r2/data-catalog/), a managed [Apache Iceberg](https://iceberg.apache.org/) catalog built into R2, now automatically optimizes manifest files as part of [compaction](/r2/data-catalog/table-maintenance/).
+
+Manifest files track the data files that make up an Iceberg table. As a table accumulates many small or fragmented manifests, query engines must read more metadata during query planning, which slows down queries even before any data is scanned.
+
+When compaction runs, R2 Data Catalog now rewrites and clusters manifest files by partition as a best-effort pre-step. This consolidates fragmented manifests, reduces the number of manifests a query engine must open, and lowers metadata I/O overhead. Tables that are already well-clustered are skipped, so the operation only runs when it provides a benefit.
+
+This happens automatically for tables with compaction enabled — no configuration changes are required.
+
+For more information, refer to [Table maintenance](/r2/data-catalog/table-maintenance/).

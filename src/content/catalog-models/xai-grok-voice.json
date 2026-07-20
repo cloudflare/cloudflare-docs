@@ -70,38 +70,38 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"websocket": {
 					"description": "Enable real-time WebSocket connection for voice conversations. When true, establishes a bidirectional WebSocket for speech-to-speech interaction with Grok voice models.",
 					"type": "boolean"
 				}
 			},
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"headers": {
-					"additionalProperties": {
-						"type": "string"
-					},
-					"description": "Optional headers to include when establishing the WebSocket connection (e.g., Authorization)",
-					"propertyNames": {
-						"type": "string"
-					},
-					"type": "object"
-				},
 				"url": {
 					"description": "WebSocket URL for the realtime connection (e.g., wss://...)",
 					"type": "string"
+				},
+				"headers": {
+					"description": "Optional headers to include when establishing the WebSocket connection (e.g., Authorization)",
+					"type": "object",
+					"propertyNames": {
+						"type": "string"
+					},
+					"additionalProperties": {
+						"type": "string"
+					}
 				}
 			},
 			"required": [
 				"url"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

@@ -1,0 +1,188 @@
+---
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/globals.css";
+import "../styles/prose.css";
+import "../styles/markdown-pipeline.css";
+import "tippy.js/dist/tippy.css";
+import "../styles/tippy.css";
+import "../styles/footnotes.css";
+import { config } from "virtual:nimbus/config";
+import { getCollectionLlmsUrl, getVersionStatus } from "nimbus-docs";
+import AgentDirective from "@/components/AgentDirective.astro";
+import Footer from "@/components/Footer.astro";
+import PageHead from "@/components/PageHead.astro";
+import type { PageMeta } from "@/components/PageHead.astro";
+import type { BasePageProps } from "nimbus-docs/types";
+
+type Props = BasePageProps & {
+	/** Render the global footer after the page content. DocsLayout sets this
+	 *  false and renders its own footer inside the content column instead. */
+	footer?: boolean;
+	meta?: PageMeta;
+};
+
+const {
+	title,
+	description,
+	noindex,
+	markdownUrl,
+	socialImage,
+	lastUpdated,
+	head: pageHead = [],
+	collection,
+	entryId,
+	footer = true,
+	meta,
+} = Astro.props;
+
+const lang = config.locale ?? "en";
+// Per-page agent-index pointer. For pages in non-primary or version
+// collections, this resolves to `/<prefix>/llms.txt` (e.g. `/v0/llms.txt`
+// for a v0 docs page, `/blog/llms.txt` for a blog post). Falls back to
+// the root `/llms.txt` when no collection is provided.
+// Hidden-version pages don't advertise an agent index (the per-version
+// llms.txt isn't emitted for them); suppress the AgentDirective entirely.
+const versionStatus = collection ? await getVersionStatus(collection) : null;
+const isHiddenVersion = versionStatus?.isHidden === true;
+const productPrefix =
+	collection === "docs" && entryId && entryId !== "index"
+		? entryId.split("/")[0]
+		: null;
+const llmsIndexPath = productPrefix
+	? `/${productPrefix}/llms.txt`
+	: collection
+		? await getCollectionLlmsUrl(collection)
+		: "/llms.txt";
+const llmsUrl = Astro.site
+	? new URL(llmsIndexPath, Astro.site).href
+	: llmsIndexPath;
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<script is:inline>
+			(() => {
+				const KEY = "ui-mode";
+				// Starlight (the production build) persists theme under this key, with
+				// values "light" | "dark" | "auto". We migrate/dual-read it so a
+				// returning visitor's saved theme survives cutover with no flash, and
+				// the toggle dual-writes it so a rollback to Starlight keeps the
+				// choice. See T9 in the parity audit.
+				const LEGACY_KEY = "starlight-theme";
+				const media = window.matchMedia("(prefers-color-scheme: dark)");
+				const isPref = (v) => v === "light" || v === "dark" || v === "auto";
+
+				const readKey = (k) => {
+					try {
+						const v = localStorage.getItem(k);
+						return isPref(v) ? v : null;
+					} catch {
+						return null;
+					}
+				};
+
+				// One-time migration: if we have no preference of our own but Starlight
+				// left one, adopt it so it persists into our key. Runs once — after the
+				// first write, our key wins and this no-ops.
+				const migrate = () => {
+					try {
+						if (readKey(KEY)) return;
+						const legacy = readKey(LEGACY_KEY);
+						if (legacy) localStorage.setItem(KEY, legacy);
+					} catch {
+						/* ignore storage errors (private mode / restricted contexts) */
+					}
+				};
+
+				// Preference is light | dark | auto. Pure read: our key wins, else a
+				// Starlight value (dual-read, in case the migration write was blocked),
+				// else "auto". "auto" is never coerced to light/dark — it round-trips.
+				const readPref = () => readKey(KEY) ?? readKey(LEGACY_KEY) ?? "auto";
+
+				const resolveMode = (pref) =>
+					pref === "light" || pref === "dark"
+						? pref
+						: media.matches
+							? "dark"
+							: "light";
+
+				const applyTheme = () => {
+					const root = document.documentElement;
+					const pref = readPref();
+					const mode = resolveMode(pref);
+					// Nimbus keys dark styling off [data-mode="dark"]; also mirror the
+					// resolved value onto [data-theme] so ported CSS still keyed on
+					// Starlight's attribute (e.g. the cf/*Diagram components) keeps
+					// working under the shim rather than silently rendering light.
+					if (mode === "dark") root.setAttribute("data-mode", "dark");
+					else root.removeAttribute("data-mode");
+					root.setAttribute("data-theme", mode);
+					root.style.colorScheme = mode;
+					// Drive the toggle icon from the root attribute (set here, pre-paint)
+					// so it never flashes the SSR default before the toggle script loads.
+					root.setAttribute("data-nb-pref", pref); // selected preference
+					root.setAttribute("data-nb-state", mode); // resolved (light/dark)
+				};
+
+				migrate();
+				applyTheme();
+				document.addEventListener("astro:after-swap", applyTheme);
+				// Live OS changes only move the page when the user is following the
+				// system (auto). An explicit light/dark choice is left untouched.
+				media.addEventListener("change", () => {
+					if (readPref() === "auto") applyTheme();
+				});
+				// Cross-tab sync within Nimbus (our own key).
+				window.addEventListener("storage", (e) => {
+					if (e.key === KEY) applyTheme();
+				});
+
+				window.__nbApplyTheme = applyTheme;
+			})();
+		</script>
+
+		<PageHead
+			title={title}
+			description={description}
+			noindex={noindex}
+			markdownUrl={markdownUrl}
+			socialImage={socialImage}
+			lastUpdated={lastUpdated}
+			head={pageHead}
+			collection={collection}
+			entryId={entryId}
+			meta={meta}
+		/>
+	</head>
+	<body class="bg-background text-foreground min-h-screen">
+		<a
+			href="#main-content"
+			class="focus:bg-primary focus:text-primary-foreground focus-visible:outline-ring sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-100 focus:rounded-md focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:no-underline focus-visible:outline-2 focus-visible:outline-offset-2"
+		>
+			Skip to content
+		</a>
+		{markdownUrl && !isHiddenVersion && <AgentDirective llmsUrl={llmsUrl} />}
+		<slot />
+		{footer !== false && <Footer />}
+
+		<script>
+			import { codeCopy } from "nimbus-docs/client";
+			import "../scripts/mobile-sidebar.client";
+			import "../scripts/mermaid.client";
+			import "../scripts/table-scroll.client";
+			import "../scripts/image-zoom.client";
+			import "../scripts/footnotes.client";
+			import "../scripts/scroll-to-top.client";
+			// Custom Zaraz analytics event wiring (link/tab/details/copy/search).
+			// Registers delegated document listeners once; safe with view transitions.
+			import "../scripts/analytics";
+
+			codeCopy();
+		</script>
+	</body>
+</html>

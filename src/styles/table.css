@@ -52,6 +52,7 @@ rule-id button {
 .sl-markdown-content table:not(:where(.not-content *)) {
 	width: 100%;
 	border-collapse: collapse;
+	border-radius: 0.75rem;
 	text-align: left;
 	font-size: 0.875rem;
 	line-height: 1.4;
@@ -69,6 +70,20 @@ rule-id button {
 	padding: 0.75rem;
 	font-size: 0.8125rem;
 	font-weight: 600;
+}
+
+.sl-markdown-content
+	thead
+	tr:first-child
+	:is(th, td):first-child:not(:where(.not-content *)) {
+	border-start-start-radius: 0.75rem;
+}
+
+.sl-markdown-content
+	thead
+	tr:first-child
+	:is(th, td):last-child:not(:where(.not-content *)) {
+	border-start-end-radius: 0.75rem;
 }
 
 /* ── Body cells ──────────────────────────────────────────────────── */

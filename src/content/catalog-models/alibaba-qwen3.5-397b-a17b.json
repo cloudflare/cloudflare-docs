@@ -4171,6 +4171,69 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3.5-397b-a17b\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting Qwen use DashScope's built-in web search via enable_search",
+			"input": {
+				"enable_search": true,
+				"max_tokens": 4096,
+				"messages": [
+					{
+						"content": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Based on the provided knowledge base (current context June 2026), here are the top recent news stories about Cloudflare:\n\n*   **Acquisition of VoidZero:** On June 4, 2026, Cloudflare announced the acquisition of VoidZero to build the future of the AI-native web, marking its latest strategic move in the AI sector.\n*   **Secure Sandboxes for Claude Agents:** On May 19, 2026, Cloudflare introduced secure, scalable sandboxes for Claude managed agents, enhancing security for AI agent lifecycles.\n*   **Q1 2026 Financial Results:** Cloudflare announced its first-quarter 2026 financial results on May 7, 2026, alongside being named a leader in edge development platforms by an independent research firm."
+			},
+			"raw_response": {
+				"id": "chatcmpl-1dcd0242-41e4-9959-b650-2328b2a35e8c",
+				"object": "chat.completion",
+				"created": 1782161740,
+				"model": "qwen3.5-397b-a17b",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "Based on the provided knowledge base (current context June 2026), here are the top recent news stories about Cloudflare:\n\n*   **Acquisition of VoidZero:** On June 4, 2026, Cloudflare announced the acquisition of VoidZero to build the future of the AI-native web, marking its latest strategic move in the AI sector.\n*   **Secure Sandboxes for Claude Agents:** On May 19, 2026, Cloudflare introduced secure, scalable sandboxes for Claude managed agents, enhancing security for AI agent lifecycles.\n*   **Q1 2026 Financial Results:** Cloudflare announced its first-quarter 2026 financial results on May 7, 2026, alongside being named a leader in edge development platforms by an independent research firm.",
+							"reasoning_content": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Topic: Top news stories about Cloudflare.\n    *   Timeframe: \"This week\" (relative to the current date provided in the knowledge base).\n    *   Format: Summarize in three bullets.\n    *   Language: The user asked in English, so the response should be in English.\n\n2.  **Determine the Current Date:**\n    *   The knowledge base contains multiple timestamps.\n    *   One source says \"\u641c\u7d22\u7ed3\u679c\u6536\u5f55\u4e8e 2026 \u5e74 6 \u6708 13 \u65e5\" (Search results recorded on June 13, 2026).\n    *   Another source says \"\u64b0\u4e8e 2026 \u5e74 6 \u6708 4 \u65e5\" (Written on June 4, 2026).\n    *   Another source says \"\u6d88\u606f\u4e8e 2026 \u5e74 2 \u6708 8 \u65e5\u53d1\u5e03\" (Message published on February 8, 2026).\n    *   Another source says \"\u8be5\u4fe1\u606f\u7684\u65f6\u95f4\u6233\u662f 2026 \u5e74 4 \u6708 19 \u65e5\" (Timestamp is April 19, 2026).\n    *   Another source says \"\u8d44\u6599\u65e5\u671f\u4e3a 2024 \u5e74 6 \u6708 18 \u65e5\" (Data date is June 18, 2024).\n    *   Another source says \"2026 \u5e74 6 \u6708 8 \u65e5\u7684\u8d44\u6599\" (Data from June 8, 2026).\n    *   The most recent and relevant \"current\" date context seems to be around June 2026, specifically mid-June 2026 (June 13, 2026 is the latest search record date).\n    *   However, looking at the \"Media Overview | Cloudflare\" section, it lists press releases for June 2026.\n    *   The list shows:\n        *   2026 \u5e74 6 \u6708 4 \u65e5 (June 4, 2026): \"cloudflare acquires voidzero to build the future of the ai-native web\"\n        *   2026 \u5e74 5 \u6708 19 \u65e5 (May 19, 2026): \"cloudflare brings secure, scalable sandboxes to claude managed agents\"\n        *   2026 \u5e74 5 \u6708 7 \u65e5 (May 7, 2026): \"cloudflare announces first quarter 2026 financial results\"\n        *   2026 \u5e74 5 \u6708 5 \u65e5 (May 5, 2026): \"cloudflare named a leader in edge development platforms report...\"\n    *   If \"this week\" refers to the week surrounding the latest data point (June 13, 2026), I need to look for news around early to mid-June 2026.\n    *   The only June 2026 press release listed is June 4, 2026 (\"cloudflare acquires voidzero...\").\n    *   There is also a mention of \"2026 \u5e74 6 \u6708 2 \u65e5\" (June 2, 2026) in the Spanish section regarding ITBrief about \"vinext\".\n    *   There is a mention of \"2026 \u5e74 6 \u6708 8 \u65e5\u7684\u8d44\u6599\" (June 8, 2026) for the official press releases list.\n    *   Since the search record date is June 13, 2026, \"this week\" would roughly be June 9 - June 15, or perhaps the most recent significant news available in the context of the provided knowledge base (which seems to cluster around early June 2026).\n    *   However, the knowledge base primarily highlights the June 4th acquisition as the top June news.\n    *   Let's look for other recent items. The \"Media Overview\" shows June 2026 has only 1 item listed in the 1-10 range (June 4).\n    *   The Spanish section mentions \"febrero de 2026 26 de febrero de 2026\" for Vinext, but also says \"2026 \u5e74 6 \u6708 2 \u65e5\" (June 2, 2026) in the header context. Wait, the Spanish text says \"ITBrief Cloudflare unveils vinext... febrero de 2026 26 de febrero de 2026\uff082026 \u5e74 6 \u6708 2 \u65e5\uff09\". This is confusing. It might mean the article was accessed June 2, but published Feb 26.\n    *   The most prominent recent news in the provided text for June 2026 is the acquisition of VoidZero.\n    *   Other recent news (May 2026) includes: Secure sandboxes for Claude agents (May 19), Q1 2026 Financial Results (May 7), Leader in Edge Development (May 5).\n    *   If I must strictly adhere to \"this week\" relative to the latest timestamp (June 13, 2026), the June 4th news is the closest significant event (about 1.5 weeks prior). There isn't much else specifically dated June 9-13 in the text.\n    *   However, often in these tasks, \"this week\" implies the most recent news available in the context provided. The context heavily features June 2026 news.\n    *   Let's select the top 3 most recent/significant stories from the provided text that represent the latest \"news cycle\" available (June 2026).\n    *   Story 1: Acquisition of VoidZero (June 4, 2026).\n    *   Story 2: Secure sandboxes for Claude managed agents (May 19, 2026) - This is late May, close to June.\n    *   Story 3: Q1 2026 Financial Results (May 7, 2026) OR Threat Intelligence Report (March 2026) OR Agents Week (April 2026).\n    *   Actually, looking at the \"Media Overview\" for June 2026, it says \"\u663e\u793a 1-10 \u4e2a\uff0c\u5171 17 \u4e2a\" (Showing 1-10 of 17). But only one is explicitly dated June 4th in the list provided.\n    *   Wait, the text says \"2026 \u5e74 6 \u6708 8 \u65e5\u7684\u8d44\u6599\" (Data from June 8, 2026) for the press release list.\n    *   If today is June 13, 2026 (search record date), the June 4th news is the most recent major announcement.\n    *   I need to find two more recent stories. The May 19th story about Claude agents is the next most recent.\n    *   The May 7th financial results are also recent.\n    *   Alternatively, there is mention of \"Agents Week 2026\" wrapped up around April 19, 2026.\n    *   Let's prioritize the June and May 2026 news as the \"top stories\" relative to the provided knowledge base's \"current\" timeframe (June 2026).\n\n    *   Candidate 1: Cloudflare acquires VoidZero to build the AI-native web (June 4, 2026).\n    *   Candidate 2: Cloudflare brings secure, scalable sandboxes to Claude managed agents (May 19, 2026).\n    *   Candidate 3: Cloudflare announces First Quarter 2026 Financial Results (May 7, 2026) OR Cloudflare named a leader in edge development platforms (May 5, 2026).\n    *   Let's pick the Financial Results as it's usually a top story.\n    *   Wait, is there anything else? The Spanish section mentions \"ITBrief Cloudflare unveils vinext... 2026 \u5e74 6 \u6708 2 \u65e5\". This might be interpreted as a June 2nd news item about Vinext (Vite-based Next.js rival). This is closer to \"this week\" (June 13) than May 7.\n    *   So:\n        1.  Acquisition of VoidZero (June 4).\n        2.  Unveiling Vinext (June 2 - based on the header date context though the text says Feb 26, the header says June 2. I should be careful. The text says \"febrero de 2026 26 de febrero de 2026\uff082026 \u5e74 6 \u6708 2 \u65e5\uff09\". This likely means the article was accessed/recorded on June 2, but published Feb 26. I should probably stick to the clearly dated June 4 press release).\n        3.  Secure sandboxes for Claude (May 19).\n\n    *   Actually, looking closely at the first block: \"2026 \u5e74 6 \u6708 \u663e\u793a 1-10 \u4e2a\uff0c\u5171 17 \u4e2a\". It lists \"cloudflare acquires voidzero...\" on June 4. It doesn't list others for June.\n    *   So the top stories are likely the June 4 acquisition, and the late May stories.\n    *   Let's formulate the bullets based on the most recent significant announcements available in the text (June 2026 context).\n\n    *   Bullet 1: Acquisition of VoidZero (June 4, 2026).\n    *   Bullet 2: Secure sandboxes for Claude agents (May 19, 2026).\n    *   Bullet 3: Q1 2026 Financial Results (May 7, 2026) OR Being named a leader in edge development (May 5, 2026). Financial results are usually more significant.\n    *   Wait, the prompt asks for \"this week\". If the current date is June 13, 2026, June 4 is last week. May 19 is last month.\n    *   However, given the limited data, these are the *top recent stories* available in the knowledge base. I should frame them as the recent highlights.\n    *   Is there any news specifically around June 13? The search record date is June 13. The press release list is from June 8.\n    *   I will summarize the most recent major announcements found in the provided text, acknowledging the timeframe provided in the knowledge base (June 2026).\n\n    *   Refined Selection:\n        1.  **VoidZero Acquisition:** Cloudflare acquired VoidZero on June 4, 2026, to build the future of the AI-native web.\n        2.  **Claude Agents Security:** On May 19, 2026, Cloudflare announced secure, scalable sandboxes for Claude managed agents.\n        3.  **Financial Results/Leadership:** Cloudflare announced Q1 2026 financial results on May 7, 2026, and was named a leader in edge development platforms on May 5, 2026. (I can combine or pick one). Let's pick the Financial Results as it's a major corporate story. Or the \"Leader in Edge Development\" as it's specific news. Let's go with the Financial Results as it's typically top news.\n        4.  Wait, I need to check if there is anything else. The \"Media Overview\" lists 17 items for June 2026 but only shows 1-10. Only one is explicitly detailed with a date (June 4).\n        5.  Okay, I will use the June 4th, May 19th, and May 7th/5th news as the \"top stories\" relative to the provided context.\n\n    *   Wait, I need to be careful about the \"this week\" constraint. If the system date is June 2026, June 4 is close enough to be considered recent top news if no other news exists for June 9-13.\n    *   I will phrase it as \"Recent top stories\" or imply the timeframe from the text.\n    *   Actually, I should check if the Vinext news is valid. \"ITBrief Cloudflare unveils vinext... febrero de 2026 26 de febrero de 2026\uff082026 \u5e74 6 \u6708 2 \u65e5\uff09\". The June 2 date is in parentheses, likely indicating when it was added to the press list or accessed. Given the ambiguity, I'll stick to the clearly dated Press Releases in the first section.\n\n    *   Plan:\n        1.  VoidZero Acquisition (June 4).\n        2.  Claude Agents Sandboxes (May 19).\n        3.  Q1 2026 Financial Results (May 7).\n\n    *   Wait, is there a Threat Intelligence Report? That was March 2026. Too old compared to May/June.\n    *   Is there Agents Week? April 2026. Too old.\n    *   So the May/June 2026 news is the most relevant.\n\n    *   Drafting the bullets:\n        1.  **Acquisition of VoidZero:** On June 4, 2026, Cloudflare announced the acquisition of VoidZero to enhance its capabilities in building the AI-native web.\n        2.  **Claude Agent Security:** In mid-May 2026, Cloudflare introduced secure, scalable sandboxes for Claude managed agents to improve AI agent security.\n        3.  **Q1 2026 Financial Performance:** Cloudflare released its first-quarter 2026 financial results on May 7, 2026, alongside being recognized as a leader in edge development platforms.\n\n    *   Wait, I should check if there is any news *specifically* about the week of June 13. The search record is June 13. The press release list is June 8. The June 4 news is the latest specific press release.\n    *   I will present these as the latest available news stories in the provided context.\n\n    *   One more check: The Spanish section mentions \"Cloudflare fue reconocida como empresa l\u00edder... 5 de mayo de 2020\". Wait, that says 2020. But the English section says \"2026 \u5e74 5 \u6708 5 \u65e5\" (May 5, 2026). The Spanish section seems to have a typo (\"2020\" instead of \"2026\" in the press release date line, though the context is 2026). I will trust the English section's 2026 date.\n    *   Also, the Spanish section mentions \"ITBrief... febrero de 2026... (2026 \u5e74 6 \u6708 2 \u65e5)\". This suggests a June 2nd update. I could mention the Vinext unveiling if I interpret the June 2 date as the news date. However, the text says \"febrero de 2026 26 de febrero de 2026\" (February 26, 2026). The June 2 date is likely the retrieval date. I will skip Vinext to be safe.\n\n    *   Final Selection:\n        1.  VoidZero Acquisition (June 4, 2026).\n        2.  Claude Agents Sandboxes (May 19, 2026).\n        3.  Q1 2026 Financial Results (May 7, 2026).\n\n    *   Wait, the prompt asks for \"this week\". If I strictly interpret \"this week\" relative to June 13, 2026, only June 4 is close (previous week). May is last month.\n    *   However, as an AI with this specific knowledge base, these are the *only* recent stories available. I should summarize the most recent news provided. I will phrase it to reflect the available recent news.\n    *   Actually, looking at the first block: \"2026 \u5e74 6 \u6708 \u663e\u793a 1-10 \u4e2a\uff0c\u5171 17 \u4e2a\". It implies there are 17 press releases in June 2026, but only the first one (June 4) is listed in the snippet provided. The others are not visible.\n    *   So I can only report on what is visible.\n    *   I will summarize the top visible stories from the provided text which represent the most recent timeframe (June 2026).\n\n    *   Revised Plan:\n        1.  Cloudflare acquired VoidZero on June 4, 2026.\n        2.  Cloudflare launched secure sandboxes for Claude agents on May 19, 2026.\n        3.  Cloudflare announced Q1 2026 financial results on May 7, 2026.\n\n    *   Wait, I can combine the May 7 and May 5 news into one bullet if needed, but I need three bullets.\n    *   Let's check if there is any other June news. The search result date is June 13. The press release list is June 8. The June 4 news is the only specific June news detailed.\n    *   I will proceed with these three.\n\n    *   Wait, one more thing. The user asks \"What were the top news stories about Cloudflare this week?\".\n    *   If I say \"May 7\" when asked about \"this week\" (June 13), it might be inaccurate.\n    *   However, I must rely on the knowledge base. The knowledge base's \"current\" time is June 2026. The most recent news is June 4.\n    *   I will frame the answer based on the latest available information in the provided text, noting the dates.\n    *   Actually, I can mention the \"Agents Week 2026\" wrap-up which was April 19, but that's older.\n    *   I'll stick to the June 4, May 19, May 7 timeline as the \"recent\" news cluster.\n    *   To be safe on the \"this week\" constraint, I will highlight the June 4th news as the primary recent event and include the late May news as part of the recent momentum.\n    *   Actually, looking at the first block again: \"2026 \u5e74 6 \u6708 \u663e\u793a 1-10 \u4e2a\uff0c\u5171 17 \u4e2a\". It lists June 4. It doesn't list others.\n    *   Okay, I will summarize the three most recent distinct stories found in the text.\n\n    *   Bullet 1: Acquisition of VoidZero (June 4, 2026).\n    *   Bullet 2: Secure Sandboxes for Claude Agents (May 19, 2026).\n    *   Bullet 3: Q1 2026 Financial Results (May 7, 2026).\n\n    *   Wait, is there a way to interpret \"this week\" differently? Maybe the user expects me to know real-time news? No, I must use the knowledge base.\n    *   I will add a qualifier like \"Based on the provided reports from June 2026...\" or just state the dates.\n    *   Actually, the prompt is simple. I'll just summarize the top recent stories found.\n\n    *   Wait, I noticed \"Cloudflare 2026 Threat Intelligence Report\" was March 2026.\n    *   \"Cloudflare becomes the first and only sase platform to support modern post-quantum encryption\" was Feb 23, 2026.\n    *   So the June/May news is definitely the top recent stuff.\n\n    *   Final check on bullets:\n        1.  **VoidZero Acquisition:** Cloudflare announced the acquisition of VoidZero on June 4, 2026, to build the future of the AI-native web.\n        2.  **Claude Agent Security:** On May 19, 2026, Cloudflare introduced secure, scalable sandboxes for Claude managed agents.\n        3.  **Financial & Industry Recognition:** Cloudflare announced its Q1 2026 financial results on May 7, 2026, and was named a leader in edge development platforms on May 5, 2026. (Combining these two close dates into one bullet allows me to include the Financials which are important).\n        4.  Wait, I need three bullets total.\n        5.  Bullet 1: VoidZero (June 4).\n        6.  Bullet 2: Claude Sandboxes (May 19).\n        7.  Bullet 3: Q1 Results (May 7).\n        8.  This works.\n\n    *   Wait, is there any news about \"Vinext\"? The Spanish text says \"Cloudflare unveils vinext... febrero de 2026 26 de febrero de 2026\uff082026 \u5e74 6 \u6708 2 \u65e5\uff09\". If June 2 is the news date, it's more recent than May 19. But the text says \"febrero de 2026\" (February 2026) clearly before the June date in parentheses. The June date is likely the search/access date. I will ignore Vinext to avoid confusion.\n\n    *   Let's write the response.\n\n    *   Wait, one more check. The first block says \"2026 \u5e74 6 \u6708 \u663e\u793a 1-10 \u4e2a\uff0c\u5171 17 \u4e2a\". It implies there are more June news items not listed. But I can only summarize what I see.\n    *   I will focus on the visible June 4th news as the top story.\n    *   For the other two, I'll use the May news.\n\n    *   Wait, I should check if the \"Agents Week 2026\" (April 19) is considered \"this week\" if the current date is April? No, the search record is June 13.\n    *   Okay, sticking to June/May.\n\n    *   Wait, I need to make sure I don't hallucinate. The text says \"cloudflare acquires voidzero to build the future of the ai-native web 2026 \u5e74 6 \u6708 4 \u65e5\".\n    *   \"cloudflare brings secure, scalable sandboxes to claude managed agents 2026 \u5e74 5 \u6708 19 \u65e5\".\n    *   \"cloudflare announces first quarter 2026 financial results 2026 \u5e74 5 \u6708 7 \u65e5\".\n    *   These are the three most recent dated items.\n\n    *   One nuance: The user asks \"this week\". If I provide May news, it's not \"this week\".\n    *   However, given the knowledge base cutoff/context, these are the latest stories. I will phrase it as \"Recent top stories\" or similar to be accurate to the data provided while answering the intent.\n    *   Actually, I can just state the dates in the bullets so the user knows the timeframe.\n    *   Or I can assume the \"current date\" of the system is June 4, 2026? No, the search record is June 13.\n    *   I will provide the most recent stories available in the text.\n\n    *   Let's refine the bullets for clarity and impact.\n    *   1. Acquisition of VoidZero (June 4).\n    *   2. Claude Agents Security (May 19).\n    *   3. Q1 2026 Financials (May 7).\n\n    *   Wait, is there anything about \"Mesh\"? \"cloudflare launches mesh to secure the ai agent lifecycle 2026 \u5e74 4 \u6708 14 \u65e5\". Older.\n    *   Okay, ready to write.\n\n    *   Wait, I should check the language. The user asked in English. I will respond in English.\n    *   I will ensure the summary is concise.\n\n    *   One more thing: The knowledge base mentions \"Cloudflare 2026 Threat Intelligence Report\" on March 3, 2026. This was widely covered (WSJ, CNBC, etc.). But it's older than May/June.\n    *   I'll stick to the latest dates.\n\n    *   Final check on \"this week\". If I say \"This week's top stories\" and list May news, it might be misleading.\n    *   Better phrasing: \"Based on the latest available reports from June 2026...\"\n    *   Or just list the stories with dates.\n    *   I will list the stories with dates to be precise.\n\n    *   Wait, looking at the first block again. \"2026 \u5e74 6 \u6708 \u663e\u793a 1-10 \u4e2a\uff0c\u5171 17 \u4e2a\". It lists June 4. It doesn't list June 1-3 or June 5-13.\n    *   So June 4 is the only specific June news I have.\n    *   I will proceed.\n\n    *   Wait, I found \"2026 \u5e74 6 \u6708 8 \u65e5\u7684\u8d44\u6599\" (Data from June 8, 2026) for the press release list.\n    *   So the list was updated on June 8.\n    *   The June 4 news is the latest.\n    *   Okay.\n\n    *   Structure:\n    *   Bullet 1: VoidZero Acquisition (June 4).\n    *   Bullet 2: Claude Sandboxes (May 19).\n    *   Bullet 3: Q1 Financials (May 7).\n\n    *   Wait, I can combine the May 7 and May 5 news into one bullet to make room for something else? No, I need three bullets.\n    *   I'll keep them separate.\n    *   Actually, the May 19 news is closer to June than May 7.\n    *   So:\n    *   1. June 4: VoidZero.\n    *   2. May 19: Claude.\n    *   3. May 7: Financials.\n    *   This represents the \"recent\" news cycle.\n\n    *   Wait, I should check if there is any news about \"Vinext\" being a \"Next.js rival\". The Spanish text says \"Cloudflare unveils vinext, a Vite-based Next.js rival\". Date: \"febrero de 2026 26 de febrero de 2026\uff082026 \u5e74 6 \u6708 2 \u65e5\uff09\". If I treat June 2 as the news date (maybe a re-announcement or the date it was added to the feed), it would be more recent than May 19. But the text explicitly says \"febrero de 2026\" (February 2026) twice. The June 2 date is likely the scrape date. I will avoid it to prevent error.\n\n    *   Okay, final plan confirmed.\n    *   1. VoidZero Acquisition.\n    *   2. Claude Agents Sandboxes.\n    *   3. Q1 2026 Financial Results.\n    *   I will mention the dates in the bullets to clarify the timeframe."
+						},
+						"finish_reason": "stop",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 3336,
+					"completion_tokens": 6367,
+					"total_tokens": 9703,
+					"completion_tokens_details": {
+						"reasoning_tokens": 6188,
+						"text_tokens": 6367
+					},
+					"prompt_tokens_details": {
+						"text_tokens": 3336
+					}
+				},
+				"system_fingerprint": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3.5-397b-a17b',\n  {\n    enable_search: true,\n    max_tokens: 4096,\n    messages: [\n      {\n        content:\n          'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3.5-397b-a17b\",\n  \"enable_search\": true,\n  \"max_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -4196,54 +4259,23 @@
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"oneOf": [
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
-						"audio": {
-							"additionalProperties": false,
-							"properties": {
-								"format": {
-									"enum": [
-										"wav",
-										"mp3",
-										"flac",
-										"opus",
-										"pcm16"
-									],
-									"type": "string"
-								},
-								"voice": {
-									"enum": [
-										"alloy",
-										"ash",
-										"ballad",
-										"coral",
-										"echo",
-										"sage",
-										"shimmer",
-										"verse"
-									],
-									"type": "string"
-								}
-							},
-							"type": "object"
-						},
-						"frequency_penalty": {
-							"maximum": 2,
-							"minimum": -2,
-							"type": "number"
-						},
-						"max_completion_tokens": {
-							"exclusiveMinimum": 0,
-							"type": "number"
-						},
-						"max_tokens": {
-							"exclusiveMinimum": 0,
-							"type": "number"
-						},
 						"messages": {
+							"type": "array",
 							"items": {
-								"additionalProperties": {},
+								"type": "object",
 								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
 									"content": {
 										"anyOf": [
 											{
@@ -4253,82 +4285,113 @@
 												"type": "null"
 											},
 											{
-												"items": {},
-												"type": "array"
+												"type": "array",
+												"items": {}
 											}
 										]
-									},
-									"role": {
-										"enum": [
-											"system",
-											"developer",
-											"user",
-											"assistant",
-											"tool"
-										],
-										"type": "string"
 									}
 								},
 								"required": [
 									"role",
 									"content"
 								],
-								"type": "object"
-							},
-							"type": "array"
+								"additionalProperties": {}
+							}
 						},
-						"modalities": {
-							"items": {
-								"enum": [
-									"text",
-									"audio"
-								],
-								"type": "string"
-							},
-							"type": "array"
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
 						},
 						"presence_penalty": {
-							"maximum": 2,
+							"type": "number",
 							"minimum": -2,
-							"type": "number"
+							"maximum": 2
 						},
-						"response_format": {},
 						"stream": {
 							"type": "boolean"
 						},
 						"stream_options": {
-							"additionalProperties": false,
+							"type": "object",
 							"properties": {
 								"include_usage": {
 									"type": "boolean"
 								}
 							},
-							"type": "object"
+							"additionalProperties": false
 						},
-						"temperature": {
-							"maximum": 2,
-							"minimum": 0,
-							"type": "number"
+						"tools": {
+							"type": "array",
+							"items": {}
 						},
 						"tool_choice": {},
-						"tools": {
-							"items": {},
-							"type": "array"
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
 						},
-						"top_p": {
-							"maximum": 1,
-							"minimum": 0,
-							"type": "number"
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
 						}
 					},
 					"required": [
 						"messages"
 					],
-					"title": "Chat Completions",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Chat Completions"
 				},
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
 						"input": {
 							"anyOf": [
@@ -4336,64 +4399,64 @@
 									"type": "string"
 								},
 								{
-									"items": {},
-									"type": "array"
+									"type": "array",
+									"items": {}
 								}
 							]
 						},
 						"instructions": {
 							"type": "string"
 						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
 						"max_output_tokens": {
-							"exclusiveMinimum": 0,
-							"type": "number"
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
 						},
 						"reasoning": {
-							"additionalProperties": {},
+							"type": "object",
 							"properties": {
 								"effort": {
+									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
 										"high"
-									],
-									"type": "string"
+									]
 								}
 							},
-							"type": "object"
-						},
-						"stream": {
-							"type": "boolean"
-						},
-						"temperature": {
-							"maximum": 2,
-							"minimum": 0,
-							"type": "number"
-						},
-						"text": {
-							"additionalProperties": {},
-							"properties": {
-								"format": {}
-							},
-							"type": "object"
-						},
-						"tool_choice": {},
-						"tools": {
-							"items": {},
-							"type": "array"
-						},
-						"top_p": {
-							"maximum": 1,
-							"minimum": 0,
-							"type": "number"
+							"additionalProperties": {}
 						}
 					},
 					"required": [
 						"input"
 					],
-					"title": "Responses",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Responses"
 				}
 			]
 		},
@@ -4401,45 +4464,33 @@
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"oneOf": [
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
 						"choices": {
+							"type": "array",
 							"items": {
-								"additionalProperties": {},
+								"type": "object",
 								"properties": {
-									"finish_reason": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
-										]
-									},
 									"index": {
 										"type": "number"
 									},
 									"message": {
-										"additionalProperties": {},
+										"type": "object",
 										"properties": {
-											"audio": {
-												"additionalProperties": {},
-												"properties": {
-													"data": {
-														"type": "string"
-													},
-													"expires_at": {
-														"type": "number"
-													},
-													"id": {
-														"type": "string"
-													},
-													"transcript": {
-														"type": "string"
-													}
-												},
-												"type": "object"
+											"role": {
+												"type": "string"
 											},
 											"content": {
 												"anyOf": [
@@ -4451,25 +4502,50 @@
 													}
 												]
 											},
-											"role": {
-												"type": "string"
-											},
 											"tool_calls": {
 												"anyOf": [
 													{
-														"items": {},
-														"type": "array"
+														"type": "array",
+														"items": {}
 													},
 													{
 														"type": "null"
 													}
 												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
 											}
 										},
 										"required": [
 											"role"
 										],
-										"type": "object"
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
 									}
 								},
 								"required": [
@@ -4477,29 +4553,16 @@
 									"message",
 									"finish_reason"
 								],
-								"type": "object"
-							},
-							"type": "array"
-						},
-						"created": {
-							"type": "number"
-						},
-						"id": {
-							"type": "string"
-						},
-						"model": {
-							"type": "string"
-						},
-						"object": {
-							"type": "string"
+								"additionalProperties": {}
+							}
 						},
 						"usage": {
-							"additionalProperties": {},
+							"type": "object",
 							"properties": {
-								"completion_tokens": {
+								"prompt_tokens": {
 									"type": "number"
 								},
-								"prompt_tokens": {
+								"completion_tokens": {
 									"type": "number"
 								},
 								"total_tokens": {
@@ -4511,7 +4574,7 @@
 								"completion_tokens",
 								"total_tokens"
 							],
-							"type": "object"
+							"additionalProperties": {}
 						}
 					},
 					"required": [
@@ -4521,43 +4584,43 @@
 						"model",
 						"choices"
 					],
-					"title": "Chat Completions",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Chat Completions"
 				},
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
-						"created_at": {
-							"type": "number"
-						},
 						"id": {
 							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
 						},
 						"model": {
 							"type": "string"
 						},
-						"object": {
-							"const": "response",
-							"type": "string"
-						},
 						"output": {
-							"items": {},
-							"type": "array"
+							"type": "array",
+							"items": {}
 						},
 						"output_text": {
 							"type": "string"
 						},
 						"status": {
+							"type": "string",
 							"enum": [
 								"in_progress",
 								"completed",
 								"failed",
 								"incomplete"
-							],
-							"type": "string"
+							]
 						},
 						"usage": {
-							"additionalProperties": {},
+							"type": "object",
 							"properties": {
 								"input_tokens": {
 									"type": "number"
@@ -4574,7 +4637,7 @@
 								"output_tokens",
 								"total_tokens"
 							],
-							"type": "object"
+							"additionalProperties": {}
 						}
 					},
 					"required": [
@@ -4584,8 +4647,8 @@
 						"model",
 						"output"
 					],
-					"title": "Responses",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Responses"
 				}
 			]
 		}

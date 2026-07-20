@@ -46,16 +46,15 @@ export default {
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
 ```python
-from pyodide.ffi import to_js
 from workers import Response, WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        await self.env.MY_QUEUE.send(to_js({
+        await self.env.MY_QUEUE.send({
             "url": request.url,
             "method": request.method,
             "headers": dict(request.headers),
-        }))
+        })
         return Response("Sent!")
 ```
 </TabItem>
@@ -76,14 +75,12 @@ const sendResultsToQueue = async (results: Array<unknown>, env: Env) => {
 </TypeScriptExample>
 <TabItem label="Python" icon="seti:python">
 ```python
-from pyodide.ffi import to_js
-
 async def send_results_to_queue(results, env):
     batch = [
         {"body": value}
         for value in results
     ]
-    await env.MY_QUEUE.sendBatch(to_js(batch))
+    await env.MY_QUEUE.sendBatch(batch)
 ```
 </TabItem>
 </Tabs>

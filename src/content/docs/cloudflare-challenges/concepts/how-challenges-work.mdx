@@ -24,6 +24,8 @@ Challenge Pages and Turnstile rely on the same underlying mechanism to issue cha
 
 JavaScript Detections is an optional feature within [Bot Management](/bots/get-started/bot-management/). When enabled, Cloudflare injects a JavaScript snippet into HTML responses to gather client-side signals. Unlike Challenge Pages, JavaScript Detections runs on every HTML request without pausing or interrupting the visitor. It populates a pass/fail result (`cf.bot_management.js_detection.passed`) that you can then act on using a [WAF custom rule](/waf/custom-rules/).
 
+For session-level detection that informs when challenges should be applied, refer to [Precursor](/cloudflare-challenges/precursor/).
+
 ---
 
 ## Available challenges
@@ -33,6 +35,7 @@ Refer to the following pages for more information on the different challenge typ
 - [Interstitial Challenge Pages](/cloudflare-challenges/challenge-types/challenge-pages/)
 - [Turnstile](/cloudflare-challenges/challenge-types/turnstile/)
 - [JavaScript Detections](/cloudflare-challenges/challenge-types/javascript-detections/)
+- [Precursor](/cloudflare-challenges/precursor/)
 
 ---
 

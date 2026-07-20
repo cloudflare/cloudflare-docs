@@ -71,10 +71,15 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the image to generate.",
+					"type": "string"
+				},
 				"aspect_ratio": {
 					"description": "Aspect ratio of the generated image.",
+					"type": "string",
 					"enum": [
 						"1:1",
 						"4:3",
@@ -84,106 +89,17 @@
 						"4:5",
 						"2:3",
 						"9:16"
-					],
-					"type": "string"
-				},
-				"complexity": {
-					"default": 0,
-					"description": "K2 Complexity slider (-100 to 100). 0 disables the slider LoRA.",
-					"maximum": 100,
-					"minimum": -100,
-					"type": "integer"
-				},
-				"creativity": {
-					"default": "low",
-					"description": "Prompt expansion mode. `raw` disables expansion; `low`, `medium`, `high` control strength. Does not affect the K2 Intensity, Complexity, or Movement slider LoRAs.",
-					"enum": [
-						"raw",
-						"low",
-						"medium",
-						"high"
-					],
-					"type": "string"
-				},
-				"image_style_references": {
-					"description": "Reference images to drive the visual style (up to 10).",
-					"items": {
-						"additionalProperties": false,
-						"properties": {
-							"strength": {
-								"default": 0.5,
-								"description": "Style influence (0 = no influence, 1 = maximum). Default 0.5.",
-								"maximum": 1,
-								"minimum": 0,
-								"type": "number"
-							},
-							"url": {
-								"description": "URL of the reference image (max 1024 chars).",
-								"format": "uri",
-								"type": "string"
-							}
-						},
-						"required": [
-							"url"
-						],
-						"type": "object"
-					},
-					"maxItems": 10,
-					"type": "array"
-				},
-				"intensity": {
-					"default": 0,
-					"description": "K2 Intensity slider (-100 to 100). 0 disables the slider LoRA.",
-					"maximum": 100,
-					"minimum": -100,
-					"type": "integer"
-				},
-				"moodboards": {
-					"description": "Moodboard references (currently limited to one).",
-					"items": {
-						"additionalProperties": false,
-						"properties": {
-							"id": {
-								"description": "Moodboard identifier.",
-								"format": "uuid",
-								"pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
-								"type": "string"
-							},
-							"strength": {
-								"default": 0.23,
-								"description": "Moodboard influence (0 = no influence, 1 = maximum). Default 0.23.",
-								"maximum": 1,
-								"minimum": 0,
-								"type": "number"
-							}
-						},
-						"required": [
-							"id"
-						],
-						"type": "object"
-					},
-					"maxItems": 1,
-					"type": "array"
-				},
-				"movement": {
-					"default": 0,
-					"description": "K2 Movement slider (-100 to 100). 0 disables the slider LoRA.",
-					"maximum": 100,
-					"minimum": -100,
-					"type": "integer"
-				},
-				"prompt": {
-					"description": "Text prompt describing the image to generate.",
-					"type": "string"
+					]
 				},
 				"resolution": {
 					"description": "Resolution scale.",
+					"type": "string",
 					"enum": [
 						"1K"
-					],
-					"type": "string"
+					]
 				},
 				"seed": {
+					"description": "Random seed for reproducible generations. Pass null or omit for a random seed.",
 					"anyOf": [
 						{
 							"type": "number"
@@ -191,13 +107,13 @@
 						{
 							"type": "null"
 						}
-					],
-					"description": "Random seed for reproducible generations. Pass null or omit for a random seed."
+					]
 				},
 				"styles": {
 					"description": "Styles (typically LoRAs) to apply to the generation.",
+					"type": "array",
 					"items": {
-						"additionalProperties": false,
+						"type": "object",
 						"properties": {
 							"id": {
 								"description": "Style (typically LoRA) identifier.",
@@ -205,18 +121,102 @@
 							},
 							"strength": {
 								"description": "Style strength, between -2 and 2.",
-								"maximum": 2,
+								"type": "number",
 								"minimum": -2,
-								"type": "number"
+								"maximum": 2
 							}
 						},
 						"required": [
 							"id",
 							"strength"
 						],
-						"type": "object"
-					},
-					"type": "array"
+						"additionalProperties": false
+					}
+				},
+				"image_style_references": {
+					"description": "Reference images to drive the visual style (up to 10).",
+					"maxItems": 10,
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"url": {
+								"description": "URL of the reference image (max 1024 chars).",
+								"type": "string",
+								"format": "uri"
+							},
+							"strength": {
+								"description": "Style influence (0 = no influence, 1 = maximum). Default 0.5.",
+								"default": 0.5,
+								"type": "number",
+								"minimum": 0,
+								"maximum": 1
+							}
+						},
+						"required": [
+							"url"
+						],
+						"additionalProperties": false
+					}
+				},
+				"creativity": {
+					"description": "Prompt expansion mode. `raw` disables expansion; `low`, `medium`, `high` control strength. Does not affect the K2 Intensity, Complexity, or Movement slider LoRAs.",
+					"default": "low",
+					"type": "string",
+					"enum": [
+						"raw",
+						"low",
+						"medium",
+						"high"
+					]
+				},
+				"intensity": {
+					"description": "K2 Intensity slider (-100 to 100). 0 disables the slider LoRA.",
+					"default": 0,
+					"type": "integer",
+					"minimum": -100,
+					"maximum": 100
+				},
+				"complexity": {
+					"description": "K2 Complexity slider (-100 to 100). 0 disables the slider LoRA.",
+					"default": 0,
+					"type": "integer",
+					"minimum": -100,
+					"maximum": 100
+				},
+				"movement": {
+					"description": "K2 Movement slider (-100 to 100). 0 disables the slider LoRA.",
+					"default": 0,
+					"type": "integer",
+					"minimum": -100,
+					"maximum": 100
+				},
+				"moodboards": {
+					"description": "Moodboard references (currently limited to one).",
+					"maxItems": 1,
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"description": "Moodboard identifier.",
+								"type": "string",
+								"format": "uuid",
+								"pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+							},
+							"strength": {
+								"description": "Moodboard influence (0 = no influence, 1 = maximum). Default 0.23.",
+								"default": 0.23,
+								"type": "number",
+								"minimum": 0,
+								"maximum": 1
+							}
+						},
+						"required": [
+							"id"
+						],
+						"additionalProperties": false
+					}
 				}
 			},
 			"required": [
@@ -224,22 +224,22 @@
 				"aspect_ratio",
 				"resolution"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"image": {
 					"description": "Presigned URL for the generated image.",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

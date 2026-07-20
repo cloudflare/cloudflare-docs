@@ -279,30 +279,26 @@ The `bindings` section contains the following fields:
 
 ## 5. Configure Durable Object class with SQLite storage backend
 
-A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, or when renaming, deleting or transferring an existing Durable Object class.
+You declare each Durable Object class your Worker exports in the `exports` field of your Wrangler configuration file. Cloudflare uses this declaration to provision a namespace for the class the first time you deploy, and to manage its lifecycle on later deploys (rename, delete, transfer).
 
-Migrations are performed through the `[[migrations]]` configurations key in your Wrangler file.
-
-The Durable Object migration to create a new Durable Object class with SQLite storage backend will look like the following in your Worker's Wrangler file:
+The minimal `exports` block to register a new Durable Object class with SQLite storage looks like:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"migrations": [
-		{
-			"tag": "v1", // Should be unique for each entry
-			"new_sqlite_classes": [ // Array of new classes
-				"MyDurableObject"
-			]
+	"exports": {
+		"MyDurableObject": {
+			"type": "durable-object",
+			"storage": "sqlite"
 		}
-	]
+	}
 }
 ```
 
 </WranglerConfig>
 
-Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to learn more about the migration process.
+Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/) to learn more about declaring and managing Durable Object classes. If you have an existing Worker on the legacy `migrations` array, refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 
 ## 6. Develop a Durable Object Worker locally
 

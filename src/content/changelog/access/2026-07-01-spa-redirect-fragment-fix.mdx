@@ -1,0 +1,13 @@
+---
+title: Fix redirect URL fragment encoding for single-page applications
+description: Access no longer over-encodes URL fragment characters, fixing post-login redirects for single-page applications with fragment-based routing.
+date: 2026-07-01
+products:
+  - access
+---
+
+Access now correctly preserves URL fragment characters (`/`, `?`, `=`, `&`, `;`) when redirecting users back to an application after login. Previously, these characters were encoded with `encodeURIComponent`, which mangled fragment-based routes used by single-page applications (SPAs).
+
+For example, an SPA URL like `https://app.example.com/#/dashboard?tab=settings&view=advanced` would previously redirect to a broken URL after login. This is now handled correctly.
+
+If your SPA users were experiencing broken navigation after authenticating through Access, this fix resolves the issue without any configuration changes.

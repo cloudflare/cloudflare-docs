@@ -27,28 +27,28 @@
 				]
 			},
 			"output": {
-				"text": "There are actually **four laws of thermodynamics** (numbered 0\u20133), but the three *main* ones most commonly referenced are:\n\n## The Three Main Laws\n\n**1st Law \u2013 Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n\n**2nd Law \u2013 Entropy**\nThe total entropy of an isolated system always increases over time. Heat flows naturally from hot to cold, and processes are irreversible in nature.\n\n**3rd Law \u2013 Absolute Zero**\nAs a system approaches absolute zero (0 Kelvin / -273.15\u00b0C), its entropy approaches a minimum or constant value. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\n## The Often-Forgotten Zeroth Law\n**0th Law \u2013 Thermal Equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of **temperature**.\n\n---\n\nWould you like a deeper explanation of any of these?"
+				"text": "There are actually **four** laws of thermodynamics (including the Zeroth Law):\n\n## The Laws of Thermodynamics\n\n**Zeroth Law**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. (This establishes the concept of temperature.)\n\n**First Law**\nEnergy cannot be created or destroyed, only converted from one form to another. (Conservation of energy)\n\n**Second Law**\nEntropy of an isolated system tends to increase over time. Heat naturally flows from hot to cold, not the reverse. (No perfectly efficient engine is possible.)\n\n**Third Law**\nAs temperature approaches absolute zero, the entropy of a perfect crystal approaches zero. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\nThe laws are often summarized humorously as:\n- **You can't win** (can't get more energy out than you put in)\n- **You can't break even** (you always lose some energy to entropy)\n- **You can't quit the game** (you can never reach absolute zero)\n\nWould you like more detail on any of these?"
 			},
 			"raw_response": {
+				"id": "msg_015bDPjJ5vm4gY4EH7pALCsh",
+				"type": "message",
+				"role": "assistant",
 				"content": [
 					{
-						"text": "There are actually **four laws of thermodynamics** (numbered 0\u20133), but the three *main* ones most commonly referenced are:\n\n## The Three Main Laws\n\n**1st Law \u2013 Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n\n**2nd Law \u2013 Entropy**\nThe total entropy of an isolated system always increases over time. Heat flows naturally from hot to cold, and processes are irreversible in nature.\n\n**3rd Law \u2013 Absolute Zero**\nAs a system approaches absolute zero (0 Kelvin / -273.15\u00b0C), its entropy approaches a minimum or constant value. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\n## The Often-Forgotten Zeroth Law\n**0th Law \u2013 Thermal Equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of **temperature**.\n\n---\n\nWould you like a deeper explanation of any of these?",
-						"type": "text"
+						"type": "text",
+						"text": "There are actually **four** laws of thermodynamics (including the Zeroth Law):\n\n## The Laws of Thermodynamics\n\n**Zeroth Law**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. (This establishes the concept of temperature.)\n\n**First Law**\nEnergy cannot be created or destroyed, only converted from one form to another. (Conservation of energy)\n\n**Second Law**\nEntropy of an isolated system tends to increase over time. Heat naturally flows from hot to cold, not the reverse. (No perfectly efficient engine is possible.)\n\n**Third Law**\nAs temperature approaches absolute zero, the entropy of a perfect crystal approaches zero. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\nThe laws are often summarized humorously as:\n- **You can't win** (can't get more energy out than you put in)\n- **You can't break even** (you always lose some energy to entropy)\n- **You can't quit the game** (you can never reach absolute zero)\n\nWould you like more detail on any of these?"
 					}
 				],
-				"gatewayMetadata": {
-					"keySource": "BYOK"
-				},
-				"id": "msg_01S23zge2x9ssM6otp3t33zw",
 				"model": "claude-sonnet-4-6",
-				"role": "assistant",
-				"stop_details": null,
 				"stop_reason": "end_turn",
-				"stop_sequence": null,
-				"type": "message",
 				"usage": {
 					"input_tokens": 17,
-					"output_tokens": 241
+					"output_tokens": 252
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
 				}
 			},
 			"code_snippets": [
@@ -79,28 +79,28 @@
 				"temperature": 0.3
 			},
 			"output": {
-				"text": "## Reading a JSON File in Python\n\n### Basic Method using `json` module\n\n```python\nimport json\n\n# Open and read the JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### Common Approaches\n\n**1. Read as a dictionary/list**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)  # Returns a Python dict or list\n\n# Access values\nprint(data['key'])\nprint(data['nested']['key'])\n```\n\n**2. Read a JSON string (not a file)**\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\n\nprint(data['name'])  # Output: Alice\n```\n\n**3. Handle encoding explicitly**\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n### Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError as e:\n    print(f\"Invalid JSON: {e}\")\n```\n\n### Key Functions Summary\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read from a **file object** |\n| `json.loads(string)` | Read from a **string** |\n| `json.dump(data, file)` | Write to a **file** |\n| `json.dumps(data)` | Convert to a **string** |\n\n### Example JSON file (`data.json`)\n```json\n{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"hobbies\": [\"reading\", \"coding\"]\n}\n```\n\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data['name'])          # Alice\nprint(data['hobbies'][0])    # reading\n```\n\nThe `json` module is built into Python, so **no installation is needed**."
+				"text": "## Reading a JSON File in Python\n\n### Basic Method using `json` module\n\n```python\nimport json\n\n# Open and read the JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### Common Approaches\n\n**1. Read as a dictionary/list (most common)**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)  # Returns a Python dict or list\n\n# Access values\nprint(data['name'])\nprint(data['age'])\n```\n\n**2. Read JSON string manually**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    content = file.read()          # Read as string\n    data = json.loads(content)     # Parse the string (note the 's')\n```\n\n**3. Handle encoding (for special characters)**\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n### Error Handling (Recommended)\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format\")\n```\n\n### Key Differences\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read directly from a **file object** |\n| `json.loads(string)` | Parse a **JSON string** |\n\n### Example JSON file (`data.json`)\n```json\n{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"hobbies\": [\"reading\", \"coding\"]\n}\n```\n\n**Output:**\n```python\ndata['name']    # \u2192 \"Alice\"\ndata['age']     # \u2192 30\ndata['hobbies'] # \u2192 [\"reading\", \"coding\"]\n```\n\n> **Tip:** Use `with open()` to ensure the file is automatically closed after reading."
 			},
 			"raw_response": {
+				"id": "msg_015vWQKd15N4szFzUuNwum2W",
+				"type": "message",
+				"role": "assistant",
 				"content": [
 					{
-						"text": "## Reading a JSON File in Python\n\n### Basic Method using `json` module\n\n```python\nimport json\n\n# Open and read the JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### Common Approaches\n\n**1. Read as a dictionary/list**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)  # Returns a Python dict or list\n\n# Access values\nprint(data['key'])\nprint(data['nested']['key'])\n```\n\n**2. Read a JSON string (not a file)**\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\n\nprint(data['name'])  # Output: Alice\n```\n\n**3. Handle encoding explicitly**\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n### Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError as e:\n    print(f\"Invalid JSON: {e}\")\n```\n\n### Key Functions Summary\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read from a **file object** |\n| `json.loads(string)` | Read from a **string** |\n| `json.dump(data, file)` | Write to a **file** |\n| `json.dumps(data)` | Convert to a **string** |\n\n### Example JSON file (`data.json`)\n```json\n{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"hobbies\": [\"reading\", \"coding\"]\n}\n```\n\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data['name'])          # Alice\nprint(data['hobbies'][0])    # reading\n```\n\nThe `json` module is built into Python, so **no installation is needed**.",
-						"type": "text"
+						"type": "text",
+						"text": "## Reading a JSON File in Python\n\n### Basic Method using `json` module\n\n```python\nimport json\n\n# Open and read the JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### Common Approaches\n\n**1. Read as a dictionary/list (most common)**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)  # Returns a Python dict or list\n\n# Access values\nprint(data['name'])\nprint(data['age'])\n```\n\n**2. Read JSON string manually**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    content = file.read()          # Read as string\n    data = json.loads(content)     # Parse the string (note the 's')\n```\n\n**3. Handle encoding (for special characters)**\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n### Error Handling (Recommended)\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format\")\n```\n\n### Key Differences\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read directly from a **file object** |\n| `json.loads(string)` | Parse a **JSON string** |\n\n### Example JSON file (`data.json`)\n```json\n{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"hobbies\": [\"reading\", \"coding\"]\n}\n```\n\n**Output:**\n```python\ndata['name']    # \u2192 \"Alice\"\ndata['age']     # \u2192 30\ndata['hobbies'] # \u2192 [\"reading\", \"coding\"]\n```\n\n> **Tip:** Use `with open()` to ensure the file is automatically closed after reading."
 					}
 				],
-				"gatewayMetadata": {
-					"keySource": "BYOK"
-				},
-				"id": "msg_015LKPCnULzDqfFALqKD6qZw",
 				"model": "claude-sonnet-4-6",
-				"role": "assistant",
-				"stop_details": null,
 				"stop_reason": "end_turn",
-				"stop_sequence": null,
-				"type": "message",
 				"usage": {
 					"input_tokens": 29,
-					"output_tokens": 556
+					"output_tokens": 508
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
 				}
 			},
 			"code_snippets": [
@@ -137,28 +137,28 @@
 				]
 			},
 			"output": {
-				"text": "Here are some great stops depending on which route you take:\n\n**Coastal Route (Highway 1) - Scenic but longer**\n- **Santa Cruz** - Beach boardwalk and pier\n- **Monterey** - Famous aquarium and Cannery Row\n- **Big Sur** - Stunning coastal cliffs and views\n- **San Simeon** - Hearst Castle tours\n- **San Luis Obispo** - Charming college town with good food\n\n**Inland Route (Highway 101 or I-5) - Faster**\n- **Gilroy** - Known as the garlic capital of the world\n- **Paso Robles** - Great wine country\n- **Santa Barbara** - Beautiful beaches and Spanish architecture\n\n**Tips to consider:**\n- The coastal route adds several hours but is one of the most beautiful drives in the US\n- Big Sur can have road closures so check conditions before you go\n- Santa Barbara is worth a stop on either route\n- Try to avoid driving through LA during rush hour\n\n**How long do you have for the trip?** That would help narrow down how many stops make sense. Also, are you interested in:\n- Food and restaurants\n- Outdoor activities\n- History and culture\n- A mix of everything"
+				"text": "Here are some great stops depending on which route you take:\n\n**Pacific Coast Highway (Highway 1) - Scenic Route**\n- **Santa Cruz** - Fun boardwalk and beach town\n- **Monterey** - Great aquarium and Cannery Row\n- **Big Sur** - Stunning coastal views and hiking\n- **San Simeon** - Hearst Castle tours\n- **Morro Bay** - Charming harbor town\n- **Santa Barbara** - Beautiful city with great food and beaches\n\n**Highway 101 - Middle Route**\n- **San Jose** - Tech museums and good food\n- **Paso Robles** - Wine country and wineries\n- **San Luis Obispo** - Charming college town\n- **Santa Barbara** - connects with PCH route\n\n**Interstate 5 - Fastest Route**\n- This is the most direct but least scenic\n- Good if you just want to get there quickly\n\n**Some Tips:**\n- The PCH route adds several hours but is worth it for the views\n- Big Sur can have road closures, so check conditions ahead of time\n- Santa Barbara is a great overnight stop\n- Try to drive Big Sur during daylight for the best views\n\nWould you like more details about any specific stop or help planning an overnight itinerary?"
 			},
 			"raw_response": {
+				"id": "msg_015gJCs45CLVWFpG9swxLY1h",
+				"type": "message",
+				"role": "assistant",
 				"content": [
 					{
-						"text": "Here are some great stops depending on which route you take:\n\n**Coastal Route (Highway 1) - Scenic but longer**\n- **Santa Cruz** - Beach boardwalk and pier\n- **Monterey** - Famous aquarium and Cannery Row\n- **Big Sur** - Stunning coastal cliffs and views\n- **San Simeon** - Hearst Castle tours\n- **San Luis Obispo** - Charming college town with good food\n\n**Inland Route (Highway 101 or I-5) - Faster**\n- **Gilroy** - Known as the garlic capital of the world\n- **Paso Robles** - Great wine country\n- **Santa Barbara** - Beautiful beaches and Spanish architecture\n\n**Tips to consider:**\n- The coastal route adds several hours but is one of the most beautiful drives in the US\n- Big Sur can have road closures so check conditions before you go\n- Santa Barbara is worth a stop on either route\n- Try to avoid driving through LA during rush hour\n\n**How long do you have for the trip?** That would help narrow down how many stops make sense. Also, are you interested in:\n- Food and restaurants\n- Outdoor activities\n- History and culture\n- A mix of everything",
-						"type": "text"
+						"type": "text",
+						"text": "Here are some great stops depending on which route you take:\n\n**Pacific Coast Highway (Highway 1) - Scenic Route**\n- **Santa Cruz** - Fun boardwalk and beach town\n- **Monterey** - Great aquarium and Cannery Row\n- **Big Sur** - Stunning coastal views and hiking\n- **San Simeon** - Hearst Castle tours\n- **Morro Bay** - Charming harbor town\n- **Santa Barbara** - Beautiful city with great food and beaches\n\n**Highway 101 - Middle Route**\n- **San Jose** - Tech museums and good food\n- **Paso Robles** - Wine country and wineries\n- **San Luis Obispo** - Charming college town\n- **Santa Barbara** - connects with PCH route\n\n**Interstate 5 - Fastest Route**\n- This is the most direct but least scenic\n- Good if you just want to get there quickly\n\n**Some Tips:**\n- The PCH route adds several hours but is worth it for the views\n- Big Sur can have road closures, so check conditions ahead of time\n- Santa Barbara is a great overnight stop\n- Try to drive Big Sur during daylight for the best views\n\nWould you like more details about any specific stop or help planning an overnight itinerary?"
 					}
 				],
-				"gatewayMetadata": {
-					"keySource": "BYOK"
-				},
-				"id": "msg_01S9ZEwEprBa1m64zKWUvdmW",
 				"model": "claude-sonnet-4-6",
-				"role": "assistant",
-				"stop_details": null,
 				"stop_reason": "end_turn",
-				"stop_sequence": null,
-				"type": "message",
 				"usage": {
 					"input_tokens": 76,
-					"output_tokens": 280
+					"output_tokens": 290
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
 				}
 			},
 			"code_snippets": [
@@ -188,28 +188,28 @@
 				"temperature": 0.8
 			},
 			"output": {
-				"text": "# The Smell of Lavender\n\nDetective Mara Chen had seen a lot of crime scenes in fourteen years on the force. She had learned to read them the way other people read books \u2014 patiently, without skipping ahead.\n\nBut this one was giving her trouble.\n\nThe apartment was sparse and cold, its single window open to the November street below. The victim, a retired accountant named Gerald Foss, lay slumped at his kitchen table with no signs of forced entry, no signs of struggle, and \u2014 this was the part that nagged at her \u2014 no signs that anyone had been upset about anything at all.\n\nEverything was deliberate. Calm.\n\nShe almost missed it.\n\nShe was pulling on a fresh glove when the draft shifted, and there it was \u2014 faint, out of place, almost polite. *Lavender.* Not a cleaning product. Not a candle. Something more personal, like soap or a fabric softener pressed warm from a dryer.\n\nMara stood very still.\n\nGerald Foss, according to his neighbor, had been allergic to every flowering plant known to mankind. His medicine cabinet held three different antihistamines. There wasn't a single flower, real or artificial, anywhere in the apartment.\n\nSomeone had been here recently. Someone clean, careful, and completely unafraid.\n\nShe pulled out her notebook and wrote one word.\n\n*Lavender.*\n\nThen she circled it twice."
+				"text": "# The Weight of Paper\n\nDetective Mara Osei had seen plenty of strange things in fourteen years on the job. She had once found a murder weapon wrapped in a birthday cake. She had once interviewed a parrot that knew the killer's name.\n\nBut this was different.\n\nThe victim's apartment was ordinary enough \u2014 takeout containers, a dying fern, furniture that looked purchased in a single defeated afternoon at a discount store. Nothing about Leonard Voss suggested a man with enemies. Nothing suggested a man with much of anything.\n\nExcept the paper.\n\nMara crouched beside the coffee table and studied it without touching it. A single sheet, handwritten, covered edge to edge in the same two words repeated hundreds of times in shrinking letters, spiraling inward like a drain.\n\n*I remember. I remember. I remember.*\n\nThe handwriting started bold and confident at the outer edge. By the center, the letters were barely visible, scratched by what must have been a nearly dead pen \u2014 or a nearly dead hand.\n\nThe medical examiner appeared in the doorway. \"No signs of struggle. No forced entry.\" He paused. \"Honestly, Mara, it looks like he just *stopped*.\"\n\nShe stood up slowly, slipping her hands into her pockets.\n\n\"Then what,\" she said quietly, \"was he trying so hard not to forget?\"\n\n---\n\n*The fern, she noticed, had been recently watered.*"
 			},
 			"raw_response": {
+				"id": "msg_01BfiLNfgBobjw33wuZDP9as",
+				"type": "message",
+				"role": "assistant",
 				"content": [
 					{
-						"text": "# The Smell of Lavender\n\nDetective Mara Chen had seen a lot of crime scenes in fourteen years on the force. She had learned to read them the way other people read books \u2014 patiently, without skipping ahead.\n\nBut this one was giving her trouble.\n\nThe apartment was sparse and cold, its single window open to the November street below. The victim, a retired accountant named Gerald Foss, lay slumped at his kitchen table with no signs of forced entry, no signs of struggle, and \u2014 this was the part that nagged at her \u2014 no signs that anyone had been upset about anything at all.\n\nEverything was deliberate. Calm.\n\nShe almost missed it.\n\nShe was pulling on a fresh glove when the draft shifted, and there it was \u2014 faint, out of place, almost polite. *Lavender.* Not a cleaning product. Not a candle. Something more personal, like soap or a fabric softener pressed warm from a dryer.\n\nMara stood very still.\n\nGerald Foss, according to his neighbor, had been allergic to every flowering plant known to mankind. His medicine cabinet held three different antihistamines. There wasn't a single flower, real or artificial, anywhere in the apartment.\n\nSomeone had been here recently. Someone clean, careful, and completely unafraid.\n\nShe pulled out her notebook and wrote one word.\n\n*Lavender.*\n\nThen she circled it twice.",
-						"type": "text"
+						"type": "text",
+						"text": "# The Weight of Paper\n\nDetective Mara Osei had seen plenty of strange things in fourteen years on the job. She had once found a murder weapon wrapped in a birthday cake. She had once interviewed a parrot that knew the killer's name.\n\nBut this was different.\n\nThe victim's apartment was ordinary enough \u2014 takeout containers, a dying fern, furniture that looked purchased in a single defeated afternoon at a discount store. Nothing about Leonard Voss suggested a man with enemies. Nothing suggested a man with much of anything.\n\nExcept the paper.\n\nMara crouched beside the coffee table and studied it without touching it. A single sheet, handwritten, covered edge to edge in the same two words repeated hundreds of times in shrinking letters, spiraling inward like a drain.\n\n*I remember. I remember. I remember.*\n\nThe handwriting started bold and confident at the outer edge. By the center, the letters were barely visible, scratched by what must have been a nearly dead pen \u2014 or a nearly dead hand.\n\nThe medical examiner appeared in the doorway. \"No signs of struggle. No forced entry.\" He paused. \"Honestly, Mara, it looks like he just *stopped*.\"\n\nShe stood up slowly, slipping her hands into her pockets.\n\n\"Then what,\" she said quietly, \"was he trying so hard not to forget?\"\n\n---\n\n*The fern, she noticed, had been recently watered.*"
 					}
 				],
-				"gatewayMetadata": {
-					"keySource": "BYOK"
-				},
-				"id": "msg_0144jtkQ6nQrr9BswabiMh3h",
 				"model": "claude-sonnet-4-6",
-				"role": "assistant",
-				"stop_details": null,
 				"stop_reason": "end_turn",
-				"stop_sequence": null,
-				"type": "message",
 				"usage": {
 					"input_tokens": 21,
 					"output_tokens": 317
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
 				}
 			},
 			"code_snippets": [
@@ -242,284 +242,284 @@
 				"text": [
 					"#",
 					" Recursion\n\n## Core Concept\n\nRecursion is when a **function calls itself** to solve a smaller",
-					" version of the same problem, breaking it down until it reaches a simple base case.\n\nEvery recursive solution",
-					" needs:\n1. **Base case** \u2014 when to stop\n2. **Recursive case** \u2014 calling",
-					" itself with a simpler input\n\n---\n\n## Simple Example: Factorial\n\n`5! = 5 \u00d7 ",
-					"4 \u00d7 3 \u00d7 2 \u00d7 1 = 120`\n\n```python\ndef factorial(n):\n    # Base case: stop here",
-					"\n    if n == 0:\n        return 1\n\n    # Recursive case: call itself with a smaller value\n    return n * factorial(n - 1)\n\nprint",
-					"(factorial(5))  # Output: 120\n```\n\n---\n\n## How It Unfolds\n\n```\nfactorial(5)\n  \u2514",
-					"\u2500\u2500 5 * factorial(4)\n            \u2514\u2500\u2500 4 * factorial(3)\n                      \u2514\u2500\u2500 3 * factorial(2)\n                                ",
-					"\u2514\u2500\u2500 2 * factorial(1)\n                                          \u2514\u2500\u2500 1 * factorial(0)\n                                                    \u2514\u2500\u2500 returns 1  \u2190 base case",
-					"\n\n# Then it works back up:\n1 * 1 = 1\n2",
-					" * 1 = 2\n3 * 2 = 6\n4 * 6 = 24\n5 * 24 = 120 \u2713\n```\n\n---\n\n## The",
-					" \"Thousand Clones\" Analogy\n\n> Imagine you're in",
-					" a long line and ask *\"what position am I in?\"*\n> You",
-					" ask the person in front, who asks the person in front of",
-					" them, and so on.\n> The person at the front says **\"I'm #",
-					"1\"** (base case), and the answer passes back",
-					" down the line.\n\n---\n\n## Key Warnings\n\n| \u26a0\ufe0f Problem | ",
-					"\u2705 Solution |\n|---|---|\n| No base case \u2192 **infinite loop** | Always define a stopping condition |\n| Too",
-					" many calls \u2192 **stack overflow** | Ensure input gets smaller each time |\n| Can be",
-					" slow with repeated work | Use memoization or iteration if needed |\n\n---\n\n##",
-					" Recursion vs. Iteration\n\nBoth solve the same problem \u2014 recursion is",
-					" often **more readable** for naturally nested problems (trees",
-					", folders, fractals), while iteration is more **memory efficient** for simple loops",
-					"."
+					" version of the same problem, until it reaches a simple base case it can solve directly.\n\nThink of it like Russian",
+					" nesting dolls \u2014 each doll contains a smaller version of itself, until you reach the smallest one",
+					".\n\n---\n\n## Two Essential Parts\n\n| Part | Purpose |\n|------|---------|",
+					"\n| **Base Case** | Stops the recursion (prevents infinite loop) |\n| **Recursive Case** | Breaks the",
+					" problem into a smaller version |\n\n---\n\n## Simple Example: Countdown\n\n```python\ndef countdown(n):",
+					"\n    # Base case \u2014 stop here\n    if n == 0:\n        print(\"Go!\")\n        return\n\n    # Recursive case \u2014 call",
+					" itself with a smaller value\n    print(n)\n    countdown(n - 1)  # \u2190 calls itself",
+					"\n\ncountdown(3)\n```\n\n**Output:**\n```\n3\n2\n1\nGo!\n```\n\n---\n\n## How It",
+					" Executes Step by Step\n\n```\ncountdown(3)\n  \u2192 prints 3, calls countdown(2)\n      ",
+					"\u2192 prints 2, calls countdown(1)\n          \u2192 prints 1, calls countdown(0)\n              \u2192 prints \"Go!\", returns   \u2713 BASE CASE\n```",
+					"\n\n---\n\n## Classic Example: Factorial\n\n```python\ndef factorial(n):\n    if n == 0:          # base case\n        return 1",
+					"\n    return n * factorial(n - 1)   # recursive case\n\nprint(factorial(4))  # \u2192 24\n```\n\n**Why it",
+					" works:**\n```\nfactorial(4)\n= 4 \u00d7 factorial(3)\n= 4 \u00d7 3 \u00d7 factorial(2)\n= 4 \u00d7 3 \u00d7 2 \u00d7 factorial",
+					"(1)\n= 4 \u00d7 3 \u00d7 2 \u00d7 1 \u00d7 factorial(0)\n= 4 \u00d7 3 \u00d7 2 \u00d7 1 \u00d7 1\n= 24\n```\n\n---\n\n## ",
+					"\u26a0\ufe0f Common Mistake: Missing Base Case\n\n```python\ndef broken(n):\n    print(n",
+					")\n    broken(n - 1)  # never stops \u2192 stack overflow!\n```\n\n---",
+					"\n\n## When to Use Recursion\n\n\u2705 **Good fit for:**\n- Tree/folder",
+					" traversal\n- Sorting algorithms (merge sort)\n- Problems naturally defined recurs",
+					"ively (Fibonacci, factorials)\n\n\u26a0\ufe0f **Be careful of:**\n- Deep recursion causing stack overflow\n- Repeated",
+					" calculations (use memoization to fix)\n\n---\n\n**The key insight:** Trust",
+					" that your function works for a smaller input, use",
+					" that result to solve the current input, and define where",
+					" to stop."
 				]
 			},
 			"raw_response": [
 				{
+					"type": "message_start",
 					"message": {
-						"content": [],
-						"id": "msg_013h2aK7NSZ33csCepec5U2R",
 						"model": "claude-sonnet-4-6",
+						"id": "msg_01JqufFVcarQ73V8GUn3XSSC",
+						"type": "message",
 						"role": "assistant",
-						"stop_details": null,
+						"content": [],
 						"stop_reason": null,
 						"stop_sequence": null,
-						"type": "message",
+						"stop_details": null,
 						"usage": {
-							"cache_creation": {
-								"ephemeral_1h_input_tokens": 0,
-								"ephemeral_5m_input_tokens": 0
-							},
+							"input_tokens": 19,
 							"cache_creation_input_tokens": 0,
 							"cache_read_input_tokens": 0,
-							"inference_geo": "global",
-							"input_tokens": 19,
+							"cache_creation": {
+								"ephemeral_5m_input_tokens": 0,
+								"ephemeral_1h_input_tokens": 0
+							},
 							"output_tokens": 1,
-							"service_tier": "standard"
+							"service_tier": "standard",
+							"inference_geo": "global"
 						}
-					},
-					"type": "message_start"
+					}
 				},
 				{
-					"content_block": {
-						"text": "",
-						"type": "text"
-					},
+					"type": "content_block_start",
 					"index": 0,
-					"type": "content_block_start"
+					"content_block": {
+						"type": "text",
+						"text": ""
+					}
 				},
 				{
 					"type": "ping"
 				},
 				{
-					"delta": {
-						"text": "#",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "#"
+					}
 				},
 				{
-					"delta": {
-						"text": " Recursion\n\n## Core Concept\n\nRecursion is when a **function calls itself** to solve a smaller",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " Recursion\n\n## Core Concept\n\nRecursion is when a **function calls itself** to solve a smaller"
+					}
 				},
 				{
-					"delta": {
-						"text": " version of the same problem, breaking it down until it reaches a simple base case.\n\nEvery recursive solution",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " version of the same problem, until it reaches a simple base case it can solve directly.\n\nThink of it like Russian"
+					}
 				},
 				{
-					"delta": {
-						"text": " needs:\n1. **Base case** \u2014 when to stop\n2. **Recursive case** \u2014 calling",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " nesting dolls \u2014 each doll contains a smaller version of itself, until you reach the smallest one"
+					}
 				},
 				{
-					"delta": {
-						"text": " itself with a simpler input\n\n---\n\n## Simple Example: Factorial\n\n`5! = 5 \u00d7 ",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": ".\n\n---\n\n## Two Essential Parts\n\n| Part | Purpose |\n|------|---------|"
+					}
 				},
 				{
-					"delta": {
-						"text": "4 \u00d7 3 \u00d7 2 \u00d7 1 = 120`\n\n```python\ndef factorial(n):\n    # Base case: stop here",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\n| **Base Case** | Stops the recursion (prevents infinite loop) |\n| **Recursive Case** | Breaks the"
+					}
 				},
 				{
-					"delta": {
-						"text": "\n    if n == 0:\n        return 1\n\n    # Recursive case: call itself with a smaller value\n    return n * factorial(n - 1)\n\nprint",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " problem into a smaller version |\n\n---\n\n## Simple Example: Countdown\n\n```python\ndef countdown(n):"
+					}
 				},
 				{
-					"delta": {
-						"text": "(factorial(5))  # Output: 120\n```\n\n---\n\n## How It Unfolds\n\n```\nfactorial(5)\n  \u2514",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\n    # Base case \u2014 stop here\n    if n == 0:\n        print(\"Go!\")\n        return\n\n    # Recursive case \u2014 call"
+					}
 				},
 				{
-					"delta": {
-						"text": "\u2500\u2500 5 * factorial(4)\n            \u2514\u2500\u2500 4 * factorial(3)\n                      \u2514\u2500\u2500 3 * factorial(2)\n                                ",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " itself with a smaller value\n    print(n)\n    countdown(n - 1)  # \u2190 calls itself"
+					}
 				},
 				{
-					"delta": {
-						"text": "\u2514\u2500\u2500 2 * factorial(1)\n                                          \u2514\u2500\u2500 1 * factorial(0)\n                                                    \u2514\u2500\u2500 returns 1  \u2190 base case",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\ncountdown(3)\n```\n\n**Output:**\n```\n3\n2\n1\nGo!\n```\n\n---\n\n## How It"
+					}
 				},
 				{
-					"delta": {
-						"text": "\n\n# Then it works back up:\n1 * 1 = 1\n2",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " Executes Step by Step\n\n```\ncountdown(3)\n  \u2192 prints 3, calls countdown(2)\n      "
+					}
 				},
 				{
-					"delta": {
-						"text": " * 1 = 2\n3 * 2 = 6\n4 * 6 = 24\n5 * 24 = 120 \u2713\n```\n\n---\n\n## The",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\u2192 prints 2, calls countdown(1)\n          \u2192 prints 1, calls countdown(0)\n              \u2192 prints \"Go!\", returns   \u2713 BASE CASE\n```"
+					}
 				},
 				{
-					"delta": {
-						"text": " \"Thousand Clones\" Analogy\n\n> Imagine you're in",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\n---\n\n## Classic Example: Factorial\n\n```python\ndef factorial(n):\n    if n == 0:          # base case\n        return 1"
+					}
 				},
 				{
-					"delta": {
-						"text": " a long line and ask *\"what position am I in?\"*\n> You",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\n    return n * factorial(n - 1)   # recursive case\n\nprint(factorial(4))  # \u2192 24\n```\n\n**Why it"
+					}
 				},
 				{
-					"delta": {
-						"text": " ask the person in front, who asks the person in front of",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " works:**\n```\nfactorial(4)\n= 4 \u00d7 factorial(3)\n= 4 \u00d7 3 \u00d7 factorial(2)\n= 4 \u00d7 3 \u00d7 2 \u00d7 factorial"
+					}
 				},
 				{
-					"delta": {
-						"text": " them, and so on.\n> The person at the front says **\"I'm #",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "(1)\n= 4 \u00d7 3 \u00d7 2 \u00d7 1 \u00d7 factorial(0)\n= 4 \u00d7 3 \u00d7 2 \u00d7 1 \u00d7 1\n= 24\n```\n\n---\n\n## "
+					}
 				},
 				{
-					"delta": {
-						"text": "1\"** (base case), and the answer passes back",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\u26a0\ufe0f Common Mistake: Missing Base Case\n\n```python\ndef broken(n):\n    print(n"
+					}
 				},
 				{
-					"delta": {
-						"text": " down the line.\n\n---\n\n## Key Warnings\n\n| \u26a0\ufe0f Problem | ",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": ")\n    broken(n - 1)  # never stops \u2192 stack overflow!\n```\n\n---"
+					}
 				},
 				{
-					"delta": {
-						"text": "\u2705 Solution |\n|---|---|\n| No base case \u2192 **infinite loop** | Always define a stopping condition |\n| Too",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\n## When to Use Recursion\n\n\u2705 **Good fit for:**\n- Tree/folder"
+					}
 				},
 				{
-					"delta": {
-						"text": " many calls \u2192 **stack overflow** | Ensure input gets smaller each time |\n| Can be",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " traversal\n- Sorting algorithms (merge sort)\n- Problems naturally defined recurs"
+					}
 				},
 				{
-					"delta": {
-						"text": " slow with repeated work | Use memoization or iteration if needed |\n\n---\n\n##",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": "ively (Fibonacci, factorials)\n\n\u26a0\ufe0f **Be careful of:**\n- Deep recursion causing stack overflow\n- Repeated"
+					}
 				},
 				{
-					"delta": {
-						"text": " Recursion vs. Iteration\n\nBoth solve the same problem \u2014 recursion is",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " calculations (use memoization to fix)\n\n---\n\n**The key insight:** Trust"
+					}
 				},
 				{
-					"delta": {
-						"text": " often **more readable** for naturally nested problems (trees",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " that your function works for a smaller input, use"
+					}
 				},
 				{
-					"delta": {
-						"text": ", folders, fractals), while iteration is more **memory efficient** for simple loops",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " that result to solve the current input, and define where"
+					}
 				},
 				{
-					"delta": {
-						"text": ".",
-						"type": "text_delta"
-					},
+					"type": "content_block_delta",
 					"index": 0,
-					"type": "content_block_delta"
+					"delta": {
+						"type": "text_delta",
+						"text": " to stop."
+					}
 				},
 				{
-					"index": 0,
-					"type": "content_block_stop"
+					"type": "content_block_stop",
+					"index": 0
 				},
 				{
-					"delta": {
-						"stop_details": null,
-						"stop_reason": "end_turn",
-						"stop_sequence": null
-					},
 					"type": "message_delta",
+					"delta": {
+						"stop_reason": "end_turn",
+						"stop_sequence": null,
+						"stop_details": null
+					},
 					"usage": {
+						"input_tokens": 19,
 						"cache_creation_input_tokens": 0,
 						"cache_read_input_tokens": 0,
-						"input_tokens": 19,
-						"output_tokens": 562
+						"output_tokens": 635
 					}
 				},
 				{
@@ -536,6 +536,231 @@
 					"label": "curl",
 					"language": "bash",
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.6\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting Claude use Anthropic's server-side web search tool to answer with current information",
+			"input": {
+				"max_tokens": 4096,
+				"messages": [
+					{
+						"content": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+						"role": "user"
+					}
+				],
+				"tools": [
+					{
+						"max_uses": 3,
+						"name": "web_search",
+						"type": "web_search_20250305"
+					}
+				]
+			},
+			"output": {
+				"text": "Here's a summary of the top Cloudflare news stories this week:\n\n---\n\n\u2022 **AI Agent Verification in Bot Management** \u2014 "
+			},
+			"raw_response": {
+				"id": "msg_011aLAk6hWx3649oMeuJBm4w",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "server_tool_use",
+						"id": "srvtoolu_017fsFRbkfUvtAZDtsdHQHpk",
+						"name": "web_search",
+						"input": {
+							"query": "Cloudflare news June 2026"
+						}
+					},
+					{
+						"type": "web_search_tool_result",
+						"tool_use_id": "srvtoolu_017fsFRbkfUvtAZDtsdHQHpk",
+						"content": [
+							{
+								"type": "web_search_result",
+								"title": "Cloudflare Release Notes - June 2026 Latest Updates - Releasebot",
+								"url": "https://releasebot.io/updates/cloudflare",
+								"encrypted_content": "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",
+								"page_age": "2 days ago"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Press Overview | Cloudflare",
+								"url": "https://www.cloudflare.com/press/press-releases/",
+								"encrypted_content": "EvMCCioIEBgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDCch0SONkciDkIjZyBoMkaSPWo3PaVWy00JBIjDLEt1nqEXoy8JuNkVrddRulYfFkaynmdMj81PTz0pFdNp1JPzH2ivOUIULTwUEnTcq9gHOoLsuFECd+94wuNXYT3y5mDi4JwIF6cgad1D5l1/XcU+IlGgv81XpGKA5mI1bkG8ra1enXlkazfHxp5tRYVKEhAIxK4TZqzxANK0TMXpVIT6HXY6g02RHaguLV01oP59VZ9bcesPf4vju8lNkfcVS/3gi2taiKViTgb5NUzKMmuSdqdmATzHmnPbmTxeTQmvmHYayBxRYCWasF7CyGHeWAYb6VF9c9uPmgOQaNJHotZRlupWt32iJhjuYq2F8JvWLkMvTwzOIRC7q0J5VpRGK/KboVxwkpqN5mQPo1IUcLvcusTdCxr6YaZmbxGZvD+sdbB+0O00YAw==",
+								"page_age": null
+							},
+							{
+								"type": "web_search_result",
+								"title": "Cloudflare News | June, 2026 (STARTUP EDITION)",
+								"url": "https://blog.mean.ceo/cloudflare-news-june-2026/",
+								"encrypted_content": "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",
+								"page_age": "3 weeks ago"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Cloudflare Release Notes & Changelog \u00b7 June 2026 \u2014 releases.sh",
+								"url": "https://releases.sh/cloudflare/releases",
+								"encrypted_content": "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",
+								"page_age": "6 hours ago"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Cloudflare Status",
+								"url": "https://www.cloudflarestatus.com/",
+								"encrypted_content": "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",
+								"page_age": "4 weeks ago"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Application Security Updates by Cloudflare - June 2026 - Releasebot",
+								"url": "https://releasebot.io/updates/cloudflare/application-security",
+								"encrypted_content": "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",
+								"page_age": "2 weeks ago"
+							},
+							{
+								"type": "web_search_result",
+								"title": "What Does Cloudflare's June 2026 Bot Management Update Mean for Webflow Site Protection? | Blog | Pravin Kumar - Webflow Developer",
+								"url": "https://www.pravinkumar.co/blog/cloudflare-june-2026-bot-management-webflow-protection-2026",
+								"encrypted_content": "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",
+								"page_age": "2 weeks ago"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Agents Week 2026 Updates and Announcements | Cloudflare",
+								"url": "https://www.cloudflare.com/agents-week/updates/",
+								"encrypted_content": "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",
+								"page_age": "May 18, 2026"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Building the agentic cloud: everything we launched during Agents Week 2026",
+								"url": "https://blog.cloudflare.com/agents-week-in-review/",
+								"encrypted_content": "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",
+								"page_age": "April 22, 2026"
+							}
+						],
+						"caller": {
+							"type": "direct"
+						}
+					},
+					{
+						"type": "text",
+						"text": "Here's a summary of the top Cloudflare news stories this week:\n\n---\n\n\u2022 **AI Agent Verification in Bot Management** \u2014 "
+					},
+					{
+						"type": "text",
+						"text": "Cloudflare updated its Bot Management platform to add AI-agent verification as a first-class signal, changing how AI browsers and AI scrapers are identified and either allowed, challenged, or blocked.",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "On June 2, 2026, Cloudflare published a quiet platform update to Bot Management that added AI-agent verification as a first-class signal. ",
+								"url": "https://www.pravinkumar.co/blog/cloudflare-june-2026-bot-management-webflow-protection-2026",
+								"title": "What Does Cloudflare's June 2026 Bot Management Update Mean for Webflow Site Protection? | Blog | Pravin Kumar - Webflow Developer",
+								"encrypted_index": "Eo8BCioIEBgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDIkf4dUAbPU0mwSiWBoMRgECCFuxF92lm0I0IjDMPZtGdaSBUjK+MTa110/fK0Oomoje7MIsDSsRu04RMQogAei319WUSJNJyYb+Ac4qE0ab0AFMLQLTZ4RsGomjWmHP8oQYBA=="
+							},
+							{
+								"type": "web_search_result_location",
+								"cited_text": "The short answer is that the update changes how AI browsers and AI scrapers are identified and either allowed, challenged, or blocked. ",
+								"url": "https://www.pravinkumar.co/blog/cloudflare-june-2026-bot-management-webflow-protection-2026",
+								"title": "What Does Cloudflare's June 2026 Bot Management Update Mean for Webflow Site Protection? | Blog | Pravin Kumar - Webflow Developer",
+								"encrypted_index": "Eo8BCioIEBgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDCcDu0Cc6g5Uh3NN+BoMav15+4KjT5IKOiWvIjAlbOz1nBnBwYR39W6HIZxA/wKJU/JHiy3anSNQOFYgyOPe2ulZFMz+DjdDFnfBKBYqE4K5q45jA4zOwZb/uWkZlCYPrQMYBA=="
+							}
+						]
+					},
+					{
+						"type": "text",
+						"text": " "
+					},
+					{
+						"type": "text",
+						"text": "The \"Verified AI Agent\" category includes 19 agents at launch, such as ChatGPT Atlas, Claude in Chrome, Perplexity Browser, Gemini Agent Mode, Brave Leo, and Arc's Browse for Me.",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "The Verified AI Agent category includes 19 agents at launch, including ChatGPT Atlas, Claude in Chrome, Perplexity Browser, Gemini Agent Mode, Brave L...",
+								"url": "https://www.pravinkumar.co/blog/cloudflare-june-2026-bot-management-webflow-protection-2026",
+								"title": "What Does Cloudflare's June 2026 Bot Management Update Mean for Webflow Site Protection? | Blog | Pravin Kumar - Webflow Developer",
+								"encrypted_index": "Eo8BCioIEBgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDKBO50GygYt22Sm6lhoMdB4WXYJ6ofkL68FrIjArle6HKbYTCvEb1zEwj6MGcGMJFmqlrrM6jJQL9r7m14o6emDFabWbRLRKUfXDxZoqE2Gynj41v7b0u+95rkpoHSzo1fsYBA=="
+							}
+						]
+					},
+					{
+						"type": "text",
+						"text": "\n\n\u2022 **Developer Platform Updates for AI Workloads** \u2014 "
+					},
+					{
+						"type": "text",
+						"text": "Cloudflare's Developer Platform now keeps Durable Objects alive while outbound connections via `connect()` or outbound WebSockets are active, reducing mid-stream eviction for long-running LLM and agent workloads, with a 15-minute cap per connection once connections close.",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "Developer Platform now keeps Durable Objects alive while outbound connections via connect() or outbound WebSocket are active, reducing mid-stream evic...",
+								"url": "https://releasebot.io/updates/cloudflare",
+								"title": "Cloudflare Release Notes - June 2026 Latest Updates - Releasebot",
+								"encrypted_index": "EpEBCioIEBgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDOQwPv1QEB13VChrQhoM8/ZBsuae46N7Es8DIjAfks8RGvF2toSWOcN8a3Bqzl8aFESObfP3ox3Xo/oljhFgt9lBSYJPwsqSsHcRtVIqFdZI2XQ7CGWNAiFWnCD5qejeFliFfBgE"
+							}
+						]
+					},
+					{
+						"type": "text",
+						"text": " Additionally, "
+					},
+					{
+						"type": "text",
+						"text": "AI agents can now deploy Workers to Cloudflare without first requiring a user to sign up or go through a browser-based OAuth flow.",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "$npx @buildinternet/releases get ... \u00b7 \u2197 \u00b7 Developer Platform Changelog \u00b7 AI agents can now deploy Workers to Cloudflare without first requiring a use...",
+								"url": "https://releases.sh/cloudflare/releases",
+								"title": "Cloudflare Release Notes & Changelog \u00b7 June 2026 \u2014 releases.sh",
+								"encrypted_index": "Eo8BCioIEBgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDP5mM4prNLy3mYjtWRoMwGfUCpnI5gzAcysbIjCnfjD044We1imO/kIPi/i1PVeUAQ3QzHXHS7fiOhzZKyFLKeEupGNsf/NKKb0ZwjQqE6NVCuw/I0IAKDPERdt39FgTIk4YBA=="
+							}
+						]
+					},
+					{
+						"type": "text",
+						"text": "\n\n\u2022 **New Application Security Detections** \u2014 "
+					},
+					{
+						"type": "text",
+						"text": "Cloudflare's Application Security added new detections for a critical Drupal PostgreSQL SQL injection (CVE-2026-9082), unsafe deserialization in the Mirasvit Cache Warmer extension (CVE-2026-45247), and a prototype pollution vector in Axios (CVE-2026-40175), plus a generic rule to block obfuscated SQL injection bypass attempts.",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "Application Security adds new detections for critical Drupal PostgreSQL SQL injection, Mirasvit Cache Warmer unsafe deserialization, and Axios prototy...",
+								"url": "https://releasebot.io/updates/cloudflare/application-security",
+								"title": "Application Security Updates by Cloudflare - June 2026 - Releasebot",
+								"encrypted_index": "EpEBCioIEBgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDH+mbIcj6unAOyW0thoMrLw7yOoRfxd2bNi7IjBx7dIe+YTaNSoP0SarEW2bXZzDwii+u+o9dXnUdrymCJ4gplwLYUwaRS76xyj3gMgqFeKTqt1Pma8vMRh9od0J08KMvb+lwxgE"
+							}
+						]
+					}
+				],
+				"model": "claude-sonnet-4-6",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 15030,
+					"output_tokens": 494
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    max_tokens: 4096,\n    messages: [\n      {\n        content:\n          'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n        role: 'user',\n      },\n    ],\n    tools: [{ max_uses: 3, name: 'web_search', type: 'web_search_20250305' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.6\",\n  \"max_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"max_uses\": 3,\n      \"name\": \"web_search\",\n      \"type\": \"web_search_20250305\"\n    }\n  ]\n}'"
 				}
 			]
 		}
@@ -559,142 +784,146 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"max_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
 				"messages": {
+					"type": "array",
 					"items": {
-						"additionalProperties": false,
+						"type": "object",
 						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"user",
+									"assistant"
+								]
+							},
 							"content": {
 								"anyOf": [
 									{
 										"type": "string"
 									},
 									{
+										"type": "array",
 										"items": {
-											"additionalProperties": {},
+											"type": "object",
 											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"text": {
+													"type": "string"
+												},
+												"source": {},
 												"cache_control": {
-													"additionalProperties": false,
+													"type": "object",
 													"properties": {
+														"type": {
+															"type": "string",
+															"const": "ephemeral"
+														},
 														"ttl": {
+															"type": "string",
 															"enum": [
 																"5m",
 																"1h"
-															],
-															"type": "string"
-														},
-														"type": {
-															"const": "ephemeral",
-															"type": "string"
+															]
 														}
 													},
 													"required": [
 														"type"
 													],
-													"type": "object"
-												},
-												"source": {},
-												"text": {
-													"type": "string"
-												},
-												"type": {
-													"type": "string"
+													"additionalProperties": false
 												}
 											},
 											"required": [
 												"type"
 											],
-											"type": "object"
-										},
-										"type": "array"
+											"additionalProperties": {}
+										}
 									}
 								]
-							},
-							"role": {
-								"enum": [
-									"user",
-									"assistant"
-								],
-								"type": "string"
 							}
 						},
 						"required": [
 							"role",
 							"content"
 						],
-						"type": "object"
-					},
-					"type": "array"
+						"additionalProperties": false
+					}
 				},
-				"metadata": {
-					"additionalProperties": {},
-					"propertyNames": {
-						"type": "string"
-					},
-					"type": "object"
-				},
-				"stream": {
-					"type": "boolean"
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
 				},
 				"system": {
 					"type": "string"
 				},
 				"temperature": {
-					"maximum": 1,
+					"type": "number",
 					"minimum": 0,
-					"type": "number"
-				},
-				"top_k": {
-					"exclusiveMinimum": 0,
-					"type": "number"
+					"maximum": 1
 				},
 				"top_p": {
-					"maximum": 1,
+					"type": "number",
 					"minimum": 0,
-					"type": "number"
+					"maximum": 1
+				},
+				"top_k": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"metadata": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string"
+					},
+					"additionalProperties": {}
 				}
 			},
 			"required": [
 				"messages",
 				"max_tokens"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string",
+					"const": "message"
+				},
+				"role": {
+					"type": "string",
+					"const": "assistant"
+				},
 				"content": {
+					"type": "array",
 					"items": {
-						"additionalProperties": {},
+						"type": "object",
 						"properties": {
-							"text": {
+							"type": {
 								"type": "string"
 							},
-							"type": {
+							"text": {
 								"type": "string"
 							}
 						},
 						"required": [
 							"type"
 						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"id": {
-					"type": "string"
+						"additionalProperties": {}
+					}
 				},
 				"model": {
-					"type": "string"
-				},
-				"role": {
-					"const": "assistant",
 					"type": "string"
 				},
 				"stop_reason": {
@@ -707,12 +936,8 @@
 						}
 					]
 				},
-				"type": {
-					"const": "message",
-					"type": "string"
-				},
 				"usage": {
-					"additionalProperties": false,
+					"type": "object",
 					"properties": {
 						"input_tokens": {
 							"type": "number"
@@ -725,7 +950,7 @@
 						"input_tokens",
 						"output_tokens"
 					],
-					"type": "object"
+					"additionalProperties": false
 				}
 			},
 			"required": [
@@ -737,7 +962,7 @@
 				"stop_reason",
 				"usage"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

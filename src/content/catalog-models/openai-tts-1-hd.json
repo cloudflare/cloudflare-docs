@@ -167,35 +167,17 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"response_format": {
-					"default": "mp3",
-					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
-					"enum": [
-						"mp3",
-						"opus",
-						"wav",
-						"aac",
-						"flac"
-					],
-					"type": "string"
-				},
-				"speed": {
-					"default": 1,
-					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
-					"maximum": 4,
-					"minimum": 0.25,
-					"type": "number"
-				},
 				"text": {
 					"description": "The text to generate audio for. Maximum length is 4096 characters.",
-					"maxLength": 4096,
-					"type": "string"
+					"type": "string",
+					"maxLength": 4096
 				},
 				"voice": {
-					"default": "alloy",
 					"description": "The voice to use when generating the audio. Defaults to alloy.",
+					"default": "alloy",
+					"type": "string",
 					"enum": [
 						"alloy",
 						"echo",
@@ -203,8 +185,26 @@
 						"onyx",
 						"nova",
 						"shimmer"
-					],
-					"type": "string"
+					]
+				},
+				"response_format": {
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
+					"default": "mp3",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"opus",
+						"wav",
+						"aac",
+						"flac"
+					]
+				},
+				"speed": {
+					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
+					"default": 1,
+					"type": "number",
+					"minimum": 0.25,
+					"maximum": 4
 				}
 			},
 			"required": [
@@ -213,11 +213,11 @@
 				"response_format",
 				"speed"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"audio": {
 					"description": "URL to the generated audio file",
@@ -227,7 +227,7 @@
 			"required": [
 				"audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

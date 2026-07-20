@@ -166,7 +166,9 @@ For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/caa-rec
 
 ---
 
-## Update an existing custom certificate
+## Update or renew an existing custom certificate
+
+To renew a custom certificate that is approaching expiry, or to replace a certificate with updated key material, follow the steps below. **This is the recommended renewal path** — it does not consume an additional certificate quota slot and avoids downtime.
 
 Before you update an existing custom certificate, you might want to consider having active [universal](/ssl/edge-certificates/universal-ssl/) or [advanced](/ssl/edge-certificates/advanced-certificate-manager/) certificates as fallback options. Go to the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page to check a list of hostnames and status of the edge certificates in your zone.
 
@@ -196,7 +198,7 @@ To update a certificate using the API, send a [`PATCH`](/api/resources/custom_ce
 
 :::note
 
-To update the **Private Key Restriction** setting of a certificate, delete and re-add the certificate.
+To update the **Private Key Restriction** setting of a certificate, you must delete and re-add the certificate — this is an exception to the recommended renewal flow above. Plan for potential downtime if no other certificate covers the same hostnames.
 
 :::
 

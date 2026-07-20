@@ -86,7 +86,7 @@ A Durable Object incurs charges only when it is **actively running in-memory**, 
 
 Durable Objects will occasionally shut down and objects are restarted, which will run your Durable Object class constructor. This can happen for various reasons, including:
 
-- New Worker [deployments](/workers/configuration/versions-and-deployments/) with code updates
+- New Worker [deployments](/workers/versions-and-deployments/) with code updates
 - Lack of requests to an object following the state transitions documented above
 - Cloudflare updates to the Workers runtime system
 - Workers runtime decisions on where to host objects

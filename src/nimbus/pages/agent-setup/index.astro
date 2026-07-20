@@ -1,0 +1,69 @@
+---
+import { Icon } from "astro-icon/components";
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
+import CopyPromptButton from "~/components/CopyPromptButton.astro";
+import { LinkButton } from "~/components/ui/link-button";
+import CatalogWithFilter from "~/components/agent-setup/CatalogWithFilter.astro";
+import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
+import AgentPrimer from "~/components/agent-setup/AgentPrimer.astro";
+import { AGENTS } from "~/components/agent-setup/agents";
+
+import "~/styles/agent-setup.css";
+
+export const prerender = true;
+
+const agents = AGENTS;
+---
+
+<SplashLayout
+	title="Agent setup"
+	description="Cloudflare provides Skills and MCP servers so your agent can seamlessly build on the Cloudflare platform. Pick an agent below to get started."
+>
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader
+				title="Agent setup"
+				tagline="Connect your AI coding agent to Cloudflare, then build and deploy straight from your editor or terminal."
+				taglineClass="max-w-xl"
+			>
+				<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+					<CopyPromptButton tooltip="Sets up your AI agent for Cloudflare" />
+
+					<LinkButton href="#pick-your-agent" variant="primary" size="lg">
+						Browse agents
+						<Icon name="ph:arrow-down" class="h-4 w-4" />
+					</LinkButton>
+				</div>
+			</PageHeader>
+
+			<section class="mt-12 pt-10" aria-label="Agent setup">
+				<div class="agent-setup-section-header" id="pick-your-agent">
+					<h2>Pick your agent</h2>
+					<p>Select an agent to get step-by-step setup instructions.</p>
+				</div>
+
+				<CatalogWithFilter agents={agents} />
+
+				<div class="agent-setup-section" style="margin-top: 5.5rem;">
+					<div class="agent-setup-section-header">
+						<h2>Compare agents</h2>
+						<p>Capabilities, pricing, and context approaches compared.</p>
+					</div>
+					<AgentComparison agents={agents} />
+				</div>
+
+				<div class="agent-setup-section" style="margin-top: 5.5rem;">
+					<div class="agent-setup-section-header">
+						<h2>Understanding agents</h2>
+						<p>Common types, concepts, and tradeoffs.</p>
+					</div>
+					<AgentPrimer />
+				</div>
+			</section>
+		</PageShell>
+	</div>
+</SplashLayout>

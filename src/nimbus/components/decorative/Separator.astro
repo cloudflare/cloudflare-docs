@@ -1,0 +1,90 @@
+---
+// Dot-grid band bracketed by dashed rules.
+import Dots from "./Dots.astro";
+
+interface Props {
+	visibleDesktop?: boolean;
+	className?: string;
+	inner?: boolean;
+}
+
+const { visibleDesktop = false, className, inner } = Astro.props;
+const DASH_ARRAY = "16,16";
+---
+
+<section
+	class={`animate-in mx-auto fade-in transition-opacity delay-100 duration-2000 ease-out relative z-0 bg-background-100 -mt-0.5 flex w-full flex-col overflow-hidden ${visibleDesktop ? "" : "md:hidden"} ${className || ""}`}
+>
+	{
+		inner && (
+			<>
+				<svg
+					class="corner-line top-line absolute top-0 left-0 hidden h-1 transition-opacity duration-2000 ease-out xl:block"
+					style={{ width: "max(0px, calc((100vw - 1480px) / 2))" }}
+					preserveAspectRatio="none"
+					aria-hidden="true"
+				>
+					<line
+						x1="0"
+						y1="0.5"
+						x2="100%"
+						y2="0.5"
+						stroke="var(--nb-border)"
+						stroke-width="1"
+						stroke-dasharray={DASH_ARRAY}
+					/>
+				</svg>
+				<svg
+					class="corner-line top-line absolute top-0 right-0 hidden h-1 transition-opacity duration-2000 ease-out xl:block"
+					style={{ width: "max(0px, calc((100vw - 1480px) / 2))" }}
+					preserveAspectRatio="none"
+					aria-hidden="true"
+				>
+					<line
+						x1="0"
+						y1="0.5"
+						x2="100%"
+						y2="0.5"
+						stroke="var(--nb-border)"
+						stroke-width="1"
+						stroke-dasharray={DASH_ARRAY}
+					/>
+				</svg>
+			</>
+		)
+	}
+	<svg
+		class={`corner-line top-line absolute top-0 left-1/2 h-1 -translate-x-1/2 transition-opacity duration-2000 ease-out ${inner ? "" : "w-[200dvw]"}`}
+		style={inner ? { width: "min(100%, 1200px)" } : undefined}
+		preserveAspectRatio="none"
+		aria-hidden="true"
+	>
+		<line
+			x1="0"
+			y1="0.5"
+			x2="100%"
+			y2="0.5"
+			stroke="var(--nb-border)"
+			stroke-width="1"
+			stroke-dasharray={DASH_ARRAY}></line>
+	</svg>
+
+	<div class="relative mb-2 h-20 w-full">
+		<Dots />
+	</div>
+
+	<svg
+		class="corner-line bottom-line absolute bottom-0 left-1/2 h-1 w-[200dvw] -translate-x-1/2 transition-opacity duration-2000 ease-out"
+		preserveAspectRatio="none"
+		aria-hidden="true"
+	>
+		<line
+			x1="0"
+			y1="0.5"
+			x2="100%"
+			y2="0.5"
+			stroke="var(--nb-border)"
+			stroke-width="1"
+			stroke-dasharray={DASH_ARRAY}></line>
+	</svg>
+</section>

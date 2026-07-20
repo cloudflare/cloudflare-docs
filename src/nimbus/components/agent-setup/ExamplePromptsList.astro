@@ -1,0 +1,15 @@
+---
+// Shared set of example prompts reused across every agent detail page.
+// The prompts are intentionally agent-agnostic — they describe what a user
+// might ask of any Cloudflare-aware coding agent, regardless of which one.
+//
+// Use from MDX:
+//   <ExamplePromptsList />
+//
+// No `slug` prop is required. When we find a genuinely agent-specific prompt
+// (something only one agent can do), we can add an override prop later.
+import ExamplePrompts from "./ExamplePrompts.astro";
+import { SHARED_PROMPTS } from "./prompts";
+---
+
+<ExamplePrompts prompts={SHARED_PROMPTS} />

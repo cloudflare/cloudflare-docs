@@ -1,0 +1,79 @@
+---
+import { z } from "astro/zod";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const query = 'Which one is cooler?'
+		const contexts = [
+			{
+				text: 'a cyberpunk lizzard'
+			},
+			{
+				text: 'a cyberpunk cat'
+			}
+		];
+
+		const response = await env.AI.run('${name}', { query, contexts });
+
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+
+`;
+
+const python = `
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+response = requests.post(
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+	  "query": "Which one is better?",
+      "contexts": [
+        {"text": "a cyberpunk lizzard"},
+		    {"text": "a cyberpunk car"},
+      ]
+    }
+)
+result = response.json()
+print(result)
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+  -d '{ "query": "Which one is better?", "contexts": [{ "text": "a cyberpunk lizzard" }, {"text": "a cyberpunk cat"}]}'
+`;
+---
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript">
+		<Code code={worker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="Python">
+		<Code code={python} lang="py" title="" />
+	</TabItem>
+	<TabItem label="curl">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>

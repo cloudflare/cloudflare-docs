@@ -173,49 +173,49 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"aspect_ratio": {
-					"default": "16:9",
-					"description": "Video aspect ratio",
-					"enum": [
-						"16:9",
-						"9:16",
-						"1:1"
-					],
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
 					"type": "string"
-				},
-				"duration": {
-					"default": "6s",
-					"description": "Video duration",
-					"enum": [
-						"4s",
-						"6s",
-						"8s"
-					],
-					"type": "string"
-				},
-				"generate_audio": {
-					"default": true,
-					"description": "Whether to generate audio with the video",
-					"type": "boolean"
 				},
 				"image_input": {
 					"description": "Base64-encoded reference image for i2v",
 					"type": "string"
 				},
-				"prompt": {
-					"description": "Text prompt describing the video to generate",
-					"type": "string"
+				"duration": {
+					"description": "Video duration",
+					"default": "6s",
+					"type": "string",
+					"enum": [
+						"4s",
+						"6s",
+						"8s"
+					]
+				},
+				"aspect_ratio": {
+					"description": "Video aspect ratio",
+					"default": "16:9",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"1:1"
+					]
 				},
 				"resolution": {
-					"default": "720p",
 					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
 					"enum": [
 						"720p",
 						"1080p"
-					],
-					"type": "string"
+					]
+				},
+				"generate_audio": {
+					"description": "Whether to generate audio with the video",
+					"default": true,
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -225,22 +225,22 @@
 				"resolution",
 				"generate_audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"video": {
 					"description": "URL to the generated video",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

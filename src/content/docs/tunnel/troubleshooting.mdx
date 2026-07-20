@@ -121,6 +121,7 @@ As a quick test, run:
 ```sh
 curl -v https://region1.v2.argotunnel.com:7844
 ```
+
 If the connection hangs, traffic is being dropped between your host and Cloudflare.
 
 To test if `cloudflared` can connect on port `7844`, run:
@@ -142,8 +143,7 @@ Replace `198.41.200.43` with the IP shown in your [error message](#dialcontext-e
 	params={{
 		logsURL: "/tunnel/monitoring/#logs",
 		protocolURL: "/tunnel/routing/#supported-protocols",
-		configFileURL:
-			"/tunnel/other-tunnel-types/local-management/configuration-file/",
+		configFileURL: "/tunnel/advanced/local-management/configuration-file/",
 		originServerNameURL: "/tunnel/configuration/#originservername",
 		caPoolURL: "/tunnel/configuration/#capool",
 		noTLSVerifyURL: "/tunnel/configuration/#notlsverify",

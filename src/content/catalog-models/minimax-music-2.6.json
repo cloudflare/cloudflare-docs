@@ -202,78 +202,78 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"bitrate": {
-					"anyOf": [
-						{
-							"const": 32000,
-							"type": "number"
-						},
-						{
-							"const": 64000,
-							"type": "number"
-						},
-						{
-							"const": 128000,
-							"type": "number"
-						},
-						{
-							"const": 256000,
-							"type": "number"
-						}
-					],
-					"description": "Audio bitrate"
-				},
-				"format": {
-					"description": "Audio format",
-					"enum": [
-						"mp3",
-						"wav"
-					],
-					"type": "string"
-				},
-				"is_instrumental": {
-					"default": false,
-					"description": "Generate instrumental music (no vocals)",
-					"type": "boolean"
+				"prompt": {
+					"description": "Description of the music style, mood, and scenario",
+					"type": "string",
+					"maxLength": 2000
 				},
 				"lyrics": {
 					"description": "Song lyrics, using \\n to separate lines",
-					"maxLength": 3500,
+					"type": "string",
 					"minLength": 1,
-					"type": "string"
-				},
-				"lyrics_optimizer": {
-					"default": false,
-					"description": "Automatically generate lyrics based on the prompt description",
-					"type": "boolean"
-				},
-				"prompt": {
-					"description": "Description of the music style, mood, and scenario",
-					"maxLength": 2000,
-					"type": "string"
+					"maxLength": 3500
 				},
 				"sample_rate": {
+					"description": "Audio sample rate",
 					"anyOf": [
 						{
-							"const": 16000,
-							"type": "number"
+							"type": "number",
+							"const": 16000
 						},
 						{
-							"const": 24000,
-							"type": "number"
+							"type": "number",
+							"const": 24000
 						},
 						{
-							"const": 32000,
-							"type": "number"
+							"type": "number",
+							"const": 32000
 						},
 						{
-							"const": 44100,
-							"type": "number"
+							"type": "number",
+							"const": 44100
 						}
-					],
-					"description": "Audio sample rate"
+					]
+				},
+				"bitrate": {
+					"description": "Audio bitrate",
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 32000
+						},
+						{
+							"type": "number",
+							"const": 64000
+						},
+						{
+							"type": "number",
+							"const": 128000
+						},
+						{
+							"type": "number",
+							"const": 256000
+						}
+					]
+				},
+				"format": {
+					"description": "Audio format",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"wav"
+					]
+				},
+				"lyrics_optimizer": {
+					"description": "Automatically generate lyrics based on the prompt description",
+					"default": false,
+					"type": "boolean"
+				},
+				"is_instrumental": {
+					"description": "Generate instrumental music (no vocals)",
+					"default": false,
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -281,22 +281,22 @@
 				"lyrics_optimizer",
 				"is_instrumental"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"audio": {
 					"description": "URL to the generated audio file",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

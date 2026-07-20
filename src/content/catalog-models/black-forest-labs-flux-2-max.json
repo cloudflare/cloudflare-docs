@@ -133,73 +133,73 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"height": {
-					"description": "Height of the generated image in pixels (minimum 64). Omit to let BFL pick.",
-					"maximum": 9007199254740991,
-					"minimum": 64,
-					"type": "integer"
-				},
-				"input_images": {
-					"description": "Up to 8 reference images for editing or multi-image composition. Each entry is an HTTPS URL or a data:image/...;base64,... URI.",
-					"items": {
-						"type": "string"
-					},
-					"maxItems": 8,
-					"type": "array"
-				},
-				"output_format": {
-					"description": "Output image format. Defaults to jpeg.",
-					"enum": [
-						"jpeg",
-						"png",
-						"webp"
-					],
-					"type": "string"
-				},
 				"prompt": {
 					"description": "Text prompt for image generation or editing.",
 					"type": "string"
 				},
-				"safety_tolerance": {
-					"description": "Tolerance for input/output moderation. 0 is the strictest, 5 the most permissive. Defaults to 2.",
-					"maximum": 5,
-					"minimum": 0,
-					"type": "integer"
-				},
 				"seed": {
 					"description": "Optional seed for reproducible generation.",
-					"maximum": 9007199254740991,
+					"type": "integer",
 					"minimum": -9007199254740991,
-					"type": "integer"
+					"maximum": 9007199254740991
 				},
 				"width": {
 					"description": "Width of the generated image in pixels (minimum 64). Omit to let BFL pick.",
-					"maximum": 9007199254740991,
+					"type": "integer",
 					"minimum": 64,
-					"type": "integer"
+					"maximum": 9007199254740991
+				},
+				"height": {
+					"description": "Height of the generated image in pixels (minimum 64). Omit to let BFL pick.",
+					"type": "integer",
+					"minimum": 64,
+					"maximum": 9007199254740991
+				},
+				"safety_tolerance": {
+					"description": "Tolerance for input/output moderation. 0 is the strictest, 5 the most permissive. Defaults to 2.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 5
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png",
+						"webp"
+					]
+				},
+				"input_images": {
+					"description": "Up to 8 reference images for editing or multi-image composition. Each entry is an HTTPS URL or a data:image/...;base64,... URI.",
+					"maxItems": 8,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"image": {
 					"description": "URL to the generated image",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

@@ -570,7 +570,7 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
 				"input": {
 					"anyOf": [
@@ -578,99 +578,99 @@
 							"type": "string"
 						},
 						{
-							"items": {},
-							"type": "array"
+							"type": "array",
+							"items": {}
 						}
 					]
 				},
 				"instructions": {
 					"type": "string"
 				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
 				"max_output_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
 				},
 				"reasoning": {
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
 						"effort": {
+							"type": "string",
 							"enum": [
 								"none",
 								"low",
 								"medium",
 								"high"
-							],
-							"type": "string"
+							]
 						}
 					},
-					"type": "object"
-				},
-				"stream": {
-					"type": "boolean"
-				},
-				"temperature": {
-					"maximum": 2,
-					"minimum": 0,
-					"type": "number"
-				},
-				"text": {
-					"additionalProperties": {},
-					"properties": {
-						"format": {}
-					},
-					"type": "object"
-				},
-				"tool_choice": {},
-				"tools": {
-					"items": {},
-					"type": "array"
-				},
-				"top_p": {
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
+					"additionalProperties": {}
 				}
 			},
 			"required": [
 				"input"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"created_at": {
-					"type": "number"
-				},
 				"id": {
 					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
 				},
 				"model": {
 					"type": "string"
 				},
-				"object": {
-					"const": "response",
-					"type": "string"
-				},
 				"output": {
-					"items": {},
-					"type": "array"
+					"type": "array",
+					"items": {}
 				},
 				"output_text": {
 					"type": "string"
 				},
 				"status": {
+					"type": "string",
 					"enum": [
 						"in_progress",
 						"completed",
 						"failed",
 						"incomplete"
-					],
-					"type": "string"
+					]
 				},
 				"usage": {
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
 						"input_tokens": {
 							"type": "number"
@@ -687,7 +687,7 @@
 						"output_tokens",
 						"total_tokens"
 					],
-					"type": "object"
+					"additionalProperties": {}
 				}
 			},
 			"required": [
@@ -697,7 +697,7 @@
 				"model",
 				"output"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		}
 	}
 }

@@ -1,0 +1,14 @@
+---
+/**
+ * Deferred — silent placeholder for components intentionally not yet ported
+ * because they depend on content/collections that haven't been migrated.
+ *
+ * Unlike `Stub.astro` (a loud yellow WIP marker), this renders nothing so
+ * migrated pages look finished. Any prose children still render. Swap the
+ * `~/components` export to the real implementation once its dependencies
+ * (e.g. the directory / learning-paths collections + reference-architecture
+ * content for ResourcesBySelector) are in place.
+ */
+---
+
+<slot />

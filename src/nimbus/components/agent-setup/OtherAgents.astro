@@ -1,0 +1,59 @@
+---
+// Lists every agent in the collection except the current one.
+// Replaces the old YAML-driven RelatedAgents, which required each agent to
+// explicitly name which others it was related to. With only 6 agents total,
+// showing "everything else" is more useful and stays correct as the list grows.
+//
+// Self-fetches from the collection so MDX callers only need to pass `currentSlug`:
+//   <OtherAgents currentSlug="claude-code" />
+import { AGENTS } from "./agents";
+
+interface Props {
+	currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+const others = AGENTS.filter((a) => a.slug !== currentSlug);
+---
+
+<div class="agent-setup-related">
+	{
+		others.map((agent) => (
+			<a
+				href={`/agent-setup/${agent.slug}/`}
+				class="agent-setup-card"
+				style="text-decoration: none;"
+			>
+				<div class="agent-setup-card-header">
+					<span
+						class="agent-setup-icon-wrap"
+						style="width: 36px; height: 36px;"
+					>
+						<img
+							src={`/icons/agents/${agent.icon}/light.svg`}
+							alt={`${agent.name} icon`}
+							width="36"
+							height="36"
+							class="agent-icon-light"
+						/>
+						<img
+							src={`/icons/agents/${agent.icon}/dark.svg`}
+							alt={`${agent.name} icon`}
+							width="36"
+							height="36"
+							class="agent-icon-dark"
+						/>
+					</span>
+					<div>
+						<div class="agent-setup-card-title">{agent.name}</div>
+						<div class="agent-setup-card-vendor">{agent.vendor}</div>
+					</div>
+				</div>
+				<div class="agent-setup-card-body">
+					<p class="agent-setup-card-description">{agent.description}</p>
+				</div>
+			</a>
+		))
+	}
+</div>

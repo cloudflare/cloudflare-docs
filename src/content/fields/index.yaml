@@ -13,9 +13,9 @@ entries:
     keywords: [request, uri, url, domain, client, visitor]
     summary: The hostname used in the full request URI.
     description: |-
-      The `http.host` field contains the `Host` header from the original request.
+      The `http.host` field contains the `Host` header from the original client request.
 
-      If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, they will not be reflected in the `http.host` field value.
+      If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, this change is not reflected in the `http.host` value seen by other rule phases (such as custom rules, cache rules, or transform rules) or [Cloudflare Workers](/workers/). All rule phases and Workers evaluate against the original, unmodified host.
     example_value: |-
       "www.example.org"
 
@@ -538,7 +538,7 @@ entries:
     keywords: [request, bots, client, visitor]
     summary: Provides the type and purpose of a verified bot.
     description: |-
-      For more details, refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#categories).
+      For more details, refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#legacy-categories).
 
   - name: cf.bot_management.score
     data_type: Number
@@ -635,7 +635,7 @@ entries:
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor, agent, web bot auth]
     plan_info_label: Enterprise add-on
-    summary: Indicates whether or not the request originated from a known [signed agent](/bots/concepts/bot/signed-agents/).
+    summary: Indicates whether or not the request originated from a known agent that self-identifies with Web Bot Auth, now classified as a [verified bot or agent](/bots/concepts/bot/verified-bots/) labeled as intermediary.
     description: |-
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 

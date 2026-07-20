@@ -144,27 +144,19 @@ class Default(WorkerEntrypoint):
 ## Publish to a Queue
 
 ```python
-from js import Object
-from pyodide.ffi import to_js as _to_js
-
 from workers import WorkerEntrypoint, Response
-
-# to_js converts between Python dictionaries and JavaScript Objects
-def to_js(obj):
-   return _to_js(obj, dict_converter=Object.fromEntries)
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        # Bindings are available on the 'env' attribute
+			  # Bindings are available on the 'env' attribute
         # https://developers.cloudflare.com/queues/
 
         # The default contentType is "json"
         # We can also pass plain text strings
         await self.env.QUEUE.send("hello", contentType="text")
         # Send a JSON payload
-        await self.env.QUEUE.send(to_js({"hello": "world"}))
+        await self.env.QUEUE.send({"hello": "world"})
 
-        # Return a response
         return Response.json({"write": "success"})
 ```
 
@@ -186,7 +178,6 @@ Refer to [Query D1 from Python Workers](/d1/examples/query-d1-from-python-worker
 
 ```python
 from workers import WorkerEntrypoint, Response, DurableObject
-from pyodide.ffi import to_js
 
 class List(DurableObject):
     async def get_messages(self):
@@ -196,7 +187,7 @@ class List(DurableObject):
     async def add_message(self, message):
         messages = await self.get_messages()
         messages.append(message)
-        await self.ctx.storage.put("messages", to_js(messages))
+        await self.ctx.storage.put("messages", messages)
         return
 
     async def say_hello(self):

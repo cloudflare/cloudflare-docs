@@ -192,9 +192,20 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image_input": {
+					"maxItems": 3,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
 				"aspect_ratio": {
+					"type": "string",
 					"enum": [
 						"1:1",
 						"3:2",
@@ -206,54 +217,43 @@
 						"9:16",
 						"16:9",
 						"21:9"
-					],
-					"type": "string"
-				},
-				"image_input": {
-					"items": {
-						"type": "string"
-					},
-					"maxItems": 3,
-					"type": "array"
-				},
-				"image_size": {
-					"enum": [
-						"1K",
-						"2K",
-						"4K"
-					],
-					"type": "string"
+					]
 				},
 				"output_format": {
+					"type": "string",
 					"enum": [
 						"jpg",
 						"png",
 						"webp"
-					],
-					"type": "string"
+					]
 				},
-				"prompt": {
-					"type": "string"
+				"image_size": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K"
+					]
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"image": {
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

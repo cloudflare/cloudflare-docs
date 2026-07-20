@@ -231,78 +231,78 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
+			"type": "object",
 			"properties": {
-				"background": {
-					"description": "Background transparency setting. Use transparent for images with no background, opaque for a solid background, or auto to let the model decide.",
-					"enum": [
-						"transparent",
-						"opaque",
-						"auto"
-					],
-					"type": "string"
-				},
-				"images": {
-					"description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
-					"items": {
-						"type": "string"
-					},
-					"maxItems": 16,
-					"type": "array"
-				},
-				"output_format": {
-					"description": "Output format for the generated image",
-					"enum": [
-						"png",
-						"webp",
-						"jpeg"
-					],
-					"type": "string"
-				},
 				"prompt": {
 					"description": "Text prompt describing the image to generate or edit",
 					"type": "string"
 				},
+				"images": {
+					"description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
+					"maxItems": 16,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
 				"quality": {
 					"description": "Quality of the generated image",
+					"type": "string",
 					"enum": [
 						"low",
 						"medium",
 						"high",
 						"auto"
-					],
-					"type": "string"
+					]
 				},
 				"size": {
 					"description": "Size of the generated image",
+					"type": "string",
 					"enum": [
 						"1024x1024",
 						"1024x1536",
 						"1536x1024",
 						"auto"
-					],
-					"type": "string"
+					]
+				},
+				"background": {
+					"description": "Background transparency setting. Use transparent for images with no background, opaque for a solid background, or auto to let the model decide.",
+					"type": "string",
+					"enum": [
+						"transparent",
+						"opaque",
+						"auto"
+					]
+				},
+				"output_format": {
+					"description": "Output format for the generated image",
+					"type": "string",
+					"enum": [
+						"png",
+						"webp",
+						"jpeg"
+					]
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": {}
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"image": {
 					"description": "URL to the generated image",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

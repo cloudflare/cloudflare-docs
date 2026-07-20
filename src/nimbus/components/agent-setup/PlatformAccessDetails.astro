@@ -1,0 +1,24 @@
+---
+// Bespoke <details> card used inside <PlatformAccess>. Unlike the site-wide
+// <Details>, this one:
+//   - Renders the header as plain text (not marked.parse → <p>), so the
+//     <summary> keeps a tight body-weight look instead of inheriting prose
+//     paragraph styling.
+//   - Uses its own class so it can coexist with the Starlight
+//     `.sl-markdown-content` prose styles WITHOUT needing `.not-content` on an
+//     ancestor. That keeps inline <code>, links, and lists inside the body
+//     correctly themed.
+interface Props {
+	header: string;
+	open?: boolean;
+}
+
+const { header, open } = Astro.props;
+---
+
+<details class="agent-platform-card" open={open}>
+	<summary class="agent-platform-card-summary">{header}</summary>
+	<div class="agent-platform-card-body">
+		<slot />
+	</div>
+</details>

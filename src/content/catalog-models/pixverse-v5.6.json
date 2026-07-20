@@ -177,11 +177,44 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string",
+					"maxLength": 2048
+				},
+				"negative_prompt": {
+					"description": "Negative text prompt",
+					"type": "string",
+					"maxLength": 2048
+				},
+				"image_input": {
+					"description": "Base64-encoded reference image for image-to-video generation (data:image/...;base64,...). The image will be uploaded to Pixverse automatically.",
+					"type": "string"
+				},
+				"duration": {
+					"description": "Video duration in seconds",
+					"default": 5,
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 5
+						},
+						{
+							"type": "number",
+							"const": 8
+						},
+						{
+							"type": "number",
+							"const": 10
+						}
+					]
+				},
 				"aspect_ratio": {
-					"default": "16:9",
 					"description": "Video aspect ratio",
+					"default": "16:9",
+					"type": "string",
 					"enum": [
 						"16:9",
 						"4:3",
@@ -191,70 +224,37 @@
 						"2:3",
 						"3:2",
 						"21:9"
-					],
-					"type": "string"
-				},
-				"duration": {
-					"anyOf": [
-						{
-							"const": 5,
-							"type": "number"
-						},
-						{
-							"const": 8,
-							"type": "number"
-						},
-						{
-							"const": 10,
-							"type": "number"
-						}
-					],
-					"default": 5,
-					"description": "Video duration in seconds"
-				},
-				"generate_audio": {
-					"default": true,
-					"description": "Whether to generate audio with the video",
-					"type": "boolean"
-				},
-				"image_input": {
-					"description": "Base64-encoded reference image for image-to-video generation (data:image/...;base64,...). The image will be uploaded to Pixverse automatically.",
-					"type": "string"
-				},
-				"motion_mode": {
-					"description": "Motion mode (fast only available when duration=5; 1080p does not support fast)",
-					"enum": [
-						"normal",
-						"fast"
-					],
-					"type": "string"
-				},
-				"negative_prompt": {
-					"description": "Negative text prompt",
-					"maxLength": 2048,
-					"type": "string"
-				},
-				"prompt": {
-					"description": "Text prompt describing the video to generate",
-					"maxLength": 2048,
-					"type": "string"
+					]
 				},
 				"quality": {
-					"default": "720p",
 					"description": "Video quality",
+					"default": "720p",
+					"type": "string",
 					"enum": [
 						"360p",
 						"540p",
 						"720p",
 						"1080p"
-					],
-					"type": "string"
+					]
 				},
 				"seed": {
 					"description": "Random seed for reproducibility",
-					"maximum": 2147483647,
+					"type": "integer",
 					"minimum": 0,
-					"type": "integer"
+					"maximum": 2147483647
+				},
+				"motion_mode": {
+					"description": "Motion mode (fast only available when duration=5; 1080p does not support fast)",
+					"type": "string",
+					"enum": [
+						"normal",
+						"fast"
+					]
+				},
+				"generate_audio": {
+					"description": "Whether to generate audio with the video",
+					"default": true,
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -264,22 +264,22 @@
 				"quality",
 				"generate_audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"video": {
 					"description": "URL to the generated video",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

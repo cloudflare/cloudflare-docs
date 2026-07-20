@@ -1,0 +1,40 @@
+---
+// Single troubleshooting accordion item for use from MDX. The solution is
+// authored as MDX children, so it can freely use `<code>`, links, lists, etc:
+//
+//   <TroubleshootingItem issue="MCP server connection fails or times out">
+//     Run `claude mcp list` to verify the server is registered. Try removing
+//     and re-adding with `claude mcp remove cloudflare` then re-add it.
+//   </TroubleshootingItem>
+
+interface Props {
+	issue: string;
+}
+
+const { issue } = Astro.props;
+---
+
+<details class="agent-setup-troubleshooting-item">
+	<summary>
+		<span class="agent-setup-troubleshooting-dot" aria-hidden="true"></span>
+		<span class="agent-setup-troubleshooting-issue-text">{issue}</span>
+		<svg
+			class="agent-setup-troubleshooting-chevron"
+			xmlns="http://www.w3.org/2000/svg"
+			width="16"
+			height="16"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			aria-hidden="true"
+		>
+			<polyline points="6 9 12 15 18 9"></polyline>
+		</svg>
+	</summary>
+	<div class="agent-setup-troubleshooting-solution">
+		<slot />
+	</div>
+</details>

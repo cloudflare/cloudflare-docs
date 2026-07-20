@@ -26,7 +26,7 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 ## Manage access to `workers.dev`
 
-When enabled, your `workers.dev` URL is available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
+When enabled, your `workers.dev` URL is available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing your `workers.dev` URL. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
 
 To limit your `workers.dev` URL to authorized emails only:
 
@@ -69,7 +69,7 @@ To disable the `workers.dev` route for a Worker, include the following in your W
 
 </WranglerConfig>
 
-When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` route does not disable Preview URLs. Learn how to [disable Preview URLs](/workers/configuration/previews/#disabling-preview-urls).
+When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Preview URLs default to matching your `workers_dev` setting unless explicitly configured. If you explicitly enabled Preview URLs, [disable them separately](/workers/versions-and-deployments/preview-urls/#toggle-preview-urls-enable-or-disable).
 
 If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your [Wrangler configuration file](/workers/wrangler/configuration/), the value of `workers_dev` will be inferred as `false` on the next deploy.
 

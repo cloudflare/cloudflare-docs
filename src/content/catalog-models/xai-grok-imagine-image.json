@@ -131,9 +131,18 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"n": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 10
+				},
 				"aspect_ratio": {
+					"type": "string",
 					"enum": [
 						"1:1",
 						"3:4",
@@ -149,45 +158,69 @@
 						"1:2",
 						"2:1",
 						"auto"
-					],
+					]
+				},
+				"quality": {
+					"type": "string",
+					"enum": [
+						"low",
+						"medium",
+						"high"
+					]
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"1k",
+						"2k"
+					]
+				},
+				"response_format": {
+					"type": "string",
+					"enum": [
+						"url",
+						"b64_json"
+					]
+				},
+				"user": {
 					"type": "string"
 				},
 				"image": {
-					"additionalProperties": false,
+					"type": "object",
 					"properties": {
-						"type": {
+						"url": {
 							"type": "string"
 						},
-						"url": {
+						"type": {
 							"type": "string"
 						}
 					},
 					"required": [
 						"url"
 					],
-					"type": "object"
+					"additionalProperties": false
 				},
 				"images": {
+					"maxItems": 10,
+					"type": "array",
 					"items": {
-						"additionalProperties": false,
+						"type": "object",
 						"properties": {
-							"type": {
+							"url": {
 								"type": "string"
 							},
-							"url": {
+							"type": {
 								"type": "string"
 							}
 						},
 						"required": [
 							"url"
 						],
-						"type": "object"
-					},
-					"maxItems": 10,
-					"type": "array"
+						"additionalProperties": false
+					}
 				},
 				"mask": {
-					"additionalProperties": false,
+					"type": "object",
 					"properties": {
 						"url": {
 							"type": "string"
@@ -196,50 +229,17 @@
 					"required": [
 						"url"
 					],
-					"type": "object"
-				},
-				"n": {
-					"maximum": 10,
-					"minimum": 1,
-					"type": "integer"
-				},
-				"prompt": {
-					"type": "string"
-				},
-				"quality": {
-					"enum": [
-						"low",
-						"medium",
-						"high"
-					],
-					"type": "string"
-				},
-				"resolution": {
-					"enum": [
-						"1k",
-						"2k"
-					],
-					"type": "string"
-				},
-				"response_format": {
-					"enum": [
-						"url",
-						"b64_json"
-					],
-					"type": "string"
-				},
-				"user": {
-					"type": "string"
+					"additionalProperties": false
 				}
 			},
 			"required": [
 				"prompt"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"image": {
 					"type": "string"
@@ -248,7 +248,7 @@
 			"required": [
 				"image"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

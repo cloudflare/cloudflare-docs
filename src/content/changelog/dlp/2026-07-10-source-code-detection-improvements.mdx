@@ -1,0 +1,16 @@
+---
+title: "Source code detection improvements"
+description: "Data Loss Prevention (DLP) source code detection now targets whole file uploads and downloads with improved accuracy and configurable confidence levels."
+date: "2026-07-10"
+products: [dlp]
+---
+
+Data Loss Prevention (DLP) source code detection now focuses on identifying whole source code file uploads and downloads. Previously, source code detection performed partial scans resulting in a higher rate of false positives. Since only whole source code files are evaluated, code embedded in other content — such as chat messages, documentation, or code samples — is no longer flagged as source code, removing a common source of false positives.
+
+Source code detection requires a minimum of 500 characters to evaluate a file. Files below this threshold are not flagged to reduce noise. This threshold filters out small fragments that lack enough context for reliable classification.
+
+Enable and set [confidence levels](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#confidence-thresholds) to tune match sensitivity. A higher confidence level reduces false positives by requiring stronger signals that the content is truly source code. A lower confidence level catches more files at the cost of additional noise.
+
+Source code detection applies to standalone source code files in [Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/). It does not detect source code embedded within other file types or payloads, such as `.docx` files or chat messages.
+
+For more information, refer to [Source Code predefined profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#source-code).

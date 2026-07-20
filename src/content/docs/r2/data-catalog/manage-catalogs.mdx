@@ -253,12 +253,25 @@ npx wrangler r2 bucket catalog snapshot-expiration disable <BUCKET_NAME> <NAMESP
 
 To connect your Iceberg engine to R2 Data Catalog, you must provide a Cloudflare API token with **both** R2 Data Catalog permissions and R2 storage permissions. Iceberg engines interact with R2 Data Catalog to perform table operations. The catalog also provides engines with SigV4 credentials, which are required to access the underlying data files stored in R2.
 
+R2 Data Catalog supports both read-only and read-write tokens:
+
+- **Read-only** operations (for example, listing namespaces, loading tables, and querying data) require a token with read access to R2 Data Catalog and R2 storage.
+- **Write** operations (for example, creating or dropping tables and committing transactions) require a token with read and write access to R2 Data Catalog and R2 storage.
+
+Use a read-only token for query engines and clients that only read data (such as R2 SQL, DuckDB, or PyIceberg readers), and a read-write token for engines and pipelines that create tables or write data.
+
+:::note[Vended credentials inherit your token's R2 storage permissions]
+
+When an engine loads credentials from the catalog, R2 Data Catalog returns SigV4 credentials that inherit the R2 storage permissions of the API token used to authenticate. A token with read-only R2 Data Catalog access but read-write R2 storage access can still be used to write objects (including catalog metadata files) to the underlying bucket. To ensure read-only access to your data, scope the R2 storage permission to read-only as well.
+
+:::
+
 ### Create API token in the dashboard
 
-Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** permissions. These permissions include both:
+Create an [R2 API token](/r2/api/tokens/#permissions) with the permissions matching your workload:
 
-- Access to R2 Data Catalog (read/write)
-- Access to R2 storage (read/write)
+- **Admin Read & Write** — for engines and pipelines that read and write data. Includes read and write access to both R2 Data Catalog and R2 storage.
+- **Admin Read only** — for query engines and clients that only read data. Includes read access to both R2 Data Catalog and R2 storage.
 
 Providing the resulting token value to your Iceberg engine gives it the ability to manage catalog metadata and handle data operations (reads or writes to R2).
 
@@ -266,7 +279,9 @@ Providing the resulting token value to your Iceberg engine gives it the ability 
 
 To create an API token programmatically for use with R2 Data Catalog, you need to specify both R2 Data Catalog and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
 
-#### Example Access Policy
+#### Example read-write Access Policy
+
+Use read and write permission groups for engines and pipelines that create tables or write data:
 
 ```json
 [
@@ -285,6 +300,33 @@ To create an API token programmatically for use with R2 Data Catalog, you need t
 			{
 				"id": "2efd5506f9c8494dacb1fa10a3e7d5b6",
 				"name": "Workers R2 Storage Bucket Item Write"
+			}
+		]
+	}
+]
+```
+
+#### Example read-only Access Policy
+
+Use read permission groups for query engines and clients that only read data:
+
+```json
+[
+	{
+		"id": "f267e341f3dd4697bd3b9f71dd96247f",
+		"effect": "allow",
+		"resources": {
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_default_my-bucket": "*",
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_eu_my-eu-bucket": "*"
+		},
+		"permission_groups": [
+			{
+				"id": "45db74139a62490b9b60eb7c4f34994b",
+				"name": "Workers R2 Data Catalog Read"
+			},
+			{
+				"id": "6a018a9f2fc74eb6b293b0c548f38b39",
+				"name": "Workers R2 Storage Bucket Item Read"
 			}
 		]
 	}

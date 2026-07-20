@@ -212,66 +212,17 @@
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
-				"apply_text_normalization": {
-					"description": "When enabled, text normalization expands numbers, dates, times, and abbreviations before converting to speech. Turning this off may reduce latency.",
-					"type": "boolean"
-				},
-				"bit_rate": {
-					"description": "Bits per second of the audio. Only for compressed audio formats (mp3, opus). The default is 128,000.",
-					"maximum": 9007199254740991,
-					"minimum": -9007199254740991,
-					"type": "integer"
-				},
-				"output_format": {
-					"default": "mp3",
-					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
-					"enum": [
-						"mp3",
-						"opus",
-						"wav",
-						"flac"
-					],
-					"type": "string"
-				},
-				"sample_rate": {
-					"description": "The synthesis sample rate in hertz. Accepts: 8000, 16000, 22050, 24000, 32000, 44100, 48000. The default is 48,000.",
-					"maximum": 9007199254740991,
-					"minimum": -9007199254740991,
-					"type": "integer"
-				},
-				"speaking_rate": {
-					"description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0. We recommend using values above 0.8 to ensure high quality.",
-					"maximum": 1.5,
-					"minimum": 0.5,
-					"type": "number"
-				},
-				"temperature": {
-					"default": 1,
-					"description": "Determines the degree of randomness when sampling audio tokens. Defaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values = more expressive, lower values = more deterministic.",
-					"maximum": 2,
-					"minimum": 0.01,
-					"type": "number"
-				},
 				"text": {
 					"description": "The text to be synthesized into speech. Maximum input of 2,000 characters.",
-					"maxLength": 2000,
-					"type": "string"
-				},
-				"timestamp_type": {
-					"default": "none",
-					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
-					"enum": [
-						"none",
-						"word",
-						"character"
-					],
-					"type": "string"
+					"type": "string",
+					"maxLength": 2000
 				},
 				"voice_id": {
-					"default": "Dennis",
 					"description": "The ID of the voice to use for synthesizing speech. Defaults to Dennis.",
+					"default": "Dennis",
+					"type": "string",
 					"enum": [
 						"Loretta",
 						"Darlene",
@@ -368,8 +319,57 @@
 						"Felix",
 						"Eleanor",
 						"Sophie"
-					],
-					"type": "string"
+					]
+				},
+				"output_format": {
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
+					"default": "mp3",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"opus",
+						"wav",
+						"flac"
+					]
+				},
+				"bit_rate": {
+					"description": "Bits per second of the audio. Only for compressed audio formats (mp3, opus). The default is 128,000.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"sample_rate": {
+					"description": "The synthesis sample rate in hertz. Accepts: 8000, 16000, 22050, 24000, 32000, 44100, 48000. The default is 48,000.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"speaking_rate": {
+					"description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0. We recommend using values above 0.8 to ensure high quality.",
+					"type": "number",
+					"minimum": 0.5,
+					"maximum": 1.5
+				},
+				"temperature": {
+					"description": "Determines the degree of randomness when sampling audio tokens. Defaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values = more expressive, lower values = more deterministic.",
+					"default": 1,
+					"type": "number",
+					"minimum": 0.01,
+					"maximum": 2
+				},
+				"timestamp_type": {
+					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
+					"default": "none",
+					"type": "string",
+					"enum": [
+						"none",
+						"word",
+						"character"
+					]
+				},
+				"apply_text_normalization": {
+					"description": "When enabled, text normalization expands numbers, dates, times, and abbreviations before converting to speech. Turning this off may reduce latency.",
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -379,11 +379,11 @@
 				"temperature",
 				"timestamp_type"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"audio": {
 					"description": "URL to the generated audio file",
@@ -393,7 +393,7 @@
 			"required": [
 				"audio"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

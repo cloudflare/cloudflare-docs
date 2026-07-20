@@ -34,12 +34,12 @@ End users can connect to private hostnames using the following traffic on-ramps:
 
 ### Private network connectivity
 
-Private hostname routing only works for applications connected with `cloudflared`. Other traffic off-ramps require IP-based routes.
+Private hostname routing works with the off-ramps below. Other traffic off-ramps require IP-based routes.
 
 | Connector                                                                                  | Compatibility | Minimum version |
 | ------------------------------------------------------------------------------------------ | ------------- | -- |
 | [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)                        | ✅            | 2025.7.0 |
-| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) | ❌             | |
+| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes) | ✅             | 2026.6.822.0 (Linux) |
 | [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
 
 ## Connect a private hostname
@@ -71,8 +71,7 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 
 <Details header="Cloudflare Mesh">
 
-1. In your [mesh node device profile](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/), ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above route through the tunnel.
-2. Depending on where you installed the mesh node, you may also need to route those destination IPs through the node and point your DNS resolver to Cloudflare Gateway. Refer to [Routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/).
+To attract a hostname's traffic to a Mesh node instead of a `cloudflared` tunnel, add a [hostname route](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes) to the node. The <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above must route through Cloudflare on both the Mesh node and client device profiles, and — for a private hostname — the node must be able to resolve the hostname (via its local hosts file or a Gateway resolver policy). Refer to [Hostname routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes).
 
 </Details>
 

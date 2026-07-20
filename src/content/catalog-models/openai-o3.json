@@ -10523,6 +10523,390 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/o3\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting the model use OpenAI's built-in web search tool to answer with current information",
+			"input": {
+				"input": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+				"max_output_tokens": 4096,
+				"tools": [
+					{
+						"type": "web_search_preview"
+					}
+				]
+			},
+			"output": {
+				"text": "\u2022 June 22, 2026 \u2013 A major Cloudflare network disruption rippled across the internet for several hours, knocking sites and apps such as X, Reddit, Zoom and Microsoft Teams offline worldwide.  Downdetector showed tens of thousands of outage reports before Cloudflare identified the root cause and began rolling out a fix. ([harianbasis.co](https://www.harianbasis.co/en/cloudflare-network-disruption-internet-outage))\n\n\u2022 June 20, 2026 \u2013 Cloudflare confirmed it has completed the acquisition of VoidZero, the open-source team behind the Vite JavaScript build tool.  The deal folds Vite, Vitest and other high-performance developer utilities into Cloudflare\u2019s Workers platform and edge network, with Cloudflare pledging to keep the tooling open-source and seeding a $1 million Vite ecosystem fund. ([harianbasis.co](https://www.harianbasis.co/en/cloudflare-acquires-voidzero-enhance-developer-tools))\n\n\u2022 June 18, 2026 \u2013 The company launched a \u201cCloudflare One Design Partner\u201d designation and an AI-powered deployment toolkit to help channel partners speed up Secure Access Service Edge (SASE) and Zero-Trust migrations.  Initial partners include Arctiq, Consortium, CMT, Presidio and The Missing Link, signalling deeper co-investment in partner-led security projects. ([itpro.com](https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption))"
+			},
+			"raw_response": {
+				"id": "resp_0e3c03908b88cc21016a399b47cc30819b8238762306128bad",
+				"object": "response",
+				"created_at": 1782160199,
+				"model": "o3-2025-04-16",
+				"output": [
+					{
+						"id": "rs_0e3c03908b88cc21016a399b488764819b816bc9d4cf79f6f1",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b48e084819b82268938a45565d2",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare news June 2026",
+								"Cloudflare announces June 2026",
+								"Cloudflare outage June 2026"
+							],
+							"query": "Cloudflare news June 2026"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b4a2bc8819bbad43fa6282be05d",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b4b2adc819b914b6d039f72e7e4",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare outage June 20 2026"
+							],
+							"query": "Cloudflare outage June 20 2026"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b4c4bac819bb1b53eb7cccd99c2",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b4c7170819bb3d0139a67899225",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare investor day June 2026 New York Stock Exchange",
+								"Cloudflare AI security partner June 17 2026",
+								"Cloudflare threat intelligence report 2026"
+							],
+							"query": "Cloudflare investor day June 2026 New York Stock Exchange"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b4e29ac819baa943cc991c126e4",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b4e9464819b8eed3b9bb4b7ccb9",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"June 21 2026 Cloudflare",
+								"June 22 2026 Cloudflare network disruption"
+							],
+							"query": "June 21 2026 Cloudflare"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b505be0819bb23d59a0a7d12a01",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b5066b0819baa7bea052770d18f",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.harianbasis.co/en/cloudflare-network-disruption-internet-outage"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b512518819b8541cae697a2aae8",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b517544819b9aec941bfbb141de",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare outage June 22 2026 Reddit down"
+							],
+							"query": "Cloudflare outage June 22 2026 Reddit down"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b53d520819b935ec374a95af017",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b5406fc819ba5032e5b6d5d5eb2",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://brandergroup.net/2026/06/cloudflares-ipv6-route-leak-exposed-routing-gaps/"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b54ffcc819ba4768f93b1a56964",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b5547b4819b9be06625da300d90",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b56169c819babddc29f78583f91",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b562c1c819b9149894d84b930c8",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.channele2e.com/brief/cloudflare-adds-design-partner-designation-for-sase-and-ai-security"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b56efa8819bb02217b18a3e8138",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b574c8c819ba0deefda3eaf09b8",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare stock June 19 2026 restructuring charge"
+							],
+							"query": "Cloudflare stock June 19 2026 restructuring charge"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b5a8ffc819b8543d55709b897cb",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b5ac598819bb6c2c56a0a709731",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.investing.com/news/insider-trading-news/cloudflare-president-zatlyn-sells-175m-in-company-stock-93CH-4751078"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b5b9d6c819bb763557fd2291d72",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b5bb3f0819b96bd37a897758396",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "find_in_page",
+							"pattern": "sold a total",
+							"url": "https://www.investing.com/news/insider-trading-news/cloudflare-president-zatlyn-sells-175m-in-company-stock-93CH-4751078"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b5cc124819ba8a75c28875a8710",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b5dd75c819ba8eb3635a87e461c",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare acquires June 2026"
+							],
+							"query": "Cloudflare acquires June 2026"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b60d610819b9f002ec12a155d11",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "ws_0e3c03908b88cc21016a399b61ea40819ba99cc8d1e20cf113",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.harianbasis.co/en/cloudflare-acquires-voidzero-enhance-developer-tools"
+						}
+					},
+					{
+						"id": "rs_0e3c03908b88cc21016a399b646190819bb4cd09ac04932b9e",
+						"type": "reasoning",
+						"content": [],
+						"summary": []
+					},
+					{
+						"id": "msg_0e3c03908b88cc21016a399b6820bc819bb3680bc388bee072",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"end_index": 415,
+										"start_index": 320,
+										"title": "Cloudflare Network Disruption Triggers Widespread Internet Outages",
+										"url": "https://www.harianbasis.co/en/cloudflare-network-disruption-internet-outage"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 896,
+										"start_index": 794,
+										"title": "Cloudflare Acquires VoidZero to Enhance Global Edge Network and Developer Tools",
+										"url": "https://www.harianbasis.co/en/cloudflare-acquires-voidzero-enhance-developer-tools"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1409,
+										"start_index": 1263,
+										"title": "Cloudflare launches new partner initiative to support AI and SASE adoption | IT Pro",
+										"url": "https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption"
+									}
+								],
+								"logprobs": [],
+								"text": "\u2022 June 22, 2026 \u2013 A major Cloudflare network disruption rippled across the internet for several hours, knocking sites and apps such as X, Reddit, Zoom and Microsoft Teams offline worldwide.  Downdetector showed tens of thousands of outage reports before Cloudflare identified the root cause and began rolling out a fix. ([harianbasis.co](https://www.harianbasis.co/en/cloudflare-network-disruption-internet-outage))\n\n\u2022 June 20, 2026 \u2013 Cloudflare confirmed it has completed the acquisition of VoidZero, the open-source team behind the Vite JavaScript build tool.  The deal folds Vite, Vitest and other high-performance developer utilities into Cloudflare\u2019s Workers platform and edge network, with Cloudflare pledging to keep the tooling open-source and seeding a $1 million Vite ecosystem fund. ([harianbasis.co](https://www.harianbasis.co/en/cloudflare-acquires-voidzero-enhance-developer-tools))\n\n\u2022 June 18, 2026 \u2013 The company launched a \u201cCloudflare One Design Partner\u201d designation and an AI-powered deployment toolkit to help channel partners speed up Secure Access Service Edge (SASE) and Zero-Trust migrations.  Initial partners include Arctiq, Consortium, CMT, Presidio and The Missing Link, signalling deeper co-investment in partner-led security projects. ([itpro.com](https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption))"
+							}
+						],
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 34032,
+					"output_tokens": 2062,
+					"total_tokens": 36094,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1280
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1782160233,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 4096,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"context": "current_turn",
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [
+					{
+						"type": "web_search_preview",
+						"search_content_types": [
+							"text"
+						],
+						"search_context_size": "medium",
+						"user_location": {
+							"type": "approximate",
+							"city": null,
+							"country": "US",
+							"region": null,
+							"timezone": null
+						}
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/o3',\n  {\n    input: 'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n    max_output_tokens: 4096,\n    tools: [{ type: 'web_search_preview' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/o3\",\n  \"input\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n  \"max_output_tokens\": 4096,\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -10548,7 +10932,7 @@
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"oneOf": [
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
 						"input": {
 							"anyOf": [
@@ -10556,114 +10940,83 @@
 									"type": "string"
 								},
 								{
-									"items": {},
-									"type": "array"
+									"type": "array",
+									"items": {}
 								}
 							]
 						},
 						"instructions": {
 							"type": "string"
 						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
 						"max_output_tokens": {
-							"exclusiveMinimum": 0,
-							"type": "number"
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
 						},
 						"reasoning": {
-							"additionalProperties": {},
+							"type": "object",
 							"properties": {
 								"effort": {
+									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
 										"high"
-									],
-									"type": "string"
+									]
 								}
 							},
-							"type": "object"
-						},
-						"stream": {
-							"type": "boolean"
-						},
-						"temperature": {
-							"maximum": 2,
-							"minimum": 0,
-							"type": "number"
-						},
-						"text": {
-							"additionalProperties": {},
-							"properties": {
-								"format": {}
-							},
-							"type": "object"
-						},
-						"tool_choice": {},
-						"tools": {
-							"items": {},
-							"type": "array"
-						},
-						"top_p": {
-							"maximum": 1,
-							"minimum": 0,
-							"type": "number"
+							"additionalProperties": {}
 						}
 					},
 					"required": [
 						"input"
 					],
-					"title": "Responses",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Responses"
 				},
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
-						"audio": {
-							"additionalProperties": false,
-							"properties": {
-								"format": {
-									"enum": [
-										"wav",
-										"mp3",
-										"flac",
-										"opus",
-										"pcm16"
-									],
-									"type": "string"
-								},
-								"voice": {
-									"enum": [
-										"alloy",
-										"ash",
-										"ballad",
-										"coral",
-										"echo",
-										"sage",
-										"shimmer",
-										"verse"
-									],
-									"type": "string"
-								}
-							},
-							"type": "object"
-						},
-						"frequency_penalty": {
-							"maximum": 2,
-							"minimum": -2,
-							"type": "number"
-						},
-						"max_completion_tokens": {
-							"exclusiveMinimum": 0,
-							"type": "number"
-						},
-						"max_tokens": {
-							"exclusiveMinimum": 0,
-							"type": "number"
-						},
 						"messages": {
+							"type": "array",
 							"items": {
-								"additionalProperties": {},
+								"type": "object",
 								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
 									"content": {
 										"anyOf": [
 											{
@@ -10673,79 +11026,110 @@
 												"type": "null"
 											},
 											{
-												"items": {},
-												"type": "array"
+												"type": "array",
+												"items": {}
 											}
 										]
-									},
-									"role": {
-										"enum": [
-											"system",
-											"developer",
-											"user",
-											"assistant",
-											"tool"
-										],
-										"type": "string"
 									}
 								},
 								"required": [
 									"role",
 									"content"
 								],
-								"type": "object"
-							},
-							"type": "array"
+								"additionalProperties": {}
+							}
 						},
-						"modalities": {
-							"items": {
-								"enum": [
-									"text",
-									"audio"
-								],
-								"type": "string"
-							},
-							"type": "array"
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
 						},
 						"presence_penalty": {
-							"maximum": 2,
+							"type": "number",
 							"minimum": -2,
-							"type": "number"
+							"maximum": 2
 						},
-						"response_format": {},
 						"stream": {
 							"type": "boolean"
 						},
 						"stream_options": {
-							"additionalProperties": false,
+							"type": "object",
 							"properties": {
 								"include_usage": {
 									"type": "boolean"
 								}
 							},
-							"type": "object"
+							"additionalProperties": false
 						},
-						"temperature": {
-							"maximum": 2,
-							"minimum": 0,
-							"type": "number"
+						"tools": {
+							"type": "array",
+							"items": {}
 						},
 						"tool_choice": {},
-						"tools": {
-							"items": {},
-							"type": "array"
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
 						},
-						"top_p": {
-							"maximum": 1,
-							"minimum": 0,
-							"type": "number"
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
 						}
 					},
 					"required": [
 						"messages"
 					],
-					"title": "Chat Completions",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Chat Completions"
 				}
 			]
 		},
@@ -10753,39 +11137,39 @@
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"oneOf": [
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
-						"created_at": {
-							"type": "number"
-						},
 						"id": {
 							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
 						},
 						"model": {
 							"type": "string"
 						},
-						"object": {
-							"const": "response",
-							"type": "string"
-						},
 						"output": {
-							"items": {},
-							"type": "array"
+							"type": "array",
+							"items": {}
 						},
 						"output_text": {
 							"type": "string"
 						},
 						"status": {
+							"type": "string",
 							"enum": [
 								"in_progress",
 								"completed",
 								"failed",
 								"incomplete"
-							],
-							"type": "string"
+							]
 						},
 						"usage": {
-							"additionalProperties": {},
+							"type": "object",
 							"properties": {
 								"input_tokens": {
 									"type": "number"
@@ -10802,7 +11186,7 @@
 								"output_tokens",
 								"total_tokens"
 							],
-							"type": "object"
+							"additionalProperties": {}
 						}
 					},
 					"required": [
@@ -10812,49 +11196,37 @@
 						"model",
 						"output"
 					],
-					"title": "Responses",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Responses"
 				},
 				{
-					"additionalProperties": {},
+					"type": "object",
 					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
 						"choices": {
+							"type": "array",
 							"items": {
-								"additionalProperties": {},
+								"type": "object",
 								"properties": {
-									"finish_reason": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
-										]
-									},
 									"index": {
 										"type": "number"
 									},
 									"message": {
-										"additionalProperties": {},
+										"type": "object",
 										"properties": {
-											"audio": {
-												"additionalProperties": {},
-												"properties": {
-													"data": {
-														"type": "string"
-													},
-													"expires_at": {
-														"type": "number"
-													},
-													"id": {
-														"type": "string"
-													},
-													"transcript": {
-														"type": "string"
-													}
-												},
-												"type": "object"
+											"role": {
+												"type": "string"
 											},
 											"content": {
 												"anyOf": [
@@ -10866,25 +11238,50 @@
 													}
 												]
 											},
-											"role": {
-												"type": "string"
-											},
 											"tool_calls": {
 												"anyOf": [
 													{
-														"items": {},
-														"type": "array"
+														"type": "array",
+														"items": {}
 													},
 													{
 														"type": "null"
 													}
 												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
 											}
 										},
 										"required": [
 											"role"
 										],
-										"type": "object"
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
 									}
 								},
 								"required": [
@@ -10892,29 +11289,16 @@
 									"message",
 									"finish_reason"
 								],
-								"type": "object"
-							},
-							"type": "array"
-						},
-						"created": {
-							"type": "number"
-						},
-						"id": {
-							"type": "string"
-						},
-						"model": {
-							"type": "string"
-						},
-						"object": {
-							"type": "string"
+								"additionalProperties": {}
+							}
 						},
 						"usage": {
-							"additionalProperties": {},
+							"type": "object",
 							"properties": {
-								"completion_tokens": {
+								"prompt_tokens": {
 									"type": "number"
 								},
-								"prompt_tokens": {
+								"completion_tokens": {
 									"type": "number"
 								},
 								"total_tokens": {
@@ -10926,7 +11310,7 @@
 								"completion_tokens",
 								"total_tokens"
 							],
-							"type": "object"
+							"additionalProperties": {}
 						}
 					},
 					"required": [
@@ -10936,8 +11320,8 @@
 						"model",
 						"choices"
 					],
-					"title": "Chat Completions",
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Chat Completions"
 				}
 			]
 		}

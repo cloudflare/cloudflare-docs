@@ -563,6 +563,20 @@
 				}
 			}
 		},
+		"vary": {
+			"title": "Vary",
+			"link": "/cache/concepts/vary/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				}
+			}
+		},
 		"vary_for_images": {
 			"title": "Vary for images",
 			"link": "/cache/advanced-configuration/vary-for-images/",

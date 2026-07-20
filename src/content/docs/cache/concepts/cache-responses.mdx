@@ -56,7 +56,7 @@ The origin web server instructed Cloudflare to bypass cache via a `Cache-Control
 
 The origin confirmed the cached resource was unchanged via a conditional request (`If-Modified-Since` or `If-None-Match`), and the response is served from Cloudflare's cache. This status reflects the synchronous validation path — the request waits for the origin to respond before being served.
 
-With [asynchronous `stale-while-revalidate`](/cache/concepts/revalidation/#asynchronous-revalidation), most revalidations now return `UPDATING` or `HIT` instead. `REVALIDATED` is seen in the following situations: `stale-while-revalidate` is not set; directives like `must-revalidate` or `no-cache` (with [Origin Cache Control](/cache/concepts/cache-control/) enabled) prevent stale content from being served; or the zone is an Enterprise zone that has not yet been migrated (refer to [Synchronous revalidation](/cache/concepts/revalidation/#synchronous-revalidation-legacy)).
+With [asynchronous `stale-while-revalidate`](/cache/concepts/revalidation/#asynchronous-revalidation), most revalidations now return `UPDATING` or `HIT` instead. `REVALIDATED` is seen in the following situations: `stale-while-revalidate` is not set; or directives like `must-revalidate` or `no-cache` (with [Origin Cache Control](/cache/concepts/cache-control/) enabled) prevent stale content from being served.
 
 ## UPDATING
 
