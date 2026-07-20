@@ -1,11 +1,13 @@
 ---
-// CF source: src/components/WARPRelease.astro (verbatim).
+// CF source: src/components/WARPRelease.astro. Select + Download restyled for nimbus.
 import Details from "./Details.astro";
 import { marked } from "marked";
 import { z } from "astro/zod";
 import prettyBytes from "pretty-bytes";
 import { warpReleasesSchema } from "~/schemas";
 import platforms from "~/util/warp-platforms.json";
+import { Icon } from "astro-icon/components";
+import { LinkButton } from "@/components/ui/link-button";
 
 type Props = z.infer<typeof props>;
 
@@ -60,32 +62,43 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 				}
 			</div>
 		</p>
-		<p>
-			<span>
-				{
-					sortedPlatforms.length > 0 ? (
-						<>
-							<select>
+		<div class="my-3 flex flex-wrap items-center gap-3">
+			{
+				sortedPlatforms.length > 0 ? (
+					<>
+						<div class="relative inline-flex">
+							<select
+								aria-label="Select Linux distribution"
+								class="border-border bg-background text-foreground hover:border-foreground/20 focus-visible:ring-primary/50 h-9 appearance-none rounded-md border pr-9 pl-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
+							>
 								{sortedPlatforms.map(([platform]) => (
 									<option value={platform}>
 										{getPrettyLinuxName(platform)}
 									</option>
 								))}
 							</select>
-							<a
-								class="inline-block"
-								data-linux-download
-								href={`https://downloads.cloudflareclient.com/v1/download/${sortedPlatforms[0][0]}/version/${release.version}`}
-							>
-								Download
-							</a>
-						</>
-					) : (
-						<a href={release.packageURL}>Download</a>
-					)
-				}
-			</span>
-		</p>
+							<Icon
+								name="ph:caret-down"
+								aria-hidden="true"
+								class="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2"
+							/>
+						</div>
+						<LinkButton
+							variant="primary"
+							size="base"
+							data-linux-download
+							href={`https://downloads.cloudflareclient.com/v1/download/${sortedPlatforms[0][0]}/version/${release.version}`}
+						>
+							Download
+						</LinkButton>
+					</>
+				) : (
+					<LinkButton variant="primary" size="base" href={release.packageURL}>
+						Download
+					</LinkButton>
+				)
+			}
+		</div>
 		<p>
 			<span>
 				<h4>Release notes</h4>

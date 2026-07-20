@@ -2,7 +2,6 @@
 import DashedLine from "@/components/decorative/DashedLine.astro";
 import Separator from "@/components/decorative/Separator.astro";
 import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
-import { FooterPrivacyChoices } from "@/components/FooterPrivacyChoices";
 import OneTrust from "~/components/OneTrust.astro";
 import {
 	DASHBOARD_LOGIN_URL,
@@ -17,14 +16,12 @@ import {
 interface Props {
 	class?: string;
 	footer?: FooterConfig;
-	privacyChoicesLabel?: string;
 	stackedColumnPairs?: StackedColumnPair[];
 }
 
 const {
 	class: className,
 	footer = defaultFooterConfig,
-	privacyChoicesLabel = "Your privacy choices",
 	stackedColumnPairs = defaultStackedColumnPairs,
 } = Astro.props;
 
@@ -96,9 +93,9 @@ const legalText = legalLinks
 	})
 	.join(" ");
 
-// Gate the OneTrust SDK loader to production. It injects `window.OneTrust`,
-// which `FooterPrivacyChoices` toggles; rendered hidden so OneTrust's own
-// button is suppressed in favour of ours.
+// Gate the OneTrust SDK loader to production. It injects `window.OneTrust`
+// along with OneTrust's own consent button, which we render inline so its
+// label and behaviour stay geo-aware and managed by the SDK.
 let isProduction = false;
 if (
 	import.meta.env.CF_PAGES_BRANCH === "production" ||
@@ -147,7 +144,7 @@ const mobileLinkClass =
 									{(section.links ?? []).map((item) => (
 										<a
 											href={item.href}
-											class="text-foreground-200 hover:text-tertiary pointer-events-auto py-1 leading-none transition-colors duration-200 ease-out lg:py-2"
+											class="text-foreground-200 hover:text-tertiary pointer-events-auto py-1 text-[15px] leading-snug transition-colors duration-200 ease-out lg:py-1.5"
 										>
 											{item.text}
 										</a>
@@ -252,24 +249,19 @@ const mobileLinkClass =
 					>{copyrightText}</span
 				>
 				<div
-					class="text-tertiary flex flex-col flex-wrap items-center justify-center gap-y-2 text-center text-[13px] leading-tight sm:justify-end sm:text-right md:flex-row lg:text-[14px]"
+					class="text-tertiary mr-4 flex flex-col flex-wrap items-center justify-center gap-y-2 text-center text-[13px] leading-tight sm:justify-end sm:text-right md:flex-row lg:text-[14px]"
 				>
-					{
-						isProduction && (
-							<div class="hidden">
-								<OneTrust />
-							</div>
-						)
-					}
 					<div class="max-w-[32ch] sm:max-w-none">
 						<Fragment set:html={legalText} />
 					</div>
-					<span class="mx-1.5 hidden sm:inline">|</span>
-					<FooterPrivacyChoices
-						client:visible
-						className="text-tertiary hover:text-foreground-200/85"
-						label={privacyChoicesLabel}
-					/>
+					{
+						isProduction && (
+							<>
+								<span class="mx-1.5 hidden sm:inline">|</span>
+								<OneTrust label="Your privacy choices" />
+							</>
+						)
+					}
 				</div>
 			</div>
 		</div>
