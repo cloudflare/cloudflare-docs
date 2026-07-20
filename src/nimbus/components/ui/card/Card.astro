@@ -18,63 +18,65 @@ import CornerMarks from "../../CornerMarks.astro";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"article"> {
-  title?: string;
-  /** When set, the title becomes a card-stretching link. */
-  href?: string;
-  /** Iconify icon name, e.g. `ph:lightning`. */
-  icon?: string;
-  /** Title element. Defaults to <h3> so card titles join the heading outline;
+	title?: string;
+	/** When set, the title becomes a card-stretching link. */
+	href?: string;
+	/** Iconify icon name, e.g. `ph:lightning`. */
+	icon?: string;
+	/** Title element. Defaults to <h3> so card titles join the heading outline;
       pass "p" to keep a title out of the outline. */
-  titleAs?: "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+	titleAs?: "h2" | "h3" | "h4" | "h5" | "h6" | "p";
 }
 
 const {
-  title,
-  href,
-  icon,
-  titleAs: TitleTag = "h3",
-  class: className,
-  ...attrs
+	title,
+	href,
+	icon,
+	titleAs: TitleTag = "h3",
+	class: className,
+	...attrs
 } = Astro.props;
 ---
 
 <article
-  class={cn(
-    "relative my-4 flex flex-col overflow-visible border border-border bg-background p-6 transition-colors duration-200 motion-reduce:transition-none",
-    className,
-  )}
-  {...attrs}
+	class={cn(
+		"relative my-4 flex flex-col overflow-visible border border-border bg-background p-6 transition-colors duration-200 motion-reduce:transition-none",
+		className,
+	)}
+	{...attrs}
 >
-  <CornerMarks />
-  {
-    icon && (
-      <span class="relative flex size-11 items-center justify-center rounded-md border border-border bg-muted text-muted-foreground transition-[background-color,border-color,color] duration-200 group-hover/card:border-[color-mix(in_oklab,var(--color-primary)_30%,transparent)] group-hover/card:bg-[color-mix(in_oklab,var(--color-primary)_10%,transparent)] group-hover/card:text-[var(--color-primary)] group-has-[:focus-visible]/card:border-[color-mix(in_oklab,var(--color-primary)_30%,transparent)] group-has-[:focus-visible]/card:bg-[color-mix(in_oklab,var(--color-primary)_10%,transparent)] group-has-[:focus-visible]/card:text-[var(--color-primary)] motion-reduce:transition-none dark:group-hover/card:bg-[color-mix(in_oklab,var(--color-primary)_18%,transparent)] dark:group-has-[:focus-visible]/card:bg-[color-mix(in_oklab,var(--color-primary)_18%,transparent)]">
-        <Icon name={icon} size="24px" aria-hidden="true" />
-      </span>
-    )
-  }
-  {
-    title && (
-      <TitleTag
-        class={cn(
-          "m-0 text-base font-medium leading-snug text-foreground md:text-lg",
-          icon ? "mt-4" : "mt-0",
-        )}
-      >
-        {href ? (
-          <a
-            {href}
-            class="text-foreground! no-underline after:absolute after:inset-0 after:content-[''] group-hover/card:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
-            {title}
-          </a>
-        ) : (
-          title
-        )}
-      </TitleTag>
-    )
-  }
-  <div class="mt-2 text-sm leading-relaxed text-muted-foreground [&>p]:my-0 [&_a]:relative [&_a]:z-[1]">
-    <slot />
-  </div>
+	<CornerMarks />
+	{
+		icon && (
+			<span class="border-border bg-muted text-muted-foreground relative flex size-11 items-center justify-center rounded-md border transition-[background-color,border-color,color] duration-200 group-hover/card:border-[color-mix(in_oklab,var(--color-primary)_30%,transparent)] group-hover/card:bg-[color-mix(in_oklab,var(--color-primary)_10%,transparent)] group-hover/card:text-[var(--color-primary)] group-has-[:focus-visible]/card:border-[color-mix(in_oklab,var(--color-primary)_30%,transparent)] group-has-[:focus-visible]/card:bg-[color-mix(in_oklab,var(--color-primary)_10%,transparent)] group-has-[:focus-visible]/card:text-[var(--color-primary)] motion-reduce:transition-none dark:group-hover/card:bg-[color-mix(in_oklab,var(--color-primary)_18%,transparent)] dark:group-has-[:focus-visible]/card:bg-[color-mix(in_oklab,var(--color-primary)_18%,transparent)]">
+				<Icon name={icon} size="24px" aria-hidden="true" />
+			</span>
+		)
+	}
+	{
+		title && (
+			<TitleTag
+				class={cn(
+					"text-foreground m-0 text-base leading-snug font-semibold",
+					icon ? "mt-4" : "mt-0",
+				)}
+			>
+				{href ? (
+					<a
+						{href}
+						class="text-foreground! focus-visible:outline-ring no-underline group-hover/card:underline after:absolute after:inset-0 after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2"
+					>
+						{title}
+					</a>
+				) : (
+					title
+				)}
+			</TitleTag>
+		)
+	}
+	<div
+		class="text-foreground/90 mt-2 text-base leading-relaxed [&_a]:relative [&_a]:z-[1] [&>p]:my-0"
+	>
+		<slot />
+	</div>
 </article>

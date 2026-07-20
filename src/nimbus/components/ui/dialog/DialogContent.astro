@@ -6,16 +6,19 @@
 import { cn } from "@/lib/cn";
 import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"div"> {}
+type Props = HTMLAttributes<"div">;
 
 const { class: className, ...attrs } = Astro.props;
 ---
 
-<div class="flex items-start justify-center pt-[10vh] px-4 pointer-events-none">
-  <div
-    class={cn("pointer-events-auto flex max-h-[70vh] w-full flex-col overflow-hidden rounded-lg bg-muted shadow-lg ring-1 ring-border", className)}
-    {...attrs}
-  >
-    <slot />
-  </div>
+<div class="pointer-events-none flex items-start justify-center px-4 pt-[10vh]">
+	<div
+		class={cn(
+			"pointer-events-auto flex max-h-[70vh] w-full flex-col overflow-hidden rounded-lg bg-muted shadow-lg ring-1 ring-border",
+			className,
+		)}
+		{...attrs}
+	>
+		<slot />
+	</div>
 </div>

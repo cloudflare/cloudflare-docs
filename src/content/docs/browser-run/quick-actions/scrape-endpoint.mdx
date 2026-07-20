@@ -22,9 +22,10 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scra
 
 ## Required fields
 
-You must provide either `url` or `elements`:
+You must provide `elements` and exactly one of `url` or `html`:
 
 - `url` (string)
+- `html` (string)
 - `elements` (array of objects) — each object must include `selector` (string)
 
 ## Common use cases
@@ -104,6 +105,7 @@ const client = new Cloudflare({
 
 const scrapes = await client.browserRendering.scrape.create({
 	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://example.com/",
 	elements: [{ selector: "h1" }, { selector: "a" }],
 });
 

@@ -18,40 +18,40 @@ export const prerender = true;
 ---
 
 <BaseLayout
-  title="Resources"
-  description="Explore our resources to learn more about Cloudflare products and services"
+	title="Resources"
+	description="Explore our resources to learn more about Cloudflare products and services"
 >
-  <div class="flex min-h-screen flex-col">
-    <Header showSidebar={false} />
-    <main id="main-content" class="flex-1">
-      <div class="relative">
-        <BackgroundLines inner={1120} outer={1360} />
-        <PageShell>
-        <PageHeader
-          title="Resources"
-          tagline="Tutorials, videos, reference architectures, and learning paths for building on Cloudflare."
-        />
+	<div class="flex min-h-screen flex-col">
+		<Header showSidebar={false} />
+		<main id="main-content" class="flex-1">
+			<div class="relative">
+				<BackgroundLines inner={1120} outer={1360} />
+				<PageShell>
+					<PageHeader
+						title="Resources"
+						tagline="Tutorials, videos, reference architectures, and learning paths for building on Cloudflare."
+					/>
 
-        <div class="mt-12 pt-10">
-          <ResourcesBySelector
-            directory=""
-            types={[
-              "tutorial",
-              "video",
-              "reference-architecture",
-              "reference-architecture-diagram",
-              "implementation-guide",
-              "design-guide",
-              "learning-path",
-              "solution-guide",
-            ]}
-            filterables={["pcx_content_type", "products"]}
-            filterPlacement="left"
-            columns={1}
-          />
-        </div>
-        </PageShell>
-      </div>
-    </main>
-  </div>
+					<div class="mt-12 pt-10">
+						<ResourcesBySelector
+							directory=""
+							types={[
+								"tutorial",
+								"video",
+								"reference-architecture",
+								"reference-architecture-diagram",
+								"implementation-guide",
+								"design-guide",
+								"learning-path",
+								"solution-guide",
+							]}
+							filterables={["pcx_content_type", "products"]}
+							filterPlacement="left"
+							columns={1}
+						/>
+					</div>
+				</PageShell>
+			</div>
+		</main>
+	</div>
 </BaseLayout>

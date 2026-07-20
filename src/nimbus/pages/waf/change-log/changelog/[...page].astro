@@ -33,7 +33,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 
 const sectionSlug = "/waf/change-log/changelog/";
-const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: externalAppLinksTransform,
+});
 const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
@@ -46,7 +49,7 @@ const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 	collection="docs"
 	feedback={false}
 >
-	<Fragment slot="pagination" />
+	<Fragment slot="pagination"></Fragment>
 	<RSSButton href="/changelog/rss/waf.xml" />
 
 	{

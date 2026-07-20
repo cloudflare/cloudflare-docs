@@ -20,9 +20,6 @@ import {
 	getInstallationToken,
 	getIssueComments,
 	getPullRequest,
-	postComment,
-	updateIssueComment,
-	type GitHubIssueComment,
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow } from "../lib/poll-run";
@@ -37,6 +34,7 @@ import {
 	partitionComments,
 } from "../lib/code-review-state";
 import {
+	postOrUpdateComment,
 	renderPendingComment,
 	renderReviewLimitComment,
 } from "../lib/code-review-render";
@@ -448,17 +446,4 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 				? input.triggerEyesReactionId
 				: null,
 	};
-}
-
-async function postOrUpdateComment(
-	token: string,
-	prNumber: number,
-	existingBotComment: GitHubIssueComment | null,
-	body: string,
-): Promise<void> {
-	if (existingBotComment) {
-		await updateIssueComment(token, existingBotComment.id, body);
-	} else {
-		await postComment(token, prNumber, body);
-	}
 }

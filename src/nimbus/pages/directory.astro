@@ -19,40 +19,40 @@ import type { ProductData } from "~/components/directory/grid";
 export const prerender = true;
 
 const products: CollectionEntry<"directory">[] = await getCollection(
-  "directory",
-  (entry: CollectionEntry<"directory">) => {
-    return Boolean(entry.data.entry?.show ?? true);
-  },
+	"directory",
+	(entry: CollectionEntry<"directory">) => {
+		return Boolean(entry.data.entry?.show ?? true);
+	},
 );
 
 const productData: ProductData[] = products
-  .map((product) => {
-    const iconData = getIconData(iconCollection.local, product.id);
-    let icon = undefined;
-    if (iconData) {
-      icon = iconToSVG(iconData);
-    }
+	.map((product) => {
+		const iconData = getIconData(iconCollection.local, product.id);
+		let icon = undefined;
+		if (iconData) {
+			icon = iconToSVG(iconData);
+		}
 
-    return {
-      ...product,
-      icon,
-      groups: [
-        product.data.entry.group,
-        ...(product.data.entry.additional_groups || []),
-      ].filter((val): val is string => Boolean(val)),
-    };
-  })
-  .sort((a, b) => a.id.localeCompare(b.id));
+		return {
+			...product,
+			icon,
+			groups: [
+				product.data.entry.group,
+				...(product.data.entry.additional_groups || []),
+			].filter((val): val is string => Boolean(val)),
+		};
+	})
+	.sort((a, b) => a.id.localeCompare(b.id));
 ---
 
 <BaseLayout
-  title="Docs directory"
-  description="Explore the different areas of our documentation site."
+	title="Docs directory"
+	description="Explore the different areas of our documentation site."
 >
-  <div class="flex min-h-screen flex-col">
-    <Header showSidebar={false} />
-    <main id="main-content" class="flex-1">
-      <Directory products={productData} />
-    </main>
-  </div>
+	<div class="flex min-h-screen flex-col">
+		<Header showSidebar={false} />
+		<main id="main-content" class="flex-1">
+			<Directory products={productData} />
+		</main>
+	</div>
 </BaseLayout>

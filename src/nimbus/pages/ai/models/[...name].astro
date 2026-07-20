@@ -17,16 +17,16 @@ import { getResolvedModels } from "~/util/models";
 export const prerender = true;
 
 export const getStaticPaths = (async () => {
-  const models = await getResolvedModels();
-  return models.map((model) => ({
-    params: { name: model.slug },
-    props: { model, slug: model.slug },
-  }));
+	const models = await getResolvedModels();
+	return models.map((model) => ({
+		params: { name: model.slug },
+		props: { model, slug: model.slug },
+	}));
 }) satisfies GetStaticPaths;
 
 const { model, slug } = Astro.props as {
-  model: Awaited<ReturnType<typeof getResolvedModels>>[number];
-  slug: string;
+	model: Awaited<ReturnType<typeof getResolvedModels>>[number];
+	slug: string;
 };
 ---
 

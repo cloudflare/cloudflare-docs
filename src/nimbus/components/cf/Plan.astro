@@ -3,47 +3,51 @@ import { z } from "astro/zod";
 import { getEntry } from "astro:content";
 
 const MAPPINGS = {
-  all: "Available on all plans",
-  paid: "Available on Paid plans",
-  pro: "Pro and above",
-  business: "Business and above",
-  enterprise: "Enterprise-only",
-  "add-on": "Add-on feature",
-  "ent-add-on": "Enterprise-only paid add-on",
-  "workers-all": "Available on Free and Paid plans",
-  "workers-paid": "Available on Workers Paid plan",
+	all: "Available on all plans",
+	paid: "Available on Paid plans",
+	pro: "Pro and above",
+	business: "Business and above",
+	enterprise: "Enterprise-only",
+	"add-on": "Add-on feature",
+	"ent-add-on": "Enterprise-only paid add-on",
+	"workers-all": "Available on Free and Paid plans",
+	"workers-paid": "Available on Workers Paid plan",
 } as const satisfies Record<string, string>;
 
 type PlanType = keyof typeof MAPPINGS;
 
 const props = z
-  .object({
-    type: z.enum(Object.keys(MAPPINGS) as [PlanType, ...PlanType[]]),
-  })
-  .or(z.object({ id: z.string() }));
+	.object({
+		type: z.enum(Object.keys(MAPPINGS) as [PlanType, ...PlanType[]]),
+	})
+	.or(z.object({ id: z.string() }));
 
 const input = props.parse(Astro.props);
 
 function getByPath(obj: any, path: string) {
-  return path.split(".").reduce((acc, key) => (acc == null ? acc : acc[key]), obj);
+	return path
+		.split(".")
+		.reduce((acc, key) => (acc == null ? acc : acc[key]), obj);
 }
 
 let availability: string;
 if ("type" in input) {
-  availability = MAPPINGS[input.type];
+	availability = MAPPINGS[input.type];
 } else {
-  const entry = await getEntry("plans", "index");
-  if (!entry) {
-    throw new Error(`[Plan] Failed to load plans JSON.`);
-  }
-  const value = getByPath(entry.data, input.id);
-  if (typeof value !== "string") {
-    throw new Error(`[Plan] id "${input.id}" did not resolve to a string in plans JSON.`);
-  }
-  availability = value;
+	const entry = await getEntry("plans", "index");
+	if (!entry) {
+		throw new Error(`[Plan] Failed to load plans JSON.`);
+	}
+	const value = getByPath(entry.data, input.id);
+	if (typeof value !== "string") {
+		throw new Error(
+			`[Plan] id "${input.id}" did not resolve to a string in plans JSON.`,
+		);
+	}
+	availability = value;
 }
 ---
 
-<div class="font-semibold text-info">
-  {availability}
+<div class="text-info font-semibold">
+	{availability}
 </div>

@@ -12,15 +12,17 @@ import { cn } from "@/lib/cn";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"div"> {
-  title?: string;
+	title?: string;
 }
 
 const { title, class: className, ...attrs } = Astro.props;
 ---
 
 <div data-step class={cn(className)} {...attrs}>
-  {title && <p class="m-0 font-semibold text-foreground">{title}</p>}
-  <div class="mt-1 text-sm leading-snug text-foreground [&_p:first-child]:mt-0 [&_p:last-child]:mb-0">
-    <slot />
-  </div>
+	{title && <p class="text-foreground m-0 font-semibold">{title}</p>}
+	<div
+		class="text-foreground mt-1 text-sm leading-snug [&_p:first-child]:mt-0 [&_p:last-child]:mb-0"
+	>
+		<slot />
+	</div>
 </div>

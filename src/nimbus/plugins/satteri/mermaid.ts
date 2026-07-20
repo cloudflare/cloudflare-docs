@@ -9,38 +9,41 @@ import { classNames, isElement } from "./types";
 const NON_WHITESPACE = /\S/;
 
 function mermaidCodeChild(pre: Element): Element | null {
-  let found: Element | null = null;
-  for (const child of pre.children ?? []) {
-    if (child.type === "text") {
-      if (NON_WHITESPACE.test(child.value)) return null;
-      continue;
-    }
-    if (isElement(child, "code") && classNames(child).includes("language-mermaid")) {
-      if (found) return null;
-      found = child;
-      continue;
-    }
-    return null;
-  }
-  return found;
+	let found: Element | null = null;
+	for (const child of pre.children ?? []) {
+		if (child.type === "text") {
+			if (NON_WHITESPACE.test(child.value)) return null;
+			continue;
+		}
+		if (
+			isElement(child, "code") &&
+			classNames(child).includes("language-mermaid")
+		) {
+			if (found) return null;
+			found = child;
+			continue;
+		}
+		return null;
+	}
+	return found;
 }
 
 export default function mermaid(): HastPluginDefinition {
-  return {
-    name: "cf-mermaid",
-    element: {
-      filter: ["pre"],
-      visit(node, ctx) {
-        const code = mermaidCodeChild(node);
-        if (!code) return;
+	return {
+		name: "cf-mermaid",
+		element: {
+			filter: ["pre"],
+			visit(node, ctx) {
+				const code = mermaidCodeChild(node);
+				if (!code) return;
 
-        return {
-          type: "element",
-          tagName: "pre",
-          properties: { className: ["mermaid"] },
-          children: [{ type: "text", value: ctx.textContent(code) }],
-        };
-      },
-    },
-  };
+				return {
+					type: "element",
+					tagName: "pre",
+					properties: { className: ["mermaid"] },
+					children: [{ type: "text", value: ctx.textContent(code) }],
+				};
+			},
+		},
+	};
 }

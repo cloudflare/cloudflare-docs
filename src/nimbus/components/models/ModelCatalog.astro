@@ -21,8 +21,8 @@ import { getFacets, type ModelCardData } from "~/util/models";
 import { resolveCols, LG_GRID_CLASS } from "~/components/directory/grid";
 
 interface Props {
-  models: ModelCardData[];
-  basePath?: string;
+	models: ModelCardData[];
+	basePath?: string;
 }
 
 const { models, basePath = "/ai/models" } = Astro.props;
@@ -31,25 +31,29 @@ const cols = resolveCols(models.length);
 ---
 
 <div data-models class="not-prose">
-  {/* Toolbar + count/clear (base-ui island; drives the grid below). */}
-  <ModelFilters facets={facets} total={models.length} client:load />
+	{/* Toolbar + count/clear (base-ui island; drives the grid below). */}
+	<ModelFilters facets={facets} total={models.length} client:load />
 
-  {/* Empty state — toggled by the island. */}
-  <div
-    data-models-empty
-    hidden
-    class="rounded-lg border border-border py-10 text-center"
-  >
-    <p class="text-lg font-semibold text-foreground">No models found</p>
-    <p class="mt-1 text-muted-foreground">
-      Try a different search term, or broaden your search by removing filters.
-    </p>
-  </div>
+	{/* Empty state — toggled by the island. */}
+	<div
+		data-models-empty
+		hidden
+		class="border-border rounded-lg border py-10 text-center"
+	>
+		<p class="text-foreground text-lg font-semibold">No models found</p>
+		<p class="text-muted-foreground mt-1">
+			Try a different search term, or broaden your search by removing filters.
+		</p>
+	</div>
 
-  {/* Grid (server-rendered; island reflows it). */}
-  <div class="relative w-full border-t border-l border-border">
-    <div data-models-grid class={LG_GRID_CLASS[cols]}>
-      {models.map((model, i) => <ModelCard model={model} index={i} cols={cols} basePath={basePath} />)}
-    </div>
-  </div>
+	{/* Grid (server-rendered; island reflows it). */}
+	<div class="border-border relative w-full border-t border-l">
+		<div data-models-grid class={LG_GRID_CLASS[cols]}>
+			{
+				models.map((model, i) => (
+					<ModelCard model={model} index={i} cols={cols} basePath={basePath} />
+				))
+			}
+		</div>
+	</div>
 </div>

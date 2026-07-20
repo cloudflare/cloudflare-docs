@@ -10,6 +10,15 @@ import type { GitHubIssueComment } from "./github";
 // Also used by render helpers; exported here as the single source of truth.
 export const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
 
+// Rebase status values embedded in the bot comment as HTML comments.
+export type RebaseStatus =
+	| "in-progress"
+	| "complete"
+	| "halted-wrong-base"
+	| "halted-fork"
+	| "halted-confidence"
+	| "failed";
+
 // Regexes to extract metadata embedded in bot comment bodies.
 const REVIEWED_HEAD_SHA_RE = /<!-- reviewed-head-sha: ([0-9a-f]{40}) -->/;
 const REVIEWED_AT_RE = /<!-- reviewed-at: ([^\n]+) -->/;

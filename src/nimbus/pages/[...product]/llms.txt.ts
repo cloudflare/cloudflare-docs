@@ -109,7 +109,8 @@ function buildSections(prefix: string, pages: Page[]): Section[] | null {
 	if (!hasOrdering) return null;
 
 	sections.sort((a, b) => {
-		if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+		if (a.order !== undefined && b.order !== undefined)
+			return a.order - b.order;
 		if (a.order !== undefined) return -1;
 		if (b.order !== undefined) return 1;
 		return a.label.localeCompare(b.label);

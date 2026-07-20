@@ -11,8 +11,8 @@ import { experimental_getWranglerCommands } from "wrangler";
 import WranglerCommand from "./WranglerCommand.astro";
 
 interface Props {
-  namespace: string;
-  headingLevel?: number;
+	namespace: string;
+	headingLevel?: number;
 }
 
 const { namespace, headingLevel = 2 } = Astro.props;
@@ -22,38 +22,38 @@ const { registry } = experimental_getWranglerCommands();
 const node = registry.subtree.get(namespace);
 
 if (!node || node.subtree.size === 0) {
-  throw new Error(`[WranglerNamespace] Namespace "${namespace}" not found`);
+	throw new Error(`[WranglerNamespace] Namespace "${namespace}" not found`);
 }
 
 type Subtree = (typeof registry)["subtree"];
 const definitions: NonNullable<(typeof node)["definition"]>[] = [];
 
 function flattenSubtree(subtree: Subtree) {
-  for (const value of subtree.values()) {
-    if (value.definition?.metadata?.hidden) continue;
-    if (value.definition?.type === "command") {
-      definitions.push(value.definition);
-    } else {
-      flattenSubtree(value.subtree);
-    }
-  }
+	for (const value of subtree.values()) {
+		if (value.definition?.metadata?.hidden) continue;
+		if (value.definition?.type === "command") {
+			definitions.push(value.definition);
+		} else {
+			flattenSubtree(value.subtree);
+		}
+	}
 }
 
 flattenSubtree(node.subtree);
 ---
 
 {
-  definitions.map((definition) => {
-    if (definition.type !== "command") {
-      throw new Error(
-        `[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
-      );
-    }
-    return (
-      <WranglerCommand
-        command={definition.command.replace("wrangler ", "")}
-        headingLevel={headingLevel}
-      />
-    );
-  })
+	definitions.map((definition) => {
+		if (definition.type !== "command") {
+			throw new Error(
+				`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
+			);
+		}
+		return (
+			<WranglerCommand
+				command={definition.command.replace("wrangler ", "")}
+				headingLevel={headingLevel}
+			/>
+		);
+	})
 }

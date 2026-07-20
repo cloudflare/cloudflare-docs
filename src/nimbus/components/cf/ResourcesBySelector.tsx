@@ -7,7 +7,11 @@ import { formatContentType } from "~/util/content-type";
 import Markdown from "react-markdown";
 // Shared corner-mark grid geometry — same source of truth as the /directory
 // page, so resource cards render with the identical blueprint treatment.
-import { cellClass, cornerSpansHTML, cornersFor } from "~/components/directory/grid";
+import {
+	cellClass,
+	cornerSpansHTML,
+	cornersFor,
+} from "~/components/directory/grid";
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
@@ -37,21 +41,36 @@ interface Props {
 // is a React island. viewBox + currentColor mirror the `ph:` set used elsewhere.
 function IconSearch({ className }: { className?: string }) {
 	return (
-		<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden className={className}>
+		<svg
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			aria-hidden
+			className={className}
+		>
 			<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
 		</svg>
 	);
 }
 function IconX({ className }: { className?: string }) {
 	return (
-		<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden className={className}>
+		<svg
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			aria-hidden
+			className={className}
+		>
 			<path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" />
 		</svg>
 	);
 }
 function IconCheck({ className }: { className?: string }) {
 	return (
-		<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden className={className}>
+		<svg
+			viewBox="0 0 256 256"
+			fill="currentColor"
+			aria-hidden
+			className={className}
+		>
 			<path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z" />
 		</svg>
 	);
@@ -100,8 +119,7 @@ export default function ResourcesBySelector({
 						)
 						.map((v) => ({
 							value: v,
-							label:
-								key === "pcx_content_type" ? formatContentType(v) : v,
+							label: key === "pcx_content_type" ? formatContentType(v) : v,
 						})),
 				}))
 			: [];
@@ -269,7 +287,10 @@ export default function ResourcesBySelector({
 				(target.tagName === "INPUT" ||
 					target.tagName === "TEXTAREA" ||
 					target.isContentEditable);
-			if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !typing)) {
+			if (
+				(e.key === "k" && (e.metaKey || e.ctrlKey)) ||
+				(e.key === "/" && !typing)
+			) {
 				e.preventDefault();
 				searchRef.current?.focus();
 				searchRef.current?.select();
@@ -285,8 +306,7 @@ export default function ResourcesBySelector({
 	);
 	const hasActiveFilters = activeFilterCount > 0 || leftFilters.search !== "";
 
-	const clearAll = () =>
-		setLeftFilters({ search: "", selectedValues: {} });
+	const clearAll = () => setLeftFilters({ search: "", selectedValues: {} });
 
 	const toggleValue = (field: string, value: string, checked: boolean) =>
 		setLeftFilters((prev) => {
@@ -326,16 +346,22 @@ export default function ResourcesBySelector({
 	};
 
 	return (
-		<div className={filterPlacement === "left" ? "md:grid md:grid-cols-[208px_1fr] md:gap-10" : ""}>
+		<div
+			className={
+				filterPlacement === "left"
+					? "md:grid md:grid-cols-[208px_1fr] md:gap-10"
+					: ""
+			}
+		>
 			{filterPlacement === "left" && filters && (
 				<aside className="hidden md:block">
 					{/* Search */}
 					<div className="relative mb-6">
-						<IconSearch className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+						<IconSearch className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
 						<input
 							ref={searchRef}
 							type="text"
-							className="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+							className="border-border bg-card text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:outline-ring h-10 w-full rounded-lg border pr-9 pl-9 text-sm focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2"
 							placeholder="Search resources"
 							aria-label="Search resources"
 							value={leftFilters.search}
@@ -353,7 +379,7 @@ export default function ResourcesBySelector({
 								type="button"
 								aria-label="Clear search"
 								onClick={() => setLeftFilters({ ...leftFilters, search: "" })}
-								className="absolute top-1/2 right-1.5 grid size-7 -translate-y-1/2 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+								className="text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-ring absolute top-1/2 right-1.5 grid size-7 -translate-y-1/2 place-items-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
 							>
 								<IconX className="size-3.5" />
 							</button>
@@ -365,7 +391,7 @@ export default function ResourcesBySelector({
 					<div className="flex flex-col gap-7">
 						{Object.entries(facets).map(([filterField, values]) => (
 							<fieldset key={filterField} className="m-0 min-w-0 border-0 p-0">
-								<legend className="mb-3 font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase">
+								<legend className="text-muted-foreground mb-3 font-mono text-[0.6875rem] tracking-[0.14em] uppercase">
 									{FACET_LABELS[filterField] ??
 										filterField
 											.replace(/_/g, " ")
@@ -400,10 +426,10 @@ export default function ResourcesBySelector({
 															)
 														}
 													/>
-													<span className="mt-0.5 grid size-4 shrink-0 place-items-center rounded-sm bg-background ring-1 ring-inset ring-border transition-[background-color,box-shadow] peer-checked:bg-foreground peer-checked:ring-foreground peer-hover:ring-border-strong peer-focus-visible:ring-2 peer-focus-visible:ring-ring">
-														<IconCheck className="size-3 text-background opacity-0 transition-opacity group-has-[:checked]/checkbox:opacity-100" />
+													<span className="bg-background ring-border peer-checked:bg-foreground peer-checked:ring-foreground peer-hover:ring-border-strong peer-focus-visible:ring-ring mt-0.5 grid size-4 shrink-0 place-items-center rounded-sm ring-1 transition-[background-color,box-shadow] ring-inset peer-focus-visible:ring-2">
+														<IconCheck className="text-background size-3 opacity-0 transition-opacity group-has-[:checked]/checkbox:opacity-100" />
 													</span>
-													<span className="text-sm leading-snug text-foreground select-none">
+													<span className="text-foreground text-sm leading-snug select-none">
 														{filterField === "pcx_content_type"
 															? formatContentType(value)
 															: value}
@@ -419,7 +445,7 @@ export default function ResourcesBySelector({
 							<button
 								type="button"
 								onClick={clearAll}
-								className="-mt-2 self-start text-sm text-muted-foreground underline-offset-2 transition-colors hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+								className="text-muted-foreground hover:text-foreground focus-visible:outline-ring -mt-2 self-start text-sm underline-offset-2 transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
 							>
 								Clear all filters
 							</button>
@@ -452,11 +478,11 @@ export default function ResourcesBySelector({
 
 			<div className={filterPlacement === "left" ? "min-w-0" : ""}>
 				{filterPlacement === "left" && visibleResources.length === 0 ? (
-					<div className="rounded-lg py-12 text-center ring-1 ring-border">
-						<p className="text-lg font-medium text-foreground">
+					<div className="ring-border rounded-lg py-12 text-center ring-1">
+						<p className="text-foreground text-lg font-medium">
 							No resources found
 						</p>
-						<p className="mx-auto mt-1 max-w-sm text-pretty text-muted-foreground">
+						<p className="text-muted-foreground mx-auto mt-1 max-w-sm text-pretty">
 							Try a different search term, or broaden your search by removing
 							filters.
 						</p>
@@ -464,7 +490,7 @@ export default function ResourcesBySelector({
 							<button
 								type="button"
 								onClick={clearAll}
-								className="mt-4 text-sm text-muted-foreground underline-offset-2 transition-colors hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+								className="text-muted-foreground hover:text-foreground focus-visible:outline-ring mt-4 text-sm underline-offset-2 transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
 							>
 								Clear all filters
 							</button>
@@ -475,7 +501,7 @@ export default function ResourcesBySelector({
 					   the wrapper draws the top + left edges, each cell closes its
 					   own right + bottom edge, and corner marks sit on the line
 					   intersections. No gap — cells share single-width lines. */
-					<div className="relative w-full border-t border-l border-border">
+					<div className="border-border relative w-full border-t border-l">
 						<div className="grid grid-cols-1 lg:grid-cols-1">
 							{visibleResources.map((page, i) => (
 								<div key={page.id} className={cellClass}>
@@ -491,12 +517,12 @@ export default function ResourcesBySelector({
 										className="group/card flex h-full flex-col p-4 text-inherit! no-underline lg:p-5"
 									>
 										<p className="pb-0.5">
-											<strong className="text-base font-semibold text-foreground transition-colors group-hover/card:text-primary">
+											<strong className="text-foreground group-hover/card:text-primary text-base font-semibold transition-colors">
 												{resourceTitle(page)}
 											</strong>
 										</p>
 										{showDescriptions && page.data.description && (
-											<div className="text-sm leading-relaxed text-muted-foreground [&_p]:m-0 [&_p]:line-clamp-2">
+											<div className="text-muted-foreground text-sm leading-relaxed [&_p]:m-0 [&_p]:line-clamp-2">
 												<Markdown
 													disallowedElements={["a"]}
 													unwrapDisallowed={true}

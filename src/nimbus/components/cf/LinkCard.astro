@@ -21,17 +21,17 @@
 import { Card } from "../ui/card";
 
 interface Props {
-  title: string;
-  href: string;
-  /** Iconify icon name, e.g. `ph:rocket-launch`. */
-  icon?: string;
-  /** Description as a string (alternative to slotted children). */
-  description?: string;
+	title: string;
+	href: string;
+	/** Iconify icon name, e.g. `ph:rocket-launch`. */
+	icon?: string;
+	/** Description as a string (alternative to slotted children). */
+	description?: string;
 }
 
 const { title, href, icon, description } = Astro.props;
 ---
 
-<Card {title} {href} {icon} class="group/card my-3 hover:bg-muted/30">
-  {description ? <Fragment set:html={description} /> : <slot />}
+<Card {title} {href} {icon} class="group/card hover:bg-muted/30 my-3">
+	{description ? <Fragment set:html={description} /> : <slot />}
 </Card>

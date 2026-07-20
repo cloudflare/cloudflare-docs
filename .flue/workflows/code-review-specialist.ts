@@ -3,7 +3,9 @@
  *
  * A stateless specialist dispatched by the code-review orchestrator. It runs in
  * its own Durable Object (its own isolate and memory budget), self-fetches the
- * PR diff for the requested mode, selects up to CODE_REVIEW_MAX_FILES files
+ * PR diff for the requested mode (self-healing incremental → full when the
+ * branch was rebased, force-pushed, or had production merged in — see
+ * fetchFilesForDiffMode), selects up to CODE_REVIEW_MAX_FILES files
  * (largest-diff-first), and fans out one review session per file at bounded
  * concurrency.
  *
@@ -14,12 +16,8 @@ import {
 	getDefaultWorkspace,
 	getShellSandbox,
 } from "../connectors/cloudflare-shell";
-import {
-	comparePullRequestHeads,
-	getInstallationToken,
-	getPullRequestFiles,
-	getRepoFileContent,
-} from "../lib/github";
+import { getInstallationToken, getRepoFileContent } from "../lib/github";
+import { fetchFilesForDiffMode } from "../lib/diff-fetch";
 import {
 	CODE_REVIEW_CONCURRENCY,
 	CODE_REVIEW_FILE_TIMEOUT_MS,
@@ -89,21 +87,24 @@ export async function run({
 			CODE_REVIEW_FILE_TIMEOUT_MS,
 		);
 
-		// Self-fetch the diff for the requested mode. Incremental is SHA-pinned;
-		// if the base SHA is gone (force-push since the orchestrator decided),
-		// self-heal to the full PR diff.
-		let files: Awaited<ReturnType<typeof getPullRequestFiles>>;
-		if (input.diffMode.type === "incremental") {
-			const compare = await comparePullRequestHeads(
-				token,
-				input.diffMode.fromSha,
-				input.diffMode.toSha,
-			);
-			files = compare
-				? compare.files
-				: await getPullRequestFiles(token, input.number);
-		} else {
-			files = await getPullRequestFiles(token, input.number);
+		// Self-fetch the diff for the requested mode. Incremental is SHA-pinned
+		// and self-heals to the full PR diff when the compare cannot be trusted
+		// (base SHA gone, branch diverged via rebase/force-push, or upstream
+		// files pulled in by an "Update branch" merge) — see fetchFilesForDiffMode.
+		const { files, effectiveMode, reason } = await fetchFilesForDiffMode(
+			token,
+			input.number,
+			input.diffMode,
+		);
+		if (input.diffMode.type === "incremental" && effectiveMode === "full") {
+			console.log({
+				message: `Code review specialist: incremental diff self-healed to full for PR #${input.number} (${reason})`,
+				event: "code_review_specialist",
+				number: input.number,
+				runId,
+				reason,
+				action: "diff_self_healed",
+			});
 		}
 
 		// Select up to CODE_REVIEW_MAX_FILES files, largest-diff-first.
@@ -129,7 +130,8 @@ export async function run({
 			number: input.number,
 			files: selectedFiles.length,
 			diffBytes,
-			diffMode: input.diffMode.type,
+			diffMode: effectiveMode,
+			requestedDiffMode: input.diffMode.type,
 			runId,
 			action: "started",
 		});

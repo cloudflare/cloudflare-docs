@@ -11,55 +11,59 @@ import { config } from "virtual:nimbus/config";
 import { getVersionAlternates, getVersionStatus } from "nimbus-docs";
 import type { HeadElement } from "nimbus-docs/types";
 import {
-  buildStructuredData,
-  classifyContentType,
-  inferContentType,
-  resolveFavicon,
-  resolvePageTitle,
-  resolveSocialImagePath,
+	buildStructuredData,
+	classifyContentType,
+	inferContentType,
+	resolveFavicon,
+	resolvePageTitle,
+	resolveSocialImagePath,
 } from "~/util/page-head";
+import { stripMarkdownDescription } from "~/util/description";
 
 // Mirrors production Starlight's generator string, for meta parity.
 const PRODUCTION_GENERATOR = "Starlight v0.40.0";
 
 export interface PageMeta {
-  titleSuffix?: string;
-  canonical?: string;
-  product?: string;
-  productGroup?: string;
-  contentType?: string;
-  products?: string[];
-  tags?: string[];
-  reviewed?: Date | string;
-  datePublished?: Date | string;
-  rssHref?: string;
-  externalLink?: string;
+	titleSuffix?: string;
+	canonical?: string;
+	product?: string;
+	productGroup?: string;
+	contentType?: string;
+	products?: string[];
+	tags?: string[];
+	reviewed?: Date | string;
+	datePublished?: Date | string;
+	rssHref?: string;
+	externalLink?: string;
+	/** Description was auto-derived from content (not frontmatter), so the
+	 *  JSON-LD strip is skipped — production only strips frontmatter origins. */
+	descriptionDerived?: boolean;
 }
 
 export interface Props {
-  title: string;
-  description?: string;
-  noindex?: boolean;
-  markdownUrl?: string;
-  socialImage?: string;
-  lastUpdated?: Date;
-  head?: HeadElement[];
-  collection?: string;
-  entryId?: string;
-  meta?: PageMeta;
+	title: string;
+	description?: string;
+	noindex?: boolean;
+	markdownUrl?: string;
+	socialImage?: string;
+	lastUpdated?: Date;
+	head?: HeadElement[];
+	collection?: string;
+	entryId?: string;
+	meta?: PageMeta;
 }
 
 const {
-  title,
-  description,
-  noindex,
-  markdownUrl,
-  socialImage,
-  lastUpdated,
-  head: pageHead = [],
-  collection,
-  entryId,
-  meta,
+	title,
+	description,
+	noindex,
+	markdownUrl,
+	socialImage,
+	lastUpdated,
+	head: pageHead = [],
+	collection,
+	entryId,
+	meta,
 } = Astro.props;
 
 const site = Astro.site;
@@ -67,56 +71,72 @@ const { pathname } = Astro.url;
 const lang = config.locale ?? "en";
 
 const versionRecord =
-  collection && entryId ? await getVersionAlternates(collection, entryId) : null;
+	collection && entryId
+		? await getVersionAlternates(collection, entryId)
+		: null;
 const isHiddenVersion =
-  (collection ? await getVersionStatus(collection) : null)?.isHidden === true;
+	(collection ? await getVersionStatus(collection) : null)?.isHidden === true;
 const versionAlternates =
-  !isHiddenVersion && versionRecord?.alternates
-    ? versionRecord.alternates.map((alt) => ({
-        version: alt.version,
-        href: site ? new URL(alt.url, site).href : alt.url,
-      }))
-    : [];
+	!isHiddenVersion && versionRecord?.alternates
+		? versionRecord.alternates.map((alt) => ({
+				version: alt.version,
+				href: site ? new URL(alt.url, site).href : alt.url,
+			}))
+		: [];
 
 // Section slug (first path segment, dots stripped) — matches production.
 const currentSection = pathname.split("/")[1]?.replaceAll(".", "") ?? "";
 const sectionProduct =
-  currentSection && currentSection !== "changelog"
-    ? await getEntry("directory", currentSection)
-    : undefined;
+	currentSection && currentSection !== "changelog"
+		? await getEntry("directory", currentSection)
+		: undefined;
 const product = meta?.product ?? sectionProduct?.data.entry?.title;
-// derivedProductGroup drives the OG card lookup; productGroup (which honours
-// meta.productGroup) drives the pcx_content_group tag. Keep them separate.
+// productGroup (which honours meta.productGroup) drives the pcx_content_group
+// tag.
 const derivedProductGroup = sectionProduct?.data.entry?.group;
 const productGroup = meta?.productGroup ?? derivedProductGroup;
 
 const titleOverride = pageHead.find((item) => item.tag === "title")?.content;
 const titleSuffix =
-  meta?.titleSuffix ??
-  (sectionProduct ? (sectionProduct.data.meta?.title ?? config.title) : undefined);
+	meta?.titleSuffix ??
+	(sectionProduct
+		? (sectionProduct.data.meta?.title ?? config.title)
+		: undefined);
 const fullTitle = resolvePageTitle({
-  title,
-  titleOverride,
-  titleSuffix,
-  siteTitle: config.title,
+	title,
+	titleOverride,
+	titleSuffix,
+	siteTitle: config.title,
 });
-const resolvedDescription = description ?? config.description;
+// Parity: no site-wide fallback — an absent description omits the tags.
+const resolvedDescription = description;
+
+// JSON-LD description is Markdown-stripped (frontmatter only); <meta>/OG stay
+// raw. Auto-derived descriptions are already plain text, so skip the strip.
+const structuredDescription = resolvedDescription
+	? meta?.descriptionDerived
+		? resolvedDescription
+		: await stripMarkdownDescription(resolvedDescription)
+	: undefined;
 
 // canonical honours meta.canonical + version pointer and %40-encodes `@`;
 // og:url stays pathname-based with a literal `@` (matches production).
-const canonicalTarget = meta?.canonical ?? versionRecord?.canonical?.url ?? pathname;
-const canonical = site ? new URL(canonicalTarget, site).href.replace(/@/g, "%40") : null;
+const canonicalTarget =
+	meta?.canonical ?? versionRecord?.canonical?.url ?? pathname;
+const canonical = site
+	? new URL(canonicalTarget, site).href.replace(/@/g, "%40")
+	: null;
 const pageUrl = site ? new URL(pathname, site).href : null;
 const markdownHref =
-  markdownUrl ??
-  (site
-    ? new URL(`${pathname.slice(1)}index.md`, site).href
-    : `${pathname.slice(1)}index.md`);
+	markdownUrl ??
+	(site
+		? new URL(`${pathname.slice(1)}index.md`, site).href
+		: `${pathname.slice(1)}index.md`);
 const rssHref =
-  meta?.rssHref ??
-  (currentSection === "changelog" && site
-    ? new URL(`${pathname.replace(/\/?$/, "/")}index.xml`, site).href
-    : undefined);
+	meta?.rssHref ??
+	(currentSection === "changelog" && site
+		? new URL(`${pathname.replace(/\/?$/, "/")}index.xml`, site).href
+		: undefined);
 
 const publicDir = join(process.cwd(), "public");
 const inPublic = (file: string) => existsSync(join(publicDir, file));
@@ -125,65 +145,72 @@ const selectedFavicon = resolveFavicon(inPublic);
 const faviconHref = `${import.meta.env.BASE_URL}${selectedFavicon.file}`;
 
 const socialImagePath = resolveSocialImagePath({
-  socialImage,
-  configImage: config.socialImage,
-  productGroup: derivedProductGroup,
-  isChangelog: collection === "changelog",
-  exists: inPublic,
+	socialImage,
+	configImage: config.socialImage,
+	isChangelog: collection === "changelog",
+	exists: inPublic,
 });
 const ogImage = site ? new URL(socialImagePath, site).href : socialImagePath;
 
 const shikiCssHref = `${import.meta.env.BASE_URL}_nimbus/shiki.css${import.meta.env.DEV ? `?v=${Date.now()}` : ""}`;
 
 const rawContentType =
-  meta?.contentType ?? inferContentType(pathname, currentSection) ?? "";
-const { contentType, isChangelog, schemaType } = classifyContentType(rawContentType);
+	meta?.contentType ?? inferContentType(pathname, currentSection) ?? "";
+const { contentType, isChangelog, schemaType } =
+	classifyContentType(rawContentType);
 
 const reviewed = meta?.reviewed ? new Date(meta.reviewed) : null;
 const daysSince = (d: Date | null | undefined) =>
-  d ? differenceInCalendarDays(new Date(), d) : null;
+	d ? differenceInCalendarDays(new Date(), d) : null;
 const lastModifiedDays = daysSince(lastUpdated);
 const lastReviewedDays = daysSince(reviewed);
 const dateModified = (lastUpdated ?? reviewed)?.toISOString().slice(0, 10);
 const datePublished = meta?.datePublished
-  ? new Date(meta.datePublished).toISOString().slice(0, 10)
-  : undefined;
+	? new Date(meta.datePublished).toISOString().slice(0, 10)
+	: undefined;
 
 const jsonLd = buildStructuredData({
-  schemaType,
-  canonical,
-  fullTitle,
-  description,
-  lang,
-  ogImage,
-  dateModified,
-  isChangelog,
-  datePublished,
-  tags: meta?.tags,
+	schemaType,
+	canonical,
+	fullTitle,
+	description: structuredDescription,
+	lang,
+	ogImage,
+	dateModified,
+	isChangelog,
+	datePublished,
+	tags: meta?.tags,
 });
 
 // external_link stub pages redirect via meta-refresh, appended after
 // config.head to preserve head order.
 const externalRefresh: HeadElement[] = meta?.externalLink
-  ? [
-      {
-        tag: "meta",
-        attrs: { "http-equiv": "refresh", content: `0; url=${meta.externalLink}` },
-      },
-    ]
-  : [];
+	? [
+			{
+				tag: "meta",
+				attrs: {
+					"http-equiv": "refresh",
+					content: `0; url=${meta.externalLink}`,
+				},
+			},
+		]
+	: [];
 const headExtras = [...(config.head ?? []), ...pageHead]
-  .filter((item) => item.tag !== "title")
-  .filter(
-    (item) =>
-      !(noindex && item.tag === "script" && item.attrs?.type === "application/ld+json"),
-  )
-  .concat(externalRefresh);
+	.filter((item) => item.tag !== "title")
+	.filter(
+		(item) =>
+			!(
+				noindex &&
+				item.tag === "script" &&
+				item.attrs?.type === "application/ld+json"
+			),
+	)
+	.concat(externalRefresh);
 const hasRssAlternate = headExtras.some(
-  (item) =>
-    item.tag === "link" &&
-    item.attrs?.rel === "alternate" &&
-    item.attrs?.type === "application/rss+xml",
+	(item) =>
+		item.tag === "link" &&
+		item.attrs?.rel === "alternate" &&
+		item.attrs?.type === "application/rss+xml",
 );
 ---
 
@@ -191,20 +218,32 @@ const hasRssAlternate = headExtras.some(
 
 <meta name="generator" content={Astro.generator} />
 <meta name="generator" content={PRODUCTION_GENERATOR} />
-{resolvedDescription && <meta name="description" content={resolvedDescription} />}
+{
+	resolvedDescription && (
+		<meta name="description" content={resolvedDescription} />
+	)
+}
 {noindex && <meta name="robots" content="noindex" />}
 
 <link rel="shortcut icon" type={selectedFavicon.type} href={faviconHref} />
 <link rel="stylesheet" href={shikiCssHref} />
 {site && canonical && <link rel="canonical" href={canonical} />}
 {site && <link rel="sitemap" href="/sitemap-index.xml" />}
-{!isHiddenVersion && <link rel="alternate" type="text/markdown" href={markdownHref} />}
-{rssHref && !hasRssAlternate && (
-  <link rel="alternate" type="application/rss+xml" href={rssHref} />
-)}
-{versionAlternates.map((alt) => (
-  <link rel="alternate" data-version={alt.version} href={alt.href} />
-))}
+{
+	!isHiddenVersion && (
+		<link rel="alternate" type="text/markdown" href={markdownHref} />
+	)
+}
+{
+	rssHref && !hasRssAlternate && (
+		<link rel="alternate" type="application/rss+xml" href={rssHref} />
+	)
+}
+{
+	versionAlternates.map((alt) => (
+		<link rel="alternate" data-version={alt.version} href={alt.href} />
+	))
+}
 
 {/* Base + enriched og:title are both intentional (matches Starlight). */}
 <meta property="og:title" content={title} />
@@ -212,7 +251,11 @@ const hasRssAlternate = headExtras.some(
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content={config.title} />
 <meta property="og:locale" content={lang} />
-{resolvedDescription && <meta property="og:description" content={resolvedDescription} />}
+{
+	resolvedDescription && (
+		<meta property="og:description" content={resolvedDescription} />
+	)
+}
 {site && pageUrl && <meta property="og:url" content={pageUrl} />}
 {ogImage && <meta property="image" content={ogImage} />}
 {ogImage && <meta property="og:image" content={ogImage} />}
@@ -226,14 +269,28 @@ const hasRssAlternate = headExtras.some(
 {productGroup && <meta name="pcx_content_group" content={productGroup} />}
 {contentType && <meta name="pcx_content_type" content={contentType} />}
 {contentType && <meta name="algolia_content_type" content={contentType} />}
-{meta?.products && <meta name="pcx_additional_products" content={meta.products.join(",")} />}
+{
+	meta?.products && (
+		<meta name="pcx_additional_products" content={meta.products.join(",")} />
+	)
+}
 {meta?.tags && <meta name="pcx_tags" content={meta.tags.join(",")} />}
-{lastModifiedDays !== null && <meta name="pcx_last_modified" content={String(lastModifiedDays)} />}
-{lastReviewedDays !== null && <meta name="pcx_last_reviewed" content={String(lastReviewedDays)} />}
+{
+	lastModifiedDays !== null && (
+		<meta name="pcx_last_modified" content={String(lastModifiedDays)} />
+	)
+}
+{
+	lastReviewedDays !== null && (
+		<meta name="pcx_last_reviewed" content={String(lastReviewedDays)} />
+	)
+}
 
 {!noindex && jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
 
-{headExtras.map(({ tag: Tag, attrs = {}, content }) =>
-  content ? <Tag {...attrs} set:html={content} /> : <Tag {...attrs} />,
-)}
+{
+	headExtras.map(({ tag: Tag, attrs = {}, content }) =>
+		content ? <Tag {...attrs} set:html={content} /> : <Tag {...attrs} />,
+	)
+}
 <script src="../../scripts/webmcp.ts"></script>

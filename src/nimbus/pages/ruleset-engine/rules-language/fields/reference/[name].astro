@@ -42,7 +42,10 @@ marked.use({ walkTokens: null });
 const description = field.description;
 
 const sectionSlug = `/ruleset-engine/rules-language/fields/reference/${field.name}/`;
-const sidebar = await getSidebar(sectionSlug, { collection: "docs", transform: externalAppLinksTransform });
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: externalAppLinksTransform,
+});
 const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 const editUrl =
 	"https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml";
@@ -58,8 +61,8 @@ const editUrl =
 	collection="docs"
 	editUrl={editUrl}
 >
-	<Fragment slot="page-title" />
-	<Fragment slot="pagination" />
+	<Fragment slot="page-title"></Fragment>
+	<Fragment slot="pagination"></Fragment>
 	<div class="align-center flex">
 		<div>
 			<h1

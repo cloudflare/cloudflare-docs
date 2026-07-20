@@ -1,0 +1,19 @@
+---
+title: Preview sent emails in the Activity log
+description: Inspect the HTML, text, headers, attachments, and raw source of sent emails from the Email Service Activity log.
+products:
+  - email-service
+date: 2026-07-17
+---
+
+You can now preview the content of sent emails directly from the Email Service Activity log. Expand a sent email and open the new **Preview** section to inspect the message as it was sent, across tabs for the rendered **HTML** body, the **Text** body, the **Headers**, the **Attachments**, and the full **Raw** [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) source.
+
+![The rendered HTML preview of a sent email in the Email Service Activity log](~/assets/images/changelog/email-service/email-message-preview.png)
+
+Previously, the Activity log surfaced delivery and authentication metadata but not the message content, making rendering and content issues harder to debug. Message preview closes that gap.
+
+To make messages previewable, turn on **Email preview** in your sending domain's settings. Previews cover messages sent while the setting is turned on and are retained for about seven days. Sending domains onboarded on or after 2026-07-02 have **Email preview** turned on automatically.
+
+![The Email preview setting in a sending domain's settings](~/assets/images/changelog/email-service/email-preview-setting.png)
+
+Refer to [Email logs](/email-service/observability/logs/#message-preview) for more information.

@@ -12,24 +12,27 @@ const models = (await getLegacyModels()).map(toModelCardData);
 
 const sectionSlug = "/workers-ai/models/";
 const sidebar = await getSidebar(sectionSlug, {
-  collection: "docs",
-  transform: docsSidebarTransform,
+	collection: "docs",
+	transform: docsSidebarTransform,
 });
 const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
 <DocsLayout
-  title="Workers AI Models"
-  sidebar={sidebar}
-  headings={false}
-  breadcrumbs={breadcrumbs}
-  prevNext={{}}
-  collection="docs"
-  wide
+	title="Workers AI Models"
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={breadcrumbs}
+	prevNext={{}}
+	collection="docs"
+	wide
 >
-  <Fragment slot="pagination" />
-  <Aside type="tip" title="Looking for more models, including external providers?">
-    Check out the <a href="/ai/models/">unified AI model catalog</a>.
-  </Aside>
-  <ModelCatalog models={models} basePath="/workers-ai/models" />
+	<Fragment slot="pagination"></Fragment>
+	<Aside
+		type="tip"
+		title="Looking for more models, including external providers?"
+	>
+		Check out the <a href="/ai/models/">unified AI model catalog</a>.
+	</Aside>
+	<ModelCatalog models={models} basePath="/workers-ai/models" />
 </DocsLayout>

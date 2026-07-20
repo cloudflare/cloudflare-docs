@@ -13,16 +13,16 @@ import { getLegacyModels } from "~/util/models";
 export const prerender = true;
 
 export const getStaticPaths = (async () => {
-  const models = await getLegacyModels();
-  return models.map((model) => ({
-    params: { name: model.name.split("/").at(-1)! },
-    props: { model, slug: model.name.split("/").at(-1)! },
-  }));
+	const models = await getLegacyModels();
+	return models.map((model) => ({
+		params: { name: model.name.split("/").at(-1)! },
+		props: { model, slug: model.name.split("/").at(-1)! },
+	}));
 }) satisfies GetStaticPaths;
 
 const { model, slug } = Astro.props as {
-  model: Awaited<ReturnType<typeof getLegacyModels>>[number];
-  slug: string;
+	model: Awaited<ReturnType<typeof getLegacyModels>>[number];
+	slug: string;
 };
 ---
 
