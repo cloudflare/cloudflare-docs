@@ -87,8 +87,8 @@ const sectionProduct =
 		? await getEntry("directory", currentSection)
 		: undefined;
 const product = meta?.product ?? sectionProduct?.data.entry?.title;
-// derivedProductGroup drives the OG card lookup; productGroup (which honours
-// meta.productGroup) drives the pcx_content_group tag. Keep them separate.
+// productGroup (which honours meta.productGroup) drives the pcx_content_group
+// tag.
 const derivedProductGroup = sectionProduct?.data.entry?.group;
 const productGroup = meta?.productGroup ?? derivedProductGroup;
 
@@ -134,7 +134,6 @@ const faviconHref = `${import.meta.env.BASE_URL}${selectedFavicon.file}`;
 const socialImagePath = resolveSocialImagePath({
 	socialImage,
 	configImage: config.socialImage,
-	productGroup: derivedProductGroup,
 	isChangelog: collection === "changelog",
 	exists: inPublic,
 });

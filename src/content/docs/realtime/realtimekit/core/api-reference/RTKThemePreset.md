@@ -1,7 +1,6 @@
 ---
 title: RTKThemePreset
 sidebar_position: 19
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->

@@ -36,29 +36,20 @@ export function resolveFavicon(exists: (file: string) => boolean): {
 	return candidates.find((c) => exists(c.file)) ?? candidates[0];
 }
 
-const productGroupOgImages: Record<string, string> = {
-	"core platform": "/core-services-preview.png",
-	"cloudflare one": "/zt-preview.png",
-	"developer platform": "/dev-products-preview.png",
-	"network security": "/core-services-preview.png",
-	"application performance": "/core-services-preview.png",
-	"application security": "/core-services-preview.png",
-};
+const CHANGELOG_OG_IMAGE = "/og-changelog.png";
 
-const CHANGELOG_OG_IMAGE = "/changelog-preview.png";
+const DEFAULT_OG_IMAGE = "/og-docs.png";
 
-/** OG image path: prop > changelog card > config > product-group card >
- *  opengraph.png > logo.png > shared card. */
+/** OG image path: prop > changelog card > config > opengraph.png > logo.png >
+ *  default docs card. */
 export function resolveSocialImagePath({
 	socialImage,
 	configImage,
-	productGroup,
 	isChangelog,
 	exists,
 }: {
 	socialImage?: string;
 	configImage?: string;
-	productGroup?: string;
 	isChangelog?: boolean;
 	exists: (file: string) => boolean;
 }): string {
@@ -66,14 +57,11 @@ export function resolveSocialImagePath({
 		socialImage ??
 		(isChangelog ? CHANGELOG_OG_IMAGE : undefined) ??
 		configImage ??
-		(productGroup
-			? productGroupOgImages[productGroup.toLowerCase()]
-			: undefined) ??
 		(exists("opengraph.png")
 			? "/opengraph.png"
 			: exists("logo.png")
 				? "/logo.png"
-				: "/cf-twitter-card.png")
+				: DEFAULT_OG_IMAGE)
 	);
 }
 

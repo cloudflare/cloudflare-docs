@@ -13,6 +13,7 @@ import AccelerateSection from "../components/landing/AccelerateSection.astro";
 import CommunityGrid from "../components/landing/CommunityGrid.astro";
 import StructuralGrid from "../components/landing/StructuralGrid.astro";
 import FullPageLines from "../components/landing/FullPageLines.astro";
+import Footer from "../components/Footer.astro";
 import { config } from "virtual:nimbus/config";
 import logo from "~/assets/logo.svg";
 
@@ -22,6 +23,7 @@ const currentPath = Astro.url.pathname;
 <BaseLayout
 	title="Cloudflare Developer Docs"
 	description="Connect, protect, and build everywhere."
+	footer={false}
 >
 	<div class="flex h-full flex-col">
 		<Header showSidebar />
@@ -30,26 +32,34 @@ const currentPath = Astro.url.pathname;
 			class="bg-background text-foreground flex w-full flex-col overflow-x-clip"
 		>
 			<div class="flex">
-				<aside
-					data-nb-desktop-sidebar
-					class="border-border sticky top-14 hidden h-[calc(100vh-3.5rem)] w-(--nb-sidebar-width) shrink-0 flex-col overflow-y-auto border-r lg:flex"
+				{
+					/* Full-height column carries the divider so it runs the entire
+				    page length; the inner <aside> stays sticky for the nav. */
+				}
+				<div
+					class="border-border hidden w-(--nb-sidebar-width) shrink-0 border-r lg:block"
 				>
-					<nav class="flex-1 px-4 pt-5 pb-12" aria-label="Documentation">
-						<SidebarFilter placeholder="Filter sidebar" />
-						<Sidebar currentPath={currentPath} />
-					</nav>
-					<div
-						class="from-background pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t to-transparent"
+					<aside
+						data-nb-desktop-sidebar
+						class="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col overflow-y-auto"
 					>
-					</div>
-				</aside>
+						<nav class="flex-1 px-4 pt-5 pb-12" aria-label="Documentation">
+							<SidebarFilter placeholder="Filter sidebar" />
+							<Sidebar currentPath={currentPath} />
+						</nav>
+						<div
+							class="from-background pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t to-transparent"
+						>
+						</div>
+					</aside>
+				</div>
 
 				<main id="main-content" class="min-w-0 flex-1">
 					<div class="relative">
 						<FullPageLines />
 						<StructuralGrid />
 						<div
-							class="relative z-10 mx-auto max-w-[1280px] px-[max(2rem,4vw)] pt-16 min-[800px]:pt-[max(2rem,4vw)]"
+							class="relative z-10 mx-auto max-w-[1280px] px-4 pt-16 min-[800px]:pt-[max(2rem,4vw)] lg:px-[max(2rem,4vw)]"
 						>
 							<Hero />
 							<BuildFromScratch />
@@ -61,6 +71,24 @@ const currentPath = Astro.url.pathname;
 						</div>
 					</div>
 				</main>
+			</div>
+
+			{
+				/* Footer spans the full page width (beneath the sidebar), rendered
+			    outside the sidebar+main row. Its own lines layer repeats
+			    FullPageLines offset by the sidebar width on desktop, so the vertical
+			    dashed rules stay vertically aligned with the content column above
+			    and read as one continuous run. Footer fill is transparent in light
+			    mode (globals.css) so the rules show through. */
+			}
+			<div class="relative">
+				<div
+					class="pointer-events-none absolute inset-0 z-0 hidden lg:left-(--nb-sidebar-width) lg:block"
+					aria-hidden="true"
+				>
+					<FullPageLines />
+				</div>
+				<Footer class="nb-home-footer" />
 			</div>
 		</div>
 	</div>
