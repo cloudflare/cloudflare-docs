@@ -20,9 +20,16 @@ For details on how zone status is evaluated, refer to [Zone status](/dns/zone-se
 
 ## 1. Confirm the assigned Cloudflare nameservers
 
-In the Cloudflare dashboard, open the domain and go to the **Overview** page. Copy the two nameservers Cloudflare has assigned to this zone. They look like `NAME.ns.cloudflare.com`.
+In the Cloudflare dashboard, open the domain and go to the **Overview** page. Copy the two nameservers Cloudflare has assigned to this zone. Depending on your setup, the hostnames use one of these formats:
 
-Do not assume the pair is the same as one you have used before on another domain or in another account. Each Cloudflare zone gets its own pair, and the pair is tied to your account. For details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
+| Setup                                                                                                             | Nameserver hostname format                                                                          |
+| ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Standard [full setup](/dns/zone-setups/full-setup/)                                                               | `NAME.ns.cloudflare.com`                                                                            |
+| [Foundation DNS](/dns/foundation-dns/) with [advanced nameservers](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment) | `NAME.foundationdns.com`, `NAME.foundationdns.net`, or `NAME.foundationdns.org` |
+| [Cloudflare as Secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/)                            | `NAME.secondary.cloudflare.com`                                                                     |
+| [Custom nameservers](/dns/nameservers/custom-nameservers/)                                                        | Your own branded hostnames                                                                          |
+
+Whichever format applies, the values shown in your dashboard are the ones the parent zone must publish. Do not assume the pair is the same as one you have used before on another domain or in another account — each Cloudflare zone gets its own pair, and the pair is tied to your account. For details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
 
 ## 2. Check what the parent zone actually publishes
 
