@@ -12,7 +12,7 @@ The [Account Roles API](/api/resources/accounts/subresources/roles/) is deprecat
 
 Review the [Permission Groups API](/api/resources/iam/subresources/permission_groups/). documentation the response schema differs from the legacy Roles response.
 
-Highlights
+## Highlights
 
 - Integrations migrating to the Permission Groups API must obtain Permission Group IDs from that API and use them in the Account Members API policies request shape. Integrations that persist legacy Role IDs will need to remap their assignments.
 - The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with edit/read flags.
