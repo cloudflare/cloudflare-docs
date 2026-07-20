@@ -617,7 +617,7 @@ export async function postOrUpdateComment(
 /**
  * Sanitize a detail string for safe interpolation into Markdown.
  * - Collapses newlines to a space (prevents blockquote breaks).
- * - Escapes backticks (prevents breaking inline code spans when detail is
+ * - Strips backticks (prevents breaking inline code spans when detail is
  *   placed inside `\`...\`` as in the halted-wrong-base status line).
  * - Removes leading `>` characters (prevents unintended nested blockquotes).
  */
@@ -743,6 +743,11 @@ export function renderRebaseStatusUpdate(
 		updatedBody = `${beforeWithMarker}\n\n${statusLine}${after}`;
 	} else {
 		// Defensive fallback: no ## Review heading — build a fresh wrapper.
+		// `stripped` still contains BOT_COMMENT_MARKER from the original body;
+		// remove it so we don't emit two markers in the same comment.
+		const strippedBody = stripped
+			.replace(BOT_COMMENT_MARKER + "\n", "")
+			.replace(BOT_COMMENT_MARKER, "");
 		updatedBody = [
 			BOT_COMMENT_MARKER,
 			`<!-- updated-at: ${new Date().toISOString()} -->`,
@@ -754,7 +759,7 @@ export function renderRebaseStatusUpdate(
 			"",
 			"---",
 			"",
-			stripped,
+			strippedBody,
 		].join("\n");
 	}
 

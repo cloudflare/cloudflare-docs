@@ -112,13 +112,37 @@ export async function run({
 	}
 
 	// ── 1. Fetch PR metadata ──────────────────────────────────────────────────
-	const [pr, allComments] = await Promise.all([
-		getPullRequest(token, input.prNumber),
-		getIssueComments(token, input.prNumber),
-	]);
-
-	const { botComment } = partitionComments(allComments);
-	const existingBody = botComment?.body ?? null;
+	// Wrap in try/catch: if either fetch fails the workflow exits without ever
+	// calling swapReaction, leaving the 👀 reaction stuck on the trigger comment.
+	let pr: Awaited<ReturnType<typeof getPullRequest>>;
+	let botComment: ReturnType<typeof partitionComments>["botComment"];
+	let existingBody: string | null;
+	try {
+		const [fetchedPr, allComments] = await Promise.all([
+			getPullRequest(token, input.prNumber),
+			getIssueComments(token, input.prNumber),
+		]);
+		pr = fetchedPr;
+		({ botComment } = partitionComments(allComments));
+		existingBody = botComment?.body ?? null;
+	} catch (fetchErr) {
+		const errMsg =
+			fetchErr instanceof Error ? fetchErr.message : String(fetchErr);
+		console.log({
+			message: `Rebase workflow: failed to fetch PR #${input.prNumber} metadata: ${errMsg}`,
+			event: "rebase_workflow",
+			number: input.prNumber,
+			error: errMsg,
+			action: "fetch_failed",
+		});
+		await swapReaction(
+			token,
+			input.triggerCommentId,
+			input.triggerEyesReactionId,
+			false,
+		);
+		return { acted: false, reason: "fetch_error", error: errMsg };
+	}
 
 	// ── 2. Validate: must target production, must not be a fork ───────────────
 	if (pr.base.ref !== "production") {
@@ -644,11 +668,25 @@ async function resolveConflictsWithAI(
 	// If we hit the cap, allPrFiles will be silently incomplete, which would cause
 	// applyResolution to omit files from the rebased commit. Halt with a clear
 	// message rather than committing an incomplete tree.
+	// Check both sides: if production changed ≥300 files since the merge base,
+	// its file list is also silently truncated, and we can miss conflicts.
 	const GITHUB_FILE_CAP = 300;
 	if (prFiles.length >= GITHUB_FILE_CAP) {
 		return {
 			confidence: "low",
 			reason: `This PR changes at least ${GITHUB_FILE_CAP} files, which exceeds the GitHub compare API cap. The AI cannot safely resolve conflicts without a complete file list. Please rebase manually.`,
+			files: [],
+			allPrFiles: prFiles,
+			conflictCandidateSet: new Set<string>(),
+			conflictWritePathMap: new Map<string, string>(),
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
+		};
+	}
+	if (productionFiles.length >= GITHUB_FILE_CAP) {
+		return {
+			confidence: "low",
+			reason: `Production has changed at least ${GITHUB_FILE_CAP} files since the merge base, which exceeds the GitHub compare API cap. Conflict detection may be incomplete. Please rebase manually.`,
 			files: [],
 			allPrFiles: prFiles,
 			conflictCandidateSet: new Set<string>(),
@@ -775,6 +813,47 @@ async function resolveConflictsWithAI(
 			confidence: "low",
 			reason:
 				"Could not identify specific conflicting files. Please resolve manually.",
+			files: [],
+			allPrFiles: prFiles,
+			conflictCandidateSet: new Set(conflictCandidates),
+			conflictWritePathMap,
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
+		};
+	}
+
+	// Reject binary conflict candidates before passing anything to the AI.
+	// Binary files decoded as UTF-8 are garbage, and AI cannot meaningfully
+	// resolve image/font/archive conflicts anyway. In a docs repo these would
+	// only appear if both sides modified the same asset, which requires manual
+	// review regardless.
+	const BINARY_EXTENSIONS = new Set([
+		"png",
+		"jpg",
+		"jpeg",
+		"gif",
+		"webp",
+		"avif",
+		"ico",
+		"pdf",
+		"woff",
+		"woff2",
+		"ttf",
+		"otf",
+		"eot",
+		"zip",
+		"tar",
+		"gz",
+		"br",
+	]);
+	const binaryConflicts = conflictCandidates.filter((p) => {
+		const ext = p.split(".").pop()?.toLowerCase() ?? "";
+		return BINARY_EXTENSIONS.has(ext);
+	});
+	if (binaryConflicts.length > 0) {
+		return {
+			confidence: "low",
+			reason: `Cannot automatically resolve binary file conflicts: ${binaryConflicts.join(", ")}. Please resolve manually.`,
 			files: [],
 			allPrFiles: prFiles,
 			conflictCandidateSet: new Set(conflictCandidates),
