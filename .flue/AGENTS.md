@@ -1,4 +1,4 @@
-# AGENTS.md — Flue
+# AGENTS.md — Flue (cloudflare-docs-flue)
 
 This directory contains the Flue-powered docs bot for `cloudflare-docs`, deployed as a Cloudflare Worker.
 
