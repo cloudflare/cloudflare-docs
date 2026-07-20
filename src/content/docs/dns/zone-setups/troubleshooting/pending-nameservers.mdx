@@ -20,16 +20,16 @@ For details on how zone status is evaluated, refer to [Zone status](/dns/zone-se
 
 ## 1. Confirm the assigned Cloudflare nameservers
 
-In the Cloudflare dashboard, open the domain and go to the **Overview** page. Copy the two nameservers Cloudflare has assigned to this zone. Depending on your setup, the hostnames use one of these formats:
+In the Cloudflare dashboard, open the domain and go to the **Overview** page. Copy the full list of nameservers Cloudflare has assigned to this zone. The number of nameservers and their hostname format depend on your setup:
 
-| Setup                                                                                                             | Nameserver hostname format                                                                          |
-| ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Standard [full setup](/dns/zone-setups/full-setup/)                                                               | `NAME.ns.cloudflare.com`                                                                            |
-| [Foundation DNS](/dns/foundation-dns/) with [advanced nameservers](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment) | `NAME.foundationdns.com`, `NAME.foundationdns.net`, or `NAME.foundationdns.org` |
-| [Cloudflare as Secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/)                            | `NAME.secondary.cloudflare.com`                                                                     |
-| [Custom nameservers](/dns/nameservers/custom-nameservers/)                                                        | Your own branded hostnames                                                                          |
+| Setup                                                                                                             | Number of nameservers | Nameserver hostname format                                                                                                                                          |
+| ----------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Standard [full setup](/dns/zone-setups/full-setup/)                                                               | 2                     | `NAME.ns.cloudflare.com`                                                                                                                                            |
+| [Foundation DNS](/dns/foundation-dns/) with [advanced nameservers](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment) | 3                     | One nameserver in each of `NAME.foundationdns.com`, `NAME.foundationdns.net`, and `NAME.foundationdns.org` — all three must be set at the registrar. |
+| [Cloudflare as Secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/)                            | 2                     | `NAME.secondary.cloudflare.com`                                                                                                                                     |
+| [Custom nameservers](/dns/nameservers/custom-nameservers/)                                                        | Varies                | Your own branded hostnames                                                                                                                                          |
 
-Whichever format applies, the values shown in your dashboard are the ones the parent zone must publish. Do not assume the pair is the same as one you have used before on another domain or in another account — each Cloudflare zone gets its own pair, and the pair is tied to your account. For details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
+Whichever format applies, the exact values shown in your dashboard are the ones the parent zone must publish. Do not assume the assignment is the same as one you have used before on another domain or in another account — each Cloudflare zone gets its own set of nameservers, and the assignment is tied to your account. For details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
 
 ## 2. Check what the parent zone actually publishes
 
@@ -45,7 +45,7 @@ Use one of the following methods to query the parent zone directly.
 dig +trace example.com NS
 ```
 
-The last section of the output should return **only** the two Cloudflare nameservers assigned to your zone (or, if you use [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns) or [Cloudflare as Secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), it should include them alongside your other provider's nameservers).
+The last section of the output should return **only** the Cloudflare nameservers assigned to your zone (or, if you use [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns) or [Cloudflare as Secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), it should include them alongside your other provider's nameservers).
 
 ### Option B - `nslookup`
 
@@ -70,8 +70,8 @@ Query the `NS` record for your domain. The result must match the nameserver pair
 
 | Result at the parent zone                                          | What it means and what to do                                                                                                                                                                                                       |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| The two Cloudflare nameservers assigned to this zone.              | Delegation is correct. If the dashboard still shows Pending, wait for Cloudflare's next activation check or [trigger one via API](/api/resources/zones/subresources/activation_check/methods/trigger/). Then continue at Step 4 to check DNSSEC. |
-| Cloudflare nameservers, but a different pair than the one assigned. | The domain is likely added to a different Cloudflare account, or you set your registrar to a pair you had previously used. Set the registrar to the exact pair displayed on this zone's Overview page.                             |
+| Exactly the Cloudflare nameservers assigned to this zone.          | Delegation is correct. If the dashboard still shows Pending, wait for Cloudflare's next activation check or [trigger one via API](/api/resources/zones/subresources/activation_check/methods/trigger/). Then continue at Step 4 to check DNSSEC. |
+| Cloudflare nameservers, but different names than the ones assigned. | The domain is likely added to a different Cloudflare account, or you set your registrar to nameservers you had previously used. Set the registrar to the exact values displayed on this zone's Overview page. For Foundation DNS advanced nameservers, all three values must be set. |
 | Nameservers from a different provider.                             | The registrar has not published your change. Continue at Step 3.                                                                                                                                                                    |
 | No nameservers returned.                                           | The domain is not yet delegated. If it was just registered, wait for the parent TLD to propagate (up to 24 hours), then retest.                                                                                                     |
 | Cloudflare and other-provider nameservers together.                | Only valid if your setup uses [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns) or [Cloudflare as Secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/). Otherwise, remove the non-Cloudflare records at the registrar. |
