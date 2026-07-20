@@ -20,5 +20,8 @@
 		"hono": "4.12.25",
 		"valibot": "1.4.1",
 		"wrangler": "4.107.0"
+	},
+	"devDependencies": {
+		"typescript": "5.9.3"
 	}
 }
