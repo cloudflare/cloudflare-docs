@@ -202,7 +202,7 @@ export const AGENTS: AgentData[] = [
 			"Powerful agent for coding and work. Natively local, with open models in the cloud. By LM Studio.",
 		capabilities: {
 			ide: false,
-			terminal: true,
+			terminal: false,
 			standalone: true,
 			cloud: true,
 			extension: false,
