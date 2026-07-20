@@ -370,7 +370,7 @@ function renderFixInAgentBlock(
 
 	return [
 		"<details>",
-		"<summary>Fix in your agent</summary>",
+		"<summary>👉 Fix in your agent 👈</summary>",
 		"",
 		fenced,
 		"",
