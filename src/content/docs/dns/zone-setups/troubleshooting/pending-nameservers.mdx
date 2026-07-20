@@ -49,11 +49,19 @@ The last section of the output should return **only** the Cloudflare nameservers
 
 ### Option B - `nslookup`
 
-If you are on Windows or prefer `nslookup`, query the parent zone the same way. Add the `-debug` flag so the output includes the authoritative response, not just the cached answer from your local resolver:
+If you are on Windows or prefer `nslookup`, query the `NS` records for your domain. Add the `-debug` flag to see the full response, including the authority section:
 
 ```sh
 nslookup -type=ns -debug example.com
 ```
+
+By default, `nslookup` queries your system's configured resolver, which may return a cached answer. For a definitive check against the parent zone (equivalent to `dig +trace`), query a TLD nameserver directly by adding it as the last argument. For example, for a `.com` domain:
+
+```sh
+nslookup -type=ns -debug example.com a.gtld-servers.net
+```
+
+You can find the authoritative TLD nameservers for any extension with `dig NS com.` (replace `com.` with your own TLD).
 
 If the output shows nameservers other than the ones assigned to your Cloudflare zone, the delegation is not yet correct.
 
