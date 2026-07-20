@@ -6,6 +6,7 @@ on:
       - production
     paths-ignore:
       - ".flue/**"
+      - ".github/workflows/flue-ci.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
