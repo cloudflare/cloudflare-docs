@@ -1,7 +1,6 @@
 ---
 title: RTKRecording
 sidebar_position: 14
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->

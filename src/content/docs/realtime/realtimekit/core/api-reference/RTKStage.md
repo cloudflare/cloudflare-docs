@@ -1,7 +1,6 @@
 ---
 title: RTKStage
 sidebar_position: 17
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -78,7 +77,7 @@ Method to cancel a previous RTKStage join request
 Method to grant access to RTKStage.
 	This can be in response to a RTKStage Join request but it can be called on other users as well
 
-`permissions.acceptRTKStageRequests` privilege required
+`permissions.acceptStageRequests` privilege required
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
 <a name="module_RTKStage--module.exports+denyAccess"></a>
@@ -109,7 +108,7 @@ to call this method
 #### module.exports.kick(userIds)
 Method to kick a user off the stage
 
-`permissions.acceptRTKStageRequests` privilege required
+`permissions.acceptStageRequests` privilege required
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
 

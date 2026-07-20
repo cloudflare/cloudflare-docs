@@ -1,7 +1,6 @@
 ---
 title: RTKParticipant
 sidebar_position: 7
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -15,7 +14,8 @@ present in the `meeting.participants` object. For example,
 const participant1 = meeting.participants.active.get(participantId);
 const participant2 = meeting.participants.joined.get(participantId);
 const participant3 = meeting.participants.active.toArray()[0];
-const participant4 = meeting.participants.active.toArray().filter((p) => p.name === 'John');
+const participant4 = meeting.participants.active.toArray()
+  .filter((p) => p.name === 'John');
 ```
 
 
@@ -26,8 +26,7 @@ const participant4 = meeting.participants.active.toArray().filter((p) => p.name 
         * [.userId](#module_RTKParticipant--module.exports+userId)
         * [.name](#module_RTKParticipant--module.exports+name)
         * [.picture](#module_RTKParticipant--module.exports+picture)
-        * [.customRTKParticipantId](#module_RTKParticipant--module.exports+customRTKParticipantId)
-        * ~~[.clientSpecificId](#module_RTKParticipant--module.exports+clientSpecificId)~~
+        * [.customParticipantId](#module_RTKParticipant--module.exports+customParticipantId)
         * [.device](#module_RTKParticipant--module.exports+device)
         * [.videoTrack](#module_RTKParticipant--module.exports+videoTrack)
         * [.audioTrack](#module_RTKParticipant--module.exports+audioTrack)
@@ -66,7 +65,7 @@ const participant4 = meeting.participants.active.toArray().filter((p) => p.name 
 | Param | Type |
 | --- | --- |
 | context | <code>Context</code> | 
-| participant | <code>IRTKParticipant</code> | 
+| participant | <code>IParticipant</code> | 
 | self | <code>Self</code> | 
 | roomSocket | <code>RoomSocketHandler</code> | 
 
@@ -95,16 +94,10 @@ The name of the participant.
 The picture of the participant.
 
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+customRTKParticipantId"></a>
+<a name="module_RTKParticipant--module.exports+customParticipantId"></a>
 
-#### module.exports.customRTKParticipantId
+#### module.exports.customParticipantId
 The custom id of the participant set during Add RTKParticipant REST API
-
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+clientSpecificId"></a>
-
-#### ~~module.exports.clientSpecificId~~
-***Deprecated***
 
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
 <a name="module_RTKParticipant--module.exports+device"></a>

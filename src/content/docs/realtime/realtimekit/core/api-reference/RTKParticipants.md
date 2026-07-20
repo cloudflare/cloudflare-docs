@@ -1,7 +1,6 @@
 ---
 title: RTKParticipants
 sidebar_position: 8
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -21,7 +20,7 @@ It consists of 4 maps:
         * [new module.exports(context, self, roomSocketHandler)](#new_module_RTKParticipants--module.exports_new)
         * [.waitlisted](#module_RTKParticipants--module.exports+waitlisted)
         * [.joined](#module_RTKParticipants--module.exports+joined)
-        * ~~[.active](#module_RTKParticipants--module.exports+active)~~
+        * [.active](#module_RTKParticipants--module.exports+active)
         * [.videoSubscribed](#module_RTKParticipants--module.exports+videoSubscribed)
         * [.audioSubscribed](#module_RTKParticipants--module.exports+audioSubscribed)
         * [.pinned](#module_RTKParticipants--module.exports+pinned)
@@ -33,9 +32,9 @@ It consists of 4 maps:
         * [.lastActiveSpeaker](#module_RTKParticipants--module.exports+lastActiveSpeaker)
         * [.selectedPeers](#module_RTKParticipants--module.exports+selectedPeers)
         * [.count](#module_RTKParticipants--module.exports+count)
-        * [.maxActiveRTKParticipantsCount](#module_RTKParticipants--module.exports+maxActiveRTKParticipantsCount)
+        * [.maxActiveParticipantsCount](#module_RTKParticipants--module.exports+maxActiveParticipantsCount)
         * [.pageCount](#module_RTKParticipants--module.exports+pageCount)
-        * [.setMaxActiveRTKParticipantsCount(limit)](#module_RTKParticipants--module.exports+setMaxActiveRTKParticipantsCount)
+        * [.setMaxActiveParticipantsCount(limit)](#module_RTKParticipants--module.exports+setMaxActiveParticipantsCount)
         * [.acceptWaitingRoomRequest(id)](#module_RTKParticipants--module.exports+acceptWaitingRoomRequest)
         * [.acceptAllWaitingRoomRequest(userIds)](#module_RTKParticipants--module.exports+acceptAllWaitingRoomRequest)
         * [.rejectWaitingRoomRequest(id)](#module_RTKParticipants--module.exports+rejectWaitingRoomRequest)
@@ -45,13 +44,10 @@ It consists of 4 maps:
         * [.setPage(page)](#module_RTKParticipants--module.exports+setPage)
         * [.disableAllAudio(allowUnmute)](#module_RTKParticipants--module.exports+disableAllAudio)
         * [.disableAllVideo()](#module_RTKParticipants--module.exports+disableAllVideo)
-        * ~~[.disableAudio(participantId)](#module_RTKParticipants--module.exports+disableAudio)~~
-        * ~~[.disableVideo(participantId)](#module_RTKParticipants--module.exports+disableVideo)~~
-        * ~~[.kick(participantId)](#module_RTKParticipants--module.exports+kick)~~
         * [.kickAll()](#module_RTKParticipants--module.exports+kickAll)
         * [.broadcastMessage(type, payload, target)](#module_RTKParticipants--module.exports+broadcastMessage)
         * [.getAllJoinedPeers(searchQuery, limit, offset)](#module_RTKParticipants--module.exports+getAllJoinedPeers)
-        * [.getRTKParticipantsInMeetingPreJoin()](#module_RTKParticipants--module.exports+getRTKParticipantsInMeetingPreJoin)
+        * [.getParticipantsInMeetingPreJoin()](#module_RTKParticipants--module.exports+getParticipantsInMeetingPreJoin)
 
 <a name="exp_module_RTKParticipants--module.exports"></a>
 
@@ -85,8 +81,8 @@ Returns a list of all participants in the meeting.
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
 <a name="module_RTKParticipants--module.exports+active"></a>
 
-#### ~~module.exports.active~~
-***Deprecated***
+#### module.exports.active
+Returns a list of participants whose streams are currently consumed.
 
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
 <a name="module_RTKParticipants--module.exports+videoSubscribed"></a>
@@ -163,9 +159,9 @@ Keeps a list of all participants who have been present in the selected peers lis
 Returns the number of participants who are joined in the meeting.
 
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-<a name="module_RTKParticipants--module.exports+maxActiveRTKParticipantsCount"></a>
+<a name="module_RTKParticipants--module.exports+maxActiveParticipantsCount"></a>
 
-#### module.exports.maxActiveRTKParticipantsCount
+#### module.exports.maxActiveParticipantsCount
 Returns the maximum number of participants that can be present in
 the active map.
 
@@ -177,9 +173,9 @@ Returns the number of pages that are available in the meeting in PAGINATED mode.
 If the meeting is in ACTIVE_GRID mode, this value will be 0.
 
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-<a name="module_RTKParticipants--module.exports+setMaxActiveRTKParticipantsCount"></a>
+<a name="module_RTKParticipants--module.exports+setMaxActiveParticipantsCount"></a>
 
-#### module.exports.setMaxActiveRTKParticipantsCount(limit)
+#### module.exports.setMaxActiveParticipantsCount(limit)
 Updates the maximum number of participants that are populated in
 the active map.
 
@@ -287,39 +283,6 @@ Disables audio for all participants in the meeting.
 Disables video for all participants in the meeting.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-<a name="module_RTKParticipants--module.exports+disableAudio"></a>
-
-#### ~~module.exports.disableAudio(participantId)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| participantId | <code>string</code> | ID of participant to be muted. |
-
-<a name="module_RTKParticipants--module.exports+disableVideo"></a>
-
-#### ~~module.exports.disableVideo(participantId)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| participantId | <code>string</code> | ID of participant to be muted. |
-
-<a name="module_RTKParticipants--module.exports+kick"></a>
-
-#### ~~module.exports.kick(participantId)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipants--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| participantId | <code>string</code> | ID of participant to be kicked. |
-
 <a name="module_RTKParticipants--module.exports+kickAll"></a>
 
 #### module.exports.kickAll()
@@ -356,9 +319,9 @@ instead
 | limit | <code>number</code> | 
 | offset | <code>number</code> | 
 
-<a name="module_RTKParticipants--module.exports+getRTKParticipantsInMeetingPreJoin"></a>
+<a name="module_RTKParticipants--module.exports+getParticipantsInMeetingPreJoin"></a>
 
-#### module.exports.getRTKParticipantsInMeetingPreJoin()
+#### module.exports.getParticipantsInMeetingPreJoin()
 Returns all peers currently in the room, is a non paginated call
 and should only be used if you are in a non room joined state,
 if in a joined group call, use `meeting.participants.joined`
