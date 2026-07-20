@@ -1,7 +1,6 @@
 ---
 title: RTKPolls
 sidebar_position: 13
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->

@@ -1,7 +1,6 @@
 ---
 title: RTKConnectedMeetings
 sidebar_position: 4
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -14,7 +13,7 @@ This consists of the methods to facilitate connected meetings
 * [RTKConnectedMeetings](#module_RTKConnectedMeetings)
     * [module.exports](#exp_module_RTKConnectedMeetings--module.exports) ⏏
         * [new module.exports(context)](#new_module_RTKConnectedMeetings--module.exports_new)
-        * [.getRTKConnectedMeetings()](#module_RTKConnectedMeetings--module.exports+getRTKConnectedMeetings)
+        * [.getConnectedMeetings()](#module_RTKConnectedMeetings--module.exports+getConnectedMeetings)
         * [.createMeetings(request)](#module_RTKConnectedMeetings--module.exports+createMeetings)
         * [.updateMeetings(request)](#module_RTKConnectedMeetings--module.exports+updateMeetings)
         * [.deleteMeetings(meetingIds)](#module_RTKConnectedMeetings--module.exports+deleteMeetings)
@@ -33,9 +32,9 @@ This consists of the methods to facilitate connected meetings
 | --- | --- |
 | context | <code>Context</code> | 
 
-<a name="module_RTKConnectedMeetings--module.exports+getRTKConnectedMeetings"></a>
+<a name="module_RTKConnectedMeetings--module.exports+getConnectedMeetings"></a>
 
-#### module.exports.getRTKConnectedMeetings()
+#### module.exports.getConnectedMeetings()
 get connected meeting state
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKConnectedMeetings--module.exports)  

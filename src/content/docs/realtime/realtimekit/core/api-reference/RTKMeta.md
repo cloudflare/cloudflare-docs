@@ -1,7 +1,6 @@
 ---
 title: RTKMeta
 sidebar_position: 6
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->

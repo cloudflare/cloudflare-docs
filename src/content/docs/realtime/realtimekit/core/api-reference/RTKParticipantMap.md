@@ -1,7 +1,6 @@
 ---
 title: RTKParticipantMap
 sidebar_position: 20
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->

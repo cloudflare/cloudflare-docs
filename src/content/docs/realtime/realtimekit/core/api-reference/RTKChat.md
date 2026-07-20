@@ -1,7 +1,6 @@
 ---
 title: RTKChat
 sidebar_position: 2
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -16,7 +15,6 @@ This is the chat module, which can be used to send and receive messages from the
         * [new module.exports(context, chatSocketHandler, self, participants)](#new_module_RTKChat--module.exports_new)
         * ~~[.messages](#module_RTKChat--module.exports+messages)~~
         * [.telemetry](#module_RTKChat--module.exports+telemetry)
-        * [.pinned](#module_RTKChat--module.exports+pinned)
         * [.setMaxTextLimit(limit)](#module_RTKChat--module.exports+setMaxTextLimit)
         * [.sendMessageInternal(message, [participantIds])](#module_RTKChat--module.exports+sendMessageInternal)
         * [.sendTextMessageInternal(message, [peerIds])](#module_RTKChat--module.exports+sendTextMessageInternal)
@@ -33,15 +31,11 @@ This is the chat module, which can be used to send and receive messages from the
         * [.editFileMessage(messageId, file)](#module_RTKChat--module.exports+editFileMessage)
         * [.editMessage(messageId, message)](#module_RTKChat--module.exports+editMessage)
         * [.deleteMessage(messageId)](#module_RTKChat--module.exports+deleteMessage)
-        * ~~[.getMessagesByUser(userId)](#module_RTKChat--module.exports+getMessagesByUser)~~
-        * ~~[.getMessagesByType(type)](#module_RTKChat--module.exports+getMessagesByType)~~
         * [.pin(id)](#module_RTKChat--module.exports+pin)
         * [.unpin(id)](#module_RTKChat--module.exports+unpin)
         * [.fetchPublicMessages(options)](#module_RTKChat--module.exports+fetchPublicMessages)
         * [.fetchPrivateMessages(options)](#module_RTKChat--module.exports+fetchPrivateMessages)
         * [.fetchPinnedMessages(options)](#module_RTKChat--module.exports+fetchPinnedMessages)
-        * ~~[.getMessages(timeStamp, size, reversed, [offset])](#module_RTKChat--module.exports+getMessages)~~
-        * ~~[.searchMessages(query, [filters])](#module_RTKChat--module.exports+searchMessages)~~
 
 <a name="exp_module_RTKChat--module.exports"></a>
 
@@ -68,12 +62,6 @@ This is the chat module, which can be used to send and receive messages from the
 
 #### module.exports.telemetry
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKChat--module.exports)  
-<a name="module_RTKChat--module.exports+pinned"></a>
-
-#### module.exports.pinned
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKChat--module.exports)  
-**Deprecated.**: This property is deprecated. Please use `fetchPinnedMessages()` instead.
-Returns an array of pinned messages.  
 <a name="module_RTKChat--module.exports+setMaxTextLimit"></a>
 
 #### module.exports.setMaxTextLimit(limit)
@@ -244,28 +232,6 @@ object.
 | --- | --- | --- |
 | messageId | <code>string</code> | Id of the message to delete. |
 
-<a name="module_RTKChat--module.exports+getMessagesByUser"></a>
-
-#### ~~module.exports.getMessagesByUser(userId)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKChat--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| userId | <code>string</code> | The user id of the user that sent the message. |
-
-<a name="module_RTKChat--module.exports+getMessagesByType"></a>
-
-#### ~~module.exports.getMessagesByType(type)~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKChat--module.exports)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| type | <code>&#x27;text&#x27;</code> \| <code>&#x27;image&#x27;</code> \| <code>&#x27;file&#x27;</code> \| <code>&#x27;custom&#x27;</code> \| <code>&#x27;poll&#x27;</code> | 'text', 'image', 'file', 'custom', or 'poll'. |
-
 <a name="module_RTKChat--module.exports+pin"></a>
 
 #### module.exports.pin(id)
@@ -320,30 +286,4 @@ Fetches pinned messages with pagination.
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>FetchMessageOptions</code> | Configuration options for fetching pinned messages, including timestamp, limit, and direction. |
-
-<a name="module_RTKChat--module.exports+getMessages"></a>
-
-#### ~~module.exports.getMessages(timeStamp, size, reversed, [offset])~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKChat--module.exports)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| timeStamp | <code>number</code> |  | 
-| size | <code>number</code> |  | 
-| reversed | <code>boolean</code> |  | 
-| [offset] | <code>number</code> | <code>0</code> | 
-
-<a name="module_RTKChat--module.exports+searchMessages"></a>
-
-#### ~~module.exports.searchMessages(query, [filters])~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKChat--module.exports)  
-
-| Param | Type |
-| --- | --- |
-| query | <code>string</code> | 
-| [filters] | <code>SearchFilters</code> | 
 
