@@ -14,7 +14,6 @@ export const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
 export type RebaseStatus =
 	| "in-progress"
 	| "complete"
-	| "halted-conflict"
 	| "halted-wrong-base"
 	| "halted-fork"
 	| "halted-confidence"

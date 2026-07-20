@@ -647,11 +647,6 @@ function rebaseStatusLine(
 			return `⏳ **Rebase:** Rebasing against \`production\`${by}…`;
 		case "complete":
 			return `✅ **Rebase:** Rebased against \`production\` — full review triggered.`;
-		case "halted-conflict":
-			return [
-				`⚠️ **Rebase:** Rebase halted — conflicts detected. Please resolve manually.`,
-				...(detail ? [`> ${sanitizeRebaseDetail(detail)}`] : []),
-			].join("\n");
 		case "halted-wrong-base":
 			return `⚠️ **Rebase:** Rebase skipped — this PR targets \`${sanitizeRebaseDetail(detail ?? "a non-production branch")}\`, not \`production\`. Rebase is only supported for PRs targeting \`production\`.`;
 		case "halted-fork":
