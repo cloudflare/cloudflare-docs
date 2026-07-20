@@ -98,7 +98,7 @@
 			"deleted_classes": ["FlueRedirectSpecialistWorkflow"],
 		},
 		{
-			// Rebase workflow added: handles /rebase and /rebaseWithConflicts slash
+			// Rebase workflow added: handles the /rebase slash
 			// commands. Rebases a PR branch against production via the GitHub API
 			// and optionally uses AI to resolve conflicts.
 			"tag": "v9",
