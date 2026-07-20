@@ -32,6 +32,7 @@ import {
 	getSectionTitle,
 } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
+import { generateDescriptionFromHtml } from "@/util/description";
 import logo from "~/assets/logo.svg";
 import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
 import type { PageMeta } from "@/components/PageHead.astro";
@@ -74,6 +75,15 @@ const {
 } = Astro.props;
 
 const isCustom = mode === "custom";
+
+// Parity with production Page.astro: derive from the content's first
+// paragraph when frontmatter has no description.
+let resolvedDescription = description;
+const descriptionDerived = !description;
+if (descriptionDerived) {
+	const contentHtml = await Astro.slots.render("default");
+	resolvedDescription = generateDescriptionFromHtml(contentHtml);
+}
 
 // `sidebar: false` / `tableOfContents: false` in frontmatter come through
 // from the route as literal `false` (not coerced to `[]`). They drive
@@ -124,7 +134,7 @@ const showFeedback = feedback !== false && !isCustom;
 
 <BaseLayout
 	title={title}
-	description={description}
+	description={resolvedDescription}
 	noindex={noindex || draft}
 	markdownUrl={markdownUrl}
 	socialImage={socialImage}
@@ -133,7 +143,7 @@ const showFeedback = feedback !== false && !isCustom;
 	collection={collection}
 	entryId={entryId}
 	footer={false}
-	meta={meta}
+	meta={{ ...meta, descriptionDerived }}
 >
 	<div class="flex min-h-screen flex-col">
 		{

@@ -1,11 +1,39 @@
-import { type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getEntry } from "astro:content";
 
-const DEFAULT_OG_IMAGE = "/og-docs.png";
+const DEFAULT_OG_IMAGE = "/cf-twitter-card.png";
 
-const CHANGELOG_OG_IMAGE = "/og-changelog.png";
+const CHANGELOG_OG_IMAGE = "/changelog-preview.png";
+
+const PRODUCT_AREA_OG_IMAGES: Record<string, string> = {
+	"core platform": "/core-services-preview.png",
+	"cloudflare one": "/zt-preview.png",
+	"developer platform": "/dev-products-preview.png",
+	"network security": "/core-services-preview.png",
+	"application performance": "/core-services-preview.png",
+	"application security": "/core-services-preview.png",
+};
 
 export async function getOgImage(entry: CollectionEntry<"docs" | "changelog">) {
-	return entry.collection === "changelog"
-		? CHANGELOG_OG_IMAGE
-		: DEFAULT_OG_IMAGE;
+	if (entry.collection === "changelog") {
+		return CHANGELOG_OG_IMAGE;
+	}
+
+	const section = entry.id.split("/").filter(Boolean).at(0);
+
+	if (!section) {
+		return DEFAULT_OG_IMAGE;
+	}
+
+	const product = await getEntry("directory", section);
+
+	if (product && product.data.entry.group) {
+		const image =
+			PRODUCT_AREA_OG_IMAGES[product.data.entry.group.toLowerCase()];
+
+		if (image) {
+			return image;
+		}
+	}
+
+	return DEFAULT_OG_IMAGE;
 }
