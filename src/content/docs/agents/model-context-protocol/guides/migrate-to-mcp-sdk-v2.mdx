@@ -24,15 +24,15 @@ The v2 packages implement the draft `2026-07-28` revision. They also support the
 
 Use the following table to select a migration path:
 
-| Current server                                            | Migration path                                                                          |
-| --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `createMcpHandler` with an SDK v1 server                  | Rename the call to `createLegacyMcpHandler` to keep the same behavior.                  |
-| Stateless server ready for draft `2026-07-28`             | Move to `@modelcontextprotocol/server` and pass a factory to `createMcpHandler`.        |
-| Server that must support published specifications only    | Keep SDK v1 and use `createLegacyMcpHandler`.                                           |
-| `McpAgent` using state, props, RPC, or pushed elicitation | Keep `McpAgent` temporarily. It remains available but is deprecated and feature-frozen. |
-| `McpAgent` without per-session state                      | Move its tools to an SDK v2 factory and use `createMcpHandler`.                         |
+| Current server                                         | Migration path                                                                   |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| `createMcpHandler` with an SDK v1 server               | Rename the call to `createLegacyMcpHandler` to keep the same behavior.           |
+| Stateless server ready for draft `2026-07-28`          | Move to `@modelcontextprotocol/server` and pass a factory to `createMcpHandler`. |
+| Server that must support published specifications only | Keep SDK v1 and use `createLegacyMcpHandler`.                                    |
+| `McpAgent` using legacy stateful operations            | Keep it only while those operations are required, and plan a migration.          |
+| `McpAgent` without legacy stateful operations          | Migrate when convenient to stateless MRTR and future MCP features.               |
 
-`createLegacyMcpHandler` and `WorkerTransport` are not deprecated. The following APIs are deprecated:
+The following APIs are deprecated:
 
 - Passing an SDK v1 server to `createMcpHandler`
 - `experimental_createMcpHandler`
@@ -227,9 +227,9 @@ Use `createLegacyMcpHandler` or `McpAgent` when a 2025 client needs those featur
 
 `McpAgent` remains an SDK v1 server. Do not change its server import to `@modelcontextprotocol/server`.
 
-Keep `McpAgent` temporarily if tools use `this.state`, `this.props`, Durable Object hibernation, RPC, pushed server-to-client requests, or session replay.
+Keep `McpAgent` only when the endpoint depends on legacy stateful operations, such as application state tied to the MCP session, RPC, pushed server-to-client requests, or session replay.
 
-To migrate fully, move application state outside the MCP protocol session. A tool can use authenticated server-issued handles to reach a Durable Object, D1, KV, or R2. Then expose the tool surface through an SDK v2 factory.
+If the endpoint does not require those operations, migrate when convenient to use stateless MRTR and future MCP features. Move durable application state outside the MCP protocol session. A tool can use authenticated server-issued handles to reach a Durable Object, D1, KV, or R2. Then expose the tool surface through an SDK v2 factory.
 
 ### Run modern and legacy lanes together
 

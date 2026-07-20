@@ -1,5 +1,5 @@
 ---
-title: "Agents SDK v0.18.0: MCP SDK v2 support"
+title: "Agents SDK v0.18.0: stateless MCP 2026-07-28 by default"
 description: "Agents SDK v0.18.0 adds MCP SDK v2 clients and stateless servers while retaining explicit support for published 2025 protocol deployments."
 products:
   - agents
@@ -53,7 +53,7 @@ export default createLegacyMcpHandler(
 
 </TypeScriptExample>
 
-`createLegacyMcpHandler` and `WorkerTransport` are not deprecated. Passing an SDK v1 server directly to `createMcpHandler` is deprecated. `McpAgent` remains available for stateful 2025 deployments, but it is deprecated and feature-frozen.
+Passing an SDK v1 server directly to `createMcpHandler` is deprecated. `McpAgent` remains available for stateful 2025 deployments, but it is deprecated and feature-frozen.
 
 ## Client negotiation and input requests
 
@@ -68,7 +68,5 @@ OAuth callbacks now validate issuer metadata through the v2 SDK. Discovery state
 To update the Agents SDK:
 
 <PackageManagers pkg="agents@latest" />
-
-The MCP SDK v2 packages remain in beta. Applications that import them directly should use the exact versions required by their installed Agents release.
 
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package changes, compatibility limits, and rollout steps.

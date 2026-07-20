@@ -314,9 +314,9 @@ export class MyMCP extends McpAgent<Env, State> {
 
 ### Migrate from McpAgent
 
-Move stateless tools to a server factory from `@modelcontextprotocol/server`, then pass that factory to `createMcpHandler`.
+Keep `McpAgent` only when an endpoint depends on legacy stateful operations, such as state tied to an MCP session, RPC, pushed server-to-client requests, or stream replay.
 
-Keep `McpAgent` temporarily when an endpoint needs Durable Object state, RPC, or published 2025 sessions. It remains available but is deprecated and feature-frozen.
+If the endpoint does not require those operations, migrate when convenient to a stateless server factory from `@modelcontextprotocol/server` and pass it to `createMcpHandler`. The stateless path supports modern multi-round-trip requests (MRTR) and will receive future MCP features.
 
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for dual-era routing, state migration, and rollout steps.
 
