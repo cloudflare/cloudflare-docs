@@ -1,16 +1,14 @@
 /**
  * Rebase workflow
  *
- * Handles the /rebase and /rebaseWithConflicts slash commands. Both commands:
+ * Handles the /rebase slash command:
  *   1. Check the PR targets `production` (not a fork, not a different base).
  *   2. Post a "rebase in progress" status at the top of the bot comment.
  *   3. Attempt a GitHub rebase via the update-branch API.
  *   4. On clean rebase: update comment to "complete", trigger a /full-review.
- *   5. On conflict:
- *      - /rebase: update comment to "halted-conflict" and stop.
- *      - /rebaseWithConflicts: attempt AI-assisted conflict resolution using
- *        the Git Data API. If confidence is high, apply and trigger /full-review.
- *        Otherwise update comment to "halted-confidence" with the reason.
+ *   5. On conflict: attempt AI-assisted conflict resolution using the Git Data
+ *      API. If confidence is high, apply and trigger /full-review. Otherwise
+ *      update comment to "halted-confidence" with the reason.
  *
  * POST /workflows/rebase  (internal — admitted by orchestrate)
  */
@@ -69,7 +67,6 @@ export const route: WorkflowRouteHandler = async (_c, next) => next();
 
 interface RebasePayload {
 	prNumber: number;
-	mode: "rebase" | "rebase_with_conflicts";
 	triggerCommentId: number;
 	triggerEyesReactionId: number | null;
 	senderLogin: string;
@@ -342,32 +339,7 @@ export async function run({
 		return { acted: true, reason: "rebase_complete" };
 	}
 
-	// ── 6. Handle conflicts ────────────────────────────────────────────────────
-	if (input.mode !== "rebase_with_conflicts") {
-		// Plain /rebase: just report and stop.
-		const haltedBody = renderRebaseStatusUpdate(
-			"halted-conflict",
-			undefined,
-			input.senderLogin,
-			liveBot?.body ?? null,
-		);
-		await postOrUpdateComment(token, input.prNumber, liveBot, haltedBody);
-		await swapReaction(
-			token,
-			input.triggerCommentId,
-			input.triggerEyesReactionId,
-			false,
-		);
-		console.log({
-			message: `Rebase halted (conflicts) for PR #${input.prNumber}`,
-			event: "rebase_workflow",
-			number: input.prNumber,
-			action: "halted_conflict",
-		});
-		return { acted: false, reason: "conflict" };
-	}
-
-	// ── 7. /rebaseWithConflicts: attempt AI resolution ────────────────────────
+	// ── 6. Conflicts: attempt AI resolution ──────────────────────────────────
 	console.log({
 		message: `Attempting AI conflict resolution for PR #${input.prNumber}`,
 		event: "rebase_workflow",
@@ -529,20 +501,18 @@ export async function run({
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function parsePayload(payload: unknown): RebasePayload {
-	const input = payload as Partial<RebasePayload>;
+	const input = payload as Partial<RebasePayload & { mode?: unknown }>;
 	if (
 		typeof input.prNumber !== "number" ||
-		(input.mode !== "rebase" && input.mode !== "rebase_with_conflicts") ||
 		typeof input.triggerCommentId !== "number" ||
 		typeof input.senderLogin !== "string"
 	) {
 		throw new Error(
-			"[flue] rebase workflow requires payload { prNumber, mode, triggerCommentId, senderLogin }.",
+			"[flue] rebase workflow requires payload { prNumber, triggerCommentId, senderLogin }.",
 		);
 	}
 	return {
 		prNumber: input.prNumber,
-		mode: input.mode,
 		triggerCommentId: input.triggerCommentId,
 		triggerEyesReactionId:
 			typeof input.triggerEyesReactionId === "number"
@@ -1081,7 +1051,7 @@ async function applyResolution(
 		// Production advanced while the AI was working. Abort so we don't
 		// silently parent the commit on a stale SHA — the user can retry.
 		throw new Error(
-			`Production branch moved during AI resolution (was ${resolution.productionRefSha.slice(0, 7)}, now ${freshProductionRef.sha.slice(0, 7)}). Please retry /rebaseWithConflicts.`,
+			`Production branch moved during AI resolution (was ${resolution.productionRefSha.slice(0, 7)}, now ${freshProductionRef.sha.slice(0, 7)}). Please retry /rebase.`,
 		);
 	}
 
@@ -1231,7 +1201,7 @@ async function applyResolution(
 	const preCommitProductionRef = await getRef(token, "production");
 	if (preCommitProductionRef.sha !== freshProductionRef.sha) {
 		throw new Error(
-			`Production branch moved during tree construction (was ${freshProductionRef.sha.slice(0, 7)}, now ${preCommitProductionRef.sha.slice(0, 7)}). Please retry /rebaseWithConflicts.`,
+			`Production branch moved during tree construction (was ${freshProductionRef.sha.slice(0, 7)}, now ${preCommitProductionRef.sha.slice(0, 7)}). Please retry /rebase.`,
 		);
 	}
 
@@ -1245,7 +1215,7 @@ async function applyResolution(
 	const currentPr = await getPullRequest(token, pr.number);
 	if (currentPr.head.sha !== pr.head.sha) {
 		throw new Error(
-			`PR branch moved during AI resolution (was ${pr.head.sha.slice(0, 7)}, now ${currentPr.head.sha.slice(0, 7)}). Please retry /rebaseWithConflicts.`,
+			`PR branch moved during AI resolution (was ${pr.head.sha.slice(0, 7)}, now ${currentPr.head.sha.slice(0, 7)}). Please retry /rebase.`,
 		);
 	}
 

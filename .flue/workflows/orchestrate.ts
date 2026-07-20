@@ -136,8 +136,6 @@ export async function run({ payload, env, req }: FlueContext) {
 	const isDisableAutoReviewCommand =
 		isOnPullRequest && trimmedComment === "/disable-auto-review";
 	const isRebaseCommand = isOnPullRequest && trimmedComment === "/rebase";
-	const isRebaseWithConflictsCommand =
-		isOnPullRequest && trimmedComment === "/rebaseWithConflicts";
 
 	if (
 		!req ||
@@ -148,8 +146,7 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isReviewCommand &&
 			!isIgnoreReviewLimitCommand &&
 			!isDisableAutoReviewCommand &&
-			!isRebaseCommand &&
-			!isRebaseWithConflictsCommand)
+			!isRebaseCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -437,13 +434,10 @@ export async function run({ payload, env, req }: FlueContext) {
 		};
 	}
 
-	// ── 5c. Handle /rebase and /rebaseWithConflicts commands ─────────────────────
-	if (isRebaseCommand || isRebaseWithConflictsCommand) {
-		const commandName = isRebaseCommand ? "rebase" : "rebaseWithConflicts";
-		// Log action names use snake_case to match the rest of the orchestrator's
-		// telemetry (e.g. "disable_auto_review_set"). camelCase command names are
-		// kept in user-facing summaries only.
-		const logAction = isRebaseCommand ? "rebase" : "rebase_with_conflicts";
+	// ── 5c. Handle /rebase command ────────────────────────────────────────────
+	if (isRebaseCommand) {
+		const commandName = "rebase";
+		const logAction = "rebase";
 		const commentId = (body.comment as Record<string, unknown> | undefined)
 			?.id as number | undefined;
 
@@ -512,7 +506,7 @@ export async function run({ payload, env, req }: FlueContext) {
 				headers: internalHeaders,
 				body: {
 					prNumber: number,
-					mode: isRebaseCommand ? "rebase" : "rebase_with_conflicts",
+					mode: "rebase",
 					triggerCommentId: commentId,
 					triggerEyesReactionId: eyesReactionId,
 					senderLogin,
