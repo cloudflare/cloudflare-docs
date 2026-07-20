@@ -1,0 +1,74 @@
+---
+title: "Agents SDK v0.18.0: MCP SDK v2 support"
+description: "Agents SDK v0.18.0 adds MCP SDK v2 clients and stateless servers while retaining explicit support for published 2025 protocol deployments."
+products:
+  - agents
+  - workers
+date: 2026-07-20
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+Agents SDK v0.18.0 adds support for the split MCP TypeScript SDK v2 packages. Agents can serve the draft `2026-07-28` protocol, negotiate between modern and published 2025 servers, and handle modern multi-round-trip input requests.
+
+Existing 2025 server deployments remain supported through `createLegacyMcpHandler`, `WorkerTransport`, and `McpAgent`.
+
+## Stateless MCP SDK v2 servers
+
+`createMcpHandler` now accepts a factory that returns a server from `@modelcontextprotocol/server`. The factory creates an isolated server for each request.
+
+<TypeScriptExample>
+
+```ts
+import { McpServer } from "@modelcontextprotocol/server";
+import { createMcpHandler } from "agents/mcp";
+
+function createServer() {
+	return new McpServer({ name: "example", version: "1.0.0" });
+}
+
+export default createMcpHandler(createServer);
+```
+
+</TypeScriptExample>
+
+The handler serves draft `2026-07-28` requests. Its default stateless fallback also supports ordinary tools, resources, and prompts from published 2025 clients. Session streams, replay, deletion, and pushed server-to-client requests still require a 2025 sessionful server.
+
+The Workers wrapper validates present browser Origins, allows the modern `Mcp-Method` and `Mcp-Name` CORS headers, and exposes the upstream handler's `close`, `notify`, and `bus` controls.
+
+## Explicit 2025 server support
+
+Existing SDK v1 servers can rename `createMcpHandler` to `createLegacyMcpHandler` without changing their transport behavior:
+
+<TypeScriptExample>
+
+```ts
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { createLegacyMcpHandler } from "agents/mcp";
+
+export default createLegacyMcpHandler(
+	new McpServer({ name: "legacy", version: "1.0.0" }),
+);
+```
+
+</TypeScriptExample>
+
+`createLegacyMcpHandler` and `WorkerTransport` are not deprecated. Passing an SDK v1 server directly to `createMcpHandler` is deprecated. `McpAgent` remains available for stateful 2025 deployments, but it is deprecated and feature-frozen.
+
+## Client negotiation and input requests
+
+The MCP client manager now uses `@modelcontextprotocol/client`. It probes modern servers with `server/discover` and falls back to the published `initialize` handshake.
+
+Modern `input_required` results use the same form and URL elicitation handlers as pushed 2025 elicitation. The SDK collects input, retries the original operation, and resolves the original `callTool`, `getPrompt`, or `readResource` promise with its final result.
+
+OAuth callbacks now validate issuer metadata through the v2 SDK. Discovery state and issuer-bound credentials persist across browser redirects and Durable Object hibernation.
+
+### Upgrade
+
+To update the Agents SDK:
+
+<PackageManagers pkg="agents@latest" />
+
+The MCP SDK v2 packages remain in beta. Applications that import them directly should use the exact versions required by their installed Agents release.
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package changes, compatibility limits, and rollout steps.

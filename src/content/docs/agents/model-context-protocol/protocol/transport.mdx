@@ -41,7 +41,7 @@ Create an MCP server using `createMcpHandler`. View the [complete example on Git
 
 ```ts
 import { createMcpHandler } from "agents/mcp";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 
 function createServer() {
@@ -66,13 +66,7 @@ function createServer() {
 	return server;
 }
 
-export default {
-	fetch: (request: Request, env: Env, ctx: ExecutionContext) => {
-		// Create a new server instance per request
-		const server = createServer();
-		return createMcpHandler(server)(request, env, ctx);
-	},
-} satisfies ExportedHandler<Env>;
+export default createMcpHandler(createServer);
 ```
 
 </TypeScriptExample>
@@ -86,26 +80,20 @@ If your MCP server implements authentication & authorization using the [Workers 
 ```ts
 export default new OAuthProvider({
 	apiRoute: "/mcp",
-	apiHandler: {
-		fetch: (request: Request, env: Env, ctx: ExecutionContext) => {
-			// Create a new server instance per request
-			const server = createServer();
-			return createMcpHandler(server)(request, env, ctx);
-		},
-	},
+	apiHandler: createMcpHandler(createServer),
 	// ... other OAuth configuration
 });
 ```
 
 </TypeScriptExample>
 
-### Stateful MCP servers
+### Stateful published 2025 servers
 
-If your MCP server needs to maintain state across requests, use `createMcpHandler` with a `WorkerTransport` inside an [Agent](/agents/) class. This allows you to persist session state in Durable Object storage and use advanced MCP features like [elicitation](https://modelcontextprotocol.io/specification/draft/client/elicitation) and [sampling](https://modelcontextprotocol.io/specification/draft/client/sampling).
+The draft `2026-07-28` protocol has no protocol-level session. Applications can store durable business data behind a separate storage boundary.
 
-See [Stateful MCP Servers](/agents/model-context-protocol/apis/handler-api/#stateful-mcp-servers) for implementation details.
+Existing servers that require published 2025 sessions can use `createLegacyMcpHandler` with `WorkerTransport`, or keep `McpAgent` temporarily. These APIs support transport state, event replay, pushed elicitation, sampling, and roots requests. `McpAgent` is deprecated and feature-frozen.
 
-Streamable HTTP streams are resumable: configure an `EventStore` so clients can reconnect with a `Last-Event-ID` header and replay missed events, keeping in-flight tool calls alive across the edge idle-stream watchdog. `DurableObjectEventStore` is exported from `agents/mcp` for stateful `WorkerTransport` callers. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability).
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) before changing a stateful endpoint. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability) for existing stream behavior.
 
 ## RPC transport
 
@@ -203,15 +191,15 @@ In your `wrangler.jsonc`, define bindings for both Durable Objects:
 	"durable_objects": {
 		"bindings": [
 			{ "name": "Chat", "class_name": "Chat" },
-			{ "name": "MyMCP", "class_name": "MyMCP" }
-		]
+			{ "name": "MyMCP", "class_name": "MyMCP" },
+		],
 	},
 	"migrations": [
 		{
 			"new_sqlite_classes": ["MyMCP", "Chat"],
-			"tag": "v1"
-		}
-	]
+			"tag": "v1",
+		},
+	],
 }
 ```
 
@@ -273,9 +261,7 @@ export class MyMCP extends McpAgent<
 			const role = this.props?.role || "guest";
 
 			return {
-				content: [
-					{ type: "text", text: `User ID: ${userId}, Role: ${role}` },
-				],
+				content: [{ type: "text", text: `User ID: ${userId}, Role: ${role}` }],
 			};
 		});
 	}
@@ -320,19 +306,19 @@ export class MyMCP extends McpAgent<Env, State> {
 
 ## Choosing a transport
 
-| Transport           | Use when                              | Pros                                     | Cons                            |
-| ------------------- | ------------------------------------- | ---------------------------------------- | ------------------------------- |
-| **Streamable HTTP** | External MCP servers, production apps | Standard protocol, secure, supports auth | Slight network overhead         |
+| Transport           | Use when                              | Pros                                     | Cons                                  |
+| ------------------- | ------------------------------------- | ---------------------------------------- | ------------------------------------- |
+| **Streamable HTTP** | External MCP servers, production apps | Standard protocol, secure, supports auth | Slight network overhead               |
 | **RPC**             | Internal agents on Cloudflare         | Fastest, simplest setup                  | No auth, Durable Object bindings only |
-| **SSE**             | Legacy compatibility                  | Backwards compatible                     | Deprecated, use Streamable HTTP |
+| **SSE**             | Legacy compatibility                  | Backwards compatible                     | Deprecated, use Streamable HTTP       |
 
-### Migrating from McpAgent
+### Migrate from McpAgent
 
-If you have an existing MCP server using the `McpAgent` class:
+Move stateless tools to a server factory from `@modelcontextprotocol/server`, then pass that factory to `createMcpHandler`.
 
-- **Not using state?** Replace your `McpAgent` class with `McpServer` from `@modelcontextprotocol/sdk` and use `createMcpHandler(server)` in a Worker `fetch` handler.
-- **Using state?** Use `createMcpHandler` with a `WorkerTransport` inside an [Agent](/agents/) class. See [Stateful MCP Servers](/agents/model-context-protocol/apis/handler-api/#stateful-mcp-servers) for details.
-- **Need SSE support?** Continue using `McpAgent` with `serveSSE()` for legacy client compatibility. See the [McpAgent API reference](/agents/model-context-protocol/apis/agent-api/).
+Keep `McpAgent` temporarily when an endpoint needs Durable Object state, RPC, or published 2025 sessions. It remains available but is deprecated and feature-frozen.
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for dual-era routing, state migration, and rollout steps.
 
 ### Testing with MCP clients
 

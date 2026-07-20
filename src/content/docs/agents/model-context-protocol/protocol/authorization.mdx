@@ -204,26 +204,39 @@ export class MyMCP extends McpAgent<Env, unknown, AuthContext> {
 
 ### With createMcpHandler
 
-Use `getMcpAuthContext()` to access the same information from within a tool handler. This uses `AsyncLocalStorage` under the hood.
+A compatible Workers OAuth Provider supplies standard token metadata at `context.http.authInfo`. Use `getMcpAuthContext()` for existing application props.
 
 ```ts
 import { createMcpHandler, getMcpAuthContext } from "agents/mcp";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 
 function createServer() {
 	const server = new McpServer({ name: "Auth Demo", version: "1.0.0" });
 
-	server.tool("whoami", "Get the current user", {}, async () => {
-		const auth = getMcpAuthContext();
-		const name = (auth?.props?.name as string) ?? "anonymous";
-		return {
-			content: [{ type: "text", text: `Hello, ${name}!` }],
-		};
-	});
+	server.registerTool(
+		"whoami",
+		{ description: "Get the current user", inputSchema: {} },
+		async (_args, context) => {
+			const auth = getMcpAuthContext();
+			const name = (auth?.props.name as string) ?? "anonymous";
+			return {
+				content: [
+					{
+						type: "text",
+						text: `${name}: ${context.http?.authInfo?.clientId}`,
+					},
+				],
+			};
+		},
+	);
 
 	return server;
 }
+
+export default createMcpHandler(createServer);
 ```
+
+Do not log or return the raw access token.
 
 ## Permission-based tool access
 

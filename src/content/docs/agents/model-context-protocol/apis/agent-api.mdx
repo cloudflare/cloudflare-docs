@@ -12,7 +12,17 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-When you build MCP Servers on Cloudflare, you extend the [`McpAgent` class](https://github.com/cloudflare/agents/blob/main/packages/agents/src/mcp/index.ts#L32-L620), from the Agents SDK:
+`McpAgent` creates a stateful published 2025 MCP server backed by a Durable Object.
+
+:::caution[Deprecated]
+
+`McpAgent` remains available for existing servers that need Durable Object state, RPC, protocol sessions, or pushed server-to-client requests. It is deprecated and feature-frozen. New stateless servers should use [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
+
+Keep importing its `McpServer` from `@modelcontextprotocol/sdk`. An SDK v2 server from `@modelcontextprotocol/server` cannot run inside `McpAgent`.
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) before changing an existing deployment.
+
+:::
 
 <TypeScriptExample>
 
@@ -40,7 +50,7 @@ export class MyMCP extends McpAgent {
 
 This means that each instance of your MCP server has its own durable state, backed by a [Durable Object](/durable-objects/), with its own [SQL database](/agents/runtime/lifecycle/state/).
 
-Your MCP server doesn't necessarily have to be an Agent. You can build MCP servers that are stateless, and just add [tools](/agents/model-context-protocol/protocol/tools/) to your MCP server using the `@modelcontextprotocol/sdk` package.
+A stateless modern server can define [tools](/agents/model-context-protocol/protocol/tools/) with `@modelcontextprotocol/server` and serve them through `createMcpHandler`.
 
 But if you want your MCP server to:
 

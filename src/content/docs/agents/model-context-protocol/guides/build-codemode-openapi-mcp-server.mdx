@@ -64,7 +64,7 @@ You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side 
    ```ts
    import { DynamicWorkerExecutor } from "@cloudflare/codemode";
    import { openApiMcpServer } from "@cloudflare/codemode/mcp";
-   import { createMcpHandler } from "agents/mcp";
+   import { createLegacyMcpHandler } from "agents/mcp";
 
    const SPEC_URL = "https://api.example.com/openapi.json";
    const API_ORIGIN = "https://api.example.com";
@@ -139,7 +139,7 @@ You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side 
    			},
    		});
 
-   		return createMcpHandler(server, { route: "/mcp" })(
+         return createLegacyMcpHandler(server, { route: "/mcp" })(
    			request,
    			env,
    			ctx,

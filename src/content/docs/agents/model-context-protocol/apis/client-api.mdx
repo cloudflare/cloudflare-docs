@@ -12,7 +12,9 @@ products:
 
 import { Render, TypeScriptExample, LinkCard } from "~/components";
 
-Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. This enables your agent to interact with GitHub, Slack, databases, and other services through a standardized protocol.
+Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.18.0 uses `@modelcontextprotocol/client` and negotiates draft `2026-07-28` or published 2025 protocol behavior automatically.
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package, type, OAuth provider, and rollout changes.
 
 ## Overview
 
@@ -686,7 +688,7 @@ async addMcpServer(
     callbackHost?: string;
     callbackPath?: string;
     agentsPrefix?: string;
-    client?: ClientOptions;
+    client?: McpClientOptions;
     transport?: {
       headers?: HeadersInit;
       type?: "sse" | "streamable-http" | "auto";
@@ -705,7 +707,7 @@ async addMcpServer(
   options?: {
     id?: string;
     props?: Record<string, unknown>;
-    client?: ClientOptions;
+    client?: McpClientOptions;
     retry?: RetryOptions;
   }
 ): Promise<{ id: string; state: "ready" }>
@@ -720,7 +722,7 @@ async addMcpServer(
   - `callbackHost` — Host for OAuth callback URL. Only needed for OAuth-authenticated servers. If omitted, automatically derived from the incoming request or WebSocket connection URI — you typically do not need to set this unless you are using a custom domain that differs from the Worker's hostname
   - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. You must route this path to the agent instance via `getAgentByName`
   - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`. Ignored when `callbackPath` is provided
-  - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
+  - `client` — The Agents-supported `McpClientOptions` subset from `@modelcontextprotocol/client`. The default validator supports JSON Schema 2020-12 and legacy draft-07 schemas in Workers
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
     - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
