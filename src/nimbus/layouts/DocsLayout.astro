@@ -26,7 +26,6 @@ import ComponentUsage from "@/components/cf/ComponentUsage.astro";
 import FeedbackPrompt from "@/components/react/FeedbackPrompt";
 import type { DocsPageProps } from "nimbus-docs/types";
 import { marked } from "marked";
-import { config } from "virtual:nimbus/config";
 import {
 	getVersionStatus,
 	getVersionAlternates,
@@ -34,6 +33,7 @@ import {
 } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
 import logo from "~/assets/logo.svg";
+import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
 import type { PageMeta } from "@/components/PageHead.astro";
 
 type Props = DocsPageProps & {
@@ -281,7 +281,7 @@ const showFeedback = feedback !== false && !isCustom;
 															</div>
 														) : (
 															<div
-																class="bg-border mt-3 mb-6 h-px w-full"
+																class="xl:bg-border mt-3 mb-6 h-px w-full bg-transparent"
 																role="none"
 															/>
 														))}
@@ -372,7 +372,11 @@ const showFeedback = feedback !== false && !isCustom;
 					class="bg-background h-full w-full -translate-x-full overflow-y-auto shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
 				>
 					<div class="border-border sticky top-0 z-[1] flex items-center justify-between border-b bg-inherit px-4 py-3">
-						<a href="/" class="group flex items-center gap-2 no-underline">
+						<a
+							href="/"
+							aria-label="Cloudflare Docs"
+							class="group flex items-center gap-2 no-underline"
+						>
 							<img
 								src={logo.src}
 								alt=""
@@ -380,8 +384,13 @@ const showFeedback = feedback !== false && !isCustom;
 								height="23"
 								class="h-[20px] w-auto"
 							/>
-							<span class="text-foreground group-hover:text-primary text-lg font-semibold tracking-tight transition-colors">
-								{config.title}
+							<CloudflareWordmark
+								role="img"
+								aria-label="Cloudflare"
+								className="text-foreground group-hover:text-primary hidden h-[11px] w-auto transition-colors sm:block"
+							/>
+							<span class="text-foreground/70 border-border-strong hidden rounded-md border px-1.5 py-0.5 text-[11px] leading-none font-semibold tracking-[0.08em] uppercase sm:inline-block">
+								Docs
 							</span>
 						</a>
 						<button

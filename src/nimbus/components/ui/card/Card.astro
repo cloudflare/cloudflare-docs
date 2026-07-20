@@ -57,7 +57,7 @@ const {
 		title && (
 			<TitleTag
 				class={cn(
-					"text-foreground m-0 text-base leading-snug font-medium md:text-lg",
+					"text-foreground m-0 text-base leading-snug font-semibold",
 					icon ? "mt-4" : "mt-0",
 				)}
 			>
@@ -75,7 +75,7 @@ const {
 		)
 	}
 	<div
-		class="text-muted-foreground mt-2 text-sm leading-relaxed [&_a]:relative [&_a]:z-[1] [&>p]:my-0"
+		class="text-foreground/90 mt-2 text-base leading-relaxed [&_a]:relative [&_a]:z-[1] [&>p]:my-0"
 	>
 		<slot />
 	</div>
