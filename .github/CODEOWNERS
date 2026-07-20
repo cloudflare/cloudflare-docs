@@ -72,6 +72,7 @@ package.json @cloudflare/content-engineering
 # Changelogs
 
 /src/content/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/organizations/ @wtrousdale @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/ai-search/ @cloudflare/pm-changelogs @rita3ko @irvinebroque @aninibread @mchenco @cloudflare/product-owners
 /src/content/changelog/dns/ @cloudflare/pm-changelogs @cloudflare/product-owners @hannes-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
 /src/content/changelog/waf/ @worenga @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @hsaxenaCF @danielegm @ay-cf
@@ -130,6 +131,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/fundamentals/ @dcpena @sahidya @cloudflare/product-owners
 /src/content/docs/fundamentals/ @jhutchings1 @cloudflare/product-owners @KaydeeDee @adambouhmad
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners @KaydeeDee @adambouhmad
+/src/content/docs/fundamentals/organizations/ @wtrousdale @KaydeeDee @adambouhmad @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
