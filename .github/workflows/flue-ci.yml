@@ -43,6 +43,10 @@ jobs:
         run: pnpm run typecheck
         working-directory: .flue
 
+      - name: Test
+        run: pnpm run test
+        working-directory: .flue
+
   build:
     name: Build
     needs: pre-build
