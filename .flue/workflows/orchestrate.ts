@@ -506,7 +506,6 @@ export async function run({ payload, env, req }: FlueContext) {
 				headers: internalHeaders,
 				body: {
 					prNumber: number,
-					mode: "rebase",
 					triggerCommentId: commentId,
 					triggerEyesReactionId: eyesReactionId,
 					senderLogin,
