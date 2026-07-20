@@ -347,8 +347,12 @@ function renderFixInAgentBlock(
 		"- If you need clarification before deciding, ask those questions",
 		"- Then share your plan for which issues to tackle and in what order",
 		"",
-		"After triaging, fix all legitimate findings. For any you decide to skip,",
-		"post a comment on this PR with the finding ID and your reasoning.",
+		"After triaging, follow this order:",
+		"1. Post a comment on this PR for any findings you are skipping, with the finding ID and your reasoning.",
+		"2. Then commit the fixes for the legitimate findings.",
+		"",
+		"The comment must come before the commit — the bot reads PR comments when a new",
+		"push triggers a review, so skip comments posted after the push will be missed.",
 	].join("\n");
 
 	const sections = [
