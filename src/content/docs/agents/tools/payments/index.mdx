@@ -17,11 +17,11 @@ AI agents need to discover, pay for, and consume resources and services programm
 Cloudflare's [Agents SDK](/agents/) supports agentic payments through two protocols built on the HTTP `402 Payment Required` status code: **x402** and **Machine Payments Protocol (MPP)**. Both follow the same core flow:
 
 1. A client requests a resource or calls a tool.
-2. The server responds with `402` and a payment challenge describing what to pay, how much, and where.
+2. The server returns a payment Challenge describing what to pay, how much, and where.
 3. The client fulfills the payment and retries the request with a payment credential.
 4. The server verifies the payment (optionally through a facilitator service) and returns the resource along with a receipt.
 
-No accounts, sessions, or pre-shared API keys are required. Agents handle the entire exchange programmatically.
+No pre-created service account or pre-shared API key is required. Agents handle the payment exchange programmatically. A protocol may still use durable sessions or subscriptions after the first payment.
 
 ## x402 and Machine Payments Protocol
 
@@ -36,11 +36,11 @@ The Agents SDK provides first-class x402 integration:
 
 ### Machine Payments Protocol
 
-[Machine Payments Protocol (MPP)](https://mpp.dev) is a protocol co-authored by Tempo Labs and Stripe. It extends the HTTP `402` pattern with a formal `WWW-Authenticate: Payment` / `Authorization: Payment` header scheme and is on the IETF standards track.
+[Machine Payments Protocol (MPP)](https://mpp.dev) is an open protocol for machine-to-machine payments. It extends the HTTP `402` pattern with a formal `WWW-Authenticate: Payment` / `Authorization: Payment` header scheme and is on the IETF standards track.
 
-MPP supports multiple payment methods beyond blockchain — including cards (via Stripe), Bitcoin Lightning, and stablecoins — and introduces **sessions** for streaming and pay-as-you-go use cases with sub-millisecond latency and sub-cent costs. MPP is backwards-compatible with x402: MPP clients can consume existing x402 services without modification.
+MPP supports multiple payment methods beyond blockchain — including cards through Stripe, Bitcoin Lightning, and stablecoins — and provides **charges**, **sessions**, and **subscriptions** for fixed-price, usage-based, and recurring billing. With an EVM charge method configured, `mppx` can also handle x402 `exact` payment Challenges.
 
-## Charge for resources
+## Build with agentic payments
 
 <CardGrid>
 	<LinkCard
@@ -49,9 +49,14 @@ MPP supports multiple payment methods beyond blockchain — including cards (via
 		href="/agents/tools/payments/x402/charge-for-http-content/"
 	/>
 	<LinkCard
-		title="HTTP content (MPP)"
-		description="Gate APIs, web pages, and files with a Worker proxy"
-		href="/agents/tools/payments/mpp-charge-for-http-content/"
+		title="Accept payments (MPP)"
+		description="Accept MPP from an origin, Worker route, or MCP tool"
+		href="/agents/tools/payments/mpp/accept-payments/"
+	/>
+	<LinkCard
+		title="Pay with MPP"
+		description="Give an Agent payment-aware HTTP fetch and MCP clients"
+		href="/agents/tools/payments/mpp/pay-from-agents-sdk/"
 	/>
 </CardGrid>
 

@@ -1,0 +1,216 @@
+---
+title: Accept payments with MPP
+pcx_content_type: how-to
+sidebar:
+  order: 1
+description: Accept MPP payments from an existing origin, a custom Worker endpoint, or an MCP tool.
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Choose the integration that matches the service you want to sell:
+
+| Service                    | Integration                                                                        |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| Existing website or API    | Put [`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) in front of the origin. |
+| New or existing Worker API | Add `mppx` middleware directly to a route.                                         |
+| MCP server                 | Add the MPP MCP transport inside a tool handler.                                   |
+
+All three approaches return a payment Challenge, verify the retry Credential, and attach a Receipt to the paid response.
+
+## Gate an existing origin with `mpp-proxy`
+
+[`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) is a Cloudflare Worker that adds MPP to an existing HTTP backend. Unprotected traffic passes through. A paid request receives an MPP Challenge, and a verified request reaches the origin. The proxy also issues a secure cookie that reuses access for one hour.
+
+<Steps>
+
+1. Deploy the template to your Cloudflare account:
+
+   [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/mpp-proxy)
+
+2. Set the recipient, payment currency, and protected routes in `wrangler.jsonc`:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+     "vars": {
+       "PAY_TO": "0xYourWalletAddress",
+       "TEMPO_TESTNET": false,
+       "PAYMENT_CURRENCY": "0x20c000000000000000000000b9537d11c60e8b50",
+       "PROTECTED_PATTERNS": [
+         {
+           "pattern": "/premium/*",
+           "amount": "0.01",
+           "description": "Access to premium content for 1 hour"
+         }
+       ]
+     }
+   }
+   ```
+
+   </WranglerConfig>
+
+   For testnet development, set `TEMPO_TESTNET` to `true` and use `0x20c0000000000000000000000000000000000000` as the payment currency.
+
+3. Store the two required secrets:
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put JWT_SECRET" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
+
+4. Request `/__mpp/protected` or another protected route. An unpaid request should return `402 Payment Required` with a `WWW-Authenticate: Payment` header.
+
+</Steps>
+
+The proxy supports DNS-based origins, external origin URLs, and [service bindings](/workers/runtime-apis/bindings/service-bindings/). Refer to the [`mpp-proxy` README](https://github.com/cloudflare/mpp-proxy) for the full configuration.
+
+### Charge crawlers with Bot Management
+
+With [Bot Management](/bots/), a protected pattern can charge automated traffic while leaving the same content free for people:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "vars": {
+    "PROTECTED_PATTERNS": [
+      {
+        "pattern": "/content/*",
+        "amount": "0.25",
+        "description": "Content access for 1 hour",
+        "bot_score_threshold": 30,
+        "except_detection_ids": [120623194, 117479730]
+      }
+    ]
+  }
+}
+```
+
+</WranglerConfig>
+
+Requests with a bot score at or below `bot_score_threshold` reach the paywall. Use `except_detection_ids` to allow specific crawlers by [detection ID](/ai-crawl-control/reference/bots/).
+
+## Charge for a Worker route
+
+Use the Hono middleware when you control the Worker application.
+
+<PackageManagers pkg="hono mppx" />
+
+Store the MPP signing key as a [Worker secret](/workers/configuration/secrets/):
+
+<PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
+
+Then add `mppx.charge` before the route handler:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { env } from "cloudflare:workers";
+import { Hono } from "hono";
+import { Mppx, tempo } from "mppx/hono";
+
+const app = new Hono();
+
+const mppx = Mppx.create({
+	methods: [tempo.charge()],
+	secretKey: env.MPP_SECRET_KEY,
+});
+
+app.get(
+	"/premium",
+	mppx.charge({
+		amount: "0.10",
+		currency: "0x20c000000000000000000000b9537d11c60e8b50",
+		description: "Premium API access",
+		recipient: "0xYourWalletAddress",
+	}),
+	(c) => c.json({ data: "Thanks for paying!" }),
+);
+
+export default app;
+```
+
+</TypeScriptExample>
+
+You can parse the verified Credential to read the payer DID, offer several methods from the same `Mppx` instance, or set different prices on different routes.
+
+## Charge for an MCP tool
+
+MPP carries its Challenge, Credential, and Receipt as MCP JSON-RPC data. Add `Transport.mcpSdk()` to an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/) and check payment inside the tool handler:
+
+<PackageManagers pkg="agents mppx @modelcontextprotocol/sdk zod" />
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpAgent } from "agents/mcp";
+import { Mppx, tempo, Transport } from "mppx/server";
+import { z } from "zod";
+
+export class PaidMCP extends McpAgent<Env> {
+	server = new McpServer({ name: "paid-search", version: "1.0.0" });
+
+	async init() {
+		const mppx = Mppx.create({
+			methods: [tempo.charge({ testnet: true })],
+			secretKey: this.env.MPP_SECRET_KEY,
+			transport: Transport.mcpSdk(),
+		});
+
+		this.server.tool(
+			"search",
+			"Search the web",
+			{ query: z.string() },
+			async ({ query }, extra) => {
+				const payment = await mppx.charge({
+					amount: "0.01",
+					currency: "0x20c0000000000000000000000000000000000000",
+					description: "Web search query",
+					recipient: "0xYourWalletAddress",
+				})(extra);
+
+				if (payment.status === 402) throw payment.challenge;
+
+				return payment.withReceipt({
+					content: [{ type: "text", text: `Results for: ${query}` }],
+				});
+			},
+		);
+	}
+}
+
+export default PaidMCP.serve("/mcp");
+```
+
+</TypeScriptExample>
+
+Free tools do not call `mppx.charge`. Paid tools can set different prices, and the returned Receipt is attached to the tool result in `_meta`.
+
+## Add other billing patterns
+
+Use the same server architecture for more than one-time charges:
+
+| Pattern                      | Server API                              | Production requirement                                                |
+| ---------------------------- | --------------------------------------- | --------------------------------------------------------------------- |
+| Usage-based access           | `mppx.session()`                        | An atomic store that persists the payment channel across requests.    |
+| Recurring access             | `mppx.subscription()`                   | An atomic store for subscription state and a stable subscription key. |
+| Native MPP and x402 together | `evm.charge()` with an x402 facilitator | An EVM asset, recipient, and facilitator configuration.               |
+| Zero-dollar payer proof      | `mppx.charge({ amount: "0" })`          | An atomic store if proofs must be single-use across Worker instances. |
+
+Use `Store.memory()` only for local development. Use a durable implementation such as `Store.cloudflare()` for concurrent Worker deployments. Refer to the [session intent](https://mpp.dev/intents/session), [subscription guide](https://mpp.dev/guides/subscription-payments), and [MPP with x402 guide](https://mpp.dev/guides/use-mpp-with-x402) for complete configurations.
+
+## Related resources
+
+- [Pay from the Agents SDK](/agents/tools/payments/mpp/pay-from-agents-sdk/)
+- [Monetize an MCP server](https://mpp.dev/guides/monetize-mcp-server)
+- [Hono middleware reference](https://mpp.dev/sdk/typescript/middlewares/hono)
+- [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/)
