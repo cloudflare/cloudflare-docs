@@ -131,7 +131,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/fundamentals/ @dcpena @sahidya @cloudflare/product-owners
 /src/content/docs/fundamentals/ @jhutchings1 @cloudflare/product-owners @KaydeeDee @adambouhmad
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners @KaydeeDee @adambouhmad
-/src/content/docs/fundamentals/organizations/ @wtrousdale @KaydeeDee @adambouhmad @cloudflare/product-owners
+/src/content/docs/fundamentals/organizations/ @wtrousdale @jhutchings1 @KaydeeDee @adambouhmad @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
