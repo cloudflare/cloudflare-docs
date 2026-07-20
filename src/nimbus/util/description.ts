@@ -2,9 +2,7 @@ import { parse } from "node-html-parser";
 import he from "he";
 import { remark } from "remark";
 import strip from "strip-markdown";
-
-// Rehype appends this to outbound links; strip it from derived descriptions.
-const EXTERNAL_LINK_ARROW = " ↗";
+import { EXTERNAL_LINK_ARROW } from "nimbus-docs/markdown";
 
 // Parity: mirrors production's src/util/props.ts generateDescription (html
 // branch); reimplemented because nimbus `~`/`@` aliases resolve to src/nimbus.
