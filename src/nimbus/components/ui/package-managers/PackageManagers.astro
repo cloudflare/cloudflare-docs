@@ -5,30 +5,20 @@
  * an inline custom element restores the saved tab before paint.
  */
 import { Icon } from "astro-icon/components";
-import { getTabs } from "nimbus-docs/lib/pkgm";
-import type { CommandType, CommandOptions } from "nimbus-docs/lib/pkgm";
+import { getTabs } from "~/util/package-managers";
+import type { CommandType, CommandOptions } from "~/util/package-managers";
 import { LayerCard, LayerCardHeader } from "@/components/ui/layer-card";
 
 interface Props extends CommandOptions {
 	pkg?: string;
 	type?: CommandType;
-	prefix?: string;
 	frame?: "terminal" | "none";
 }
 
 // `frame` is accepted for MDX API parity but intentionally not honored:
 // Nimbus keeps its LayerCard shell regardless of `frame="none"`.
-const { pkg, type = "add", args, dev, comment, managers, prefix } = Astro.props;
-let tabs = getTabs(type, pkg, { args, dev, comment, managers });
-// `nimbus-docs`'s pkgm has no `prefix` option, so mirror upstream here:
-// prepend it to the command line, below any leading comment line.
-if (prefix) {
-	tabs = tabs.map((tab) => {
-		const lines = tab.cmd.split("\n");
-		lines[lines.length - 1] = `${prefix} ${lines[lines.length - 1]}`;
-		return { ...tab, cmd: lines.join("\n") };
-	});
-}
+const { pkg, type = "add", args, dev, comment, prefix } = Astro.props;
+const tabs = getTabs(type, pkg, { args, dev, comment, prefix });
 const uid = `pm-${crypto.randomUUID()}`;
 ---
 

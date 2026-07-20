@@ -44,10 +44,10 @@
 	 * (code-title bar, package-manager tabs). */
 	--nb-surface-sunken: oklch(0.975 0 0);
 
-	/* Primary action / brand — mode-invariant (dark overrides only -hover). */
-	--nb-primary: oklch(0.663 0.227 35.9);
+	/* Primary action / brand — matches www marketing orange. */
+	--nb-primary: oklch(0.687 0.208 38.8); /* #ff5e1f */
 	--nb-primary-foreground: oklch(0.99 0.009 78.3);
-	--nb-primary-hover: oklch(0.612 0.211 35.8);
+	--nb-primary-hover: oklch(0.711 0.188 40.4); /* #ff7038 */
 
 	--nb-link: var(--nb-primary);
 
@@ -78,6 +78,14 @@
 	/* Landing structural-grid tick marks (StructuralGrid.astro) */
 	--nb-grid-line: oklch(0 0 0 / 0.08);
 	--nb-grid-line-accent: oklch(0 0 0 / 0.12);
+
+	/* Footer palette — ported verbatim from cloudflare-dev-platform's
+	 * marketing chrome so the global footer matches it 1:1 (light mode). */
+	--nb-accent-100: #ff5e1f; /* Aerospace Orange */
+	--nb-background-100: #ffffff; /* Floral White */
+	--nb-foreground-100: #262626; /* Black Bean */
+	--nb-foreground-200: #262626; /* Black Bean 70% */
+	--nb-text-tertiary: #727272; /* Muted footer text */
 
 	/* Typography — self-hosted via @fontsource-variable in BaseLayout.astro */
 	--nb-font-sans:
@@ -129,8 +137,7 @@
 	/* Darker than `card` (0.168) so the inverted header recedes below the body. */
 	--nb-surface-sunken: oklch(0.13 0 0);
 
-	/* --nb-primary / --nb-primary-foreground inherit from :root (identical). */
-	--nb-primary-hover: oklch(0.696 0.201 40.2);
+	/* --nb-primary / --nb-primary-foreground / --nb-primary-hover inherit from :root (identical). */
 
 	--nb-border: oklch(0.285 0 0);
 	--nb-border-strong: oklch(0.371 0 0);
@@ -155,6 +162,13 @@
 
 	--nb-grid-line: oklch(1 0 0 / 0.1);
 	--nb-grid-line-accent: oklch(1 0 0 / 0.16);
+
+	/* Footer palette — dark mode (from cloudflare-dev-platform). */
+	--nb-accent-100: #ff5e1f; /* Aerospace Orange (mode-invariant) */
+	--nb-background-100: #151414; /* Dark brown/black */
+	--nb-foreground-100: #f0e3de; /* Light beige/cream */
+	--nb-foreground-200: #f0e3de; /* Light beige 70% */
+	--nb-text-tertiary: #9a9390; /* Muted footer text */
 }
 
 /* ---- Diagram accent ----
@@ -203,6 +217,15 @@
 	--color-danger: var(--nb-danger);
 	--color-danger-muted: var(--nb-danger-muted);
 
+	/* Footer palette (ported from cloudflare-dev-platform). Generates
+	 * bg-background-100 / text-foreground-100 / text-foreground-200 /
+	 * text-accent-100. */
+	--color-accent-100: var(--nb-accent-100);
+	--color-background-100: var(--nb-background-100);
+	--color-foreground-100: var(--nb-foreground-100);
+	--color-foreground-200: var(--nb-foreground-200);
+	--color-text-tertiary: var(--nb-text-tertiary);
+
 	--font-sans: var(--nb-font-sans);
 	--font-mono: var(--nb-font-mono);
 
@@ -235,6 +258,43 @@
 	}
 }
 
+/* Footer helpers ported from cloudflare-dev-platform. `text-tertiary` is a
+ * custom utility there (not a Tailwind color), and `px-section` is their
+ * single source of truth for responsive horizontal section padding. */
+@utility text-tertiary {
+	color: var(--color-text-tertiary);
+}
+
+@utility px-section {
+	padding-inline: 1rem;
+	@media (width >= 64rem) {
+		padding-inline: 1.5rem;
+	}
+	@media (width >= 80rem) {
+		padding-inline: 2rem;
+	}
+}
+
+/* Blueprint continuity: in light mode the footer sheds its solid fill so the
+ * landing page's vertical dashed rules (FullPageLines) read straight through
+ * it. Targets the footer's fill layers (scroll host + legal band + separator).
+ * Dark mode keeps the fill — the blueprint treatment is a light-mode motif.
+ * Unlayered, so it wins over Tailwind's layered `bg-background-100` utility. */
+html:not([data-mode="dark"]) .nb-footer .bg-background-100 {
+	background-color: transparent;
+}
+
+/* On the landing page the footer runs full width, but its content must share
+ * the content column's right gutter (`max(2rem, 4vw)`, wider than the footer's
+ * default `px-section`) so the rightmost column ends on FullPageLines' inner
+ * rule — leaving a clean dot gutter bracketed by BOTH the inner and outer
+ * dashed rules, matching the content above. Desktop-only (lines are lg+). */
+@media (min-width: 64rem) {
+	.nb-home-footer .footer-scroll-host {
+		padding-right: max(2rem, 4vw);
+	}
+}
+
 /* ---- Minimal overrides the plugin doesn't cover ---- */
 html {
 	font-family: var(--nb-font-sans);
@@ -243,6 +303,9 @@ html {
 
 body {
 	opacity: 1;
+	/* Grayscale antialiasing to match production (avoids heavier subpixel text). */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 @media (prefers-reduced-motion: no-preference) {

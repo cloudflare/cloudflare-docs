@@ -35,50 +35,34 @@ describe("resolveFavicon", () => {
 
 describe("resolveSocialImagePath", () => {
 	const none = existing();
-	test("precedence: prop > config > product-group > opengraph > logo > card", () => {
+	test("precedence: prop > config > opengraph > logo > card", () => {
 		expect(
 			resolveSocialImagePath({
 				socialImage: "/page.png",
 				configImage: "/cfg.png",
-				productGroup: "developer platform",
 				exists: existing("opengraph.png"),
 			}),
 		).toBe("/page.png");
 		expect(
 			resolveSocialImagePath({ configImage: "/cfg.png", exists: none }),
 		).toBe("/cfg.png");
-		expect(
-			resolveSocialImagePath({
-				productGroup: "Developer Platform",
-				exists: none,
-			}),
-		).toBe("/dev-products-preview.png");
 		expect(resolveSocialImagePath({ exists: existing("opengraph.png") })).toBe(
 			"/opengraph.png",
 		);
 		expect(resolveSocialImagePath({ exists: existing("logo.png") })).toBe(
 			"/logo.png",
 		);
-		expect(resolveSocialImagePath({ exists: none })).toBe(
-			"/cf-twitter-card.png",
-		);
+		expect(resolveSocialImagePath({ exists: none })).toBe("/og-docs.png");
 	});
 
-	test("unknown product group falls through to the file/card chain", () => {
-		expect(
-			resolveSocialImagePath({ productGroup: "not a group", exists: none }),
-		).toBe("/cf-twitter-card.png");
-	});
-
-	test("changelog card beats config/product-group/files, loses to explicit prop", () => {
+	test("changelog card beats config/files, loses to explicit prop", () => {
 		expect(
 			resolveSocialImagePath({
 				isChangelog: true,
 				configImage: "/cfg.png",
-				productGroup: "developer platform",
 				exists: existing("opengraph.png"),
 			}),
-		).toBe("/changelog-preview.png");
+		).toBe("/og-changelog.png");
 		expect(
 			resolveSocialImagePath({
 				socialImage: "/page.png",
@@ -87,7 +71,7 @@ describe("resolveSocialImagePath", () => {
 			}),
 		).toBe("/page.png");
 		expect(resolveSocialImagePath({ isChangelog: false, exists: none })).toBe(
-			"/cf-twitter-card.png",
+			"/og-docs.png",
 		);
 	});
 });

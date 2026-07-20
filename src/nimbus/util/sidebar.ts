@@ -1,20 +1,11 @@
-/**
- * Cloudflare navigation conventions, expressed as call-site callbacks for
- * the nimbus-docs nav surface:
- *
- *   - `sectionTitleResolver` — the rail header title, passed to
- *     `getSectionTitle`. Learning paths get the per-module title suffixed
- *     with "(Learning Paths)"; every other product uses its `directory`
- *     entry title.
- *   - `agentResourcesTransform` — appends the "Agent resources" group to a
- *     module's rail when that module has a `directory` entry, passed to
- *     `getSidebar`.
- */
+// Cloudflare nav conventions for the nimbus-docs nav surface: section titles,
+// breadcrumb relabeling, sidebar transforms, and badges.
 import { getCollection, getEntry } from "astro:content";
 import { getBreadcrumbs, getRouteNavigation } from "nimbus-docs";
 import type { SectionTitleResolver } from "nimbus-docs";
 import type {
 	SidebarBadge,
+	SidebarGroupItem,
 	SidebarItem,
 	SidebarTransform,
 } from "nimbus-docs/types";
@@ -33,9 +24,7 @@ export const sectionTitleResolver: SectionTitleResolver = async ({
 	return entry ? { rail: entry.data.entry.title } : undefined;
 };
 
-// Display title for a top-level product, from the `directory` collection — the
-// same source the rail uses. Memoized: a build resolves each of the ~105 slugs
-// once. (Not cleared by clearNavCaches, so dev edits to a title need a restart.)
+// Product title from `directory`. Memoized per build (dev title edits need a restart).
 const sectionTitleCache = new Map<string, string | undefined>();
 async function directoryTitle(seg0: string): Promise<string | undefined> {
 	if (sectionTitleCache.has(seg0)) return sectionTitleCache.get(seg0);
@@ -56,13 +45,8 @@ function nodeHref(node: SidebarItem): string | undefined {
 	return node.indexIsExternal ? undefined : node.indexHref;
 }
 
-/**
- * Breadcrumb `resolveLabel`: rewrite the product/section crumb from its raw dir
- * slug (`workers-ai`) to the directory title (`Workers AI`). Only the section
- * crumb is touched — identified by `href === /<seg0>/` or, for an index-less
- * section, a top-level group whose label is the slug. All other crumbs keep
- * `node.label` (page titles), short-circuiting before any lookup.
- */
+// Breadcrumb label: rewrite the section crumb from dir slug (`workers-ai`) to
+// its directory title (`Workers AI`); all other crumbs keep node.label.
 async function breadcrumbLabelResolver({
 	node,
 	slug,
@@ -155,9 +139,53 @@ export const agentResourcesTransform: SidebarTransform = async ({
 	return [...tree, agentResources];
 };
 
-// Same-origin sibling apps that live OUTSIDE the docs build — separate
-// deploys served at the same origin (today just the `/api/` OpenAPI
-// reference). A link into one of these leaves the docs app entirely.
+const LEARNING_PATHS_SECTION = "learning-paths";
+
+const trimSlashes = (href: string): string => href.replace(/^\/+|\/+$/g, "");
+
+function someInternalHref(
+	item: SidebarItem,
+	pred: (href: string) => boolean,
+): boolean {
+	if (item.type === "external") return false;
+	if (item.type === "link") {
+		return !item._neverActive && pred(item.href);
+	}
+	const ownIndexMatches =
+		!!item.indexHref &&
+		!item.indexIsExternal &&
+		!item._indexNeverActive &&
+		pred(item.indexHref);
+	return (
+		ownIndexMatches ||
+		item.children.some((child) => someInternalHref(child, pred))
+	);
+}
+
+// Isolate the rail to the current learning path's modules. The framework's
+// `sidebar.isolate` mishandles cross-section external_links, so we do it here.
+export function isolateLearningPath(
+	tree: SidebarItem[],
+	currentSlug: string,
+): SidebarItem[] {
+	const segs = currentSlug.split("/").filter(Boolean);
+	if (segs[0] !== LEARNING_PATHS_SECTION || !segs[1]) return tree;
+	const prefix = `/${segs[0]}/${segs[1]}/`;
+	const currentKey = trimSlashes(`/${segs.join("/")}`);
+
+	const groups = tree.filter(
+		(item): item is SidebarGroupItem => item.type === "group",
+	);
+	const owner =
+		groups.find((g) =>
+			someInternalHref(g, (href) => trimSlashes(href) === currentKey),
+		) ??
+		groups.find((g) => someInternalHref(g, (href) => href.startsWith(prefix)));
+
+	return owner ? owner.children : tree;
+}
+
+// Same-origin sibling apps outside the docs build (today just `/api/`).
 const EXTERNAL_APP_PREFIXES = ["/api/"];
 
 function isExternalAppHref(href: string): boolean {
@@ -203,9 +231,7 @@ function markInternalRedirects(items: SidebarItem[]): SidebarItem[] {
 	});
 }
 
-// External-app (`/api/`) re-marking + internal-redirect arrows, without the
-// Agent resources group. The "Overview" convention is applied by nimbus-docs
-// via `sidebar.indexDisplay: "overview-leaf"`.
+// External-app re-marking + internal-redirect arrows (no Agent resources group).
 export const externalAppLinksTransform: SidebarTransform = ({ tree }) =>
 	markInternalRedirects(markExternalAppLinks(tree));
 
@@ -261,11 +287,8 @@ function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
 	return betaBadgeUrlsPromise;
 }
 
-/**
- * Walk the tree: remap an existing badge's variant, or inject the auto-Beta
- * badge when a node has none and its URL is a beta product. A group keys off
- * its landing (`indexHref`); links/externals off `href`.
- */
+// Remap a badge's variant, or inject an auto-Beta badge for beta-product URLs.
+// Groups key off `indexHref`; links/externals off `href`.
 function applyBadges(
 	items: SidebarItem[],
 	betaUrls: Map<string, SidebarBadge>,
@@ -286,12 +309,11 @@ function applyBadges(
 	});
 }
 
-// Agent resources + external-app re-marking + badges. The "Overview" convention
-// (leaf lift + section-root pinning) is applied downstream by nimbus-docs via
-// `sidebar.indexDisplay: "overview-leaf"`, which runs after this transform — so
-// `applyBadges` still keys group badges off `indexHref` before it is cleared.
+// Isolate learning paths + agent resources + external-app re-marking + badges.
+// Runs before nimbus-docs' overview-leaf pass, so group badges still see `indexHref`.
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
-	const withAgentResources = await agentResourcesTransform(ctx);
+	const tree = isolateLearningPath(ctx.tree, ctx.currentSlug);
+	const withAgentResources = await agentResourcesTransform({ ...ctx, tree });
 	const withExternal = markExternalAppLinks(withAgentResources);
 	const withRedirects = markInternalRedirects(withExternal);
 	const betaUrls = await getBetaBadgeUrls();

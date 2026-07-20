@@ -6,6 +6,7 @@ import { ThemeToggle } from "./ui/theme-toggle";
 import { DocSearch } from "./ui/search";
 import { config } from "virtual:nimbus/config";
 import { getSidebarSections } from "nimbus-docs";
+import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
 import logo from "~/assets/logo.svg";
 
 interface Props {
@@ -55,7 +56,11 @@ const navLinks = [
 >
 	<div class="mx-auto flex h-14 items-center justify-between px-4 lg:px-6">
 		<div class="flex items-center gap-3">
-			<a href="/" class="group flex items-center gap-2">
+			<a
+				href="/"
+				aria-label="Cloudflare Docs"
+				class="group flex items-center gap-2"
+			>
 				<img
 					src={logo.src}
 					alt=""
@@ -63,10 +68,15 @@ const navLinks = [
 					height="23"
 					class="h-[20px] w-auto"
 				/>
+				<CloudflareWordmark
+					role="img"
+					aria-label="Cloudflare"
+					className="text-foreground group-hover:text-primary hidden h-[11px] w-auto transition-colors sm:block"
+				/>
 				<span
-					class="text-foreground group-hover:text-primary text-lg font-semibold tracking-tight transition-colors"
+					class="text-foreground/70 border-border-strong hidden rounded-md border px-1.5 py-0.5 text-[11px] leading-none font-semibold tracking-[0.08em] uppercase sm:inline-block"
 				>
-					{config.title}
+					Docs
 				</span>
 			</a>
 
