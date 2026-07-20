@@ -543,10 +543,7 @@ export function renderComment(
 		"| `/disable-auto-review` | Stops automatic reviews from triggering on future pushes to this PR. Codeowners can still run `/review` or `/full-review` manually. |",
 	);
 	lines.push(
-		"| `/rebase` | Rebases the PR branch against `production`. Stops if there are conflicts and reports which files conflict. |",
-	);
-	lines.push(
-		"| `/rebaseWithConflicts` | Rebases against `production` and attempts to resolve conflicts automatically using AI. Stops with an explanation if confidence is not high enough. |",
+		"| `/rebase` | Rebases the PR branch against `production`. On conflict, attempts to resolve automatically using AI. Stops with an explanation if confidence is not high enough. |",
 	);
 	lines.push("");
 	lines.push("</details>");
@@ -652,7 +649,7 @@ function rebaseStatusLine(
 			return `✅ **Rebase:** Rebased against \`production\` — full review triggered.`;
 		case "halted-conflict":
 			return [
-				`⚠️ **Rebase:** Rebase halted — conflicts detected. Resolve manually or use \`/rebaseWithConflicts\`.`,
+				`⚠️ **Rebase:** Rebase halted — conflicts detected. Please resolve manually.`,
 				...(detail ? [`> ${sanitizeRebaseDetail(detail)}`] : []),
 			].join("\n");
 		case "halted-wrong-base":
