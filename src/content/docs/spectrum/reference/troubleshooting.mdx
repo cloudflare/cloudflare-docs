@@ -27,3 +27,27 @@ When a Spectrum application uses a [virtual network origin](/spectrum/reference/
 ### Cloudflare WAN as the connector
 
 For tunnel health, BGP, and routing diagnostics on WAN-connected origins, refer to [Troubleshoot Cloudflare WAN](/cloudflare-wan/troubleshooting/).
+
+## Health checks fail when IP Access Rules are enabled
+
+### Symptoms
+
+- Cloudflare Load Balancer health checks report all endpoints as unhealthy with the error `Connection reset by peer`.
+- Removing IP Access Rules from the Spectrum application causes health checks to succeed.
+- The Spectrum application itself works correctly for client traffic that is allowed by the IP Access Rules.
+
+### Cause
+
+When you turn on [IP Access Rules](/spectrum/reference/configuration-options/#ip-access-rules) on a Spectrum application, all incoming connections are evaluated against your rules — including connections from Cloudflare's own health check probes. If your IP Access Rules use an allowlist model (allow specific IPs, block everything else), Cloudflare's health check source IPs will be blocked, causing health checks to fail.
+
+### Solution
+
+Add Cloudflare's IP ranges to your IP Access Rules allowlist. You can find the current list of Cloudflare IP addresses at [cloudflare.com/ips](https://www.cloudflare.com/ips/).
+
+Alternatively, if you only need to restrict client access (not health check access), consider configuring health checks to use a TCP check type that validates the connection can be established, and manage your access control at the origin level instead.
+
+:::note
+
+[Custom rules](/waf/custom-rules/) (WAF rules) do not apply to Spectrum applications configured with the TCP/UDP application type. For Spectrum, IP Access Rules are the only supported mechanism for IP-based filtering. Refer to [Spectrum Limitations](/spectrum/reference/limitations/#ip-access-control).
+
+:::

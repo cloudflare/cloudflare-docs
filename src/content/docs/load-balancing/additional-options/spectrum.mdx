@@ -54,6 +54,9 @@ The exact settings will vary depending on your use case. Refer to the following 
 8. On the **Monitors** page, define the settings presented and select **Next**.
    - Review the monitors attached to your pools.
    - If needed, you can attach an existing monitor or [create a new monitor](/load-balancing/monitors/create-monitor/#create-a-monitor).
+   :::caution[IP Access Rules and health checks]
+   If your Spectrum application has [IP Access Rules](/spectrum/reference/configuration-options/#ip-access-rules) enabled, Cloudflare's health check probes must be allowed by your rules. Otherwise, health checks will be blocked and all endpoints will be marked as unhealthy. To resolve this, add [Cloudflare IP addresses](https://www.cloudflare.com/ips/) to your IP Access Rules allowlist. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#health-checks-fail-when-ip-access-rules-are-enabled) for details.
+   :::
 
 9. On the **Traffic Steering** page, choose an option for [Traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and select **Next**.
 
