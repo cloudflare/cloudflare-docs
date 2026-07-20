@@ -91,9 +91,9 @@ export default new OAuthProvider({
 
 The draft `2026-07-28` protocol has no protocol-level session. Applications can store durable business data behind a separate storage boundary.
 
-Existing servers that require published 2025 sessions can use `createLegacyMcpHandler` with `WorkerTransport`, or keep `McpAgent` temporarily. These APIs support transport state, event replay, pushed elicitation, sampling, and roots requests. `McpAgent` is deprecated and feature-frozen.
+Existing servers that require published 2025 sessions can use `createLegacyMcpHandler` with `WorkerTransport`, or keep `McpAgent` while their stateless equivalents are built. These APIs support transport state, event replay, pushed elicitation, sampling, and roots requests. `McpAgent` is deprecated and feature-frozen.
 
-Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) before changing a stateful endpoint. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability) for existing stream behavior.
+Add the modern route before moving clients, and keep both lanes until existing sessions drain. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged migration. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability) for existing stream behavior.
 
 ## RPC transport
 
@@ -314,11 +314,11 @@ export class MyMCP extends McpAgent<Env, State> {
 
 ### Migrate from McpAgent
 
-Keep `McpAgent` only when an endpoint depends on legacy stateful operations, such as state tied to an MCP session, RPC, pushed server-to-client requests, or stream replay.
+If the endpoint does not use legacy stateful features, migrate directly to a stateless server factory from `@modelcontextprotocol/server` and pass it to `createMcpHandler`.
 
-If the endpoint does not require those operations, migrate when convenient to a stateless server factory from `@modelcontextprotocol/server` and pass it to `createMcpHandler`. The stateless path supports modern multi-round-trip requests (MRTR) and will receive future MCP features.
+If it depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay, first design stateless equivalents. For example, move business state behind explicit application storage and replace pushed input requests with multi-round-trip `input_required` results. Serve modern and legacy lanes together while clients migrate and existing sessions drain.
 
-Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for dual-era routing, state migration, and rollout steps.
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the feature mapping, dual-era routing, and rollout steps.
 
 ### Testing with MCP clients
 

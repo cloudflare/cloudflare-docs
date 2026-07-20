@@ -28,7 +28,7 @@ The Agents SDK provides multiple ways to create MCP servers. Choose the approach
 | [`McpAgent`](/agents/model-context-protocol/apis/agent-api/)                                          | Yes                  | Published 2025                                   | Existing Durable Object and RPC servers |
 | Raw SDK transport                                                                                     | Depends on transport | Depends on SDK package                           | Custom transport ownership              |
 
-Use `createMcpHandler` for a new stateless server. `McpAgent` remains available but is deprecated and feature-frozen. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) when updating an existing server.
+Use `createMcpHandler` for a new stateless server. An existing `McpAgent` without legacy stateful dependencies can migrate directly. If it uses MCP session state, RPC, pushed requests, streams, or replay, plan the stateless equivalents and serve both eras during the transition. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged rollout.
 
 ## Deploy your first MCP server
 

@@ -16,11 +16,13 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 :::caution[Deprecated]
 
-`McpAgent` remains available for existing servers that need Durable Object state, RPC, protocol sessions, or pushed server-to-client requests. It is deprecated and feature-frozen. New stateless servers should use [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
+`McpAgent` remains available for published 2025 servers that use legacy stateful features. It is deprecated and feature-frozen. A server without those dependencies can migrate directly to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
 
-Keep importing its `McpServer` from `@modelcontextprotocol/sdk`. An SDK v2 server from `@modelcontextprotocol/server` cannot run inside `McpAgent`.
+A server that depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay needs a staged migration. Design stateless equivalents, add a modern route, and serve both eras until clients migrate and existing sessions drain.
 
-Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) before changing an existing deployment.
+Keep importing the legacy server's `McpServer` from `@modelcontextprotocol/sdk`. An SDK v2 server from `@modelcontextprotocol/server` cannot run inside `McpAgent`.
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the feature mapping and dual-era rollout.
 
 :::
 
