@@ -45,7 +45,7 @@ describe("parseAddedLines", () => {
 	});
 
 	it("assigns correct line numbers with context lines", () => {
-		const patch = `@@ -10,5 +10,6 @@
+		const patch = `@@ -10,4 +10,5 @@
  context line
  context line
 +new line here
@@ -108,7 +108,7 @@ describe("parseAddedLines", () => {
 	});
 
 	it("handles a realistic MDX diff", () => {
-		const patch = `@@ -5,6 +5,10 @@
+		const patch = `@@ -5,5 +5,9 @@
  import { Tabs } from "~/components";
  
 +import { Details } from "~/components";
