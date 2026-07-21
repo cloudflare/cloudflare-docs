@@ -31,7 +31,7 @@ Regional Services only applies to the custom domain configured for a Workers pro
 
 Regional Services restricts where Workers are executed (where requests are processed). However, Workers code and secrets are deployed globally to all Cloudflare data centers. Regional Services does not prevent the code itself from being present outside the configured region — only its execution is regionalized.
 
-Regional Services applies to outgoing [subrequests](/workers/platform/limits/#subrequests) (secondary HTTP requests that Workers make to other services) from a regionalized hostname — those are processed within the configured region. However, incoming subrequests from other zones or domains to your regionalized hostname are not automatically regionalized. They follow their own zone's Regional Services configuration.
+Requests reaching your regionalized hostname from another zone or domain are regionalized according to your hostname's Regional Services configuration, regardless of the originating zone. Regional Services does not extend to outgoing [subrequests](/workers/platform/limits/#subrequests) from Workers to other services — refer to [Limitations](/data-localization/limitations/#regional-services) for details.
 
 Regional Services does not apply to other Worker triggers, like [Queues](/queues/) or [Cron Triggers](/workers/configuration/cron-triggers/).
 
