@@ -4,81 +4,134 @@ import type { HTMLAttributes } from "astro/types";
 import type { Breadcrumb } from "nimbus-docs/types";
 
 interface Props extends HTMLAttributes<"nav"> {
-  items: Breadcrumb[];
-  /** Max visible crumbs before collapsing middle items (default: 4) */
-  maxVisible?: number;
+	items: Breadcrumb[];
+	/** Max visible crumbs before collapsing middle items (default: 4) */
+	maxVisible?: number;
 }
 
 const { items, maxVisible = 4, class: className, ...attrs } = Astro.props;
 
-// Determine if we need to collapse the middle
+// Collapsed shape: Home + first + … + parent + current.
 const shouldCollapse = items.length > maxVisible;
-// When collapsed: Home + first segment + ... + last 2 (parent + current)
-const headCount = 2; // Home + first segment
-const tailCount = 2; // parent + current page
+const headCount = 2;
+const tailCount = 2;
 const headItems = shouldCollapse ? items.slice(0, headCount) : items;
-const collapsedItems = shouldCollapse ? items.slice(headCount, items.length - tailCount) : [];
+const collapsedItems = shouldCollapse
+	? items.slice(headCount, items.length - tailCount)
+	: [];
 const tailItems = shouldCollapse ? items.slice(items.length - tailCount) : [];
 ---
 
-{items.length > 1 && (
-  <nav aria-label="Breadcrumb" class={cn("text-xs font-medium", className)} {...attrs}>
-    <ol class="flex flex-wrap items-center gap-y-0.5 text-muted-foreground">
-      {headItems.map((crumb, i) => (
-        <li class="flex items-center">
-          {i > 0 && <span class="mx-1.5 text-muted-foreground/50">/</span>}
-          {(!shouldCollapse && i === items.length - 1) || !crumb.href ? (
-            <span class="text-foreground truncate max-w-[12rem]">{crumb.label}</span>
-          ) : (
-            <a href={crumb.href} class="hover:text-foreground transition-colors truncate max-w-[12rem]">
-              {crumb.label}
-            </a>
-          )}
-        </li>
-      ))}
+{
+	items.length > 1 && (
+		<nav
+			aria-label="Breadcrumb"
+			class={cn("min-w-0 text-xs font-medium", className)}
+			{...attrs}
+		>
+			{/* Only the current crumb shrinks; no overflow-hidden so the … popover can escape the row. */}
+			<ol class="text-muted-foreground flex items-center">
+				{headItems.map((crumb, i) => {
+					const isCurrent = !shouldCollapse && i === items.length - 1;
+					return (
+						<li
+							class={cn(
+								"flex items-center",
+								isCurrent ? "min-w-0" : "flex-shrink-0",
+							)}
+						>
+							{i > 0 && (
+								<span class="text-muted-foreground/50 mx-1.5 flex-shrink-0">
+									/
+								</span>
+							)}
+							{isCurrent || !crumb.href ? (
+								<span
+									class={cn(
+										"text-foreground",
+										isCurrent ? "min-w-0 truncate" : "whitespace-nowrap",
+									)}
+									aria-current={isCurrent ? "page" : undefined}
+								>
+									{crumb.label}
+								</span>
+							) : (
+								<a
+									href={crumb.href}
+									class="hover:text-foreground whitespace-nowrap transition-colors"
+								>
+									{crumb.label}
+								</a>
+							)}
+						</li>
+					);
+				})}
 
-      {shouldCollapse && collapsedItems.length > 0 && (
-        <li class="flex items-center">
-          <span class="mx-1.5 text-muted-foreground/50">/</span>
-          <details class="relative group">
-            <summary
-              class="list-none cursor-pointer select-none rounded px-1 py-0.5 transition-colors hover:bg-accent hover:text-foreground [&::-webkit-details-marker]:hidden group-open:before:fixed group-open:before:inset-0 group-open:before:z-[39] group-open:before:cursor-default group-open:before:content-['']"
-              aria-label={`Show ${collapsedItems.length} more path segments`}
-            >
-              <span class="tracking-widest">&hellip;</span>
-            </summary>
-            <div class="absolute left-0 top-full z-40 mt-1 min-w-[10rem] max-w-[16rem] rounded-lg border border-border bg-card p-1 shadow-lg">
-              {collapsedItems.map((crumb) => (
-                crumb.href ? (
-                  <a
-                    href={crumb.href}
-                    class="block truncate rounded-md px-2.5 py-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-                  >
-                    {crumb.label}
-                  </a>
-                ) : (
-                  <span class="block truncate rounded-md px-2.5 py-1.5 text-xs text-muted-foreground">
-                    {crumb.label}
-                  </span>
-                )
-              ))}
-            </div>
-          </details>
-        </li>
-      )}
+				{shouldCollapse && collapsedItems.length > 0 && (
+					<li class="flex flex-shrink-0 items-center">
+						<span class="text-muted-foreground/50 mx-1.5">/</span>
+						<details class="group relative">
+							<summary
+								class="hover:bg-accent hover:text-foreground cursor-pointer list-none rounded px-1 py-0.5 transition-colors select-none group-open:before:fixed group-open:before:inset-0 group-open:before:z-[39] group-open:before:cursor-default group-open:before:content-[''] [&::-webkit-details-marker]:hidden"
+								aria-label={`Show ${collapsedItems.length} more path segments`}
+							>
+								<span class="tracking-widest">&hellip;</span>
+							</summary>
+							<div class="border-border bg-card absolute top-full left-0 z-40 mt-1 max-w-[16rem] min-w-[10rem] rounded-lg border p-1 shadow-lg">
+								{collapsedItems.map((crumb) =>
+									crumb.href ? (
+										<a
+											href={crumb.href}
+											class="text-muted-foreground hover:bg-accent hover:text-foreground block truncate rounded-md px-2.5 py-1.5 text-xs transition-colors"
+										>
+											{crumb.label}
+										</a>
+									) : (
+										<span class="text-muted-foreground block truncate rounded-md px-2.5 py-1.5 text-xs">
+											{crumb.label}
+										</span>
+									),
+								)}
+							</div>
+						</details>
+					</li>
+				)}
 
-      {shouldCollapse && tailItems.map((crumb, i) => (
-        <li class="flex items-center">
-          <span class="mx-1.5 text-muted-foreground/50">/</span>
-          {i === tailItems.length - 1 || !crumb.href ? (
-            <span class="text-foreground truncate max-w-[12rem]">{crumb.label}</span>
-          ) : (
-            <a href={crumb.href} class="hover:text-foreground transition-colors truncate max-w-[12rem]">
-              {crumb.label}
-            </a>
-          )}
-        </li>
-      ))}
-    </ol>
-  </nav>
-)}
+				{shouldCollapse &&
+					tailItems.map((crumb, i) => {
+						const isCurrent = i === tailItems.length - 1;
+						return (
+							<li
+								class={cn(
+									"flex items-center",
+									isCurrent ? "min-w-0" : "flex-shrink-0",
+								)}
+							>
+								<span class="text-muted-foreground/50 mx-1.5 flex-shrink-0">
+									/
+								</span>
+								{isCurrent || !crumb.href ? (
+									<span
+										class={cn(
+											"text-foreground",
+											isCurrent ? "min-w-0 truncate" : "whitespace-nowrap",
+										)}
+										aria-current={isCurrent ? "page" : undefined}
+									>
+										{crumb.label}
+									</span>
+								) : (
+									<a
+										href={crumb.href}
+										class="hover:text-foreground whitespace-nowrap transition-colors"
+									>
+										{crumb.label}
+									</a>
+								)}
+							</li>
+						);
+					})}
+			</ol>
+		</nav>
+	)
+}

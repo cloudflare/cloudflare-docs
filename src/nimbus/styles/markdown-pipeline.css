@@ -11,10 +11,23 @@
 	position: relative;
 }
 
+/* Match the wrapper's font-size to the heading so `1lh` equals the heading's
+ * line box and the icon centers on the first line at every level. */
+.docs-content .heading-wrapper.level-h1 {
+	font-size: var(--nb-h1-size);
+}
+.docs-content .heading-wrapper.level-h2 {
+	font-size: var(--nb-h2-size);
+}
+.docs-content .heading-wrapper.level-h3 {
+	font-size: var(--nb-h3-size);
+}
+
 .docs-content .anchor-link {
 	position: absolute;
-	top: 0.15em;
+	top: 0;
 	left: -1.4rem;
+	height: 1lh;
 	display: inline-flex;
 	align-items: center;
 	color: var(--nb-muted-foreground);

@@ -341,6 +341,10 @@ Complete Step 4 at least one hour after steps 1, 2, and 3 so clients have enough
 
 By completing this step, you deliver the Cloudflare One Client to targeted macOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
 
+:::caution
+On versions 2026.3.566.1 and later, Intune may repeatedly reinstall the Cloudflare One Client after you upload the `.pkg`, restarting the client and dropping the WARP connection. This happens because Intune adds the client's embedded framework bundles to the app's **Included apps** detection list, but Intune cannot detect those frameworks as installed applications on their own. To fix this, remove every entry except `com.cloudflare.1dot1dot1dot1.macos` from the **Included apps** list, set **Ignore app version** to **Yes**, and reapply the change each time you upload a new package. Refer to [Repeated reinstalls on macOS with Microsoft Intune](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/known-limitations/#repeated-reinstalls-on-macos-with-microsoft-intune).
+:::
+
 ## iOS
 
 The following steps outline how to deploy the Cloudflare One Agent (Cloudflare One Client) on iOS using Microsoft Intune and preconfigure it with MDM parameters.

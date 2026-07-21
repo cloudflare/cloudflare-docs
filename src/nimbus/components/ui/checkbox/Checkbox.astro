@@ -22,26 +22,26 @@ import type { HTMLAttributes } from "astro/types";
 import { checkboxVariants, type CheckboxVariant } from "./variants";
 
 interface Props extends Omit<HTMLAttributes<"input">, "size"> {
-  /** Visible label. Omit only when passing `aria-label` / `aria-labelledby`. */
-  label?: string;
-  /** Visual variant. @default "default" */
-  variant?: CheckboxVariant;
-  /** Box before label (default) or after. @default true */
-  controlFirst?: boolean;
-  /** Seed the indeterminate ("mixed") state. */
-  indeterminate?: boolean;
+	/** Visible label. Omit only when passing `aria-label` / `aria-labelledby`. */
+	label?: string;
+	/** Visual variant. @default "default" */
+	variant?: CheckboxVariant;
+	/** Box before label (default) or after. @default true */
+	controlFirst?: boolean;
+	/** Seed the indeterminate ("mixed") state. */
+	indeterminate?: boolean;
 }
 
 const {
-  label,
-  variant = "default",
-  controlFirst = true,
-  indeterminate = false,
-  checked,
-  disabled,
-  class: className,
-  id,
-  ...attrs
+	label,
+	variant = "default",
+	controlFirst = true,
+	indeterminate = false,
+	checked,
+	disabled,
+	class: className,
+	id,
+	...attrs
 } = Astro.props;
 
 // Stable id so the inline indeterminate-seeding script can target this input.
@@ -49,44 +49,46 @@ const inputId = id ?? `cb-${Math.random().toString(36).slice(2, 10)}`;
 ---
 
 <label
-  class={cn(
-    "group/checkbox m-0 inline-flex items-start gap-2",
-    !controlFirst && "flex-row-reverse justify-end",
-    disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-    className,
-  )}
+	class={cn(
+		"group/checkbox m-0 inline-flex items-start gap-2",
+		!controlFirst && "flex-row-reverse justify-end",
+		disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+		className,
+	)}
 >
-  <span class={cn("relative inline-flex size-4 shrink-0", label && "mt-0.5")}>
-    <input
-      type="checkbox"
-      id={inputId}
-      checked={checked}
-      disabled={disabled}
-      data-indeterminate={indeterminate ? "true" : undefined}
-      class="peer absolute inset-0 z-20 m-0 size-4 cursor-[inherit] appearance-none opacity-0"
-      {...attrs}
-    />
-    <span aria-hidden="true" class={checkboxVariants({ variant })}></span>
-    {/* Glyphs are siblings of the input (not children of the box) so the
-        `peer-*` combinator can reach them. */}
-    <Icon
-      name="ph:check-bold"
-      class="pointer-events-none absolute inset-0 z-10 m-auto size-3 text-background opacity-0 transition-opacity peer-checked:opacity-100 peer-indeterminate:opacity-0"
-    />
-    <Icon
-      name="ph:minus-bold"
-      class="pointer-events-none absolute inset-0 z-10 m-auto size-3 text-background opacity-0 transition-opacity peer-indeterminate:opacity-100"
-    />
-  </span>
-  {label && <span class="text-sm text-foreground select-none">{label}</span>}
+	<span class={cn("relative inline-flex size-4 shrink-0", label && "mt-0.5")}>
+		<input
+			type="checkbox"
+			id={inputId}
+			checked={checked}
+			disabled={disabled}
+			data-indeterminate={indeterminate ? "true" : undefined}
+			class="peer absolute inset-0 z-20 m-0 size-4 cursor-[inherit] appearance-none opacity-0"
+			{...attrs}
+		/>
+		<span aria-hidden="true" class={checkboxVariants({ variant })}></span>
+		{
+			/* Glyphs are siblings of the input (not children of the box) so the
+        `peer-*` combinator can reach them. */
+		}
+		<Icon
+			name="ph:check-bold"
+			class="text-background pointer-events-none absolute inset-0 z-10 m-auto size-3 opacity-0 transition-opacity peer-checked:opacity-100 peer-indeterminate:opacity-0"
+		/>
+		<Icon
+			name="ph:minus-bold"
+			class="text-background pointer-events-none absolute inset-0 z-10 m-auto size-3 opacity-0 transition-opacity peer-indeterminate:opacity-100"
+		/>
+	</span>
+	{label && <span class="text-foreground text-sm select-none">{label}</span>}
 </label>
 
 {/* `indeterminate` is a JS-only property — seed it once the element exists. */}
 {
-  indeterminate && (
-    <script is:inline define:vars={{ inputId }}>
-      var el = document.getElementById(inputId);
-      if (el) el.indeterminate = true;
-    </script>
-  )
+	indeterminate && (
+		<script is:inline define:vars={{ inputId }}>
+			const el = document.getElementById(inputId); if (el) el.indeterminate =
+			true;
+		</script>
+	)
 }

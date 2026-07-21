@@ -3,6 +3,12 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-06-04"
+    description: |-
+      - Updated v8 to version 15.0.
+  - publish_date: "2026-05-13"
+    description: |-
+      - Fixed a regression where passing an array for to/cc/bcc on the SendEmail builder produced "Invalid email address" errors.
   - publish_date: "2026-04-27"
     description: |-
       - Updated v8 to version 14.8.

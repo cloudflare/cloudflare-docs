@@ -1,0 +1,59 @@
+---
+title: Manage Flagship from the command line with Wrangler
+description: Create Flagship apps, bind them to Workers, switch feature flags, and run rollouts with wrangler flagship.
+products:
+  - flagship
+date: 2026-07-16
+---
+
+**[Wrangler](/workers/wrangler/)** now includes `wrangler flagship`, a command suite for managing [Flagship](/flagship/) apps and feature flags from your terminal.
+
+Create an app and, if you use it from a Worker, add it to your `wrangler.json` or `wrangler.jsonc` file as a binding:
+
+```bash
+wrangler flagship apps create "My Worker App" \
+  --binding FLAGS \
+  --update-config
+```
+
+Then create flags for the behavior you want to control. Flags can be booleans, strings, numbers, or JSON values:
+
+```bash
+wrangler flagship flags create <APP_ID> new-checkout
+
+wrangler flagship flags create <APP_ID> checkout-flow \
+  --variation control=old-checkout \
+  --variation treatment=new-checkout \
+  --default control \
+  --type string
+```
+
+After a flag exists, change its default variation or use enable and disable commands as kill switches. Existing targeting rules continue to apply unless you change or clear them explicitly:
+
+```bash
+wrangler flagship flags update <APP_ID> checkout-flow --default treatment
+wrangler flagship flags disable <APP_ID> checkout-flow
+wrangler flagship flags enable <APP_ID> checkout-flow
+```
+
+For release workflows, use `rollout`, `split`, and `rules` to change exposure without redeploying your Worker:
+
+```bash
+wrangler flagship flags rollout <APP_ID> new-checkout \
+  --to on \
+  --percentage 25 \
+  --by user_id
+
+wrangler flagship flags split <APP_ID> checkout-flow \
+  --weight control=80 \
+  --weight treatment=20 \
+  --by user_id
+
+wrangler flagship flags rules update <APP_ID> checkout-flow \
+  --priority 1 \
+  --when "country equals US"
+```
+
+These commands can also be used from CI/CD pipelines, scripts, and AI agents to inspect Flagship state, update flag behavior, or roll back changes through Wrangler.
+
+Refer to the [`wrangler flagship` command reference](/flagship/reference/wrangler-commands/) for the full command guide.

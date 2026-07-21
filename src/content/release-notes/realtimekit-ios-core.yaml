@@ -3,6 +3,18 @@ link: "/realtime/realtimekit/release-notes/ios-core/"
 productName: RealtimeKit iOS Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-07-17"
+    title: RealtimeKit iOS Core 3.1.0
+    description: |-
+      **Enhancements**
+
+      - Room joins are up to 25% faster under normal network conditions
+      - Improved the initial quality of video received from mobile participants
+
+      **Fixes**
+
+      - Fixed a crash when switching between breakout rooms
+      - When unmuting audio or video, the SDK now requests permission when the corresponding `RtkMeetingInfo.enableAudio` or `RtkMeetingInfo.enableVideo` field is `false`. The UI Kit component is no longer silently disabled.
   - publish_date: "2026-06-24"
     title: RealtimeKit iOS Core 3.0.0
     description: |-

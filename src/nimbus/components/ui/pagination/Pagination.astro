@@ -5,32 +5,57 @@ import type { HTMLAttributes } from "astro/types";
 import type { PrevNext } from "nimbus-docs/types";
 
 interface Props extends HTMLAttributes<"nav"> {
-  prevNext: PrevNext;
+	prevNext: PrevNext;
 }
 
 const { prevNext, class: className, ...attrs } = Astro.props;
 const { prev, next } = prevNext;
 ---
 
-{(prev || next) && (
-  <nav aria-label="Pagination" class={cn("flex items-center justify-between mt-12 pt-6 border-t border-border", className)} {...attrs}>
-    {prev ? (
-      <a href={prev.href} class="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-        <Icon name="ph:caret-left" class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
-        <span>
-          <span class="block text-xs text-muted-foreground">Previous</span>
-          <span class="font-medium text-foreground">{prev.label}</span>
-        </span>
-      </a>
-    ) : <span />}
-    {next ? (
-      <a href={next.href} class="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors text-right">
-        <span>
-          <span class="block text-xs text-muted-foreground">Next</span>
-          <span class="font-medium text-foreground">{next.label}</span>
-        </span>
-        <Icon name="ph:caret-right" class="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-      </a>
-    ) : <span />}
-  </nav>
-)}
+{
+	(prev || next) && (
+		<nav
+			aria-label="Pagination"
+			class={cn(
+				"border-border mt-12 flex items-center justify-between border-t pt-6",
+				className,
+			)}
+			{...attrs}
+		>
+			{prev ? (
+				<a
+					href={prev.href}
+					class="group text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm transition-colors"
+				>
+					<Icon
+						name="ph:caret-left"
+						class="h-4 w-4 transition-transform group-hover:-translate-x-0.5"
+					/>
+					<span>
+						<span class="text-muted-foreground block text-xs">Previous</span>
+						<span class="text-foreground font-medium">{prev.label}</span>
+					</span>
+				</a>
+			) : (
+				<span />
+			)}
+			{next ? (
+				<a
+					href={next.href}
+					class="group text-muted-foreground hover:text-foreground flex items-center gap-2 text-right text-sm transition-colors"
+				>
+					<span>
+						<span class="text-muted-foreground block text-xs">Next</span>
+						<span class="text-foreground font-medium">{next.label}</span>
+					</span>
+					<Icon
+						name="ph:caret-right"
+						class="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+					/>
+				</a>
+			) : (
+				<span />
+			)}
+		</nav>
+	)
+}

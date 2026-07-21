@@ -2,6 +2,12 @@
 import { Image } from "astro:assets";
 import PrivacyChoicesImage from "~/assets/privacyoptions.svg";
 
+interface Props {
+	label?: string;
+}
+
+const { label = "Cookie Settings" } = Astro.props;
+
 const isProduction = import.meta.env.PROD;
 
 const uuid = isProduction
@@ -22,7 +28,7 @@ const uuid = isProduction
 <!-- OneTrust Cookies Settings button start -->
 <div class="inline-flex items-center gap-2">
 	<Image src={PrivacyChoicesImage} alt="privacy options" height="12" />
-	<button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+	<button id="ot-sdk-btn" class="ot-sdk-show-settings">{label}</button>
 </div>
 <!-- OneTrust Cookies Settings button end -->
 

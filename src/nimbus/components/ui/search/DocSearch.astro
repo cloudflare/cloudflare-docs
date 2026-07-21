@@ -8,210 +8,210 @@ import "@docsearch/css/dist/modal.css";
 ---
 
 <cfdocs-docsearch id="docsearch" transition:persist="docsearch">
-  <button type="button" class="DocSearch DocSearch-Button" aria-label="Search">
-    <span class="DocSearch-Button-Container">
-      <svg
-        width="20"
-        height="20"
-        class="DocSearch-Search-Icon"
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-      >
-        <path
-          d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
-          stroke="currentColor"
-          fill="none"
-          fill-rule="evenodd"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-      <span class="DocSearch-Button-Placeholder">Search</span>
-    </span>
-    <span class="DocSearch-Button-Keys"></span>
-  </button>
+	<button type="button" class="DocSearch DocSearch-Button" aria-label="Search">
+		<span class="DocSearch-Button-Container">
+			<svg
+				width="20"
+				height="20"
+				class="DocSearch-Search-Icon"
+				viewBox="0 0 20 20"
+				aria-hidden="true"
+			>
+				<path
+					d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+					stroke="currentColor"
+					fill="none"
+					fill-rule="evenodd"
+					stroke-linecap="round"
+					stroke-linejoin="round"></path>
+			</svg>
+			<span class="DocSearch-Button-Placeholder">Search</span>
+		</span>
+		<span class="DocSearch-Button-Keys"></span>
+	</button>
 </cfdocs-docsearch>
 
 <style is:global>
-  /* Modal theming — DocSearch vars remapped to Nimbus tokens (which already
+	/* Modal theming — DocSearch vars remapped to Nimbus tokens (which already
    * flip under [data-mode="dark"], so no separate dark block). */
-  :root {
-    --docsearch-primary-color: var(--nb-primary);
-    --docsearch-text-color: var(--nb-foreground);
-    --docsearch-spacing: 12px;
-    --docsearch-icon-stroke-width: 1.4;
-    --docsearch-highlight-color: var(--nb-primary);
-    --docsearch-muted-color: var(--nb-muted-foreground);
-    --docsearch-container-background: oklch(0 0 0 / 0.5);
+	:root {
+		--docsearch-primary-color: var(--nb-primary);
+		--docsearch-text-color: var(--nb-foreground);
+		--docsearch-spacing: 12px;
+		--docsearch-icon-stroke-width: 1.4;
+		--docsearch-highlight-color: var(--nb-primary);
+		--docsearch-muted-color: var(--nb-muted-foreground);
+		--docsearch-container-background: oklch(0 0 0 / 0.5);
 
-    --docsearch-modal-width: 560px;
-    --docsearch-modal-height: 600px;
-    --docsearch-modal-background: var(--nb-card);
-    --docsearch-modal-shadow: var(--nb-shadow-lg);
+		--docsearch-modal-width: 560px;
+		--docsearch-modal-height: 600px;
+		--docsearch-modal-background: var(--nb-card);
+		--docsearch-modal-shadow: var(--nb-shadow-lg);
 
-    --docsearch-searchbox-height: 56px;
-    --docsearch-searchbox-background: var(--nb-muted);
-    --docsearch-searchbox-focus-background: var(--nb-card);
-    --docsearch-searchbox-shadow: inset 0 0 0 1px var(--docsearch-primary-color);
+		--docsearch-searchbox-height: 56px;
+		--docsearch-searchbox-background: var(--nb-muted);
+		--docsearch-searchbox-focus-background: var(--nb-card);
+		--docsearch-searchbox-shadow: inset 0 0 0 1px var(--docsearch-primary-color);
 
-    --docsearch-hit-height: 56px;
-    --docsearch-hit-color: var(--nb-foreground);
-    --docsearch-hit-active-color: var(--nb-primary-foreground);
-    --docsearch-hit-background: var(--nb-card);
-    --docsearch-hit-shadow: none;
+		--docsearch-hit-height: 56px;
+		--docsearch-hit-color: var(--nb-foreground);
+		--docsearch-hit-active-color: var(--nb-primary-foreground);
+		--docsearch-hit-background: var(--nb-card);
+		--docsearch-hit-shadow: none;
 
-    --docsearch-key-gradient: linear-gradient(
-      var(--nb-muted) 0%,
-      var(--nb-muted) 100%
-    );
-    --docsearch-key-shadow: none;
+		--docsearch-key-gradient: linear-gradient(
+			var(--nb-muted) 0%,
+			var(--nb-muted) 100%
+		);
+		--docsearch-key-shadow: none;
 
-    --docsearch-footer-height: 44px;
-    --docsearch-footer-background: var(--nb-card);
-    --docsearch-footer-shadow: 0 -1px 0 0 var(--nb-border);
-  }
+		--docsearch-footer-height: 44px;
+		--docsearch-footer-background: var(--nb-card);
+		--docsearch-footer-shadow: 0 -1px 0 0 var(--nb-border);
+	}
 
-  .DocSearch-Modal {
-    border: 1px solid var(--nb-border);
-  }
-  .DocSearch-Logo svg * {
-    fill: var(--docsearch-muted-color);
-  }
+	.DocSearch-Modal {
+		border: 1px solid var(--nb-border);
+	}
+	.DocSearch-Logo svg * {
+		fill: var(--docsearch-muted-color);
+	}
 
-  /* Trigger button — styled for the Nimbus header. */
-  #docsearch {
-    display: inline-flex;
-  }
-  /* Mobile: icon-only square button, no pill chrome. The pill (border, fill,
+	/* Trigger button — styled for the Nimbus header. */
+	#docsearch {
+		display: inline-flex;
+	}
+	/* Mobile: icon-only square button, no pill chrome. The pill (border, fill,
    * placeholder, keys) is added at >=768px below. */
-  #docsearch .DocSearch-Button {
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    height: 2.25rem;
-    width: 2.25rem;
-    padding: 0;
-    border: 1px solid transparent;
-    border-radius: 0.5rem;
-    background-color: transparent;
-    color: var(--nb-muted-foreground);
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition:
-      color 150ms,
-      background-color 150ms,
-      border-color 150ms;
-  }
-  #docsearch .DocSearch-Button:hover {
-    color: var(--nb-foreground);
-    background-color: var(--nb-muted);
-    box-shadow: none;
-  }
-  #docsearch .DocSearch-Button:focus-visible {
-    outline: 2px solid var(--nb-primary);
-    outline-offset: 2px;
-  }
-  /* Collapse the wrapper so icon + placeholder + keys are direct flex children
+	#docsearch .DocSearch-Button {
+		margin: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		height: 2.25rem;
+		width: 2.25rem;
+		padding: 0;
+		border: 1px solid transparent;
+		border-radius: 0.5rem;
+		background-color: transparent;
+		color: var(--nb-muted-foreground);
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition:
+			color 150ms,
+			background-color 150ms,
+			border-color 150ms;
+	}
+	#docsearch .DocSearch-Button:hover {
+		color: var(--nb-foreground);
+		background-color: var(--nb-muted);
+		box-shadow: none;
+	}
+	#docsearch .DocSearch-Button:focus-visible {
+		outline: 2px solid var(--nb-primary);
+		outline-offset: 2px;
+	}
+	/* Collapse the wrapper so icon + placeholder + keys are direct flex children
    * of the button (matches starlight-docsearch); otherwise they stack. */
-  #docsearch .DocSearch-Button-Container {
-    display: contents;
-  }
-  #docsearch .DocSearch-Search-Icon {
-    width: 1rem;
-    height: 1rem;
-    color: currentColor;
-    stroke-width: 1.6;
-  }
-  #docsearch .DocSearch-Button-Placeholder {
-    display: none;
-    padding: 0;
-    font-size: 0.875rem;
-  }
-  #docsearch .DocSearch-Button-Keys {
-    display: none;
-    align-items: center;
-    gap: 0.125rem;
-    min-width: auto;
-    margin-inline-start: 0.5rem;
-  }
-  #docsearch .DocSearch-Button-Key {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 1.25rem;
-    min-width: 1.25rem;
-    padding: 0 0.25rem;
-    margin: 0;
-    border: 1px solid var(--nb-border);
-    border-radius: 0.25rem;
-    background: var(--nb-muted);
-    box-shadow: none;
-    color: var(--nb-muted-foreground);
-    font-size: 0.6875rem;
-    font-weight: 600;
-  }
+	#docsearch .DocSearch-Button-Container {
+		display: contents;
+	}
+	#docsearch .DocSearch-Search-Icon {
+		width: 1rem;
+		height: 1rem;
+		color: currentColor;
+		stroke-width: 1.6;
+	}
+	#docsearch .DocSearch-Button-Placeholder {
+		display: none;
+		padding: 0;
+		font-size: 0.875rem;
+	}
+	#docsearch .DocSearch-Button-Keys {
+		display: none;
+		align-items: center;
+		gap: 0.125rem;
+		min-width: auto;
+		margin-inline-start: 0.5rem;
+	}
+	#docsearch .DocSearch-Button-Key {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: 1.25rem;
+		min-width: 1.25rem;
+		padding: 0 0.25rem;
+		margin: 0;
+		border: 1px solid var(--nb-border);
+		border-radius: 0.25rem;
+		background: var(--nb-muted);
+		box-shadow: none;
+		color: var(--nb-muted-foreground);
+		font-size: 0.6875rem;
+		font-weight: 600;
+	}
 
-  /* >=768px: expand to the full pill with placeholder + keys. */
-  @media (min-width: 768px) {
-    #docsearch .DocSearch-Button {
-      width: auto;
-      padding: 0 0.625rem 0 0.75rem;
-      border-color: var(--nb-border);
-      background-color: var(--nb-card);
-    }
-    #docsearch .DocSearch-Button:hover {
-      border-color: var(--nb-border-strong);
-      background-color: var(--nb-card);
-    }
-    #docsearch .DocSearch-Button-Placeholder {
-      display: inline;
-    }
-    #docsearch .DocSearch-Button-Keys {
-      display: flex;
-    }
-  }
+	/* >=768px: expand to the full pill with placeholder + keys. */
+	@media (min-width: 768px) {
+		#docsearch .DocSearch-Button {
+			width: auto;
+			padding: 0 0.625rem 0 0.75rem;
+			border-color: var(--nb-border);
+			background-color: var(--nb-card);
+		}
+		#docsearch .DocSearch-Button:hover {
+			border-color: var(--nb-border-strong);
+			background-color: var(--nb-card);
+		}
+		#docsearch .DocSearch-Button-Placeholder {
+			display: inline;
+		}
+		#docsearch .DocSearch-Button-Keys {
+			display: flex;
+		}
+	}
 </style>
 
 <script>
-  import docsearch from "@docsearch/js";
-  import { docSearchOptions, getIndexName } from "./docsearch-config";
+	import docsearch from "@docsearch/js";
+	import { docSearchOptions, getIndexName } from "./docsearch-config";
 
-  class DocSearchElement extends HTMLElement {
-    connectedCallback() {
-      // Persisted element: mount once for the app's lifetime. Mark mounted only
-      // after mount() succeeds so a throw here retries on the next connect.
-      if (this.dataset.mounted) return;
-      this.mount();
-      this.dataset.mounted = "true";
+	class DocSearchElement extends HTMLElement {
+		connectedCallback() {
+			// Persisted element: mount once for the app's lifetime. Mark mounted only
+			// after mount() succeeds so a throw here retries on the next connect.
+			if (this.dataset.mounted) return;
+			this.mount();
+			this.dataset.mounted = "true";
 
-      // Prod re-picks the index on every (full) page load. Under view
-      // transitions this instance persists, so refresh the index when the
-      // /style-guide/ boundary is crossed. Re-invoking docsearch() reconciles
-      // into the same container (no stacked listeners).
-      document.addEventListener("astro:page-load", () => {
-        if (getIndexName() !== this.dataset.index) this.mount();
-      });
-    }
+			// Prod re-picks the index on every (full) page load. Under view
+			// transitions this instance persists, so refresh the index when the
+			// /style-guide/ boundary is crossed. Re-invoking docsearch() reconciles
+			// into the same container (no stacked listeners).
+			document.addEventListener("astro:page-load", () => {
+				if (getIndexName() !== this.dataset.index) this.mount();
+			});
+		}
 
-    mount() {
-      const indexName = getIndexName();
-      this.dataset.index = indexName;
-      docsearch({
-        ...docSearchOptions,
-        indexName,
-        container: this,
-        // Prod's button text; remaining strings are @docsearch/js English
-        // defaults, matching what Starlight injects in prod.
-        placeholder: "Search",
-        translations: {
-          button: { buttonText: "Search", buttonAriaLabel: "Search" },
-        },
-      });
-    }
-  }
+		mount() {
+			const indexName = getIndexName();
+			this.dataset.index = indexName;
+			docsearch({
+				...docSearchOptions,
+				indexName,
+				container: this,
+				// Prod's button text; remaining strings are @docsearch/js English
+				// defaults, matching what Starlight injects in prod.
+				placeholder: "Search",
+				translations: {
+					button: { buttonText: "Search", buttonAriaLabel: "Search" },
+				},
+			});
+		}
+	}
 
-  if (!customElements.get("cfdocs-docsearch")) {
-    customElements.define("cfdocs-docsearch", DocSearchElement);
-  }
+	if (!customElements.get("cfdocs-docsearch")) {
+		customElements.define("cfdocs-docsearch", DocSearchElement);
+	}
 </script>

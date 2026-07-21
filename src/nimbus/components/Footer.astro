@@ -1,145 +1,307 @@
 ---
-/**
- * Footer — global site footer (link grid + legal bar). Ported from the upstream
- * Starlight override (src/components/overrides/Footer.astro); the Starlight-only
- * Pagination/EditLink/Feedback bits are dropped since DocsLayout owns those.
- * Rendered once in BaseLayout, so it appears on every page.
- */
-import { Icon } from "astro-icon/components";
+import DashedLine from "@/components/decorative/DashedLine.astro";
+import Separator from "@/components/decorative/Separator.astro";
+import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
 import OneTrust from "~/components/OneTrust.astro";
+import {
+	DASHBOARD_LOGIN_URL,
+	DASHBOARD_SIGN_UP_URL,
+	defaultFooterConfig,
+	defaultStackedColumnPairs,
+	type FooterColumn,
+	type FooterConfig,
+	type StackedColumnPair,
+} from "@/util/footer";
 
 interface Props {
-  /** Extra classes on the <footer> — e.g. a top margin on pages without a
-   *  decorative backdrop, where the footer isn't meant to sit flush. */
-  class?: string;
+	class?: string;
+	footer?: FooterConfig;
+	stackedColumnPairs?: StackedColumnPair[];
 }
 
-const { class: className } = Astro.props;
+const {
+	class: className,
+	footer = defaultFooterConfig,
+	stackedColumnPairs = defaultStackedColumnPairs,
+} = Astro.props;
 
-type FooterLink = { text: string; href: string; icon?: string };
+const columns = footer?.columns ?? [];
+const normalizeTitle = (value: string): string => value.trim().toLowerCase();
+const normalizedPairs = stackedColumnPairs
+	.map((pair) => ({
+		primary: normalizeTitle(pair.primary),
+		secondary: normalizeTitle(pair.secondary),
+	}))
+	.filter((pair) => pair.primary.length > 0 && pair.secondary.length > 0);
+const columnByTitle = new Map(
+	columns.map((column) => [normalizeTitle(column.title), column] as const),
+);
+const secondaryByPrimary = new Map(
+	normalizedPairs.map((pair) => [pair.primary, pair.secondary] as const),
+);
+const secondaryTitles = new Set(normalizedPairs.map((pair) => pair.secondary));
+const consumedTitles = new Set<string>();
+const columnGroups: FooterColumn[][] = [];
 
-const groups: [string, FooterLink[]][] = Object.entries({
-  Resources: [
-    { text: "API", href: "/api/" },
-    { text: "New to Cloudflare?", href: "/fundamentals/" },
-    { text: "Directory", href: "/directory/" },
-    { text: "Sponsorships", href: "/sponsorships/" },
-    { text: "Open Source", href: "https://github.com/cloudflare" },
-    { text: "Cloudflare Research", href: "https://research.cloudflare.com/" },
-  ],
-  Support: [
-    { text: "Help Center", href: "https://support.cloudflare.com/" },
-    { text: "System Status", href: "https://www.cloudflarestatus.com/" },
-    {
-      text: "Compliance",
-      href: "https://www.cloudflare.com/trust-hub/compliance-resources/",
-    },
-    { text: "GDPR", href: "https://www.cloudflare.com/trust-hub/gdpr/" },
-  ],
-  Company: [
-    { text: "cloudflare.com", href: "https://www.cloudflare.com/" },
-    { text: "Our team", href: "https://www.cloudflare.com/people/" },
-    { text: "Careers", href: "https://www.cloudflare.com/careers/" },
-  ],
-  Tools: [
-    { text: "Cloudflare Radar", href: "https://radar.cloudflare.com/" },
-    { text: "Cloudflare Labs", href: "https://labs.cloudflare.dev/" },
-    { text: "Speed Test", href: "https://speed.cloudflare.com/" },
-    { text: "Is BGP Safe Yet?", href: "https://isbgpsafeyet.com/" },
-    { text: "Certificate Transparency", href: "https://ct.cloudflare.com/" },
-  ],
-  Community: [
-    {
-      text: "Community forum",
-      href: "https://community.cloudflare.com/",
-      icon: "simple-icons:cloudflare",
-    },
-    { text: "X", href: "https://x.com/cloudflare", icon: "simple-icons:x" },
-    {
-      text: "Discord",
-      href: "https://discord.cloudflare.com/",
-      icon: "simple-icons:discord",
-    },
-    {
-      text: "YouTube",
-      href: "https://www.youtube.com/cloudflare",
-      icon: "simple-icons:youtube",
-    },
-    {
-      text: "GitHub",
-      href: "https://github.com/cloudflare/cloudflare-docs",
-      icon: "simple-icons:github",
-    },
-  ],
-});
+for (const column of columns) {
+	const key = normalizeTitle(column.title);
+	if (consumedTitles.has(key)) continue;
 
-const legal: [string, string][] = Object.entries({
-  "Privacy Policy": "https://www.cloudflare.com/privacypolicy/",
-  "Terms of Use": "https://www.cloudflare.com/website-terms/",
-  "Report Security Issues": "https://www.cloudflare.com/disclosure/",
-  Trademark: "https://www.cloudflare.com/trademark/",
-});
+	if (secondaryTitles.has(key)) {
+		const hasPrimaryInColumns = normalizedPairs.some(
+			(pair) => pair.secondary === key && columnByTitle.has(pair.primary),
+		);
+		if (hasPrimaryInColumns) continue;
+	}
 
-const year = new Date().getFullYear();
+	const secondaryKey = secondaryByPrimary.get(key);
+	const secondaryColumn = secondaryKey
+		? columnByTitle.get(secondaryKey)
+		: undefined;
+	if (secondaryColumn && !consumedTitles.has(secondaryKey!)) {
+		columnGroups.push([column, secondaryColumn]);
+		consumedTitles.add(key);
+		consumedTitles.add(secondaryKey!);
+		continue;
+	}
+
+	columnGroups.push([column]);
+	consumedTitles.add(key);
+}
+
+for (const column of columns) {
+	const key = normalizeTitle(column.title);
+	if (consumedTitles.has(key)) continue;
+	columnGroups.push([column]);
+	consumedTitles.add(key);
+}
+
+const legalLinks = footer?.legalLinks ?? [];
+const copyrightTemplate = footer?.copyright || "© {year} Cloudflare, Inc.";
+const copyrightText = copyrightTemplate.replace(
+	"{year}",
+	String(new Date().getFullYear()),
+);
+
+const legalText = legalLinks
+	.map((link, index) => {
+		// First legal link (Privacy policy) is emphasised with medium weight.
+		const emphasis = index === 0 ? " font-medium text-foreground-100" : "";
+		const anchor = `<a href="${link.href}" class="hover:text-foreground-100/70 transition-colors duration-400 ease-out${emphasis}">${link.text}</a>`;
+		if (index === legalLinks.length - 1) return anchor;
+		return `${anchor}<span class="mx-1.5">|</span>`;
+	})
+	.join(" ");
 
 let isProduction = false;
-
 if (
-  import.meta.env.CF_PAGES_BRANCH === "production" ||
-  import.meta.env.GITHUB_REF_NAME === "production"
+	import.meta.env.CF_PAGES_BRANCH === "production" ||
+	import.meta.env.GITHUB_REF_NAME === "production"
 ) {
-  isProduction = true;
+	isProduction = true;
 }
+
+const mobileLinkClass =
+	"pointer-events-auto inline-flex w-fit items-center justify-center gap-0 whitespace-nowrap p-0 text-[14px] leading-[20px] font-medium text-foreground-100 underline-offset-2 transition-colors duration-200 ease-out hover:text-accent-100 hover:underline";
 ---
 
-<footer class:list={["border-t border-border", className]}>
-  {/* Inner container matches the PageShell content envelope so footer edges
-      line up with page content instead of running full-bleed. */}
-  <div class="mx-auto w-full max-w-[1120px] px-[max(1.5rem,4vw)] py-12">
-    <div class="grid grid-cols-2 gap-8 lg:grid-cols-5">
-      {
-        groups.map(([title, items]) => (
-          <ul class="m-0 flex list-none flex-col gap-3 pl-0">
-            <li class="text-xs font-semibold text-foreground">{title}</li>
-            {items.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="inline-flex items-center gap-2 text-sm text-muted-foreground no-underline transition-colors hover:text-foreground"
-                >
-                  {link.icon && <Icon name={link.icon} class="h-4 w-4 shrink-0" aria-hidden="true" />}
-                  {link.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ))
-      }
-    </div>
+<footer class:list={["nb-footer z-10 w-full overflow-x-clip px-px", className]}>
+	<DashedLine class="relative left-1/2 w-screen -translate-x-1/2" />
+	<div
+		class="footer-scroll-host bg-background-100 px-section relative mx-auto flex w-full flex-col justify-between overflow-visible bg-linear-to-b pt-8 select-none [@media(max-height:924px)]:min-h-screen"
+	>
+		<div
+			class="pointer-events-none relative mx-auto flex h-full w-full max-w-[1480px] flex-col items-start gap-8 pb-8 lg:justify-between"
+		>
+			<div class="flex justify-start lg:block lg:justify-center">
+				<div
+					class="flex flex-col items-start justify-start transition-opacity duration-200 ease-out lg:flex-row"
+				>
+					<CloudflareWordmark
+						className="footer-cf-wordmark text-foreground-200 h-[12px] w-auto"
+						aria-label="Cloudflare wordmark"
+						role="img"
+					/>
+				</div>
+			</div>
 
-    <div class="mt-10 border-t border-border pt-6">
-      <ul class="m-0 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 pl-0 text-xs text-muted-foreground">
-        <li class="list-none">© {year} Cloudflare, Inc.</li>
-        {
-          legal.map(([text, href]) => (
-            <li>
-              <a
-                href={href}
-                class="no-underline transition-colors hover:text-foreground"
-              >
-                {text}
-              </a>
-            </li>
-          ))
-        }
-        {
-          isProduction && (
-            <li>
-              <OneTrust />
-            </li>
-          )
-        }
-      </ul>
-    </div>
-  </div>
+			<div
+				class="grid w-full grid-cols-1 justify-start gap-8 lg:ml-auto lg:w-auto lg:grid-cols-4 lg:items-stretch"
+			>
+				{
+					columnGroups.map((group) => (
+						<div class="grid w-full grid-cols-2 gap-8 lg:h-full lg:max-w-[264px] lg:grid-cols-1 lg:grid-rows-2 lg:gap-y-10">
+							{group.map((section) => (
+								<div class="flex w-full flex-col lg:min-h-0">
+									<div class="flex w-full pb-2 lg:pb-3">
+										<span class="text-tertiary hover:text-foreground-200/70 text-[13px] leading-none font-medium transition-colors duration-200 max-lg:text-xs">
+											{section.title}
+										</span>
+									</div>
+									{(section.links ?? []).map((item) => (
+										<a
+											href={item.href}
+											class="text-foreground-200 hover:text-tertiary pointer-events-auto py-1 text-[15px] leading-snug transition-colors duration-200 ease-out lg:py-1.5"
+										>
+											{item.text}
+										</a>
+									))}
+								</div>
+							))}
+						</div>
+					))
+				}
+				<div
+					class="pointer-events-auto flex flex-col items-start gap-2 lg:hidden"
+				>
+					<a href={DASHBOARD_SIGN_UP_URL} class={mobileLinkClass}>
+						Start Building
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="size-4 shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M7 17 17 7m0 0H7m10 0v10"></path>
+						</svg>
+					</a>
+					<a href={DASHBOARD_LOGIN_URL} class={mobileLinkClass}>
+						Log In
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="size-4 shrink-0"
+							aria-hidden="true"
+						>
+							<path d="M7 17 17 7m0 0H7m10 0v10"></path>
+						</svg>
+					</a>
+				</div>
+			</div>
+
+			{/** Spacer that grows to push the mobile circles SVG to the bottom. */}
+			<div class="pointer-events-none relative flex w-full flex-1 items-end">
+				<div
+					class="text-accent-100 aspect-561/250 w-full overflow-hidden pb-5 lg:hidden"
+				>
+					<svg
+						aria-hidden="true"
+						viewBox="0 0 561 250"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+						class="block h-full w-full"
+					>
+						<g
+							opacity="0.42"
+							stroke="currentColor"
+							stroke-width="0.75"
+							stroke-dasharray="3.11 3.11"
+						>
+							<ellipse cx="303.718" cy="134.931" rx="134.906" ry="134.556"
+							></ellipse>
+							<ellipse cx="140.739" cy="138.82" rx="60.8247" ry="60.6667"
+							></ellipse>
+							<ellipse cx="89.2726" cy="238.375" rx="88.8976" ry="88.6667"
+							></ellipse>
+							<ellipse cx="455.776" cy="215.042" rx="106.053" ry="105.778"
+							></ellipse>
+							<circle cx="467.797" cy="264.875" r="71.5"></circle>
+							<ellipse cx="355.961" cy="109.264" rx="71.7419" ry="71.5556"
+							></ellipse>
+							<ellipse cx="358.524" cy="224.375" rx="31.1921" ry="31.1111"
+							></ellipse>
+							<ellipse cx="465.579" cy="149.708" rx="31.1921" ry="31.1111"
+							></ellipse>
+						</g>
+						<g fill="none" stroke="currentColor" stroke-width="0.75">
+							<path
+								d="M452.193 109.264C511.94 109.264 560.375 156.622 560.375 215.042C560.375 225.456 558.837 235.519 555.969 245.025C555.199 247.577 552.76 249.264 550.039 249.264H399.529C397.297 249.264 395.758 247.075 396.559 245.038L399.435 237.713C408.625 214.212 434.844 194.96 459.101 193.832L505.082 191.529C507.538 191.406 509.466 189.422 509.466 187.017C509.466 184.625 507.558 182.646 505.116 182.506L461.938 180.023C438.725 178.868 427.384 158.791 433.627 137.869L440.812 113.789C441.543 111.34 443.728 109.558 446.334 109.42C448.274 109.317 450.227 109.264 452.193 109.264Z"
+							></path>
+							<path
+								d="M302.648 0.375C364.95 0.375 417.285 42.0634 432.087 98.4665C432.709 100.835 432.514 103.334 431.626 105.62L419.772 136.131C410.583 159.631 386.966 180.011 360.244 180.011L154.404 182.323C151.92 182.352 149.921 184.33 149.92 186.759C149.92 189.186 151.916 191.166 154.398 191.198L357.338 193.82C380.602 193.82 391.892 215.052 385.652 235.975L383.033 244.779C382.243 247.436 379.753 249.264 376.922 249.264H6.79428C3.62784 249.264 0.918159 246.989 0.664591 243.902C0.47264 241.566 0.375 239.204 0.375 236.819C0.375 191.386 35.9484 154.08 81.3467 150.07C80.4151 145.946 79.9205 141.662 79.9205 137.264C79.9205 104.618 106.987 78.1528 140.375 78.1528C153.663 78.1528 165.947 82.347 175.925 89.4518C193.691 37.6773 243.713 0.375 302.648 0.375Z"
+							></path>
+						</g>
+					</svg>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-background-100 flex flex-col pb-4">
+			<DashedLine class="relative left-1/2 w-screen -translate-x-1/2" />
+			<Separator />
+
+			<div
+				class="pointer-events-auto relative z-10 mx-auto mt-4 flex w-full max-w-[1480px] flex-col justify-between gap-3 md:flex-row md:items-center md:gap-4 lg:gap-8"
+			>
+				<span
+					class="text-tertiary text-center text-[13px] leading-tight sm:text-left lg:text-[14px]"
+					>{copyrightText}</span
+				>
+				<div
+					class="text-tertiary mr-4 flex flex-col flex-wrap items-center justify-center gap-y-2 text-center text-[13px] leading-tight sm:justify-end sm:text-right md:flex-row lg:text-[14px]"
+				>
+					<div class="max-w-[32ch] sm:max-w-none">
+						<Fragment set:html={legalText} />
+					</div>
+					{
+						isProduction && (
+							<>
+								<span class="mx-1.5 hidden sm:inline">|</span>
+								<OneTrust label="Your privacy choices" />
+							</>
+						)
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </footer>
+
+<style>
+	@keyframes footerCfWordmarkSlide {
+		from {
+			transform: translate(0, 0);
+		}
+		to {
+			transform: translate(56px, 0);
+		}
+	}
+
+	@supports (animation-timeline: view()) {
+		/*
+		 * The named view-timeline tracks the footer container's progression
+		 * through the viewport, keying the wordmark slide to the tail of the
+		 * `entry` phase (i.e. the page is scrolled to the bottom of the footer).
+		 */
+		.footer-scroll-host {
+			view-timeline-name: --footer-progress;
+		}
+
+		.footer-cf-wordmark {
+			animation: footerCfWordmarkSlide linear both;
+			animation-timeline: --footer-progress;
+			animation-range: entry 92% entry 100%;
+			will-change: transform;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.footer-cf-wordmark {
+			animation: none;
+		}
+	}
+
+	@media (min-height: 925px) {
+		.footer-cf-wordmark {
+			animation: none;
+		}
+	}
+</style>

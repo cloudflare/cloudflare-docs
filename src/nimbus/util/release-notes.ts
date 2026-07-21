@@ -13,48 +13,50 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 
 export async function getReleaseNotes(opts?: {
-  filter?: (entry: CollectionEntry<"release-notes">) => boolean;
-  deprecationsOnly?: boolean;
+	filter?: (entry: CollectionEntry<"release-notes">) => boolean;
+	deprecationsOnly?: boolean;
 }) {
-  let releaseNotes;
+	let releaseNotes;
 
-  if (opts?.filter) {
-    releaseNotes = await getCollection("release-notes", opts.filter);
-  } else {
-    releaseNotes = await getCollection("release-notes");
-  }
+	if (opts?.filter) {
+		releaseNotes = await getCollection("release-notes", opts.filter);
+	} else {
+		releaseNotes = await getCollection("release-notes");
+	}
 
-  if (!releaseNotes) {
-    throw new Error(
-      `[getReleaseNotes] Unable to find any releaseNotes with ${JSON.stringify(opts)}`,
-    );
-  }
+	if (!releaseNotes) {
+		throw new Error(
+			`[getReleaseNotes] Unable to find any releaseNotes with ${JSON.stringify(opts)}`,
+		);
+	}
 
-  if (opts?.deprecationsOnly) {
-    releaseNotes = releaseNotes.filter((x) => x.id === "api-deprecations");
-  } else {
-    releaseNotes = releaseNotes.filter((x) => x.id !== "api-deprecations");
-  }
+	if (opts?.deprecationsOnly) {
+		releaseNotes = releaseNotes.filter((x) => x.id === "api-deprecations");
+	} else {
+		releaseNotes = releaseNotes.filter((x) => x.id !== "api-deprecations");
+	}
 
-  const products = [...new Set(releaseNotes.flatMap((x) => x.data.productName))];
+	const products = [
+		...new Set(releaseNotes.flatMap((x) => x.data.productName)),
+	];
 
-  const mapped = releaseNotes.flatMap((product) => {
-    return product.data.entries.map((entry) => {
-      return {
-        product: product.data.productName,
-        link: product.data.link,
-        date: entry.publish_date,
-        description: entry.description,
-        title: entry.title,
-        scheduled: entry.scheduled,
-        productLink: product.data.productLink,
-        individual_page: entry.individual_page && entry.link,
-      };
-    });
-  });
+	const mapped = releaseNotes.flatMap((product) => {
+		return product.data.entries.map((entry) => {
+			return {
+				product: product.data.productName,
+				link: product.data.link,
+				date: entry.publish_date,
+				description: entry.description,
+				title: entry.title,
+				scheduled: entry.scheduled,
+				productLink: product.data.productLink,
+				individual_page: entry.individual_page && entry.link,
+			};
+		});
+	});
 
-  const grouped = Object.entries(Object.groupBy(mapped, (entry) => entry.date));
-  const entries = grouped.sort().reverse();
+	const grouped = Object.entries(Object.groupBy(mapped, (entry) => entry.date));
+	const entries = grouped.sort().reverse();
 
-  return { products, releaseNotes: entries };
+	return { products, releaseNotes: entries };
 }

@@ -72,18 +72,25 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
    Canonical server-side siteverify (Node / fetch idiom; adapt to the detected backend):
 
    ```js
-   const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-     method: 'POST',
-     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-     body: new URLSearchParams({
-       secret: process.env.TURNSTILE_SECRET,
-       response: token,         // cf-turnstile-response from the request
-       remoteip: clientIp,      // X-Forwarded-For / req.ip / etc.
-     }),
-   });
-   const result = await r.json();
+   let result;
+   try {
+     const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+       body: new URLSearchParams({
+         secret: process.env.TURNSTILE_SECRET,
+         response: token,         // cf-turnstile-response from the request
+         remoteip: clientIp,      // X-Forwarded-For / req.ip / etc.
+       }),
+     });
+     if (!r.ok) throw new Error(`siteverify ${r.status}`);
+     result = await r.json();
+   } catch (err) {
+     // Network error, non-2xx, or non-JSON body from siteverify. Fail closed.
+     return res.status(403).send('forbidden');  // adapt to your framework
+   }
    if (!result.success) {
-     return reject(403, 'forbidden');  // platform-appropriate equivalent
+     return res.status(403).send('forbidden');
    }
    // existing handler logic runs here, unchanged
    ```
@@ -129,7 +136,7 @@ If the user tells you they already have a Turnstile widget set up and want to wi
    - `missing_read_scope`: tell the user to add `Account.Turnstile:Read` to the token, or fall back to asking them to paste the secret. In the paste path, you do not have `clearance_level` or `domains`; ask the user to confirm both.
 3. Check `clearance_level` from the response (or the user's answer):
    - `no_clearance`: standard wire-up (Step 9).
-   - anything else: ask whether they want siteverify on top of pre-clearance, or exit per the scope boundary.
+   - anything else: exit per the scope boundary. Spin does not apply to pre-clearance widgets; siteverify is optional there and the user should be redirected as described above. Do NOT prompt the user for permission to add siteverify on top.
 4. Continue from Step 9 (Wire the integration). Site key does not change; the existing widget keeps working throughout.
 5. Never recreate the widget to get a fresh secret. That breaks the existing sitekey everywhere it's deployed.
 

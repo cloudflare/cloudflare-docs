@@ -11,37 +11,38 @@ import { getLegacyModels, detectApiModes } from "~/util/models";
 export const prerender = true;
 
 export const getStaticPaths = (async () => {
-  const models = await getLegacyModels();
-  const paths: { params: { schema: string }; props: { schema: unknown } }[] = [];
+	const models = await getLegacyModels();
+	const paths: { params: { schema: string }; props: { schema: unknown } }[] =
+		[];
 
-  for (const model of models) {
-    const slug = model.name.split("/").at(-1)!;
-    const modes = detectApiModes(model.schema);
+	for (const model of models) {
+		const slug = model.name.split("/").at(-1)!;
+		const modes = detectApiModes(model.schema);
 
-    if (modes) {
-      for (const mode of modes) {
-        paths.push({
-          params: { schema: `${slug}/${mode.id}-input` },
-          props: { schema: mode.input },
-        });
-        paths.push({
-          params: { schema: `${slug}/${mode.id}-output` },
-          props: { schema: mode.output },
-        });
-      }
-    } else {
-      paths.push({
-        params: { schema: `${slug}/schema-input` },
-        props: { schema: model.schema.input },
-      });
-      paths.push({
-        params: { schema: `${slug}/schema-output` },
-        props: { schema: model.schema.output },
-      });
-    }
-  }
+		if (modes) {
+			for (const mode of modes) {
+				paths.push({
+					params: { schema: `${slug}/${mode.id}-input` },
+					props: { schema: mode.input },
+				});
+				paths.push({
+					params: { schema: `${slug}/${mode.id}-output` },
+					props: { schema: mode.output },
+				});
+			}
+		} else {
+			paths.push({
+				params: { schema: `${slug}/schema-input` },
+				props: { schema: model.schema.input },
+			});
+			paths.push({
+				params: { schema: `${slug}/schema-output` },
+				props: { schema: model.schema.output },
+			});
+		}
+	}
 
-  return paths;
+	return paths;
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;

@@ -22,7 +22,7 @@ The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull
 | `code-review-orchestrator.ts`  | `FlueCodeReviewOrchestratorWorkflow` | **Dispatch-only**: limit check, placeholder, context → R2, admits all three specialists F&F.  |
 | `code-review-specialist.ts`    | `FlueCodeReviewSpecialistWorkflow`   | Generic code-review fan-out (its own isolate).                                                |
 | `style-guide-specialist.ts`    | `FlueStyleGuideSpecialistWorkflow`   | Style-guide fan-out (its own isolate).                                                        |
-| `conventions-specialist.ts`    | `FlueConventionsSpecialistWorkflow`  | PR-level conventions check (title, description, scope) via a light AI session.                |
+| `conventions-specialist.ts`    | `FlueConventionsSpecialistWorkflow`  | PR-level conventions check (title, description, scope) via a light AI session; findings use `CV-` ids. |
 | `finalize-review.ts`           | `FlueFinalizeReviewWorkflow`         | Reconciles, renders, and posts the review comment (admitted by the last specialist to finish). |
 | `dependabot-review.ts`         | `FlueDependabotReviewWorkflow`       | Separate review path for Dependabot PRs.                                                      |
 
@@ -42,14 +42,14 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
     - Writes crash-protection **placeholder results** (`code.json`, `style.json`, `conventions.json` with `final:false`) so each stream key always exists in R2. Placeholders do NOT trigger finalize — `tryClaimFinalize` requires every stream to be `final:true`. Their purpose is to ensure R2 reads in finalize never return null due to a specialist being evicted before it could write anything.
     - Admits all three specialists **fire-and-forget** and returns immediately.
 3. Each specialist runs in its **own DO** (own ~128 MB isolate):
-   - Self-fetches its diff for the requested mode. Incremental is SHA-pinned via `comparePullRequestHeads`; if the base SHA is gone (force-push since the orchestrator decided), it self-heals to the full PR diff.
+   - Self-fetches its diff for the requested mode via `fetchFilesForDiffMode` (`lib/diff-fetch.ts`). Incremental is SHA-pinned via `comparePullRequestHeads` and is trusted **only** when the compare succeeds, its `status` is `ahead`/`identical`, and every file in the delta belongs to the PR's net diff. Otherwise it self-heals to the full PR diff. This covers all the ways `fromSha` stops being a clean ancestor of the head: the base SHA being gone (force-push + GC → 404), a rebase or force-push (`status: diverged`), and a `production` merge / "Update branch" that drags upstream files into the delta (`status: ahead` but the delta contains files outside the PR). Without this, a rebased/updated branch's incremental compare sweeps in every upstream commit it absorbed, and the review flags findings in files the PR never touched.
    - Selects eligible files; the code-review specialist fans out one session per file at bounded concurrency; the style-guide specialist stages the diff into a run-scoped Workspace path (`diffs/pr-<n>/runs/<runId>`) and fans out per-file sessions.
    - On completion (or any error), writes `{ok, result, final:true}` to its R2 rendezvous key (overwriting the placeholder), then calls `tryClaimFinalize`. The **last specialist** to write wins the atomic conditional-PUT lock and admits `finalize-review`.
    - If a specialist DO is hard-evicted before writing `final:true`, the sibling will not claim the lock (it checks `final:true`), leaving the review needing a `/review` retry — the accepted residual case.
 4. `finalize-review`:
     - Reads `context.json` + all three stream results from R2.
     - **Head-guards**: skips posting if the PR head has moved on (newer push already owns the comment).
-    - **Idempotency-guards** (comment mode only): skips if this headSha is already finalized.
+    - **Idempotency-guards** (comment mode only): skips if this headSha is already finalized, unless the existing comment is in a retryable state (`pending` placeholder or `failure`), which allows re-finalization.
     - **Reconciles** each stream separately against previous findings (from R2) and captured human comments. Degraded streams (`ok:false`) carry their previous findings forward as active rather than reconciling.
     - Persists `review-<headSha>.json` (`{ code, style, conventions }`) to R2, renders and posts (or logs) the comment, swaps 👀→👍 on trigger comments, and calls `markAutoReviewCompleted` if code and style both succeeded.
     - Cleans up the pending rendezvous namespace (`cleanupPending`).
@@ -67,7 +67,7 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 
 - **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […], conventions: […] }`; a legacy bare array means style-only), `auto-review-count.json`, `ignore-review-limit.json`, `auto-review-disabled.json`. The staged diff lives in the specialist DO's Workspace filesystem, not R2. The **rendezvous namespace** `diffs/pr-<n>/pending/<headSha>/<dispatchId>/` is short-lived (context.json, code.json, style.json, conventions.json, finalize.lock) and deleted by `finalize-review` on completion.
 - The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
-- `lib/code-review-render.ts` renders the single comment: a status line, then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables), `### Conventions`, `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
+- `lib/code-review-render.ts` renders the single comment under a `## Review` heading: a status line, then a collapsed "Fix in your agent" prompt block (only when there is at least one active finding), then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables), `### Conventions`, `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
 - **Models**: all model calls (reviews and reconciliation) use `cloudflare/@cf/moonshotai/kimi-k2.7-code`.
 - **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
 
@@ -84,6 +84,13 @@ Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts
 
 - Bindings: `AI` (Workers AI), `LOADER` (`worker_loaders`, backs the shell sandbox), `DOCS_FLUE_BUCKET` (R2). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`.
 - DO migrations: v1 initial classes; v2 Dependabot; v3 `Flue…`-prefix renames; v4 deleted the standalone style-guide workflow (its fan-out had moved in-process); v5 added the two specialist classes (the fan-outs split back into their own DOs for isolated memory budgets); v6 added `FlueFinalizeReviewWorkflow` (the new finalize-review workflow); v7 added `FlueConventionsSpecialistWorkflow` and `FlueRedirectSpecialistWorkflow`; v8 deleted `FlueRedirectSpecialistWorkflow` (redirect check removed from pipeline).
+
+### Roles, build config, and dev/deploy scripts
+
+- **Roles** (`roles/`): `cloudflare-docs-bot.md` holds the bot's identity and operating guidelines (stay scoped to cloudflare-docs, never leak internal info, be conservative and transparent). Flue auto-discovers the `roles/` directory at build time — it is not imported explicitly the way skills are.
+- **Build config** (`flue.config.ts`): a one-line `defineConfig({ target: "cloudflare" })`. This is the Flue CLI build entry (`flue build` / `flue dev`).
+- **Maintenance script** (`bin/clear-r2-pr-data.ts`): clears the `diffs/pr-<n>/` R2 state for a PR (or all PRs). Run against local dev state via the `flue:clear-r2-pr-data:local` script.
+- **Repo-root scripts** (`package.json` at the repository root, not `.flue/package.json`): `flue:dev` (local dev with an 8 GB heap), `flue:dev:wrangler` (build + `wrangler dev --remote`), `flue:build`, `flue:deploy` (build + `wrangler deploy` with `--secrets-file .env`), `flue:clear-r2-pr-data:local`, and `flue:reset:local` (wipe local Durable Object + R2 dev state). Use these to develop and deploy the worker; the `flue docs` CLI below is only for reading Flue documentation.
 
 ## Reading Flue documentation
 
@@ -108,6 +115,12 @@ Do not rely on pre-trained Flue knowledge. Flue has changed substantially across
 - Prefer `log.info`, `log.warn`, and `log.error` from `FlueContext` for workflow facts that should appear in run history. Use `console.log` only for low-value runtime debugging.
 - Keep model output structured with Valibot when trusted code consumes it. Skill instructions must match the schema exactly; do not ask for Markdown when the workflow expects JSON-like structured data.
 - Keep side-effecting operations (GitHub labels, comments, close/update actions) in trusted TypeScript code, not in model tools.
+
+## Testing
+
+Pure, deterministic TypeScript functions in `.flue/lib/` — those that do not require AI, GitHub API calls, R2, or Workers bindings to exercise — should have Vitest unit tests. When adding or modifying trusted TS logic (rendering, state parsing, result merging, diff selection, concurrency utilities, webhook parsing, etc.), write or update tests in a matching `*.test.ts` file alongside the source. Run tests with `pnpm run test` from the `.flue/` directory.
+
+Functions that require bindings (Durable Objects, R2, AI, the Flue harness) are not unit-testable in isolation and do not need tests; cover their logic paths through integration or by extracting the pure sub-functions and testing those.
 
 ## Review Rule Policy
 

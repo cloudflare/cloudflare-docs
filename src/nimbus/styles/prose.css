@@ -7,243 +7,271 @@
  * low by design, but layering is what actually lets utilities override an
  * otherwise-unlayered stylesheet. */
 @layer components {
-.docs-content {
-  font-size: 1rem;
-  line-height: 1.75;
-  color: var(--nb-foreground);
-  /* Break long unbreakable tokens (e.g. registry paths like
+	.docs-content {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: var(--nb-foreground);
+		/* Break long unbreakable tokens (e.g. registry paths like
      HKLM\SOFTWARE\...\UseWebView2) so they wrap instead of overflowing on
      narrow viewports. Inherited by all prose text. */
-  overflow-wrap: break-word;
-}
+		overflow-wrap: break-word;
+	}
 
-/* Vertical rhythm — every direct child gets spacing by default.
+	/* Vertical rhythm — every direct child gets spacing by default.
    Components can override with their own margin utilities (my-4, mt-6, etc.)
    because :where() keeps specificity at (0,1,0) and utilities come later. */
-.docs-content > :where(:not(:first-child)) {
-  margin-top: 1.25rem;
-}
+	.docs-content > :where(:not(:first-child)) {
+		margin-top: 1.25rem;
+	}
 
-.docs-content :where(ul:not([class])) {
-  padding-left: 1.25rem;
-  list-style-type: disc;
-}
+	.docs-content :where(ul:not([class])) {
+		padding-left: 1.25rem;
+		list-style-type: disc;
+	}
 
-.docs-content :where(ol:not([class])) {
-  padding-left: 1.25rem;
-  list-style-type: decimal;
-}
+	.docs-content :where(ol:not([class])) {
+		padding-left: 1.25rem;
+		list-style-type: decimal;
+	}
 
-.docs-content :where(ul:not([class]) ul:not([class])) {
-  list-style-type: circle;
-}
+	.docs-content :where(ul:not([class]) ul:not([class])) {
+		list-style-type: circle;
+	}
 
-.docs-content :where(ul:not([class]) ul:not([class]) ul:not([class])) {
-  list-style-type: square;
-}
+	.docs-content :where(ul:not([class]) ul:not([class]) ul:not([class])) {
+		list-style-type: square;
+	}
 
-.docs-content :where(li:not([class])) {
-  margin: 0.25rem 0;
-}
+	.docs-content :where(li:not([class])) {
+		margin: 0.25rem 0;
+	}
 
-/* Loose lists — a blank line between a bullet and its children wraps the
+	/* Loose lists — a blank line between a bullet and its children wraps the
    bullet text in <p> and follows with a nested list; keep that authored gap. */
-.docs-content :where(li:not([class]) > p),
-.docs-content :where(li:not([class]) > ul:not([class])),
-.docs-content :where(li:not([class]) > ol:not([class])) {
-  margin: 1rem 0;
-}
+	.docs-content :where(li:not([class]) > p),
+	.docs-content :where(li:not([class]) > ul:not([class])),
+	.docs-content :where(li:not([class]) > ol:not([class])) {
+		margin: 1rem 0;
+	}
 
-.docs-content :where(blockquote:not([class])) {
-  margin: 1.25rem 0;
-  padding-left: 1rem;
-  border-left: 2px solid var(--nb-border);
-  color: var(--nb-muted-foreground);
-}
+	.docs-content :where(blockquote:not([class])) {
+		margin: 1.25rem 0;
+		padding-left: 1rem;
+		border-left: 2px solid var(--nb-border);
+		color: var(--nb-muted-foreground);
+	}
 
-.docs-content :where(hr:not([class])) {
-  border: 0;
-  border-top: 1px solid var(--nb-border);
-  margin: 1.5rem 0;
-}
+	.docs-content :where(hr:not([class])) {
+		border: 0;
+		border-top: 1px solid var(--nb-border);
+		margin: 1.5rem 0;
+	}
 
-/* Component boundary — elements with a class attribute are component-owned.
+	/* Component boundary — elements with a class attribute are component-owned.
    Markdown never adds classes to h1–h6 or p; components always do. */
-.docs-content :where(h1, h2, h3, h4, h5, h6, p):where([class]) {
-  margin: 0;
-  font-size: inherit;
-}
+	.docs-content :where(h1, h2, h3, h4, h5, h6, p):where([class]) {
+		margin: 0;
+		font-size: inherit;
+	}
 
-/* Adjacent button group — when MDX places two buttons next to each other
+	/* Adjacent button group — when MDX places two buttons next to each other
    (e.g. `<LinkButton/> <LinkButton/>`), the first of the pair gets a trailing
    gap. `:has(+ …)` means only a button *immediately followed by* another
    button is affected, so lone buttons never get a stray margin, and the
    trailing (inline-end) margin avoids any indent if the pair wraps. */
-.docs-content :where([data-nb-button]:has(+ [data-nb-button])) {
-  margin-inline-end: 0.75rem;
-}
+	.docs-content :where([data-nb-button]:has(+ [data-nb-button])) {
+		margin-inline-end: 0.75rem;
+	}
 
-/* Markdown heading typography is token-driven from globals.css. */
-.docs-content :where(h1:not([class])) {
-  font-size: var(--nb-h1-size);
-  font-weight: var(--nb-h1-weight);
-  letter-spacing: var(--nb-h1-tracking);
-  margin-top: 0;
-}
+	/* Markdown heading typography is token-driven from globals.css. */
+	.docs-content :where(h1:not([class])) {
+		font-size: var(--nb-h1-size);
+		font-weight: var(--nb-h1-weight);
+		letter-spacing: var(--nb-h1-tracking);
+		margin-top: 0;
+	}
 
-.docs-content :where(h2:not([class])) {
-  font-size: var(--nb-h2-size);
-  font-weight: var(--nb-h2-weight);
-  letter-spacing: var(--nb-h2-tracking);
-  margin-top: 2.5rem;
-}
+	.docs-content :where(h2:not([class])) {
+		font-size: var(--nb-h2-size);
+		font-weight: var(--nb-h2-weight);
+		letter-spacing: var(--nb-h2-tracking);
+		margin-top: 2.5rem;
+	}
 
-.docs-content :where(h3:not([class])) {
-  font-size: var(--nb-h3-size);
-  font-weight: var(--nb-h3-weight);
-  letter-spacing: var(--nb-h3-tracking);
-  margin-top: 2rem;
-}
+	.docs-content :where(h3:not([class])) {
+		font-size: var(--nb-h3-size);
+		font-weight: var(--nb-h3-weight);
+		letter-spacing: var(--nb-h3-tracking);
+		margin-top: 2rem;
+	}
 
-.docs-content :where(h4:not([class]), h5:not([class]), h6:not([class])) {
-  font-weight: var(--nb-h4-weight);
-}
+	.docs-content :where(h4:not([class]), h5:not([class]), h6:not([class])) {
+		font-weight: var(--nb-h4-weight);
+	}
 
-.docs-content :where(h1:not([class]), h2:not([class]), h3:not([class]), h4:not([class])) {
-  scroll-margin-top: 5rem;
-}
+	.docs-content
+		:where(h1:not([class]), h2:not([class]), h3:not([class]), h4:not([class])) {
+		/* Below xl the sticky mobile TOC sits under the sticky header, so headings
+     need extra clearance when jumped to. At xl+ only the header is sticky. */
+		scroll-margin-top: 7.5rem;
+	}
 
-.docs-content :where(code:not([class])):not(:where(pre *)) {
-  font-family: var(--nb-font-mono);
-  direction: ltr;
-  unicode-bidi: isolate;
-  background: var(--nb-muted);
-  border: 1px solid var(--nb-border);
-  border-radius: 0.375rem;
-  padding: 0.125rem 0.375rem;
-  font-size: 0.875em;
-  font-weight: 450;
-  /* Long space-less tokens (e.g. `/accounts/{account_id}/queues/.../pull`)
+	@media (min-width: 80rem) {
+		.docs-content
+			:where(
+				h1:not([class]),
+				h2:not([class]),
+				h3:not([class]),
+				h4:not([class])
+			) {
+			scroll-margin-top: 5rem;
+		}
+	}
+
+	.docs-content :where(code:not([class])):not(:where(pre *)) {
+		font-family: var(--nb-font-mono);
+		direction: ltr;
+		unicode-bidi: isolate;
+		background: var(--nb-muted);
+		border: 1px solid var(--nb-border);
+		border-radius: 0.375rem;
+		padding: 0.125rem 0.375rem;
+		font-size: 0.875em;
+		font-weight: 450;
+		/* Long space-less tokens (e.g. `/accounts/{account_id}/queues/.../pull`)
      have no natural break opportunity and would overflow on narrow screens.
      `anywhere` lets them wrap as a last resort (and shrinks min-content so
      they don't blow out flex/grid containers either). */
-  overflow-wrap: anywhere;
-}
+		overflow-wrap: anywhere;
+	}
 
-/* Code inside headings (e.g. `### \`Queue\``) keeps the heading's scale and
+	/* Code inside headings (e.g. `### \`Queue\``) keeps the heading's scale and
    weight instead of the inline-chip sizing. */
-.docs-content :where(h1, h2, h3, h4, h5, h6) :where(code:not([class])) {
-  font-size: 1em;
-  font-weight: inherit;
-}
+	.docs-content :where(h1, h2, h3, h4, h5, h6) :where(code:not([class])) {
+		font-size: 1em;
+		font-weight: inherit;
+	}
 
-.docs-content :where(code:not([class])):not(:where(pre *))::before,
-.docs-content :where(code:not([class])):not(:where(pre *))::after {
-  content: none;
-}
+	.docs-content :where(code:not([class])):not(:where(pre *))::before,
+	.docs-content :where(code:not([class])):not(:where(pre *))::after {
+		content: none;
+	}
 
-.docs-content :where(pre:not([class])) {
-  margin: 1.5rem 0;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--nb-border);
-  background-color: var(--nb-card);
-  overflow-x: auto;
-  font-family: var(--nb-font-mono);
-  font-size: 0.875rem;
-  line-height: 1.625;
-}
+	.docs-content :where(pre:not([class])) {
+		margin: 1.5rem 0;
+		padding: 0.75rem 1rem;
+		border-radius: 0.5rem;
+		border: 1px solid var(--nb-border);
+		background-color: var(--nb-card);
+		overflow-x: auto;
+		font-family: var(--nb-font-mono);
+		font-size: 0.875rem;
+		line-height: 1.625;
+	}
 
-/* Shiki-rendered code blocks — wider vertical margin than base rhythm
+	/* Shiki-rendered code blocks — wider vertical margin than base rhythm
    (1.25rem) because code blocks are visually dense. Inline code-token
    styling (background, border, padding) is reset because Shiki spans
    already carry their own colors via inline styles. */
-.docs-content .nb-code-figure {
-  margin: 1.5rem 0;
-}
+	.docs-content .nb-code-figure {
+		margin: 1.5rem 0;
+	}
 
-.docs-content pre.astro-code code {
-  direction: ltr;
-  unicode-bidi: isolate;
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: inherit;
-  font-weight: inherit;
-  border-radius: 0;
-}
+	.docs-content pre.astro-code code {
+		direction: ltr;
+		unicode-bidi: isolate;
+		background: none;
+		border: none;
+		padding: 0;
+		font-size: inherit;
+		font-weight: inherit;
+		border-radius: 0;
+	}
 
-/* Scroll container injected around every markdown table by the
+	/* Scroll container injected around every markdown table by the
    `cf-table-scroll` Sätteri plugin. It carries the border + rounded corners and
    clips the table to them, and scrolls horizontally when the table is wider
    than the content column (many columns). When the table fits, it fills 100%
    and no scrollbar shows. This is what lets a wide table scroll in place rather
    than overflowing the layout — a bare table can't do both. */
-.docs-content :where(.table-scroll) {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  border: 1px solid var(--nb-border);
-  border-radius: 0.75rem;
-}
+	.docs-content :where(.table-scroll) {
+		width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		border: 1px solid var(--nb-border);
+		border-radius: 0.75rem;
+	}
 
-.docs-content :where(.table-scroll):focus-visible {
-  outline: 2px solid var(--nb-link);
-  outline-offset: 2px;
-}
+	.docs-content :where(.table-scroll):focus-visible {
+		outline: 2px solid var(--nb-link);
+		outline-offset: 2px;
+	}
 
-.docs-content :where(table:not([class])) {
-  display: table;
-  width: 100%;
-  text-align: left;
-  border-collapse: separate;
-  border-spacing: 0;
-  table-layout: auto;
-}
+	.docs-content :where(table:not([class])) {
+		display: table;
+		width: 100%;
+		text-align: left;
+		border-collapse: separate;
+		border-spacing: 0;
+		table-layout: auto;
+	}
 
-.docs-content :where(th:not([class])),
-.docs-content :where(td:not([class])) {
-  padding: 0.625rem 0.75rem;
-  text-align: left;
-  vertical-align: top;
-  border-bottom: 1px solid var(--nb-border);
-}
+	.docs-content :where(th:not([class])),
+	.docs-content :where(td:not([class])) {
+		padding: 0.625rem 0.75rem;
+		text-align: left;
+		vertical-align: top;
+		border-bottom: 1px solid var(--nb-border);
+	}
 
-.docs-content :where(td:not([class])) {
-  font-size: 0.9rem;
-}
+	.docs-content :where(td:not([class])) {
+		font-size: 0.9rem;
+	}
 
-.docs-content :where(th:not([class])) {
-  background: var(--nb-muted);
-  font-weight: 600;
-  font-size: 0.8125rem;
-  white-space: nowrap;
-}
+	.docs-content :where(th:not([class])) {
+		background: var(--nb-muted);
+		font-weight: 600;
+		font-size: 0.8125rem;
+		white-space: nowrap;
+	}
 
-.docs-content :where(tbody:not([class]) tr:not([class]):last-child td:not([class])) {
-  border-bottom: none;
-}
+	.docs-content
+		:where(
+			tbody:not([class]):has(tr:nth-child(5)) tr:nth-child(even) td:not([class])
+		) {
+		background: var(--nb-accent);
+	}
 
-.docs-content
-  :where(td:not([class]), th:not([class]))
-  :where(code:not([class])) {
-  overflow-wrap: normal;
-}
+	.docs-content
+		:where(tbody:not([class]) tr:not([class]):last-child td:not([class])) {
+		border-bottom: none;
+	}
 
-.docs-content :where(a:not([class])) {
-  color: var(--nb-link);
-  text-decoration-line: underline;
-  text-decoration-color: color-mix(in oklch, var(--nb-link) 40%, transparent);
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-  font-weight: 500;
-  transition: text-decoration-color 0.15s;
-  /* Long URLs/paths in link text shouldn't force horizontal overflow. */
-  overflow-wrap: break-word;
-}
+	.docs-content
+		:where(td:not([class]), th:not([class]))
+		:where(code:not([class])) {
+		overflow-wrap: normal;
+	}
 
-.docs-content :where(a:not([class]):hover) {
-  text-decoration-color: var(--nb-link);
-}
+	/* Inline bold — 600 matches the heading weights */
+	.docs-content :where(strong:not([class]), b:not([class])) {
+		font-weight: 600;
+	}
+
+	.docs-content :where(a:not([class])) {
+		color: var(--nb-link);
+		text-decoration-line: underline;
+		text-decoration-color: color-mix(in oklch, var(--nb-link) 40%, transparent);
+		text-underline-offset: 3px;
+		text-decoration-thickness: 1px;
+		font-weight: 500;
+		transition: text-decoration-color 0.15s;
+		/* Long URLs/paths in link text shouldn't force horizontal overflow. */
+		overflow-wrap: break-word;
+	}
+
+	.docs-content :where(a:not([class]):hover) {
+		text-decoration-color: var(--nb-link);
+	}
 }

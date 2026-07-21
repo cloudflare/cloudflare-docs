@@ -17,126 +17,130 @@ import BaseLayout from "./BaseLayout.astro";
 import Header from "@/components/Header.astro";
 import type { BasePageProps } from "nimbus-docs/types";
 import type { PageMeta } from "@/components/PageHead.astro";
+import { CHANGELOG_OG_IMAGE } from "~/util/page-head";
 
 type Props = BasePageProps & {
-  meta?: PageMeta;
+	meta?: PageMeta;
 };
 
-const baseProps = Astro.props;
+const { socialImage, ...baseProps } = Astro.props;
+const resolvedSocialImage = socialImage ?? CHANGELOG_OG_IMAGE;
 ---
 
-<BaseLayout {...baseProps}>
-  <div class="flex min-h-screen flex-col">
-    <Header showSidebar={false} />
-    <main id="main-content" class="flex-1">
-      <div class="nb-cl-shell">
-        <div class="nb-cl-backdrop" aria-hidden="true">
-          {/* Left: just the spine line (co-opted by the timeline). */}
-          <span class="nb-cl-rule nb-cl-rule-left"></span>
-          {/* Right: inner rule + dot-grid gutter + outer rule. */}
-          <span class="nb-cl-rule nb-cl-rule-right"></span>
-          <span class="nb-cl-dots"></span>
-          <span class="nb-cl-rule nb-cl-rule-outer"></span>
-        </div>
-        <div class="nb-cl-col">
-          <slot />
-        </div>
-      </div>
-    </main>
-  </div>
+<BaseLayout socialImage={resolvedSocialImage} {...baseProps}>
+	<div class="flex min-h-screen flex-col">
+		<Header showSidebar={false} />
+		<main id="main-content" class="flex-1">
+			<div class="nb-cl-shell">
+				<div class="nb-cl-backdrop" aria-hidden="true">
+					{/* Left: just the spine line (co-opted by the timeline). */}
+					<span class="nb-cl-rule nb-cl-rule-left"></span>
+					{/* Right: inner rule + dot-grid gutter + outer rule. */}
+					<span class="nb-cl-rule nb-cl-rule-right"></span>
+					<span class="nb-cl-dots"></span>
+					<span class="nb-cl-rule nb-cl-rule-outer"></span>
+				</div>
+				<div class="nb-cl-col">
+					<slot />
+				</div>
+			</div>
+		</main>
+	</div>
 </BaseLayout>
 
 <style>
-  .nb-cl-shell {
-    position: relative;
-    /* Reading column width; the backdrop's left rule (the spine) sits on the
+	.nb-cl-shell {
+		position: relative;
+		/* Reading column width; the backdrop's left rule (the spine) sits on the
        column's left edge (= the feed's node axis). */
-    --nb-cl-col: min(768px, calc(100vw - 3rem));
-    /* Decorative outer bound — half of the directory's 1360px envelope, so the
+		--nb-cl-col: min(768px, calc(100vw - 3rem));
+		/* Decorative outer bound — half of the directory's 1360px envelope, so the
        outer rule lines up across both pages even though the reading column is
        narrower. The dot-grid fills from the column edge out to this bound. */
-    --nb-cl-outer: 680px;
-  }
+		--nb-cl-outer: 680px;
+	}
 
-  .nb-cl-col {
-    position: relative;
-    z-index: 1;
-    width: var(--nb-cl-col);
-    margin-inline: auto;
-    /* Top padding is owned by the page content (PageHeader's pt-14 on the feed,
+	.nb-cl-col {
+		position: relative;
+		z-index: 1;
+		width: var(--nb-cl-col);
+		margin-inline: auto;
+		/* Top padding is owned by the page content (PageHeader's pt-14 on the feed,
        pt-6 on the post), so the feed hero lines up with Directory/Agent Setup. */
-    padding-bottom: 3rem;
-  }
+		padding-bottom: 3rem;
+	}
 
-  /* Decorative backdrop — desktop only, purely decorative, animation-free. */
-  .nb-cl-backdrop {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    display: none;
-  }
-  @media (min-width: 768px) {
-    .nb-cl-backdrop {
-      display: block;
-    }
-  }
+	/* Decorative backdrop — desktop only, purely decorative, animation-free. */
+	.nb-cl-backdrop {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		overflow: hidden;
+		pointer-events: none;
+		display: none;
+	}
+	@media (min-width: 768px) {
+		.nb-cl-backdrop {
+			display: block;
+		}
+	}
 
-  .nb-cl-rule {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    /* center the 1px rule on its x so it coincides exactly with the feed's
+	.nb-cl-rule {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 1px;
+		/* center the 1px rule on its x so it coincides exactly with the feed's
        solid spine (also center-anchored) — no fuzzy doubled line in the feed. */
-    transform: translateX(-50%);
-    background-image: linear-gradient(
-      to bottom,
-      var(--nb-border) 50%,
-      transparent 50%
-    );
-    background-size: 1px 32px;
-    background-repeat: repeat-y;
-  }
-  .nb-cl-rule-left {
-    left: calc(50% - var(--nb-cl-col) / 2);
-  }
-  .nb-cl-rule-right {
-    left: calc(50% + var(--nb-cl-col) / 2);
-  }
-  .nb-cl-rule-outer {
-    left: calc(50% + var(--nb-cl-outer));
-  }
-  .nb-cl-dots {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: calc(50% + var(--nb-cl-col) / 2);
-    width: calc(var(--nb-cl-outer) - var(--nb-cl-col) / 2);
-    background-image: radial-gradient(
-      var(--nb-grid-line) 0.75px,
-      transparent 0.75px
-    );
-    background-size: 12px 12px;
-    background-position: left top;
-  }
+		transform: translateX(-50%);
+		background-image: linear-gradient(
+			to bottom,
+			var(--nb-border) 50%,
+			transparent 50%
+		);
+		background-size: 1px 32px;
+		background-repeat: repeat-y;
+	}
+	.nb-cl-rule-left {
+		left: calc(50% - var(--nb-cl-col) / 2);
+	}
+	.nb-cl-rule-right {
+		left: calc(50% + var(--nb-cl-col) / 2);
+	}
+	.nb-cl-rule-outer {
+		left: calc(50% + var(--nb-cl-outer));
+	}
+	.nb-cl-dots {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: calc(50% + var(--nb-cl-col) / 2);
+		width: calc(var(--nb-cl-outer) - var(--nb-cl-col) / 2);
+		background-image: radial-gradient(
+			var(--nb-grid-line) 0.75px,
+			transparent 0.75px
+		);
+		background-size: 12px 12px;
+		background-position: left top;
+	}
 </style>
 
-{/* These target MDX-rendered content (entry bodies marked `.nb-cl-prose`),
-    which has no class hooks for Tailwind utilities — so they stay global. */}
+{
+	/* These target MDX-rendered content (entry bodies marked `.nb-cl-prose`),
+    which has no class hooks for Tailwind utilities — so they stay global. */
+}
 <style is:global>
-  .nb-cl-prose p {
-    text-wrap: pretty;
-  }
+	.nb-cl-prose p {
+		text-wrap: pretty;
+	}
 
-  /* Subtle 1px outline on entry images for consistent depth — pure
+	/* Subtle 1px outline on entry images for consistent depth — pure
      black/white at 10%, never a tinted neutral. */
-  .nb-cl-prose img {
-    outline: 1px solid rgba(0, 0, 0, 0.1);
-    outline-offset: -1px;
-  }
-  [data-mode="dark"] .nb-cl-prose img {
-    outline-color: rgba(255, 255, 255, 0.1);
-  }
+	.nb-cl-prose img {
+		outline: 1px solid rgba(0, 0, 0, 0.1);
+		outline-offset: -1px;
+	}
+	[data-mode="dark"] .nb-cl-prose img {
+		outline-color: rgba(255, 255, 255, 0.1);
+	}
 </style>

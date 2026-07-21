@@ -6,12 +6,12 @@
  *
  * CF source: cloudflare-docs/src/components/DashButton.astro
  * Reads the shared route data in place via `~/content` (→ root src/content);
- * Starlight LinkButton → our cf/LinkButton port.
+ * Starlight LinkButton → the shared Nimbus ui/link-button.
  */
 import CoreManuallyDefinedRoutes from "~/content/dash-routes/core-manually-defined.json";
 import CoreRoutes from "~/content/dash-routes/core.json";
 import ZeroTrustRoutes from "~/content/dash-routes/zero-trust.json";
-import LinkButton from "./LinkButton.astro";
+import { LinkButton } from "../ui/link-button";
 
 interface Props {
 	url: string;

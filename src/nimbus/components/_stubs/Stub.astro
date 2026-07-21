@@ -16,19 +16,19 @@
 // stub re-export in `src/components.ts` and import the real one.
 
 interface Props {
-  name?: string;
-  [key: string]: unknown;
+	name?: string;
+	[key: string]: unknown;
 }
 
 const { name = "Stub" } = Astro.props;
 ---
 
 <div
-  data-cf-stub={name}
-  style="border-left: 3px solid #f5b400; background: #fff8e1; color: #5c4a00; padding: 0.5rem 0.75rem; margin: 0.5rem 0; font-family: ui-monospace, monospace; font-size: 0.85em;"
+	data-cf-stub={name}
+	style="border-left: 3px solid #f5b400; background: #fff8e1; color: #5c4a00; padding: 0.5rem 0.75rem; margin: 0.5rem 0; font-family: ui-monospace, monospace; font-size: 0.85em;"
 >
-  <strong>[{name}]</strong> WIP: importing requires a bit of work
-  <div style="margin-top: 0.5rem; font-family: inherit; font-size: inherit;">
-    <slot />
-  </div>
+	<strong>[{name}]</strong> WIP: importing requires a bit of work
+	<div style="margin-top: 0.5rem; font-family: inherit; font-size: inherit;">
+		<slot />
+	</div>
 </div>
