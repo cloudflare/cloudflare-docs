@@ -92,7 +92,7 @@ Handled inline in `lib/pipeline-entry.ts`. Authorization is `getInstallationToke
 
 ### Bindings & migrations (`wrangler.jsonc`)
 
-- Bindings: `AI` (Workers AI), `LOADER` (`worker_loaders` — currently unused; no agent uses a shell sandbox), `DOCS_FLUE_BUCKET` (R2), and four `[[workflows]]` (`REVIEW_ORCHESTRATOR`, `INGEST`, `DEPENDABOT_REVIEW`, `REBASE`). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`. `GITHUB_WEBHOOK_SECRET` and `GITHUB_ORG_TOKEN` (read:org, for codeowner checks) are required secrets.
+- Bindings: `AI` (Workers AI), `DOCS_FLUE_BUCKET` (R2), and four `[[workflows]]` (`REVIEW_ORCHESTRATOR`, `INGEST`, `DEPENDABOT_REVIEW`, `REBASE`). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`. `GITHUB_WEBHOOK_SECRET` and `GITHUB_ORG_TOKEN` (read:org, for codeowner checks) are required secrets.
 - DO migrations: v1–v9 are the 0.11 history (kept so already-deployed workers migrate in order). **v10** is the Flue 2.0 reset: it deletes the retired `FlueRegistry` plus all nine 0.11 workflow DO classes and creates the **seven** per-agent SQLite DO classes the 2.0 build binds (`Flue<PascalCase(agentName)>Agent`). Every agent DO binding is created by v10. Validate the whole config with `wrangler deploy --dry-run --config dist/cloudflare_docs_flue/wrangler.json`.
 
 ### Roles, build config, and dev/deploy scripts

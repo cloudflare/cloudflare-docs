@@ -12,8 +12,6 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
-		"@cloudflare/codemode": "0.3.8",
-		"@cloudflare/shell": "0.3.9",
 		"@cloudflare/workers-types": "4.20260526.1",
 		"@flue/runtime": "0.4.0-nightly.202605211826",
 		"@octokit/auth-app": "8.2.0",
