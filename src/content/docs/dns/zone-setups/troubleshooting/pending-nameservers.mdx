@@ -76,6 +76,8 @@ Query the `NS` record for your domain. The result must match the nameserver pair
 
 ### What to do based on the result
 
+Use the following table to decide the next step based on what your lookup returns:
+
 | Result at the parent zone                                          | What it means and what to do                                                                                                                                                                                                       |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Exactly the Cloudflare nameservers assigned to this zone.          | Delegation is correct. If the dashboard still shows Pending, wait for Cloudflare's next activation check or [trigger one via API](/api/resources/zones/subresources/activation_check/methods/trigger/). Then continue at Step 4 to check DNSSEC. |
