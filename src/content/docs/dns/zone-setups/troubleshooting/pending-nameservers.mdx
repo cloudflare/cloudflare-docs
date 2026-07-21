@@ -65,7 +65,7 @@ You can find the authoritative TLD nameservers for any extension with `dig NS co
 
 If the output shows nameservers other than the ones assigned to your Cloudflare zone, the delegation is not yet correct.
 
-### Option C - Web-based lookup
+### Option C - web-based lookup
 
 If you do not have `dig` or `nslookup` locally, use a public lookup tool:
 
@@ -124,7 +124,7 @@ For more information on DNSSEC configuration, refer to [Configure DNSSEC](/dns/d
 
 ## 5. If the zone is still Pending
 
-If Steps 1-4 all check out, and the parent zone returns the correct Cloudflare nameservers, wait for Cloudflare's next activation check. Checks happen on an increasing interval; you can force one at any time from the **Overview** page or [trigger one via API](/api/resources/zones/subresources/activation_check/methods/trigger/).
+If Steps 1-4 all check out, and the parent zone returns the correct Cloudflare nameservers, wait for Cloudflare's next activation check. Checks happen on an increasing interval. You can force one at any time from the **Overview** page or [trigger one via API](/api/resources/zones/subresources/activation_check/methods/trigger/).
 
 :::caution
 Free-plan zones that stay Pending for more than 28 days are automatically deleted. Refer to [Zone status](/dns/zone-setups/reference/domain-status/) for the full status flow.
