@@ -232,10 +232,7 @@
 				"prompt",
 				"duration",
 				"resolution",
-				"aspect_ratio",
-				"fps",
-				"camera_fixed",
-				"watermark"
+				"aspect_ratio"
 			],
 			"additionalProperties": false
 		},
