@@ -1,0 +1,580 @@
+---
+title: Examples
+pcx_content_type: example
+description: Patterns for combining Workers Caching with authentication, request normalization, and Durable Objects.
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Workers Caching is **a cache that is itself a Worker primitive**. It sits in front of every Worker entrypoint — the default export and every named [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) — and it also sits in front of `fetch()` calls between entrypoints in the same Worker via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/). That second fact is the one that makes the rest of this page possible.
+
+When one entrypoint invokes another's `fetch()` via `ctx.exports`, the cache evaluates that call the same way it would evaluate a request from a browser. A hit returns the cached response without the callee running. A miss runs the callee and stores the response under its own cache key, keyed by the callee's entrypoint, path, query string, and [`ctx.props`](/workers/cache/cache-keys/#multi-tenant-safety-with-ctxprops). The caller still runs on every request — but anything the caller hands off to the callee is cacheable independently.
+
+:::note
+Only `fetch()` invocations go through the cache. Calling a custom RPC method on an entrypoint (for example `ctx.exports.Backend.getUser(id)`) bypasses the cache entirely. To cache a piece of work, expose it as a `fetch` handler.
+:::
+
+That gives you a primitive you can compose. You can author a Worker as a chain of small entrypoints — auth, normalization, routing, the expensive read, the data layer — and let Workers Caching slot in wherever you want it. Each cached entrypoint is a unit of memoization with its own key, its own TTL, and its own tag namespace for purging. Anything you would want to configure about caching — when it runs, what it keys on, when it invalidates — is expressed as ordinary Worker code: which entrypoint you call, what request you forward, what `ctx.props` you pass, what `Cache-Control` you set.
+
+The examples on this page all use the same shape: an outer (gateway) entrypoint that runs every request, plus one or more inner entrypoints that are cached. The outer entrypoint does something cheap (authenticate, rewrite a header, pick a route); the inner entrypoint does something expensive (look up data, transform it, run a Durable Object). They are written as classes in one source file, deployed as one Worker, billed as one Worker — connected by a cache stage that sits in front of the inner entrypoint.
+
+### Two rules to keep in mind
+
+Two facts shape every pattern below. They follow directly from "the cache is in front of every entrypoint":
+
+**Disable caching on the gateway entrypoint.** Because the cache sits in front of every entrypoint by default, the outer entrypoint would itself be cached — and the next request would be served from that outer cache without ever entering your gateway logic. Turn caching off for the gateway entrypoint in your Wrangler configuration, and leave it on for the inner entrypoint the gateway forwards to. Using `"default"` for the default export:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": { "enabled": true },
+	"exports": {
+		// The gateway runs on every request — no caching in front of it.
+		"default": { "type": "worker", "cache": { "enabled": false } },
+		// The inner entrypoint is the one that gets cached.
+		"Inner": { "type": "worker", "cache": { "enabled": true } },
+	},
+}
+```
+
+</WranglerConfig>
+
+:::caution[Do not use `Cache-Control: no-store` to keep the gateway running]
+
+It might seem simpler to leave caching on for the gateway and return `Cache-Control: no-store` from it on every request. Do not do this. With caching enabled, each request to the gateway still consults the lower and upper [cache tiers](/workers/cache/#tiered-cache) before your Worker runs — so every request pays the tiered-cache round trip only to produce an uncacheable response. That adds significant latency for no benefit. Disabling caching on the entrypoint in `exports` makes requests skip the cache lookup entirely and go straight to your gateway logic.
+
+:::
+
+**Strip request headers that would force a bypass.** Cloudflare's standard [bypass rules](/cache/concepts/cache-responses/#bypass) apply to the inner entrypoint's cache too — an `Authorization` header on the forwarded request will turn every inner call into a `BYPASS`, and nothing will ever be stored. When the outer entrypoint authenticates the request and decides it is safe to cache, it must strip `Authorization` (and anything else that triggers automatic bypass) before invoking the inner entrypoint.
+
+Both rules apply to every example below.
+
+## Cache authenticated responses
+
+Caching authenticated APIs has historically been awkward. The standard [bypass rules](/cache/concepts/cache-responses/#bypass) treat any request with an `Authorization` header as private and refuse to cache it — which is the safe default, but means a token-authenticated endpoint that returns identical responses to thousands of users runs your Worker every single time.
+
+The pattern below lets you authenticate every request and still serve cache hits without running the cacheable handler:
+
+1. The outer (default) entrypoint receives the request and authenticates it.
+2. On success, it strips the `Authorization` header and forwards the request to a named entrypoint via `ctx.exports`.
+3. Workers Caching sits in front of the named entrypoint. On a hit, the cached response is returned to the outer entrypoint, which returns it to the client — without the named entrypoint ever running.
+
+Disable caching on the default entrypoint so it runs on every request to authenticate, and keep it on for `CachedAPI`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": { "enabled": true },
+	"exports": {
+		"default": { "type": "worker", "cache": { "enabled": false } },
+		"CachedAPI": { "type": "worker", "cache": { "enabled": true } },
+	},
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+interface Env {
+	API_TOKEN: string;
+}
+
+// Cached entrypoint. Workers Caching sits in front of this — on a hit,
+// the cached response is returned and `fetch` below is never invoked.
+export class CachedAPI extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const data = await loadExpensiveData(request);
+
+		return new Response(JSON.stringify(data), {
+			headers: {
+				"Content-Type": "application/json",
+				// All authenticated callers see this same response on a hit.
+				"Cache-Control": "public, max-age=60",
+			},
+		});
+	}
+}
+
+// Default entrypoint. Runs on every request to authenticate the caller,
+// then forwards to the cached entrypoint.
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		if (!(await authenticate(request, env))) {
+			return new Response("Unauthorized", { status: 401 });
+		}
+
+		// Strip the Authorization header before forwarding. Otherwise the
+		// request would trigger Cloudflare's automatic bypass for
+		// authenticated requests, and nothing would ever be cached.
+		const forwarded = new Request(request);
+		forwarded.headers.delete("Authorization");
+
+		// Caching is disabled for this gateway entrypoint (see the Wrangler
+		// configuration above), so it runs on every request. Forward to the
+		// cached CachedAPI entrypoint and return its response directly.
+		return ctx.exports.CachedAPI.fetch(forwarded);
+	},
+} satisfies ExportedHandler<Env>;
+
+async function authenticate(request: Request, env: Env): Promise<boolean> {
+	const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/, "");
+	return token === env.API_TOKEN;
+}
+
+async function loadExpensiveData(request: Request): Promise<unknown> {
+	// Replace with your real data source — D1, KV, an origin, and so on.
+	return { timestamp: Date.now() };
+}
+```
+
+</TypeScriptExample>
+
+A few things to notice:
+
+- **The cache is in the right place.** It sits between the outer entrypoint and the cached entrypoint, so cache hits skip the expensive work entirely. Only the auth check runs.
+- **`Authorization` is stripped before forwarding.** This is what makes the response cacheable — Cloudflare's bypass rule fires on the inbound request, not on the response, so removing the header before the request reaches the cached entrypoint is what lets the cached entrypoint's `Cache-Control: public` take effect. It also prevents tokens from contributing to any future cache key.
+- **The cached response is shared across users.** Every caller who passes the auth check sees the same cached body.
+
+:::caution
+This example is intentionally minimal to show the shape of the pattern. Sharing a single cached response across every authenticated caller is only correct when the response really is the same for all of them — for example, a public catalog behind a token gate, or an internal endpoint where every caller is equally privileged. If different callers should see different data, the next section shows how to partition the cache per user with `ctx.props`. Workers Caching does not infer per-user isolation for you; you have to ask for it.
+:::
+
+### Per-user authenticated responses
+
+If your endpoint returns user-specific data, pass the user identifier via `ctx.props`. Workers Caching includes `ctx.props` in the cache key, so each user gets their own cache entry and one user can never receive another user's cached response. This uses the same Wrangler configuration as the previous example — caching disabled on `default`, enabled on `CachedAPI`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+interface Env {
+	API_TOKEN: string;
+}
+
+interface Props {
+	userId: string;
+}
+
+export class CachedAPI extends WorkerEntrypoint<Env, Props> {
+	async fetch(request: Request): Promise<Response> {
+		// ctx.props.userId is part of the cache key, so this response
+		// is cached separately for every userId.
+		const { userId } = this.ctx.props;
+		const data = await loadUserData(userId);
+
+		return new Response(JSON.stringify(data), {
+			headers: {
+				"Content-Type": "application/json",
+				"Cache-Control": "public, max-age=60",
+			},
+		});
+	}
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const userId = await authenticate(request, env);
+		if (!userId) {
+			return new Response("Unauthorized", { status: 401 });
+		}
+
+		const forwarded = new Request(request);
+		forwarded.headers.delete("Authorization");
+
+		// The gateway's cache is disabled, so it runs on every request.
+		// Pass the authenticated userId to the cached entrypoint via props —
+		// this becomes part of the cache key.
+		return ctx.exports.CachedAPI.fetch(forwarded, {
+			props: { userId },
+		});
+	},
+} satisfies ExportedHandler<Env>;
+
+async function authenticate(
+	request: Request,
+	env: Env,
+): Promise<string | null> {
+	// Replace with your real auth — JWT verification, token lookup, and so on.
+	return "user-42";
+}
+
+async function loadUserData(userId: string): Promise<unknown> {
+	return { userId, timestamp: Date.now() };
+}
+```
+
+</TypeScriptExample>
+
+For more on cache isolation between callers, refer to [Multi-tenant safety with `ctx.props`](/workers/cache/cache-keys/#multi-tenant-safety-with-ctxprops).
+
+The shape of this example — the outer entrypoint shapes a value (the user's identity) into the cache key by passing it through `ctx.props` — is the same shape the next example uses to influence a different part of the key.
+
+## Normalize `Accept-Encoding` for `Vary`
+
+[`Vary`](/workers/cache/#content-negotiation-with-vary) lets a single URL cache multiple representations — for example, a Brotli-encoded and gzip-encoded variant of the same asset. Cloudflare keys variants on the **verbatim value** of each `Vary`-listed request header, so two requests with semantically equivalent but textually different `Accept-Encoding` headers produce two separate variants.
+
+For requests routed through Cloudflare's front line, this matters even more: the `Accept-Encoding` request header your Worker sees has typically been rewritten by Cloudflare to a canonical value (such as `gzip, br`) for cache efficiency. The original value is preserved at [`request.cf.clientAcceptEncoding`](/workers/runtime-apis/request/#incomingrequestcfproperties), but if your Worker varies on `Accept-Encoding` without restoring the eyeball's value first, every cached variant ends up keyed on the rewritten string — so the cache returns a Brotli variant to clients that only accept gzip, or the other way around.
+
+The fix is a gateway entrypoint that restores `Accept-Encoding` from `request.cf.clientAcceptEncoding` before forwarding to the cached entrypoint. Disable caching on the gateway and enable it on `CachedAssets`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": { "enabled": true },
+	"exports": {
+		"default": { "type": "worker", "cache": { "enabled": false } },
+		"CachedAssets": { "type": "worker", "cache": { "enabled": true } },
+	},
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class CachedAssets extends WorkerEntrypoint {
+	async fetch(request: Request): Promise<Response> {
+		const accept = request.headers.get("Accept-Encoding") ?? "";
+		const wantsBrotli = accept.includes("br");
+
+		const { body, encoding } = wantsBrotli
+			? await loadBrotli(request)
+			: await loadGzip(request);
+
+		return new Response(body, {
+			headers: {
+				"Content-Type": "application/javascript",
+				"Content-Encoding": encoding,
+				"Cache-Control": "public, max-age=86400, immutable",
+				// One variant per distinct Accept-Encoding value the cached
+				// entrypoint sees. The gateway below normalizes that value.
+				Vary: "Accept-Encoding",
+			},
+		});
+	}
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// On Cloudflare, the eyeball's Accept-Encoding is usually rewritten
+		// to a canonical value before the Worker runs. Restore it from
+		// request.cf.clientAcceptEncoding so the cached entrypoint sees
+		// what the client actually sent — and so Vary keys variants on
+		// the real value.
+		const original = request.cf?.clientAcceptEncoding;
+
+		const forwarded = new Request(request);
+		if (original) {
+			forwarded.headers.set("Accept-Encoding", original);
+		}
+
+		// The gateway's cache is disabled (see the Wrangler configuration
+		// above), so it runs on every request and always restores
+		// Accept-Encoding before forwarding to the cached entrypoint.
+		return ctx.exports.CachedAssets.fetch(forwarded);
+	},
+} satisfies ExportedHandler;
+
+async function loadBrotli(
+	request: Request,
+): Promise<{ body: ArrayBuffer; encoding: string }> {
+	// Replace with your real asset loader (R2, KV, fetch, and so on).
+	return { body: new ArrayBuffer(0), encoding: "br" };
+}
+
+async function loadGzip(
+	request: Request,
+): Promise<{ body: ArrayBuffer; encoding: string }> {
+	return { body: new ArrayBuffer(0), encoding: "gzip" };
+}
+```
+
+</TypeScriptExample>
+
+Things to notice:
+
+- **The gateway runs on every request, but it is small.** It only restores one header and calls `ctx.exports`. The expensive work — picking the encoding, loading the asset — runs only on cache misses.
+- **Variants share a single purge identity.** Purging by tag or path prefix invalidates every variant of a URL together, so all variants must use the same [`Cache-Tag`](/workers/cache/configuration/#cache-tag) values. Refer to the notes in [Content negotiation with `Vary`](/workers/cache/#content-negotiation-with-vary).
+- **The same pattern applies to other normalizable headers.** If you want to vary on `Accept-Language` and you receive a long, complex value from browsers, normalize it in the gateway (for example, fold it down to the primary language tag) before forwarding. This keeps the cache fan-out bounded.
+
+If you do not need per-encoding variants — for example, if your Worker always returns Brotli when the client accepts it and otherwise falls back to gzip — you do not need `Vary` at all. Pick a canonical encoding inside the cached entrypoint based on the restored `Accept-Encoding`, and let the cache store a single variant. Refer to [`Accept-Encoding` and `Content-Encoding`](/workers/cache/configuration/#accept-encoding-and-content-encoding) for that variant of the pattern.
+
+So far the inner entrypoint has been a function of the request. The next example puts a stateful component — a Durable Object — behind the same cache stage, with the same shape.
+
+## Cache Durable Object responses
+
+[Durable Objects](/durable-objects/) are never cached directly by Workers Caching — they are stateful, and caching their responses would defeat the point. But many Durable Object endpoints serve read-heavy traffic where a short cache TTL is perfectly acceptable: leaderboards, counters, aggregated stats, configuration that changes a few times an hour.
+
+You can cache those responses by wrapping the Durable Object behind a named entrypoint and letting Workers Caching sit in front of the entrypoint. On a cache hit, the wrapper never runs and the Durable Object is never touched. Disable caching on the default (router) entrypoint and enable it on the `CachedLeaderboard` wrapper — the Durable Object itself is never cached and needs no cache configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": { "enabled": true },
+	"exports": {
+		"default": { "type": "worker", "cache": { "enabled": false } },
+		"CachedLeaderboard": { "type": "worker", "cache": { "enabled": true } },
+	},
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject, WorkerEntrypoint } from "cloudflare:workers";
+
+interface Env {
+	LEADERBOARD: DurableObjectNamespace<Leaderboard>;
+}
+
+// A Durable Object that maintains an expensive-to-compute leaderboard.
+export class Leaderboard extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/top") {
+			const top = await this.computeTop();
+			return new Response(JSON.stringify(top), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
+
+		if (url.pathname === "/record" && request.method === "POST") {
+			const { userId, score } = await request.json<{
+				userId: string;
+				score: number;
+			}>();
+			await this.record(userId, score);
+			return new Response("Recorded");
+		}
+
+		return new Response("Not found", { status: 404 });
+	}
+
+	private async computeTop(): Promise<unknown> {
+		// Pretend this is expensive — a sorted scan of stored state, an
+		// aggregation across many keys, a call to another service.
+		return { top: [], computedAt: Date.now() };
+	}
+
+	private async record(userId: string, score: number): Promise<void> {
+		await this.ctx.storage.put(`score:${userId}`, score);
+	}
+}
+
+// Cached entrypoint. Forwards GET /top to the Durable Object and tags
+// the response so it can be purged when scores change.
+export class CachedLeaderboard extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const id = this.env.LEADERBOARD.idFromName("global");
+		const stub = this.env.LEADERBOARD.get(id);
+		const response = await stub.fetch(request);
+
+		// Copy the body and headers into a new Response so we can attach
+		// cache headers. The DO's body stream is consumed once here.
+		return new Response(response.body, {
+			status: response.status,
+			headers: {
+				...Object.fromEntries(response.headers),
+				"Cache-Control": "public, max-age=30",
+				"Cache-Tag": "leaderboard",
+			},
+		});
+	}
+
+	// Invalidate this entrypoint's cached leaderboard. purge() is scoped to
+	// the entrypoint that calls it, so it must run inside CachedLeaderboard —
+	// the entrypoint that owns the cached response. The gateway invokes this
+	// over ctx.exports after a write.
+	async invalidate(): Promise<void> {
+		await this.ctx.cache.purge({ tags: ["leaderboard"] });
+	}
+}
+
+// Default entrypoint. Routes reads through the cached entrypoint
+// and writes directly to the Durable Object, invalidating the cache on write.
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (request.method === "GET" && url.pathname === "/top") {
+			// Read path — goes through Workers Caching. The router's cache is
+			// disabled (see the Wrangler configuration above), so it runs on
+			// every request. On a hit, CachedLeaderboard never runs and the
+			// Durable Object is never touched.
+			return ctx.exports.CachedLeaderboard.fetch(request);
+		}
+
+		if (request.method === "POST" && url.pathname === "/record") {
+			// Write path — bypass the cached entrypoint, hit the Durable
+			// Object directly, then ask CachedLeaderboard to invalidate its
+			// own cache so the next read returns fresh data. The purge must
+			// run inside CachedLeaderboard because purges are scoped to the
+			// entrypoint that owns the cached response — a purge from this
+			// gateway would target the gateway's (disabled) cache instead.
+			const id = env.LEADERBOARD.idFromName("global");
+			const stub = env.LEADERBOARD.get(id);
+			const result = await stub.fetch(request);
+
+			await ctx.exports.CachedLeaderboard.invalidate();
+
+			return result;
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Why this works:
+
+- **Reads pay nothing on a cache hit.** Workers Caching sits in front of `CachedLeaderboard`, so a hit returns the cached body without invoking the wrapper, without invoking the Durable Object, and without doing the expensive aggregation. The default entrypoint still runs to dispatch the request, but it is a thin router.
+- **Writes invalidate the cache immediately.** The POST handler updates the Durable Object and then calls `ctx.exports.CachedLeaderboard.invalidate()`, which runs [`purge({ tags: ["leaderboard"] })`](/workers/cache/purge/#purge-by-tag) _inside_ `CachedLeaderboard`. This matters because [purges are scoped to the entrypoint that calls them](/workers/cache/purge/#purge-modes) — the gateway's cache is disabled, so a purge issued from the gateway would not touch the entries `CachedLeaderboard` stored. The very next GET misses the cache, reruns the wrapper, and stores a fresh response.
+- **The cached entrypoint owns the cache contract.** All cache-control headers are set in `CachedLeaderboard`, including the `Cache-Tag`, and `CachedLeaderboard` also exposes the `invalidate()` method that purges them. The Durable Object stays unaware of caching.
+
+If you have many independent Durable Object instances — for example, one per tenant — pass the tenant identifier via `ctx.props` when invoking the cached entrypoint, the same way [Per-user authenticated responses](#per-user-authenticated-responses) does. Each tenant gets its own cache entry, and a purge on one tenant does not invalidate any other.
+
+## Cache an origin you do not control
+
+Sometimes the origin you depend on is not yours. A third-party API, a SaaS endpoint, a public dataset, a vendor service behind a slow CDN — its caching headers are whatever the owner decided to ship, and you cannot change them. Maybe it sends `Cache-Control: no-store` to be safe. Maybe it sends nothing at all. Maybe it caches aggressively in a way that does not match your application's read patterns. Either way, you pay the latency and the request cost on every call.
+
+Workers Caching lets you put your own cache layer in front of that origin without changing anything on the origin side. The pattern is the same outer-plus-inner shape as the rest of this page: a thin entrypoint that forwards to the origin, with Workers Caching sitting in front of it and applying the `Cache-Control` directives you choose. The origin keeps its own caching contract with the rest of the world; your Worker just adds a second, user-controlled layer between your application and that origin. As with the other patterns, disable caching on the gateway and enable it on `CachedOrigin`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": { "enabled": true },
+	"exports": {
+		"default": { "type": "worker", "cache": { "enabled": false } },
+		"CachedOrigin": { "type": "worker", "cache": { "enabled": true } },
+	},
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+const ORIGIN = "https://api.example.com";
+
+// Cached entrypoint. Fetches the upstream origin and overlays your own
+// Cache-Control on the response. Workers Caching sits in front of this,
+// so on a hit the upstream origin is never contacted.
+export class CachedOrigin extends WorkerEntrypoint {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		const upstream = new URL(url.pathname + url.search, ORIGIN);
+
+		// Forward the request to the third-party origin. The origin's own
+		// caching headers (or lack of them) are about to be overwritten —
+		// they apply to the origin's relationship with the public internet,
+		// not to your cache layer.
+		const response = await fetch(upstream, {
+			method: request.method,
+			headers: request.headers,
+			body: request.body,
+		});
+
+		// Replace the origin's Cache-Control with your own. This is the
+		// whole point of the pattern: you decide how long Workers Caching
+		// stores this response, regardless of what the origin says.
+		const headers = new Headers(response.headers);
+		headers.set("Cache-Control", "public, max-age=300");
+		headers.set("Cache-Tag", "origin:example");
+
+		return new Response(response.body, {
+			status: response.status,
+			statusText: response.statusText,
+			headers,
+		});
+	}
+}
+
+// Default entrypoint. Forwards every request through the cached entrypoint.
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// The gateway's cache is disabled (see the Wrangler configuration
+		// above), so it runs on every request and forwards to the cached
+		// CachedOrigin entrypoint.
+		return ctx.exports.CachedOrigin.fetch(request);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+What is happening here:
+
+- **The cache layer is yours.** The origin's `Cache-Control` is replaced before the response reaches Workers Caching, so the TTL, freshness directives, and `Cache-Tag` namespace are all controlled by your code. You decide when the cache holds onto a response, and you decide when to purge it via [`ctx.cache.purge()`](/workers/cache/purge/).
+- **The origin's own caching model is untouched.** Your Worker is the only thing that sees the rewritten `Cache-Control`. The origin still serves its other clients with whatever caching contract it published — you have not changed its behaviour or its security model, you have only added a layer in front of it for your application.
+- **Cache hits never touch the origin.** Workers Caching sits in front of `CachedOrigin`, so a hit returns the stored response without invoking `fetch` against the upstream. This is what cuts the origin request volume and the latency of every cached call.
+
+A few common extensions to this pattern:
+
+- **Per-resource TTLs.** If different paths on the upstream should have different freshness, branch on `url.pathname` inside `CachedOrigin` and set a different `max-age` (and a different `Cache-Tag`) for each. The cache key already includes the path and query string, so each resource gets its own entry.
+- **Per-user caching.** If your application authenticates the caller and the upstream returns user-specific data, authenticate in the outer entrypoint and pass the user identifier via `ctx.props` to `CachedOrigin` — the same shape as [Per-user authenticated responses](#per-user-authenticated-responses). Each user gets their own cache entry, and one user can never receive another user's cached response.
+- **Stale-while-revalidate.** If the origin is slow or flaky, set `Cache-Control: public, max-age=60, stale-while-revalidate=600` on the cached response. Most requests return the cached body immediately, and Workers Caching refreshes the origin in the background. Refer to [Use `stale-while-revalidate` for low-latency refreshes](/workers/cache/configuration/#use-stale-while-revalidate-for-low-latency-refreshes).
+- **Targeted invalidation.** Tag responses with `Cache-Tag` values that reflect your application's data model (for example, `Cache-Tag: origin:example, product:42`). When you know the upstream has changed — a webhook fires, an admin action runs — call `ctx.cache.purge({ tags: ["product:42"] })` and the next request repopulates the cache.
+
+This is the same building block as every other example on this page. The only difference is that the "expensive work" the cached entrypoint does on a miss is a `fetch` to somebody else's server. The control over how long that response lives, how it is keyed, and when it is invalidated stays entirely in your Worker.
+
+## Composing the patterns
+
+All four examples are the same architecture seen through four lenses:
+
+| Outer entrypoint          | What the cache stage is doing                 | Inner entrypoint                                  |
+| ------------------------- | --------------------------------------------- | ------------------------------------------------- |
+| Authenticate the request  | Caching an expensive computation per user     | Loads or computes the user's data                 |
+| Restore `Accept-Encoding` | Caching one variant per real encoding         | Loads the correctly-encoded asset                 |
+| Route reads vs. writes    | Caching reads, invalidating them on writes    | Wraps a Durable Object behind a `Cache-Tag`       |
+| Forward the request as-is | Caching a third-party origin under your terms | Fetches the upstream and overlays `Cache-Control` |
+
+The only thing that changes between rows is what the outer entrypoint does before the call and what the inner entrypoint does on a miss. The cache stage in the middle is the same primitive every time — keyed by the inner entrypoint, the request path and query string, and `ctx.props`; configured by the inner entrypoint's `Cache-Control` and `Cache-Tag`; invalidated by `ctx.cache.purge()` from whichever entrypoint owns the data.
+
+That uniformity is what makes the patterns compose. Nothing stops you from stacking them in a single Worker:
+
+- An outer entrypoint that authenticates and routes.
+- A normalization entrypoint that strips tracking query parameters, restores `Accept-Encoding`, and shapes the request into a canonical form.
+- A cached entrypoint that fronts a Durable Object, tagged for purging.
+- A separate cached entrypoint for an unauthenticated public endpoint, also reachable through the same outer entrypoint, with its own cache key and `Cache-Tag` namespace.
+
+Each call between these entrypoints goes through its own cache stage. The chain is built out of the same three building blocks — `WorkerEntrypoint`, `ctx.exports`, and a `Cache-Control` header — and the cache is a stage of the chain rather than a separate system bolted on. Whatever you would have configured in a cache rules engine, you now write as code: which entrypoint runs, what request gets forwarded, what props get passed, what `Cache-Control` gets returned, what gets purged.
+
+There is no fixed list of patterns. Workers Caching gives you a cache between every Worker entrypoint — what you build with that is up to you.

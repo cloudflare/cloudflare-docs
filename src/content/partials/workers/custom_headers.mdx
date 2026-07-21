@@ -105,7 +105,7 @@ To enable other domains to fetch every static asset from your {props.product ===
 {props.product === "workers" ? (
 
 <>
-This applies the `Access-Control-Allow-Origin` header to any incoming URL. Note that the CORS specification only allows `*`, `null`, or an exact origin as valid `Access-Control-Allow-Origin` values — wildcard patterns within origins are not supported. To allow CORS from specific <a href="/workers/configuration/previews/">preview URLs</a>, you will need to handle this dynamically in your Worker code rather than through the `_headers` file.
+This applies the `Access-Control-Allow-Origin` header to any incoming URL. Note that the CORS specification only allows `*`, `null`, or an exact origin as valid `Access-Control-Allow-Origin` values — wildcard patterns within origins are not supported. To allow CORS from specific <a href="/workers/versions-and-deployments/preview-urls/">preview URLs</a>, you will need to handle this dynamically in your Worker code rather than through the `_headers` file.
 </>
 ) : (
 <>

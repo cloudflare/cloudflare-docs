@@ -220,6 +220,21 @@ let instance = await env.MY_WORKFLOW.get("abc-123");
 await instance.terminate(); // Returns Promise<void>
 ```
 
+To run registered rollback handlers before terminating, pass `rollback: true`:
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+await instance.terminate({ rollback: true }); // Returns Promise<void>
+```
+
+You can also run rollback handlers from Wrangler:
+
+```sh
+npx wrangler workflows instances terminate <WORKFLOW_NAME> <INSTANCE_ID> --rollback
+# For a local Workflows instance during wrangler dev:
+npx wrangler workflows instances terminate <WORKFLOW_NAME> <INSTANCE_ID> --local --rollback
+```
+
 Once stopped/terminated, the Workflow instance _cannot_ be resumed.
 
 ### Restart a Workflow

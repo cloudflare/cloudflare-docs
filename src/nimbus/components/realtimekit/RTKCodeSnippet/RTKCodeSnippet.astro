@@ -1,0 +1,16 @@
+---
+import { z } from "astro/zod";
+
+const props = z.object({
+	id: z.union([z.string(), z.array(z.string())]),
+});
+
+const { id } = props.parse(Astro.props);
+const ids = Array.isArray(id) ? id : [id];
+---
+
+<div class="rtk-code-snippet hidden" data-rtk-ids={ids.join(",")}>
+	<slot />
+</div>
+
+<script src="./RTKCodeSnippet.ts"></script>

@@ -1,0 +1,36 @@
+---
+title: New Durable Object namespaces must use the SQLite storage backend
+description: Accounts without an existing key-value backed Durable Object namespace can no longer create new ones and should use the SQLite storage backend instead.
+products:
+  - durable-objects
+  - workers
+date: 2026-07-09
+---
+
+import { WranglerConfig } from "~/components";
+
+If your account does not already have a key-value (KV) backed Durable Object namespace, you can no longer create new ones. New Durable Object namespaces must use the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class), which has been recommended for all new Durable Objects since it became [generally available](https://blog.cloudflare.com/sqlite-in-durable-objects/) in 2024.
+
+Create a new class with a `new_sqlite_classes` migration:
+
+<WranglerConfig>
+
+```toml
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyDurableObject"]
+```
+
+</WranglerConfig>
+
+SQLite-backed Durable Objects have feature parity with the key-value backend — including the [key-value storage API](/durable-objects/api/sqlite-storage-api/#synchronous-kv-api) — and additionally support relational [SQL queries](/durable-objects/api/sqlite-storage-api/#sql-api) and [point-in-time recovery](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api) to restore an object's storage to any point in the past 30 days.
+
+If you attempt to create a new key-value backed namespace (a `new_classes` migration) on an affected account, the deployment fails with the following error:
+
+```txt
+Creating new key-value backed Durable Object namespaces is no longer supported on this account. Please create a namespace using a `new_sqlite_classes` migration instead.
+```
+
+This change only affects accounts that are not already using the key-value storage backend. Accounts with at least one existing key-value backed namespace can still create new ones for now, and the Workers Free plan has only ever supported SQLite-backed Durable Objects. It is part of a broader move toward SQLite as the single storage backend for Durable Objects, ahead of a future migration path for existing key-value backed objects.
+
+For more information, refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/).

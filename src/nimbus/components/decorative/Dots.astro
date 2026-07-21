@@ -1,0 +1,45 @@
+---
+// Dot-grid pattern fill. Shared by Separator, BackgroundLines, FullPageLines.
+import { nextDecorId } from "./_id";
+
+interface Props {
+	color?: string;
+	class?: string;
+	size?: number;
+	stagger?: boolean;
+}
+
+const {
+	color = "var(--nb-grid-line)",
+	class: className,
+	size = 12,
+	stagger = false,
+} = Astro.props;
+
+const r = 0.75;
+const patternId = nextDecorId("nb-dots");
+const patternWidth = stagger ? size + r * 2 : size;
+const patternHeight = stagger ? size * 2 : size;
+---
+
+<svg
+	class:list={[
+		"pointer-events-none absolute inset-0 z-0 h-full w-full",
+		className,
+	]}
+	aria-hidden="true"
+>
+	<pattern
+		id={patternId}
+		x="0"
+		y="0"
+		width={patternWidth}
+		height={patternHeight}
+		patternUnits="userSpaceOnUse"
+	>
+		<circle cx={size / 2} cy={size / 2} r={r} fill={color}></circle>
+		{stagger && <circle cx={size} cy={size + size / 2} r={r} fill={color} />}
+	</pattern>
+	<rect x="0" y="0" width="100%" height="100%" fill={`url(#${patternId})`}
+	></rect>
+</svg>

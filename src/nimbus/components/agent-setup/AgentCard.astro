@@ -1,0 +1,33 @@
+---
+import type { AgentData } from "./types";
+import AgentIcon from "./AgentIcon.astro";
+import CapabilityBadge from "./CapabilityBadge.astro";
+
+interface Props {
+	agent: AgentData;
+}
+
+const { agent } = Astro.props;
+---
+
+<a href={`/agent-setup/${agent.slug}/`} class="agent-setup-card">
+	<div class="agent-setup-card-header">
+		<AgentIcon icon={agent.icon} name={agent.name} size={36} />
+		<div>
+			<div class="agent-setup-card-title">{agent.name}</div>
+			<div class="agent-setup-card-vendor">{agent.vendor}</div>
+		</div>
+	</div>
+
+	<div class="agent-setup-card-body">
+		<p class="agent-setup-card-description">{agent.description}</p>
+
+		<CapabilityBadge capabilities={agent.capabilities} />
+
+		<ul class="agent-setup-card-features">
+			{agent.features.slice(0, 4).map((feature) => <li>{feature}</li>)}
+		</ul>
+
+		<span class="agent-setup-card-cta"> View guide &rarr; </span>
+	</div>
+</a>

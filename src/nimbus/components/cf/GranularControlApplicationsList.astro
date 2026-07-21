@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+
+import { Details } from "~/components";
+
+type Application = {
+	name: string;
+	display_name: string;
+};
+
+const collection = await getCollection("granular-control-applications");
+---
+
+{
+	collection.map((entry) => (
+		<Details header={entry.data.display_id as string}>
+			<ul>
+				{entry.data.applications.map((application: Application) => (
+					<li>{application.display_name}</li>
+				))}
+			</ul>
+		</Details>
+	))
+}

@@ -1,7 +1,6 @@
 ---
 title: RealtimeKitClient
 sidebar_position: 3
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -29,8 +28,6 @@ named `meeting`.
             * [.__internals__](#module_RealtimeKitClient--module.exports+__internals__)
             * [.join()](#module_RealtimeKitClient--module.exports+join)
             * [.leave()](#module_RealtimeKitClient--module.exports+leave)
-            * ~~[.joinRoom()](#module_RealtimeKitClient--module.exports+joinRoom)~~
-            * ~~[.leaveRoom([state])](#module_RealtimeKitClient--module.exports+leaveRoom)~~
         * _static_
             * [.initMedia([options], [skipAwaits], [cachedUserDetails])](#module_RealtimeKitClient--module.exports.initMedia)
             * [.init(options)](#module_RealtimeKitClient--module.exports.init)
@@ -131,23 +128,6 @@ is joined successfully.
 The `leave()` method can be used to leave a meeting.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RealtimeKitClient--module.exports)  
-<a name="module_RealtimeKitClient--module.exports+joinRoom"></a>
-
-#### ~~module.exports.joinRoom()~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RealtimeKitClient--module.exports)  
-<a name="module_RealtimeKitClient--module.exports+leaveRoom"></a>
-
-#### ~~module.exports.leaveRoom([state])~~
-***Deprecated***
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RealtimeKitClient--module.exports)  
-
-| Param | Type |
-| --- | --- |
-| [state] | <code>LeaveRoomState</code> | 
-
 <a name="module_RealtimeKitClient--module.exports.initMedia"></a>
 
 #### module.exports.initMedia([options], [skipAwaits], [cachedUserDetails])

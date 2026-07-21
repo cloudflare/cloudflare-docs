@@ -1,0 +1,92 @@
+---
+title: Enterprise AI agent workspace
+pcx_content_type: reference-architecture-diagram
+products: [access, agents, ai-gateway, sandbox, workers]
+sidebar:
+  order: 2
+  label: Enterprise AI agent workspace
+updated: 2026-07-11
+description: Reference architecture for building governed, stateful enterprise AI agent workspaces on Cloudflare.
+---
+
+## Introduction
+
+An enterprise AI agent workspace gives employees a persistent environment for completing work with AI. It pairs that workspace with a curated library of organizational context and skills, so people do their best work using an organization's own knowledge and proven playbooks. Each workspace holds its own conversation state, files, enterprise tools, and isolated execution.
+
+Employees use a workspace to produce documents, presentations, spreadsheets, research, workflows, source code, and apps. These outputs outlive the conversation. An employee can review, share, export, or keep improving them with AI.
+
+The architecture uses [Cloudflare Workers](/workers/) and the [Agents SDK](/agents/) for orchestration, [Durable Objects](/durable-objects/) for state, [AI Gateway](/ai-gateway/) for model governance, and [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) for enterprise tools. [Dynamic Workers](/dynamic-workers/), [Sandbox SDK](/sandbox/) containers, and [Browser Run](/browser-run/) handle work that needs more than model inference.
+
+Unlike an [enterprise vibe coding platform](/reference-architecture/diagrams/ai/enterprise-ai-vibe-coding-platform/), the result is not always a deployed application. Source code and apps are two output types among documents, data, analysis, and repeatable workflows.
+
+## Core architecture
+
+![Enterprise AI agent workspace architecture showing multiple ways to invoke work, verified access, a stateful agent workspace built on Workers, Durable Objects, Dynamic Workers, and Sandbox containers, curated organizational knowledge, secure access to AI model providers through AI Gateway and to internal and SaaS MCP servers through MCP server portals, and durable outputs.](~/assets/images/reference-architecture/enterprise-ai-agent-workspace/top-level.svg)
+
+1. **Invoke work:** An employee starts or resumes work from the web application, enterprise chat, or email. Webhooks and schedules can also start work without an open browser session. [Cloudflare Access](/cloudflare-one/access-controls/) authenticates browser sessions, and each asynchronous channel validates its signature, token, or sender before a request is accepted.
+2. **Reach the agent workspace:** Workers route the request to the workspace agent. The agent restores conversation history, tasks, files, permissions, and queued events from durable state, draws on curated organization knowledge, then runs bounded code in Dynamic Workers or a Sandbox container when a task needs more than model inference.
+3. **Use governed models and tools:** The agent calls approved models through AI Gateway and approved enterprise tools through an MCP server portal. Both layers keep provider routing, credentials, policy, and logging outside the workspace.
+4. **Save an output:** The workspace saves the result as a durable work product that the employee can review, continue with AI, share, or export.
+
+The web application is the primary surface, but it is not the agent runtime. Every channel sends events to the same stateful workspace, so an employee can start work in chat, review it in the web application, and continue later against one agent history.
+
+## State and isolation model
+
+![Workspace isolation and state model showing a stateless Worker routing to one per-user Durable Object and per-workspace Durable Objects, each coordinating Dynamic Workers, a Sandbox container, and durable file and output storage.](~/assets/images/reference-architecture/enterprise-ai-agent-workspace/worker-do.svg)
+
+Workers stay stateless. They serve the interface and route each request to the right Durable Object using the identity and workspace in the request.
+
+Each workspace maps to one Durable Object running the Agents SDK. This object is the durable authority for the workspace. It owns the conversation, tasks, schedules, consent decisions, and event queue, and it coordinates model calls, tools, files, and execution. Work continues after the browser disconnects or a Worker isolate restarts, and workspaces scale independently instead of sharing one agent process.
+
+A separate per-user Durable Object stores profile settings, the workspace registry, integrations, and grants. One user owns many independently stateful workspaces.
+
+The workspace coordinates resources but does not store everything. The workspace picks an execution environment per task: Dynamic Workers for bounded [Code Mode](/agents/model-context-protocol/), Sandbox SDK containers for a full shell and build environment, and Browser Run for isolated browser sessions. Large files and reusable outputs live in a versioned file service, and sharing grants are kept separate from the output bytes so access can be granted or revoked without moving the file. Sandbox backups and shared organizational context use [R2](/r2/). Usage and lifecycle events use [Workers Analytics Engine](/analytics/analytics-engine/) or an external system.
+
+| Scope                          | Cloudflare primitive          | Responsibility                                                  | Lifetime                   |
+| ------------------------------ | ----------------------------- | --------------------------------------------------------------- | -------------------------- |
+| Application                    | Workers                       | UI, APIs, authentication, routing, and channel ingress          | Stateless request handling |
+| User                           | Durable Object                | Profile, workspace registry, integrations, grants, and activity | Durable                    |
+| Workspace                      | Agents SDK and Durable Object | Agent state, event queue, and turn orchestration                | Durable                    |
+| Code Mode execution            | Dynamic Worker                | Bounded code and tool composition                               | Ephemeral                  |
+| Active development environment | Sandbox SDK container         | Shell, builds, previews, and coding sessions                    | Created on demand          |
+| Browser session                | Browser Run                   | Web navigation, interaction, screenshots, and PDF rendering     | Session scoped             |
+| User files                     | Versioned file service        | Files, saved outputs, and revisions                             | Durable                    |
+| Skills and context library     | Read-only object store (R2)   | Curated skills, reference context, and commands                 | Published centrally        |
+| Backup                         | R2                            | Sandbox backups                                                 | Durable                    |
+
+## Governed access to models and tools
+
+All model requests go through [AI Gateway](/ai-gateway/). The agent uses models from different providers without moving provider-specific logic into each workspace. AI Gateway applies routing, tracks usage and cost, and stores request logs.
+
+Enterprise tools connect through an [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/). The portal exposes one endpoint, applies Access policies, curates the available tools, routes per-user credentials, and logs tool activity. Administrators build portals per team so an agent receives the tools for its work instead of every tool in the organization.
+
+## Skills and organizational context
+
+A workspace draws on a curated, read-only library that is published centrally and shared across every workspace. The library holds skills, which are reusable task playbooks the agent loads on demand, and context, which is the reference material an organization wants agents to use.
+
+Skills layer by source, from platform-provided to organization-shared to workspace-local, so a team can extend or override the defaults. The agent lists skills, loads one when a task matches, and unloads it afterward. This keeps guidance out of the model context until it is needed.
+
+Publish the library through a versioned, read-only store so changes to skills and context stay auditable and reviewable. The library is read-only to the agent and governed centrally.
+
+## Security model
+
+Treat model output, tool output, and generated code as untrusted. Apply controls at the platform boundary, not in generated code.
+
+- **Identity:** Use Access for browser sessions and MCP portal connections. Verify asynchronous channels before routing their events to a workspace.
+- **Authorization:** Check user ownership before resolving a workspace, opening a terminal, reading an output, or serving a preview.
+- **Tool access:** Use MCP server portal policies, tool allowlists, OAuth, grants, and consent for sensitive operations.
+- **Code isolation:** Run bounded code in Dynamic Workers and full development workloads in Sandbox SDK containers.
+- **Credential isolation:** Keep model and tool credentials in platform services. Never expose them to generated code or model context.
+- **Curated inputs:** Publish skills and context to a read-only, versioned store. A workspace cannot mutate the shared library.
+- **Auditability:** Record model usage, tool calls, consent decisions, output sharing, and execution lifecycle events.
+
+## Related resources
+
+- [Agents SDK](/agents/)
+- [AI Gateway](/ai-gateway/)
+- [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/)
+- [Dynamic Workers](/dynamic-workers/)
+- [Sandbox SDK](/sandbox/)
+- [Browser Run](/browser-run/)
+- [AI Vibe Coding Platform](/reference-architecture/diagrams/ai/ai-vibe-coding-platform/)
+- [Enterprise AI Vibe Coding Platform](/reference-architecture/diagrams/ai/enterprise-ai-vibe-coding-platform/)

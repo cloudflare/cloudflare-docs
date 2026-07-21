@@ -144,11 +144,11 @@ npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="mysql://u
 </Tabs>
 
 :::note[Manage caching]
-By default, Hyperdrive will cache query results. If you wish to disable caching, pass the flag `--caching-disabled`.
+By default, Hyperdrive caches eligible read query results. If you wish to disable caching, pass the flag `--caching-disabled`.
 
 Alternatively, you can use the `--max-age` flag to specify the maximum duration (in seconds) for which items should persist in the cache, before they are evicted. Default value is 60 seconds.
 
-Refer to [Hyperdrive Wrangler commands](/hyperdrive/reference/wrangler-commands/) for more information.
+Hyperdrive does not invalidate cached read results when your application writes to your database. If your application needs read-after-write consistency, use a separate cache-disabled Hyperdrive configuration for the reads that must return fresh data. Refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for guidance and [Hyperdrive Wrangler commands](/hyperdrive/reference/wrangler-commands/) for command options.
 :::
 
 If successful, the command will output your new Hyperdrive configuration:

@@ -281,7 +281,6 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/parallel/v1b
 The following models do not accept web search through AI Gateway:
 
 - **Google Gemini** — not available through the unified `web_search` tool, because Vertex's OpenAI-compatible surface does not translate it into Gemini's native `googleSearch` tool. To use Gemini grounding, pass the native `google_search` tool to the [provider-specific Vertex endpoint](/ai-gateway/usage/providers/vertex/#using-provider-specific-endpoint).
-- **Anthropic `claude-fable-5`** — AI Gateway does not provision the Anthropic credential this model requires.
 - **Grok chat-completions models** — `xai/grok-4.20-0309-non-reasoning`, `xai/grok-4.20-0309-reasoning`, and `xai/grok-4.3` use the chat-completions endpoint, which does not accept the `web_search` tool. For Grok web search, refer to [xAI web search](#xai-web-search).
 - **DeepSeek `deepseek-v4-flash`, `deepseek-v4-pro`** — these models accept function tools only.
 - **MiniMax `m2.7`, `m3`** — these models accept `{ "type": "function" }` tools only.

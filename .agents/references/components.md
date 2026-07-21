@@ -82,7 +82,7 @@ database_id = "<unique-ID-for-your-database>"
 </WranglerConfig>
 ```
 
-- Always provide TOML as input — JSON is auto-generated.
+- Always provide TOML or JSON as input — the other format is auto-generated.
 - Use `$today` for `compatibility_date`. It is replaced with the current date at build time and injects a comment telling readers to keep it current.
 - Use `removeSchema` prop to omit the `$schema` line from JSON output (useful for config snippets rather than full files).
 - If a feature requires a minimum `compatibility_date`, note it in a `:::note` admonition above or below the config block.

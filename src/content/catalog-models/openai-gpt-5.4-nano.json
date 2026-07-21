@@ -5964,6 +5964,178 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-5.4-nano\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting the model use OpenAI's built-in web search tool to answer with current information",
+			"input": {
+				"input": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+				"max_output_tokens": 4096,
+				"tools": [
+					{
+						"type": "web_search_preview"
+					}
+				]
+			},
+			"output": {
+				"text": "- **New Cloudflare One partner initiative for AI + SASE migrations:** Cloudflare announced a new \u201cCloudflare One Design Partner\u201d designation (via its PowerUP program) and an AI-powered toolkit aimed at helping organizations modernize security/networking to SASE-style architectures. ([itpro.com](https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption?utm_source=openai))  \n- **Acquisition to expand Cloudflare\u2019s AI-native dev tooling:** Cloudflare said it\u2019s buying **VoidZero** (behind the Vite ecosystem and related tools like Vitest), with plans to integrate those assets into **Cloudflare Workers** and keep key parts open source. ([itpro.com](https://www.itpro.com/business/acquisition/cloudflare-snaps-up-voidzero-to-expand-ai-native-developer-tools?utm_source=openai))  \n- **Operational / reliability chatter around recent Cloudflare issues:** Multiple outlets and community reports during the last week pointed to **service problems affecting customer traffic** (including discussions referencing Cloudflare\u2019s status/incident activity). ([cloudflarestatus.com](https://www.cloudflarestatus.com/uptime?utm_source=openai))"
+			},
+			"raw_response": {
+				"id": "resp_0e2e9c834e7f91cc016a39969473f0819a9f7395881d0a2709",
+				"object": "response",
+				"created_at": 1782158996,
+				"model": "gpt-5.4-nano-2026-03-17",
+				"output": [
+					{
+						"id": "ws_0e2e9c834e7f91cc016a399694e4e4819aae4e34fc9fbc5091",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare news this week",
+								"Cloudflare announcement June 2026",
+								"Cloudflare funding acquisition partnership June 2026",
+								"Cloudflare incident outage news"
+							],
+							"query": "Cloudflare news this week"
+						}
+					},
+					{
+						"id": "ws_0e2e9c834e7f91cc016a3996967398819aa1ca74f93b3d30b0",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"site:blog.cloudflare.com 2026 Cloudflare June 2026",
+								"Cloudflare June 2026 acquisition partnership June 2026 Reuters",
+								"Cloudflare June 2026 earnings analyst news",
+								"Cloudflare outage June 2026"
+							],
+							"query": "site:blog.cloudflare.com 2026 Cloudflare June 2026"
+						}
+					},
+					{
+						"id": "msg_0e2e9c834e7f91cc016a399698556c819aaeac57e1b9b1c6e0",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"end_index": 447,
+										"start_index": 283,
+										"title": "Cloudflare launches new partner initiative to support AI and SASE adoption",
+										"url": "https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 851,
+										"start_index": 711,
+										"title": "Cloudflare snaps up VoidZero to expand AI-native developer tools",
+										"url": "https://www.itpro.com/business/acquisition/cloudflare-snaps-up-voidzero-to-expand-ai-native-developer-tools?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1204,
+										"start_index": 1121,
+										"title": "Cloudflare Status - Incident History",
+										"url": "https://www.cloudflarestatus.com/uptime?utm_source=openai"
+									}
+								],
+								"logprobs": [],
+								"text": "- **New Cloudflare One partner initiative for AI + SASE migrations:** Cloudflare announced a new \u201cCloudflare One Design Partner\u201d designation (via its PowerUP program) and an AI-powered toolkit aimed at helping organizations modernize security/networking to SASE-style architectures. ([itpro.com](https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption?utm_source=openai))  \n- **Acquisition to expand Cloudflare\u2019s AI-native dev tooling:** Cloudflare said it\u2019s buying **VoidZero** (behind the Vite ecosystem and related tools like Vitest), with plans to integrate those assets into **Cloudflare Workers** and keep key parts open source. ([itpro.com](https://www.itpro.com/business/acquisition/cloudflare-snaps-up-voidzero-to-expand-ai-native-developer-tools?utm_source=openai))  \n- **Operational / reliability chatter around recent Cloudflare issues:** Multiple outlets and community reports during the last week pointed to **service problems affecting customer traffic** (including discussions referencing Cloudflare\u2019s status/incident activity). ([cloudflarestatus.com](https://www.cloudflarestatus.com/uptime?utm_source=openai))"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 12884,
+					"output_tokens": 388,
+					"total_tokens": 13272,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 173
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1782159001,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 4096,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"context": "current_turn",
+					"effort": "none",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [
+					{
+						"type": "web_search_preview",
+						"search_content_types": [
+							"text"
+						],
+						"search_context_size": "medium",
+						"user_location": {
+							"type": "approximate",
+							"city": null,
+							"country": "US",
+							"region": null,
+							"timezone": null
+						}
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-nano',\n  {\n    input: 'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n    max_output_tokens: 4096,\n    tools: [{ type: 'web_search_preview' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-5.4-nano\",\n  \"input\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n  \"max_output_tokens\": 4096,\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,

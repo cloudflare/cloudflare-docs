@@ -102,12 +102,18 @@ wrangler containers registries configure [DOMAIN] [OPTIONS]
 
 - `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
   - Domain to configure for the registry.
-- `--public-credential` <Type text="string" /> <MetaInfo text="required" />
-  - The public part of the registry credentials, e.g. `AWS_ACCESS_KEY_ID` for ECR
+- `--dockerhub-username` <Type text="string" /> <MetaInfo text="optional" />
+  - The Docker Hub username to authenticate with. Use with the `docker.io` domain. The secret is a Docker Hub personal access token.
+- `--aws-access-key-id` <Type text="string" /> <MetaInfo text="optional" />
+  - The AWS access key ID to authenticate with. Use with an Amazon ECR domain. The secret is the matching AWS secret access key.
+- `--gar-email` <Type text="string" /> <MetaInfo text="optional" />
+  - The Google service account email to authenticate with. Use with a `*-docker.pkg.dev` domain.
 - `--secret-store-id` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the secret store to use to store the registry credentials
 - `--secret-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name Wrangler should store the registry credentials under
+
+The credential flags are mutually exclusive. Use the one that matches the registry you are configuring.
 
 When run interactively, wrangler will prompt you for your secret and store it in Secrets Store.
 To run non-interactively, you can send your secret value to wrangler through stdin to have
@@ -202,14 +208,14 @@ wrangler containers instances 12345678-abcd-1234-abcd-123456789abc --json
 
 ```json output
 [
-  {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "name": "worker-12",
-    "state": "running",
-    "location": "sfo06",
-    "version": 3,
-    "created": "2025-06-01T12:00:00Z"
-  }
+	{
+		"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "worker-12",
+		"state": "running",
+		"location": "sfo06",
+		"version": 3,
+		"created": "2025-06-01T12:00:00Z"
+	}
 ]
 ```
 

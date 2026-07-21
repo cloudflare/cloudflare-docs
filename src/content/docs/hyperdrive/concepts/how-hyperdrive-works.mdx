@@ -62,9 +62,11 @@ Hyperdrive supports caching of non-mutating (read) queries to your database.
 
 When queries are sent via Hyperdrive, Hyperdrive parses the query and determines whether the query is a mutating (write) or non-mutating (read) query.
 
-For non-mutating queries, Hyperdrive will cache the response for the configured `max_age`, and whenever subsequent queries are made that match the original, Hyperdrive will return the cached response, bypassing the need to issue the query back to the origin database.
+For non-mutating queries, Hyperdrive caches the response for the configured `max_age`. When your Worker sends a later query that matches the original, Hyperdrive returns the cached response instead of sending the query back to the origin database.
 
 Caching reduces the burden on your origin database and accelerates the response times for your queries.
+
+Hyperdrive does not invalidate cached read query results when your application writes to your database. If your application needs read-after-write consistency, refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for guidance on using a separate cache-disabled Hyperdrive configuration for reads that must return fresh data.
 
 Learn more about query caching behavior and configuration in [Query caching](/hyperdrive/concepts/query-caching/).
 

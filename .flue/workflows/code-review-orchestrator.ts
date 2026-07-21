@@ -1,63 +1,52 @@
 /**
- * Code review orchestrator
+ * Code review orchestrator — dispatch phase only
  *
- * Coordinates specialist review agents for a pull request, reconciles their
- * findings against the review history and human comments, then renders a
- * single review comment.
+ * Performs the limit check, posts the placeholder, decides the diff mode,
+ * writes context to R2, and admits all three specialists fire-and-forget. It
+ * does NOT wait for the specialists. The finalize-review workflow (admitted
+ * by whichever specialist finishes last via the R2 rendezvous lock) handles
+ * reconciliation, rendering, and posting.
+ *
+ * Specialist streams: code, style, conventions.
  *
  * Behavior is controlled by the DOCS_FLUE_REVIEW_MODE env var:
- *   "log"     — (default) fetch context, run agents, log the rendered comment.
- *               Does NOT mutate GitHub.
- *   "comment" — create or update the single bot review comment on the PR.
+ *   "log"     — (default) does not mutate GitHub (no comment posting).
+ *   "comment" — creates or updates the single bot review comment on the PR.
  *
  * POST /workflows/code-review-orchestrator
  */
 import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
-import { createAgent } from "@flue/runtime";
-import reconcileSkill from "../.agents/skills/reconcile-code-review/SKILL.md" with { type: "skill" };
 import {
-	getDefaultWorkspace,
-	getShellSandbox,
-} from "../connectors/cloudflare-shell";
-import {
-	addReactionToComment,
-	comparePullRequestHeads,
 	getInstallationToken,
 	getIssueComments,
 	getPullRequest,
-	getPullRequestFiles,
-	postComment,
-	removeReactionFromComment,
-	updateIssueComment,
-	type GitHubIssueComment,
 } from "../lib/github";
-import {
-	runStyleGuideReviewInProcess,
-	selectStyleGuideFiles,
-	STYLE_GUIDE_CONCURRENCY,
-} from "../lib/style-guide-inproc";
-import type {
-	StyleGuideFinding,
-	StyleGuideResult,
-} from "../lib/style-guide-results";
-import { writeDiffToWorkspace } from "../lib/code-review-diff";
+import { getInternalHeaders } from "../lib/internal-auth";
+import { admitWorkflow } from "../lib/poll-run";
+import { toReviewSpecialistPrMeta } from "../lib/review-specialist";
 import {
 	BOT_COMMENT_MARKER,
 	type DiffMode,
 	extractReviewedHeadSha,
 	getAutoReviewCount,
-	incrementAutoReviewCount,
+	isAutoReviewDisabled,
 	isReviewLimitIgnored,
 	partitionComments,
 } from "../lib/code-review-state";
 import {
-	ReconcileResultSchema,
-	type ReconcileResult,
-	renderComment,
-	renderFailureComment,
+	postOrUpdateComment,
 	renderPendingComment,
 	renderReviewLimitComment,
 } from "../lib/code-review-render";
+import {
+	EXPECTED_STREAMS,
+	writeContext,
+	writeStreamResult,
+	degradedCodeResult,
+	degradedStyleResult,
+	degradedConventionsResult,
+	tryClaimFinalize,
+} from "../lib/finalize-rendezvous";
 
 export const route: WorkflowRouteHandler = async (_c, next) => next();
 
@@ -74,21 +63,37 @@ interface CodeReviewOrchestratorPayload {
 	triggerEyesReactionId?: number | null;
 }
 
-export async function run({ id: runId, init, payload, env }: FlueContext) {
+export async function run({
+	id: runId,
+	payload,
+	env,
+	req,
+}: FlueContext): Promise<Record<string, unknown>> {
 	const input = parsePayload(payload);
 	const typedEnv = env as Record<string, string & unknown>;
 
 	const reviewMode =
 		(typedEnv.DOCS_FLUE_REVIEW_MODE as string | undefined) ?? "log";
 	const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-	const loader = typedEnv.LOADER as unknown as Parameters<
-		typeof getShellSandbox
-	>[0]["loader"];
-	const workspace = getDefaultWorkspace();
+
+	// ── Auto-review disabled check ────────────────────────────────────────────
+	// If a codeowner has run /disable-auto-review, suppress push-triggered
+	// reviews. Codeowner slash commands (bypassReviewLimit=true) still work.
+	if (!input.bypassReviewLimit) {
+		const disabled = await isAutoReviewDisabled(bucket, input.number);
+		if (disabled) {
+			console.log({
+				message: `Auto-review suppressed: PR #${input.number} — auto-review is disabled`,
+				event: "code_review_orchestrator",
+				number: input.number,
+				runId,
+				action: "auto_review_disabled",
+			});
+			return { dispatched: false, reason: "auto_review_disabled" };
+		}
+	}
 
 	// ── Auto-review limit check ────────────────────────────────────────────────
-	// Automatic reviews are capped at 2 per PR. Codeowner commands bypass this,
-	// and the /ignore-review-limit command permanently lifts the cap for the PR.
 	if (!input.bypassReviewLimit) {
 		const [autoReviewCount, limitIgnored] = await Promise.all([
 			getAutoReviewCount(bucket, input.number),
@@ -111,7 +116,6 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 				const botComment =
 					allComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ??
 					null;
-				// Only post if not already showing the paused message
 				const alreadyPaused = botComment?.body?.includes(
 					"Automatic reviews for this PR are paused",
 				);
@@ -126,56 +130,23 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 			}
 
 			return {
-				mode: reviewMode,
-				active: 0,
-				ignored: 0,
-				resolved: 0,
-				summary: "Auto-review limit reached.",
-				commentBody: null,
+				dispatched: false,
+				reason: "auto_review_limit_reached",
 			};
 		}
-		// Increment before running so a mid-run failure counts as a used review
-		await incrementAutoReviewCount(bucket, input.number, autoReviewCount);
 	}
 
 	const token = await getInstallationToken(typedEnv as Record<string, string>);
 
-	const agent = createAgent(() => ({
-		sandbox: getShellSandbox({ workspace, loader }),
-		model: "cloudflare/@cf/moonshotai/kimi-k2.7-code",
-		skills: [reconcileSkill],
-	}));
-	const harness = await init(agent);
-
-	// console.log({
-	// 	message: `Code review started: PR #${input.number}`,
-	// 	event: "code_review_orchestrator",
-	// 	number: input.number,
-	// 	mode: reviewMode,
-	// 	runId,
-	// 	action: "started",
-	// });
-
-	// ── 1. Gather PR review context ────────────────────────────────────────────
+	// ── 1. Gather PR context ───────────────────────────────────────────────────
 	const [allComments, pr] = await Promise.all([
 		getIssueComments(token, input.number),
 		getPullRequest(token, input.number),
 	]);
 	const { botComment, humanCommentsAfterBot } = partitionComments(allComments);
-
 	const currentHeadSha = pr.head.sha;
 
-	// Session key is scoped to PR + head SHA so each new commit gets a fresh
-	// context. Re-runs for the same SHA reuse the session (enabling the
-	// reconciler to work correctly across retries). In log mode, also scope by
-	// runId so local test runs never share state.
-	const sessionKey =
-		reviewMode === "log" || input.forceFullReview
-			? `code-review-orchestrator:${input.number}:${runId}`
-			: `code-review-orchestrator:${input.number}:${currentHeadSha}`;
-	const session = await harness.session(sessionKey);
-
-	// forceFullReview: wipe all previous review JSONs so reconciler starts fresh
+	// forceFullReview: wipe all previous review JSONs so the reconciler starts fresh.
 	if (input.forceFullReview) {
 		const prPrefix = `diffs/pr-${input.number}/`;
 		const existing = await bucket.list({ prefix: prPrefix });
@@ -184,408 +155,271 @@ export async function run({ id: runId, init, payload, env }: FlueContext) {
 				.filter((o) => o.key.match(/review-[0-9a-f]+\.json$/))
 				.map((o) => bucket.delete(o.key)),
 		);
-		// console.log({
-		// 	message: `Full review forced: cleared previous review JSONs for PR #${input.number}`,
-		// 	event: "code_review_orchestrator",
-		// 	number: input.number,
-		// 	runId,
-		// 	action: "full_review_forced",
-		// });
 	}
 
 	const previousReviewedSha = input.forceFullReview
 		? null
 		: extractReviewedHeadSha(botComment?.body ?? null);
 
-	// Determine diff mode: incremental if we have a prior reviewed SHA that
-	// differs from the current head; full otherwise.
-	let diffMode: DiffMode;
-	let allFiles: Awaited<ReturnType<typeof getPullRequestFiles>>;
-
-	if (
+	const diffMode: DiffMode =
 		!input.forceFullReview &&
 		previousReviewedSha &&
 		previousReviewedSha !== currentHeadSha
-	) {
-		// Attempt incremental diff — commits since last review
-		const compare = await comparePullRequestHeads(
-			token,
-			previousReviewedSha,
-			currentHeadSha,
-		);
+			? {
+					type: "incremental",
+					fromSha: previousReviewedSha,
+					toSha: currentHeadSha,
+				}
+			: { type: "full" };
 
-		if (compare) {
-			diffMode = {
-				type: "incremental",
-				fromSha: previousReviewedSha,
-				toSha: currentHeadSha,
-			};
-			allFiles = compare.files;
-			// console.log({
-			// 	message: `Code review using incremental diff: PR #${input.number} — ${previousReviewedSha.slice(0, 7)}...${currentHeadSha.slice(0, 7)}, ${allFiles.length} file(s) changed`,
-			// 	event: "code_review_orchestrator",
-			// 	number: input.number,
-			// 	diff_mode: "incremental",
-			// 	from_sha: previousReviewedSha,
-			// 	to_sha: currentHeadSha,
-			// 	files: allFiles.length,
-			// 	runId,
-			// 	action: "diff_mode_resolved",
-			// });
-		} else {
-			// Base SHA gone (force-push) — fall back to full PR diff
-			diffMode = { type: "full" };
-			allFiles = await getPullRequestFiles(token, input.number);
-			// console.log({
-			// 	message: `Code review falling back to full diff (base SHA not found): PR #${input.number}`,
-			// 	event: "code_review_orchestrator",
-			// 	number: input.number,
-			// 	diff_mode: "full",
-			// 	fallback_reason: "base_sha_not_found",
-			// 	to_sha: currentHeadSha,
-			// 	files: allFiles.length,
-			// 	runId,
-			// 	action: "diff_mode_resolved",
-			// });
-		}
-	} else {
-		// No previous review or SHA unchanged — full PR diff
-		diffMode = { type: "full" };
-		allFiles = await getPullRequestFiles(token, input.number);
-		// console.log({
-		// 	message: `Code review using full diff: PR #${input.number} — ${allFiles.length} file(s)`,
-		// 	event: "code_review_orchestrator",
-		// 	number: input.number,
-		// 	diff_mode: "full",
-		// 	to_sha: currentHeadSha,
-		// 	had_previous_review: previousReviewedSha !== null,
-		// 	files: allFiles.length,
-		// 	runId,
-		// 	action: "diff_mode_resolved",
-		// });
+	// ── 2. Derive baseUrl (needed for R2 context + specialist payloads) ──────────
+	// Validate req before posting the placeholder so we never leave a stale
+	// "review pending" comment if the request context is unexpectedly absent.
+	if (!req) {
+		throw new Error(
+			"[flue] code-review-orchestrator: missing request context — cannot derive baseUrl",
+		);
+	}
+	const baseUrl = new URL(req.url).origin;
+
+	// ── 3. Post the placeholder ────────────────────────────────────────────────
+	if (reviewMode === "comment") {
+		await postOrUpdateComment(
+			token,
+			input.number,
+			botComment,
+			renderPendingComment(
+				currentHeadSha,
+				botComment !== null,
+				input.forceFullReview,
+				botComment?.body ?? undefined,
+			),
+		);
 	}
 
-	// console.log({
-	// 	message: `Code review context fetched: PR #${input.number} — ${allFiles.length} file(s) in diff, ${allComments.length} comment(s), prior bot review: ${botComment ? "yes" : "no"}, human replies: ${humanCommentsAfterBot.length}`,
-	// 	event: "code_review_orchestrator",
-	// 	number: input.number,
-	// 	files: allFiles.length,
-	// 	comments: allComments.length,
-	// 	has_prior_bot_review: botComment !== null,
-	// 	human_replies: humanCommentsAfterBot.length,
-	// 	runId,
-	// 	action: "context_fetched",
-	// });
+	// ── 4. Write context to R2 ─────────────────────────────────────────────────
+	// dispatchId = this run's id, scoping the rendezvous so concurrent
+	// dispatches on the same head SHA don't collide.
 
-	// Run-scoped diff directory in the shared Workspace. The style-guide review
-	// sessions run in this same Durable Object, so the diff is staged directly
-	// in the Workspace (read by the `code` tool) — no R2 round-trip. prDir stays
-	// the R2 key prefix for the cross-run review-state objects.
-	const prDir = `diffs/pr-${input.number}`;
-	const diffDir = `${prDir}/runs/${runId}`;
+	await writeContext(bucket, {
+		prNumber: input.number,
+		headSha: currentHeadSha,
+		dispatchId: runId,
+		baseUrl,
+		diffMode,
+		forceFullReview: input.forceFullReview ?? false,
+		bypassReviewLimit: input.bypassReviewLimit ?? false,
+		reviewMode,
+		previousReviewedSha,
+		triggerCommentId: input.triggerCommentId,
+		triggerEyesReactionId: input.triggerEyesReactionId,
+		humanComments: humanCommentsAfterBot.map((c) => ({
+			author: c.user?.login ?? "unknown",
+			created_at: c.created_at,
+			body: c.body ?? "",
+		})),
+		expectedStreams: [...EXPECTED_STREAMS],
+	});
 
-	// ── 2. Stage the diff in the Workspace, and post the placeholder comment ──
+	// ── 5. Write crash-protection placeholders for all three streams ──────────
+	// Written BEFORE the specialists are admitted so a key always exists even
+	// if a specialist DO is evicted immediately after admission. Placeholders
+	// have final:false so tryClaimFinalize ignores them — finalize only runs
+	// once each specialist writes its own final:true result.
 	await Promise.all([
-		writeDiffToWorkspace(workspace, diffDir, allFiles, pr),
-		// In comment mode, immediately post/update with a "review in progress"
-		// message so the reviewer sees something right away.
-		reviewMode === "comment"
-			? postOrUpdateComment(
-					token,
-					input.number,
-					botComment,
-					renderPendingComment(
-						currentHeadSha,
-						botComment !== null,
-						input.forceFullReview,
-						botComment?.body ?? undefined,
-					),
-				)
-			: Promise.resolve(),
+		writeStreamResult(bucket, input.number, currentHeadSha, runId, "code", {
+			ok: false,
+			result: degradedCodeResult(),
+			final: false,
+		}),
+		writeStreamResult(bucket, input.number, currentHeadSha, runId, "style", {
+			ok: false,
+			result: degradedStyleResult(),
+			final: false,
+		}),
+		writeStreamResult(
+			bucket,
+			input.number,
+			currentHeadSha,
+			runId,
+			"conventions",
+			{
+				ok: false,
+				result: degradedConventionsResult(),
+				final: false,
+			},
+		),
 	]);
 
-	let styleGuideResult: StyleGuideResult;
-	try {
-		const styleGuideFiles = selectStyleGuideFiles(allFiles);
-		console.log({
-			message: `Style-guide review fan-out: PR #${input.number} — ${styleGuideFiles.length} file(s), concurrency ${STYLE_GUIDE_CONCURRENCY}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			files: styleGuideFiles.length,
-			concurrency: STYLE_GUIDE_CONCURRENCY,
-			diffDir,
-			runId,
-			action: "style_guide_fanout_start",
-		});
+	// ── 6. Admit all three specialists fire-and-forget ─────────────────────────
+	const internalHeaders = getInternalHeaders(
+		typedEnv as Record<string, string>,
+	);
+	const specialistBody = {
+		eventType: "pull_request" as const,
+		number: input.number,
+		headSha: currentHeadSha,
+		diffMode,
+		pr: toReviewSpecialistPrMeta(pr),
+		dispatchId: runId,
+		baseUrl,
+		expectedStreams: [...EXPECTED_STREAMS],
+	};
 
-		// In-process fan-out: one harness over a single shared workspace,
-		// hydrated once, with one concurrent session per file. A single file's
-		// failure degrades to an empty result rather than aborting the review.
-		styleGuideResult = await runStyleGuideReviewInProcess({
-			init,
-			workspace,
-			loader,
-			prNumber: input.number,
-			pullRequest: {
-				number: pr.number,
-				title: pr.title,
-				base: pr.base.ref,
-				head: pr.head.ref,
-			},
-			diffDir,
-			files: styleGuideFiles,
-			runId,
-			concurrency: STYLE_GUIDE_CONCURRENCY,
-		});
-		console.log({
-			message: `Style-guide review returned: PR #${input.number} — ${styleGuideResult.findings.length} finding(s) across ${styleGuideResult.reviewedFiles.length} file(s)`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			findings: styleGuideResult.findings.length,
-			reviewedFiles: styleGuideResult.reviewedFiles.length,
-			runId,
-			action: "style_guide_complete",
-		});
-
-		// If the agent returned a known failure summary (e.g. model timed out
-		// and produced no output), surface a failure comment rather than
-		// falsely claiming no issues were found.
-		const FAILURE_SUMMARIES = [
-			"Style-guide review produced no result.",
-			"Style-guide review failed.",
-		];
-		if (
-			styleGuideResult.findings.length === 0 &&
-			FAILURE_SUMMARIES.includes(styleGuideResult.summary)
-		) {
-			if (reviewMode === "comment") {
-				const failureComment = renderFailureComment(currentHeadSha);
-				let targetComment = botComment;
-				if (targetComment === null) {
-					const freshComments = await getIssueComments(token, input.number);
-					targetComment =
-						freshComments.findLast((c) =>
-							c.body?.includes(BOT_COMMENT_MARKER),
-						) ?? null;
-				}
-				await postOrUpdateComment(
-					token,
-					input.number,
-					targetComment,
-					failureComment,
-				).catch(() => {});
-			}
+	type AdmitOutcome =
+		| { ok: true; runId: string }
+		| { ok: false; reason: string };
+	const admitSpecialist = async (pathname: string): Promise<AdmitOutcome> => {
+		try {
+			const id = await admitWorkflow({
+				baseUrl,
+				pathname,
+				headers: internalHeaders,
+				body: specialistBody,
+			});
+			return { ok: true, runId: id };
+		} catch (err) {
 			return {
-				mode: reviewMode,
-				active: 0,
-				ignored: 0,
-				resolved: 0,
-				summary: styleGuideResult.summary,
-				commentBody: null,
+				ok: false,
+				reason: err instanceof Error ? err.message : String(err),
 			};
 		}
-	} catch (err) {
-		const errMsg = err instanceof Error ? err.message : String(err);
-		console.log({
-			message: `Style-guide review failed: PR #${input.number} — ${errMsg}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			error: errMsg,
-			runId,
-			action: "style_guide_failed",
-		});
+	};
 
-		// Update the placeholder comment to show failure rather than leaving
-		// it stuck on "Review in progress".
-		if (reviewMode === "comment") {
-			const failureComment = renderFailureComment(currentHeadSha);
-			try {
-				let targetComment = botComment;
-				if (targetComment === null) {
-					const freshComments = await getIssueComments(token, input.number);
-					targetComment =
-						freshComments.findLast((c) =>
-							c.body?.includes(BOT_COMMENT_MARKER),
-						) ?? null;
-				}
-				await postOrUpdateComment(
-					token,
-					input.number,
-					targetComment,
-					failureComment,
-				);
-			} catch (postErr) {
+	const [codeAdmit, styleAdmit, conventionsAdmit] = await Promise.all([
+		admitSpecialist("/workflows/code-review-specialist"),
+		admitSpecialist("/workflows/style-guide-specialist"),
+		admitSpecialist("/workflows/conventions-specialist"),
+	]);
+
+	console.log({
+		message: `Review dispatch: PR #${input.number} — specialists admitted (${diffMode.type} diff)`,
+		event: "code_review_orchestrator",
+		number: input.number,
+		diffMode: diffMode.type,
+		codeRunId: codeAdmit.ok ? codeAdmit.runId : null,
+		styleRunId: styleAdmit.ok ? styleAdmit.runId : null,
+		conventionsRunId: conventionsAdmit.ok ? conventionsAdmit.runId : null,
+		codeAdmitOk: codeAdmit.ok,
+		styleAdmitOk: styleAdmit.ok,
+		conventionsAdmitOk: conventionsAdmit.ok,
+		runId,
+		action: "specialists_dispatched",
+	});
+
+	// For each failed admit, overwrite the crash-protection placeholder with a
+	// final:true degraded result so the surviving specialists can still claim
+	// the finalize lock. If all fail, claim the lock here and admit finalize
+	// directly — nothing else will.
+	const admitResults: Array<{
+		admit: AdmitOutcome;
+		stream: string;
+		degraded: () => unknown;
+		label: string;
+	}> = [
+		{
+			admit: codeAdmit,
+			stream: "code",
+			degraded: degradedCodeResult,
+			label: "Code-review",
+		},
+		{
+			admit: styleAdmit,
+			stream: "style",
+			degraded: degradedStyleResult,
+			label: "Style-guide",
+		},
+		{
+			admit: conventionsAdmit,
+			stream: "conventions",
+			degraded: degradedConventionsResult,
+			label: "Conventions",
+		},
+	];
+
+	let anyFailed = false;
+	let firstFailedStream = "";
+	for (const { admit, stream, degraded, label } of admitResults) {
+		if (!admit.ok) {
+			anyFailed = true;
+			if (!firstFailedStream) firstFailedStream = stream;
+			console.log({
+				message: `${label} specialist admit failed: PR #${input.number} — ${admit.reason}`,
+				event: "code_review_orchestrator",
+				number: input.number,
+				error: admit.reason,
+				stream,
+				runId,
+				action: "specialist_admit_failed",
+			});
+			await writeStreamResult(
+				bucket,
+				input.number,
+				currentHeadSha,
+				runId,
+				stream,
+				{
+					ok: false,
+					result: degraded(),
+					final: true,
+				},
+			).catch(() => {});
+		}
+	}
+
+	// If any admit failed, try to claim the finalize lock. In the all-fail case
+	// all streams are final:true so the claim succeeds and finalize runs with
+	// three degraded results. In a partial-fail case, surviving specialists write
+	// final:true when they finish and the last one to do so claims the lock.
+	if (anyFailed) {
+		try {
+			const won = await tryClaimFinalize(
+				bucket,
+				input.number,
+				currentHeadSha,
+				runId,
+				firstFailedStream,
+				[...EXPECTED_STREAMS],
+			);
+			if (won) {
+				await admitWorkflow({
+					baseUrl,
+					pathname: "/workflows/finalize-review",
+					headers: internalHeaders,
+					body: {
+						eventType: "pull_request",
+						number: input.number,
+						headSha: currentHeadSha,
+						dispatchId: runId,
+					},
+				});
 				console.log({
-					message: `Failed to post failure comment: PR #${input.number}`,
+					message: `Orchestrator admitted finalize-review after specialist admit failure: PR #${input.number}`,
 					event: "code_review_orchestrator",
 					number: input.number,
-					error: postErr instanceof Error ? postErr.message : String(postErr),
 					runId,
-					action: "failure_comment_post_failed",
+					action: "orchestrator_finalize_admitted",
 				});
 			}
+		} catch (err) {
+			console.log({
+				message: `Orchestrator failed to admit finalize-review after specialist failure: PR #${input.number} — ${err instanceof Error ? err.message : String(err)}`,
+				event: "code_review_orchestrator",
+				number: input.number,
+				error: err instanceof Error ? err.message : String(err),
+				runId,
+				action: "orchestrator_finalize_admit_failed",
+			});
 		}
-
-		return {
-			mode: reviewMode,
-			active: 0,
-			ignored: 0,
-			resolved: 0,
-			summary: "Style-guide review failed.",
-			commentBody: null,
-		};
-	}
-
-	// ── 4. Reconcile findings with review history and human comments ───────────
-	// Load previous findings from R2 (structured) rather than parsing the comment.
-	const previousReviewKey = previousReviewedSha
-		? `${prDir}/review-${previousReviewedSha}.json`
-		: null;
-	let previousFindings: StyleGuideFinding[] = [];
-	if (previousReviewKey) {
-		try {
-			const obj = await bucket.get(previousReviewKey);
-			if (obj) {
-				previousFindings = JSON.parse(await obj.text()) as StyleGuideFinding[];
-			}
-		} catch {
-			// Non-fatal — fall back to empty previous findings
-		}
-	}
-
-	let reconciled: ReconcileResult;
-
-	const needsReconciliation =
-		previousFindings.length > 0 || humanCommentsAfterBot.length > 0;
-
-	if (!needsReconciliation) {
-		reconciled = {
-			active: styleGuideResult.findings,
-			ignored_by_reviewer: [],
-			resolved: [],
-			summary:
-				styleGuideResult.findings.length === 0
-					? "No style-guide issues found."
-					: `${styleGuideResult.findings.length} finding(s); no prior review to reconcile against.`,
-		};
-		// console.log({
-		// 	message: `Reconciliation skipped (deterministic): PR #${input.number} — no prior findings and no human comments`,
-		// 	event: "code_review_orchestrator",
-		// 	number: input.number,
-		// 	active: reconciled.active.length,
-		// 	runId,
-		// 	action: "reconciliation_skipped",
-		// });
-	} else {
-		const { data } = await session.skill("reconcile-code-review", {
-			model: "cloudflare/@cf/zai-org/glm-4.7-flash",
-			args: {
-				pullRequest: { number: input.number },
-				currentFindings: styleGuideResult.findings,
-				reviewedFiles: styleGuideResult.reviewedFiles,
-				previousFindings,
-				humanComments: humanCommentsAfterBot.map((c) => ({
-					author: c.user?.login ?? "unknown",
-					created_at: c.created_at,
-					body: c.body ?? "",
-				})),
-				diffMode,
-			},
-			result: ReconcileResultSchema,
-		});
-
-		reconciled = data ?? {
-			active: styleGuideResult.findings,
-			ignored_by_reviewer: [],
-			resolved: [],
-			summary: styleGuideResult.summary,
-		};
-
-		console.log({
-			message: `Reconciliation complete: PR #${input.number} — ${reconciled.active.length} active, ${reconciled.ignored_by_reviewer.length} ignored, ${reconciled.resolved.length} resolved`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			active: reconciled.active.length,
-			ignored: reconciled.ignored_by_reviewer.length,
-			resolved: reconciled.resolved.length,
-			reconciliation_used_fallback: data === undefined,
-			runId,
-			action: "reconciliation_complete",
-		});
-	}
-
-	// ── 5. Persist findings to R2 for future reconciliation ───────────────────
-	const currentReviewKey = `${prDir}/review-${currentHeadSha}.json`;
-	await bucket.put(currentReviewKey, JSON.stringify(reconciled.active));
-
-	// ── 6. Render the review comment ───────────────────────────────────────────
-	const commentBody = renderComment(
-		reconciled,
-		currentHeadSha,
-		input.forceFullReview,
-	);
-
-	// ── 7. Log or post ─────────────────────────────────────────────────────────
-	if (reviewMode === "log") {
-		console.log({
-			message: `Code review complete (log mode): PR #${input.number} — ${reconciled.active.length} active, ${reconciled.ignored_by_reviewer.length} ignored, ${reconciled.resolved.length} resolved`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			mode: reviewMode,
-			active: reconciled.active.length,
-			ignored: reconciled.ignored_by_reviewer.length,
-			resolved: reconciled.resolved.length,
-			runId,
-			action: "complete_log_mode",
-			commentBody,
-		});
-	} else {
-		// Update the placeholder comment with the final review.
-		// botComment may have been created or updated in step 2 — re-fetch to
-		// get the latest comment id if we didn't have one before.
-		let targetComment = botComment;
-		if (targetComment === null) {
-			const freshComments = await getIssueComments(token, input.number);
-			targetComment =
-				freshComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ??
-				null;
-		}
-		await postOrUpdateComment(token, input.number, targetComment, commentBody);
-
-		// Swap 👀 → 👍 on the /full-review trigger comment if applicable
-		if (input.triggerCommentId) {
-			if (input.triggerEyesReactionId) {
-				await removeReactionFromComment(
-					token,
-					input.triggerCommentId,
-					input.triggerEyesReactionId,
-				).catch(() => {}); // non-fatal
-			}
-			await addReactionToComment(token, input.triggerCommentId, "+1").catch(
-				() => {},
-			); // non-fatal
-		}
-
-		console.log({
-			message: `Code review comment updated with final review: PR #${input.number}`,
-			event: "code_review_orchestrator",
-			number: input.number,
-			mode: reviewMode,
-			active: reconciled.active.length,
-			ignored: reconciled.ignored_by_reviewer.length,
-			resolved: reconciled.resolved.length,
-			runId,
-			action: "complete_comment_posted",
-		});
 	}
 
 	return {
-		mode: reviewMode,
-		active: reconciled.active.length,
-		ignored: reconciled.ignored_by_reviewer.length,
-		resolved: reconciled.resolved.length,
-		summary: reconciled.summary,
-		commentBody,
+		dispatched: codeAdmit.ok || styleAdmit.ok || conventionsAdmit.ok,
+		headSha: currentHeadSha,
+		diffMode: diffMode.type,
+		codeAdmitOk: codeAdmit.ok,
+		styleAdmitOk: styleAdmit.ok,
+		conventionsAdmitOk: conventionsAdmit.ok,
 	};
 }
 
@@ -612,17 +446,4 @@ function parsePayload(payload: unknown): CodeReviewOrchestratorPayload {
 				? input.triggerEyesReactionId
 				: null,
 	};
-}
-
-async function postOrUpdateComment(
-	token: string,
-	prNumber: number,
-	existingBotComment: GitHubIssueComment | null,
-	body: string,
-): Promise<void> {
-	if (existingBotComment) {
-		await updateIssueComment(token, existingBotComment.id, body);
-	} else {
-		await postComment(token, prNumber, body);
-	}
 }

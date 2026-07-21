@@ -1,0 +1,27 @@
+---
+title: New `us` jurisdiction for Durable Objects
+description: Restrict Durable Objects to run and store data within the United States.
+products:
+  - durable-objects
+  - workers
+date: 2026-06-26
+---
+
+Durable Objects now supports a `us` [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction), letting you create Durable Objects that only run and store data within the United States. Use the `us` jurisdiction when you need to keep a Durable Object's compute and storage inside the United States to meet data residency requirements.
+
+Create a namespace restricted to the `us` jurisdiction the same way as any other jurisdiction:
+
+```js
+// Worker
+export default {
+	async fetch(request, env) {
+		const usSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("us");
+		const stub = usSubnamespace.getByName("general");
+		return stub.fetch(request);
+	},
+};
+```
+
+Workers may still access Durable Objects constrained to the `us` jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data.
+
+For the full list of supported jurisdictions, refer to [Data location — Restrict Durable Objects to a jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).

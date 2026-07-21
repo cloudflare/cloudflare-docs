@@ -1,7 +1,6 @@
 ---
 title: RTKLivestream
 sidebar_position: 5
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -16,7 +15,7 @@ to start/stop live streams.
     * [module.exports](#exp_module_RTKLivestream--module.exports) ⏏
         * [new module.exports(context, self)](#new_module_RTKLivestream--module.exports_new)
         * [.telemetry](#module_RTKLivestream--module.exports+telemetry)
-        * [.setRTKLivestreamState(livestreamState)](#module_RTKLivestream--module.exports+setRTKLivestreamState)
+        * [.setLivestreamState(livestreamState)](#module_RTKLivestream--module.exports+setLivestreamState)
         * [.start([livestreamConfig])](#module_RTKLivestream--module.exports+start)
         * [.stop()](#module_RTKLivestream--module.exports+stop)
 
@@ -37,9 +36,9 @@ to start/stop live streams.
 
 #### module.exports.telemetry
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKLivestream--module.exports)  
-<a name="module_RTKLivestream--module.exports+setRTKLivestreamState"></a>
+<a name="module_RTKLivestream--module.exports+setLivestreamState"></a>
 
-#### module.exports.setRTKLivestreamState(livestreamState)
+#### module.exports.setLivestreamState(livestreamState)
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKLivestream--module.exports)  
 
 | Param | Type |
@@ -55,7 +54,7 @@ Starts livestreaming the meeting.
 
 | Param | Type |
 | --- | --- |
-| [livestreamConfig] | <code>StartRTKLivestreamConfig</code> | 
+| [livestreamConfig] | <code>StartLivestreamConfig</code> | 
 
 <a name="module_RTKLivestream--module.exports+stop"></a>
 

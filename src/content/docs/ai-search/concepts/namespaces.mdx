@@ -8,9 +8,21 @@ products:
   - ai-search
 ---
 
-import { WranglerConfig } from "~/components";
+import { AiSearchNamespacesDiagram, WranglerConfig } from "~/components";
 
 Every AI Search instance belongs to a **namespace**. A namespace is a logical grouping of instances within your account.
+
+<AiSearchNamespacesDiagram />
+
+## Why use namespaces
+
+Common reasons to use namespaces include:
+
+- **Domain separation**: Separate instances by product area, for example `blog`, `support`, and `docs`.
+- **Tenant isolation**: Assign each tenant their own namespace so that instance names do not collide across tenants.
+- **Agent isolation**: Give each agent its own namespace for independent context management.
+
+For a step-by-step guide to isolating search per tenant, see [Multitenancy](/ai-search/how-to/per-tenant-search/).
 
 ## Requirements
 
@@ -85,12 +97,6 @@ namespace = "support"
 ```
 
 </WranglerConfig>
-
-### Common reasons to use multiple namespaces
-
-- **Domain separation**: Separate instances by product area, for example `blog`, `support`, and `docs`.
-- **Tenant isolation**: Assign each tenant their own namespace so that instance names do not collide across tenants.
-- **Agent isolation**: Give each agent its own namespace for independent context management.
 
 ## Namespaces and instance uniqueness
 

@@ -1,0 +1,47 @@
+---
+import { z } from "astro/zod";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+	lora: z.boolean(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+      const resp = await env.AI.run("${name}", {
+        "text":"Hello World!"
+      }, {
+        returnRawResponse: true
+      });
+
+      return resp;
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const curl = `
+curl --request POST \
+  --url 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}' \
+  --header 'Authorization: Bearer {TOKEN}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "text":"Hello world!"
+}'
+`;
+---
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript">
+		<Code code={worker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="curl">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>

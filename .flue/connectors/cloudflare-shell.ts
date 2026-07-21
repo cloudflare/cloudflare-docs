@@ -272,3 +272,16 @@ export function getDefaultWorkspace(): Workspace {
 	const { storage } = getCloudflareContext();
 	return new Workspace({ sql: storage.sql });
 }
+
+/**
+ * Recursively remove a path from a Workspace (the Durable Object's
+ * SQLite-backed filesystem). Used to clean up run-scoped staged diffs after a
+ * review so the DO's storage does not grow with every run.
+ */
+export async function removeWorkspacePath(
+	workspace: Workspace,
+	path: string,
+	options?: { recursive?: boolean; force?: boolean },
+): Promise<void> {
+	await new WorkspaceFileSystem(workspace).rm(path, options);
+}

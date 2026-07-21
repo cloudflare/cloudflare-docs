@@ -46,16 +46,16 @@ export default {
 The `Container` class extends `DurableObject`, so all [Durable Object](/durable-objects/) functionality is available — including [SQLite storage](/durable-objects/api/sqlite-storage-api/), [alarms](/durable-objects/api/alarms/), and [RPC methods](/durable-objects/api/base/#rpc-methods). Container disk is ephemeral by default, but Durable Object storage persists across container restarts.
 
 <TypeScriptExample>
-```
+```ts
 import { Container } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
 	defaultPort = 8080;
 
 	async runAndPersist() {
-		const res = await this.fetch("/run-task");
+		const res = await this.containerFetch("/run-task");
 		const body = await res.text();
-		await this.ctx.storage.sql.exec(
+		this.ctx.storage.sql.exec(
 			"INSERT OR REPLACE INTO results (value) VALUES (?)",
 			body,
 		);
@@ -64,6 +64,10 @@ export class MyContainer extends Container {
 }
 ```
 </TypeScriptExample>
+
+## Execute commands
+
+Use `this.ctx.container.exec()` to start another process inside a running Container. Refer to [Execute commands](/containers/execute-commands/) for startup, streaming, output, and process-control examples.
 
 ## Properties
 
@@ -114,7 +118,7 @@ Run Worker code after the container has started.
 
 ```ts
 onStart(): void | Promise<void>
-```
+````
 
 **Returns**: `void | Promise<void>`. Resolve after any startup logic finishes.
 
