@@ -5,8 +5,9 @@
 	"type": "module",
 	"description": "Flue-powered docs bot for cloudflare/cloudflare-docs. Deployed as a Cloudflare Worker.",
 	"scripts": {
-		"build": "flue build",
-		"dev": "flue dev",
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run"
 	},
@@ -14,16 +15,19 @@
 		"@cloudflare/codemode": "0.3.8",
 		"@cloudflare/shell": "0.3.9",
 		"@cloudflare/workers-types": "4.20260526.1",
-		"@flue/cli": "0.11.0",
-		"@flue/runtime": "0.11.0",
+		"@flue/runtime": "0.4.0-nightly.202605211826",
 		"@octokit/auth-app": "8.2.0",
-		"agents": "0.14.1",
+		"agents": "0.17.4",
 		"hono": "4.12.25",
-		"valibot": "1.4.1",
-		"wrangler": "4.107.0"
+		"valibot": "1.4.1"
 	},
 	"devDependencies": {
+		"@cloudflare/vite-plugin": "1.46.0",
+		"@flue/cli": "0.4.0-nightly.202605211826",
+		"@flue/vite": "0.4.0-nightly.202605211826",
 		"typescript": "5.9.3",
-		"vitest": "4.1.10"
+		"vite": "8.1.2",
+		"vitest": "4.1.10",
+		"wrangler": "4.113.0"
 	}
 }
