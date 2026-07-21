@@ -715,9 +715,13 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 
 A full example is available in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
 
-:::caution[WebSocket disconnection on deploy]
+:::caution[WebSocket disconnection during code updates]
 
-Code updates disconnect all WebSockets. Deploying a new version restarts every Durable Object, which disconnects any existing connections.
+Connections accepted with the WebSocket Hibernation API remain connected when a Durable Object adopts new code after hibernating.
+
+A forced code update disconnects WebSockets attached to the running instance. This happens when the update timeout expires before hibernation or when you set the timeout to `0s`. The Web Standard WebSocket API prevents hibernation, so its connections are disconnected when the timeout expires.
+
+Refer to [Code updates in the Durable Object lifecycle](/durable-objects/concepts/durable-object-lifecycle/#code-updates) for more information.
 
 :::
 
