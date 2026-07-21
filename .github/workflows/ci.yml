@@ -181,6 +181,7 @@ jobs:
     name: Nimbus Build
     needs: pre-build
     runs-on: ubuntu-latest
+    continue-on-error: true
     outputs:
       succeeded: ${{ steps.build.outputs.succeeded }}
     permissions:
@@ -235,10 +236,12 @@ jobs:
           echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
       - name: Upload Nimbus build artifact
+        if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: dist-nimbus
           path: dist-nimbus
+          if-no-files-found: ignore
 
       - name: Upload Nimbus build log
         if: always()
@@ -250,7 +253,7 @@ jobs:
 
   post-build:
     name: Post Build
-    needs: [build, nimbus-build]
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -287,8 +290,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: dist-nimbus
-          path: dist-nimbus
+          name: dist
+          path: dist
 
       - name: Tests (Workers)
         run: pnpm run test:postbuild
@@ -362,7 +365,7 @@ jobs:
 
   publish-preview:
     name: Deploy Preview
-    needs: [build, nimbus-build]
+    needs: build
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
@@ -400,8 +403,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: dist-nimbus
-          path: dist-nimbus
+          name: dist
+          path: dist
 
       - name: Deploy to Cloudflare Workers
         id: deploy

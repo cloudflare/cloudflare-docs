@@ -320,7 +320,7 @@ export const collections = {
 	// non-canonical here and stripped by the (non-strict) zod schema.
 	"compatibility-flags": defineCollection({
 		loader: glob({
-			pattern: "*.{md,mdx}",
+			pattern: "*.md",
 			base: "./src/content/compatibility-flags",
 		}),
 		schema: compatibilityFlagsSchema,

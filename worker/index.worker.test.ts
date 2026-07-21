@@ -200,7 +200,9 @@ describe("Cloudflare Docs", () => {
 				const image = dom.querySelector("meta[property='og:image']")?.attributes
 					.content;
 
-				expect(image).toBe("https://developers.cloudflare.com/og-docs.png");
+				expect(image).toBe(
+					"https://developers.cloudflare.com/dev-products-preview.png",
+				);
 			});
 		});
 
