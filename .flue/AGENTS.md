@@ -116,6 +116,12 @@ Do not rely on pre-trained Flue knowledge. Flue has changed substantially across
 - Keep model output structured with Valibot when trusted code consumes it. Skill instructions must match the schema exactly; do not ask for Markdown when the workflow expects JSON-like structured data.
 - Keep side-effecting operations (GitHub labels, comments, close/update actions) in trusted TypeScript code, not in model tools.
 
+## Testing
+
+Pure, deterministic TypeScript functions in `.flue/lib/` — those that do not require AI, GitHub API calls, R2, or Workers bindings to exercise — should have Vitest unit tests. When adding or modifying trusted TS logic (rendering, state parsing, result merging, diff selection, concurrency utilities, webhook parsing, etc.), write or update tests in a matching `*.test.ts` file alongside the source. Run tests with `pnpm run test` from the `.flue/` directory.
+
+Functions that require bindings (Durable Objects, R2, AI, the Flue harness) are not unit-testable in isolation and do not need tests; cover their logic paths through integration or by extracting the pure sub-functions and testing those.
+
 ## Review Rule Policy
 
 Do not add agent review rules for issues that are already reliably caught by CI, including build failures, type checking, linting, link validation, and schema validation. Agent review rules should focus on style, clarity, maintainability, and conventions that CI cannot enforce.
