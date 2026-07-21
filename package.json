@@ -1,5 +1,5 @@
 {
-	"name": "cloudflare-docs-starlight",
+	"name": "cloudflare-docs",
 	"private": true,
 	"type": "module",
 	"scripts": {
