@@ -9,33 +9,17 @@ products:
 ---
 
 import {
-	CardGrid,
-	LinkCard,
 	PackageManagers,
 	Steps,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
 
-Use Cloudflare Workers to accept Machine Payments Protocol (MPP) payments. Protect an origin with a proxy, or add `mppx` to a Worker route or Model Context Protocol (MCP) tool.
+Use Cloudflare Workers to accept Machine Payments Protocol (MPP) payments. Choose an integration based on the service you want to protect:
 
-<CardGrid>
-	<LinkCard
-		title="Protect an existing origin"
-		description="Deploy an MPP proxy without changing origin code"
-		href="/agents/tools/payments/mpp/protect-an-origin/"
-	/>
-	<LinkCard
-		title="Charge for a Worker route"
-		description="Add payment middleware to a Worker application"
-		href="/agents/tools/payments/mpp/accept-payments/#charge-for-a-worker-route"
-	/>
-	<LinkCard
-		title="Charge for an MCP tool"
-		description="Require payment before an MCP tool returns its result"
-		href="/agents/tools/payments/mpp/accept-payments/#charge-for-an-mcp-tool"
-	/>
-</CardGrid>
+- **[`mpp-proxy`](https://github.com/cloudflare/mpp-proxy)** — Charge for HTTP content without changing your origin code. Refer to [Charge for HTTP content](/agents/tools/payments/mpp/charge-for-http-content/).
+- **Worker route** — Add `mppx` payment middleware to a Worker application.
+- **MCP tool** — Require payment before an MCP tool returns its result.
 
 ## Prerequisites
 

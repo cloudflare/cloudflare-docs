@@ -312,9 +312,9 @@
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
-/agents/tools/payments/mpp-charge-for-http-content/ /agents/tools/payments/mpp/accept-payments/ 301
-/agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp/accept-payments/ 301
-/agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp/accept-payments/ 301
+/agents/tools/payments/mpp-charge-for-http-content/ /agents/tools/payments/mpp/charge-for-http-content/ 301
+/agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp/charge-for-http-content/ 301
+/agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp/charge-for-http-content/ 301
 
 # ai-audit
 /ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
