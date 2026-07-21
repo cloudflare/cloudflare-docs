@@ -1,6 +1,6 @@
 ---
 name: turnstile-spin
-description: Set up Cloudflare Turnstile end-to-end in a project. Scan the codebase, create the widget via the Cloudflare API, embed it on the right forms, wire canonical server-side siteverify in the customer's existing backend, validate, and persist the skill. Load this when a user asks to add Turnstile, set up CAPTCHA, protect a form from bots, or fix a Turnstile integration. Mirrors developers.cloudflare.com/turnstile/spin.
+description: Set up Cloudflare Turnstile end-to-end in a project. Scan the codebase, create the widget via the Cloudflare API, embed it where user requests need bot verification (form submissions, SPA actions, API endpoints, download links, comment or vote submissions, etc.), wire canonical server-side siteverify in the customer's existing backend, validate, and persist the skill. Load this when a user asks to add Turnstile, set up CAPTCHA, protect a form or endpoint from bots, or fix a Turnstile integration. Mirrors developers.cloudflare.com/turnstile/spin.
 references:
   - vanilla-html
   - nextjs-app
@@ -24,8 +24,8 @@ Load when the user's prompt mentions any of:
 
 - "Turnstile", "CAPTCHA", "bot protection"
 - "siteverify", "cf-turnstile-response"
-- "protect this form", "stop bot signups", "spam signups"
-- A specific signup, login, or contact form combined with "Cloudflare" or "bot"
+- "protect this form", "protect this endpoint", "protect this button", "stop bot signups", "spam signups", "block bots on <target>"
+- A specific signup, login, contact form, download, comment, API endpoint, or other user-triggered request combined with "Cloudflare" or "bot"
 
 Do not load for unrelated Cloudflare tasks (Workers, Pages, R2, etc.) unless Turnstile is also mentioned.
 
@@ -33,7 +33,7 @@ Do not load for unrelated Cloudflare tasks (Workers, Pages, R2, etc.) unless Tur
 
 The user pasted the prompt. You are in a multi-step dialog. Detect what you can, ask only when you have to, confirm before every irreversible step. Each numbered moment is one agent message. Items marked **[wait for user]** require a user response.
 
-1. **Brief acknowledge.** One sentence: "I'll run Turnstile setup end to end. That's: check auth, scan the codebase, create the widget, embed it on the right forms, wire server-side siteverify, validate. Proceed?" **[wait for user]** Do NOT present a plan yet. Auth + scan come first.
+1. **Brief acknowledge.** One sentence: "I'll run Turnstile setup end to end. That's: check auth, scan the codebase, create the widget, embed it where visitor requests need verification, wire server-side siteverify, validate. Proceed?" **[wait for user]** Do NOT present a plan yet. Auth + scan come first.
 
 2. **CLI check.** Spin's helper scripts use `curl` against `api.cloudflare.com` and `npx wrangler whoami` for account enumeration. Widget creation in Step 8 prefers `wrangler turnstile widget create` when the subcommand is available (Wrangler 4.109+), falling back to the bundled curl script otherwise. No persistent CLI install is required.
 
@@ -67,7 +67,7 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
    Parse `sitekey` and `secret` from stdout JSON. If wrangler is missing, older than the turnstile subcommand (`unknown command`), or otherwise fails, fall back to `scripts/widget-create.sh --account-id <id> --name <name> --domains <list> --mode managed`, which uses `curl` against the Cloudflare API directly. Report the sitekey. Capture the secret into a shell variable `WIDGET_SECRET`; never write it to disk except into the user's own env / secret store in Step 9.
 
-9. **Wire the integration.** State the contract: "I'll embed the widget on each chosen form and add a canonical siteverify call inside your existing submit handler, gated on `success === true`. The handler logic stays the same. The secret lives in your env as `TURNSTILE_SECRET`." Ask "yes" / "show". **[wait for user]** If "show", print unified diffs and ask again. Do NOT propose alternate behavior (mail delivery, custom backends).
+9. **Wire the integration.** State the contract: "I'll embed the widget at each chosen surface (form, SPA action, endpoint) and add a canonical siteverify call inside your existing handler, gated on `success === true`. The handler logic stays the same. The secret lives in your env as `TURNSTILE_SECRET`." Ask "yes" / "show". **[wait for user]** If "show", print unified diffs and ask again. Do NOT propose alternate behavior (mail delivery, custom backends).
 
    Canonical server-side siteverify (Node / fetch idiom; adapt to the detected backend):
 
@@ -115,7 +115,7 @@ The user pasted the prompt. You are in a multi-step dialog. Detect what you can,
 
 ### Hard scope boundary: DO NOT ask the user about
 
-Spin validates the Turnstile token via canonical siteverify before the user's existing form handler runs. Everything else is out of scope:
+Spin validates the Turnstile token via canonical siteverify before the user's existing handler runs. Everything else is out of scope:
 
 - **Email / SMS / notification delivery.** Leave the existing submit handler alone (just gate it on `success === true`). Don't propose Resend, Mailchannels, SMTP, mailto.
 - **Adding a new backend.** If the form has no backend handler today (pure-static site, mailto-only contact form), say so and exit. Spin requires a server-side place to put siteverify.
@@ -142,7 +142,7 @@ If the user tells you they already have a Turnstile widget set up and want to wi
 
 ### The frontend-edit contract
 
-When wiring an existing form (Step 9), the contract is: **gate, don't replace.** The user's existing submit handler keeps doing what it did. Spin only adds a validation step before it.
+When wiring an existing form or user-triggered endpoint (Step 9), the contract is: **gate, don't replace.** The user's existing handler keeps doing what it did. Spin only adds a validation step before it.
 
 Frontend (embeds the widget; submits to the user's existing endpoint):
 
