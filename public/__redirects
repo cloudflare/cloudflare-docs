@@ -566,7 +566,7 @@
 /realtime/realtimekit/core/video-background/ /realtime/realtimekit/core/video-effects/ 302
 /realtime/realtimekit/voice-meetings/ /realtime/realtimekit/audio-calls/ 302
 /realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
-/realtime/realtimekit/core/api-reference/rtkparticipantmap/ /realtime/realtimekit/core/api-reference/rtkparticipants/ 302
+/realtime/realtimekit/core/api-reference/rtkparticipantmap/ /realtime/realtimekit/core/api-reference/rtkparticipants/ 301
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/agents/ /realtime/ 301
