@@ -18,6 +18,7 @@ import {
 	resolvePageTitle,
 	resolveSocialImagePath,
 } from "~/util/page-head";
+import { stripMarkdownDescription } from "~/util/description";
 
 // Mirrors production Starlight's generator string, for meta parity.
 const PRODUCTION_GENERATOR = "Starlight v0.40.0";
@@ -34,6 +35,9 @@ export interface PageMeta {
 	datePublished?: Date | string;
 	rssHref?: string;
 	externalLink?: string;
+	/** Description was auto-derived from content (not frontmatter), so the
+	 *  JSON-LD strip is skipped — production only strips frontmatter origins. */
+	descriptionDerived?: boolean;
 }
 
 export interface Props {
@@ -104,7 +108,16 @@ const fullTitle = resolvePageTitle({
 	titleSuffix,
 	siteTitle: config.title,
 });
-const resolvedDescription = description ?? config.description;
+// Parity: no site-wide fallback — an absent description omits the tags.
+const resolvedDescription = description;
+
+// JSON-LD description is Markdown-stripped (frontmatter only); <meta>/OG stay
+// raw. Auto-derived descriptions are already plain text, so skip the strip.
+const structuredDescription = resolvedDescription
+	? meta?.descriptionDerived
+		? resolvedDescription
+		: await stripMarkdownDescription(resolvedDescription)
+	: undefined;
 
 // canonical honours meta.canonical + version pointer and %40-encodes `@`;
 // og:url stays pathname-based with a literal `@` (matches production).
@@ -160,7 +173,7 @@ const jsonLd = buildStructuredData({
 	schemaType,
 	canonical,
 	fullTitle,
-	description,
+	description: structuredDescription,
 	lang,
 	ogImage,
 	dateModified,

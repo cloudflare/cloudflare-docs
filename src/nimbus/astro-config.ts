@@ -193,8 +193,7 @@ const iconAlias = {
 	},
 };
 
-// The Nimbus target's markdown / integrations / vite, branched into
-// astro.config.ts when BUILD_TARGET=nimbus.
+// markdown / integrations / vite consumed by astro.config.ts.
 export const markdown = {
 	syntaxHighlight: {
 		type: "shiki" as const,
@@ -258,9 +257,8 @@ export const integrations = [
 // the final alias array and the built-in alias plugin matches them first.
 // `~/assets` and `~/content` precede `~` so the shared root tree still wins.
 //
-// This only applies to the Nimbus target (this config is loaded solely when
-// BUILD_TARGET=nimbus); the default Starlight build is untouched and keeps
-// `~`→src via its own tsconfig alias.
+// `~` resolves to src/nimbus; shared modules (assets, content, util) are
+// explicitly aliased to their root src/ locations below.
 const nimbusDir = here(".");
 const rootAssets = here("../assets");
 const rootContent = here("../content");

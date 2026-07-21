@@ -28,11 +28,14 @@ async function run(): Promise<void> {
 			(job) =>
 				job.name === "Pre Build" ||
 				job.name === "Build" ||
+				job.name === "Nimbus Build" ||
 				job.name === "Post Build",
 		);
 
 		if (ciJobs.length === 0) {
-			core.setFailed(`Could not find Pre Build, Build, or Post Build jobs`);
+			core.setFailed(
+				`Could not find Pre Build, Build, Nimbus Build, or Post Build jobs`,
+			);
 			process.exit();
 		}
 

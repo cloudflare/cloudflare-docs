@@ -27,9 +27,7 @@ import {
 	getInstallationToken,
 	getIssueComments,
 	getPullRequest,
-	postComment,
 	removeReactionFromComment,
-	updateIssueComment,
 	type GitHubIssueComment,
 } from "../lib/github";
 import type {
@@ -47,6 +45,7 @@ import {
 } from "../lib/code-review-state";
 import type { DiffMode } from "../lib/code-review-state";
 import {
+	postOrUpdateComment,
 	ReconcileResultSchema,
 	type ReconcileResult,
 	renderComment,
@@ -607,17 +606,4 @@ function parsePayload(payload: unknown): FinalizeReviewPayload {
 		headSha: input.headSha,
 		dispatchId: input.dispatchId,
 	};
-}
-
-async function postOrUpdateComment(
-	token: string,
-	prNumber: number,
-	existingBotComment: GitHubIssueComment | null,
-	body: string,
-): Promise<void> {
-	if (existingBotComment) {
-		await updateIssueComment(token, existingBotComment.id, body);
-	} else {
-		await postComment(token, prNumber, body);
-	}
 }
