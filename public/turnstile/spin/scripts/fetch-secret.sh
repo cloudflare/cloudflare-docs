@@ -10,7 +10,12 @@
 #   --account-id <id>   Cloudflare account ID
 #   --sitekey <key>     Widget sitekey to look up
 #
-# Outputs JSON. Exit 0 on success, 1 on failure.
+# Requires: bash, curl, python3.
+#
+# Outputs JSON. Exit codes:
+#   0  success
+#   1  API failure or missing prerequisite
+#   2  invalid usage (missing/unknown flag or value)
 #   ok:        {"status":"ok","secret":"<secret>","clearance_level":"<level>","domains":[<list>]}
 #   no_scope:  {"status":"missing_read_scope","detail":"token lacks Account.Turnstile:Read"}
 #   not_found: {"status":"error","reason":"widget_not_found","http_code":<code>}
@@ -23,6 +28,12 @@
 # the existing sitekey everywhere the user has it deployed in their frontend.
 
 set -uo pipefail
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "fetch-secret: python3 is required but not found in PATH." >&2
+  echo '{"status":"error","reason":"python3_not_available"}'
+  exit 1
+fi
 
 need_arg() {
   if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
@@ -48,12 +59,16 @@ done
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
 sitekey_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$SITEKEY")
 
-tmp=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.XXXXXX")
-trap 'rm -f "$tmp"' EXIT
+tmp=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.body.XXXXXX")
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.hdr.XXXXXX")
+chmod 600 "$auth_headers"
+trap 'rm -f "$tmp" "$auth_headers"' EXIT
+
+printf 'Authorization: Bearer %s\n' "$CLOUDFLARE_API_TOKEN" > "$auth_headers"
 
 http_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
   "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets/$sitekey_enc" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" || echo "000")
+  -H "@$auth_headers" || echo "000")
 
 python3 -c '
 import json, sys
@@ -68,14 +83,26 @@ except Exception as exc:
     print(json.dumps({"status":"error","reason":"non_json_response","http_code":http_code}))
     sys.exit(1)
 
+if not isinstance(data, dict):
+    print(f"fetch-secret: response was not a JSON object (HTTP {http_code}).", file=sys.stderr)
+    print(json.dumps({"status":"error","reason":"non_object_response","http_code":http_code}))
+    sys.exit(1)
+
 errors = data.get("errors") or []
-first_code = (errors[0] or {}).get("code", 0) if errors else 0
+first = (errors[0] or {}) if errors else {}
+if not isinstance(first, dict):
+    first = {}
+first_code = first.get("code", 0)
 
 if http_code == "200" and data.get("success"):
     result = data.get("result") or {}
+    if not isinstance(result, dict):
+        result = {}
     secret = result.get("secret")
     clearance = result.get("clearance_level") or "no_clearance"
     domains = result.get("domains") or []
+    if not isinstance(domains, list):
+        domains = []
     if not secret:
         print("fetch-secret: widget lookup returned success but no secret.", file=sys.stderr)
         print(json.dumps({"status":"error","reason":"no_secret_in_response","http_code":http_code}))
@@ -94,7 +121,7 @@ if http_code == "403" and first_code == 10000:
     print(json.dumps({"status":"missing_read_scope","detail":"token lacks Account.Turnstile:Read"}))
     sys.exit(1)
 
-msg = (errors[0].get("message") if errors else "widget lookup failed") or "widget lookup failed"
+msg = first.get("message", "widget lookup failed") or "widget lookup failed"
 print(f"fetch-secret: widget lookup failed (HTTP {http_code}): {msg}", file=sys.stderr)
 try:
     code_num = int(http_code)

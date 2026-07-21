@@ -5,9 +5,11 @@
 #   $CLOUDFLARE_API_TOKEN  (required)
 #   $CLOUDFLARE_ACCOUNT_ID (optional; if set, must be one of the token's accounts)
 #
+# Requires: bash, curl, python3. Optional: wrangler (for account enumeration).
+#
 # Outputs JSON to stdout, always exits 0. The agent reads `status`:
 #   "ok"                ; selected account passed the Turnstile Edit-scope probe
-#   "missing_token"     ; no token set, or account enumeration failed
+#   "missing_token"     ; no token set, python3 unavailable, or account enumeration failed
 #   "missing_scope"     ; token lacks Account.Turnstile:Edit on the selected account
 #   "multiple_accounts" ; token covers >1 accounts and $CLOUDFLARE_ACCOUNT_ID is unset
 #   "account_mismatch"  ; $CLOUDFLARE_ACCOUNT_ID is set but is not in the token's accounts list
@@ -24,6 +26,11 @@ emit() {
   echo "$1"
   exit 0
 }
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "auth-probe: python3 is required but not found in PATH." >&2
+  emit '{"status":"missing_token","reason":"python3_not_available"}'
+fi
 
 token="${CLOUDFLARE_API_TOKEN:-}"
 declared_account="${CLOUDFLARE_ACCOUNT_ID:-}"
@@ -125,12 +132,16 @@ fi
 #   400/422 or 200 with validation error codes  → Edit scope OK
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$account_id")
 
-tmp=$(mktemp "${TMPDIR:-/tmp}/auth-probe.XXXXXX")
-trap 'rm -f "$tmp"' EXIT
+tmp=$(mktemp "${TMPDIR:-/tmp}/auth-probe.body.XXXXXX")
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/auth-probe.hdr.XXXXXX")
+chmod 600 "$auth_headers"
+trap 'rm -f "$tmp" "$auth_headers"' EXIT
+
+printf 'Authorization: Bearer %s\n' "$token" > "$auth_headers"
 
 edit_code=$(curl -sS -w "%{http_code}" -o "$tmp" -X POST \
   "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets" \
-  -H "Authorization: Bearer $token" \
+  -H "@$auth_headers" \
   -H "Content-Type: application/json" \
   --data '{"name":"","domains":[]}' || echo "000")
 
@@ -145,8 +156,14 @@ try:
 except Exception:
     print("unknown")
     sys.exit(0)
+if not isinstance(data, dict):
+    print("unknown")
+    sys.exit(0)
 errors = data.get("errors") or []
-first_code = (errors[0] or {}).get("code", 0) if errors else 0
+first = (errors[0] or {}) if errors else {}
+if not isinstance(first, dict):
+    first = {}
+first_code = first.get("code", 0)
 if http_code in ("401", "403"):
     print("missing_scope")
 elif http_code == "200" and data.get("success") is False and first_code == 10000:

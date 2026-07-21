@@ -11,13 +11,24 @@
 # Args:
 #   --account-id <id>             Cloudflare account ID (only used when CLOUDFLARE_API_TOKEN is set)
 #   --sitekey <key>               Widget sitekey
-#   --expected-domains <a,b,c>    Comma-separated domains that must appear in the widget's domains array
+#   --expected-domains <a,b,c>    Comma-separated domains that must appear in the widget's domains array (whitespace around each token is trimmed)
 #
-# Outputs JSON. Exit 0 if all checks pass, 1 otherwise.
+# Requires: bash, curl, python3.
+#
+# Outputs JSON. Exit codes:
+#   0  all checks passed
+#   1  any check failed or missing prerequisite
+#   2  invalid usage (missing/unknown flag or value)
 #   ok:    {"status":"ok","hostname_check":"ran"|"skipped"}
-#   fail:  {"status":"error","check":"dummy_siteverify|hostname","detail":"<msg>"}
+#   fail:  {"status":"error","check":"dummy_siteverify|hostname|prerequisite","detail":"<msg>"}
 
 set -uo pipefail
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "validate: python3 is required but not found in PATH." >&2
+  echo '{"status":"error","check":"prerequisite","detail":"python3 not available"}'
+  exit 1
+fi
 
 need_arg() {
   if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
@@ -41,13 +52,23 @@ done
 : "${TURNSTILE_SECRET:?TURNSTILE_SECRET must be set (the secret captured in Step 8)}"
 [ -n "$SITEKEY" ] || { echo "validate: --sitekey required" >&2; exit 2; }
 
+# Prepare all tempfiles up front so the trap covers everything.
+secret_file=$(mktemp "${TMPDIR:-/tmp}/validate.secret.XXXXXX")
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/validate.hdr.XXXXXX")
+tmp=$(mktemp "${TMPDIR:-/tmp}/validate.body.XXXXXX")
+chmod 600 "$secret_file" "$auth_headers"
+trap 'rm -f "$secret_file" "$auth_headers" "$tmp"' EXIT
+
+# Write secret without a trailing newline so curl url-encodes only the value.
+printf '%s' "$TURNSTILE_SECRET" > "$secret_file"
+
 # Check 1: dummy-token siteverify against challenges.cloudflare.com.
 # A valid secret + dummy token returns success:false with
 # error-codes:["invalid-input-response"]. That confirms the secret is
 # correctly bound to the widget; anything else is a real misconfiguration.
 dummy=$(curl -sS -X POST "https://challenges.cloudflare.com/turnstile/v0/siteverify" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  --data-urlencode "secret=${TURNSTILE_SECRET}" \
+  --data-urlencode "secret@$secret_file" \
   --data-urlencode "response=XXXX.DUMMY.TOKEN.XXXX" || echo "")
 
 verdict=$(python3 -c '
@@ -61,8 +82,13 @@ try:
 except Exception:
     print(f"error:dummy_siteverify:non_json:{raw[:120]}")
     sys.exit(0)
+if not isinstance(d, dict):
+    print(f"error:dummy_siteverify:not_object:{raw[:120]}")
+    sys.exit(0)
 success = d.get("success")
 codes = d.get("error-codes") or []
+if not isinstance(codes, list):
+    codes = []
 if success is None:
     print(f"error:dummy_siteverify:missing_success:{raw[:120]}")
     sys.exit(0)
@@ -75,7 +101,7 @@ if "invalid-input-secret" in codes:
 if "invalid-input-response" in codes:
     print("ok")
     sys.exit(0)
-joined = ",".join(codes)
+joined = ",".join(str(c) for c in codes)
 print(f"error:dummy_siteverify:unexpected_codes:{joined}")
 ' <<< "$dummy")
 
@@ -109,22 +135,21 @@ if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "$ACCOUNT_ID" ] || [ -z "$EXPECTED
   exit 0
 fi
 
+printf 'Authorization: Bearer %s\n' "$CLOUDFLARE_API_TOKEN" > "$auth_headers"
+
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
 sitekey_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$SITEKEY")
 
-tmp=$(mktemp "${TMPDIR:-/tmp}/validate.XXXXXX")
-trap 'rm -f "$tmp"' EXIT
-
 http_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
   "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets/$sitekey_enc" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" || echo "000")
+  -H "@$auth_headers" || echo "000")
 
 python3 -c '
 import json, sys
 http_code = sys.argv[1]
 path = sys.argv[2]
 expected_csv = sys.argv[3]
-expected = [d for d in expected_csv.split(",") if d]
+expected = [d.strip() for d in expected_csv.split(",") if d.strip()]
 
 try:
     with open(path) as f:
@@ -135,14 +160,27 @@ except Exception as exc:
     print(json.dumps({"status":"error","check":"hostname","detail":f"non-JSON response (HTTP {http_code})"}))
     sys.exit(1)
 
+if not isinstance(data, dict):
+    print(f"validate: widget lookup response was not a JSON object (HTTP {http_code}).", file=sys.stderr)
+    print(json.dumps({"status":"error","check":"hostname","detail":f"response was not a JSON object (HTTP {http_code})"}))
+    sys.exit(1)
+
 if http_code != "200" or not data.get("success"):
     errors = data.get("errors") or []
-    msg = errors[0].get("message", "unknown") if errors else "unknown"
+    first = (errors[0] or {}) if errors else {}
+    if not isinstance(first, dict):
+        first = {}
+    msg = first.get("message", "unknown")
     print(f"validate: widget lookup failed (HTTP {http_code}): {msg}", file=sys.stderr)
     print(json.dumps({"status":"error","check":"hostname","detail":f"HTTP {http_code}: {msg}"}))
     sys.exit(1)
 
-registered = (data.get("result") or {}).get("domains") or []
+result = data.get("result") or {}
+if not isinstance(result, dict):
+    result = {}
+registered = result.get("domains") or []
+if not isinstance(registered, list):
+    registered = []
 missing = [d for d in expected if d not in registered]
 if missing:
     missing_str = " ".join(missing)

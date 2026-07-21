@@ -10,12 +10,24 @@
 #   --domains <a,b,c>        Comma-separated domain list (include localhost,127.0.0.1)
 #   --mode <managed|invisible|non-interactive>  Default: managed
 #
-# Outputs JSON to stdout. Exit 0 on success, 1 on failure. Diagnostics on stderr.
+# Requires: bash, curl, python3.
+#
+# Outputs JSON to stdout. Exit codes:
+#   0  success
+#   1  API failure or missing prerequisite
+#   2  invalid usage (missing/unknown flag or value)
+# Diagnostics on stderr.
 #   ok:    {"status":"ok","sitekey":"<key>","secret":"<secret>"}
 #   error: {"status":"error","code":<code>,"message":"<msg>"}
 #     code 10000 → token lacks Account.Turnstile:Edit
 
 set -uo pipefail
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "widget-create: python3 is required but not found in PATH." >&2
+  echo '{"status":"error","code":0,"message":"python3 not available"}'
+  exit 1
+fi
 
 need_arg() {
   if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
@@ -49,19 +61,23 @@ import json, sys
 name, domains_csv, mode = sys.argv[1], sys.argv[2], sys.argv[3]
 print(json.dumps({
   "name": name,
-  "domains": [d for d in domains_csv.split(",") if d],
+  "domains": [d.strip() for d in domains_csv.split(",") if d.strip()],
   "mode": mode,
 }))
 ' "$NAME" "$DOMAINS" "$MODE")
 
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
 
-tmp=$(mktemp "${TMPDIR:-/tmp}/widget-create.XXXXXX")
-trap 'rm -f "$tmp"' EXIT
+tmp=$(mktemp "${TMPDIR:-/tmp}/widget-create.body.XXXXXX")
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/widget-create.hdr.XXXXXX")
+chmod 600 "$auth_headers"
+trap 'rm -f "$tmp" "$auth_headers"' EXIT
+
+printf 'Authorization: Bearer %s\n' "$CLOUDFLARE_API_TOKEN" > "$auth_headers"
 
 http_code=$(curl -sS -w "%{http_code}" -o "$tmp" -X POST \
   "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "@$auth_headers" \
   -H "Content-Type: application/json" \
   --data "$body_json" || echo "000")
 
@@ -78,8 +94,15 @@ except Exception as exc:
     print(json.dumps({"status": "error", "code": 0, "message": f"non-JSON response (HTTP {http_code})"}))
     sys.exit(1)
 
+if not isinstance(data, dict):
+    print(f"widget-create: response was not a JSON object (HTTP {http_code}).", file=sys.stderr)
+    print(json.dumps({"status": "error", "code": 0, "message": "response was not a JSON object"}))
+    sys.exit(1)
+
 errors = data.get("errors") or []
-first = errors[0] if errors else {}
+first = (errors[0] or {}) if errors else {}
+if not isinstance(first, dict):
+    first = {}
 code = first.get("code", 0)
 message = first.get("message", "unknown")
 
@@ -89,6 +112,11 @@ if not data.get("success"):
     sys.exit(1)
 
 result = data.get("result") or {}
+if not isinstance(result, dict):
+    print(f"widget-create: unexpected result shape in response.", file=sys.stderr)
+    print(json.dumps({"status": "error", "code": 0, "message": "unexpected result shape"}))
+    sys.exit(1)
+
 sitekey = result.get("sitekey")
 secret = result.get("secret")
 if not sitekey or not secret:

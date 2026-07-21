@@ -8,11 +8,22 @@
 #                   The bundle is extracted into the parent directory of <path>,
 #                   so scripts land at e.g. .claude/skills/turnstile-spin/scripts/.
 #
-# Outputs JSON. Exit 0 if the bundle was written, 1 on failure.
+# Requires: bash, python3, npx (for degit).
+#
+# Outputs JSON. Exit codes:
+#   0  bundle written
+#   1  fetch or write failure or missing prerequisite
+#   2  invalid usage (missing/unknown flag or value)
 #   ok:    {"status":"ok","path":"<path>","bundle_root":"<dir>","scripts":[<list>]}
 #   fail:  {"status":"error","reason":"<reason>"}
 
 set -uo pipefail
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "persist-skill: python3 is required but not found in PATH." >&2
+  echo '{"status":"error","reason":"python3_not_available"}'
+  exit 1
+fi
 
 need_arg() {
   if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
@@ -61,7 +72,7 @@ path_arg, bundle_root = sys.argv[1], sys.argv[2]
 scripts_dir = os.path.join(bundle_root, "scripts")
 try:
     scripts = sorted(f for f in os.listdir(scripts_dir))
-except FileNotFoundError:
+except OSError:
     scripts = []
 print(json.dumps({
     "status": "ok",
