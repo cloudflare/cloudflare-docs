@@ -43,9 +43,9 @@ To enable Query String Sort:
 
 ***
 
-## Unexpected behavior with WordPress admin pages
+## Unexpected behavior with order-sensitive applications
 
-When a site or an application requires exact query string ordering, enabling Query String Sort might cause unexpected behavior.
+When a site or an application requires exact query string ordering, enabling Query String Sort can cause unexpected behavior. This affects both content management systems like WordPress and enterprise applications like Oracle E-Business Suite (EBS).
 
 For example in the WordPress admin UI, you might notice any of the following behaviors:
 
@@ -91,6 +91,30 @@ When this happens, you will most likely find errors in the browser console, such
 This type of error indicates that Query String Sort is inadvertently breaking some WordPress admin page functionality.
 
 After sorting, the query then goes to Cloudflare's cache infrastructure (and to the origin server, if the resource is not in the Cloudflare cache or is not cacheable). The origin server then serves the concatenated scripts, which are ordered differently. Because scripts might depend on other scripts, this process might break dependencies.
+
+### Enterprise applications with order-sensitive request handling
+
+WordPress admin is not the only case where sorted query strings break an application. Enterprise applications that use query string parameters as part of session validation, CSRF protection, or request signing may treat a reordered URL as tampered and return an authorization error instead of the expected response.
+
+**Confirmed case: Oracle E-Business Suite (EBS)**
+
+Oracle EBS ties URL query parameters to its session and request validation. With **Enable Query String Sort** on, EBS receives the sorted URL, rejects the request, and returns an error such as:
+
+> You have insufficient privileges for the current operation. Please contact your system administrator.
+
+The symptom appears intermittently on operations that rely on parameterized URLs — for example, form POST responses, report downloads, or PDF exports — and disappears when Cloudflare proxy is turned off for the hostname.
+
+**May also affect**
+
+Any application whose request handling depends on preserving the client's query string order. Examples include:
+
+* Applications that sign URLs with an HMAC over the raw query string
+* CSRF protections that hash query string parameters
+* Enterprise suites such as SAP or PeopleSoft, and custom identity gateways
+
+If you see intermittent authorization errors that only occur behind Cloudflare and only on URLs with multiple query parameters, this feature is worth eliminating early. See [Respond to the issue](#respond-to-the-issue) below for the fix.
+
+For strong isolation, host order-sensitive applications on their own subdomain or zone so zone-wide cache toggles do not affect them.
 
 ### Respond to the issue
 
