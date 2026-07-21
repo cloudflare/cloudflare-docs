@@ -8,13 +8,7 @@ products:
   - durable-objects
 ---
 
-import {
-	GlossaryTooltip,
-	DashButton,
-	Steps,
-	WranglerConfig,
-	Render,
-} from "~/components";
+import { GlossaryTooltip, DashButton, Steps, WranglerConfig, Render } from "~/components";
 
 <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> expose analytics for Durable Object namespace-level and request-level metrics.
 
@@ -40,17 +34,7 @@ Per-namespace analytics for Durable Objects are available in the Cloudflare dash
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
-You can also filter supported charts to a single Durable Object by entering its [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name) and selecting a match. Clear the filter to return to namespace-level metrics.
-
-## Total storage
-
-The **Total storage** chart shows the maximum SQLite storage used by a Durable Object namespace during each hour. Use this chart to identify storage growth, validate data cleanup, and investigate unexpected usage.
-
-The chart appears only for [SQLite-backed Durable Object namespaces](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class). It does not appear for namespaces that use the legacy key-value storage backend.
-
-Viewing storage for individual Durable Objects by ID or name is not supported.
-
-The chart queries the `durableObjectsSqlStorageGroups` GraphQL dataset for the selected namespace ID. It plots `max.storedBytes`, in bytes, grouped by `dimensions.datetimeHour`.
+You can also filter the charts to a single Durable Object by entering its [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name) and selecting a match. Clear the filter to return to namespace-level metrics.
 
 ## Memory usage
 
@@ -108,11 +92,10 @@ Durable Object metrics are powered by GraphQL.
 
 The datasets that include Durable Object metrics include:
 
-- `durableObjectsInvocationsAdaptiveGroups`
-- `durableObjectsPeriodicGroups`
-- `durableObjectsSqlStorageGroups`
-- `durableObjectsStorageGroups`
-- `durableObjectsSubrequestsAdaptiveGroups`
+* `durableObjectsInvocationsAdaptiveGroups`
+* `durableObjectsPeriodicGroups`
+* `durableObjectsStorageGroups`
+* `durableObjectsSubrequestsAdaptiveGroups`
 
 Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspection/) to get information on the fields exposed by each datasets.
 
@@ -120,8 +103,8 @@ Use [GraphQL Introspection](/analytics/graphql-api/features/discovery/introspect
 
 Durable Objects using [WebSockets](/durable-objects/best-practices/websockets/) will see request metrics across several GraphQL datasets because WebSockets have different types of requests.
 
-- Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often do not terminate until the Durable Object terminates.
-- Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [WebSocket Hibernation](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
+* Metrics for a WebSocket connection itself is represented in `durableObjectsInvocationsAdaptiveGroups` once the connection closes. Since WebSocket connections are long-lived, connections often do not terminate until the Durable Object terminates.
+* Metrics for incoming and outgoing WebSocket messages on a WebSocket connection are available in `durableObjectsPeriodicGroups`. If a WebSocket connection uses [WebSocket Hibernation](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), incoming WebSocket messages are instead represented in `durableObjectsInvocationsAdaptiveGroups`.
 
 ## Example GraphQL query for Durable Objects
 
