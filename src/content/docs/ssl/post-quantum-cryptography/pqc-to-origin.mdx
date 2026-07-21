@@ -28,15 +28,15 @@ This poses a question of how the origin servers - as well as other middleboxes (
 
 ### ClientHello from Cloudflare
 
-To reduce the risk of any issues when connecting to servers that are not ready for hybrid key agreements, Cloudflare leverages HelloRetryRequest. This means that, instead of sending [X25519MLKEM768](/ssl/post-quantum-cryptography/#hybrid-key-agreement) immediately as a keyshare [^1], Cloudflare will by default only advertise support for it.
+Cloudflare uses [automatic key exchange](/ssl/origin-configuration/automatic-key-exchange/) to learn which key agreement the origin servers for a zone prefer. Cloudflare applies one preference across the zone. When the selected preference is [X25519MLKEM768](/ssl/post-quantum-cryptography/#hybrid-key-agreement), Cloudflare sends that key share in the first `ClientHello`.
 
-If the origin supports post-quantum hybrid key agreement, it can use HelloRetryRequest to request it from Cloudflare.
+Cloudflare continues to advertise other allowed key agreements. If an origin requires another key share, it can use a [HelloRetryRequest](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.4) to request one. The retry adds one network round trip but does not break the connection.
 
 ### Set up
 
 #### Cloudflare zone settings
 
-The method described above is the one Cloudflare uses to support post-quantum to all outbound connections. However, if your origin server supports PQC and prefers it, you can use the [API](/api/resources/origin_post_quantum_encryption/methods/update/) to adjust your Cloudflare zone settings and avoid the extra round trip.
+Automatic key exchange is the default for eligible zones. You can use the [API](/api/resources/origin_post_quantum_encryption/methods/update/) to set a manual post-quantum preference.
 
 It is also possible to opt out of PQC using the same API endpoint.
 
@@ -64,7 +64,7 @@ To make sure that your origin server prefers the post-quantum key agreement, use
 
 <Example>
 ```bash
-$ bssl client -connect (your server):443 -curves X25519MLKEM768
+bssl client -connect <YOUR_ORIGIN>:443 -curves X25519MLKEM768
 ```
 
 Verify that the `ECDHE curve` in the handshake output indicates `X25519MLKEM768`.
@@ -183,5 +183,3 @@ Presenting an ML-DSA certificate on the authenticating side is not enough on its
 
 - **Custom Origin Trust Store (COTS):** Upload only ML-DSA certificate authorities. If you leave classical CAs in the trust store alongside the ML-DSA CA, Cloudflare will still accept an origin certificate that chains to a classical CA, leaving the connection open to downgrade. Uploading a COTS CA already replaces the default publicly trusted CAs for the zone (see the caution above), so make sure every CA you upload is post-quantum.
 - **Authenticated Origin Pulls (AOP):** Configure your origin server to require the ML-DSA client certificate and to reject classical client certificates. Cloudflare presenting an ML-DSA certificate only helps if the origin refuses to authenticate connections that use a classical certificate.
-
-[^1]: When, to remove a round trip, a client makes a guess of what the server supports.

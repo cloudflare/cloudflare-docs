@@ -1,0 +1,103 @@
+---
+pcx_content_type: configuration
+products:
+  - ssl
+title: Automatic key exchange to origins
+sidebar:
+  order: 2
+description: Configure how Cloudflare selects key agreements for TLS connections to your origin servers.
+tags:
+  - Post-quantum
+---
+
+import { DashButton, Steps } from "~/components";
+
+Automatic key exchange selects one zone-wide key agreement that Cloudflare sends first when starting a Transport Layer Security (TLS) 1.3 connection to your origins. Cloudflare derives the preference from traffic-weighted results across active origins. Selecting the preferred key agreement can avoid a [HelloRetryRequest](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.4) and remove one network round trip from each new connection.
+
+This feature is separate from your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/). The encryption mode controls whether Cloudflare uses HTTPS and validates your origin certificate. Automatic key exchange controls the order of key shares within an HTTPS connection.
+
+## Requirements and scope
+
+Automatic key exchange applies when the connection meets these requirements:
+
+- Your zone uses **Full**, **Full (strict)**, or **Strict (SSL-Only Origin Pull)** mode.
+- Your origin negotiates TLS 1.3 with Cloudflare.
+- Your zone does not connect through Cloudflare Tunnel.
+
+Automatic key exchange is available on all plans. It only affects new TLS connections. Requests that reuse an existing connection do not perform another key exchange.
+
+[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) uses a separate post-quantum connection between `cloudflared` and Cloudflare.
+
+The setting applies to all outbound connections for the zone, including `fetch()` requests from [Workers](/workers/). If the zone has multiple active origins, Cloudflare derives one preference from their traffic-weighted results.
+
+## How automatic selection works
+
+Cloudflare scans active origins approximately every 24 hours. The scan checks the key agreements that each origin supports and prefers.
+
+Cloudflare then applies the selected preference in stages:
+
+1. Cloudflare sends the selected key share to 1% of traffic.
+2. Cloudflare monitors connection failures and HelloRetryRequest rates.
+3. A healthy change increases through 10%, 25%, 50%, 75%, and 100% of traffic.
+4. An unhealthy change rolls back to the previous setting.
+
+For each connection, Cloudflare sends the preferred key share first. Cloudflare also advertises the other key agreements allowed by your compliance requirements. An origin can request another advertised key share with a HelloRetryRequest. This adds one round trip but does not break the connection.
+
+After a successful rollout, Cloudflare keeps the preference until a later scan finds a better option. The selected option may be a classical key agreement or the post-quantum `X25519MLKEM768` hybrid key agreement.
+
+Cloudflare uses standardized `X25519MLKEM768` for automatic post-quantum selection. Cloudflare does not prefer the obsolete `X25519Kyber768Draft00` key agreement.
+
+## Configuration options
+
+To configure automatic key exchange in the dashboard:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **SSL/TLS Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls" />
+
+2. Under **Origin connection & post-quantum encryption**, turn **Automatic key exchange** on or off.
+3. Select any **Compliance requirements**. Leave both options unselected to allow all supported key agreements.
+</Steps>
+
+The settings provide two separate controls. **Automatic key exchange** controls whether Cloudflare scans and reorders allowed key agreements. **Compliance requirements** control which key agreements Cloudflare may use.
+
+### Automatic key exchange
+
+Automatic key exchange is on by default for eligible zones.
+
+The setting has these options:
+
+| Setting | Behavior |
+| --- | --- |
+| On | Cloudflare scans your origins and sends the zone's selected allowed key share first. |
+| Off | Cloudflare does not scan or reorder key shares. It uses the default order for your selected compliance requirements. |
+
+Turning off automatic key exchange does not change your compliance requirements.
+
+### Compliance requirements
+
+Compliance requirements filter the key agreements that Cloudflare can advertise or select. Automatic key exchange never selects an algorithm outside this allowed set.
+
+The available selections are:
+
+| Selection | API value | Behavior |
+| --- | --- | --- |
+| No selection | `[]` | Allows supported classical and post-quantum key agreements. |
+| Post-quantum hybrid | `["pqh"]` | Allows only hybrid post-quantum key agreements. Requires TLS 1.3. |
+| Federal Information Processing Standards (FIPS) | `["fips"]` | Allows only key agreements that meet FIPS requirements. Requires TLS 1.2 or later. |
+| Post-quantum hybrid and FIPS | `["pqh", "fips"]` | Allows only key agreements that satisfy both requirements. Requires TLS 1.3. |
+
+Cloudflare rejects a combination if the selected requirements have no key agreement in common. Changing a compliance requirement stops any active rollout. A later scan selects from the new allowed set.
+
+## Manual post-quantum options
+
+The [Origin Post-Quantum Encryption API](/api/resources/origin_post_quantum_encryption/methods/update/) predates automatic key exchange. It remains available with these manual options:
+
+| Value | Behavior |
+| --- | --- |
+| `supported` | Advertises post-quantum support but sends a classical key share first. A compatible origin can request a post-quantum key share. |
+| `preferred` | Sends a post-quantum key share first and continues to advertise classical key shares. |
+| `off` | Does not send or advertise post-quantum key agreements. |
+
+For the API request and origin verification steps, refer to [Post-quantum key agreement](/ssl/post-quantum-cryptography/pqc-to-origin/#post-quantum-key-agreement).
