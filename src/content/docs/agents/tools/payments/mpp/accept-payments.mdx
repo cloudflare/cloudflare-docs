@@ -2,20 +2,40 @@
 title: Accept payments with MPP
 pcx_content_type: how-to
 sidebar:
-  order: 1
-description: Accept Machine Payments Protocol (MPP) payments from a Cloudflare Worker route or Model Context Protocol (MCP) tool.
+  order: 2
+description: Accept Machine Payments Protocol (MPP) payments from an origin, Cloudflare Worker route, or Model Context Protocol (MCP) tool.
 products:
   - agents
 ---
 
 import {
+	CardGrid,
+	LinkCard,
 	PackageManagers,
 	Steps,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
 
-Use Cloudflare Workers to accept Machine Payments Protocol (MPP) payments. Add `mppx` to an HTTP route or a Model Context Protocol (MCP) tool.
+Use Cloudflare Workers to accept Machine Payments Protocol (MPP) payments. Protect an origin with a proxy, or add `mppx` to a Worker route or Model Context Protocol (MCP) tool.
+
+<CardGrid>
+	<LinkCard
+		title="Protect an existing origin"
+		description="Deploy an MPP proxy without changing origin code"
+		href="/agents/tools/payments/mpp/protect-an-origin/"
+	/>
+	<LinkCard
+		title="Charge for a Worker route"
+		description="Add payment middleware to a Worker application"
+		href="/agents/tools/payments/mpp/accept-payments/#charge-for-a-worker-route"
+	/>
+	<LinkCard
+		title="Charge for an MCP tool"
+		description="Require payment before an MCP tool returns its result"
+		href="/agents/tools/payments/mpp/accept-payments/#charge-for-an-mcp-tool"
+	/>
+</CardGrid>
 
 ## Prerequisites
 
