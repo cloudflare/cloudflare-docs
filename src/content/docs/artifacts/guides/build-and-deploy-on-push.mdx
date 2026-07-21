@@ -19,7 +19,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Artifacts events can build and deploy projects stored in Artifacts repos. When a user or agent pushes a commit, the event starts a Workflow.
+Artifacts events can build and deploy projects stored in Artifacts repos. When a user or agent pushes a commit, the event triggers a [Workflow instance](/workflows/build/trigger-workflows/).
 
 Within the Workflow, continuous integration (CI) tooling caches dependencies, runs checks, and builds the project. The pipeline can deploy output as a [Worker](/workers/) or a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) User Worker.
 
@@ -27,7 +27,7 @@ This is useful when you need to:
 
 - Automatically build and deploy application code stored in Artifacts.
 - Run linting, type checking, tests, and other checks on every push.
-- Reuse dependencies when `package-lock.json` has not changed.
+- Reuse dependencies when the lockfile (i.e. `pnpm-lock.yaml`) has not changed.
 - Stop deployment when a check or build fails.
 - Restrict API token access to the deployment step.
 - Deploy output as a Worker or User Worker.
@@ -38,141 +38,128 @@ This is useful when you need to:
 
 1. **Push repo changes** — A `git push` to the Artifacts repo emits an `artifacts.push` event that identifies the pushed repo, branch, and commit.
 2. **Run the CI Workflow** — The event starts a Workflow that checks out the commit, installs and caches dependencies, and runs CI steps — build, lint, typecheck, and format — in parallel. A failed step stops the Workflow before deployment.
-3. **Build the project** — Once all checks pass, the Workflow builds the project output for deployment.
-4. **Deploy the Worker** — The Workflow deploys the built Worker as a preview for non-main branches or to production for the main branch.
+3. **Deploy the Worker** — The Workflow deploys the built Worker either directly to your account or as a User Worker, if using Workers for Platforms
 
 ## Start a build when code changes
 
-When a user or agent pushes a commit to an Artifacts repo, Artifacts emits an event that identifies the repo, branch, and commit that changed. You will use this event to start a Workflow that runs a CI pipeline — checking out the commit, installing dependencies, running checks, building the project, and deploying the Worker.
+When a user or agent pushes a commit to an Artifacts repo, Artifacts emits an event that identifies the repo, branch, and commit that changed. You will use this event to start a Workflow that runs a CI pipeline by checking out the commit, installing dependencies, running checks, building the project, and deploying the Worker.
 
-This guide defines those CI steps in a Workflow class named `BuildAndDeployWorkflow`. To start this Workflow automatically after each push, add an `artifacts.push` trigger to your Wrangler configuration:
+This guide defines those CI steps in a Workflow class named `CIWorkflow`. To start this Workflow automatically after each push, add an `artifacts.push` trigger to your Wrangler configuration:
 
 <WranglerConfig>
 
-```toml
-name = "artifact-ci"
-main = "src/index.ts"
-compatibility_date = "$today"
+```json
+{
+	"name": "my-ci-cd-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-07-21",
 
-[[workflows]]
-name = "build-and-deploy"
-binding = "BUILD_AND_DEPLOY"
-class_name = "BuildAndDeployWorkflow"
+	"workflows": [
+		{
+			"name": "ci-workflow",
+			"binding": "BUILD_AND_DEPLOY",
+			"class_name": "CIWorkflow"
+		}
+	],
 
-[[triggers]]
-type = "artifacts.push"
-class_name = "BuildAndDeployWorkflow"
+	"artifacts": [
+		{
+			"binding": "ARTIFACTS",
+			"namespace": "customer-projects"
+		}
+	],
 
-[observability]
-enabled = true
+	"triggers": [
+		{
+			"type": "cf.repo.push",
+			"filter": {
+				"repoName": "my-repo",
+				"namespace": "ARTIFACTS"
+			},
+			"target": {
+				"type": "workflow",
+				"workflowName": "ci-workflow"
+			}
+		}
+	],
+
+	"observability": {
+		"enabled": true
+	}
+}
 ```
 
 </WranglerConfig>
+
+:::note
+If you are running CI for a User Worker, include `"dispatch_namespace":<DISPATHCH_NAMEPSACE>" in your Trigger target.
+:::
 
 ## Run the build pipeline
 
 To run the build pipeline, the Workflow first needs the files from the pushed commit. It clones the repo, then uses runners to install dependencies, run checks, build the project, and deploy the Worker.
 
-### Check out the pushed commit
-
-Before the Workflow can run build commands, it needs a local copy of the pushed commit. To retrieve the repo's Git remote and create a short-lived read token, expose the repo namespace to the Workflow through an [Artifacts binding](/artifacts/api/workers-binding/).
-
-Add the binding to your Wrangler configuration. Set `namespace` to the same namespace that emits the push events handled by this Workflow:
-
-<WranglerConfig>
-
-```toml
-[[artifacts]]
-binding = "ARTIFACTS"
-namespace = "customer-projects"
-```
-
-</WranglerConfig>
-
-The binding is available as `env.ARTIFACTS`.
-
-Use the repo name from the push event to get its handle, create a short-lived read token, and pass both to a runner that clones the repo and checks out the pushed commit:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-const repo = await this.env.ARTIFACTS.get(push.source.repoName);
-const token = await repo.createToken("read", 900);
-
-const checkout = await step.runner("check out pushed commit", {
-	exec:
-		"rm -rf repo && " +
-		'git -c "http.extraHeader=Authorization: Bearer $ARTIFACTS_TOKEN" ' +
-		'clone "$ARTIFACTS_REMOTE" repo && ' +
-		'git -C repo checkout --detach "$COMMIT_SHA"',
-	env: {
-		ARTIFACTS_REMOTE: repo.remote,
-		ARTIFACTS_TOKEN: token.plaintext,
-		COMMIT_SHA: push.payload.after,
-	},
-});
-```
-
-</TypeScriptExample>
-
-- `env.ARTIFACTS.get()` returns the repo handle for the name in the push event.
-- `createToken("read", 900)` creates a read-only token that expires after 15 minutes. The token is passed only to the checkout runner and is never stored in the repo.
-- `push.payload.after` identifies the exact commit that triggered this Workflow. A branch can receive another commit before checkout begins, so using the SHA from the event ensures the Workflow builds the intended version.
-
 ### Define the CI steps
 
-Once the repo is checked out, use the `@cloudflare/ci` SDK to define the CI steps. The SDK provides two tools to help you build the pipeline:
+Use the `@cloudflare/ci` SDK to define the CI steps. The SDK provides two tools to help you build the pipeline:
 
 - **Runners** — each `runner()` call spins up an isolated sandbox and executes a shell command. You use the same commands you already run locally or in another CI system. Each runner captures its own logs, status, and output files.
-- **Cache** — `step.cache()` allows you to cache installed dependencies so that later Workflow runs do not reinstall them. Pass the files that determine the dependencies, such as `package-lock.json`, to `step.cache()`. When those files have not changed, the SDK restores the cached result instead of running the command again.
+- **Cache** — the `cache` option on a runner caches installed dependencies so that later runs do not reinstall them. Pass the files that determine the dependencies, such as `pnpm-lock.yaml`, to `cache.inputs`. When those files have not changed, the SDK restores the cached result instead of running the command again.
 
-Each runner passes its output files to the next, so your install step feeds your checks, your checks gate your build, and your build feeds your deployment. Multiple runners can branch from the same cached result — for example, lint, type-check, and test runners can all reuse one cached install.
+A cached runner takes a [snapshot](/sandbox/api/backups/) of its sandbox, which later runners reuse. Multiple runners can branch from the same cached result — for example, lint, type-check, and test runners can all reuse one cached install.
 
 <ArtifactsCIPipelineDiagram />
 
-A failed runner retries automatically. Runners that depend on it do not start until the retry succeeds. If the configured retry limit is reached, the Workflow ends in an `Errored` state.
+A failed runner retries according to its [step configuration](/workflows/build/sleeping-and-retrying/#retry-steps), where you can define the number of retry attempts, backoff schedule, and timeouts. Runners that depend on a previous step do not start until its retry succeeds. If the configured retry limit is reached, the Workflow terminates in an `Errored` state.
 
 Here is an example of how to set up your Workflow to use runners and cache to install dependencies, run checks, build the project, and deploy the Worker:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-// Install dependencies — cached based on package-lock.json so later
+// Install dependencies — cached based on pnpm-lock.yaml so later
 // runs skip this step when the lockfile has not changed.
-const deps = await checkout
-	.cache(["repo/package-lock.json"])
-	.runner("install dependencies", {
-		cwd: "repo",
-		exec: "npm ci",
-	});
+const { workspace } = await ci.workspace.runner({
+	name: "install dependencies",
+	command: "pnpm install --frozen-lockfile",
+	workingDirectory: "repo",
+	cache: {
+		inputs: ["repo/pnpm-lock.yaml"],
+	},
+});
 
 // Run checks in parallel — all three must pass before the pipeline continues.
 await Promise.all([
-	deps.runner("lint", {
-		cwd: "repo",
-		exec: "npm run lint --if-present",
+	workspace.runner({
+		name: "lint",
+		command: "pnpm lint",
+		workingDirectory: "repo",
 	}),
-	deps.runner("typecheck", {
-		cwd: "repo",
-		exec: "npm run typecheck --if-present",
+	workspace.runner({
+		name: "typecheck",
+		command: "pnpm typecheck",
+		workingDirectory: "repo",
 	}),
-	deps.runner("test", {
-		cwd: "repo",
-		exec: "npm test --if-present",
+	workspace.runner({
+		name: "test",
+		command: "pnpm test",
+		workingDirectory: "repo",
 	}),
 ]);
 
 // Build the project — produces dist/worker.mjs.
-const build = await deps.runner("build", {
-	cwd: "repo",
-	exec: "npm run build",
+const { workspace: build } = await workspace.runner({
+	name: "build",
+	command: "pnpm build",
+	workingDirectory: "repo",
 });
 
 // Deploy — only this runner receives the CLOUDFLARE_API_TOKEN secret.
-await build.runner("deploy Worker", {
-	cwd: "repo",
-	exec: "node ./ci/deploy-worker.mjs",
-	env: {
+await build.runner({
+	name: "deploy Worker",
+	command: "node ./ci/deploy-worker.mjs",
+	workingDirectory: "repo",
+	environment: {
 		CLOUDFLARE_ACCOUNT_ID: "<YOUR_ACCOUNT_ID>",
 		WORKER_NAME: "my-application",
 	},
@@ -192,115 +179,6 @@ Each runner displays its own logs and status, so you can identify the command th
 
 ## Deploy the application
 
-Once all checks pass and the build completes, the final runner deploys the latest version. It executes a script that calls the Cloudflare API with a deployment token.
+To deploy a Worker, pass `wrangler deploy` to your final `runner()` step, i.e. `workspace.runner({ name: "deploy", command: "wrangler deploy" })`.
 
-### Store the deployment token
-
-Worker and User Worker deployments require an API token. To keep the token out of your source code, store it as a secret on the Worker that defines the Workflow:
-
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="secret put CLOUDFLARE_API_TOKEN"
-/>
-
-The `secrets` option injects the token into only the deploy runner's environment. The install, check, and build runners do not receive it, so commands from the project cannot read or use the token.
-
-### Deploy the Worker
-
-The deploy runner executes a script that calls the Cloudflare API to deploy the latest version. Choose the deployment target that matches your application:
-
-<Tabs> <TabItem label="Worker">
-
-The deploy runner executes `ci/deploy-worker.mjs`, which calls the Cloudflare API to deploy the latest version of the Worker:
-
-<TypeScriptExample filename="ci/deploy-worker.mjs">
-
-```js
-import { readFile } from "node:fs/promises";
-import Cloudflare from "cloudflare";
-
-function requireEnvironmentVariable(name) {
-	const value = process.env[name];
-
-	if (!value) {
-		throw new Error(`Missing required environment variable: ${name}`);
-	}
-
-	return value;
-}
-
-const apiToken = requireEnvironmentVariable("CLOUDFLARE_API_TOKEN");
-const accountId = requireEnvironmentVariable("CLOUDFLARE_ACCOUNT_ID");
-const scriptName = requireEnvironmentVariable("WORKER_NAME");
-const workerSource = await readFile("dist/worker.mjs", "utf8");
-
-const scriptFile = new File([workerSource], "worker.mjs", {
-	type: "application/javascript+module",
-});
-
-const client = new Cloudflare({ apiToken });
-
-await client.workers.scripts.update(scriptName, {
-	account_id: accountId,
-	metadata: {
-		main_module: "worker.mjs",
-	},
-	files: [scriptFile],
-});
-```
-
-</TypeScriptExample>
-
-This calls `PUT /accounts/{account_id}/workers/scripts/{script_name}`. If the Worker exists, the request replaces its script.
-
-</TabItem> <TabItem label="User Worker (Workers for Platforms)">
-
-To deploy to a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) dispatch namespace instead, the deploy runner executes `ci/deploy-user-worker.mjs`, which calls the Cloudflare API to deploy the latest version as a User Worker:
-
-<TypeScriptExample filename="ci/deploy-user-worker.mjs">
-
-```js
-import { readFile } from "node:fs/promises";
-import Cloudflare from "cloudflare";
-
-function requireEnvironmentVariable(name) {
-	const value = process.env[name];
-
-	if (!value) {
-		throw new Error(`Missing required environment variable: ${name}`);
-	}
-
-	return value;
-}
-
-const apiToken = requireEnvironmentVariable("CLOUDFLARE_API_TOKEN");
-const accountId = requireEnvironmentVariable("CLOUDFLARE_ACCOUNT_ID");
-const namespace = requireEnvironmentVariable("DISPATCH_NAMESPACE");
-const userWorkerName = requireEnvironmentVariable("USER_WORKER_NAME");
-const workerSource = await readFile("dist/worker.mjs", "utf8");
-
-const scriptFile = new File([workerSource], "worker.mjs", {
-	type: "application/javascript+module",
-});
-
-const client = new Cloudflare({ apiToken });
-
-await client.workersForPlatforms.dispatch.namespaces.scripts.update(
-	namespace,
-	userWorkerName,
-	{
-		account_id: accountId,
-		metadata: {
-			main_module: "worker.mjs",
-		},
-		files: [scriptFile],
-	},
-);
-```
-
-</TypeScriptExample>
-
-This calls `PUT /accounts/{account_id}/workers/dispatch/namespaces/{namespace}/scripts/{script_name}`. If the User Worker exists, the request replaces its script.
-
-</TabItem> </Tabs>
+To deploy a User Worker, pass `wrangler deploy --dispatch_namespace <DISPATCH_NAMESPACE>` to your final `runner()` step.
