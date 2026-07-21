@@ -17,10 +17,14 @@ if (fs.existsSync(PLATFORMS_PATH)) {
 		if (Array.isArray(parsed)) {
 			existingPlatforms = parsed;
 		} else {
-			console.warn(`${PLATFORMS_PATH} did not contain an array; ignoring existing content.`);
+			console.warn(
+				`${PLATFORMS_PATH} did not contain an array; ignoring existing content.`,
+			);
 		}
 	} catch {
-		console.warn(`Failed to parse ${PLATFORMS_PATH}; ignoring existing content.`);
+		console.warn(
+			`Failed to parse ${PLATFORMS_PATH}; ignoring existing content.`,
+		);
 	}
 }
 
