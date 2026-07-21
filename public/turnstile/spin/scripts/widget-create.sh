@@ -17,41 +17,84 @@
 
 set -uo pipefail
 
+need_arg() {
+  if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
+    echo "widget-create: missing value for $1" >&2
+    exit 2
+  fi
+}
+
 MODE="managed"
+ACCOUNT_ID=""
+NAME=""
+DOMAINS=""
+
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --account-id) ACCOUNT_ID="$2"; shift 2 ;;
-    --name)       NAME="$2"; shift 2 ;;
-    --domains)    DOMAINS="$2"; shift 2 ;;
-    --mode)       MODE="$2"; shift 2 ;;
+    --account-id) need_arg "$1" "${2-}"; ACCOUNT_ID="$2"; shift 2 ;;
+    --name)       need_arg "$1" "${2-}"; NAME="$2"; shift 2 ;;
+    --domains)    need_arg "$1" "${2-}"; DOMAINS="$2"; shift 2 ;;
+    --mode)       need_arg "$1" "${2-}"; MODE="$2"; shift 2 ;;
     *) echo "widget-create: unknown arg $1" >&2; exit 2 ;;
   esac
 done
 
 : "${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN must be set}"
-: "${ACCOUNT_ID:?--account-id required}"
-: "${NAME:?--name required}"
-: "${DOMAINS:?--domains required}"
+[ -n "$ACCOUNT_ID" ] || { echo "widget-create: --account-id required" >&2; exit 2; }
+[ -n "$NAME" ]       || { echo "widget-create: --name required"       >&2; exit 2; }
+[ -n "$DOMAINS" ]    || { echo "widget-create: --domains required"    >&2; exit 2; }
 
-domains_json=$(python3 -c "import sys; print(__import__('json').dumps(sys.argv[1].split(',')))" "$DOMAINS")
+body_json=$(python3 -c '
+import json, sys
+name, domains_csv, mode = sys.argv[1], sys.argv[2], sys.argv[3]
+print(json.dumps({
+  "name": name,
+  "domains": [d for d in domains_csv.split(",") if d],
+  "mode": mode,
+}))
+' "$NAME" "$DOMAINS" "$MODE")
 
-body=$(curl -sS -X POST \
-  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets" \
+account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
+
+tmp=$(mktemp "${TMPDIR:-/tmp}/widget-create.XXXXXX")
+trap 'rm -f "$tmp"' EXIT
+
+http_code=$(curl -sS -w "%{http_code}" -o "$tmp" -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   -H "Content-Type: application/json" \
-  -d "{\"name\":\"$NAME\",\"domains\":$domains_json,\"mode\":\"$MODE\"}" 2>/dev/null)
+  --data "$body_json" || echo "000")
 
-success=$(echo "$body" | (jq -r '.success' 2>/dev/null || python3 -c "import sys,json; print(str(json.load(sys.stdin).get('success',False)).lower())"))
+python3 -c '
+import json, sys
+http_code = sys.argv[1]
+path = sys.argv[2]
+try:
+    with open(path) as f:
+        raw = f.read()
+    data = json.loads(raw) if raw else {}
+except Exception as exc:
+    print(f"widget-create: non-JSON response (HTTP {http_code}): {exc}", file=sys.stderr)
+    print(json.dumps({"status": "error", "code": 0, "message": f"non-JSON response (HTTP {http_code})"}))
+    sys.exit(1)
 
-if [ "$success" = "true" ]; then
-  sitekey=$(echo "$body" | (jq -r '.result.sitekey' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)['result']['sitekey'])"))
-  secret=$(echo "$body" | (jq -r '.result.secret' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)['result']['secret'])"))
-  echo "{\"status\":\"ok\",\"sitekey\":\"$sitekey\",\"secret\":\"$secret\"}"
-  exit 0
-fi
+errors = data.get("errors") or []
+first = errors[0] if errors else {}
+code = first.get("code", 0)
+message = first.get("message", "unknown")
 
-code=$(echo "$body" | (jq -r '.errors[0].code // 0' 2>/dev/null || echo "0"))
-message=$(echo "$body" | (jq -r '.errors[0].message // "unknown"' 2>/dev/null || echo "unknown") | tr -d '"')
-echo "widget-create: failed (code=$code): $message" >&2
-echo "{\"status\":\"error\",\"code\":$code,\"message\":\"$message\"}"
-exit 1
+if not data.get("success"):
+    print(f"widget-create: failed (HTTP {http_code}, code={code}): {message}", file=sys.stderr)
+    print(json.dumps({"status": "error", "code": code, "message": message}))
+    sys.exit(1)
+
+result = data.get("result") or {}
+sitekey = result.get("sitekey")
+secret = result.get("secret")
+if not sitekey or not secret:
+    print("widget-create: API returned success but no sitekey/secret in response.", file=sys.stderr)
+    print(json.dumps({"status": "error", "code": 0, "message": "missing sitekey/secret in response"}))
+    sys.exit(1)
+
+print(json.dumps({"status": "ok", "sitekey": sitekey, "secret": secret}))
+' "$http_code" "$tmp"

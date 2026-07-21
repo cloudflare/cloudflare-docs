@@ -24,44 +24,82 @@
 
 set -uo pipefail
 
+need_arg() {
+  if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
+    echo "fetch-secret: missing value for $1" >&2
+    exit 2
+  fi
+}
+
+ACCOUNT_ID=""
+SITEKEY=""
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --account-id) ACCOUNT_ID="$2"; shift 2 ;;
-    --sitekey)    SITEKEY="$2"; shift 2 ;;
+    --account-id) need_arg "$1" "${2-}"; ACCOUNT_ID="$2"; shift 2 ;;
+    --sitekey)    need_arg "$1" "${2-}"; SITEKEY="$2"; shift 2 ;;
     *) echo "fetch-secret: unknown arg $1" >&2; exit 2 ;;
   esac
 done
 
 : "${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN must be set}"
-: "${ACCOUNT_ID:?--account-id required}"
-: "${SITEKEY:?--sitekey required}"
+[ -n "$ACCOUNT_ID" ] || { echo "fetch-secret: --account-id required" >&2; exit 2; }
+[ -n "$SITEKEY" ]    || { echo "fetch-secret: --sitekey required"    >&2; exit 2; }
 
-tmp=$(mktemp)
+account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
+sitekey_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$SITEKEY")
+
+tmp=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.XXXXXX")
+trap 'rm -f "$tmp"' EXIT
+
 http_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
-  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$SITEKEY" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" 2>/dev/null || echo "000")
-body=$(cat "$tmp"); rm -f "$tmp"
+  "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets/$sitekey_enc" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" || echo "000")
 
-if [ "$http_code" = "200" ]; then
-  secret=$(echo "$body" | (jq -r '.result.secret' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)['result']['secret'])"))
-  clearance=$(echo "$body" | (jq -r '.result.clearance_level // "no_clearance"' 2>/dev/null || python3 -c "import sys,json; print(json.load(sys.stdin)['result'].get('clearance_level','no_clearance'))"))
-  domains=$(echo "$body" | (jq -c '.result.domains // []' 2>/dev/null || python3 -c "import sys,json; print(json.dumps(json.load(sys.stdin)['result'].get('domains',[])))"))
-  if [ -n "$secret" ] && [ "$secret" != "null" ]; then
-    echo "{\"status\":\"ok\",\"secret\":\"$secret\",\"clearance_level\":\"$clearance\",\"domains\":$domains}"
-    exit 0
-  fi
-fi
+python3 -c '
+import json, sys
+http_code = sys.argv[1]
+path = sys.argv[2]
+try:
+    with open(path) as f:
+        raw = f.read()
+    data = json.loads(raw) if raw else {}
+except Exception as exc:
+    print(f"fetch-secret: non-JSON response (HTTP {http_code}): {exc}", file=sys.stderr)
+    print(json.dumps({"status":"error","reason":"non_json_response","http_code":http_code}))
+    sys.exit(1)
 
-if [ "$http_code" = "403" ]; then
-  code=$(echo "$body" | (jq -r '.errors[0].code // 0' 2>/dev/null || echo "0"))
-  if [ "$code" = "10000" ]; then
-    echo "fetch-secret: token can edit Turnstile widgets but cannot read this one's secret." >&2
-    echo "fetch-secret: add Account.Turnstile:Read to the token, or fall back to user paste." >&2
-    echo "{\"status\":\"missing_read_scope\",\"detail\":\"token lacks Account.Turnstile:Read\"}"
-    exit 1
-  fi
-fi
+errors = data.get("errors") or []
+first_code = (errors[0] or {}).get("code", 0) if errors else 0
 
-echo "fetch-secret: widget lookup failed (HTTP $http_code)." >&2
-echo "{\"status\":\"error\",\"reason\":\"widget_not_found\",\"http_code\":$http_code}"
-exit 1
+if http_code == "200" and data.get("success"):
+    result = data.get("result") or {}
+    secret = result.get("secret")
+    clearance = result.get("clearance_level") or "no_clearance"
+    domains = result.get("domains") or []
+    if not secret:
+        print("fetch-secret: widget lookup returned success but no secret.", file=sys.stderr)
+        print(json.dumps({"status":"error","reason":"no_secret_in_response","http_code":http_code}))
+        sys.exit(1)
+    print(json.dumps({
+        "status": "ok",
+        "secret": secret,
+        "clearance_level": clearance,
+        "domains": domains,
+    }))
+    sys.exit(0)
+
+if http_code == "403" and first_code == 10000:
+    print("fetch-secret: token can edit Turnstile widgets but cannot read the secret for this sitekey.", file=sys.stderr)
+    print("fetch-secret: add Account.Turnstile:Read to the token, or fall back to user paste.", file=sys.stderr)
+    print(json.dumps({"status":"missing_read_scope","detail":"token lacks Account.Turnstile:Read"}))
+    sys.exit(1)
+
+msg = (errors[0].get("message") if errors else "widget lookup failed") or "widget lookup failed"
+print(f"fetch-secret: widget lookup failed (HTTP {http_code}): {msg}", file=sys.stderr)
+try:
+    code_num = int(http_code)
+except ValueError:
+    code_num = 0
+print(json.dumps({"status":"error","reason":"widget_not_found","http_code":code_num}))
+sys.exit(1)
+' "$http_code" "$tmp"

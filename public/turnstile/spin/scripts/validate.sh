@@ -19,20 +19,27 @@
 
 set -uo pipefail
 
+need_arg() {
+  if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
+    echo "validate: missing value for $1" >&2
+    exit 2
+  fi
+}
+
 ACCOUNT_ID=""
 SITEKEY=""
 EXPECTED_DOMAINS=""
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --account-id)       ACCOUNT_ID="$2"; shift 2 ;;
-    --sitekey)          SITEKEY="$2"; shift 2 ;;
-    --expected-domains) EXPECTED_DOMAINS="$2"; shift 2 ;;
+    --account-id)       need_arg "$1" "${2-}"; ACCOUNT_ID="$2"; shift 2 ;;
+    --sitekey)          need_arg "$1" "${2-}"; SITEKEY="$2"; shift 2 ;;
+    --expected-domains) need_arg "$1" "${2-}"; EXPECTED_DOMAINS="$2"; shift 2 ;;
     *) echo "validate: unknown arg $1" >&2; exit 2 ;;
   esac
 done
 
 : "${TURNSTILE_SECRET:?TURNSTILE_SECRET must be set (the secret captured in Step 8)}"
-: "${SITEKEY:?--sitekey required}"
+[ -n "$SITEKEY" ] || { echo "validate: --sitekey required" >&2; exit 2; }
 
 # Check 1: dummy-token siteverify against challenges.cloudflare.com.
 # A valid secret + dummy token returns success:false with
@@ -41,29 +48,54 @@ done
 dummy=$(curl -sS -X POST "https://challenges.cloudflare.com/turnstile/v0/siteverify" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   --data-urlencode "secret=${TURNSTILE_SECRET}" \
-  --data-urlencode "response=XXXX.DUMMY.TOKEN.XXXX" 2>/dev/null || echo "")
+  --data-urlencode "response=XXXX.DUMMY.TOKEN.XXXX" || echo "")
 
-success=$(echo "$dummy" | (jq -r '.success // "missing"' 2>/dev/null || echo "missing"))
-codes=$(echo "$dummy" | (jq -r '.["error-codes"] // [] | join(",")' 2>/dev/null || echo ""))
+verdict=$(python3 -c '
+import json, sys
+raw = sys.stdin.read()
+if not raw:
+    print("error:dummy_siteverify:network_failure")
+    sys.exit(0)
+try:
+    d = json.loads(raw)
+except Exception:
+    print(f"error:dummy_siteverify:non_json:{raw[:120]}")
+    sys.exit(0)
+success = d.get("success")
+codes = d.get("error-codes") or []
+if success is None:
+    print(f"error:dummy_siteverify:missing_success:{raw[:120]}")
+    sys.exit(0)
+if success is True:
+    print("error:dummy_siteverify:unexpected_true")
+    sys.exit(0)
+if "invalid-input-secret" in codes:
+    print("error:dummy_siteverify:invalid-input-secret")
+    sys.exit(0)
+if "invalid-input-response" in codes:
+    print("ok")
+    sys.exit(0)
+joined = ",".join(codes)
+print(f"error:dummy_siteverify:unexpected_codes:{joined}")
+' <<< "$dummy")
 
-if [ "$success" != "false" ]; then
-  echo "validate: siteverify returned unexpected shape for a dummy token: $dummy" >&2
-  echo "{\"status\":\"error\",\"check\":\"dummy_siteverify\",\"detail\":\"expected success:false on a dummy token\"}"
-  exit 1
-fi
-
-case ",$codes," in
-  *,invalid-input-secret,*)
+case "$verdict" in
+  ok)
+    ;;
+  error:dummy_siteverify:invalid-input-secret)
     echo "validate: siteverify rejected the secret. TURNSTILE_SECRET does not match the widget's secret." >&2
-    echo "{\"status\":\"error\",\"check\":\"dummy_siteverify\",\"detail\":\"invalid-input-secret\"}"
+    echo '{"status":"error","check":"dummy_siteverify","detail":"invalid-input-secret"}'
     exit 1
     ;;
-  *,invalid-input-response,*)
-    : # Expected. Continue.
+  error:dummy_siteverify:*)
+    detail=${verdict#error:dummy_siteverify:}
+    echo "validate: siteverify returned unexpected result: $detail" >&2
+    python3 -c 'import json, sys; print(json.dumps({"status":"error","check":"dummy_siteverify","detail":sys.argv[1]}))' "$detail"
+    exit 1
     ;;
   *)
-    echo "validate: unexpected error codes from siteverify: $codes" >&2
-    echo "{\"status\":\"error\",\"check\":\"dummy_siteverify\",\"detail\":\"unexpected codes: $codes\"}"
+    echo "validate: unexpected verdict from siteverify parse: $verdict" >&2
+    echo '{"status":"error","check":"dummy_siteverify","detail":"parse_failure"}'
     exit 1
     ;;
 esac
@@ -77,23 +109,46 @@ if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "$ACCOUNT_ID" ] || [ -z "$EXPECTED
   exit 0
 fi
 
-widget=$(curl -sS \
-  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$SITEKEY" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" 2>/dev/null)
-registered=$(echo "$widget" | (jq -r '.result.domains[]' 2>/dev/null || python3 -c "import sys,json; [print(d) for d in json.load(sys.stdin)['result']['domains']]"))
+account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
+sitekey_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$SITEKEY")
 
-missing=""
-IFS=',' read -ra DOMS <<< "$EXPECTED_DOMAINS"
-for d in "${DOMS[@]}"; do
-  if ! echo "$registered" | grep -qFx "$d"; then
-    missing="${missing}${d} "
-  fi
-done
+tmp=$(mktemp "${TMPDIR:-/tmp}/validate.XXXXXX")
+trap 'rm -f "$tmp"' EXIT
 
-if [ -n "$missing" ]; then
-  echo "validate: hostname check failed; domains not on widget: $missing" >&2
-  echo "{\"status\":\"error\",\"check\":\"hostname\",\"detail\":\"missing domains: ${missing% }\"}"
-  exit 1
-fi
+http_code=$(curl -sS -w "%{http_code}" -o "$tmp" \
+  "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets/$sitekey_enc" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" || echo "000")
 
-echo '{"status":"ok","hostname_check":"ran"}'
+python3 -c '
+import json, sys
+http_code = sys.argv[1]
+path = sys.argv[2]
+expected_csv = sys.argv[3]
+expected = [d for d in expected_csv.split(",") if d]
+
+try:
+    with open(path) as f:
+        raw = f.read()
+    data = json.loads(raw) if raw else {}
+except Exception as exc:
+    print(f"validate: widget lookup returned non-JSON (HTTP {http_code}): {exc}", file=sys.stderr)
+    print(json.dumps({"status":"error","check":"hostname","detail":f"non-JSON response (HTTP {http_code})"}))
+    sys.exit(1)
+
+if http_code != "200" or not data.get("success"):
+    errors = data.get("errors") or []
+    msg = errors[0].get("message", "unknown") if errors else "unknown"
+    print(f"validate: widget lookup failed (HTTP {http_code}): {msg}", file=sys.stderr)
+    print(json.dumps({"status":"error","check":"hostname","detail":f"HTTP {http_code}: {msg}"}))
+    sys.exit(1)
+
+registered = (data.get("result") or {}).get("domains") or []
+missing = [d for d in expected if d not in registered]
+if missing:
+    missing_str = " ".join(missing)
+    print(f"validate: hostname check failed; domains not on widget: {missing_str}", file=sys.stderr)
+    print(json.dumps({"status":"error","check":"hostname","detail":f"missing domains: {missing_str}"}))
+    sys.exit(1)
+
+print(json.dumps({"status":"ok","hostname_check":"ran"}))
+' "$http_code" "$tmp" "$EXPECTED_DOMAINS"
