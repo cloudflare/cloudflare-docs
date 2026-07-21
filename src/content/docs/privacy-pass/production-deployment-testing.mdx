@@ -26,7 +26,7 @@ Privacy Pass is not a self-serve product at the moment: a production deployment 
 
 **What you operate or need in place:**
 
-- A working **Attester**, the service that verifies your claim and, once the Client is verified, proxies the blinded token request to the Issuer. In Cloudflare Issuer deployments, the Client never contacts the Issuer directly. You operate the Attester to keep roles separate, but Cloudflare can help build it. Refer to [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) for an implementation for Cloudflare Workers.
+- A working **Attester**, the service that verifies your claim and, once the Client is verified, proxies the blinded token request to the Issuer. In Cloudflare Issuer deployments, the Client never contacts the Issuer directly. Generally, you operate the Attester to keep roles separate, but Cloudflare can help build it. Refer to [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) for an implementation for Cloudflare Workers.
 - The **Origin** (the web service, application, or website a Client is trying to access) configured to verify tokens against the issuer's public key (or Cloudflare redemption at the edge).
 - The **mTLS client certificate** your Attester uses to authenticate to the issuer.
 - The **client library** for running the issuance protocol. Library options include TypeScript, Go, and Rust. 
