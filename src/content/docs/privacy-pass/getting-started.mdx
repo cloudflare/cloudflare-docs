@@ -94,7 +94,7 @@ Public-Verifiable tokens
 
 The example creates an Issuer, a Client, and an Origin in a single process (the Issuer key pair is generated up front in `setup()` with `Issuer.generateKey`), then runs them through the protocol.
 
-The example follows the flow below. It only exercises the Origin, Client, and Issuer — the Attester is stubbed, since no real attestation runs, so it is left out of the diagram:
+The example follows the flow described in the diagram, and only exercises the Origin, Client, and Issuer. The Attester is stubbed and left out of the diagram since no real attestation runs here.
 
 ```txt
  ┌────────┐              ┌────────┐                ┌────────┐
