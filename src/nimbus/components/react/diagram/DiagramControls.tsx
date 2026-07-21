@@ -7,16 +7,16 @@ import { ActionBar } from "./ActionBar";
 import { ActionButton } from "./ActionButton";
 
 export interface DiagramControlsProps {
-  /** Left-aligned status text (phase labels, step counters). */
-  status?: ReactNode;
-  statusClassName?: string;
-  /** Render the Play/Pause button. */
-  playPause?: boolean;
-  /** Render the Reset button. */
-  reset?: boolean;
-  /** Extra controls rendered alongside the defaults (mode toggles, etc.). */
-  children?: ReactNode;
-  className?: string;
+	/** Left-aligned status text (phase labels, step counters). */
+	status?: ReactNode;
+	statusClassName?: string;
+	/** Render the Play/Pause button. */
+	playPause?: boolean;
+	/** Render the Reset button. */
+	reset?: boolean;
+	/** Extra controls rendered alongside the defaults (mode toggles, etc.). */
+	children?: ReactNode;
+	className?: string;
 }
 
 /**
@@ -30,35 +30,43 @@ export interface DiagramControlsProps {
  * card supplies its own.
  */
 export function DiagramControls({
-  status,
-  statusClassName,
-  playPause = true,
-  reset = true,
-  children,
-  className,
+	status,
+	statusClassName,
+	playPause = true,
+	reset = true,
+	children,
+	className,
 }: DiagramControlsProps) {
-  const ctx = useDiagram();
-  if (!ctx) return null;
+	const ctx = useDiagram();
+	if (!ctx) return null;
 
-  return (
-    <div className={cn("flex items-center justify-between flex-wrap gap-2 p-3", className)}>
-      {status != null && (
-        <span
-          className={cn(
-            "font-mono text-[9px] uppercase tracking-widest text-neutral-500 dark:text-neutral-400 select-none",
-            statusClassName,
-          )}
-        >
-          {status}
-        </span>
-      )}
-      <ActionBar className="ml-auto">
-        {playPause && (
-          <ActionButton label={ctx.playing ? "Pause" : "Play"} onClick={ctx.toggle} />
-        )}
-        {reset && <ActionButton label="Reset" onClick={ctx.reset} />}
-        {children}
-      </ActionBar>
-    </div>
-  );
+	return (
+		<div
+			className={cn(
+				"flex flex-wrap items-center justify-between gap-2 p-3",
+				className,
+			)}
+		>
+			{status != null && (
+				<span
+					className={cn(
+						"font-mono text-[9px] tracking-widest text-neutral-500 uppercase select-none dark:text-neutral-400",
+						statusClassName,
+					)}
+				>
+					{status}
+				</span>
+			)}
+			<ActionBar className="ml-auto">
+				{playPause && (
+					<ActionButton
+						label={ctx.playing ? "Pause" : "Play"}
+						onClick={ctx.toggle}
+					/>
+				)}
+				{reset && <ActionButton label="Reset" onClick={ctx.reset} />}
+				{children}
+			</ActionBar>
+		</div>
+	);
 }

@@ -26,7 +26,7 @@ export interface ReviewSpecialistPayload {
 	number: number;
 	/** PR head SHA — specialists read post-change file content at this ref. */
 	headSha: string;
-	/** Diff mode decided by the orchestrator (specialists self-heal on force-push). */
+	/** Diff mode decided by the orchestrator (specialists self-heal incremental → full on rebase/force-push/upstream merge). */
 	diffMode: DiffMode;
 	/** PR metadata needed to stage the diff context. */
 	pr: ReviewSpecialistPrMeta;

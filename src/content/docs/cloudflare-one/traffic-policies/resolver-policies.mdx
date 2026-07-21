@@ -50,7 +50,7 @@ Gateway will route user traffic to your configured DNS resolver based on the mat
 
 You may use resolver policies if you require access to non-publicly routed domains, such as private network services or internal resources. You may also use resolver policies if you need to access a protected DNS service or want to simplify DNS management for multiple locations.
 
-### Internal DNS <Badge text="Beta" variant="caution" size="small" />
+### Internal DNS
 
 [Cloudflare Internal DNS](/dns/internal-dns/) allows you to manage DNS records for internal resources on a private network. DNS zones configured in Internal DNS can only be queried by the Gateway resolver. With resolver policies, you can determine how Gateway resolves your organization's DNS queries to resolve to internal resources based on the context of the query, such as known source IPs for a geographic location.
 

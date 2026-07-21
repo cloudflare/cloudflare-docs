@@ -12,15 +12,15 @@ import type { BasePageProps } from "nimbus-docs/types";
 import type { PageMeta } from "@/components/PageHead.astro";
 
 type Props = BasePageProps & {
-  meta?: PageMeta;
+	meta?: PageMeta;
 };
 ---
 
 <BaseLayout {...Astro.props}>
-  <div class="flex min-h-screen flex-col">
-    <Header showSidebar={false} />
-    <main id="main-content" class="flex-1">
-      <slot />
-    </main>
-  </div>
+	<div class="flex min-h-screen flex-col">
+		<Header showSidebar={false} />
+		<main id="main-content" class="flex-1">
+			<slot />
+		</main>
+	</div>
 </BaseLayout>

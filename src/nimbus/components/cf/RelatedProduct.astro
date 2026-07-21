@@ -1,34 +1,42 @@
 ---
-/**
- * RelatedProduct — 2-column row showing a CF product icon, the product
- * name as a link, and a slotted description. Used in the "Related
- * products" section of product landing pages.
- *
- * CF source: cloudflare-docs/src/components/RelatedProduct.astro
- *
- * Mapping notes:
- *   - `product` is a bare icon name resolved by astro-icon against the
- *     local set in `src/icons/`. Those SVGs use `fill="currentColor"`, so
- *     the icon follows the element's text color.
- */
 import { z } from "astro/zod";
 import { Icon as AstroIcon } from "astro-icon/components";
 
 const props = z.object({
-  header: z.string(),
-  href: z.string(),
-  product: z.string(),
+	header: z.string(),
+	href: z.string(),
+	product: z.string(),
+	accent: z.string().optional(),
 });
 
-const { header, href, product } = props.parse(Astro.props);
+const { header, href, product, accent } = props.parse(Astro.props);
 ---
 
-<div class="grid grid-cols-[32px_auto] items-start gap-x-2 mb-3">
-  <AstroIcon name={product} class="text-3xl text-muted-foreground" />
-  <div class="mt-0!">
-    <strong>
-      <a href={href} class="text-foreground! decoration-brand">{header}</a>
-    </strong>
-    <slot />
-  </div>
+<div
+	class="group relative my-0! grid grid-cols-[44px_1fr] items-start gap-4 rounded-lg py-4 pr-3 transition-colors motion-reduce:transition-none"
+	style={`--pc:${accent ?? "var(--color-primary)"}`}
+>
+	<span
+		class="border-border text-muted-foreground flex size-11 shrink-0 items-center justify-center rounded border border-dashed transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-[var(--pc)] group-hover:bg-[color-mix(in_oklab,var(--pc)_10%,transparent)] group-hover:text-[var(--pc)] group-has-[:focus-visible]:border-[var(--pc)] group-has-[:focus-visible]:bg-[color-mix(in_oklab,var(--pc)_10%,transparent)] group-has-[:focus-visible]:text-[var(--pc)] motion-reduce:transition-none dark:group-hover:bg-[color-mix(in_oklab,var(--pc)_18%,transparent)] dark:group-has-[:focus-visible]:bg-[color-mix(in_oklab,var(--pc)_18%,transparent)]"
+	>
+		<AstroIcon name={product} size="20px" aria-hidden="true" />
+	</span>
+	<div class="mt-0! min-w-0">
+		{
+			/* after:* stretches the header link over the whole row so it's fully clickable. */
+		}
+		<a
+			href={href}
+			class="text-foreground! focus-visible:outline-ring block text-base font-semibold no-underline after:absolute after:inset-0 after:content-[''] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+			>{header}</a
+		>
+		{
+			/* Description sits outside the header link; its own links are raised above the stretched overlay. */
+		}
+		<div
+			class="text-foreground/90 mt-1.5 text-base leading-relaxed [&_a]:relative [&_a]:z-[1] [&>p]:my-0"
+		>
+			<slot />
+		</div>
+	</div>
 </div>

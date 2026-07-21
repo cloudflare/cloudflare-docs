@@ -24,24 +24,24 @@ import RSSButton from "~/components/cf/RSSButton.astro";
 const page = await getEntry("docs", Astro.params.slug!);
 
 if (!page) {
-  throw new Error(
-    `[ProductReleaseNotes] Failed to find entry for ${Astro.params.slug}.`,
-  );
+	throw new Error(
+		`[ProductReleaseNotes] Failed to find entry for ${Astro.params.slug}.`,
+	);
 }
 
 if (!page.data.release_notes_file_name) {
-  throw new Error(
-    `[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' frontmatter property.`,
-  );
+	throw new Error(
+		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' frontmatter property.`,
+	);
 }
 
 if (
-  page.data.release_notes_file_name &&
-  page.data.release_notes_file_name.length > 1
+	page.data.release_notes_file_name &&
+	page.data.release_notes_file_name.length > 1
 ) {
-  throw new Error(
-    `[ProductReleaseNotes] This component cannot be used on files that have more than 1 entry in their 'release_notes_file_name' frontmatter property.`,
-  );
+	throw new Error(
+		`[ProductReleaseNotes] This component cannot be used on files that have more than 1 entry in their 'release_notes_file_name' frontmatter property.`,
+	);
 }
 
 const name = page.data.release_notes_file_name?.[0];
@@ -49,74 +49,75 @@ const name = page.data.release_notes_file_name?.[0];
 let releaseNotes;
 
 if (name === "api-deprecations") {
-  ({ releaseNotes } = await getReleaseNotes({ deprecationsOnly: true }));
+	({ releaseNotes } = await getReleaseNotes({ deprecationsOnly: true }));
 } else {
-  ({ releaseNotes } = await getReleaseNotes({
-    filter: (entry: CollectionEntry<"release-notes">) => {
-      return entry.id === name;
-    },
-  }));
+	({ releaseNotes } = await getReleaseNotes({
+		filter: (entry: CollectionEntry<"release-notes">) => {
+			return entry.id === name;
+		},
+	}));
 }
 
 if (!releaseNotes) {
-  throw new Error(
-    `[ProductReleaseNotes] Failed to find release notes called ${name}.`,
-  );
+	throw new Error(
+		`[ProductReleaseNotes] Failed to find release notes called ${name}.`,
+	);
 }
 ---
 
 {
-  page.data.pcx_content_type === "changelog" && (
-    <p>
-      <RSSButton href={`/${page.id}/index.xml`} />
-    </p>
-  )
+	page.data.pcx_content_type === "changelog" && (
+		<p>
+			<RSSButton href={`/${page.id}/index.xml`} />
+		</p>
+	)
 }
 
 {
-  releaseNotes.map(([date, entries]) => (
-    <div data-date={date}>
-      {(entries ?? []).map(async (entry) => {
-        let description;
-        if (entry.individual_page) {
-          const link = entry.individual_page;
+	releaseNotes.map(([date, entries]) => (
+		<div data-date={date}>
+			{(entries ?? []).map(async (entry) => {
+				let description;
+				if (entry.individual_page) {
+					const link = entry.individual_page;
 
-          if (!link)
-            throw new Error(
-              `Changelog entry points to individual page but no link is provided`,
-            );
+					if (!link)
+						throw new Error(
+							`Changelog entry points to individual page but no link is provided`,
+						);
 
-          const linked = await getEntry("docs", link.slice(1, -1));
+					const linked = await getEntry("docs", link.slice(1, -1));
 
-          if (!linked)
-            throw new Error(
-              `Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
-            );
+					if (!linked)
+						throw new Error(
+							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
+						);
 
-          description = (await entryToString(linked, Astro.locals)) ?? linked.body;
+					description =
+						(await entryToString(linked, Astro.locals)) ?? linked.body;
 
-          return (
-            <div data-product={entry.product.toLowerCase()}>
-              <a href={entry.individual_page} class="no-underline">
-                <AnchorHeading depth={2} title={linked.data.title} />
-              </a>
-              <p class="text-xs">{entry.date}</p>
-              {<Fragment set:html={description} />}
-            </div>
-          );
-        } else {
-          description = marked.parse(entry.description as string);
-          return (
-            <>
-              <AnchorHeading depth={2} title={date} />
-              <div data-product={entry.product.toLowerCase()}>
-                {entry.title && <strong>{entry.title}</strong>}
-                {<Fragment set:html={description} />}
-              </div>
-            </>
-          );
-        }
-      })}
-    </div>
-  ))
+					return (
+						<div data-product={entry.product.toLowerCase()}>
+							<a href={entry.individual_page} class="no-underline">
+								<AnchorHeading depth={2} title={linked.data.title} />
+							</a>
+							<p class="text-xs">{entry.date}</p>
+							{<Fragment set:html={description} />}
+						</div>
+					);
+				} else {
+					description = marked.parse(entry.description as string);
+					return (
+						<>
+							<AnchorHeading depth={2} title={date} />
+							<div data-product={entry.product.toLowerCase()}>
+								{entry.title && <strong>{entry.title}</strong>}
+								{<Fragment set:html={description} />}
+							</div>
+						</>
+					);
+				}
+			})}
+		</div>
+	))
 }

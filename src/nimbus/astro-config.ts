@@ -46,7 +46,7 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 		}
 	}
 
-  return paths;
+	return paths;
 }
 
 const sidebarItems = await autogenSections();
@@ -77,14 +77,18 @@ const nimbusConfig = defineNimbusConfig({
 	description: "Cloudflare's documentation.",
 	locale: "en",
 	github: "https://github.com/cloudflare/cloudflare-docs",
-	socialImageAlt: "Cloudflare documentation",
-	// Search is Algolia DocSearch (wired in E4); Pagefind off.
-	search: false,
+	editPattern:
+		"https://github.com/cloudflare/cloudflare-docs/edit/production/{path}",
+	socialImage: "/og-docs.png",
+	socialImageAlt: "Cloudflare Docs",
+	// "custom" renders the search UI slot but skips the built-in Pagefind index;
+	// Nimbus mounts Algolia DocSearch instead (see ui/search/DocSearch.astro).
+	search: { provider: "custom" },
 	sidebar: {
 		items: sidebarItems,
 		overviewLabel: "Overview",
+		indexDisplay: "overview-leaf",
 		scope: "section",
-		isolate: { boundaries: ["learning-paths/*"] },
 		defaultCollapsed: true,
 	},
 });
@@ -109,16 +113,16 @@ const iconAlias = {
 			javascript: "vscode-icons:file-type-js-official",
 			typescript: "vscode-icons:file-type-typescript-official",
 			python: "vscode-icons:file-type-python",
-			shell: "vscode-icons:file-type-shell",
+			shell: "ph:terminal-window",
 			rust: "vscode-icons:file-type-rust",
-			video: "vscode-icons:file-type-video",
-			db: "vscode-icons:file-type-db",
+			video: "ph:play-circle",
+			db: "ph:database",
 			php: "vscode-icons:file-type-php",
 			html: "vscode-icons:file-type-html",
-			docker: "vscode-icons:file-type-docker",
+			docker: "simple-icons:docker",
 			svelte: "vscode-icons:file-type-svelte",
 			powershell: "vscode-icons:file-type-powershell",
-			notebook: "vscode-icons:file-type-jupyter",
+			notebook: "ph:notebook",
 			nix: "vscode-icons:file-type-nix",
 			json: "vscode-icons:file-type-json",
 			java: "vscode-icons:file-type-java",
@@ -155,21 +159,21 @@ const iconAlias = {
 			email: "ph:envelope-simple",
 			error: "ph:warning-circle",
 			external: "ph:arrow-square-out",
-			github: "ph:github-logo",
+			github: "simple-icons:github",
 			heart: "ph:heart",
 			information: "ph:info",
 			key: "ph:key",
 			laptop: "ph:laptop",
-			linux: "ph:linux-logo",
+			linux: "simple-icons:linux",
 			"list-format": "ph:list-bullets",
 			magnifier: "ph:magnifying-glass",
-			mastodon: "ph:mastodon-logo",
+			mastodon: "simple-icons:mastodon",
 			moon: "ph:moon",
 			puzzle: "ph:puzzle-piece",
 			rocket: "ph:rocket-launch",
 			setting: "ph:gear",
 			star: "ph:star",
-			terminal: "ph:terminal",
+			terminal: "ph:terminal-window",
 		};
 
 		let out = code;
@@ -189,8 +193,7 @@ const iconAlias = {
 	},
 };
 
-// The Nimbus target's markdown / integrations / vite, branched into
-// astro.config.ts when BUILD_TARGET=nimbus.
+// markdown / integrations / vite consumed by astro.config.ts.
 export const markdown = {
 	syntaxHighlight: {
 		type: "shiki" as const,
@@ -254,9 +257,8 @@ export const integrations = [
 // the final alias array and the built-in alias plugin matches them first.
 // `~/assets` and `~/content` precede `~` so the shared root tree still wins.
 //
-// This only applies to the Nimbus target (this config is loaded solely when
-// BUILD_TARGET=nimbus); the default Starlight build is untouched and keeps
-// `~`→src via its own tsconfig alias.
+// `~` resolves to src/nimbus; shared modules (assets, content, util) are
+// explicitly aliased to their root src/ locations below.
 const nimbusDir = here(".");
 const rootAssets = here("../assets");
 const rootContent = here("../content");
@@ -289,14 +291,9 @@ const aliasResolver = {
 			return {
 				resolve: {
 					alias: [
-						// Shared content imports component barrels by name — both
-						// Starlight's (`@astrojs/starlight/components`) and Expressive
-						// Code's (`astro-expressive-code/components`, e.g. the workers
-						// terraform changelog). Map both to the Nimbus barrel (which
-						// re-exports those names, incl. `Code`) so byte-identical content
-						// resolves without pulling in Starlight + Expressive Code (whose
-						// `renderer.ts` needs `virtual:astro-expressive-code/config`, a
-						// module only the EC integration — which Nimbus omits — provides).
+						// Map Starlight's and Expressive Code's component barrels to the
+						// Nimbus barrel, so shared content resolves without pulling in the
+						// Starlight/EC integrations Nimbus omits.
 						{
 							find: /^@astrojs\/starlight\/components$/,
 							replacement: `${nimbusDir}/components`,
@@ -305,14 +302,21 @@ const aliasResolver = {
 							find: /^astro-expressive-code\/components$/,
 							replacement: `${nimbusDir}/components`,
 						},
+						// Shared modules: resolve to the root src/ tree, not the nimbus dir.
 						{ find: /^~\/assets(\/.*)?$/, replacement: `${rootAssets}$1` },
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
-						// Shared: the Zaraz `track()` shim is byte-identical to root and
 						{ find: /^~\/util\/zaraz$/, replacement: `${rootUtil}/zaraz` },
-						// Shared: the OneTrust cookie-consent component is portable
+						{
+							find: /^~\/util\/package-managers$/,
+							replacement: `${rootUtil}/package-managers`,
+						},
 						{
 							find: /^~\/components\/OneTrust\.astro$/,
 							replacement: `${rootComponents}/OneTrust.astro`,
+						},
+						{
+							find: /^~\/util\/warp-platforms\.json$/,
+							replacement: `${rootUtil}/warp-platforms.json`,
 						},
 						{ find: /^~(\/.*)?$/, replacement: `${nimbusDir}$1` },
 						{ find: /^@(\/.*)?$/, replacement: `${nimbusDir}$1` },
@@ -323,7 +327,13 @@ const aliasResolver = {
 	},
 	// Defense-in-depth fallback for any context the alias array doesn't cover.
 	async resolveId(
-		this: { resolve: (s: string, i?: string, o?: object) => Promise<{ id: string } | null> },
+		this: {
+			resolve: (
+				s: string,
+				i?: string,
+				o?: object,
+			) => Promise<{ id: string } | null>;
+		},
 		source: string,
 		importer: string | undefined,
 		options: object,
@@ -339,6 +349,8 @@ const aliasResolver = {
 		else if (source === "~/content" || source.startsWith("~/content/"))
 			mapped = rootContent + source.slice("~/content".length);
 		else if (source === "~/util/zaraz") mapped = rootUtil + "/zaraz";
+		else if (source === "~/util/package-managers")
+			mapped = rootUtil + "/package-managers";
 		else if (source === "~/components/OneTrust.astro")
 			mapped = rootComponents + "/OneTrust.astro";
 		else if (source === "~" || source.startsWith("~/"))
@@ -346,7 +358,10 @@ const aliasResolver = {
 		else if (source === "@" || source.startsWith("@/"))
 			mapped = nimbusDir + source.slice(1);
 		if (mapped === null) return null;
-		const resolved = await this.resolve(mapped, importer, { ...options, skipSelf: true });
+		const resolved = await this.resolve(mapped, importer, {
+			...options,
+			skipSelf: true,
+		});
 		return resolved ?? { id: mapped };
 	},
 };

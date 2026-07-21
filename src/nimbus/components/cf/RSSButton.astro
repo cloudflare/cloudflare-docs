@@ -13,33 +13,33 @@ import { z } from "astro/zod";
 import { Icon } from "astro-icon/components";
 
 const props = z
-  .object({
-    text: z.string().default("Subscribe to RSS"),
-    icon: z.string().default("rss"),
-  })
-  .and(
-    z
-      .object({
-        changelog: z
-          .string()
-          .transform((val) => val.toLowerCase().replaceAll(" ", "-")),
-      })
-      .or(
-        z.object({
-          href: z.string(),
-        }),
-      ),
-  );
+	.object({
+		text: z.string().default("Subscribe to RSS"),
+		icon: z.string().default("rss"),
+	})
+	.and(
+		z
+			.object({
+				changelog: z
+					.string()
+					.transform((val) => val.toLowerCase().replaceAll(" ", "-")),
+			})
+			.or(
+				z.object({
+					href: z.string(),
+				}),
+			),
+	);
 
 const input = props.parse(Astro.props);
 const iconName = input.icon.includes(":") ? input.icon : "ph:rss-simple";
 ---
 
 <a
-  href={"href" in input ? input.href : `/changelog/rss/${input.changelog}.xml`}
-  class="inline-flex items-center justify-center gap-1 rounded-sm font-semibold no-underline"
-  target="_blank"
+	href={"href" in input ? input.href : `/changelog/rss/${input.changelog}.xml`}
+	class="ms-3 inline-flex items-center justify-center gap-1 rounded-sm font-semibold no-underline"
+	target="_blank"
 >
-  {input.text}
-  <Icon name={iconName} size="1.25rem" />
+	{input.text}
+	<Icon name={iconName} size="1.25rem" />
 </a>

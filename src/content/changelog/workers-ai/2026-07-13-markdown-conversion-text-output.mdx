@@ -1,0 +1,39 @@
+---
+title: Plain text output for Markdown Conversion
+description: Choose between Markdown and plain text output when converting documents
+date: 2026-07-10
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Markdown Conversion](/workers-ai/features/markdown-conversion/) service now supports a new `output` conversion option that controls the format of the converted content.
+
+Set `output.format` to `text` to receive plain text with Markdown syntax removed. The default value is `markdown`, so existing conversions are unchanged.
+
+Use the [`env.AI`](/workers-ai/features/markdown-conversion/usage/binding/) binding:
+
+<TypeScriptExample>
+
+```typescript
+await env.AI.toMarkdown(
+	{ name: "page.html", blob: new Blob([html]) },
+	{
+		conversionOptions: {
+			output: { format: "text" },
+		},
+	},
+);
+```
+
+</TypeScriptExample>
+
+Or call the REST API:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
+  -H 'Authorization: Bearer {API_TOKEN}' \
+  -F 'files=@index.html' \
+  -F 'conversionOptions={"output": {"format": "text"}}'
+```
+
+When you request text output, the `format` field of each result is set to `text`. For more details, refer to [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/#output).

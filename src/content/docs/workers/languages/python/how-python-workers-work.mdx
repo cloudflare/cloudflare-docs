@@ -64,7 +64,7 @@ To reduce cold start times, when you deploy a Python Worker, Cloudflare performs
 1. Wrangler uploads your Python code and any packages included in your `pyproject.toml` to the Workers API.
 2. Cloudflare sends your Python code to the Workers runtime to be validated.
 3. Cloudflare creates a new v8 isolate for your Worker, automatically injecting Pyodide.
-4. Cloudflare scans the Worker’s code for import statements, execute them, and then take a snapshot of the Worker’s WebAssembly linear memory. Effectively, we perform the expensive work of importing packages at deploy time, rather than at runtime.
+4. Cloudflare executes the Worker entrypoint module and everything it imports at top level and then take a snapshot of the Worker’s WebAssembly linear memory. Effectively, we perform the expensive initialization work at deploy time, rather than at runtime.
 5. Cloudflare deploys this snapshot alongside your Worker’s Python code to the Cloudflare network.
 
 When a request comes in to your Worker, we load this snapshot and use it to bootstrap your Worker in an isolate, avoiding expensive initialization time:

@@ -1,0 +1,29 @@
+---
+// Horizontal dashed divider (16/16 dash), matching Separator.
+interface Props {
+	class?: string;
+	color?: string;
+	strokeWidth?: number;
+}
+
+const {
+	class: className,
+	color = "var(--nb-border)",
+	strokeWidth = 1,
+} = Astro.props;
+---
+
+<svg
+	class:list={["block h-px w-full", className]}
+	preserveAspectRatio="none"
+	aria-hidden="true"
+>
+	<line
+		x1="0"
+		y1="0.5"
+		x2="100%"
+		y2="0.5"
+		stroke={color}
+		stroke-width={strokeWidth}
+		stroke-dasharray="16,16"></line>
+</svg>

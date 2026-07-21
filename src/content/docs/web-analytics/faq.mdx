@@ -62,6 +62,16 @@ They are most likely coming from an automated testing tool making erroneous requ
 
 We do not support custom integrations directly with the endpoint: all requests should originate from our beacon JavaScript.
 
+### Why am I seeing syntax errors from the beacon script in Internet Explorer?
+
+Internet Explorer 11 was the final version of Internet Explorer and it was [declared completely end-of-life (EOL) in 2022](https://techcommunity.microsoft.com/blog/windows-itpro-blog/internet-explorer-11-desktop-app-retirement-faq/2366549).
+
+Our beacon script targets modern syntax which Internet Explorer does not support. This will cause a non-user-visible error when the script attempts to execute. The only functional impact is that beacons are not collected from these old browsers.
+
+For customers using automatic-injection, Cloudflare adds `type="module"` to the `<script>` tag to prevent loading in Internet Explorer and similarly old, deprecated browsers.
+
+For customers using the manual embed approach, you will need to add `type="module"` to the `<script>` tag manually. Our dashboard has been updated to include this attribute in the installation instructions.
+
 ---
 
 ## Setup
@@ -80,7 +90,7 @@ Yes. Instead of embedding the script using a tag manager as shown here:
 
 ```html
 <script
-	defer
+	type="module"
 	src="https://static.cloudflareinsights.com/beacon.min.js"
 	data-cf-beacon='{"token": "$SITE_TOKEN"}'
 ></script>
@@ -90,7 +100,7 @@ Add the following script:
 
 ```html
 <script
-	defer
+	type="module"
 	src="https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN"
 ></script>
 ```

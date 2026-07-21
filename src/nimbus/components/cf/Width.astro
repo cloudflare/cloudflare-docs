@@ -9,8 +9,8 @@ import { z } from "astro/zod";
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-  size: z.enum(["large", "medium", "small"]),
-  center: z.boolean().default(false),
+	size: z.enum(["large", "medium", "small"]),
+	center: z.boolean().default(false),
 });
 
 const { size, center } = props.parse(Astro.props);
@@ -18,12 +18,12 @@ const { size, center } = props.parse(Astro.props);
 // Full width on small screens (a fractional block on a phone is unusable),
 // collapsing to the requested fraction from `md` up.
 const widthClasses = {
-  large: "w-full md:w-3/4",
-  medium: "w-full md:w-1/2",
-  small: "w-full md:w-1/4",
+	large: "w-full md:w-3/4",
+	medium: "w-full md:w-1/2",
+	small: "w-full md:w-1/4",
 };
 ---
 
 <div class:list={[widthClasses[size], center ? "mx-auto" : ""]}>
-  <slot />
+	<slot />
 </div>

@@ -72,9 +72,9 @@ const price = Array.isArray(properties.price)
 								: "Planned Deprecation"}
 						</td>
 						<td>
-							{new Date(
-								properties.planned_deprecation_date,
-							).toLocaleDateString("en-US")}
+							{new Date(properties.planned_deprecation_date).toLocaleDateString(
+								"en-US",
+							)}
 						</td>
 					</tr>
 				)}

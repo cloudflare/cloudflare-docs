@@ -9,22 +9,22 @@ import { cn } from "@/lib/cn";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"div"> {
-  label: string;
+	label: string;
 }
 
 const { label, class: className, ...attrs } = Astro.props;
 
 if (!label) {
-  throw new Error("Missing required `label` prop on `<TabItem>` component.");
+	throw new Error("Missing required `label` prop on `<TabItem>` component.");
 }
 ---
 
 <div
-  role="tabpanel"
-  data-nb-tabs-content
-  data-nb-tab-label={label}
-  class={cn(className)}
-  {...attrs}
+	role="tabpanel"
+	data-nb-tabs-content
+	data-nb-tab-label={label}
+	class={cn(className)}
+	{...attrs}
 >
-  <slot />
+	<slot />
 </div>

@@ -83,15 +83,25 @@ Users can now connect to your private application after authenticating with Clou
 
 ## Authentication flow
 
+The authentication experience depends on the application's protocol.
+
 ### HTTPS applications
 
 If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
 
-If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned off, session management is [handled in the Cloudflare One Client](#non-https-applications) instead of in the browser.
+If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned off, session management is [handled in the Cloudflare One Client](#other-non-http-applications) instead of in the browser.
 
-### Non-HTTPS applications
+:::note
+If your origin uses a self-signed or otherwise untrusted certificate, create a Gateway HTTP Allow policy for the origin with the [untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) set to _Pass through_. Otherwise, Gateway will block the connection before it reaches Access.
+:::
 
-The Cloudflare One Client manages sessions for all non-HTTPS applications. Users will receive an `Authentication required` pop-up notification from the Cloudflare One Client. When the user selects the notification, the Cloudflare One Client will open a browser window with your Access login page.
+### Plaintext HTTP applications
+
+For applications served over plaintext HTTP on port `80`, Cloudflare Access presents an in-browser login page and issues an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/), the same as HTTPS applications with Gateway TLS decryption. Gateway TLS decryption is not required because the traffic is already unencrypted.
+
+### Other non-HTTP applications
+
+For applications that are not HTTP or HTTPS (for example, SSH, RDP, or arbitrary TCP/UDP), the Cloudflare One Client manages the session. Users will receive an `Authentication required` pop-up notification from the Cloudflare One Client. When the user selects the notification, the Cloudflare One Client will open a browser window with your Access login page.
 
 <Render file="gateway/client-notifications-os" product="cloudflare-one" />
 

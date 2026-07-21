@@ -9,12 +9,12 @@
 import { mount } from "nimbus-docs/client";
 
 function initSteps(root: HTMLElement): () => void {
-  const lists = root.querySelectorAll<HTMLOListElement>("ol");
-  lists.forEach((ol) => ol.setAttribute("role", "list"));
+	const lists = root.querySelectorAll<HTMLOListElement>("ol");
+	lists.forEach((ol) => ol.setAttribute("role", "list"));
 
-  return () => {
-    lists.forEach((ol) => ol.removeAttribute("role"));
-  };
+	return () => {
+		lists.forEach((ol) => ol.removeAttribute("role"));
+	};
 }
 
 mount("[data-nb-steps]", initSteps);

@@ -1,0 +1,57 @@
+---
+title: "WAF Release - 2026-07-14"
+description: Cloudflare WAF managed rulesets 2026-07-14
+date: 2026-07-14
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new rules targeting critical infrastructure vulnerabilities. These include an unauthenticated memory disclosure flaw in Citrix NetScaler ADC and Gateway (CVE-2026-8451) and a high-severity pre-authentication remote code execution (RCE) vulnerability in Progress Kemp LoadMaster (CVE-2026-8037).
+
+**Key Findings**
+
+- CVE-2026-8451: An insufficient input validation vulnerability affects Citrix NetScaler ADC and NetScaler Gateway appliances configured as a SAML Identity Provider (IdP). Remote, unauthenticated attackers can exploit this flaw by sending malformed requests to trigger a memory overread, allowing them to leak chunks of sensitive data from adjacent appliance memory.
+
+- CVE-2026-8037: A critical OS command injection vulnerability in Progress Kemp LoadMaster load balancers allows unauthenticated remote attackers to achieve remote code execution (RCE). 
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="78826e3223b94da493a2ade876973ac4" />
+			</td>
+			<td>N/A</td>
+			<td>Citrix Netscaler ADC - Insufficient Input Validation - CVE:CVE-2026-8451</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="6b64d216620449fbb273d07910233f36" />
+			</td>
+			<td>N/A</td>
+			<td>Progress Kemp LoadMaster - Remote Code Execution - CVE:CVE-2026-8037</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>		
+	</tbody>
+</table>

@@ -44,10 +44,10 @@
 	 * (code-title bar, package-manager tabs). */
 	--nb-surface-sunken: oklch(0.975 0 0);
 
-	/* Primary action / brand — mode-invariant (dark overrides only -hover). */
-	--nb-primary: oklch(0.663 0.227 35.9);
+	/* Primary action / brand — matches www marketing orange. */
+	--nb-primary: oklch(0.687 0.208 38.8); /* #ff5e1f */
 	--nb-primary-foreground: oklch(0.99 0.009 78.3);
-	--nb-primary-hover: oklch(0.612 0.211 35.8);
+	--nb-primary-hover: oklch(0.711 0.188 40.4); /* #ff7038 */
 
 	--nb-link: var(--nb-primary);
 
@@ -79,6 +79,14 @@
 	--nb-grid-line: oklch(0 0 0 / 0.08);
 	--nb-grid-line-accent: oklch(0 0 0 / 0.12);
 
+	/* Footer palette — ported verbatim from cloudflare-dev-platform's
+	 * marketing chrome so the global footer matches it 1:1 (light mode). */
+	--nb-accent-100: #ff5e1f; /* Aerospace Orange */
+	--nb-background-100: #ffffff; /* Floral White */
+	--nb-foreground-100: #262626; /* Black Bean */
+	--nb-foreground-200: #262626; /* Black Bean 70% */
+	--nb-text-tertiary: #727272; /* Muted footer text */
+
 	/* Typography — self-hosted via @fontsource-variable in BaseLayout.astro */
 	--nb-font-sans:
 		"Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
@@ -90,7 +98,7 @@
 	--nb-h1-weight: 600;
 	--nb-h1-tracking: -0.025em;
 	--nb-h2-size: 1.3rem;
-	--nb-h2-weight: 650;
+	--nb-h2-weight: 600;
 	--nb-h2-tracking: -0.015em;
 	--nb-h3-size: 1.1rem;
 	--nb-h3-weight: 600;
@@ -121,7 +129,7 @@
 	--nb-card-foreground: var(--nb-foreground);
 
 	--nb-muted: oklch(0.264 0 0);
-	--nb-muted-foreground: oklch(0.556 0 0);
+	--nb-muted-foreground: oklch(0.708 0 0);
 
 	--nb-accent: oklch(0.269 0 0);
 	--nb-accent-foreground: var(--nb-foreground);
@@ -129,8 +137,7 @@
 	/* Darker than `card` (0.168) so the inverted header recedes below the body. */
 	--nb-surface-sunken: oklch(0.13 0 0);
 
-	/* --nb-primary / --nb-primary-foreground inherit from :root (identical). */
-	--nb-primary-hover: oklch(0.696 0.201 40.2);
+	/* --nb-primary / --nb-primary-foreground / --nb-primary-hover inherit from :root (identical). */
 
 	--nb-border: oklch(0.285 0 0);
 	--nb-border-strong: oklch(0.371 0 0);
@@ -155,6 +162,13 @@
 
 	--nb-grid-line: oklch(1 0 0 / 0.1);
 	--nb-grid-line-accent: oklch(1 0 0 / 0.16);
+
+	/* Footer palette — dark mode (from cloudflare-dev-platform). */
+	--nb-accent-100: #ff5e1f; /* Aerospace Orange (mode-invariant) */
+	--nb-background-100: #151414; /* Dark brown/black */
+	--nb-foreground-100: #f0e3de; /* Light beige/cream */
+	--nb-foreground-200: #f0e3de; /* Light beige 70% */
+	--nb-text-tertiary: #9a9390; /* Muted footer text */
 }
 
 /* ---- Diagram accent ----
@@ -203,6 +217,15 @@
 	--color-danger: var(--nb-danger);
 	--color-danger-muted: var(--nb-danger-muted);
 
+	/* Footer palette (ported from cloudflare-dev-platform). Generates
+	 * bg-background-100 / text-foreground-100 / text-foreground-200 /
+	 * text-accent-100. */
+	--color-accent-100: var(--nb-accent-100);
+	--color-background-100: var(--nb-background-100);
+	--color-foreground-100: var(--nb-foreground-100);
+	--color-foreground-200: var(--nb-foreground-200);
+	--color-text-tertiary: var(--nb-text-tertiary);
+
 	--font-sans: var(--nb-font-sans);
 	--font-mono: var(--nb-font-mono);
 
@@ -211,7 +234,8 @@
 	--shadow-lg: var(--nb-shadow-lg);
 
 	/* Landing-page animations */
-	--animate-changelog-pulse: changelog-pulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+	--animate-changelog-pulse: changelog-pulse 3s cubic-bezier(0.16, 1, 0.3, 1)
+		infinite;
 
 	@keyframes changelog-pulse {
 		0% {
@@ -234,6 +258,43 @@
 	}
 }
 
+/* Footer helpers ported from cloudflare-dev-platform. `text-tertiary` is a
+ * custom utility there (not a Tailwind color), and `px-section` is their
+ * single source of truth for responsive horizontal section padding. */
+@utility text-tertiary {
+	color: var(--color-text-tertiary);
+}
+
+@utility px-section {
+	padding-inline: 1rem;
+	@media (width >= 64rem) {
+		padding-inline: 1.5rem;
+	}
+	@media (width >= 80rem) {
+		padding-inline: 2rem;
+	}
+}
+
+/* Blueprint continuity: in light mode the footer sheds its solid fill so the
+ * landing page's vertical dashed rules (FullPageLines) read straight through
+ * it. Targets the footer's fill layers (scroll host + legal band + separator).
+ * Dark mode keeps the fill — the blueprint treatment is a light-mode motif.
+ * Unlayered, so it wins over Tailwind's layered `bg-background-100` utility. */
+html:not([data-mode="dark"]) .nb-footer .bg-background-100 {
+	background-color: transparent;
+}
+
+/* On the landing page the footer runs full width, but its content must share
+ * the content column's right gutter (`max(2rem, 4vw)`, wider than the footer's
+ * default `px-section`) so the rightmost column ends on FullPageLines' inner
+ * rule — leaving a clean dot gutter bracketed by BOTH the inner and outer
+ * dashed rules, matching the content above. Desktop-only (lines are lg+). */
+@media (min-width: 64rem) {
+	.nb-home-footer .footer-scroll-host {
+		padding-right: max(2rem, 4vw);
+	}
+}
+
 /* ---- Minimal overrides the plugin doesn't cover ---- */
 html {
 	font-family: var(--nb-font-sans);
@@ -242,6 +303,9 @@ html {
 
 body {
 	opacity: 1;
+	/* Grayscale antialiasing to match production (avoids heavier subpixel text). */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -280,12 +344,73 @@ body {
 	overflow: hidden;
 }
 
+/* ---- Theme toggle icon (T9) ----
+   Which icon shows is driven by the root `data-nb-pref` attribute, set by
+   BaseLayout's pre-paint inline script, so the correct icon paints immediately
+   (no flash before the toggle script hydrates). Falls back to the system icon
+   when the attribute is missing (e.g. JS disabled). */
+.nb-theme-ico {
+	display: none;
+}
+:root[data-nb-pref="light"] .nb-theme-ico-light,
+:root[data-nb-pref="dark"] .nb-theme-ico-dark,
+:root[data-nb-pref="auto"] .nb-theme-ico-auto,
+:root:not([data-nb-pref]) .nb-theme-ico-auto {
+	display: block;
+}
+
+/* ---- Image zoom (T8) ---- */
+.medium-zoom-overlay {
+	z-index: 200;
+}
+.medium-zoom-image--opened {
+	z-index: 201;
+}
+/* Not `none`: medium-zoom keys off transitionend, which `none` never emits. */
+@media (prefers-reduced-motion: reduce) {
+	html .medium-zoom-image,
+	html .medium-zoom-image--opened,
+	html .medium-zoom-overlay {
+		transition-duration: 1ms !important;
+	}
+}
+
+.nb-zoom-close {
+	position: fixed;
+	inset: 20px 20px auto auto;
+	z-index: 202;
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	padding: 10px;
+	border: 2px solid var(--nb-border-strong);
+	border-radius: 50%;
+	background-color: var(--nb-card);
+	color: var(--nb-foreground);
+	cursor: zoom-out;
+	opacity: 0;
+}
+.nb-zoom-close svg {
+	width: 100%;
+	height: 100%;
+}
+.nb-zoom-close--open {
+	opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+	.nb-zoom-close {
+		transition: opacity 300ms;
+	}
+}
+
 /* ---- Scrollbar ----
    Standard props for Firefox + recent Chromium; WebKit pseudo-elements
    below give Safari finer control (rounded thumb, exact width). */
 * {
 	scrollbar-width: thin;
-	scrollbar-color: color-mix(in oklch, var(--nb-foreground) 20%, transparent) transparent;
+	scrollbar-color: color-mix(in oklch, var(--nb-foreground) 20%, transparent)
+		transparent;
 }
 ::-webkit-scrollbar {
 	width: 6px;
@@ -527,7 +652,9 @@ pre.astro-code .line.diff.remove::before {
 pre.astro-code.has-focused .line:not(.focused) {
 	opacity: 0.45;
 	filter: blur(0.25px);
-	transition: opacity 0.2s ease, filter 0.2s ease;
+	transition:
+		opacity 0.2s ease,
+		filter 0.2s ease;
 }
 pre.astro-code.has-focused:hover .line:not(.focused) {
 	opacity: 1;
@@ -580,7 +707,9 @@ pre.astro-code[data-nb-wrap] .line {
 	height: 0.5rem;
 	border-radius: 50%;
 	background: var(--nb-muted-foreground);
-	box-shadow: 0.75rem 0 0 var(--nb-muted-foreground), 1.5rem 0 0 var(--nb-muted-foreground);
+	box-shadow:
+		0.75rem 0 0 var(--nb-muted-foreground),
+		1.5rem 0 0 var(--nb-muted-foreground);
 	opacity: 0.45;
 	pointer-events: none;
 }
@@ -609,13 +738,15 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 		@apply outline-offset-[-2px];
 	}
 	[data-nb-sidebar-link][aria-current="page"] {
-		@apply bg-accent font-semibold text-foreground;
+		@apply bg-accent text-foreground font-semibold;
 	}
 
 	[data-nb-caret] {
-		@apply ml-auto -mr-px shrink-0 w-5 h-5 bg-current text-muted-foreground opacity-50 transition-[rotate,color] duration-[250ms] ease-[cubic-bezier(0.87,0,0.13,1)];
-		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z'/%3E%3C/svg%3E") center / contain no-repeat;
-		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z'/%3E%3C/svg%3E") center / contain no-repeat;
+		@apply text-muted-foreground -mr-px ml-auto h-5 w-5 shrink-0 bg-current opacity-50 transition-[rotate,color] duration-[250ms] ease-[cubic-bezier(0.87,0,0.13,1)];
+		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z'/%3E%3C/svg%3E")
+			center / contain no-repeat;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z'/%3E%3C/svg%3E")
+			center / contain no-repeat;
 	}
 	[data-nb-sidebar-group-label]:hover [data-nb-caret] {
 		@apply text-foreground;
@@ -623,41 +754,61 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 }
 
 @layer components {
-
 	[data-nb-sidebar-group-label] {
-		@apply flex min-h-[2rem] items-center rounded-lg px-3 py-1 text-[0.8125rem] no-underline transition-colors duration-150 font-medium text-muted-foreground;
+		@apply text-muted-foreground flex min-h-[2rem] items-center rounded-lg px-3 py-1 text-[0.8125rem] font-medium no-underline transition-colors duration-150;
 	}
-	[data-mode="dark"] [data-nb-sidebar-group-label]:not([data-nb-active]):not([data-nb-current]) {
+	[data-mode="dark"]
+		[data-nb-sidebar-group-label]:not([data-nb-active]):not([data-nb-current]) {
 		color: var(--nb-foreground);
 	}
 	[data-mode="dark"] [data-nb-sidebar-group-text] .text-muted-foreground {
 		color: var(--nb-foreground);
 	}
-	[data-nb-sidebar-group-label]:focus-visible { @apply outline-offset-[-2px]; }
-	[data-nb-sidebar-group-label]:hover { @apply bg-accent text-foreground; }
-	[data-nb-sidebar-group-label][data-nb-active] { @apply font-semibold text-foreground; }
-	
-	[data-nb-sidebar-group-label]:not([data-nb-collapsible-trigger]) { @apply p-0; }
+	[data-nb-sidebar-group-label]:focus-visible {
+		@apply outline-offset-[-2px];
+	}
+	[data-nb-sidebar-group-label]:hover {
+		@apply bg-accent text-foreground;
+	}
+	[data-nb-sidebar-group-label][data-nb-active] {
+		@apply text-foreground font-semibold;
+	}
 
-	[data-nb-sidebar-group-label][data-nb-current] { @apply bg-accent text-foreground font-semibold; }
+	[data-nb-sidebar-group-label]:not([data-nb-collapsible-trigger]) {
+		@apply p-0;
+	}
 
-	[data-nb-sidebar-group-label][data-nb-collapsible-trigger] { @apply justify-between pr-1.5; }
+	[data-nb-sidebar-group-label][data-nb-current] {
+		@apply bg-accent text-foreground font-semibold;
+	}
+
+	[data-nb-sidebar-group-label][data-nb-collapsible-trigger] {
+		@apply justify-between pr-1.5;
+	}
 
 	[data-nb-sidebar-group-link] {
-		@apply flex flex-1 min-w-0 items-center min-h-[2rem] px-3 py-1 rounded-l-lg;
+		@apply flex min-h-[2rem] min-w-0 flex-1 items-center rounded-l-lg px-3 py-1;
 	}
-	[data-nb-sidebar-group-link]:focus-visible { @apply outline-offset-[-2px]; }
+	[data-nb-sidebar-group-link]:focus-visible {
+		@apply outline-offset-[-2px];
+	}
 
 	[data-nb-sidebar-group-toggle] {
-		@apply flex items-center shrink-0 min-h-[2rem] px-1.5 py-1 rounded-r-lg;
+		@apply flex min-h-[2rem] shrink-0 items-center rounded-r-lg px-1.5 py-1;
 	}
-	[data-nb-sidebar-group-toggle]:hover { @apply bg-accent text-foreground; }
-	[data-nb-sidebar-group-toggle]:focus-visible { @apply outline-offset-[-2px]; }
+	[data-nb-sidebar-group-toggle]:hover {
+		@apply bg-accent text-foreground;
+	}
+	[data-nb-sidebar-group-toggle]:focus-visible {
+		@apply outline-offset-[-2px];
+	}
 
-	[data-nb-sidebar-group-text] { @apply flex items-center gap-2 flex-1 min-w-0; }
+	[data-nb-sidebar-group-text] {
+		@apply flex min-w-0 flex-1 items-center gap-2;
+	}
 
 	[data-nb-sidebar-sublist] {
-		@apply mt-0.5 ml-3 list-none border-l border-border p-0 pl-2 flex flex-col gap-px;
+		@apply border-border mt-0.5 ml-3 flex list-none flex-col gap-px border-l p-0 pl-2;
 	}
 }
 
@@ -683,10 +834,10 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 		@apply grid-rows-[1fr];
 	}
 	[data-nb-collapsible-content] > div {
-		@apply overflow-hidden min-h-0;
+		@apply min-h-0 overflow-hidden;
 	}
 	[data-nb-collapsible-trigger] {
-		@apply w-full text-left cursor-pointer select-none;
+		@apply w-full cursor-pointer text-left select-none;
 	}
 	[data-nb-sidebar-sublist] > li {
 		@apply break-words;

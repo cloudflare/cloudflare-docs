@@ -25,9 +25,14 @@ const {
 	{imageUrls.map((url) => <img src={url} alt={alt} loading="lazy" />)}
 	{
 		/* AI-generated outputs do not ship caption tracks. */
+		/* eslint-disable-next-line astro/jsx-a11y/media-has-caption */
 		videoUrl && <video src={videoUrl} controls preload="metadata" />
 	}
-	{audioUrl && <audio src={audioUrl} controls preload="metadata" />}
+	{
+		/* AI-generated outputs do not ship caption tracks. */
+		/* eslint-disable-next-line astro/jsx-a11y/media-has-caption */
+		audioUrl && <audio src={audioUrl} controls preload="metadata" />
+	}
 </div>
 
 <style>

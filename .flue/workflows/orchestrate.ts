@@ -135,6 +135,7 @@ export async function run({ payload, env, req }: FlueContext) {
 		isOnPullRequest && trimmedComment === "/ignore-review-limit";
 	const isDisableAutoReviewCommand =
 		isOnPullRequest && trimmedComment === "/disable-auto-review";
+	const isRebaseCommand = isOnPullRequest && trimmedComment === "/rebase";
 
 	if (
 		!req ||
@@ -144,7 +145,8 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isFullReviewCommand &&
 			!isReviewCommand &&
 			!isIgnoreReviewLimitCommand &&
-			!isDisableAutoReviewCommand)
+			!isDisableAutoReviewCommand &&
+			!isRebaseCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -430,6 +432,112 @@ export async function run({ payload, env, req }: FlueContext) {
 			acted: true,
 			summary: `Auto-review disabled by @${senderLogin}. Push-triggered reviews will no longer run. Codeowners can still use /review or /full-review.`,
 		};
+	}
+
+	// ── 5c. Handle /rebase command ────────────────────────────────────────────
+	if (isRebaseCommand) {
+		const commandName = "rebase";
+		const logAction = "rebase";
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		let token: string;
+		let codeowner: boolean;
+		try {
+			token = await getInstallationToken(typedEnv);
+			const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+			codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+		} catch (authErr) {
+			const errMsg =
+				authErr instanceof Error ? authErr.message : String(authErr);
+			console.log({
+				message: `${commandName} auth failed for PR #${number}: ${errMsg}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: `${logAction}_auth_failed`,
+			});
+			return { acted: false, summary: `${commandName} auth failed: ${errMsg}` };
+		}
+
+		if (!codeowner) {
+			console.log({
+				message: `${commandName} command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: `${logAction}_ignored_not_codeowner`,
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+
+		// Add 👀 reaction to acknowledge receipt. Non-fatal: if the reaction API
+		// fails we still dispatch the workflow.
+		let eyesReactionId: number | null = null;
+		try {
+			eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		} catch (reactionErr) {
+			console.log({
+				message: `${commandName}: failed to add 👀 reaction to comment ${commentId} — continuing`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error:
+					reactionErr instanceof Error
+						? reactionErr.message
+						: String(reactionErr),
+				action: `${logAction}_reaction_failed`,
+			});
+		}
+
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: `/workflows/rebase`,
+				headers: internalHeaders,
+				body: {
+					prNumber: number,
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+					senderLogin,
+				},
+			});
+			console.log({
+				message: `${commandName} admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: `${logAction}_admitted`,
+			});
+			return {
+				acted: true,
+				summary: `${commandName} triggered by @${senderLogin}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `${commandName} dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: `${logAction}_dispatch_failed`,
+			});
+			return {
+				acted: false,
+				summary: `${commandName} dispatch failed: ${errMsg}`,
+			};
+		}
 	}
 
 	const baseUrl = new URL(req.url).origin;
