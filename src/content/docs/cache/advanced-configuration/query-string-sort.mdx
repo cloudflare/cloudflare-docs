@@ -94,7 +94,7 @@ After sorting, the query then goes to Cloudflare's cache infrastructure (and to 
 
 ### Enterprise applications with order-sensitive request handling
 
-WordPress admin is not the only case where sorted query strings break an application. Enterprise applications that use query string parameters as part of session validation, CSRF protection, or request signing may treat a reordered URL as tampered and return an authorization error instead of the expected response.
+Enterprise applications that use query string parameters as part of session validation, CSRF protection, or request signing may treat a reordered URL as tampered and return an authorization error instead of the expected response.
 
 **Confirmed case: Oracle E-Business Suite (EBS)**
 
