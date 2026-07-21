@@ -11,7 +11,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 
 <figure
 	class="artifacts-ci-workflow-diagram not-content"
-	aria-label="An Artifacts repository change starts a CI Workflow on git push. The Workflow installs and caches dependencies, then runs build, lint, typecheck, and format steps. Non-main branches deploy to a preview, while the main branch deploys to production."
+	aria-label="An Artifacts repository change starts a CI Workflow on git push. The Workflow installs and caches dependencies, then runs build, lint, typecheck, and format steps, then deploys the built Worker."
 >
 	<cfdocs-artifacts-ci-workflow-diagram
 		data-autoplay={String(autoPlay)}
@@ -95,50 +95,16 @@ const { autoPlay = true, loop = true } = Astro.props;
 				</div>
 			</section>
 
-			<div class="branch-split" aria-hidden="true">
-				<svg viewBox="0 0 400 94" preserveAspectRatio="none">
-					<path class="split-path split-stem" data-step="6" d="M200 0v24"
-					></path>
-					<path class="split-path split-bar" data-step="6" d="M100 24h200"
-					></path>
-					<path
-						class="split-path preview-path"
-						data-step="7"
-						d="M100 24v17M100 61v33"></path>
-					<path
-						class="split-path production-path"
-						data-step="8"
-						d="M300 24v17M300 61v33"></path>
-				</svg>
-				<div class="branch-labels">
-					<span class="branch-label" data-step="7">Non-main branch</span>
-					<span class="branch-label" data-step="8">Main branch</span>
+			<div class="workflow-connector" data-step="6" aria-hidden="true"></div>
+
+			<div class="deployment-stage">
+				<div class="deployment-card" data-step="7" aria-label="Deploy Worker">
+					<span class="deployment-icon" aria-hidden="true">
+						<AstroIcon name="workers" />
+					</span>
+					<span class="deployment-name">Deploy Worker</span>
 				</div>
 			</div>
-
-			<section
-				class="deployment-group"
-				data-step="6"
-				aria-label="Deploy Worker"
-			>
-				<span class="group-label">Deploy Worker</span>
-				<div class="deployment-grid">
-					<div class="deployment-card" data-step="7">
-						<span class="deployment-icon" aria-hidden="true">
-							<AstroIcon name="workers" />
-						</span>
-						<span class="deployment-name">Preview</span>
-						<span class="deployment-note">Non-main branch</span>
-					</div>
-					<div class="deployment-card" data-step="8">
-						<span class="deployment-icon" aria-hidden="true">
-							<AstroIcon name="workers" />
-						</span>
-						<span class="deployment-name">Production</span>
-						<span class="deployment-note">Main branch</span>
-					</div>
-				</div>
-			</section>
 		</div>
 	</cfdocs-artifacts-ci-workflow-diagram>
 </figure>
@@ -320,28 +286,22 @@ const { autoPlay = true, loop = true } = Astro.props;
 		stroke: var(--diagram-accent);
 	}
 
-	.workflow-group,
-	.deployment-group {
+	.workflow-group {
 		position: relative;
 		background: var(--diagram-group);
 		border: 1px dashed var(--diagram-line);
 		border-radius: 0.75rem;
 		transition: border-color 0.3s ease;
-	}
-
-	.workflow-group {
 		padding: 2.25rem 1rem 1rem;
 	}
 
-	.workflow-group > .group-label,
-	.deployment-group > .group-label {
+	.workflow-group > .group-label {
 		position: absolute;
 		top: 0.625rem;
 		left: 0.75rem;
 	}
 
-	.workflow-group.is-active,
-	.deployment-group.is-active {
+	.workflow-group.is-active {
 		border-color: var(--diagram-accent);
 	}
 
@@ -423,71 +383,18 @@ const { autoPlay = true, loop = true } = Astro.props;
 		height: 1rem;
 	}
 
-	.branch-split {
-		position: relative;
-		height: 94px;
-		margin-bottom: -1px;
-	}
-
-	.branch-split svg {
-		display: block;
-		width: 100%;
-		height: 100%;
-		overflow: visible;
-	}
-
-	.split-path {
-		fill: none;
-		stroke: var(--diagram-line);
-		stroke-width: 2;
-		vector-effect: non-scaling-stroke;
-		transition: stroke 0.3s ease;
-	}
-
-	.split-path.is-active {
-		stroke: var(--diagram-accent);
-	}
-
-	.branch-label {
-		font-size: 0.5625rem;
-		line-height: 1.25rem;
-		color: var(--diagram-muted);
-		text-align: center;
-		white-space: nowrap;
-		transition: color 0.3s ease;
-	}
-
-	.branch-label.is-active {
-		color: var(--diagram-accent);
-	}
-
-	.branch-labels {
-		position: absolute;
-		top: 41px;
-		left: 0;
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		width: 100%;
-	}
-
-	.deployment-group {
-		padding: 2.25rem 0.75rem 0.75rem;
-	}
-
-	.deployment-grid {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.5rem;
+	.deployment-stage {
+		display: flex;
+		justify-content: center;
 	}
 
 	.deployment-card {
 		display: flex;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 0.25rem;
-		min-width: 0;
-		padding: 0.75rem 0.5rem;
+		gap: 0.625rem;
+		width: 240px;
+		padding: 0.625rem 0.875rem;
 	}
 
 	.deployment-icon {
@@ -497,11 +404,6 @@ const { autoPlay = true, loop = true } = Astro.props;
 
 	.deployment-name {
 		font-size: 0.6875rem;
-	}
-
-	.deployment-note {
-		font-size: 0.5625rem;
-		color: var(--diagram-muted);
 	}
 
 	@media (max-width: 30rem) {
@@ -527,7 +429,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 
 <script>
 	class ArtifactsCIWorkflowDiagramElement extends HTMLElement {
-		private static readonly MAX_STEP = 8;
+		private static readonly MAX_STEP = 7;
 		private currentStep = 0;
 		private timeout: number | undefined;
 		private observer: IntersectionObserver | undefined;
