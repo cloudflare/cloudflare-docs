@@ -6,6 +6,7 @@ on:
       - production
     paths:
       - ".flue/**"
+      - ".github/workflows/flue-ci.yml"
 
 permissions:
   contents: read
