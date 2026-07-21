@@ -1,6 +1,5 @@
-# build output
+ # build output
 dist/
-dist-nimbus/
 distmd/
 distllms/
 
@@ -9,7 +8,6 @@ distllms/
 
 # Astro build cache
 .astro-cache/
-.astro-cache-nimbus/
 
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
