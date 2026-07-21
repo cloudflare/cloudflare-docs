@@ -18,8 +18,6 @@ const plugin2 = meeting.plugins.all.get(pluginId);
 
 * [RTKPlugin](#module_RTKPlugin)
     * [.component](#module_RTKPlugin+component)
-    * [.telemetry](#module_RTKPlugin+telemetry)
-    * [.activePluginsStore](#module_RTKPlugin+activePluginsStore)
     * [.activateForSelf()](#module_RTKPlugin+activateForSelf)
     * [.deactivateForSelf()](#module_RTKPlugin+deactivateForSelf)
     * [.activate()](#module_RTKPlugin+activate)
@@ -31,22 +29,6 @@ const plugin2 = meeting.plugins.all.get(pluginId);
 The component for this plugin, as provided in the plugin config.
 
 **Kind**: instance property of [<code>RTKPlugin</code>](#module_RTKPlugin)  
-<a name="module_RTKPlugin+telemetry"></a>
-
-### plugin.telemetry
-**Kind**: instance property of [<code>RTKPlugin</code>](#module_RTKPlugin)  
-<a name="module_RTKPlugin+activePluginsStore"></a>
-
-### plugin.activePluginsStore
-**Kind**: instance property of [<code>RTKPlugin</code>](#module_RTKPlugin)  
-
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-| config | <code>ClientPluginConfig</code> | 
-| activePluginsStore | <code>Store</code> | 
-| self | <code>Self</code> | 
-
 <a name="module_RTKPlugin+activateForSelf"></a>
 
 ### plugin.activateForSelf()
