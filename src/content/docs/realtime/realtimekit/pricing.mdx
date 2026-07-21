@@ -7,11 +7,15 @@ sidebar:
   order: 17
 ---
 
-import RTKPricingCalculator from "~/components/realtimekit/RTKPricingCalculator/RTKPricingCalculator.astro";
-
 Cloudflare RealtimeKit is currently in Beta and is available at no cost during this period.
 
 When RealtimeKit reaches general availability (GA), usage will be charged according to the pricing model below:
+
+:::note
+
+To estimate your RealtimeKit costs, refer to the [RealtimeKit pricing calculator](https://realtime.cloudflare.com/#pricing-calculator).
+
+:::
 
 | Feature                                               | Price                                 |
 | ----------------------------------------------------- | ------------------------------------- |
@@ -23,9 +27,3 @@ When RealtimeKit reaches general availability (GA), usage will be charged accord
 | Transcription (Real-time)                             | Standard model pricing via Workers AI |
 
 Whether a participant is an audio-only participant or an audio/video participant is determined by the `Meeting Type` of their [preset](/realtime/realtimekit/concepts/preset/).
-
-## Pricing calculator
-
-Use the calculator below to estimate your monthly cost based on expected usage.
-
-<RTKPricingCalculator />
