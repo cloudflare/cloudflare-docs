@@ -115,7 +115,7 @@ export default defineConfig({
 	...(isNimbus
 		? {
 				srcDir: "./src/nimbus",
-				outDir: "./dist-nimbus",
+				outDir: "./dist",
 				cacheDir: ".astro-cache-nimbus",
 			}
 		: { cacheDir: ".astro-cache" }),
@@ -314,9 +314,8 @@ export default defineConfig({
 		server: {
 			watch: {
 				ignored: [
-					"**/dist-nimbus/**",
-					"**/.astro-cache-nimbus/**",
 					"**/dist/**",
+					"**/.astro-cache-nimbus/**",
 					"**/.astro-cache/**",
 				],
 			},

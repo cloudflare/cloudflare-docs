@@ -155,7 +155,7 @@ jobs:
           restore-keys: |
             astro-nimbus-assets-
 
-      - name: Build (→ dist-nimbus)
+      - name: Build
         id: build
         env:
           BUILD_TARGET: nimbus
@@ -169,8 +169,8 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
-          name: dist-nimbus
-          path: dist-nimbus
+          name: dist
+          path: dist
 
       - name: Upload build log
         if: always()
@@ -219,8 +219,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: dist-nimbus
-          path: dist-nimbus
+          name: dist
+          path: dist
 
       - name: Tests (Workers)
         run: pnpm run test:postbuild
@@ -305,11 +305,11 @@ jobs:
         run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      - name: Download Nimbus artifact
+      - name: Download artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: dist-nimbus
-          path: dist-nimbus
+          name: dist
+          path: dist
 
       - name: Deploy to Cloudflare Workers
         id: deploy
@@ -324,8 +324,8 @@ jobs:
           echo "branch_slug=${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
           echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
 
-          pnpm exec wrangler deploy --config wrangler.nimbus-preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}"
-          pnpm exec wrangler deploy --config wrangler.nimbus-preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}"
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}"
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}"
 
       - name: Post preview URL on PR
         env:
