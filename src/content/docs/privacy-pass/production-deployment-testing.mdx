@@ -8,8 +8,6 @@ sidebar:
   order: 4
 ---
 
-import { TypeScriptExample } from "~/components";
-
 This guide covers obtaining a token from your Cloudflare-operated deployment. By this point, you and Cloudflare have already worked together to build and provision the following components. Use this guide to confirm the deployment issues and redeems tokens end to end.
 
 Privacy Pass is not a self-serve product at the moment: a production deployment is a managed engagement with Cloudflare. If you just want to see Privacy Pass work without any setup, refer to [Getting started](/privacy-pass/getting-started/).
@@ -91,8 +89,6 @@ In this deployment the Client never contacts the issuer directly. Getting a toke
 
 Using the TypeScript library for this example, the Client builds the blinded token request, then sends it to your Attester, which proxies it to the issuer and returns the signed response:
 
-<TypeScriptExample>
-
 ```ts
 import { publicVerif } from '@cloudflare/privacypass-ts';
 const { BlindRSAMode, Client } = publicVerif;
@@ -113,8 +109,6 @@ const tokenResponseBytes = await sendToAttester(tokenRequest.serialize());
 const tokenResponse = client.deserializeTokenResponse(tokenResponseBytes);
 const token = await client.finalize(tokenResponse);
 ```
-
-</TypeScriptExample>
 
 The Client then redeems the token by sending it to the Origin in an `Authorization` header. The Origin (or Cloudflare at the edge – refer to [Deployment Models](/privacy-pass/concepts/deployment-models/)) verifies the signature against the issuer's public key and responds with `200 OK`.
 

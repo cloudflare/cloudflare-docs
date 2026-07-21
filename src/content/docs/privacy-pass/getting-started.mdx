@@ -8,8 +8,6 @@ sidebar:
   order: 2
 ---
 
-import { TypeScriptExample } from "~/components";
-
 There are two self-serve ways to see Privacy Pass in action:
 
 - **Get a real token with the demo tool:** the fastest way to obtain a real, issuer-signed token, using a browser tool and a Cloudflare-provided demo issuer.
@@ -69,15 +67,11 @@ npm ci
 
 The publicly-verifiable example ([`pub_verif.example.ts`](https://github.com/cloudflare/privacypass-ts/blob/main/examples/pub_verif.example.ts)) only exports its functions, so add a small runner that calls just that one. Create `examples/run-pub-verif.ts`:
 
-<TypeScriptExample>
-
 ```ts
 import { publicVerifiableTokensPSS } from "./pub_verif.example.js";
 
 await publicVerifiableTokensPSS();
 ```
-
-</TypeScriptExample>
 
 Compile the examples and run your runner:
 
@@ -98,28 +92,32 @@ Public-Verifiable tokens
 
 ### How the example maps to the four roles
 
-The example creates an Issuer, a Client, and an Origin in a single process (the Issuer key pair is generated up front in `setup()` with `Issuer.generateKey`), then runs them through the protocol. The code annotations in the diagram sit at the point in the flow where each step happens:
+The example creates an Issuer, a Client, and an Origin in a single process (the Issuer key pair is generated up front in `setup()` with `Issuer.generateKey`), then runs them through the protocol.
+
+The example follows the flow below. It only exercises the Origin, Client, and Issuer — the Attester is stubbed, since no real attestation runs, so it is left out of the diagram:
 
 ```txt
-// +--------+            +--------+         +----------+ +--------+
-// | Origin |            | Client |         | Attester | | Issuer |
-// +---+----+            +---+----+         +----+-----+ +---+----+
-//     |                     |                   |           |
-//     |<----- Request ------+                   |           |
+ ┌────────┐              ┌────────┐                ┌────────┐
+ │ Origin │              │ Client │                │ Issuer │
+ └────────┘              └────────┘                └────────┘
+      │                       │                         │
+      │<────── Request ───────│                         │
+      │─── TokenChallenge ───>│                         │
+      │                       │                         │
+      │                       │───── TokenRequest ─────>│
+      │                       │<──── TokenResponse ─────│
+      │                       │                         │
+      │<─── Request+Token ────│                         │
+```
+
+Each call in the example maps to one step in that flow:
+
+```ts
 const redemptionContext = crypto.getRandomValues(new Uint8Array(32));
 const tokChl = origin.createTokenChallenge(issuer.name, redemptionContext);  // Origin issues a token challenge
-//     +-- TokenChallenge -->|                   |           |
-//     |                     |<== Attestation ==>|           |   // stubbed: no real Attester runs
-//     |                     |                   |           |
-const tokReq = await client.createTokenRequest(tokChl, pkIssuer);            // Client blinds the request
-//     |                     +--------- TokenRequest ------->|
-//     |                     |                   |           |
+const tokReq = await client.createTokenRequest(tokChl, pkIssuer);            // Client sends blinded request
 const tokRes = await issuer.issue(tokReq);                                   // Issuer signs the blinded request
-//     |                     |<-------- TokenResponse -------+
-//     |                     |                   |           |
-const token = await client.finalize(tokRes);                                 // Client unblinds to recover the token
-//     |<-- Request+Token ---+                   |           |
-//     |                     |                   |           |
+const token = await client.finalize(tokRes);                                 // Client finalizes token and resends request with it
 const isValid = await origin.verify(token, issuer.publicKey);                // Origin verifies against the issuer key
 ```
 
