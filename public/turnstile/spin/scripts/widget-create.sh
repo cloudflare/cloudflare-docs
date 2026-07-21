@@ -68,8 +68,17 @@ print(json.dumps({
 
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
 
-tmp=$(mktemp "${TMPDIR:-/tmp}/widget-create.body.XXXXXX")
-auth_headers=$(mktemp "${TMPDIR:-/tmp}/widget-create.hdr.XXXXXX")
+tmp=$(mktemp "${TMPDIR:-/tmp}/widget-create.body.XXXXXX") || {
+  echo "widget-create: mktemp failed for response body tempfile." >&2
+  echo '{"status":"error","code":0,"message":"mktemp failed"}'
+  exit 1
+}
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/widget-create.hdr.XXXXXX") || {
+  echo "widget-create: mktemp failed for auth headers tempfile." >&2
+  echo '{"status":"error","code":0,"message":"mktemp failed"}'
+  rm -f "$tmp"
+  exit 1
+}
 chmod 600 "$auth_headers"
 trap 'rm -f "$tmp" "$auth_headers"' EXIT
 
@@ -100,6 +109,8 @@ if not isinstance(data, dict):
     sys.exit(1)
 
 errors = data.get("errors") or []
+if not isinstance(errors, list):
+    errors = []
 first = (errors[0] or {}) if errors else {}
 if not isinstance(first, dict):
     first = {}

@@ -25,6 +25,12 @@ if ! command -v python3 >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! command -v npx >/dev/null 2>&1; then
+  echo "persist-skill: npx is required but not found in PATH (needed for degit)." >&2
+  echo '{"status":"error","reason":"npx_not_available"}'
+  exit 1
+fi
+
 need_arg() {
   if [ -z "${2-}" ] || [[ "$2" == --* ]]; then
     echo "persist-skill: missing value for $1" >&2

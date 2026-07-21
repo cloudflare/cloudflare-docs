@@ -53,9 +53,23 @@ done
 [ -n "$SITEKEY" ] || { echo "validate: --sitekey required" >&2; exit 2; }
 
 # Prepare all tempfiles up front so the trap covers everything.
-secret_file=$(mktemp "${TMPDIR:-/tmp}/validate.secret.XXXXXX")
-auth_headers=$(mktemp "${TMPDIR:-/tmp}/validate.hdr.XXXXXX")
-tmp=$(mktemp "${TMPDIR:-/tmp}/validate.body.XXXXXX")
+secret_file=$(mktemp "${TMPDIR:-/tmp}/validate.secret.XXXXXX") || {
+  echo "validate: mktemp failed for secret tempfile." >&2
+  echo '{"status":"error","check":"prerequisite","detail":"mktemp failed"}'
+  exit 1
+}
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/validate.hdr.XXXXXX") || {
+  echo "validate: mktemp failed for auth headers tempfile." >&2
+  echo '{"status":"error","check":"prerequisite","detail":"mktemp failed"}'
+  rm -f "$secret_file"
+  exit 1
+}
+tmp=$(mktemp "${TMPDIR:-/tmp}/validate.body.XXXXXX") || {
+  echo "validate: mktemp failed for response body tempfile." >&2
+  echo '{"status":"error","check":"prerequisite","detail":"mktemp failed"}'
+  rm -f "$secret_file" "$auth_headers"
+  exit 1
+}
 chmod 600 "$secret_file" "$auth_headers"
 trap 'rm -f "$secret_file" "$auth_headers" "$tmp"' EXIT
 
@@ -167,6 +181,8 @@ if not isinstance(data, dict):
 
 if http_code != "200" or not data.get("success"):
     errors = data.get("errors") or []
+    if not isinstance(errors, list):
+        errors = []
     first = (errors[0] or {}) if errors else {}
     if not isinstance(first, dict):
         first = {}

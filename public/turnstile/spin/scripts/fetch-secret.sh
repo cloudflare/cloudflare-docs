@@ -59,8 +59,17 @@ done
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$ACCOUNT_ID")
 sitekey_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$SITEKEY")
 
-tmp=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.body.XXXXXX")
-auth_headers=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.hdr.XXXXXX")
+tmp=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.body.XXXXXX") || {
+  echo "fetch-secret: mktemp failed for response body tempfile." >&2
+  echo '{"status":"error","reason":"mktemp_failed"}'
+  exit 1
+}
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/fetch-secret.hdr.XXXXXX") || {
+  echo "fetch-secret: mktemp failed for auth headers tempfile." >&2
+  echo '{"status":"error","reason":"mktemp_failed"}'
+  rm -f "$tmp"
+  exit 1
+}
 chmod 600 "$auth_headers"
 trap 'rm -f "$tmp" "$auth_headers"' EXIT
 
@@ -89,6 +98,8 @@ if not isinstance(data, dict):
     sys.exit(1)
 
 errors = data.get("errors") or []
+if not isinstance(errors, list):
+    errors = []
 first = (errors[0] or {}) if errors else {}
 if not isinstance(first, dict):
     first = {}

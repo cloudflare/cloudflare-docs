@@ -132,8 +132,15 @@ fi
 #   400/422 or 200 with validation error codes  → Edit scope OK
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$account_id")
 
-tmp=$(mktemp "${TMPDIR:-/tmp}/auth-probe.body.XXXXXX")
-auth_headers=$(mktemp "${TMPDIR:-/tmp}/auth-probe.hdr.XXXXXX")
+tmp=$(mktemp "${TMPDIR:-/tmp}/auth-probe.body.XXXXXX") || {
+  echo "auth-probe: mktemp failed for response body tempfile." >&2
+  emit '{"status":"missing_token","reason":"mktemp_failed"}'
+}
+auth_headers=$(mktemp "${TMPDIR:-/tmp}/auth-probe.hdr.XXXXXX") || {
+  echo "auth-probe: mktemp failed for auth headers tempfile." >&2
+  rm -f "$tmp"
+  emit '{"status":"missing_token","reason":"mktemp_failed"}'
+}
 chmod 600 "$auth_headers"
 trap 'rm -f "$tmp" "$auth_headers"' EXIT
 
@@ -160,6 +167,8 @@ if not isinstance(data, dict):
     print("unknown")
     sys.exit(0)
 errors = data.get("errors") or []
+if not isinstance(errors, list):
+    errors = []
 first = (errors[0] or {}) if errors else {}
 if not isinstance(first, dict):
     first = {}
