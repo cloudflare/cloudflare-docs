@@ -38,7 +38,7 @@ The Agents SDK provides first-class x402 integration:
 
 [Machine Payments Protocol (MPP)](https://mpp.dev) is an open payment protocol. It adds the `WWW-Authenticate: Payment` and `Authorization: Payment` headers to HTTP `402` responses.
 
-On Cloudflare, MPP can protect Worker routes, origins, and MCP tools. Cloudflare Agents can also pay MPP services through HTTP or MCP. The `mppx` SDK supports one-time, usage-based, and recurring payments.
+MPP supports multiple payment methods beyond blockchains, including cards (via Stripe) and stablecoins. The `mppx` SDK supports one-time, usage-based, and recurring payments. MPP is also backwards-compatible with x402: MPP clients can consume existing x402 services without modification.
 
 ## Build with agentic payments
 
@@ -50,7 +50,7 @@ On Cloudflare, MPP can protect Worker routes, origins, and MCP tools. Cloudflare
 	/>
 	<LinkCard
 		title="Accept payments (MPP)"
-		description="Accept MPP from an origin, Worker route, or MCP tool"
+		description="Accept MPP from a Worker route or MCP tool"
 		href="/agents/tools/payments/mpp/accept-payments/"
 	/>
 	<LinkCard

@@ -3,7 +3,7 @@ title: Accept payments with MPP
 pcx_content_type: how-to
 sidebar:
   order: 1
-description: Accept payments through Machine Payments Protocol (MPP) from a Cloudflare Worker, origin proxy, or Model Context Protocol (MCP) tool.
+description: Accept Machine Payments Protocol (MPP) payments from a Cloudflare Worker route or Model Context Protocol (MCP) tool.
 products:
   - agents
 ---
@@ -15,96 +15,13 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Use Cloudflare Workers to accept Machine Payments Protocol (MPP) payments. Protect an existing origin, a Worker route, or a Model Context Protocol (MCP) tool.
+Use Cloudflare Workers to accept Machine Payments Protocol (MPP) payments. Add `mppx` to an HTTP route or a Model Context Protocol (MCP) tool.
 
 ## Prerequisites
 
-[Create a Cloudflare account](/fundamentals/account/create-account/), if you have not already. The examples also require a payment recipient and an MPP secret key.
+Create a [Cloudflare account](/fundamentals/account/create-account/). You also need a payment recipient and an MPP secret key.
 
-Choose a Cloudflare integration for the service:
-
-| Service                    | Cloudflare integration                                                             |
-| -------------------------- | ---------------------------------------------------------------------------------- |
-| Existing website or API    | Put [`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) in front of the origin. |
-| New or existing Worker API | Add `mppx` middleware to a Worker route.                                           |
-| MCP server                 | Add the MPP transport to an `McpAgent` tool handler.                               |
-
-Each workflow challenges unpaid requests. It verifies the payment retry and returns an MPP Receipt.
-
-## Gate an existing origin with `mpp-proxy`
-
-Deploy [`mpp-proxy`](https://github.com/cloudflare/mpp-proxy) when you cannot change the origin code. The Worker passes unprotected requests to the origin. It challenges paid paths and verifies payment before forwarding. A secure cookie reuses access for one hour.
-
-<Steps>
-
-1. Deploy the template to your Cloudflare account:
-
-   [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/mpp-proxy)
-
-2. Set the recipient, payment currency, and protected routes in `wrangler.jsonc`:
-
-   <WranglerConfig>
-
-   ```jsonc
-   {
-     "vars": {
-       "PAY_TO": "0xYourWalletAddress",
-       "TEMPO_TESTNET": false,
-       "PAYMENT_CURRENCY": "0x20c000000000000000000000b9537d11c60e8b50",
-       "PROTECTED_PATTERNS": [
-         {
-           "pattern": "/premium/*",
-           "amount": "0.01",
-           "description": "Access to premium content for 1 hour"
-         }
-       ]
-     }
-   }
-   ```
-
-   </WranglerConfig>
-
-   For testnet development, set `TEMPO_TESTNET` to `true` and use `0x20c0000000000000000000000000000000000000` as the payment currency.
-
-3. Store the two required secrets:
-
-   <PackageManagers type="exec" pkg="wrangler" args="secret put JWT_SECRET" />
-
-   <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
-
-4. Request `/__mpp/health` to confirm that the Worker is available. Then request `/__mpp/protected` or another paid route. The unpaid request returns `402 Payment Required` with a `WWW-Authenticate: Payment` header.
-
-</Steps>
-
-The Worker now protects matching routes before forwarding them. It supports DNS origins, external URLs, and [service bindings](/workers/runtime-apis/bindings/service-bindings/).
-
-For all settings, refer to the [`mpp-proxy` README](https://github.com/cloudflare/mpp-proxy).
-
-### Charge crawlers with Bot Management
-
-With [Cloudflare Bot Management](/bots/), a paid pattern can target automated traffic. The same content remains free for people:
-
-<WranglerConfig>
-
-```jsonc
-{
-  "vars": {
-    "PROTECTED_PATTERNS": [
-      {
-        "pattern": "/content/*",
-        "amount": "0.25",
-        "description": "Content access for 1 hour",
-        "bot_score_threshold": 30,
-        "except_detection_ids": [120623194, 117479730]
-      }
-    ]
-  }
-}
-```
-
-</WranglerConfig>
-
-Requests with a bot score at or below `bot_score_threshold` reach the paywall. Use `except_detection_ids` to allow specific crawlers by [detection ID](/ai-crawl-control/reference/bots/).
+The examples use a stablecoin payment method on testnet. For other methods, refer to [MPP payment methods](https://mpp.dev/payment-methods/).
 
 ## Charge for a Worker route
 
@@ -120,7 +37,7 @@ Add `mppx` middleware when you control the Worker application:
 
    <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
 
-3. Add `mppx.charge` before the paid route handler:
+3. Add the payment middleware before the paid route handler:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -129,22 +46,22 @@ Add `mppx` middleware when you control the Worker application:
    import { Hono } from "hono";
    import { Mppx, tempo } from "mppx/hono";
 
+   const workerEnv = env as Env & { MPP_SECRET_KEY: string };
    const app = new Hono();
-
    const mppx = Mppx.create({
-     methods: [tempo.charge()],
-     secretKey: env.MPP_SECRET_KEY,
+     methods: [tempo.charge({ testnet: true })],
+     secretKey: workerEnv.MPP_SECRET_KEY,
    });
 
    app.get(
      "/premium",
      mppx.charge({
-       amount: "0.10",
-       currency: "0x20c000000000000000000000b9537d11c60e8b50",
+       amount: "0.01",
+       currency: "0x20c0000000000000000000000000000000000000",
        description: "Premium API access",
-       recipient: "0xYourWalletAddress",
+       recipient: "<YOUR_WALLET_ADDRESS>",
      }),
-     (c) => c.json({ data: "Thanks for paying!" }),
+     (c) => c.json({ access: "paid" }),
    );
 
    export default app;
@@ -152,11 +69,19 @@ Add `mppx` middleware when you control the Worker application:
 
    </TypeScriptExample>
 
-4. Request `/premium` without payment. The Worker returns `402 Payment Required` and an MPP Challenge.
+4. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+5. Request the paid route without a payment:
+
+   ```sh
+   curl -i https://<YOUR_WORKER>.workers.dev/premium
+   ```
+
+   The Worker returns `402 Payment Required` and a `WWW-Authenticate: Payment` header. A paid retry reaches the handler and returns a `Payment-Receipt` header.
 
 </Steps>
-
-After payment, the Worker runs the route handler and returns a Receipt. You can also read the decentralized identifier (DID) for the payer.
 
 ## Charge for an MCP tool
 
@@ -164,15 +89,36 @@ Add the MPP transport to an [`McpAgent`](/agents/model-context-protocol/apis/age
 
 <Steps>
 
-1. Install the Agents SDK, `mppx`, MCP SDK, and Zod:
+1. Install the required packages in an Agents project:
 
    <PackageManagers pkg="agents mppx @modelcontextprotocol/sdk zod" />
 
-2. Store `MPP_SECRET_KEY` as a [Worker secret](/workers/configuration/secrets/):
+2. Bind the `McpAgent` Durable Object in the Wrangler configuration:
+
+   <WranglerConfig>
+
+   ```toml
+   name = "mpp-server"
+   main = "src/index.ts"
+   compatibility_date = "$today"
+   compatibility_flags = ["nodejs_compat"]
+
+   [[durable_objects.bindings]]
+   name = "MCP_OBJECT"
+   class_name = "PaidMCP"
+
+   [[migrations]]
+   tag = "v1"
+   new_sqlite_classes = ["PaidMCP"]
+   ```
+
+   </WranglerConfig>
+
+3. Store `MPP_SECRET_KEY` as a Worker secret:
 
    <PackageManagers type="exec" pkg="wrangler" args="secret put MPP_SECRET_KEY" />
 
-3. Add `Transport.mcpSdk()` and check payment in the tool handler:
+4. Check payment before returning the tool result:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -182,7 +128,9 @@ Add the MPP transport to an [`McpAgent`](/agents/model-context-protocol/apis/age
    import { Mppx, tempo, Transport } from "mppx/server";
    import { z } from "zod";
 
-   export class PaidMCP extends McpAgent<Env> {
+   type PaymentEnv = Env & { MPP_SECRET_KEY: string };
+
+   export class PaidMCP extends McpAgent<PaymentEnv> {
      server = new McpServer({ name: "paid-search", version: "1.0.0" });
 
      async init() {
@@ -193,15 +141,15 @@ Add the MPP transport to an [`McpAgent`](/agents/model-context-protocol/apis/age
        });
 
        this.server.tool(
-         "search",
-         "Search the web",
+         "premium_search",
+         "Search premium content",
          { query: z.string() },
          async ({ query }, extra) => {
            const payment = await mppx.charge({
              amount: "0.01",
              currency: "0x20c0000000000000000000000000000000000000",
-             description: "Web search query",
-             recipient: "0xYourWalletAddress",
+             description: "Premium search",
+             recipient: "<YOUR_WALLET_ADDRESS>",
            })(extra);
 
            if (payment.status === 402) throw payment.challenge;
@@ -219,30 +167,12 @@ Add the MPP transport to an [`McpAgent`](/agents/model-context-protocol/apis/age
 
    </TypeScriptExample>
 
-4. Call the `search` tool without payment. The MCP server returns an MPP Challenge through JSON-RPC.
+5. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   An unpaid `premium_search` call returns an MPP Challenge. A paid retry returns the tool result and an MPP Receipt in `_meta`.
 
 </Steps>
 
-After payment, the tool result includes the MPP Receipt in `_meta`. Free tools do not call `mppx.charge`.
-
-## Add other billing patterns
-
-After a one-time Worker flow succeeds, add another billing pattern:
-
-| Pattern                      | Server API                              | Production requirement                                                |
-| ---------------------------- | --------------------------------------- | --------------------------------------------------------------------- |
-| Usage-based access           | `mppx.session()`                        | An atomic store that persists the payment channel across requests.    |
-| Recurring access             | `mppx.subscription()`                   | An atomic store for subscription state and a stable subscription key. |
-| Native MPP and x402 together | `evm.charge()` with an x402 facilitator | An Ethereum Virtual Machine (EVM) asset, recipient, and facilitator.  |
-| Zero-dollar payer proof      | `mppx.charge({ amount: "0" })`          | An atomic store if proofs must be single-use across Worker instances. |
-
-Use `Store.memory()` only for local development. Concurrent Workers need a durable implementation such as `Store.cloudflare()`.
-
-For complete configurations, refer to the [session intent](https://mpp.dev/intents/session), [subscription guide](https://mpp.dev/guides/subscription-payments), and [MPP with x402 guide](https://mpp.dev/guides/use-mpp-with-x402).
-
-## Next steps
-
-- [Pay from the Agents SDK](/agents/tools/payments/mpp/pay-from-agents-sdk/)
-- [Monetize an MCP server](https://mpp.dev/guides/monetize-mcp-server)
-- [Hono middleware reference](https://mpp.dev/sdk/typescript/middlewares/hono)
-- [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/)
+To test both payment flows from a Cloudflare Agent, refer to [Pay from the Agents SDK](/agents/tools/payments/mpp/pay-from-agents-sdk/). For production billing patterns, refer to [MPP payment intents](https://mpp.dev/intents/).

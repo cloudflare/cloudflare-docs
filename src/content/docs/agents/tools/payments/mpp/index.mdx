@@ -5,76 +5,64 @@ sidebar:
   order: 9
   group:
     hideIndex: false
-description: Use Machine Payments Protocol (MPP) with Cloudflare Workers and the Agents SDK to accept and make payments.
+description: Accept and make payments using Machine Payments Protocol (MPP) with Cloudflare Workers and the Agents SDK.
 products:
   - agents
 ---
 
-import { CardGrid, LinkCard } from "~/components";
+import { LinkCard, CardGrid } from "~/components";
 
-[Machine Payments Protocol (MPP)](https://mpp.dev) adds payments to HTTP requests and Model Context Protocol (MCP) tool calls. Use it with Cloudflare Workers to sell access. Use it with the Agents SDK to pay for services.
+[Machine Payments Protocol (MPP)](https://mpp.dev) is an open protocol for machine-to-machine payments. It standardizes the HTTP `402 Payment Required` status code with a formal authentication scheme proposed to the [IETF](https://paymentauth.org). MPP gives agents, applications, and people one interface to pay for a service in the same HTTP request.
+
+MPP is payment-method agnostic. It supports stablecoins, cards through Stripe, and custom payment methods. A service can offer more than one method.
+
+## How it works
+
+1. An Agent or HTTP client requests a paid resource.
+2. The service returns `402 Payment Required` with a payment Challenge.
+3. The client fulfills the payment.
+4. The client retries with a payment Credential.
+5. The service returns the resource with a payment Receipt.
+
+HTTP services exchange payment data in authentication headers. Model Context Protocol (MCP) tools use the same flow through JSON-RPC.
+
+## Payment intents
+
+MPP defines three payment intents:
+
+- **`charge`** — Collect a one-time payment.
+- **`session`** — Charge for measured usage.
+- **`subscription`** — Sell recurring access.
+
+For more information, refer to [MPP payment intents](https://mpp.dev/intents/).
+
+## Compatibility with x402
+
+MPP is backwards-compatible with [x402](/agents/tools/payments/x402/). MPP clients can consume existing x402 services without changes to those services.
+
+## Build on Cloudflare
 
 <CardGrid>
 	<LinkCard
 		title="Accept payments"
-		description="Gate an existing origin, a custom Worker route, or an MCP tool"
+		description="Charge for a Worker route or an MCP tool"
 		href="/agents/tools/payments/mpp/accept-payments/"
 	/>
 	<LinkCard
 		title="Pay from the Agents SDK"
-		description="Give an Agent payment-aware HTTP fetch and MCP clients"
+		description="Pay HTTP services and MCP tools from a Cloudflare Agent"
 		href="/agents/tools/payments/mpp/pay-from-agents-sdk/"
 	/>
 </CardGrid>
 
-## Choose a Cloudflare workflow
+## SDKs
 
-Choose a workflow based on where payment happens:
+MPP provides SDKs for TypeScript, Python, Rust, Go, and Ruby. The Cloudflare guides use the TypeScript [`mppx` SDK](https://mpp.dev/sdk/typescript/).
 
-| Goal                       | Cloudflare integration                                           |
-| -------------------------- | ---------------------------------------------------------------- |
-| Protect an existing origin | Deploy `mpp-proxy` as a Worker in front of the origin.            |
-| Charge for a Worker route  | Add `mppx` middleware to a Hono route.                            |
-| Charge for an MCP tool     | Add the MPP transport to an `McpAgent` tool handler.              |
-| Pay an HTTP endpoint       | Create a payment-aware client in the Agent lifecycle.            |
-| Pay for an MCP tool        | Wrap the MCP connection created by the Agents SDK.               |
+For current packages and integrations, refer to the [MPP SDK documentation](https://mpp.dev/sdk/).
 
-## How payments move through Cloudflare
+## Related
 
-1. An Agent or HTTP client requests a paid resource.
-2. The Worker or MCP server returns an MPP Challenge.
-3. The client creates a payment Credential.
-4. The client retries the same request.
-5. The server verifies payment and returns a Receipt.
-
-HTTP services return the Challenge with `402 Payment Required`. MCP tools return the same payment data through JSON-RPC.
-
-## Add billing beyond one request
-
-Choose an MPP intent based on the billing model:
-
-| Intent             | Cloudflare use case                                      |
-| ------------------ | -------------------------------------------------------- |
-| **`charge`**       | Set a fixed price for a Worker route or MCP tool.        |
-| **`session`**      | Meter streamed tokens, bytes, or other changing usage.   |
-| **`subscription`** | Sell recurring access, plans, memberships, or allowances. |
-
-Sessions and subscriptions keep state across requests. Use a durable, atomic store for production Workers.
-
-## Choose a payment method
-
-MPP separates the payment protocol from the payment method. A Worker can offer one or more compatible methods. The examples use one stablecoin method so that the code remains executable.
-
-For other methods, refer to [MPP payment methods](https://mpp.dev/payment-methods).
-
-## Pay MPP and x402 services
-
-The same `mppx` HTTP client can pay MPP and x402 services. Add an x402-compatible charge method beside the native MPP method.
-
-For the shared setup, refer to [use MPP with x402](https://mpp.dev/guides/use-mpp-with-x402).
-
-## Related resources
-
-- [Cloudflare Agents integration](https://mpp.dev/partner-integrations/cloudflare-agents)
-- [MPP protocol documentation](https://mpp.dev)
-- [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/)
+- [mpp.dev](https://mpp.dev) — Protocol documentation and guides
+- [IETF specification](https://paymentauth.org) — Payment HTTP Authentication Scheme
+- [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/) — Cloudflare-native web content monetization
