@@ -1,6 +1,6 @@
 ---
 title: Observability
-description: Subscribe to structured Agent events for RPC calls, state changes, schedules, workflows, and MCP connections via diagnostics channels.
+description: Instrument AI SDK v6 and v7 with Workers traces, and subscribe to structured Agents SDK events through diagnostics channels.
 pcx_content_type: concept
 sidebar:
   order: 30
@@ -8,9 +8,146 @@ products:
   - agents
 ---
 
-import { TypeScriptExample, LinkCard } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
 
-Agents emit structured events for every significant operation — RPC calls, state changes, schedule execution, workflow transitions, MCP connections, and more. These events are published to [diagnostics channels](/workers/runtime-apis/nodejs/diagnostics-channel/) and are silent by default (zero overhead when nobody is listening).
+The Agents SDK exposes Workers traces and structured events. Workers traces show agent, model, tool, lifecycle, and storage spans. Structured events report state changes, schedules, workflows, Model Context Protocol (MCP) activity, and recovery events.
+
+## AI SDK tracing
+
+Import `agents/observability/ai` to instrument AI SDK model and tool calls. The integration emits attributes from the [OpenTelemetry semantic conventions for generative AI](https://github.com/open-telemetry/semantic-conventions-genai) through native [Workers custom spans](/workers/observability/traces/custom-spans/).
+
+Traces appear in Workers Observability and configured OpenTelemetry Protocol (OTLP) destinations. The instrumentation adds no OpenTelemetry SDK or exporter dependency.
+
+### Turn on Workers traces
+
+Set `observability.traces.enabled` to `true` in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[observability.traces]
+enabled = true
+```
+
+</WranglerConfig>
+
+Set `observability.traces.enabled` to `false` to turn off native tracing for the Worker. This setting turns off Agents SDK and AI SDK spans. It does not turn off diagnostics-channel events.
+
+### Instrument AI SDK v6
+
+Wrap the AI SDK namespace once. Call the wrapped functions in place of the original exports:
+
+<TypeScriptExample>
+
+```ts
+import * as ai from "ai";
+import { wrapAISDK } from "agents/observability/ai";
+
+const tracedAI = wrapAISDK(ai);
+
+await tracedAI.streamText({
+	model,
+	prompt: "What should I work on next?",
+});
+```
+
+</TypeScriptExample>
+
+`wrapAISDK` instruments `generateText`, `streamText`, `generateObject`, and `streamObject`.
+
+### Instrument AI SDK v7
+
+AI SDK v7 provides a telemetry lifecycle. Register the Agents SDK adapter once to instrument every supported generation call:
+
+<TypeScriptExample>
+
+```ts
+import { generateText, registerTelemetry } from "ai";
+import { createAISDKTelemetry } from "agents/observability/ai";
+
+registerTelemetry(createAISDKTelemetry());
+
+await generateText({
+	model,
+	prompt: "What should I work on next?",
+});
+```
+
+</TypeScriptExample>
+
+To instrument one call, pass the adapter through `experimental_telemetry.integrations` instead:
+
+<TypeScriptExample>
+
+```ts
+import { generateText } from "ai";
+import { createAISDKTelemetry } from "agents/observability/ai";
+
+await generateText({
+	model,
+	prompt: "What should I work on next?",
+	experimental_telemetry: {
+		integrations: [createAISDKTelemetry()],
+	},
+});
+```
+
+</TypeScriptExample>
+
+### Trace Think agents
+
+[`Think`](/agents/harnesses/think/) instruments every model turn automatically. When Workers traces are on, each turn emits these spans:
+
+- `invoke_agent {agent class}` for the complete turn
+- `chat {model}` for each model call
+- `execute_tool {tool}` for each tool execution
+
+Think records identifiers for the agent class, named instance, conversation, and turn. You do not need to wrap the AI SDK or register the v7 adapter.
+
+### Store model and tool payloads
+
+Message and tool payloads can contain personally identifiable information (PII). The integration does not record them by default.
+
+For AI SDK v6, pass storage options to `wrapAISDK`:
+
+<TypeScriptExample>
+
+```ts
+import * as ai from "ai";
+import { wrapAISDK } from "agents/observability/ai";
+
+const tracedAI = wrapAISDK(ai, {
+	storeMessages: true,
+	storeTools: true,
+});
+```
+
+</TypeScriptExample>
+
+For AI SDK v7, pass the same options to `createAISDKTelemetry`. For Think, override the corresponding properties on the agent:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	override storeMessages = true;
+	override storeTools = true;
+}
+```
+
+</TypeScriptExample>
+
+`storeMessages` records OpenTelemetry-compatible input and output message JSON on `chat` spans. `storeTools` records arguments and results on `execute_tool` spans.
+
+## Structured events
+
+Agents publish structured events to [diagnostics channels](/workers/runtime-apis/nodejs/diagnostics-channel/). Publishing has zero subscriber overhead.
 
 ## Event structure
 

@@ -132,6 +132,23 @@ tag = "v1"
 
 </WranglerConfig>
 
+### Tracing
+
+Think instruments model turns and tool calls automatically. To send `invoke_agent`, `chat`, and `execute_tool` spans to Workers Observability, turn on Workers traces:
+
+<WranglerConfig>
+
+```toml
+[observability.traces]
+enabled = true
+```
+
+</WranglerConfig>
+
+To turn tracing off, set `observability.traces.enabled` to `false`. You do not need to change the Think agent class.
+
+For span attributes, payload controls, and direct AI SDK v6 or v7 setup, refer to [Observability](/agents/runtime/operations/observability/#ai-sdk-tracing).
+
 ## Think vs AIChatAgent
 
 Both Think and [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/) extend `Agent` and speak the same `cf_agent_chat_*` WebSocket protocol. They serve different goals.

@@ -100,7 +100,7 @@ flowchart TD
 | **AI Models**         | Workers AI, OpenAI, Anthropic bindings                                                           | [Using AI models](/agents/runtime/operations/using-ai-models/)        |
 | **Protocol messages** | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`                                  | [Protocol messages](/agents/runtime/communication/protocol-messages/) |
 | **Context**           | `getCurrentAgent()`                                                                              | [getCurrentAgent()](/agents/runtime/lifecycle/get-current-agent/)     |
-| **Observability**     | `subscribe()`, diagnostics channels, Tail Workers                                                | [Observability](/agents/runtime/operations/observability/)            |
+| **Observability**     | `wrapAISDK()`, `createAISDKTelemetry()`, `subscribe()`, diagnostics channels                      | [Observability](/agents/runtime/operations/observability/)            |
 | **Sub-agents**        | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                              | [Sub-agents](/agents/runtime/execution/sub-agents/)                   |
 | **Agents as tools**   | `runAgentTool()`, `clearAgentToolRuns()`, `hasAgentToolRun()`                                    | [Agents as tools](/agents/runtime/execution/agent-tools/)             |
 | **Agent Skills**      | `skills` registry, bundled skill sources, script runners                                         | [Agent Skills](/agents/runtime/execution/agent-skills/)               |
