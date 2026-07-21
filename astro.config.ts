@@ -14,7 +14,7 @@ export default defineConfig({
 	},
 	srcDir: "./src/nimbus",
 	outDir: "./dist",
-	cacheDir: ".astro-cache-nimbus",
+	cacheDir: ".astro-cache",
 	markdown,
 	image: {
 		service: {
@@ -35,7 +35,7 @@ export default defineConfig({
 		...nimbusVite,
 		server: {
 			watch: {
-				ignored: ["**/dist/**", "**/.astro-cache-nimbus/**"],
+				ignored: ["**/dist/**", "**/.astro-cache/**"],
 			},
 		},
 	},
