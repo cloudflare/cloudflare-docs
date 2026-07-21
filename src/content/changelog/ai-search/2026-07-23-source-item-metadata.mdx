@@ -1,0 +1,14 @@
+---
+title: AI Search items include source metadata
+description: Item responses now include the complete source metadata collected during indexing.
+products:
+  - ai-search
+date: 2026-07-23
+publish_future_dated_entry: true
+---
+
+[AI Search](/ai-search/) item responses now include the complete source metadata collected during indexing. For example, metadata such as an R2 object's custom `description` is available in the item's `metadata` object instead of only on its indexed chunks.
+
+This change does not alter metadata filtering. Search filters continue to use the custom metadata fields configured for the AI Search instance.
+
+Existing items receive the complete metadata after their source is indexed again. For more information, refer to [managing items](/ai-search/api/items/rest-api/) and [metadata filtering](/ai-search/configuration/indexing/metadata/).
