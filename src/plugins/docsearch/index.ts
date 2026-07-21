@@ -1,10 +1,15 @@
-import type { DocSearchClientOptions } from "@astrojs/starlight-docsearch";
+import type docsearch from "@docsearch/js";
 import {
 	ALGOLIA_APP_ID,
 	ALGOLIA_API_KEY,
 	ALGOLIA_INDEX,
 	ALGOLIA_INDEX_STYLE_GUIDE,
-} from "~/util/algolia";
+} from "../../nimbus/util/algolia";
+
+type DocSearchClientOptions = Omit<
+	Parameters<typeof docsearch>[0],
+	"container" | "translations"
+>;
 
 // Style-guide pages use a separate index. Exported so consumers can resolve the
 // index for the current path (e.g. per client-side navigation).

@@ -1,4 +1,4 @@
-import { addTooltip } from "~/util/tippy";
+import { addTooltip } from "../nimbus/util/tippy";
 
 const footnotes = document.querySelectorAll("section.footnotes");
 
