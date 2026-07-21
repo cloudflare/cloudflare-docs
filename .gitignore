@@ -9,6 +9,9 @@ distllms/
 # Astro build cache
 .astro-cache/
 
+# Local AI Search indexing state
+.ai-search/
+
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
 !.agents/skills/
