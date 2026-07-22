@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 
-const skills = await getCollection("skills");
+const skills = await getCollection("skills-manifest");
 
 // Sort alphabetically so the order is stable and deterministic
 skills.sort((a, b) => a.id.localeCompare(b.id));

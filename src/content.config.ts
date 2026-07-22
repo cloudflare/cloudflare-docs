@@ -14,6 +14,7 @@ import { fieldsSchema } from "~/schemas/fields";
 import { productAvailabilityCollectionConfig } from "~/content/collections/product-availability";
 import { granularControlApplicationsCollectionConfig } from "~/content/collections/granular-control-applications";
 import { mcpServersCollectionConfig } from "~/content/collections/mcp-servers";
+import { skillsManifestCollectionConfig } from "~/content/collections/skills-manifest";
 
 // Extend the default docs schema with the CF-specific frontmatter keys the
 // content uses. The schema is permissive — these fields just need to validate
@@ -275,6 +276,11 @@ export const collections = {
 	// Cloudflare's catalog of managed remote MCP servers, fetched from
 	// middlecache at build. Read by McpServerList on the agent-setup pages.
 	"mcp-servers": defineCollection(mcpServersCollectionConfig),
+	// Agent Skills manifest (name + description only), fetched from
+	// middlecache at build. Read by SkillsList on the agent-setup pages.
+	// Distinct from the `skills` collection above, which loads the full
+	// SKILL.md bundles for the /.well-known/skills/ discovery routes.
+	"skills-manifest": defineCollection(skillsManifestCollectionConfig),
 	// CF notification catalog (single index.yaml). Read by AvailableNotifications.
 	notifications: defineCollection({
 		loader: glob({ pattern: "*.yaml", base: "./src/content/notifications" }),
