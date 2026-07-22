@@ -32,7 +32,10 @@ import {
 	getSectionTitle,
 } from "nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
-import { generateDescriptionFromHtml } from "@/util/description";
+import {
+	assertNoClientIslandInDerivedSlot,
+	generateDescriptionFromHtml,
+} from "@/util/description";
 import logo from "~/assets/logo.svg";
 import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
 import type { PageMeta } from "@/components/PageHead.astro";
@@ -82,6 +85,7 @@ let resolvedDescription = description;
 const descriptionDerived = !description;
 if (descriptionDerived) {
 	const contentHtml = await Astro.slots.render("default");
+	assertNoClientIslandInDerivedSlot(contentHtml, Astro.url.pathname);
 	resolvedDescription = generateDescriptionFromHtml(contentHtml);
 }
 

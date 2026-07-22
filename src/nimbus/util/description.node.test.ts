@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import {
+	assertNoClientIslandInDerivedSlot,
 	generateDescriptionFromHtml,
 	stripMarkdownDescription,
 } from "./description";
@@ -38,6 +39,46 @@ describe("generateDescriptionFromHtml", () => {
 
 	test("empty paragraph yields an empty (falsy) string", () => {
 		expect(generateDescriptionFromHtml("<p></p>")).toBe("");
+	});
+});
+
+describe("assertNoClientIslandInDerivedSlot", () => {
+	test("throws when the derived slot contains a client island", () => {
+		const html =
+			'<astro-island uid="x" component-url="/Foo.tsx" client="load"></astro-island>';
+		expect(() =>
+			assertNoClientIslandInDerivedSlot(html, "/some/page/"),
+		).toThrow(/renders a client island/);
+	});
+
+	test("names the offending pathname in the error", () => {
+		expect(() =>
+			assertNoClientIslandInDerivedSlot("<astro-island></astro-island>", "/x/"),
+		).toThrow('"/x/"');
+	});
+
+	test("does not throw for plain prose (no island)", () => {
+		expect(() =>
+			assertNoClientIslandInDerivedSlot("<p>Just a paragraph.</p>", "/x/"),
+		).not.toThrow();
+	});
+
+	test("does not throw for escaped markup in code samples", () => {
+		expect(() =>
+			assertNoClientIslandInDerivedSlot(
+				"<pre><code>&lt;astro-island&gt;</code></pre>",
+				"/x/",
+			),
+		).not.toThrow();
+	});
+
+	test("does not throw for server islands (server:defer)", () => {
+		expect(() =>
+			assertNoClientIslandInDerivedSlot(
+				"<!--[if astro]>server-island-start<![endif]--><script></script>",
+				"/x/",
+			),
+		).not.toThrow();
 	});
 });
 

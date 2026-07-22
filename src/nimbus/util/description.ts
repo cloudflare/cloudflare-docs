@@ -19,6 +19,17 @@ export function generateDescriptionFromHtml(html: string): string | undefined {
 		.trim();
 }
 
+export function assertNoClientIslandInDerivedSlot(
+	html: string,
+	pathname: string,
+): void {
+	if (html.includes("<astro-island")) {
+		throw new Error(
+			`DocsLayout: "${pathname}" needs an explicit \`description\`.`,
+		);
+	}
+}
+
 // Parity: production strips Markdown from the description only for JSON-LD
 // (via Page.astro), leaving the raw string in <meta>/OG. No-op on plain text.
 export async function stripMarkdownDescription(
