@@ -5,7 +5,7 @@ products:
 title: Automatic key exchange to origins
 sidebar:
   order: 2
-description: Configure how Cloudflare selects key agreements for TLS connections to your origin servers.
+description: Configure how Cloudflare selects TLS 1.3 key agreement algorithms for connections to your origin servers.
 tags:
   - Post-quantum
 ---
@@ -14,7 +14,7 @@ import { DashButton, Steps } from "~/components";
 
 Automatic key exchange selects one zone-wide key agreement that Cloudflare sends first when starting a Transport Layer Security (TLS) 1.3 connection to your origins. Cloudflare derives the preference from traffic-weighted results across active origins. Selecting the preferred key agreement can avoid a [HelloRetryRequest](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.4) and remove one network round trip from each new connection.
 
-This feature is separate from your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/). The encryption mode controls whether Cloudflare uses HTTPS and validates your origin certificate. Automatic key exchange controls the order of key shares within an HTTPS connection.
+This feature is separate from your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/). The encryption mode controls whether Cloudflare uses HTTPS and validates your origin certificate. Automatic key exchange controls the order of [key shares](https://datatracker.ietf.org/doc/html/rfc8446#section-4.2.8) when starting an HTTPS connection.
 
 ## Requirements and scope
 
@@ -32,7 +32,7 @@ The setting applies to all outbound connections for the zone, including `fetch()
 
 ## How automatic selection works
 
-Cloudflare scans active origins approximately every 24 hours. The scan checks the key agreements that each origin supports and prefers.
+Cloudflare scans active origins approximately every 24 hours. The scan checks the TLS key agreements that each origin supports and prefers.
 
 Cloudflare then applies the selected preference in stages:
 
@@ -43,9 +43,9 @@ Cloudflare then applies the selected preference in stages:
 
 For each connection, Cloudflare sends the preferred key share first. Cloudflare also advertises the other key agreements allowed by your compliance requirements. An origin can request another advertised key share with a HelloRetryRequest. This adds one round trip but does not break the connection.
 
-After a successful rollout, Cloudflare keeps the preference until a later scan finds a better option. The selected option may be a classical key agreement or the post-quantum `X25519MLKEM768` hybrid key agreement.
+After a successful rollout, Cloudflare keeps the preference until a later scan finds a better option. The selected option may be a classical key agreement or the post-quantum `X25519MLKEM768` hybrid key agreement based on what the origin server supports and prefers.
 
-Cloudflare uses standardized `X25519MLKEM768` for automatic post-quantum selection. Cloudflare does not prefer the obsolete `X25519Kyber768Draft00` key agreement.
+Cloudflare uses standardized `X25519MLKEM768` for automatic post-quantum selection.
 
 ## Configuration options
 
@@ -60,7 +60,7 @@ To configure automatic key exchange in the dashboard:
 3. Select any **Compliance requirements**. Leave both options unselected to allow all supported key agreements.
 </Steps>
 
-The settings provide two separate controls. **Automatic key exchange** controls whether Cloudflare scans and reorders allowed key agreements. **Compliance requirements** control which key agreements Cloudflare may use.
+The settings provide two separate controls. **Automatic key exchange** controls whether Cloudflare scans and reorders preferred key agreements. **Compliance requirements** control which key agreements Cloudflare may use for the automatic selection.
 
 ### Automatic key exchange
 
@@ -70,7 +70,7 @@ The setting has these options:
 
 | Setting | Behavior |
 | --- | --- |
-| On | Cloudflare scans your origins and sends the zone's selected allowed key share first. |
+| On | Cloudflare scans your origins and sends the zone's preferred key share. |
 | Off | Cloudflare does not scan or reorder key shares. It uses the default order for your selected compliance requirements. |
 
 Turning off automatic key exchange does not change your compliance requirements.
