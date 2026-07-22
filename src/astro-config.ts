@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises";
+import { open, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
@@ -26,6 +26,22 @@ async function autogenSections() {
 		}));
 }
 
+// Frontmatter blocks across all docs content top out at ~750 bytes today;
+// 1KB gives a margin without reading full file bodies (some are 500KB+)
+// just to check for one frontmatter key.
+const FRONTMATTER_SCAN_BYTES = 1024;
+
+async function readFilePrefix(path: string, maxBytes: number): Promise<string> {
+	const handle = await open(path, "r");
+	try {
+		const buffer = Buffer.alloc(maxBytes);
+		const { bytesRead } = await handle.read(buffer, 0, maxBytes, 0);
+		return buffer.toString("utf-8", 0, bytesRead);
+	} finally {
+		await handle.close();
+	}
+}
+
 async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 	const paths = new Set<string>();
 	const entries = await readdir(dir, { withFileTypes: true });
@@ -37,7 +53,7 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 				paths.add(path);
 			}
 		} else if (entry.name.endsWith(".mdx") || entry.name.endsWith(".md")) {
-			const content = await readFile(full, "utf-8");
+			const content = await readFilePrefix(full, FRONTMATTER_SCAN_BYTES);
 			const match = content.match(/^---\n([\s\S]*?)\n---/);
 			if (match?.[1].includes("external_link:")) {
 				let rel = full.slice("src/content/docs".length);
