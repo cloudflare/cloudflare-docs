@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { Details, PackageManagers, InlineBadge } from "~/components";
+import { Details, PackageManagers, Steps } from "~/components";
 
 Local Explorer is a browser-based interface for viewing and editing the data in your local [bindings](/workers/runtime-apis/bindings/) during development. It is available at `/cdn-cgi/explorer` on your local development server.
 
@@ -23,11 +23,15 @@ Local Explorer works with both [Wrangler](/workers/wrangler/) and the [Cloudflar
 
 ## Open Local Explorer
 
+<Steps>
 1. Start a local development session:
 
-<PackageManagers type="exec" pkg="wrangler" args="dev" />
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-2. Press `e` in your terminal to open Local Explorer in your browser. You can also navigate directly to `/cdn-cgi/explorer` on your Worker's route and port.
+2. Open Local Explorer in your browser:
+   - **Wrangler**: press `e` in your terminal.
+   - **Vite plugin**: navigate directly to `/cdn-cgi/explorer` on your dev server's route and port.
+</Steps>
 
 Local Explorer is available by default and detects the bindings defined in your [Wrangler configuration](/workers/wrangler/configuration/) automatically.
 
@@ -43,9 +47,9 @@ Local Explorer supports the following binding types:
 | [Durable Objects](/durable-objects/) (SQLite storage) | Browse SQLite tables and rows, run SQL queries | Insert, update, and delete rows through SQL |
 | [Workflows](/workflows/)                              | List instances, view status and step history   | Trigger new runs, retry failed instances    |
 
-### D1 and Durable Objects SQL studio
+### D1 and Durable Objects SQL Studio
 
-For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [SQLite storage API](/durable-objects/api/sqlite-storage-api/), Local Explorer includes a SQL studio. This is the same experience available in the Cloudflare dashboard for deployed D1 databases. It provides both a visual table browser with inline editing and a SQL query editor where you can run arbitrary queries.
+For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [SQLite storage API](/durable-objects/api/sqlite-storage-api/), Local Explorer includes a SQL Studio. This is the same experience available in the Cloudflare dashboard for deployed D1 databases. It provides both a visual table browser with inline editing and a SQL query editor where you can run arbitrary queries.
 
 ## Observability
 
@@ -57,45 +61,21 @@ Local observability captures traces and logs from `wrangler dev` on your machine
 
 ### View traces
 
-In Local Explorer's **Observability** section, each Worker invocation appears as a trace. Select any trace to expand a waterfall showing every binding operation (D1 queries, KV reads, R2 operations, Durable Object calls, `fetch()`) with timing, status, and error details.
+In Local Explorer's **Observability** section, each Worker invocation appears as a trace. Select any trace to expand a waterfall showing every binding operation with timing, status, and error details. Traces are filterable by status, binding type, and operation name.
 
-#### Example: Debug a failed request
+The following operations are captured automatically in every trace:
 
-This Worker makes two D1 calls. The second references a table that does not exist:
-
-```typescript
-// In your Worker's fetch handler:
-if (pathname === "/api/todos" && method === "POST") {
-  const body = (await request.json()) as { title?: string };
-  const title = (body.title ?? "").trim();
-
-  type Todo = { id: number; title: string; completed: boolean; created_at: string };
-
-  console.info("Creating todo", title);
-
-  // Step 1: Insert the todo
-  const todo = await env.DB.prepare(
-    "INSERT INTO todos (title) VALUES (?) RETURNING id, title, completed, created_at"
-  )
-    .bind(title)
-    .first<Todo>();
-
-  // Step 2: Log to audit table
-  await env.DB.prepare(
-    "INSERT INTO audit_log (action, todo_id) VALUES (?, ?)"
-  ).bind("created", todo!.id).run(); // ← fails here: table does not exist
-
-  return Response.json({ todo }, { status: 201 });
-}
-```
-
-The trace waterfall shows which D1 call succeeded and which failed. No `console.log()` or try/catch required.
-
-![Trace waterfall for POST /api/todos showing two D1 database spans: the first INSERT succeeded (green), the second INSERT failed with error "no such table: audit_log"](~/assets/images/workers/observability/local-trace-failed-request.png)
+| Operation | What is recorded |
+| --------- | ---------------- |
+| `fetch()` handler | Method, URL, status code, duration |
+| D1 | SQL query, duration, error |
+| KV | Operation type, key, duration |
+| R2 | Operation type, object key, duration |
+| Durable Objects | Method, duration, error |
 
 ### Search logs
 
-The **Logs** view captures all console output from your Worker. Filter by level (error, warn, info, log, debug) or search by text to find specific messages without scrolling through terminal output.
+The **Logs** view captures all `console.log()`, `console.warn()`, `console.error()`, and `console.debug()` output from your Worker. You can filter by level or search by text to find specific messages without scrolling through terminal output.
 
 ## API
 
@@ -109,7 +89,7 @@ curl http://localhost:8787/cdn-cgi/explorer/api
 
 ### Use with AI coding agents
 
-The OpenAPI spec at `/cdn-cgi/explorer/api` allows AI coding agents and other tools to discover and interact with your local development environment programmatically. An agent can fetch the spec, understand what resources are available, and make API calls to read or modify local data, query traces and logs, and debug your Worker without requiring manual setup.
+When Wrangler detects it is running inside an AI coding agent, it prints the Local Explorer API endpoint directly to the terminal. The agent can fetch the [OpenAPI specification](https://www.openapis.org/) from that endpoint to discover all available operations, then make API calls to read or modify local data, query traces and logs, and debug your Worker.
 
 This can be useful as an alternative to the CLI when you want an agent to:
 
