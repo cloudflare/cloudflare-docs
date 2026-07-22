@@ -68,41 +68,17 @@ const llmsUrl = Astro.site
 		<script is:inline>
 			(() => {
 				const KEY = "ui-mode";
-				// Starlight (the production build) persists theme under this key, with
-				// values "light" | "dark" | "auto". We migrate/dual-read it so a
-				// returning visitor's saved theme survives cutover with no flash, and
-				// the toggle dual-writes it so a rollback to Starlight keeps the
-				// choice. See T9 in the parity audit.
-				const LEGACY_KEY = "starlight-theme";
 				const media = window.matchMedia("(prefers-color-scheme: dark)");
 				const isPref = (v) => v === "light" || v === "dark" || v === "auto";
 
-				const readKey = (k) => {
+				const readPref = () => {
 					try {
-						const v = localStorage.getItem(k);
-						return isPref(v) ? v : null;
+						const v = localStorage.getItem(KEY);
+						return isPref(v) ? v : "auto";
 					} catch {
-						return null;
+						return "auto";
 					}
 				};
-
-				// One-time migration: if we have no preference of our own but Starlight
-				// left one, adopt it so it persists into our key. Runs once — after the
-				// first write, our key wins and this no-ops.
-				const migrate = () => {
-					try {
-						if (readKey(KEY)) return;
-						const legacy = readKey(LEGACY_KEY);
-						if (legacy) localStorage.setItem(KEY, legacy);
-					} catch {
-						/* ignore storage errors (private mode / restricted contexts) */
-					}
-				};
-
-				// Preference is light | dark | auto. Pure read: our key wins, else a
-				// Starlight value (dual-read, in case the migration write was blocked),
-				// else "auto". "auto" is never coerced to light/dark — it round-trips.
-				const readPref = () => readKey(KEY) ?? readKey(LEGACY_KEY) ?? "auto";
 
 				const resolveMode = (pref) =>
 					pref === "light" || pref === "dark"
@@ -115,10 +91,8 @@ const llmsUrl = Astro.site
 					const root = document.documentElement;
 					const pref = readPref();
 					const mode = resolveMode(pref);
-					// Nimbus keys dark styling off [data-mode="dark"]; also mirror the
-					// resolved value onto [data-theme] so ported CSS still keyed on
-					// Starlight's attribute (e.g. the cf/*Diagram components) keeps
-					// working under the shim rather than silently rendering light.
+					// data-mode drives Nimbus dark-mode CSS; data-theme is kept for
+					// any ported component CSS that still keys off Starlight's attribute.
 					if (mode === "dark") root.setAttribute("data-mode", "dark");
 					else root.removeAttribute("data-mode");
 					root.setAttribute("data-theme", mode);
@@ -129,7 +103,6 @@ const llmsUrl = Astro.site
 					root.setAttribute("data-nb-state", mode); // resolved (light/dark)
 				};
 
-				migrate();
 				applyTheme();
 				document.addEventListener("astro:after-swap", applyTheme);
 				// Live OS changes only move the page when the user is following the
@@ -137,7 +110,8 @@ const llmsUrl = Astro.site
 				media.addEventListener("change", () => {
 					if (readPref() === "auto") applyTheme();
 				});
-				// Cross-tab sync within Nimbus (our own key).
+
+				// Cross-tab sync.
 				window.addEventListener("storage", (e) => {
 					if (e.key === KEY) applyTheme();
 				});

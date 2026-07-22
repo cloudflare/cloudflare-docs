@@ -235,7 +235,7 @@ export const integrations = [
 				"error",
 				{ aliases: { "~/assets/": "src/assets/" } },
 			],
-			"nimbus/internal-link": "off",
+			"nimbus/internal-link": "error",
 		},
 	}),
 ];
@@ -291,17 +291,6 @@ const aliasResolver = {
 			return {
 				resolve: {
 					alias: [
-						// Map Starlight's and Expressive Code's component barrels to the
-						// Nimbus barrel, so shared content resolves without pulling in the
-						// Starlight/EC integrations Nimbus omits.
-						{
-							find: /^@astrojs\/starlight\/components$/,
-							replacement: `${nimbusDir}/components`,
-						},
-						{
-							find: /^astro-expressive-code\/components$/,
-							replacement: `${nimbusDir}/components`,
-						},
 						// Shared modules: resolve to the root src/ tree, not the nimbus dir.
 						{ find: /^~\/assets(\/.*)?$/, replacement: `${rootAssets}$1` },
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
@@ -339,12 +328,7 @@ const aliasResolver = {
 		options: object,
 	) {
 		let mapped: string | null = null;
-		if (
-			source === "@astrojs/starlight/components" ||
-			source === "astro-expressive-code/components"
-		)
-			mapped = nimbusDir + "/components";
-		else if (source === "~/assets" || source.startsWith("~/assets/"))
+		if (source === "~/assets" || source.startsWith("~/assets/"))
 			mapped = rootAssets + source.slice("~/assets".length);
 		else if (source === "~/content" || source.startsWith("~/content/"))
 			mapped = rootContent + source.slice("~/content".length);
