@@ -162,7 +162,7 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=8192"
         run: |
           set -o pipefail
-          pnpm run build 2>&1 | tee nimbus-build.log
+          pnpm run build 2>&1 | tee build.log
           echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
       - name: Upload build artifact
@@ -175,8 +175,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
-          name: nimbus-build-log
-          path: nimbus-build.log
+          name: build-log
+          path: build.log
           if-no-files-found: ignore
 
   post-build:
@@ -331,5 +331,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
           SHORT_SHA: ${{ steps.deploy.outputs.short_sha }}
-        run: pnpm exec tsx bin/post-nimbus-preview-url-comment/index.ts
+        run: pnpm exec tsx bin/post-preview-url-comment/index.ts
         continue-on-error: true
