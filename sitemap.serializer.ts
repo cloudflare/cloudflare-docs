@@ -102,7 +102,7 @@ export function createSitemapLastmodSerializer() {
 			const startTime = performance.now();
 			lastModMetadata = await getLastmodViaGitShell(
 				"src/content/docs",
-				"src/nimbus/pages/**/*.astro",
+				"src/pages/**/*.astro",
 			);
 			const endTime = performance.now();
 
