@@ -43,7 +43,7 @@ Of these three [link types](#link-types), only **Internal** links:
 - Universally lead to a bad customer experience (a `404` page).
 - Are easily auditable within the current context.
 
-For these reasons, we choose to make a build **fail** based on broken internal links. For our implementation, we rely on [Nimbus](https://nimbus-docs.com/)'s `nimbus/internal-link` [lint rule](https://nimbus-docs.com/writing/linting/), configured in [`astro-config.ts`](https://github.com/cloudflare/cloudflare-docs/blob/production/src/astro-config.ts).
+For these reasons, we choose to make a build **fail** based on broken internal links. For our implementation, we rely on [Nimbus](https://nimbus-docs.com/)'s `nimbus/internal-link` [lint rule](https://nimbus-docs.com/writing/linting/), configured in [`astro.config.ts`](https://github.com/cloudflare/cloudflare-docs/blob/production/astro.config.ts).
 
 We also make two intentional decisions about this link auditing:
 
