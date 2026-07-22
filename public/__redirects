@@ -434,6 +434,7 @@
 /ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/embed-search-snippets/ 301
 
 # bots
+/bots/attribution-business-insights/ /bots/business-insights/ 301
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
