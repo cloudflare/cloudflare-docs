@@ -8,12 +8,15 @@ import "tippy.js/dist/tippy.css";
 import "../styles/tippy.css";
 import "../styles/footnotes.css";
 import { config } from "virtual:nimbus/config";
-import { getCollectionLlmsUrl, getVersionStatus } from "nimbus-docs";
+import {
+	getCollectionLlmsUrl,
+	getVersionStatus,
+} from "@cloudflare/nimbus-docs";
 import AgentDirective from "@/components/AgentDirective.astro";
 import Footer from "@/components/Footer.astro";
 import PageHead from "@/components/PageHead.astro";
 import type { PageMeta } from "@/components/PageHead.astro";
-import type { BasePageProps } from "nimbus-docs/types";
+import type { BasePageProps } from "@cloudflare/nimbus-docs/types";
 
 type Props = BasePageProps & {
 	/** Render the global footer after the page content. DocsLayout sets this
@@ -145,7 +148,7 @@ const llmsUrl = Astro.site
 		{footer !== false && <Footer />}
 
 		<script>
-			import { codeCopy } from "nimbus-docs/client";
+			import { codeCopy } from "@cloudflare/nimbus-docs/client";
 			import "../scripts/mobile-sidebar.client";
 			import "../scripts/mermaid.client";
 			import "../scripts/table-scroll.client";

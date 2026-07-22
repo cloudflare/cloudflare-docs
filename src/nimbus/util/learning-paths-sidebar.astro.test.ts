@@ -4,7 +4,7 @@ import type {
 	SidebarGroupItem,
 	SidebarItem,
 	SidebarLinkItem,
-} from "nimbus-docs/types";
+} from "@cloudflare/nimbus-docs/types";
 
 import { isolateLearningPath } from "./sidebar";
 

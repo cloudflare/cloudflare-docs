@@ -3,7 +3,7 @@
  * or a future timestamp (ms) for time-limited dismissal.
  */
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 
 const KEY_PREFIX = "nb-banner-dismissed-";
 

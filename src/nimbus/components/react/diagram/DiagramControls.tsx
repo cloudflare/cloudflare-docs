@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useDiagram } from "nimbus-docs/react";
+import { useDiagram } from "@cloudflare/nimbus-docs/react";
 import { cn } from "@/lib/cn";
 import { ActionBar } from "./ActionBar";
 import { ActionButton } from "./ActionButton";

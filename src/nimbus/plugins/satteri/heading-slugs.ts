@@ -12,7 +12,7 @@ import type {
 	HastVisitorContext,
 	Text,
 } from "./types";
-import { EXTERNAL_LINK_ARROW } from "nimbus-docs/markdown";
+import { EXTERNAL_LINK_ARROW } from "@cloudflare/nimbus-docs/markdown";
 
 const LITERAL_COMMENT_ID = /\{\/\*\s*([\s\S]*?)\s*\*\/\}\s*$/;
 

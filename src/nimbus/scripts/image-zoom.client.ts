@@ -1,7 +1,7 @@
 // Click/keyboard-to-zoom for content images (T8), via medium-zoom + a
 // starlight-image-zoom-style unzoom control.
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 import mediumZoom from "medium-zoom";
 import type { Zoom } from "medium-zoom";
 import "medium-zoom/dist/style.css";

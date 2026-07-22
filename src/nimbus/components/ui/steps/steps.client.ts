@@ -6,7 +6,7 @@
  * on the inner `<ol>` makes VoiceOver announce the item count again.
  */
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 
 function initSteps(root: HTMLElement): () => void {
 	const lists = root.querySelectorAll<HTMLOListElement>("ol");

@@ -13,7 +13,11 @@ export default function shiftHeadings(): HastPluginDefinition {
 		element: {
 			filter: ["div"],
 			visit(node, ctx) {
-				if (!ctx.filename || !ctx.filename.includes(CHANGELOG_PATH)) return;
+				// satteri 0.9 renamed the visitor context's `filename` (string) to
+				// `fileURL` (URL | undefined). Match on the URL pathname, which is
+				// always forward-slashed and so cross-platform.
+				const path = ctx.fileURL?.pathname;
+				if (!path || !path.includes(CHANGELOG_PATH)) return;
 
 				const classes = classNames(node);
 				if (!classes.includes("heading-wrapper")) return;

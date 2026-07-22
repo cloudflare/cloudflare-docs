@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { externalAppLinksTransform } from "./sidebar";
-import type { SidebarItem } from "nimbus-docs/types";
+import type { SidebarItem } from "@cloudflare/nimbus-docs/types";
 
 const ARROW = " \u2197";
 

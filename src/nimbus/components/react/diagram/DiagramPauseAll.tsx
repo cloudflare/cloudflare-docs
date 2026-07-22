@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { diagramRegistry } from "nimbus-docs/react";
+import { diagramRegistry } from "@cloudflare/nimbus-docs/react";
 import { cn } from "@/lib/cn";
 
 /** Ghost-button styling — matches `ActionButton`. */

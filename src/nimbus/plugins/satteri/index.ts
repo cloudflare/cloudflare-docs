@@ -6,7 +6,7 @@
 //   - shift-headings last: it operates on the `.heading-wrapper` autolink
 //     produces.
 
-import { externalLinks, titleFigure } from "nimbus-docs/markdown";
+import { externalLinks, titleFigure } from "@cloudflare/nimbus-docs/markdown";
 import mermaid from "./mermaid";
 import headingSlugs from "./heading-slugs";
 import autolinkHeadings from "./autolink-headings";

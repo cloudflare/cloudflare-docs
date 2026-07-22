@@ -1,6 +1,6 @@
 "use client";
 
-import { useDiagram } from "nimbus-docs/react";
+import { useDiagram } from "@cloudflare/nimbus-docs/react";
 
 /**
  * Signal inspector. Reads DiagramContext and prints every signal — handy

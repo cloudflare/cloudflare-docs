@@ -8,7 +8,7 @@
  * aria-selected + hidden input + `data-value`), and a bubbling
  * `combobox:change` CustomEvent (`detail: { value, label }`).
  */
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 
 let uid = 0;
 

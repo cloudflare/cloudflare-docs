@@ -24,13 +24,13 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import ComponentUsage from "@/components/cf/ComponentUsage.astro";
 import FeedbackPrompt from "@/components/react/FeedbackPrompt";
-import type { DocsPageProps } from "nimbus-docs/types";
+import type { DocsPageProps } from "@cloudflare/nimbus-docs/types";
 import { marked } from "marked";
 import {
 	getVersionStatus,
 	getVersionAlternates,
 	getSectionTitle,
-} from "nimbus-docs";
+} from "@cloudflare/nimbus-docs";
 import { sectionTitleResolver } from "@/util/sidebar";
 import { generateDescriptionFromHtml } from "@/util/description";
 import logo from "~/assets/logo.svg";

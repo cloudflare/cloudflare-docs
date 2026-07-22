@@ -12,7 +12,7 @@ import {
 	type EdgeSpec,
 	type EdgeRect,
 	type ResolvedEdge,
-} from "nimbus-docs/react";
+} from "@cloudflare/nimbus-docs/react";
 import { cn } from "@/lib/cn";
 import { DiagramDefs } from "./DiagramDefs";
 

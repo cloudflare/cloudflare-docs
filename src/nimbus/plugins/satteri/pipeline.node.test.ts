@@ -1,3 +1,4 @@
+import { pathToFileURL } from "node:url";
 import { describe, expect, test } from "vitest";
 import { markdownToHtml } from "satteri";
 
@@ -11,7 +12,10 @@ function render(
 	return markdownToHtml(markdown, {
 		features: { gfm: true, smartPunctuation: false },
 		hastPlugins,
-		filename: pathname,
+		// satteri 0.9 takes a `fileURL` (URL), surfaced to plugins as
+		// `ctx.fileURL` — matching how Astro/nimbus pass the document URL at
+		// build time (was the `filename` string in 0.6).
+		fileURL: pathToFileURL(pathname),
 	}).html;
 }
 

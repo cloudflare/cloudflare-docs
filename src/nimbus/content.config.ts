@@ -1,7 +1,10 @@
 import { defineCollection, reference, z } from "astro:content";
 import { glob } from "astro/loaders";
 import { skillsLoader } from "astro-skills";
-import { docsCollection, partialsCollection } from "nimbus-docs/content";
+import {
+	docsCollection,
+	partialsCollection,
+} from "@cloudflare/nimbus-docs/content";
 import { warpReleasesSchema } from "~/schemas/warp-releases";
 import { compatibilityFlagsSchema } from "~/schemas/compatibility-flags";
 import { fieldsSchema } from "~/schemas/fields";

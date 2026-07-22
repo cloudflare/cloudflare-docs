@@ -8,7 +8,7 @@
 import type { GetStaticPaths } from "astro";
 import { render } from "astro:content";
 import { format } from "date-fns";
-import { getSidebar } from "nimbus-docs";
+import { getSidebar } from "@cloudflare/nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
 import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import Pagination from "~/components/changelog/Pagination.astro";

@@ -4,7 +4,7 @@
  * rail's curves instead of cutting across.
  */
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 
 const READING_BAND = 0.25;
 const BOTTOM_EPSILON = 2;

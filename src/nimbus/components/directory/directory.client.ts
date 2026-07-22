@@ -20,7 +20,7 @@
  *   - the empty state, a "Clear filters" affordance, and URL sync
  *     (`?search=…&group=…&group=…`).
  */
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 import { setSearchParams } from "~/util/url";
 import {
 	LG_GRID_CLASS,

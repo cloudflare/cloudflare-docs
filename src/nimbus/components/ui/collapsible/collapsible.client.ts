@@ -1,6 +1,6 @@
 /** Wires Collapsible via the disclosure module. */
 
-import { mount, makeDisclosure } from "nimbus-docs/client";
+import { mount, makeDisclosure } from "@cloudflare/nimbus-docs/client";
 
 declare global {
 	interface HTMLElement {
