@@ -107,7 +107,7 @@ Weight configured within a load balancer pool will be honored with load balancin
 
 Cookie and header-based [session affinity](/load-balancing/understand-basics/session-affinity/) are not available with Spectrum because TCP connections do not carry HTTP cookies or headers. Instead, you can:
 
-- Use **session affinity by cookie and client IP fallback**. Since TCP connections have no cookies, the load balancer automatically falls back to IP-based hashing.
+- Use session affinity type: **[Cloudflare cookie and client IP fallback](/load-balancing/understand-basics/session-affinity/#by-cloudflare-cookie-and-client-ip-fallback)**. Since TCP connections have no cookies, the load balancer automatically falls back to IP-based hashing.
 - Use **Hash** [endpoint steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) on the pool for source-IP-based routing.
 
 :::note
