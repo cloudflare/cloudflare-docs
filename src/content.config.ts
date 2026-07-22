@@ -13,6 +13,7 @@ import { fieldsSchema } from "~/schemas/fields";
 // loader + schema) rather than duplicating the fetcher on the Nimbus side.
 import { productAvailabilityCollectionConfig } from "~/content/collections/product-availability";
 import { granularControlApplicationsCollectionConfig } from "~/content/collections/granular-control-applications";
+import { mcpServersCollectionConfig } from "~/content/collections/mcp-servers";
 
 // Extend the default docs schema with the CF-specific frontmatter keys the
 // content uses. The schema is permissive — these fields just need to validate
@@ -271,6 +272,9 @@ export const collections = {
 	"granular-control-applications": defineCollection(
 		granularControlApplicationsCollectionConfig,
 	),
+	// Cloudflare's catalog of managed remote MCP servers, fetched from
+	// middlecache at build. Read by McpServerList on the agent-setup pages.
+	"mcp-servers": defineCollection(mcpServersCollectionConfig),
 	// CF notification catalog (single index.yaml). Read by AvailableNotifications.
 	notifications: defineCollection({
 		loader: glob({ pattern: "*.yaml", base: "./src/content/notifications" }),

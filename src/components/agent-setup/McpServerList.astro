@@ -10,13 +10,7 @@ const { showBundled = false } = Astro.props;
 
 const CODE_MODE_URL = "https://mcp.cloudflare.com/mcp";
 
-// FIXME: "cloudflare-mcps-manifest" is not declared in content.config.ts (or
-// provided by any integration) — getCollection warns and returns [] at
-// runtime rather than throwing, so this list silently renders empty on all
-// consuming agent-setup pages. Needs a real collection/loader; the
-// `@ts-expect-error` keeps this visible until one exists.
-// @ts-expect-error — collection "cloudflare-mcps-manifest" does not exist
-const allServers = await getCollection("cloudflare-mcps-manifest");
+const allServers = await getCollection("mcp-servers");
 
 // Code Mode first, then the rest in manifest order
 const servers = [
