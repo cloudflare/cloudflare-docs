@@ -1,10 +1,8 @@
 /**
  * theme-toggle.client.ts — cycles the theme preference light → dark → auto.
- * Writes the choice to localStorage ("ui-mode") and mirrors it to Starlight's
- * "starlight-theme" key, so reverting to the Starlight build keeps the
- * preference (T9, parity audit). BaseLayout's pre-paint script owns DOM
- * application (data-mode / data-theme) so view transitions, OS changes, and
- * cross-tab edits stay in sync.
+ * Writes the choice to localStorage ("ui-mode"). BaseLayout's pre-paint script
+ * owns DOM application (data-mode / data-theme) so view transitions, OS
+ * changes, and cross-tab edits stay in sync.
  */
 
 import { mount } from "@cloudflare/nimbus-docs/client";
@@ -47,8 +45,6 @@ function initThemeToggle(button: HTMLElement): () => void {
 		const next = ORDER[(ORDER.indexOf(readPref()) + 1) % ORDER.length];
 		try {
 			localStorage.setItem("ui-mode", next);
-			// Dual-write so a rollback to the Starlight build keeps the preference.
-			localStorage.setItem("starlight-theme", next);
 		} catch {
 			// Ignore storage errors (private mode / restricted contexts).
 		}

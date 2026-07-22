@@ -24,9 +24,6 @@ export default defineConfig({
 			},
 		},
 	},
-	experimental: {
-		contentIntellisense: true,
-	},
 	server: {
 		port: 1111,
 	},
