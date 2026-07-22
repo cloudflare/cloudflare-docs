@@ -22,7 +22,13 @@ const mcpServersCollectionConfig: CollectionConfig<typeof mcpServerSchema> = {
 			const lookup: Record<string, McpServer> = {};
 
 			for (const server of data.servers) {
-				lookup[slug(server.name)] = server;
+				const id = slug(server.name);
+				if (id in lookup) {
+					throw new Error(
+						`mcp-servers: "${server.name}" and "${lookup[id]?.name}" both slugify to "${id}" — rename one to disambiguate.`,
+					);
+				}
+				lookup[id] = server;
 			}
 
 			return lookup;

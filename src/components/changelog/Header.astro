@@ -116,7 +116,7 @@ const selectedLabel = productMatch
 						<ComboboxGroupLabel>Products</ComboboxGroupLabel>
 						{products.map((product) => (
 							<ComboboxOption value={`/changelog/product/${product.id}/`}>
-								{product.data.entry!.title}
+								{product.data.entry?.title ?? product.id}
 							</ComboboxOption>
 						))}
 					</ComboboxGroup>

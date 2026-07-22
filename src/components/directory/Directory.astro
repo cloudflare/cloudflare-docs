@@ -48,7 +48,7 @@ const groupsOf = (product: ProductData): string[] =>
 // still renders once; the category filter matches it via its `data-groups`.
 const items = products
 	.slice()
-	.sort((a, b) => a.data.name!.localeCompare(b.data.name!));
+	.sort((a, b) => (a.data.name ?? "").localeCompare(b.data.name ?? ""));
 const cols = resolveCols(items.length);
 
 // Group list for the filter checklist — alphabetical, `Other` last.
@@ -139,11 +139,11 @@ const groups = [...groupSet].sort((a, b) => {
 						{
 							items.map((product, i) => {
 								const description =
-									product.data.meta?.description ?? product.data.entry!.title;
+									product.data.meta?.description ?? product.data.entry?.title;
 								return (
 									<div
 										data-directory-cell
-										data-name={product.data.name!.toLowerCase()}
+										data-name={(product.data.name ?? "").toLowerCase()}
 										data-groups={groupsOf(product).join("|")}
 										class={cellClass}
 									>
@@ -154,7 +154,7 @@ const groups = [...groupSet].sort((a, b) => {
 											set:html={cornerSpansHTML(cornersFor(i, cols))}
 										/>
 										<a
-											href={product.data.entry!.url}
+											href={product.data.entry?.url ?? `/${product.id}/`}
 											class="group/card flex h-full flex-col p-4 text-inherit! no-underline lg:p-5"
 										>
 											{product.icon ? (
@@ -170,7 +170,7 @@ const groups = [...groupSet].sort((a, b) => {
 													aria-hidden="true"
 													class="text-muted-foreground group-hover/card:text-primary -ml-0.5 inline-flex size-5 shrink-0 items-center justify-center text-base leading-none font-bold"
 												>
-													{product.data.name!.charAt(0)}
+													{(product.data.name ?? "?").charAt(0)}
 												</span>
 											)}
 											<p class="pt-2 pb-0.5">

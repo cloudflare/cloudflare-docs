@@ -54,7 +54,9 @@ const directoryByGroup = Object.entries(
 					{entries?.map((entry) => (
 						<li>
 							<p>
-								<a href={entry.data.entry!.url}>{entry.data.entry!.title}</a>
+								<a href={entry.data.entry?.url ?? `/${entry.id}/`}>
+									{entry.data.entry?.title ?? entry.id}
+								</a>
 							</p>
 							<RSSButton changelog={entry.id} />
 						</li>
