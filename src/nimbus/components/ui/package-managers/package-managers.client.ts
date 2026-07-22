@@ -5,18 +5,7 @@
 
 import { mount, initTabs } from "nimbus-docs/client";
 
-function cloneIcon(tpl: HTMLTemplateElement | null): Node {
-	return tpl ? tpl.content.cloneNode(true) : document.createTextNode("");
-}
-
 function initPackageManager(container: HTMLElement): () => void {
-	const copyTpl = container.querySelector<HTMLTemplateElement>(
-		"[data-nb-pm-icon-copy]",
-	);
-	const checkTpl = container.querySelector<HTMLTemplateElement>(
-		"[data-nb-pm-icon-check]",
-	);
-
 	const tabs = initTabs({
 		container,
 		tabSelector: "[data-nb-pm-tab]",
@@ -34,6 +23,13 @@ function initPackageManager(container: HTMLElement): () => void {
 	container
 		.querySelectorAll<HTMLButtonElement>("[data-nb-pm-copy]")
 		.forEach((btn) => {
+			// Toggle between the two icons instead of replacing the button's
+			// children. astro-icon renders the first `ph:copy`/`ph:check` on the
+			// page as a shared `<symbol>` and every other instance as a `<use>`
+			// reference to it; removing the button that hosts the definition would
+			// orphan every other copy icon on the page. Never remove the nodes.
+			const copyIcon = btn.querySelector<SVGElement>('[data-icon="ph:copy"]');
+			const checkIcon = btn.querySelector<SVGElement>('[data-icon="ph:check"]');
 			const handlerInfo: {
 				btn: HTMLButtonElement;
 				handler: () => void;
@@ -46,10 +42,12 @@ function initPackageManager(container: HTMLElement): () => void {
 					} catch {
 						return;
 					}
-					btn.replaceChildren(cloneIcon(checkTpl));
+					copyIcon?.classList.add("hidden");
+					checkIcon?.classList.remove("hidden");
 					if (handlerInfo.timer) window.clearTimeout(handlerInfo.timer);
 					handlerInfo.timer = window.setTimeout(() => {
-						btn.replaceChildren(cloneIcon(copyTpl));
+						checkIcon?.classList.add("hidden");
+						copyIcon?.classList.remove("hidden");
 					}, 1500);
 				},
 			};

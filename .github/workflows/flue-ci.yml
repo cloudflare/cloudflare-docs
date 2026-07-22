@@ -6,6 +6,7 @@ on:
       - production
     paths:
       - ".flue/**"
+      - ".github/workflows/flue-ci.yml"
 
 permissions:
   contents: read
@@ -40,6 +41,10 @@ jobs:
 
       - name: Typecheck
         run: pnpm run typecheck
+        working-directory: .flue
+
+      - name: Test
+        run: pnpm run test
         working-directory: .flue
 
   build:

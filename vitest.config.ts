@@ -2,8 +2,6 @@ import { defineConfig, defineProject } from "vitest/config";
 import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 import { getViteConfig } from "astro/config";
 
-import tsconfigPaths from "vite-tsconfig-paths";
-
 export default defineConfig({
 	test: {
 		projects: [
@@ -32,14 +30,12 @@ export default defineConfig({
 					include: ["**/*.node.test.ts"],
 					environment: "happy-dom",
 				},
-				plugins: [tsconfigPaths()],
 			}),
 			getViteConfig({
 				test: {
 					name: "Astro",
 					include: ["**/*.astro.test.ts"],
 				},
-				plugins: [tsconfigPaths()],
 			}),
 		],
 	},

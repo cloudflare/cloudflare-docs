@@ -23,7 +23,7 @@ Workers Cache is **your Worker's cache**. It is owned by your Worker, operated b
 
 A Worker is a zoneless entity — a Worker can be bound to any number of [zones](/fundamentals/concepts/accounts-and-zones/#zones), run on `workers.dev`, or be invoked entirely through service bindings without ever touching a zone. The cache follows the Worker, not a zone, so:
 
-- **No zone configuration for caching applies to Workers Caching.** [Cache Rules](/cache/how-to/cache-rules/), [Cache Response Rules](/cache/how-to/cache-response-rules/), Page Rules, cache level settings, the zone's default cached-file-extensions list, and every other zone-level cache control have no effect on a Worker's cache.
+- **No zone configuration for caching applies to Workers Caching.** [Cache Rules](/cache/how-to/cache-rules/), [Cache Response Rules](/cache/how-to/cache-response-rules/), [Page Rules](/rules/page-rules/), cache level settings, the zone's [default cached-file-extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) list, and every other zone-level cache control have no effect on a Worker's cache.
 - **Your Worker is in full control.** You set `Cache-Control` headers on your responses, and Cloudflare honors them per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111). That is the entire configuration surface.
 - **The cache is shared across every way the Worker can be invoked.** A Worker bound to `api.example.com`, `api.example.net`, and invoked over a service binding serves the same cached responses to all three — the cache is keyed by the request path, entrypoint, `ctx.props`, and (by default) the Worker version, not by hostname. See [Cache keys](/workers/cache/cache-keys/).
 

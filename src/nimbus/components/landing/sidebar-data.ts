@@ -78,6 +78,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Durable Objects", "/durable-objects/"),
 					link("Queues", "/queues/"),
 					link("Workflows", "/workflows/"),
+					link("Flagship", "/flagship/"),
 					link("Browser Run", "/browser-run/"),
 					link("Workers VPC", "/workers-vpc/"),
 					link("Cloudflare for Platforms", "/cloudflare-for-platforms/"),

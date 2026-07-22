@@ -33,7 +33,6 @@ export default [
 			".flue/.flue-vite/",
 			".flue/.wrangler/",
 			"dist/",
-			"dist-nimbus/",
 			".github/",
 			// Generated at prebuild/predev by bin/fetch-skills.ts (gitignored).
 			"skills/",

@@ -109,6 +109,7 @@ const uid = `pm-${crypto.randomUUID()}`;
 								class="border-border text-muted-foreground hover:text-foreground focus-visible:outline-ring m-0 flex shrink-0 cursor-pointer items-center justify-center border-0 border-l border-solid bg-transparent px-3 transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
 							>
 								<Icon name="ph:copy" class="h-[18px] w-[18px]" />
+								<Icon name="ph:check" class="hidden h-[18px] w-[18px]" />
 							</button>
 						</div>
 					</div>
@@ -117,12 +118,6 @@ const uid = `pm-${crypto.randomUUID()}`;
 		}
 		<nb-pm-restore style="display:contents"></nb-pm-restore>
 	</LayerCard>
-	<template data-nb-pm-icon-copy
-		><Icon name="ph:copy" class="h-[18px] w-[18px]" is:inline /></template
-	>
-	<template data-nb-pm-icon-check
-		><Icon name="ph:check" class="h-[18px] w-[18px]" is:inline /></template
-	>
 </div>
 
 <script>

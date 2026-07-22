@@ -1,8 +1,6 @@
 dist
 .astro
 
-# Excluded from repo formatting during priming; format/re-enable before cutover.
-dist-nimbus/
 # fetched at prebuild/predev by bin/fetch-skills.ts
 .tmp
 # generated actions JS

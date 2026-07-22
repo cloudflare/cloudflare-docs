@@ -193,8 +193,7 @@ const iconAlias = {
 	},
 };
 
-// The Nimbus target's markdown / integrations / vite, branched into
-// astro.config.ts when BUILD_TARGET=nimbus.
+// markdown / integrations / vite consumed by astro.config.ts.
 export const markdown = {
 	syntaxHighlight: {
 		type: "shiki" as const,
@@ -236,7 +235,7 @@ export const integrations = [
 				"error",
 				{ aliases: { "~/assets/": "src/assets/" } },
 			],
-			"nimbus/internal-link": "off",
+			"nimbus/internal-link": "error",
 		},
 	}),
 ];
@@ -258,9 +257,8 @@ export const integrations = [
 // the final alias array and the built-in alias plugin matches them first.
 // `~/assets` and `~/content` precede `~` so the shared root tree still wins.
 //
-// This only applies to the Nimbus target (this config is loaded solely when
-// BUILD_TARGET=nimbus); the default Starlight build is untouched and keeps
-// `~`→src via its own tsconfig alias.
+// `~` resolves to src/nimbus; shared modules (assets, content, util) are
+// explicitly aliased to their root src/ locations below.
 const nimbusDir = here(".");
 const rootAssets = here("../assets");
 const rootContent = here("../content");
@@ -293,17 +291,6 @@ const aliasResolver = {
 			return {
 				resolve: {
 					alias: [
-						// Map Starlight's and Expressive Code's component barrels to the
-						// Nimbus barrel, so shared content resolves without pulling in the
-						// Starlight/EC integrations Nimbus omits.
-						{
-							find: /^@astrojs\/starlight\/components$/,
-							replacement: `${nimbusDir}/components`,
-						},
-						{
-							find: /^astro-expressive-code\/components$/,
-							replacement: `${nimbusDir}/components`,
-						},
 						// Shared modules: resolve to the root src/ tree, not the nimbus dir.
 						{ find: /^~\/assets(\/.*)?$/, replacement: `${rootAssets}$1` },
 						{ find: /^~\/content(\/.*)?$/, replacement: `${rootContent}$1` },
@@ -341,12 +328,7 @@ const aliasResolver = {
 		options: object,
 	) {
 		let mapped: string | null = null;
-		if (
-			source === "@astrojs/starlight/components" ||
-			source === "astro-expressive-code/components"
-		)
-			mapped = nimbusDir + "/components";
-		else if (source === "~/assets" || source.startsWith("~/assets/"))
+		if (source === "~/assets" || source.startsWith("~/assets/"))
 			mapped = rootAssets + source.slice("~/assets".length);
 		else if (source === "~/content" || source.startsWith("~/content/"))
 			mapped = rootContent + source.slice("~/content".length);

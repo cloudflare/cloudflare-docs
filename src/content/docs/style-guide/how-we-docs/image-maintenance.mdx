@@ -52,6 +52,6 @@ In combination with [flagging unused images](#flag-unused-images), we also have 
 	code={{ title: "astro.config.ts", mark: 5 }}
 />
 
-This line ensures that our custom [Remark plugin](https://github.com/cloudflare/cloudflare-docs/blob/production/src/plugins/remark/validate-images.ts) validates all images paths. If the path does not exist, we throw an error and prevent the site from building.
+This ensures that the build-time `nimbus/image-ref` lint rule validates all image paths. If the path does not exist, we throw an error and prevent the site from building.
 
 When paired with [flagging unused images](#flag-unused-images), this path validation ensures that a tech writer can safely delete unused files in a pull request. So long as the site builds correctly, you have only deleted image files that are not referenced anywhere.
