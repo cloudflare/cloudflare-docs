@@ -1,0 +1,23 @@
+src/content/docs/agents/tools/codemode/mcp.mdx
+  s_d312d69f854587::t_565e6cbc0e857a 139-155,203-204
+src/content/changelog/agents/2026-07-20-mcp-tool-schema-conversion.mdx
+  s_d312d69f854587::t_2fe3f4ccd2fa70 1-35
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_d312d69f854587::t_cbc15f463cbefd 323-324,328,330,340-341,370,1151-1160,1171-1172
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "475db1be1976e021a250128b133b6eb0a30c2a5b",
+  "prompts": {},
+  "sessions": {
+    "s_d312d69f854587": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8013-17ba-7182-8a0d-1ab48840e333",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
