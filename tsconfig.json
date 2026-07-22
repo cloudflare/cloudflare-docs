@@ -4,11 +4,12 @@
 		"baseUrl": ".",
 		"target": "ESNext",
 		"paths": {
-			"~/*": ["src/*"]
+			"~/*": ["src/*"],
+			"@/*": ["src/*"]
 		},
 		"jsx": "react-jsx",
 		"jsxImportSource": "react"
 	},
 	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": ["dist", "worker", ".flue", "src/nimbus"]
+	"exclude": ["dist", "worker", ".flue"]
 }

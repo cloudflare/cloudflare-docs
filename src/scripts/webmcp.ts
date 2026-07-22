@@ -7,7 +7,7 @@ import {
 	ALGOLIA_APP_ID,
 	ALGOLIA_API_KEY,
 	ALGOLIA_INDEX,
-} from "../nimbus/util/algolia";
+} from "../util/algolia";
 const LLMS_TXT_URL = "https://developers.cloudflare.com/llms.txt";
 
 // Cache for list-directories results — fetched once per session.

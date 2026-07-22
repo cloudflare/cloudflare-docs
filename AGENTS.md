@@ -22,22 +22,19 @@ cloudflare-docs/
 │   │   ├── glossary/       # Glossary term definitions (YAML)
 │   │   ├── products/       # Product metadata (YAML, 135 files)
 │   │   └── ...             # Other data collections (plans, fields, models, etc.)
-│   ├── nimbus/             # Nimbus app (srcDir) — components, layouts, pages, schemas, util
-│   │   ├── components/     # Astro + React components (barrel: components.ts)
-│   │   ├── components.ts   # MDX component barrel — all MDX imports come from here
-│   │   ├── layouts/        # Page layout components
-│   │   ├── pages/          # Dynamic route pages (changelog, llms.txt, RSS, etc.)
-│   │   ├── schemas/        # Zod schemas for all content collections
-│   │   ├── plugins/        # Satteri hast pipeline plugins
-│   │   ├── scripts/        # Client-side scripts (analytics, mermaid, etc.)
-│   │   ├── styles/         # CSS (Tailwind 4)
-│   │   └── util/           # App utility functions
-│   ├── components/         # Shared diagram components (AiSearch*Diagram, OneTrust)
+│   ├── components/         # Astro + React components (barrel: components.ts)
+│   ├── components.ts       # MDX component barrel — all MDX imports come from here
+│   ├── layouts/            # Page layout components
+│   ├── pages/              # Dynamic route pages (changelog, llms.txt, RSS, etc.)
+│   ├── schemas/            # Zod schemas for all content collections
+│   ├── plugins/            # Satteri hast pipeline plugins, Algolia DocSearch config
+│   ├── scripts/            # Client-side scripts (analytics, mermaid, webmcp, etc.)
+│   ├── styles/             # CSS (Tailwind 4)
 │   ├── icons/              # Product SVG icons (~110)
 │   ├── assets/             # Processed images (optimized by Astro)
-│   ├── plugins/docsearch/  # Algolia DocSearch config
-│   ├── scripts/webmcp.ts   # WebMCP client script
-│   └── util/               # Shared utility functions (zaraz, package-managers, redirects, etc.)
+│   ├── util/               # App utility functions
+│   ├── astro-config.ts     # Nimbus integration + Vite config, imported by root astro.config.ts
+│   └── content.config.ts   # Content collection definitions
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
 ├── bin/                    # Build scripts and CI helpers
@@ -186,7 +183,7 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 
 ## Content collections
 
-The site defines 20 content collections in `src/nimbus/content.config.ts` with schemas in `src/nimbus/schemas/`. The major ones:
+The site defines 20 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
 | Collection          | Location                         | Description                              |
 | ------------------- | -------------------------------- | ---------------------------------------- |

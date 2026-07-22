@@ -1,9 +1,5 @@
 import { defineConfig } from "astro/config";
-import {
-	markdown,
-	integrations,
-	vite as nimbusVite,
-} from "./src/nimbus/astro-config.ts";
+import { markdown, integrations, vite as appVite } from "./src/astro-config.ts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,7 +8,6 @@ export default defineConfig({
 		prefetchAll: true,
 		defaultStrategy: "hover",
 	},
-	srcDir: "./src/nimbus",
 	outDir: "./dist",
 	cacheDir: ".astro-cache",
 	markdown,
@@ -29,7 +24,7 @@ export default defineConfig({
 	},
 	integrations,
 	vite: {
-		...nimbusVite,
+		...appVite,
 		server: {
 			watch: {
 				ignored: ["**/dist/**", "**/.astro-cache/**"],
