@@ -21,7 +21,7 @@ package.json @cloudflare/content-engineering
 # AI
 
 /src/content/docs/agent-lee/ @kczajkowski @Brayden @cloudflare/ax @cloudflare/product-owners
-/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @thomasgauvin @cloudflare/product-owners
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @adriandlam @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @mchenco @zeke @superhighfives @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
@@ -36,6 +36,12 @@ package.json @cloudflare/content-engineering
 /src/content/catalog-models/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners
 /bin/fetch-catalog-models.ts @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners @kodster28
 /src/content/docs/agent-memory/ @lambrospetrou @rts-rob @pmesgari @cloudflare/product-owners
+/public/icons/agents @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/assets/images/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/components/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/content/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/content/docs/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/nimbus/pages/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 
 # AI Crawl Control
 /src/content/docs/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso
@@ -144,7 +150,7 @@ package.json @cloudflare/content-engineering
 
 # Developer Platform
 
-/src/content/docs/artifacts/ @elithrar @dmmulroy @mattzcarey @dinasaur404 @whoiskatrin @cloudflare/product-owners
+/src/content/docs/artifacts/ @elithrar @dmmulroy @mattzcarey @dinasaur404 @cloudflare/product-owners
 /src/content/docs/containers/ @mikenomitch @th0m @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/partials/containers/ @mikenomitch @th0m @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/docs/d1/ @elithrar @rita3ko @irvinebroque @vy-ton @ivoryibu @rts-rob @joshthoward @lambrospetrou @oxyjun @cloudflare/product-owners
@@ -214,7 +220,7 @@ package.json @cloudflare/content-engineering
 /src/assets/images/changelog/workers-vpc/ @nikitacano @elithrar @thomasgauvin @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/docs/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @celso @deloreyj @mia303 @jonesphillip @cloudflare/product-owners
 /src/content/partials/workflows/ @elithrar @rita3ko @irvinebroque @vy-ton @celso @deloreyj @mia303 @jonesphillip @cloudflare/product-owners
-/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @scuffi @aron-cf @thomasgauvin @cloudflare/product-owners @cloudflare/ai-agents
+/src/content/docs/sandbox/ @cloudflare/product-owners @cloudflare/ai-agents
 /src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/product-owners
 /src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/product-owners
 /src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/product-owners
