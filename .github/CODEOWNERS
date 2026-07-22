@@ -41,7 +41,7 @@ package.json @cloudflare/content-engineering
 /src/components/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/docs/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
-/src/nimbus/pages/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
+/src/pages/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 
 # AI Crawl Control
 /src/content/docs/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso
