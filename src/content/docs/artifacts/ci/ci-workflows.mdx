@@ -59,7 +59,9 @@ Cloudflare CI uses the following components:
      protected async run(
        event: WorkflowEvent<CiParams>,
        step: CiRunnerStep,
-     ): Promise<void> {...}
+     ): Promise<void> {
+       // ...
+     }
    }
    ```
 
