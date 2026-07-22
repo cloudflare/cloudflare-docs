@@ -155,7 +155,14 @@ export const collections = {
 	// add more. Read by getChangelogs (`~/util/changelog`) and the
 	// `/changelog/*` pages + RSS feeds.
 	changelog: defineCollection({
-		loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/changelog" }),
+		loader: glob({
+			pattern: "**/*.{md,mdx}",
+			base: "./src/content/changelog",
+			// Preserve dots in folder names (e.g. `1.1.1.1/`). The default
+			// generateId runs github-slugger which strips dots, producing
+			// `1111` — that no longer matches the `directory` entry `1.1.1.1`.
+			generateId: ({ entry }) => entry.replace(/\.(mdx?)$/, ""),
+		}),
 		schema: z.object({
 			title: z.string(),
 			description: z.string(),
