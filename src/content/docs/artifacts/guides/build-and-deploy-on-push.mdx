@@ -44,48 +44,79 @@ This is useful when you need to:
 
 When a user or agent pushes a commit to an Artifacts repo, Artifacts emits an event that identifies the repo, branch, and commit that changed. You will use this event to start a Workflow that runs a CI pipeline by checking out the commit, installing dependencies, running checks, building the project, and deploying the Worker.
 
-This guide defines those CI steps in a Workflow class named `CIWorkflow`. To start this Workflow automatically after each push, add an `artifacts.push` trigger to your Wrangler configuration:
+Now, to actually trigger your CI Workflow, add an events binding to your Worker's Wrangler configuration. Specifying the `CIWorkflow` as the trigger's target will automatically trigger a Workflow instance on every `cf.artifacts.repo.pushed` event.
+
+You will also need to include your `artifacts`, `workflows`, and `durable_objects` (plus `migrations`) bindings, along with an `r2_buckets` binding if you are using cache.
 
 <WranglerConfig>
 
-```json
+```jsonc
 {
+	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "my-ci-cd-worker",
 	"main": "src/index.ts",
-	"compatibility_date": "2026-07-21",
-
-	"workflows": [
-		{
-			"name": "ci-workflow",
-			"binding": "BUILD_AND_DEPLOY",
-			"class_name": "CIWorkflow"
-		}
-	],
-
+	"compatibility_date": "2026-06-16",
+	"compatibility_flags": ["nodejs_compat"],
 	"artifacts": [
 		{
 			"binding": "ARTIFACTS",
-			"namespace": "customer-projects"
-		}
+			"namespace": "my-namespace",
+		},
 	],
-
+	"containers": [
+		{
+			"class_name": "CiSandbox",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+			"instance_type": "standard-4",
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "SANDBOX",
+				"class_name": "CiSandbox",
+			},
+		],
+	},
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "CI_WORKFLOW",
+			"class_name": "CI",
+		},
+	],
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["CiSandbox"],
+		},
+	],
+	"r2_buckets": [
+		{
+			"binding": "BACKUP_BUCKET",
+			"bucket_name": "my-bucket",
+		},
+	],
 	"triggers": [
 		{
 			"type": "cf.repo.push",
 			"filter": {
 				"repoName": "my-repo",
-				"namespace": "ARTIFACTS"
+				"namespace": "ARTIFACTS",
 			},
 			"target": {
 				"type": "workflow",
-				"workflowName": "ci-workflow"
-			}
-		}
+				"workflowName": "my-workflow",
+			},
+		},
 	],
-
 	"observability": {
-		"enabled": true
-	}
+		"enabled": true,
+		"logs": {
+			"enabled": true,
+		},
+	},
 }
 ```
 
