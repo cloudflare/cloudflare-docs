@@ -54,12 +54,12 @@ Cloudflare considered the asset eligible for cache at request time — either be
 
 Common reasons the origin response is treated as not cacheable include:
 
-* The origin web server returned a `Cache-Control` header set to `no-cache`, `no-store`, `private`, or `max-age=0`. Origin `Cache-Control` directives are only honored when [Origin Cache-Control](/cache/concepts/cache-control/) is enabled. Refer to [Conditions](/cache/concepts/cache-control/#conditions) for the full behavior.
+* The origin web server returned a `Cache-Control` header set to `no-cache`, `no-store`, or `private`. Origin `Cache-Control` directives are only honored when [Origin Cache-Control](/cache/concepts/cache-control/) is enabled, and specific directives may result in a different cache status (for example, `max-age=0` with Origin Cache Control enabled caches and revalidates). Refer to [Conditions](/cache/concepts/cache-control/#conditions) for the full behavior.
 * The origin web server returned a `Set-Cookie` header.
 * The request to the origin web server included an `Authorization` header (in some cases).
 
 :::note
-If you configured a [Cache Rule](/cache/how-to/cache-rules/) with **Eligible for cache** set to *Yes* (for example, on HTML content) and the origin response is not cacheable, the response is returned with `CF-Cache-Status: BYPASS` — not `DYNAMIC`. `DYNAMIC` is only returned when Cloudflare determines the asset is not eligible for cache at request time. Refer to [DYNAMIC](#dynamic) below for details.
+If you configured a [Cache Rule](/cache/how-to/cache-rules/) with **Eligible for cache** set to *Yes* (for example, on HTML content) and the origin returns a non-cacheable `Cache-Control` directive, the response is returned with `CF-Cache-Status: BYPASS` — not `DYNAMIC`. `DYNAMIC` is only returned when Cloudflare determines the asset is not eligible for cache at request time.
 :::
 
 ## REVALIDATED
@@ -81,4 +81,4 @@ This typically happens when:
 * The requested asset is not one of the [default cached file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) (for example, HTML or JSON) and no rule instructs Cloudflare to cache it.
 * A [Cache Rule](/cache/how-to/cache-rules/) with the **Bypass cache** setting matches the request. The legacy `Cache Level: Bypass` option in [Configuration Rules](/rules/configuration-rules/) or [Page Rules](/rules/page-rules/) behaves the same way.
 
-Use [Cache Rules](/cache/how-to/cache-rules/) to change what content Cloudflare caches. Once the request is treated as eligible for cache, the `CF-Cache-Status` header will reflect the response-time cache decision (`HIT`, `MISS`, `EXPIRED`, `REVALIDATED`, `BYPASS`, and so on) — see [BYPASS](#bypass) for the case where the origin response is ultimately not cacheable.
+Use [Cache Rules](/cache/how-to/cache-rules/) to change what content Cloudflare caches. Once the request is treated as eligible for cache, the `CF-Cache-Status` header will reflect the response-time cache decision (`HIT`, `MISS`, `EXPIRED`, `REVALIDATED`, `BYPASS`, and so on) — refer to [BYPASS](#bypass) for the case where the origin response is ultimately not cacheable.
