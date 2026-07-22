@@ -130,6 +130,11 @@ fi
 #   401 or 403                                  → token lacks Edit
 #   200 with success:false, errors[0].code=10000 → token lacks Edit
 #   400/422 or 200 with validation error codes  → Edit scope OK
+#
+# The API rejects the empty-name/empty-domains payload with 400 today, so
+# no widget is created. If validation ever loosens and the probe accidentally
+# creates one, we detect the returned sitekey and DELETE it as a safety net
+# so the probe stays side-effect-free.
 account_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$account_id")
 
 tmp=$(mktemp "${TMPDIR:-/tmp}/auth-probe.body.XXXXXX") || {
@@ -152,39 +157,63 @@ edit_code=$(curl -sS -w "%{http_code}" -o "$tmp" -X POST \
   -H "Content-Type: application/json" \
   --data '{"name":"","domains":[]}' || echo "000")
 
-verdict=$(python3 -c '
+probe_output=$(python3 -c '
 import json, sys
 http_code = sys.argv[1]
 path = sys.argv[2]
+verdict = "unknown"
+created_sitekey = ""
 try:
     with open(path) as f:
         raw = f.read()
     data = json.loads(raw) if raw else {}
 except Exception:
-    print("unknown")
-    sys.exit(0)
-if not isinstance(data, dict):
-    print("unknown")
-    sys.exit(0)
-errors = data.get("errors") or []
-if not isinstance(errors, list):
-    errors = []
-first = (errors[0] or {}) if errors else {}
-if not isinstance(first, dict):
-    first = {}
-first_code = first.get("code", 0)
-if http_code in ("401", "403"):
-    print("missing_scope")
-elif http_code == "200" and data.get("success") is False and first_code == 10000:
-    print("missing_scope")
-elif http_code in ("400", "422"):
-    print("scope_ok")
-elif http_code == "200":
-    # Any 200 that got past auth means scope is fine (whether success or not).
-    print("scope_ok")
-else:
-    print(f"unexpected_{http_code}")
+    data = None
+if isinstance(data, dict):
+    errors = data.get("errors") or []
+    if not isinstance(errors, list):
+        errors = []
+    first = (errors[0] or {}) if errors else {}
+    if not isinstance(first, dict):
+        first = {}
+    first_code = first.get("code", 0)
+    if http_code in ("401", "403"):
+        verdict = "missing_scope"
+    elif http_code == "200" and data.get("success") is False and first_code == 10000:
+        verdict = "missing_scope"
+    elif http_code in ("400", "422"):
+        verdict = "scope_ok"
+    elif http_code == "200":
+        # Any 200 that got past auth means scope is fine (whether success or not).
+        verdict = "scope_ok"
+    else:
+        verdict = f"unexpected_{http_code}"
+    # Detect accidental widget creation (safety net if API validation ever
+    # accepts the empty-name/empty-domains probe payload).
+    result = data.get("result")
+    if isinstance(result, dict) and data.get("success") is True:
+        sk = result.get("sitekey", "")
+        if isinstance(sk, str) and sk:
+            created_sitekey = sk
+print(f"{verdict}|{created_sitekey}")
 ' "$edit_code" "$tmp")
+verdict="${probe_output%%|*}"
+created_sitekey="${probe_output#*|}"
+[ "$created_sitekey" = "$probe_output" ] && created_sitekey=""
+
+# If the probe unexpectedly created a widget (API validation loosened),
+# DELETE it so the probe stays side-effect-free.
+if [ -n "$created_sitekey" ]; then
+  echo "auth-probe: probe unexpectedly created widget $created_sitekey; cleaning up..." >&2
+  sk_enc=$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$created_sitekey")
+  cleanup_code=$(curl -sS -o /dev/null -w "%{http_code}" -X DELETE \
+    "https://api.cloudflare.com/client/v4/accounts/$account_enc/challenges/widgets/$sk_enc" \
+    -H "@$auth_headers" || echo "000")
+  case "$cleanup_code" in
+    2*) echo "auth-probe: cleanup DELETE for widget $created_sitekey succeeded (HTTP $cleanup_code)." >&2 ;;
+    *)  echo "auth-probe: cleanup DELETE for widget $created_sitekey FAILED (HTTP $cleanup_code). Please remove it from the Turnstile dashboard manually." >&2 ;;
+  esac
+fi
 
 case "$verdict" in
   scope_ok)
