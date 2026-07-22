@@ -106,6 +106,10 @@ const hasCodeExamples = hasCatalogUsage || !!CodeExamples;
 const hasRemainingExamples = remainingExamples.length > 0;
 
 const description = model.description;
+const modelKind = model.task ? `a ${model.task} model` : "an AI model";
+const metaDescription =
+	description ||
+	`${displayName} is ${modelKind}${model.authorName ? ` by ${model.authorName}` : ""}, available through Cloudflare AI.`;
 const isBeta = model.beta;
 
 // Map the banner `severity` onto the four Aside types; unknown severities fall
@@ -217,7 +221,7 @@ const headings: MarkdownHeading[] = [
 
 <DocsLayout
 	title={displayName}
-	description={description}
+	description={metaDescription}
 	sidebar={sidebar}
 	headings={headings}
 	breadcrumbs={breadcrumbs}
