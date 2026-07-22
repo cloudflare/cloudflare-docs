@@ -8,8 +8,11 @@ import { join } from "node:path";
 import { getEntry } from "astro:content";
 import { differenceInCalendarDays } from "date-fns";
 import { config } from "virtual:nimbus/config";
-import { getVersionAlternates, getVersionStatus } from "nimbus-docs";
-import type { HeadElement } from "nimbus-docs/types";
+import {
+	getVersionAlternates,
+	getVersionStatus,
+} from "@cloudflare/nimbus-docs";
+import type { HeadElement } from "@cloudflare/nimbus-docs/types";
 import {
 	buildStructuredData,
 	classifyContentType,

@@ -2,9 +2,12 @@ import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import skills from "astro-skills";
-import nimbus, { defineConfig as defineNimbusConfig } from "nimbus-docs";
+import nimbus, {
+	defineConfig as defineNimbusConfig,
+} from "@cloudflare/nimbus-docs";
 import { hastPlugins } from "./plugins/satteri";
 import { createSitemapLastmodSerializer } from "../../sitemap.serializer";
 import { isDisallowedByRobots } from "../util/robots";
@@ -372,5 +375,10 @@ export const vite = {
 	// can load two React copies across the symlink in dev and client islands
 	// fail to hydrate with "jsxDEV is not a function".
 	resolve: { dedupe: ["react", "react-dom"] },
-	plugins: [aliasResolver, componentsBarrelSideEffects, iconAlias],
+	plugins: [
+		tailwindcss(),
+		aliasResolver,
+		componentsBarrelSideEffects,
+		iconAlias,
+	],
 };

@@ -1,6 +1,6 @@
 /** Sidebar runtime: filter, persistence, "/" shortcut. */
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 
 const STORAGE_KEY = "sidebar-state";
 

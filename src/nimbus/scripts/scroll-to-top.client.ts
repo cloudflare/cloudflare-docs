@@ -1,6 +1,6 @@
 // Update ring on scroll, reveal past threshold, scroll to top on click.
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 import { addTooltip } from "../util/tippy";
 
 const SHOW_AFTER_PX = 300;

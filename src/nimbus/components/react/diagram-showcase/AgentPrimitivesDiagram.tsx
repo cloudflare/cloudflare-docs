@@ -8,7 +8,7 @@ import {
 	edgePoint,
 	type EdgeRect,
 	type Point,
-} from "nimbus-docs/react";
+} from "@cloudflare/nimbus-docs/react";
 import { DiagramStage, Tabs } from "@/components/react/diagram";
 import {
 	RX,

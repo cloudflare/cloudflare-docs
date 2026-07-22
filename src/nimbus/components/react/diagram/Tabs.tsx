@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { useTabIndicator } from "nimbus-docs/react";
+import { useTabIndicator } from "@cloudflare/nimbus-docs/react";
 import { cn } from "@/lib/cn";
 import type { ChipOption } from "./ChipGroup";
 

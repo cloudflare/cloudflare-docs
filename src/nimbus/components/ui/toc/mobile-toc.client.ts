@@ -16,7 +16,7 @@
  * rect-based clamping so it doesn't rely on `offsetParent` layout.
  */
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 
 // Matches Kumo: ignore the top 10% and bottom 70% of the viewport so the
 // "active" heading is whatever sits near the top of the reading area. The

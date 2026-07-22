@@ -1,4 +1,4 @@
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 import tippy, { type Instance } from "tippy.js";
 import { track } from "~/util/zaraz";
 

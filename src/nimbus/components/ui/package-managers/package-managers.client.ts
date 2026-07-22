@@ -3,7 +3,7 @@
  * `<nb-pm-restore>` early-paint element to avoid flash across navigations.
  */
 
-import { mount, initTabs } from "nimbus-docs/client";
+import { mount, initTabs } from "@cloudflare/nimbus-docs/client";
 
 function initPackageManager(container: HTMLElement): () => void {
 	const tabs = initTabs({

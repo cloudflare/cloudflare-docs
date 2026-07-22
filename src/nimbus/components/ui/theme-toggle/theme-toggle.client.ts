@@ -7,7 +7,7 @@
  * cross-tab edits stay in sync.
  */
 
-import { mount } from "nimbus-docs/client";
+import { mount } from "@cloudflare/nimbus-docs/client";
 
 declare global {
 	interface Window {

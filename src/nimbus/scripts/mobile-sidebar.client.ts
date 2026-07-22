@@ -1,4 +1,4 @@
-import { lockScroll, unlockScroll } from "nimbus-docs/client";
+import { lockScroll, unlockScroll } from "@cloudflare/nimbus-docs/client";
 
 const CLOSE_DURATION_MS = 250;
 

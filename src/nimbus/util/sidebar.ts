@@ -1,14 +1,14 @@
 // Cloudflare nav conventions for the nimbus-docs nav surface: section titles,
 // breadcrumb relabeling, sidebar transforms, and badges.
 import { getCollection, getEntry } from "astro:content";
-import { getBreadcrumbs, getRouteNavigation } from "nimbus-docs";
-import type { SectionTitleResolver } from "nimbus-docs";
+import { getBreadcrumbs, getRouteNavigation } from "@cloudflare/nimbus-docs";
+import type { SectionTitleResolver } from "@cloudflare/nimbus-docs";
 import type {
 	SidebarBadge,
 	SidebarGroupItem,
 	SidebarItem,
 	SidebarTransform,
-} from "nimbus-docs/types";
+} from "@cloudflare/nimbus-docs/types";
 
 export const sectionTitleResolver: SectionTitleResolver = async ({
 	sectionSlug,

@@ -2,7 +2,7 @@
 // Per-product 404 — keeps the product sidebar (not splash), unlike the site /404.
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import { getSidebar } from "nimbus-docs";
+import { getSidebar } from "@cloudflare/nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
 import { externalAppLinksTransform } from "~/util/sidebar";
 import FourOhFour from "~/components/404.astro";
