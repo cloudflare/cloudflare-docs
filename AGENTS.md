@@ -33,7 +33,6 @@ cloudflare-docs/
 │   ├── icons/              # Product SVG icons (~110)
 │   ├── assets/             # Processed images (optimized by Astro)
 │   ├── util/               # App utility functions
-│   ├── astro-config.ts     # Nimbus integration + Vite config, imported by root astro.config.ts
 │   └── content.config.ts   # Content collection definitions
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
