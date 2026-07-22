@@ -6,8 +6,126 @@ date: 2026-07-21
 
 import { RuleID } from "~/components";
 
-This release introduces new rules and updates existing threat signatures to provide targeted protections for vulnerabilities in Adobe ColdFusion and WordPress, alongside enhanced generic protections against enhanced generic protections against Server-Side Request Forgery (SSRF), Local File Inclusion (LFI), and Cross-Site Scripting (XSS) obfuscation techniques. To strengthen overall detection capabilities across emerging threat vectors, new emergency detection rules have also been deployed for Generic Rules - Unauthenticated Remote Code Execution (RCE), Generic Rules - Authentication Bypass (Auth Bypass - 2) and Generic Rules - Information Disclosure.
+This release introduces new rules for vulnerabilities in Adobe ColdFusion, Next.js, WordPress alongside updates to existing rules thereby providing enhanced generic protections against Server-Side Request Forgery (SSRF), Local File Inclusion (LFI), and Cross-Site Scripting (XSS). 
 
+**WAF and framework adapter mitigations for Next.js vulnerabilities**
+
+Multiple [security vulnerabilities](https://nextjs.org/blog/july-2026-security-release) were disclosed and patched by the Next.js team through July 2026 security release. These include denial of service, middleware and proxy bypass, server-side request forgery, information disclosure, and cache poisoning across a range of severities.
+
+Several of the disclosed vulnerabilities are not possible to block at WAF layer,we strongly recommend updating your application and its dependencies immediately. Patched versions are available through v16.2.11 (Active LTS) and v15.5.21 (Maintenance LTS) to address these issues. 
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Advisory</th>
+			<th>CVE</th>
+			<th>Severity</th>
+			<th>Issue</th>
+			<th>WAF Coverage</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-m99w-x7hq-7vfj">Denial of Service in App Router using Server Actions</a></td>
+			<td>CVE-2026-64641</td>
+			<td>High</td>
+			<td>
+				Crafted requests targeting Next.js applications using App Router with at least one Server Action can lead to excessive CPU usage. The CPU usage blocks processing of further requests in the same process, leading to Denial of Service.
+			</td>
+			<td>
+				WAF rule Next.js - DoS - CVE-2026-64641 (<RuleID id="b013b67c357547b4b866234390dcdb0a" />) has been deployed to provide coverage.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-6gpp-xcg3-4w24">Middleware / Proxy bypass in App Router applications using Turbopack and single locale</a></td>
+			<td>CVE-2026-64642</td>
+			<td>High</td>
+			<td>
+				Next.js applications using App Router built with Turbopack and a single entry in config.i18n.locales are vulnerable to a middleware/proxy bypass. Accordingly, any authentication or security checks that a middleware/proxy may perform are bypassed.
+			</td>
+			<td>
+				This is a middleware bypass that unfortunately cannot be covered through Cloudflare WAF signature engine.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-p9j2-gv94-2wf4">Server-Side Request Forgery in rewrites via attacker-controlled destination hostname</a></td>
+			<td>CVE-2026-64645</td>
+			<td>High</td>
+			<td>
+				A rewrites() or redirects() rule that builds its external destination hostname from request-controlled input can be pointed at an arbitrary hostname, regardless of the rule's hostname suffix. For rewrites, this behavior enables Server-Side Request Forgery (SSRF); for redirects, Open Redirect can be achieved.
+			</td>
+			<td>
+				Existing SSRF rules provide adequate coverage for this vulnerability, no tailored WAF rule was developed.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-89xv-2m56-2m9x">Server-Side Request Forgery in Server Actions on custom servers</a></td>
+			<td>CVE-2026-64649</td>
+			<td>High</td>
+			<td>
+				When a Server Action forwards or redirects a request, an attacker can cause the server to send that outbound request to a malicious host (Server-Side Request Forgery). This requires the attacker’s request to control Host-associated headers.
+			</td>
+			<td>
+				WAF rule Next.js - SSRF - CVE-2026-64649 (<RuleID id="7fe6d6f3df774ae2a0011f20930091a3" />) has been deployed to provide coverage.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-q8wf-6r8g-63ch">Denial of Service in the Image Optimization API using SVGs</a></td>
+			<td>CVE-2026-64644</td>
+			<td>Medium</td>
+			<td>
+				When self-hosting Next.js with the default image loader, the Image Optimization API can optimize remotely hosted images if configured (not enabled by default). If those images contain malicious content, the images can cause CPU exhaustion in the /_next/image endpoint.
+			</td>
+			<td>
+				Malicious request is unfortunately indistinguishable from a legitimate image optimization request, so no WAF rule has been created to address this vulnerability.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-4c39-4ccg-62r3">Unbounded Server Action payload in Edge runtime</a></td>
+			<td>CVE-2026-64646</td>
+			<td>Medium</td>
+			<td>
+				A crafted request can lead to memory consumption on Server Actions in the Edge runtime. Next.js applications which use App Router and have at least one Server Action are affected.
+			</td>
+			<td>
+				Unfortunately there is no one size fits all rule that can be deployed through WAF in lieu of custom bodySizeLimit configurations, so no WAF rule has been created to address this vulnerability.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-955p-x3mx-jcvp">Unauthenticated disclosure of internal Server Function endpoints</a></td>
+			<td>CVE-2026-64643</td>
+			<td>Medium</td>
+			<td>
+				In Next.js applications using App Router, Server Actions (use server) or use cache endpoint IDs can be globally disclosed. An attacker can use this for reconnaissance and as part of a broader attack chain.
+			</td>
+			<td>
+				WAF rule Next.js - Information Disclosure - CVE-2026-64643 (<RuleID id="6c4135d4d9d745e4866ad83672952826" />) has been deployed to provide coverage.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-68g3-v927-f742">Cache confusion of response bodies for requests with bodies</a></td>
+			<td>CVE-2026-64648</td>
+			<td>Medium</td>
+			<td>
+				A server-side fetch with a request body may return a cached response body from a different request to the same URL but different body. This only applies for fetch calls of the shape fetch(new Request(init), aDifferentInit)
+			</td>
+			<td>
+				This is an application logic bug that unfortunately cannot be covered through Cloudflare WAF signature engine.
+			</td>
+		</tr>
+		<tr>
+			<td><a href="https://github.com/vercel/next.js/security/advisories/GHSA-4633-3j49-mh5q">Cache confusion of response bodies for requests with bodies containing invalid UTF-8 byte sequences</a></td>
+			<td>CVE-2026-64647</td>
+			<td>Medium</td>
+			<td>
+				A server-side fetch with a request body may return a cached response body from a different request to the same URL but different body. This only applies when receiving request bodies which contain invalid UTF-8 characters.
+			</td>
+			<td>
+				This is an application logic bug that unfortunately cannot be covered through Cloudflare WAF signature engine.
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 **Key Findings**
 
@@ -16,7 +134,6 @@ This release introduces new rules and updates existing threat signatures to prov
 - CVE-2026-48282: A path traversal vulnerability in Adobe ColdFusion enables unauthenticated attackers to manipulate directory sequences and access restricted system files on the host filesystem.
 
 - CVE-2026-60137: An unauthenticated SQL injection vulnerability affecting WordPress. Threat actors exploit unsanitized input parameters to execute arbitrary SQL queries, leading to unauthorized database access, record manipulation, or data exfiltration.
-
 
 - CVE-2026-63030: A remote code execution vulnerability affecting WordPress core and plugin components. Remote, unauthenticated attackers can execute arbitrary system commands to gain unauthorized access or establish backdoors on host servers.
 
@@ -193,36 +310,49 @@ This release introduces new rules and updates existing threat signatures to prov
 		<tr>
 			<td>Cloudflare Managed Ruleset</td>
 			<td>
-				<RuleID id="c4ca56c0a6a348299d5a93e663167195" />
-			</td>
-			<td>N/A</td>
-			<td>Generic Rules - RCE</td>
-			<td>N/A</td>
-			<td>Block</td>
-			<td>
-				This is a new detection.
-			</td>
-		</tr>
-		<tr>
-			<td>Cloudflare Managed Ruleset</td>
-			<td>
 				<RuleID id="6c4135d4d9d745e4866ad83672952826" />
 			</td>
 			<td>N/A</td>
-			<td>Generic Rules - Information Disclosure</td>
+			<td>Next.js - Information Disclosure - CVE-2026-64643</td>
 			<td>N/A</td>
 			<td>Block</td>
 			<td>
 				This is a new detection.
 			</td>
-		</tr>
+		</tr>	
 		<tr>
 			<td>Cloudflare Managed Ruleset</td>
 			<td>
 				<RuleID id="7fe6d6f3df774ae2a0011f20930091a3" />
 			</td>
 			<td>N/A</td>
-			<td>Generic Rules - Auth Bypass - 2</td>
+			<td>Next.js - SSRF - CVE-2026-64649</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>	
+    <tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="c4ca56c0a6a348299d5a93e663167195" />
+			</td>
+			<td>N/A</td>
+			<td>Next.js - Remote Code Execution - Cache Components</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>	
+    <tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="b013b67c357547b4b866234390dcdb0a" />
+			</td>
+			<td>N/A</td>
+			<td>Next.js - DoS - CVE-2026-64641</td>
 			<td>N/A</td>
 			<td>Block</td>
 			<td>
