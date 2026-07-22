@@ -28,7 +28,7 @@ This poses a question of how the origin servers - as well as other middleboxes (
 
 ### ClientHello from Cloudflare
 
-Cloudflare uses [automatic key exchange](/ssl/origin-configuration/automatic-key-exchange/) to learn which key agreement the origin servers for a zone prefer. Cloudflare applies one preference across the zone. When the selected preference is [X25519MLKEM768](/ssl/post-quantum-cryptography/#hybrid-key-agreement), Cloudflare sends that key share in the first `ClientHello`.
+Cloudflare uses [automatic key exchange](/ssl/origin-configuration/automatic-key-exchange/) to learn which key agreements a zone's origin servers prefer. Cloudflare applies one preference across the zone. When the selected preference is [X25519MLKEM768](/ssl/post-quantum-cryptography/#hybrid-key-agreement), Cloudflare sends that key share in the initial `ClientHello` to allow for faster connection establishment.
 
 Cloudflare continues to advertise other allowed key agreements. If an origin requires another key share, it can use a [HelloRetryRequest](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.4) to request one. The retry adds one network round trip but does not break the connection.
 

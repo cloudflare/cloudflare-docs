@@ -12,9 +12,9 @@ tags:
 
 import { DashButton, Steps } from "~/components";
 
-Automatic key exchange selects one zone-wide key agreement that Cloudflare sends first when starting a Transport Layer Security (TLS) 1.3 connection to your origins. Cloudflare derives the preference from traffic-weighted results across active origins. Selecting the preferred key agreement can avoid a [HelloRetryRequest](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.4) and remove one network round trip from each new connection.
+Automatic key exchange allows Cloudflare to establish faster connections to origin servers by predicting which key agreements origins support. When establishing a TLS 1.3 connection to the origin, Cloudflare sends a key share for the predicted key agreement in the initial ClientHello, which can remove one network round trip by avoiding a [HelloRetryRequest](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.4).
 
-This feature is separate from your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/). The encryption mode controls whether Cloudflare uses HTTPS and validates your origin certificate. Automatic key exchange controls the order of [key shares](https://datatracker.ietf.org/doc/html/rfc8446#section-4.2.8) when starting an HTTPS connection.
+This feature is separate from your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/). The encryption mode controls whether Cloudflare uses HTTPS and validates your origin certificate. Automatic key exchange controls the [key shares](https://datatracker.ietf.org/doc/html/rfc8446#section-4.2.8) sent when starting an HTTPS connection. The same preference is applied for all of a zone's origins.
 
 ## Requirements and scope
 
