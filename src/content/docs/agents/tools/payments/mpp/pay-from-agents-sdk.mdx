@@ -113,13 +113,23 @@ export class BuyerAgent extends Agent<PaymentEnv> {
 	}
 
 	async paidSearch() {
-		const { id } = await this.addMcpServer(
+		const connection = await this.addMcpServer(
 			"premium-search",
 			"https://mcp.example.com/mcp",
 		);
+		if (connection.state === "authenticating") {
+			return { authUrl: connection.authUrl };
+		}
+
 		await this.mcp.waitForConnections();
 
-		const client = McpClient.wrap(this.mcp.mcpConnections[id].client, {
+		const server = this.getMcpServers().servers[connection.id];
+		const mcpConnection = this.mcp.mcpConnections[connection.id];
+		if (server?.state !== "ready" || !mcpConnection) {
+			throw new Error("MCP server is not ready.");
+		}
+
+		const client = McpClient.wrap(mcpConnection.client, {
 			methods: this.methods,
 		});
 		const result = await client.callTool({
@@ -133,6 +143,8 @@ export class BuyerAgent extends Agent<PaymentEnv> {
 ```
 
 </TypeScriptExample>
+
+If `paidSearch()` returns an `authUrl`, send the user to that URL and retry after authorization.
 
 The wrapper retries a paid tool call with an MPP Credential. The result includes the MPP Receipt as `result.receipt`.
 
