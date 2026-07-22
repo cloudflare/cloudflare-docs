@@ -1,6 +1,6 @@
 ---
-title: "Agents SDK v0.18.0: stateless MCP 2026-07-28 by default"
-description: "Agents SDK v0.18.0 adds MCP SDK v2 clients and stateless servers while retaining explicit support for published 2025 protocol deployments."
+title: "Agents SDK v0.18.0: Stateless MCP SDK v2 support"
+description: "Agents SDK v0.18.0 adds Stateless MCP SDK v2 clients and servers while retaining explicit Legacy support."
 products:
   - agents
   - workers
@@ -9,11 +9,11 @@ date: 2026-07-20
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-Agents SDK v0.18.0 adds support for the split MCP TypeScript SDK v2 packages. Agents can serve the draft `2026-07-28` protocol, negotiate between modern and published 2025 servers, and handle modern multi-round-trip input requests.
+Agents SDK v0.18.0 adds support for the split MCP TypeScript SDK v2 packages. Agents can serve Stateless MCP, fall back to Legacy servers, and handle Stateless Elicitation.
 
-Existing 2025 server deployments remain supported through `createLegacyMcpHandler`, `WorkerTransport`, and `McpAgent`.
+Existing Legacy server deployments remain supported through `createLegacyMcpHandler`, `WorkerTransport`, and `McpAgent`.
 
-## Stateless MCP SDK v2 servers
+## Stateless servers
 
 `createMcpHandler` now accepts a factory that returns a server from `@modelcontextprotocol/server`. The factory creates an isolated server for each request.
 
@@ -21,7 +21,7 @@ Existing 2025 server deployments remain supported through `createLegacyMcpHandle
 
 ```ts
 import { McpServer } from "@modelcontextprotocol/server";
-import { createMcpHandler } from "agents/mcp";
+import { createMcpHandler } from "agents/mcp/server";
 
 function createServer() {
 	return new McpServer({ name: "example", version: "1.0.0" });
@@ -32,11 +32,11 @@ export default createMcpHandler(createServer);
 
 </TypeScriptExample>
 
-The handler serves draft `2026-07-28` requests. Its default stateless fallback also supports ordinary tools, resources, and prompts from published 2025 clients. Session streams, replay, deletion, and pushed server-to-client requests still require a 2025 sessionful server.
+The isolated `agents/mcp/server` entry keeps `McpAgent`, `WorkerTransport`, MCP client transports, and SDK v1 modules out of Stateless server bundles. Its Legacy compatibility lane supports ordinary tools, resources, and prompts. Session streams, replay, deletion, and pushed server-to-client requests still require a Legacy sessionful server.
 
-The Workers wrapper validates present browser Origins, allows the modern `Mcp-Method` and `Mcp-Name` CORS headers, and exposes the upstream handler's `close`, `notify`, and `bus` controls.
+The Workers wrapper validates present browser Origins, supports explicit delegation to trusted Origin middleware, and exposes the upstream handler's `close`, `notify`, and `bus` controls.
 
-## Explicit 2025 server support
+## Explicit Legacy support
 
 Existing SDK v1 servers can rename `createMcpHandler` to `createLegacyMcpHandler` without changing their transport behavior:
 
@@ -53,13 +53,13 @@ export default createLegacyMcpHandler(
 
 </TypeScriptExample>
 
-Passing an SDK v1 server directly to `createMcpHandler` is deprecated. `McpAgent` remains available for stateful 2025 deployments, but it is deprecated and feature-frozen.
+Passing an SDK v1 server directly to `createMcpHandler` is deprecated. `McpAgent` remains available for stateful Legacy deployments, but it is deprecated and feature-frozen.
 
 ## Client negotiation and input requests
 
-The MCP client manager now uses `@modelcontextprotocol/client`. It probes modern servers with `server/discover` and falls back to the published `initialize` handshake.
+The MCP client manager now uses `@modelcontextprotocol/client`. It probes Stateless servers with `server/discover` and falls back to the Legacy `initialize` handshake.
 
-Modern `input_required` results use the same form and URL elicitation handlers as pushed 2025 elicitation. The SDK collects input, retries the original operation, and resolves the original `callTool`, `getPrompt`, or `readResource` promise with its final result.
+Stateless Elicitation uses `input_required` through multi-round-trip requests (MRTR). Legacy Elicitation uses the same form and URL handlers for pushed requests. The SDK collects input, retries the original operation, and resolves the original `callTool`, `getPrompt`, or `readResource` promise with its final result.
 
 OAuth callbacks now validate issuer metadata through the v2 SDK. Discovery state and issuer-bound credentials persist across browser redirects and Durable Object hibernation.
 

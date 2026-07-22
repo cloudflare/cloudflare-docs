@@ -202,12 +202,12 @@ export class MyMCP extends McpAgent<Env, unknown, AuthContext> {
 }
 ```
 
-### With createMcpHandler
+### With Stateless createMcpHandler
 
 A compatible Workers OAuth Provider supplies standard token metadata at `context.http.authInfo`. Use `getMcpAuthContext()` for existing application props.
 
 ```ts
-import { createMcpHandler, getMcpAuthContext } from "agents/mcp";
+import { createMcpHandler, getMcpAuthContext } from "agents/mcp/server";
 import { McpServer } from "@modelcontextprotocol/server";
 
 function createServer() {

@@ -12,7 +12,7 @@ products:
 
 import { Render, TypeScriptExample, LinkCard } from "~/components";
 
-Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.18.0 uses `@modelcontextprotocol/client` and negotiates draft `2026-07-28` or published 2025 protocol behavior automatically.
+Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.18.0 uses `@modelcontextprotocol/client` and negotiates Stateless or Legacy behavior automatically.
 
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package, type, OAuth provider, and rollout changes.
 
@@ -395,15 +395,15 @@ for (const prompt of state.prompts) {
 
 ### Elicitation
 
-[MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) lets a server request user input while handling another request, such as a tool call. The current stable MCP specification defines form and URL modes.
+MCP servers can request user input while handling another operation. Stateless Elicitation returns `input_required` and completes through multi-round-trip requests (MRTR). Legacy Elicitation sends pushed `elicitation/create` requests. Both use form and URL modes.
 
-Register a handler for each mode your Agent supports in `onStart()`:
+Register a handler for each mode your Agent supports in `onStart()`. The same handlers serve both lanes:
 
 <TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
-import type { ElicitRequest, ElicitResult } from "agents/mcp";
+import type { ElicitRequest, ElicitResult } from "agents/mcp/client";
 
 class MyAgent extends Agent<Env> {
 	onStart() {
@@ -434,7 +434,7 @@ The `serverId` identifies the connection that sent the request. Use it to tell t
 
 #### Capability negotiation and hibernation
 
-At the MCP `initialize` handshake, a connection advertises only the modes with configured handlers. A form-only handler advertises form mode. A URL-only handler advertises URL mode. A connection without handlers advertises no elicitation capability, which lets the server use its fallback.
+The SDK advertises only the modes with configured handlers. Legacy connections advertise them during `initialize`. Stateless requests carry them with request capabilities. A form-only handler advertises form mode. A URL-only handler advertises URL mode. A connection without handlers advertises no elicitation capability, which lets the server use its fallback.
 
 The SDK stores the advertised modes with each server registration. A connection restored after Durable Object hibernation can therefore advertise the same modes when it reconnects. Callback functions remain in memory and reattach when `onStart()` runs.
 
@@ -512,7 +512,7 @@ A handler returns a promise, but the response often comes from a browser. Broadc
 
 ```ts
 import { Agent, callable } from "agents";
-import type { ElicitRequest, ElicitResult } from "agents/mcp";
+import type { ElicitRequest, ElicitResult } from "agents/mcp/client";
 
 type PendingResolver = {
 	resolve: (result: ElicitResult) => void;
@@ -572,9 +572,9 @@ class MyAgent extends Agent<Env> {
 
 The example uses a 55-second timeout because MCP SDK requests default to 60 seconds. If your client call sets a longer request timeout, adjust this timeout to finish first.
 
-Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. The [`mcp-elicitation` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) is a server that sends both modes.
+Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. [`mcp-elicitation-mrtr`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) demonstrates Stateless Elicitation. [`mcp-elicitation`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) demonstrates Legacy Elicitation.
 
-To send elicitation requests from an MCP server, refer to [`elicitInput`](/agents/model-context-protocol/apis/agent-api/#elicitinputoptions-context).
+For server-side patterns, refer to [Stateless Elicitation](/agents/model-context-protocol/apis/handler-api/#stateless-elicitation) and [Legacy Elicitation](/agents/model-context-protocol/apis/agent-api/#legacy-elicitation).
 
 ## Managing servers
 
@@ -872,7 +872,7 @@ export class MyAgent extends Agent {
 
 ### `configureElicitationHandlers()`
 
-Configure handlers for server-initiated `elicitation/create` requests. Add a handler for each elicitation mode your Agent supports.
+Configure handlers for Stateless Elicitation and Legacy `elicitation/create` requests. Add a handler for each elicitation mode your Agent supports.
 
 ```txt
 this.mcp.configureElicitationHandlers(handlers?: {
@@ -901,7 +901,7 @@ Passing `undefined` clears all configured handlers.
 
 #### Capability behavior
 
-The client advertises only modes with configured handlers during the MCP `initialize` handshake. Handler changes apply immediately to live connections, but servers receive updated advertised modes after those connections reconnect.
+The client advertises only modes with configured handlers during Legacy negotiation and on Stateless requests. Handler changes apply immediately to live connections, but servers receive updated advertised modes after those connections reconnect.
 
 The SDK stores the handler-derived modes with each MCP server registration. Restored connections advertise those modes after Durable Object hibernation, and callbacks reattach when `onStart()` runs.
 
@@ -913,7 +913,7 @@ Configure handlers in `onStart()`:
 
 ```ts
 import { Agent } from "agents";
-import type { ElicitRequest, ElicitResult } from "agents/mcp";
+import type { ElicitRequest, ElicitResult } from "agents/mcp/client";
 
 export class MyAgent extends Agent<Env> {
 	onStart() {

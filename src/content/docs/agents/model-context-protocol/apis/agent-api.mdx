@@ -12,15 +12,15 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-`McpAgent` creates a stateful published 2025 MCP server backed by a Durable Object.
+`McpAgent` creates a stateful Legacy MCP server backed by a Durable Object.
 
 :::caution[Deprecated]
 
-`McpAgent` remains available for published 2025 servers that use legacy stateful features. It is deprecated and feature-frozen. A server without those dependencies can migrate directly to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
+`McpAgent` remains available for Legacy servers that use stateful features. It is deprecated and feature-frozen. A server without those dependencies can migrate directly to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
 
-A server that depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay needs a staged migration. Design stateless equivalents, add a modern route, and serve both eras until clients migrate and existing sessions drain.
+A server that depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay needs a staged migration. Design Stateless equivalents, add a Stateless route, and serve both lanes until clients migrate and existing sessions drain.
 
-Keep importing the legacy server's `McpServer` from `@modelcontextprotocol/sdk`. An SDK v2 server from `@modelcontextprotocol/server` cannot run inside `McpAgent`.
+Keep importing the Legacy server `McpServer` from `@modelcontextprotocol/sdk`. An SDK v2 server from `@modelcontextprotocol/server` cannot run inside `McpAgent`.
 
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the feature mapping and dual-era rollout.
 
@@ -52,7 +52,7 @@ export class MyMCP extends McpAgent {
 
 This means that each instance of your MCP server has its own durable state, backed by a [Durable Object](/durable-objects/), with its own [SQL database](/agents/runtime/lifecycle/state/).
 
-A stateless modern server can define [tools](/agents/model-context-protocol/protocol/tools/) with `@modelcontextprotocol/server` and serve them through `createMcpHandler`.
+A Stateless server can define [tools](/agents/model-context-protocol/protocol/tools/) with `@modelcontextprotocol/server` and serve them through `createMcpHandler`.
 
 But if you want your MCP server to:
 
@@ -269,9 +269,9 @@ export class MyMCP extends McpAgent<Env, State, {}> {
 
 </TypeScriptExample>
 
-## Elicitation
+## Legacy Elicitation
 
-[MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) lets a server request user input while handling another request, such as a tool call. The current stable MCP specification defines two modes:
+[MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) lets a server request user input while handling another request, such as a tool call. Legacy Elicitation defines two modes:
 
 - **Form mode** collects structured, non-sensitive data through the client.
 - **URL mode** sends the user to an out-of-band interaction, such as third-party authorization or payment.
@@ -383,7 +383,7 @@ switch (result.action) {
 </TypeScriptExample>
 
 :::note[MCP client support]
-Not all MCP clients implement elicitation. Check the client before depending on it and provide a fallback when appropriate. Agents acting as MCP clients can handle both modes through [MCP client elicitation handlers](/agents/model-context-protocol/apis/client-api/#elicitation).
+Not all MCP clients implement Legacy Elicitation. Check the client before depending on it and provide a fallback when appropriate. Agents acting as MCP clients can handle both modes through [MCP client elicitation handlers](/agents/model-context-protocol/apis/client-api/#elicitation).
 :::
 
 For more human-in-the-loop patterns, refer to [Human-in-the-loop patterns](/agents/concepts/agentic-patterns/human-in-the-loop/).

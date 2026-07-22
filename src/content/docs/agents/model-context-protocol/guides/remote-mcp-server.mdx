@@ -21,14 +21,14 @@ This guide shows how to deploy a remote MCP server on Cloudflare using [Streamab
 
 The Agents SDK provides multiple ways to create MCP servers. Choose the approach that fits your use case:
 
-| Approach                                                                                              | Stateful?            | Protocol path                                    | Best for                                |
-| ----------------------------------------------------------------------------------------------------- | -------------------- | ------------------------------------------------ | --------------------------------------- |
-| [`createMcpHandler()`](/agents/model-context-protocol/apis/handler-api/)                              | No                   | Draft `2026-07-28`, with stateless 2025 fallback | New stateless tools                     |
-| [`createLegacyMcpHandler()`](/agents/model-context-protocol/apis/handler-api/#createlegacymcphandler) | Optional             | Published 2025                                   | Existing `WorkerTransport` servers      |
-| [`McpAgent`](/agents/model-context-protocol/apis/agent-api/)                                          | Yes                  | Published 2025                                   | Existing Durable Object and RPC servers |
-| Raw SDK transport                                                                                     | Depends on transport | Depends on SDK package                           | Custom transport ownership              |
+| Approach                                                                                              | Stateful?            | Protocol path                       | Best for                                |
+| ----------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------- | --------------------------------------- |
+| [`createMcpHandler()`](/agents/model-context-protocol/apis/handler-api/)                              | No                   | Stateless with Legacy compatibility | New Stateless tools                     |
+| [`createLegacyMcpHandler()`](/agents/model-context-protocol/apis/handler-api/#createlegacymcphandler) | Optional             | Legacy                              | Existing `WorkerTransport` servers      |
+| [`McpAgent`](/agents/model-context-protocol/apis/agent-api/)                                          | Yes                  | Legacy                              | Existing Durable Object and RPC servers |
+| Raw SDK transport                                                                                     | Depends on transport | Depends on SDK package              | Custom transport ownership              |
 
-Use `createMcpHandler` for a new stateless server. An existing `McpAgent` without legacy stateful dependencies can migrate directly. If it uses MCP session state, RPC, pushed requests, streams, or replay, plan the stateless equivalents and serve both eras during the transition. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged rollout.
+Use `createMcpHandler` for a new stateless server. An existing `McpAgent` without legacy stateful dependencies can migrate directly. If it uses MCP session state, RPC, pushed requests, streams, or replay, plan the Stateless equivalents and serve Stateless and Legacy lanes during the transition. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged rollout.
 
 ## Deploy your first MCP server
 
