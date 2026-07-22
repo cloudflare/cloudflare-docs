@@ -107,9 +107,13 @@ const hasRemainingExamples = remainingExamples.length > 0;
 
 const description = model.description;
 const modelKind = model.task ? `a ${model.task} model` : "an AI model";
+const availability =
+	model.hosting === "hosted"
+		? "available on Cloudflare Workers AI"
+		: "available via Cloudflare AI Gateway";
 const metaDescription =
 	description ||
-	`${displayName} is ${modelKind}${model.authorName ? ` by ${model.authorName}` : ""}, available through Cloudflare AI.`;
+	`${displayName} is ${modelKind}${model.authorName ? ` by ${model.authorName}` : ""}, ${availability}.`;
 const isBeta = model.beta;
 
 // Map the banner `severity` onto the four Aside types; unknown severities fall
