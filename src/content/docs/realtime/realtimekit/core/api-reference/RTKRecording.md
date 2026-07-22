@@ -12,16 +12,11 @@ to start/stop recordings and check if there's a recording in progress.
 
 
 * [RTKRecording](#module_RTKRecording)
-    * [.telemetry](#module_RTKRecording+telemetry)
     * [.start()](#module_RTKRecording+start)
     * [.stop()](#module_RTKRecording+stop)
     * [.pause()](#module_RTKRecording+pause)
     * [.resume()](#module_RTKRecording+resume)
 
-<a name="module_RTKRecording+telemetry"></a>
-
-### meeting.recording.telemetry
-**Kind**: instance property of [<code>RTKRecording</code>](#module_RTKRecording)  
 <a name="module_RTKRecording+start"></a>
 
 ### meeting.recording.start()
