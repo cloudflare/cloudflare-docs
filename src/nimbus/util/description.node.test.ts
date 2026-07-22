@@ -48,7 +48,7 @@ describe("assertNoClientIslandInDerivedSlot", () => {
 			'<astro-island uid="x" component-url="/Foo.tsx" client="load"></astro-island>';
 		expect(() =>
 			assertNoClientIslandInDerivedSlot(html, "/some/page/"),
-		).toThrow(/renders a client island/);
+		).toThrow(/needs an explicit `description`/);
 	});
 
 	test("names the offending pathname in the error", () => {
