@@ -715,12 +715,28 @@ Gateway routing supports [Streamable HTTP](https://spec.modelcontextprotocol.io/
 
 ### Enable Gateway routing
 
-To route MCP server portal traffic through Gateway:
+You can route every server in a portal through Gateway or turn on routing for individual servers. If Gateway routing is enabled on the portal, it applies to every server in that portal regardless of the server-level setting.
+
+#### Route every server in a portal
+
+To route traffic from every MCP server in a portal through Gateway:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
 2. Find the portal you want to configure, then select the three dots > **Edit**.
 3. Under **Basic information**, turn on **Route traffic through Cloudflare Gateway**.
 4. Select **Save**.
+
+#### Route an individual server
+
+To route traffic from one MCP server through Gateway without enabling Gateway routing for the entire portal:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+2. Go to the **MCP servers** tab.
+3. Find the server you want to configure, then select the three dots > **Edit**.
+4. Under **Basic information**, turn on **Route traffic through Cloudflare Gateway**.
+5. Select **Save**.
+
+The API field for the server-level setting is `secure_web_gateway`. It defaults to `false`.
 
 Portal traffic will now appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/). To apply DLP scanning, [create a Gateway HTTP policy](#example-gateway-policy).
 
