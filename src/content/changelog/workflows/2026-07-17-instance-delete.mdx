@@ -1,15 +1,22 @@
 ---
-title: Delete Workflow instances in batches
-description: Delete up to 100 Workflow instances and their stored state using a binding or Wrangler.
+title: Delete Workflow instances individually or in batches
+description: Delete one or up to 100 Workflow instances and their stored state using a binding or Wrangler.
 products:
   - workflows
   - workers
 date: 2026-07-17 12:00:00 UTC
 ---
 
-You can now delete up to 100 Workflow instances and their stored state in one operation via the [Workflows API](/workflows/build/workers-api/) or Wrangler CLI. After deletion, the stored state from those instances no longer counts toward your Workflows storage bill. Running instances are terminated before deletion.
+You can now delete one or up to 100 Workflow instances and their stored state via the [Workflows API](/workflows/build/workers-api/) or Wrangler CLI. After deletion, the stored state from those instances no longer counts toward your Workflows storage bill. Running instances are terminated before deletion.
 
-Delete instances via the [Workflows API](/workflows/build/workers-api/#deletebatch) by calling `deleteBatch()` on the Workflow binding:
+Delete one instance by calling [`delete()`](/workflows/build/workers-api/#delete) on its handle:
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
+```
+
+Delete multiple instances by calling [`deleteBatch()`](/workflows/build/workers-api/#deletebatch) on the Workflow binding:
 
 ```ts
 const result = await env.MY_WORKFLOW.deleteBatch([
@@ -21,13 +28,14 @@ console.log(result.deleted);
 console.log(result.errors);
 ```
 
-The result contains successfully deleted IDs and per-instance errors. IDs that do not exist are returned as errors, and duplicate IDs are processed once.
+The batch result contains successfully deleted IDs and per-instance errors. IDs that do not exist are returned as errors. Duplicate IDs are deleted once, and the result includes one entry for each input position.
 
-You can also delete multiple instances from Wrangler. Use `--local` against a local `wrangler dev` session:
+Wrangler accepts one or more instance IDs. Use `--local` against a local `wrangler dev` session:
 
 ```sh
+npx wrangler workflows instances delete my-workflow <INSTANCE_ID>
 npx wrangler workflows instances delete my-workflow <INSTANCE_ID> <INSTANCE_ID>
-npx wrangler workflows instances delete my-workflow <INSTANCE_ID> <INSTANCE_ID> --local
+npx wrangler workflows instances delete my-workflow <INSTANCE_ID> --local
 ```
 
-For more information, refer to [Delete Workflow instances](/workflows/build/trigger-workflows/#delete-workflow-instances) and the [`deleteBatch`](/workflows/build/workers-api/#deletebatch) Workers API reference.
+For more information, refer to [Delete Workflow instances](/workflows/build/trigger-workflows/#delete-workflow-instances), [`delete`](/workflows/build/workers-api/#delete), and [`deleteBatch`](/workflows/build/workers-api/#deletebatch).
