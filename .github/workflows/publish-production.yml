@@ -12,7 +12,7 @@ on:
 
 jobs:
   publish:
-    if: github.repository == 'cloudflare/cloudflare-docs'
+    if: github.repository == 'cloudflare/cloudflare-docs' && github.ref == 'refs/heads/production'
     name: Production
     runs-on: ubuntu-22.04
     permissions:
@@ -150,9 +150,6 @@ jobs:
 
       - name: Reindex AI Search
         env:
-          # Bearer token for the indexer worker's /api/ai-search/reindex endpoint
-          # (matches bin/ai-search-doc-events send-token-env default).
-          AI_SEARCH_REINDEX_TOKEN: ${{ secrets.AI_SEARCH_REINDEX_TOKEN }}
           # The indexer sits behind Cloudflare Access, so the reindex call needs
           # an Access service token (send.ts sends these as CF-Access-Client-*).
           CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
@@ -161,7 +158,6 @@ jobs:
           REINDEX_URL: ${{ vars.AI_SEARCH_REINDEX_URL }}
         run: |
           : "${REINDEX_URL:?AI_SEARCH_REINDEX_URL repository variable is required}"
-          : "${AI_SEARCH_REINDEX_TOKEN:?AI_SEARCH_REINDEX_TOKEN secret is required}"
           : "${CF_ACCESS_CLIENT_ID:?CF_ACCESS_CLIENT_ID secret is required}"
           : "${CF_ACCESS_CLIENT_SECRET:?CF_ACCESS_CLIENT_SECRET secret is required}"
 
