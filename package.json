@@ -157,10 +157,5 @@
 			"version": ">=24.0.0",
 			"onFail": "error"
 		}
-	},
-	"pnpm": {
-		"overrides": {
-			"@cloudflare/nimbus-docs": "https://registry.npmjs.org/@cloudflare/nimbus-docs/-/nimbus-docs-0.7.1.tgz"
-		}
 	}
 }
