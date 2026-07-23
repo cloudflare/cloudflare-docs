@@ -1,6 +1,5 @@
 ---
 import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
-import DocSearch from "@astrojs/starlight-docsearch/DocSearch.astro";
 import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 
@@ -16,7 +15,7 @@ import AgentDirective from "../AgentDirective.astro";
 	</div>
 	<div class="header-end">
 		<div id="docsearch">
-			<DocSearch />
+			<cfdocs-docs-search></cfdocs-docs-search>
 		</div>
 		<div id="right-group">
 			<HeaderDropdowns client:idle />
@@ -184,29 +183,18 @@ import AgentDirective from "../AgentDirective.astro";
 		gap: 0.25rem;
 	}
 
+	/* Search/ask trigger is hidden on narrow viewports (matches right-group). */
+	#docsearch {
+		display: none;
+	}
+
 	@media screen and (min-width: 800px) {
 		#right-group {
 			display: flex;
 		}
 
 		#docsearch {
-			width: 18rem;
-		}
-
-		#docsearch :global(.DocSearch-Button) {
-			height: 2.25rem;
-			border-color: var(--color-header-line);
-			color: var(--color-header-text-subtle);
-			transition:
-				color 150ms,
-				background-color 150ms,
-				border-color 150ms;
-		}
-
-		#docsearch :global(.DocSearch-Button:hover) {
-			border-color: var(--color-header-line);
-			background-color: var(--color-header-fill);
-			color: var(--color-header-hover-text);
+			display: block;
 		}
 	}
 </style>

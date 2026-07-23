@@ -1,31 +1,22 @@
+import type { DocsSearchElement } from "~/components/docs-search/docs-search";
+
+/**
+ * Opens the global docs search/chat panel in Search mode, optionally
+ * pre-filling a query. Used by the 404 page and the sidebar "global search"
+ * fallback. Falls back to legacy DocSearch selectors if the custom element
+ * hasn't upgraded yet.
+ */
 export const openGlobalSearch = (searchTerm?: string) => {
-	// Try multiple selectors for DocSearch
-	const docSearchButton =
-		(document.querySelector("#docsearch button") as HTMLButtonElement) ||
-		(document.querySelector(".DocSearch-Button") as HTMLButtonElement) ||
-		(document.querySelector("[data-docsearch-button]") as HTMLButtonElement);
+	const panel = document.querySelector<DocsSearchElement>("cfdocs-docs-search");
 
-	if (docSearchButton) {
-		// Click the DocSearch button to open the modal
-		docSearchButton.click();
-
-		if (searchTerm) {
-			// Wait for modal to open and set the search term
-			setTimeout(() => {
-				const searchInput =
-					(document.querySelector(".DocSearch-Input") as HTMLInputElement) ||
-					(document.querySelector("#docsearch-input") as HTMLInputElement) ||
-					(document.querySelector(
-						"[data-docsearch-input]",
-					) as HTMLInputElement);
-
-				if (searchInput) {
-					searchInput.value = searchTerm;
-					searchInput.focus();
-					// Trigger search
-					searchInput.dispatchEvent(new Event("input", { bubbles: true }));
-				}
-			}, 100);
-		}
+	if (panel && typeof panel.open === "function") {
+		panel.open("search", searchTerm);
+		return;
 	}
+
+	// Fallback: click the trigger button directly if the element isn't ready.
+	const trigger = document.querySelector<HTMLButtonElement>(
+		"cfdocs-docs-search .ds-trigger",
+	);
+	trigger?.click();
 };
