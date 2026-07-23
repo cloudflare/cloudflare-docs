@@ -49,7 +49,7 @@
 		"@astrojs/rss": "4.0.18",
 		"@astrojs/sitemap": "3.7.3",
 		"@base-ui/react": "1.5.0",
-		"@cloudflare/nimbus-docs": "^0.6.1",
+		"@cloudflare/nimbus-docs": "https://pkg.pr.new/@cloudflare/nimbus-docs@36",
 		"@cloudflare/vitest-pool-workers": "0.16.15",
 		"@cloudflare/workers-types": "4.20260615.1",
 		"@docsearch/css": "3.9.0",

@@ -20,7 +20,14 @@ const NOINDEX_PRODUCTS = ["email-security"];
 export const prerender = true;
 export const getStaticPaths = getDocsStaticPaths;
 
-const { entry, Content, headings } = await getDocsPageProps(Astro);
+const { entry, Content, headings } = await getDocsPageProps(Astro, {
+	partialHeadings: {
+		resolvePartialId: ({ file, product }) => {
+			if (!file) return undefined;
+			return product ? `${product}/${file}` : file;
+		},
+	},
+});
 
 const currentSlug = Astro.url.pathname.replace(/\/$/, "") || "/";
 const sectionSegment = currentSlug.split("/").filter(Boolean)[0];
