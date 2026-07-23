@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="SILLAGE — Maison de parfum. L'art de laisser une trace. Des parfums d'exception composés à Paris."
+    />
+    <title>SILLAGE — Maison de parfum</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Grain + ambient light -->
+    <div class="grain" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true"></div>
+
+    <!-- Custom cursor -->
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"></div>
+    </div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="preloader__inner">
+        <svg class="preloader__trail" viewBox="0 0 600 120" preserveAspectRatio="xMidYMid meet">
+          <path
+            class="trail-path"
+            d="M10,90 C120,20 200,110 300,60 C400,10 480,100 590,40"
+            fill="none"
+          />
+        </svg>
+        <div class="preloader__word" aria-label="Sillage">
+          <span>S</span><span>I</span><span>L</span><span>L</span><span>A</span><span>G</span><span>E</span>
+        </div>
+        <div class="preloader__meta">
+          <span class="preloader__tag">Maison de parfum · Paris</span>
+          <span class="preloader__count" id="count">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="nav" id="nav">
+      <a href="#" class="nav__brand" data-cursor="link">SILLAGE</a>
+      <nav class="nav__links">
+        <a href="#collection" data-cursor="link">Collection</a>
+        <a href="#maison" data-cursor="link">La Maison</a>
+        <a href="#contact" data-cursor="link">Contact</a>
+      </nav>
+      <a href="#collection" class="nav__cta" data-cursor="link">Découvrir</a>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero" id="hero">
+        <div class="hero__label reveal-up">
+          <span class="line"></span> Collection Printemps — MMXXVI
+        </div>
+
+        <h1 class="hero__title" aria-label="Sillage">
+          <span class="word">
+            <span class="l">S</span><span class="l">I</span><span class="l">L</span><span class="l">L</span
+            ><span class="l">A</span><span class="l">G</span><span class="l">E</span>
+          </span>
+        </h1>
+
+        <p class="hero__sub reveal-up">
+          L'art de laisser une trace. Trois parfums composés comme des souvenirs —
+          l'empreinte invisible que l'on porte, et que l'on abandonne derrière soi.
+        </p>
+
+        <div class="hero__scroll reveal-up" data-cursor="link">
+          <span>Faire défiler</span>
+          <span class="hero__scroll-line"></span>
+        </div>
+
+        <div class="hero__flacon" aria-hidden="true"></div>
+      </section>
+
+      <!-- Manifesto -->
+      <section class="manifesto" id="manifeste">
+        <p class="manifesto__text" data-split>
+          Un parfum n'est pas ce que l'on voit. C'est ce que l'on retient. Une présence
+          qui demeure quand tout le reste s'efface.
+        </p>
+      </section>
+
+      <!-- Marquee -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track" id="marquee-track"></div>
+      </div>
+
+      <!-- Collection -->
+      <section class="collection" id="collection">
+        <div class="section-head reveal-up">
+          <span class="section-head__idx">01 — 03</span>
+          <h2 class="section-head__title">La Collection</h2>
+          <p class="section-head__desc">
+            Trois compositions, trois territoires olfactifs. Chacune scellée à la main dans
+            son flacon de verre soufflé.
+          </p>
+        </div>
+
+        <div class="grid" id="grid"><!-- injecté par JS --></div>
+      </section>
+
+      <!-- Maison / craft -->
+      <section class="maison" id="maison">
+        <div class="maison__col maison__col--text reveal-up">
+          <span class="section-head__idx">La Maison</span>
+          <h2 class="maison__title">
+            Composer une émotion,<br />goutte après goutte.
+          </h2>
+          <p class="maison__body">
+            Chaque flacon SILLAGE naît d'une pyramide olfactive pensée dans le temps :
+            les notes de tête qui séduisent, le cœur qui persuade, le fond qui reste. Nos
+            essences sont distillées en petites séries et macérées durant douze semaines.
+          </p>
+        </div>
+
+        <div class="pyramid" id="pyramid">
+          <div class="pyramid__row" data-tier>
+            <span class="pyramid__k">Tête</span>
+            <span class="pyramid__bar"><i></i></span>
+            <span class="pyramid__v">Bergamote · Poivre rose · Néroli</span>
+          </div>
+          <div class="pyramid__row" data-tier>
+            <span class="pyramid__k">Cœur</span>
+            <span class="pyramid__bar"><i></i></span>
+            <span class="pyramid__v">Rose de Mai · Iris · Jasmin</span>
+          </div>
+          <div class="pyramid__row" data-tier>
+            <span class="pyramid__k">Fond</span>
+            <span class="pyramid__bar"><i></i></span>
+            <span class="pyramid__v">Oud · Ambre gris · Vétiver</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact / footer -->
+      <footer class="footer" id="contact">
+        <div class="footer__cta reveal-up">
+          <span class="section-head__idx">Restons en contact</span>
+          <h2 class="footer__title">Recevez notre sillage.</h2>
+          <form class="footer__form" onsubmit="return false">
+            <input type="email" placeholder="votre@email.com" aria-label="Email" />
+            <button type="submit" data-cursor="link">S'inscrire</button>
+          </form>
+        </div>
+        <div class="footer__base">
+          <span>SILLAGE — Maison de parfum</span>
+          <span>Paris · MMXXVI</span>
+          <span>Fait main, en petites séries</span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="js/anime.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
