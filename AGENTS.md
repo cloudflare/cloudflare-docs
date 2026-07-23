@@ -4,7 +4,7 @@ This file helps AI agents understand the structure, tooling, and conventions of 
 
 ## Repository overview
 
-This is the source for [developers.cloudflare.com](https://developers.cloudflare.com). It is an **Astro** site using the **Starlight** documentation framework. Content is authored in **MDX** (Markdown + JSX). The site is deployed as a Cloudflare Worker.
+This is the source for [developers.cloudflare.com](https://developers.cloudflare.com). It is an **Astro** site using the **Nimbus** (`nimbus-docs`) documentation framework. Content is authored in **MDX** (Markdown + JSX). The site is deployed as a Cloudflare Worker.
 
 - **Node.js**: 24.x
 - **Package manager**: pnpm (use `pnpm install --frozen-lockfile` to install)
@@ -22,16 +22,18 @@ cloudflare-docs/
 │   │   ├── glossary/       # Glossary term definitions (YAML)
 │   │   ├── products/       # Product metadata (YAML, 135 files)
 │   │   └── ...             # Other data collections (plans, fields, models, etc.)
-│   ├── components/         # Custom Astro + React components
-│   │   ├── index.ts        # Central re-export barrel — all MDX imports come from here
-│   │   └── overrides/      # Starlight component overrides (Banner, Footer, Head, etc.)
+│   ├── components/         # Astro + React components (barrel: components.ts)
+│   ├── components.ts       # MDX component barrel — all MDX imports come from here
+│   ├── layouts/            # Page layout components
+│   ├── pages/              # Dynamic route pages (changelog, llms.txt, RSS, etc.)
 │   ├── schemas/            # Zod schemas for all content collections
-│   ├── plugins/            # Remark, Rehype, Starlight, and Expressive Code plugins
+│   ├── plugins/            # Satteri hast pipeline plugins, Algolia DocSearch config
+│   ├── scripts/            # Client-side scripts (analytics, mermaid, webmcp, etc.)
+│   ├── styles/             # CSS (Tailwind 4)
 │   ├── icons/              # Product SVG icons (~110)
 │   ├── assets/             # Processed images (optimized by Astro)
-│   ├── styles/             # CSS (Tailwind 4)
-│   ├── pages/              # Dynamic route pages (changelog, glossary, search)
-│   └── util/               # Shared utility functions
+│   ├── util/               # App utility functions
+│   └── content.config.ts   # Content collection definitions
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
 ├── bin/                    # Build scripts and CI helpers
@@ -41,8 +43,7 @@ cloudflare-docs/
 │                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
 │                           # skills/ is in .gitignore and is NOT committed to the repository.
 ├── .flue/                  # Flue cloudflare-docs-bot — see .flue/AGENTS.md
-├── astro.config.ts         # Astro + Starlight configuration
-├── ec.config.mjs           # Expressive Code (syntax highlighting) configuration
+├── astro.config.ts         # Astro + Nimbus configuration
 ├── package.json
 └── tsconfig.json
 ```
@@ -129,7 +130,7 @@ pnpm run format:core:check  # Prettier formatting check
 pnpm run check              # Astro + Worker type checking
 pnpm run lint               # ESLint
 pnpm run format:core:check  # Prettier formatting check
-pnpm run build              # Full build with link checking (set RUN_LINK_CHECK=true)
+pnpm run build              # Full build with link checking
 pnpm run test               # All test suites
 pnpm exec tsm bin/validate-redirects.ts  # Only if public/__redirects was modified
 ```
@@ -158,7 +159,7 @@ The CI workflow (`.github/workflows/ci.yml`) runs on PRs to `production` and che
 2. `pnpm run check` (Astro + Worker type checking)
 3. ESLint (reported inline on PR via reviewdog)
 4. `pnpm run format:core:check` (Prettier formatting)
-5. `pnpm run build` with `RUN_LINK_CHECK=true` (full build + internal link validation)
+5. `pnpm run build` (full build + MDX parsing + image path validation)
 6. Redirect validation (`bin/validate-redirects.ts`)
 7. `pnpm run test` (all Vitest suites)
 
@@ -221,7 +222,7 @@ node tools/directory-entry-ids --fix  # Auto-fix missing, malformed, or duplicat
 
 ## Testing
 
-Tests use Vitest with three workspace projects (`vitest.workspace.ts`):
+Tests use Vitest with three workspace projects (`vitest.config.ts`):
 
 | Suite   | File pattern       | Runtime                           |
 | ------- | ------------------ | --------------------------------- |
