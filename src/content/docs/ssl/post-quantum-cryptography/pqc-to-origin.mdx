@@ -12,7 +12,7 @@ tags:
   - Post-quantum
 ---
 
-import { Example, APIRequest } from "~/components";
+import { Example } from "~/components";
 
 This page covers post-quantum cryptography on the TLS connection between Cloudflare's edge and your origin server. Cloudflare supports both [post-quantum key agreement](#post-quantum-key-agreement) (X25519MLKEM768) and [post-quantum signatures](#post-quantum-signatures) (ML-DSA via Authenticated Origin Pulls and Custom Origin Trust Store) on this connection.
 
@@ -36,27 +36,11 @@ Cloudflare continues to advertise other allowed key agreements. If an origin req
 
 #### Cloudflare zone settings
 
-Automatic key exchange is the default for eligible zones. You can use the [API](/api/resources/origin_post_quantum_encryption/methods/update/) to set a manual post-quantum preference.
+[Automatic key exchange](/ssl/origin-configuration/automatic-key-exchange/) is on for all existing zones and on by default for new zones. When an origin supports both classical and post-quantum options, Cloudflare prefers post-quantum key agreement.
 
-It is also possible to opt out of PQC using the same API endpoint.
+Use **Automatic key exchange** to control scanning and preferred key share selection. Compliance requirements apply only to TLS 1.3 connections.
 
-:::note
-This setting affects all outbound connections from the zone you specify in the API call, including `fetch()` requests made by [Workers](/workers/) on your zone.
-:::
-
-<APIRequest
-	path="/zones/{zone_id}/cache/origin_post_quantum_encryption"
-	method="PUT"
-	json={{
-		value: "<YOUR_CHOSEN_SETTING>",
-	}}
-/>
-
-The possible values are:
-
-- `supported` (most compatible): Advertise support for post-quantum key agreement, but send a classical keyshare in the first ClientHello.
-- `preferred` (most performant): Send a post-quantum keyshare in the first ClientHello. Cloudflare continues to advertise support for classical keyshares as well.
-- `off`: Do not send nor advertise support for post-quantum key agreement to the origin.
+The [Origin Post-Quantum Encryption API](/api/resources/origin_post_quantum_encryption/methods/update/) is deprecated. Requests to this API are no-ops and do not change a zone's post-quantum key agreement behavior.
 
 #### Origin server
 
@@ -84,7 +68,7 @@ Both can be used independently or together. Using them together lets you establi
 
 - A TLS library on your origin that supports ML-DSA — for example, [OpenSSL](https://www.openssl.org/) 3.5.0 or later. Refer to [PQC support](/ssl/post-quantum-cryptography/pqc-support/) for additional options.
 - [OpenSSL](https://www.openssl.org/) 3.5.0 or later on your workstation to generate certificates.
-- An origin server that negotiates TLS 1.3. ML-DSA signatures are not available in TLS 1.2 or earlier.
+- An origin server that negotiates TLS 1.3 for ML-DSA signatures.
 
 :::note
 ML-DSA private keys must be provided in the [seed-only encoding](https://datatracker.ietf.org/doc/draft-ietf-lamps-dilithium-certificates/) when uploaded to Cloudflare. The expanded-key encoding is currently rejected by the upload endpoints.
