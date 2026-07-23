@@ -250,7 +250,20 @@ To restart an instance from a specific step instead of the beginning, refer to [
 
 ### Delete Workflow instances
 
-You can delete up to 100 Workflow instances and their stored state in one call. Deleting a running instance terminates it before removing its state. IDs that do not exist are returned as per-instance errors, and duplicate IDs are processed once.
+Deleting an instance removes its stored state. A running instance is terminated before its state is removed.
+
+Delete one instance by calling `delete()` on its handle:
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
+```
+
+</TypeScriptExample>
+
+Delete up to 100 instances in one call with `deleteBatch()`:
 
 <TypeScriptExample>
 
@@ -266,15 +279,18 @@ console.log(result.errors); // Per-instance failures, if any
 
 </TypeScriptExample>
 
-You can also delete multiple instances from Wrangler:
+Missing IDs are returned as per-instance errors. Duplicate IDs are deleted once, and the result includes one entry for each input position.
+
+Wrangler accepts one or more instance IDs:
 
 ```sh
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID>
 npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> <INSTANCE_ID>
 # For local Workflow instances during wrangler dev:
-npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> <INSTANCE_ID> --local
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> --local
 ```
 
-For the full result shape, refer to [`deleteBatch`](/workflows/build/workers-api/#deletebatch).
+For the full APIs, refer to [`delete`](/workflows/build/workers-api/#delete) and [`deleteBatch`](/workflows/build/workers-api/#deletebatch).
 
 ### Trigger a Workflow from another Workflow
 
