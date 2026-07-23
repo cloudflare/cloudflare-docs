@@ -55,7 +55,7 @@ return await sandbox.terminal(request);
 const session = await sandbox.getSession('dev');
 return await session.terminal(request);
 
-````
+```
 </TypeScriptExample>
 
 ## Client-side addon
@@ -68,7 +68,7 @@ The `@cloudflare/sandbox/xterm` module provides `SandboxAddon` for xterm.js, whi
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 
 const addon = new SandboxAddon(options: SandboxAddonOptions);
-````
+```
 
 **Options**:
 
@@ -88,20 +88,20 @@ const terminal = new Terminal({ cursorBlink: true });
 terminal.open(document.getElementById('terminal'));
 
 const addon = new SandboxAddon({
-getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
-const params = new URLSearchParams({ id: sandboxId });
-if (sessionId) params.set('session', sessionId);
-return `${origin}/ws/terminal?${params}`;
-},
-onStateChange: (state, error) => {
-console.log(`Terminal ${state}`, error);
-}
+  getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
+    const params = new URLSearchParams({ id: sandboxId });
+    if (sessionId) params.set('session', sessionId);
+    return `${origin}/ws/terminal?${params}`;
+  },
+  onStateChange: (state, error) => {
+    console.log(`Terminal ${state}`, error);
+  }
 });
 
 terminal.loadAddon(addon);
 addon.connect({ sandboxId: 'my-sandbox' });
 
-````
+```
 
 </TypeScriptExample>
 
@@ -111,7 +111,7 @@ Establish a connection to a sandbox terminal.
 
 ```ts
 addon.connect(target: ConnectionTarget): void
-````
+```
 
 **Parameters**:
 

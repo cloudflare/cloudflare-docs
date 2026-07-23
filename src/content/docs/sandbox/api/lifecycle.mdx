@@ -33,7 +33,6 @@ const sandbox = getSandbox(
 ```
 
 **Parameters**:
-
 - `binding` - The Durable Object namespace binding from your Worker environment
 - `sandboxId` - Unique identifier for this sandbox. The same ID always returns the same sandbox instance. In user-facing apps, scope IDs to a single user.
 - `options` (optional) - See [SandboxOptions](/sandbox/configuration/sandbox-options/) for all available options:
@@ -82,7 +81,6 @@ await sandbox.setKeepAlive(keepAlive: boolean): Promise<void>
 ```
 
 **Parameters**:
-
 - `keepAlive` - `true` to prevent automatic sleep, `false` to allow normal sleep behavior
 
 When enabled, the sandbox automatically sends heartbeat pings every 30 seconds to prevent container eviction. When disabled, the sandbox returns to normal sleep behavior based on the `sleepAfter` configuration.
@@ -97,8 +95,7 @@ await sandbox.startProcess('python long_running_analysis.py');
 
 // Later, disable keepAlive when done
 await sandbox.setKeepAlive(false);
-
-````
+```
 </TypeScriptExample>
 
 :::note[Heartbeat mechanism]
@@ -117,10 +114,9 @@ Destroy the sandbox container and free up resources.
 
 ```ts
 await sandbox.destroy(): Promise<void>
-````
+```
 
 Immediately terminates the container and permanently deletes all state:
-
 - All files in `/workspace`, `/tmp`, and `/home`
 - All running processes
 - All sessions (including the default session)
@@ -131,15 +127,14 @@ Immediately terminates the container and permanently deletes all state:
 async function executeCode(code: string): Promise<string> {
   const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
 
-try {
-await sandbox.writeFile('/tmp/code.py', code);
-const result = await sandbox.exec('python /tmp/code.py');
-return result.stdout;
-} finally {
-await sandbox.destroy();
+  try {
+    await sandbox.writeFile('/tmp/code.py', code);
+    const result = await sandbox.exec('python /tmp/code.py');
+    return result.stdout;
+  } finally {
+    await sandbox.destroy();
+  }
 }
-}
-
 ```
 </TypeScriptExample>
 
@@ -154,4 +149,3 @@ Containers automatically sleep after 10 minutes of inactivity but still count to
 - [Sandbox lifecycle concept](/sandbox/concepts/sandboxes/) - Understanding container lifecycle and state
 - [Sandbox options configuration](/sandbox/configuration/sandbox-options/) - Configure `keepAlive` and other options
 - [Sessions API](/sandbox/api/sessions/) - Create execution contexts within a sandbox
-```

@@ -47,15 +47,14 @@ const statefulResult = await statefulSandbox.exec('pwd');
 
 // Sessionless behavior: implicit operations do not share shell state
 const statelessSandbox = getSandbox(env.Sandbox, 'api-worker', {
-enableDefaultSession: false
+  enableDefaultSession: false
 });
 
 await statelessSandbox.exec('cd /workspace/app');
 const statelessResult = await statelessSandbox.exec('pwd');
 // statelessResult.stdout: "/workspace"
 // The second exec did not inherit shell state from the first.
-
-````
+```
 </TypeScriptExample>
 
 ### keepAlive
@@ -85,8 +84,7 @@ try {
 } finally {
   await sandbox.destroy(); // Required to prevent containers running indefinitely
 }
-````
-
+```
 </TypeScriptExample>
 
 :::caution[Resource management with keepAlive]
@@ -113,10 +111,9 @@ const sandbox = getSandbox(env.Sandbox, 'user-123', {
 
 // Sleep after 5 minutes (using number)
 const sandbox2 = getSandbox(env.Sandbox, 'user-456', {
-sleepAfter: 300 // 300 seconds = 5 minutes
+  sleepAfter: 300  // 300 seconds = 5 minutes
 });
-
-````
+```
 </TypeScriptExample>
 
 :::note[Ignored when keepAlive is true]
@@ -145,8 +142,7 @@ const sandbox2 = getSandbox(env.Sandbox, 'user-env', {
     instanceGetTimeoutMS: 60_000   // 1 minute for provisioning
   }
 });
-````
-
+```
 </TypeScriptExample>
 
 **Available timeout options**:
@@ -155,7 +151,6 @@ const sandbox2 = getSandbox(env.Sandbox, 'user-env', {
 - `portReadyTimeoutMS` - How long to wait for the sandbox API to become ready. Increase if you extend the base Dockerfile with custom startup work (installing packages, starting services). **Default**: `90000` (90 seconds)
 
 **Environment variable overrides**:
-
 - `SANDBOX_INSTANCE_TIMEOUT_MS` - Override `instanceGetTimeoutMS`
 - `SANDBOX_PORT_TIMEOUT_MS` - Override `portReadyTimeoutMS`
 
@@ -168,7 +163,6 @@ Precedence: `options` > `env vars` > SDK defaults
 Control SDK logging for debugging and monitoring. Set these in your Worker's `wrangler.jsonc` file.
 
 **Available options**:
-
 - `SANDBOX_LOG_LEVEL` - Minimum log level: `debug`, `info`, `warn`, `error`. **Default**: `info`
 - `SANDBOX_LOG_FORMAT` - Output format: `json`, `pretty`. **Default**: `json`
 
@@ -208,12 +202,11 @@ const sandbox1 = getSandbox(env.Sandbox, 'MyProject-123');
 
 // With normalization
 const sandbox2 = getSandbox(env.Sandbox, 'MyProject-123', {
-normalizeId: true
+  normalizeId: true
 });
 // Creates Durable Object with ID: "myproject-123"
 // Preview URL: 8000-myproject-123.example.com
 // Works: URL routes to "myproject-123" (same DO)
-
 ```
 </TypeScriptExample>
 
@@ -263,4 +256,3 @@ With `keepAlive`, containers send automatic heartbeat pings every 30 seconds to 
 - [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
 - [Lifecycle API](/sandbox/api/lifecycle/) - Create and manage sandboxes with `setKeepAlive()`
 - [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle
-```

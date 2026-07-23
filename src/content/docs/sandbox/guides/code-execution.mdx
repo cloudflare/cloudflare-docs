@@ -13,7 +13,7 @@ import { TypeScriptExample } from "~/components";
 This guide shows you how to execute Python and JavaScript code with rich outputs using the Code Interpreter API.
 
 :::note[Coming soon: Sandbox SDK 1.0]
-This page documents interpreter methods on today's stable `@cloudflare/sandbox` package.
+This page documents the interpreter on today's stable `@cloudflare/sandbox` package.
 
 In the **1.0 preview** (`@next`), the interpreter is an opt-in extension at `@cloudflare/sandbox/interpreter`. Refer to [Extensions](/sandbox/1-0-preview/extensions/#code-interpreter).
 :::
@@ -46,7 +46,7 @@ const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
 
 // Create a Python context
 const pythonContext = await sandbox.createCodeContext({
-language: 'python'
+  language: 'python'
 });
 
 console.log('Context ID:', pythonContext.id);
@@ -54,9 +54,8 @@ console.log('Language:', pythonContext.language);
 
 // Create a JavaScript context
 const jsContext = await sandbox.createCodeContext({
-language: 'javascript'
+  language: 'javascript'
 });
-
 ```
 </TypeScriptExample>
 
@@ -66,20 +65,20 @@ language: 'javascript'
 
 <TypeScriptExample>
 ```
-
 // Create context
 const context = await sandbox.createCodeContext({
-language: 'python'
+  language: 'python'
 });
 
 // Execute code
-const result = await sandbox.runCode(`print("Hello from Code Interpreter!")
+const result = await sandbox.runCode(`
+print("Hello from Code Interpreter!")
 result = 2 + 2
-print(f"2 + 2 = {result}")`, { context: context.id });
+print(f"2 + 2 = {result}")
+`, { context: context.id });
 
 console.log('Output:', result.output);
 console.log('Success:', result.success);
-
 ```
 </TypeScriptExample>
 
@@ -89,9 +88,8 @@ Variables and imports remain available between executions in the same context, a
 
 <TypeScriptExample>
 ```
-
 const context = await sandbox.createCodeContext({
-language: 'python'
+  language: 'python'
 });
 
 // First execution - import and define variables
@@ -104,11 +102,12 @@ print("Data initialized")
 `, { context: context.id });
 
 // Second execution - use previously defined variables
-const result = await sandbox.runCode(`mean = np.mean(data)
-print(f"Mean: {mean}")`, { context: context.id });
+const result = await sandbox.runCode(`
+mean = np.mean(data)
+print(f"Mean: {mean}")
+`, { context: context.id });
 
 console.log(result.output); // "Mean: 3.0"
-
 ```
 </TypeScriptExample>
 
@@ -122,7 +121,6 @@ The code interpreter returns multiple output formats:
 
 <TypeScriptExample>
 ```
-
 const result = await sandbox.runCode(`
 import matplotlib.pyplot as plt
 
@@ -132,28 +130,27 @@ plt.show()
 `, { context: context.id });
 
 // Check available formats
-console.log('Formats:', result.formats); // ['text', 'png']
+console.log('Formats:', result.formats);  // ['text', 'png']
 
 // Access outputs
 if (result.outputs.png) {
-// Return as image
-return new Response(atob(result.outputs.png), {
-headers: { 'Content-Type': 'image/png' }
-});
+  // Return as image
+  return new Response(atob(result.outputs.png), {
+    headers: { 'Content-Type': 'image/png' }
+  });
 }
 
 if (result.outputs.html) {
-// Return as HTML (pandas DataFrames)
-return new Response(result.outputs.html, {
-headers: { 'Content-Type': 'text/html' }
-});
+  // Return as HTML (pandas DataFrames)
+  return new Response(result.outputs.html, {
+    headers: { 'Content-Type': 'text/html' }
+  });
 }
 
 if (result.outputs.json) {
-// Return as JSON
-return Response.json(result.outputs.json);
+  // Return as JSON
+  return Response.json(result.outputs.json);
 }
-
 ```
 </TypeScriptExample>
 
@@ -163,36 +160,34 @@ For long-running code, stream output in real-time:
 
 <TypeScriptExample>
 ```
-
 const context = await sandbox.createCodeContext({
-language: 'python'
+  language: 'python'
 });
 
 const result = await sandbox.runCode(
-`
+  `
 import time
 
 for i in range(10):
-print(f"Processing item {i+1}/10...")
-time.sleep(0.5)
+    print(f"Processing item {i+1}/10...")
+    time.sleep(0.5)
 
 print("Done!")
 `,
-{
-context: context.id,
-stream: true,
-onOutput: (data) => {
-console.log('Output:', data);
-},
-onResult: (result) => {
-console.log('Result:', result);
-},
-onError: (error) => {
-console.error('Error:', error);
-}
-}
+  {
+    context: context.id,
+    stream: true,
+    onOutput: (data) => {
+      console.log('Output:', data);
+    },
+    onResult: (result) => {
+      console.log('Result:', result);
+    },
+    onError: (error) => {
+      console.error('Error:', error);
+    }
+  }
 );
-
 ```
 </TypeScriptExample>
 
@@ -202,23 +197,22 @@ Run LLM-generated code safely in a sandbox:
 
 <TypeScriptExample>
 ```
-
 // 1. Generate code with Claude
 const response = await fetch('https://api.anthropic.com/v1/messages', {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'x-api-key': env.ANTHROPIC_API_KEY,
-'anthropic-version': '2023-06-01'
-},
-body: JSON.stringify({
-model: 'claude-3-5-sonnet-20241022',
-max_tokens: 1024,
-messages: [{
-role: 'user',
-content: 'Write Python code to calculate fibonacci sequence up to 100'
-}]
-})
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': env.ANTHROPIC_API_KEY,
+    'anthropic-version': '2023-06-01'
+  },
+  body: JSON.stringify({
+    model: 'claude-3-5-sonnet-20241022',
+    max_tokens: 1024,
+    messages: [{
+      role: 'user',
+      content: 'Write Python code to calculate fibonacci sequence up to 100'
+    }]
+  })
 });
 
 const { content } = await response.json();
@@ -231,7 +225,6 @@ const result = await sandbox.runCode(code, { context: context.id });
 console.log('Generated code:', code);
 console.log('Output:', result.output);
 console.log('Success:', result.success);
-
 ```
 </TypeScriptExample>
 
@@ -241,15 +234,13 @@ console.log('Success:', result.success);
 
 <TypeScriptExample>
 ```
-
 const contexts = await sandbox.listCodeContexts();
 
 console.log(`${contexts.length} active contexts:`);
 
 for (const ctx of contexts) {
-console.log(`  ${ctx.id} (${ctx.language})`);
+  console.log(`  ${ctx.id} (${ctx.language})`);
 }
-
 ```
 </TypeScriptExample>
 
@@ -257,7 +248,6 @@ console.log(`  ${ctx.id} (${ctx.language})`);
 
 <TypeScriptExample>
 ```
-
 // Delete specific context
 await sandbox.deleteCodeContext(context.id);
 console.log('Context deleted');
@@ -265,10 +255,9 @@ console.log('Context deleted');
 // Clean up all contexts
 const contexts = await sandbox.listCodeContexts();
 for (const ctx of contexts) {
-await sandbox.deleteCodeContext(ctx.id);
+  await sandbox.deleteCodeContext(ctx.id);
 }
 console.log('All contexts deleted');
-
 ```
 </TypeScriptExample>
 
@@ -284,4 +273,3 @@ console.log('All contexts deleted');
 - [Code Interpreter API reference](/sandbox/api/interpreter/) - Complete API documentation
 - [AI code executor tutorial](/sandbox/tutorials/ai-code-executor/) - Build complete AI executor
 - [Execute commands guide](/sandbox/guides/execute-commands/) - Lower-level command execution
-```

@@ -29,7 +29,6 @@ const context = await sandbox.createCodeContext(options?: CreateContextOptions):
 ```
 
 **Parameters**:
-
 - `options` (optional):
   - `language` - `"python" | "javascript" | "typescript"` (default: `"python"`)
   - `cwd` - Working directory (default: `"/workspace"`)
@@ -56,7 +55,6 @@ const result = await sandbox.runCode(code: string, options?: RunCodeOptions): Pr
 ```
 
 **Parameters**:
-
 - `code` - The code to execute (required)
 - `options` (optional):
   - `context` - Context to run in (recommended - see below)
@@ -65,7 +63,6 @@ const result = await sandbox.runCode(code: string, options?: RunCodeOptions): Pr
   - `onStdout`, `onStderr`, `onResult`, `onError` - Streaming callbacks
 
 **Returns**: `Promise<ExecutionResult>` with:
-
 - `code` - The executed code
 - `logs` - `stdout` and `stderr` arrays
 - `results` - Array of rich outputs (see [Rich Output Formats](#rich-output-formats))
@@ -79,10 +76,9 @@ const result = await sandbox.runCode(code: string, options?: RunCodeOptions): Pr
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 
 await sandbox.runCode('import math; radius = 5', { context: ctx });
-const result = await sandbox.runCode('math.pi \* radius \*\* 2', { context: ctx });
+const result = await sandbox.runCode('math.pi * radius ** 2', { context: ctx });
 
 console.log(result.results[0].text); // "78.53981633974483"
-
 ```
 </TypeScriptExample>
 
@@ -91,14 +87,14 @@ If no `context` is provided, a default context is automatically created/reused f
 
 <TypeScriptExample>
 ```
-
-const result = await sandbox.runCode(`data = [1, 2, 3, 4, 5]
+const result = await sandbox.runCode(`
+data = [1, 2, 3, 4, 5]
 print(f"Sum: {sum(data)}")
-sum(data)`, { language: 'python' });
+sum(data)
+`, { language: 'python' });
 
 console.log(result.logs.stdout); // ["Sum: 15"]
 console.log(result.results[0].text); // "15"
-
 ```
 </TypeScriptExample>
 :::
@@ -107,15 +103,13 @@ console.log(result.results[0].text); // "15"
 
 <TypeScriptExample>
 ```
-
 const result = await sandbox.runCode('x = 1 / 0', { language: 'python' });
 
 if (result.error) {
-console.error(result.error.name); // "ZeroDivisionError"
-console.error(result.error.value); // "division by zero"
-console.error(result.error.traceback); // Stack trace array
+  console.error(result.error.name);      // "ZeroDivisionError"
+  console.error(result.error.value);     // "division by zero"
+  console.error(result.error.traceback); // Stack trace array
 }
-
 ```
 </TypeScriptExample>
 
@@ -125,17 +119,17 @@ JavaScript and TypeScript code execution supports top-level `await` and persiste
 
 <TypeScriptExample>
 ```
-
 const ctx = await sandbox.createCodeContext({ language: 'javascript' });
 
 // Execution 1: Fetch data with top-level await
-await sandbox.runCode(`const response = await fetch('https://api.example.com/data');
-const data = await response.json();`, { context: ctx });
+await sandbox.runCode(`
+const response = await fetch('https://api.example.com/data');
+const data = await response.json();
+`, { context: ctx });
 
 // Execution 2: Use the data from previous execution
 const result = await sandbox.runCode('console.log(data)', { context: ctx });
 console.log(result.logs.stdout); // Data persists across executions
-
 ```
 </TypeScriptExample>
 
@@ -143,7 +137,6 @@ Variables declared with `const`, `let`, or `var` persist across executions, enab
 
 <TypeScriptExample>
 ```
-
 const ctx = await sandbox.createCodeContext({ language: 'javascript' });
 
 await sandbox.runCode('const x = 10', { context: ctx });
@@ -151,8 +144,7 @@ await sandbox.runCode('let y = 20', { context: ctx });
 const result = await sandbox.runCode('x + y', { context: ctx });
 
 console.log(result.results[0].text); // "30"
-
-````
+```
 </TypeScriptExample>
 
 ### `listCodeContexts()`
@@ -161,11 +153,13 @@ List all active code execution contexts.
 
 ```ts
 const contexts = await sandbox.listCodeContexts(): Promise<CodeContext[]>
-````
+```
 
 <TypeScriptExample>
-	``` const contexts = await sandbox.listCodeContexts(); console.log(`Found $
-	{contexts.length} contexts`); ```
+```
+const contexts = await sandbox.listCodeContexts();
+console.log(`Found ${contexts.length} contexts`);
+```
 </TypeScriptExample>
 
 ### `deleteCodeContext()`
@@ -202,12 +196,11 @@ plt.show()
 `, { language: 'python' });
 
 if (result.results[0]?.png) {
-const imageBuffer = Buffer.from(result.results[0].png, 'base64');
-return new Response(imageBuffer, {
-headers: { 'Content-Type': 'image/png' }
-});
+  const imageBuffer = Buffer.from(result.results[0].png, 'base64');
+  return new Response(imageBuffer, {
+    headers: { 'Content-Type': 'image/png' }
+  });
 }
-
 ```
 </TypeScriptExample>
 
@@ -215,17 +208,17 @@ headers: { 'Content-Type': 'image/png' }
 
 <TypeScriptExample>
 ```
-
-const result = await sandbox.runCode(`import pandas as pd
+const result = await sandbox.runCode(`
+import pandas as pd
 df = pd.DataFrame({'Name': ['Alice', 'Bob'], 'Age': [25, 30]})
-df`, { language: 'python' });
+df
+`, { language: 'python' });
 
 if (result.results[0]?.html) {
-return new Response(result.results[0].html, {
-headers: { 'Content-Type': 'text/html' }
-});
+  return new Response(result.results[0].html, {
+    headers: { 'Content-Type': 'text/html' }
+  });
 }
-
 ```
 </TypeScriptExample>
 
@@ -234,4 +227,3 @@ headers: { 'Content-Type': 'text/html' }
 - [Build an AI Code Executor](/sandbox/tutorials/ai-code-executor/) - Complete tutorial
 - [Commands API](/sandbox/api/commands/) - Lower-level command execution
 - [Files API](/sandbox/api/files/) - File operations
-```

@@ -37,13 +37,13 @@ Keep your `wrangler` Durable Object binding and container configuration. Preview
 `exec()` takes an argument vector and returns a handle when launch succeeds. Collect output separately.
 
 <TypeScriptExample>
-```ts
+```
 import { getSandbox, proxyToSandbox } from "@cloudflare/sandbox";
 
 export { Sandbox } from "@cloudflare/sandbox";
 
 type Env = {
-Sandbox: DurableObjectNamespace<import("@cloudflare/sandbox").Sandbox>;
+	Sandbox: DurableObjectNamespace<import("@cloudflare/sandbox").Sandbox>;
 };
 
 export default {
@@ -51,20 +51,18 @@ export default {
 		const proxy = await proxyToSandbox(request, env);
 		if (proxy) return proxy;
 
-    	const sandbox = getSandbox(env.Sandbox, "preview-demo");
-    	const process = await sandbox.exec(["python3", "-c", "print(2 + 2)"]);
-    	const output = await process.output({ encoding: "utf8" });
+		const sandbox = getSandbox(env.Sandbox, "preview-demo");
+		const process = await sandbox.exec(["python3", "-c", "print(2 + 2)"]);
+		const output = await process.output({ encoding: "utf8" });
 
-    	return Response.json({
-    		id: process.id,
-    		pid: process.pid,
-    		stdout: output.stdout,
-    		exitCode: output.exitCode,
-    	});
-    },
-
+		return Response.json({
+			id: process.id,
+			pid: process.pid,
+			stdout: output.stdout,
+			exitCode: output.exitCode,
+		});
+	},
 };
-
 ```
 </TypeScriptExample>
 

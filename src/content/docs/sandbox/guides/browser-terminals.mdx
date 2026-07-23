@@ -15,7 +15,7 @@ This guide shows you how to connect a browser-based terminal to a sandbox shell.
 :::note[Coming soon: Sandbox SDK 1.0]
 This page documents browser terminals on today's stable `@cloudflare/sandbox` package.
 
-If you adopt the [1.0 preview](/sandbox/1-0-preview/), confirm terminal connect helpers against your installed `@next` package. Process handles are not a substitute for a PTY.
+**Sandbox SDK 1.0** (preview on `@next`) keeps terminals separate from process handles. Confirm preview terminal method names in your installed `@next` package and read [processes versus terminals](/sandbox/1-0-preview/processes/#processes-versus-terminals).
 :::
 
 ## Prerequisites
@@ -38,31 +38,28 @@ Add a route that proxies WebSocket connections to the sandbox terminal. The exam
 <TypeScriptExample>
 
 ```ts
-import { getSandbox } from "@cloudflare/sandbox";
+import { getSandbox } from '@cloudflare/sandbox';
 
-export { Sandbox } from "@cloudflare/sandbox";
+export { Sandbox } from '@cloudflare/sandbox';
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
 
-		if (
-			url.pathname === "/ws/terminal" &&
-			request.headers.get("Upgrade") === "websocket"
-		) {
-			const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-			const sessionId = url.searchParams.get("session");
+    if (url.pathname === '/ws/terminal' && request.headers.get('Upgrade') === 'websocket') {
+      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+      const sessionId = url.searchParams.get('session');
 
-			if (sessionId) {
-				const session = await sandbox.getSession(sessionId);
-				return await session.terminal(request);
-			}
+      if (sessionId) {
+        const session = await sandbox.getSession(sessionId);
+        return await session.terminal(request);
+      }
 
-			return await sandbox.terminal(request, { cols: 80, rows: 24 });
-		}
+      return await sandbox.terminal(request, { cols: 80, rows: 24 });
+    }
 
-		return new Response("Not found", { status: 404 });
-	},
+    return new Response('Not found', { status: 404 });
+  }
 };
 ```
 
@@ -75,37 +72,37 @@ Create the terminal in your browser code and attach the `SandboxAddon`. The addo
 <TypeScriptExample>
 
 ```ts
-import { Terminal } from "@xterm/xterm";
-import { FitAddon } from "@xterm/addon-fit";
-import { SandboxAddon } from "@cloudflare/sandbox/xterm";
-import "@xterm/xterm/css/xterm.css";
+import { Terminal } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
+import { SandboxAddon } from '@cloudflare/sandbox/xterm';
+import '@xterm/xterm/css/xterm.css';
 
 const terminal = new Terminal({ cursorBlink: true });
 const fitAddon = new FitAddon();
 terminal.loadAddon(fitAddon);
 
 const addon = new SandboxAddon({
-	getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
-		const params = new URLSearchParams({ id: sandboxId });
-		if (sessionId) params.set("session", sessionId);
-		return `${origin}/ws/terminal?${params}`;
-	},
-	onStateChange: (state, error) => {
-		console.log(`Terminal ${state}`, error ?? "");
-	},
+  getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
+    const params = new URLSearchParams({ id: sandboxId });
+    if (sessionId) params.set('session', sessionId);
+    return `${origin}/ws/terminal?${params}`;
+  },
+  onStateChange: (state, error) => {
+    console.log(`Terminal ${state}`, error ?? '');
+  }
 });
 
 terminal.loadAddon(addon);
-terminal.open(document.getElementById("terminal"));
+terminal.open(document.getElementById('terminal'));
 fitAddon.fit();
 
 // Connect to the default session
-addon.connect({ sandboxId: "my-sandbox" });
+addon.connect({ sandboxId: 'my-sandbox' });
 
 // Or connect to a specific session
 // addon.connect({ sandboxId: 'my-sandbox', sessionId: 'development' });
 
-window.addEventListener("resize", () => fitAddon.fit());
+window.addEventListener('resize', () => fitAddon.fit());
 ```
 
 </TypeScriptExample>
@@ -119,44 +116,44 @@ If you are building a custom terminal UI or running in an environment without xt
 <TypeScriptExample>
 
 ```ts
-const ws = new WebSocket("wss://example.com/ws/terminal?id=my-sandbox");
-ws.binaryType = "arraybuffer";
+const ws = new WebSocket('wss://example.com/ws/terminal?id=my-sandbox');
+ws.binaryType = 'arraybuffer';
 
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
 
-ws.addEventListener("message", (event) => {
-	if (event.data instanceof ArrayBuffer) {
-		// Terminal output (binary) — includes ANSI escape sequences
-		const text = decoder.decode(event.data);
-		appendToDisplay(text);
-		return;
-	}
+ws.addEventListener('message', (event) => {
+  if (event.data instanceof ArrayBuffer) {
+    // Terminal output (binary) — includes ANSI escape sequences
+    const text = decoder.decode(event.data);
+    appendToDisplay(text);
+    return;
+  }
 
-	// Control message (JSON text)
-	const msg = JSON.parse(event.data);
+  // Control message (JSON text)
+  const msg = JSON.parse(event.data);
 
-	switch (msg.type) {
-		case "ready":
-			// Terminal is accepting input — send initial resize
-			ws.send(JSON.stringify({ type: "resize", cols: 80, rows: 24 }));
-			break;
+  switch (msg.type) {
+    case 'ready':
+      // Terminal is accepting input — send initial resize
+      ws.send(JSON.stringify({ type: 'resize', cols: 80, rows: 24 }));
+      break;
 
-		case "exit":
-			console.log(`Shell exited: code ${msg.code}`);
-			break;
+    case 'exit':
+      console.log(`Shell exited: code ${msg.code}`);
+      break;
 
-		case "error":
-			console.error("Terminal error:", msg.message);
-			break;
-	}
+    case 'error':
+      console.error('Terminal error:', msg.message);
+      break;
+  }
 });
 
 // Send keystrokes as binary
 function sendInput(text: string): void {
-	if (ws.readyState === WebSocket.OPEN) {
-		ws.send(encoder.encode(text));
-	}
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(encoder.encode(text));
+  }
 }
 ```
 

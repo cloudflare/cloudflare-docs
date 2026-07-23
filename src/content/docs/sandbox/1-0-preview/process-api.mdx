@@ -52,12 +52,11 @@ type SandboxCommand = readonly [executable: string, ...args: string[]];
 `Promise<SandboxProcess>`
 
 <TypeScriptExample>
-```ts
+```
 const process = await sandbox.exec(["node", "--version"]);
 const output = await process.output({ encoding: "utf8" });
 
 console.log(process.id, process.pid, output.stdout, output.exitCode);
-
 ```
 </TypeScriptExample>
 

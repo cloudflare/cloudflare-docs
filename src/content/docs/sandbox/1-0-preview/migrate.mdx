@@ -58,7 +58,7 @@ console.log(result.stdout, result.exitCode);
 Preview:
 
 <TypeScriptExample>
-```ts
+```
 const process = await sandbox.exec(["/bin/bash", "-lc", "npm test"]);
 const result = await process.output({ encoding: "utf8" });
 console.log(result.stdout, result.exitCode);
@@ -74,7 +74,7 @@ Rules:
 ### Background processes and streaming
 
 <TypeScriptExample>
-```ts
+```
 const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
 	cwd: "/workspace/app",
 });
@@ -85,7 +85,6 @@ const stream = await server.logs({ follow: true, replay: true });
 // consume stream...
 
 await server.kill();
-
 ```
 </TypeScriptExample>
 

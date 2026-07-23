@@ -15,7 +15,7 @@ This guide shows you how to handle real-time output from commands, processes, an
 :::note[Coming soon: Sandbox SDK 1.0]
 This page documents streaming helpers on today's stable `@cloudflare/sandbox` package.
 
-In the **1.0 preview** (`@next`), stream process output with `process.logs()` (and related waits) on the handle returned by `exec()`. Refer to [Process execution](/sandbox/1-0-preview/processes/#logs-and-large-output).
+In the **1.0 preview** (`@next`), stream with process handle methods such as `logs()` after `exec(argv)`. Refer to [Process execution](/sandbox/1-0-preview/processes/) or the [Process API](/sandbox/1-0-preview/process-api/).
 :::
 
 ## When to use streaming
@@ -47,10 +47,10 @@ const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
 const stream = await sandbox.execStream('npm run build');
 
 for await (const event of parseSSEStream<ExecEvent>(stream)) {
-switch (event.type) {
-case 'stdout':
-console.log(event.data);
-break;
+  switch (event.type) {
+    case 'stdout':
+      console.log(event.data);
+      break;
 
     case 'stderr':
       console.error(event.data);
@@ -63,10 +63,8 @@ break;
     case 'error':
       console.error('Failed:', event.error);
       break;
-
+  }
 }
-}
-
 ```
 </TypeScriptExample>
 
@@ -76,10 +74,9 @@ Return streaming output to users via Server-Sent Events:
 
 <TypeScriptExample>
 ```
+import { getSandbox } from '@cloudflare/sandbox';
 
-import { getSandbox } from "@cloudflare/sandbox";
-
-export { Sandbox } from "@cloudflare/sandbox";
+export { Sandbox } from '@cloudflare/sandbox';
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -93,10 +90,8 @@ export default {
         'Cache-Control': 'no-cache'
       }
     });
-
-}
+  }
 };
-
 ```
 </TypeScriptExample>
 
@@ -104,21 +99,19 @@ Client-side consumption:
 
 <TypeScriptExample>
 ```
-
 // Browser JavaScript
 const eventSource = new EventSource('/build');
 
 eventSource.addEventListener('stdout', (event) => {
-const data = JSON.parse(event.data);
-console.log(data.data);
+  const data = JSON.parse(event.data);
+  console.log(data.data);
 });
 
 eventSource.addEventListener('complete', (event) => {
-const data = JSON.parse(event.data);
-console.log('Exit code:', data.exitCode);
-eventSource.close();
+  const data = JSON.parse(event.data);
+  console.log('Exit code:', data.exitCode);
+  eventSource.close();
 });
-
 ```
 </TypeScriptExample>
 
@@ -128,7 +121,6 @@ Monitor background process output:
 
 <TypeScriptExample>
 ```
-
 import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
 const process = await sandbox.startProcess('node server.js');
@@ -136,14 +128,13 @@ const process = await sandbox.startProcess('node server.js');
 const logStream = await sandbox.streamProcessLogs(process.id);
 
 for await (const log of parseSSEStream<LogEvent>(logStream)) {
-console.log(log.data);
+  console.log(log.data);
 
-if (log.data.includes('Server listening')) {
-console.log('Server is ready');
-break;
+  if (log.data.includes('Server listening')) {
+    console.log('Server is ready');
+    break;
+  }
 }
-}
-
 ```
 </TypeScriptExample>
 
@@ -153,14 +144,13 @@ Check exit codes and handle stream errors:
 
 <TypeScriptExample>
 ```
-
 const stream = await sandbox.execStream('npm run build');
 
 for await (const event of parseSSEStream<ExecEvent>(stream)) {
-switch (event.type) {
-case 'stdout':
-console.log(event.data);
-break;
+  switch (event.type) {
+    case 'stdout':
+      console.log(event.data);
+      break;
 
     case 'error':
       throw new Error(`Build failed: ${event.error}`);
@@ -170,10 +160,8 @@ break;
         throw new Error(`Build failed with exit code ${event.exitCode}`);
       }
       break;
-
+  }
 }
-}
-
 ```
 </TypeScriptExample>
 
@@ -190,4 +178,3 @@ break;
 - [Execute commands guide](/sandbox/guides/execute-commands/) - Command execution patterns
 - [Background processes guide](/sandbox/guides/background-processes/) - Process log streaming
 - [Code Interpreter guide](/sandbox/guides/code-execution/) - Stream code execution output
-```
