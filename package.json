@@ -81,7 +81,7 @@
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.61.1",
 		"algoliasearch": "5.54.1",
-		"astro": "https://pkg.pr.new/astro@17084",
+		"astro": "https://pkg.pr.new/astro@cb5390a",
 		"astro-icon": "1.1.5",
 		"astro-skills": "0.1.0",
 		"cidr-tools": "12.0.3",
