@@ -3,6 +3,35 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-21"
+    title: "Account Roles API"
+    description: |-
+      Deprecation date: July 21, 2026
+
+      The [Account Roles API](/api/resources/accounts/subresources/roles/) only returns account-level roles today, and is deprecated in favor of the [Permission Groups API](/api/resources/iam/subresources/permission_groups/). The Permission Groups API is the supported way to enumerate account, zone, and resource-level roles that can be granted to account members.
+
+      Deprecated APIs:
+
+      - `GET /accounts/{account_id}/roles` — List roles
+      - `GET /accounts/{account_id}/roles/{role_id}` — Role details
+
+      Replacements:
+
+      - `GET /accounts/{account_id}/iam/permission_groups` — List account permission groups
+      - `GET /accounts/{account_id}/iam/permission_groups/{permission_group_id}` — Permission group details
+
+      The response schema differs from the legacy Roles response:
+
+      - The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with edit/read flags.
+      - The `PermissionGroup` response replaces those with a `meta` object containing `label` and `scopes`. Individual permissions are not returned as part of the permission group.
+
+      Additional notes:
+
+      - Integrations migrating to the Permission Groups API must obtain Permission Group IDs from that API and use them in the Account Members API policies request shape. Integrations that persist legacy Role IDs will need to remap their assignments.
+      - Both endpoints use the standard Cloudflare response envelope, so pagination and error-handling do not change.
+      - The new API supports the [API Token](/fundamentals/api/get-started/create-token/) authorization scheme. The legacy Email + API Key authorization scheme is provided for backwards compatibility.
+      - The affected terraform resource is the `cloudflare_account_role` data source. You will need to migrate to the `cloudflare_account_permission_group` data source.
+
   - publish_date: "2026-07-15"
     title: "Workers KV: Legacy Namespace Routes"
     description: |-

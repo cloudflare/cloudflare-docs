@@ -1,30 +1,40 @@
 ---
+/**
+ * /ruleset-engine/rules-language/fields/reference/ — the rules-language field
+ * catalog. Same generator pattern as ai/models: an explicit page (DocsLayout +
+ * client island) that shadows the content route; data read from the `fields`
+ * collection. CF source: cloudflare-docs/src/pages/.../reference/index.astro
+ * (StarlightPage → DocsLayout).
+ */
 import { getEntry } from "astro:content";
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getSidebar } from "@cloudflare/nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import FieldCatalog from "~/components/FieldCatalog.tsx";
 
+export const prerender = true;
+
 const entry = await getEntry("fields", "index");
-
-if (!entry) {
-	throw new Error(`Failed to load fields data`);
-}
-
+if (!entry) throw new Error("Failed to load fields data");
 const fields = entry.data.entries;
+
+const sectionSlug = "/ruleset-engine/rules-language/fields/reference/";
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: externalAppLinksTransform,
+});
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
-<StarlightPage
-	frontmatter={{
-		title: "Fields reference",
-		tableOfContents: false,
-		editUrl:
-			"https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml",
-	}}
+<DocsLayout
+	title="Fields reference"
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={breadcrumbs}
+	prevNext={{}}
+	collection="docs"
+	wide
 >
+	<Fragment slot="pagination"></Fragment>
 	<FieldCatalog fields={fields} client:load />
-</StarlightPage>
-
-<style>
-	:root {
-		--sl-content-width: 1350px !important;
-	}
-</style>
+</DocsLayout>

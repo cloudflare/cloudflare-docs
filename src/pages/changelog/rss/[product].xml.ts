@@ -1,5 +1,10 @@
+/**
+ * /changelog/rss/<product-id>.xml — per-product RSS feed.
+ * CF source: cloudflare-docs/src/pages/changelog/rss/[product].xml.ts
+ */
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
+import { config } from "virtual:nimbus/config";
 import { getChangelogs, getRSSItems } from "~/util/changelog";
 
 import type {
@@ -9,17 +14,15 @@ import type {
 	GetStaticPaths,
 } from "astro";
 
+export const prerender = true;
+
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 
 	return directory.map((entry) => {
 		return {
-			params: {
-				product: entry.id,
-			},
-			props: {
-				product: entry,
-			},
+			params: { product: entry.id },
+			props: { product: entry },
 		};
 	});
 }) satisfies GetStaticPaths;
@@ -40,15 +43,12 @@ export const GET: APIRoute<Props, Params> = async ({
 		},
 	});
 
-	const items = await getRSSItems({
-		notes,
-		locals,
-	});
+	const items = await getRSSItems({ notes, locals });
 
 	return rss({
 		title: `Cloudflare changelogs | ${data.name}`,
 		description: `Cloudflare changelogs for ${data.name}`,
-		site: "https://developers.cloudflare.com/changelog/",
+		site: new URL("/changelog/", config.site).href,
 		items,
 	});
 };

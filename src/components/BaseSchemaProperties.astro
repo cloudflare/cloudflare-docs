@@ -3,10 +3,10 @@ import { z } from "astro/zod";
 import { baseSchema } from "~/schemas";
 import { marked } from "marked";
 
-import Type from "./Type.astro";
-import MetaInfo from "./MetaInfo.astro";
-import AnchorHeading from "./AnchorHeading.astro";
-import Details from "./Details.astro";
+import Type from "./cf/Type.astro";
+import MetaInfo from "./cf/MetaInfo.astro";
+import AnchorHeading from "./cf/AnchorHeading.astro";
+import Details from "./cf/Details.astro";
 
 const fullSchema = baseSchema({
 	// @ts-expect-error Normally passed in by Astro, but we are using the schema standalone.

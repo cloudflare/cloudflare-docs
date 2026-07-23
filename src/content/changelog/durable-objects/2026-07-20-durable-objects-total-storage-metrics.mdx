@@ -1,0 +1,20 @@
+---
+title: View total SQLite storage for Durable Object namespaces
+description: Track total SQLite storage usage over time for a Durable Object namespace in the Cloudflare dashboard.
+products:
+  - durable-objects
+  - workers
+date: 2026-07-20
+---
+
+import { DashButton } from "~/components";
+
+You can now monitor the total SQLite storage used by a Durable Object namespace over time in the Cloudflare dashboard. The new **Total storage** chart shows the maximum storage reported during each hour. This helps you identify storage growth, validate data cleanup, and investigate unexpected usage.
+
+![The Total storage chart showing a Durable Object namespace growing to 260.1 MB of storage over time.](~/assets/images/changelog/durable-objects/durable-objects-total-storage.png)
+
+<DashButton url="/?to=/:account/workers/durable-objects" />
+
+The chart appears only for SQLite-backed Durable Object namespaces. It does not appear for namespaces that use the legacy key-value storage backend. Viewing storage for individual Durable Objects by ID or name is not supported.
+
+For more information, refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/#total-storage).

@@ -12,7 +12,7 @@ Privacy Pass, an [IETF standard](https://datatracker.ietf.org/doc/html/rfc9576) 
 
 ---
 
-## What's in these docs
+## What is in these docs
 
 - **[Getting started](/privacy-pass/getting-started/)** — two self-serve ways to see Privacy Pass work: get a real token with the demo tool, or run the issuance and redemption flow locally.
 - **[Privacy Pass Protocol](/privacy-pass/concepts/privacy-pass-protocol/)** — the four roles, an architecture diagram, and the issuance and redemption flow.
@@ -24,7 +24,7 @@ Privacy Pass, an [IETF standard](https://datatracker.ietf.org/doc/html/rfc9576) 
 
 ## Why it matters
 
-Verifying users on the internet usually forces a trade-off between user experience and privacy, coming at the cost of either time spent solving CAPTCHAs or privacy lost to a trackable identifier. Privacy Pass eases that trade-off: a user proves a claim once, and receives tokens that can be redeemed later without revealing their identity or linking their activity.
+Verifying users on the Internet usually forces a trade-off between user experience and privacy, coming at the cost of either time spent solving CAPTCHAs or privacy lost to a trackable identifier. Privacy Pass eases that trade-off: a user proves a claim once, and receives tokens that can be redeemed later without revealing their identity or linking their activity.
 
 So far, the main use cases have been providing a privacy-preserving CAPTCHA alternative, such as through [Turnstile](/turnstile/) and verification for Cloudflare's [Privacy Proxy](/privacy-proxy/) and [Privacy Gateway](/privacy-gateway/) products. However, by adjusting the deployment, Privacy Pass tokens can attest to any other information a service provider wants to prove.
 
@@ -38,11 +38,11 @@ Every Privacy Pass use case comes down to the same idea: let clients prove somet
 - **Privacy-preserving bot management** – Apple uses their token deployment, Private Access Tokens, to [automatically reduce CAPTCHAs](https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/) when using iOS 16+ devices on participating websites. Privacy Pass tokens are similarly [built into Turnstile](https://blog.cloudflare.com/privacy-pass-standard/) as a signal in its application layer challenge decisions.
 - **Attribute verification** – Privacy Pass can help attest to whether a user  has a valid subscription to the service or meets age requirement without that service learning their identity or linking it to their activity.
 
-- **Rate limiting**: While production use cases are still in development, Privacy Pass tokens can be used to meter usage without identifying users. See the [Batched Token issuance protocol](https://datatracker.ietf.org/doc/draft-ietf-privacypass-batched-tokens/), [ARC issuance protocol](https://datatracker.ietf.org/doc/draft-ietf-privacypass-arc-protocol/) and [Privacy Pass Reverse Flow](https://datatracker.ietf.org/doc/draft-meunier-privacypass-reverse-flow/) IETF drafts.
+- **Rate limiting**: While production use cases are still in development, Privacy Pass tokens can be used to meter usage without identifying users. Refer to the [Batched Token issuance protocol](https://datatracker.ietf.org/doc/draft-ietf-privacypass-batched-tokens/), [ARC issuance protocol](https://datatracker.ietf.org/doc/draft-ietf-privacypass-arc-protocol/), and [Privacy Pass Reverse Flow](https://datatracker.ietf.org/doc/draft-meunier-privacypass-reverse-flow/) IETF drafts.
 
 ---
 
-## Why does Cloudflare operate Privacy Pass infrastructure?
+## Why Cloudflare operates Privacy Pass infrastructure
 
 - **Reliability and scale.** Issuers face high request volumes and must stay highly available so that user experience isn't affected by attacks or latency, something Cloudflare's global network is built to handle. Cloudflare is one of the few providers running Privacy Pass at scale.
 - **Redemption at the edge.** Because Cloudflare sits in front of many origins, it can verify tokens at the edge on the Origin's behalf. Furthermore, Cloudflare Workers natively supports redemption, offering additional infrastructure to ease Privacy Pass integration.

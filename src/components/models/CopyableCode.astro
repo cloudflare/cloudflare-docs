@@ -1,4 +1,9 @@
 ---
+/**
+ * CopyableCode — copy affordance for the model ID: the id is shown as `<code>`
+ * inside the button, the label is a `title`/`aria-label` tooltip, and success
+ * is shown by swapping the copy icon for a checkmark.
+ */
 interface Props {
 	text: string;
 	label?: string;
@@ -8,8 +13,17 @@ const { text, label = "Copy" } = Astro.props;
 ---
 
 <copyable-code data-text={text}>
-	<button type="button" title={label} aria-label={label} class="copy-button">
-		<code>{text}</code>
+	<button
+		type="button"
+		title={label}
+		aria-label={label}
+		class="copy-button border-border bg-card hover:border-border-strong hover:bg-accent inline-flex cursor-pointer items-center gap-2 rounded-md border px-2.5 py-1.5 transition-colors"
+	>
+		<code
+			class="text-muted-foreground border-0 bg-transparent p-0 font-mono text-[0.8125rem]"
+		>
+			{text}
+		</code>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="14"
@@ -20,51 +34,13 @@ const { text, label = "Copy" } = Astro.props;
 			stroke-width="2"
 			stroke-linecap="round"
 			stroke-linejoin="round"
-			class="copy-icon"
+			class="copy-icon text-muted-foreground shrink-0"
 		>
 			<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
 			<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
 		</svg>
 	</button>
 </copyable-code>
-
-<style>
-	.copy-button {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.375rem 0.625rem;
-		border-radius: 0.375rem;
-		border: 1px solid var(--sl-color-gray-5);
-		background: transparent;
-		cursor: pointer;
-		transition:
-			border-color 0.15s,
-			background-color 0.15s;
-	}
-
-	.copy-button:hover {
-		border-color: var(--sl-color-gray-4);
-		background: var(--sl-color-gray-6);
-	}
-
-	.copy-button code {
-		font-size: 0.8125rem;
-		color: var(--sl-color-gray-2);
-		background: none;
-		padding: 0;
-		border: none;
-	}
-
-	.copy-icon {
-		color: var(--sl-color-gray-3);
-		flex-shrink: 0;
-	}
-
-	.copy-button:hover .copy-icon {
-		color: var(--sl-color-gray-2);
-	}
-</style>
 
 <script>
 	class CopyableCode extends HTMLElement {
@@ -82,7 +58,7 @@ const { text, label = "Copy" } = Astro.props;
 
 					if (icon && copyPath) {
 						icon.innerHTML = checkPath;
-						icon.style.color = "var(--sl-color-green)";
+						icon.style.color = "var(--nb-success)";
 						setTimeout(() => {
 							icon.innerHTML = copyPath;
 							icon.style.color = "";

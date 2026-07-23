@@ -41,23 +41,22 @@ jobs:
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
-            .astro-cache-nimbus/assets
-          key: astro-nimbus-assets-${{ hashFiles('src/assets/**') }}
+            .astro-cache/assets
+          key: astro-assets-${{ hashFiles('src/assets/**') }}
           restore-keys: |
-            astro-nimbus-assets-
+            astro-assets-
 
       - name: Build
         run: pnpm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BUILD_TARGET: nimbus
 
       - name: Upload artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         continue-on-error: true
         with:
           name: site-html
-          path: dist-nimbus
+          path: dist
 
       - name: Deploy to Cloudflare Workers
         run: pnpm exec wrangler deploy
