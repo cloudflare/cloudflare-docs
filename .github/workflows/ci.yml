@@ -146,14 +146,20 @@ jobs:
         run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      - name: Restore Astro assets from cache
+      - name: Restore Astro cache (assets + incremental build)
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
+          # The experimental incremental build manifest (incremental-build.json)
+          # and cached page outputs (dist/) live under cacheDir (.astro-cache),
+          # alongside the existing asset cache. A rolling per-commit key ensures
+          # each run saves a fresh cache (actions/cache only saves on a miss),
+          # while restore-keys pulls the most recent prior cache forward so
+          # unchanged pages are skipped on the next build.
           path: |
-            .astro-cache/assets
-          key: astro-assets-${{ hashFiles('src/assets/**') }}
+            .astro-cache
+          key: astro-cache-${{ runner.os }}-${{ github.sha }}
           restore-keys: |
-            astro-assets-
+            astro-cache-${{ runner.os }}-
 
       - name: Build
         id: build

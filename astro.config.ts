@@ -268,6 +268,12 @@ const appVite = {
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
+	// Testing Astro's experimental incremental static builds
+	// (withastro/astro#17084) with the nimbus-docs preview that emits a
+	// per-entry cacheKey (cloudflare/nimbus#44).
+	experimental: {
+		incrementalBuild: true,
+	},
 	prefetch: {
 		prefetchAll: true,
 		defaultStrategy: "hover",
