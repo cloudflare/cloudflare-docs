@@ -1,6 +1,6 @@
 ---
-title: Web Crypto adds experimental ML-KEM and ML-DSA support
-description: The Workers runtime adds experimental post-quantum algorithms and key encapsulation methods through a compatibility flag.
+title: Web Crypto adds ML-KEM and ML-DSA support
+description: The Workers runtime adds opt-in post-quantum algorithms and key encapsulation methods through a compatibility flag.
 products:
   - workers
 date: 2026-07-23
@@ -10,7 +10,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 The Workers Web Crypto API now supports ML-KEM-768, ML-KEM-1024, and all three ML-DSA parameter sets. ML-KEM establishes shared secrets, while ML-DSA signs and verifies data.
 
-The experimental API also adds key encapsulation and decapsulation methods, `getPublicKey()`, `SubtleCrypto.supports()`, and JSON Web Keys (JWKs) with the `AKP` key type.
+The opt-in API also adds key encapsulation and decapsulation methods, `getPublicKey()`, `SubtleCrypto.supports()`, and JSON Web Keys (JWKs) with the `AKP` key type.
 
 Turn on the `webcrypto_modern_algorithms` compatibility flag to use these features:
 
