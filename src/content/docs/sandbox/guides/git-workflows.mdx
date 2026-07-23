@@ -12,6 +12,10 @@ import { TypeScriptExample } from "~/components";
 
 This guide shows you how to clone repositories, manage branches, and automate Git operations in the sandbox.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents `sandbox.gitCheckout()` on today's stable `@cloudflare/sandbox` package. Preview docs for a Git extension are not published yet; keep using this stable surface for Git workflows until they are.
+:::
+
 ## Clone repositories
 
 <TypeScriptExample>
@@ -25,18 +29,19 @@ await sandbox.gitCheckout('https://github.com/user/repo');
 
 // Clone specific branch
 await sandbox.gitCheckout('https://github.com/user/repo', {
-  branch: 'develop'
+branch: 'develop'
 });
 
 // Shallow clone (faster for large repos)
 await sandbox.gitCheckout('https://github.com/user/large-repo', {
-  depth: 1
+depth: 1
 });
 
 // Clone to specific directory
 await sandbox.gitCheckout('https://github.com/user/my-app', {
-  targetDir: '/workspace/project'
+targetDir: '/workspace/project'
 });
+
 ```
 </TypeScriptExample>
 
@@ -46,10 +51,12 @@ Use a personal access token in the URL:
 
 <TypeScriptExample>
 ```
+
 const token = env.GITHUB_TOKEN;
 const repoUrl = `https://${token}@github.com/user/private-repo.git`;
 
 await sandbox.gitCheckout(repoUrl);
+
 ```
 </TypeScriptExample>
 
@@ -63,6 +70,7 @@ Clone a repository and run build steps:
 
 <TypeScriptExample>
 ```
+
 await sandbox.gitCheckout('https://github.com/user/my-app');
 
 const repoName = 'my-app';
@@ -72,6 +80,7 @@ await sandbox.exec(`cd ${repoName} && npm install`);
 await sandbox.exec(`cd ${repoName} && npm run build`);
 
 console.log('Build complete');
+
 ```
 </TypeScriptExample>
 
@@ -79,6 +88,7 @@ console.log('Build complete');
 
 <TypeScriptExample>
 ```
+
 await sandbox.gitCheckout('https://github.com/user/repo');
 
 // Switch branches
@@ -86,6 +96,7 @@ await sandbox.exec('cd repo && git checkout feature-branch');
 
 // Create new branch
 await sandbox.exec('cd repo && git checkout -b new-feature');
+
 ```
 </TypeScriptExample>
 
@@ -93,6 +104,7 @@ await sandbox.exec('cd repo && git checkout -b new-feature');
 
 <TypeScriptExample>
 ```
+
 await sandbox.gitCheckout('https://github.com/user/repo');
 
 // Modify a file
@@ -104,6 +116,7 @@ await sandbox.exec('cd repo && git config user.name "Sandbox Bot"');
 await sandbox.exec('cd repo && git config user.email "bot@example.com"');
 await sandbox.exec('cd repo && git add README.md');
 await sandbox.exec('cd repo && git commit -m "Update README"');
+
 ```
 </TypeScriptExample>
 
@@ -121,12 +134,14 @@ Verify your token is set:
 
 <TypeScriptExample>
 ```
+
 if (!env.GITHUB_TOKEN) {
-  throw new Error('GITHUB_TOKEN not configured');
+throw new Error('GITHUB_TOKEN not configured');
 }
 
 const repoUrl = `https://${env.GITHUB_TOKEN}@github.com/user/private-repo.git`;
 await sandbox.gitCheckout(repoUrl);
+
 ```
 </TypeScriptExample>
 
@@ -136,9 +151,11 @@ Use shallow clone:
 
 <TypeScriptExample>
 ```
+
 await sandbox.gitCheckout('https://github.com/user/large-repo', {
-  depth: 1
+depth: 1
 });
+
 ```
 </TypeScriptExample>
 
@@ -147,3 +164,4 @@ await sandbox.gitCheckout('https://github.com/user/large-repo', {
 - [Files API reference](/sandbox/api/files/) - File operations after cloning
 - [Execute commands guide](/sandbox/guides/execute-commands/) - Run git commands
 - [Manage files guide](/sandbox/guides/manage-files/) - Work with cloned files
+```

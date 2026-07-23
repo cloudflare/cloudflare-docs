@@ -1,0 +1,162 @@
+---
+title: Migrate
+pcx_content_type: how-to
+sidebar:
+  order: 3
+description: Update an existing Sandbox SDK application from the stable package to @cloudflare/sandbox@next.
+products:
+  - sandbox
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This guide moves a project onto `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. Migrate when you can so you are ready when 1.0 becomes the stable release. For the full preview section, refer to [1.0 preview](/sandbox/1-0-preview/).
+:::
+
+## Before you start
+
+1. Use a branch or staging deployment so you can verify the preview before cutting over production.
+2. Deploy the Worker and the container image that match `@next` together.
+3. Inventory call sites: `exec`, `execStream`, `startProcess`, sessions, transport settings, interpreter methods, and terminal helpers.
+
+If you still need stable-line cleanup first (RPC transport, `exposePort`, stream helpers), complete the [2026 deprecation migration](/sandbox/guides/2026-deprecation/), then return here.
+
+## Install the preview package
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+Confirm the lockfile resolves `@cloudflare/sandbox` to a preview build, then deploy Worker and container together.
+
+## Migration map
+
+| Stable surface                                                       | Preview action                                                                 |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `SANDBOX_TRANSPORT`, `transport` on `getSandbox()`, `setTransport()` | Remove. Control plane is RPC-only.                                             |
+| `await sandbox.exec(string)` → buffered result                       | `await sandbox.exec(argv)` then `await process.output(...)`.                   |
+| `execStream`, `startProcess`, process log helpers                    | Process handle: `logs`, `kill`, `waitFor*`.                                    |
+| Default session / `enableDefaultSession`                             | Gone. No hidden shell state between `exec` calls.                              |
+| `createSession` / `ExecutionSession`                                 | Gone from the core public surface. Use `cwd`/`env`, shell argv, or a terminal. |
+| Interpreter methods on `Sandbox`                                     | `withInterpreter` from `@cloudflare/sandbox/interpreter`.                      |
+| String kill signals                                                  | Numeric signals on `process.kill`.                                             |
+
+## Remove transport selection
+
+Delete `SANDBOX_TRANSPORT`, the `transport` option on `getSandbox()`, `SandboxTransport` types, and `sandbox.setTransport()`. No replacement setting is required.
+
+## Migrate command execution
+
+### Buffered commands
+
+Stable:
+
+```ts
+const result = await sandbox.exec("npm test");
+console.log(result.stdout, result.exitCode);
+```
+
+Preview:
+
+<TypeScriptExample>
+```ts
+const process = await sandbox.exec(["/bin/bash", "-lc", "npm test"]);
+const result = await process.output({ encoding: "utf8" });
+console.log(result.stdout, result.exitCode);
+```
+</TypeScriptExample>
+
+Rules:
+
+- `await sandbox.exec(...)` means **launch succeeded**, not **command finished**.
+- Prefer argv without a shell when you run a single binary: `['npm', 'test']` with `cwd` set.
+- There is no `sandbox.run()` compatibility helper on the current preview tip.
+
+### Background processes and streaming
+
+<TypeScriptExample>
+```ts
+const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
+	cwd: "/workspace/app",
+});
+
+await server.waitForPort(3000, { timeout: 60_000 });
+
+const stream = await server.logs({ follow: true, replay: true });
+// consume stream...
+
+await server.kill();
+
+```
+</TypeScriptExample>
+
+Across Worker requests, keep `server.id` and resume with `getProcess(id)` only while that process may still be running in the current container. If the container stopped, `getProcess` may return `null`. If you still hold a handle from a previous container, expect a stale-handle error. In both cases, start a new `exec` from the work you still need to run. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+
+### Shell state
+
+| Stable | Preview |
+| ------ | ------- |
+| `exec("cd /app"); exec("npm test");` | `exec(['/bin/bash', '-lc', 'cd /app && npm test'])` or `exec(['npm', 'test'], { cwd: '/app' })` |
+| Exported vars in the default session | Pass `env` on each launch, or use a terminal |
+
+### Timeouts and cancellation
+
+| Goal | API |
+| ---- | --- |
+| Limit process lifetime | `exec(argv, { timeout })` — may finish with `timedOut: true` |
+| Limit how long you wait | Options or `AbortSignal` on `output` / waits / `logs` — does **not** kill the process |
+
+## Drop session APIs
+
+Remove `createSession`, `getSession`, `deleteSession`, and `sessionId` options on core calls.
+
+User isolation remains **one sandbox per user** (or per trust boundary), not sessions inside one sandbox.
+
+## Attach the interpreter
+
+See [Extensions](/sandbox/1-0-preview/extensions/) for full examples. Minimum:
+
+```ts
+import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
+import { withInterpreter } from "@cloudflare/sandbox/interpreter";
+
+export class Sandbox extends BaseSandbox<Env> {
+	interpreter = withInterpreter(this);
+}
+```
+
+## Terminals
+
+Use preview terminal APIs (`createTerminal`, `getTerminal`, `listTerminals`, and related connect helpers in your installed version) when you need a PTY. Process handles are not terminals.
+
+## Lifecycle errors to handle
+
+- **`CONTAINER_UNAVAILABLE`** — container not ready to admit work; retry as a **new** operation with your own backoff.
+- **Stale process or terminal handles** — the handle belonged to a previous container for this sandbox; relaunch the work.
+- **Operation interrupted** — work was admitted then interrupted; inspect state before retrying side effects.
+
+`getProcess` and `listProcesses` do not start a container. They return `null` or `[]` when no container is running for the sandbox.
+
+## Do not treat process IDs as permanent jobs
+
+You will keep using the same **sandbox ID** after idle time or restarts. The **container** behind that sandbox ID may be new, and processes from the previous container will not still be running. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+
+When you migrate:
+
+1. Do not treat a stored `process.id` as enough to resume work after an arbitrary delay.
+2. Persist the command, `cwd`, `env`, and any app checkpoint you need to relaunch.
+3. On a later request, call `getProcess(id)` only if that process might still be running in the current container; if you get `null` or a stale-handle error, start a new `exec` from the stored work.
+
+## Verify
+
+1. Install `@next` and deploy Worker plus container together.
+2. Run one argv `exec` and `output()`.
+3. Run one long-lived process with `waitForPort` or `logs`.
+4. Exercise the interpreter only if your app uses that extension.
+5. Confirm no remaining transport types, session APIs, or stable-only client imports.
+
+## Related
+
+- [1.0 preview overview](/sandbox/1-0-preview/)
+- [Process execution](/sandbox/1-0-preview/processes/) (including [how long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives))
+- [Process API](/sandbox/1-0-preview/process-api/)
+- [Extensions](/sandbox/1-0-preview/extensions/)

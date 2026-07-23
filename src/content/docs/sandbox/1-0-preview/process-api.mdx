@@ -1,0 +1,165 @@
+---
+title: Process API
+pcx_content_type: reference
+sidebar:
+  order: 5
+description: Reference for argv exec, SandboxProcess handles, logs, waits, and related types in the Sandbox SDK 1.0 preview.
+products:
+  - sandbox
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents the process API on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable command surface, refer to [Commands](/sandbox/api/commands/).
+:::
+
+Launch and observe supervised processes in the current container for a sandbox.
+
+For the mental model, refer to [Process execution](/sandbox/1-0-preview/processes/).
+
+## `exec()`
+
+Start a process from an argument vector. Resolves when launch succeeds, not when the process exits.
+
+```ts
+const process = await sandbox.exec(
+	command: SandboxCommand,
+	options?: ExecOptions,
+): Promise<SandboxProcess>;
+```
+
+### `SandboxCommand`
+
+```ts
+type SandboxCommand = readonly [executable: string, ...args: string[]];
+```
+
+- `command[0]` must be a non-empty executable path or name.
+- Later arguments may be empty strings.
+- Shell syntax requires an explicit shell, for example `['/bin/bash', '-lc', script]`.
+
+### `ExecOptions`
+
+| Field     | Type                     | Description                                                                                                           |
+| --------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `cwd`     | `string`                 | Working directory for this launch. Defaults to `/workspace` when unset.                                               |
+| `env`     | `Record<string, string>` | Environment overlay for this launch. Does not mutate later launches. Sandbox-level env still applies.                 |
+| `timeout` | `number`                 | Remote process lifetime in milliseconds. The supervisor may stop the process; completion can report `timedOut: true`. |
+
+### Returns
+
+`Promise<SandboxProcess>`
+
+<TypeScriptExample>
+```ts
+const process = await sandbox.exec(["node", "--version"]);
+const output = await process.output({ encoding: "utf8" });
+
+console.log(process.id, process.pid, output.stdout, output.exitCode);
+
+```
+</TypeScriptExample>
+
+## `getProcess()`
+
+Return a handle for a process running in the **current container** for this sandbox, or `null`.
+
+Does not start a container if none is running. Returns `null` when no container is up, when the process ID is unknown in the current container, or when that process belonged to a previous container for the same sandbox ID.
+
+```ts
+const process = await sandbox.getProcess(id: string): Promise<SandboxProcess | null>;
+```
+
+Process IDs are not durable across container stop or replace. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+
+## `listProcesses()`
+
+List processes running in the current container for this sandbox. Does not start a container if none is running. Returns an empty list when no container is up.
+
+```ts
+const statuses = await sandbox.listProcesses(): Promise<ProcessStatus[]>;
+```
+
+## `SandboxProcess`
+
+| Member                          | Description                                                |
+| ------------------------------- | ---------------------------------------------------------- |
+| `id`                            | Process ID in the current container.                       |
+| `pid`                           | Container pid at launch.                                   |
+| `exitCode`                      | `Promise<number>` that resolves when the process finishes. |
+| `status()`                      | Current discriminated status.                              |
+| `logs(options?)`                | Cursor-based log stream.                                   |
+| `output(options?)`              | Buffered stdout and stderr plus exit metadata.             |
+| `waitForExit(options?)`         | Wait until the supervised process group settles.           |
+| `waitForLog(pattern, options?)` | Wait until stdout or stderr matches.                       |
+| `waitForPort(port, options?)`   | Wait until a port is ready or readiness fails.             |
+| `kill(signal?)`                 | Send a numeric signal. Default `15` (`SIGTERM`).           |
+
+### `output()`
+
+```ts
+interface ProcessOutput<T = Uint8Array> {
+	stdout: T;
+	stderr: T;
+	exitCode: number;
+	signal?: number;
+	timedOut: boolean;
+	truncated: boolean;
+}
+```
+
+Pass `{ encoding: "utf8" }` when you want string streams. Prefer `logs()` when output may exceed the buffer.
+
+### `logs()`
+
+```ts
+interface ProcessLogsOptions {
+	since?: string; // opaque cursor
+	replay?: boolean;
+	follow?: boolean;
+	signal?: AbortSignal; // cancels this subscription only
+}
+```
+
+### Status shape
+
+```ts
+type ProcessStatus =
+	| { state: "running"; id: string; pid: number /* … */ }
+	| { state: "exited"; id: string; pid: number; exit: ProcessExit /* … */ }
+	| { state: "error"; id: string; pid: number; error: ProcessFailure /* … */ };
+```
+
+A process stays `running` until the supervised **process group** has settled, even if the root pid exits while descendants continue.
+
+### `ProcessExit`
+
+```ts
+interface ProcessExit {
+	code: number;
+	signal?: number;
+	timedOut: boolean;
+}
+```
+
+## Common errors
+
+| Situation | Typical outcome |
+| --------- | --------------- |
+| Unknown process ID in the current container | Process not found |
+| `getProcess` / `listProcesses` while no container is running | `null` / `[]` (does not start a container; not an error) |
+| Handle or process ID from a previous container for this sandbox | Stale process handle |
+| Local wait timed out (process may still run) | Process wait timeout |
+| Local `AbortSignal` | Process aborted |
+| Port not ready before exit | Process exited before ready |
+| Container not ready to admit work | `CONTAINER_UNAVAILABLE` |
+| Work interrupted after admission | Operation interrupted |
+
+Exact error class names are exported from `@cloudflare/sandbox` in the preview package. Lifetime behavior is explained in [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+
+## Related
+
+- [Process execution](/sandbox/1-0-preview/processes/)
+- [Migrate from the stable SDK](/sandbox/1-0-preview/migrate/)
+- Stable: [Commands](/sandbox/api/commands/)

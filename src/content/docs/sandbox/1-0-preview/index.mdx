@@ -1,0 +1,129 @@
+---
+title: 1.0 preview
+pcx_content_type: overview
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Overview
+description: Install @cloudflare/sandbox@next, learn the 1.0 APIs, and prepare for the Sandbox SDK 1.0 stable release.
+products:
+  - sandbox
+---
+
+import { CardGrid, LinkTitleCard, PackageManagers } from "~/components";
+
+**Sandbox SDK 1.0** is the next major release of the SDK. It is available now as a preview on the npm `@next` tag while the current stable package remains published for existing apps.
+
+We recommend:
+
+- **New projects** — start on `@cloudflare/sandbox@next` and follow this section.
+- **Existing apps** — migrate when you can, so you are ready when 1.0 becomes the stable release.
+
+The main [Sandbox documentation](/sandbox/) still documents today's stable package. Use this section for the preview APIs and migration path.
+
+## Install the preview
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+Deploy the Worker package and the sandbox container image from the same preview line. Do not mix a preview Worker package with a stable container image.
+
+## What changes in 1.0
+
+The 1.0 preview changes how applications start work inside a sandbox and how they observe that work over time. This section summarizes the public differences. For procedures and code updates, refer to [Migrate](/sandbox/1-0-preview/migrate/) and [Process execution](/sandbox/1-0-preview/processes/).
+
+### Command execution
+
+In the current stable package, `sandbox.exec()` takes a command string and resolves when the command finishes with buffered output. Long-running services and streaming use separate APIs (`startProcess`, `execStream`).
+
+In the 1.0 preview, `sandbox.exec()` takes an argument vector and resolves when the process **starts**. The return value is a process handle. Use handle methods such as `output()`, `logs()`, `waitForExit()`, `waitForPort()`, and `kill()` to observe or control the process. The same handle covers short commands and long-running services.
+
+```ts
+// Current stable package
+const result = await sandbox.exec("npm test");
+console.log(result.stdout, result.exitCode);
+
+// 1.0 preview
+const process = await sandbox.exec(["npm", "test"]);
+const result = await process.output({ encoding: "utf8" });
+console.log(result.stdout, result.exitCode);
+```
+
+Shell features such as pipes and `&&` require an explicit shell executable, for example `['/bin/bash', '-lc', 'cd app && npm test']`. Pass `cwd` and `env` on each `exec()` when the process needs them.
+
+### Sessions
+
+In the current stable package, a default session can preserve working directory and environment variables across `exec()` calls. Applications can also create named sessions with `createSession()`.
+
+The 1.0 preview does not expose session execution on the core SDK. Each `exec()` starts an independent process. To keep shell state across interactions, use a [terminal](/sandbox/1-0-preview/processes/#processes-versus-terminals), encode the full command in one shell invocation, or rely on the sandbox filesystem. Isolate different end users with separate sandboxes, not with sessions inside one sandbox.
+
+### Code interpreter
+
+In the current stable package, the code interpreter methods live on `Sandbox`.
+
+In the 1.0 preview, the interpreter is an opt-in extension. Attach it on your `Sandbox` subclass, then call `sandbox.interpreter.*`. Refer to [Extensions](/sandbox/1-0-preview/extensions/).
+
+### Sandbox ID, container, and processes
+
+You still address a sandbox with a stable **sandbox ID** (`getSandbox(env.Sandbox, "user-123")`). That sandbox runs in a **container**; the ID is stable, the container instance is not always the same. Processes you start with `exec()` exist only in the current container — when that container stops, those processes are gone and old handles fail closed. Terms and lifetime: [Sandbox ID, container, and process](/sandbox/1-0-preview/processes/#sandbox-id-container-and-process) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+
+### Transport configuration
+
+In the current stable package, applications can select HTTP, WebSocket, or RPC transport between the Durable Object and the container.
+
+In the 1.0 preview, the SDK always uses RPC. Remove `SANDBOX_TRANSPORT`, the `transport` option on `getSandbox()`, and `setTransport()`. No replacement setting is required.
+
+## Start here
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/sandbox/1-0-preview/get-started/"
+	icon="rocket"
+>
+	Install `@next` and run your first argv process handle.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Migrate from stable"
+	href="/sandbox/1-0-preview/migrate/"
+	icon="open-book"
+>
+	Update an existing app from the stable SDK to the preview.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Process execution"
+	href="/sandbox/1-0-preview/processes/"
+	icon="document"
+>
+	How `exec()` works, process handles, and how long processes live.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Process API"
+	href="/sandbox/1-0-preview/process-api/"
+	icon="setting"
+>
+	Signatures for `exec`, handles, status, logs, and waits.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Extensions"
+	href="/sandbox/1-0-preview/extensions/"
+	icon="puzzle"
+>
+	Attach the code interpreter and other optional capabilities.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Stable documentation
+
+While you remain on the current stable package, use the main docs:
+
+- [Get started](/sandbox/get-started/)
+- [Commands](/sandbox/api/commands/)
+- [Sessions](/sandbox/concepts/sessions/)
+- [2026 deprecation migration](/sandbox/guides/2026-deprecation/)

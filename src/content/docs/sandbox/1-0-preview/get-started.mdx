@@ -1,0 +1,90 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 1
+description: Install @cloudflare/sandbox@next and run a first argv process in a sandbox.
+products:
+  - sandbox
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page uses `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. Prefer this path for new projects. For today's stable package, refer to [Getting started](/sandbox/get-started/).
+:::
+
+## 1. Install the preview package
+
+In a Workers project that already uses Sandbox, or a new project from the Sandbox template:
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+Build and deploy the Worker **and** the sandbox container image from the same preview line.
+
+## 2. Export your Sandbox class
+
+```ts
+import { Sandbox } from "@cloudflare/sandbox";
+
+export { Sandbox };
+```
+
+Keep your `wrangler` Durable Object binding and container configuration. Preview-specific transport variables are not required.
+
+## 3. Run a process
+
+`exec()` takes an argument vector and returns a handle when launch succeeds. Collect output separately.
+
+<TypeScriptExample>
+```ts
+import { getSandbox, proxyToSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+type Env = {
+Sandbox: DurableObjectNamespace<import("@cloudflare/sandbox").Sandbox>;
+};
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const proxy = await proxyToSandbox(request, env);
+		if (proxy) return proxy;
+
+    	const sandbox = getSandbox(env.Sandbox, "preview-demo");
+    	const process = await sandbox.exec(["python3", "-c", "print(2 + 2)"]);
+    	const output = await process.output({ encoding: "utf8" });
+
+    	return Response.json({
+    		id: process.id,
+    		pid: process.pid,
+    		stdout: output.stdout,
+    		exitCode: output.exitCode,
+    	});
+    },
+
+};
+
+```
+</TypeScriptExample>
+
+Shell syntax needs an explicit shell:
+
+```ts
+const process = await sandbox.exec(["/bin/bash", "-lc", "echo hello && uname -a"]);
+const { stdout } = await process.output({ encoding: "utf8" });
+```
+
+## 4. What to notice
+
+- `await sandbox.exec(...)` is **launch**, not completion.
+- There is no hidden session: a later `exec` does not remember a previous `cd`.
+- Use `cwd` and `env` on each launch when you need them.
+- A process runs in the current container for the sandbox. After that container stops, start a new process. For the sandbox ID / container / process model, refer to [Sandbox ID, container, and process](/sandbox/1-0-preview/processes/#sandbox-id-container-and-process).
+
+## Next
+
+- [Process execution](/sandbox/1-0-preview/processes/) — how `exec()` and process lifetime work
+- [Migrate](/sandbox/1-0-preview/migrate/) — update an existing stable app
+- [Process API](/sandbox/1-0-preview/process-api/)
+- [Extensions](/sandbox/1-0-preview/extensions/)

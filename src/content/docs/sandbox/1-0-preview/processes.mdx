@@ -1,0 +1,157 @@
+---
+title: Process execution
+pcx_content_type: concept
+sidebar:
+  order: 2
+description: How the Sandbox SDK 1.0 preview runs commands — argv launches, process handles, and container lifetime.
+products:
+  - sandbox
+---
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents process execution on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable command and session behavior, refer to [Commands](/sandbox/api/commands/) and [Sessions](/sandbox/concepts/sessions/).
+:::
+
+In the 1.0 preview, treat the sandbox as a computer you drive with explicit programs — not as a hidden shell that remembers the last command.
+
+Each `exec()` starts a **new supervised process** from an argument vector. The call resolves when launch succeeds (you receive a process ID and a pid), not when the process exits. Interactive shell state lives on **terminals**, not across successive `exec()` calls.
+
+## Sandbox ID, container, and process
+
+Most applications use **one sandbox per user or task**:
+
+```ts
+const sandbox = getSandbox(env.Sandbox, "user-123");
+```
+
+Three different things are in play:
+
+| Term | Meaning |
+| ---- | ------- |
+| **Sandbox ID** | The stable string your app uses to find that sandbox again (`"user-123"` above). |
+| **Container** | The [Containers](/containers/) instance currently running work for that sandbox. Sandboxes run on containers. The sandbox ID is stable; the container instance behind it is not always the same one. |
+| **Process** | A program you start with `exec()` **inside the current container**. The handle and `process.id` mean “this program in this container,” not “this sandbox ID forever.” |
+
+**Same sandbox ID does not mean the same container.** Processes live only in the container that started them, so after a new container serves that ID you start new processes — you do not resume the old ones. Details: [How long a process lives](#how-long-a-process-lives).
+
+## Command model
+
+Compared with the current stable package:
+
+| Current stable package | 1.0 preview |
+| ---------------------- | ----------- |
+| `exec(string)` resolves when the command finishes | `exec(argv)` resolves when the process starts |
+| Default session can preserve `cd` / `export` | Each launch is independent |
+| `startProcess` / `execStream` for other shapes | One process handle covers short and long-running work |
+
+Use argv for a single binary:
+
+```ts
+const process = await sandbox.exec(["node", "--version"]);
+const output = await process.output({ encoding: "utf8" });
+```
+
+Use an explicit shell when you need shell syntax:
+
+```ts
+const process = await sandbox.exec([
+	"/bin/bash",
+	"-lc",
+	"cd /workspace/app && npm test",
+]);
+```
+
+Or pass `cwd` and `env` on the launch instead of relying on a previous command:
+
+```ts
+const process = await sandbox.exec(["npm", "test"], {
+	cwd: "/workspace/app",
+	env: { NODE_ENV: "test" },
+});
+```
+
+## Process handles
+
+`await sandbox.exec(argv)` returns a **process handle**:
+
+| Capability | Methods |
+| ---------- | ------- |
+| Identity | `id`, `pid` |
+| Observe | `status()`, `logs()`, `output()`, `waitForExit()`, `waitForLog()`, `waitForPort()`, `exitCode` |
+| Control | `kill(signal?)` with a numeric signal (default `15`) |
+
+Observation timeouts and `AbortSignal` values cancel **only that wait or stream**. They do not stop the process. Call `kill()` when you intend to stop it.
+
+`exec(argv, { timeout })` sets a **remote lifetime** deadline. When the supervisor stops the process for that deadline, completion can report `timedOut: true`.
+
+API details: [Process API](/sandbox/1-0-preview/process-api/).
+
+## How long a process lives
+
+A process lives only as long as it keeps running **in the current container** for that sandbox. The [sandbox ID / container / process](#sandbox-id-container-and-process) distinction matters here: after the container stops, old process IDs are not valid on a later container that serves the same sandbox ID.
+
+### When the container stops
+
+The container for a sandbox is not meant to run forever. After a period with nothing to do, Cloudflare may stop it. The container can also stop after failures, or when the platform replaces it during normal operations (for example after some deploys).
+
+When that happens:
+
+- Your app still uses the same sandbox ID (`user-123`).
+- Processes that were running in the old container have exited. Their process IDs and live log buffers from that container are gone.
+- The next time you use the sandbox for real work, Cloudflare may start a **new** container for the same sandbox ID. You start new processes there. You do not reconnect to process IDs from the previous container. Files from the old container are not still there unless your app restored them (for example from a backup or a mounted bucket).
+
+Sandboxes already behave this way. The 1.0 preview does not introduce container stop. The preview makes the SDK honest about process handles after the container has stopped or a new container has started for the same sandbox ID.
+
+### What you see in the API
+
+| What you try | What happens |
+| ------------ | ------------ |
+| The process is still running in the current container | `getProcess(id)` returns it; you can read logs and wait as usual |
+| No container is running for the sandbox yet | `getProcess` and `listProcesses` return `null` / `[]`. They do **not** start a container just to answer the lookup |
+| You still hold a handle from before the container stopped | Calls on that handle fail with a stale-handle error. The SDK does not retarget them at a new container for the same sandbox ID |
+| You need the same *job* after a stop | Start a new `exec()` with the same command and options (and any checkpoint your app stored) |
+
+The SDK will not quietly treat an old process ID as valid on a new container that happens to serve the same sandbox ID.
+
+### What to remember across Worker requests
+
+Your Worker may handle many short requests while the **same container** stays up for a sandbox. That is fine: store `process.id` (and a log cursor if you stream), call `getProcess(id)` on the next request, and continue **as long as that process is still running in that container**.
+
+If the work must continue even after the container may have stopped — minutes or hours later, or after a failure — store the **job**, not only the process ID:
+
+- What to run (argv or script)
+- `cwd` and `env` if you need them
+- Any application checkpoint (for example repo path, step number, agent state)
+
+On the next request, try `getProcess` if you still have a process ID. If you get `null` or a stale-handle error, run `exec` again from the stored job. Treat that as normal recovery, not as a rare disaster.
+
+If the job also depends on files that lived only in the previous container, you may [back up and restore](/sandbox/guides/backup-restore/) those directories (or mount durable storage) before relying on the tree again. Backup and restore replace filesystem state; they do not bring back old process IDs or log buffers.
+
+### Keeping the container running
+
+While a process or terminal is active, the container can stay running so work continues across requests. When nothing is active, the container may stop again after idle time. Long-running product flows should either keep meaningful work active or rely on checkpoints and relaunch.
+
+## Processes versus terminals
+
+| | Process (`exec`) | Terminal |
+| - | ---------------- | -------- |
+| Purpose | Supervised argv launch | Interactive PTY |
+| Shell memory across calls | No | Yes (PTY session) |
+| Standard input | Not on the public process API | Yes |
+| Stop | `kill(signal?)` | Interrupt, terminate, or close |
+| Discovery | `getProcess` / `listProcesses` (non-waking) | `getTerminal` / `listTerminals` |
+
+Do not infer terminal control semantics from process handles. Terminals follow the same [lifetime rules](#how-long-a-process-lives) as processes: they only exist in the current container for that sandbox.
+
+## Logs and large output
+
+`output()` buffers stdout and stderr and may set `truncated: true`.
+
+For large or long-running output, use `logs({ since, replay, follow })` and keep the latest **cursor**. A later Worker request against the **same still-running container** can call `getProcess(id)` and resume with `logs({ since: cursor, replay: true, follow: true })`. After a new container starts for the sandbox, start a new process instead of expecting the old cursor to apply.
+
+## Related
+
+- [Process API](/sandbox/1-0-preview/process-api/)
+- [Migrate](/sandbox/1-0-preview/migrate/)
+- [Get started](/sandbox/1-0-preview/get-started/)
+- [1.0 preview overview](/sandbox/1-0-preview/)

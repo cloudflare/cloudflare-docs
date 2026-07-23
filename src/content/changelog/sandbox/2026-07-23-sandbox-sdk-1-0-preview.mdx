@@ -1,0 +1,24 @@
+---
+title: Document the Sandbox SDK 1.0 preview
+description: A dedicated docs section covers @cloudflare/sandbox@next so teams can adopt the upcoming Sandbox SDK 1.0 APIs.
+products:
+  - sandbox
+date: 2026-07-23
+---
+
+import { PackageManagers } from "~/components";
+
+**Sandbox SDK 1.0** is the next major release of the SDK. A preview is available now on the npm `@next` tag while the current stable package remains published for existing apps.
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+We recommend starting new projects on the preview and migrating existing apps when you can, so you are ready when 1.0 becomes the stable release. The main [Sandbox documentation](/sandbox/) still describes today's stable package. Preview documentation lives in a dedicated section:
+
+- [Sandbox SDK 1.0 preview](/sandbox/1-0-preview/)
+- [Get started with the preview](/sandbox/1-0-preview/get-started/)
+- [Migrate from the stable SDK](/sandbox/1-0-preview/migrate/)
+- [Process execution](/sandbox/1-0-preview/processes/)
+- [Process API](/sandbox/1-0-preview/process-api/)
+- [Extensions](/sandbox/1-0-preview/extensions/)
+
+Stable pages that change in 1.0 now point to the matching preview topic. Deploy the preview Worker package and container image together.

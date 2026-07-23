@@ -1,0 +1,71 @@
+---
+title: Extensions
+pcx_content_type: how-to
+sidebar:
+  order: 4
+description: Attach the code interpreter and other optional Sandbox capabilities in the 1.0 preview.
+products:
+  - sandbox
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents extensions on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. On today's stable package, interpreter methods remain on the core SDK — refer to [Use code interpreter](/sandbox/guides/code-execution/).
+:::
+
+Optional capabilities attach to your `Sandbox` subclass. They are not imported as free-floating globals on every app.
+
+## Attach pattern
+
+```ts
+import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
+import { withInterpreter } from "@cloudflare/sandbox/interpreter";
+
+export class Sandbox extends BaseSandbox<Env> {
+	interpreter = withInterpreter(this);
+}
+```
+
+Call them as nested namespaces from the Worker: `sandbox.interpreter.*`.
+
+## Code interpreter
+
+The interpreter is a **sidecar** extension. Its runtime packages as a tarball and provisions on first use.
+
+```ts
+const context = await sandbox.interpreter.createCodeContext({
+	language: "python",
+});
+const result = await sandbox.interpreter.runCode('print("hello")', { context });
+```
+
+Methods keep familiar names:
+
+- `createCodeContext`
+- `runCode`
+- `runCodeStream`
+- `listCodeContexts`
+- `deleteCodeContext`
+
+`runCode` returns plain serializable result data across the Worker and Durable Object boundary. Python still requires the `-python` image variant.
+
+## OpenCode
+
+If you use OpenCode, attach `withOpenCode` on the subclass and build clients with the package helpers (`createOpenCodeClient`, `createOpenCodeProxy`). Confirm exact exports in your installed `@next` version. Older free functions such as `createOpencode` are not the preview surface.
+
+## Authoring your own extension
+
+Experimental helpers live under `@cloudflare/sandbox/extensions`.
+
+- Extend `SandboxExtension`.
+- Export a `withYourExtension(sandbox)` helper.
+- SDK-only extensions use `this.exec` and scoped runtime access.
+- Sidecar extensions ship a `.tgz` and call through `withSidecar`.
+
+Third-party publishing on npm is not set up yet. Keep custom extensions in your application for now.
+
+## Related
+
+- [Process execution](/sandbox/1-0-preview/processes/)
+- [Migrate from the stable SDK](/sandbox/1-0-preview/migrate/)

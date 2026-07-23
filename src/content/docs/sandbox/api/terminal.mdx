@@ -12,6 +12,12 @@ import { TypeScriptExample } from "~/components";
 
 Connect browser-based terminal UIs to sandbox shells via WebSocket. The server-side `terminal()` method proxies WebSocket connections to the container, and the client-side `SandboxAddon` integrates with xterm.js for terminal rendering.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents terminal helpers on today's stable `@cloudflare/sandbox` package.
+
+**Sandbox SDK 1.0** (preview on `@next`) treats terminals as first-class resources separate from process handles. Confirm method names in your installed `@next` package and read [processes versus terminals](/sandbox/1-0-preview/processes/#processes-versus-terminals).
+:::
+
 ## Server-side methods
 
 ### `terminal()`
@@ -49,7 +55,7 @@ return await sandbox.terminal(request);
 const session = await sandbox.getSession('dev');
 return await session.terminal(request);
 
-```
+````
 </TypeScriptExample>
 
 ## Client-side addon
@@ -62,7 +68,7 @@ The `@cloudflare/sandbox/xterm` module provides `SandboxAddon` for xterm.js, whi
 import { SandboxAddon } from '@cloudflare/sandbox/xterm';
 
 const addon = new SandboxAddon(options: SandboxAddonOptions);
-```
+````
 
 **Options**:
 
@@ -82,20 +88,20 @@ const terminal = new Terminal({ cursorBlink: true });
 terminal.open(document.getElementById('terminal'));
 
 const addon = new SandboxAddon({
-  getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
-    const params = new URLSearchParams({ id: sandboxId });
-    if (sessionId) params.set('session', sessionId);
-    return `${origin}/ws/terminal?${params}`;
-  },
-  onStateChange: (state, error) => {
-    console.log(`Terminal ${state}`, error);
-  }
+getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
+const params = new URLSearchParams({ id: sandboxId });
+if (sessionId) params.set('session', sessionId);
+return `${origin}/ws/terminal?${params}`;
+},
+onStateChange: (state, error) => {
+console.log(`Terminal ${state}`, error);
+}
 });
 
 terminal.loadAddon(addon);
 addon.connect({ sandboxId: 'my-sandbox' });
 
-```
+````
 
 </TypeScriptExample>
 
@@ -105,7 +111,7 @@ Establish a connection to a sandbox terminal.
 
 ```ts
 addon.connect(target: ConnectionTarget): void
-```
+````
 
 **Parameters**:
 
