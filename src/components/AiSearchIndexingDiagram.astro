@@ -1,0 +1,893 @@
+---
+import { Icon as AstroIcon } from "astro-icon/components";
+
+interface Props {
+	autoPlay?: boolean;
+	loop?: boolean;
+	keyword?: boolean;
+}
+
+const { autoPlay = true, loop = true, keyword = true } = Astro.props;
+---
+
+<figure
+	class="ai-search-indexing-diagram not-content"
+	aria-label="AI Search indexing pipeline: content is stored in built-in storage — included with every instance — optionally populated from a connected R2 bucket or website. It is then parsed to Markdown by Workers AI, chunked, embedded through AI Gateway into a Vectorize vector index and, optionally, tokenized into an AI Search inverted index. Each stage links to its documentation."
+>
+	<cfdocs-ai-search-indexing-diagram
+		data-autoplay={String(autoPlay)}
+		data-loop={String(loop)}
+		data-keyword={String(keyword)}
+	>
+		<div class="asid-track">
+			<!-- Start -->
+			<a
+				class="asid-cap asid-start"
+				data-step="0"
+				href="/ai-search/configuration/data-source/"
+			>
+				<span class="asid-cap-icon" aria-hidden="true">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"
+						></path>
+						<path d="M14 3v5h5M9 13h6M9 17h6"></path>
+					</svg>
+				</span>
+				<span>Your content</span>
+				<span class="asid-cap-hint">e.g. PDF, image</span>
+			</a>
+
+			<!-- Line into the "storage" scope -->
+			<div class="asid-connector" data-step="1"></div>
+
+			<div class="asid-group">
+				<span class="asid-group-label">source</span>
+
+				<!-- Fan-out to the optional connected sources -->
+				<div class="asid-bracket asid-fanout" data-step="2" aria-hidden="true">
+					<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+						<line
+							x1="60"
+							y1="0"
+							x2="60"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="30"
+							y1="13"
+							x2="90"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="30"
+							y1="13"
+							x2="30"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="90"
+							y1="13"
+							x2="90"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+					</svg>
+				</div>
+
+				<!-- Optional connected sources -->
+				<div class="asid-sources">
+					<a
+						class="asid-node asid-source asid-optional"
+						data-step="3"
+						href="/ai-search/configuration/data-source/r2/"
+					>
+						<span class="asid-node-head">
+							Data source
+							<span class="asid-opt">Optional</span>
+						</span>
+						<span class="asid-node-body">
+							<span class="asid-icon" aria-hidden="true"
+								><AstroIcon name="r2" /></span
+							>
+							<span class="asid-node-title">R2 bucket</span>
+						</span>
+					</a>
+					<a
+						class="asid-node asid-source asid-optional"
+						data-step="3"
+						href="/ai-search/configuration/data-source/website/"
+					>
+						<span class="asid-node-head">
+							Data source · Browser Run
+							<span class="asid-opt">Optional</span>
+						</span>
+						<span class="asid-node-body">
+							<span class="asid-icon" aria-hidden="true"
+								><AstroIcon name="browser-run" /></span
+							>
+							<span class="asid-node-title">Website</span>
+						</span>
+					</a>
+				</div>
+
+				<!-- Fan-in: connected sources land in built-in storage -->
+				<div class="asid-bracket asid-fanin" data-step="4" aria-hidden="true">
+					<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+						<line
+							x1="30"
+							y1="0"
+							x2="30"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="90"
+							y1="0"
+							x2="90"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="30"
+							y1="13"
+							x2="90"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							x1="60"
+							y1="13"
+							x2="60"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+					</svg>
+				</div>
+
+				<!-- Built-in storage: the always-present store -->
+				<a
+					class="asid-node"
+					data-step="5"
+					href="/ai-search/configuration/data-source/built-in-storage/"
+				>
+					<span class="asid-node-head">AI Search · R2</span>
+					<span class="asid-node-body">
+						<span class="asid-icon" aria-hidden="true"
+							><AstroIcon name="ai-search" /></span
+						>
+						<span class="asid-node-title">Built-in storage</span>
+					</span>
+				</a>
+
+				<div class="asid-connector asid-exit" data-step="6"></div>
+			</div>
+
+			<!-- Line out of the storage scope -->
+			<div class="asid-connector asid-exit" data-step="6"></div>
+
+			<!-- Parsing -->
+			<a
+				class="asid-node"
+				data-step="7"
+				href="/workers-ai/features/markdown-conversion/"
+			>
+				<span class="asid-node-head">Workers AI · toMarkdown()</span>
+				<span class="asid-node-body">
+					<span class="asid-icon" aria-hidden="true"
+						><AstroIcon name="workers-ai" /></span
+					>
+					<span class="asid-node-title">Parsing</span>
+				</span>
+			</a>
+
+			<div class="asid-connector" data-step="8"></div>
+
+			<!-- Chunking -->
+			<a
+				class="asid-node"
+				data-step="9"
+				href="/ai-search/configuration/indexing/chunking/"
+			>
+				<span class="asid-node-head">AI Search</span>
+				<span class="asid-node-body">
+					<span class="asid-icon" aria-hidden="true"
+						><AstroIcon name="ai-search" /></span
+					>
+					<span class="asid-node-title">Chunking</span>
+				</span>
+			</a>
+
+			{
+				keyword ? (
+					<>
+						{/* Line into the "index & store" scope */}
+						<div class="asid-connector" data-step="10" />
+
+						<div class="asid-group asid-group-terminal">
+							<span class="asid-group-label">index &amp; store</span>
+
+							{/* Split: chunks fan out to two parallel lanes */}
+							<div
+								class="asid-bracket asid-split"
+								data-step="11"
+								aria-hidden="true"
+							>
+								<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+									<line
+										x1="60"
+										y1="0"
+										x2="60"
+										y2="13"
+										vector-effect="non-scaling-stroke"
+									/>
+									<line
+										x1="30"
+										y1="13"
+										x2="90"
+										y2="13"
+										vector-effect="non-scaling-stroke"
+									/>
+									<line
+										x1="30"
+										y1="13"
+										x2="30"
+										y2="26"
+										vector-effect="non-scaling-stroke"
+									/>
+									<line
+										x1="90"
+										y1="13"
+										x2="90"
+										y2="26"
+										vector-effect="non-scaling-stroke"
+									/>
+								</svg>
+							</div>
+
+							<div class="asid-lanes">
+								<div class="asid-lane asid-optional">
+									<a
+										class="asid-node"
+										data-step="12"
+										href="/ai-search/configuration/models/"
+									>
+										<span class="asid-node-head">
+											AI Gateway / Workers AI
+											<span class="asid-opt">Optional</span>
+										</span>
+										<span class="asid-node-body">
+											<span class="asid-icon" aria-hidden="true">
+												<AstroIcon name="ai-gateway" />
+											</span>
+											<span class="asid-node-title">Embedding</span>
+										</span>
+									</a>
+									<div class="asid-connector" data-step="13" />
+									<a
+										class="asid-node asid-terminal"
+										data-step="14"
+										href="/ai-search/configuration/indexing/vector-search/"
+									>
+										<span class="asid-node-head">
+											AI Search · Vectorize
+											<span class="asid-opt">Optional</span>
+										</span>
+										<span class="asid-node-body">
+											<span class="asid-icon" aria-hidden="true">
+												<AstroIcon name="ai-search" />
+											</span>
+											<span class="asid-node-title">Vector index</span>
+										</span>
+									</a>
+								</div>
+
+								<div class="asid-lane asid-optional">
+									<a
+										class="asid-node"
+										data-step="12"
+										href="/ai-search/configuration/indexing/keyword-search/"
+									>
+										<span class="asid-node-head">
+											AI Search
+											<span class="asid-opt">Optional</span>
+										</span>
+										<span class="asid-node-body">
+											<span class="asid-icon" aria-hidden="true">
+												<AstroIcon name="ai-search" />
+											</span>
+											<span class="asid-node-title">Keyword tokenizer</span>
+										</span>
+									</a>
+									<div class="asid-connector" data-step="13" />
+									<a
+										class="asid-node asid-terminal"
+										data-step="14"
+										href="/ai-search/configuration/indexing/keyword-search/"
+									>
+										<span class="asid-node-head">
+											AI Search
+											<span class="asid-opt">Optional</span>
+										</span>
+										<span class="asid-node-body">
+											<span class="asid-icon" aria-hidden="true">
+												<AstroIcon name="ai-search" />
+											</span>
+											<span class="asid-node-title">Inverted index</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</>
+				) : (
+					<>
+						<div class="asid-connector" data-step="10" />
+						<a
+							class="asid-node"
+							data-step="12"
+							href="/ai-search/configuration/models/"
+						>
+							<span class="asid-node-head">AI Gateway / Workers AI</span>
+							<span class="asid-node-body">
+								<span class="asid-icon" aria-hidden="true">
+									<AstroIcon name="ai-gateway" />
+								</span>
+								<span class="asid-node-title">Embedding</span>
+							</span>
+						</a>
+						<div class="asid-connector" data-step="13" />
+						<a
+							class="asid-node asid-terminal"
+							data-step="14"
+							href="/ai-search/configuration/indexing/vector-search/"
+						>
+							<span class="asid-node-head">AI Search · Vectorize</span>
+							<span class="asid-node-body">
+								<span class="asid-icon" aria-hidden="true">
+									<AstroIcon name="ai-search" />
+								</span>
+								<span class="asid-node-title">Vector index</span>
+							</span>
+						</a>
+					</>
+				)
+			}
+		</div>
+	</cfdocs-ai-search-indexing-diagram>
+</figure>
+
+<style>
+	.ai-search-indexing-diagram {
+		/* Neutral, Kumo-style monochrome palette */
+		--asid-panel: #fbfbfb;
+		--asid-dot: rgb(0 0 0 / 8%);
+		--asid-card: #ffffff;
+		--asid-head: #f4f4f5;
+		--asid-border: #e3e3e6;
+		--asid-line: #c1c1c8;
+		--asid-joint: #ffffff;
+		--asid-text: #1a1a1c;
+		--asid-muted: #8a8a90;
+		/* Accent — used sparingly to trace the active step */
+		--asid-accent: #f6821f;
+		--asid-accent-soft: rgb(246 130 31 / 14%);
+
+		margin: 1.5rem 0;
+		/* Respond to the diagram's own available width, not the viewport. */
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .ai-search-indexing-diagram {
+		--asid-panel: #121213;
+		--asid-dot: rgb(255 255 255 / 9%);
+		--asid-card: #1b1b1d;
+		--asid-head: #242427;
+		--asid-border: #38383c;
+		--asid-line: #4d4d54;
+		--asid-joint: #1b1b1d;
+		--asid-text: #f3f3f5;
+		--asid-muted: #9a9aa2;
+	}
+
+	cfdocs-ai-search-indexing-diagram {
+		display: block;
+		width: 100%;
+		padding: 1.5rem 1rem;
+		border: 1px solid var(--asid-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--asid-dot) 1px, transparent 1px),
+			var(--asid-panel);
+		background-size: 16px 16px;
+	}
+
+	.asid-track {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	/* --- Cards (clickable) --- */
+	.asid-node {
+		position: relative;
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 300px;
+		background: var(--asid-card);
+		border: 1px solid var(--asid-border);
+		border-radius: 0.625rem;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		color: inherit;
+		text-decoration: none;
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease,
+			transform 0.15s ease;
+	}
+
+	/* Output port — every non-terminal box emits its line from a centred
+	   node on its bottom edge. Terminal boxes carry no port. */
+	.asid-node::after,
+	.asid-start::after {
+		content: "";
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--asid-joint);
+		border: 2px solid var(--asid-line);
+		box-sizing: border-box;
+		transform: translateX(-50%);
+		transition: border-color 0.25s ease;
+		z-index: 2;
+	}
+
+	.asid-terminal::after {
+		display: none;
+	}
+
+	.asid-node-head {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.25rem 0.625rem;
+		background: var(--asid-head);
+		border-bottom: 1px solid var(--asid-border);
+		border-radius: 0.5625rem 0.5625rem 0 0;
+		white-space: nowrap;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		letter-spacing: 0.01em;
+		color: var(--asid-muted);
+	}
+
+	.asid-node-body {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 0.625rem;
+	}
+
+	.asid-node-title {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.2;
+		color: var(--asid-text);
+	}
+
+	.asid-node:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asid-accent) 55%,
+			var(--asid-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+		transform: translateY(-1px);
+	}
+
+	.asid-node:focus-visible {
+		outline: 2px solid var(--asid-accent);
+		outline-offset: 2px;
+	}
+
+	/* Icon chip — normalise every product glyph to currentColor */
+	.asid-icon {
+		flex: none;
+		width: 1.25rem;
+		height: 1.25rem;
+		color: var(--asid-muted);
+		transition: color 0.25s ease;
+	}
+
+	.asid-icon :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.asid-icon :global(svg path) {
+		fill: currentColor;
+	}
+
+	/* --- Optional connected sources (two exact halves so each card centre
+	   lands on the fan stub at 25% / 75%). Spacing via card margins. --- */
+	.asid-sources {
+		display: grid;
+		/* minmax(0, 1fr) forces two *equal* columns. Plain 1fr is
+		   minmax(auto, 1fr), so a wide nowrap head (e.g. "Data source ·
+		   Browser Run") would stretch its column and push the card centres
+		   off the 25% / 75% fan stubs below. */
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0;
+		width: 100%;
+	}
+
+	.asid-sources .asid-node {
+		max-width: none;
+		width: auto;
+		margin: 0 0.5rem;
+	}
+
+	/* --- Dashed scope boxes. Zero vertical padding so the entry/exit lines
+	   flow straight through the dashed border. --- */
+	.asid-group {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		padding: 0 0.75rem;
+		border: 1px dashed var(--asid-border);
+		border-radius: 0.75rem;
+	}
+
+	/* Terminal scope (nothing exits the bottom) gets breathing room. */
+	.asid-group-terminal {
+		padding-bottom: 0.9rem;
+	}
+
+	.asid-group-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.1rem 0.5rem;
+		background: var(--asid-panel);
+		border: 1px solid var(--asid-border);
+		border-radius: 9999px;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: var(--asid-muted);
+	}
+
+	/* --- Parallel lanes (two exact halves; spacing via lane margins) --- */
+	.asid-lanes {
+		display: grid;
+		/* Equal columns so the split stubs land on each lane's card centre —
+		   see the note on .asid-sources. */
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0;
+		width: 100%;
+	}
+
+	.asid-lane {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 0 0.5rem;
+	}
+
+	.asid-lanes .asid-node {
+		max-width: none;
+	}
+
+	.asid-optional .asid-node,
+	.asid-node.asid-optional {
+		border-style: dashed;
+	}
+
+	.asid-opt {
+		margin-left: auto;
+		font-size: 0.5rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--asid-muted);
+		border: 1px solid var(--asid-border);
+		border-radius: 0.25rem;
+		padding: 0.03rem 0.22rem;
+	}
+
+	/* --- Connectors (vertical wires) --- */
+	.asid-connector {
+		width: 2px;
+		height: 1.5rem;
+		margin: 0 auto;
+		background: var(--asid-line);
+		transition: background-color 0.25s ease;
+	}
+
+	.asid-connector.active {
+		background: var(--asid-accent);
+	}
+
+	/* Shorter segments where the line crosses a scope box border. */
+	.asid-exit {
+		height: 0.85rem;
+	}
+
+	/* --- Brackets (orthogonal SVG fan-out / fan-in / split) --- */
+	/* Full width so the vertical stubs line up with the node centres. */
+	.asid-bracket {
+		width: 100%;
+	}
+
+	.asid-bracket svg {
+		display: block;
+		width: 100%;
+		height: 1.5rem;
+	}
+
+	.asid-bracket line {
+		stroke: var(--asid-line);
+		stroke-width: 2;
+		fill: none;
+		stroke-linecap: round;
+		transition: stroke 0.25s ease;
+	}
+
+	.asid-bracket.active line {
+		stroke: var(--asid-accent);
+	}
+
+	/* --- Start cap --- */
+	.asid-cap {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.3rem 0.8rem;
+		border-radius: 9999px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		transition:
+			box-shadow 0.25s ease,
+			border-color 0.25s ease;
+	}
+
+	.asid-start {
+		background: var(--asid-card);
+		border: 1px solid var(--asid-border);
+		color: var(--asid-text);
+	}
+
+	/* Clickable start cap links to docs — match the node cards' affordance. */
+	a.asid-cap {
+		text-decoration: none;
+		color: var(--asid-text);
+	}
+
+	a.asid-cap:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asid-accent) 55%,
+			var(--asid-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+	}
+
+	a.asid-cap:focus-visible {
+		outline: 2px solid var(--asid-accent);
+		outline-offset: 2px;
+	}
+
+	/* Muted example hint next to the "Your content" label. */
+	.asid-cap-hint {
+		font-weight: 400;
+		color: var(--asid-muted);
+	}
+
+	.asid-cap-icon {
+		width: 0.875rem;
+		height: 0.875rem;
+	}
+
+	.asid-cap-icon svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* --- Active / current animation states --- */
+	.asid-node.current {
+		border-color: var(--asid-accent);
+		box-shadow: 0 0 0 2px var(--asid-accent-soft);
+		animation: asid-pulse 1.2s ease-in-out infinite;
+	}
+
+	.asid-node.current .asid-icon {
+		color: var(--asid-accent);
+	}
+
+	.asid-node.active::after,
+	.asid-node.current::after,
+	.asid-start.active::after {
+		border-color: var(--asid-accent);
+	}
+
+	.asid-cap.current {
+		border-color: var(--asid-accent);
+		box-shadow: 0 0 0 3px var(--asid-accent-soft);
+	}
+
+	@keyframes asid-pulse {
+		0%,
+		100% {
+			box-shadow: 0 0 0 2px var(--asid-accent-soft);
+		}
+		50% {
+			box-shadow: 0 0 0 5px transparent;
+		}
+	}
+
+	/* --- Responsive: the fan-out and split branches ARE the diagram — they
+	   show that sources are parallel & optional and that indexing runs two
+	   lanes at once. Collapsing them into a single column would read as a
+	   sequential pipeline and lose that meaning. So on narrow screens we keep
+	   the two-column branches and the orthogonal forks (which scale to any
+	   width), and only tighten spacing + let the monospace heads wrap so the
+	   cards fit side by side. --- */
+	@container (max-width: 560px) {
+		cfdocs-ai-search-indexing-diagram {
+			padding: 1.25rem 0.6rem;
+		}
+
+		/* Only tighten the horizontal padding — using the shorthand here would
+		   zero the terminal group's padding-bottom and let the last cards
+		   touch the dashed border. */
+		.asid-group {
+			padding-inline: 0.4rem;
+		}
+
+		.asid-sources .asid-node,
+		.asid-lane {
+			margin: 0 0.25rem;
+		}
+
+		/* Keep the monospace scope heads on a single line (the eyebrow labels
+		   read as one phrase — "Data source · Browser Run" must never break),
+		   and tighten the OPTIONAL badge so the longest head still fits the
+		   two-column cards down to the narrowest phones. */
+		.asid-node-head {
+			padding: 0.25rem 0.4rem;
+			white-space: nowrap;
+			/* Slightly smaller than the desktop head so the longest nowrap
+			   label ("Data source · Browser Run" + badge) fits the narrow
+			   two-column cards without clipping at the right edge. */
+			font-size: 0.5625rem;
+		}
+
+		.asid-node-body {
+			gap: 0.375rem;
+			padding: 0.45rem 0.45rem;
+		}
+
+		.asid-node-title {
+			font-size: 0.6875rem;
+		}
+
+		.asid-opt {
+			font-size: 0.4375rem;
+			padding: 0.03rem 0.18rem;
+			letter-spacing: 0.03em;
+		}
+	}
+
+	/* --- Reduced motion: leave the complete, neutral diagram static --- */
+	@media (prefers-reduced-motion: reduce) {
+		.asid-node,
+		.asid-cap,
+		.asid-icon,
+		.asid-connector,
+		.asid-node::after,
+		.asid-bracket line {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	class AiSearchIndexingDiagramElement extends HTMLElement {
+		private loop = false;
+		private steps: Element[][] = [];
+		private timer: number | null = null;
+
+		connectedCallback() {
+			this.loop = this.dataset.loop === "true";
+			this.groupSteps();
+
+			const reduced = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+
+			// Only animate when asked to and motion is allowed. Otherwise the
+			// diagram simply rests in its complete, neutral state.
+			if (!reduced && this.dataset.autoplay === "true") {
+				this.timer = window.setTimeout(() => this.play(), 500);
+			}
+		}
+
+		disconnectedCallback() {
+			if (this.timer !== null) window.clearTimeout(this.timer);
+		}
+
+		/** Group every [data-step] element by its step number, in order. */
+		private groupSteps() {
+			const byStep = new Map<number, Element[]>();
+			this.querySelectorAll<HTMLElement>("[data-step]").forEach((el) => {
+				const step = Number(el.dataset.step);
+				if (Number.isNaN(step)) return;
+				const group = byStep.get(step) ?? [];
+				group.push(el);
+				byStep.set(step, group);
+			});
+			this.steps = [...byStep.keys()]
+				.sort((a, b) => a - b)
+				.map((key) => byStep.get(key)!);
+		}
+
+		private reset() {
+			this.steps
+				.flat()
+				.forEach((el) => el.classList.remove("active", "current"));
+		}
+
+		private play() {
+			this.reset();
+			this.advance(0);
+		}
+
+		private advance(index: number) {
+			if (index > 0) {
+				// The previous group is done processing — leave it solid.
+				this.steps[index - 1]?.forEach((el) => el.classList.remove("current"));
+			}
+
+			if (index >= this.steps.length) {
+				if (this.loop) {
+					this.timer = window.setTimeout(() => this.play(), 2200);
+				}
+				return;
+			}
+
+			this.steps[index].forEach((el) => {
+				el.classList.add("active");
+				// Connectors just light up; cards/caps pulse while "current".
+				if (!el.classList.contains("asid-connector")) {
+					el.classList.add("current");
+				}
+			});
+
+			// Connectors are quick; cards linger so the pulse reads.
+			const isConnectorOnly = this.steps[index].every((el) =>
+				el.classList.contains("asid-connector"),
+			);
+			const duration = isConnectorOnly ? 550 : 1100;
+			this.timer = window.setTimeout(() => this.advance(index + 1), duration);
+		}
+	}
+
+	customElements.define(
+		"cfdocs-ai-search-indexing-diagram",
+		AiSearchIndexingDiagramElement,
+	);
+</script>

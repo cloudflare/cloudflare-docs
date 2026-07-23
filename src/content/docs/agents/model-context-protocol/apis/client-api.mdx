@@ -318,60 +318,28 @@ export class MyAgent extends Agent {
 
 Once connected, access the server's capabilities:
 
-### Getting available tools
+### Get available tools
+
+Use `listTools()` to inspect the raw MCP catalog without preparing tools for an AI SDK model call:
 
 <TypeScriptExample>
 
 ```ts
-const state = this.getMcpServers();
+const tools = this.mcp.listTools();
 
-// All tools from all connected servers
-for (const tool of state.tools) {
+for (const tool of tools) {
 	console.log(`Tool: ${tool.name}`);
 	console.log(`  From server: ${tool.serverId}`);
-	console.log(`  Title: ${tool.title ?? tool.name}`);
+	console.log(`  Title: ${tool.title ?? tool.annotations?.title ?? tool.name}`);
 	console.log(`  Description: ${tool.description}`);
 }
 ```
 
 </TypeScriptExample>
 
-### Resources and prompts
+`getMcpServers().tools` returns the same raw tool records as part of the full MCP client state. Neither API converts the tool schemas.
 
-<TypeScriptExample>
-
-```ts
-const state = this.getMcpServers();
-
-// Available resources
-for (const resource of state.resources) {
-	console.log(`Resource: ${resource.name} (${resource.uri})`);
-}
-
-// Available prompts
-for (const prompt of state.prompts) {
-	console.log(`Prompt: ${prompt.name}`);
-}
-```
-
-</TypeScriptExample>
-
-### Server status
-
-<TypeScriptExample>
-
-```ts
-const state = this.getMcpServers();
-
-for (const [id, server] of Object.entries(state.servers)) {
-	console.log(`${server.name}: ${server.state}`);
-	// state: "ready" | "authenticating" | "connecting" | "connected" | "discovering" | "failed"
-}
-```
-
-</TypeScriptExample>
-
-### Integration with AI SDK
+#### Integration with AI SDK
 
 To use MCP tools with the AI SDK, use `this.mcp.getAITools()` which converts MCP tools to AI SDK format:
 
@@ -399,33 +367,218 @@ export class MyAgent extends Agent<Env> {
 
 :::note
 
-`getMcpServers().tools` returns raw MCP `Tool` objects for inspection. Use `this.mcp.getAITools()` when passing tools to the AI SDK.
+Use `this.mcp.listTools()` or `getMcpServers().tools` for discovery. Call `this.mcp.getAITools()` when passing tools to the AI SDK. `getAITools()` converts each input and output schema to Zod, then reuses those schemas while the live connection keeps the same current catalog.
 
 :::
 
-## Managing servers
-
-### Removing a server
+### Resources and prompts
 
 <TypeScriptExample>
 
 ```ts
-await this.removeMcpServer(serverId);
+const state = this.getMcpServers();
+
+// Available resources
+for (const resource of state.resources) {
+	console.log(`Resource: ${resource.name} (${resource.uri})`);
+}
+
+// Available prompts
+for (const prompt of state.prompts) {
+	console.log(`Prompt: ${prompt.name}`);
+}
 ```
 
 </TypeScriptExample>
 
-This disconnects from the server and removes it from storage.
+### Elicitation
 
-### Persistence
+[MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) lets a server request user input while handling another request, such as a tool call. The current stable MCP specification defines form and URL modes.
 
-MCP servers persist across agent restarts:
+Register a handler for each mode your Agent supports in `onStart()`:
 
-- Server configuration stored in SQLite
-- OAuth tokens stored securely
-- Connections restored automatically when agent wakes
+<TypeScriptExample>
 
-### Listing all servers
+```ts
+import { Agent } from "agents";
+import type { ElicitRequest, ElicitResult } from "agents/mcp";
+
+class MyAgent extends Agent<Env> {
+	onStart() {
+		this.mcp.configureElicitationHandlers({
+			form: (request, serverId) =>
+				this.forwardElicitationToBrowser(request, serverId),
+			url: (request, serverId) =>
+				this.forwardElicitationToBrowser(request, serverId),
+		});
+	}
+
+	private forwardElicitationToBrowser(
+		request: ElicitRequest,
+		serverId: string,
+	): Promise<ElicitResult> {
+		// Forward the request to your UI and resolve after the user responds.
+		// A complete implementation appears in Forward elicitation to a UI.
+		throw new Error(
+			`Implement elicitation for ${serverId}: ${request.params.message}`,
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `serverId` identifies the connection that sent the request. Use it to tell the user which server is asking for input and to apply server-specific policy.
+
+#### Capability negotiation and hibernation
+
+At the MCP `initialize` handshake, a connection advertises only the modes with configured handlers. A form-only handler advertises form mode. A URL-only handler advertises URL mode. A connection without handlers advertises no elicitation capability, which lets the server use its fallback.
+
+The SDK stores the advertised modes with each server registration. A connection restored after Durable Object hibernation can therefore advertise the same modes when it reconnects. Callback functions remain in memory and reattach when `onStart()` runs.
+
+You can explicitly narrow the advertised modes when adding a server:
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("portal", "https://portal.example.com/mcp", {
+	client: {
+		capabilities: {
+			elicitation: { form: {} },
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+An explicit `client.capabilities.elicitation` value takes precedence over handler-derived modes and persists with the server registration. Do not advertise a mode without a matching handler. If the server sends that mode, the connection returns an error because it cannot handle the request.
+
+#### Form mode
+
+Form mode collects structured, non-sensitive data in the client. The request includes a restricted JSON Schema in `requestedSchema`. If the user submits the form, return `action: "accept"` with matching `content`:
+
+<TypeScriptExample>
+
+```ts
+this.mcp.configureElicitationHandlers({
+	form: async (request) => {
+		const content = await showFormToUser(request.params.requestedSchema);
+		return content ? { action: "accept", content } : { action: "cancel" };
+	},
+});
+```
+
+</TypeScriptExample>
+
+Allow the user to review and edit values before submission. Validate accepted content against `requestedSchema`. Do not use form mode to request passwords, API keys, access tokens, payment credentials, or other secrets.
+
+#### URL mode
+
+URL mode asks the user to open an external page. Use it for out-of-band interactions that may collect secrets, such as third-party authorization or payment. Keep the URL in the dedicated elicitation path and out of model-visible messages and tool-result text.
+
+A URL handler should:
+
+1. Show which MCP server sent the request.
+2. Show the request message, target host, and full URL.
+3. Ask for consent before opening the URL.
+4. Open the page in a browser context the Agent and model cannot inspect.
+5. Return `action: "accept"` without `content` after consent.
+6. Offer distinct decline and cancel controls.
+
+Do not prefetch the URL or its metadata. Treat the URL as untrusted input. Production servers should send HTTPS URLs.
+
+For URL mode, `accept` means the user consented to open the URL. It does not mean the external interaction finished. A server may later send `notifications/elicitation/complete` with the request `elicitationId`.
+
+#### Response actions
+
+Both modes support three actions:
+
+| Action    | Meaning                                                           |
+| --------- | ----------------------------------------------------------------- |
+| `accept`  | The user submitted the form or consented to open the URL.         |
+| `decline` | The user explicitly rejected the request.                         |
+| `cancel`  | The user dismissed the request without making an explicit choice. |
+
+Include `content` only for an accepted form response. Omit it for URL, decline, and cancel responses.
+
+#### Forward elicitation to a UI
+
+A handler returns a promise, but the response often comes from a browser. Broadcast the request to connected clients, then resolve the promise through a `@callable` method:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+import type { ElicitRequest, ElicitResult } from "agents/mcp";
+
+type PendingResolver = {
+	resolve: (result: ElicitResult) => void;
+	timeout: ReturnType<typeof setTimeout>;
+};
+
+class MyAgent extends Agent<Env> {
+	private pendingElicitations = new Map<string, PendingResolver>();
+
+	onStart() {
+		this.mcp.configureElicitationHandlers({
+			form: (request, serverId) => this.forward(request, serverId),
+			url: (request, serverId) => this.forward(request, serverId),
+		});
+	}
+
+	private forward(
+		request: ElicitRequest,
+		serverId: string,
+	): Promise<ElicitResult> {
+		const id = crypto.randomUUID();
+
+		const result = new Promise<ElicitResult>((resolve) => {
+			const timeout = setTimeout(() => {
+				if (this.pendingElicitations.delete(id)) {
+					resolve({ action: "cancel" });
+				}
+			}, 55_000);
+			this.pendingElicitations.set(id, { resolve, timeout });
+		});
+
+		this.broadcast(
+			JSON.stringify({
+				type: "mcp-elicitation",
+				id,
+				serverId,
+				params: request.params,
+			}),
+		);
+
+		return result;
+	}
+
+	@callable()
+	respondToElicitation(id: string, result: ElicitResult) {
+		const pending = this.pendingElicitations.get(id);
+		if (!pending) return;
+
+		this.pendingElicitations.delete(id);
+		clearTimeout(pending.timeout);
+		pending.resolve(result);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The example uses a 55-second timeout because MCP SDK requests default to 60 seconds. If your client call sets a longer request timeout, adjust this timeout to finish first.
+
+Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. The [`mcp-elicitation` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) is a server that sends both modes.
+
+To send elicitation requests from an MCP server, refer to [`elicitInput`](/agents/model-context-protocol/apis/agent-api/#elicitinputoptions-context).
+
+## Managing servers
+
+MCP server registrations persist across Agent restarts. The SDK stores server configuration in SQLite, stores OAuth tokens securely, and restores connections when the Agent wakes.
+
+### List all servers
 
 <TypeScriptExample>
 
@@ -438,6 +591,36 @@ for (const [id, server] of Object.entries(state.servers)) {
 ```
 
 </TypeScriptExample>
+
+### Get server status
+
+Use the server ID to inspect an individual connection:
+
+<TypeScriptExample>
+
+```ts
+const state = this.getMcpServers();
+const server = state.servers[serverId];
+
+if (server) {
+	console.log(`${server.name}: ${server.state}`);
+	// state: "ready" | "authenticating" | "connecting" | "connected" | "discovering" | "failed"
+}
+```
+
+</TypeScriptExample>
+
+### Remove a server
+
+<TypeScriptExample>
+
+```ts
+await this.removeMcpServer(serverId);
+```
+
+</TypeScriptExample>
+
+This disconnects from the server and removes it from storage.
 
 ## Client-side integration
 
@@ -685,6 +868,77 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
+### `configureElicitationHandlers()`
+
+Configure handlers for server-initiated `elicitation/create` requests. Add a handler for each elicitation mode your Agent supports.
+
+```txt
+this.mcp.configureElicitationHandlers(handlers?: {
+  form?: (
+    request: ElicitRequest,
+    serverId: string,
+  ) => Promise<ElicitResult>;
+  url?: (
+    request: ElicitRequest,
+    serverId: string,
+  ) => Promise<ElicitResult>;
+}): void
+```
+
+#### Parameters
+
+- `handlers` (object, optional) — Elicitation handlers keyed by mode:
+  - `form` (function, optional) — Handles form-mode requests for structured, non-sensitive input.
+  - `url` (function, optional) — Handles URL-mode requests for out-of-band interactions.
+- `request` (`ElicitRequest`) — The MCP elicitation request. Inspect `request.params.mode` for the mode-specific fields.
+- `serverId` (string) — The ID of the MCP server connection that sent the request.
+
+Each handler returns a promise containing an `ElicitResult`. Return `accept`, `decline`, or `cancel`. Accepted form responses include `content` that matches `requestedSchema`. URL responses omit `content`.
+
+Passing `undefined` clears all configured handlers.
+
+#### Capability behavior
+
+The client advertises only modes with configured handlers during the MCP `initialize` handshake. Handler changes apply immediately to live connections, but servers receive updated advertised modes after those connections reconnect.
+
+The SDK stores the handler-derived modes with each MCP server registration. Restored connections advertise those modes after Durable Object hibernation, and callbacks reattach when `onStart()` runs.
+
+#### Usage
+
+Configure handlers in `onStart()`:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import type { ElicitRequest, ElicitResult } from "agents/mcp";
+
+export class MyAgent extends Agent<Env> {
+	onStart() {
+		this.mcp.configureElicitationHandlers({
+			form: (request, serverId) =>
+				this.forwardElicitationToBrowser(request, serverId),
+			url: (request, serverId) =>
+				this.forwardElicitationToBrowser(request, serverId),
+		});
+	}
+
+	private forwardElicitationToBrowser(
+		request: ElicitRequest,
+		serverId: string,
+	): Promise<ElicitResult> {
+		// Forward the request to your UI and resolve after the user responds.
+		throw new Error(
+			`Implement elicitation for ${serverId}: ${request.params.message}`,
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+For the complete browser forwarding pattern and mode-specific requirements, refer to [Elicitation](#elicitation).
+
 ## Custom OAuth provider
 
 Override the default OAuth provider used when connecting to MCP servers by implementing `createMcpOAuthProvider()` on your Agent class. This enables custom authentication strategies such as pre-registered client credentials or mTLS, beyond the built-in dynamic client registration.
@@ -894,6 +1148,16 @@ Close all active server connections while preserving registrations.
 async closeAllConnections(): Promise<void>
 ```
 
+#### `this.mcp.listTools()`
+
+Get raw MCP tool records without converting their schemas to Zod.
+
+```ts
+listTools(filter?: MCPServerFilter): Array<Tool & { serverId: string }>
+```
+
+Use this method for catalog discovery and inspection. Pass an `MCPServerFilter` to limit the returned tools to specific connections.
+
 #### `this.mcp.getAITools()`
 
 Get all discovered MCP tools in a format compatible with the AI SDK.
@@ -903,6 +1167,8 @@ getAITools(filter?: MCPServerFilter): ToolSet
 ```
 
 Tools are automatically namespaced by server ID to prevent conflicts when multiple MCP servers expose tools with the same name.
+
+`getAITools()` reuses converted schemas for the current catalog on each live connection. It converts schemas again after discovery replaces the catalog or the live connection changes. Each call returns fresh tool records and execute functions. Use `this.mcp.listTools()` when you only need the raw catalog.
 
 Pass an `MCPServerFilter` to scope the returned tools to a subset of connected servers:
 

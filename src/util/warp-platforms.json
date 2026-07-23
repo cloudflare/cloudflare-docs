@@ -114,5 +114,13 @@
 	{
 		"platform": "fedora44-intel",
 		"display_name": "Fedora 44 (x86-64)"
+	},
+	{
+		"platform": "fedora44-arm",
+		"display_name": "Fedora 44 (arm64)"
+	},
+	{
+		"platform": "android",
+		"display_name": "Android"
 	}
 ]

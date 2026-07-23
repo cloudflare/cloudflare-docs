@@ -288,7 +288,7 @@ This command configures your project for Cloudflare Workers without deploying. I
 
 Manage the secret variables for a Worker.
 
-This action creates a new [version](/workers/configuration/versions-and-deployments/#versions) of the Worker and [deploys](/workers/configuration/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](#versions-secret-put) commands.
+This action creates a new [version](/workers/versions-and-deployments/#versions) of the Worker and [deploys](/workers/versions-and-deployments/#deployments) it immediately. To only create a new version of the Worker, use the [`wrangler versions secret`](#versions-secret-put) commands.
 
 <WranglerCommand command="secret put" headingLevel={3} />
 
@@ -391,13 +391,13 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 
 <WranglerCommand
 	command="versions upload"
-	description="Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
+	description="Upload a new [version](/workers/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
 	headingLevel={3}
 />
 
 <WranglerCommand
 	command="versions deploy"
-	description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
+	description="Deploy a previously created [version](/workers/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
 	headingLevel={3}
 />
 
@@ -438,7 +438,7 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 
 ## `deployments`
 
-[Deployments](/workers/configuration/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
+[Deployments](/workers/versions-and-deployments/#deployments) track the version(s) of your Worker that are actively serving traffic.
 
 :::note
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.

@@ -1,48 +1,55 @@
-import alibaba from "../../assets/images/workers-ai/alibaba.svg";
-import anthropic from "../../assets/images/workers-ai/anthropic.svg";
-import assemblyai from "../../assets/images/workers-ai/assemblyai.svg";
-import aws from "../../assets/images/workers-ai/aws.svg";
-import baai from "../../assets/images/workers-ai/baai.svg";
-import blackforestlabs from "../../assets/images/workers-ai/blackforestlabs.svg";
-import bytedance from "../../assets/images/workers-ai/bytedance.svg";
-import cloudflare from "../../assets/images/workers-ai/cloudflare.svg";
-import deepgram from "../../assets/images/workers-ai/deepgram.svg";
-import deepseek from "../../assets/images/workers-ai/deepseek.svg";
-import defog from "../../assets/images/workers-ai/defog.svg";
-import elevenlabs from "../../assets/images/workers-ai/elevenlabs.svg";
-import fal from "../../assets/images/workers-ai/fal.svg";
-import fireworks from "../../assets/images/workers-ai/fireworks.svg";
-import google from "../../assets/images/workers-ai/google.svg";
-import huggingface from "../../assets/images/workers-ai/huggingface.svg";
-import ibm from "../../assets/images/workers-ai/ibm.svg";
-import ideogram from "../../assets/images/workers-ai/ideogram.svg";
-import inworld from "../../assets/images/workers-ai/inworld.svg";
-import kling from "../../assets/images/workers-ai/kling.svg";
-import leonardo from "../../assets/images/workers-ai/leonardo.svg";
-import luma from "../../assets/images/workers-ai/luma.svg";
-import meta from "../../assets/images/workers-ai/meta.svg";
-import microsoft from "../../assets/images/workers-ai/microsoft.svg";
-import minimax from "../../assets/images/workers-ai/minimax.svg";
-import mistralai from "../../assets/images/workers-ai/mistralai.svg";
-import moonshotai from "../../assets/images/workers-ai/moonshotai.svg";
-import myshell from "../../assets/images/workers-ai/myshell.svg";
-import nvidia from "../../assets/images/workers-ai/nvidia.svg";
-import openai from "../../assets/images/workers-ai/openai.svg";
-import pipecat from "../../assets/images/workers-ai/pipecat.svg";
-import pixverse from "../../assets/images/workers-ai/pixverse.svg";
-import prunaai from "../../assets/images/workers-ai/prunaai.svg";
-import qwen from "../../assets/images/workers-ai/qwen.svg";
-import recraft from "../../assets/images/workers-ai/recraft.svg";
-import replicate from "../../assets/images/workers-ai/replicate.svg";
-import resembleai from "../../assets/images/workers-ai/resemble-ai.svg";
-import runway from "../../assets/images/workers-ai/runway.svg";
-import stabilityai from "../../assets/images/workers-ai/stabilityai.svg";
-import tiiuae from "../../assets/images/workers-ai/tiiuae.svg";
-import unum from "../../assets/images/workers-ai/unum.svg";
-import vidu from "../../assets/images/workers-ai/vidu.svg";
-import xai from "../../assets/images/workers-ai/xai.svg";
-import zai from "../../assets/images/workers-ai/zai.svg";
-import zaiorg from "../../assets/images/workers-ai/zai-org.svg";
+/**
+ * Author metadata (display name + logo). Each logo is imported from
+ * `../../assets/images/workers-ai/*.svg` and exposed via `.src`. Multiple ids
+ * can alias the same brand (e.g. `facebook`/`meta`/`meta-llama` → "Meta"). Ids
+ * with no entry fall back to the raw id + an initial-letter tile at the call
+ * sites via `authorData[id]?.name ?? id`.
+ */
+import alibaba from "~/assets/images/workers-ai/alibaba.svg";
+import anthropic from "~/assets/images/workers-ai/anthropic.svg";
+import assemblyai from "~/assets/images/workers-ai/assemblyai.svg";
+import aws from "~/assets/images/workers-ai/aws.svg";
+import baai from "~/assets/images/workers-ai/baai.svg";
+import blackforestlabs from "~/assets/images/workers-ai/blackforestlabs.svg";
+import bytedance from "~/assets/images/workers-ai/bytedance.svg";
+import cloudflare from "~/assets/images/workers-ai/cloudflare.svg";
+import deepgram from "~/assets/images/workers-ai/deepgram.svg";
+import deepseek from "~/assets/images/workers-ai/deepseek.svg";
+import defog from "~/assets/images/workers-ai/defog.svg";
+import elevenlabs from "~/assets/images/workers-ai/elevenlabs.svg";
+import fal from "~/assets/images/workers-ai/fal.svg";
+import fireworks from "~/assets/images/workers-ai/fireworks.svg";
+import google from "~/assets/images/workers-ai/google.svg";
+import huggingface from "~/assets/images/workers-ai/huggingface.svg";
+import ibm from "~/assets/images/workers-ai/ibm.svg";
+import ideogram from "~/assets/images/workers-ai/ideogram.svg";
+import inworld from "~/assets/images/workers-ai/inworld.svg";
+import kling from "~/assets/images/workers-ai/kling.svg";
+import leonardo from "~/assets/images/workers-ai/leonardo.svg";
+import luma from "~/assets/images/workers-ai/luma.svg";
+import meta from "~/assets/images/workers-ai/meta.svg";
+import microsoft from "~/assets/images/workers-ai/microsoft.svg";
+import minimax from "~/assets/images/workers-ai/minimax.svg";
+import mistralai from "~/assets/images/workers-ai/mistralai.svg";
+import moonshotai from "~/assets/images/workers-ai/moonshotai.svg";
+import myshell from "~/assets/images/workers-ai/myshell.svg";
+import nvidia from "~/assets/images/workers-ai/nvidia.svg";
+import openai from "~/assets/images/workers-ai/openai.svg";
+import pipecat from "~/assets/images/workers-ai/pipecat.svg";
+import pixverse from "~/assets/images/workers-ai/pixverse.svg";
+import prunaai from "~/assets/images/workers-ai/prunaai.svg";
+import qwen from "~/assets/images/workers-ai/qwen.svg";
+import recraft from "~/assets/images/workers-ai/recraft.svg";
+import replicate from "~/assets/images/workers-ai/replicate.svg";
+import resembleai from "~/assets/images/workers-ai/resemble-ai.svg";
+import runway from "~/assets/images/workers-ai/runway.svg";
+import stabilityai from "~/assets/images/workers-ai/stabilityai.svg";
+import tiiuae from "~/assets/images/workers-ai/tiiuae.svg";
+import unum from "~/assets/images/workers-ai/unum.svg";
+import vidu from "~/assets/images/workers-ai/vidu.svg";
+import xai from "~/assets/images/workers-ai/xai.svg";
+import zai from "~/assets/images/workers-ai/zai.svg";
+import zaiorg from "~/assets/images/workers-ai/zai-org.svg";
 
 export const authorData: Record<string, { name: string; logo: string }> = {
 	alibaba: {

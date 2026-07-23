@@ -15,13 +15,15 @@ import type { FlueContext, WorkflowRouteHandler } from "@flue/runtime";
 import {
 	addReactionToComment,
 	getInstallationToken,
-	getPullRequest,
 	isCodeOwner,
 	verifyGitHubSignature,
 } from "../lib/github";
 import { getInternalHeaders } from "../lib/internal-auth";
 import { admitWorkflow, pollRun } from "../lib/poll-run";
-import { setReviewLimitIgnored } from "../lib/code-review-state";
+import {
+	setReviewLimitIgnored,
+	setAutoReviewDisabled,
+} from "../lib/code-review-state";
 import {
 	getIssueOrPullRequestLabel,
 	getIssueOrPullRequestNumber,
@@ -131,6 +133,9 @@ export async function run({ payload, env, req }: FlueContext) {
 	const isReviewCommand = isOnPullRequest && trimmedComment === "/review";
 	const isIgnoreReviewLimitCommand =
 		isOnPullRequest && trimmedComment === "/ignore-review-limit";
+	const isDisableAutoReviewCommand =
+		isOnPullRequest && trimmedComment === "/disable-auto-review";
+	const isRebaseCommand = isOnPullRequest && trimmedComment === "/rebase";
 
 	if (
 		!req ||
@@ -139,7 +144,9 @@ export async function run({ payload, env, req }: FlueContext) {
 			!isDependabotReviewEvent &&
 			!isFullReviewCommand &&
 			!isReviewCommand &&
-			!isIgnoreReviewLimitCommand)
+			!isIgnoreReviewLimitCommand &&
+			!isDisableAutoReviewCommand &&
+			!isRebaseCommand)
 	) {
 		return { acted: false, summary: "No action needed." };
 	}
@@ -188,11 +195,12 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 	}
 
-	// ── 3. Handle /full-review command ──────────────────────────────────────
-	if (isFullReviewCommand) {
+	// ── 3–4b. Handle review slash commands (/full-review, /review) ─────────────
+	if (isFullReviewCommand || isReviewCommand) {
+		const commandName = isFullReviewCommand ? "full-review" : "review";
+
 		const commentId = (body.comment as Record<string, unknown> | undefined)
 			?.id as number | undefined;
-
 		if (!commentId || !senderLogin) {
 			return { acted: false, summary: "Missing comment id or sender." };
 		}
@@ -201,26 +209,46 @@ export async function run({ payload, env, req }: FlueContext) {
 		const token = await getInstallationToken(typedEnv);
 		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
 		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
-
 		if (!codeowner) {
 			console.log({
-				message: `Full review command ignored — ${senderLogin} is not a codeowner`,
+				message: `${commandName} command ignored — ${senderLogin} is not a codeowner`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
-				action: "full_review_ignored_not_codeowner",
+				action: `${commandName.replace(/-/g, "_")}_ignored_not_codeowner`,
 			});
 			return { acted: false, summary: "Commenter is not a codeowner." };
 		}
 
-		// Acknowledge immediately with 👀 so the user knows we saw it
 		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
-
-		// Check if the PR is from Dependabot — if so route to dependabot-review
-		const prForSlash = await getPullRequest(token, number).catch(() => null);
+		// Read the PR author directly from the issue_comment webhook payload
+		// (body.issue.user.login) rather than making an extra getPullRequest API
+		// call that can fail and silently misroute Dependabot PRs.
+		const prAuthorFromPayload = (
+			(body.issue as Record<string, unknown> | undefined)?.user as
+				| Record<string, unknown>
+				| undefined
+		)?.login as string | undefined;
 		const internalHeaders = getInternalHeaders(typedEnv);
 		const baseUrl = new URL(req.url).origin;
-		const isDepBot = prForSlash?.user?.login === "dependabot[bot]";
+		const isDepBot = prAuthorFromPayload === "dependabot[bot]";
+
+		const orchestratorBody = isDepBot
+			? {
+					eventType: "pull_request" as const,
+					number,
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+				}
+			: {
+					eventType: "pull_request" as const,
+					number,
+					forceFullReview: !isReviewCommand,
+					bypassReviewLimit: true,
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+				};
+
 		try {
 			const runId = await admitWorkflow({
 				baseUrl,
@@ -228,126 +256,34 @@ export async function run({ payload, env, req }: FlueContext) {
 					? `/workflows/dependabot-review`
 					: `/workflows/code-review-orchestrator`,
 				headers: internalHeaders,
-				body: isDepBot
-					? {
-							eventType: "pull_request",
-							number,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						}
-					: {
-							eventType: "pull_request",
-							number,
-							forceFullReview: true,
-							bypassReviewLimit: true,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						},
+				body: orchestratorBody,
 			});
 			console.log({
-				message: `Full review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				message: `${commandName} admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
 				runId,
-				action: "full_review_admitted",
+				action: `${commandName.replace(/-/g, "_")}_admitted`,
 			});
 			return {
 				acted: true,
-				summary: `Full review triggered by @${senderLogin}.`,
+				summary: `${commandName} triggered by @${senderLogin}.`,
 			};
 		} catch (err) {
 			const errMsg = err instanceof Error ? err.message : String(err);
 			console.log({
-				message: `Full review dispatch failed: PR #${number}`,
+				message: `${commandName} dispatch failed: PR #${number}`,
 				event: "github_webhook_orchestrator",
 				delivery,
 				number,
 				error: errMsg,
-				action: "full_review_dispatch_failed",
+				action: `${commandName.replace(/-/g, "_")}_dispatch_failed`,
 			});
 			return {
 				acted: false,
-				summary: `Full review dispatch failed: ${errMsg}`,
+				summary: `${commandName} dispatch failed: ${errMsg}`,
 			};
-		}
-	}
-
-	// ── 4. Handle /review command ────────────────────────────────────────────
-	if (isReviewCommand) {
-		const commentId = (body.comment as Record<string, unknown> | undefined)
-			?.id as number | undefined;
-
-		if (!commentId || !senderLogin) {
-			return { acted: false, summary: "Missing comment id or sender." };
-		}
-
-		const typedEnv = env as Record<string, string>;
-		const token = await getInstallationToken(typedEnv);
-		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
-		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
-
-		if (!codeowner) {
-			console.log({
-				message: `Review command ignored — ${senderLogin} is not a codeowner`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				action: "review_ignored_not_codeowner",
-			});
-			return { acted: false, summary: "Commenter is not a codeowner." };
-		}
-
-		// Acknowledge immediately with 👀
-		const eyesReactionId = await addReactionToComment(token, commentId, "eyes");
-
-		// Check if the PR is from Dependabot — if so route to dependabot-review
-		const prForReview = await getPullRequest(token, number).catch(() => null);
-		const internalHeaders = getInternalHeaders(typedEnv);
-		const baseUrl = new URL(req.url).origin;
-		const isDepBot = prForReview?.user?.login === "dependabot[bot]";
-		try {
-			const runId = await admitWorkflow({
-				baseUrl,
-				pathname: isDepBot
-					? `/workflows/dependabot-review`
-					: `/workflows/code-review-orchestrator`,
-				headers: internalHeaders,
-				body: isDepBot
-					? {
-							eventType: "pull_request",
-							number,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						}
-					: {
-							eventType: "pull_request",
-							number,
-							bypassReviewLimit: true,
-							triggerCommentId: commentId,
-							triggerEyesReactionId: eyesReactionId,
-						},
-			});
-			console.log({
-				message: `Review admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				runId,
-				action: "review_admitted",
-			});
-			return { acted: true, summary: `Review triggered by @${senderLogin}.` };
-		} catch (err) {
-			const errMsg = err instanceof Error ? err.message : String(err);
-			console.log({
-				message: `Review dispatch failed: PR #${number}`,
-				event: "github_webhook_orchestrator",
-				delivery,
-				number,
-				error: errMsg,
-				action: "review_dispatch_failed",
-			});
-			return { acted: false, summary: `Review dispatch failed: ${errMsg}` };
 		}
 	}
 
@@ -377,10 +313,38 @@ export async function run({ payload, env, req }: FlueContext) {
 		}
 
 		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
-		await setReviewLimitIgnored(bucket, number, senderLogin as string);
+		try {
+			await setReviewLimitIgnored(bucket, number, senderLogin as string);
+		} catch (writeErr) {
+			console.log({
+				message: `Failed to persist ignore-review-limit flag for PR #${number}: ${writeErr instanceof Error ? writeErr.message : String(writeErr)}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: writeErr instanceof Error ? writeErr.message : String(writeErr),
+				action: "ignore_review_limit_write_failed",
+			});
+			return {
+				acted: false,
+				summary: "Failed to persist review limit flag — please try again.",
+			};
+		}
 
-		// Acknowledge with 👍
-		await addReactionToComment(token, commentId, "+1");
+		// Acknowledge with 👍 — non-fatal if the reaction fails; the flag is
+		// already persisted.
+		await addReactionToComment(token, commentId, "+1").catch((reactionErr) => {
+			console.log({
+				message: `ignore-review-limit: reaction failed for PR #${number} — flag was still set`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error:
+					reactionErr instanceof Error
+						? reactionErr.message
+						: String(reactionErr),
+				action: "ignore_review_limit_reaction_failed",
+			});
+		});
 
 		console.log({
 			message: `Review limit permanently ignored by ${senderLogin}: PR #${number}`,
@@ -394,6 +358,186 @@ export async function run({ payload, env, req }: FlueContext) {
 			acted: true,
 			summary: `Review limit permanently ignored by @${senderLogin}.`,
 		};
+	}
+
+	// ── 5b. Handle /disable-auto-review command ────────────────────────────────
+	if (isDisableAutoReviewCommand) {
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		const token = await getInstallationToken(typedEnv);
+		const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+		const codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+
+		if (!codeowner) {
+			console.log({
+				message: `disable-auto-review command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: "disable_auto_review_ignored_not_codeowner",
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const bucket = typedEnv.DOCS_FLUE_BUCKET as unknown as R2Bucket;
+		try {
+			await setAutoReviewDisabled(bucket, number, senderLogin as string);
+		} catch (writeErr) {
+			console.log({
+				message: `Failed to persist disable-auto-review flag for PR #${number}: ${writeErr instanceof Error ? writeErr.message : String(writeErr)}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: writeErr instanceof Error ? writeErr.message : String(writeErr),
+				action: "disable_auto_review_write_failed",
+			});
+			return {
+				acted: false,
+				summary:
+					"Failed to persist auto-review disable flag — please try again.",
+			};
+		}
+
+		// Acknowledge with 👍 — non-fatal if the reaction fails; the flag is
+		// already persisted.
+		await addReactionToComment(token, commentId, "+1").catch((reactionErr) => {
+			console.log({
+				message: `disable-auto-review: reaction failed for PR #${number} — flag was still set`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error:
+					reactionErr instanceof Error
+						? reactionErr.message
+						: String(reactionErr),
+				action: "disable_auto_review_reaction_failed",
+			});
+		});
+
+		console.log({
+			message: `Auto-review disabled by ${senderLogin}: PR #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			number,
+			action: "auto_review_disabled",
+		});
+
+		return {
+			acted: true,
+			summary: `Auto-review disabled by @${senderLogin}. Push-triggered reviews will no longer run. Codeowners can still use /review or /full-review.`,
+		};
+	}
+
+	// ── 5c. Handle /rebase command ────────────────────────────────────────────
+	if (isRebaseCommand) {
+		const commandName = "rebase";
+		const logAction = "rebase";
+		const commentId = (body.comment as Record<string, unknown> | undefined)
+			?.id as number | undefined;
+
+		if (!commentId || !senderLogin) {
+			return { acted: false, summary: "Missing comment id or sender." };
+		}
+
+		const typedEnv = env as Record<string, string>;
+		let token: string;
+		let codeowner: boolean;
+		try {
+			token = await getInstallationToken(typedEnv);
+			const orgToken = typedEnv.GITHUB_ORG_TOKEN ?? "";
+			codeowner = await isCodeOwner(token, orgToken, senderLogin as string);
+		} catch (authErr) {
+			const errMsg =
+				authErr instanceof Error ? authErr.message : String(authErr);
+			console.log({
+				message: `${commandName} auth failed for PR #${number}: ${errMsg}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: `${logAction}_auth_failed`,
+			});
+			return { acted: false, summary: `${commandName} auth failed: ${errMsg}` };
+		}
+
+		if (!codeowner) {
+			console.log({
+				message: `${commandName} command ignored — ${senderLogin} is not a codeowner`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				action: `${logAction}_ignored_not_codeowner`,
+			});
+			return { acted: false, summary: "Commenter is not a codeowner." };
+		}
+
+		const internalHeaders = getInternalHeaders(typedEnv);
+		const baseUrl = new URL(req.url).origin;
+
+		// Add 👀 reaction to acknowledge receipt. Non-fatal: if the reaction API
+		// fails we still dispatch the workflow.
+		let eyesReactionId: number | null = null;
+		try {
+			eyesReactionId = await addReactionToComment(token, commentId, "eyes");
+		} catch (reactionErr) {
+			console.log({
+				message: `${commandName}: failed to add 👀 reaction to comment ${commentId} — continuing`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error:
+					reactionErr instanceof Error
+						? reactionErr.message
+						: String(reactionErr),
+				action: `${logAction}_reaction_failed`,
+			});
+		}
+
+		try {
+			const runId = await admitWorkflow({
+				baseUrl,
+				pathname: `/workflows/rebase`,
+				headers: internalHeaders,
+				body: {
+					prNumber: number,
+					triggerCommentId: commentId,
+					triggerEyesReactionId: eyesReactionId,
+					senderLogin,
+				},
+			});
+			console.log({
+				message: `${commandName} admitted by ${senderLogin}: PR #${number} — runId: ${runId}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				runId,
+				action: `${logAction}_admitted`,
+			});
+			return {
+				acted: true,
+				summary: `${commandName} triggered by @${senderLogin}.`,
+			};
+		} catch (err) {
+			const errMsg = err instanceof Error ? err.message : String(err);
+			console.log({
+				message: `${commandName} dispatch failed: PR #${number}`,
+				event: "github_webhook_orchestrator",
+				delivery,
+				number,
+				error: errMsg,
+				action: `${logAction}_dispatch_failed`,
+			});
+			return {
+				acted: false,
+				summary: `${commandName} dispatch failed: ${errMsg}`,
+			};
+		}
 	}
 
 	const baseUrl = new URL(req.url).origin;

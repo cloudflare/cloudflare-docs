@@ -1,36 +1,39 @@
 ---
 pcx_content_type: concept
 title: Pricing
-description: Cloudflare Workflows pricing based on CPU time, requests, and duration, included in Workers Free and Paid plans.
+description: Cloudflare Workflows pricing based on CPU time, requests, storage, and steps, included in Workers Free and Paid plans.
 sidebar:
   order: 2
 products:
   - workflows
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::note
 
-Workflows is included in both the Free and Paid [Workers plans](/workers/platform/pricing/#workers).
+Workflows is included in both the Free and Paid [Workers plans](/workers/platform/pricing/#workers). Billing for Workflows steps and storage will apply [starting August 10th, 2026](/changelog/post/2026-07-07-workflows-billing-updates/).
 
 :::
 
-Workflows pricing is identical to [Workers Standard pricing](/workers/platform/pricing/#workers) and are billed on three dimensions:
+Workflows uses [Workers Standard pricing](/workers/platform/pricing/#workers) for CPU time and requests. Workflows are billed on four dimensions:
 
-* **CPU time**: the total amount of compute (measured in milliseconds) consumed by a given Workflow.
-* **Requests** (invocations): the number of Workflow invocations. [Subrequests](/workers/platform/limits/#subrequests) made from a Workflow do not incur additional request costs.
-* **Storage**: the total amount of storage (measured in GB) persisted by your Workflows.
+- **CPU time**: the total amount of compute (measured in milliseconds) consumed by a given Workflow.
+- **Requests** (invocations): the number of Workflow invocations. [Subrequests](/workers/platform/limits/#subrequests) made from a Workflow do not incur additional request costs.
+- **Storage**: the total amount of storage (measured in GB) persisted by your Workflows.
+- **Steps**: the number of steps executed by your Workflows.
 
 A Workflow that is waiting on a response to an API call, paused as a result of calling `step.sleep`, or otherwise idle, does not incur CPU time.
 
-### Workflows Pricing
+:::note
 
-| Unit | Workers Free | Workers Paid |
-|------|--------------|--------------|
-| Requests (millions) | 100,000 per day ([shared with Workers requests](/workers/platform/pricing/#workers)| 10 million included per month + $0.30 per additional million	|
-| CPU time (ms) | 10 milliseconds of CPU time per invocation | 30 million CPU milliseconds included per month + $0.02 per additional million CPU milliseconds |
-| Storage (GB-mo) | 1GB | 1GB included per month + $0.20/ GB-month |
+Step count does not include rollback handlers or retries.
+
+:::
+
+### Workflows pricing
+
+<Render file="workflows-pricing" product="workflows" />
 
 :::note[CPU limits]
 
@@ -40,20 +43,14 @@ You can increase the CPU limit available to your Workflow instances up to 5 minu
 
 ### Storage Usage
 
-:::note
-
-Storage billing for Workflows will go live on September 15th, 2025.
-
-:::
-
 Storage is billed using gigabyte-month (GB-month) as the billing metric, identical to [Durable Objects SQL storage](/durable-objects/platform/pricing/#sqlite-storage-backend). A GB-month is calculated by averaging the peak storage per day over a billing period (30 days).
 
-* Storage is calculated across all instances, and includes running, errored, sleeping and completed instances.
-* By default, instance state is retained for [3 days on the Free plan](/workflows/reference/limits/) and [30 days on the Paid plan](/workflows/reference/limits/).
-* When creating a Workflow instance, you can set a shorter state retention period if you do not need to retain state for errored or completed Workflows. Refer to the [`retention` option in `WorkflowInstanceCreateOptions`](/workflows/build/workers-api/#workflowinstancecreateoptions) for more information.
-* Deleting instances via the [Workers API](/workflows/build/workers-api/), [Wrangler CLI](/workers/wrangler/commands/workflows/#workflows), REST API, or dashboard will free up storage. Note that it may take a few minutes for storage limits to update.
+- Storage is calculated across all instances, and includes running, errored, sleeping, and completed instances.
+- By default, instance state is retained for [3 days on the Free plan](/workflows/reference/limits/) and [30 days on the Paid plan](/workflows/reference/limits/).
+- When creating a Workflow instance, you can set a shorter state retention period if you do not need to retain state for errored or completed Workflows. Refer to the [`retention` option in `WorkflowInstanceCreateOptions`](/workflows/build/workers-api/#workflowinstancecreateoptions) for more information.
+- Deleting instances via the [Workers API](/workflows/build/workers-api/), [Wrangler CLI](/workers/wrangler/commands/workflows/#workflows), REST API, or dashboard will free up storage. It may take a few minutes for storage limits to update.
 
-An instance that attempts to store state when your have reached the storage limit on the Free plan will cause an error to be thrown.
+An instance that attempts to store state when you have reached the storage limit on the Free plan will throw an error.
 
 ## Frequently Asked Questions
 
@@ -61,7 +58,7 @@ Frequently asked questions related to Workflows pricing:
 
 ### Are there additional costs for Workflows?
 
-No. Workflows are priced based on the same compute (CPU time), requests (invocations) as Workers, as well as storage (state from a Workflow).
+Yes. Workflows are priced based on the same compute (CPU time) and requests (invocations) as Workers, as well as storage (state from a Workflow) and steps.
 
 ### Are Workflows available on the [Workers Free](/workers/platform/pricing/#workers) plan?
 
@@ -73,7 +70,7 @@ A Workflow invocation is when you trigger a new Workflow instance: for example, 
 
 ### How do Workflows show up on my bill?
 
-Workflows are billed as Workers, and share the same CPU time and request SKUs.
+Workflows are billed as Workers, and share the same CPU time and request SKUs. Workflows billing also includes storage and step usage.
 
 ### Are there any limits to Workflows?
 

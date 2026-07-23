@@ -1493,9 +1493,9 @@ export default {
 
 This pattern does not scale. As traffic increases, the single Durable Object becomes a chokepoint. Instead, identify natural coordination boundaries in your application (per user, per room, per document) and create separate Durable Objects for each.
 
-## Testing and migrations
+## Testing and class lifecycle
 
-### Test with Vitest and plan for class migrations
+### Test with Vitest and plan for class lifecycle changes
 
 Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integration provides utilities for direct instance access.
 
@@ -1558,22 +1558,23 @@ export default defineConfig({
 });
 ```
 
-For schema changes, run migrations in the constructor using `blockConcurrencyWhile()`. For class renames or deletions, use Wrangler migrations:
+For data-schema changes, run schema migrations in the constructor using `blockConcurrencyWhile()`. For class renames or deletions, change the class entry in the [`exports`](/durable-objects/reference/durable-objects-migrations/) field of your Wrangler configuration file:
 
 <WranglerConfig>
 ```jsonc
 {
-  "migrations": [
-    // Rename a class
-    { "tag": "v2", "renamed_classes": [{ "from": "OldChatRoom", "to": "ChatRoom" }] },
+  "exports": {
+    // Rename a class — also add a live entry for the new name
+    "OldChatRoom": { "type": "durable-object", "state": "renamed", "renamed_to": "ChatRoom" },
+    "ChatRoom": { "type": "durable-object", "storage": "sqlite" },
     // Delete a class (removes all data!)
-    { "tag": "v3", "deleted_classes": ["DeprecatedRoom"] }
-  ]
+    "DeprecatedRoom": { "type": "durable-object", "state": "deleted" }
+  }
 }
 ```
 </WranglerConfig>
 
-Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) for more details on class migrations, and [Testing with Durable Objects](/durable-objects/examples/testing-with-durable-objects/) for comprehensive testing patterns including SQLite queries and alarm testing.
+Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/) for more details on class lifecycle changes, and [Testing with Durable Objects](/durable-objects/examples/testing-with-durable-objects/) for comprehensive testing patterns including SQLite queries and alarm testing.
 
 ## Related resources
 

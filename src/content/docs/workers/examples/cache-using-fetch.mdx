@@ -26,7 +26,7 @@ If you want to get started quickly, click on the button below.
 
 This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -127,40 +127,36 @@ export default app;
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import WorkerEntrypoint
-from pyodide.ffi import to_js as _to_js
-from js import Response, URL, Object, fetch
-
-def to_js(x):
-    return _to_js(x, dict_converter=Object.fromEntries)
+from workers import WorkerEntrypoint, Response, fetch
+from urllib.parse import urlparse
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        url = URL.new(request.url)
+        url = urlparse(request.url)
 
         # Only use the path for the cache key, removing query strings
         # and always store using HTTPS, for example, https://www.example.com/file-uri-here
-        some_custom_key = f"https://{url.hostname}{url.pathname}"
+        some_custom_key = f"https://{url.hostname}{url.path}"
 
         response = await fetch(
             request,
-            cf=to_js({
+            cf={
                 # Always cache this fetch regardless of content type
                 # for a max of 5 seconds before revalidating the resource
                 "cacheTtl": 5,
                 "cacheEverything": True,
                 # Enterprise only feature, see Cache API for other plans
                 "cacheKey": some_custom_key,
-            }),
+            },
         )
 
         # Reconstruct the Response object to make its headers mutable
-        response = Response.new(response.body, response)
+        new_response = Response(response.body, headers=dict(response.headers))
 
         # Set cache control headers to cache on browser for 25 minutes
-        response.headers["Cache-Control"] = "max-age=1500"
+        new_response.headers["Cache-Control"] = "max-age=1500"
 
-        return response
+        return new_response
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
@@ -311,6 +307,40 @@ export default app;
 </TabItem> </Tabs>
 
 Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (for example, belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
+
+## Cache expected Vary responses
+
+Use `cf.vary` when an origin returns a `Vary` header and you want a Worker subrequest to cache expected variants. This setting applies only to the `fetch()` request where you set it.
+
+For Vary behavior details, refer to [Vary](/cache/concepts/vary/). For the full request init object, refer to [`cf.vary`](/workers/runtime-apis/request/#the-cfvary-property).
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		return fetch(request, {
+			cf: {
+				vary: {
+					default: { action: "bypass" },
+					headers: {
+						accept: {
+							action: "normalize",
+							media_types: ["text/html", "application/json"],
+						},
+						"accept-language": {
+							action: "normalize",
+							languages: ["en", "fr", "de"],
+						},
+					},
+				},
+			},
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
 
 ## Override based on origin response code
 

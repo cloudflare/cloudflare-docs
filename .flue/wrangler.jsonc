@@ -53,13 +53,63 @@
 		},
 		{
 			// The style-guide-review workflow was retired: its per-file review now
-			// runs in-process inside the code-review orchestrator via concurrent
-			// sessions (lib/style-guide-inproc.ts), so the standalone workflow's
-			// Durable Object class is no longer generated.
+			// runs in-process inside the style-guide-specialist workflow via
+			// concurrent sessions (lib/style-guide-inproc.ts), so the standalone
+			// workflow's Durable Object class is no longer generated.
 			"tag": "v4",
 			"deleted_classes": ["FlueStyleGuideReviewWorkflow"],
 		},
+		{
+			// The code review and style-guide fan-outs were split back out of the
+			// orchestrator into their own specialist workflows, so each runs in its
+			// own Durable Object isolate (own memory budget) instead of competing
+			// for the orchestrator DO's. See workflows/{code-review,style-guide}-specialist.ts.
+			"tag": "v5",
+			"new_sqlite_classes": [
+				"FlueCodeReviewSpecialistWorkflow",
+				"FlueStyleGuideSpecialistWorkflow",
+			],
+		},
+		{
+			// The finalize-review workflow handles reconciliation, rendering, and
+			// posting the review comment. It is admitted by whichever specialist
+			// finishes last via an R2 rendezvous lock, replacing the orchestrator's
+			// 20-minute specialist poll. See workflows/finalize-review.ts.
+			"tag": "v6",
+			"new_sqlite_classes": ["FlueFinalizeReviewWorkflow"],
+		},
+		{
+			// Two new specialist workflows added to the review pipeline:
+			// - ConventionsSpecialist: checks PR title, description, and scope via a
+			//   light AI session (conventions-check skill).
+			// - RedirectSpecialist: pure TypeScript, no model; checks that renamed or
+			//   deleted docs pages have entries in public/__redirects.
+			// See workflows/conventions-specialist.ts (RedirectSpecialist since removed).
+			"tag": "v7",
+			"new_sqlite_classes": [
+				"FlueConventionsSpecialistWorkflow",
+				"FlueRedirectSpecialistWorkflow",
+			],
+		},
+		{
+			// RedirectSpecialist removed from the review pipeline — the check added
+			// noise without enough signal. DO class deleted to clean up the registry.
+			"tag": "v8",
+			"deleted_classes": ["FlueRedirectSpecialistWorkflow"],
+		},
+		{
+			// Rebase workflow added: handles the /rebase slash
+			// commands. Rebases a PR branch against production via the GitHub API
+			// and optionally uses AI to resolve conflicts.
+			"tag": "v9",
+			"new_sqlite_classes": ["FlueRebaseWorkflow"],
+		},
 	],
+	// Explicitly empty crons list so wrangler clears any previously registered
+	// cron triggers on deploy (an absent triggers key leaves existing ones intact).
+	"triggers": {
+		"crons": [],
+	},
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,
@@ -70,9 +120,10 @@
 			"invocation_logs": false,
 		},
 		"traces": {
-			"enabled": false,
+			"enabled": true,
 			"persist": true,
 			"head_sampling_rate": 1,
 		},
 	},
+
 }

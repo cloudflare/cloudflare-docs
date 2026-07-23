@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { CardGrid, DashButton, Description, LinkTitleCard } from "~/components";
+import { CardGrid, DashButton, Description, Details, LinkTitleCard } from "~/components";
 
 <Description>
 
@@ -21,7 +21,7 @@ Cloudflare partners with [PlanetScale](https://planetscale.com/) to provide Plan
 
 Get the best of both products, build for Workers global distribution and optimize for regional data access. Get started by creating a PlanetScale database in the Cloudflare dashboard.
 
-<DashButton url="/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1"/>
+<DashButton url="/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1" />
 
 ## Workers + PlanetScale
 
@@ -43,6 +43,8 @@ Hyperdrive provides the connection glue between Workers and PlanetScale. It pool
 
 4. **Query PlanetScale only when necessary.** If neither cache has the result, Hyperdrive sends the query to PlanetScale using an already available pool of database connections. Writes and other uncacheable queries go to PlanetScale so the database remains the source of truth. Multiple layers of caching reduce overall load on your database.
 
+Hyperdrive does not invalidate cached read results when your application writes to PlanetScale. If your application needs read-after-write consistency for authentication, sessions, permissions, or another critical path, use a separate cache-disabled Hyperdrive configuration for those reads. Refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for guidance.
+
 ## PlanetScale developer experience
 
 ### Postgres or MySQL
@@ -60,6 +62,20 @@ Use [development branches](https://planetscale.com/docs/postgres/branching) to t
 ### Cloudflare billing
 
 When you create a PlanetScale database from the Cloudflare dashboard, you are billed via your Cloudflare account — you will see a line item on your Cloudflare invoice for your PlanetScale usage. The pricing for PlanetScale is the same when you create and use databases via Cloudflare as it is when you buy directly from PlanetScale. For more pricing details, refer to [PlanetScale's pricing](https://planetscale.com/pricing). You can introspect per-database billing usage via PlanetScale's [dashboard](https://planetscale.com/docs/billing#organization-usage-and-billing-page).
+
+## FAQ
+
+<Details header="How do I get support for my PlanetScale database?" id="support-for-your-connected-planetscale-databases">
+
+Support for your PlanetScale databases created via Cloudflare is provided by PlanetScale at their Standard level support or your procured PlanetScale support plan. For help with your PlanetScale database, refer to [PlanetScale Support](https://planetscale.com/docs/support) for more information or contact the PlanetScale support team directly via the [PlanetScale support portal](https://support.planetscale.com/).
+
+</Details>
+
+<Details header="How is my PlanetScale database billed?">
+
+For pay-as-you-go Cloudflare accounts, a PlanetScale database is billed daily from when the database is created until the database is deleted. Your database is billed whether or not you execute queries or store data.
+
+</Details>
 
 <CardGrid>
 

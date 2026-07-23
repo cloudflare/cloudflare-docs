@@ -193,4 +193,34 @@ export const AGENTS: AgentData[] = [
 			website: "https://windsurf.com",
 		},
 	},
+	{
+		name: "Bionic",
+		vendor: "LM Studio",
+		slug: "bionic",
+		icon: "bionic",
+		description:
+			"Powerful agent for coding and work. Natively local, with open models in the cloud. By LM Studio.",
+		capabilities: {
+			ide: false,
+			terminal: false,
+			standalone: true,
+			cloud: true,
+			extension: false,
+			open_source: false,
+		},
+		features: [
+			"Local, remote, and cloud models",
+			"Code Projects for local codebases",
+			"Repository search and file editing",
+			"Git and local shell tools",
+		],
+		pricing_model: "hybrid",
+		model_flexibility: "multi_provider",
+		links: {
+			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
+			docs: "https://lmstudio.ai/docs/bionic",
+			website: "https://lmstudio.ai/",
+		},
+	},
 ];

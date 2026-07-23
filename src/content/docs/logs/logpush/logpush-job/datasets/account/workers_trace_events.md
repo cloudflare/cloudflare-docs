@@ -43,7 +43,7 @@ The timestamp of when the event was received, in milliseconds.
 
 Type: `string`
 
-The event type that triggered the invocation. <br />Possible values are <em>fetch</em>.
+The event type that triggered the invocation. <br />Possible values are <em>fetch</em> \| <em>scheduled</em> \| <em>alarm</em> \| <em>queue</em> \| <em>email</em> \| <em>worker_rpc</em> \| <em>hibernatable_web_socket</em>.
 
 ## Exceptions
 
@@ -61,7 +61,7 @@ List of console messages emitted during the invocation.
 
 Type: `string`
 
-The outcome of the Worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em>.
+The outcome of the Worker script invocation. <br />Possible values are <em>ok</em> \| <em>canceled</em> \| <em>exception</em> \| <em>unknown</em>.
 
 ## ScriptName
 

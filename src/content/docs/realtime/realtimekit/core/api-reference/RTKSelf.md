@@ -1,7 +1,6 @@
 ---
 title: RTKSelf
 sidebar_position: 15
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -14,7 +13,6 @@ this module.
 
 
 * [RTKSelf](#module_RTKSelf)
-    * [.telemetry](#module_RTKSelf+telemetry)
     * [.peerId](#module_RTKSelf+peerId)
     * [.roomState](#module_RTKSelf+roomState)
     * [.permissions](#module_RTKSelf+permissions)
@@ -33,18 +31,12 @@ this module.
     * [.disableVideo()](#module_RTKSelf+disableVideo)
     * [.disableScreenShare()](#module_RTKSelf+disableScreenShare)
     * [.getAllDevices()](#module_RTKSelf+getAllDevices)
-    * [.setIsPinned()](#module_RTKSelf+setIsPinned)
     * [.pin()](#module_RTKSelf+pin)
     * [.unpin()](#module_RTKSelf+unpin)
     * [.hide()](#module_RTKSelf+hide)
     * [.show()](#module_RTKSelf+show)
     * [.setDevice(device)](#module_RTKSelf+setDevice)
-    * [.updateVideo()](#module_RTKSelf+updateVideo)
 
-<a name="module_RTKSelf+telemetry"></a>
-
-### meeting.self.telemetry
-**Kind**: instance property of [<code>RTKSelf</code>](#module_RTKSelf)  
 <a name="module_RTKSelf+peerId"></a>
 
 ### meeting.self.peerId
@@ -179,10 +171,6 @@ This method is used to stop sharing the local participant's screen.
 Returns all media devices accessible by the local participant.
 
 **Kind**: instance method of [<code>RTKSelf</code>](#module_RTKSelf)  
-<a name="module_RTKSelf+setIsPinned"></a>
-
-### meeting.self.setIsPinned()
-**Kind**: instance method of [<code>RTKSelf</code>](#module_RTKSelf)  
 <a name="module_RTKSelf+pin"></a>
 
 ### meeting.self.pin()
@@ -220,9 +208,3 @@ Change the current media device that is being used by the local participant.
 | --- | --- | --- |
 | device | <code>MediaDeviceInfo</code> | The device that is to be used. A device of the same `kind` will be replaced. the primary stream. |
 
-<a name="module_RTKSelf+updateVideo"></a>
-
-### meeting.self.updateVideo()
-Internal method, do not use
-
-**Kind**: instance method of [<code>RTKSelf</code>](#module_RTKSelf)  

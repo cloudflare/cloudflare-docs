@@ -1,0 +1,36 @@
+---
+title: Cache multiple versions of a URL with Vary
+description: Cache Rules now support the origin Vary response header, so the same URL can hold multiple cached versions selected by the request headers your origin varies on.
+products:
+  - cache
+date: 2026-07-02
+---
+
+Your origin can serve different responses for the same URL — different languages based on `Accept-Language`, or different formats based on `Accept` — by returning a [`Vary`](https://www.rfc-editor.org/rfc/rfc9110.html#name-vary) response header. Cloudflare's cache now honors that header directly in [Cache Rules](/cache/how-to/cache-rules/), so the same URL can hold multiple cached versions and each request is matched to the right one. Content that previously had to bypass cache to stay correct can now be cached, following standard [HTTP caching behavior](https://www.rfc-editor.org/rfc/rfc9111.html#name-calculating-cache-keys-with).
+
+## What changed
+
+Your origin now decides which request headers matter by listing them in its `Vary` response, and you control how Cloudflare treats each one. When you have enabled Vary using a cache rule and a response includes a `Vary` header, the request headers listed become part of the cache key.
+
+For each header your origin varies on, choose one of three actions:
+
+| Action        | Behavior                                                                                                      | Best for                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `normalize`   | Converts equivalent header values to the same cache key value before matching, collapsing redundant versions. | Most `Accept`, `Accept-Language`, and `Accept-Encoding` use cases.         |
+| `passthrough` | Uses the raw header value to select the cached version and forwards it to the origin unchanged.               | When byte-for-byte differences in the header value should create versions. |
+| `bypass`      | Bypasses cache whenever this header name appears in the origin's `Vary` response.                             | Per-user values, or headers with too many possible values to cache safely. |
+
+## Benefits
+
+- **Higher cache hit ratios**: `normalize` treats semantically equivalent headers as one version. For example, `Accept-Language: en-US, fr;q=0.8` and `Accept-Language: fr;q=0.8, en-GB` both resolve to the same cache key, so you serve more requests from cache instead of the origin.
+- **Correct content negotiation**: Requests always receive the cached version that matches their headers, so language and format variants stay accurate.
+- **No origin or Worker changes required**: If your origin already sends `Vary`, you configure the behavior entirely in Cache Rules.
+- **Standards-aligned**: Cache key calculation follows RFC 9111, and `Vary: *` continues to bypass cache as required by RFC 9110.
+
+## Availability
+
+Vary in Cache Rules is available on all plans (Free, Pro, Business, and Enterprise). For per-request control in Workers subrequests, use the [`cf.vary`](/workers/runtime-apis/request/#the-cfvary-property) property.
+
+## Get started
+
+Configure Vary in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/caching/cache-rules) under **Caching** > **Cache Rules**, or through the [Rulesets API](/ruleset-engine/rulesets-api/). To learn how Vary affects cache keys and how each action works, refer to [Vary](/cache/concepts/vary/) and the [Cache Rules Vary setting](/cache/how-to/cache-rules/settings/#vary).

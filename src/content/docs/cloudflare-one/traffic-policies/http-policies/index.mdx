@@ -67,6 +67,12 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in the Cloudflare dashboard.                                                                                                                                 |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to [Troubleshooting Gateway](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate). |
 
+#### Custom headers
+
+Allow policies can modify HTTP request headers before forwarding traffic to the destination. You can add, overwrite, or delete headers, and use dynamic variables to inject identity, device, and network context into header values.
+
+For more information, refer to [Custom headers](/cloudflare-one/traffic-policies/http-policies/tenant-control/).
+
 ### Block
 
 API value: `block`

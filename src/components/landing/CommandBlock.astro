@@ -18,7 +18,7 @@ const {
 
 <div
 	class:list={[
-		"flex items-stretch overflow-hidden border border-zinc-200 dark:border-[#2a2a2a]",
+		"border-border flex items-stretch overflow-hidden border",
 		rounded && "rounded",
 		className,
 	]}
@@ -26,7 +26,7 @@ const {
 	{
 		showPrompt && (
 			<span
-				class="bg-background text-accent flex shrink-0 items-center border-r border-zinc-200 px-3 font-mono text-sm leading-none select-none dark:border-[#2a2a2a]"
+				class="bg-background text-primary border-border flex shrink-0 items-center border-r px-3 font-mono text-sm leading-none select-none"
 				aria-hidden="true"
 			>
 				$
@@ -36,7 +36,7 @@ const {
 
 	<code
 		id={id}
-		class="bg-background min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none text-zinc-700 select-all dark:text-zinc-300"
+		class="bg-background text-foreground min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none select-all"
 	>
 		{command}
 	</code>
@@ -45,7 +45,7 @@ const {
 		type="button"
 		data-copy-target={id}
 		aria-label="Copy to clipboard"
-		class="cmd-copy-btn focus-visible:outline-accent flex w-10 shrink-0 cursor-pointer items-center justify-center border-l border-zinc-200 text-zinc-500 transition-colors duration-150 hover:bg-zinc-100 hover:text-zinc-700 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:border-[#2a2a2a] dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
+		class="cmd-copy-btn focus-visible:outline-primary border-border text-muted-foreground hover:bg-muted hover:text-foreground flex w-10 shrink-0 cursor-pointer items-center justify-center border-l transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2"
 	>
 		<svg
 			class="cmd-copy-default"
@@ -88,7 +88,7 @@ const {
 	}
 	.cmd-copy-btn[data-copied="true"] .cmd-copy-done {
 		display: block;
-		color: #10a37f;
+		color: var(--color-success);
 	}
 </style>
 

@@ -82,7 +82,7 @@ database_id = "<unique-ID-for-your-database>"
 </WranglerConfig>
 ```
 
-- Always provide TOML as input — JSON is auto-generated.
+- Always provide TOML or JSON as input — the other format is auto-generated.
 - Use `$today` for `compatibility_date`. It is replaced with the current date at build time and injects a comment telling readers to keep it current.
 - Use `removeSchema` prop to omit the `$schema` line from JSON output (useful for config snippets rather than full files).
 - If a feature requires a minimum `compatibility_date`, note it in a `:::note` admonition above or below the config block.
@@ -350,7 +350,7 @@ import { DirectoryListing } from "~/components";
 
 ## Badge
 
-Starlight built-in. Displays a coloured status badge. Use in page headings to indicate beta, new, deprecated, etc. Prefer this over `InlineBadge` for heading-level status labels.
+Nimbus component. Displays a coloured status badge. Use in page headings to indicate beta, new, deprecated, etc. Prefer this over `InlineBadge` for heading-level status labels.
 
 ```mdx
 import { Badge } from "~/components";
@@ -375,7 +375,7 @@ sidebar:
 
 ## Card / LinkTitleCard / ListCard
 
-Starlight built-ins for styled card containers. Used on overview and navigation pages.
+Nimbus components for styled card containers. Used on overview and navigation pages.
 
 ```mdx
 import { Card, LinkTitleCard, ListCard } from "~/components";
@@ -593,7 +593,7 @@ Variants: `primary` (default), `secondary`, `minimal`.
 
 ## LinkCard / CardGrid
 
-Starlight built-in. Renders a card with a title, description, and link. Use `CardGrid` to display multiple cards in a grid layout.
+Nimbus component. Renders a card with a title, description, and link. Use `CardGrid` to display multiple cards in a grid layout.
 
 ```mdx
 import { LinkCard, CardGrid } from "~/components";
@@ -614,7 +614,7 @@ import { LinkCard, CardGrid } from "~/components";
 
 ## FileTree
 
-Starlight built-in. Displays a file and directory tree. Use bold to highlight the current file.
+Nimbus component. Displays a file and directory tree. Use bold to highlight the current file.
 
 ```mdx
 import { FileTree } from "~/components";

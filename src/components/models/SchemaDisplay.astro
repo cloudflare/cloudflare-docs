@@ -1,14 +1,9 @@
 ---
 /**
- * SchemaDisplay - Unified schema display component for model parameters
- *
- * Features:
- * - Table layout with Name, Type, Default, Description columns
- * - Tree-line indentation for nested objects/arrays
- * - Collapsible nested sections with lazy rendering
- * - Search/filter with auto-expand on match
- * - Essential params shown first (Input only), Advanced collapsed
- * - Tabs for top-level anyOf/oneOf variants
+ * SchemaDisplay — schema display for model parameters. Walks the JSON Schema at
+ * build time (allOf merge, nullable collapse, $ref resolve, flat-schema rows)
+ * into `SchemaRowData`, then hands off to the interactive `SchemaTree` /
+ * `SchemaVariantSelector` islands. Handles top-level anyOf/oneOf variants.
  */
 import {
 	SchemaTree,
@@ -22,7 +17,7 @@ import { resolveInlineRef } from "@stoplight/json";
 import SchemaTreeView from "./SchemaTree.tsx";
 import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
 import type { SchemaRowData } from "./types";
-import { getTopLevelVariants } from "~/util/model-schema";
+import { getTopLevelVariants } from "~/util/models";
 
 interface Props {
 	schema: Record<string, unknown>;
@@ -421,9 +416,7 @@ const variantRows =
 				client:visible
 			/>
 		) : rows.length === 0 ? (
-			<p class="text-sm text-gray-500 dark:text-gray-400">
-				No parameters defined.
-			</p>
+			<p class="text-muted-foreground text-sm">No parameters defined.</p>
 		) : (
 			<SchemaTreeView
 				rows={rows}

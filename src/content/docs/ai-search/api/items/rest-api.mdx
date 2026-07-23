@@ -35,8 +35,8 @@ The available operations are the same for both paths. For the namespace-scoped A
 
 Upload, list, get, delete, and download items within an instance. For the full specification, refer to the [Items API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/).
 
-| Operation                                                                                                            | Method   | Description                    |
-| -------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------ |
+| Operation                                                                                                                | Method   | Description                    |
+| ------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------ |
 | [Upload](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/upload/)     | `POST`   | Upload a document for indexing |
 | [List](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/list/)         | `GET`    | List all items in an instance  |
 | [Get](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/get/)           | `GET`    | Get item info by ID            |
@@ -61,3 +61,12 @@ List all items in an instance:
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
+
+To find a single item by its exact object key, pass the `key` query parameter:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items?key=docs/readme.md" \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
+Keys are unique per data source, so combine `key` with `source` (for example, `source=builtin`) to disambiguate when the same key exists across multiple sources.

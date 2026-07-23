@@ -3,6 +3,10 @@ link: "/browser-run/changelog/"
 productName: Browser Run
 productLink: "/browser-run/"
 entries:
+  - publish_date: "2026-07-07"
+    title: "New endpoint: /accessibilityTree"
+    description: |-
+      * Added the [`/accessibilityTree` endpoint](/browser-run/quick-actions/accessibility-tree-endpoint/) to capture the accessibility tree from a rendered webpage. The accessibility tree includes roles, names, values, states, and hierarchy, giving AI agents and automation workflows a structured view of page elements without parsing raw HTML or interpreting screenshots. You can capture the full page tree, return only semantically meaningful nodes with `interestingOnly`, or capture a subtree with `root`.
   - publish_date: "2026-06-12"
     title: "New tutorial: Pre-render pages for crawlers"
     description: |-

@@ -1,0 +1,36 @@
+---
+title: Subscribe to Email Sending events with Queues
+description: Receive outbound transactional email lifecycle events on a queue by subscribing per sending domain.
+products:
+  - email-service
+  - queues
+date: 2026-07-15
+---
+
+You can now subscribe to **[Email Sending](/email-service/api/send-emails/) events** through [Queues event subscriptions](/queues/event-subscriptions/) and receive outbound transactional email lifecycle events on a queue. Each subscription is scoped to one sending domain — either the zone apex, such as `example.com`, or a verified sending subdomain, such as `send.example.com`.
+
+Six event types are published: `message.delivered`, `message.deferred`, `message.bounced`, `message.failed`, `message.rejected`, and `message.complained`. Use them to track deliverability, react to bounces and complaints, and drive suppression or retry logic. Email Routing events are not published on this source.
+
+Each event includes the message details, delivery status, and SMTP response:
+
+```json
+{
+	"type": "cf.email.sending.message.delivered",
+	"source": {
+		"type": "email.sending",
+		"zoneId": "023e105f4ecef8ad9ca31a8372d0c353",
+		"domain": "example.com"
+	},
+	"payload": {
+		"messageId": "0101018f7d0c4d9a-msg-deadbeef",
+		"recipient": "user@example.net",
+		"terminal": true,
+		"delivery": {
+			"status": "delivered",
+			"smtpStatusCode": "250"
+		}
+	}
+}
+```
+
+Refer to [Event subscriptions](/email-service/platform/event-subscriptions/) to see all event types and example payloads.

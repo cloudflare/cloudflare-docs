@@ -12,8 +12,8 @@ releaseNotes: |-
 
 
   - Starting with 2026.6.822.0, the client unifies all API requests under the `api.devices.cloudflare.com` SNI, where previously both `zero-trust-client.cloudflareclient.com` and `notifications.cloudflareclient.com` were used. Review [Cloudflare One Client with firewall](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/) to ensure systems that rely on SNI inspection do not block the API traffic. The behavior of previous client versions is unaffected.
-  - Cloudflare Mesh functionality using the Cloudflare One Client is now supported on RHEL 9 and 10.
-  - Cloudflare Mesh now supports hostname-based routing for Cloudflare Tunnel.
+  - [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) functionality using the Cloudflare One Client is now supported on RHEL 9 and 10.
+  - Cloudflare Mesh now supports [hostname-based routing](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes).
   - Client Certificate device-posture checks now support template variables (e.g. `${serial_number}`, `${device_uuid}`) in the Subject Alternative Name field. Previously only the Common Name field accepted variables, which broke posture rules that pinned identity to a SAN entry.
   - Improved accessibility by using high contrast colors and more defined color boundaries when high contrast is enabled in the system display settings.
   - Path MTU Discovery (PMTUD) is now enabled by default.

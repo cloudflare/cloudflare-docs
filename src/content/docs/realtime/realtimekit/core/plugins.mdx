@@ -14,7 +14,7 @@ This guide explains how to register, activate, and render plugins in a meeting u
 
 Plugins are interactive real-time applications that run inside a meeting, such as a shared whiteboard or a document viewer. When a participant activates a plugin, it becomes active for everyone in the session.
 
-<RTKSDKSelector disabledPlatforms={["mobile-flutter", "mobile-react-native"]} />
+<RTKSDKSelector disabledPlatforms={["mobile-flutter"]} />
 
 :::note
 You must register a plugin with the same `id` on every platform your participants use. A plugin is only visible to a participant who has registered it, and activation state only syncs across participants who share the same plugin `id`. If a web participant registers a plugin under one `id` and a mobile participant uses a different `id`, the plugin will not be visible or synced across both platforms.
@@ -85,6 +85,22 @@ let plugin = meeting.plugins.all.first { $0.id == pluginId }
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-react-native">
+
+Use the `useRealtimeKitSelector` hook to read plugins reactively.
+
+```tsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react-native";
+
+const allPlugins = useRealtimeKitSelector((m) => m.plugins.all.toArray());
+const activePlugins = useRealtimeKitSelector((m) => m.plugins.active.toArray());
+
+// Get a single plugin by its namespaced id
+const plugin = useRealtimeKitSelector((m) => m.plugins.all.get(pluginId));
+```
+
+</RTKCodeSnippet>
+
 ## Register a plugin
 
 You register the plugins available in a session when you initialize the SDK. Each configuration provides the metadata RealtimeKit uses to list the plugin and the location it loads.
@@ -130,6 +146,51 @@ Each plugin configuration accepts the following fields:
 | `icon`        | Icon URL or data URI shown next to the name.                                                   | `string`                                           | true     |
 | `permissions` | Controls whether the local participant can activate or deactivate the plugin.                  | `{ canActivate: boolean; canDeactivate: boolean }` | true     |
 | `component`   | Element rendered when the plugin is active.                                                    | `HTMLElement`                                      | true     |
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Pass plugin configurations as `defaults.plugins` when calling `initMeeting`. In React Native, `component` should be an object with a `src` property containing the URL to render — you can load this in a `WebView` or use the UI Kit to handle rendering automatically.
+
+```tsx
+const [meeting, initMeeting] = useRealtimeKitClient();
+
+await initMeeting({
+  authToken: "<auth_token>",
+  defaults: {
+    plugins: [
+      {
+        // User-provided unique id. The SDK prefixes it with
+        // `{meetingId}:` to create the namespaced `plugin.id`.
+        id: "whiteboard",
+        // Display name shown in the plugins panel
+        name: "Whiteboard",
+        // Icon URL shown next to the name
+        icon: "https://example.com/whiteboard.png",
+        // Per-plugin permissions for the local participant
+        permissions: {
+          canActivate: true,
+          canDeactivate: true,
+        },
+        // URL to render when the plugin is active.
+        // Pass an object with a src property: { src: string }.
+        component: { src: "https://example.com/whiteboard/" },
+      },
+    ],
+  },
+});
+```
+
+Each plugin configuration accepts the following fields:
+
+| Field         | Description                                                                                     | Type                                               | Required |
+| ------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------- | -------- |
+| `id`          | Unique identifier for the plugin. The SDK prefixes it with `{meetingId}:` to form `plugin.id`. | `string`                                           | true     |
+| `name`        | Display name shown in the plugins panel.                                                        | `string`                                           | true     |
+| `icon`        | Icon URL shown next to the name.                                                                | `string`                                           | true     |
+| `permissions` | Controls whether the local participant can activate or deactivate the plugin.                   | `{ canActivate: boolean; canDeactivate: boolean }` | true     |
+| `component`   | Object with a `src` URL to render when the plugin is active.                                    | `{ src: string }`                                  | true     |
 
 </RTKCodeSnippet>
 
@@ -231,7 +292,7 @@ await plugin.deactivate();
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id="web-react">
+<RTKCodeSnippet id={["web-react", "mobile-react-native"]}>
 
 ```jsx
 const plugins = useRealtimeKitSelector((m) => m.plugins);
@@ -323,9 +384,23 @@ While a plugin is active, call `getPluginView()` to obtain the `WKWebView` that 
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-react-native">
+
+| Property      | Description                                                                                        | Type                                               |
+| ------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `id`          | Namespaced plugin id, in the form `{meetingId}:{configId}`.                                        | `string`                                           |
+| `name`        | Display name of the plugin.                                                                        | `string`                                           |
+| `icon`        | Icon URL.                                                                                          | `string`                                           |
+| `permissions` | Activation permissions for the local participant.                                                  | `{ canActivate: boolean; canDeactivate: boolean }` |
+| `component`   | The object provided at registration. Contains a `src` URL that your rendering layer loads.          | `{ src: string }`                                  |
+| `active`      | Whether the plugin is currently running.                                                           | `boolean`                                          |
+| `enabledBy`   | Id of the participant who activated the plugin.                                                    | `string`                                           |
+
+</RTKCodeSnippet>
+
 ## Listen to plugin events
 
-<RTKCodeSnippet id={["web-react", "web-web-components", "web-angular"]}>
+<RTKCodeSnippet id={["web-react", "web-web-components", "web-angular", "mobile-react-native"]}>
 
 A `Plugin` object emits events as its state changes. You can listen on a single plugin, or on a map to receive events for every plugin it contains.
 
@@ -462,5 +537,17 @@ guard let plugin = meeting.plugins.active.first else { return }
 // Returns a WKWebView you can add to your view hierarchy
 let pluginView = plugin.getPluginView()
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The React Native UI Kit provides ready-made components for plugins:
+
+- [`RtkPluginsToggle`](/realtime/realtimekit/ui-kit/api-reference/react-native/rtkpluginstoggle/): a control bar button that opens and closes the plugins sidebar.
+- [`RtkPlugins`](/realtime/realtimekit/ui-kit/api-reference/react-native/rtkplugins/): a panel listing available plugins with controls to activate or deactivate each one.
+- [`RtkPluginMain`](/realtime/realtimekit/ui-kit/api-reference/react-native/rtkpluginmain/): renders the active plugin in a `WebView`.
+
+These components read from `meeting.plugins` automatically once plugins are registered at initialization. If you use `RtkMeeting`, plugin UI is included without any additional setup.
 
 </RTKCodeSnippet>

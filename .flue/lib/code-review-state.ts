@@ -10,6 +10,15 @@ import type { GitHubIssueComment } from "./github";
 // Also used by render helpers; exported here as the single source of truth.
 export const BOT_COMMENT_MARKER = "<!-- cloudflare-docs-flue-code-review -->";
 
+// Rebase status values embedded in the bot comment as HTML comments.
+export type RebaseStatus =
+	| "in-progress"
+	| "complete"
+	| "halted-wrong-base"
+	| "halted-fork"
+	| "halted-confidence"
+	| "failed";
+
 // Regexes to extract metadata embedded in bot comment bodies.
 const REVIEWED_HEAD_SHA_RE = /<!-- reviewed-head-sha: ([0-9a-f]{40}) -->/;
 const REVIEWED_AT_RE = /<!-- reviewed-at: ([^\n]+) -->/;
@@ -94,16 +103,68 @@ export async function getAutoReviewCount(
 }
 
 /**
- * Increment the automatic review counter for a PR in R2.
- * Takes the current count to avoid a read-modify-write race on the caller side.
+ * Record that an automatic review *completed* for a PR head SHA.
+ *
+ * The counter is incremented on successful completion (not at the start of a
+ * run), and deduplicated per head SHA. This means interrupted or failed runs
+ * never burn an auto-review slot, and re-runs of the same head SHA are not
+ * double-counted. The cap therefore limits the number of *delivered* automatic
+ * reviews, which is the intended behavior.
+ *
+ * Uses an ETag-based conditional PUT (If-Match) to make the read-modify-write
+ * atomic: if two concurrent finalizes race, one will win and the other will
+ * retry rather than silently overwriting. Retries up to 3 times on conflict.
  */
-export async function incrementAutoReviewCount(
+export async function markAutoReviewCompleted(
 	bucket: R2Bucket,
 	prNumber: number,
-	current: number,
+	headSha: string,
 ): Promise<void> {
 	const key = `diffs/pr-${prNumber}/auto-review-count.json`;
-	await bucket.put(key, JSON.stringify({ count: current + 1 }));
+
+	for (let attempt = 0; attempt < 3; attempt++) {
+		const obj = await bucket.get(key);
+		let count = 0;
+		let shas: string[] = [];
+		const etag = obj?.etag ?? null;
+
+		if (obj) {
+			try {
+				const data = (await obj.json()) as { count?: number; shas?: string[] };
+				// Validate shape defensively — corrupt or migrated data should not
+				// produce wrong counts or crash .includes()/.push() calls.
+				count =
+					typeof data.count === "number" && Number.isFinite(data.count)
+						? data.count
+						: 0;
+				shas = Array.isArray(data.shas) ? (data.shas as string[]) : [];
+			} catch {
+				// Corrupt counter — start fresh.
+			}
+		}
+
+		if (shas.includes(headSha)) return; // already counted this head SHA
+
+		shas.push(headSha);
+		const body = JSON.stringify({ count: count + 1, shas });
+
+		// Conditional PUT: succeed only if the object hasn't changed since we read it.
+		// etag=null means the key didn't exist; use If-None-Match: * to create-if-absent.
+		const putResult = etag
+			? await bucket.put(key, body, {
+					onlyIf: new Headers({ "If-Match": etag }),
+				})
+			: await bucket.put(key, body, {
+					onlyIf: new Headers({ "If-None-Match": "*" }),
+				});
+
+		if (putResult !== null) return; // success — conditional PUT won
+
+		// Lost the race — another finalize updated the key between our get and put.
+		// Retry with a fresh read.
+	}
+	// After 3 failed attempts, give up non-fatally. The review was delivered;
+	// failing to count it precisely is preferable to failing the entire finalize.
 }
 
 /**
@@ -134,5 +195,43 @@ export async function setReviewLimitIgnored(
 	await bucket.put(
 		key,
 		JSON.stringify({ ignored: true, actor, setAt: new Date().toISOString() }),
+	);
+}
+
+/**
+ * Check whether automatic reviews have been disabled for a PR.
+ * When true, push-triggered reviews are suppressed; codeowner slash commands
+ * (which set bypassReviewLimit) still work normally.
+ * Returns false if no disable flag exists.
+ */
+export async function isAutoReviewDisabled(
+	bucket: R2Bucket,
+	prNumber: number,
+): Promise<boolean> {
+	const key = `diffs/pr-${prNumber}/auto-review-disabled.json`;
+	const obj = await bucket.get(key);
+	if (!obj) return false;
+	try {
+		const data = (await obj.json()) as { disabled?: boolean };
+		return data.disabled === true;
+	} catch {
+		// Corrupt file — treat as not disabled.
+		return false;
+	}
+}
+
+/**
+ * Disable automatic reviews for a PR in R2.
+ * Records the actor who set the flag for auditability.
+ */
+export async function setAutoReviewDisabled(
+	bucket: R2Bucket,
+	prNumber: number,
+	actor: string,
+): Promise<void> {
+	const key = `diffs/pr-${prNumber}/auto-review-disabled.json`;
+	await bucket.put(
+		key,
+		JSON.stringify({ disabled: true, actor, setAt: new Date().toISOString() }),
 	);
 }

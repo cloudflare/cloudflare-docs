@@ -1,0 +1,39 @@
+---
+title: "Moondream 3.1 now available on Workers AI"
+description: Moondream 3.1, a fast and efficient vision language model with frontier-level visual reasoning, is now available on Workers AI.
+products:
+  - workers-ai
+date: 2026-07-08
+---
+
+Partnering with [Moondream](https://moondream.ai/) to bring their latest model [`@cf/moondream/moondream3.1-9B-A2B`](/workers-ai/models/moondream3.1-9B-A2B/) to Workers AI. Moondream 3.1 is a fast vision language model built on a mixture-of-experts architecture with 9B total parameters and 2B active, delivering frontier-level visual reasoning while retaining fast, cost-efficient inference.
+
+Moondream 3.1 is designed for real-world vision tasks, with a 32K token context window for handling complex queries and structured outputs.
+
+## Key capabilities
+
+- **Query** — ask open-ended questions about an image, with an optional reasoning parameter
+- **Caption** — generate short, normal, or long descriptions of an image
+- **Point** — return coordinates for objects matching a target phrase
+- **Detect** — return bounding boxes for objects matching a target phrase
+
+## Real-time vision at the edge
+
+Vision workloads like live camera feeds, robotics, content moderation, and interactive agents need answers in milliseconds, not seconds. Moondream 3.1's small active footprint (2B active parameters) pairs well with Workers AI's serverless, globally distributed inference: requests run close to your users, and streaming responses start returning tokens almost immediately.
+
+In our testing, first tokens streamed back in roughly 20–30 ms, and results were fast across every task. The example end-to-end times below (client-observed median, including network round trip) are for a simple, single-subject image. Actual latency depends heavily on the image and how much detail you ask for.
+
+| Task      | End-to-end (p50) |
+| --------- | ---------------- |
+| `query`   | ~770 ms          |
+| `caption` | ~480 ms          |
+| `point`   | ~145 ms          |
+| `detect`  | ~160 ms          |
+
+At these speeds you can call the model inline while handling a request rather than pushing the work to a background queue or a separate service. That opens up use cases where a slow response breaks the experience: moderating user-uploaded images before they are stored, locating an object in a video frame to drive a live overlay, extracting fields from a document during a form submission, or letting an agent inspect a screenshot and decide its next step within a single turn.
+
+## Get started
+
+Use Moondream 3.1 through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`) or the REST API at `/ai/run`. You can also use [AI Gateway](/ai-gateway/) with these endpoints.
+
+For more information, refer to the [Moondream 3.1 model page](/workers-ai/models/moondream3.1-9B-A2B/) and [pricing](/workers-ai/platform/pricing/).
