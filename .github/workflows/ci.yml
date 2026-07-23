@@ -168,7 +168,7 @@ jobs:
       # Needs .nimbus/routes.json, materialized by the Build step above —
       # only a full `astro build` regenerates it (`astro dev`/`astro sync`
       # don't), so this can't run as its own job without re-building.
-      - name: Nimbus link validation
+      - name: Nimbus lint
         run: pnpm run lint:nimbus
 
       - name: Upload build artifact
