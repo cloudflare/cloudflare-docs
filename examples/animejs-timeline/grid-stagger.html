@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>anime.js — grid stagger</title>
+		<style>
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: grid;
+				place-content: center;
+				background: #111;
+			}
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(11, 1fr);
+				gap: 10px;
+			}
+			.square {
+				width: 28px;
+				height: 28px;
+				border-radius: 6px;
+				background: #f6821f;
+				color: #f6821f;
+				transform: scale(0);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="grid"></div>
+
+		<script type="module">
+			// utils DOIT être importé — sinon "utils is not defined"
+			import {
+				animate,
+				stagger,
+				utils,
+			} from "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+
+			// 11 colonnes x 4 lignes = 44 carrés
+			const grid = document.querySelector(".grid");
+			for (let i = 0; i < 11 * 4; i++) {
+				const el = document.createElement("div");
+				el.className = "square";
+				grid.appendChild(el);
+			}
+
+			const $squares = utils.$(".square");
+
+			function animateGrid() {
+				animate($squares, {
+					scale: [{ to: [0, 1.25] }, { to: 0 }],
+					boxShadow: [
+						{ to: "0 0 1rem 0 currentColor" },
+						{ to: "0 0 0rem 0 currentColor" },
+					],
+					delay: stagger(100, {
+						grid: [11, 4],
+						from: utils.random(0, 11 * 4),
+					}),
+					onComplete: animateGrid,
+				});
+			}
+
+			animateGrid();
+		</script>
+	</body>
+</html>

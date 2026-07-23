@@ -6,6 +6,10 @@ Exemples réutilisables pour tes futurs projets. anime.js **4.5.0**.
 
 - `index.html` — `createTimeline()` + `stagger()`
 - `svg-starter.html` — utilitaires SVG : `svg.createDrawable()`, `svg.morphTo()`, `svg.createMotionPath()`
+- `grid-stagger.html` — `stagger()` en grille + `utils.$` / `utils.random`
+
+> ⚠️ `utils` doit être importé explicitement pour utiliser `utils.$(...)` ou `utils.random(...)` :
+> `import { animate, stagger, utils } from "animejs";`
 
 Ouvre-les directement dans un navigateur, aucune étape de build.
 
