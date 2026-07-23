@@ -231,7 +231,58 @@ const integrations = [
 				"error",
 				{ aliases: { "~/assets/": "src/assets/" } },
 			],
-			"nimbus/internal-link": "error",
+			// `ignore` mirrors the exclude list from the pre-Nimbus
+			// `starlight-links-validator` config (see git history,
+			// astro.config.ts before #32203), translated to picomatch glob
+			// syntax. Two categories:
+			//   - Carried over from that list: /api, /changelog, llms.txt
+			//     endpoints, {props.*} placeholders, dynamic example/reference
+			//     pages, retired workers-ai models, agent-setup, videos, etc.
+			//   - Added during this migration: public/-served static assets
+			//     (PDFs, notebooks, certs, etc.) that aren't real Astro page
+			//     routes, so they're invisible to the route truth this rule
+			//     checks against.
+			"nimbus/internal-link": [
+				"error",
+				{
+					ignore: [
+						"/api/**",
+						"/changelog/**",
+						"/http/resources/**",
+						"/llms.txt",
+						"/llms-full.txt",
+						"**/llms.txt",
+						"**/index.md",
+						"{props.*}",
+						"/glossary",
+						"/directory",
+						"/rules/snippets/examples",
+						"/rules/transform/examples",
+						"/ruleset-engine/rules-language/fields/reference/**",
+						"/workers/examples",
+						"/workers/llms-full.txt",
+						"/workers-ai/models/**",
+						"/markdown.zip",
+						"/style-guide/index.md",
+						"/agent-setup",
+						"/videos/**",
+						// public/-served static assets — not real Astro routes.
+						"/cloudflare-one/static/**",
+						"/email-security/static/**",
+						"/network-interconnect/static/**",
+						"/realtime/static/**",
+						"/reference-architecture/static/**",
+						"/ssl/static/**",
+						"/waiting-room/static/**",
+						"/workers-ai/static/**",
+						"/workers-ai-notebooks/**",
+						"/sandbox/guides/2026-deprecation/SKILL.md",
+						// RSS/index.xml-style endpoints — dynamic routes, same
+						// blind spot as the llms.txt endpoints above.
+						"**/index.xml",
+					],
+				},
+			],
 		},
 	}),
 ];

@@ -165,6 +165,12 @@ jobs:
           pnpm run build 2>&1 | tee build.log
           echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
+      # Needs .nimbus/routes.json, materialized by the Build step above —
+      # only a full `astro build` regenerates it (`astro dev`/`astro sync`
+      # don't), so this can't run as its own job without re-building.
+      - name: Nimbus link validation
+        run: pnpm run lint:nimbus
+
       - name: Upload build artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
