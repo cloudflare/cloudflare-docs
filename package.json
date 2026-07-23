@@ -49,7 +49,7 @@
 		"@astrojs/rss": "4.0.18",
 		"@astrojs/sitemap": "3.7.3",
 		"@base-ui/react": "1.5.0",
-		"@cloudflare/nimbus-docs": "https://pkg.pr.new/@cloudflare/nimbus-docs@36",
+		"@cloudflare/nimbus-docs": "0.7.1",
 		"@cloudflare/vitest-pool-workers": "0.16.15",
 		"@cloudflare/workers-types": "4.20260615.1",
 		"@docsearch/css": "3.9.0",
@@ -156,6 +156,11 @@
 			"name": "node",
 			"version": ">=24.0.0",
 			"onFail": "error"
+		}
+	},
+	"pnpm": {
+		"overrides": {
+			"@cloudflare/nimbus-docs": "https://registry.npmjs.org/@cloudflare/nimbus-docs/-/nimbus-docs-0.7.1.tgz"
 		}
 	}
 }
