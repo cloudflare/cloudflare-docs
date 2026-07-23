@@ -541,9 +541,9 @@ type WorkflowBatchDeleteResult = {
 ```
 
 - `deleted` contains the IDs that were deleted successfully.
-- `errors` contains failures. The `index` matches the instance ID's position in the input array.
+- `errors` contains failures. The `index` matches the instance ID's first position in the input array.
 
-Deletion is idempotent. An ID whose instance no longer exists is included in `deleted`. A running instance is terminated before its stored state is removed.
+Duplicate IDs are processed once. An ID whose instance does not exist is included in `errors`. A running instance is terminated before its stored state is removed.
 
 ### get
 

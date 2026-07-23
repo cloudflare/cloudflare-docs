@@ -250,7 +250,7 @@ To restart an instance from a specific step instead of the beginning, refer to [
 
 ### Delete Workflow instances
 
-You can delete up to 100 Workflow instances and their stored state in one call. Deleting a running instance terminates it before removing its state.
+You can delete up to 100 Workflow instances and their stored state in one call. Deleting a running instance terminates it before removing its state. IDs that do not exist are returned as per-instance errors, and duplicate IDs are processed once.
 
 <TypeScriptExample>
 
