@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>anime.js — SVG starter (morphTo / motionPath / drawable)</title>
+		<style>
+			body {
+				margin: 0;
+				min-height: 100vh;
+				background: #111;
+				color: #eee;
+				font-family: system-ui, sans-serif;
+				display: grid;
+				gap: 32px;
+				place-content: center;
+				padding: 40px;
+			}
+			.panel {
+				display: grid;
+				gap: 8px;
+				justify-items: center;
+			}
+			h2 {
+				margin: 0;
+				font-size: 14px;
+				font-weight: 600;
+				color: #f6821f;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+			}
+			svg {
+				background: #1b1b1b;
+				border-radius: 12px;
+			}
+			[stroke] {
+				stroke: #f6821f;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 1. createDrawable : anime le tracé d'un path (effet "dessin") -->
+		<div class="panel">
+			<h2>createDrawable</h2>
+			<svg width="200" height="120" viewBox="0 0 200 120" fill="none">
+				<path
+					class="line"
+					d="M10 60 Q 60 10 100 60 T 190 60"
+					stroke-width="4"
+					stroke-linecap="round"
+				/>
+			</svg>
+		</div>
+
+		<!-- 2. morphTo : transforme une forme en une autre -->
+		<div class="panel">
+			<h2>morphTo</h2>
+			<svg width="200" height="120" viewBox="0 0 200 120">
+				<polygon
+					class="shape"
+					points="100,20 180,100 20,100"
+					fill="#f6821f"
+				/>
+				<polygon
+					class="shape-target"
+					points="20,20 180,20 180,100 20,100"
+					fill="none"
+					style="display: none"
+				/>
+			</svg>
+		</div>
+
+		<!-- 3. createMotionPath : déplace un élément le long d'un path -->
+		<div class="panel">
+			<h2>createMotionPath</h2>
+			<svg width="200" height="120" viewBox="0 0 200 120" fill="none">
+				<path
+					class="track"
+					d="M10 100 C 60 10, 140 10, 190 100"
+					stroke="#444"
+					stroke-width="2"
+				/>
+				<circle class="dot" cx="0" cy="0" r="8" fill="#f6821f" />
+			</svg>
+		</div>
+
+		<script type="module">
+			import { animate, svg } from "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+
+			// 1. createDrawable — anime la portion visible du tracé
+			const [drawable] = svg.createDrawable(".line");
+			animate(drawable, {
+				draw: ["0 0", "0 1", "1 1"],
+				duration: 3000,
+				ease: "inOutQuad",
+				loop: true,
+			});
+
+			// 2. morphTo — morph du triangle vers le carré (aller-retour)
+			animate(".shape", {
+				points: svg.morphTo(".shape-target"),
+				duration: 1500,
+				ease: "inOutCirc",
+				alternate: true,
+				loop: true,
+			});
+
+			// 3. createMotionPath — la boule suit la courbe
+			const { translateX, translateY, rotate } = svg.createMotionPath(".track");
+			animate(".dot", {
+				translateX,
+				translateY,
+				rotate,
+				duration: 2000,
+				ease: "inOutSine",
+				alternate: true,
+				loop: true,
+			});
+		</script>
+	</body>
+</html>
