@@ -1,6 +1,6 @@
 ---
 title: Create a durable Code Mode runtime
-description: Create a Code Mode runtime with connectors, durable approvals, rollback, execution history, and reusable snippets.
+description: Create a Code Mode runtime with connectors, direct host APIs, durable approvals, rollback, execution history, and reusable snippets.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -23,7 +23,7 @@ Code Mode is experimental and may introduce breaking changes. Use caution in pro
 
 ## Prerequisites
 
-You need an existing Agents SDK application that uses `AIChatAgent`, Vite, and the AI SDK.
+You need an existing Agents SDK application with a Durable Object and Vite. The example uses `AIChatAgent` and the AI SDK.
 
 ## Integrate Code Mode
 
@@ -233,6 +233,28 @@ You need an existing Agents SDK application that uses `AIChatAgent`, Vite, and t
    Replace the `model` import with the existing model setup in your application.
 
 </Steps>
+
+## Use the runtime without the AI SDK
+
+Use `execute()`, `search()`, and `describe()` when an MCP server or another host invokes Code Mode without an AI SDK tool adapter:
+
+<TypeScriptExample>
+
+```ts
+const runtime = this.#runtime();
+const matches = await runtime.search("create note");
+const method = matches.results[0];
+const docs = await runtime.describe(method.path);
+const outcome = await runtime.execute({
+	code: `async () => notes.createNote({ text: "Follow up" })`,
+});
+```
+
+</TypeScriptExample>
+
+`search()` and `describe()` do not run sandbox code. Their results include `requiresApproval: true` for connector methods that pause before execution.
+
+`execute()` returns the same durable result as the model-facing tool. A result can complete, pause, or contain an execution error. Resolve a paused result with `approve()` or `reject()`.
 
 ## Verify the integration
 

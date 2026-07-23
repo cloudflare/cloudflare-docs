@@ -4,7 +4,7 @@ import {
 	ALGOLIA_API_KEY,
 	ALGOLIA_INDEX,
 	ALGOLIA_INDEX_STYLE_GUIDE,
-} from "../../nimbus/util/algolia";
+} from "../../util/algolia";
 
 type DocSearchClientOptions = Omit<
 	Parameters<typeof docsearch>[0],
