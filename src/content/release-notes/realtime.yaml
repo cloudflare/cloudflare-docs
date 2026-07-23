@@ -3,6 +3,16 @@ link: "/realtime/changelog/"
 productName: Realtime
 productLink: "/realtime/"
 entries:
+  - publish_date: "2026-07-23"
+    title: DataChannels return-to-publisher (canReply)
+    description: |-
+      DataChannels now support opt-in reverse traffic from one subscriber back to the publisher on the same channel. When a subscriber pulls a remote DataChannel with `canReply: true` (or is granted it later via `datachannels/update`), the SFU admits that subscriber's messages to the publisher only.
+
+      - Opt-in per subscriber; defaults to `false`, so existing publisher-to-subscriber fan-out is unchanged.
+      - Reverse traffic is not fanned out to other subscribers.
+      - Exclusive: at most one subscriber holds `canReply` per publisher DataChannel; a new grant replaces the previous holder.
+      - Grant or revoke without re-pulling via `PUT .../datachannels/update`.
+      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Limits, timeouts and quotas](/realtime/sfu/limits/)
   - publish_date: "2026-06-10"
     title: DataChannels subscriber acknowledgment gate (waitForAck)
     description: |-
