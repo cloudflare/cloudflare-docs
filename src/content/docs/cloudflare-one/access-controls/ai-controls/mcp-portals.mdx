@@ -92,8 +92,10 @@ MCP server portals were previously referred to as **Agents Gateway** in some con
 
 ## Prerequisites
 
-- An [active domain on Cloudflare](/fundamentals/manage-domains/add-site/)
-- Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
+- A domain for the portal URL. You can use one of the following:
+  - An [active domain on Cloudflare](/fundamentals/manage-domains/add-site/) that uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
+  - Your account's [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/)
+  - A `pages.dev` domain associated with a Cloudflare Pages project
 - An [identity provider](/cloudflare-one/integrations/identity-providers/) configured on Cloudflare Zero Trust
 
 ## Add an MCP server
@@ -210,7 +212,7 @@ To create an MCP server portal:
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
 2. Select **Add MCP server portal**.
 3. Enter any name for the portal.
-4. Under **Custom domain**, select a domain for the portal URL. Domains must belong to an active zone in your Cloudflare account. You can optionally specify a subdomain.
+4. Under **Custom domain**, select a domain for the portal URL. You can choose a domain from an active zone in your account, your account's `workers.dev` subdomain, or a `pages.dev` domain associated with a Pages project. You can optionally specify a subdomain.
 5. [Add MCP servers](#add-an-mcp-server) to the portal.
 6. (Optional) Under **MCP servers**, [configure the tools and prompts](#manage-tools-and-prompts) available through the portal.
 7. (Optional) Configure **Require user auth** for servers that support OAuth: - `Enabled`: (default) User will be prompted to utilize their own login credentials to establish a connection with the MCP server. - `Disabled`: Users who are connected to the portal will automatically have access to the MCP server via its [admin credential](#reauthenticate-the-mcp-server).
