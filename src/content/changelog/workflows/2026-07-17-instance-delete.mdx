@@ -21,7 +21,7 @@ console.log(result.deleted);
 console.log(result.errors);
 ```
 
-The result contains successfully deleted IDs and per-instance errors. Deleting an ID whose instance no longer exists is treated as successful.
+The result contains successfully deleted IDs and per-instance errors. IDs that do not exist are returned as errors, and duplicate IDs are processed once.
 
 You can also delete multiple instances from Wrangler. Use `--local` against a local `wrangler dev` session:
 
