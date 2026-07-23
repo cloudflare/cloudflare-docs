@@ -62,6 +62,8 @@ Common reasons the origin response is treated as not cacheable include:
 If you configured a [Cache Rule](/cache/how-to/cache-rules/) with **Eligible for cache** set to *Yes* (for example, on HTML content) and the origin returns a non-cacheable `Cache-Control` directive, the response is returned with `CF-Cache-Status: BYPASS` — not `DYNAMIC`. `DYNAMIC` is only returned when Cloudflare determines the asset is not eligible for cache at request time.
 :::
 
+BYPASS means the decision not to cache was made at **response time** — the request was initially eligible for caching, but the origin response or response headers instructed Cloudflare not to cache. For example, a Cache Rule that sets `"cache": true` enables caching at request time, but if the origin returns `Cache-Control: no-store`, the response will be BYPASS.
+
 ## REVALIDATED
 
 The origin confirmed the cached resource was unchanged via a conditional request (`If-Modified-Since` or `If-None-Match`), and the response is served from Cloudflare's cache. This status reflects the synchronous validation path — the request waits for the origin to respond before being served.
