@@ -53,8 +53,29 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 	return paths;
 }
 
+// Every public/ file as an exact root-relative path, for internal-link's
+// `ignore` — exact matches so a product with both a public/ asset folder
+// and real doc pages under the same prefix (workers-ai, ssl, ...) can't
+// have its real pages masked by an overly broad ignore.
+async function getPublicAssetPaths(dir: string): Promise<string[]> {
+	const paths: string[] = [];
+	const entries = await readdir(dir, { withFileTypes: true });
+
+	for (const entry of entries) {
+		const full = join(dir, entry.name);
+		if (entry.isDirectory()) {
+			paths.push(...(await getPublicAssetPaths(full)));
+		} else {
+			paths.push(`/${full.slice("public/".length)}`);
+		}
+	}
+
+	return paths;
+}
+
 const sidebarItems = await autogenSections();
 const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
+const publicAssetPaths = await getPublicAssetPaths("public");
 const serializeSitemapLastmod = createSitemapLastmodSerializer();
 
 // Mirrors production's sitemap `filter` (root astro.config.ts).
@@ -257,6 +278,9 @@ const integrations = [
 						"/style-guide/index.md",
 						"/agent-setup/",
 						"/videos/**",
+						// RSS/index.xml endpoints aren't real Astro page routes.
+						"**/index.xml",
+						...publicAssetPaths,
 					],
 				},
 			],
