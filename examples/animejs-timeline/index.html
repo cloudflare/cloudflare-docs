@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>anime.js — createTimeline() demo</title>
+		<style>
+			body {
+				display: grid;
+				place-items: center;
+				min-height: 100vh;
+				margin: 0;
+				background: #111;
+				font-family: system-ui, sans-serif;
+			}
+			.stage {
+				display: flex;
+				gap: 24px;
+				align-items: flex-end;
+			}
+			.tick {
+				width: 12px;
+				height: 40px;
+				background: #f6821f;
+				border-radius: 4px;
+			}
+			.ticker {
+				width: 60px;
+				height: 60px;
+				background: #f6821f;
+				border-radius: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="stage">
+			<div class="tick"></div>
+			<div class="tick"></div>
+			<div class="tick"></div>
+			<div class="tick"></div>
+			<div class="ticker"></div>
+		</div>
+
+		<!-- anime.js v4 est un module ES : on l'importe, pas de <script src> global -->
+		<script type="module">
+			import {
+				createTimeline,
+				stagger,
+			} from "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+
+			createTimeline()
+				.add(
+					".tick",
+					{
+						y: "-=6",
+						duration: 50,
+					},
+					stagger(10),
+				)
+				.add(
+					".ticker",
+					{
+						rotate: 360,
+						duration: 1920,
+					},
+					"<",
+				);
+		</script>
+	</body>
+</html>

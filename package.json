@@ -74,6 +74,7 @@
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.44.0",
 		"algoliasearch": "5.52.0",
+		"animejs": "4.5.0",
 		"astro": "6.2.2",
 		"astro-breadcrumbs": "3.4.0",
 		"astro-expressive-code": "0.41.7",
