@@ -41,6 +41,12 @@ sequenceDiagram
 
 <br />
 
+## Dashboard analytics visibility
+
+When Customer Metadata Boundary is configured, dashboard analytics and Logs views are only accessible to users whose sessions are routed to the configured region's core data center. This is determined by geo-steering, not by your physical location. If your session is routed to a data center outside the configured region, you may see "no data" for analytics and logs.
+
+To allow authorized users to view logs and analytics regardless of where their session is routed, enable [Allow out-of-region access](/data-localization/metadata-boundary/out-of-region-access/).
+
 ## Log management
 
 Additionally, you can configure [Logpush](/logs/logpush/) (Cloudflare's log export service) to push Customer Logs to your own storage services, SIEMs (Security Information and Event Management systems), and log management providers.
