@@ -1,0 +1,59 @@
+---
+title: Agents SDK reduces MCP schema conversion, adds exposure controls for MCP in Think and Code Mode SDK adds direct host APIs
+description: Agents SDK reduces repeated MCP schema conversion and adds direct Code Mode runtime APIs for hosts that do not use the AI SDK.
+products:
+  - agents
+  - workers
+date: 2026-07-22
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+This release reduces repeated MCP schema conversion and adds an opt-out for Think's automatic MCP tool exposure. It also lets non-AI-SDK hosts invoke the durable Code Mode runtime directly.
+
+## Control direct MCP tool exposure in Think
+
+Agents SDK MCP clients now reuse converted input and output schemas while a live connection keeps the same tool catalog. This avoids converting every MCP JSON Schema to Zod again for each model turn.
+
+`@cloudflare/think` also adds `includeMcpTools`. Set it to `false` when you expose MCP tools through Code Mode or another mechanism outside Think's automatic tool set:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	includeMcpTools = false;
+	waitForMcpConnections = true;
+}
+```
+
+</TypeScriptExample>
+
+This setting skips Think's automatic `getAITools()` call. MCP registration, restoration, discovery, raw catalog access, direct calls, and Code Mode connectors continue to work.
+
+Use [`listTools()`](/agents/model-context-protocol/apis/client-api/#thismcplisttools) when you only need the raw MCP catalog. For connector setup, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/).
+
+## Invoke the Code Mode runtime without the AI SDK
+
+`@cloudflare/codemode@latest` adds `execute()`, `search()`, and `describe()` to the durable runtime handle. MCP servers and other hosts can now execute code and discover connector methods without adapting the runtime to an AI SDK tool.
+
+<TypeScriptExample>
+
+```ts
+const matches = await runtime.search("create issue");
+const docs = await runtime.describe(matches.results[0].path);
+const outcome = await runtime.execute({
+	code: `async () => github.create_issue({ title: "Bug" })`,
+});
+```
+
+</TypeScriptExample>
+
+Search and describe results include `requiresApproval: true` for protected connector methods. Resolve a paused execution with the existing `approve()` and `reject()` methods.
+
+For setup and exact method types, refer to [Create a durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) and the [Code Mode API reference](/agents/tools/codemode/api-reference/).
+
+## Upgrade
+
+<PackageManagers pkg="agents@latest @cloudflare/think@latest @cloudflare/codemode@latest" />
