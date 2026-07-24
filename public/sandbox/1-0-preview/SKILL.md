@@ -42,7 +42,7 @@ If the user explicitly wants to stay on the current stable package only, use the
 ## Search before migrating
 
 ```sh
-rg 'SANDBOX_TRANSPORT|transport:|setTransport|enableDefaultSession|createSession|getSession|execStream\(|startProcess\(|killProcess\(|sandbox\.terminal\(|sessionId|createCodeContext\(|runCode\(|SandboxTransport|ExecutionSession'
+rg 'SANDBOX_TRANSPORT|transport:|setTransport|enableDefaultSession|createSession|getSession|execStream\(|startProcess\(|killProcess\(|sandbox\.terminal\(|sessionId|gitCheckout\(|createCodeContext\(|runCode\(|SandboxTransport|ExecutionSession'
 ```
 
 Also find string `exec(` sites and session shell assumptions (`cd` then later `exec`).
@@ -113,6 +113,13 @@ if (t) return t.connect(request, { cursor });
 ```ts
 interpreter = withInterpreter(this);
 ```
+
+### APIs that remain available
+
+Most non-execution APIs (files, env, mounts, backups, ports/tunnels, lifecycle options) remain available on the sandbox. Do not tell users they were removed in 1.0.
+
+- Prefer the main Sandbox docs for those topics; skip sessions/transport/string-exec/`sandbox.terminal` on stable pages
+- `gitCheckout` is **removed** on `@next` — run `git` with argv `exec`
 
 ## Validation
 

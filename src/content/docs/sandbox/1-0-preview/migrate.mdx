@@ -43,6 +43,7 @@ Confirm the lockfile resolves `@cloudflare/sandbox` to a preview build, then dep
 | Process / stream **stdin**                                           | No process stdin on the handle. Non-interactive: argv/`cwd`/`env`. Interactive PTY: [terminals](/sandbox/1-0-preview/terminals/). |
 | `sandbox.terminal(request)` / session `terminal()`                   | `createTerminal`, then `terminal.connect(request)`.                            |
 | xterm `sessionId`                                                    | `terminalId` (and optional `cursor`).                                          |
+| `sandbox.gitCheckout(...)`                                           | Removed. Run `git` with argv `exec`, for example `['git', 'clone', url, dir]`, then `output()` / waits as needed. |
 
 ## Remove transport selection
 

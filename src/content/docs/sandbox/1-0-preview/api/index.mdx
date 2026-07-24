@@ -44,6 +44,18 @@ Reference for the preview public surface. Start with the mental model pages when
 
 </CardGrid>
 
+## Other API surfaces
+
+Files, env, mounts, backups, ports, tunnels, and related options remain available on the sandbox. Use the main reference for these surfaces:
+
+- [Files](/sandbox/api/files/) and [file watching](/sandbox/api/file-watching/)
+- [Environment variables](/sandbox/configuration/environment-variables/)
+- [Storage](/sandbox/api/storage/) and [backups](/sandbox/api/backups/)
+- [Ports](/sandbox/api/ports/) and [tunnels](/sandbox/api/tunnels/)
+- [Lifecycle](/sandbox/api/lifecycle/) and [sandbox options](/sandbox/configuration/sandbox-options/)
+
+Ignore stable session and transport options on `@next`. Changed execution and terminal surfaces are documented above.
+
 ## Related concepts and guides
 
 - [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
@@ -51,13 +63,3 @@ Reference for the preview public surface. Start with the mental model pages when
 - [Terminals](/sandbox/1-0-preview/terminals/)
 - [Errors and recovery](/sandbox/1-0-preview/errors/)
 - [Migrate](/sandbox/1-0-preview/migrate/)
-
-## Surfaces still documented on stable
-
-Until preview-specific pages exist, use the main docs for APIs that are largely unchanged on `@next` (confirm details against your installed package):
-
-- [Files](/sandbox/api/files/)
-- [File watching](/sandbox/api/file-watching/)
-- [Ports](/sandbox/api/ports/) and [Tunnels](/sandbox/api/tunnels/)
-- [Storage](/sandbox/api/storage/) and [Backups](/sandbox/api/backups/)
-- [Lifecycle](/sandbox/api/lifecycle/) (ignore transport and session options on `@next`)

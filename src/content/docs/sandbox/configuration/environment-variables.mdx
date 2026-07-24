@@ -10,6 +10,12 @@ products:
 
 import { WranglerConfig } from "~/components";
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents environment configuration on today's stable `@cloudflare/sandbox` package.
+
+On the **1.0 preview** (`@next`), `setEnvVars` and per-launch `env` remain. There is no default session that keeps shell `export` across `exec` calls. Remove `SANDBOX_TRANSPORT`. Refer to [Migrate](/sandbox/1-0-preview/migrate/) for the changed execution model.
+:::
+
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
 
 ## SDK configuration variables
