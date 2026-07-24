@@ -107,7 +107,7 @@ After fixing the change at the registrar, re-run the check from Step 2.
 
 If Step 2 shows the correct Cloudflare nameservers at the parent zone but the zone is still Pending, check whether DNSSEC is still enabled from a previous DNS provider.
 
-DS records live at the registrar, not at the DNS provider, and they must be removed or updated when you move DNS providers. If they are not, resolvers will refuse the new nameservers.
+DS records live at the registrar, not at the DNS provider, and they must be removed or updated when you move DNS providers. If they are not, the DNSSEC chain of trust breaks and resolvers return SERVFAIL for your domain.
 
 To check for DS records:
 
@@ -132,7 +132,7 @@ For more information on DNSSEC configuration, refer to [Configure DNSSEC](/dns/d
 
 If Steps 1-4 all check out, and the parent zone returns the correct Cloudflare nameservers, wait for Cloudflare's next activation check. Checks happen on an increasing interval.
 
-You can request an earlier check from the **Overview** page or by [triggering one via API](/api/resources/zones/subresources/activation_check/methods/trigger/). This endpoint is rate-limited and may return an error if you have requested a check recently. A successful request does not activate the zone immediately — it places your zone in a prioritized queue, and the check itself can still take a few minutes to a few hours to complete depending on DNS propagation.
+You can request an earlier check from the **Overview** page or by [triggering one via API](/api/resources/zones/subresources/activation_check/methods/trigger/). This endpoint is rate-limited and may return an error if you have requested a check recently. A successful request does not activate the zone immediately — it places your zone in a prioritized queue, and activation can take a few minutes to a few hours, depending both on when the recheck runs and on whether the nameserver change at your registrar has taken effect by then.
 
 :::caution
 Free-plan zones that stay Pending for more than 28 days are automatically deleted. Refer to [Zone status](/dns/zone-setups/reference/domain-status/) for the full status flow.
