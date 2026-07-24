@@ -3,6 +3,20 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-22"
+    title: "Account name 65-character limit"
+    description: |-
+      Enforcement date: September 27, 2026
+
+      Account names will be limited to a maximum of 65 characters across all account creation and update APIs. This limit applies to all accounts, including organization accounts. Currently, the account update API (`PUT /accounts/{account_id}`) already enforces this limit, while the account create API (`POST /accounts`) silently truncates names up to 120 bytes. This mismatch can result in accounts that are created successfully but cannot later be renamed. After September 27, 2026, the create API will reject names longer than 65 characters with an HTTP `400` error.
+
+      Affected APIs:
+
+      - `POST /accounts` — Create account
+      - `PUT /accounts/{account_id}` — Update account (already enforced)
+
+      After the enforcement date, integrations that create accounts with names longer than 65 characters must truncate or shorten the name before sending the request to ensure uninterrupted service.
+
   - publish_date: "2026-07-21"
     title: "Account Roles API"
     description: |-
