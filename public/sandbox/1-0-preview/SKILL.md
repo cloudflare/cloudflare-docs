@@ -30,6 +30,8 @@ If the user explicitly wants to stay on the current stable package only, use the
 - Errors API: https://developers.cloudflare.com/sandbox/1-0-preview/api/errors/
 - Extensions: https://developers.cloudflare.com/sandbox/1-0-preview/extensions/
 - Environment variables: https://developers.cloudflare.com/sandbox/1-0-preview/environment/
+- Code interpreter: https://developers.cloudflare.com/sandbox/1-0-preview/interpreter/
+- Interpreter API: https://developers.cloudflare.com/sandbox/1-0-preview/api/interpreter/
 
 ## Guidance for agents
 
@@ -116,8 +118,15 @@ if (t) return t.connect(request, { cursor });
 ### Extensions
 
 ```ts
+import { withInterpreter } from "@cloudflare/sandbox/interpreter";
+// on Sandbox subclass:
 interpreter = withInterpreter(this);
+// then: sandbox.interpreter.createCodeContext / runCode / ...
 ```
+
+- How-to: https://developers.cloudflare.com/sandbox/1-0-preview/interpreter/
+- API: https://developers.cloudflare.com/sandbox/1-0-preview/api/interpreter/
+- Python needs the `-python` image variant; same `@next` Worker + image line
 
 ### Other APIs
 

@@ -67,7 +67,7 @@ In the 1.0 preview, terminals are first-class PTY resources: `createTerminal`, `
 
 In the current stable package, the code interpreter methods live on `Sandbox`.
 
-In the 1.0 preview, the interpreter is an opt-in extension. Attach it on your `Sandbox` subclass, then call `sandbox.interpreter.*`. Refer to [Extensions](/sandbox/1-0-preview/extensions/).
+In the 1.0 preview, the interpreter is an opt-in extension. Attach it on your `Sandbox` subclass, then call `sandbox.interpreter.*`. Refer to [Code interpreter](/sandbox/1-0-preview/interpreter/).
 
 ### Sandbox ID, container, and processes
 
@@ -149,6 +149,14 @@ For process environment on `@next`, use [Environment variables](/sandbox/1-0-pre
 	icon="document"
 >
 	`setEnvVars`, per-launch `env`, and how processes get their environment.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Code interpreter"
+	href="/sandbox/1-0-preview/interpreter/"
+	icon="seti:python"
+>
+	Attach the interpreter extension and run Python or JS/TS.
 </LinkTitleCard>
 
 <LinkTitleCard

@@ -2,7 +2,7 @@
 title: Migrate
 pcx_content_type: how-to
 sidebar:
-  order: 8
+  order: 9
 description: Update an existing Sandbox SDK application from the stable package to @cloudflare/sandbox@next.
 products:
   - sandbox
@@ -37,7 +37,7 @@ Confirm the lockfile resolves `@cloudflare/sandbox` to a preview build, then dep
 | `execStream`, `startProcess`, process log helpers                    | Process handle: `logs`, `kill`, `waitFor*`.                                    |
 | Default session / `enableDefaultSession`                             | Gone. Each `exec` is independent.                                              |
 | `createSession` / `ExecutionSession`                                 | Gone from the core public surface. Pass `cwd`/`env` per `exec`, or one shell argv script. |
-| Interpreter methods on `Sandbox`                                     | `withInterpreter` from `@cloudflare/sandbox/interpreter`.                      |
+| Interpreter methods on `Sandbox`                                     | Same method names on `sandbox.interpreter` after `withInterpreter`. `runCode` returns plain `ExecutionResult`. See [Code interpreter](/sandbox/1-0-preview/interpreter/). |
 | String kill signals                                                  | Numeric signals on `process.kill`.                                             |
 | `waitForPort` default mode                                           | Preview default is **`tcp`**. Pass `mode: "http"` for HTTP checks.             |
 | Process / stream **stdin**                                           | No process stdin on the handle. Non-interactive: argv/`cwd`/`env`. Interactive PTY: [terminals](/sandbox/1-0-preview/terminals/). |
@@ -124,7 +124,7 @@ User isolation remains **one sandbox per user** (or per trust boundary), not ses
 
 ## Attach the interpreter
 
-See [Extensions](/sandbox/1-0-preview/extensions/) for full examples. Minimum:
+See [Code interpreter](/sandbox/1-0-preview/interpreter/). Minimum:
 
 ```ts
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
@@ -192,4 +192,5 @@ When you migrate:
 - [Errors API](/sandbox/1-0-preview/api/errors/)
 - [API reference](/sandbox/1-0-preview/api/)
 - [Terminals](/sandbox/1-0-preview/terminals/)
+- [Code interpreter](/sandbox/1-0-preview/interpreter/)
 - [Extensions](/sandbox/1-0-preview/extensions/)
