@@ -18,7 +18,13 @@ This guide moves a project onto `@cloudflare/sandbox@next`, the preview of Sandb
 
 1. Use a branch or staging deployment so you can verify the preview before cutting over production.
 2. Deploy the Worker and the container image that match `@next` together.
-3. Inventory call sites: `exec`, `execStream`, `startProcess`, sessions, transport settings, interpreter methods, and terminal helpers.
+3. Inventory call sites across the Worker **and** any self-deployed bridge clients:
+   - Commands: `exec`, `execStream`, `startProcess`, string kill signals, process stdin
+   - Sessions and transport: `createSession`, `enableDefaultSession`, `SANDBOX_TRANSPORT`, `setTransport`
+   - Terminals: `sandbox.terminal`, session `terminal()`, xterm `sessionId`
+   - Interpreter: `createCodeContext` / `runCode` on bare `Sandbox`
+   - Git: `gitCheckout`
+   - Bridge HTTP: `/v1/sandbox/:id/exec`, `/session`, `/pty`, `Session-Id`, `timeout_ms`
 
 If you still need stable-line cleanup first (RPC transport, `exposePort`, stream helpers), complete the [2026 deprecation migration](/sandbox/guides/2026-deprecation/), then return here.
 
@@ -75,6 +81,7 @@ Rules:
 
 - `await sandbox.exec(...)` means **launch succeeded**, not **command finished**.
 - Prefer argv without a shell when you run a single binary: `['npm', 'test']` with `cwd` set.
+- `output()` defaults to **byte** streams (`Uint8Array`). Pass `{ encoding: "utf8" }` for strings.
 - There is no `sandbox.run()` compatibility helper on the current preview tip.
 
 ### Background processes and streaming
@@ -110,6 +117,8 @@ Across Worker requests, keep `server.id` and resume with `getProcess(id)` only w
 
 Details: [Environment variables](/sandbox/1-0-preview/environment/).
 
+Do not put live API keys or long-lived provider credentials into `setEnvVars` or launch `env`. Keep secrets in the Worker and inject them with [outbound traffic](/sandbox/guides/outbound-traffic/) handlers when the process must call an external API.
+
 ### Timeouts and cancellation
 
 | Goal | API |
@@ -135,6 +144,35 @@ export class Sandbox extends BaseSandbox<Env> {
 	interpreter = withInterpreter(this);
 }
 ```
+
+Use the **`-python`** image variant when you run Python. Keep the Worker package and container image on the same `@next` line.
+
+## Git
+
+`sandbox.gitCheckout` is removed. Clone or fetch with argv `exec`, for example:
+
+```ts
+const clone = await sandbox.exec(
+	["git", "clone", "--depth", "1", repoUrl, "/workspace/repo"],
+	{ cwd: "/workspace" },
+);
+const result = await clone.output({ encoding: "utf8" });
+```
+
+## Bridge HTTP clients
+
+If you deploy the [sandbox bridge](/sandbox/bridge/) Worker for non-Workers clients, the stable template on `main` is a different HTTP API from the preview template on `next`.
+
+Redeploy from the [`next` bridge template](/sandbox/1-0-preview/bridge/), keep `@cloudflare/sandbox@next` paired with `cloudflare/sandbox:next`, and update clients:
+
+| Stable bridge | Preview bridge |
+| ------------- | -------------- |
+| `POST …/exec` | `POST …/processes`, then `GET …/processes/:id/logs` |
+| Sessions / `Session-Id` | Removed — pass `cwd` / `env` on each process or terminal |
+| `GET …/pty` | `POST …/terminals`, then `…/connect` |
+| Body field `timeout_ms` | `timeout` on process create |
+
+Reference: [Bridge HTTP API](/sandbox/1-0-preview/bridge/http-api/).
 
 ## Terminals
 
@@ -174,26 +212,35 @@ When you migrate:
 2. Persist the command, `cwd`, `env`, and any app checkpoint you need to relaunch.
 3. On a later request, call `getProcess(id)` only if that process might still be running in the current container; if you get `null` or a stale-handle error, start a new `exec` from the stored work.
 
+## What usually stays the same
+
+Files, mounts, backups, ports, tunnels, `proxyToSandbox`, and most lifecycle options remain available. Use the main Sandbox docs for those signatures. Where a stable page still describes sessions, transport selection, string `exec` helpers, or `sandbox.terminal`, follow this preview section instead.
+
 ## Verify
 
-1. Install `@next` and deploy Worker plus container together.
-2. Run one argv `exec` and `output()`.
+1. Install `@next` and deploy Worker plus container together (same preview line).
+2. Run one argv `exec` and `output({ encoding: "utf8" })`.
 3. Run one long-lived process with `waitForPort` or `logs`.
 4. If the app uses a browser terminal: create, connect, and resume with `getTerminal` while the container still has it.
-5. Exercise the interpreter only if your app uses that extension.
-6. Confirm no remaining transport types, session APIs, `sandbox.terminal(`, xterm `sessionId`, or stable-only client imports.
-7. If you run a self-deployed bridge: redeploy the preview template and update HTTP clients off `/exec`, sessions, and `/pty`.
+5. Exercise the interpreter only if your app uses that extension (Python needs `-python`).
+6. Confirm error handling distinguishes unavailable, interrupted/RPC, stale handle, and local wait timeouts — [Errors and recovery](/sandbox/1-0-preview/errors/).
+7. Confirm secrets are not stored in sandbox env; outbound handlers where needed.
+8. Grep again for removed APIs (transport, sessions, `execStream`, `startProcess`, `sandbox.terminal`, `gitCheckout`, xterm `sessionId`).
+9. If you run a self-deployed bridge: redeploy the preview template and update HTTP clients off `/exec`, sessions, `/pty`, and `timeout_ms`.
 
 ## Related
 
 - [1.0 preview overview](/sandbox/1-0-preview/)
+- [Get started](/sandbox/1-0-preview/get-started/)
 - [Environment variables](/sandbox/1-0-preview/environment/)
 - [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
 - [Process execution](/sandbox/1-0-preview/processes/) (including [how long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives))
+- [Processes API](/sandbox/1-0-preview/api/processes/)
 - [Errors and recovery](/sandbox/1-0-preview/errors/)
 - [Errors API](/sandbox/1-0-preview/api/errors/)
 - [API reference](/sandbox/1-0-preview/api/)
 - [Terminals](/sandbox/1-0-preview/terminals/)
+- [Terminals API](/sandbox/1-0-preview/api/terminals/)
 - [Code interpreter](/sandbox/1-0-preview/interpreter/)
 - [Extensions](/sandbox/1-0-preview/extensions/)
-- [Bridge](/sandbox/1-0-preview/bridge/)
+- [Bridge](/sandbox/1-0-preview/bridge/) ([HTTP API](/sandbox/1-0-preview/bridge/http-api/))
