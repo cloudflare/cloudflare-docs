@@ -31,6 +31,10 @@ In the Cloudflare dashboard, open the domain and go to the **Overview** page. Co
 
 Whichever format applies, the exact values shown in your dashboard are the ones the parent zone must publish. Do not assume the assignment is the same as one you have used before on another domain or in another account — each Cloudflare zone gets its own set of nameservers, and the assignment is tied to your account. For details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
 
+:::caution
+Copy the nameserver names directly from the Cloudflare dashboard rather than typing them manually. Typos such as `cloudlfare.com` or `cloudfare.com` are a common cause of the zone remaining in **Pending Nameserver Update** status.
+:::
+
 ## 2. Check what the parent zone actually publishes
 
 The registrar control panel shows what you *asked* the registrar to publish. It does not show what the parent zone (the TLD) is actually returning to the Internet. These can differ when a change was not saved, not yet propagated, applied to a different domain, or applied in a different registrar account.
