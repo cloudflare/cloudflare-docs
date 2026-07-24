@@ -6,6 +6,8 @@ products:
   - ai-gateway
 ---
 
+import { Tabs, TabItem, TypeScriptExample } from "~/components";
+
 [Neon AI Gateway](https://neon.com/docs/ai-gateway/overview) is an OpenAI-compatible inference gateway built into Neon. A single Neon credential gives you access to models from multiple providers, without separate provider accounts.
 
 :::note
@@ -29,6 +31,7 @@ When making requests to Neon AI Gateway, ensure you have the following:
 - Your AI Gateway account ID.
 - Your AI Gateway gateway name.
 - A Cloudflare API token with the `AI Gateway - Edit` permission, to create the custom provider.
+- A Cloudflare API token with the `AI Gateway - Run` permission, if your gateway has [Authenticated Gateway](/ai-gateway/configuration/authentication/) turned on.
 - A Neon credential with the `ai_gateway:invoke` scope. Refer to [AI Gateway authentication](https://neon.com/docs/ai-gateway/authentication) in the Neon documentation.
 - The AI Gateway host of your Neon branch, available in the Neon Console as `NEON_AI_GATEWAY_BASE_URL`. It follows the format `br-<name>-api.ai.<cell>.<region>.aws.neon.tech`.
 - The ID of a model in the [Neon model catalog](https://neon.com/docs/ai-gateway/models).
@@ -64,10 +67,31 @@ Everything after `custom-neon/` is appended to the branch host:
 
 Pass your Neon credential as a bearer token on every request. You do not need separate provider API keys.
 
+If your gateway has [Authenticated Gateway](/ai-gateway/configuration/authentication/) turned on, also send your Cloudflare API token in the `cf-aig-authorization` header. The examples below show both variants.
+
 ## Examples
 
 ### cURL
 
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```bash title="Example fetch request"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/chat/completions \
+  --header "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+  --header "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "gpt-5-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
 ```bash title="Example fetch request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/chat/completions \
   --header "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
@@ -82,12 +106,19 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/
     ]
   }'
 ```
+</TabItem>
+</Tabs>
 
-### Use OpenAI SDK with JavaScript
+### OpenAI SDK
 
 Set the SDK base URL to the provider path plus `/v1`. The SDK appends `/chat/completions`.
 
-```js title="JavaScript"
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+
+<TypeScriptExample>
+
+```ts
 import OpenAI from "openai";
 
 const accountId = "{account_id}";
@@ -95,26 +126,72 @@ const gatewayId = "{gateway_id}";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/custom-neon/v1`;
 
 const openai = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL,
+	apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
+	baseURL,
+	defaultHeaders: {
+		"cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`,
+	},
 });
 
 const chatCompletion = await openai.chat.completions.create({
-  model: "gpt-5-mini",
-  messages: [{ role: "user", content: "What is Cloudflare?" }],
+	model: "gpt-5-mini",
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
 
 console.log(chatCompletion.choices[0].message);
 ```
 
+</TypeScriptExample>
+
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+
+<TypeScriptExample>
+
+```ts
+import OpenAI from "openai";
+
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/custom-neon/v1`;
+
+const openai = new OpenAI({
+	apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
+	baseURL,
+});
+
+const chatCompletion = await openai.chat.completions.create({
+	model: "gpt-5-mini",
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+
+console.log(chatCompletion.choices[0].message);
+```
+
+</TypeScriptExample>
+
+</TabItem>
+</Tabs>
+
 ### List available models
 
 Neon returns the models available to your branch at `GET /v1/models`:
 
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```bash title="List models"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/models \
+  --header "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+  --header "cf-aig-authorization: Bearer $CF_AIG_TOKEN"
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
 ```bash title="List models"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/models \
   --header "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN"
 ```
+</TabItem>
+</Tabs>
 
 You can also browse Neon model IDs, pricing, and capabilities on [Models.dev](https://models.dev/providers/neon/).
 
