@@ -1,26 +1,17 @@
 ---
-title: Automatic key exchange reduces origin TLS handshake latency
-description: Cloudflare now selects one zone-wide key agreement from traffic-weighted origin results, reducing retries and using post-quantum encryption when supported.
+title: Faster TLS handshakes to your origins, automatically
+description: Cloudflare now predicts the key agreement algorithm preferred by origin servers, helping establish TLS 1.3 connections faster.
 date: 2026-07-21
 products:
   - ssl
 ---
 
-Cloudflare now automatically selects one zone-wide key agreement for Transport Layer Security (TLS) 1.3 connections to your origins. Cloudflare derives the preference from traffic-weighted results across active origins. Sending the correct key share in the first `ClientHello` avoids a [HelloRetryRequest](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.4), removing one network round trip from each new origin connection that would otherwise require a retry.
+Cloudflare now takes the guesswork out of TLS 1.3 key agreement with your origins. Automatic key exchange predicts the preferred algorithm and sends its key share in the first `ClientHello`, helping avoid a `HelloRetryRequest` and one extra network round trip.
 
-Automatic key exchange works with both classical and post-quantum algorithms. When the selected preference is post-quantum, Cloudflare can send the standardized `X25519MLKEM768` hybrid key share first. This protects the connection against harvest-now, decrypt-later attacks without adding a retry.
+Automatic key exchange is on for all existing zones and on by default for new zones. When an origin supports both classical and post-quantum key agreements, Cloudflare prefers the standardized `X25519MLKEM768` hybrid key agreement.
 
-Cloudflare uses standardized ML-KEM instead of the obsolete `X25519Kyber768Draft00` key agreement.
+To change this behavior, go to **SSL/TLS** > **Overview** > **Origin connection & post-quantum encryption**. Turn off **Automatic key exchange** to stop automatic scans and preference updates. Turning it off does not change your compliance requirements.
 
-Cloudflare applies each new preference gradually:
+**Compliance requirements** apply only to TLS 1.3 connections. The **Post-quantum hybrid** option requires hybrid post-quantum key agreements. The **Federal Information Processing Standards (FIPS)** option requires FIPS-compliant key agreements. Select both to require key agreements that satisfy both, or leave both unselected to allow all supported key agreements.
 
-1. Cloudflare scans your active origins and determines a traffic-weighted preference for the zone.
-2. Cloudflare sends the new preference to 1% of traffic.
-3. Healthy changes increase through 10%, 25%, 50%, 75%, and 100% of traffic.
-4. Unhealthy changes roll back to the previous setting.
-
-Cloudflare continues to advertise the other key agreements allowed by your configuration. If an origin requires a different key share, it can request one without breaking the connection.
-
-Automatic key exchange is on by default for eligible zones. You can turn it off or restrict the available key agreements with origin TLS compliance requirements.
-
-For configuration options and detailed behavior, refer to [Automatic key exchange to origins](/ssl/origin-configuration/automatic-key-exchange/).
+For requirements, configuration options, and rollout details, refer to [Automatic key exchange to origins](/ssl/origin-configuration/automatic-key-exchange/).
