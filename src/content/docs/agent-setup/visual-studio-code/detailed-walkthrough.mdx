@@ -12,7 +12,7 @@ This walkthrough connects Visual Studio Code directly to the Cloudflare API usin
 
 The Cloudflare MCP server at `mcp.cloudflare.com` exposes the Cloudflare API to any MCP-capable agent. The Visual Studio Code Copilot agent connects to it, and you run API calls from natural language.
 
-For the condensed version, see the [Visual Studio Code quick start](/agent-setup/visual-studio-code/).
+For the condensed version, refer to the [Visual Studio Code quick start](/agent-setup/visual-studio-code/).
 
 ## Before you start
 
@@ -82,10 +82,7 @@ For the condensed version, see the [Visual Studio Code quick start](/agent-setup
 
 	![Cloudflare MCP authorization page showing access templates and account scope options](~/assets/images/agent-setup/visual-studio-code/cloudflare-mcp-access-template.png)
 
-	Two things to know before you authorize:
-
-	- **Full access** lets the agent create and delete real resources, which is why this belongs on a demo account.
-	- You can revoke the grant at any time from the dashboard under **My Profile** > **Access Management** > **Connected Applications**. Visit that page if a re-authorization behaves unexpectedly.
+	Before you authorize, know two things. **Full access** lets the agent create and delete real resources, which is why this belongs on a demo account. You can revoke the grant at any time from the dashboard under **My Profile** > **Access Management** > **Connected Applications**, which is also the page to visit if a re-authorization behaves unexpectedly.
 
 8. **Verify permissions and authorize**
 
@@ -130,7 +127,7 @@ For the condensed version, see the [Visual Studio Code quick start](/agent-setup
 
 12. **Create a DNS record**
 
-	Ask the agent to create a DNS AAAA record and enable the Cloudflare proxy. This example points `test.cloudflaredemo.net` at `100::`, an IPv6 blackhole route from the [documentation-only prefix](https://www.rfc-editor.org/rfc/rfc9780.html#section-7.1-1). Approve the tool call (**Always Allow**), and the agent reports the record created.
+	Ask the agent to create a DNS AAAA record and enable the Cloudflare proxy. This example points `test.cloudflaredemo.net` at `100::`, a reserved placeholder address from the IPv6 discard prefix `0100::/64` ([RFC 6666](https://www.rfc-editor.org/rfc/rfc6666)). Because the record is proxied, Cloudflare intercepts requests before they reach this address. Approve the tool call (**Always Allow**), and the agent reports the record created.
 
 	![Copilot Chat creating a proxied AAAA DNS record through the Cloudflare MCP server](~/assets/images/agent-setup/visual-studio-code/cloudflare-mcp-create-aaaa-record.png)
 
