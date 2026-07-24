@@ -1,0 +1,123 @@
+---
+title: Neon AI Gateway
+description: Route Neon AI Gateway requests through AI Gateway for observability and control.
+pcx_content_type: get-started
+products:
+  - ai-gateway
+---
+
+[Neon AI Gateway](https://neon.com/docs/ai-gateway/overview) is an OpenAI-compatible inference gateway built into Neon. A single Neon credential gives you access to models from multiple providers, without separate provider accounts.
+
+:::note
+Neon AI Gateway is in beta. It requires a paid Neon plan and is only available in the AWS US East (Ohio) region (`aws-us-east-2`).
+:::
+
+Each Neon branch has its own gateway host, so Neon does not have a single upstream URL that applies to every account. Add Neon to AI Gateway as a [custom provider](/ai-gateway/configuration/custom-providers/) and set the base URL to the host of the branch you want to send inference requests to.
+
+## Endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-{slug}
+```
+
+The `custom-` prefix is required for every custom provider. The examples on this page use the slug `neon`, which makes the provider segment `custom-neon`.
+
+## Prerequisites
+
+When making requests to Neon AI Gateway, ensure you have the following:
+
+- Your AI Gateway account ID.
+- Your AI Gateway gateway name.
+- A Cloudflare API token with the `AI Gateway - Edit` permission, to create the custom provider.
+- A Neon credential with the `ai_gateway:invoke` scope. Refer to [AI Gateway authentication](https://neon.com/docs/ai-gateway/authentication) in the Neon documentation.
+- The AI Gateway host of your Neon branch, available in the Neon Console as `NEON_AI_GATEWAY_BASE_URL`. It follows the format `br-<name>-api.ai.<cell>.<region>.aws.neon.tech`.
+- The ID of a model in the [Neon model catalog](https://neon.com/docs/ai-gateway/models).
+
+## Create the custom provider
+
+Set `base_url` to your Neon branch host with no path. Neon serves chat completions at `/v1/chat/completions`, and AI Gateway appends the request path to `base_url`.
+
+```bash title="Create the Neon custom provider"
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "Neon AI Gateway",
+    "slug": "neon",
+    "base_url": "https://br-example-branch-api.ai.c-2.us-east-2.aws.neon.tech",
+    "link": "https://neon.com/docs/ai-gateway/overview",
+    "enable": true
+  }'
+```
+
+Create one custom provider per Neon branch that you want to route through AI Gateway, and give each one a distinct slug.
+
+## URL structure
+
+Everything after `custom-neon/` is appended to the branch host:
+
+| Component    | Value                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------ |
+| Gateway URL  | `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/chat/completions` |
+| `base_url`   | `https://br-example-branch-api.ai.c-2.us-east-2.aws.neon.tech`                                   |
+| Upstream URL | `https://br-example-branch-api.ai.c-2.us-east-2.aws.neon.tech/v1/chat/completions`               |
+
+Pass your Neon credential as a bearer token on every request. You do not need separate provider API keys.
+
+## Examples
+
+### cURL
+
+```bash title="Example fetch request"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/chat/completions \
+  --header "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "gpt-5-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+### Use OpenAI SDK with JavaScript
+
+Set the SDK base URL to the provider path plus `/v1`. The SDK appends `/chat/completions`.
+
+```js title="JavaScript"
+import OpenAI from "openai";
+
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/custom-neon/v1`;
+
+const openai = new OpenAI({
+  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
+  baseURL,
+});
+
+const chatCompletion = await openai.chat.completions.create({
+  model: "gpt-5-mini",
+  messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+
+console.log(chatCompletion.choices[0].message);
+```
+
+### List available models
+
+Neon returns the models available to your branch at `GET /v1/models`:
+
+```bash title="List models"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/models \
+  --header "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN"
+```
+
+You can also browse Neon model IDs, pricing, and capabilities on [Models.dev](https://models.dev/providers/neon/).
+
+## Unified API
+
+Because Neon is OpenAI-compatible, you can also reach it through the Unified API by setting the model to `custom-neon/{model}`. Refer to [Custom Providers](/ai-gateway/configuration/custom-providers/) for the request format.
