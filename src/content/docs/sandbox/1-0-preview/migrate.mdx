@@ -2,7 +2,7 @@
 title: Migrate
 pcx_content_type: how-to
 sidebar:
-  order: 6
+  order: 7
 description: Update an existing Sandbox SDK application from the stable package to @cloudflare/sandbox@next.
 products:
   - sandbox
@@ -32,7 +32,7 @@ Confirm the lockfile resolves `@cloudflare/sandbox` to a preview build, then dep
 
 | Stable surface                                                       | Preview action                                                                 |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `SANDBOX_TRANSPORT`, `transport` on `getSandbox()`, `setTransport()` | Remove. Control plane is RPC-only.                                             |
+| `SANDBOX_TRANSPORT`, `transport` on `getSandbox()`, `setTransport()` | Remove. The preview uses RPC automatically; no transport setting.             |
 | `await sandbox.exec(string)` → buffered result                       | `await sandbox.exec(argv)` then `await process.output(...)`.                   |
 | `execStream`, `startProcess`, process log helpers                    | Process handle: `logs`, `kill`, `waitFor*`.                                    |
 | Default session / `enableDefaultSession`                             | Gone. Each `exec` is independent.                                              |
@@ -138,15 +138,24 @@ Details: [Terminals](/sandbox/1-0-preview/terminals/), [Terminals API](/sandbox/
 
 ## Lifecycle errors to handle
 
-- **`CONTAINER_UNAVAILABLE`** — container not ready to admit work; retry as a **new** operation with your own backoff.
-- **Stale process or terminal handles** — the handle belonged to a previous container for this sandbox; relaunch the work.
-- **Operation interrupted** — work was admitted then interrupted; inspect state before retrying side effects.
+Production apps on `@next` should handle container start failures, interrupted calls, stale handles, and local wait timeouts differently. Lifecycle: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/). Recovery: [Errors and recovery](/sandbox/1-0-preview/errors/). Catalog: [Errors API](/sandbox/1-0-preview/api/errors/).
 
-`getProcess` and `listProcesses` do not start a container. They return `null` or `[]` when no container is running for the sandbox.
+Minimum handlers:
+
+| Error | What to do |
+| ----- | ---------- |
+| `ContainerUnavailableError` | Container did not start the work — back off (`retryAfterMs` when set), then try the work again |
+| `StaleProcessHandleError` / `StaleTerminalHandleError` | Previous container — start again from stored work state |
+| `OperationInterruptedError` | Work may have started — read `reason` / `retryable`; check state before repeating |
+| `RPCTransportError` | Lost contact during the call — a later call may work; this call may already have run |
+| `ProcessWaitTimeoutError` / `ProcessAbortedError` | Wait ended only — process may still be running |
+| `RuntimeControlProtocolError` or unusable image after deploy | Worker package and container image must match on the same `@next` line; do not treat as a slow start |
+
+`getProcess` / `getTerminal` / `list*` do not start a container. They return `null` or `[]` when none is running (not an exception).
 
 ## Do not treat process IDs as permanent jobs
 
-You will keep using the same **sandbox ID** after idle time or restarts. The **container** behind that sandbox ID may be new, and processes from the previous container will not still be running. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+You will keep using the same **sandbox ID** after idle time or restarts. The **container** behind that sandbox ID may be new, and processes from the previous container will not still be running. See [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 When you migrate:
 
@@ -166,7 +175,10 @@ When you migrate:
 ## Related
 
 - [1.0 preview overview](/sandbox/1-0-preview/)
+- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
 - [Process execution](/sandbox/1-0-preview/processes/) (including [how long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives))
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
 - [API reference](/sandbox/1-0-preview/api/)
 - [Terminals](/sandbox/1-0-preview/terminals/)
 - [Extensions](/sandbox/1-0-preview/extensions/)

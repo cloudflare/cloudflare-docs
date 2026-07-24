@@ -71,7 +71,7 @@ In the 1.0 preview, the interpreter is an opt-in extension. Attach it on your `S
 
 ### Sandbox ID, container, and processes
 
-You still address a sandbox with a stable **sandbox ID** (`getSandbox(env.Sandbox, "user-123")`). That sandbox runs in a **container**; the ID is stable, the container instance is not always the same. Processes you start with `exec()` exist only in the current container — when that container stops, those processes are gone and old handles fail closed. Terms and lifetime: [Sandbox ID, container, and process](/sandbox/1-0-preview/processes/#sandbox-id-container-and-process) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+You still address a sandbox with a stable **sandbox ID** (`getSandbox(env.Sandbox, "user-123")`). That sandbox runs in a **container**; the ID is stable, the container instance is not always the same. Processes you start with `exec()` exist only in the current container — when that container stops, those processes are gone and old handles fail closed. Full model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/). Process detail: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 ### Transport configuration
 
@@ -100,9 +100,17 @@ In the 1.0 preview, the SDK always uses RPC. Remove `SANDBOX_TRANSPORT`, the `tr
 </LinkTitleCard>
 
 <LinkTitleCard
+	title="Sandbox lifecycle"
+	href="/sandbox/1-0-preview/lifecycle/"
+	icon="document"
+>
+	Sandbox ID, container, stop, replace, and what your app should store.
+</LinkTitleCard>
+
+<LinkTitleCard
 	title="Process execution"
 	href="/sandbox/1-0-preview/processes/"
-	icon="document"
+	icon="seti:shell"
 >
 	How `exec()` works, process handles, and how long processes live.
 </LinkTitleCard>
@@ -116,11 +124,19 @@ In the 1.0 preview, the SDK always uses RPC. Remove `SANDBOX_TRANSPORT`, the `tr
 </LinkTitleCard>
 
 <LinkTitleCard
+	title="Errors and recovery"
+	href="/sandbox/1-0-preview/errors/"
+	icon="error"
+>
+	How to retry, inspect, and relaunch after common failures.
+</LinkTitleCard>
+
+<LinkTitleCard
 	title="API reference"
 	href="/sandbox/1-0-preview/api/"
 	icon="setting"
 >
-	Process and terminal signatures for `@next`.
+	Process, terminal, and error signatures for `@next`.
 </LinkTitleCard>
 
 <LinkTitleCard

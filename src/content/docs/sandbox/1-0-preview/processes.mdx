@@ -2,7 +2,7 @@
 title: Process execution
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 3
 description: How the Sandbox SDK 1.0 preview runs commands — argv launches, process handles, and container lifetime.
 products:
   - sandbox
@@ -32,7 +32,7 @@ Three different things are in play:
 | **Container** | The [Containers](/containers/) instance currently running work for that sandbox. Sandboxes run on containers. The sandbox ID is stable; the container instance behind it is not always the same one. |
 | **Process** | A program you start with `exec()` **inside the current container**. The handle and `process.id` mean “this program in this container,” not “this sandbox ID forever.” |
 
-**Same sandbox ID does not mean the same container.** Processes live only in the container that started them, so after a new container serves that ID you start new processes — you do not resume the old ones. Details: [How long a process lives](#how-long-a-process-lives).
+**Same sandbox ID does not mean the same container.** Processes live only in the container that started them, so after a new container serves that ID you start new processes — you do not resume the old ones. Full sandbox model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/). Process-only detail: [How long a process lives](#how-long-a-process-lives).
 
 ## Command model
 
@@ -108,10 +108,10 @@ Sandboxes already behave this way. The 1.0 preview does not introduce container 
 | ------------ | ------------ |
 | The process is still running in the current container | `getProcess(id)` returns it; you can read logs and wait as usual |
 | No container is running for the sandbox yet | `getProcess` and `listProcesses` return `null` / `[]`. They do **not** start a container just to answer the lookup |
-| You still hold a handle from before the container stopped | Calls on that handle fail with a stale-handle error. The SDK does not retarget them at a new container for the same sandbox ID |
+| You still hold a handle from before the container stopped | Calls on that handle fail with `StaleProcessHandleError`. The SDK does not retarget them at a new container for the same sandbox ID |
 | You need the same *job* after a stop | Start a new `exec()` with the same command and options (and any checkpoint your app stored) |
 
-The SDK will not quietly treat an old process ID as valid on a new container that happens to serve the same sandbox ID.
+The SDK will not quietly treat an old process ID as valid on a new container that happens to serve the same sandbox ID. Recovery procedures: [Errors and recovery](/sandbox/1-0-preview/errors/).
 
 ### What to remember across Worker requests
 
@@ -150,7 +150,10 @@ For large or long-running output, use `logs({ since, replay, follow })` and keep
 
 ## Related
 
+- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
 - [Processes API](/sandbox/1-0-preview/api/processes/)
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
 - [Terminals](/sandbox/1-0-preview/terminals/)
 - [Migrate](/sandbox/1-0-preview/migrate/)
 - [Get started](/sandbox/1-0-preview/get-started/)

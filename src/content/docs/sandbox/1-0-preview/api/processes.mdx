@@ -155,22 +155,24 @@ interface ProcessExit {
 
 ## Common errors
 
-| Situation | Typical outcome |
+| Situation | Class / outcome |
 | --------- | --------------- |
-| Unknown process ID in the current container | Process not found |
-| `getProcess` / `listProcesses` while no container is running | `null` / `[]` (does not start a container; not an error) |
-| Handle or process ID from a previous container for this sandbox | Stale process handle |
-| Local wait timed out (process may still run) | Process wait timeout |
-| Local `AbortSignal` | Process aborted |
-| Port not ready before exit | Process exited before ready |
-| Container not ready to admit work | `CONTAINER_UNAVAILABLE` |
-| Work interrupted after admission | Operation interrupted |
+| Unknown process ID in the current container | `ProcessNotFoundError` |
+| `getProcess` / `listProcesses` while no container is running | `null` / `[]` (not an error; does not start a container) |
+| Handle or process ID from a previous container | `StaleProcessHandleError` |
+| Local wait timed out (process may still run) | `ProcessWaitTimeoutError` |
+| Local `AbortSignal` on a wait or stream | `ProcessAbortedError` |
+| Port not ready before exit | `ProcessExitedBeforeReadyError` |
+| Container not ready; work did not start | `ContainerUnavailableError` |
+| Work interrupted after it may have started | `OperationInterruptedError` |
 
-Exact error class names are exported from `@cloudflare/sandbox` in the preview package. Lifetime behavior is explained in [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+Recovery guidance: [Errors and recovery](/sandbox/1-0-preview/errors/). Full catalog: [Errors API](/sandbox/1-0-preview/api/errors/). Lifetime: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 ## Related
 
 - [Process execution](/sandbox/1-0-preview/processes/)
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
 - [Terminals API](/sandbox/1-0-preview/api/terminals/)
 - [API reference](/sandbox/1-0-preview/api/)
 - [Migrate from the stable SDK](/sandbox/1-0-preview/migrate/)

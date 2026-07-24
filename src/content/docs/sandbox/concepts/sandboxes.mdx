@@ -16,6 +16,12 @@ A sandbox is an isolated execution environment where your code runs. Each sandbo
 - Maintains state while the container is active
 - Exists as a Cloudflare Durable Object
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents sandbox lifecycle on today's stable `@cloudflare/sandbox` package.
+
+The **1.0 preview** keeps the same sandbox ID / container split and makes process and terminal handles fail closed after container stop or replace. Refer to [Sandbox lifecycle (1.0 preview)](/sandbox/1-0-preview/lifecycle/) and [Errors and recovery](/sandbox/1-0-preview/errors/).
+:::
+
 ## Lifecycle states
 
 ### Creation

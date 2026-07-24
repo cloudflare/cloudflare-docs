@@ -261,22 +261,22 @@ const addon = new SandboxAddon({
 
 ## Common errors
 
-| Situation | Typical outcome |
+| Situation | Class / outcome |
 | --------- | --------------- |
-| Unknown terminal ID in the current container | Terminal not found |
-| `getTerminal` / `listTerminals` while no container is running | `null` / `[]` (does not start a container; not an error) |
-| Handle or terminal ID from a previous container for this sandbox | Stale terminal handle |
-| Invalid working directory at create | Invalid terminal cwd |
-| Invalid output cursor | Invalid terminal cursor |
-| Control operation failed | Terminal control error |
+| Unknown terminal ID in the current container | `TerminalNotFoundError` |
+| `getTerminal` / `listTerminals` while no container is running | `null` / `[]` (not an error; does not start a container) |
+| Handle or terminal ID from a previous container | `StaleTerminalHandleError` |
+| Invalid working directory at create | `InvalidTerminalCwdError` |
+| Invalid output cursor | `InvalidTerminalCursorError` |
+| Control operation failed | `TerminalControlError` |
 
-Exact class names include `TerminalNotFoundError`, `StaleTerminalHandleError`, `InvalidTerminalCwdError`, `InvalidTerminalCursorError`, and `TerminalControlError` from `@cloudflare/sandbox`.
-
-Terminals follow the same lifetime rules as processes: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+Recovery guidance: [Errors and recovery](/sandbox/1-0-preview/errors/). Full catalog: [Errors API](/sandbox/1-0-preview/api/errors/). Lifetime: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 ## Related
 
 - [Terminals](/sandbox/1-0-preview/terminals/)
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
 - [Processes API](/sandbox/1-0-preview/api/processes/)
 - [API reference](/sandbox/1-0-preview/api/)
 - [Migrate](/sandbox/1-0-preview/migrate/)

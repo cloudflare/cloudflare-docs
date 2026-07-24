@@ -78,12 +78,15 @@ const { stdout } = await process.output({ encoding: "utf8" });
 - `await sandbox.exec(...)` is **launch**, not completion.
 - There is no hidden session: a later `exec` does not remember a previous `cd`.
 - Use `cwd` and `env` on each launch when you need them.
-- A process runs in the current container for the sandbox. After that container stops, start a new process. For the sandbox ID / container / process model, refer to [Sandbox ID, container, and process](/sandbox/1-0-preview/processes/#sandbox-id-container-and-process).
+- A process runs in the current container for the sandbox. After that container stops, start a new process. For the full model, refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+- Before production traffic, learn which failures are safe to retry: [Errors and recovery](/sandbox/1-0-preview/errors/).
 
 ## Next
 
+- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) — sandbox ID, container, stop, and replace
 - [Process execution](/sandbox/1-0-preview/processes/) — how `exec()` and process lifetime work
+- [Errors and recovery](/sandbox/1-0-preview/errors/) — retries, interrupted calls, and stale handles
 - [Migrate](/sandbox/1-0-preview/migrate/) — update an existing stable app
-- [API reference](/sandbox/1-0-preview/api/) — processes and terminals
+- [API reference](/sandbox/1-0-preview/api/) — processes, terminals, and errors
 - [Terminals](/sandbox/1-0-preview/terminals/) — interactive PTY and browser connect
 - [Extensions](/sandbox/1-0-preview/extensions/)

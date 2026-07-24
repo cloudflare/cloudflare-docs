@@ -2,7 +2,7 @@
 title: Terminals
 pcx_content_type: concept
 sidebar:
-  order: 3
+  order: 4
 description: Interactive PTY terminals in the Sandbox SDK 1.0 preview — resource model and browser connect.
 products:
   - sandbox
@@ -28,7 +28,7 @@ Command execution uses [`exec`](/sandbox/1-0-preview/processes/) and process han
 | Stop | `kill(signal?)` | `interrupt()` / `terminate()` |
 | Lookup | `getProcess` / `listProcesses` | `getTerminal` / `listTerminals` |
 
-Both kinds of resource live only in the current container for a sandbox ID. Lookup methods do not start a container. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+Both kinds of resource live only in the current container for a sandbox ID. Lookup methods do not start a container. See [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 ## Create a terminal
 
@@ -157,6 +157,8 @@ sandboxAddon.connect({ sandboxId, terminalId });
 ## Related
 
 - [Terminals API](/sandbox/1-0-preview/api/terminals/)
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
 - [Process execution](/sandbox/1-0-preview/processes/)
 - [Processes API](/sandbox/1-0-preview/api/processes/)
 - [Migrate](/sandbox/1-0-preview/migrate/)

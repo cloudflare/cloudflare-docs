@@ -20,11 +20,14 @@ If the user explicitly wants to stay on the current stable package only, use the
 - Hub: https://developers.cloudflare.com/sandbox/1-0-preview/
 - Get started: https://developers.cloudflare.com/sandbox/1-0-preview/get-started/
 - Migrate: https://developers.cloudflare.com/sandbox/1-0-preview/migrate/
+- Lifecycle: https://developers.cloudflare.com/sandbox/1-0-preview/lifecycle/
 - Process model: https://developers.cloudflare.com/sandbox/1-0-preview/processes/
 - Terminals: https://developers.cloudflare.com/sandbox/1-0-preview/terminals/
+- Errors and recovery: https://developers.cloudflare.com/sandbox/1-0-preview/errors/
 - API reference: https://developers.cloudflare.com/sandbox/1-0-preview/api/
 - Processes API: https://developers.cloudflare.com/sandbox/1-0-preview/api/processes/
 - Terminals API: https://developers.cloudflare.com/sandbox/1-0-preview/api/terminals/
+- Errors API: https://developers.cloudflare.com/sandbox/1-0-preview/api/errors/
 - Extensions: https://developers.cloudflare.com/sandbox/1-0-preview/extensions/
 
 ## Guidance for agents
@@ -34,6 +37,7 @@ If the user explicitly wants to stay on the current stable package only, use the
 3. Prefer installed `@next` types over inventing APIs.
 4. Never put internal release calendars or private timelines in user-facing text.
 5. Keep stable docs links available for teams that remain on the current package for now.
+6. **Error handling matters.** Do not wrap every sandbox call in the same retry loop. Follow https://developers.cloudflare.com/sandbox/1-0-preview/errors/
 
 ## Search before migrating
 
@@ -66,7 +70,8 @@ const out = await p.output({ encoding: "utf8" });
 - Processes run in the current **container** for a **sandbox ID**; same sandbox ID ≠ same container forever
 - `getProcess` / `listProcesses` do not start a container; return `null` / `[]` when none is running
 - After the container stops or is replaced, old process IDs/handles are gone (stale-handle); store the job and `exec` again
-- Canonical explanation: https://developers.cloudflare.com/sandbox/1-0-preview/processes/#how-long-a-process-lives
+- Lifecycle model: https://developers.cloudflare.com/sandbox/1-0-preview/lifecycle/
+- Process lifetime: https://developers.cloudflare.com/sandbox/1-0-preview/processes/#how-long-a-process-lives
 
 ### Sessions
 
@@ -84,6 +89,21 @@ if (t) return t.connect(request, { cursor });
 - Browser helper: `@cloudflare/sandbox/xterm` with `{ sandboxId, terminalId }`
 - Docs: https://developers.cloudflare.com/sandbox/1-0-preview/terminals/
 
+### Errors
+
+| Error | What to do |
+| ----- | ---------- |
+| `ContainerUnavailableError` | Container did not start the work — back off, then try the work again |
+| `OperationInterruptedError` | Work may have started — read `reason` / `retryable` and check state before repeating |
+| `RPCTransportError` | Lost contact during the call — later calls may work; this call may already have run |
+| `StaleProcessHandleError` / `StaleTerminalHandleError` | Start again from stored work state |
+| `ProcessWaitTimeoutError` / `ProcessAbortedError` | Wait ended only; process may still run |
+| `RuntimeControlProtocolError` / bad image after deploy | Worker package and container image must match on the same `@next` line; not a slow-start retry |
+
+- Prefer `instanceof` on classes from `@cloudflare/sandbox`
+- Full catalog: https://developers.cloudflare.com/sandbox/1-0-preview/api/errors/
+- Guidance: https://developers.cloudflare.com/sandbox/1-0-preview/errors/
+
 ### Extensions
 
 ```ts
@@ -96,5 +116,6 @@ interpreter = withInterpreter(this);
 2. Smoke argv exec + `output()`
 3. Smoke long-running process
 4. Smoke terminal create + connect if the app uses a terminal UI
-5. Smoke extensions in use
-6. Grep again for removed APIs
+5. Confirm error handling does not retry every failure the same way
+6. Smoke extensions in use
+7. Grep again for removed APIs
