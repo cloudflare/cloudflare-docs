@@ -60,6 +60,8 @@ D1 is designed for horizontal scale-out across many smaller databases, not verti
 
 A natural sharding boundary is one database per tenant: each user, organization, or project gets its own isolated database. This gives complete data isolation, per-tenant schema evolution, and a migration blast radius limited to a single tenant. You can create databases programmatically with the [REST API](/api/resources/d1/subresources/database/methods/create/) and set a location hint per tenant.
 
+Sharding has trade-offs. You cannot run SQL `JOIN` operations across D1 databases, and ACID transactions do not span database boundaries. Keep data that must be joined or updated atomically in the same database, or design explicit application-level workflows for cross-database operations.
+
 Workers Paid accounts support 50,000 databases. This limit can be increased by request on Workers Paid and Enterprise plans, with support for millions to tens of millions of databases per account.
 
 Attribute usage per database with the `rows_read` and `rows_written` fields that every query returns in its `meta` object. Apply per-query and per-tenant limits so one tenant cannot consume all of your account-level limits or inflate your bill.
@@ -265,7 +267,7 @@ export default {
 
 </TypeScriptExample>
 
-### Whitelist dynamic SQL identifiers
+### Allowlist dynamic SQL identifiers
 
 Bound parameters are for values, not SQL identifiers. You cannot bind a column name, table name, or sort direction. If a query must choose a dynamic identifier, map user input to a fixed allowlist and reject everything else.
 
@@ -307,7 +309,9 @@ Do this for every dynamic clause: `ORDER BY`, sort direction, optional filters, 
 
 D1 automatically retries read-only queries up to two more times when it encounters a retryable error. Write queries are not automatically retried. Your application must retry write operations that are safe to repeat.
 
-Make writes idempotent before you retry them. For order creation, require a client-generated idempotency key and enforce it with a `UNIQUE` constraint. If a transient error occurs after D1 commits the write but before the Worker receives the response, the retry returns the existing order instead of creating a duplicate.
+Automatic retries handle retryable network-level or service-level failures for read-only queries. They do not decide whether a write is safe to repeat, and they do not resolve application-level outcomes such as unique constraint collisions. Your application owns the logical retry behavior for writes.
+
+Make writes idempotent before you retry them. For order creation, require a client-generated idempotency key and enforce it with a `UNIQUE` constraint. If a transient error occurs after D1 commits the write but before the Worker receives the response, the retry returns the existing order instead of creating a duplicate. If a retry hits the unique constraint, treat that as a signal to fetch and return the existing record rather than issuing a second logical write.
 
 Use exponential backoff with full jitter so clients do not retry in lockstep. Start around `50 ms`, cap around `2 s`, and keep the maximum attempt count small. Retry only errors marked retryable in the [D1 error list](/d1/observability/debug-d1/#error-list).
 
@@ -413,26 +417,26 @@ The same rule applies to imports. Partition import data into files of tens of me
 
 ## Schema and migrations
 
-### Use raw SQL until an ORM pays for itself
+### Choose the right migration tooling
 
-Do not add an ORM by default. D1 speaks SQL directly, and hand-written SQL is often the simplest option for small applications.
+You can write migration SQL by hand or use an object-relational mapping (ORM) tool to generate it. Each approach has trade-offs.
 
-Raw SQL is usually enough when:
+Raw SQL with `wrangler` works well when:
 
 - You have one to five tables.
-- Your queries are straightforward create, read, update, and delete operations.
+- Your queries are basic create, read, update, and delete (CRUD) operations.
 - You are the only developer working on the schema.
 - You are comfortable writing SQL.
 
-An ORM such as Drizzle starts paying off when:
+An ORM such as Drizzle or Prisma works well when:
 
-- You have 10 or more tables with foreign key relationships.
-- You write joins across three or more tables and want type safety for columns and relationships.
-- Multiple developers change the schema and need TypeScript definitions as a shared source of truth.
-- You want editor autocomplete for table and column names.
-- You are iterating quickly on schema design and want generated SQL to review.
+- You have 10 or more tables with foreign key relationships between them.
+- You build complex queries with joins across three or more tables, where type safety helps prevent joining on the wrong column or misspelling a field name.
+- Multiple developers touch the schema, and the TypeScript definition becomes the single source of truth with compile errors catching mismatches immediately.
+- You want autocompletion in your editor when writing queries.
+- You are iterating rapidly on schema design and want to see what SQL each change produces before applying it.
 
-The cost is migration complexity. ORM migration generators produce SQL, but Wrangler applies migrations to D1 and tracks them in the `d1_migrations` table. Review generated migrations before applying them, especially statements that drop tables or alter migration metadata.
+If you use an ORM, be aware that ORM migration generators cannot apply migrations to D1 directly. Generate the SQL with your ORM, then apply it with `wrangler`. Review all generated SQL before applying it because ORMs may generate destructive statements for tables they do not manage, including Wrangler's `d1_migrations` table.
 
 ### Test migrations locally before remote
 
