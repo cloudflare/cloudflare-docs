@@ -1,13 +1,12 @@
 {
-	"model_id": "elevenlabs/eleven-turbo-v2-5",
+	"model_id": "elevenlabs/eleven-multilingual-v2",
 	"provider_id": "elevenlabs",
-	"name": "Eleven Turbo v2.5",
-	"description": "ElevenLabs' Turbo v2.5 text-to-speech model balancing high-quality voice generation with low latency across 32 languages.",
+	"name": "Eleven Multilingual v2",
+	"description": "ElevenLabs' multilingual text-to-speech model for generating natural speech across many languages with ElevenLabs voices.",
 	"task": "Text-to-Speech",
 	"tags": [
 		"Text-to-Speech",
 		"Audio Generation",
-		"Low Latency",
 		"Multilingual"
 	],
 	"context_length": null,
@@ -15,20 +14,21 @@
 	"schema_version": "1.0.0",
 	"examples": [
 		{
-			"name": "AI Gateway Notification",
-			"description": "Generate balanced low-latency speech for an AI Gateway notification",
+			"name": "French AI Gateway Speech",
+			"description": "Generate multilingual speech about Cloudflare AI Gateway",
 			"input": {
-				"text": "Your Cloudflare AI Gateway usage report is ready. Review provider latency, token counts, cache status, and request costs in the dashboard.",
+				"text": "Bonjour et bienvenue dans Cloudflare AI Gateway. Suivez vos requetes, vos couts et les performances de vos modeles depuis une seule interface.",
 				"voice_id": "JBFqnCBsd6RMkjVDRZzb",
+				"language_code": "fr",
 				"output_format": "mp3_44100_128"
 			},
 			"output": {
-				"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-turbo-v2-5/ai-gateway-notification.mp3"
+				"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-multilingual-v2/french-ai-gateway-speech.mp3"
 			},
 			"raw_response": {
 				"state": "Completed",
 				"result": {
-					"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-turbo-v2-5/ai-gateway-notification.mp3"
+					"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-multilingual-v2/french-ai-gateway-speech.mp3"
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -38,12 +38,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'elevenlabs/eleven-turbo-v2-5',\n  {\n    text: 'Your Cloudflare AI Gateway usage report is ready. Review provider latency, token counts, cache status, and request costs in the dashboard.',\n    voice_id: 'JBFqnCBsd6RMkjVDRZzb',\n    output_format: 'mp3_44100_128',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'elevenlabs/eleven-multilingual-v2',\n  {\n    text: 'Bonjour et bienvenue dans Cloudflare AI Gateway. Suivez vos requetes, vos couts et les performances de vos modeles depuis une seule interface.',\n    voice_id: 'JBFqnCBsd6RMkjVDRZzb',\n    language_code: 'fr',\n    output_format: 'mp3_44100_128',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"elevenlabs/eleven-turbo-v2-5\",\n  \"input\": {\n    \"text\": \"Your Cloudflare AI Gateway usage report is ready. Review provider latency, token counts, cache status, and request costs in the dashboard.\",\n    \"voice_id\": \"JBFqnCBsd6RMkjVDRZzb\",\n    \"output_format\": \"mp3_44100_128\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"elevenlabs/eleven-multilingual-v2\",\n  \"input\": {\n    \"text\": \"Bonjour et bienvenue dans Cloudflare AI Gateway. Suivez vos requetes, vos couts et les performances de vos modeles depuis une seule interface.\",\n    \"voice_id\": \"JBFqnCBsd6RMkjVDRZzb\",\n    \"language_code\": \"fr\",\n    \"output_format\": \"mp3_44100_128\"\n  }\n}'"
 				}
 			]
 		}
@@ -57,14 +57,13 @@
 	"terms": "https://elevenlabs.io/terms",
 	"cover_image_url": null,
 	"metadata": {
-		"Languages": "32",
-		"Latency": "Low (~250-300ms)",
+		"Languages": "Multilingual speech generation",
 		"Output Formats": "MP3, WAV, PCM, Opus, u-law, A-law",
 		"Voices": "Supports ElevenLabs voice IDs"
 	},
 	"request_formats": null,
 	"banner": null,
-	"created_at": "2026-07-09 02:32:45",
+	"created_at": "2026-07-24 20:04:40",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
