@@ -1,0 +1,88 @@
+---
+title: Troubleshooting
+pcx_content_type: how-to
+sidebar:
+  order: 11
+description: Common failures on @cloudflare/sandbox@next and where to fix them.
+products:
+  - sandbox
+---
+
+:::note[Path to Sandbox SDK 1.0]
+This page is for `@cloudflare/sandbox@next`. Stable-package symptoms may differ.
+:::
+
+Short symptom → fix map. Deeper recovery: [Errors and recovery](/sandbox/1-0-preview/errors/). Lifecycle: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+
+## Deploy and image
+
+| Symptom | What to check |
+| ------- | ------------- |
+| `RuntimeControlProtocolError`, control/protocol failures after deploy | Worker package and container image are on different lines. Use the same `@next` / `cloudflare/sandbox:next` (or the same exact prerelease) pair. |
+| Container never becomes ready; repeated `ContainerUnavailableError` | Cold start or capacity. Back off using `retryAfterMs` when set, then retry the **work**. See [Errors and recovery](/sandbox/1-0-preview/errors/). |
+| Works in `wrangler dev`, fails in production only | Production-only limits and cold start. Still keep package/image matched. |
+
+## Processes
+
+| Symptom | What to check |
+| ------- | ------------- |
+| `await exec` “finished” but the command did not | `exec` resolves on **launch**. Use `output()`, `waitForExit()`, or `exitCode`. |
+| No stdout as a string | `output()` defaults to bytes. Pass `{ encoding: "utf8" }`. |
+| `getProcess` is `null` / list is `[]` | No container running, or ID unknown in the **current** container. Discovery does not wake a sandbox. Relaunch from stored job state if needed. |
+| `StaleProcessHandleError` | Handle was from a previous container. Start a new `exec` from checkpointed work. |
+| Wait timed out / aborted but process still runs | Local wait only. Call `kill()` if you intend to stop it. |
+| Port never becomes ready | Default `waitForPort` mode is **TCP**. Use `mode: "http"` for HTTP checks. Process may have exited — check status/logs. |
+| Need interactive stdin | Not on the process handle. Use a [terminal](/sandbox/1-0-preview/terminals/) or non-interactive argv/`cwd`/`env`. |
+
+## Terminals
+
+| Symptom | What to check |
+| ------- | ------------- |
+| Browser still uses `sessionId` | Preview xterm helper expects `terminalId`. |
+| `getTerminal` is `null` | Same lifetime rules as processes. Create again if the container was replaced. |
+| Reconnect has no history | Pass the last `cursor` into `connect` / output options. |
+
+## Environment and secrets
+
+| Symptom | What to check |
+| ------- | ------------- |
+| Env from an earlier `exec` “disappeared” | No session shell. Use `setEnvVars` and/or per-launch `env`. [Environment variables](/sandbox/1-0-preview/environment/). |
+| API keys leaked into the container | Do not put live secrets in sandbox env. Use [outbound traffic](/sandbox/guides/outbound-traffic/) handlers on the Worker. |
+
+## Interpreter
+
+| Symptom | What to check |
+| ------- | ------------- |
+| `sandbox.createCodeContext is not a function` | Attach `withInterpreter` and call `sandbox.interpreter.*`. |
+| Python not available | Use the **`-python`** image variant on the same `@next` line. |
+
+## Bridge HTTP
+
+| Symptom | What to check |
+| ------- | ------------- |
+| `404` on `/v1/sandbox/:id/exec` | Preview bridge has **no** `/exec`. Use `/processes` and log routes. [Bridge HTTP API](/sandbox/1-0-preview/bridge/http-api/). |
+| Session header ignored / session routes missing | Sessions are removed on the preview bridge template. |
+| `/pty` missing | Use `/terminals` and `/connect`. |
+| Deployed bridge still looks like stable | Redeploy from the [`next` template](https://github.com/cloudflare/sandbox-sdk/tree/next/bridge/worker), not `main`. |
+
+## Coding agents and long jobs
+
+For agents and long-running tools on `@next`:
+
+1. Launch with `exec(argv)` (often `['/bin/bash', '-lc', script]`).
+2. Wait with `waitForLog`, `waitForPort`, or `logs` — not only `await exec`.
+3. Persist **job state** (command, `cwd`, `env`, checkpoint), not only `process.id`.
+4. On a later request: `getProcess(id)` while the same container may still hold it; otherwise `exec` again.
+5. Use a [terminal](/sandbox/1-0-preview/terminals/) only when you need a human PTY, not as a session substitute.
+
+See [Process execution](/sandbox/1-0-preview/processes/), [Migrate](/sandbox/1-0-preview/migrate/), and examples in the [sandbox-sdk](https://github.com/cloudflare/sandbox-sdk/tree/next/examples) repo (`claude-code`, `codex`, `opencode`, and others).
+
+## Related
+
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
+- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
+- [Process API](/sandbox/1-0-preview/api/processes/)
+- [Terminal API](/sandbox/1-0-preview/api/terminals/)
+- [Bridge](/sandbox/1-0-preview/bridge/)
+- [Migrate](/sandbox/1-0-preview/migrate/)

@@ -29,6 +29,7 @@ If the user explicitly wants to stay on the current stable package only, use the
 - Extensions: https://developers.cloudflare.com/sandbox/1-0-preview/extensions/
 - Bridge: https://developers.cloudflare.com/sandbox/1-0-preview/bridge/
 - Bridge HTTP API: https://developers.cloudflare.com/sandbox/1-0-preview/bridge/http-api/
+- Troubleshooting: https://developers.cloudflare.com/sandbox/1-0-preview/troubleshooting/
 - API hub: https://developers.cloudflare.com/sandbox/1-0-preview/api/
 - Processes API: https://developers.cloudflare.com/sandbox/1-0-preview/api/processes/
 - Terminals API: https://developers.cloudflare.com/sandbox/1-0-preview/api/terminals/
