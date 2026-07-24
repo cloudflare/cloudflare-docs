@@ -139,15 +139,21 @@ fi
 
 echo "Production: $prod_id. Deleting $count preview deployments..."
 
-printf '%s\n' "$to_delete" | xargs -n1 -P "$parallel" -I{} \
+failed=$(printf '%s\n' "$to_delete" | xargs -n1 -P "$parallel" -I{} \
     sh -c 'npx --no-install wrangler pages deployment delete "$1" --project-name "$2" --force >/dev/null 2>&1 \
-           || echo "FAILED: $1"' _ {} "$project"
+           || echo "$1"' _ {} "$project")
+
+if [ -n "$failed" ]; then
+    echo "The following deployments failed to delete:" >&2
+    printf '%s\n' "$failed" >&2
+    exit 1
+fi
 
 echo "Done."
 ```
 
 	</TabItem>
-	<TabItem label="Windows PowerShell">
+	<TabItem label="PowerShell 7+">
 
 ```powershell
 param(
@@ -195,7 +201,7 @@ Write-Output "Done."
 	</TabItem>
 </Tabs>
 
-Note that these scripts will not delete the active production deployment if one exists.
+These scripts will not delete the active production deployment if one exists.
 
 ## Use Pages as Origin in Cloudflare Load Balancer
 
