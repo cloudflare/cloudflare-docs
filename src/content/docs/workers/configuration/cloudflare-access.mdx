@@ -8,11 +8,13 @@ products:
 
 import { DashButton, Steps, Tabs, TabItem } from "~/components";
 
-You can require sign-in on your Workers so that only authorized users can reach them.
+With Cloudflare Access, you can restrict who is authorized to access your application. You decide who is approved, and every request is checked before your Worker runs. Approved visitors are let through, while everyone else is shown a login page or blocked.
 
-By enabling Cloudflare Access on your Worker, every request is checked before your Worker runs: approved visitors are let through, while everyone else is shown a login page or blocked.
+You can protect:
 
-You decide who is approved, such as members of your Cloudflare account or anyone with a verified email address at a domain like `example.com`.
+- **A single application**: require sign-in on its preview URLs, production URLs, or both.
+- **All Workers in your account**: protect every existing and newly created Worker by default.
+- **Specific custom domains and hostnames**: restrict access at the hostname or route level.
 
 ## Before you start
 
@@ -221,6 +223,33 @@ When you turn on Access, choose who can sign in. The same policy options are ava
 You can add one or more policies. Visitors who match any selected policy can sign in.
 
 For advanced policy configuration, such as multiple identity providers, device posture rules, service tokens, complex policy ordering, or custom login or block pages, edit the Access application in Zero Trust after you create it. For the full set of options, refer to [Access policies](/cloudflare-one/access-controls/policies/).
+
+## Read authenticated user identity with ctx.access
+
+Every time Cloudflare Access authenticates a request, your Worker can read the signed-in user's identity — including email, groups, device posture, and [more identity fields](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) — directly through `ctx.access`. No extra configuration or JWT parsing required.
+
+Use this to personalize responses, enforce fine-grained permissions, or log activity per user.
+
+`ctx.access` is `undefined` if Access did not authenticate the request.
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		if (!ctx.access) {
+			return new Response("Access required", { status: 403 });
+		}
+
+		const identity = await ctx.access.getIdentity();
+		const email = identity?.email ?? "unknown";
+
+		return new Response(`Hello, ${email}`);
+	},
+};
+```
+
+:::note
+`ctx.access` is not populated during local development with `wrangler dev`. Access runs on Cloudflare's network, not your local machine, so `ctx.access` will always be `undefined` locally.
+:::
 
 ## Disable Access
 
