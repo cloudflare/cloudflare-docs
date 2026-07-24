@@ -15,7 +15,7 @@ Create shell sessions within a sandbox. Each session maintains its own shell sta
 :::note[Coming soon: Sandbox SDK 1.0]
 This page documents today's stable `@cloudflare/sandbox` package.
 
-**Sandbox SDK 1.0** (preview on `@next`) removes core session execution APIs (`createSession`, `ExecutionSession`, default sessions). Use per-launch `cwd` and `env`, an explicit shell command, or a [terminal](/sandbox/1-0-preview/processes/#processes-versus-terminals). Refer to [Process execution](/sandbox/1-0-preview/processes/) or [migrate session workflows](/sandbox/1-0-preview/migrate/#drop-session-apis).
+**Sandbox SDK 1.0** (preview on `@next`) removes core session execution APIs (`createSession`, `ExecutionSession`, default sessions). Pass `cwd` and `env` on each `exec`, or use one explicit shell argv script. Refer to [Process execution](/sandbox/1-0-preview/processes/) or [migrate](/sandbox/1-0-preview/migrate/#drop-session-apis).
 :::
 
 :::note

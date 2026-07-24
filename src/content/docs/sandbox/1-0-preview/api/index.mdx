@@ -1,0 +1,53 @@
+---
+title: API reference
+pcx_content_type: navigation
+sidebar:
+  order: 7
+description: API reference for @cloudflare/sandbox@next — processes, terminals, and related preview surfaces.
+products:
+  - sandbox
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This section documents APIs on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable package, refer to [API reference](/sandbox/api/).
+:::
+
+Reference for the preview public surface. Start with the mental model pages when you need *why*; use these pages for signatures and types.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Processes"
+	href="/sandbox/1-0-preview/api/processes/"
+	icon="seti:shell"
+>
+	`exec`, process handles, logs, waits, and kill.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Terminals"
+	href="/sandbox/1-0-preview/api/terminals/"
+	icon="terminal"
+>
+	`createTerminal`, handles, output, connect, interrupt, and terminate.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Related concepts and guides
+
+- [Process execution](/sandbox/1-0-preview/processes/)
+- [Terminals](/sandbox/1-0-preview/terminals/)
+- [Migrate](/sandbox/1-0-preview/migrate/)
+
+## Surfaces still documented on stable
+
+Until preview-specific pages exist, use the main docs for APIs that are largely unchanged on `@next` (confirm details against your installed package):
+
+- [Files](/sandbox/api/files/)
+- [File watching](/sandbox/api/file-watching/)
+- [Ports](/sandbox/api/ports/) and [Tunnels](/sandbox/api/tunnels/)
+- [Storage](/sandbox/api/storage/) and [Backups](/sandbox/api/backups/)
+- [Lifecycle](/sandbox/api/lifecycle/) (ignore transport and session options on `@next`)

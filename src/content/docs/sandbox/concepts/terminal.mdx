@@ -10,10 +10,10 @@ products:
 
 Terminal connections let browser-based UIs interact directly with sandbox shells. Instead of executing discrete commands with `exec()`, a terminal connection opens a persistent, bidirectional channel to a bash shell — the same model as SSH or a local terminal emulator.
 
-:::note[Coming soon: Sandbox SDK 1.0]
-This page documents terminal connections on today's stable `@cloudflare/sandbox` package.
+:::note[Sandbox SDK 1.0 preview]
+This page describes terminal connections on today's stable `@cloudflare/sandbox` package.
 
-In the **1.0 preview** (`@next`), terminals remain the interactive PTY path and stay separate from argv process handles. Refer to [processes versus terminals](/sandbox/1-0-preview/processes/#processes-versus-terminals).
+On **`@cloudflare/sandbox@next`**, terminals use `createTerminal`, `getTerminal`, and `terminal.connect`. Refer to [Terminals](/sandbox/1-0-preview/terminals/) and [Terminals API](/sandbox/1-0-preview/api/terminals/).
 :::
 
 ## How terminal connections work

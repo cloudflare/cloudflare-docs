@@ -1,8 +1,8 @@
 ---
-title: Process API
+title: Processes
 pcx_content_type: reference
 sidebar:
-  order: 5
+  order: 1
 description: Reference for argv exec, SandboxProcess handles, logs, waits, and related types in the Sandbox SDK 1.0 preview.
 products:
   - sandbox
@@ -110,6 +110,17 @@ interface ProcessOutput<T = Uint8Array> {
 
 Pass `{ encoding: "utf8" }` when you want string streams. Prefer `logs()` when output may exceed the buffer.
 
+Default body encoding is binary (`Uint8Array`) unless you pass `encoding: "utf8"`.
+
+Optional local observation controls on `output()`:
+
+| Field      | Type          | Description                                      |
+| ---------- | ------------- | ------------------------------------------------ |
+| `encoding` | `"utf8"`      | Decode stdout/stderr as strings.                 |
+| `maxBytes` | `number`      | Cap buffered bytes (may set `truncated: true`). |
+| `timeout`  | `number`      | Local wait deadline only; does not kill.         |
+| `signal`   | `AbortSignal` | Cancel this wait only; does not kill.            |
+
 ### `logs()`
 
 ```ts
@@ -160,5 +171,7 @@ Exact error class names are exported from `@cloudflare/sandbox` in the preview p
 ## Related
 
 - [Process execution](/sandbox/1-0-preview/processes/)
+- [Terminals API](/sandbox/1-0-preview/api/terminals/)
+- [API reference](/sandbox/1-0-preview/api/)
 - [Migrate from the stable SDK](/sandbox/1-0-preview/migrate/)
 - Stable: [Commands](/sandbox/api/commands/)

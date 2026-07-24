@@ -12,9 +12,9 @@ products:
 This page documents process execution on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable command and session behavior, refer to [Commands](/sandbox/api/commands/) and [Sessions](/sandbox/concepts/sessions/).
 :::
 
-In the 1.0 preview, treat the sandbox as a computer you drive with explicit programs — not as a hidden shell that remembers the last command.
+In the 1.0 preview, treat the sandbox as a computer you drive with explicit programs.
 
-Each `exec()` starts a **new supervised process** from an argument vector. The call resolves when launch succeeds (you receive a process ID and a pid), not when the process exits. Interactive shell state lives on **terminals**, not across successive `exec()` calls.
+Each `exec()` starts a **new supervised process** from an argument vector. The call resolves when launch succeeds (you receive a process ID and a pid), not when the process exits. Each launch is independent: pass `cwd` and `env` when the process needs them, or put multi-step shell syntax in one explicit shell argv. For an interactive PTY, use the [terminal](/sandbox/1-0-preview/terminals/) API.
 
 ## Sandbox ID, container, and process
 
@@ -84,7 +84,7 @@ Observation timeouts and `AbortSignal` values cancel **only that wait or stream*
 
 `exec(argv, { timeout })` sets a **remote lifetime** deadline. When the supervisor stops the process for that deadline, completion can report `timedOut: true`.
 
-API details: [Process API](/sandbox/1-0-preview/process-api/).
+API details: [Processes API](/sandbox/1-0-preview/api/processes/).
 
 ## How long a process lives
 
@@ -131,17 +131,16 @@ If the job also depends on files that lived only in the previous container, you 
 
 While a process or terminal is active, the container can stay running so work continues across requests. When nothing is active, the container may stop again after idle time. Long-running product flows should either keep meaningful work active or rely on checkpoints and relaunch.
 
-## Processes versus terminals
+## Processes and terminals
 
 | | Process (`exec`) | Terminal |
 | - | ---------------- | -------- |
-| Purpose | Supervised argv launch | Interactive PTY |
-| Shell memory across calls | No | Yes (PTY session) |
-| Standard input | Not on the public process API | Yes |
-| Stop | `kill(signal?)` | Interrupt, terminate, or close |
-| Discovery | `getProcess` / `listProcesses` (non-waking) | `getTerminal` / `listTerminals` |
+| Role | Supervised argv process | Interactive PTY |
+| Input | Launch-time argv | PTY input (`write` / browser `connect`) |
+| Stop | `kill(signal?)` | `interrupt()` / `terminate()` |
+| Lookup | `getProcess` / `listProcesses` | `getTerminal` / `listTerminals` |
 
-Do not infer terminal control semantics from process handles. Terminals follow the same [lifetime rules](#how-long-a-process-lives) as processes: they only exist in the current container for that sandbox.
+Both follow the same [container lifetime rules](#how-long-a-process-lives). Terminal docs: [Terminals](/sandbox/1-0-preview/terminals/). API: [Terminals API](/sandbox/1-0-preview/api/terminals/).
 
 ## Logs and large output
 
@@ -151,7 +150,8 @@ For large or long-running output, use `logs({ since, replay, follow })` and keep
 
 ## Related
 
-- [Process API](/sandbox/1-0-preview/process-api/)
+- [Processes API](/sandbox/1-0-preview/api/processes/)
+- [Terminals](/sandbox/1-0-preview/terminals/)
 - [Migrate](/sandbox/1-0-preview/migrate/)
 - [Get started](/sandbox/1-0-preview/get-started/)
 - [1.0 preview overview](/sandbox/1-0-preview/)

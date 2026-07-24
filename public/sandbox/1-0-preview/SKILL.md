@@ -21,7 +21,10 @@ If the user explicitly wants to stay on the current stable package only, use the
 - Get started: https://developers.cloudflare.com/sandbox/1-0-preview/get-started/
 - Migrate: https://developers.cloudflare.com/sandbox/1-0-preview/migrate/
 - Process model: https://developers.cloudflare.com/sandbox/1-0-preview/processes/
-- Process API: https://developers.cloudflare.com/sandbox/1-0-preview/process-api/
+- Terminals: https://developers.cloudflare.com/sandbox/1-0-preview/terminals/
+- API reference: https://developers.cloudflare.com/sandbox/1-0-preview/api/
+- Processes API: https://developers.cloudflare.com/sandbox/1-0-preview/api/processes/
+- Terminals API: https://developers.cloudflare.com/sandbox/1-0-preview/api/terminals/
 - Extensions: https://developers.cloudflare.com/sandbox/1-0-preview/extensions/
 
 ## Guidance for agents
@@ -35,7 +38,7 @@ If the user explicitly wants to stay on the current stable package only, use the
 ## Search before migrating
 
 ```sh
-rg 'SANDBOX_TRANSPORT|transport:|setTransport|enableDefaultSession|createSession|getSession|execStream\(|startProcess\(|killProcess\(|createCodeContext\(|runCode\(|SandboxTransport|ExecutionSession'
+rg 'SANDBOX_TRANSPORT|transport:|setTransport|enableDefaultSession|createSession|getSession|execStream\(|startProcess\(|killProcess\(|sandbox\.terminal\(|sessionId|createCodeContext\(|runCode\(|SandboxTransport|ExecutionSession'
 ```
 
 Also find string `exec(` sites and session shell assumptions (`cd` then later `exec`).
@@ -68,7 +71,18 @@ const out = await p.output({ encoding: "utf8" });
 ### Sessions
 
 - Remove core session APIs
-- Use `cwd`/`env`, bash `-lc`, or terminals
+- Pass `cwd` / `env` on each `exec`, or one shell argv script for multi-step shell syntax
+
+### Terminals
+
+```ts
+const terminal = await sandbox.createTerminal({ command: ["bash"] });
+const t = await sandbox.getTerminal(terminal.id);
+if (t) return t.connect(request, { cursor });
+```
+
+- Browser helper: `@cloudflare/sandbox/xterm` with `{ sandboxId, terminalId }`
+- Docs: https://developers.cloudflare.com/sandbox/1-0-preview/terminals/
 
 ### Extensions
 
@@ -81,5 +95,6 @@ interpreter = withInterpreter(this);
 1. Typecheck against `@next`
 2. Smoke argv exec + `output()`
 3. Smoke long-running process
-4. Smoke extensions in use
-5. Grep again for removed APIs
+4. Smoke terminal create + connect if the app uses a terminal UI
+5. Smoke extensions in use
+6. Grep again for removed APIs

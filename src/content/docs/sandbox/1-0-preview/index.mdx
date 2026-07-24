@@ -55,7 +55,13 @@ Shell features such as pipes and `&&` require an explicit shell executable, for 
 
 In the current stable package, a default session can preserve working directory and environment variables across `exec()` calls. Applications can also create named sessions with `createSession()`.
 
-The 1.0 preview does not expose session execution on the core SDK. Each `exec()` starts an independent process. To keep shell state across interactions, use a [terminal](/sandbox/1-0-preview/processes/#processes-versus-terminals), encode the full command in one shell invocation, or rely on the sandbox filesystem. Isolate different end users with separate sandboxes, not with sessions inside one sandbox.
+The 1.0 preview does not expose session execution on the core SDK. Each `exec()` starts an independent process. Pass `cwd` and `env` on each launch when you need them, or put multi-step shell syntax in one explicit shell argv (for example `['/bin/bash', '-lc', script]`). Isolate different end users with separate sandboxes.
+
+### Terminals
+
+In the current stable package, browser shells typically use `sandbox.terminal(request)` (often with session helpers and xterm `sessionId`).
+
+In the 1.0 preview, terminals are first-class PTY resources: `createTerminal`, `getTerminal`, `listTerminals`, and `terminal.connect(request)`. The xterm helper uses `terminalId`. Refer to [Terminals](/sandbox/1-0-preview/terminals/).
 
 ### Code interpreter
 
@@ -102,11 +108,19 @@ In the 1.0 preview, the SDK always uses RPC. Remove `SANDBOX_TRANSPORT`, the `tr
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Process API"
-	href="/sandbox/1-0-preview/process-api/"
+	title="Terminals"
+	href="/sandbox/1-0-preview/terminals/"
+	icon="terminal"
+>
+	Interactive PTYs, lifetime, and browser connect.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="API reference"
+	href="/sandbox/1-0-preview/api/"
 	icon="setting"
 >
-	Signatures for `exec`, handles, status, logs, and waits.
+	Process and terminal signatures for `@next`.
 </LinkTitleCard>
 
 <LinkTitleCard
