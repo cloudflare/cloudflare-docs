@@ -32,6 +32,8 @@ If the user explicitly wants to stay on the current stable package only, use the
 - Environment variables: https://developers.cloudflare.com/sandbox/1-0-preview/environment/
 - Code interpreter: https://developers.cloudflare.com/sandbox/1-0-preview/interpreter/
 - Interpreter API: https://developers.cloudflare.com/sandbox/1-0-preview/api/interpreter/
+- Bridge: https://developers.cloudflare.com/sandbox/1-0-preview/bridge/
+- Bridge HTTP API: https://developers.cloudflare.com/sandbox/1-0-preview/bridge/http-api/
 
 ## Guidance for agents
 
@@ -135,6 +137,13 @@ Files, mounts, backups, ports/tunnels, and lifecycle options remain available. P
 Environment variables on `@next`: https://developers.cloudflare.com/sandbox/1-0-preview/environment/
 
 - `gitCheckout` is removed on `@next` — run `git` with argv `exec`
+
+### Bridge (self-deployed Worker)
+
+- Template: `https://github.com/cloudflare/sandbox-sdk/tree/next/bridge/worker`
+- npm `@next` + Docker `cloudflare/sandbox:next` (same line)
+- HTTP: `/processes`, `/terminals` — not `/exec`, sessions, or `/pty`
+- Docs: https://developers.cloudflare.com/sandbox/1-0-preview/bridge/
 
 ## Validation
 

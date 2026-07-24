@@ -44,6 +44,7 @@ Confirm the lockfile resolves `@cloudflare/sandbox` to a preview build, then dep
 | `sandbox.terminal(request)` / session `terminal()`                   | `createTerminal`, then `terminal.connect(request)`.                            |
 | xterm `sessionId`                                                    | `terminalId` (and optional `cursor`).                                          |
 | `sandbox.gitCheckout(...)`                                           | Removed. Run `git` with argv `exec`, for example `['git', 'clone', url, dir]`, then `output()` / waits as needed. |
+| Self-deployed **bridge** Worker (`main` template)                    | Redeploy the [`next` bridge template](/sandbox/1-0-preview/bridge/). Clients: `/exec` → `/processes` + logs; drop sessions; `/pty` → `/terminals`. |
 
 ## Remove transport selection
 
@@ -181,6 +182,7 @@ When you migrate:
 4. If the app uses a browser terminal: create, connect, and resume with `getTerminal` while the container still has it.
 5. Exercise the interpreter only if your app uses that extension.
 6. Confirm no remaining transport types, session APIs, `sandbox.terminal(`, xterm `sessionId`, or stable-only client imports.
+7. If you run a self-deployed bridge: redeploy the preview template and update HTTP clients off `/exec`, sessions, and `/pty`.
 
 ## Related
 
@@ -194,3 +196,4 @@ When you migrate:
 - [Terminals](/sandbox/1-0-preview/terminals/)
 - [Code interpreter](/sandbox/1-0-preview/interpreter/)
 - [Extensions](/sandbox/1-0-preview/extensions/)
+- [Bridge](/sandbox/1-0-preview/bridge/)

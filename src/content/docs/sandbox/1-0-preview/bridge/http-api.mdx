@@ -1,0 +1,187 @@
+---
+title: Bridge HTTP API
+pcx_content_type: reference
+sidebar:
+  order: 1
+description: HTTP routes for the Sandbox bridge Worker on @cloudflare/sandbox@next.
+products:
+  - sandbox
+  - workers
+---
+
+import { WranglerConfig } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents the bridge HTTP API from the sandbox-sdk **`next`** branch template. For the stable bridge on `main` (`/exec`, sessions, `/pty`), refer to [HTTP API reference](/sandbox/bridge/http-api/).
+:::
+
+Routes exposed by a bridge Worker you deploy from [Bridge](/sandbox/1-0-preview/bridge/). The Worker is not a Cloudflare-operated shared endpoint — each deployment has its own URL and `SANDBOX_API_KEY`.
+
+For interactive exploration on a running Worker, open `GET /v1/openapi` (HTML) or `GET /v1/openapi.json`.
+
+## Authentication
+
+All routes under `/v1/sandbox/*`, `/v1/pool/*`, and `/v1/openapi.*` require:
+
+```txt
+Authorization: Bearer <SANDBOX_API_KEY>
+```
+
+When `SANDBOX_API_KEY` is not configured, authentication is skipped for local development. Always set the secret before production.
+
+OpenAPI routes also accept `?token=` as an alternative to the Bearer header.
+
+## OpenAPI schema
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `GET` | `/v1/openapi.json` | OpenAPI 3.1 schema |
+| `GET` | `/v1/openapi` | Interactive HTML docs |
+
+## Health
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `GET` | `/health` | Unauthenticated liveness. Returns `{"ok": true}`. |
+
+## Sandbox lifecycle
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/v1/sandbox` | Create a sandbox. Returns `{"id": "<sandbox-id>"}`. |
+| `DELETE` | `/v1/sandbox/:id` | Destroy the sandbox. Returns `204`. |
+| `GET` | `/v1/sandbox/:id/running` | Container liveness. Returns `{"running": true\|false}`. |
+
+## Processes
+
+Process execution is launch / list / get / logs / kill. There is no `POST …/exec` and no session header.
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/v1/sandbox/:id/processes` | Launch an argv process. Returns process status (does not wait for exit). |
+| `GET` | `/v1/sandbox/:id/processes` | List process statuses in the current container |
+| `GET` | `/v1/sandbox/:id/processes/:processId` | One process status |
+| `GET` | `/v1/sandbox/:id/processes/:processId/logs` | SSE log stream (`since`, `replay`, `follow` query params) |
+| `POST` | `/v1/sandbox/:id/processes/:processId/kill` | Numeric signal (body optional `{"signal": 15}`). Returns `204`. |
+
+### Launch body
+
+```json
+{
+  "argv": ["/bin/bash", "-lc", "echo hello"],
+  "timeout": 10000,
+  "cwd": "/workspace",
+  "env": { "CI": "1" }
+}
+```
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `argv` | `string[]` | Required. Non-empty; `argv[0]` is the executable. Shell syntax needs an explicit shell. |
+| `timeout` | `number` | Optional remote process lifetime in milliseconds |
+| `cwd` | `string` | Optional working directory (must resolve under `/workspace`) |
+| `env` | `object` | Optional string-valued environment overlay for this launch |
+
+### Behavior
+
+- **Launch** (`POST …/processes`) is the process route that may allocate or wake a container.
+- **List / get / logs / kill** do not wake a sandbox with no active runtime. List returns `[]`; get, logs, and kill return not found.
+- Process IDs, PIDs, logs, and cursors are **runtime-local**. After the container stops or is replaced, start a new process.
+- Closing a log SSE stream cancels only that observation; the process keeps running.
+- Log `stdout` / `stderr` event payloads use **base64** `data` at the bridge boundary, plus `cursor` and `timestamp`.
+
+```sh
+curl -sN "$SANDBOX_API_URL/v1/sandbox/$ID/processes/$PID/logs?replay=true&follow=true" \
+  -H "Authorization: Bearer $SANDBOX_API_KEY"
+```
+
+Kill defaults to signal `15`. Allowed integers: `1`–`64`.
+
+Same model as the Worker SDK: [Process execution](/sandbox/1-0-preview/processes/), [Process API](/sandbox/1-0-preview/api/processes/).
+
+## Terminals
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/v1/sandbox/:id/terminals` | Create a terminal. Body: `argv` (required), optional `cwd`, `env`, `cols`, `rows`. |
+| `GET` | `/v1/sandbox/:id/terminals` | List terminal snapshots |
+| `GET` | `/v1/sandbox/:id/terminals/:terminalId` | One snapshot |
+| `GET` | `/v1/sandbox/:id/terminals/:terminalId/connect` | WebSocket connect / reconnect (`cursor`, `cols`, `rows` query params) |
+| `POST` | `/v1/sandbox/:id/terminals/:terminalId/interrupt` | Interrupt the terminal |
+| `POST` | `/v1/sandbox/:id/terminals/:terminalId/terminate` | Terminate the terminal |
+
+There is no `GET …/pty` route and no session-scoped PTY on this template.
+
+```sh
+curl -X POST "$SANDBOX_API_URL/v1/sandbox/$ID/terminals" \
+  -H "Authorization: Bearer $SANDBOX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"argv":["bash"],"cols":120,"rows":30}'
+```
+
+See [Terminals](/sandbox/1-0-preview/terminals/) and [Terminal API](/sandbox/1-0-preview/api/terminals/).
+
+## Files
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `GET` | `/v1/sandbox/:id/file/*` | Read file bytes (`application/octet-stream`). Path after `/file/` is absolute without a leading slash (for example `workspace/main.py` → `/workspace/main.py`). |
+| `PUT` | `/v1/sandbox/:id/file/*` | Write raw body bytes to that path |
+
+Paths must resolve under `/workspace`.
+
+## Workspace archives
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/v1/sandbox/:id/persist` | Tar the workspace (optional `excludes` query). Returns tar bytes. |
+| `POST` | `/v1/sandbox/:id/hydrate` | Restore workspace from tar body |
+
+## Bucket mounts
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/v1/sandbox/:id/mount` | Mount S3-compatible or R2 binding storage |
+| `POST` | `/v1/sandbox/:id/unmount` | Unmount by `mountPath` |
+
+Mount body fields include `mountPath` (required), and either remote `bucket` + `options.endpoint` or Worker `binding` for credential-less R2. Optional `options.prefix`, `readOnly`, credentials, and `credentialProxy`. See OpenAPI on the Worker for the full schema.
+
+## Tunnels
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/v1/sandbox/:id/tunnel/:port` | Create or reuse a tunnel for a port already listening in the sandbox |
+| `DELETE` | `/v1/sandbox/:id/tunnel/:port` | Delete tunnel for that port (`204`) |
+
+Empty body → ephemeral `*.trycloudflare.com`. JSON `{"name":"app"}` → named tunnel subdomain prefix (requires account token / zone config as in the Worker README).
+
+## Warm pool
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `GET` | `/v1/pool/stats` | Pool statistics |
+| `POST` | `/v1/pool/prime` | Start the warm pool alarm loop |
+| `POST` | `/v1/pool/shutdown-prewarmed` | Stop idle warm containers |
+
+Configure in `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```toml
+[vars]
+WARM_POOL_TARGET = "0"                # idle containers to keep warm (0 = disabled)
+WARM_POOL_REFRESH_INTERVAL = "10000"  # health-check interval (ms)
+```
+
+</WranglerConfig>
+
+Default target `0` disables the pool. A cron trigger can prime the pool after deploy; see the template `wrangler.jsonc`.
+
+## Related
+
+- [Bridge](/sandbox/1-0-preview/bridge/) — deploy and upgrade
+- [Process execution](/sandbox/1-0-preview/processes/)
+- [Terminals](/sandbox/1-0-preview/terminals/)
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- Stable bridge HTTP API: [/sandbox/bridge/http-api/](/sandbox/bridge/http-api/)
+- Template source: [bridge/worker on `next`](https://github.com/cloudflare/sandbox-sdk/tree/next/bridge/worker)

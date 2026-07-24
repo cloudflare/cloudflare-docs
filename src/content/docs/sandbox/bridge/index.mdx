@@ -15,7 +15,11 @@ products:
 
 import { Details, Tabs, TabItem } from "~/components";
 
-The sandbox bridge is a reference-implementation Cloudflare Worker that exposes the [Sandbox SDK](/sandbox/api/) as an HTTP API. Any HTTP client — Python script, Node.js service, CI pipeline — can create and control sandboxes without writing a Worker.
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents the bridge template on the sandbox-sdk **`main`** branch (stable package line). The **1.0 preview** bridge uses process and terminal HTTP resources on the **`next`** branch template — [Bridge on `@next`](/sandbox/1-0-preview/bridge/).
+:::
+
+The sandbox bridge is a reference-implementation Cloudflare Worker that exposes the [Sandbox SDK](/sandbox/api/) as an HTTP API. Any HTTP client — Python script, Node.js service, CI pipeline — can create and control sandboxes without writing a Worker. You deploy the Worker in **your** account; it is not a Cloudflare-hosted shared API.
 
 ## Why use the bridge
 
