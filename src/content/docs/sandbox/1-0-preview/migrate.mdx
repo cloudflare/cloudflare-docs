@@ -39,6 +39,8 @@ Confirm the lockfile resolves `@cloudflare/sandbox` to a preview build, then dep
 | `createSession` / `ExecutionSession`                                 | Gone from the core public surface. Pass `cwd`/`env` per `exec`, or one shell argv script. |
 | Interpreter methods on `Sandbox`                                     | `withInterpreter` from `@cloudflare/sandbox/interpreter`.                      |
 | String kill signals                                                  | Numeric signals on `process.kill`.                                             |
+| `waitForPort` default mode                                           | Preview default is **`tcp`**. Pass `mode: "http"` for HTTP checks.             |
+| Process / stream **stdin**                                           | No process stdin on the handle. Non-interactive: argv/`cwd`/`env`. Interactive PTY: [terminals](/sandbox/1-0-preview/terminals/). |
 | `sandbox.terminal(request)` / session `terminal()`                   | `createTerminal`, then `terminal.connect(request)`.                            |
 | xterm `sessionId`                                                    | `terminalId` (and optional `cursor`).                                          |
 
@@ -81,14 +83,18 @@ const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
 	cwd: "/workspace/app",
 });
 
+// Default readiness mode is TCP. Use mode: "http" when you need an HTTP check.
 await server.waitForPort(3000, { timeout: 60_000 });
+// await server.waitForPort(3000, { mode: "http", path: "/health", timeout: 60_000 });
 
 const stream = await server.logs({ follow: true, replay: true });
 // consume stream...
 
-await server.kill();
+await server.kill(); // numeric signal; default 15
 ```
 </TypeScriptExample>
+
+Process handle details (waits, log events, `kill`, no stdin): [Processes API](/sandbox/1-0-preview/api/processes/).
 
 Across Worker requests, keep `server.id` and resume with `getProcess(id)` only while that process may still be running in the current container. If the container stopped, `getProcess` may return `null`. If you still hold a handle from a previous container, expect a stale-handle error. In both cases, start a new `exec` from the work you still need to run. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 

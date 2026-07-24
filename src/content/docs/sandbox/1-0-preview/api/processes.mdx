@@ -16,7 +16,9 @@ This page documents the process API on `@cloudflare/sandbox@next`, the preview o
 
 Launch and observe supervised processes in the current container for a sandbox.
 
-For the mental model, refer to [Process execution](/sandbox/1-0-preview/processes/).
+For the mental model, refer to [Process execution](/sandbox/1-0-preview/processes/). For interactive PTY input and browser terminals, refer to [Terminals](/sandbox/1-0-preview/terminals/) and the [Terminals API](/sandbox/1-0-preview/api/terminals/).
+
+Process handles have **no standard input**. Use `cwd`, `env`, and the argv (or an explicit shell script) for non-interactive work. Use a [terminal](/sandbox/1-0-preview/terminals/) when you need an interactive PTY.
 
 ## `exec()`
 
@@ -74,28 +76,56 @@ Process IDs are not durable across container stop or replace. See [How long a pr
 
 ## `listProcesses()`
 
-List processes running in the current container for this sandbox. Does not start a container if none is running. Returns an empty list when no container is up.
+List processes in the current container for this sandbox. Does not start a container if none is running. Returns an empty list when no container is up.
 
 ```ts
 const statuses = await sandbox.listProcesses(): Promise<ProcessStatus[]>;
 ```
 
+Each entry is a [ProcessStatus](#processstatus) value (the same shape as `status()`).
+
 ## `SandboxProcess`
 
-| Member                          | Description                                                |
-| ------------------------------- | ---------------------------------------------------------- |
-| `id`                            | Process ID in the current container.                       |
-| `pid`                           | Container pid at launch.                                   |
-| `exitCode`                      | `Promise<number>` that resolves when the process finishes. |
-| `status()`                      | Current discriminated status.                              |
-| `logs(options?)`                | Cursor-based log stream.                                   |
-| `output(options?)`              | Buffered stdout and stderr plus exit metadata.             |
-| `waitForExit(options?)`         | Wait until the supervised process group settles.           |
-| `waitForLog(pattern, options?)` | Wait until stdout or stderr matches.                       |
-| `waitForPort(port, options?)`   | Wait until a port is ready or readiness fails.             |
-| `kill(signal?)`                 | Send a numeric signal. Default `15` (`SIGTERM`).           |
+| Member                          | Description                                                                 |
+| ------------------------------- | --------------------------------------------------------------------------- |
+| `id`                            | Process ID in the current container.                                        |
+| `pid`                           | Container pid at launch.                                                    |
+| `exitCode`                      | `Promise<number>` that resolves when the supervised process group settles.  |
+| `status()`                      | Current discriminated status.                                               |
+| `logs(options?)`                | Cursor-based log stream.                                                    |
+| `output(options?)`              | Buffered stdout and stderr plus exit metadata.                              |
+| `waitForExit(options?)`         | Wait until the supervised process group settles.                            |
+| `waitForLog(pattern, options?)` | Wait until stdout or stderr matches.                                        |
+| `waitForPort(port, options?)`   | Wait until a port is ready or readiness fails.                              |
+| `kill(signal?)`                 | Send a numeric signal. Default `15` (`SIGTERM`).                            |
+
+There is no process stdin API on this handle.
+
+### `status()`
+
+```ts
+const status = await process.status(): Promise<ProcessStatus>;
+```
+
+See [ProcessStatus](#processstatus). A process stays `running` until the supervised **process group** has settled, even if the root pid exits while descendants continue.
 
 ### `output()`
+
+Buffer stdout and stderr until the process completes (or the local wait ends), then return exit metadata.
+
+```ts
+// Default: binary bodies
+const output = await process.output(
+	options?: ProcessOutputOptions,
+): Promise<ProcessOutput<Uint8Array>>;
+
+// String bodies
+const text = await process.output(
+	options: ProcessOutputOptions & { encoding: "utf8" },
+): Promise<ProcessOutput<string>>;
+```
+
+#### `ProcessOutput`
 
 ```ts
 interface ProcessOutput<T = Uint8Array> {
@@ -108,48 +138,322 @@ interface ProcessOutput<T = Uint8Array> {
 }
 ```
 
-Pass `{ encoding: "utf8" }` when you want string streams. Prefer `logs()` when output may exceed the buffer.
+Default body encoding is binary (`Uint8Array`) unless you pass `encoding: "utf8"`. Prefer `logs()` when output may exceed what you want to buffer.
 
-Default body encoding is binary (`Uint8Array`) unless you pass `encoding: "utf8"`.
+#### `ProcessOutputOptions`
 
-Optional local observation controls on `output()`:
+| Field      | Type          | Description                                                                 |
+| ---------- | ------------- | --------------------------------------------------------------------------- |
+| `encoding` | `"utf8"`      | Decode stdout/stderr as strings.                                            |
+| `maxBytes` | `number`      | Cap buffered bytes per stream side of the result; may set `truncated: true`. No default cap when omitted. |
+| `timeout`  | `number`      | Local wait deadline in milliseconds only; does not kill the process.      |
+| `signal`   | `AbortSignal` | Cancel this wait only; does not kill the process.                           |
 
-| Field      | Type          | Description                                      |
-| ---------- | ------------- | ------------------------------------------------ |
-| `encoding` | `"utf8"`      | Decode stdout/stderr as strings.                 |
-| `maxBytes` | `number`      | Cap buffered bytes (may set `truncated: true`). |
-| `timeout`  | `number`      | Local wait deadline only; does not kill.         |
-| `signal`   | `AbortSignal` | Cancel this wait only; does not kill.            |
+`maxBytes` must be a non-negative finite number when set.
+
+<TypeScriptExample>
+```
+const process = await sandbox.exec(["/bin/bash", "-lc", "npm test"], {
+	cwd: "/workspace/app",
+});
+const result = await process.output({ encoding: "utf8", timeout: 120_000 });
+
+console.log(result.exitCode, result.stdout, result.timedOut, result.truncated);
+```
+</TypeScriptExample>
 
 ### `logs()`
 
+Stream replayable log events with an opaque cursor.
+
 ```ts
-interface ProcessLogsOptions {
-	since?: string; // opaque cursor
-	replay?: boolean;
-	follow?: boolean;
-	signal?: AbortSignal; // cancels this subscription only
+const stream = await process.logs(options?: ProcessLogsOptions);
+// Promise<ReadableStream<ProcessLogEvent>>
+```
+
+#### `ProcessLogsOptions`
+
+| Field    | Type          | Description                                                         |
+| -------- | ------------- | ------------------------------------------------------------------- |
+| `since`  | `string`      | Opaque cursor; resume after a previous event.                       |
+| `replay` | `boolean`     | Include buffered history when resuming.                             |
+| `follow` | `boolean`     | Keep the stream open for live output.                               |
+| `signal` | `AbortSignal` | Cancel this subscription only; the process keeps running.           |
+
+#### `ProcessLogEvent`
+
+```ts
+type ProcessLogEvent =
+	| {
+			type: "stdout" | "stderr";
+			cursor: string;
+			timestamp: string;
+			data: Uint8Array;
+	  }
+	| {
+			type: "terminal";
+			state: "exited";
+			cursor: string;
+			timestamp: string;
+			exit: ProcessExit;
+	  }
+	| {
+			type: "terminal";
+			state: "error";
+			cursor: string;
+			timestamp: string;
+			error: ProcessFailure;
+	  }
+	| {
+			type: "truncated";
+			cursor?: string;
+			timestamp: string;
+	  };
+```
+
+Retain the latest `cursor` from delivered events if a later Worker request resumes with `logs({ since: cursor, replay: true, follow: true })` on the **same** process in the **same** container.
+
+<TypeScriptExample>
+```
+const process = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
+	cwd: "/workspace/app",
+});
+
+const stream = await process.logs({ follow: true, replay: true });
+const reader = stream.getReader();
+const decoder = new TextDecoder();
+
+for (;;) {
+	const { done, value } = await reader.read();
+	if (done) break;
+
+	if (value.type === "stdout" || value.type === "stderr") {
+		// Keep value.cursor if you will resume later
+		console.log(value.type, decoder.decode(value.data, { stream: true }));
+		continue;
+	}
+
+	if (value.type === "terminal") {
+		console.log("done", value.state);
+		break;
+	}
+}
+```
+</TypeScriptExample>
+
+### `waitForExit()`
+
+Wait until the supervised process group settles.
+
+```ts
+const exit = await process.waitForExit(options?: {
+	timeout?: number;
+	signal?: AbortSignal;
+}): Promise<ProcessExit>;
+```
+
+| Field     | Type          | Description                                               |
+| --------- | ------------- | --------------------------------------------------------- |
+| `timeout` | `number`      | Local wait deadline only; does not kill the process.      |
+| `signal`  | `AbortSignal` | Cancel this wait only; does not kill the process.         |
+
+Returns [ProcessExit](#processexit). Local timeout surfaces as `ProcessWaitTimeoutError`. Local abort surfaces as `ProcessAbortedError`.
+
+<TypeScriptExample>
+```
+const build = await sandbox.exec(["/bin/bash", "-lc", "npm run build"], {
+	cwd: "/workspace/app",
+});
+const exit = await build.waitForExit({ timeout: 600_000 });
+console.log(exit.code, exit.signal, exit.timedOut);
+```
+</TypeScriptExample>
+
+### `waitForLog()`
+
+Wait until stdout and/or stderr matches a pattern.
+
+```ts
+const result = await process.waitForLog(
+	pattern: string | RegExp,
+	options?: WaitForLogOptions,
+): Promise<WaitForLogResult>;
+```
+
+#### `WaitForLogOptions`
+
+| Field     | Type                              | Description                                          |
+| --------- | --------------------------------- | ---------------------------------------------------- |
+| `stream`  | `"stdout" \| "stderr" \| "both"`  | Which streams to match. Default: `"both"`.           |
+| `timeout` | `number`                          | Local wait deadline only; does not kill the process. |
+| `signal`  | `AbortSignal`                     | Cancel this wait only; does not kill the process.    |
+
+#### `WaitForLogResult`
+
+```ts
+interface WaitForLogResult {
+	stream: "stdout" | "stderr";
+	text: string;
+	match: string;
+	cursor?: string;
 }
 ```
 
-### Status shape
+- `text` is the matching window of decoded output for that stream.
+- `match` is the matched substring.
+- `cursor` is the log cursor at the match when available.
+
+If the process exits before a match, the SDK throws `ProcessExitedBeforeLogError`. A local wait timeout throws `ProcessWaitTimeoutError`.
+
+<TypeScriptExample>
+```
+const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
+	cwd: "/workspace/app",
+});
+
+const ready = await server.waitForLog(/listening on/i, {
+	stream: "both",
+	timeout: 60_000,
+});
+console.log(ready.stream, ready.match);
+```
+</TypeScriptExample>
+
+### `waitForPort()`
+
+Wait until a port is ready, or fail if the process exits first or the local wait ends.
+
+```ts
+await process.waitForPort(
+	port: number,
+	options?: WaitForPortOptions,
+): Promise<void>;
+```
+
+#### `WaitForPortOptions`
+
+| Field      | Type                                      | Description |
+| ---------- | ----------------------------------------- | ----------- |
+| `mode`     | `"tcp" \| "http"`                         | Readiness check. Default: `"tcp"` (accepts a TCP connection). |
+| `path`     | `string`                                  | HTTP path to request when `mode` is `"http"`. Default: `"/"`. |
+| `status`   | `number \| { min: number; max: number }`  | Expected HTTP status or inclusive range when `mode` is `"http"`. Default: `{ min: 200, max: 399 }`. |
+| `interval` | `number`                                  | Milliseconds between checks. Default: `500`. |
+| `timeout`  | `number`                                  | Local wait deadline only; does not kill the process. No default timeout when omitted. |
+| `signal`   | `AbortSignal`                             | Cancel this wait only; does not kill the process. |
+
+**TCP mode** (default) succeeds when the port accepts a connection:
+
+<TypeScriptExample>
+```
+const db = await sandbox.exec(["redis-server"]);
+
+await db.waitForPort(6379, {
+	mode: "tcp",
+	timeout: 10_000,
+});
+```
+</TypeScriptExample>
+
+**HTTP mode** issues an HTTP request and checks the response status:
+
+<TypeScriptExample>
+```
+const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
+	cwd: "/workspace/app",
+});
+
+await server.waitForPort(3000, {
+	mode: "http",
+	path: "/health",
+	status: { min: 200, max: 299 },
+	timeout: 60_000,
+});
+```
+</TypeScriptExample>
+
+Typical failures:
+
+- `ProcessReadyTimeoutError` — port not ready before the local timeout
+- `ProcessExitedBeforeReadyError` — process exited before the port was ready
+- `ProcessAbortedError` — local `AbortSignal` cancelled the wait (process may still run)
+
+### `kill()`
+
+Send a numeric signal to the process.
+
+```ts
+await process.kill(signal?: number): Promise<void>;
+```
+
+- Default `signal` is `15` (`SIGTERM`).
+- Pass a numeric signal only (for example `9` for `SIGKILL`). String signal names are not accepted.
+
+Stopping the process is separate from cancelling a local wait or log subscription.
+
+### `exitCode`
+
+```ts
+const code: Promise<number> = process.exitCode;
+```
+
+Resolves to the exit code when the supervised process group has settled (the same completion boundary as `waitForExit()`). Prefer `waitForExit()` when you also need `signal` or `timedOut`.
+
+## ProcessStatus
 
 ```ts
 type ProcessStatus =
-	| { state: "running"; id: string; pid: number /* … */ }
-	| { state: "exited"; id: string; pid: number; exit: ProcessExit /* … */ }
-	| { state: "error"; id: string; pid: number; error: ProcessFailure /* … */ };
+	| {
+			state: "running";
+			id: string;
+			pid: number;
+			command: SandboxCommand;
+			cwd?: string;
+			startedAt: string;
+	  }
+	| {
+			state: "exited";
+			id: string;
+			pid: number;
+			command: SandboxCommand;
+			cwd?: string;
+			startedAt: string;
+			endedAt: string;
+			exit: ProcessExit;
+	  }
+	| {
+			state: "error";
+			id: string;
+			pid: number;
+			command: SandboxCommand;
+			cwd?: string;
+			startedAt: string;
+			endedAt: string;
+			error: ProcessFailure;
+	  };
 ```
 
-A process stays `running` until the supervised **process group** has settled, even if the root pid exits while descendants continue.
+`listProcesses()` returns `ProcessStatus[]` using this shape.
 
 ### `ProcessExit`
+
+Outcome observed for the **root** subprocess when the supervised group settles.
 
 ```ts
 interface ProcessExit {
 	code: number;
 	signal?: number;
 	timedOut: boolean;
+}
+```
+
+Signals delivered only to descendants do not rewrite this outcome. See [Process execution](/sandbox/1-0-preview/processes/).
+
+### `ProcessFailure`
+
+```ts
+interface ProcessFailure {
+	code: string;
+	message: string;
 }
 ```
 
@@ -160,9 +464,15 @@ interface ProcessExit {
 | Unknown process ID in the current container | `ProcessNotFoundError` |
 | `getProcess` / `listProcesses` while no container is running | `null` / `[]` (not an error; does not start a container) |
 | Handle or process ID from a previous container | `StaleProcessHandleError` |
-| Local wait timed out (process may still run) | `ProcessWaitTimeoutError` |
+| Local wait timed out (`output` / `waitForExit` / `waitForLog`) | `ProcessWaitTimeoutError` |
 | Local `AbortSignal` on a wait or stream | `ProcessAbortedError` |
-| Port not ready before exit | `ProcessExitedBeforeReadyError` |
+| Port not ready before local timeout | `ProcessReadyTimeoutError` |
+| Process exited before port readiness | `ProcessExitedBeforeReadyError` |
+| Process exited before a log match | `ProcessExitedBeforeLogError` |
+| Invalid working directory at launch | `InvalidProcessCwdError` |
+| Invalid environment at launch | `InvalidProcessEnvironmentError` |
+| Invalid log cursor | `InvalidProcessCursorError` |
+| Process failed to start | `ProcessSpawnFailedError` |
 | Container not ready; work did not start | `ContainerUnavailableError` |
 | Work interrupted after it may have started | `OperationInterruptedError` |
 

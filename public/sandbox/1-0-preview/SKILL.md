@@ -67,6 +67,10 @@ const out = await p.output({ encoding: "utf8" });
 
 - `await exec` = launch, not completion
 - Observation timeout/abort does not kill; `exec` `timeout` is remote process lifetime
+- Process handles have **no stdin**; use argv/`cwd`/`env`, or a terminal for interactive PTY
+- `waitForPort` default mode is **`tcp`** (not HTTP); pass `mode: "http"` for HTTP readiness
+- `kill(signal?)` takes a **numeric** signal only (default `15`)
+- Wait/log/port option details: https://developers.cloudflare.com/sandbox/1-0-preview/api/processes/
 - Processes run in the current **container** for a **sandbox ID**; same sandbox ID ≠ same container forever
 - `getProcess` / `listProcesses` do not start a container; return `null` / `[]` when none is running
 - After the container stops or is replaced, old process IDs/handles are gone (stale-handle); store the job and `exec` again

@@ -148,6 +148,8 @@ Both follow the same [container lifetime rules](#how-long-a-process-lives). Term
 
 For large or long-running output, use `logs({ since, replay, follow })` and keep the latest **cursor**. A later Worker request against the **same still-running container** can call `getProcess(id)` and resume with `logs({ since: cursor, replay: true, follow: true })`. After a new container starts for the sandbox, start a new process instead of expecting the old cursor to apply.
 
+Event shapes, wait options, and readiness checks: [Processes API](/sandbox/1-0-preview/api/processes/).
+
 ## Related
 
 - [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
