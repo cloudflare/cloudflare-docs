@@ -55,7 +55,7 @@ Shell features such as pipes and `&&` require an explicit shell executable, for 
 
 In the current stable package, a default session can preserve working directory and environment variables across `exec()` calls. Applications can also create named sessions with `createSession()`.
 
-The 1.0 preview does not expose session execution. Each `exec()` starts an independent process. Pass `cwd` and `env` on each launch when you need them, or put multi-step shell syntax in one explicit shell argv (for example `['/bin/bash', '-lc', script]`). Isolate different end users with separate sandboxes.
+The 1.0 preview does not expose session execution. Each `exec()` starts an independent process. Pass `cwd` and `env` on each launch when you need them, or put multi-step shell syntax in one explicit shell argv (for example `['/bin/bash', '-lc', script]`). Isolate different end users with separate sandboxes. Environment model: [Environment variables](/sandbox/1-0-preview/environment/).
 
 ### Terminals
 
@@ -79,19 +79,17 @@ In the current stable package, applications can select HTTP, WebSocket, or RPC t
 
 In the 1.0 preview, the SDK always uses RPC. Remove `SANDBOX_TRANSPORT`, the `transport` option on `getSandbox()`, and `setTransport()`. No replacement setting is required.
 
-### What else still works
+### Other sandbox APIs
 
-Files, env, mounts, backups, ports, tunnels, and most lifecycle options remain available on the sandbox. This preview section focuses on what changed for execution, terminals, lifecycle honesty, and recovery.
-
-Continue using the main docs for these surfaces:
+These remain available. Use the main Sandbox documentation for them (and ignore session or transport options where those pages still mention them):
 
 - [Files](/sandbox/api/files/) and [file watching](/sandbox/api/file-watching/)
-- [Environment variables](/sandbox/configuration/environment-variables/)
 - [Storage](/sandbox/api/storage/) and [backups](/sandbox/api/backups/)
 - [Ports](/sandbox/api/ports/) and [tunnels](/sandbox/api/tunnels/)
 - [Lifecycle](/sandbox/api/lifecycle/) and [sandbox options](/sandbox/configuration/sandbox-options/)
+- [Outbound traffic](/sandbox/guides/outbound-traffic/) (credential injection and egress policy)
 
-On `@next`, skip stable guidance about sessions, transport selection, string `exec` / `execStream` / `startProcess`, and `sandbox.terminal(request)`.
+For process environment on `@next`, use [Environment variables](/sandbox/1-0-preview/environment/) in this section.
 
 ## Start here
 
@@ -143,6 +141,14 @@ On `@next`, skip stable guidance about sessions, transport selection, string `ex
 	icon="error"
 >
 	How to retry, inspect, and relaunch after common failures.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Environment variables"
+	href="/sandbox/1-0-preview/environment/"
+	icon="document"
+>
+	`setEnvVars`, per-launch `env`, and how processes get their environment.
 </LinkTitleCard>
 
 <LinkTitleCard

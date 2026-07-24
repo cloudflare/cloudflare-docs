@@ -29,6 +29,7 @@ If the user explicitly wants to stay on the current stable package only, use the
 - Terminals API: https://developers.cloudflare.com/sandbox/1-0-preview/api/terminals/
 - Errors API: https://developers.cloudflare.com/sandbox/1-0-preview/api/errors/
 - Extensions: https://developers.cloudflare.com/sandbox/1-0-preview/extensions/
+- Environment variables: https://developers.cloudflare.com/sandbox/1-0-preview/environment/
 
 ## Guidance for agents
 
@@ -77,10 +78,14 @@ const out = await p.output({ encoding: "utf8" });
 - Lifecycle model: https://developers.cloudflare.com/sandbox/1-0-preview/lifecycle/
 - Process lifetime: https://developers.cloudflare.com/sandbox/1-0-preview/processes/#how-long-a-process-lives
 
-### Sessions
+### Sessions and environment
 
-- Remove core session APIs
+- Remove session APIs
 - Pass `cwd` / `env` on each `exec`, or one shell argv script for multi-step shell syntax
+- `setEnvVars` merges into later `exec` launches (memory on the Durable Object; not filesystem-durable)
+- Per-launch `env` on `exec` / `createTerminal` as needed for **non-secret** config
+- Do **not** put live API keys or long-lived credentials in the sandbox; use outbound handlers: https://developers.cloudflare.com/sandbox/guides/outbound-traffic/
+- https://developers.cloudflare.com/sandbox/1-0-preview/environment/
 
 ### Terminals
 
@@ -114,12 +119,13 @@ if (t) return t.connect(request, { cursor });
 interpreter = withInterpreter(this);
 ```
 
-### APIs that remain available
+### Other APIs
 
-Most non-execution APIs (files, env, mounts, backups, ports/tunnels, lifecycle options) remain available on the sandbox. Do not tell users they were removed in 1.0.
+Files, mounts, backups, ports/tunnels, and lifecycle options remain available. Prefer the main Sandbox docs for signatures; skip sessions, transport selection, string exec helpers, and `sandbox.terminal` where those pages still describe them.
 
-- Prefer the main Sandbox docs for those topics; skip sessions/transport/string-exec/`sandbox.terminal` on stable pages
-- `gitCheckout` is **removed** on `@next` — run `git` with argv `exec`
+Environment variables on `@next`: https://developers.cloudflare.com/sandbox/1-0-preview/environment/
+
+- `gitCheckout` is removed on `@next` — run `git` with argv `exec`
 
 ## Validation
 

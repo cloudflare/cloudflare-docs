@@ -2,7 +2,7 @@
 title: Migrate
 pcx_content_type: how-to
 sidebar:
-  order: 7
+  order: 8
 description: Update an existing Sandbox SDK application from the stable package to @cloudflare/sandbox@next.
 products:
   - sandbox
@@ -104,7 +104,10 @@ Across Worker requests, keep `server.id` and resume with `getProcess(id)` only w
 | Stable | Preview |
 | ------ | ------- |
 | `exec("cd /app"); exec("npm test");` | `exec(['/bin/bash', '-lc', 'cd /app && npm test'])` or `exec(['npm', 'test'], { cwd: '/app' })` |
-| Exported vars in the default session | Pass `env` on each launch (and/or `setEnvVars` when sandbox-wide values apply) |
+| Exported vars in the default session | `setEnvVars` and/or `env` on each `exec` |
+| `createSession({ env })` | `setEnvVars` and/or `env` on each `exec` / `createTerminal` |
+
+Details: [Environment variables](/sandbox/1-0-preview/environment/).
 
 ### Timeouts and cancellation
 
@@ -182,6 +185,7 @@ When you migrate:
 ## Related
 
 - [1.0 preview overview](/sandbox/1-0-preview/)
+- [Environment variables](/sandbox/1-0-preview/environment/)
 - [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
 - [Process execution](/sandbox/1-0-preview/processes/) (including [how long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives))
 - [Errors and recovery](/sandbox/1-0-preview/errors/)

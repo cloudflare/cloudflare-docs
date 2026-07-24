@@ -70,6 +70,8 @@ const process = await sandbox.exec(["npm", "test"], {
 });
 ```
 
+Sandbox-wide values use `setEnvVars`. See [Environment variables](/sandbox/1-0-preview/environment/).
+
 ## Process handles
 
 `await sandbox.exec(argv)` returns a **process handle**:
