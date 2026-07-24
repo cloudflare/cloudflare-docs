@@ -43,29 +43,29 @@ Use one of the following methods to query the parent zone directly.
 
 ### Option A - `dig +trace`
 
-`dig +trace` follows the delegation from the root zone down, so its final output shows the nameservers that the parent zone is actually publishing for your domain.
+`dig +trace` follows the delegation from the root zone down, so its final output shows the nameservers that the parent zone is actually publishing for your domain. In a terminal, run:
 
 ```sh
 dig +trace example.com NS
 ```
 
-The last section of the output should return **only** the Cloudflare nameservers assigned to your zone (or, if you use [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns) or [Cloudflare as Secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), it should include them alongside your other provider's nameservers).
+The last section of the output should return **only** the Cloudflare nameservers assigned to your zone (or, if you use [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns), it should include them alongside your other provider's nameservers).
 
 ### Option B - `nslookup`
 
-If you are on Windows or prefer `nslookup`, query the `NS` records for your domain. Add the `-debug` flag to see the full response, including the authority section:
+If you are on Windows or prefer `nslookup`, query the `NS` records for your domain. Add the `-debug` flag to see the full response, including the authority section. In a terminal, run:
 
 ```sh
 nslookup -type=ns -debug example.com
 ```
 
-By default, `nslookup` queries your system's configured resolver, which may return a cached answer. For a definitive check against the parent zone (equivalent to `dig +trace`), query a TLD nameserver directly by adding it as the last argument. For example, for a `.com` domain:
+By default, `nslookup` queries your system's configured resolver, which may return a cached answer. For a definitive check against the parent zone (equivalent to `dig +trace`), query a TLD nameserver directly by adding it as the last argument. For a `.com` domain, this looks like:
 
 ```sh
 nslookup -type=ns -debug example.com a.gtld-servers.net
 ```
 
-You can find the authoritative TLD nameservers for any extension with `dig NS com.` (replace `com.` with your own TLD).
+For other TLDs, refer to [IANA's root zone database](https://www.iana.org/domains/root/db) to find the authoritative nameservers for your TLD.
 
 If the output shows nameservers other than the ones assigned to your Cloudflare zone, the delegation is not yet correct.
 
