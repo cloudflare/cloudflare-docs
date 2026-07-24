@@ -1,7 +1,13 @@
 ---
-import { Code, Tabs, TabItem } from "~/components";
+/**
+ * ExampleCard — renders one example: a code snippet block (single `<Code>` or
+ * `<Tabs>` of languages) plus its rendered output (text / media) and/or raw
+ * JSON response.
+ */
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
 import OutputBody from "~/components/models/OutputBody.astro";
-import type { ModelExample, CodeSnippet } from "~/schemas/catalog-models";
+import type { ModelExample, CodeSnippet } from "~/util/models";
 
 interface Props {
 	example: ModelExample;
@@ -82,7 +88,10 @@ const displayNames: Record<string, string> = {
 	bash: "Bash",
 };
 
-function getLang(label: string): string {
+// Returns a Shiki language id. Cast to `any` at call sites because Astro's
+// `Code` types `lang` as the literal `CodeLanguage` union, while these labels
+// are resolved dynamically from the catalog data.
+function getLang(label: string): any {
 	return languageMap[label] ?? languageMap[label.toLowerCase()] ?? "txt";
 }
 
@@ -184,42 +193,6 @@ function getLabel(label: string): string {
 		flex-direction: column;
 	}
 
-	/* stretch the tabs element and its active panel */
-	.example-card.side-by-side .example-code :global(starlight-tabs) {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-	}
-
-	.example-card.side-by-side
-		.example-code
-		:global(starlight-tabs > [role="tabpanel"]:not([hidden])) {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-	}
-
-	.example-card.side-by-side .example-code :global(.expressive-code) {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-	}
-
-	.example-card.side-by-side .example-code :global(.expressive-code figure) {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-	}
-
-	.example-card.side-by-side .example-code :global(.expressive-code pre) {
-		flex: 1;
-		overflow: auto;
-	}
-
 	.example-response {
 		display: flex;
 		flex-direction: column;
@@ -234,22 +207,9 @@ function getLabel(label: string): string {
 		align-self: start;
 	}
 
-	/* Cap raw response JSON to match the Output text panel height exactly.
-	   Expressive Code wraps the code block in a <figure> with its own margins
-	   and frame chrome; we zero those out and cap the outer figure so the
-	   two tabs render at the same overall size. */
-	.example-raw-response :global(.expressive-code) {
-		margin: 0;
-	}
-	.example-raw-response :global(.expressive-code figure) {
-		margin: 0;
+	/* Cap raw response JSON so the two tabs render at a similar size. */
+	.example-raw-response :global(pre) {
 		max-height: 32rem;
-		display: flex;
-		flex-direction: column;
-	}
-	.example-raw-response :global(.expressive-code pre) {
-		flex: 1;
-		min-height: 0;
 		overflow: auto;
 	}
 </style>

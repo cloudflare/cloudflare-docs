@@ -7,7 +7,8 @@
 	"scripts": {
 		"build": "flue build",
 		"dev": "flue dev",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@cloudflare/codemode": "0.3.8",
@@ -22,6 +23,7 @@
 		"wrangler": "4.107.0"
 	},
 	"devDependencies": {
-		"typescript": "5.9.3"
+		"typescript": "5.9.3",
+		"vitest": "4.1.10"
 	}
 }

@@ -1,27 +1,26 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
-import { isDisallowedByRobots } from "~/util/robots";
+import { isDisallowedByRobots } from "../util/robots";
+
+export const prerender = true;
 
 export const GET: APIRoute = async ({ url }) => {
 	const base = url.origin;
 	const allDirectory = await getCollection("directory");
-	const directory = allDirectory.filter((p) => !!p.data.entry.group);
+	const directory = allDirectory.filter((p) => !!p.data.entry?.group);
 
 	const docs = await getCollection("docs");
 
-	// Build a set of all canonical URL prefixes across the entire directory.
 	const allUrlPrefixes = new Set<string>(
 		allDirectory
-			.map((entry) => entry.data.entry.url)
+			.map((entry) => entry.data.entry?.url)
 			.filter(
 				(u): u is string =>
 					typeof u === "string" && u !== "" && u !== "/" && !u.includes("#"),
 			),
 	);
 
-	// Returns true if this entry's URL is nested under another directory entry's URL.
-	// e.g. /logs/logpush/ is nested under /logs/  →  duplicate in parent's llms.txt
 	function isSubProduct(entryUrl: string): boolean {
 		if (!entryUrl || entryUrl === "/" || entryUrl.includes("#")) return false;
 		for (const otherUrl of Array.from(allUrlPrefixes)) {
@@ -31,14 +30,14 @@ export const GET: APIRoute = async ({ url }) => {
 		return false;
 	}
 
-	// Build a set of product IDs that actually have docs pages, are not sub-products,
-	// and are not disallowed by robots.txt
 	const productsWithDocs = new Set(
 		directory
 			.filter((entry) => {
-				if (isSubProduct(entry.data.entry.url)) return false;
-				if (isDisallowedByRobots(entry.data.entry.url)) return false;
-				const prefix = entry.data.entry.url.slice(1, -1);
+				const entryUrl = entry.data.entry?.url;
+				if (!entryUrl) return false;
+				if (isSubProduct(entryUrl)) return false;
+				if (isDisallowedByRobots(entryUrl)) return false;
+				const prefix = entryUrl.slice(1, -1);
 				return docs.some(
 					(e) => e.id.startsWith(prefix + "/") || e.id === prefix,
 				);
@@ -46,12 +45,12 @@ export const GET: APIRoute = async ({ url }) => {
 			.map((entry) => entry.id),
 	);
 
-	// Group products by their group, skipping any without docs pages
 	const groupedMap = new Map<string, typeof directory>();
 	for (const entry of directory.filter((entry) =>
 		productsWithDocs.has(entry.id),
 	)) {
-		const group = entry.data.entry.group as string;
+		const group = entry.data.entry?.group;
+		if (!group) continue;
 		if (!groupedMap.has(group)) {
 			groupedMap.set(group, []);
 		}
@@ -61,21 +60,23 @@ export const GET: APIRoute = async ({ url }) => {
 		a.localeCompare(b),
 	);
 
-	// Find ungrouped directory entries that have their own top-level docs section,
-	// are not nested under another product's URL path, and are not disallowed by robots.txt
 	const ungrouped = allDirectory
 		.filter((entry) => {
-			if (entry.data.entry.group) return false;
-			if (isSubProduct(entry.data.entry.url)) return false;
-			if (isDisallowedByRobots(entry.data.entry.url)) return false;
-			const prefix = entry.data.entry.url.slice(1, -1);
+			const entryUrl = entry.data.entry?.url;
+			if (entry.data.entry?.group) return false;
+			if (!entryUrl) return false;
+			if (isSubProduct(entryUrl)) return false;
+			if (isDisallowedByRobots(entryUrl)) return false;
+			const prefix = entryUrl.slice(1, -1);
 			return docs.some((e) => e.id.startsWith(prefix + "/") || e.id === prefix);
 		})
-		.sort((a, b) => a.data.entry.title.localeCompare(b.data.entry.title));
+		.sort((a, b) =>
+			(a.data.entry?.title ?? "").localeCompare(b.data.entry?.title ?? ""),
+		);
 
 	const otherLinks = ungrouped
 		.map((entry) => {
-			const line = `- [${entry.data.entry.title}](${base}${entry.data.entry.url}llms.txt)`;
+			const line = `- [${entry.data.entry?.title}](${base}${entry.data.entry?.url}llms.txt)`;
 			const description = entry.data.meta?.description;
 			return description ? line.concat(`: ${description}`) : line;
 		})
@@ -95,7 +96,7 @@ export const GET: APIRoute = async ({ url }) => {
 
 				${entries
 					.map((entry) => {
-						const line = `- [${entry.data.entry.title}](${base}${entry.data.entry.url}llms.txt)`;
+						const line = `- [${entry.data.entry?.title}](${base}${entry.data.entry?.url}llms.txt)`;
 						const description = entry.data.meta?.description;
 						return description ? line.concat(`: ${description}`) : line;
 					})

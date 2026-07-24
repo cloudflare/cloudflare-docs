@@ -5,58 +5,47 @@ sidebar_position: 11
 
 <!-- Auto Generated Below -->
 
+## Modules
+
+<dl>
+<dt><a href="#module_RTKPip">RTKPip</a></dt>
+<dd></dd>
+</dl>
+
 ## Functions
 
 <dl>
 <dt><a href="#getInitials">getInitials()</a></dt>
 <dd><p>Code from ui-kit. Same method used in the avatar component</p>
 </dd>
-<dt><a href="#_init">_init(context, self)</a></dt>
-<dd></dd>
-<dt><a href="#init">init([options])</a></dt>
-<dd><p>Initialize PiP and prepare sources</p>
-</dd>
-<dt><a href="#disableSource">disableSource(source)</a></dt>
-<dd></dd>
-<dt><a href="#addSource">addSource(id, element, enabled, [displayText])</a></dt>
-<dd><p>Add a video source from the participant grid</p>
-</dd>
-<dt><a href="#updateSource">updateSource(id, source)</a></dt>
-<dd><p>Update a video source</p>
-</dd>
-<dt><a href="#removeSource">removeSource(id)</a></dt>
-<dd><p>Remove the video source for the participant</p>
-</dd>
-<dt><a href="#removePinnedSource">removePinnedSource(id)</a></dt>
-<dd><p>Remove the pinned source</p>
-</dd>
-<dt><a href="#removeAllSources">removeAllSources()</a></dt>
-<dd><p>Remove all sources</p>
-</dd>
-<dt><a href="#enable">enable()</a></dt>
-<dd><p>Enable PiP</p>
-</dd>
 </dl>
 
-<a name="getInitials"></a>
+<a name="module_RTKPip"></a>
 
-Code from ui-kit. Same method used in the avatar component
 
-**Kind**: global function  
-<a name="_init"></a>
+* [RTKPip](#module_RTKPip)
+    * [.disable](#module_RTKPip+disable)
+    * [.init([options])](#module_RTKPip+init)
+    * [.disableSource(source)](#module_RTKPip+disableSource)
+    * [.addSource(id, element, enabled, [displayText])](#module_RTKPip+addSource)
+    * [.updateSource(id, source)](#module_RTKPip+updateSource)
+    * [.removeSource(id)](#module_RTKPip+removeSource)
+    * [.removePinnedSource(id)](#module_RTKPip+removePinnedSource)
+    * [.removeAllSources()](#module_RTKPip+removeAllSources)
+    * [.enable()](#module_RTKPip+enable)
 
-**Kind**: global function  
+<a name="module_RTKPip+disable"></a>
 
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-| self | <code>Self</code> | 
+### meeting.participants.pip.disable
+Disable PiP
 
-<a name="init"></a>
+**Kind**: instance property of [<code>RTKPip</code>](#module_RTKPip)  
+<a name="module_RTKPip+init"></a>
 
+### meeting.participants.pip.init([options])
 Initialize PiP and prepare sources
 
-**Kind**: global function  
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
 
 | Param | Type |
 | --- | --- |
@@ -64,19 +53,21 @@ Initialize PiP and prepare sources
 | [options.height] | <code>number</code> | 
 | [options.width] | <code>number</code> | 
 
-<a name="disableSource"></a>
+<a name="module_RTKPip+disableSource"></a>
 
-**Kind**: global function  
+### meeting.participants.pip.disableSource(source)
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
 
 | Param | Type |
 | --- | --- |
 | source | <code>string</code> | 
 
-<a name="addSource"></a>
+<a name="module_RTKPip+addSource"></a>
 
+### meeting.participants.pip.addSource(id, element, enabled, [displayText])
 Add a video source from the participant grid
 
-**Kind**: global function  
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -85,44 +76,54 @@ Add a video source from the participant grid
 | enabled | <code>boolean</code> | if source is enabled |
 | [displayText] | <code>string</code> | two character display text |
 
-<a name="updateSource"></a>
+<a name="module_RTKPip+updateSource"></a>
 
+### meeting.participants.pip.updateSource(id, source)
 Update a video source
 
-**Kind**: global function  
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
 
 | Param | Type |
 | --- | --- |
 | id | <code>string</code> | 
 | source | <code>any</code> | 
 
-<a name="removeSource"></a>
+<a name="module_RTKPip+removeSource"></a>
 
+### meeting.participants.pip.removeSource(id)
 Remove the video source for the participant
 
-**Kind**: global function  
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
 
 | Param | Description |
 | --- | --- |
 | id | id for the source (ex. participant id) |
 
-<a name="removePinnedSource"></a>
+<a name="module_RTKPip+removePinnedSource"></a>
 
+### meeting.participants.pip.removePinnedSource(id)
 Remove the pinned source
 
-**Kind**: global function  
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
 
 | Param | Description |
 | --- | --- |
 | id | id for the source (ex. participant id) |
 
-<a name="removeAllSources"></a>
+<a name="module_RTKPip+removeAllSources"></a>
 
+### meeting.participants.pip.removeAllSources()
 Remove all sources
 
-**Kind**: global function  
-<a name="enable"></a>
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
+<a name="module_RTKPip+enable"></a>
 
+### meeting.participants.pip.enable()
 Enable PiP
+
+**Kind**: instance method of [<code>RTKPip</code>](#module_RTKPip)  
+<a name="getInitials"></a>
+
+Code from ui-kit. Same method used in the avatar component
 
 **Kind**: global function  

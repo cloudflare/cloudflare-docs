@@ -1,11 +1,13 @@
 ---
-import StarlightPage, {
-	type StarlightPageProps,
-} from "@astrojs/starlight/components/StarlightPage.astro";
+// Per-product 404 — keeps the product sidebar (not splash), unlike the site /404.
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-
+import { getSidebar } from "@cloudflare/nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { externalAppLinksTransform } from "~/util/sidebar";
 import FourOhFour from "~/components/404.astro";
+
+export const prerender = true;
 
 export const getStaticPaths = (async () => {
 	const sections = await getCollection("docs", (e) => {
@@ -21,19 +23,27 @@ export const getStaticPaths = (async () => {
 	});
 }) satisfies GetStaticPaths;
 
-const props = {
-	frontmatter: {
-		title: "404 - Page Not Found",
-		tableOfContents: false,
-		editUrl: false,
-		feedback: false,
-		noindex: true,
-	},
-	hideTitle: true,
-	hideBreadcrumbs: true,
-} as StarlightPageProps;
+const { product } = Astro.params;
+
+const sectionSlug = `/${product}/404/`;
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: externalAppLinksTransform,
+});
 ---
 
-<StarlightPage {...props}>
+<DocsLayout
+	title="404 - Page Not Found"
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={[]}
+	prevNext={{}}
+	collection="docs"
+	noindex
+	feedback={false}
+	meta={{ products: [] }}
+>
+	<Fragment slot="page-title"></Fragment>
+	<Fragment slot="pagination"></Fragment>
 	<FourOhFour />
-</StarlightPage>
+</DocsLayout>
