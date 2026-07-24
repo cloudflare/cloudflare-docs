@@ -41,6 +41,12 @@ export interface ApiMode {
 export interface ModelView {
 	/** Collection entry id (filename), e.g. `openai-tts-1` / `aura-1`. */
 	id: string;
+	/**
+	 * Content-layer digest of the source entry, used as the incremental-build
+	 * `cacheKey` for the per-model routes. Undefined if the loader didn't
+	 * provide one (page then always re-renders).
+	 */
+	digest?: string;
 	/** Full model id, e.g. `@cf/meta/...` (legacy) or `openai/tts-1` (catalog). */
 	name: string;
 	/** URL slug used by `/ai/models/[...name]`. */

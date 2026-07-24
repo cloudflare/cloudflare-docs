@@ -17,6 +17,8 @@ export const getStaticPaths = (async () => {
 	return models.map((model) => ({
 		params: { name: model.name.split("/").at(-1)! },
 		props: { model, slug: model.name.split("/").at(-1)! },
+		// Incremental-build cache key: the source entry's content digest.
+		cacheKey: model.digest,
 	}));
 }) satisfies GetStaticPaths;
 

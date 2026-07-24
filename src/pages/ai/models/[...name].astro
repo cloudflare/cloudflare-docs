@@ -21,6 +21,8 @@ export const getStaticPaths = (async () => {
 	return models.map((model) => ({
 		params: { name: model.slug },
 		props: { model, slug: model.slug },
+		// Incremental-build cache key: the source entry's content digest.
+		cacheKey: model.digest,
 	}));
 }) satisfies GetStaticPaths;
 

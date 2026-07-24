@@ -31,6 +31,7 @@ const authorDisplayName = (author: string): string =>
 
 function buildView(args: {
 	id: string;
+	digest?: string;
 	name: string;
 	slug: string;
 	displayName: string;
@@ -56,6 +57,7 @@ function buildView(args: {
 
 	return {
 		id: args.id,
+		digest: args.digest,
 		name: args.name,
 		slug: args.slug,
 		shortName: args.name.split("/").at(-1) ?? args.name,
@@ -121,6 +123,7 @@ export function catalogToResolved(entry: CatalogEntry): ModelView {
 
 	return buildView({
 		id: entry.id,
+		digest: entry.digest != null ? String(entry.digest) : undefined,
 		name: model.model_id,
 		slug: model.model_id,
 		displayName: model.name,
@@ -157,6 +160,7 @@ export function legacyToResolved(entry: LegacyEntry): ModelView {
 
 	return buildView({
 		id: entry.id,
+		digest: entry.digest != null ? String(entry.digest) : undefined,
 		name: d.name,
 		slug: d.name,
 		displayName: d.name.split("/").at(-1) ?? d.name,
