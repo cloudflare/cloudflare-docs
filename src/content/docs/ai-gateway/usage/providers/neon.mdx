@@ -57,7 +57,7 @@ Create one custom provider per Neon branch that you want to route through AI Gat
 
 ## URL structure
 
-Everything after `custom-neon/` is appended to the branch host:
+AI Gateway appends everything after `custom-neon/` to the branch host:
 
 | Component    | Value                                                                                            |
 | ------------ | ------------------------------------------------------------------------------------------------ |
@@ -67,7 +67,7 @@ Everything after `custom-neon/` is appended to the branch host:
 
 Pass your Neon credential as a bearer token on every request. You do not need separate provider API keys.
 
-If your gateway has [Authenticated Gateway](/ai-gateway/configuration/authentication/) turned on, also send your Cloudflare API token in the `cf-aig-authorization` header. The examples below show both variants.
+If your gateway has [Authenticated Gateway](/ai-gateway/configuration/authentication/) turned on, also send your Cloudflare API token in the `cf-aig-authorization` header. Each example on this page has a tab for both cases.
 
 ## Examples
 
