@@ -1,0 +1,209 @@
+---
+title: Local development
+description: Develop against R2 buckets locally with Wrangler, including the local public bucket and S3-compatible endpoints.
+pcx_content_type: concept
+sidebar:
+  order: 4
+products:
+  - r2
+---
+
+import { WranglerConfig, Tabs, TabItem } from "~/components";
+
+R2 supports local development using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. When you run `wrangler dev`, [Miniflare](/workers/testing/miniflare/) creates a local version of each R2 bucket your Worker binds to. Local buckets store their objects on disk, so requests never reach Cloudflare and never affect production data or billing.
+
+Local buckets are also reachable over HTTP, which lets you develop against R2 with tools that are not Workers. Objects can be served publicly, and buckets can be exposed over an S3-compatible API.
+
+## Start a local development session
+
+:::note
+
+This guide assumes you are using [Wrangler v3.0](https://blog.cloudflare.com/wrangler3/) or later. Serving objects over HTTP requires Wrangler v4.100.0 or later.
+
+Users new to R2 and/or Cloudflare Workers should visit the [R2 get started guide](/r2/get-started/) to install `wrangler` and create their first bucket.
+
+:::
+
+To develop against a local bucket, add an [R2 binding](/workers/wrangler/configuration/#r2-buckets) to your Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+name = "my-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "my-bucket"
+```
+
+</WranglerConfig>
+
+Open your terminal and run the following command to start a local development session:
+
+```sh
+npx wrangler dev
+```
+
+```txt output
+ ⛅️ wrangler 4.107.0
+────────────────────
+Your Worker has access to the following bindings:
+Binding                     Resource       Mode
+env.BUCKET (my-bucket)      R2 Bucket      local
+
+⎔ Starting local server...
+[wrangler:info] Ready on http://localhost:8787
+```
+
+Local development sessions create a standalone, local-only environment that mirrors the production environment R2 runs in so you can test your Worker _before_ you deploy to production. The bucket is available on `env.BUCKET`, with the same [Workers API](/r2/api/workers/workers-api-reference/) it has in production.
+
+Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#dev) to learn more about how to configure a local development session.
+
+## Populate a local bucket
+
+A newly created local bucket is empty. Wrangler runs a local version of your bucket that is separate from the remote bucket, so changes you make locally do not affect production data.
+
+To add an object to a local bucket, use [`wrangler r2 object put`](/workers/wrangler/commands/r2/#r2-object-put) with the `--local` flag:
+
+```sh
+npx wrangler r2 object put my-bucket/cat.png --file=./cat.png --local
+```
+
+Use [`wrangler r2 object get`](/workers/wrangler/commands/r2/#r2-object-get) and [`wrangler r2 object delete`](/workers/wrangler/commands/r2/#r2-object-delete) with the same `--local` flag to read and remove local objects. Without `--local`, these commands act on the remote bucket.
+
+## Persist local data
+
+By default, Wrangler persists local objects across development sessions. Use the [`--persist-to`](/workers/wrangler/commands/general/#dev) flag to store them in a specific directory.
+
+For more information on where local data is stored, refer to [Adding local data](/workers/local-development/local-data/#where-local-data-gets-stored).
+
+## Serve objects publicly
+
+Every local bucket is served over HTTP at the following path on the development server:
+
+```txt
+/cdn-cgi/local/r2/public/<BUCKET_ID>/<KEY>
+```
+
+`<BUCKET_ID>` is the bucket's `bucket_name`. When `bucket_name` is not set, it is the binding name instead.
+
+This endpoint requires no configuration. To read an object from the `my-bucket` bucket:
+
+```sh
+curl http://localhost:8787/cdn-cgi/local/r2/public/my-bucket/cat.png
+```
+
+The endpoint simulates a [public bucket](/r2/buckets/public-buckets/). It accepts `GET` and `HEAD` requests, and honors the `Range` and conditional request headers. Stored HTTP metadata, such as `Content-Type`, is returned with the object.
+
+Requests using any other method return `401`. Buckets configured with `remote = true` are not served.
+
+## Serve buckets over the S3 API
+
+:::note[Experimental]
+
+The local S3-compatible endpoint is experimental and may change. It requires Wrangler `vX.Y.Z` or later.
+
+:::
+
+Buckets can be served over an S3-compatible API, which lets you point existing S3 clients at a local bucket. Use this to develop against R2 with the AWS SDKs, the AWS CLI, or any other tool that speaks S3, without connecting to a real bucket.
+
+### Configure a bucket
+
+Unlike the public endpoint, the S3 endpoint is opt-in. Add `experimental_local_s3_credentials` to a bucket to serve it:
+
+<WranglerConfig removeSchema>
+
+```toml
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "my-bucket"
+
+[r2_buckets.experimental_local_s3_credentials]
+accessKeyId = "local-access-key-id"
+secretAccessKey = "local-secret-access-key"
+```
+
+</WranglerConfig>
+
+Both `accessKeyId` and `secretAccessKey` are required. Their values are arbitrary strings that you choose. They are not [R2 API tokens](/r2/api/tokens/), and they grant no access to production buckets.
+
+Requests are authenticated with AWS Signature Version 4, using either the `Authorization` header or [presigned URL](/r2/api/s3/presigned-urls/) query parameters. Buckets configured with `remote = true` are not served, and their credentials are ignored.
+
+### Connect an S3 client
+
+The bucket is served at the following path on the development server:
+
+```txt
+/cdn-cgi/local/r2/s3
+```
+
+Set the client's region to `auto` and turn on path-style addressing, so that the client appends the bucket to the endpoint. As with the public endpoint, the bucket is addressed by its `bucket_name`, or by the binding name when `bucket_name` is not set.
+
+<Tabs>
+<TabItem label="aws-sdk-js-v3">
+
+```ts
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: "http://localhost:8787/cdn-cgi/local/r2/s3",
+	credentials: {
+		accessKeyId: "local-access-key-id",
+		secretAccessKey: "local-secret-access-key",
+	},
+	forcePathStyle: true,
+});
+
+// On @aws-sdk/client-s3 older than 3.729.0, uploads hang because workerd
+// does not answer the SDK's `Expect: 100-continue`. Uncomment to fix.
+// S3.middlewareStack.remove("addExpectContinueMiddleware");
+
+console.log(
+	await S3.send(new GetObjectCommand({ Bucket: "my-bucket", Key: "cat.png" })),
+);
+```
+
+</TabItem>
+<TabItem label="aws-cli">
+
+```sh
+aws s3api get-object \
+  --endpoint-url http://localhost:8787/cdn-cgi/local/r2/s3 \
+  --bucket my-bucket \
+  --key cat.png \
+  cat.png
+```
+
+</TabItem>
+</Tabs>
+
+### Supported operations
+
+The endpoint implements the following operations:
+
+| Type    | Operations                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ------- | ------- |
+| Bucket  | [ListBuckets](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html), [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html), [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html), [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html), [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html), [GetBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html)                                                                                                                                                                                                                                                  |
+| Object  | [GetObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html), [HeadObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html), [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html), [CopyObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html), [DeleteObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html), [DeleteObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjects.html)                                                                                  |
+| Multipart | [CreateMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html), [UploadPart](https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html), [UploadPartCopy](https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html), [CompleteMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html), [AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)                                                                                              |
+
+For the full set of operations R2 supports, refer to [S3 API compatibility](/r2/api/s3/api/).
+
+`ListBuckets` returns only the buckets that share the credentials the request was signed with.
+
+### Limitations
+
+Although the local endpoint tries to match R2's production behavior, it does not support all of the same S3 operations and features. For example:
+
+- Server-side encryption with customer-provided keys (SSE-C) is rejected rather than applied.
+- The `x-amz-storage-class` header accepts `STANDARD` only. Local buckets do not store a [storage class](/r2/buckets/storage-classes/), so `STANDARD_IA` is rejected.
+- Cross-origin requests are always allowed. Production buckets answer preflight requests according to their [CORS configuration](/r2/buckets/cors/).
+
+## Related resources
+
+- Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and R2 locally and debug issues before deploying.
+- Review the [S3 operations R2 supports](/r2/api/s3/api/) in production.
+- Understand how to configure [public buckets](/r2/buckets/public-buckets/) to expose bucket contents to the Internet.
