@@ -8,7 +8,7 @@ products:
   - r2
 ---
 
-import { WranglerConfig, Tabs, TabItem } from "~/components";
+import { WranglerConfig, Tabs, TabItem, TypeScriptExample } from "~/components";
 
 R2 supports local development using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. When you run `wrangler dev`, [Miniflare](/workers/testing/miniflare/) creates a local version of each R2 bucket your Worker binds to. Local buckets store their objects on disk, so requests never reach Cloudflare and never affect production data or billing.
 
@@ -144,6 +144,8 @@ Set the client's region to `auto` and turn on path-style addressing, so that the
 <Tabs>
 <TabItem label="aws-sdk-js-v3">
 
+<TypeScriptExample>
+
 ```ts
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 
@@ -166,12 +168,17 @@ console.log(
 );
 ```
 
+</TypeScriptExample>
+
 </TabItem>
 <TabItem label="aws-cli">
 
 ```sh
+AWS_ACCESS_KEY_ID=local-access-key-id \
+AWS_SECRET_ACCESS_KEY=local-secret-access-key \
 aws s3api get-object \
   --endpoint-url http://localhost:8787/cdn-cgi/local/r2/s3 \
+  --region auto \
   --bucket my-bucket \
   --key cat.png \
   cat.png
