@@ -37,7 +37,7 @@ enabled = true
 
 Set `observability.traces.enabled` to `false` to turn off native tracing for the Worker. This setting turns off Agents SDK and AI SDK spans. It does not turn off diagnostics-channel events.
 
-### Instrument AI SDK v6
+### Instrument AI SDK v6 and v7
 
 Wrap the AI SDK namespace once. Call the wrapped functions in place of the original exports:
 
@@ -57,46 +57,9 @@ await tracedAI.streamText({
 
 </TypeScriptExample>
 
-`wrapAISDK` instruments `generateText`, `streamText`, `generateObject`, and `streamObject`.
+`wrapAISDK` instruments `generateText`, `streamText`, `generateObject`, and `streamObject`. With AI SDK v7, the wrapper starts `invoke_agent` before model and tool work begins. This keeps `chat` and `execute_tool` spans under the operation span without changing other asynchronous context used by providers or tools.
 
-### Instrument AI SDK v7
-
-AI SDK v7 provides a telemetry lifecycle. Register the Agents SDK adapter once to instrument every supported generation call:
-
-<TypeScriptExample>
-
-```ts
-import { generateText, registerTelemetry } from "ai";
-import { createAISDKTelemetry } from "agents/observability/ai";
-
-registerTelemetry(createAISDKTelemetry());
-
-await generateText({
-	model,
-	prompt: "What should I work on next?",
-});
-```
-
-</TypeScriptExample>
-
-To instrument one call, pass the adapter through `experimental_telemetry.integrations` instead:
-
-<TypeScriptExample>
-
-```ts
-import { generateText } from "ai";
-import { createAISDKTelemetry } from "agents/observability/ai";
-
-await generateText({
-	model,
-	prompt: "What should I work on next?",
-	experimental_telemetry: {
-		integrations: [createAISDKTelemetry()],
-	},
-});
-```
-
-</TypeScriptExample>
+`createAISDKTelemetry` remains available for applications that need an AI SDK v7 lifecycle integration. Use `wrapAISDK` when the `invoke_agent` parent-child hierarchy is required.
 
 ### Trace Think agents
 
@@ -112,7 +75,7 @@ Think records identifiers for the agent class, named instance, conversation, and
 
 Message and tool payloads can contain personally identifiable information (PII). The integration does not record them by default.
 
-For AI SDK v6, pass storage options to `wrapAISDK`:
+For AI SDK v6 or v7, pass storage options to `wrapAISDK`:
 
 <TypeScriptExample>
 
@@ -128,7 +91,7 @@ const tracedAI = wrapAISDK(ai, {
 
 </TypeScriptExample>
 
-For AI SDK v7, pass the same options to `createAISDKTelemetry`. For Think, override the corresponding properties on the agent:
+For Think, override the corresponding properties on the agent:
 
 <TypeScriptExample>
 
