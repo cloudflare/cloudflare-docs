@@ -344,7 +344,7 @@ Generally, you should try to get `queryEfficiency` as close to `1` as possible. 
 
 D1 Insights can also surface automated index recommendations for eligible D1 databases. Index recommendations identify query patterns that may be missing an index and provide a `CREATE INDEX` statement to review and apply manually.
 
-Index recommendations are precomputed by Cloudflare. Running Wrangler, opening the dashboard, or calling the API fetches stored recommendations; it does not generate a new recommendation on demand.
+Index recommendations are precomputed by Cloudflare. Running Wrangler, opening the dashboard, or calling the API fetches stored recommendations. It does not generate a new recommendation on demand.
 
 At GA, index recommendations are available for eligible paid D1 customers. Free plan databases are not included. Cloudflare generates recommendations for the top 10% of active D1 databases where D1 detects high-impact optimization opportunities. A database may not have recommendations even if it is active.
 
@@ -375,7 +375,7 @@ Affected queries:
 - SELECT OrderDetail.OrderId, OrderDetail.Quantity, OrderDetail.UnitPrice AS ...
 ```
 
-The query previews above are examples. D1 may truncate query previews and should not expose bound parameter values.
+The query previews in this section are examples. D1 may truncate query previews and should not expose bound parameter values.
 
 Use `--recommendations` without a database name to list databases in your account that have current recommendations:
 
@@ -473,7 +473,7 @@ D1 exposes stored recommendations through the D1 API.
 GET /accounts/{account_id}/d1/database/{database_id}/insights
 ```
 
-For index recommendations, the response includes the recommendation type, explanation, generated timestamp, suggested DDL, and related query previews.
+For index recommendations, the response includes recommendation metadata, suggested DDL, and related query previews.
 
 ```json
 {
@@ -490,7 +490,7 @@ For index recommendations, the response includes the recommendation type, explan
         "suggestion": {
           "ddl": "CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);"
         },
-        "documentation_url": "https://developers.cloudflare.com/d1/",
+        "documentation_url": "/d1/",
         "affected_query_count": 3,
         "queries": [
           {
