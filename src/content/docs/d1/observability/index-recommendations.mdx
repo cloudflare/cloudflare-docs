@@ -1,0 +1,193 @@
+---
+pcx_content_type: concept
+title: Index recommendations
+description: Use D1 Insights index recommendations to identify likely missing indexes and review suggested CREATE INDEX statements.
+sidebar:
+  order: 10.5
+products:
+  - d1
+---
+
+D1 Insights can surface automated index recommendations for eligible D1 databases. Index recommendations identify query patterns that may be missing an index and provide a `CREATE INDEX` statement to review and apply manually.
+
+Index recommendations are precomputed by Cloudflare. Running Wrangler, opening the dashboard, or calling the API fetches stored recommendations. It does not generate a new recommendation on demand.
+
+At GA, index recommendations are available for eligible paid D1 customers. Free plan databases are not included. Cloudflare generates recommendations for the top 10% of active D1 databases where D1 detects high-impact optimization opportunities. A database may not have recommendations even if it is active.
+
+### Get index recommendations with Wrangler
+
+Use the `--recommendations` flag to fetch stored recommendations for a database:
+
+```sh
+npx wrangler d1 insights <database_name> --recommendations
+```
+
+If Cloudflare has generated recommendations for the database, Wrangler returns the recommendation details, including a suggested `CREATE INDEX` statement and related query previews.
+
+```sh output
+D1 recommendations for production-db
+
+[High] Index on OrderDetail.OrderId for faster joins and filters
+
+The queries join OrderDetail with Order on OrderId, and filter by OrderId.
+An index on OrderDetail.OrderId will speed up these joins and WHERE clauses.
+
+SQL:
+CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);
+
+Affected queries:
+- SELECT Shipper.CompanyName AS ShipViaCompanyName, SUM(OrderDetail.UnitPrice * ...)
+- SELECT SUM(OrderDetail.UnitPrice * OrderDetail.Discount * OrderDetail.Quantity) AS ...
+- SELECT OrderDetail.OrderId, OrderDetail.Quantity, OrderDetail.UnitPrice AS ...
+```
+
+The query previews in this section are examples. D1 may truncate query previews and should not expose bound parameter values.
+
+Use `--recommendations` without a database name to list databases in your account that have current recommendations:
+
+```sh
+npx wrangler d1 insights --recommendations
+```
+
+Then use the database-level command to view full details:
+
+```sh
+npx wrangler d1 insights <database_name> --recommendations
+```
+
+If no recommendation is available, Wrangler returns an empty state. An empty result is not an error.
+
+```sh output
+No automated index suggestions are available for production-db right now.
+
+Cloudflare generates suggestions for the top 10% of active D1 databases where D1 detects high-impact optimization opportunities.
+```
+
+### Apply a recommended index
+
+D1 does not automatically apply index recommendations at GA. Review the SQL and apply it through your normal database change workflow.
+
+A recommendation may include a `CREATE INDEX` statement like:
+
+```sql
+CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);
+```
+
+Before applying a recommendation:
+
+1. Review the affected query patterns.
+2. Check whether an existing index already covers the query.
+3. Confirm the index name follows your project conventions.
+4. Add the statement to the appropriate migration or run it manually after review.
+5. Test the affected queries where possible.
+
+You can run the SQL manually after review:
+
+```sh
+npx wrangler d1 execute <database_name> --command "CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);"
+```
+
+Review schema changes before running them against production.
+
+### Why indexes matter
+
+Indexes help D1 find rows without scanning an entire table. If a query frequently filters, joins, or sorts by a column that is not indexed, D1 may need to read many more rows than necessary.
+
+Adding the right index can help:
+
+- reduce rows read;
+- improve query latency;
+- reduce repeated full table scans;
+- improve application performance; and
+- reduce the chance of unexpected usage from inefficient queries.
+
+Indexes can increase storage usage and add overhead to writes. Review each recommendation before applying it.
+
+### Dashboard
+
+Dashboard may show D1 recommendations in account-level and database-level views. A database recommendation card may include:
+
+- severity, such as `High`;
+- recommendation title;
+- explanation;
+- generated timestamp;
+- SQL statement;
+- affected query previews;
+- a link to learn more about indexes; and
+- a **Copy agent instructions** action.
+
+Use **Copy agent instructions** to copy a prompt-ready summary into a coding agent or issue. The copied instructions should include the recommendation, SQL, and safety reminders such as checking existing indexes and following your migration process.
+
+```txt
+Cloudflare D1 recommends adding an index to improve queries using OrderDetail.OrderId.
+
+Review this SQL statement and add it to the appropriate D1 migration if it is safe for this application:
+
+CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);
+
+Before applying:
+- Check existing indexes.
+- Follow the project migration process.
+- Review the query patterns for correctness.
+```
+
+### API
+
+D1 exposes stored recommendations through the D1 API.
+
+```http
+GET /accounts/{account_id}/d1/database/{database_id}/insights
+```
+
+For index recommendations, the response includes recommendation metadata, suggested DDL, and related query previews.
+
+```json
+{
+  "success": true,
+  "result": {
+    "insights": [
+      {
+        "id": "insight_abc123",
+        "type": "index_suggestion",
+        "severity": "high",
+        "title": "Index on OrderDetail.OrderId for faster joins and filters",
+        "explanation": "The queries join OrderDetail with Order on OrderId, and filter by OrderId. An index on OrderDetail.OrderId will speed up these joins and WHERE clauses.",
+        "generated_at": "2026-07-22T00:00:00Z",
+        "suggestion": {
+          "ddl": "CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);"
+        },
+        "documentation_url": "/d1/",
+        "affected_query_count": 3,
+        "queries": [
+          {
+            "sql_preview": "SELECT Shipper.CompanyName AS ShipViaCompanyName, SUM(OrderDetail.UnitPrice * ...)"
+          },
+          {
+            "sql_preview": "SELECT SUM(OrderDetail.UnitPrice * OrderDetail.Discount * OrderDetail.Quantity) AS ..."
+          },
+          {
+            "sql_preview": "SELECT OrderDetail.OrderId, OrderDetail.Quantity, OrderDetail.UnitPrice AS ..."
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "last_analyzed_at": "2026-07-22T00:00:00Z",
+      "coverage": {
+        "mode": "eligible_high_impact_databases",
+        "description": "Automated suggestions currently target the top 10% of active D1 databases."
+      }
+    }
+  },
+  "errors": [],
+  "messages": []
+}
+```
+
+Use the account-level endpoint to discover which databases have current recommendations, then call the database-level endpoint for full recommendation details:
+
+```http
+GET /accounts/{account_id}/d1/insights
+```
+
+At GA, D1 does not expose apply actions, dismiss actions, AI confidence scores, or predicted "optimal rows read" values.
