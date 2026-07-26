@@ -4,41 +4,35 @@ title: Choosing between Wrangler & Vite
 sidebar:
   order: 3
 head: []
-description: Choosing between Wrangler and Vite for local development
+description: Choose between Wrangler and the Cloudflare Vite plugin for local development.
 products:
   - workers
+reviewed: 2026-07-26
 ---
 
-# When to use Wrangler vs Vite
+Wrangler and the Cloudflare Vite plugin both provide local development environments for Workers. Both support backend Workers, local and remote bindings, and multi-Worker applications.
 
-Deciding between Wrangler and the Cloudflare Vite plugin depends on your project's focus and development workflow. Here are some quick guidelines to help you choose:
+Choose based on the build tools your project uses. You can also use the Vite plugin for development and builds while using Wrangler for deployment and other Workers commands.
 
-## When to use Wrangler
+## Compare Wrangler and Vite
 
-- **Backend & Workers-focused:**
-  If you're primarily building APIs, serverless functions, or background tasks, use Wrangler.
+| Capability or workflow                         | Wrangler                                           | Cloudflare Vite plugin                                         |
+| ---------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------- |
+| Standalone JavaScript or TypeScript Workers    | Supported                                          | Supported                                                      |
+| Full-stack and backend Workers                 | Supported                                          | Supported                                                      |
+| Local binding simulations                      | Supported                                          | Supported                                                      |
+| [Remote bindings](/workers/local-development/) | Supported                                          | Supported                                                      |
+| Multi-Worker development                       | Supported                                          | Supported                                                      |
+| Frontend and server-side rendering frameworks  | Use the framework build output                     | Integrates with Vite-powered frameworks                        |
+| Build pipeline                                 | Uses Wrangler's bundler or a custom build          | Uses Vite transformations, Hot Module Replacement, and plugins |
+| Deployment and resource management             | Provides the relevant commands                     | Use Wrangler after `vite build`                                |
+| [Rust Workers](/workers/languages/rust/)       | The documented `workers-rs` workflow uses Wrangler | No documented `workers-rs` integration                         |
+| [Python Workers](/workers/languages/python/)   | Use `pywrangler` instead of `wrangler`             | No documented Python integration                               |
 
-- **Remote development:**
-  If your project needs the ability to run your worker remotely on Cloudflare's network, use Wrangler's `--remote` flag.
+Use the [Cloudflare Vite plugin](/workers/vite-plugin/) when your project already uses Vite or would benefit from its build pipeline. Vite is valid for standalone backend Workers, not only frontend applications.
 
-- **Simple frontends:**
-  If you have minimal frontend requirements and don’t need hot reloading or advanced bundling, Wrangler may be sufficient.
+Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) when your project does not use Vite or you want a direct command-line workflow. Wrangler also provides deployment and resource management commands.
 
-## When to use the Cloudflare Vite Plugin
+For local development that requires deployed resources, both tools support [remote bindings](/workers/local-development/#remote-bindings). Your Worker runs locally while selected bindings connect to deployed Cloudflare resources.
 
-Use the [Vite plugin](/workers/vite-plugin/) for:
-
-- **Frontend-centric development:**
-  If you already use Vite with modern frontend frameworks like React, Vue, Svelte, or Solid, the Vite plugin integrates into your development workflow.
-
-- **React Router v8:**
-  If you are using [React Router v8](https://reactrouter.com/) (the successor to Remix), it is officially supported by the Vite plugin as a full-stack SSR framework.
-
-- **Rapid iteration (HMR):**
-  If you need near-instant updates in the browser, the Vite plugin provides [Hot Module Replacement (HMR)](https://vite.dev/guide/features.html#hot-module-replacement) during local development.
-
-- **Advanced optimizations:**
-  If you require more advanced optimizations (code splitting, efficient bundling, CSS handling, build time transformations, etc.), Vite is a strong fit.
-
-- **Greater flexibility:**
-  Due to Vite's advanced configuration options and large ecosystem of plugins, there is more flexibility to customize your development experience and build output.
+For configuration differences when moving an existing project, refer to [Migrating from wrangler dev](/workers/vite-plugin/reference/migrating-from-wrangler-dev/).
