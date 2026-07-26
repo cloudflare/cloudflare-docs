@@ -10,7 +10,7 @@ products:
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-This guide covers the MCP SDK v2 upgrade in Agents SDK v0.18.0. It explains how to move Stateless servers to `@modelcontextprotocol/server`, keep existing servers on an explicit Legacy handler, and update MCP clients.
+This guide covers the MCP SDK v2 upgrade in Agents SDK v0.20.0. It explains how to move Stateless servers to `@modelcontextprotocol/server`, keep existing servers on an explicit Legacy handler, and update MCP clients.
 
 ## Choose a server path
 
@@ -353,7 +353,7 @@ Custom transports, proxies, and gateways must preserve the draft request headers
 
 The exact beta used by Agents is a draft snapshot. Beta.5 makes `clientInfo` optional and places server identity in result `_meta`. Use high-level SDK APIs and update MCP packages with the Agents release that supports each snapshot. Raw Stateless results must include `resultType`.
 
-The draft deprecates Roots, Sampling, Logging, the old HTTP+SSE transport, and Dynamic Client Registration. The types remain available during the deprecation window for Legacy compatibility. The published experimental task methods become the `io.modelcontextprotocol/tasks` extension. Agents SDK v0.18.0 does not add that extension.
+The draft deprecates Roots, Sampling, Logging, the old HTTP+SSE transport, and Dynamic Client Registration. The types remain available during the deprecation window for Legacy compatibility. The published experimental task methods become the `io.modelcontextprotocol/tasks` extension. Agents SDK v0.20.0 does not add that extension.
 
 ### Integration compatibility
 
@@ -391,6 +391,6 @@ Serve these results with `createLegacyMcpHandler`. The Code Mode MCP connector a
 
 </Steps>
 
-Stored HTTP session IDs from Agents releases before v0.18.0 do not include the negotiated protocol version. The upgraded client discards those IDs and reconnects instead of sending an unsafe resumed request. Existing in-flight work tied to an old remote session does not resume.
+Stored HTTP session IDs from Agents releases before v0.20.0 do not include the negotiated protocol version. The upgraded client discards those IDs and reconnects instead of sending an unsafe resumed request. Existing in-flight work tied to an old remote session does not resume.
 
 For API details, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) and [`McpClient`](/agents/model-context-protocol/apis/client-api/).
