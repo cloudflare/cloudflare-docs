@@ -14,7 +14,7 @@ import { TypeScriptExample } from "~/components";
 
 ## Overview
 
-D1 is the relational database in Cloudflare's developer platform. Workers are stateless compute, [Workers KV](/kv/) is a globally distributed key-value store, [Durable Objects](/durable-objects/) provide in-memory single-point coordination, and [R2](/r2/) stores unstructured objects. D1 gives Workers applications standard relational SQL, ACID transactions, structured querying, migrations, read replication, and automatic Time Travel backups without managing a database server.
+D1 is the relational database in Cloudflare's developer platform. It gives Workers applications standard relational SQL, ACID transactions, structured querying, migrations, read replication, and automatic Time Travel backups without managing a database server.
 
 ## When to use D1
 
@@ -54,6 +54,8 @@ The first limits to design around are:
 
 A common failure mode for large D1 databases is an aggregation query that tries to scan an entire multi-gigabyte table into memory. Keep hot-path aggregations precomputed or bounded by indexed predicates. For the complete list, refer to [Limits](/d1/platform/limits/).
 
+Workers Paid accounts support 50,000 D1 databases by default. To request an adjustment to a limit, complete the [Limit Increase Request Form](https://forms.gle/eX6pXvit1wBv77Yw5). If the limit can be increased, Cloudflare will contact you with next steps.
+
 ## Scale out across many databases
 
 D1 is designed for horizontal scale-out across many smaller databases, not vertical scale-up of one large database. When a single database approaches its size or throughput limits, shard your data across multiple databases instead of growing one.
@@ -61,8 +63,6 @@ D1 is designed for horizontal scale-out across many smaller databases, not verti
 A natural sharding boundary is one database per tenant: each user, organization, or project gets its own isolated database. This gives complete data isolation, per-tenant schema evolution, and a migration blast radius limited to a single tenant. You can create databases programmatically with the [REST API](/api/resources/d1/subresources/database/methods/create/) and set a location hint per tenant.
 
 Sharding has trade-offs. You cannot run SQL `JOIN` operations across D1 databases, and ACID transactions do not span database boundaries. Keep data that must be joined or updated atomically in the same database, or design explicit application-level workflows for cross-database operations.
-
-Workers Paid accounts support 50,000 databases. This limit can be increased by request on Workers Paid and Enterprise plans, with support for millions to tens of millions of databases per account.
 
 Attribute usage per database with the `rows_read` and `rows_written` fields that every query returns in its `meta` object. Apply per-query and per-tenant limits so one tenant cannot consume all of your account-level limits or inflate your bill.
 
@@ -98,7 +98,7 @@ export default {
 
 </TypeScriptExample>
 
-For SaaS platforms that dynamically bind databases per tenant, refer to [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+For platforms that deploy user Workers with per-customer D1 bindings, refer to [Workers for Platforms bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/).
 
 ## Example schema
 
@@ -437,6 +437,12 @@ An ORM such as Drizzle or Prisma works well when:
 - You are iterating rapidly on schema design and want to see what SQL each change produces before applying it.
 
 If you use an ORM, be aware that ORM migration generators cannot apply migrations to D1 directly. Generate the SQL with your ORM, then apply it with `wrangler`. Review all generated SQL before applying it because ORMs may generate destructive statements for tables they do not manage, including Wrangler's `d1_migrations` table.
+
+### Apply migrations outside your Worker startup path
+
+Do not create tables, create indexes, or run schema migrations from Worker startup code or request handlers. Schema changes are usually more expensive than normal application queries, and D1 may need to scan existing data, update query planner statistics, or rewrite table data. Running that work during startup or on the first request can add latency, duplicate work across deployments, and fail under normal request limits.
+
+Treat D1 schema changes as deployment operations. Generate or write migration SQL, review it, apply it with `wrangler d1 migrations apply`, and then deploy Worker code that depends on the new schema. Create indexes in migration files, not in Worker code that runs on every isolate startup.
 
 ### Test migrations locally before remote
 
