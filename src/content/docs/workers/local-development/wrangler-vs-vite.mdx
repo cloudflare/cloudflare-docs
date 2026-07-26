@@ -20,14 +20,14 @@ Choose based on the build tools your project uses. You can also use the Vite plu
 | ---------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------- |
 | Standalone JavaScript or TypeScript Workers    | Supported                                          | Supported                                                      |
 | Full-stack and backend Workers                 | Supported                                          | Supported                                                      |
-| Local binding simulations                      | Supported                                          | Supported                                                      |
+| Local binding simulations via [Miniflare](/workers/testing/miniflare/)                     | Supported                                          | Supported                                                      |
 | [Remote bindings](/workers/local-development/) | Supported                                          | Supported                                                      |
 | Multi-Worker development                       | Supported                                          | Supported                                                      |
 | Frontend and server-side rendering frameworks  | Use the framework build output                     | Integrates with Vite-powered frameworks                        |
 | Build pipeline                                 | Uses Wrangler's bundler or a custom build          | Uses Vite transformations, Hot Module Replacement, and plugins |
-| Deployment and resource management             | Provides the relevant commands                     | Use Wrangler after `vite build`                                |
-| [Rust Workers](/workers/languages/rust/)       | The documented `workers-rs` workflow uses Wrangler | No documented `workers-rs` integration                         |
-| [Python Workers](/workers/languages/python/)   | Use `pywrangler` instead of `wrangler`             | No documented Python integration                               |
+| Deployment and resource management             | Supported                     | Use Wrangler after `vite build`                                |
+| [Rust Workers](/workers/languages/rust/)       | Supported | Not supported                         |
+| [Python Workers](/workers/languages/python/)   | Use [`pywrangler`](/workers/languages/python/) instead of `wrangler`             | Not supported                               |
 
 Use the [Cloudflare Vite plugin](/workers/vite-plugin/) when your project already uses Vite or would benefit from its build pipeline. Vite is valid for standalone backend Workers, not only frontend applications.
 
