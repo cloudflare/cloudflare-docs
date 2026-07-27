@@ -43,6 +43,7 @@
 	box-shadow: 0 -4px 24px -4px rgba(0, 0, 0, 0.08) !important;
 	color: var(--ot-fg) !important;
 	padding: 20px 24px !important;
+	text-align: left !important;
 	z-index: 2147483645 !important;
 }
 
@@ -148,20 +149,21 @@
 	outline: none !important;
 	padding: 10px 20px !important;
 	text-transform: none !important;
-	white-space: nowrap !important;
+	text-align: center !important;
+	white-space: normal !important;
 	width: auto !important;
 }
 
 #onetrust-banner-sdk #onetrust-pc-btn-handler {
-	width: 167.578px !important;
+	min-width: 167.578px !important;
 }
 
 #onetrust-banner-sdk #onetrust-reject-all-handler {
-	width: 125px !important;
+	min-width: 125px !important;
 }
 
 #onetrust-banner-sdk #onetrust-accept-btn-handler {
-	width: 162.672px !important;
+	min-width: 162.672px !important;
 }
 
 #onetrust-banner-sdk #onetrust-accept-btn-handler,
@@ -184,6 +186,8 @@
 #onetrust-banner-sdk #onetrust-pc-btn-handler {
 	color: var(--ot-fg) !important;
 	opacity: 0.9 !important;
+	text-decoration: underline !important;
+	text-underline-offset: 2px !important;
 }
 
 #onetrust-banner-sdk .onetrust-close-btn-handler,
@@ -615,7 +619,7 @@
 }
 
 #onetrust-banner-sdk button:focus-visible,
-#onetrust-pc-sdk #close-pc-btn-handler:focus,
+#onetrust-pc-sdk #close-pc-btn-handler:focus-visible,
 #onetrust-pc-sdk button:focus-visible,
 #onetrust-pc-sdk .ot-tgl input:focus-visible + .ot-switch,
 #onetrust-pc-sdk .ot-tgl input:focus-visible + .ot-switch-nob {
