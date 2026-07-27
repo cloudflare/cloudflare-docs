@@ -2,6 +2,7 @@ export { Aside } from "./components/ui/aside";
 export { Card } from "./components/ui/card";
 export { CardGrid } from "./components/ui/card-grid";
 export { PackageManagers } from "./components/ui/package-managers";
+export { default as PlaceholderConnectionString } from "./components/PlaceholderConnectionString.astro";
 export { Step, Steps } from "./components/ui/steps";
 export { TabItem, Tabs } from "./components/ui/tabs";
 export { Badge } from "./components/ui/badge";

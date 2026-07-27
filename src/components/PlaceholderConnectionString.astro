@@ -1,0 +1,158 @@
+---
+// Generates a syntactically valid, credential-free PostgreSQL connection
+// string that readers can copy as a placeholder. All values are randomized in
+// the browser and use the reserved ".example" domain, so the string never
+// points at a real database or leaks real credentials.
+---
+
+<cfdocs-placeholder-connection-string>
+	<div class="pcs-wrapper">
+		<label class="pcs-label" for="pcs-output">
+			Placeholder connection string
+		</label>
+		<div class="pcs-row">
+			<input
+				id="pcs-output"
+				class="pcs-output"
+				type="text"
+				readonly
+				spellcheck="false"
+				aria-live="polite"
+			/>
+			<button type="button" class="pcs-button" data-action="generate">
+				Generate
+			</button>
+			<button
+				type="button"
+				class="pcs-button"
+				data-action="copy"
+				aria-label="Copy placeholder connection string"
+			>
+				Copy
+			</button>
+		</div>
+	</div>
+</cfdocs-placeholder-connection-string>
+
+<style>
+	.pcs-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin: 1rem 0;
+	}
+
+	.pcs-label {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+
+	.pcs-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.pcs-output {
+		flex: 1 1 20rem;
+		min-width: 0;
+		padding: 0.5rem 0.625rem;
+		border-radius: 0.375rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: var(--sl-color-gray-6);
+		color: var(--sl-color-gray-1);
+		font-family: var(--__sl-font-mono, monospace);
+		font-size: 0.8125rem;
+	}
+
+	.pcs-button {
+		padding: 0.5rem 0.875rem;
+		border-radius: 0.375rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: transparent;
+		color: var(--sl-color-white);
+		cursor: pointer;
+		font-size: 0.8125rem;
+		transition:
+			border-color 0.15s,
+			background-color 0.15s;
+	}
+
+	.pcs-button:hover {
+		border-color: var(--sl-color-gray-4);
+		background: var(--sl-color-gray-6);
+	}
+</style>
+
+<script>
+	import { track } from "~/util/zaraz";
+
+	class PlaceholderConnectionStringElement extends HTMLElement {
+		connectedCallback() {
+			const output = this.querySelector<HTMLInputElement>(".pcs-output");
+			const generateButton = this.querySelector<HTMLButtonElement>(
+				'[data-action="generate"]',
+			);
+			const copyButton = this.querySelector<HTMLButtonElement>(
+				'[data-action="copy"]',
+			);
+
+			if (!output || !generateButton || !copyButton) {
+				return;
+			}
+
+			const randomHex = (bytes: number) => {
+				const values = new Uint8Array(bytes);
+				crypto.getRandomValues(values);
+				return Array.from(values, (value) =>
+					value.toString(16).padStart(2, "0"),
+				).join("");
+			};
+
+			// Build a syntactically valid PostgreSQL connection string with random
+			// placeholder values. The ".example" domain is reserved and never
+			// resolves, so the placeholder cannot point at a real database.
+			const generate = () => {
+				const user = `placeholder_user_${randomHex(3)}`;
+				const password = `placeholder_pw_${randomHex(12)}`;
+				const host = `placeholder-${randomHex(4)}.example`;
+				// Random port in the ephemeral range keeps each tenant host:port unique.
+				const port =
+					1024 + (crypto.getRandomValues(new Uint16Array(1))[0] % 64512);
+				const database = `placeholder_db_${randomHex(3)}`;
+
+				output.value = `postgresql://${user}:${password}@${host}:${port}/${database}?sslmode=require`;
+			};
+
+			generate();
+
+			generateButton.addEventListener("click", () => {
+				generate();
+				track("interacted with docs helper", {
+					value: "placeholder connection string generator",
+				});
+			});
+
+			const copyLabel = copyButton.textContent;
+			copyButton.addEventListener("click", async () => {
+				try {
+					await navigator.clipboard.writeText(output.value);
+					copyButton.textContent = "Copied";
+					setTimeout(() => {
+						copyButton.textContent = copyLabel;
+					}, 1500);
+				} catch {
+					// Ignore clipboard failures (denied or unavailable access).
+				}
+			});
+		}
+	}
+
+	if (!customElements.get("cfdocs-placeholder-connection-string")) {
+		customElements.define(
+			"cfdocs-placeholder-connection-string",
+			PlaceholderConnectionStringElement,
+		);
+	}
+</script>
