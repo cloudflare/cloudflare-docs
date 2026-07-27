@@ -10,6 +10,12 @@ products:
 
 import { WranglerConfig } from "~/components";
 
+:::note[Two different migration paths]
+This guide is for apps that **stay on the current stable** `@cloudflare/sandbox` package and need to leave features deprecated in June 2026 (transports, default sessions, stream helpers, and related APIs).
+
+To move onto **Sandbox SDK 1.0** (`@cloudflare/sandbox@next`), use [Migrate to the 1.0 preview](/sandbox/1-0-preview/migrate/) instead. That path covers argv `exec`, removed sessions, terminals, interpreter attach, bridge HTTP, and container cutover. Completing this stable-line guide first is still useful if you use the older transports or stream helpers.
+:::
+
 This guide walks through migrating away from the Sandbox SDK features deprecated in June 2026. These features will no longer be present in future Sandbox SDK versions after July 9, 2026.
 
 For the announcement and rationale, refer to the [deprecation changelog entry](/changelog/sandbox/2026-06-09-deprecating-sandbox-sdk-features/).

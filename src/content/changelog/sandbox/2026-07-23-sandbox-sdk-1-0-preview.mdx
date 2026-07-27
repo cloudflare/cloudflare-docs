@@ -1,6 +1,6 @@
 ---
-title: Document the Sandbox SDK 1.0 preview
-description: A dedicated docs section covers @cloudflare/sandbox@next so teams can adopt the upcoming Sandbox SDK 1.0 APIs.
+title: Sandbox SDK 1.0 preview on @next
+description: A thinner Sandbox SDK on Cloudflare Containers — unified process handles, no sessions or transport selection, and dual-track docs for @cloudflare/sandbox@next.
 products:
   - sandbox
 date: 2026-07-23
@@ -8,14 +8,33 @@ date: 2026-07-23
 
 import { PackageManagers } from "~/components";
 
-**Sandbox SDK 1.0** is the next major release of the SDK. A preview is available now on the npm `@next` tag while the current stable package remains published for existing apps.
+**Sandbox SDK 1.0** is available as a preview on the npm `@next` tag. The current stable package remains published for existing apps.
+
+Sandbox SDK first shipped to give developers a rich way to run untrusted and agent-driven work on [Cloudflare Containers](/containers/). Since then, both Sandbox and Containers have matured. This preview is a thinner SDK on that same foundation: less session and transport machinery inside the package, and one clear model for starting and observing work in a sandbox.
 
 <PackageManagers pkg="@cloudflare/sandbox@next" />
 
-We recommend starting new projects on the preview and migrating existing apps when you can, so you are ready when 1.0 becomes the stable release. The main [Sandbox documentation](/sandbox/) still describes today's stable package. Preview documentation lives in a dedicated section:
+## What this preview is
+
+In the preview:
+
+- **One process model** — `sandbox.exec()` takes an argument list, returns when the process **starts**, and gives you a handle for output, logs, waits, and signals. Short commands and long-running services use the same API.
+- **No session execution** — each launch is independent. Pass `cwd` and `env` when you need them, or put multi-step shell syntax in one explicit shell command.
+- **No transport selection** — the SDK talks to the container over RPC. Remove `SANDBOX_TRANSPORT`, `transport` on `getSandbox()`, and `setTransport()`.
+- **Terminals as resources** — interactive PTYs use `createTerminal` / `connect`, not the older session-shaped helpers.
+- **Interpreter as an extension** — attach the code interpreter on your `Sandbox` subclass instead of calling interpreter methods on the core class.
+
+Sandboxes still run on containers. A stable **sandbox ID** still finds the same logical sandbox; the **container** behind that ID can stop or be replaced. What 1.0 makes explicit is that process and terminal handles belong to the **current** container and fail closed after replace — they are not silent stand-ins for “this sandbox ID forever.”
+
+## Who should use it
+
+- **New projects** — start on `@cloudflare/sandbox@next` and follow the [1.0 preview](/sandbox/1-0-preview/) docs.
+- **Existing apps** — migrate when you can, so you are ready when 1.0 becomes the stable release. Use [Migrate](/sandbox/1-0-preview/migrate/) for the full path, including deploying the Worker package and container image from the **same** `@next` line.
+
+The main [Sandbox documentation](/sandbox/) still describes today's stable package. Preview documentation lives under a dedicated section:
 
 - [Sandbox SDK 1.0 preview](/sandbox/1-0-preview/)
-- [Get started with the preview](/sandbox/1-0-preview/get-started/)
+- [Get started](/sandbox/1-0-preview/get-started/)
 - [Migrate from the stable SDK](/sandbox/1-0-preview/migrate/)
 - [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
 - [Process execution](/sandbox/1-0-preview/processes/)
@@ -28,4 +47,4 @@ We recommend starting new projects on the preview and migrating existing apps wh
 - [Bridge](/sandbox/1-0-preview/bridge/) ([HTTP API](/sandbox/1-0-preview/bridge/http-api/))
 - [Troubleshooting](/sandbox/1-0-preview/troubleshooting/)
 
-Stable pages that change in 1.0 now point to the matching preview topic. Deploy the preview Worker package and container image together.
+Stable pages that change in 1.0 point to the matching preview topic.

@@ -3,7 +3,7 @@ title: Get started
 pcx_content_type: get-started
 sidebar:
   order: 1
-description: Install @cloudflare/sandbox@next and run a first argv process in a sandbox.
+description: Install @cloudflare/sandbox@next and run your first process handle in a sandbox.
 products:
   - sandbox
 ---
@@ -34,7 +34,9 @@ Keep your `wrangler` Durable Object binding and container configuration. Preview
 
 ## 3. Run a process
 
-`exec()` takes an argument vector and returns a handle when launch succeeds. Collect output separately.
+`exec()` starts a program from **argv** — an array of the executable path or name, then its arguments. It waits until the sandbox can start the process, then returns a **process handle**. It does **not** wait for the process to exit.
+
+Collect results with handle methods such as `output()`, or stream with `logs()`.
 
 <TypeScriptExample>
 ```
@@ -66,27 +68,33 @@ export default {
 ```
 </TypeScriptExample>
 
-Shell syntax needs an explicit shell:
+Each argv entry is one argument to the process. The SDK does **not** run a shell and does **not** shell-escape argv. Spaces and special characters in an entry stay inside that argument.
+
+Shell syntax (`&&`, pipes, redirects, globs) needs an explicit shell, with the script as its own argument:
 
 ```ts
-const process = await sandbox.exec(["/bin/bash", "-lc", "echo hello && uname -a"]);
+const process = await sandbox.exec([
+	"/bin/bash",
+	"-lc",
+	"echo hello && uname -a",
+]);
 const { stdout } = await process.output({ encoding: "utf8" });
 ```
 
-## 4. What to notice
+## 4. How this differs from the stable package
 
-- `await sandbox.exec(...)` is **launch**, not completion.
-- There is no hidden session: a later `exec` does not remember a previous `cd`.
-- Use `cwd` and `env` on each launch when you need them.
-- A process runs in the current container for the sandbox. After that container stops, start a new process. For the full model, refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+- `await sandbox.exec(...)` creates a process; it does **not** wait for exit. Use `output()`, `waitForExit()`, or other handle methods for completion.
+- Each `exec()` is independent. A `cd` or `export` in one call is not remembered in the next.
+- Pass `cwd` and `env` on each `exec()` when you need them (or use `setEnvVars` for sandbox-wide values — [Environment variables](/sandbox/1-0-preview/environment/)).
+- A process runs only in the **current container** for that sandbox. After the container stops or is replaced, start a new process. Model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
 - Before production traffic, learn which failures are safe to retry: [Errors and recovery](/sandbox/1-0-preview/errors/).
 
 ## Next
 
 - [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) — sandbox ID, container, stop, and replace
-- [Process execution](/sandbox/1-0-preview/processes/) — how `exec()` and process lifetime work
+- [Process execution](/sandbox/1-0-preview/processes/) — `exec()`, handles, and continuing work across requests
 - [Errors and recovery](/sandbox/1-0-preview/errors/) — retries, interrupted calls, and stale handles
 - [Migrate](/sandbox/1-0-preview/migrate/) — update an existing stable app
 - [API reference](/sandbox/1-0-preview/api/) — processes, terminals, and errors
-- [Terminals](/sandbox/1-0-preview/terminals/) — interactive PTY and browser connect
+- [Terminals](/sandbox/1-0-preview/terminals/) — interactive PTY and browser connections
 - [Extensions](/sandbox/1-0-preview/extensions/)

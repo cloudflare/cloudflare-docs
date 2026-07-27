@@ -20,7 +20,7 @@ For the mental model and browser connect walkthrough, refer to [Terminals](/sand
 
 ## `createTerminal()`
 
-Start a terminal from an argument vector (usually a shell). Resolves when the terminal resource is created.
+Start a terminal from **argv** (usually a shell). Resolves when the terminal resource is created. Same rules as process `exec`: no implicit shell wrapping, and argv entries are not shell-escaped.
 
 ```ts
 const terminal = await sandbox.createTerminal(

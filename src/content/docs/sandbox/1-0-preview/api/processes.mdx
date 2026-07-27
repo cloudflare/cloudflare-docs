@@ -18,11 +18,11 @@ Launch and observe supervised processes in the current container for a sandbox.
 
 For the mental model, refer to [Process execution](/sandbox/1-0-preview/processes/). For interactive PTY input and browser terminals, refer to [Terminals](/sandbox/1-0-preview/terminals/) and the [Terminals API](/sandbox/1-0-preview/api/terminals/).
 
-Process handles have **no standard input**. Use `cwd`, `env`, and the argv (or an explicit shell script) for non-interactive work. Use a [terminal](/sandbox/1-0-preview/terminals/) when you need an interactive PTY.
+Process handles have **no standard input**. Use `cwd`, `env`, and argv (or an explicit shell script) for non-interactive work. Use a [terminal](/sandbox/1-0-preview/terminals/) when you need an interactive PTY.
 
 ## `exec()`
 
-Start a process from an argument vector. Resolves when launch succeeds, not when the process exits.
+Start a process from **argv** (executable, then arguments). Resolves when launch succeeds, not when the process exits. The SDK does not run a shell and does not shell-escape argv — each entry is one process argument.
 
 ```ts
 const process = await sandbox.exec(
@@ -39,6 +39,7 @@ type SandboxCommand = readonly [executable: string, ...args: string[]];
 
 - `command[0]` must be a non-empty executable path or name.
 - Later arguments may be empty strings.
+- Entries are passed through as-is (no shell escaping of argv).
 - Shell syntax requires an explicit shell, for example `['/bin/bash', '-lc', script]`.
 
 ### `ExecOptions`
