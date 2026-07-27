@@ -87,13 +87,13 @@ export default new OAuthProvider({
 
 </TypeScriptExample>
 
-### Legacy servers
+### Servers that need protocol sessions
 
-Stateless MCP has no protocol-level session. Applications can store durable business data behind a separate storage boundary.
+MCP has no protocol-level session on the stateless path. Applications can store durable business data behind a separate storage boundary.
 
-Servers that require Legacy sessions can use `createLegacyMcpHandler` with `WorkerTransport`, or keep `McpAgent` while their Stateless equivalents are built. These APIs support transport state, event replay, pushed elicitation, sampling, and roots requests. `McpAgent` is deprecated and feature-frozen.
+Servers that require legacy sessions can use `createLegacyMcpHandler` with `WorkerTransport`, or keep `McpAgent` while their stateless equivalents are built. These APIs support transport state, event replay, pushed elicitation, sampling, and roots requests. `McpAgent` is deprecated and feature-frozen.
 
-Add the Stateless route before moving clients, and keep both lanes until existing sessions drain. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged migration. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability) for existing stream behavior.
+Add the stateless route before moving clients, and keep both lanes until existing sessions drain. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged migration. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability) for existing stream behavior.
 
 ## RPC transport
 
@@ -310,13 +310,13 @@ export class MyMCP extends McpAgent<Env, State> {
 | ------------------- | ------------------------------------- | ---------------------------------------- | ------------------------------------- |
 | **Streamable HTTP** | External MCP servers, production apps | Standard protocol, secure, supports auth | Slight network overhead               |
 | **RPC**             | Internal agents on Cloudflare         | Fastest, simplest setup                  | No auth, Durable Object bindings only |
-| **SSE**             | Legacy compatibility                  | Backwards compatible                     | Deprecated, use Streamable HTTP       |
+| **SSE**             | Compatibility with older clients      | Backwards compatible                     | Deprecated, use Streamable HTTP       |
 
 ### Migrate from McpAgent
 
-If the endpoint does not use Legacy stateful features, migrate directly to a Stateless server factory from `@modelcontextprotocol/server` and pass it to `createMcpHandler`.
+If the endpoint does not use legacy stateful features, migrate directly to a stateless server factory from `@modelcontextprotocol/server` and pass it to `createMcpHandler`.
 
-If it depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay, first design Stateless equivalents. For example, move business state behind explicit application storage and replace pushed input requests with Stateless Elicitation. Serve Stateless and Legacy lanes together while clients migrate and existing sessions drain.
+If it depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay, first design stateless equivalents. For example, move business state behind explicit application storage and replace pushed input requests with stateless elicitation. Serve stateless and legacy lanes together while clients migrate and existing sessions drain.
 
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the feature mapping, dual-era routing, and rollout steps.
 

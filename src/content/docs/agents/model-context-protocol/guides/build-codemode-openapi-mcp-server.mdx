@@ -33,7 +33,7 @@ Code Mode is experimental and may have breaking changes. Use caution in producti
 
 You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side method for authenticating API requests.
 
-`openApiMcpServer()` currently returns an SDK v1 server. Serve it through the explicit Legacy `createLegacyMcpHandler` API.
+`openApiMcpServer()` currently returns an SDK v1 server. Serve it through the explicit legacy `createLegacyMcpHandler` API.
 
 ## Publish the service
 
@@ -141,11 +141,11 @@ You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side 
    			},
    		});
 
-         return createLegacyMcpHandler(server, { route: "/mcp" })(
-   			request,
-   			env,
-   			ctx,
-   		);
+       return createLegacyMcpHandler(server, { route: "/mcp" })(
+           request,
+           env,
+           ctx,
+       );
    	},
    } satisfies ExportedHandler<Env>;
    ```

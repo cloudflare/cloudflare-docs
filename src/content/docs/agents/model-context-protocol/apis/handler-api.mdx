@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: MCP handler APIs
-description: Create Stateless or Legacy MCP server handlers for Cloudflare Workers with the Agents SDK.
+description: Create stateless or legacy MCP server handlers for Cloudflare Workers with the Agents SDK.
 tags:
   - MCP
 sidebar:
@@ -16,18 +16,18 @@ The Agents SDK provides two server handler paths:
 
 | API                      | Import path         | MCP server package             | Behavior                                       |
 | ------------------------ | ------------------- | ------------------------------ | ---------------------------------------------- |
-| `createMcpHandler`       | `agents/mcp/server` | `@modelcontextprotocol/server` | Stateless with Legacy compatibility by default |
-| `createLegacyMcpHandler` | `agents/mcp`        | `@modelcontextprotocol/sdk`    | Legacy sessions through `WorkerTransport`      |
+| `createMcpHandler`       | `agents/mcp/server` | `@modelcontextprotocol/server` | stateless with legacy compatibility by default |
+| `createLegacyMcpHandler` | `agents/mcp`        | `@modelcontextprotocol/sdk`    | legacy sessions through `WorkerTransport`      |
 
-`McpAgent` remains available for Legacy servers while Stateless equivalents are built. It is deprecated and feature-frozen. Refer to the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for staged rollout guidance.
+`McpAgent` remains available for legacy servers while stateless equivalents are built. It is deprecated and feature-frozen. Refer to the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for staged rollout guidance.
 
 ## Install dependencies
 
-For a Stateless server:
+For a stateless server:
 
 <PackageManagers pkg="agents @modelcontextprotocol/server@2.0.0-beta.5 zod" />
 
-For an explicit Legacy server:
+For an explicit legacy server:
 
 <PackageManagers pkg="agents @modelcontextprotocol/sdk@1.29.0 zod" />
 
@@ -115,10 +115,10 @@ The following options are available:
 | `allowedHostnames`       | `string[]`                  | Localhost or `workers.dev` route                  | Optional Host restriction for custom domains                  |
 | `allowedOriginHostnames` | `string[] \| "*"`           | Localhost, `workers.dev`, or concrete CORS Origin | Browser Origin restriction, or explicit middleware delegation |
 | `authContext`            | `McpAuthContext`            | Execution context props                           | Application props returned by `getMcpAuthContext()`           |
-| `legacy`                 | `"stateless" \| "reject"`   | `"stateless"`                                     | Legacy compatibility or Stateless-only rejection              |
-| `responseMode`           | `"auto" \| "json" \| "sse"` | `"auto"`                                          | Stateless request response shaping                            |
+| `legacy`                 | `"stateless" \| "reject"`   | `"stateless"`                                     | legacy compatibility or stateless-only rejection              |
+| `responseMode`           | `"auto" \| "json" \| "sse"` | `"auto"`                                          | stateless request response shaping                            |
 | `onerror`                | `(error: Error) => void`    | None                                              | Out-of-band error reporting                                   |
-| `bus`                    | `ServerEventBus`            | In-memory bus                                     | Event bus for Stateless subscriptions                         |
+| `bus`                    | `ServerEventBus`            | In-memory bus                                     | Event bus for stateless subscriptions                         |
 | `maxSubscriptions`       | `number`                    | `1,024`                                           | Maximum concurrent listen streams                             |
 | `keepAliveMs`            | `number`                    | `15,000`                                          | Keepalive interval for listen streams                         |
 
@@ -132,13 +132,13 @@ The handler creates one MCP server for each request. This follows the draft prot
 
 Application data can still be durable. Store cross-request data behind an authenticated handle in a Durable Object, D1, KV, or R2 rather than an MCP session ID.
 
-### Stateless Elicitation
+### Elicitation with a stateless handler
 
-Stateless Elicitation returns `input_required` and completes through multi-round-trip requests (MRTR). The SDK carries `requestState` and `inputResponses` between requests. The Worker does not remain suspended while a user responds.
+Elicitation through a stateless handler returns `input_required` and completes through multi-round-trip requests (MRTR). The SDK carries `requestState` and `inputResponses` between requests. The Worker does not remain suspended while a user responds.
 
 Use `inputRequired(...)` to request input. Read accepted form content from `context.mcpReq.inputResponses` with `acceptedContent(...)`.
 
-Refer to the [Stateless Elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) for a two-round tool flow. For stateful pushed requests, refer to [Legacy Elicitation](/agents/model-context-protocol/apis/agent-api/#legacy-elicitation).
+Refer to the [stateless elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) for a two-round tool flow. For stateful pushed requests, refer to [Elicitation on legacy servers](/agents/model-context-protocol/apis/agent-api/#elicitation-on-legacy-servers).
 
 ### Origin validation and CORS
 
@@ -169,11 +169,11 @@ CORS response headers are not authentication. Protect the MCP endpoint with OAut
 
 The handler does not infer a Host allowlist from `request.url`. If a deployment accepts arbitrary Host values, validate them before calling the handler. Local servers outside Cloudflare Workers should follow the upstream SDK DNS rebinding guidance.
 
-### Legacy compatibility
+### Compatibility with legacy clients
 
-The default `legacy: "stateless"` setting accepts ordinary Legacy tools, prompts, and resources. This lane uses the SDK v2 web-standard transport and does not import `WorkerTransport`.
+The default `legacy: "stateless"` setting accepts ordinary legacy tools, prompts, and resources. This lane uses the SDK v2 web-standard transport and does not import `WorkerTransport`.
 
-Legacy compatibility does not provide a complete session transport:
+This compatibility path does not provide a complete session transport:
 
 - Each POST creates a new server and transport.
 - HTTP GET and DELETE return `405`.
@@ -182,7 +182,7 @@ Legacy compatibility does not provide a complete session transport:
 - Standalone streams, resumability, replay, and session deletion are unavailable.
 - Published experimental tasks are not supported through this path.
 
-Set `legacy: "reject"` for a Stateless-only endpoint. Use `createLegacyMcpHandler` or `McpAgent` when a Legacy client needs protocol sessions.
+Set `legacy: "reject"` for a stateless-only endpoint. Use `createLegacyMcpHandler` or `McpAgent` when a legacy client needs protocol sessions.
 
 ### Return value
 
@@ -203,7 +203,7 @@ handler.bus.publish(event);
 await handler.close();
 ```
 
-`close()` rejects new requests and closes active Stateless and Legacy compatibility work.
+`close()` rejects new requests and closes active stateless and legacy compatibility work.
 
 ## `createLegacyMcpHandler`
 
@@ -224,11 +224,11 @@ function createLegacyMcpHandler(
 ): LegacyMcpHandler;
 ```
 
-Use this handler for Legacy sessions, transport storage, event replay, and pushed server-to-client requests.
+Use this handler for legacy sessions, transport storage, event replay, and pushed server-to-client requests.
 
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
-```ts title="src/index.ts"
+```ts
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { createLegacyMcpHandler } from "agents/mcp";
 
@@ -330,7 +330,7 @@ Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-t
 <LinkCard
 	title="McpAgent API"
 	href="/agents/model-context-protocol/apis/agent-api/"
-	description="Reference for the retained stateful Legacy server path."
+	description="Reference for the retained stateful legacy server path."
 />
 
 <LinkCard

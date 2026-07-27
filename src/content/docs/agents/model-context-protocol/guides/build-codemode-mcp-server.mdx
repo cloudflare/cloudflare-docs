@@ -30,7 +30,7 @@ Code Mode is experimental and may have breaking changes. Use caution in producti
 
 You need a Cloudflare Workers project and an existing `McpServer`.
 
-`codeMcpServer()` currently returns an SDK v1 server. Serve it through the explicit Legacy `createLegacyMcpHandler` API.
+`codeMcpServer()` currently returns an SDK v1 server. Serve it through the explicit legacy `createLegacyMcpHandler` API.
 
 ## Wrap the server
 
@@ -107,11 +107,11 @@ You need a Cloudflare Workers project and an existing `McpServer`.
    			executor,
    		});
 
-         return createLegacyMcpHandler(server, { route: "/mcp" })(
-   			request,
-   			env,
-   			ctx,
-   		);
+       return createLegacyMcpHandler(server, { route: "/mcp" })(
+           request,
+           env,
+           ctx,
+       );
    	},
    } satisfies ExportedHandler<Env>;
    ```
