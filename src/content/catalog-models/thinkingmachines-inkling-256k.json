@@ -1,0 +1,367 @@
+{
+	"model_id": "thinkingmachines/inkling-256k",
+	"provider_id": "thinkingmachines",
+	"name": "Inkling 256K",
+	"description": "The 256K-context variant of Inkling, Thinking Machines' open-weights hybrid reasoning MoE model. Same hybrid reasoning, tool-use, and streaming support as the base model, with an extended context window for longer conversations and documents. Currently intended for low-traffic testing and internal use rather than high-throughput production deployments.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Reasoning",
+		"Coding",
+		"Agentic",
+		"Open Source",
+		"Tool Use",
+		"MoE",
+		"Long Context"
+	],
+	"context_length": 262144,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic message request",
+			"input": {
+				"max_tokens": 512,
+				"messages": [
+					{
+						"content": "The capital of France is",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The capital of France is **Paris**."
+			},
+			"raw_response": {
+				"id": "msg_f3f0874570144f29add4272d4f07491d",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "thinking",
+						"thinking": "The user is asking \"The capital of France is\". This is a straightforward factual question. The capital of France is Paris. I should provide the answer clearly and concisely.",
+						"signature": ""
+					},
+					{
+						"type": "text",
+						"text": "The capital of France is **Paris**."
+					}
+				],
+				"model": "thinkingmachines/Inkling:peft:262144",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 0,
+					"output_tokens": 52,
+					"cache_creation_input_tokens": 19,
+					"cache_read_input_tokens": 0
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'thinkingmachines/inkling-256k',\n  { max_tokens: 512, messages: [{ content: 'The capital of France is', role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"thinkingmachines/inkling-256k\",\n  \"max_tokens\": 512,\n  \"messages\": [\n    {\n      \"content\": \"The capital of France is\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Tool Use",
+			"description": "Tool use round-trip: the model requests a tool call, then answers using the tool_result supplied in a follow-up user message",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "What's the weather in Paris?",
+						"role": "user"
+					},
+					{
+						"content": [
+							{
+								"id": "toolu_01A1x1x1x1x1x1x1x1x1x1x1",
+								"input": {
+									"city": "Paris"
+								},
+								"name": "get_weather",
+								"type": "tool_use"
+							}
+						],
+						"role": "assistant"
+					},
+					{
+						"content": [
+							{
+								"content": "Sunny, 22\u00b0C",
+								"tool_use_id": "toolu_01A1x1x1x1x1x1x1x1x1x1x1",
+								"type": "tool_result"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"tools": [
+					{
+						"description": "Get the current weather for a city.",
+						"input_schema": {
+							"properties": {
+								"city": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"city"
+							],
+							"type": "object"
+						},
+						"name": "get_weather"
+					}
+				]
+			},
+			"output": {
+				"text": "The weather in Paris is sunny with a temperature of 22\u00b0C."
+			},
+			"raw_response": {
+				"id": "msg_5711f240c8da46eeb462f8900281d087",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "thinking",
+						"thinking": "The user asked for the weather in Paris. The function returned \"Sunny, 22\u00b0C\". I should provide a clear, concise answer.",
+						"signature": ""
+					},
+					{
+						"type": "text",
+						"text": "The weather in Paris is sunny with a temperature of 22\u00b0C."
+					}
+				],
+				"model": "thinkingmachines/Inkling:peft:262144",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 0,
+					"output_tokens": 49,
+					"cache_creation_input_tokens": 95,
+					"cache_read_input_tokens": 0
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'thinkingmachines/inkling-256k',\n  {\n    max_tokens: 1024,\n    messages: [\n      { content: \"What's the weather in Paris?\", role: 'user' },\n      {\n        content: [\n          {\n            id: 'toolu_01A1x1x1x1x1x1x1x1x1x1x1',\n            input: { city: 'Paris' },\n            name: 'get_weather',\n            type: 'tool_use',\n          },\n        ],\n        role: 'assistant',\n      },\n      {\n        content: [\n          {\n            content: 'Sunny, 22\u00b0C',\n            tool_use_id: 'toolu_01A1x1x1x1x1x1x1x1x1x1x1',\n            type: 'tool_result',\n          },\n        ],\n        role: 'user',\n      },\n    ],\n    tools: [\n      {\n        description: 'Get the current weather for a city.',\n        input_schema: {\n          properties: { city: { type: 'string' } },\n          required: ['city'],\n          type: 'object',\n        },\n        name: 'get_weather',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"thinkingmachines/inkling-256k\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"What'\\''s the weather in Paris?\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": [\n        {\n          \"id\": \"toolu_01A1x1x1x1x1x1x1x1x1x1x1\",\n          \"input\": {\n            \"city\": \"Paris\"\n          },\n          \"name\": \"get_weather\",\n          \"type\": \"tool_use\"\n        }\n      ],\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": [\n        {\n          \"content\": \"Sunny, 22\u00b0C\",\n          \"tool_use_id\": \"toolu_01A1x1x1x1x1x1x1x1x1x1x1\",\n          \"type\": \"tool_result\"\n        }\n      ],\n      \"role\": \"user\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"description\": \"Get the current weather for a city.\",\n      \"input_schema\": {\n        \"properties\": {\n          \"city\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"city\"\n        ],\n        \"type\": \"object\"\n      },\n      \"name\": \"get_weather\"\n    }\n  ]\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://huggingface.co/thinkingmachines/Inkling",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Architecture": "Mixture-of-Experts (MoE)",
+		"Thinking": "Yes"
+	},
+	"request_formats": [
+		"anthropic-messages"
+	],
+	"banner": null,
+	"created_at": "2026-07-21 22:12:27",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"user",
+									"assistant"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"text": {
+													"type": "string"
+												},
+												"source": {},
+												"cache_control": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "ephemeral"
+														},
+														"ttl": {
+															"type": "string",
+															"enum": [
+																"5m",
+																"1h"
+															]
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": false
+												}
+											},
+											"required": [
+												"type"
+											],
+											"additionalProperties": {}
+										}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": false
+					}
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"system": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"top_k": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"metadata": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string"
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"messages",
+				"max_tokens"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string",
+					"const": "message"
+				},
+				"role": {
+					"type": "string",
+					"const": "assistant"
+				},
+				"content": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string"
+							},
+							"text": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"type"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"model": {
+					"type": "string"
+				},
+				"stop_reason": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"id",
+				"type",
+				"role",
+				"content",
+				"model",
+				"stop_reason",
+				"usage"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

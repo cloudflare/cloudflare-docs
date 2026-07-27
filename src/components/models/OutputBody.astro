@@ -1,4 +1,5 @@
 ---
+/** OutputBody — renders an example's output (text / image(s) / video / audio). */
 interface Props {
 	alt: string;
 	textOutput?: string;
@@ -28,6 +29,7 @@ const {
 		videoUrl && <video src={videoUrl} controls preload="metadata" />
 	}
 	{
+		/* AI-generated outputs do not ship caption tracks. */
 		/* eslint-disable-next-line astro/jsx-a11y/media-has-caption */
 		audioUrl && <audio src={audioUrl} controls preload="metadata" />
 	}
@@ -43,11 +45,11 @@ const {
 	.example-text {
 		margin: 0;
 		padding: 0.75rem;
-		border: 1px solid var(--sl-color-gray-5);
+		border: 1px solid var(--nb-border);
 		border-radius: 0.5rem;
-		background: var(--sl-color-bg-inline-code);
-		color: var(--sl-color-white);
-		font-family: var(--sl-font);
+		background: var(--nb-muted);
+		color: var(--nb-foreground);
+		font-family: var(--nb-font-mono);
 		font-size: 0.875rem;
 		line-height: 1.5;
 		white-space: pre-wrap;
@@ -60,7 +62,7 @@ const {
 	.example-output-body :global(video) {
 		width: 100%;
 		border-radius: 0.5rem;
-		border: 1px solid var(--sl-color-gray-5);
+		border: 1px solid var(--nb-border);
 	}
 
 	.example-output-body :global(audio) {

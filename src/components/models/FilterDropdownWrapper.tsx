@@ -17,13 +17,11 @@ export function FilterDropdownWrapper({
 }) {
 	const [selected, setSelected] = useState<string[]>([]);
 
-	// Self-initialise from URL on mount; also listen for clear events
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 		const initial = params.getAll(filterKey);
 		if (initial.length > 0) {
 			setSelected(initial);
-			// Fire event so the Astro script applies the initial filter pass
 			document.dispatchEvent(
 				new CustomEvent("model-catalog-filter", {
 					detail: { key: filterKey, value: initial },

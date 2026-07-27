@@ -1,15 +1,34 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getSidebar } from "@cloudflare/nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { Aside } from "~/components";
+import { docsSidebarTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import ModelCatalog from "~/components/ModelCatalog.astro";
 import { getLegacyModels, toModelCardData } from "~/util/model-resolver";
-import { Aside } from "~/components";
+
+export const prerender = true;
 
 const models = (await getLegacyModels()).map(toModelCardData);
+
+const sectionSlug = "/workers-ai/models/";
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: docsSidebarTransform,
+});
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 ---
 
-<StarlightPage
-	frontmatter={{ title: "Workers AI Models", tableOfContents: false }}
+<DocsLayout
+	title="Workers AI Models"
+	description="Browse the catalog of machine learning models available on Workers AI."
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={breadcrumbs}
+	prevNext={{}}
+	collection="docs"
+	wide
 >
+	<Fragment slot="pagination"></Fragment>
 	<Aside
 		type="tip"
 		title="Looking for more models, including external providers?"
@@ -17,10 +36,4 @@ const models = (await getLegacyModels()).map(toModelCardData);
 		Check out the <a href="/ai/models/">unified AI model catalog</a>.
 	</Aside>
 	<ModelCatalog models={models} basePath="/workers-ai/models" />
-</StarlightPage>
-
-<style>
-	:root {
-		--sl-content-width: 1350px !important;
-	}
-</style>
+</DocsLayout>

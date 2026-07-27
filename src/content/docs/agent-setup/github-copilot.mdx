@@ -51,6 +51,10 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		}
 		```
 
+		:::note
+		In Visual Studio Code, `.vscode/mcp.json` uses `servers` as the root key instead of `mcpServers`. For the Visual Studio Code setup, refer to the [Visual Studio Code guide](/agent-setup/visual-studio-code/).
+		:::
+
 	4. **Try a prompt**
 
 		Open Copilot Chat (**Ctrl+Shift+I**), switch to agent mode, and try a prompt — for example:
@@ -82,7 +86,8 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	<FAQItem question="Does Copilot support Cloudflare Skills?">
 		Yes. GitHub Copilot added Agent Skills support for VS Code agent mode, the
 		Copilot CLI, and the cloud agent. Run `npx skills add
-		https://github.com/cloudflare/skills` to install them. Refer to the [About agent
+		https://github.com/cloudflare/skills` to install them. Refer to the [About
+		agent
 		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
 		guide for details on where Copilot looks for Skills.
 	</FAQItem>

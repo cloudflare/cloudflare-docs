@@ -1,6 +1,7 @@
 ---
 import { z } from "astro/zod";
-import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
 import Render from "~/components/Render.astro";
 
 type Props = z.infer<typeof props>;
@@ -81,14 +82,14 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 ---
 
 <Tabs syncKey="workersAiExamples">
-	<TabItem label="TypeScript" icon="seti:typescript">
+	<TabItem label="TypeScript">
 		<Code code={worker} lang="ts" title="" />
 		<Render file="nodejs-compat-howto" product="workers" />
 	</TabItem>
-	<TabItem label="Python" icon="seti:python">
+	<TabItem label="Python">
 		<Code code={python} lang="py" title="" />
 	</TabItem>
-	<TabItem label="curl" icon="seti:shell">
+	<TabItem label="curl">
 		<Code code={curl} lang="sh" />
 	</TabItem>
 </Tabs>

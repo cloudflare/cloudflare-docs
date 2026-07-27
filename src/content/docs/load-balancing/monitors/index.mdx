@@ -52,6 +52,14 @@ When you [attach a monitor to a pool](/load-balancing/monitors/create-monitor/#c
 
 ---
 
+## IPv4 and IPv6 probe behavior
+
+Health monitor probes use IPv4 by default. IPv6 probes are only sent if the endpoint address has no `A` records (only `AAAA`). Each endpoint receives one probe per interval — Cloudflare does not probe both IPv4 and IPv6 for the same endpoint.
+
+To enforce probing over IPv6, set the endpoint address to either a raw IPv6 address or a hostname that only has `AAAA` records.
+
+---
+
 ## Host header prioritization
 
 The host headers used on health monitor requests can be configured either [on the monitor itself](/load-balancing/monitors/create-monitor/) or on the [endpoints within a pool](/load-balancing/pools/create-pool/).

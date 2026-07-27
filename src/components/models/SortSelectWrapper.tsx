@@ -9,7 +9,6 @@ import { SortSelect, type SortOrder } from "./SortSelect";
 export function SortSelectWrapper() {
 	const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
 
-	// Self-initialise from URL on mount
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 		const initial = params.get("sort");

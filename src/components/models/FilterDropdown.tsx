@@ -21,31 +21,37 @@ export function FilterDropdown({
 	onChange: (selected: string[]) => void;
 }) {
 	const hasSelection = selected.length > 0;
-	const triggerLabel = hasSelection ? `${label} (+${selected.length})` : label;
+	const triggerContent = (
+		<span className="inline-flex items-center gap-1.5">
+			{label}
+			{hasSelection && (
+				<span className="bg-primary text-primary-foreground grid min-w-[1.25rem] place-items-center rounded-full px-1.5 text-[0.6875rem] font-semibold">
+					{selected.length}
+				</span>
+			)}
+		</span>
+	);
 	const selectedItems = items.filter((item) => selected.includes(item.value));
-
-	function handleChange(value: unknown) {
-		const next = (value as FilterItem[]).map((item) => item.value);
-		onChange(next);
-	}
 
 	return (
 		<Combobox.Root
 			multiple
 			value={selectedItems}
-			onValueChange={handleChange}
+			onValueChange={(value) =>
+				onChange((value as FilterItem[]).map((item) => item.value))
+			}
 			items={items}
 			isItemEqualToValue={(a, b) => a.value === b.value}
 		>
 			<Combobox.Trigger
-				className={`flex cursor-pointer items-center gap-1.5 rounded-lg border bg-white px-3 py-2 text-sm whitespace-nowrap transition-colors select-none dark:bg-gray-800 ${
+				className={`bg-card flex h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-sm whitespace-nowrap transition-colors select-none ${
 					hasSelection
-						? "border-blue-300 text-blue-700 dark:border-blue-600 dark:text-blue-300"
-						: "border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+						? "border-primary text-primary"
+						: "border-border text-foreground hover:border-border-strong"
 				}`}
 			>
-				<Combobox.Value placeholder={<span>{label}</span>}>
-					{() => triggerLabel}
+				<Combobox.Value placeholder={triggerContent}>
+					{() => triggerContent}
 				</Combobox.Value>
 				<Combobox.Icon className="flex">
 					<ChevronUpDownIcon />
@@ -58,17 +64,17 @@ export function FilterDropdown({
 					sideOffset={8}
 				>
 					<Combobox.Popup
-						className="max-h-[24rem] max-w-[var(--available-width)] origin-[var(--transform-origin)] rounded-lg border border-gray-200 bg-white shadow-lg transition-[transform,scale,opacity] [--input-height:2.75rem] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0 dark:border-gray-600 dark:bg-gray-800"
+						className="border-border bg-card max-h-[24rem] max-w-[var(--available-width)] origin-[var(--transform-origin)] rounded-lg border shadow-lg transition-[transform,scale,opacity] [--input-height:2.75rem] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0"
 						aria-label={label}
 					>
 						<div className="w-64 p-2">
 							<Combobox.Input
 								placeholder={`Search ${label.toLowerCase()}...`}
-								className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm font-normal text-gray-900 outline-none focus:border-blue-300 focus:ring-1 focus:ring-blue-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100"
+								className="border-border bg-card text-foreground placeholder:text-muted-foreground focus-visible:outline-ring h-9 w-full rounded-md border px-3 text-sm font-normal focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2"
 							/>
 						</div>
 						<Combobox.Empty>
-							<div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+							<div className="text-muted-foreground px-4 py-3 text-sm">
 								No results found.
 							</div>
 						</Combobox.Empty>
@@ -77,14 +83,14 @@ export function FilterDropdown({
 								<Combobox.Item
 									key={item.value}
 									value={item}
-									className="group grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none data-[highlighted]:bg-gray-100 dark:data-[highlighted]:bg-gray-700"
+									className="group data-[highlighted]:bg-accent grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none"
 								>
-									<span className="col-start-1 flex h-4 w-4 items-center justify-center rounded border border-gray-300 group-data-[selected]:border-blue-600 group-data-[selected]:bg-blue-600 group-data-[selected]:text-white dark:border-gray-500 dark:group-data-[selected]:border-blue-500 dark:group-data-[selected]:bg-blue-500">
+									<span className="border-border group-data-[selected]:border-primary group-data-[selected]:bg-primary group-data-[selected]:text-primary-foreground col-start-1 flex h-4 w-4 items-center justify-center rounded border">
 										<Combobox.ItemIndicator>
 											<CheckIcon />
 										</Combobox.ItemIndicator>
 									</span>
-									<span className="col-start-2 text-gray-700 dark:text-gray-200">
+									<span className="text-foreground col-start-2">
 										{item.label}
 									</span>
 								</Combobox.Item>
@@ -105,7 +111,8 @@ function ChevronUpDownIcon() {
 			viewBox="0 0 8 12"
 			fill="none"
 			stroke="currentcolor"
-			strokeWidth="1.5"
+			strokeWidth={1.5}
+			className="text-muted-foreground"
 		>
 			<path d="M0.5 4.5L4 1.5L7.5 4.5" />
 			<path d="M0.5 7.5L4 10.5L7.5 7.5" />

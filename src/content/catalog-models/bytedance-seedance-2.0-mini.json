@@ -1,0 +1,300 @@
+{
+	"model_id": "bytedance/seedance-2.0-mini",
+	"provider_id": "bytedance",
+	"name": "Seedance 2.0 Mini",
+	"description": "ByteDance's compact, cost-efficient video generation model from the Seedance 2.0 family. Supports text-to-video, image-to-video, reference video, and reference audio for background music. Ideal for high-volume workloads where speed and cost matter.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Audio Generation",
+		"Fast",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Video",
+			"description": "Simple text-to-video with default settings",
+			"input": {
+				"prompt": "A cat sitting on a windowsill watching raindrops fall on the glass, cozy interior lighting",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/simple-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/simple-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0-mini',\n  {\n    prompt:\n      'A cat sitting on a windowsill watching raindrops fall on the glass, cozy interior lighting',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-mini\",\n  \"input\": {\n    \"prompt\": \"A cat sitting on a windowsill watching raindrops fall on the glass, cozy interior lighting\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Image to Video",
+			"description": "Generate video from a reference image",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "The scene slowly comes to life with gentle movement",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/image-to-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/image-to-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0-mini',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt: 'The scene slowly comes to life with gentle movement',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-mini\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"The scene slowly comes to life with gentle movement\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Portrait Video with Audio",
+			"description": "Vertical video for social media",
+			"input": {
+				"prompt": "A steaming coffee cup on a marble table, morning light streaming through a window",
+				"aspect_ratio": "9:16",
+				"duration": 5,
+				"resolution": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/portrait-video-with-audio.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/portrait-video-with-audio.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0-mini',\n  {\n    prompt: 'A steaming coffee cup on a marble table, morning light streaming through a window',\n    aspect_ratio: '9:16',\n    duration: 5,\n    resolution: '720p',\n    generate_audio: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-mini\",\n  \"input\": {\n    \"prompt\": \"A steaming coffee cup on a marble table, morning light streaming through a window\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\",\n    \"generate_audio\": true\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Virtual Avatar Reference",
+			"description": "Use a virtual character avatar from the trusted asset library",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "The scene gently animates with subtle motion",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p",
+				"use_virtual_avatar": true
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/virtual-avatar-reference.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/virtual-avatar-reference.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0-mini',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt: 'The scene gently animates with subtle motion',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n    use_virtual_avatar: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-mini\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"The scene gently animates with subtle motion\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\",\n    \"use_virtual_avatar\": true\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://seed.bytedance.com/en/seedance",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedance-2.0-mini.png",
+	"metadata": {
+		"Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 21:9, 9:21",
+		"Max Duration": "12 seconds",
+		"Native Audio": "Yes",
+		"Resolutions": "480p, 720p"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-06-26 18:21:59",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string",
+					"maxLength": 2000
+				},
+				"image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
+					"type": "string"
+				},
+				"reference_video": {
+					"description": "Reference video (HTTP(S) URL or base64 data URI) for style/motion guidance",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
+					"type": "string"
+				},
+				"reference_images": {
+					"description": "Reference images (1-4, HTTP(S) URLs or base64 data URIs) to guide video generation for characters, avatars, clothing, or environments. Cannot be used with first/last frame images.",
+					"maxItems": 4,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"duration": {
+					"description": "Video duration in seconds",
+					"default": 5,
+					"type": "integer",
+					"minimum": 4,
+					"maximum": 12
+				},
+				"resolution": {
+					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p"
+					]
+				},
+				"aspect_ratio": {
+					"description": "Video aspect ratio. Ignored if an image is used.",
+					"default": "16:9",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"4:3",
+						"1:1",
+						"3:4",
+						"9:16",
+						"21:9",
+						"9:21"
+					]
+				},
+				"fps": {
+					"description": "Frame rate (frames per second)",
+					"default": 24,
+					"type": "number",
+					"const": 24
+				},
+				"camera_fixed": {
+					"description": "Whether to fix camera position",
+					"default": false,
+					"type": "boolean"
+				},
+				"generate_audio": {
+					"description": "Whether to generate audio with the video",
+					"type": "boolean"
+				},
+				"watermark": {
+					"description": "Whether to add a watermark to the output video",
+					"default": false,
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"use_virtual_avatar": {
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
+					"default": false,
+					"type": "boolean"
+				},
+				"reference_audio": {
+					"description": "Reference audio (HTTP(S) URL or base64 data:audio/... URI) to use as background music. Must be accompanied by a reference image or video.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"resolution",
+				"aspect_ratio",
+				"fps",
+				"camera_fixed",
+				"watermark",
+				"use_virtual_avatar"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -1,0 +1,392 @@
+---
+title: Migrate to MCP SDK v2
+description: Migrate Agents SDK MCP servers and clients to the split MCP TypeScript SDK v2 packages while retaining legacy compatibility.
+pcx_content_type: how-to
+sidebar:
+  order: 13
+products:
+  - agents
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+This guide covers the [MCP SDK v2](https://github.com/modelcontextprotocol/typescript-sdk) upgrade in Agents SDK v0.20.0. It explains how to move servers to `@modelcontextprotocol/server`, use a temporary legacy lane only when sessionful features require it, and update MCP clients.
+
+## Choose a server path
+
+Use the following table to select a migration path:
+
+| Current server                                | Migration path                                                                                                         |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| SDK v1 server without sessionful dependencies | Move the server definition to an SDK v2 factory and pass the factory to `createMcpHandler`.                            |
+| SDK v1 server with sessionful dependencies    | Add an SDK v2 route. Keep `createLegacyMcpHandler` only on a temporary legacy lane while replacing those dependencies. |
+| `McpAgent` without legacy stateful features   | Migrate directly to an SDK v2 factory and `createMcpHandler`.                                                          |
+| `McpAgent` that uses legacy stateful features | Design stateless equivalents, serve stateless and legacy lanes together, then drain the legacy lane.                   |
+
+Agents SDK v0.20.0 deprecates these APIs:
+
+- Passing an SDK v1 server to `createMcpHandler`. Move the server to an SDK v2 factory. Use `createLegacyMcpHandler` only as a temporary bridge for sessionful behavior. This overload is scheduled for removal in the next major version.
+- `McpAgent`. It is deprecated and feature-frozen. Migrate at your earliest convenience. No removal version is announced.
+- `MCPClientManager.callTool(params, resultSchema, options)` and `withX402Client(...).callTool(confirm, params, resultSchema, options)`. Use `callTool(params, options)` or `callTool(confirm, params, options)` instead. No removal version is announced.
+
+`experimental_createMcpHandler` was already deprecated and remains scheduled for removal in the next major version. Move its SDK v1 server to an SDK v2 factory. Use `createLegacyMcpHandler` only on a temporary sessionful lane while migrating.
+
+## Install the MCP packages
+
+Install only the MCP package generations that your application imports. Keep the v2 beta version exact.
+
+For a stateless server:
+
+<PackageManagers pkg="agents @modelcontextprotocol/server@2.0.0-beta.5 zod" />
+
+For a temporary legacy lane:
+
+<PackageManagers pkg="agents @modelcontextprotocol/sdk@1.29.0 zod" />
+
+For an Agent that connects to MCP servers:
+
+<PackageManagers pkg="agents @modelcontextprotocol/client@2.0.0-beta.5" />
+
+Follow peer dependency instructions from your package manager. The exact v2 pin will change with later Agents releases while the MCP SDK remains in beta.
+
+## Decide whether a temporary legacy lane is required
+
+Do not keep SDK v1 only because the server currently imports it. Move directly to an SDK v2 factory unless the endpoint depends on one of these sessionful features:
+
+- Protocol sessions or a supplied `WorkerTransport`
+- Transport storage or event replay
+- Standalone GET streams
+- Pushed elicitation, sampling, or roots requests
+- Session deletion with HTTP `DELETE`
+
+If the endpoint uses one of these features, deploy the stateless route first. Keep the SDK v1 route only while you replace the sessionful dependency. Route requests with `isLegacyRequest()` as shown in [Run stateless and legacy lanes together](#run-stateless-and-legacy-lanes-together).
+
+For an SDK v1 endpoint that does not use `McpAgent`, use `createLegacyMcpHandler` only on that temporary legacy branch. Remove it after clients migrate and existing sessions drain.
+
+## Move a stateless server to SDK v2
+
+The stateless `createMcpHandler` accepts a factory. The factory returns `McpServer` or `Server` from `@modelcontextprotocol/server`.
+
+<Steps>
+
+1. Follow the upstream [TypeScript SDK v2 migration guide](https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/migration/upgrade-to-v2.md) for server registration changes.
+
+2. Import the server from `@modelcontextprotocol/server`.
+
+3. Move server construction and registration into a factory.
+
+4. Keep the Worker object default export. Inside its `fetch()` method, pass the factory to `createMcpHandler` and invoke the returned callable as before. Use the handler's `fetch(request, options?)` method only for lower-level request integration.
+
+5. Do not default-export the callable returned by the Agents handler. Wrangler interprets function default exports as `WorkerEntrypoint` classes.
+
+6. Remove SDK v1 transport and session options.
+
+7. Test the endpoint with stateless and legacy clients.
+
+</Steps>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { McpServer } from "@modelcontextprotocol/server";
+import { createMcpHandler } from "agents/mcp/server";
+import { z } from "zod";
+
+function createServer() {
+	const server = new McpServer({
+		name: "example-server",
+		version: "1.0.0",
+	});
+
+	server.registerTool(
+		"hello",
+		{
+			description: "Return a greeting",
+			inputSchema: { name: z.string().optional() },
+		},
+		async ({ name }) => ({
+			content: [{ type: "text", text: `Hello, ${name ?? "World"}!` }],
+		}),
+	);
+
+	return server;
+}
+
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer)(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+The Worker entrypoint remains an object. Only the handler call changes:
+
+```ts
+// SDK v1: pass a fresh constructed server.
+return createMcpHandler(createServer())(request, env, ctx);
+
+// SDK v2: pass the factory itself.
+return createMcpHandler(createServer)(request, env, ctx);
+```
+
+Do not simplify this to `export default createMcpHandler(createServer)`. The Agents handler is callable for composition inside another handler, but Wrangler treats any function default export as a `WorkerEntrypoint` class.
+
+The SDK v2 handler creates one server for each MCP request. Concurrent Worker requests never share a connected server instance.
+
+### Handler options for stateless servers
+
+The Agents wrapper adds `route`, `corsOptions`, `allowedHostnames`, `allowedOriginHostnames`, and `authContext`. It also passes supported SDK v2 options through to the upstream handler.
+
+Common options include:
+
+| Option                            | Behavior                                                                            |
+| --------------------------------- | ----------------------------------------------------------------------------------- |
+| `route`                           | Sets the exact request path. The default is `/mcp`.                                 |
+| `legacy`                          | Uses legacy compatibility by default. Set `"reject"` for a stateless-only endpoint. |
+| `responseMode`                    | Selects automatic, JSON, or SSE response handling.                                  |
+| `allowedHostnames`                | Restricts Host headers to specific hostnames.                                       |
+| `allowedOriginHostnames`          | Restricts browser Origins, or accepts `"*"` when trusted middleware validates them. |
+| `corsOptions`                     | Controls CORS response headers. Set `false` to remove them.                         |
+| `onerror`                         | Reports handler errors without changing the response.                               |
+| `maxSubscriptions`, `keepAliveMs` | Configure `subscriptions/listen` delivery.                                          |
+
+The stateless handler rejects these SDK v1 options:
+
+- `transport`
+- `storage`
+- `sessionIdGenerator`
+- `onsessioninitialized` and `onsessionclosed`
+- `enableJsonResponse`
+- `eventStore`
+- `allowedHosts` and `allowedOrigins`
+- `enableDnsRebindingProtection`
+- `retryInterval`
+
+Use `responseMode: "json"` instead of `enableJsonResponse: true`. JSON mode drops notifications emitted before the final result.
+
+### Origin validation on Workers
+
+The Workers wrapper validates every present Origin. It rejects malformed, opaque, and non-HTTP Origins with `403`.
+
+Its default allowlist includes localhost-class Origins and the endpoint's `workers.dev` hostname. A concrete `corsOptions.origin` also adds its hostname automatically. The handler applies matching Host checks to localhost and `workers.dev` endpoints.
+
+For a custom domain with wildcard CORS, configure both Host and Origin restrictions explicitly:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer, {
+			allowedHostnames: ["mcp.example.com"],
+			allowedOriginHostnames: ["app.example.com"],
+			corsOptions: { origin: "https://app.example.com" },
+		})(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Set `allowedOriginHostnames: "*"` only when trusted middleware validates Origins before calling the handler. This value turns off the handler Origin check. MCP HTTP servers must validate browser Origins.
+
+CORS headers do not authenticate a request. Protect the endpoint with OAuth or another authentication layer.
+
+The handler does not infer a trusted Host allowlist from `request.url`. If your deployment accepts arbitrary Host values, validate them before calling the handler. For local servers outside Cloudflare Workers, follow the upstream SDK Host and Origin validation guidance.
+
+### Understand compatibility with legacy clients
+
+The default `legacy: "stateless"` setting supports ordinary legacy tools, resources, and prompts. This lane uses the SDK v2 web-standard transport. It does not import `WorkerTransport` and is not a complete sessionful transport.
+
+The fallback has these limits:
+
+- Each POST receives a new server and transport.
+- HTTP GET and DELETE return `405`.
+- No MCP session ID or protocol session state persists.
+- Pushed sampling, elicitation, and roots requests fail immediately.
+- Standalone streams, event replay, and session deletion are unavailable.
+- Published experimental tasks are not supported through this fallback.
+
+While migrating these features, route affected legacy clients to a temporary `createLegacyMcpHandler` or `McpAgent` lane.
+
+## Migrate an `McpAgent` server
+
+During migration, `McpAgent` remains an SDK v1 server. Do not change the server import inside the legacy route to `@modelcontextprotocol/server`.
+
+### Migrate directly without legacy stateful features
+
+If the server does not depend on MCP session state, RPC, pushed server-to-client requests, standalone streams, or event replay, move its tools to an SDK v2 factory and serve it with `createMcpHandler`.
+
+### Plan stateless equivalents for stateful features
+
+If the server uses legacy stateful features, keep the existing `McpAgent` route while you design and deploy stateless equivalents:
+
+| Stateful feature on the legacy path             | Design for the stateless path                                                                                                                                                    |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Application data keyed by an MCP session        | Store data behind an explicit application boundary such as a Durable Object, D1, KV, or R2. Address it with an authenticated, server-issued handle instead of an MCP session ID. |
+| Multi-step interaction state                    | Return integrity-protected `requestState` with `input_required`. Bind it to the authenticated user, original method and parameters, and an expiry.                               |
+| Pushed elicitation, sampling, or roots requests | Return `inputRequired(...)`. The client fulfils the embedded requests and retries the original operation.                                                                        |
+| Standalone list-change stream                   | Publish changes through `subscriptions/listen`. Clients reopen the subscription if its stream ends.                                                                              |
+| Session replay or transport recovery            | Make each stateless request independently recoverable. Persist business progress in application storage rather than the MCP transport.                                           |
+| Agent-to-`McpAgent` RPC                         | Replace the protocol-session dependency with an explicit application RPC or HTTP boundary, then expose the stateless MCP tools separately.                                       |
+
+Do not remove the legacy route as soon as the stateless implementation exists. Serve both lanes while clients migrate and existing sessions drain.
+
+### Run stateless and legacy lanes together
+
+A single URL can route stateless requests to SDK v2 and legacy requests to the existing sessionful server.
+
+<TypeScriptExample>
+
+```ts
+import { isLegacyRequest } from "@modelcontextprotocol/server";
+import { createMcpHandler } from "agents/mcp/server";
+
+const stateless = createMcpHandler(createStatelessServer, {
+	route: "/mcp",
+	legacy: "reject",
+});
+
+const legacy = MyMcpAgent.serve("/mcp");
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		if (await isLegacyRequest(request)) {
+			return legacy.fetch(request, env, ctx);
+		}
+		return stateless(request, env, ctx);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Keep `legacy: "reject"` on the stateless handler. Otherwise, its legacy compatibility lane consumes requests before the sessionful route receives them.
+
+Deploy both routes before moving clients. Monitor the legacy lane and let existing sessions drain. Remove the legacy route and its protocol-only Durable Object binding only after no clients depend on them. Handle Durable Object migration configuration as a separate deployment step.
+
+## Update MCP clients
+
+Agents now uses `@modelcontextprotocol/client` internally. Existing `addMcpServer` calls negotiate the protocol era automatically.
+
+Servers on the stateless path use `server/discover`. Agents falls back to `initialize` for legacy Streamable HTTP, SSE, and RPC servers.
+
+The client API includes these changes:
+
+- `callTool(params, options)` is the preferred signature.
+- `callTool(params, resultSchema, options)` remains available but is deprecated.
+- MCP client types now come from `@modelcontextprotocol/client`.
+- Required stateless HTTP headers are handled by the SDK.
+- List changes use stateless subscriptions or legacy notifications based on the negotiated lane.
+
+### Configure elicitation for stateless requests
+
+Tools, prompts, and resources on the stateless path can return `input_required` through multi-round-trip requests (MRTR). The SDK calls the configured elicitation handler and retries the original operation. Your original `callTool`, `getPrompt`, or `readResource` promise remains pending.
+
+Each retry contains responses for the immediately preceding input round, not every earlier response. The client also echoes the latest opaque `requestState`. Seal trusted intermediate values needed by later rounds into integrity-protected `requestState`; do not expect `inputResponses` to accumulate across rounds.
+
+Refer to the [stateless elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) for a two-round tool flow.
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent<Env> {
+	onStart() {
+		this.mcp.configureElicitationHandlers({
+			form: async (request, serverId, signal) => {
+				return collectInput(request, serverId, signal);
+			},
+			url: async (request, serverId, signal) => {
+				return openExternalFlow(request, serverId, signal);
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Handlers and in-flight calls remain in memory. Hibernation, isolate restart, transport loss, or connection reconstruction rejects an active interactive call. Retry the operation after the connection recovers.
+
+Treat manually handled `requestState` as untrusted input. Bind it to the authenticated user and operation, protect its integrity, and set a short expiry.
+
+### Update custom OAuth providers
+
+A custom `AgentMcpOAuthProvider` must implement the v2 `OAuthClientProvider` contract:
+
+- Import OAuth types from `@modelcontextprotocol/client`.
+- Store `StoredOAuthClientInformation` and `StoredOAuthTokens`.
+- Preserve the SDK issuer stamp on credentials.
+- Persist `OAuthDiscoveryState` across browser redirects.
+- Accept `"discovery"` in `invalidateCredentials`.
+- Keep credentials separate when authorization issuers differ.
+
+SDK v2 validates OAuth metadata issuers by default. A trusted legacy server with known mismatched metadata can use `skipIssuerMetadataValidation: true`. This weakens OAuth mix-up protection and should not be a general fallback.
+
+## Review protocol differences
+
+MCP's stateless model changes the transport and lifecycle:
+
+| Area                  | Previous behavior                                   | New behavior                                                             |
+| --------------------- | --------------------------------------------------- | ------------------------------------------------------------------------ |
+| Startup               | `initialize` handshake                              | No handshake. `server/discover` is optional for clients                  |
+| Request metadata      | Connection-scoped negotiation                       | Version, client capabilities, and identity metadata on each request      |
+| Sessions              | Optional `Mcp-Session-Id`                           | No protocol session                                                      |
+| Server input requests | Server sends JSON-RPC requests                      | Server returns `input_required`. Client retries the original operation   |
+| Change notifications  | Standalone GET stream and list-change notifications | `subscriptions/listen` POST with an SSE response                         |
+| Stream recovery       | `Last-Event-ID` can resume configured streams       | Listen streams reopen after failure. There is no `Last-Event-ID` replay. |
+
+Custom transports, proxies, and gateways must preserve the draft request headers:
+
+- `MCP-Protocol-Version`
+- `Mcp-Method`
+- `Mcp-Name` for tool, prompt, and resource operations
+- Declared `Mcp-Param-*` tool headers
+
+The exact beta used by Agents is a draft snapshot. Beta.5 makes `clientInfo` optional and places server identity in result `_meta`. Use high-level SDK APIs and update MCP packages with the Agents release that supports each snapshot. Raw stateless results must include `resultType`.
+
+The draft deprecates Roots, Sampling, Logging, the old HTTP+SSE transport, and Dynamic Client Registration. The types remain available during the deprecation window for legacy compatibility. The published experimental task methods become the `io.modelcontextprotocol/tasks` extension. Agents SDK v0.20.0 does not add that extension.
+
+### Integration compatibility
+
+The following integrations retain SDK v1 server output in this release:
+
+- Current Code Mode `codeMcpServer` and `openApiMcpServer` helpers
+- The server-side `withX402` helper
+- Existing OpenAI Apps examples that import an SDK v1 `McpServer`
+
+Until these integrations produce SDK v2 servers, isolate their output behind a temporary `createLegacyMcpHandler` route. The Code Mode MCP connector and `withX402Client` accept either client generation.
+
+## Plan the rollout
+
+<Steps>
+
+1. Classify each endpoint by its sessionful dependencies.
+
+2. Pin the MCP SDK versions required by the Agents release.
+
+3. Move each server definition that can be stateless to an SDK v2 factory.
+
+4. Add stateless handlers beside endpoints that still need a temporary legacy lane.
+
+5. Route stateless and legacy requests with `isLegacyRequest()`.
+
+6. Test stateless and legacy clients independently.
+
+7. Test required HTTP headers through every proxy and gateway.
+
+8. Test OAuth after a clean login and after Durable Object hibernation.
+
+9. Test cancellation, multiple input rounds, and transport loss.
+
+10. Verify valid Origins and reject invalid Origins with `403`.
+
+11. Remove legacy routes only after existing sessions drain.
+
+</Steps>
+
+Stored HTTP session IDs from Agents releases before v0.20.0 do not include the negotiated protocol version. The upgraded client discards those IDs and reconnects instead of sending an unsafe resumed request. Existing in-flight work tied to an old remote session does not resume.
+
+For API details, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) and [`McpClient`](/agents/model-context-protocol/apis/client-api/).

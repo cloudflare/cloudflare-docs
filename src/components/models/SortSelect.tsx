@@ -2,16 +2,14 @@ import { Select } from "@base-ui/react/select";
 
 export type SortOrder = "newest" | "oldest";
 
-const sortOptions = [
+const sortOptions: { value: SortOrder; label: string }[] = [
 	{ value: "newest", label: "Newest first" },
 	{ value: "oldest", label: "Oldest first" },
 ];
 
 /**
  * Single-select dropdown for model sort order.
- *
- * Fires a "model-catalog-sort" CustomEvent on the document when the value
- * changes, so the Astro catalog script can respond without React owning state.
+ * Controlled — parent owns state and event dispatching.
  */
 export function SortSelect({
 	sortOrder,
@@ -20,18 +18,13 @@ export function SortSelect({
 	sortOrder: SortOrder;
 	onChange: (value: SortOrder) => void;
 }) {
-	function handleChange(value: SortOrder | null) {
-		if (!value) return;
-		onChange(value);
-	}
-
 	return (
 		<Select.Root
 			value={sortOrder}
-			onValueChange={handleChange}
+			onValueChange={(value) => onChange(value as SortOrder)}
 			items={sortOptions}
 		>
-			<Select.Trigger className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm whitespace-nowrap text-gray-700 transition-colors select-none hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+			<Select.Trigger className="border-border bg-card text-foreground hover:border-border-strong flex h-10 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-sm whitespace-nowrap transition-colors select-none">
 				<Select.Value>
 					{() =>
 						sortOptions.find((o) => o.value === sortOrder)?.label ??
@@ -49,17 +42,17 @@ export function SortSelect({
 					align="start"
 					alignItemWithTrigger={false}
 				>
-					<Select.Popup className="min-w-[var(--anchor-width)] origin-[var(--transform-origin)] rounded-lg border border-gray-200 bg-white py-1 shadow-lg transition-[transform,scale,opacity] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0 dark:border-gray-600 dark:bg-gray-800">
+					<Select.Popup className="border-border bg-card min-w-[var(--anchor-width)] origin-[var(--transform-origin)] rounded-lg border py-1 shadow-lg transition-[transform,scale,opacity] data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
 						{sortOptions.map((option) => (
 							<Select.Item
 								key={option.value}
 								value={option.value}
-								className="grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none data-[highlighted]:bg-gray-100 dark:data-[highlighted]:bg-gray-700"
+								className="data-[highlighted]:bg-accent grid cursor-default grid-cols-[1rem_1fr] items-center gap-2 px-3 py-2 text-sm leading-4 outline-hidden select-none"
 							>
 								<Select.ItemIndicator className="col-start-1">
 									<CheckIcon />
 								</Select.ItemIndicator>
-								<Select.ItemText className="col-start-2 text-gray-700 dark:text-gray-200">
+								<Select.ItemText className="text-foreground col-start-2">
 									{option.label}
 								</Select.ItemText>
 							</Select.Item>
@@ -79,7 +72,8 @@ function ChevronUpDownIcon() {
 			viewBox="0 0 8 12"
 			fill="none"
 			stroke="currentcolor"
-			strokeWidth="1.5"
+			strokeWidth={1.5}
+			className="text-muted-foreground"
 		>
 			<path d="M0.5 4.5L4 1.5L7.5 4.5" />
 			<path d="M0.5 7.5L4 10.5L7.5 7.5" />

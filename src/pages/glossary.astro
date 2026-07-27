@@ -1,11 +1,35 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+/**
+ * /glossary/ — full glossary catalog.
+ *
+ * CF source: src/pages/glossary.astro (StarlightPage `template: "splash"`).
+ * Nimbus redesign: shared splash shell + directory/changelog-style blueprint
+ * framing and centered hero. Glossary behavior remains the original search +
+ * table + view-more flow.
+ */
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
 import { Glossary as GlossaryComponent } from "~/components";
 import { Badge } from "~/components";
+
+export const prerender = true;
 ---
 
-<StarlightPage frontmatter={{ title: "Glossary", template: "splash" }}>
-	<Badge text="Beta" variant="caution" size="medium" />
-	<br />
-	<GlossaryComponent />
-</StarlightPage>
+<SplashLayout title="Glossary">
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader title="Glossary">
+				<div class="mt-4 flex items-center justify-center gap-2">
+					<Badge text="Beta" variant="caution" size="medium" />
+				</div>
+			</PageHeader>
+
+			<section class="mt-12 pt-10" aria-label="Glossary terms">
+				<GlossaryComponent />
+			</section>
+		</PageShell>
+	</div>
+</SplashLayout>
