@@ -105,11 +105,13 @@ The stateless `createMcpHandler` accepts a factory. The factory returns `McpServ
 
 3. Move server construction and registration into a factory.
 
-4. Pass the factory itself to `createMcpHandler`.
+4. Keep the Worker object default export. Inside its `fetch()` method, pass the factory to `createMcpHandler` and call the returned handler's `.fetch()` method.
 
-5. Remove SDK v1 transport and session options.
+5. Do not default-export the callable returned by the Agents handler. Wrangler interprets function default exports as `WorkerEntrypoint` classes.
 
-6. Test the endpoint with stateless and legacy clients.
+6. Remove SDK v1 transport and session options.
+
+7. Test the endpoint with stateless and legacy clients.
 
 </Steps>
 
@@ -140,12 +142,28 @@ function createServer() {
 	return server;
 }
 
-export default createMcpHandler(createServer);
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer).fetch(request, env, ctx);
+	},
+} satisfies ExportedHandler;
 ```
 
 </TypeScriptExample>
 
-The handler creates one server for each request. Concurrent Worker requests never share a connected server instance.
+The Worker entrypoint remains an object. Only the handler call changes:
+
+```ts
+// SDK v1: pass a fresh constructed server.
+return createMcpHandler(createServer())(request, env, ctx);
+
+// SDK v2: pass the factory itself.
+return createMcpHandler(createServer).fetch(request, env, ctx);
+```
+
+Do not simplify this to `export default createMcpHandler(createServer)`. The Agents handler is callable for composition inside another handler, but Wrangler treats any function default export as a `WorkerEntrypoint` class.
+
+The SDK v2 handler creates one server for each MCP request. Concurrent Worker requests never share a connected server instance.
 
 ### Handler options for stateless servers
 
@@ -189,11 +207,15 @@ For a custom domain with wildcard CORS, configure both Host and Origin restricti
 <TypeScriptExample>
 
 ```ts
-export default createMcpHandler(createServer, {
-	allowedHostnames: ["mcp.example.com"],
-	allowedOriginHostnames: ["app.example.com"],
-	corsOptions: { origin: "https://app.example.com" },
-});
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer, {
+			allowedHostnames: ["mcp.example.com"],
+			allowedOriginHostnames: ["app.example.com"],
+			corsOptions: { origin: "https://app.example.com" },
+		}).fetch(request, env, ctx);
+	},
+} satisfies ExportedHandler;
 ```
 
 </TypeScriptExample>
@@ -292,6 +314,8 @@ The client API includes these changes:
 ### Configure elicitation for stateless requests
 
 Tools, prompts, and resources on the stateless path can return `input_required` through multi-round-trip requests (MRTR). The SDK calls the configured elicitation handler and retries the original operation. Your original `callTool`, `getPrompt`, or `readResource` promise remains pending.
+
+Each retry contains responses for the immediately preceding input round, not every earlier response. The client also echoes the latest opaque `requestState`. Seal trusted intermediate values needed by later rounds into integrity-protected `requestState`; do not expect `inputResponses` to accumulate across rounds.
 
 Refer to the [stateless elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) for a two-round tool flow.
 

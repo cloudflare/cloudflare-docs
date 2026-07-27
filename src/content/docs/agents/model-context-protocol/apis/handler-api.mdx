@@ -35,7 +35,7 @@ Use the exact MCP versions required by your installed Agents release while the v
 
 ## `createMcpHandler`
 
-`createMcpHandler` creates a stateless Worker handler from an MCP SDK v2 server factory.
+`createMcpHandler` creates a callable stateless MCP request handler from an MCP SDK v2 server factory. Invoke it from a Worker's object `fetch()` export or compose it inside another handler.
 
 ```ts
 import {
@@ -97,7 +97,11 @@ function createServer() {
 	return server;
 }
 
-export default createMcpHandler(createServer);
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer).fetch(request, env, ctx);
+	},
+} satisfies ExportedHandler;
 ```
 
 </TypeScriptExample>
@@ -134,9 +138,9 @@ Application data can still be durable. Store cross-request data behind an authen
 
 ### Elicitation with a stateless handler
 
-Elicitation through a stateless handler returns `input_required` and completes through multi-round-trip requests (MRTR). The SDK carries `requestState` and `inputResponses` between requests. The Worker does not remain suspended while a user responds.
+Elicitation through a stateless handler returns `input_required` and completes through multi-round-trip requests (MRTR). On each retry, the SDK echoes the latest `requestState` and sends responses for the immediately preceding input round. It does not accumulate earlier `inputResponses`. The Worker does not remain suspended while a user responds.
 
-Use `inputRequired(...)` to request input. Read accepted form content from `context.mcpReq.inputResponses` with `acceptedContent(...)`.
+Use `inputRequired(...)` to request input. Read that round's accepted form content from `context.mcpReq.inputResponses` with `acceptedContent(...)`. Seal trusted intermediate values needed by later rounds into integrity-protected `requestState`.
 
 Refer to the [stateless elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) for a two-round tool flow. For stateful pushed requests, refer to [Elicitation on legacy servers](/agents/model-context-protocol/apis/agent-api/#elicitation-on-legacy-servers).
 
@@ -151,12 +155,16 @@ For a custom domain with wildcard CORS, set `allowedHostnames` and `allowedOrigi
 <TypeScriptExample>
 
 ```ts
-export default createMcpHandler(createServer, {
-	allowedHostnames: ["mcp.example.com"],
-	corsOptions: {
-		origin: "https://app.example.com",
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer, {
+			allowedHostnames: ["mcp.example.com"],
+			corsOptions: {
+				origin: "https://app.example.com",
+			},
+		}).fetch(request, env, ctx);
 	},
-});
+} satisfies ExportedHandler;
 ```
 
 </TypeScriptExample>
@@ -186,13 +194,13 @@ Set `legacy: "reject"` for a stateless-only endpoint. Use `createLegacyMcpHandle
 
 ### Return value
 
-The returned handler is callable as a Worker fetch handler:
+The returned handler is callable when composing MCP routing inside another Worker handler:
 
 ```ts
-const handler = createMcpHandler(createServer);
-
-const response = await handler(request, env, ctx);
+const response = await createMcpHandler(createServer)(request, env, ctx);
 ```
+
+Do not export the callable directly as a Worker's default export. Wrangler treats function default exports as `WorkerEntrypoint` classes. Invoke it from an object handler's `fetch()` method, as shown above.
 
 It also exposes the upstream handler controls:
 
