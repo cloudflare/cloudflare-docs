@@ -31,7 +31,7 @@ A single D1 database has fixed resources. You do not choose instance sizes, CPU,
 
 The first limits to design around are:
 
-| Limit                              | Workers Paid | Workers Free |
+| Limit                              | Workers paid | Workers free |
 | ---------------------------------- | ------------ | ------------ |
 | Databases per account              | 50,000       | 10           |
 | Maximum database size              | 10 GB        | 500 MB       |
@@ -264,7 +264,7 @@ Do this for every dynamic clause: `ORDER BY`, sort direction, optional filters, 
 
 ### Implement application level retry with exponential backoff and jitter for write queries
 
-D1 automatically retries `SELECT`, `EXPLAIN`, and `WITH` queries up to two times on transient errors. Write queries are never automatically retried. Your application must implement its own retry for idempotent write operations.
+D1 automatically retries read only queries up to two times on transient errors. Only queries containing solely `SELECT`, `EXPLAIN`, or read only `WITH` statements are retried. Any query that can write is never automatically retried. Your application must implement its own retry for idempotent write operations.
 
 Make writes idempotent before you retry them. For order creation, require a client generated idempotency key and enforce it with a `UNIQUE` constraint. If a transient error occurs after D1 commits the write but before the Worker receives the response, the retry returns the existing order instead of creating a duplicate. If a retry hits the unique constraint, treat that as a signal to fetch and return the existing record rather than issuing a second logical write.
 
@@ -391,7 +391,7 @@ An ORM such as Drizzle or Prisma works well when:
 - You want autocompletion in your editor when writing queries.
 - You are iterating rapidly on schema design and want to see what SQL each change produces before applying it.
 
-If you use an ORM, be aware that ORM migration generators cannot apply migrations to D1 directly. Generate the SQL with your ORM, then apply it with `wrangler`. Review all generated SQL before applying it, especially as described in [Review generated migrations before applying them](#review-generated-migrations-before-applying-them), because ORMs may generate destructive statements for tables they do not manage, including Wrangler's `d1_migrations` table.
+If you use an ORM, be aware that ORM migration generators cannot apply migrations to D1 directly. Generate the SQL with your ORM, then apply it with `wrangler`. Review all generated SQL before applying it, especially as described in [Review generated migrations before applying them](#review-generated-migrations-before-applying-them), because ORMs may generate destructive statements for tables they do not manage, including `wrangler`'s `d1_migrations` table.
 
 ### Apply migrations outside your Worker startup path
 
@@ -428,11 +428,11 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 ```
 
-This pattern lets Wrangler record the migration without trying to recreate tables that already exist. After the baseline is applied, future migrations should contain only the incremental schema changes.
+This pattern lets `wrangler` record the migration without trying to recreate tables that already exist. After the baseline is applied, future migrations should contain only the incremental schema changes.
 
 ### Review generated migrations before applying them
 
-Never apply ORM generated SQL blindly. A migration generator only knows the schema model it was given. If Wrangler's `d1_migrations` table, manually created indexes, or existing production tables are missing from that model, generated SQL can include destructive statements you did not intend.
+Never apply ORM generated SQL blindly. A migration generator only knows the schema model it was given. If `wrangler`'s `d1_migrations` table, manually created indexes, or existing production tables are missing from that model, generated SQL can include destructive statements you did not intend.
 
 Bad migration review looks like this:
 
@@ -442,7 +442,7 @@ DROP TABLE d1_migrations;
 DROP TABLE order_events;
 ```
 
-Good migration review keeps Wrangler metadata intact and limits the migration to the intended schema change:
+`wrangler` metadata remains intact and limits the migration to the intended schema change:
 
 ```sql
 -- Good: only the intended application change remains.
@@ -451,7 +451,7 @@ CREATE INDEX IF NOT EXISTS idx_orders_archived_at ON orders(archived_at);
 PRAGMA optimize;
 ```
 
-If your ORM writes migrations in nested directories, configure `migrations_pattern` so Wrangler finds the files. For more detail, refer to [Migrations](/d1/reference/migrations/#nested-migration-layouts).
+If your ORM writes migrations in nested directories, configure `migrations_pattern` so `wrangler` finds the files. For more detail, refer to [Migrations](/d1/reference/migrations/#nested-migration-layouts).
 
 ### Defer foreign keys during migrations
 
