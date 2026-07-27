@@ -9,7 +9,7 @@ date: 2026-07-27
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-The [MCP 2026-07-28 release candidate](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/) makes the protocol stateless by default. Agents SDK v0.20.0 adopts this model through the split MCP TypeScript SDK v2 packages. New MCP servers can run in a Worker without keeping transport state in a Durable Object, and clients can call tools without an `initialize` handshake. Applications can still use Durable Objects or other storage for their own state.
+With support for the [MCP 2026-07-28 release candidate](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/), Agents SDK v0.20.0 lets you run MCP tools, prompts, resources, and elicitation statelessly in a Worker, so MCP transport no longer needs a Durable Object. You can still use Durable Objects or other storage for application state.
 
 Agents clients negotiate stateless or legacy behavior automatically. Existing legacy server deployments remain supported through `createLegacyMcpHandler`, `WorkerTransport`, and `McpAgent`.
 
