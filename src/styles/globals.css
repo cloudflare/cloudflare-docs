@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./onetrust.css";
 
 /* Wire Tailwind v4's `dark:` variant to the existing `[data-mode="dark"]` signal,
  * so `dark:invert`, `dark:bg-foo`, etc. work without each rule re-stating the selector. */
