@@ -16,9 +16,15 @@ function resolvePartialId(file?: string, product?: string): string | undefined {
 	return product ? `${product}/${file}` : file;
 }
 
+function stripFencedCodeBlocks(body: string): string {
+	return body.replace(/```[\s\S]*?```/g, "");
+}
+
 function renderRefs(body: string): string[] {
 	const ids: string[] = [];
-	for (const match of body.matchAll(/<Render\b[^>]*>/g)) {
+	for (const match of stripFencedCodeBlocks(body).matchAll(
+		/<Render\b[^>]*>/g,
+	)) {
 		const tag = match[0];
 		const file = /\bfile=["']([^"']+)["']/.exec(tag)?.[1];
 		const product = /\bproduct=["']([^"']+)["']/.exec(tag)?.[1];

@@ -18,14 +18,6 @@ minimumReleaseAgeExclude:
 # natively (nimbus-docs pulls markdown-satteri 0.3.4, @astrojs/mdx@7 peers
 # ^0.3.1), so the old allowedVersions override is obsolete and has been removed.
 
-# Resolve @cloudflare/nimbus-docs from the public npm tarball. It is published to
-# public npm, but a machine-global .npmrc rule routes the whole @cloudflare scope
-# to the internal registry gateway (which does not mirror it). Pinning the tarball
-# URL here bypasses that routing for this one package, leaving the scope rule (and
-# every other @cloudflare/* dependency) untouched. Bump this URL on each release.
-overrides:
-  "@cloudflare/nimbus-docs": "https://registry.npmjs.org/@cloudflare/nimbus-docs/-/nimbus-docs-0.7.1.tgz"
-
 # Prevent transitive dependencies from using exotic sources (git repos, direct tarball URLs).
 # Only direct dependencies may use exotic sources.
 blockExoticSubdeps: true
