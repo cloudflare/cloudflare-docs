@@ -59,12 +59,14 @@ export function sectionItemKey(
 	return `${prefix}.${anchor}.md`;
 }
 
-export function uniqueAnchor(anchor: string, usedAnchors: Map<string, number>) {
+export function uniqueAnchor(anchor: string, usedAnchors: Set<string>) {
 	if (!anchor) return anchor;
 
-	const count = usedAnchors.get(anchor) ?? 0;
-	usedAnchors.set(anchor, count + 1);
-	return count === 0 ? anchor : `${anchor}-${count}`;
+	let candidate = anchor;
+	let suffix = 1;
+	while (usedAnchors.has(candidate)) candidate = `${anchor}-${suffix++}`;
+	usedAnchors.add(candidate);
+	return candidate;
 }
 
 export function addSectionRecordFields(
@@ -72,14 +74,23 @@ export function addSectionRecordFields(
 	sections: RawSection[],
 ): Section[] {
 	const baseKey = docsPathToItemKey(path);
-	const usedAnchors = new Map<string, number>();
+	const usedAnchors = new Set<string>();
+	const usedKeyAnchors = new Set<string>();
 
 	return sections.map((section, index) => {
 		const anchor = uniqueAnchor(section.anchor, usedAnchors);
+		const keyAnchor = uniqueAnchor(
+			anchor || slugifyHeading(section.heading) || `section-${index + 1}`,
+			usedKeyAnchors,
+		);
 		const sectionWithAnchor = { ...section, anchor };
 		return {
 			...sectionWithAnchor,
-			key: sectionItemKey(baseKey, sectionWithAnchor, index),
+			key: sectionItemKey(
+				baseKey,
+				{ ...sectionWithAnchor, anchor: keyAnchor },
+				index,
+			),
 		};
 	});
 }

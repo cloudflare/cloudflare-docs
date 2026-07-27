@@ -1,6 +1,6 @@
 import type { ContentTransformer, RawSection } from "../types";
 import { MAX_SECTION_TEXT_LENGTH, sha256, truncateText } from "../shared";
-import { documentText } from "./mdast";
+import { documentHeadings } from "./mdast";
 
 function thirdPartyLicenseSections(
 	pageTitle: string,
@@ -9,7 +9,7 @@ function thirdPartyLicenseSections(
 	isMdx = false,
 ): RawSection[] {
 	const licenseListing = markdown
-		? documentText(markdown, isMdx, { dropCode: true })
+		? documentHeadings(markdown, isMdx)
 		: undefined;
 	const text = truncateText(
 		[pageTitle, description, licenseListing].filter(Boolean).join("\n\n"),

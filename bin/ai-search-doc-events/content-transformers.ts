@@ -24,7 +24,7 @@ type ProcessorRoute = {
 
 // Ordered list: the first route whose matcher accepts the page wins.
 const routes: ProcessorRoute[] = [
-	{ processor: thirdPartyLicenseProcessor, match: "/legal/3rdparty/" },
+	{ processor: thirdPartyLicenseProcessor, match: /\/legal\/3rdparty\/$/ },
 	{
 		processor: modelPageProcessor,
 		match: [/^\/ai\/models\/.+\/$/, /^\/workers-ai\/models\/[^/]+\/$/],

@@ -36,4 +36,20 @@ describe("AI Search content transformers", () => {
 
 		expect(sections[0].text).toContain("Claude Code by Anthropic");
 	});
+
+	it("uses the license processor for product-prefixed third-party pages", async () => {
+		const sections = await transformContent({
+			path: "/warp-client/legal/3rdparty/",
+			title: "Third party licenses",
+			description: "Third-party software licenses.",
+			sourceMarkdown: "## Platform\n\n- ### Package\n\n  Full license text",
+			sourceMarkdownPath: "3rdparty.mdx",
+			root: parse("<main></main>"),
+		});
+
+		expect(sections).toHaveLength(1);
+		expect(sections[0].text).toContain("Platform");
+		expect(sections[0].text).toContain("Package");
+		expect(sections[0].text).not.toContain("Full license text");
+	});
 });

@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
+import { visit } from "unist-util-visit";
 import type { RawSection } from "../types";
 import {
 	MAX_SECTION_TEXT_LENGTH,
@@ -99,18 +100,23 @@ export function extractSections(
 	return sections;
 }
 
-/** Extract the plain text of a whole document, optionally dropping code blocks. */
-export function documentText(
-	source: string,
-	mdx: boolean,
-	{ dropCode = false } = {},
-): string {
+/** Extract the plain text of a whole document. */
+export function documentText(source: string, mdx: boolean): string {
 	const { content } = matter(source);
-	const nodes = parseDoc(content, mdx).children.filter(
-		(node) => isContentNode(node) && !(dropCode && node.type === "code"),
-	);
-	return nodes
+	return parseDoc(content, mdx)
+		.children.filter(isContentNode)
 		.map((node) => nodeText(node))
 		.filter(Boolean)
 		.join("\n\n");
+}
+
+/** Extract headings at any depth without including their section bodies. */
+export function documentHeadings(source: string, mdx: boolean): string {
+	const { content } = matter(source);
+	const headings: string[] = [];
+	visit(parseDoc(content, mdx), "heading", (node) => {
+		const heading = nodeText(node);
+		if (heading) headings.push(heading);
+	});
+	return headings.join("\n");
 }
