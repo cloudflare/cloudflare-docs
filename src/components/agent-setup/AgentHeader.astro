@@ -6,10 +6,9 @@
 // Usage from an MDX page:
 //   <AgentHeader slug="claude-code" />
 //   <AgentHeader slug="opencode">custom intro markup here</AgentHeader>
+import { Icon } from "astro-icon/components";
 import { AGENTS } from "./agents";
-import AgentIcon from "./AgentIcon.astro";
 import CapabilityBadge from "./CapabilityBadge.astro";
-import "~/styles/agent-setup.css";
 
 interface Props {
 	slug: string;
@@ -41,65 +40,87 @@ const externalLinks = [
 ].filter(Boolean) as { label: string; href: string }[];
 ---
 
-<a href="/agent-setup/" class="agent-setup-back">
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		width="16"
-		height="16"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-		aria-hidden="true"
+<div class="not-content">
+	<a
+		href="/agent-setup/"
+		class="text-muted-foreground hover:text-foreground mb-6 inline-flex items-center gap-1.5 text-sm font-medium no-underline transition-colors"
 	>
-		<polyline points="15 18 9 12 15 6"></polyline>
-	</svg>
-	All agents
-</a>
+		<Icon name="ph:arrow-left" class="h-4 w-4" />
+		All agents
+	</a>
 
-<div class="mb-6 flex items-center gap-4">
-	<AgentIcon icon={agent.icon} name={agent.name} size={48} />
-	<div>
-		<h1 id="_top" class="-mt-1! mb-0! text-3xl! leading-none! font-bold!">
-			{agent.name} + Cloudflare
-		</h1>
-		<span class="text-sm" style={`color: var(--color-cl1-gray-5)`}>
-			{agent.vendor}
+	<div class="mb-6 flex items-center gap-4">
+		<span
+			class="border-border bg-muted flex size-14 shrink-0 items-center justify-center rounded-lg border"
+		>
+			<img
+				src={`/icons/agents/${agent.icon}/light.svg`}
+				alt=""
+				width="32"
+				height="32"
+				class="block size-8 dark:hidden"
+			/>
+			<img
+				src={`/icons/agents/${agent.icon}/dark.svg`}
+				alt=""
+				width="32"
+				height="32"
+				class="hidden size-8 dark:block"
+			/>
 		</span>
+		<div class="min-w-0">
+			<div
+				class="text-primary mb-1 font-mono text-xs tracking-widest uppercase"
+			>
+				{agent.vendor}
+			</div>
+			<h1
+				id="_top"
+				class="text-foreground m-0 text-3xl leading-none font-semibold tracking-tight"
+			>
+				{agent.name} + Cloudflare
+			</h1>
+		</div>
 	</div>
+
+	{
+		Astro.slots.has("default") ? (
+			<div class="text-muted-foreground [&_a]:text-primary mb-5 max-w-[70ch] text-base leading-relaxed [&_a]:no-underline hover:[&_a]:underline">
+				<slot />
+			</div>
+		) : (
+			<p class="text-muted-foreground mb-5 max-w-[70ch] text-base leading-relaxed">
+				{agent.description}
+			</p>
+		)
+	}
+
+	<div class="mb-5">
+		<CapabilityBadge capabilities={agent.capabilities} />
+	</div>
+
+	{
+		externalLinks.length > 0 && (
+			<div class="flex flex-wrap items-center gap-x-1 gap-y-1 text-sm">
+				{externalLinks.map((link, i) => (
+					<span class="inline-flex items-center">
+						<a
+							href={link.href}
+							class="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 no-underline underline-offset-4 transition-colors hover:underline"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{link.label}
+							<Icon name="ph:arrow-up-right" class="h-3 w-3" />
+						</a>
+						{i < externalLinks.length - 1 && (
+							<span class="text-border mx-2" aria-hidden="true">
+								·
+							</span>
+						)}
+					</span>
+				))}
+			</div>
+		)
+	}
 </div>
-
-{
-	Astro.slots.has("default") ? (
-		<div class="agent-setup-intro">
-			<slot />
-		</div>
-	) : (
-		<p class="mb-4 text-base" style={{ lineHeight: 1.6 }}>
-			{agent.description}
-		</p>
-	)
-}
-
-<div class="mb-4">
-	<CapabilityBadge capabilities={agent.capabilities} />
-</div>
-
-{
-	externalLinks.length > 0 && (
-		<div class="agent-setup-links">
-			{externalLinks.map((link) => (
-				<a
-					href={link.href}
-					class="agent-setup-link"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					{link.label} &nearr;
-				</a>
-			))}
-		</div>
-	)
-}

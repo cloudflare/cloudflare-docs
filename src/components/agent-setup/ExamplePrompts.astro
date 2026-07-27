@@ -15,20 +15,25 @@ interface Props {
 const { prompts, count = 5 } = Astro.props;
 ---
 
-<div class="agent-setup-prompts" data-cfdocs-prompts-count={count}>
+<div class="not-content flex flex-wrap gap-2" data-cfdocs-prompts-count={count}>
 	{
 		prompts.map((prompt) => (
 			<button
 				type="button"
-				class="agent-setup-prompt"
+				class="group/prompt border-border bg-muted/40 text-foreground hover:border-primary focus-visible:outline-primary inline-flex max-w-full items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
 				data-cfdocs-copy-prompt
 				data-prompt={prompt}
 				aria-label={`Copy prompt: ${prompt}`}
 			>
-				<span class="agent-setup-prompt-text">&ldquo;{prompt}&rdquo;</span>
-				<span class="agent-setup-prompt-icon" aria-hidden="true">
+				<span class="text-muted-foreground min-w-0 flex-1">
+					&ldquo;{prompt}&rdquo;
+				</span>
+				<span
+					class="text-muted-foreground group-hover/prompt:text-foreground group-data-[copied]/prompt:text-primary flex size-4 shrink-0 items-center justify-center transition-colors"
+					aria-hidden="true"
+				>
 					<svg
-						class="agent-setup-prompt-icon-copy"
+						class="group-data-[copied]/prompt:hidden"
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"
@@ -43,7 +48,7 @@ const { prompts, count = 5 } = Astro.props;
 						<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
 					</svg>
 					<svg
-						class="agent-setup-prompt-icon-check"
+						class="hidden group-data-[copied]/prompt:block"
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"

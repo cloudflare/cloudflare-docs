@@ -6,6 +6,7 @@
 //     Run `claude mcp list` to verify the server is registered. Try removing
 //     and re-adding with `claude mcp remove cloudflare` then re-add it.
 //   </TroubleshootingItem>
+import { Icon } from "astro-icon/components";
 
 interface Props {
 	issue: string;
@@ -14,27 +15,21 @@ interface Props {
 const { issue } = Astro.props;
 ---
 
-<details class="agent-setup-troubleshooting-item">
-	<summary>
-		<span class="agent-setup-troubleshooting-dot" aria-hidden="true"></span>
-		<span class="agent-setup-troubleshooting-issue-text">{issue}</span>
-		<svg
-			class="agent-setup-troubleshooting-chevron"
-			xmlns="http://www.w3.org/2000/svg"
-			width="16"
-			height="16"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			aria-hidden="true"
-		>
-			<polyline points="6 9 12 15 18 9"></polyline>
-		</svg>
+<details class="group/ts border-border border-b last:border-b-0">
+	<summary
+		class="text-foreground flex cursor-pointer list-none items-center gap-3 px-5 py-4 text-[0.9375rem] font-medium marker:content-[''] [&::-webkit-details-marker]:hidden"
+	>
+		<span class="bg-primary size-2 shrink-0 rounded-full" aria-hidden="true"
+		></span>
+		<span class="flex-1">{issue}</span>
+		<Icon
+			name="ph:caret-down"
+			class="text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200 group-open/ts:rotate-180"
+		/>
 	</summary>
-	<div class="agent-setup-troubleshooting-solution">
+	<div
+		class="[&_a]:text-primary [&_p]:text-muted-foreground px-5 pb-4 pl-10 text-sm leading-relaxed [&_a]:no-underline hover:[&_a]:underline [&>*]:m-0 [&>*+*]:mt-3"
+	>
 		<slot />
 	</div>
 </details>

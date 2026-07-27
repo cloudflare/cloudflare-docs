@@ -1,13 +1,9 @@
 ---
-// Bespoke <details> card used inside <PlatformAccess>. Unlike the site-wide
-// <Details>, this one:
-//   - Renders the header as plain text (not marked.parse → <p>), so the
-//     <summary> keeps a tight body-weight look instead of inheriting prose
-//     paragraph styling.
-//   - Uses its own class so it can coexist with the Starlight
-//     `.sl-markdown-content` prose styles WITHOUT needing `.not-content` on an
-//     ancestor. That keeps inline <code>, links, and lists inside the body
-//     correctly themed.
+// Accordion row used inside <PlatformAccess>. Renders the header as plain text
+// and keeps its body in the prose context so inline <code>, links, and lists
+// inside the slot stay themed by the markdown pipeline.
+import { Icon } from "astro-icon/components";
+
 interface Props {
 	header: string;
 	open?: boolean;
@@ -16,9 +12,17 @@ interface Props {
 const { header, open } = Astro.props;
 ---
 
-<details class="agent-platform-card" open={open}>
-	<summary class="agent-platform-card-summary">{header}</summary>
-	<div class="agent-platform-card-body">
+<details class="group/pa border-border border-b last:border-b-0" open={open}>
+	<summary
+		class="text-foreground flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[0.9375rem] font-medium marker:content-[''] [&::-webkit-details-marker]:hidden"
+	>
+		{header}
+		<Icon
+			name="ph:caret-down"
+			class="text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200 group-open/pa:rotate-180"
+		/>
+	</summary>
+	<div class="px-5 pb-5 text-sm leading-relaxed [&>*]:m-0 [&>*+*]:mt-3">
 		<slot />
 	</div>
 </details>
