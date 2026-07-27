@@ -105,7 +105,7 @@ The stateless `createMcpHandler` accepts a factory. The factory returns `McpServ
 
 3. Move server construction and registration into a factory.
 
-4. Keep the Worker object default export. Inside its `fetch()` method, pass the factory to `createMcpHandler` and call the returned handler's `.fetch()` method.
+4. Keep the Worker object default export. Inside its `fetch()` method, pass the factory to `createMcpHandler` and invoke the returned callable as before. Calling its `.fetch()` method is equivalent.
 
 5. Do not default-export the callable returned by the Agents handler. Wrangler interprets function default exports as `WorkerEntrypoint` classes.
 
@@ -144,7 +144,7 @@ function createServer() {
 
 export default {
 	fetch(request, env, ctx) {
-		return createMcpHandler(createServer).fetch(request, env, ctx);
+		return createMcpHandler(createServer)(request, env, ctx);
 	},
 } satisfies ExportedHandler;
 ```
@@ -158,7 +158,7 @@ The Worker entrypoint remains an object. Only the handler call changes:
 return createMcpHandler(createServer())(request, env, ctx);
 
 // SDK v2: pass the factory itself.
-return createMcpHandler(createServer).fetch(request, env, ctx);
+return createMcpHandler(createServer)(request, env, ctx);
 ```
 
 Do not simplify this to `export default createMcpHandler(createServer)`. The Agents handler is callable for composition inside another handler, but Wrangler treats any function default export as a `WorkerEntrypoint` class.
@@ -213,7 +213,7 @@ export default {
 			allowedHostnames: ["mcp.example.com"],
 			allowedOriginHostnames: ["app.example.com"],
 			corsOptions: { origin: "https://app.example.com" },
-		}).fetch(request, env, ctx);
+		})(request, env, ctx);
 	},
 } satisfies ExportedHandler;
 ```
