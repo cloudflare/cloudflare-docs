@@ -171,16 +171,16 @@ The Agents wrapper adds `route`, `corsOptions`, `allowedHostnames`, `allowedOrig
 
 Common options include:
 
-| Option                                   | Behavior                                                                            |
-| ---------------------------------------- | ----------------------------------------------------------------------------------- |
-| `route`                                  | Sets the exact request path. The default is `/mcp`.                                 |
-| `legacy`                                 | Uses legacy compatibility by default. Set `"reject"` for a stateless-only endpoint. |
-| `responseMode`                           | Selects automatic, JSON, or SSE response handling.                                  |
-| `allowedHostnames`                       | Restricts Host headers to specific hostnames.                                       |
-| `allowedOriginHostnames`                 | Restricts browser Origins, or accepts `"*"` when trusted middleware validates them. |
-| `corsOptions`                            | Controls CORS response headers. Set `false` to remove them.                         |
-| `onerror`                                | Reports handler errors without changing the response.                               |
-| `bus`, `maxSubscriptions`, `keepAliveMs` | Configure `subscriptions/listen` delivery.                                          |
+| Option                            | Behavior                                                                            |
+| --------------------------------- | ----------------------------------------------------------------------------------- |
+| `route`                           | Sets the exact request path. The default is `/mcp`.                                 |
+| `legacy`                          | Uses legacy compatibility by default. Set `"reject"` for a stateless-only endpoint. |
+| `responseMode`                    | Selects automatic, JSON, or SSE response handling.                                  |
+| `allowedHostnames`                | Restricts Host headers to specific hostnames.                                       |
+| `allowedOriginHostnames`          | Restricts browser Origins, or accepts `"*"` when trusted middleware validates them. |
+| `corsOptions`                     | Controls CORS response headers. Set `false` to remove them.                         |
+| `onerror`                         | Reports handler errors without changing the response.                               |
+| `maxSubscriptions`, `keepAliveMs` | Configure `subscriptions/listen` delivery.                                          |
 
 The stateless handler rejects these SDK v1 options:
 

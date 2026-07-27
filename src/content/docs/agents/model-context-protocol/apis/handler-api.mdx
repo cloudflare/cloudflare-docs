@@ -122,7 +122,6 @@ The following options are available:
 | `legacy`                 | `"stateless" \| "reject"`   | `"stateless"`                                     | legacy compatibility or stateless-only rejection              |
 | `responseMode`           | `"auto" \| "json" \| "sse"` | `"auto"`                                          | stateless request response shaping                            |
 | `onerror`                | `(error: Error) => void`    | None                                              | Out-of-band error reporting                                   |
-| `bus`                    | `ServerEventBus`            | In-memory bus                                     | Event bus for stateless subscriptions                         |
 | `maxSubscriptions`       | `number`                    | `1,024`                                           | Maximum concurrent listen streams                             |
 | `keepAliveMs`            | `number`                    | `15,000`                                          | Keepalive interval for listen streams                         |
 
@@ -194,7 +193,7 @@ Set `legacy: "reject"` for a stateless-only endpoint. Use `createLegacyMcpHandle
 
 ### Return value
 
-`createMcpHandler` returns a `StatelessMcpHandler`. It is callable and exposes request, lifecycle, notification, and event-bus controls:
+`createMcpHandler` returns a `StatelessMcpHandler`. It is callable and exposes request and notification controls:
 
 ```ts
 interface StatelessMcpHandler {
@@ -205,18 +204,11 @@ interface StatelessMcpHandler {
 		(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response>;
 	};
 
-	close(): Promise<void>;
-
 	notify: {
 		toolsChanged(): void;
 		promptsChanged(): void;
 		resourcesChanged(): void;
 		resourceUpdated(uri: string): void;
-	};
-
-	bus: {
-		publish(event: ServerEvent): void;
-		subscribe(listener: (event: ServerEvent) => void): () => void;
 	};
 }
 
@@ -224,12 +216,6 @@ type McpHandlerRequestOptions = {
 	authInfo?: AuthInfo;
 	parsedBody?: unknown;
 };
-
-type ServerEvent =
-	| { kind: "tools_list_changed" }
-	| { kind: "prompts_list_changed" }
-	| { kind: "resources_list_changed" }
-	| { kind: "resource_updated"; uri: string };
 ```
 
 #### Invoke the handler
@@ -257,14 +243,6 @@ const response = await handler.fetch(request, {
 
 `authInfo` is passed to the server factory and request handlers. The handler does not derive it from request headers or verify access tokens. `parsedBody` avoids reparsing a JSON body that upstream middleware already consumed.
 
-#### Close the handler
-
-```ts
-await handler.close();
-```
-
-`close()` rejects new requests, closes active modern exchanges, and closes active work in the stateless legacy compatibility handler.
-
 #### Publish list and resource changes
 
 The `notify` methods publish typed change events to matching open `subscriptions/listen` streams:
@@ -278,15 +256,11 @@ The `notify` methods publish typed change events to matching open `subscriptions
 
 Calling a notifier when no matching subscription is open is a no-op.
 
-The lower-level `bus` carries the same events. `publish(event)` synchronously publishes to registered listeners. `subscribe(listener)` registers a listener and returns an idempotent unsubscribe function. Prefer the typed `notify` methods when publishing standard MCP changes.
+#### Keep one handler for notifications
 
-By default, each handler owns an in-process event bus. You can provide a `ServerEventBus` through the `bus` option when events must cross processes or isolates.
+Notification routing belongs to the handler instance. Constructing a new handler inside every Worker `fetch()` call is suitable for ordinary tools, prompts, resources, and MRTR elicitation. It cannot notify a `subscriptions/listen` stream owned by an earlier handler instance.
 
-#### Keep one handler for subscription controls
-
-The controls belong to the handler instance. Constructing a new handler inside every Worker `fetch()` call is suitable for ordinary tools, prompts, resources, and MRTR elicitation. It creates a new in-memory event bus for every request, however, so later requests cannot notify a `subscriptions/listen` stream owned by an earlier handler.
-
-Create the handler once at module scope when using `notify`, `bus`, `close`, or in-process subscriptions, then invoke it from the Worker object export:
+Create the handler once at module scope when using `notify` or `subscriptions/listen`, then invoke it from the Worker object export:
 
 ```ts
 const handler = createMcpHandler(createServer);
@@ -298,7 +272,7 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-For events spanning multiple Worker isolates, supply a shared `ServerEventBus` implementation instead of relying on the default in-memory bus.
+Notifications are isolate-local. A notification published in one Worker isolate does not reach a subscription stream running in another isolate.
 
 ## `createLegacyMcpHandler`
 
