@@ -661,7 +661,17 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 			reconciled.styleOk
 		) {
 			await step.do("mark-auto-review", async () => {
-				await markAutoReviewCompleted(bucket, number, headSha).catch(() => {});
+				try {
+					await markAutoReviewCompleted(bucket, number, headSha);
+				} catch (err) {
+					console.error({
+						message: `Failed to mark auto-review completed: PR #${number} — ${err instanceof Error ? err.message : String(err)}`,
+						event: "review_orchestrator",
+						number,
+						runId,
+						action: "mark_auto_review_failed",
+					});
+				}
 				return { marked: true };
 			});
 		}

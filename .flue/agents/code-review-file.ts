@@ -117,9 +117,11 @@ export default function CodeReviewFile(_props: AgentProps): string {
 		useTool(tool);
 	}
 
-	if (input.repoAgentsMd) {
-		useInstruction(buildInstructions(input.repoAgentsMd));
-	}
+	// Always call useInstruction so the hook order stays stable across renders.
+	// When repoAgentsMd is absent, pass an empty string (no-op instruction).
+	useInstruction(
+		input.repoAgentsMd ? buildInstructions(input.repoAgentsMd) : "",
+	);
 
 	const writeReview = useDataWriter(CODE_REVIEW_FILE_DATA, {
 		schema: CodeReviewResultFromModelSchema,

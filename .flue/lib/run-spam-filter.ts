@@ -108,7 +108,29 @@ export async function runSpamFilter(
 		};
 	}
 
-	const verdict = v.parse(SpamVerdictSchema, raw);
+	let verdict: SpamVerdict;
+	try {
+		verdict = v.parse(SpamVerdictSchema, raw);
+	} catch {
+		console.log({
+			message: `${itemType} Left open: ${itemLabel} (invalid verdict shape)`,
+			event: "spam_and_off_topic_filter_verdict",
+			eventType: input.eventType,
+			kind: item.kind,
+			number: item.number,
+			url: item.url,
+			is_spam: false,
+			confidence: "low",
+			action: "left_open",
+			reason: "Invalid verdict.",
+		});
+		return {
+			is_spam: false,
+			confidence: "low",
+			reason: "Invalid verdict.",
+			closed: false,
+		};
+	}
 
 	// Only act on medium/high confidence — trusted code makes the API calls,
 	// not the agent, so there's no risk of hallucinated curl commands.
@@ -142,8 +164,8 @@ export async function runSpamFilter(
 		const label = isOffTopic ? "off topic" : "spam";
 
 		await addLabels(token, input.number, [label]);
-		await postComment(token, input.number, comment);
 		await closeIssue(token, input.number);
+		await postComment(token, input.number, comment);
 
 		console.log({
 			message: `${itemType} Closed: ${itemLabel} (${verdict.confidence} confidence spam/off-topic)`,

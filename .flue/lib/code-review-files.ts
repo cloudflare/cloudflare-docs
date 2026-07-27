@@ -125,7 +125,10 @@ export function selectCodeReviewFiles(
 				!!file.patch &&
 				!CODE_REVIEW_IGNORE_PATH_RE.test(file.filename),
 		)
-		.sort((a, b) => b.additions - a.additions)
+		.sort(
+			(a, b) =>
+				b.additions - a.additions || a.filename.localeCompare(b.filename),
+		)
 		.slice(0, maxFiles);
 }
 

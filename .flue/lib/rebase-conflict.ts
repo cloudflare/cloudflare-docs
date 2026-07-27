@@ -282,6 +282,34 @@ export async function resolveConflictsWithAI(
 		[...conflictMetaMap.entries()].map(([p, m]) => [p, m.writePath]),
 	);
 
+	// Detect duplicate write paths: two conflict candidates mapping to the
+	// same production path would cause last-write-wins in resolvedByProductionPath
+	// and treeUpdates, silently dropping one candidate's resolution.
+	const writePathCounts = new Map<string, string[]>();
+	for (const [prPath, writePath] of conflictWritePathMap) {
+		const existing = writePathCounts.get(writePath) ?? [];
+		existing.push(prPath);
+		writePathCounts.set(writePath, existing);
+	}
+	const duplicates = [...writePathCounts.entries()].filter(
+		([, prPaths]) => prPaths.length > 1,
+	);
+	if (duplicates.length > 0) {
+		const dupDesc = duplicates
+			.map(([writePath, prPaths]) => `${prPaths.join(" + ")} → ${writePath}`)
+			.join("; ");
+		return {
+			confidence: "low",
+			reason: `Multiple conflict candidates map to the same write path (${dupDesc}). Cannot safely resolve automatically — please rebase manually.`,
+			files: [],
+			allPrFiles: prFiles,
+			conflictCandidateSet: new Set(conflictCandidates),
+			conflictWritePathMap,
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
+		};
+	}
+
 	if (conflictCandidates.length === 0) {
 		return {
 			confidence: "low",

@@ -198,7 +198,7 @@ async function reviewOneFile({
 		return {
 			findings: [],
 			summary: "Code review produced no result.",
-			reviewedFiles: [input.filename],
+			reviewedFiles: [],
 		};
 	}
 

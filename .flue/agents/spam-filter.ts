@@ -93,14 +93,18 @@ export default function SpamFilter(_props: AgentProps): string {
 	);
 
 	useAgentFinish(({ response, append }) => {
-		const submitted = response.toolCalls.some(
-			(call) => call.tool === SUBMIT_TOOL && !call.isError,
+		const submitCalls = response.toolCalls.filter(
+			(call) => call.tool === SUBMIT_TOOL,
 		);
-		if (submitted) return;
+		const hasValidSubmission = submitCalls.some((call) => !call.isError);
+		if (hasValidSubmission) return;
+		const hasErroredSubmission = submitCalls.some((call) => call.isError);
 		append({
 			kind: "signal",
 			type: "reminder",
-			body: `You ended without calling ${SUBMIT_TOOL} — nothing was recorded. Call it now with your verdict.`,
+			body: hasErroredSubmission
+				? `Your last call to ${SUBMIT_TOOL} was invalid. Fix the data and call it again with a valid verdict (is_spam, confidence, reason).`
+				: `You ended without calling ${SUBMIT_TOOL} — nothing was recorded. Call it now with your verdict.`,
 		});
 	});
 
