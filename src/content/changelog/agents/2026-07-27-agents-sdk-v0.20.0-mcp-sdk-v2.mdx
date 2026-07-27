@@ -1,6 +1,6 @@
 ---
 title: "Agents SDK adds MCP Specification 2026-07-28 support"
-description: "Agents SDK v0.20.0 adds stateless-by-default MCP 2026-07-28 clients and servers while retaining explicit legacy support."
+description: "Agents SDK v0.20.0 adds client and server support for MCP 2026-07-28, including stateless Workers and compatibility with legacy MCP servers."
 products:
   - agents
   - workers
@@ -9,9 +9,15 @@ date: 2026-07-27
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-With support for the [MCP 2026-07-28 release candidate](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/), Agents SDK v0.20.0 lets you run MCP tools, prompts, resources, and elicitation statelessly in a Worker, so MCP transport no longer needs a Durable Object. You can still use Durable Objects or other storage for application state.
+Agents SDK v0.20.0 adds client and server support for the [MCP 2026-07-28 release candidate](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/). Workers can serve tools, prompts, resources, and elicitation without an MCP transport session or Durable Object. Agents can connect to both MCP 2026-07-28 servers and existing legacy servers.
 
-Agents clients negotiate stateless or legacy behavior automatically. Existing legacy server deployments remain supported through `createLegacyMcpHandler`, `WorkerTransport`, and `McpAgent`.
+## Client support
+
+The MCP client manager now uses `@modelcontextprotocol/client`. For each connection, it probes for MCP 2026-07-28 support with `server/discover`. If the server does not support the stateless protocol, the client continues with the legacy `initialize` handshake on the same connection. Existing `addMcpServer` calls do not need a protocol-version setting or separate clients for each protocol generation.
+
+For stateless requests, elicitation uses `input_required` through multi-round-trip requests (MRTR). The legacy path uses the same form and URL handlers for pushed requests. The SDK collects input, retries the original operation, and resolves the original `callTool`, `getPrompt`, or `readResource` promise with its final result.
+
+OAuth callbacks now validate issuer metadata through the v2 SDK. Discovery state and issuer-bound credentials persist across browser redirects and Durable Object hibernation.
 
 ## Run stateless servers
 
@@ -36,47 +42,62 @@ export default {
 
 </TypeScriptExample>
 
-The isolated `agents/mcp/server` entry keeps `McpAgent`, `WorkerTransport`, MCP client transports, and SDK v1 modules out of stateless server bundles. Its legacy compatibility lane supports ordinary tools, resources, and prompts. Session streams, replay, deletion, and pushed server-to-client requests still require a legacy sessionful server.
+The isolated `agents/mcp/server` entry keeps `McpAgent`, `WorkerTransport`, MCP client transports, and SDK v1 modules out of stateless server bundles.
 
 The Workers wrapper validates present browser Origins, supports explicit delegation to trusted Origin middleware, and exposes request handling plus typed change notifications.
 
-## Keep legacy support
+### Backward compatibility
 
-Existing SDK v1 servers can rename `createMcpHandler` to `createLegacyMcpHandler` without changing their transport behavior:
+The same `createMcpHandler(createServer)(request, env, ctx)` route serves MCP 2026-07-28 clients and legacy clients that use stateless requests. You do not need separate routes or tool definitions for ordinary tools, prompts, and resources.
+
+`McpAgent` is deprecated and feature-frozen. Migrate existing `McpAgent` servers to the stateless handler at your earliest convenience. If a server depends on protocol sessions, RPC, pushed server-to-client requests, standalone streams, or replay, use the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) to design stateless equivalents and run both routes while clients transition.
+
+## Migrate existing SDK v1 servers
+
+Upgrade the Agents SDK:
+
+<PackageManagers pkg="agents@latest" />
+
+Move ordinary SDK v1 server definitions into an SDK v2 factory and serve them with `createMcpHandler`. The handler's default legacy compatibility means most stateless deployments need only one route.
+
+If an existing `McpAgent` server still needs sessionful features, add the stateless path beside it. Use `isLegacyRequest()` to send only legacy traffic to the existing route:
 
 <TypeScriptExample>
 
 ```ts
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { createLegacyMcpHandler } from "agents/mcp";
+import { isLegacyRequest } from "@modelcontextprotocol/server";
+import { createMcpHandler } from "agents/mcp/server";
+import { MyMcpAgent } from "./legacy-server";
+import { createServer } from "./server";
 
-function createServer() {
-	return new McpServer({ name: "legacy", version: "1.0.0" });
-}
+const stateless = createMcpHandler(createServer, {
+	route: "/mcp",
+	legacy: "reject",
+});
+const legacy = MyMcpAgent.serve("/mcp");
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		return createLegacyMcpHandler(createServer())(request, env, ctx);
+		if (await isLegacyRequest(request)) {
+			return legacy.fetch(request, env, ctx);
+		}
+		return stateless(request, env, ctx);
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
-Passing an SDK v1 server directly to `createMcpHandler` is deprecated. `McpAgent` remains available for stateful legacy deployments, but it is deprecated and feature-frozen.
+Migrate the remaining sessionful features, allow existing sessions to drain, then remove the legacy route. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package changes, compatibility limits, and rollout steps.
 
-## Client negotiation and input requests
+## Deprecations in v0.20.0
 
-The MCP client manager now uses `@modelcontextprotocol/client`. It probes stateless servers with `server/discover` and falls back to the legacy `initialize` handshake.
+This release deprecates the following Agents SDK APIs:
 
-For stateless requests, elicitation uses `input_required` through multi-round-trip requests (MRTR). The legacy path uses the same form and URL handlers for pushed requests. The SDK collects input, retries the original operation, and resolves the original `callTool`, `getPrompt`, or `readResource` promise with its final result.
+| Deprecated API                                                                                          | Replacement                                                                                                                                                          | Status                                                   |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `McpAgent`                                                                                              | Use an SDK v2 factory with `createMcpHandler` for stateless servers. Use the migration guide to replace stateful features before removing a legacy route.            | Feature-frozen. No removal version is announced.         |
+| `createMcpHandler(v1Server, options)`                                                                   | Move the server to an SDK v2 factory and call `createMcpHandler(factory, options)`. Use `createLegacyMcpHandler` only as a temporary bridge for sessionful features. | Scheduled for removal in the next major version.         |
+| `MCPClientManager.callTool(params, resultSchema, options)` and the equivalent `withX402Client` overload | Use `callTool(params, options)` or `callTool(confirm, params, options)`.                                                                                             | Compatibility overload. No removal version is announced. |
 
-OAuth callbacks now validate issuer metadata through the v2 SDK. Discovery state and issuer-bound credentials persist across browser redirects and Durable Object hibernation.
-
-### Upgrade
-
-To update the Agents SDK:
-
-<PackageManagers pkg="agents@latest" />
-
-Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package changes, compatibility limits, and rollout steps.
+The MCP 2026-07-28 draft separately deprecates Roots, Sampling, Logging, the old HTTP+SSE transport, and Dynamic Client Registration.

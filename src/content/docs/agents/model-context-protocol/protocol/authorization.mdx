@@ -178,9 +178,9 @@ Remember — [authentication is different from authorization](https://www.cloud
 
 When a user authenticates through the OAuth Provider, their identity information is available inside your tools. How you access it depends on whether you use `McpAgent` or `createMcpHandler`.
 
-### With McpAgent
+### With `McpAgent` during migration
 
-The third type parameter on `McpAgent` defines the shape of the authentication context. Access it via `this.props` inside `init()` and tool handlers.
+This pattern applies only to existing deprecated `McpAgent` routes. The third type parameter defines the authentication context shape. Access it through `this.props` inside `init()` and tool handlers.
 
 ```ts
 import { McpAgent } from "agents/mcp";

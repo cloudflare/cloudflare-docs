@@ -14,7 +14,7 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 MCP tools are functions that an [MCP server](/agents/model-context-protocol/) exposes for clients to call. An LLM can invoke a tool to look up data, run a calculation, or call an API. The MCP server executes the tool and returns its result.
 
-Use `@modelcontextprotocol/server` for a stateless `createMcpHandler` server. Existing legacy `McpAgent` servers must keep using `@modelcontextprotocol/sdk`.
+Use `@modelcontextprotocol/server` for a stateless `createMcpHandler` server. `McpAgent` is deprecated and feature-frozen. Existing `McpAgent` routes must keep using `@modelcontextprotocol/sdk` only while they migrate.
 
 :::note[Experimental WebMCP adapter]
 
@@ -174,7 +174,7 @@ export default {
 
 ## Using tools with `McpAgent`
 
-For legacy stateful MCP servers, define tools in the `init()` method of an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/). Tools have access to the agent instance via `this`, which means they can read and write state.
+This section applies only to existing legacy routes during migration. Define their tools in the `init()` method of an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/). Tools have access to the agent instance through `this`, so they can read and write state.
 
 <TypeScriptExample>
 

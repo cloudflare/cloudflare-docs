@@ -21,19 +21,19 @@ This guide shows how to deploy a remote MCP server on Cloudflare using [Streamab
 
 The Agents SDK provides multiple ways to create MCP servers. Choose the approach that fits your use case:
 
-| Approach                                                                                              | Stateful?            | Protocol path                       | Best for                                |
-| ----------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------- | --------------------------------------- |
-| [`createMcpHandler()`](/agents/model-context-protocol/apis/handler-api/)                              | No                   | stateless with legacy compatibility | New stateless tools                     |
-| [`createLegacyMcpHandler()`](/agents/model-context-protocol/apis/handler-api/#createlegacymcphandler) | Optional             | legacy                              | Existing `WorkerTransport` servers      |
-| [`McpAgent`](/agents/model-context-protocol/apis/agent-api/)                                          | Yes                  | legacy                              | Existing Durable Object and RPC servers |
-| Raw SDK transport                                                                                     | Depends on transport | Depends on SDK package              | Custom transport ownership              |
+| Approach                                                                                              | Stateful?            | Protocol path                       | Best for                                    |
+| ----------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------- | ------------------------------------------- |
+| [`createMcpHandler()`](/agents/model-context-protocol/apis/handler-api/)                              | No                   | stateless with legacy compatibility | New stateless tools                         |
+| [`createLegacyMcpHandler()`](/agents/model-context-protocol/apis/handler-api/#createlegacymcphandler) | Optional             | legacy                              | Temporary existing `WorkerTransport` routes |
+| [`McpAgent`](/agents/model-context-protocol/apis/agent-api/)                                          | Yes                  | legacy                              | Deprecated Durable Object and RPC servers   |
+| Raw SDK transport                                                                                     | Depends on transport | Depends on SDK package              | Custom transport ownership                  |
 
 Use `createMcpHandler` for a new stateless server. An existing `McpAgent` without legacy stateful dependencies can migrate directly. If it uses MCP session state, RPC, pushed requests, streams, or replay, plan the stateless equivalents and serve stateless and legacy lanes during the transition. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged rollout.
 
 ## Deploy your first MCP server
 
 :::note[Template protocol path]
-The quick-deploy templates in this section currently use the legacy `McpAgent` path. You can still use it for sessionful deployments. For a new stateless server, start with the [`mcp-worker` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+The quick-deploy templates in this section still use the deprecated `McpAgent` path. Do not use that path for a new server. Start with the [`mcp-worker` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker). If an existing template deployment needs sessionful behavior, add a stateless route and follow the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/).
 :::
 
 You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the [next section](/agents/model-context-protocol/guides/remote-mcp-server/#add-authentication).

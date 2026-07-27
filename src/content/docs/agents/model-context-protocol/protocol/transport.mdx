@@ -18,7 +18,7 @@ The Model Context Protocol (MCP) specification defines two standard [transport m
 2. **Streamable HTTP** — The standard transport method for remote MCP connections, [introduced](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) in March 2025. It uses a single HTTP endpoint for bidirectional messaging.
 
 :::note
-Server-Sent Events (SSE) was previously used for remote MCP connections but has been deprecated in favor of Streamable HTTP. If you need SSE support for legacy clients, use the [`McpAgent`](/agents/model-context-protocol/apis/agent-api/) class.
+Server-Sent Events (SSE) was previously used for remote MCP connections but has been deprecated in favor of Streamable HTTP. Existing `McpAgent` deployments can retain SSE temporarily while they migrate, but new servers should use the stateless Streamable HTTP handler.
 :::
 
 MCP servers built with the [Agents SDK](/agents) use [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) to handle Streamable HTTP transport.
@@ -95,7 +95,7 @@ export default new OAuthProvider({
 
 MCP has no protocol-level session on the stateless path. Applications can store durable business data behind a separate storage boundary.
 
-Servers that require legacy sessions can use `createLegacyMcpHandler` with `WorkerTransport`, or keep `McpAgent` while their stateless equivalents are built. These APIs support transport state, event replay, pushed elicitation, sampling, and roots requests. `McpAgent` is deprecated and feature-frozen.
+While migrating legacy sessions, existing servers can keep a temporary `createLegacyMcpHandler` with `WorkerTransport` or `McpAgent` route beside the new stateless route. These APIs support transport state, event replay, pushed elicitation, sampling, and roots requests. `McpAgent` is deprecated and feature-frozen.
 
 Add the stateless route before moving clients, and keep both lanes until existing sessions drain. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged migration. Refer to [`McpAgent`: Stream resumability](/agents/model-context-protocol/apis/agent-api/#stream-resumability) for existing stream behavior.
 
@@ -109,7 +109,13 @@ The **RPC transport** is designed for internal applications where your MCP serve
 
 RPC transport does not support authentication. Use Streamable HTTP for external connections that require OAuth.
 
-### Connecting an Agent to an McpAgent via RPC
+### Connect an Agent to an existing `McpAgent` through RPC
+
+:::caution[Deprecated server path]
+
+This section applies only to existing `McpAgent` deployments during migration. Do not create a new `McpAgent` server. Use a stateless `createMcpHandler` server instead.
+
+:::
 
 #### 1. Define your MCP server
 

@@ -10,25 +10,26 @@ products:
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-This guide covers the [MCP SDK v2](https://github.com/modelcontextprotocol/typescript-sdk) upgrade in Agents SDK v0.20.0. It explains how to move stateless servers to `@modelcontextprotocol/server`, keep existing servers on an explicit legacy handler, and update MCP clients.
+This guide covers the [MCP SDK v2](https://github.com/modelcontextprotocol/typescript-sdk) upgrade in Agents SDK v0.20.0. It explains how to move servers to `@modelcontextprotocol/server`, use a temporary legacy lane only when sessionful features require it, and update MCP clients.
 
 ## Choose a server path
 
 Use the following table to select a migration path:
 
-| Current server                              | Migration path                                                                                       |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `createMcpHandler` with an SDK v1 server    | Rename the call to `createLegacyMcpHandler` to keep the same behavior.                               |
-| Server ready for stateless request handling | Move to `@modelcontextprotocol/server` and pass a factory to `createMcpHandler`.                     |
-| Server that must retain legacy behavior     | Keep SDK v1 and use `createLegacyMcpHandler`.                                                        |
-| `McpAgent` without legacy stateful features | Migrate directly to an SDK v2 factory and `createMcpHandler`.                                        |
-| `McpAgent` using legacy stateful features   | Design stateless equivalents, serve stateless and legacy lanes together, then drain the legacy lane. |
+| Current server                                | Migration path                                                                                                         |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| SDK v1 server without sessionful dependencies | Move the server definition to an SDK v2 factory and pass the factory to `createMcpHandler`.                            |
+| SDK v1 server with sessionful dependencies    | Add an SDK v2 route. Keep `createLegacyMcpHandler` only on a temporary legacy lane while replacing those dependencies. |
+| `McpAgent` without legacy stateful features   | Migrate directly to an SDK v2 factory and `createMcpHandler`.                                                          |
+| `McpAgent` that uses legacy stateful features | Design stateless equivalents, serve stateless and legacy lanes together, then drain the legacy lane.                   |
 
-The following APIs are deprecated:
+Agents SDK v0.20.0 deprecates these APIs:
 
-- Passing an SDK v1 server to `createMcpHandler`
-- `experimental_createMcpHandler`
-- `McpAgent`
+- Passing an SDK v1 server to `createMcpHandler`. Move the server to an SDK v2 factory. Use `createLegacyMcpHandler` only as a temporary bridge for sessionful behavior. This overload is scheduled for removal in the next major version.
+- `McpAgent`. It is deprecated and feature-frozen. Migrate at your earliest convenience. No removal version is announced.
+- `MCPClientManager.callTool(params, resultSchema, options)` and `withX402Client(...).callTool(confirm, params, resultSchema, options)`. Use `callTool(params, options)` or `callTool(confirm, params, options)` instead. No removal version is announced.
+
+`experimental_createMcpHandler` was already deprecated and remains scheduled for removal in the next major version. Move its SDK v1 server to an SDK v2 factory. Use `createLegacyMcpHandler` only on a temporary sessionful lane while migrating.
 
 ## Install the MCP packages
 
@@ -38,7 +39,7 @@ For a stateless server:
 
 <PackageManagers pkg="agents @modelcontextprotocol/server@2.0.0-beta.5 zod" />
 
-For an explicit legacy server:
+For a temporary legacy lane:
 
 <PackageManagers pkg="agents @modelcontextprotocol/sdk@1.29.0 zod" />
 
@@ -48,9 +49,9 @@ For an Agent that connects to MCP servers:
 
 Follow peer dependency instructions from your package manager. The exact v2 pin will change with later Agents releases while the MCP SDK remains in beta.
 
-## Keep existing legacy behavior
+## Decide whether a temporary legacy lane is required
 
-Use this path when your server depends on any of these features:
+Do not keep SDK v1 only because the server currently imports it. Move directly to an SDK v2 factory unless the endpoint depends on one of these sessionful features:
 
 - Protocol sessions or a supplied `WorkerTransport`
 - Transport storage or event replay
@@ -58,40 +59,9 @@ Use this path when your server depends on any of these features:
 - Pushed elicitation, sampling, or roots requests
 - Session deletion with HTTP `DELETE`
 
-<Steps>
+If the endpoint uses one of these features, deploy the stateless route first. Keep the SDK v1 route only while you replace the sessionful dependency. Route requests with `isLegacyRequest()` as shown in [Run stateless and legacy lanes together](#run-stateless-and-legacy-lanes-together).
 
-1. Keep importing `McpServer` from `@modelcontextprotocol/sdk`.
-
-2. Replace `createMcpHandler` with `createLegacyMcpHandler`.
-
-3. Keep the existing `WorkerTransport` options.
-
-4. Test initialization, tool calls, reconnects, session deletion, OAuth, and server-to-client requests.
-
-</Steps>
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { createLegacyMcpHandler } from "agents/mcp";
-
-function createServer() {
-	return new McpServer({ name: "legacy-server", version: "1.0.0" });
-}
-
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		return createLegacyMcpHandler(createServer())(request, env, ctx);
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
-
-Create a new SDK v1 server for each request unless you provide a persistent transport that is already connected to that server. Reconnecting one server instance to several transports is invalid.
-
-Refer to the [legacy elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) for a sessionful server with Durable Object state and SSE replay.
+For an SDK v1 endpoint that does not use `McpAgent`, use `createLegacyMcpHandler` only on that temporary legacy branch. Remove it after clients migrate and existing sessions drain.
 
 ## Move a stateless server to SDK v2
 
@@ -239,11 +209,11 @@ The fallback has these limits:
 - Standalone streams, event replay, and session deletion are unavailable.
 - Published experimental tasks are not supported through this fallback.
 
-Use `createLegacyMcpHandler` or `McpAgent` when a legacy client needs those features.
+While migrating these features, route affected legacy clients to a temporary `createLegacyMcpHandler` or `McpAgent` lane.
 
 ## Migrate an `McpAgent` server
 
-`McpAgent` remains an SDK v1 server. Do not change its server import to `@modelcontextprotocol/server`.
+During migration, `McpAgent` remains an SDK v1 server. Do not change the server import inside the legacy route to `@modelcontextprotocol/server`.
 
 ### Migrate directly without legacy stateful features
 
@@ -387,31 +357,33 @@ The following integrations retain SDK v1 server output in this release:
 - The server-side `withX402` helper
 - Existing OpenAI Apps examples that import an SDK v1 `McpServer`
 
-Serve these results with `createLegacyMcpHandler`. The Code Mode MCP connector and `withX402Client` accept either client generation.
+Until these integrations produce SDK v2 servers, isolate their output behind a temporary `createLegacyMcpHandler` route. The Code Mode MCP connector and `withX402Client` accept either client generation.
 
 ## Plan the rollout
 
 <Steps>
 
-1. Classify each endpoint as stateless, explicit legacy, or `McpAgent`.
+1. Classify each endpoint by its sessionful dependencies.
 
 2. Pin the MCP SDK versions required by the Agents release.
 
-3. Rename SDK v1 handler calls before changing their behavior.
+3. Move each server definition that can be stateless to an SDK v2 factory.
 
-4. Add stateless handlers beside existing sessionful routes.
+4. Add stateless handlers beside endpoints that still need a temporary legacy lane.
 
-5. Test stateless and legacy clients independently.
+5. Route stateless and legacy requests with `isLegacyRequest()`.
 
-6. Test required HTTP headers through every proxy and gateway.
+6. Test stateless and legacy clients independently.
 
-7. Test OAuth after a clean login and after Durable Object hibernation.
+7. Test required HTTP headers through every proxy and gateway.
 
-8. Test cancellation, multiple input rounds, and transport loss.
+8. Test OAuth after a clean login and after Durable Object hibernation.
 
-9. Verify valid Origins and reject invalid Origins with `403`.
+9. Test cancellation, multiple input rounds, and transport loss.
 
-10. Remove legacy routes only after existing sessions drain.
+10. Verify valid Origins and reject invalid Origins with `403`.
+
+11. Remove legacy routes only after existing sessions drain.
 
 </Steps>
 

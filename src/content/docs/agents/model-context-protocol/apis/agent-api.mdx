@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: McpAgent
-description: Build stateful MCP servers on Cloudflare by extending the McpAgent class with persistent storage and agent capabilities.
+description: Reference the deprecated, feature-frozen McpAgent class while migrating existing stateful MCP servers to stateless handlers.
 tags:
   - MCP
 sidebar:
@@ -16,7 +16,7 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 :::caution[Deprecated]
 
-`McpAgent` remains available for legacy servers that use stateful features. It is deprecated and feature-frozen. A server without those dependencies can migrate directly to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
+`McpAgent` remains available only for existing legacy servers while they migrate. It is deprecated and feature-frozen. Migrate to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) at your earliest convenience.
 
 A server that depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay needs a staged migration. Design stateless equivalents, add a stateless route, and serve both lanes until clients migrate and existing sessions drain.
 

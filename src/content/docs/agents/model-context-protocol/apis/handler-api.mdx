@@ -19,7 +19,7 @@ The Agents SDK provides two server handler paths:
 | `createMcpHandler`       | `agents/mcp/server` | `@modelcontextprotocol/server` | stateless with legacy compatibility by default |
 | `createLegacyMcpHandler` | `agents/mcp`        | `@modelcontextprotocol/sdk`    | legacy sessions through `WorkerTransport`      |
 
-`McpAgent` remains available for legacy servers while stateless equivalents are built. It is deprecated and feature-frozen. Refer to the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for staged rollout guidance.
+`McpAgent` is deprecated and feature-frozen. Migrate existing `McpAgent` servers to a stateless handler. Refer to the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) when sessionful features require a staged rollout.
 
 ## Install dependencies
 
@@ -189,7 +189,7 @@ This compatibility path does not provide a complete session transport:
 - Standalone streams, resumability, replay, and session deletion are unavailable.
 - Published experimental tasks are not supported through this path.
 
-Set `legacy: "reject"` for a stateless-only endpoint. Use `createLegacyMcpHandler` or `McpAgent` when a legacy client needs protocol sessions.
+Set `legacy: "reject"` for a stateless-only endpoint. During migration, route legacy clients that still require protocol sessions to a temporary `createLegacyMcpHandler` or `McpAgent` lane.
 
 ### Return value
 
@@ -293,7 +293,7 @@ function createLegacyMcpHandler(
 ): LegacyMcpHandler;
 ```
 
-Use this handler for legacy sessions, transport storage, event replay, and pushed server-to-client requests.
+Use this handler only as a temporary migration bridge when an existing SDK v1 endpoint still requires legacy sessions, transport storage, event replay, or pushed server-to-client requests.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -314,9 +314,9 @@ export default {
 
 </TypeScriptExample>
 
-Passing an SDK v1 server to `createMcpHandler` still works but emits a deprecation warning. Change the call to `createLegacyMcpHandler` to keep the same behavior without the warning.
+Passing an SDK v1 server to `createMcpHandler` still works but emits a deprecation warning. Move the server to an SDK v2 factory and pass the factory to `createMcpHandler`. If sessionful behavior prevents an immediate migration, use `createLegacyMcpHandler` only on the temporary legacy lane.
 
-`experimental_createMcpHandler` is also deprecated. Replace it with `createLegacyMcpHandler`.
+`experimental_createMcpHandler` is also deprecated. Move its SDK v1 server to an SDK v2 factory. Use `createLegacyMcpHandler` only as a temporary bridge for sessionful behavior.
 
 ### `CreateLegacyMcpHandlerOptions`
 
@@ -399,7 +399,7 @@ Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-t
 <LinkCard
 	title="McpAgent API"
 	href="/agents/model-context-protocol/apis/agent-api/"
-	description="Reference for the retained stateful legacy server path."
+	description="Reference for the deprecated, feature-frozen stateful server path during migration."
 />
 
 <LinkCard
