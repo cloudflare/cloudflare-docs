@@ -13,9 +13,10 @@
  * packages, dispatches this agent via `lib/run-dependabot-review.ts`, then
  * renders and posts the comment itself. The agent only reasons and submits.
  *
- * Per-run GitHub token flows through `initialData`; the GitHub-API-backed tools
- * (`makeDependabotReviewTools`) are built inside the render from it, fixed
- * length so the hook order is stable (the `code-review-file` mechanism).
+ * Per-run GitHub token is minted in-DO from env (not seeded via initialData);
+ * the GitHub-API-backed tools (`makeDependabotReviewTools`) are built inside
+ * the render from it, fixed length so the hook order is stable (the
+ * `code-review-file` mechanism).
  *
  * Structured output (D5): the model's only way to return a result is the
  * `submit_dependabot_review` tool (typed by `DependabotReviewResultSchema`) →
@@ -43,6 +44,7 @@ import {
 	type DependabotReviewResult,
 } from "../lib/dependabot-review";
 import { makeDependabotReviewTools } from "../lib/github-repo-tools";
+import { getGitHubToken } from "../lib/token-provider";
 
 const MODEL = "cloudflare/@cf/moonshotai/kimi-k2.7-code";
 
@@ -58,8 +60,6 @@ export interface DependabotReviewInput {
 	prBody: string;
 	/** Packages pre-parsed from the PR body by trusted code. */
 	packages: DependabotPackage[];
-	/** GitHub installation token backing the repo/npm lookup tools. */
-	token: string;
 }
 
 /** Re-export the shared result type for driver convenience. */
@@ -99,9 +99,13 @@ export default function DependabotReviewer(_props: AgentProps): string {
 
 	const input = useInitialData<DependabotReviewInput>();
 
-	// Repo + npm lookup tools. Fixed length every render, so the hook order is
-	// stable across the run.
-	for (const tool of makeDependabotReviewTools(input.token, input.prNumber)) {
+	// Repo + npm lookup tools, backed by a token minted in-DO from env (not
+	// seeded via initialData). Fixed length every render, so the hook order
+	// is stable across the run.
+	for (const tool of makeDependabotReviewTools(
+		getGitHubToken,
+		input.prNumber,
+	)) {
 		useTool(tool);
 	}
 

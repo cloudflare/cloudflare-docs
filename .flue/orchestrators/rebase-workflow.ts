@@ -208,7 +208,12 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 		const attempt = await step.do<AttemptResult>("attempt", async () => {
 			const token = await getInstallationToken(ghEnv);
 			try {
-				const result = await updatePullRequestBranch(token, prNumber, "rebase");
+				const result = await updatePullRequestBranch(
+					token,
+					prNumber,
+					"rebase",
+					prep.priorSha,
+				);
 				if (result.ok) {
 					return {
 						outcome: "clean",
@@ -309,13 +314,13 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 						"complete",
 						undefined,
 						senderLogin,
-					);
+					).catch(() => {});
 					await swapReaction(
 						token,
 						triggerCommentId,
 						triggerEyesReactionId,
 						true,
-					);
+					).catch(() => {});
 					return { result: "applied" };
 				}
 

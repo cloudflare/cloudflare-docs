@@ -39,6 +39,7 @@ import codeReviewSkill from "../.agents/skills/code-review/SKILL.md";
 import { useBotRole } from "../lib/bot-role";
 import { CodeReviewResultFromModelSchema } from "../lib/code-review-results";
 import { makeCodeReviewTools } from "../lib/github-repo-tools";
+import { getGitHubToken } from "../lib/token-provider";
 import type {
 	AddedLine,
 	CodeReviewPullRequest,
@@ -59,8 +60,6 @@ export interface CodeReviewFileInput {
 	addedLines: AddedLine[];
 	/** Full file content at the head SHA (capped); may be empty if unavailable. */
 	fileContent: string;
-	/** GitHub installation token backing the cross-file lookup tools. */
-	token: string;
 	/** PR head SHA — the ref `read_repo_file` is pinned to. */
 	headSha: string;
 	/** Repository root AGENTS.md, injected as reference context. */
@@ -111,9 +110,10 @@ export default function CodeReviewFile(_props: AgentProps): string {
 
 	const input = useInitialData<CodeReviewFileInput>();
 
-	// Cross-file lookup tools, bound to the PR head SHA. Fixed length every
-	// render, so the hook order is stable.
-	for (const tool of makeCodeReviewTools(input.token, input.headSha)) {
+	// Cross-file lookup tools, backed by a token minted in-DO from env (not
+	// seeded via initialData). Fixed length every render, so the hook order
+	// is stable.
+	for (const tool of makeCodeReviewTools(getGitHubToken, input.headSha)) {
 		useTool(tool);
 	}
 

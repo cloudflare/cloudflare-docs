@@ -167,7 +167,7 @@ async function reviewOneFile({
 		return {
 			findings: [],
 			summary: "Style-guide review produced no result.",
-			reviewedFiles: [input.filename],
+			reviewedFiles: [],
 		};
 	}
 

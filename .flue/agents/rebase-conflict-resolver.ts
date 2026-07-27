@@ -15,9 +15,10 @@
  * branch via the Git Data API, and posts all status. The agent only reasons and
  * submits (D5) — it never mutates the repo.
  *
- * Per-run GitHub token flows through `initialData`; the read/commit-lookup tools
- * (`makeRebaseConflictTools`) are built inside the render from it, fixed length
- * so the hook order is stable (the `code-review-file` mechanism).
+ * Per-run GitHub token is minted in-DO from env (not seeded via initialData);
+ * the read/commit-lookup tools (`makeRebaseConflictTools`) are built inside
+ * the render from it, fixed length so the hook order is stable (the
+ * `code-review-file` mechanism).
  *
  * Structured output (D5): the model's only way to return a result is the
  * `submit_conflict_resolution` tool (typed by `ConflictResolutionFromModelSchema`)
@@ -44,6 +45,7 @@ import {
 	type RebaseConflictAgentInput,
 } from "../lib/rebase-conflict";
 import { makeRebaseConflictTools } from "../lib/github-repo-tools";
+import { getGitHubToken } from "../lib/token-provider";
 
 const MODEL = "cloudflare/@cf/moonshotai/kimi-k2.7-code";
 
@@ -90,9 +92,10 @@ export default function RebaseConflictResolver(_props: AgentProps): string {
 
 	const input = useInitialData<RebaseConflictAgentInput>();
 
-	// read_repo_file + get_commit_pr, bound to the token. Fixed length every
-	// render, so the hook order is stable across the run.
-	for (const tool of makeRebaseConflictTools(input.token)) {
+	// read_repo_file + get_commit_pr, backed by a token minted in-DO from env
+	// (not seeded via initialData). Fixed length every render, so the hook
+	// order is stable across the run.
+	for (const tool of makeRebaseConflictTools(getGitHubToken)) {
 		useTool(tool);
 	}
 

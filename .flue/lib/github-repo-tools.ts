@@ -7,6 +7,7 @@
  */
 import { defineTool, type ToolDefinition } from "@flue/runtime";
 import * as v from "valibot";
+import type { TokenProvider } from "./token-provider";
 
 const REPO = "cloudflare/cloudflare-docs";
 const DEFAULT_REF = "production";
@@ -23,7 +24,7 @@ function apiHeaders(token: string): Record<string, string> {
 // ── Tool: get_pr_context ──────────────────────────────────────────────────────
 
 export function makeGetPrContextTool(
-	token: string,
+	getToken: TokenProvider,
 	prNumber: number,
 ): ToolDefinition {
 	return defineTool({
@@ -31,6 +32,7 @@ export function makeGetPrContextTool(
 		description:
 			"Fetch the Dependabot PR metadata: title, body, author, base/head refs.",
 		async run() {
+			const token = await getToken();
 			const res = await fetch(
 				`https://api.github.com/repos/${REPO}/pulls/${prNumber}`,
 				{ headers: apiHeaders(token) },
@@ -56,7 +58,7 @@ export function makeGetPrContextTool(
 // ── Tool: get_pr_files ────────────────────────────────────────────────────────
 
 export function makeGetPrFilesTool(
-	token: string,
+	getToken: TokenProvider,
 	prNumber: number,
 ): ToolDefinition {
 	return defineTool({
@@ -64,6 +66,7 @@ export function makeGetPrFilesTool(
 		description:
 			"Fetch the list of files changed in the Dependabot PR, including patches.",
 		async run() {
+			const token = await getToken();
 			const res = await fetch(
 				`https://api.github.com/repos/${REPO}/pulls/${prNumber}/files?per_page=100`,
 				{ headers: apiHeaders(token) },
@@ -89,7 +92,7 @@ export function makeGetPrFilesTool(
 // ── Tool: read_repo_file ──────────────────────────────────────────────────────
 
 export function makeReadRepoFileTool(
-	token: string,
+	getToken: TokenProvider,
 	defaultRef: string = DEFAULT_REF,
 ): ToolDefinition {
 	return defineTool({
@@ -110,6 +113,7 @@ export function makeReadRepoFileTool(
 			),
 		}),
 		async run({ data }) {
+			const token = await getToken();
 			const path = data.path;
 			const ref = data.ref ?? defaultRef;
 			// Encode each path segment but preserve the slashes the contents API needs.
@@ -149,10 +153,10 @@ export function makeReadRepoFileTool(
 // Uses the GitHub code search API. If search returns no results or errors,
 // use read_repo_file on specific paths instead.
 
-export function makeSearchRepoTool(token: string): ToolDefinition {
+export function makeSearchRepoTool(getToken: TokenProvider): ToolDefinition {
 	return defineTool({
 		name: "search_repo",
-		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippets. Use to find import sites, usages, and callers. Limited to 20 results. Note: code search indexes the default branch, so results may not reflect changes on the PR branch — use read_repo_file for exact current content. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
+		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippet. Use to find import sites, usages, and callers. Limited to 20 results. Note: code search indexes the default branch, so results may not reflect changes on the PR branch — use read_repo_file for exact current content. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
 		input: v.object({
 			query: v.pipe(
 				v.string(),
@@ -170,6 +174,7 @@ export function makeSearchRepoTool(token: string): ToolDefinition {
 			),
 		}),
 		async run({ data }) {
+			const token = await getToken();
 			const query = data.query;
 			const path = data.path;
 			const q = `${query} repo:${REPO}${path ? ` path:${path}` : ""}`;
@@ -263,7 +268,9 @@ export function makeGetNpmPackageInfoTool(): ToolDefinition {
 // package is a direct or transitive dependency, and which direct dep pulls it
 // in if transitive. More reliable than code-searching the lockfile.
 
-export function makeTraceDependencyTool(token: string): ToolDefinition {
+export function makeTraceDependencyTool(
+	getToken: TokenProvider,
+): ToolDefinition {
 	return defineTool({
 		name: "trace_dependency",
 		description:
@@ -277,6 +284,7 @@ export function makeTraceDependencyTool(token: string): ToolDefinition {
 			),
 		}),
 		async run({ data }) {
+			const token = await getToken();
 			const packageName = data.packageName;
 			// 1. Check package.json for direct dep
 			const pkgRes = await fetch(
@@ -350,15 +358,15 @@ export function makeTraceDependencyTool(token: string): ToolDefinition {
 // ── Factory: all tools ────────────────────────────────────────────────────────
 
 export function makeDependabotReviewTools(
-	token: string,
+	getToken: TokenProvider,
 	prNumber: number,
 ): ToolDefinition[] {
 	return [
-		makeGetPrContextTool(token, prNumber),
-		makeGetPrFilesTool(token, prNumber),
-		makeReadRepoFileTool(token),
-		makeSearchRepoTool(token),
-		makeTraceDependencyTool(token),
+		makeGetPrContextTool(getToken, prNumber),
+		makeGetPrFilesTool(getToken, prNumber),
+		makeReadRepoFileTool(getToken),
+		makeSearchRepoTool(getToken),
+		makeTraceDependencyTool(getToken),
 		makeGetNpmPackageInfoTool(),
 	];
 }
@@ -371,15 +379,18 @@ export function makeDependabotReviewTools(
 // default branch only, so it is best-effort for finding usages/callers.
 
 export function makeCodeReviewTools(
-	token: string,
+	getToken: TokenProvider,
 	headSha: string,
 ): ToolDefinition[] {
-	return [makeReadRepoFileTool(token, headSha), makeSearchRepoTool(token)];
+	return [
+		makeReadRepoFileTool(getToken, headSha),
+		makeSearchRepoTool(getToken),
+	];
 }
 
 // ── Tool: get_commit_pr ───────────────────────────────────────────────────────
 
-function makeGetCommitPrTool(token: string): ToolDefinition {
+function makeGetCommitPrTool(getToken: TokenProvider): ToolDefinition {
 	return defineTool({
 		name: "get_commit_pr",
 		description:
@@ -391,6 +402,7 @@ function makeGetCommitPrTool(token: string): ToolDefinition {
 			),
 		}),
 		async run({ data }) {
+			const token = await getToken();
 			const sha = data.commit_sha.trim();
 			// Validate before URL-interpolation: the GitHub commits/{sha}/pulls
 			// endpoint requires a full 40-character SHA.
@@ -455,10 +467,12 @@ function makeGetCommitPrTool(token: string): ToolDefinition {
 //
 // The agent CANNOT make arbitrary GitHub calls — only these two.
 
-export function makeRebaseConflictTools(token: string): ToolDefinition[] {
+export function makeRebaseConflictTools(
+	getToken: TokenProvider,
+): ToolDefinition[] {
 	// read_repo_file defaults to "production" but the agent can override the
 	// ref parameter to read files at the merge base SHA, PR head SHA, or
 	// production head SHA as needed for conflict resolution.
-	const readTool = makeReadRepoFileTool(token, "production");
-	return [readTool, makeGetCommitPrTool(token)];
+	const readTool = makeReadRepoFileTool(getToken, "production");
+	return [readTool, makeGetCommitPrTool(getToken)];
 }

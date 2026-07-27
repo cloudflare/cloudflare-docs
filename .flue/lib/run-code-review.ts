@@ -117,7 +117,6 @@ export async function runCodeReview(
 						filename: file.filename,
 						addedLines,
 						fileContent,
-						token,
 						headSha,
 						...(repoAgentsMd ? { repoAgentsMd } : {}),
 					},

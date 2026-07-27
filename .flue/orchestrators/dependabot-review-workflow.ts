@@ -152,14 +152,12 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 			result: DependabotReviewResult | null;
 		}>("review", async () => {
 			try {
-				const token = await getInstallationToken(ghEnv);
 				const result = await runDependabotReview(
 					{
 						prNumber: number,
 						prTitle: ctx.title,
 						prBody: ctx.body,
 						packages: ctx.packages,
-						token,
 					},
 					`${runId}:dependabot:${ctx.headSha}`,
 				);

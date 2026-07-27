@@ -553,13 +553,17 @@ export async function updatePullRequestBranch(
 	token: string,
 	pullNumber: number,
 	updateMethod: "merge" | "rebase",
+	expectedHeadSha?: string,
 ): Promise<UpdateBranchResult> {
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/update-branch`,
 		{
 			method: "PUT",
 			headers: apiHeaders(token),
-			body: JSON.stringify({ update_method: updateMethod }),
+			body: JSON.stringify({
+				update_method: updateMethod,
+				...(expectedHeadSha ? { expected_head_sha: expectedHeadSha } : {}),
+			}),
 		},
 	);
 	if (res.status === 202) return { ok: true, async: true };

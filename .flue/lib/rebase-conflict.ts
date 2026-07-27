@@ -82,8 +82,6 @@ export interface RebaseConflictAgentInput {
 	productionHeadSha: string;
 	productionCommits: Array<{ sha: string; message: string }>;
 	conflictFiles: ConflictFileForAgent[];
-	/** GitHub installation token backing the read_repo_file / get_commit_pr tools. */
-	token: string;
 }
 
 /** Runs the AI conflict resolver; returns null on any failure (→ low-confidence fallback). */
@@ -412,6 +410,28 @@ export async function resolveConflictsWithAI(
 		}),
 	);
 
+	// Halt on modify/delete conflicts: the schema only supports { path, content },
+	// so a resolution would create a blob and resurrect a file that one side
+	// intentionally removed. baseVersion !== null with a null prVersion or
+	// productionVersion means one side deleted while the other modified.
+	const deleteModifyConflicts = conflictFiles.filter(
+		(f) =>
+			f.baseVersion !== null &&
+			(f.prVersion === null || f.productionVersion === null),
+	);
+	if (deleteModifyConflicts.length > 0) {
+		return {
+			confidence: "low",
+			reason: `Cannot automatically resolve modify/delete conflicts for: ${deleteModifyConflicts.map((f) => f.path).join(", ")}. One side deleted a file the other modified — please resolve manually.`,
+			files: [],
+			allPrFiles: prFiles,
+			conflictCandidateSet: new Set(conflictCandidates),
+			conflictWritePathMap,
+			mergeBaseSha,
+			productionRefSha: productionRef.sha,
+		};
+	}
+
 	const lowConfidenceFallback: ResolvedConflicts = {
 		confidence: "low",
 		reason:
@@ -436,7 +456,6 @@ export async function resolveConflictsWithAI(
 			message: c.message.split("\n")[0],
 		})),
 		conflictFiles,
-		token,
 	});
 
 	if (!data) return lowConfidenceFallback;

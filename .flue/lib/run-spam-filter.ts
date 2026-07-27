@@ -163,9 +163,9 @@ export async function runSpamFilter(
 		const comment = isOffTopic ? OFF_TOPIC_COMMENT : SPAM_COMMENT;
 		const label = isOffTopic ? "off topic" : "spam";
 
-		await addLabels(token, input.number, [label]);
+		await addLabels(token, input.number, [label]).catch(() => {});
 		await closeIssue(token, input.number);
-		await postComment(token, input.number, comment);
+		await postComment(token, input.number, comment).catch(() => {});
 
 		console.log({
 			message: `${itemType} Closed: ${itemLabel} (${verdict.confidence} confidence spam/off-topic)`,

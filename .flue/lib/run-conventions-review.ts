@@ -26,6 +26,9 @@ import {
 const DISPATCH_MESSAGE =
 	"Review this pull request against the repository conventions and submit your review.";
 
+/** Per-review hard timeout — a wedged read must not hang the orchestrator step. */
+const CONVENTIONS_TIMEOUT_MS = 5 * 60_000;
+
 /**
  * Run the conventions reviewer for one PR and return a normalized
  * {@link CodeReviewResult} with `CV-` prefixed finding ids.
@@ -42,7 +45,16 @@ export async function runConventionsReview(
 		message: DISPATCH_MESSAGE,
 		initialData: input,
 	});
-	const reply = await agent.read(receipt);
+
+	let reply;
+	try {
+		reply = await agent.read(receipt, {
+			signal: AbortSignal.timeout(CONVENTIONS_TIMEOUT_MS),
+		});
+	} catch (err) {
+		await Promise.resolve(agent.abort()).catch(() => {});
+		throw err;
+	}
 
 	const raw = reply.data[CONVENTIONS_REVIEW_DATA]?.[0];
 	const parsed = v.parse(ConventionsReviewSchema, raw);

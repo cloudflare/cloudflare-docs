@@ -31,6 +31,33 @@ import type { DiffMode } from "./code-review-state";
 const DISPATCH_MESSAGE =
 	"Reconcile the current review findings against the previous review and human comments, then submit the result.";
 
+/**
+ * Build the fallback active-findings set when reconciliation fails or is
+ * skipped: current findings plus previous findings for files not reviewed
+ * this run, deduped by id. Without the carry-forward, a transient reconcile
+ * failure in incremental mode would permanently drop findings for untouched
+ * files once the reduced set is persisted.
+ */
+export function carryForwardOnFallback(
+	currentFindings: ReconcileFinding[],
+	previousFindings: ReconcileFinding[],
+	reviewedFiles: string[],
+): ReconcileFinding[] {
+	const reviewedSet = new Set(reviewedFiles);
+	const carriedForward = previousFindings.filter(
+		(f) => !reviewedSet.has(f.path),
+	);
+	const seen = new Set(currentFindings.map((f) => f.id));
+	const result = [...currentFindings];
+	for (const f of carriedForward) {
+		if (!seen.has(f.id)) {
+			seen.add(f.id);
+			result.push(f);
+		}
+	}
+	return result;
+}
+
 /** Per-reconcile hard timeout — a wedged read must not hang the orchestrator step. */
 export const RECONCILE_TIMEOUT_MS = 5 * 60_000;
 
@@ -113,7 +140,11 @@ export async function reconcileStream(
 		previousFindings.length > 0 || humanComments.length > 0;
 
 	const fallback = (): ReconcileResult => ({
-		active: currentFindings,
+		active: carryForwardOnFallback(
+			currentFindings,
+			previousFindings,
+			reviewedFiles,
+		),
 		ignored_by_reviewer: [],
 		resolved: [],
 		summary: fallbackSummary,
