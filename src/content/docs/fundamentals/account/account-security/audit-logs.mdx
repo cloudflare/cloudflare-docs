@@ -133,21 +133,18 @@ Resource History is available in the Cloudflare dashboard and via the Audit Logs
 
 ### What Resource History gives you
 
-- **Change history for any resource.** Given any audit log entry, retrieve every other audit log entry for the same resource, ordered chronologically.
-- **Field-level before and after.** Compare any two entries in a resource's history to see exactly which fields changed.
+For any audit log entry, Resource History retrieves every other audit log entry for the same resource, ordered chronologically. You can then pick an earlier entry from that history to see exactly which fields changed between the two.
 
-### Using Resource History in the dashboard
+### Use Resource History in the dashboard
 
 1. Go to **Manage Account** > **Audit Logs**.
 2. Open any audit log entry.
 3. Select **Change History** to see the full history for the resource that entry describes.
-4. In the history view, select any two entries to see a side-by-side diff of the fields that changed between them.
+4. In the history view, select any earlier entry to see a side-by-side diff of the fields that changed between it and the current entry.
 
 When Resource History cannot identify the underlying resource (for example, for certain system-initiated events), the dashboard shows an empty state indicating that change history is not available for that entry.
 
-For a small subset of events, the dashboard may show approximate results (changes to other resources of the same product and type). When this happens, the view displays a warning banner.
-
-### Using Resource History via the API
+### Use Resource History via the API
 
 You can retrieve the change history for any audit log entry using the History endpoint. Given the `id` of a source audit log entry, the endpoint derives identifying filters from that entry and returns matching audit log entries within a date window you specify.
 
