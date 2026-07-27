@@ -14,13 +14,24 @@ import { config } from "virtual:nimbus/config";
 import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
 import { getOgImage } from "~/util/og";
+import {
+	pageHasRuntimeHeadings,
+	scrapeRenderedHeadings,
+} from "../util/rendered-toc";
 
 const NOINDEX_PRODUCTS = ["email-security"];
 
 export const prerender = true;
 export const getStaticPaths = getDocsStaticPaths;
 
-const { entry, Content, headings } = await getDocsPageProps(Astro);
+const { entry, Content, headings } = await getDocsPageProps(Astro, {
+	partialHeadings: {
+		resolvePartialId: ({ file, product }) => {
+			if (!file) return undefined;
+			return product ? `${product}/${file}` : file;
+		},
+	},
+});
 
 const currentSlug = Astro.url.pathname.replace(/\/$/, "") || "/";
 const sectionSegment = currentSlug.split("/").filter(Boolean)[0];
@@ -66,7 +77,20 @@ const editUrl = await getEditUrl(entry);
 // Frontmatter wins; git is the fallback.
 const lastUpdated = entry.data.lastUpdated ?? (await getLastUpdated(entry));
 const tocConfig = entry.data.tableOfContents;
-const tocHeadings = headings.filter((h) => h.slug !== "footnote-label");
+// Runtime (set:html) headings are missing from compile-time `headings`.
+let tocSource = headings;
+if (
+	tocOn &&
+	tocConfig !== false &&
+	(await pageHasRuntimeHeadings(entry.body ?? ""))
+) {
+	try {
+		tocSource = await scrapeRenderedHeadings(Content, components);
+	} catch (err) {
+		console.error(`[toc] rendered-heading scrape failed for ${entry.id}:`, err);
+	}
+}
+const tocHeadings = tocSource.filter((h) => h.slug !== "footnote-label");
 const toc =
 	tocOn && tocConfig !== false ? getTOC(tocHeadings, tocConfig) : false;
 const markdownPath = `/${entry.id}/index.md`;
