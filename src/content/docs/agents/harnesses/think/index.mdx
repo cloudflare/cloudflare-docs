@@ -134,7 +134,7 @@ tag = "v1"
 
 ### Tracing
 
-Think instruments model turns and tool calls automatically. To send `invoke_agent`, `chat`, and `execute_tool` spans to Workers Observability, turn on Workers traces:
+Think instruments model turns and tool calls automatically, just like [Flue](https://flueframework.com/). To send `invoke_agent`, `chat`, `execute_tool`, and `tool_approval` spans to Workers Observability, turn on Workers traces:
 
 <WranglerConfig>
 
@@ -145,9 +145,9 @@ enabled = true
 
 </WranglerConfig>
 
-To turn tracing off, set `observability.traces.enabled` to `false`. You do not need to change the Think agent class.
+Traces appear in the Agents view in the Cloudflare Dashboard, where you can replay sessions and inspect trace waterfalls. To turn tracing off, set `observability.traces.enabled` to `false`. You do not need to change the Think agent class.
 
-For span attributes, payload controls, and direct AI SDK v6 or v7 setup, refer to [Observability](/agents/runtime/operations/observability/#ai-sdk-tracing).
+For span attributes, payload controls, exporting traces, and direct AI SDK v6 or v7 setup, refer to [Tracing](/agents/runtime/operations/observability/tracing/).
 
 ## Think vs AIChatAgent
 
