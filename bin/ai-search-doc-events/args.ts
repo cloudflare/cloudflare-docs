@@ -30,17 +30,17 @@ export function parseArgs(): Args {
 		process.exit(0);
 	}
 
-	const batchSize = Number.parseInt(values["batch-size"], 10);
+	const batchSize = Number(values["batch-size"]);
 	if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 100) {
 		throw new Error("--batch-size must be an integer from 1 to 100");
 	}
 
-	const concurrency = Number.parseInt(values.concurrency, 10);
+	const concurrency = Number(values.concurrency);
 	if (!Number.isInteger(concurrency) || concurrency < 1) {
 		throw new Error("--concurrency must be a positive integer");
 	}
 
-	const maxRetries = Number.parseInt(values["max-retries"], 10);
+	const maxRetries = Number(values["max-retries"]);
 	if (!Number.isInteger(maxRetries) || maxRetries < 0) {
 		throw new Error("--max-retries must be a non-negative integer");
 	}

@@ -83,6 +83,13 @@ async function runPool<T>(
  */
 export async function sendPayload(args: Args, payload: DiffPayload) {
 	if (!args.sendUrl) return false;
+	if (
+		!Number.isInteger(args.batchSize) ||
+		args.batchSize < 1 ||
+		args.batchSize > 100
+	) {
+		throw new Error("batchSize must be an integer from 1 to 100");
+	}
 
 	const headers = buildHeaders(args);
 
