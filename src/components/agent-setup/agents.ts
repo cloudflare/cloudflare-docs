@@ -39,7 +39,7 @@ export const AGENTS: AgentData[] = [
 		slug: "codex",
 		icon: "codex",
 		description:
-			"Lightweight open-source terminal agent that reads and writes files, runs commands, and browses the web in a sandbox. Made by OpenAI.",
+			"OpenAI coding agent available as a terminal CLI and standalone app. It reads and writes files, runs commands, and browses the web in a sandbox.",
 		capabilities: {
 			ide: false,
 			terminal: true,
