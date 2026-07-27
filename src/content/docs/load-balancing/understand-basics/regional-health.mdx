@@ -1,0 +1,175 @@
+---
+title: Regional health
+pcx_content_type: concept
+description: Use regional health decisions to steer traffic when pool reachability differs by region.
+products:
+  - load-balancing
+sidebar:
+  order: 5.5
+---
+
+import { APIRequest } from "~/components";
+
+:::note
+
+Regional health is in beta and available to eligible accounts. Configure it with the `health_sources` field on a pool through the API.
+
+:::
+
+By default, Cloudflare Load Balancing makes one global health decision for each pool and its endpoints. Your load balancer steers on that single decision everywhere.
+
+Regional health changes that. Each region gets its own health decision, with global health as a fallback. A region that cannot reach a pool steers around it right away. It does not wait for a global decision to change.
+
+You control this behavior with the `health_sources` field on a pool. Regional health works alongside global health, not in place of it.
+
+---
+
+## Reasons to use regional health
+
+Cloudflare runs health checks from three data centers in each [health monitor region](/load-balancing/understand-basics/health-details/) on a pool. By default, those results collapse into a single global decision. A pool is healthy when a threshold proportion of checking regions report it healthy. Your load balancer then steers on that one decision everywhere.
+
+For most pools, this is the right behavior. It produces one consistent answer. It also fits any pool that is equally reachable from everywhere. A typical setup has one pool per location. [Traffic steering](/load-balancing/understand-basics/traffic-steering/) sends each user to the nearest pool, and fails over when that pool is unhealthy.
+
+That single decision fits poorly when reachability differs by region. Cloudflare computes it from every region that checks the pool. This includes regions that never send the pool any traffic. Suppose the network path from one region to a pool degrades. The failing checks from that region still count towards the single decision.
+
+Neither outcome is correct. The other regions may outweigh the affected one. That region then keeps sending local traffic to an unreachable pool. Or the failure flips the whole decision. Healthy regions then lose a pool they reach normally.
+
+Regional health gives each region its own decision for a pool. A region that cannot reach a pool routes around it. Regions that can reach it keep using it.
+
+### Benefits
+
+- **Faster failover.** Your load balancer reacts as soon as the checks in a region change. It does not wait for a worldwide threshold.
+- **Decisions stay in region.** Cloudflare computes regional health close to where the checks run. This shortens the delay between detecting a problem and steering around it.
+- **Decisions match your traffic.** Each region judges a pool by whether it can reach that pool. A worldwide average no longer counts regions that never route there.
+
+---
+
+## Health sources
+
+A health source is the scope over which Cloudflare aggregates data center health checks into a decision. Cloudflare supports the following sources:
+
+| Source     | Scope                 | Description                                                                                                                                    |
+| ---------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `local`    | A single data center  | No aggregation. The result comes from the individual data center that ran the check. Applies only when the pool has no `check_regions` set, so that every data center runs checks. |
+| `regional` | One region            | Aggregates the checks of all data centers within each region in `check_regions`. Each region produces its own decision.                        |
+| `global`   | The Cloudflare global network | Aggregates every configured region into a single decision. This is the default Load Balancing behavior.                                   |
+
+The `health_sources` field is an ordered priority list. For each request, your load balancer takes the first source with a decision for that region. It falls back to the next source when none exists.
+
+With `["regional", "global"]`, your load balancer prefers the decision for the region handling the request. It uses the global decision when no regional decision exists. This happens in two cases. Traffic may land in a region outside `check_regions`. Or regional data may be briefly stale during a failover. Because each region decides independently, a problem in one region never changes steering in another.
+
+When `health_sources` is unset, the pool keeps its existing behavior. That is equivalent to `["local", "global"]`. Existing pools are unaffected until you opt in.
+
+The only accepted values are unset and `["regional", "global"]`.
+
+:::note
+
+Your load balancer may fall back to the `global` source. Cloudflare then compares the copy held at the data center serving the request against the centrally aggregated copy. It uses whichever is more recent.
+
+:::
+
+---
+
+## Regional health compared to check regions
+
+The `check_regions` and `health_sources` fields sound similar but do different jobs:
+
+| Aspect                                    | `check_regions`             | `health_sources`                                 |
+| ----------------------------------------- | --------------------------- | ------------------------------------------------ |
+| Controls                                  | Where health checks run     | How checks turn into a steering decision         |
+| Output                                    | Inputs to the decision      | One global decision, or one decision per region  |
+| Can regions disagree about a pool         | No                          | Yes, when `health_sources` includes `regional`   |
+
+Narrowing `check_regions` changes the inputs to the single global decision. It is still one decision, used in every location. Narrowing it cannot make two regions disagree about the same pool. Only `health_sources` with `regional` can.
+
+---
+
+## Example: region-specific reachability failure
+
+Consider a US pool (`pool-us`) and a European pool (`pool-eu`). [Proximity steering](/load-balancing/understand-basics/traffic-steering/steering-policies/proximity-steering/) sends European users to `pool-eu` first, then fails over to `pool-us`. European traffic can therefore land on `pool-us`. So the `check_regions` for `pool-us` include both North American and European regions.
+
+A transatlantic peering problem now makes `pool-us` unreachable from Europe. North America still reaches it normally.
+
+With global health, the failing checks from Europe feed into the single decision for `pool-us`. No setting gets this right. If `pool-us` stays healthy, European failover traffic still goes to a pool it cannot reach. If the failure flips the decision, North American traffic loses a pool it reaches normally.
+
+With regional health, `pool-us` is unhealthy in Europe. Your load balancer steers European traffic to the next reachable pool. In North America, `pool-us` stays healthy. That traffic continues to use it.
+
+Regional health only changes behavior when reachability genuinely differs by region. Suppose the endpoints in `pool-us` failed outright. Checks from every region would fail, and your load balancer would fail over everywhere. Global health does the same.
+
+---
+
+## Example: origins in a limited set of regions
+
+Regional health is not only for worldwide deployments. Consider a deployment with all users and origins in Europe and Asia. You run a European pool and an Asian pool. You do not serve traffic elsewhere. You set `check_regions` to your European and Asian regions.
+
+With global health, Cloudflare still combines those checks into one global decision. The health pipeline that does this may sit outside the regions you operate in. Your load balancer waits on that round trip before it can act.
+
+With regional health, the region that runs the checks also decides the result. Europe decides the health of your European pool. Asia decides the health of your Asian pool. When an endpoint in Europe fails, your load balancer in Europe acts directly. It does not wait on a round trip to a distant location.
+
+---
+
+## Recommended pool configuration
+
+For most multi-region deployments, Cloudflare recommends the following configuration:
+
+```json
+{
+	"check_regions": ["ALL_REGIONS"],
+	"health_sources": ["regional", "global"]
+}
+```
+
+Here, `health_sources` gives you per-region steering. Global health still covers traffic that has no regional decision. Setting `check_regions` to `["ALL_REGIONS"]` ensures a region actively checks the pool wherever traffic lands. Narrow `check_regions` only when no traffic will reach the regions you leave out. Traffic arriving in an unmonitored region falls back to the global decision.
+
+The `ALL_REGIONS` value for `check_regions` is available only on Enterprise plans. On other plans, list the individual regions you want to check.
+
+---
+
+## Configure regional health
+
+Before you begin, confirm two things. Your account has access to the regional health beta. The pool specifies at least one region in `check_regions`.
+
+:::caution
+
+The China Network and FedRAMP High regions each require separate access approval. Without that approval, adding either region to `check_regions` on a regional health pool returns a validation error.
+
+:::
+
+Set `health_sources` to `["regional", "global"]` on the pool:
+
+<APIRequest
+	path="/accounts/{account_id}/load_balancers/pools/{pool_id}"
+	method="PATCH"
+	json={{
+		check_regions: ["WNAM", "WEU"],
+		health_sources: ["regional", "global"],
+	}}
+/>
+
+You can set `health_sources` when you create, update, or patch a pool. Every pool response includes the field.
+
+---
+
+## When to use regional health
+
+Regional health only matters when regions can disagree about a pool. That requires two or more regions checking it. Turn on regional health when:
+
+- **Your origins span multiple regions.** Each region judges the pool by whether it can reach the origins closest to it.
+- **Traffic fails over onto a pool in another region.** Regional health can tell that one region reaches a shared failover target and another does not.
+- **Reachability varies by network path.** The affected region routes around peering issues, cable cuts, and regional routing failures.
+
+Keep the default global behavior when:
+
+- **Only one region checks the pool.** The regional and global decisions are identical.
+- **Origins are either fully up or fully down everywhere.** Every region reaches the same decision, so regional health does not change steering.
+- **You only want to limit where checks run.** Use `check_regions` for that. Narrowing it does not give each region its own decision.
+
+---
+
+## Related resources
+
+- [How endpoints and pools become unhealthy](/load-balancing/understand-basics/health-details/)
+- [Pools](/load-balancing/pools/)
+- [Monitors](/load-balancing/monitors/)
+- [Traffic steering](/load-balancing/understand-basics/traffic-steering/)
+- [Load Balancing analytics](/load-balancing/reference/load-balancing-analytics/)
