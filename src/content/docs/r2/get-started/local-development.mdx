@@ -111,7 +111,7 @@ Buckets can be served over an S3-compatible API, which lets you point existing S
 
 ### Configure a bucket
 
-Unlike the public endpoint, the S3 endpoint is opt-in. Add `experimental_local_s3_credentials` to a bucket to serve it:
+Unlike the public endpoint, the S3 endpoint is opt-in. Add `local_dev.experimental_s3_credentials` to a bucket to serve it:
 
 <WranglerConfig removeSchema>
 
@@ -120,7 +120,7 @@ Unlike the public endpoint, the S3 endpoint is opt-in. Add `experimental_local_s
 binding = "BUCKET"
 bucket_name = "my-bucket"
 
-[r2_buckets.experimental_local_s3_credentials]
+[r2_buckets.local_dev.experimental_s3_credentials]
 accessKeyId = "local-access-key-id"
 secretAccessKey = "local-secret-access-key"
 ```
