@@ -127,25 +127,23 @@ You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side 
    								: JSON.stringify(options.body),
    				});
 
-   				if (response.status === 204) return null;
-
-   				const responseType = response.headers.get("Content-Type") ?? "";
-   				const result = responseType.includes("application/json")
-   					? await response.json()
-   					: await response.text();
-
    				if (!response.ok) {
    					throw new Error(`API request failed: ${response.status}`);
    				}
-   				return result;
+   				if (response.status === 204) return null;
+
+   				const responseType = response.headers.get("Content-Type") ?? "";
+   				return responseType.includes("application/json")
+   					? await response.json()
+   					: await response.text();
    			},
    		});
 
-       return createLegacyMcpHandler(server, { route: "/mcp" })(
-           request,
-           env,
-           ctx,
-       );
+   		return createLegacyMcpHandler(server, { route: "/mcp" })(
+   			request,
+   			env,
+   			ctx,
+   		);
    	},
    } satisfies ExportedHandler<Env>;
    ```

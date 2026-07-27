@@ -46,9 +46,15 @@ Existing SDK v1 servers can rename `createMcpHandler` to `createLegacyMcpHandler
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { createLegacyMcpHandler } from "agents/mcp";
 
-export default createLegacyMcpHandler(
-	new McpServer({ name: "legacy", version: "1.0.0" }),
-);
+function createServer() {
+	return new McpServer({ name: "legacy", version: "1.0.0" });
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		return createLegacyMcpHandler(createServer())(request, env, ctx);
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>

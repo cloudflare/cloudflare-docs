@@ -32,6 +32,10 @@ Use `createMcpHandler` for a new stateless server. An existing `McpAgent` withou
 
 ## Deploy your first MCP server
 
+:::note[Template protocol path]
+The quick-deploy templates in this section currently use the legacy `McpAgent` path. It remains supported for sessionful deployments. For a new stateless server, start with the [`mcp-worker` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+:::
+
 You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the [next section](/agents/model-context-protocol/guides/remote-mcp-server/#add-authentication).
 
 ### Via the dashboard

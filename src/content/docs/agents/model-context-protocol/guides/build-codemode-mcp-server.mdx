@@ -107,11 +107,11 @@ You need a Cloudflare Workers project and an existing `McpServer`.
    			executor,
    		});
 
-       return createLegacyMcpHandler(server, { route: "/mcp" })(
-           request,
-           env,
-           ctx,
-       );
+   		return createLegacyMcpHandler(server, { route: "/mcp" })(
+   			request,
+   			env,
+   			ctx,
+   		);
    	},
    } satisfies ExportedHandler<Env>;
    ```
