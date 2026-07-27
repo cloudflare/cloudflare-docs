@@ -9,9 +9,7 @@ const sortOptions: { value: SortOrder; label: string }[] = [
 
 /**
  * Single-select dropdown for model sort order.
- *
- * Fires a "model-catalog-sort" CustomEvent on the document when the value
- * changes, so the Astro catalog script can respond without React owning state.
+ * Controlled — parent owns state and event dispatching.
  */
 export function SortSelect({
 	sortOrder,

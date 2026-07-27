@@ -209,11 +209,11 @@ const pageTitle = `${displayName} (${authorName})`;
 const headTitle = `${pageTitle} · Cloudflare AI docs`;
 
 const headings: MarkdownHeading[] = [
-	hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
-	hasCodeExamples && { depth: 2, slug: "Usage", text: "Usage" },
-	hasRemainingExamples && { depth: 2, slug: "Examples", text: "Examples" },
-	hasSchema && { depth: 2, slug: "Parameters", text: "Parameters" },
-	hasSchema && { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" },
+	hasPlayground && { depth: 2, slug: "playground", text: "Playground" },
+	hasCodeExamples && { depth: 2, slug: "usage", text: "Usage" },
+	hasRemainingExamples && { depth: 2, slug: "examples", text: "Examples" },
+	hasSchema && { depth: 2, slug: "parameters", text: "Parameters" },
+	hasSchema && { depth: 2, slug: "api-schemas", text: "API Schemas (Raw)" },
 ].filter(Boolean) as MarkdownHeading[];
 ---
 
@@ -358,7 +358,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasPlayground && (
 			<Fragment>
-				<AnchorHeading depth={2} title="Playground" slug="Playground" />
+				<AnchorHeading depth={2} title="Playground" slug="playground" />
 				<p>
 					Try out this model with Workers AI LLM Playground. It does not require
 					any setup or authentication and is an instant way to preview and test
@@ -376,7 +376,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasCatalogUsage && firstExample && (
 			<Fragment>
-				<AnchorHeading depth={2} title="Usage" slug="Usage" />
+				<AnchorHeading depth={2} title="Usage" slug="usage" />
 				<ExampleCard example={firstExample} layout="stack" />
 			</Fragment>
 		)
@@ -385,7 +385,7 @@ const headings: MarkdownHeading[] = [
 	{
 		!hasCatalogUsage && CodeExamples && (
 			<Fragment>
-				<AnchorHeading depth={2} title="Usage" slug="Usage" />
+				<AnchorHeading depth={2} title="Usage" slug="usage" />
 				<CodeExamples name={model.name} lora={false} />
 			</Fragment>
 		)
@@ -394,7 +394,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasRemainingExamples && (
 			<Fragment>
-				<AnchorHeading depth={2} title="Examples" slug="Examples" />
+				<AnchorHeading depth={2} title="Examples" slug="examples" />
 				{remainingExamples.map((example) => (
 					<details>
 						<summary>
@@ -413,7 +413,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasSchema && apiModes && apiModes.length > 1 ? (
 			<Fragment>
-				<AnchorHeading depth={2} title="Parameters" slug="Parameters" />
+				<AnchorHeading depth={2} title="Parameters" slug="parameters" />
 
 				{allInputsIdentical ? (
 					<Fragment>
@@ -471,7 +471,7 @@ const headings: MarkdownHeading[] = [
 		) : (
 			hasSchema && (
 				<Fragment>
-					<AnchorHeading depth={2} title="Parameters" slug="Parameters" />
+					<AnchorHeading depth={2} title="Parameters" slug="parameters" />
 					{variantTitles.length > 0 ? (
 						<div data-variant-section data-active-variant={activeVariant}>
 							<SchemaVariantTabs titles={variantTitles} client:visible />
@@ -562,7 +562,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasSchema && (
 			<Fragment>
-				<AnchorHeading depth={2} title="API Schemas (Raw)" slug="API-Schemas" />
+				<AnchorHeading depth={2} title="API Schemas (Raw)" slug="api-schemas" />
 				<div class="not-prose grid grid-cols-1 gap-2 sm:grid-cols-2">
 					{rawLinks.map((link) => (
 						<div class="border-border flex items-center justify-between rounded-lg border px-4 py-1.5">
