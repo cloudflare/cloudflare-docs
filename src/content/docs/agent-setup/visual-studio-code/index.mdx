@@ -48,7 +48,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 	3. **Start the server and authorize**
 
-		After you save `mcp.json`, Visual Studio Code shows a **Start** CodeLens above the server definition. Select it and complete the OAuth flow to authorize the Cloudflare MCP server against your account. Start with a demo account until you are comfortable with the scope you grant.
+		After you save `mcp.json`, Visual Studio Code shows a **Start** CodeLens on the `cloudflare-api` server definition. Select it and complete the OAuth flow to authorize the Cloudflare MCP server against your account. Start with a demo account until you are comfortable with the scope you grant.
 
 	4. **Try a prompt**
 
@@ -82,7 +82,7 @@ For a screenshot-by-screenshot walkthrough — including the OAuth authorization
 ## FAQ
 
 <FAQList>
-	<FAQItem question="Why does the MCP server only show 3 tools?">
+	<FAQItem question="Why does the MCP server only show three tools?">
 		The Cloudflare API specification is roughly two million tokens, which is far
 		too large to hand an agent directly. The Cloudflare MCP server uses a
 		code-execution pattern: the agent gets a tool to search the API spec and a
@@ -132,8 +132,8 @@ For a screenshot-by-screenshot walkthrough — including the OAuth authorization
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="The agent suggests creating an API token to work around an error">
 		Decline. If authentication is broken, the fix is the OAuth grant, not
-		pasting a bearer token into a chat window. Follow the API error 10000 steps
-		above to re-grant cleanly.
+		pasting a bearer token into a chat window. Follow the API error 10000
+		troubleshooting steps to re-grant cleanly.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="401 errors in the Visual Studio Code logs">
 		Expected behavior until you select **Allow in this Session** in the Copilot

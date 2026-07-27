@@ -16,9 +16,9 @@ For the condensed version, refer to the [Visual Studio Code quick start](/agent-
 
 ## Before you start
 
-- **Visual Studio Code**, fully up to date. A version mismatch between the editor and the Copilot extension is the most common source of agent-mode errors.
-- **GitHub Copilot**. Any GitHub account works, and the free tier is enough.
-- **A Cloudflare account** you are comfortable pointing an agent at. Use a demo account. The reason becomes clear at the authorization step.
+- Visual Studio Code, fully up to date. A version mismatch between the editor and the Copilot extension is the most common source of agent-mode errors.
+- GitHub Copilot. Any GitHub account works, and the free tier is enough.
+- A Cloudflare account you are comfortable pointing an agent at. Use a demo account. The reason becomes clear at the authorization step.
 
 ## Connect Visual Studio Code to the Cloudflare API
 
@@ -72,9 +72,9 @@ For the condensed version, refer to the [Visual Studio Code quick start](/agent-
 
 6. **Start the server**
 
-	After you save the file, a **Start** link appears above the server definition. It looks like a comment, but it is a button (a [CodeLens](https://learn.microsoft.com/en-us/visualstudio/ide/find-code-changes-and-other-history-with-codelens)). Select it, then allow the authentication prompt. Your browser opens the Cloudflare authorization page.
+	After you save the file, a **Start** link appears on the `cloudflare-api` server definition. It looks like a comment, but it is a button (a [CodeLens](https://learn.microsoft.com/en-us/visualstudio/ide/find-code-changes-and-other-history-with-codelens)). Select it, then allow the authentication prompt. Your browser opens the Cloudflare authorization page.
 
-	![Visual Studio Code showing the Start CodeLens above the Cloudflare MCP server definition](~/assets/images/agent-setup/visual-studio-code/vscode-start-cloudflare-mcp.png)
+	![Visual Studio Code showing the Start CodeLens on the Cloudflare MCP server definition in mcp.json](~/assets/images/agent-setup/visual-studio-code/vscode-start-cloudflare-mcp.png)
 
 7. **Choose an access template**
 
@@ -127,7 +127,7 @@ For the condensed version, refer to the [Visual Studio Code quick start](/agent-
 
 12. **Create a DNS record**
 
-	Ask the agent to create a DNS AAAA record and enable the Cloudflare proxy. This example points `test.cloudflaredemo.net` at `100::`, a reserved placeholder address from the IPv6 discard prefix `0100::/64` ([RFC 6666](https://www.rfc-editor.org/rfc/rfc6666)). Because the record is proxied, Cloudflare intercepts requests before they reach this address. Approve the tool call (**Always Allow**), and the agent reports the record created.
+	Ask the agent to create a DNS AAAA record and turn on the Cloudflare proxy. This example points `test.cloudflaredemo.net` at `100::`, a reserved placeholder address from the IPv6 discard prefix `0100::/64` ([RFC 6666](https://www.rfc-editor.org/rfc/rfc6666)). Because the record is proxied, Cloudflare intercepts requests before they reach this address. Approve the tool call (**Always Allow**), and the agent reports the record created.
 
 	![Copilot Chat creating a proxied AAAA DNS record through the Cloudflare MCP server](~/assets/images/agent-setup/visual-studio-code/cloudflare-mcp-create-aaaa-record.png)
 
@@ -169,7 +169,7 @@ For the condensed version, refer to the [Visual Studio Code quick start](/agent-
 	```
 
 	:::note
-	Because you enabled the proxy, the response returns Cloudflare-owned IP addresses rather than the origin `100::` address.
+	Because you turned on the proxy, the response returns Cloudflare-owned IP addresses rather than the origin `100::` address.
 	:::
 
 14. **Delete the DNS record**
