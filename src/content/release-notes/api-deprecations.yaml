@@ -3,6 +3,29 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-27"
+    title: "Zone Settings Batch API"
+    description: |-
+      Deprecation date: April 23, 2025
+
+      End of life date: March 31, 2027
+
+      **Update:** This deprecation's end of life date has been extended to March 31, 2027 (previously September 15, 2026).
+
+      The Zone Settings Batch API endpoints, which read and edit multiple zone settings in a single request, are deprecated and will reach their end of life on March 31, 2027. Use the per-setting endpoints to read and edit individual zone settings instead.
+
+      Deprecated APIs:
+
+      - `GET /zones/{zone_id}/settings`
+      - `PATCH /zones/{zone_id}/settings`
+
+      Replacements:
+
+      - [Get zone setting](/api/resources/zones/subresources/settings/methods/get/) — `GET /zones/{zone_id}/settings/{setting_id}`
+      - [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) — `PATCH /zones/{zone_id}/settings/{setting_id}`
+
+      Integrations that read or edit multiple settings in a single call must migrate to per-setting requests before March 31, 2027 to ensure uninterrupted service. After this date, the batch endpoints will no longer be available.
+
   - publish_date: "2026-07-22"
     title: "Account name 65-character limit"
     description: |-
@@ -163,27 +186,6 @@ entries:
       - [Create registration](/api/resources/registrar/subresources/registrations/methods/create/) — `POST /accounts/{account_id}/registrar/registrations`
 
       Customers and integrations using the legacy domain management endpoints must migrate to the new Registrar API before September 27, 2026 to ensure uninterrupted service. After this date, the legacy endpoints will no longer be available.
-
-  - publish_date: "2026-06-16"
-    title: "Zone Settings Batch API"
-    description: |-
-      Deprecation date: April 23, 2025
-
-      End of life date: September 15, 2026
-
-      The Zone Settings Batch API endpoints, which read and edit multiple zone settings in a single request, are deprecated and will reach their end of life on September 15, 2026. Use the per-setting endpoints to read and edit individual zone settings instead.
-
-      Deprecated APIs:
-
-      - `GET /zones/{zone_id}/settings`
-      - `PATCH /zones/{zone_id}/settings`
-
-      Replacements:
-
-      - [Get zone setting](/api/resources/zones/subresources/settings/methods/get/) — `GET /zones/{zone_id}/settings/{setting_id}`
-      - [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) — `PATCH /zones/{zone_id}/settings/{setting_id}`
-
-      Integrations that read or edit multiple settings in a single call must migrate to per-setting requests before September 15, 2026 to ensure uninterrupted service. After this date, the batch endpoints will no longer be available.
 
   - publish_date: "2026-05-13"
     title: "Gateway Audit SSH rules"
