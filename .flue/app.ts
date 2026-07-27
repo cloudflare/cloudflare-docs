@@ -5,8 +5,16 @@ import {
 	type CloudflareAIBinding,
 } from "@flue/runtime/cloudflare";
 import { Hono } from "hono";
-import { verifyGitHubSignature } from "./lib/github";
-import { classifyWebhook, isActionable } from "./lib/webhook-classify";
+import {
+	verifyGitHubSignature,
+	getPullRequest,
+	getInstallationToken,
+} from "./lib/github";
+import {
+	classifyWebhook,
+	isActionable,
+	type WebhookClassification,
+} from "./lib/webhook-classify";
 import { startReviewPipeline, type PipelineEnv } from "./lib/pipeline-entry";
 
 const bindings = workerEnv as unknown as {
@@ -27,11 +35,59 @@ setProvider(
 	}),
 );
 
-type WebhookEnv = PipelineEnv & { GITHUB_WEBHOOK_SECRET?: string };
+type WebhookEnv = PipelineEnv & {
+	GITHUB_WEBHOOK_SECRET?: string;
+	DOCS_FLUE_INTERNAL_TOKEN?: string;
+};
 
 const app = new Hono();
 
 app.get("/health", (c) => c.json({ ok: true }));
+
+// Trigger a review for a PR by number. Fetches the real PR from GitHub,
+// builds the same classification a webhook would, and routes through
+// startReviewPipeline — spam gate, Dependabot detection, codeowner checks,
+// the full pipeline. Gated behind DOCS_FLUE_INTERNAL_TOKEN.
+app.post("/dev/review/:number", async (c) => {
+	const env = c.env as unknown as WebhookEnv;
+	const secret = env.DOCS_FLUE_INTERNAL_TOKEN;
+	if (!secret) return c.text("Internal token not configured", 500);
+
+	const provided = c.req.header("x-dev-secret");
+	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+
+	const prNumber = Number(c.req.param("number"));
+	if (!Number.isInteger(prNumber) || prNumber <= 0)
+		return c.text("Invalid PR number", 400);
+
+	const ghEnv = env as unknown as Record<string, string>;
+	const token = await getInstallationToken(ghEnv);
+	const pr = await getPullRequest(token, prNumber);
+
+	const classification: WebhookClassification = {
+		eventType: "pull_request",
+		action: "opened",
+		number: prNumber,
+		title: pr.title,
+		senderLogin: pr.user?.login ?? undefined,
+		prAuthorLogin: pr.user?.login ?? undefined,
+		isDependabotPr: pr.user?.login === "dependabot[bot]",
+		isDependabotReviewEvent: pr.user?.login === "dependabot[bot]",
+		isSpamFilterEvent: pr.user?.login !== "dependabot[bot]",
+		isCodeReviewEvent: pr.user?.login !== "dependabot[bot]",
+		isDraft: pr.draft,
+		command: null,
+		commentId: undefined,
+		commentPrAuthorLogin: undefined,
+	};
+
+	if (!isActionable(classification)) {
+		return c.json({ acted: false, reason: "No action needed." });
+	}
+
+	await startReviewPipeline(env, classification, "");
+	return c.json({ acted: true, number: prNumber }, 202);
+});
 
 // GitHub webhook ingress. Stateless: verify the HMAC, classify the payload, and
 // hand actionable events to the durable review pipeline. There are no internal
