@@ -59,6 +59,8 @@ await tracedAI.streamText({
 
 `wrapAISDK` instruments `generateText`, `streamText`, `generateObject`, and `streamObject`. With AI SDK v7, the wrapper starts `invoke_agent` before model and tool work begins. This keeps `chat` and `execute_tool` spans under the operation span without changing other asynchronous context used by providers or tools.
 
+Hibernatable WebSocket turns use invocation-bounded spans. Think and AIChat close interaction, turn, result, `invoke_agent`, `chat`, and `execute_tool` spans before asynchronous work can escape the native Worker invocation. Later model steps retain their correlation and parent IDs. RPC, alarm, and other non-WebSocket turns retain full completion lifetimes. Completion-time attributes such as usage, finish reason, response IDs, and asynchronous errors might be unavailable on invocation-bounded spans.
+
 `createAISDKTelemetry` remains available for applications that need an AI SDK v7 lifecycle integration. Use `wrapAISDK` when the `invoke_agent` parent-child hierarchy is required.
 
 ### Trace Think agents
