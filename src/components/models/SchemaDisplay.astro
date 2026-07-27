@@ -77,8 +77,15 @@ function flatSchemaToRows(schemaObj: Record<string, unknown>): SchemaRowData[] {
 	}));
 }
 
-// Generate unique ID for sessionStorage keys
-const schemaId = `schema-${title.toLowerCase()}-${Date.now()}`;
+// Generate a stable ID for sessionStorage keys based on schema content.
+// Using a simple hash of the JSON so the key is consistent across builds —
+// Date.now() was non-deterministic and silently lost user state on every deploy.
+const schemaJson = JSON.stringify(schema);
+let schemaHash = 0;
+for (let i = 0; i < schemaJson.length; i++) {
+	schemaHash = (schemaHash * 31 + schemaJson.charCodeAt(i)) >>> 0;
+}
+const schemaId = `schema-${title.toLowerCase()}-${schemaHash.toString(36)}`;
 
 type ReferenceInfo = {
 	source: string | null;
