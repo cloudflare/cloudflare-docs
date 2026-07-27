@@ -194,24 +194,111 @@ Set `legacy: "reject"` for a stateless-only endpoint. Use `createLegacyMcpHandle
 
 ### Return value
 
-The returned handler is callable when composing MCP routing inside another Worker handler:
+`createMcpHandler` returns a `StatelessMcpHandler`. It is callable and exposes request, lifecycle, notification, and event-bus controls:
 
 ```ts
-const response = await createMcpHandler(createServer)(request, env, ctx);
+interface StatelessMcpHandler {
+	(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response>;
+
+	fetch: {
+		(request: Request, options?: McpHandlerRequestOptions): Promise<Response>;
+		(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response>;
+	};
+
+	close(): Promise<void>;
+
+	notify: {
+		toolsChanged(): void;
+		promptsChanged(): void;
+		resourcesChanged(): void;
+		resourceUpdated(uri: string): void;
+	};
+
+	bus: {
+		publish(event: ServerEvent): void;
+		subscribe(listener: (event: ServerEvent) => void): () => void;
+	};
+}
+
+type McpHandlerRequestOptions = {
+	authInfo?: AuthInfo;
+	parsedBody?: unknown;
+};
+
+type ServerEvent =
+	| { kind: "tools_list_changed" }
+	| { kind: "prompts_list_changed" }
+	| { kind: "resources_list_changed" }
+	| { kind: "resource_updated"; uri: string };
 ```
 
-Do not export the callable directly as a Worker's default export. Wrangler treats function default exports as `WorkerEntrypoint` classes. Invoke it from an object handler's `fetch()` method, as shown above.
+#### Invoke the handler
 
-It also exposes the upstream handler controls:
+Call the handler from a Worker's object `fetch()` export:
 
 ```ts
-handler.fetch(request, { authInfo });
-handler.notify.toolsChanged();
-handler.bus.publish(event);
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer)(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+The three-argument `handler.fetch(request, env, ctx)` overload is equivalent. Do not export the callable directly as a Worker's default export. Wrangler treats function default exports as `WorkerEntrypoint` classes.
+
+Use the request-options overload when another framework or authentication layer has already parsed or validated request data:
+
+```ts
+const response = await handler.fetch(request, {
+	authInfo,
+	parsedBody,
+});
+```
+
+`authInfo` is passed to the server factory and request handlers. The handler does not derive it from request headers or verify access tokens. `parsedBody` avoids reparsing a JSON body that upstream middleware already consumed.
+
+#### Close the handler
+
+```ts
 await handler.close();
 ```
 
-`close()` rejects new requests and closes active stateless and legacy compatibility work.
+`close()` rejects new requests, closes active modern exchanges, and closes active work in the stateless legacy compatibility handler.
+
+#### Publish list and resource changes
+
+The `notify` methods publish typed change events to matching open `subscriptions/listen` streams:
+
+| Method                        | MCP notification                       |
+| ----------------------------- | -------------------------------------- |
+| `notify.toolsChanged()`       | `notifications/tools/list_changed`     |
+| `notify.promptsChanged()`     | `notifications/prompts/list_changed`   |
+| `notify.resourcesChanged()`   | `notifications/resources/list_changed` |
+| `notify.resourceUpdated(uri)` | `notifications/resources/updated`      |
+
+Calling a notifier when no matching subscription is open is a no-op.
+
+The lower-level `bus` carries the same events. `publish(event)` synchronously publishes to registered listeners. `subscribe(listener)` registers a listener and returns an idempotent unsubscribe function. Prefer the typed `notify` methods when publishing standard MCP changes.
+
+By default, each handler owns an in-process event bus. You can provide a `ServerEventBus` through the `bus` option when events must cross processes or isolates.
+
+#### Keep one handler for subscription controls
+
+The controls belong to the handler instance. Constructing a new handler inside every Worker `fetch()` call is suitable for ordinary tools, prompts, resources, and MRTR elicitation. It creates a new in-memory event bus for every request, however, so later requests cannot notify a `subscriptions/listen` stream owned by an earlier handler.
+
+Create the handler once at module scope when using `notify`, `bus`, `close`, or in-process subscriptions, then invoke it from the Worker object export:
+
+```ts
+const handler = createMcpHandler(createServer);
+
+export default {
+	fetch(request, env, ctx) {
+		return handler(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+For events spanning multiple Worker isolates, supply a shared `ServerEventBus` implementation instead of relying on the default in-memory bus.
 
 ## `createLegacyMcpHandler`
 
