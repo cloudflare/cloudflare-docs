@@ -1,20 +1,26 @@
 ---
 pcx_content_type: concept
-title: Index recommendations
-description: Use D1 Insights index recommendations to identify likely missing indexes and review suggested CREATE INDEX statements.
+title: Recommendations
+description: Use D1 Insights recommendations to identify optimization opportunities and review suggested actions for D1 databases.
 sidebar:
   order: 10.5
 products:
   - d1
 ---
 
-D1 Insights can surface automated index recommendations for eligible D1 databases. Index recommendations identify query patterns that may be missing an index and provide a `CREATE INDEX` statement to review and apply manually.
+D1 Insights can surface precomputed recommendations for eligible D1 databases. Recommendations help identify optimization opportunities and provide guidance for what to review next.
+
+At GA, D1 Insights supports **index recommendations**. Index recommendations identify query patterns that may be missing an index and provide a `CREATE INDEX` statement to review and apply manually.
+
+Future D1 recommendation types can use this page to document additional guidance, such as query attribution, workload guidance, storage growth projections, or stale table detection.
+
+## Index recommendations
 
 Index recommendations are precomputed by Cloudflare. Running Wrangler, opening the dashboard, or calling the API fetches stored recommendations. It does not generate a new recommendation on demand.
 
 At GA, index recommendations are available for eligible paid D1 customers. Free plan databases are not included. Cloudflare generates recommendations for the top 10% of active D1 databases where D1 detects high-impact optimization opportunities. A database may not have recommendations even if it is active.
 
-### Get index recommendations with Wrangler
+## Get recommendations with Wrangler
 
 Use the `--recommendations` flag to fetch stored recommendations for a database:
 
@@ -63,7 +69,7 @@ No automated index suggestions are available for production-db right now.
 Cloudflare generates suggestions for the top 10% of active D1 databases where D1 detects high-impact optimization opportunities.
 ```
 
-### Apply a recommended index
+## Apply an index recommendation
 
 D1 does not automatically apply index recommendations at GA. Review the SQL and apply it through your normal database change workflow.
 
@@ -89,7 +95,7 @@ npx wrangler d1 execute <database_name> --command "CREATE INDEX idx_OrderDetail_
 
 Review schema changes before running them against production.
 
-### Why indexes matter
+## Why indexes matter
 
 Indexes help D1 find rows without scanning an entire table. If a query frequently filters, joins, or sorts by a column that is not indexed, D1 may need to read many more rows than necessary.
 
@@ -103,7 +109,7 @@ Adding the right index can help:
 
 Indexes can increase storage usage and add overhead to writes. Review each recommendation before applying it.
 
-### Dashboard
+## Dashboard
 
 Dashboard may show D1 recommendations in account-level and database-level views. A database recommendation card may include:
 
@@ -131,7 +137,7 @@ Before applying:
 - Review the query patterns for correctness.
 ```
 
-### API
+## API
 
 D1 exposes stored recommendations through the D1 API.
 
