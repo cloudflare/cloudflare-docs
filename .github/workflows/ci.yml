@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - production
+    paths-ignore:
+      - ".flue/**"
+      - ".github/workflows/flue-ci.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -111,10 +114,9 @@ jobs:
     needs: pre-build
     runs-on: ubuntu-latest
     outputs:
-      link_validation_failed: ${{ steps.build_step.outputs.link_validation_failed }}
+      succeeded: ${{ steps.build.outputs.succeeded }}
     permissions:
       contents: read
-      pull-requests: write
     steps:
       - name: Check out repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -154,13 +156,14 @@ jobs:
             astro-assets-
 
       - name: Build
-        id: build_step
+        id: build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_LINK_CHECK: true
+          NODE_OPTIONS: "--max-old-space-size=8192"
         run: |
           set -o pipefail
-          pnpm run build 2>&1 | tee /tmp/build-output.log
+          pnpm run build 2>&1 | tee build.log
+          echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
@@ -168,12 +171,13 @@ jobs:
           name: dist
           path: dist
 
-      - name: Upload link validation report
-        if: steps.build_step.outputs.link_validation_failed == 'true'
+      - name: Upload build log
+        if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
-          name: link-validation-report
-          path: .starlight-links-validator/errors.json
+          name: build-log
+          path: build.log
+          if-no-files-found: ignore
 
   post-build:
     name: Post Build
@@ -220,19 +224,9 @@ jobs:
       - name: Tests (Workers)
         run: pnpm run test:postbuild
 
-      - name: Download link validation report
-        if: needs.build.outputs.link_validation_failed == 'true'
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: link-validation-report
-          path: .starlight-links-validator
-
-      - name: Link validation
-        run: pnpm exec tsx bin/check-link-validation/index.ts
-
   notify:
     name: Notify
-    needs: [pre-build, build, post-build]
+    needs: [pre-build, post-build]
     if: always()
     runs-on: ubuntu-latest
     permissions:
@@ -273,24 +267,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec tsx bin/post-pr-ci-failure-comment/index.ts
 
-      - name: Download link validation report
-        if: needs.build.outputs.link_validation_failed == 'true' && github.event.pull_request.head.repo.full_name == github.repository
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: link-validation-report
-          path: .starlight-links-validator
-
-      - name: Post link validation comment
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm exec tsx bin/post-link-validation-comment/index.ts
-
   publish-preview:
     name: Deploy Preview
     needs: build
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -340,14 +320,16 @@ jobs:
           SHORT_SHA="${PR_HEAD_SHA:0:8}"
           BRANCH_SLUG=$(echo "$PR_HEAD_REF" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
 
-          echo "branch_slug=$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
+          echo "branch_slug=${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
+          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
 
-          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
-          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}"
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}"
 
       - name: Post preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
+          SHORT_SHA: ${{ steps.deploy.outputs.short_sha }}
         run: pnpm exec tsx bin/post-preview-url-comment/index.ts
         continue-on-error: true

@@ -325,7 +325,7 @@ export async function runCodeReviewInProcess(
 
 				const result = await reviewSingleFile({
 					harness,
-					sessionName: `cr:${index}`,
+					sessionName: `${runId}:cr:${index}`,
 					pullRequest,
 					filename: file.filename,
 					addedLines,
@@ -401,7 +401,7 @@ async function reviewSingleFile({
 	prNumber: number;
 	runId: string;
 }): Promise<CodeReviewResult> {
-	const session = await harness.session(sessionName);
+	const session = await harness.sessions.create(sessionName);
 
 	// Bound the per-file session so one wedged file cannot hold a concurrency
 	// slot for the orchestrator's whole poll. On timeout we ABORT the operation

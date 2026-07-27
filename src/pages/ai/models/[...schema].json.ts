@@ -1,14 +1,21 @@
+/**
+ * /ai/models/<slug>/<schema>.json — raw JSON-Schema endpoints (unified catalog).
+ *
+ * `detectApiModes` splits the schema into per-mode `{mode.id}-input/-output.json`
+ * when it has modes, else a single `schema-input/-output.json`. Bound to
+ * `getResolvedModels` with `model.slug` (full/multi-segment).
+ */
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
-import { getResolvedModels } from "~/util/model-resolver";
-import { detectApiModes } from "~/util/model-schema";
+import { getResolvedModels, detectApiModes } from "~/util/models";
+
+export const prerender = true;
 
 export const getStaticPaths = (async () => {
 	const models = await getResolvedModels();
-	const paths = [];
+	const paths: { params: { schema: string }; props: { schema: unknown } }[] =
+		[];
 
 	for (const model of models) {
-		// Catalog models use the full slug as the URL path segment
-		// (e.g. "openai/gpt-5.4-mini"), matching /ai/models/[...name].astro
 		const slug = model.slug;
 		const modes = detectApiModes(model.schema);
 
@@ -40,6 +47,4 @@ export const getStaticPaths = (async () => {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute<Props> = ({ props }) => {
-	return Response.json(props.schema);
-};
+export const GET: APIRoute<Props> = ({ props }) => Response.json(props.schema);

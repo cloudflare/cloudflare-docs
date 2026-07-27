@@ -1,0 +1,192 @@
+{
+	"model_id": "bytedance/seedream-5-pro",
+	"provider_id": "bytedance",
+	"name": "Seedream 5 Pro",
+	"description": "Seedream 5 Pro is ByteDance's high-quality image generation and editing model with text prompts, up to 10 reference images, and 1K, 2K, or explicit pixel-size output controls.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Multi-Reference"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Mechanical Watch",
+			"description": "Clean studio product render with precise materials and lighting.",
+			"input": {
+				"prompt": "Premium studio product render of a transparent mechanical wristwatch suspended above matte black stone, visible gears, sapphire reflections, razor-sharp lighting, luxury advertising style"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/bytedance/seedream-5-pro/mechanical-watch-0.jpeg"
+				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://examples.aig.cloudflare.com/bytedance/seedream-5-pro/mechanical-watch-0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-pro',\n  {\n    prompt:\n      'Premium studio product render of a transparent mechanical wristwatch suspended above matte black stone, visible gears, sapphire reflections, razor-sharp lighting, luxury advertising style',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-pro\",\n  \"input\": {\n    \"prompt\": \"Premium studio product render of a transparent mechanical wristwatch suspended above matte black stone, visible gears, sapphire reflections, razor-sharp lighting, luxury advertising style\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Red Panda Bakery",
+			"description": "Whimsical illustrated scene with a very different visual style.",
+			"input": {
+				"prompt": "A cozy children's book illustration of a red panda baker frosting moon-shaped cakes inside a tiny snowy mountain bakery, soft gouache texture, warm window light",
+				"size": "1536x864"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/bytedance/seedream-5-pro/red-panda-bakery-0.jpeg"
+				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://examples.aig.cloudflare.com/bytedance/seedream-5-pro/red-panda-bakery-0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-pro',\n  {\n    prompt:\n      \"A cozy children's book illustration of a red panda baker frosting moon-shaped cakes inside a tiny snowy mountain bakery, soft gouache texture, warm window light\",\n    size: '1536x864',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-pro\",\n  \"input\": {\n    \"prompt\": \"A cozy children'\\''s book illustration of a red panda baker frosting moon-shaped cakes inside a tiny snowy mountain bakery, soft gouache texture, warm window light\",\n    \"size\": \"1536x864\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Claymation Reference",
+			"description": "Use a reference image for a claymation-style transformation.",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "Transform this reference into a handcrafted claymation diorama, rounded clay forms, visible fingerprints, miniature set lighting, playful stop-motion film look",
+				"size": "1K"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/bytedance/seedream-5-pro/claymation-reference-0.jpeg"
+				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://examples.aig.cloudflare.com/bytedance/seedream-5-pro/claymation-reference-0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-pro',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt:\n      'Transform this reference into a handcrafted claymation diorama, rounded clay forms, visible fingerprints, miniature set lighting, playful stop-motion film look',\n    size: '1K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5-pro\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"Transform this reference into a handcrafted claymation diorama, rounded clay forms, visible fingerprints, miniature set lighting, playful stop-motion film look\",\n    \"size\": \"1K\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://ark.ap-southeast.bytepluses.com/api/v3/images/generations",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Max Reference Images": "10",
+		"Output Sizes": "1K, 2K, custom WIDTHxHEIGHT",
+		"Reference Image Formats": "JPEG, PNG, WebP, BMP, TIFF, GIF, HEIC, HEIF"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-07-23 19:24:33",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"minItems": 1,
+							"maxItems": 10,
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					]
+				},
+				"size": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"images": {
+					"minItems": 1,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				}
+			},
+			"required": [
+				"images"
+			],
+			"additionalProperties": false
+		}
+	}
+}

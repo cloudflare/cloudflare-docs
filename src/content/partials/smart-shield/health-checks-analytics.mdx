@@ -180,11 +180,11 @@ Review your Health Check configuration to ensure it matches an expected request 
 
 #### Cause
 
-The origin web server’s hostname resolves to an internal or restricted address. No checks are run against this origin.
+The origin web server's hostname resolves to a non-publicly-routable or restricted IP address (for example, a localhost address). No checks are run against this origin.
 
 #### Solution
 
-Cloudflare does not allow use of an origin web server hostname that resolves to a Cloudflare IP.
+Confirm the origin web server hostname resolves to a publicly routable IP address. Note that if the hostname resolves to a public Cloudflare anycast IP (because the hostname is proxied through Cloudflare), the health check will run but will probe Cloudflare's edge rather than your actual origin server. To monitor your origin server directly, configure the health check to use the origin IP address or a non-proxied hostname.
 
 ### Other Failure
 

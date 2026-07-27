@@ -97,6 +97,13 @@
 			"tag": "v8",
 			"deleted_classes": ["FlueRedirectSpecialistWorkflow"],
 		},
+		{
+			// Rebase workflow added: handles the /rebase slash
+			// commands. Rebases a PR branch against production via the GitHub API
+			// and optionally uses AI to resolve conflicts.
+			"tag": "v9",
+			"new_sqlite_classes": ["FlueRebaseWorkflow"],
+		},
 	],
 	// Explicitly empty crons list so wrangler clears any previously registered
 	// cron triggers on deploy (an absent triggers key leaves existing ones intact).

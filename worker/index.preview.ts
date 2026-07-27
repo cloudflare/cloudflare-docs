@@ -1,21 +1,11 @@
-// TEMPORARY — Nimbus preview Worker (Starlight -> Nimbus migration).
+// Preview Worker — a self-contained copy of `worker/index.ts` used for
+// PR preview deployments (wrangler.preview.json -> dist).
 //
-// This is a deliberate, self-contained COPY of `worker/index.ts`. It exists so
-// the Nimbus preview (wrangler.preview.json -> dist-nimbus) can run the exact
-// same request-handling logic as production WITHOUT touching or refactoring the
-// production Worker. The only difference from index.ts is the redirects import
-// path (`../dist-nimbus/__redirects` instead of `../dist/__redirects`).
-//
-// It is deployed manually/locally with:
-//   BUILD_TARGET=nimbus pnpm run build
-//   pnpm exec wrangler preview --config wrangler.preview.json --name nimbus
-//
-// Do NOT invest in deduplicating this against index.ts. At cutover (Epic H1)
-// delete this file and wrangler.preview.json. Production is unaffected by
-// anything here.
+// It is deployed via CI with:
+//   pnpm exec wrangler deploy --config wrangler.preview.json ...
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
-import redirectsFileContents from "../dist-nimbus/__redirects";
+import redirectsFileContents from "../dist/__redirects";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000

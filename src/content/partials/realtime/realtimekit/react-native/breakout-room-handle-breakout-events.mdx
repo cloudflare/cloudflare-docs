@@ -1,0 +1,23 @@
+---
+{}
+
+---
+The `useRealtimeKitClient` hook automatically handles the `meetingChanged` event and swaps the active client reference when the local participant is moved to a breakout room or back to the main meeting. No additional setup is needed.
+
+If you are using the `RtkMeeting` UI Kit component, the transition UI (the "Joining…" screen) is also handled automatically.
+
+To show a custom loading screen during the switch, listen to the `changingMeeting` event:
+
+```tsx
+useEffect(() => {
+  if (!meeting) return;
+
+  const onChangingMeeting = (meetingId: string) => {
+    console.log("Switching to meeting:", meetingId);
+    // Show a loading indicator
+  };
+
+  meeting.connectedMeetings.on("changingMeeting", onChangingMeeting);
+  return () => meeting.connectedMeetings.removeListener("changingMeeting", onChangingMeeting);
+}, [meeting]);
+```

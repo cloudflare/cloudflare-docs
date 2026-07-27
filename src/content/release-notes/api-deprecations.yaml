@@ -3,6 +3,49 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-22"
+    title: "Account name 65-character limit"
+    description: |-
+      Enforcement date: September 27, 2026
+
+      Account names will be limited to a maximum of 65 characters across all account creation and update APIs. This limit applies to all accounts, including organization accounts. Currently, the account update API (`PUT /accounts/{account_id}`) already enforces this limit, while the account create API (`POST /accounts`) silently truncates names up to 120 bytes. This mismatch can result in accounts that are created successfully but cannot later be renamed. After September 27, 2026, the create API will reject names longer than 65 characters with an HTTP `400` error.
+
+      Affected APIs:
+
+      - `POST /accounts` — Create account
+      - `PUT /accounts/{account_id}` — Update account (already enforced)
+
+      After the enforcement date, integrations that create accounts with names longer than 65 characters must truncate or shorten the name before sending the request to ensure uninterrupted service.
+
+  - publish_date: "2026-07-21"
+    title: "Account Roles API"
+    description: |-
+      Deprecation date: July 21, 2026
+
+      The [Account Roles API](/api/resources/accounts/subresources/roles/) only returns account-level roles today, and is deprecated in favor of the [Permission Groups API](/api/resources/iam/subresources/permission_groups/). The Permission Groups API is the supported way to enumerate account, zone, and resource-level roles that can be granted to account members.
+
+      Deprecated APIs:
+
+      - `GET /accounts/{account_id}/roles` — List roles
+      - `GET /accounts/{account_id}/roles/{role_id}` — Role details
+
+      Replacements:
+
+      - `GET /accounts/{account_id}/iam/permission_groups` — List account permission groups
+      - `GET /accounts/{account_id}/iam/permission_groups/{permission_group_id}` — Permission group details
+
+      The response schema differs from the legacy Roles response:
+
+      - The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with edit/read flags.
+      - The `PermissionGroup` response replaces those with a `meta` object containing `label` and `scopes`. Individual permissions are not returned as part of the permission group.
+
+      Additional notes:
+
+      - Integrations migrating to the Permission Groups API must obtain Permission Group IDs from that API and use them in the Account Members API policies request shape. Integrations that persist legacy Role IDs will need to remap their assignments.
+      - Both endpoints use the standard Cloudflare response envelope, so pagination and error-handling do not change.
+      - The new API supports the [API Token](/fundamentals/api/get-started/create-token/) authorization scheme. The legacy Email + API Key authorization scheme is provided for backwards compatibility.
+      - The affected terraform resource is the `cloudflare_account_role` data source. You will need to migrate to the `cloudflare_account_permission_group` data source.
+
   - publish_date: "2026-07-15"
     title: "Workers KV: Legacy Namespace Routes"
     description: |-
@@ -33,6 +76,49 @@ entries:
       - `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{key_name}` (read, write, and delete key-value pairs)
 
       After October 15, 2026, requests to the legacy `/accounts/{account_id}/workers/namespaces/*` routes will no longer be supported. Update integrations to use the documented Workers KV API endpoints before that date to ensure uninterrupted service.
+
+  - publish_date: "2026-07-09"
+    title: "Zero Trust Networks Route Endpoints and Cloudflare Tunnel Connections Field"
+    description: |-
+      Deprecation date: July 9, 2026
+
+      End of life date: October 5, 2026
+
+      Two related changes to the [Zero Trust Networks API](/api/resources/zero_trust/subresources/networks/) and [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/) take effect on October 5, 2026.
+
+      **Route endpoints**
+
+      The CIDR-encoded route endpoints are deprecated in favor of the standard, `route_id`-based endpoints that already exist today.
+
+      Deprecated APIs:
+
+      - `POST /accounts/{account_id}/teamnet/routes/network/{ip_network_encoded}`
+      - `PATCH /accounts/{account_id}/teamnet/routes/network/{ip_network_encoded}`
+      - `DELETE /accounts/{account_id}/teamnet/routes/network/{ip_network_encoded}`
+
+      Replacements:
+
+      - `POST /accounts/{account_id}/teamnet/routes`
+      - `PATCH /accounts/{account_id}/teamnet/routes/{route_id}`
+      - `DELETE /accounts/{account_id}/teamnet/routes/{route_id}`
+
+      **Cloudflare Tunnel and Cloudflare Mesh connections**
+
+      The `connections` array is removed from list and get responses for Cloudflare Tunnel and Cloudflare Mesh nodes (the `cfd_tunnel` and `warp_connector` API resources). Query the dedicated connections endpoint instead of reading the field off the tunnel or node object.
+
+      Affected APIs:
+
+      - `GET /accounts/{account_id}/cfd_tunnel`
+      - `GET /accounts/{account_id}/cfd_tunnel/{tunnel_id}`
+      - `GET /accounts/{account_id}/warp_connector`
+      - `GET /accounts/{account_id}/warp_connector/{tunnel_id}`
+
+      Replacements:
+
+      - `GET /accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections`
+      - `GET /accounts/{account_id}/warp_connector/{tunnel_id}/connections`
+
+      For full migration guidance, including `curl` examples and `cloudflared` and Terraform notes, refer to the [Cloudflare Tunnel changelog](/changelog/2026-07-09-tunnel-routes-and-connections-api-changes/).
 
   - publish_date: "2026-07-08"
     title: "AMP/SXG API and Rules"

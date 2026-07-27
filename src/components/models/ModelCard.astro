@@ -1,0 +1,138 @@
+---
+/**
+ * ModelCard — one model as a flat grid cell, sharing the Directory shell
+ * (grid.ts): bg-background, 1px self-closing borders, rounded corner-mark
+ * squares at line intersections. Content hierarchy: logo + 18px title anchor,
+ * a 12px meta row (author • model type), 14px muted description, badges.
+ *
+ * The cell carries the `data-facet-*` / `data-name` / `data-date` attributes the
+ * catalog controller (ModelFilters.tsx island) reads to filter, sort, and re-flow
+ * the corner marks. `index`/`cols` seed the build-time corner marks.
+ */
+import { Icon } from "astro-icon/components";
+import { Badge } from "~/components/ui/badge";
+import ModelBadges from "./ModelBadges.astro";
+import { authorData } from "~/components/models/data";
+import {
+	facetValues,
+	pinnedModelNames,
+	type ModelCardData,
+} from "~/util/models";
+import {
+	cellClass,
+	cornersFor,
+	cornerSpansHTML,
+} from "~/components/directory/grid";
+
+interface Props {
+	model: ModelCardData;
+	index: number;
+	cols: number;
+	basePath?: string;
+}
+
+const { model, index, cols, basePath = "/ai/models" } = Astro.props;
+// Card href: short last-path-segment slug under /workers-ai (legacy URLs),
+// else the full model id/slug (multi-segment under /ai).
+const slugSeg =
+	basePath === "/workers-ai/models" ? model.shortName : model.name;
+const href = `${basePath}/${slugSeg}/`;
+const dateValue = model.createdAt ? new Date(model.createdAt).getTime() : 0;
+// Pinned-first sort tier: -1 when not pinned.
+const pinnedIndex = pinnedModelNames.indexOf(model.name);
+const isPinned = pinnedIndex >= 0;
+// Author logo; initial-letter tile when the author id is unmapped.
+const authorLogo = authorData[model.author]?.logo;
+---
+
+<div
+	data-models-cell
+	data-name={model.name.toLowerCase()}
+	data-facet-tasks={facetValues(model, "tasks").join("|")}
+	data-facet-capabilities={facetValues(model, "capabilities").join("|")}
+	data-facet-providers={facetValues(model, "providers").join("|")}
+	data-facet-authors={facetValues(model, "authors").join("|")}
+	data-date={dateValue}
+	data-pinned-index={pinnedIndex}
+	class={cellClass}
+>
+	<div
+		data-corner-marks
+		class="pointer-events-none absolute inset-0 z-10 select-none"
+		aria-hidden="true"
+		set:html={cornerSpansHTML(cornersFor(index, cols))}
+	/>
+
+	<a
+		href={href}
+		class="group/card hover:bg-muted/30 focus-visible:outline-ring relative flex h-full flex-col p-5 text-inherit! no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2"
+	>
+		{
+			isPinned && (
+				<>
+					<span class="sr-only">Pinned</span>
+					<span
+						class="bg-primary/10 text-primary ring-primary/20 pointer-events-none absolute top-3 right-3 z-20 grid size-6 place-items-center rounded-md ring-1 ring-inset"
+						title="Pinned model"
+						aria-hidden="true"
+					>
+						<Icon name="ph:push-pin-fill" class="size-3.5" />
+					</span>
+				</>
+			)
+		}
+		<div class={`flex items-center gap-3${isPinned ? " pr-9" : ""}`}>
+			{
+				authorLogo ? (
+					<img
+						src={authorLogo}
+						alt={`${model.authorName} logo`}
+						loading="lazy"
+						class="border-border bg-card size-10 shrink-0 rounded-md border object-contain p-1 dark:bg-gray-200"
+					/>
+				) : (
+					<span
+						aria-hidden="true"
+						class="border-border bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-md border text-base font-bold uppercase"
+					>
+						{model.author.charAt(0)}
+					</span>
+				)
+			}
+			<div class="flex min-w-0 flex-1 items-center gap-2">
+				<h3
+					class="text-foreground group-hover/card:text-primary line-clamp-2 text-sm leading-snug font-semibold break-words"
+				>
+					{model.shortName}
+				</h3>
+				{
+					model.beta && (
+						<Badge
+							text="Beta"
+							variant="caution"
+							size="small"
+							class="shrink-0"
+						/>
+					)
+				}
+			</div>
+		</div>
+
+		<div
+			class="border-border mt-3 mb-3 flex items-center justify-between gap-2 border-t pt-3 text-xs"
+		>
+			<span class="text-foreground truncate">{model.authorName}</span>
+			<span class="text-foreground shrink-0 font-mono tracking-wider uppercase">
+				{model.task}
+			</span>
+		</div>
+
+		<p
+			class="text-muted-foreground mb-4 line-clamp-2 min-h-10 flex-1 text-sm leading-relaxed"
+		>
+			{model.description}
+		</p>
+
+		<ModelBadges model={model} />
+	</a>
+</div>

@@ -327,6 +327,19 @@ Disabling Email Routing on a domain stops processing incoming emails and removes
 2. DNS records are tied to the account, not to specific users.
 3. Use Cloudflare account-level permissions to manage access.
 
+## Email preview
+
+Turn on **Email preview** to store sent messages so you can inspect their content in the [Activity log](/email-service/observability/logs/#message-preview). Previews cover messages sent while the setting is turned on and are retained for about seven days.
+
+New sending domains have **Email preview** turned on automatically. To change the setting for a domain:
+
+1. Go to **Compute** > **Email Service** > **Email Sending**.
+
+   <DashButton url="/?to=/:account/email-service/sending" />
+
+2. Select the domain, then open **Settings**.
+3. Toggle **Enable email preview**.
+
 ## Next steps
 
 - **[Send emails API](/email-service/api/send-emails/)**: Workers binding and REST API reference

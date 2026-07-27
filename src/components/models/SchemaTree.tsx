@@ -2,14 +2,10 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import type { SchemaRowData } from "./types";
 
 /**
- * SchemaTree - Interactive flex-based view for schema parameters
- *
- * Features:
- * - Flex layout (not table) for better spacing
- * - Collapsible nested objects/arrays with lazy rendering
- * - Search filter with auto-expand and highlight
- * - Essential params first (for Input), Advanced collapsed
- * - sessionStorage persistence for collapse state
+ * SchemaTree — interactive view for schema parameters: collapsible nested
+ * objects/arrays with lazy child rendering, within-tree search (filter +
+ * auto-expand + highlight), sessionStorage collapse persistence, and
+ * oneOf/anyOf OR-dividers.
  */
 
 interface SchemaTreeProps {
@@ -41,7 +37,7 @@ function highlightMatch(text: string, searchTerm: string): React.ReactNode {
 	return (
 		<>
 			{text.slice(0, index)}
-			<mark className="rounded bg-amber-200 px-0.5 dark:bg-amber-700">
+			<mark className="bg-warning-muted text-warning rounded px-0.5">
 				{text.slice(index, index + searchTerm.length)}
 			</mark>
 			{text.slice(index + searchTerm.length)}
@@ -99,12 +95,12 @@ function OrDivider({ depth }: { depth: number }) {
 	const indentPx = depth * 24;
 	return (
 		<div
-			className="flex items-center gap-2 py-0 text-xs text-gray-400 dark:text-gray-500"
+			className="text-muted-foreground flex items-center gap-2 py-0 text-xs"
 			style={{ paddingLeft: indentPx + 16 }}
 		>
-			<span className="h-px flex-1 border-t border-dashed border-gray-200 dark:border-gray-800" />
+			<span className="border-border h-px flex-1 border-t border-dashed" />
 			<span className="font-medium tracking-wider uppercase">or</span>
-			<span className="h-px flex-1 border-t border-dashed border-gray-200 dark:border-gray-800" />
+			<span className="border-border h-px flex-1 border-t border-dashed" />
 		</div>
 	);
 }
@@ -149,21 +145,12 @@ function SchemaNode({
 				)}
 
 				{/* Hide bottom border if OR divider will follow, or if expanded (children provide border) */}
-				<div
-					className={
-						showOneOfBorder
-							? "border-b border-gray-100 dark:border-gray-800"
-							: ""
-					}
-				>
+				<div className={showOneOfBorder ? "border-border border-b" : ""}>
 					<div
 						className={[
 							"py-3",
-							hasChildren &&
-								"cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50",
-							hasChildren &&
-								isExpanded &&
-								"border-b border-gray-100 dark:border-gray-800",
+							hasChildren && "hover:bg-muted/50 cursor-pointer",
+							hasChildren && isExpanded && "border-border border-b",
 						]
 							.filter(Boolean)
 							.join(" ")}
@@ -178,7 +165,7 @@ function SchemaNode({
 								{hasChildren && (
 									<span
 										className={[
-											"inline-block text-xs text-gray-400 transition-transform",
+											"text-muted-foreground inline-block text-xs transition-transform",
 											isExpanded && "rotate-90",
 										]
 											.filter(Boolean)
@@ -188,23 +175,19 @@ function SchemaNode({
 									</span>
 								)}
 							</span>
-							<span className="font-medium text-gray-900 dark:text-gray-100">
+							<span className="text-foreground font-medium">
 								{highlightMatch(row.name, searchTerm)}
 							</span>
 							{row.isArray && (
-								<span className="font-mono text-gray-400 dark:text-gray-500">
-									[]
-								</span>
+								<span className="text-muted-foreground font-mono">[]</span>
 							)}
 							{row.isObject && !row.isOneOf && (
-								<span className="font-mono text-gray-400 dark:text-gray-500">
-									{"{}"}
-								</span>
+								<span className="text-muted-foreground font-mono">{"{}"}</span>
 							)}
 						</div>
 
 						{/* Line 2: Type + metadata */}
-						<div className="mt-0.5 flex flex-wrap items-center gap-2 pl-5 text-xs text-gray-500 dark:text-gray-400">
+						<div className="text-muted-foreground mt-0.5 flex flex-wrap items-center gap-2 pl-5 text-xs">
 							<span>{row.type}</span>
 							{row.metadata &&
 								Object.entries(row.metadata).map(([key, value]) => (
@@ -222,7 +205,7 @@ function SchemaNode({
 
 						{/* Line 3: Description if present */}
 						{row.description && (
-							<div className="mt-1 pl-5 text-sm text-gray-600 dark:text-gray-300">
+							<div className="text-muted-foreground mt-1 pl-5 text-sm">
 								{highlightMatch(row.description, searchTerm)}
 							</div>
 						)}
@@ -254,20 +237,13 @@ function SchemaNode({
 	// Only show outer border when collapsed or no children - expanded children provide their own closing border
 	const showOuterBorder = !hasChildren || !isExpanded;
 	return (
-		<div
-			className={
-				showOuterBorder ? "border-b border-gray-100 dark:border-gray-800" : ""
-			}
-		>
+		<div className={showOuterBorder ? "border-border border-b" : ""}>
 			{/* Clickable row */}
 			<div
 				className={[
 					"py-3",
-					hasChildren &&
-						"cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50",
-					hasChildren &&
-						isExpanded &&
-						"border-b border-gray-100 dark:border-gray-800",
+					hasChildren && "hover:bg-muted/50 cursor-pointer",
+					hasChildren && isExpanded && "border-border border-b",
 				]
 					.filter(Boolean)
 					.join(" ")}
@@ -282,7 +258,7 @@ function SchemaNode({
 						{hasChildren && (
 							<span
 								className={[
-									"inline-block text-xs text-gray-400 transition-transform",
+									"text-muted-foreground inline-block text-xs transition-transform",
 									isExpanded && "rotate-90",
 								]
 									.filter(Boolean)
@@ -292,14 +268,12 @@ function SchemaNode({
 							</span>
 						)}
 					</span>
-					<span className="font-medium text-gray-900 dark:text-gray-100">
+					<span className="text-foreground font-medium">
 						{highlightMatch(row.name, searchTerm)}
 					</span>
-					{row.isArray && (
-						<span className="text-gray-400 dark:text-gray-500">[]</span>
-					)}
+					{row.isArray && <span className="text-muted-foreground">[]</span>}
 					{row.isObject && !row.isOneOf && (
-						<span className="text-gray-400 dark:text-gray-500">{"{}"}</span>
+						<span className="text-muted-foreground">{"{}"}</span>
 					)}
 				</div>
 
@@ -307,29 +281,27 @@ function SchemaNode({
 				<div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1 pl-5 text-sm">
 					{/* Type and badges */}
 					<span className="flex flex-wrap items-center gap-3">
-						<code className="text-xs text-gray-500 dark:text-gray-400">
-							{row.type}
-						</code>
+						<code className="text-muted-foreground text-xs">{row.type}</code>
 						{row.required && !hideRequired && (
-							<span className="rounded border border-amber-200 bg-amber-100 px-1 py-0.5 text-xs leading-none text-amber-800 dark:border-amber-700 dark:bg-amber-900 dark:text-amber-200">
+							<span className="border-warning/30 bg-warning-muted text-warning rounded border px-1 py-0.5 text-xs leading-none">
 								required
 							</span>
 						)}
 						{row.defaultValue !== undefined && (
-							<span className="text-xs text-gray-400">
+							<span className="text-muted-foreground text-xs">
 								<span className="font-medium">default:</span> {row.defaultValue}
 							</span>
 						)}
 						{/* Render all metadata */}
 						{row.metadata &&
 							Object.entries(row.metadata).map(([key, value]) => (
-								<span key={key} className="text-xs text-gray-400">
+								<span key={key} className="text-muted-foreground text-xs">
 									<span className="font-medium">{key}:</span> {String(value)}
 								</span>
 							))}
 						{/* Enum values */}
 						{row.enumValues && row.enumValues.length > 0 && (
-							<span className="text-xs text-gray-400">
+							<span className="text-muted-foreground text-xs">
 								<span className="font-medium">enum:</span>{" "}
 								{row.enumValues.join(", ")}
 							</span>
@@ -338,7 +310,7 @@ function SchemaNode({
 
 					{/* Description */}
 					{row.description && (
-						<span className="text-gray-600 dark:text-gray-300">
+						<span className="text-muted-foreground">
 							{highlightMatch(row.description, searchTerm)}
 						</span>
 					)}
@@ -438,17 +410,17 @@ export default function SchemaTree({
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 					placeholder="Filter parameters..."
-					className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-blue-400"
+					className="border-border bg-card text-foreground focus:ring-ring w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:outline-none"
 				/>
 			</div>
 
 			{filteredRows.length === 0 ? (
-				<p className="py-4 text-sm text-gray-500 dark:text-gray-400">
+				<p className="text-muted-foreground py-4 text-sm">
 					No parameters match your search.
 				</p>
 			) : (
-				<div className="max-h-[500px] overflow-y-scroll rounded-md border border-gray-200 dark:border-gray-700">
-					<div className="not-content divide-y divide-gray-100 dark:divide-gray-800">
+				<div className="border-border max-h-[500px] overflow-y-scroll rounded-md border">
+					<div className="not-prose divide-border divide-y">
 						{filteredRows.map((row) => (
 							<SchemaNode
 								key={row.id}

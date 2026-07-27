@@ -1,7 +1,6 @@
 ---
 title: RTKMeta
 sidebar_position: 6
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -12,94 +11,76 @@ This consists of the metadata of the meeting, such as the room name and the titl
 
 
 * [RTKMeta](#module_RTKMeta)
-    * [module.exports](#exp_module_RTKMeta--module.exports) ⏏
-        * [new module.exports(context, self, viewType, roomSocketHandler, meetingTitle)](#new_module_RTKMeta--module.exports_new)
-        * [.selfActiveTab](#module_RTKMeta--module.exports+selfActiveTab)
-        * [.broadcastTabChanges](#module_RTKMeta--module.exports+broadcastTabChanges)
-        * [.viewType](#module_RTKMeta--module.exports+viewType)
-        * [.meetingStartedTimestamp](#module_RTKMeta--module.exports+meetingStartedTimestamp)
-        * [.meetingTitle](#module_RTKMeta--module.exports+meetingTitle)
-        * [.sessionId](#module_RTKMeta--module.exports+sessionId)
-        * [.meetingId](#module_RTKMeta--module.exports+meetingId)
-        * [.setBroadcastTabChanges(broadcastTabChanges)](#module_RTKMeta--module.exports+setBroadcastTabChanges)
-        * [.setSelfActiveTab(spotlightTab, tabChangeSource)](#module_RTKMeta--module.exports+setSelfActiveTab)
+    * [.selfActiveTab](#module_RTKMeta+selfActiveTab)
+    * [.broadcastTabChanges](#module_RTKMeta+broadcastTabChanges)
+    * [.viewType](#module_RTKMeta+viewType)
+    * [.meetingStartedTimestamp](#module_RTKMeta+meetingStartedTimestamp)
+    * [.meetingTitle](#module_RTKMeta+meetingTitle)
+    * [.sessionId](#module_RTKMeta+sessionId)
+    * [.meetingId](#module_RTKMeta+meetingId)
+    * [.setBroadcastTabChanges(broadcastTabChanges)](#module_RTKMeta+setBroadcastTabChanges)
+    * [.setSelfActiveTab(spotlightTab, tabChangeSource)](#module_RTKMeta+setSelfActiveTab)
 
-<a name="exp_module_RTKMeta--module.exports"></a>
+<a name="module_RTKMeta+selfActiveTab"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKMeta--module.exports_new"></a>
-
-#### new module.exports(context, self, viewType, roomSocketHandler, meetingTitle)
-
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-| self | <code>Self</code> | 
-| viewType | <code>string</code> | 
-| roomSocketHandler | <code>RoomSocketHandler</code> | 
-| meetingTitle | <code>string</code> | 
-
-<a name="module_RTKMeta--module.exports+selfActiveTab"></a>
-
-#### module.exports.selfActiveTab
+### meeting.meta.selfActiveTab
 Represents the current active tab
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
-<a name="module_RTKMeta--module.exports+broadcastTabChanges"></a>
+**Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+broadcastTabChanges"></a>
 
-#### module.exports.broadcastTabChanges
+### meeting.meta.broadcastTabChanges
 Represents whether current user is spotlighted
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
-<a name="module_RTKMeta--module.exports+viewType"></a>
+**Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+viewType"></a>
 
-#### module.exports.viewType
+### meeting.meta.viewType
 The `viewType` tells the type of the meeting
 possible values are: GROUP_CALL| LIVESTREAM | CHAT | AUDIO_ROOM
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
-<a name="module_RTKMeta--module.exports+meetingStartedTimestamp"></a>
+**Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+meetingStartedTimestamp"></a>
 
-#### module.exports.meetingStartedTimestamp
+### meeting.meta.meetingStartedTimestamp
 The timestamp of the time when the meeting started.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
-<a name="module_RTKMeta--module.exports+meetingTitle"></a>
+**Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+meetingTitle"></a>
 
-#### module.exports.meetingTitle
+### meeting.meta.meetingTitle
 The title of the meeting.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
-<a name="module_RTKMeta--module.exports+sessionId"></a>
+**Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+sessionId"></a>
 
-#### module.exports.sessionId
+### meeting.meta.sessionId
 (Experimental) The sessionId this meeting object is part of.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
-<a name="module_RTKMeta--module.exports+meetingId"></a>
+**Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+meetingId"></a>
 
-#### module.exports.meetingId
+### meeting.meta.meetingId
 The room name of the meeting.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
-<a name="module_RTKMeta--module.exports+setBroadcastTabChanges"></a>
+**Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+setBroadcastTabChanges"></a>
 
-#### module.exports.setBroadcastTabChanges(broadcastTabChanges)
+### meeting.meta.setBroadcastTabChanges(broadcastTabChanges)
 Sets current user as broadcasting tab changes
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
+**Kind**: instance method of [<code>RTKMeta</code>](#module_RTKMeta)  
 
 | Param | Type |
 | --- | --- |
 | broadcastTabChanges | <code>boolean</code> | 
 
-<a name="module_RTKMeta--module.exports+setSelfActiveTab"></a>
+<a name="module_RTKMeta+setSelfActiveTab"></a>
 
-#### module.exports.setSelfActiveTab(spotlightTab, tabChangeSource)
+### meeting.meta.setSelfActiveTab(spotlightTab, tabChangeSource)
 Sets current active tab for user
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKMeta--module.exports)  
+**Kind**: instance method of [<code>RTKMeta</code>](#module_RTKMeta)  
 
 | Param | Type |
 | --- | --- |

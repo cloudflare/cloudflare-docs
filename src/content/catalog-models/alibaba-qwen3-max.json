@@ -1744,6 +1744,64 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting Qwen use DashScope's built-in web search via enable_search",
+			"input": {
+				"enable_search": true,
+				"max_tokens": 4096,
+				"messages": [
+					{
+						"content": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "As of the week ending June 23, 2026, the top Cloudflare news stories include:\n\n- **Acquisition of VoidZero**: On June 4, 2026, Cloudflare announced it acquired VoidZero to accelerate development of the AI-native web, enhancing its platform for next-generation agentic applications.\n\n- **Secure Sandboxes for Claude Managed Agents**: On May 19, 2026, Cloudflare introduced secure, scalable sandboxes integrated with Anthropic\u2019s Claude Managed Agents, strengthening runtime security for AI agents\u2014a key update still resonating in early June coverage.\n\n- **Industry Recognition and Strategic Momentum**: Throughout June, Cloudflare continued to be highlighted as a Leader in Edge Development Platforms (per an independent research firm report on May 5, widely cited in June) and maintained media visibility through its ongoing \u201cAgents Week 2026\u201d initiatives, reinforcing its position at the forefront of agentic AI infrastructure."
+			},
+			"raw_response": {
+				"id": "chatcmpl-5860fcba-c7bc-9e5e-afd8-d32376b5a423",
+				"object": "chat.completion",
+				"created": 1782161284,
+				"model": "qwen3-max",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "As of the week ending June 23, 2026, the top Cloudflare news stories include:\n\n- **Acquisition of VoidZero**: On June 4, 2026, Cloudflare announced it acquired VoidZero to accelerate development of the AI-native web, enhancing its platform for next-generation agentic applications.\n\n- **Secure Sandboxes for Claude Managed Agents**: On May 19, 2026, Cloudflare introduced secure, scalable sandboxes integrated with Anthropic\u2019s Claude Managed Agents, strengthening runtime security for AI agents\u2014a key update still resonating in early June coverage.\n\n- **Industry Recognition and Strategic Momentum**: Throughout June, Cloudflare continued to be highlighted as a Leader in Edge Development Platforms (per an independent research firm report on May 5, widely cited in June) and maintained media visibility through its ongoing \u201cAgents Week 2026\u201d initiatives, reinforcing its position at the forefront of agentic AI infrastructure."
+						},
+						"finish_reason": "stop",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 3589,
+					"completion_tokens": 196,
+					"total_tokens": 3785,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					}
+				},
+				"system_fingerprint": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    enable_search: true,\n    max_tokens: 4096,\n    messages: [\n      {\n        content:\n          'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"enable_search\": true,\n  \"max_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,

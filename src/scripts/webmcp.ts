@@ -3,7 +3,11 @@
  * Spec: https://webmachinelearning.github.io/webmcp/
  */
 
-import { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX } from "~/util/algolia";
+import {
+	ALGOLIA_APP_ID,
+	ALGOLIA_API_KEY,
+	ALGOLIA_INDEX,
+} from "../util/algolia";
 const LLMS_TXT_URL = "https://developers.cloudflare.com/llms.txt";
 
 // Cache for list-directories results — fetched once per session.
