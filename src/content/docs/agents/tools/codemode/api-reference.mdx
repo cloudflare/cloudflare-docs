@@ -51,6 +51,9 @@ interface CodemodeRuntimeHandle {
 	tool(
 		options?: CodemodeRuntimeToolOptions,
 	): Tool<ProxyToolInput, ProxyToolOutput>;
+	execute(input: ProxyToolInput): Promise<ProxyToolOutput>;
+	search(query: string): Promise<SearchOutput>;
+	describe(target: string): Promise<DescribeOutput>;
 	approve(options: CodemodeApproveOptions): Promise<ProxyToolOutput>;
 	reject(options: CodemodeRejectOptions): Promise<boolean>;
 	rollback(options: CodemodeRollbackOptions): Promise<void>;
@@ -70,6 +73,9 @@ The handle methods have these effects:
 | Method                         | Effect                                                                                                                                                                                   |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `tool(options?)`               | Returns the AI SDK tool given to the model. `description` replaces the default description. `connectorHints` adds a one-line hint for each connector when using the default description. |
+| `execute({ code })`            | Runs code directly without adapting the runtime to an AI SDK tool. The result can complete, pause for approval, or return an error status.                                             |
+| `search(query)`                | Searches connector methods and saved snippets without running sandbox code.                                                                                                            |
+| `describe(target)`             | Returns on-demand TypeScript documentation for a connector, method, or saved snippet.                                                                                                  |
 | `approve({ executionId })`     | Resumes a paused execution through replay. The result can complete, pause again, or return an error status. It does not revive a non-paused execution.                                   |
 | `reject({ seq, executionId })` | Rejects one pending action and terminates the execution. Returns `false` if the action is no longer pending. It does not roll back earlier actions.                                      |
 | `rollback({ executionId })`    | Calls available `revert` functions in reverse call order. Missing connectors and methods without `revert` remain applied. It attempts later reverts after a failure.                        |
@@ -230,6 +236,7 @@ type SearchResult = {
 	connector: string;
 	method: string;
 	description?: string;
+	requiresApproval?: boolean;
 	kind: "method" | "snippet";
 	score: number;
 };
@@ -243,10 +250,13 @@ type SearchOutput = {
 type DescribeOutput = {
 	path: string;
 	description?: string;
+	requiresApproval?: boolean;
 	types: string;
 	kind: "connector" | "method" | "snippet";
 };
 ```
+
+`requiresApproval` is `true` when a connector method pauses before execution. It is omitted for methods that do not require approval and for snippets.
 
 ### Snippet types
 

@@ -364,3 +364,88 @@ export function makeCodeReviewTools(
 ): ToolDefinition[] {
 	return [makeReadRepoFileTool(token, headSha), makeSearchRepoTool(token)];
 }
+
+// ── Tool: get_commit_pr ───────────────────────────────────────────────────────
+
+function makeGetCommitPrTool(token: string): ToolDefinition {
+	return {
+		name: "get_commit_pr",
+		description:
+			"Given a commit SHA from the production branch, return the pull request(s) that introduced that commit — including the PR title, description (body), number, and URL. Use this to understand WHY a production change was made and what the author intended, which helps determine the correct merge resolution.",
+		parameters: Type.Object({
+			commit_sha: Type.String({
+				description: "The full 40-character git commit SHA to look up.",
+			}),
+		}),
+		async execute(args) {
+			const sha = String(args.commit_sha ?? "").trim();
+			// Validate before URL-interpolation: the GitHub commits/{sha}/pulls
+			// endpoint requires a full 40-character SHA.
+			if (!/^[0-9a-f]{40}$/i.test(sha)) {
+				return `Invalid commit SHA: "${sha}". Provide a full 40-character hex SHA.`;
+			}
+			const res = await fetch(
+				`https://api.github.com/repos/${REPO}/commits/${encodeURIComponent(sha)}/pulls`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+						// The commit-pulls endpoint historically required the groot-preview
+						// media type. It has since graduated to the stable API, but
+						// including the preview type ensures compatibility with any
+						// GitHub Enterprise instances that may still require it.
+						Accept:
+							"application/vnd.github.groot-preview+json, application/vnd.github+json",
+						"X-GitHub-Api-Version": "2022-11-28",
+						"User-Agent": "cloudflare-docs-agents",
+					},
+				},
+			);
+			if (!res.ok) {
+				// 422 means the SHA is invalid/malformed — surface the real error
+				// rather than masking it as "no PRs found" (200 + empty array is
+				// how the API signals an empty result).
+				throw new Error(
+					`get_commit_pr failed for ${sha}: HTTP ${res.status} — ${await res.text()}`,
+				);
+			}
+			const prs = (await res.json()) as Array<{
+				number: number;
+				title: string;
+				body: string | null;
+				html_url: string;
+				state: string;
+			}>;
+			if (prs.length === 0) return "No pull requests found for that commit.";
+			return JSON.stringify(
+				prs.map((pr) => ({
+					number: pr.number,
+					title: pr.title,
+					body: pr.body
+						? pr.body.slice(0, 2000) +
+							(pr.body.length > 2000 ? "\n[...truncated]" : "")
+						: null,
+					url: pr.html_url,
+					state: pr.state,
+				})),
+			);
+		},
+	};
+}
+
+// ── Factory: rebase-conflict tools ────────────────────────────────────────────
+//
+// Tools for the AI conflict-resolution agent in /rebaseWithConflicts.
+//
+// Bounded to:
+//   - read_repo_file: read any file at any ref (merge base, PR head, prod head)
+//   - get_commit_pr: look up the PR title+description for a production commit
+//
+// The agent CANNOT make arbitrary GitHub calls — only these two.
+
+export function makeRebaseConflictTools(token: string): ToolDefinition[] {
+	// read_repo_file defaults to "production" but the agent can override the
+	// ref parameter to read files at the merge base SHA, PR head SHA, or
+	// production head SHA as needed for conflict resolution.
+	const readTool = makeReadRepoFileTool(token, "production");
+	return [readTool, makeGetCommitPrTool(token)];
+}

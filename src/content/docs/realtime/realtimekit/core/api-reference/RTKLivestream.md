@@ -12,53 +12,23 @@ to start/stop live streams.
 
 
 * [RTKLivestream](#module_RTKLivestream)
-    * [module.exports](#exp_module_RTKLivestream--module.exports) ⏏
-        * [new module.exports(context, self)](#new_module_RTKLivestream--module.exports_new)
-        * [.telemetry](#module_RTKLivestream--module.exports+telemetry)
-        * [.setLivestreamState(livestreamState)](#module_RTKLivestream--module.exports+setLivestreamState)
-        * [.start([livestreamConfig])](#module_RTKLivestream--module.exports+start)
-        * [.stop()](#module_RTKLivestream--module.exports+stop)
+    * [.start([livestreamConfig])](#module_RTKLivestream+start)
+    * [.stop()](#module_RTKLivestream+stop)
 
-<a name="exp_module_RTKLivestream--module.exports"></a>
+<a name="module_RTKLivestream+start"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKLivestream--module.exports_new"></a>
-
-#### new module.exports(context, self)
-
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-| self | <code>Self</code> | 
-
-<a name="module_RTKLivestream--module.exports+telemetry"></a>
-
-#### module.exports.telemetry
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKLivestream--module.exports)  
-<a name="module_RTKLivestream--module.exports+setLivestreamState"></a>
-
-#### module.exports.setLivestreamState(livestreamState)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKLivestream--module.exports)  
-
-| Param | Type |
-| --- | --- |
-| livestreamState | <code>RTKLivestreamState</code> | 
-
-<a name="module_RTKLivestream--module.exports+start"></a>
-
-#### module.exports.start([livestreamConfig])
+### meeting.livestream.start([livestreamConfig])
 Starts livestreaming the meeting.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKLivestream--module.exports)  
+**Kind**: instance method of [<code>RTKLivestream</code>](#module_RTKLivestream)  
 
 | Param | Type |
 | --- | --- |
 | [livestreamConfig] | <code>StartLivestreamConfig</code> | 
 
-<a name="module_RTKLivestream--module.exports+stop"></a>
+<a name="module_RTKLivestream+stop"></a>
 
-#### module.exports.stop()
+### meeting.livestream.stop()
 Stops livestreaming the meeting.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKLivestream--module.exports)  
+**Kind**: instance method of [<code>RTKLivestream</code>](#module_RTKLivestream)  

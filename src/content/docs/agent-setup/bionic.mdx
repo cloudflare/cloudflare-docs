@@ -1,0 +1,126 @@
+---
+title: LM Studio Bionic + Cloudflare
+description: Use LM Studio Bionic with Cloudflare projects, local codebases, and local or cloud-hosted open-source models.
+template: splash
+pcx_content_type: how-to
+products:
+  - agent-setup
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="bionic" />
+
+## Quick start
+
+<Steps>
+	1. **Install LM Studio Bionic**
+
+		Download and install Bionic from the [LM Studio Bionic website](https://lmstudio.ai/).
+
+	2. **Create a Code Project**
+
+		In Bionic, create a **Code Project**, then select the local directory that contains your Cloudflare project. If your project has a `wrangler.jsonc` file, select the directory that contains it.
+
+	3. **Add the Cloudflare MCP server**
+
+		In Bionic, add Cloudflare as a remote Model Context Protocol (MCP) server using the following URL:
+
+		```txt
+		https://mcp.cloudflare.com/mcp
+		```
+
+	4. **Try a prompt**
+
+		Ask Bionic to investigate a task, make changes, and run relevant tests. Review its diffs and command output before keeping changes.
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess />
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- Use a **Code Project** for local Cloudflare source files. Use a **Work Project** for research, writing, and document tasks.
+- Use the Cloudflare API MCP server for account resources and domain-specific servers for focused workflows.
+- Review Bionic diffs and command output before keeping changes.
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use the MCP server, Wrangler CLI, or both?">
+		Use both. The Cloudflare API MCP server handles Cloudflare account operations,
+		such as DNS, WAF, R2, and Zero Trust. Wrangler handles local development,
+		deployments, and migrations. In a Code Project, Bionic can run local shell
+		commands, including Wrangler commands.
+	</FAQItem>
+	<FAQItem question="How do I give Bionic access to my Cloudflare account?">
+		Add <code>https://mcp.cloudflare.com/mcp</code> as a remote MCP server. When
+		Bionic prompts you, complete the OAuth authorization flow in your browser and
+		choose the permissions to grant.
+	</FAQItem>
+	<FAQItem question="Can Bionic deploy existing Workers projects?">
+		Yes. Create a Code Project from the existing project directory where
+		<code>wrangler.jsonc</code> is located. You can then ask Bionic to run the
+		deployment command for that project.
+	</FAQItem>
+	<FAQItem question="What does Code Mode mean for MCP?">
+		Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints
+		into about 1,000 tokens. Instead of exposing every endpoint as a separate tool,
+		it exposes <code>search()</code> and <code>execute()</code>. Bionic writes
+		JavaScript to call them. For more information, refer to
+		<a href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a>.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server not connecting">
+		Confirm that the server URL is <code>https://mcp.cloudflare.com/mcp</code>.
+		Remove and re-add the remote MCP server in Bionic, then try connecting again.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Add the Cloudflare documentation MCP server at
+		<code>https://docs.mcp.cloudflare.com/mcp</code> so Bionic can retrieve current
+		documentation. Alternatively, point Bionic to
+		<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for a directory of
+		all products, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="MCP server authentication fails">
+		Remove and re-add the MCP server. When Bionic prompts you, complete the OAuth
+		authorization flow in your browser.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="bionic" />

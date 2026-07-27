@@ -129,7 +129,7 @@ Every code example should include a description of what it does and any relevant
 
 ## Notes and Warnings
 
-Use Starlight aside syntax:
+Use aside syntax:
 
 ```
 :::note[Optional Title]

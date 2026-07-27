@@ -1,5 +1,5 @@
 ---
-import CornerMarks from "./CornerMarks.astro";
+import CornerMarks from "@/components/CornerMarks.astro";
 import SectionHeading from "./SectionHeading.astro";
 
 const cards = [
@@ -44,27 +44,27 @@ const cards = [
 			Connect with Cloudflare
 		</SectionHeading>
 		<p
-			class="text-foreground-muted max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
+			class="text-muted-foreground max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
 		>
 			Find community, read the blog, and explore open source projects.
 		</p>
 	</div>
 
 	<div
-		class="border-border-100 bg-border-100 relative grid grid-cols-1 gap-px overflow-visible border md:grid-cols-3"
+		class="border-border bg-border relative grid grid-cols-1 gap-px overflow-visible border md:grid-cols-3"
 	>
 		<CornerMarks />
 
 		{
 			cards.map((card) => (
 				<div class="community-card bg-background flex flex-col p-6">
-					<span class="text-accent-100 font-mono text-xs tracking-widest uppercase">
+					<span class="text-primary font-mono text-xs tracking-widest uppercase">
 						{card.label}
 					</span>
 					<h3 class="text-foreground mt-3 mb-2 text-base leading-snug font-medium md:text-lg">
 						{card.heading}
 					</h3>
-					<p class="text-foreground-muted mb-6 flex-1 text-sm leading-relaxed md:text-base">
+					<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed md:text-base">
 						{card.desc}
 					</p>
 
@@ -72,7 +72,7 @@ const cards = [
 						{card.links.map((link) => (
 							<a
 								href={link.href}
-								class="text-foreground-muted inline-flex w-fit items-center text-sm font-medium underline-offset-4 hover:underline"
+								class="text-muted-foreground inline-flex w-fit items-center text-sm font-medium underline-offset-4 hover:underline"
 							>
 								{link.label}
 							</a>

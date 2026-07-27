@@ -1,14 +1,21 @@
+/**
+ * /workers-ai/models/<short-slug>/<schema>.json — raw JSON-Schema endpoints.
+ *
+ * `detectApiModes` splits the schema into per-mode `{mode.id}-input/-output.json`
+ * when it has modes, else a single `schema-input/-output.json`. Bound to
+ * `getLegacyModels` with the short slug.
+ */
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
-import { getLegacyModels } from "~/util/model-resolver";
-import { detectApiModes } from "~/util/model-schema";
+import { getLegacyModels, detectApiModes } from "~/util/models";
+
+export const prerender = true;
 
 export const getStaticPaths = (async () => {
 	const models = await getLegacyModels();
-	const paths = [];
+	const paths: { params: { schema: string }; props: { schema: unknown } }[] =
+		[];
 
 	for (const model of models) {
-		// Short slug is the last segment of the model name, matching the
-		// URL structure used by /workers-ai/models/[...name].astro
 		const slug = model.name.split("/").at(-1)!;
 		const modes = detectApiModes(model.schema);
 
@@ -40,6 +47,4 @@ export const getStaticPaths = (async () => {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute<Props> = ({ props }) => {
-	return Response.json(props.schema);
-};
+export const GET: APIRoute<Props> = ({ props }) => Response.json(props.schema);

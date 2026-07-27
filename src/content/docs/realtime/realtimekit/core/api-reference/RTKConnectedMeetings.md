@@ -11,72 +11,58 @@ This consists of the methods to facilitate connected meetings
 
 
 * [RTKConnectedMeetings](#module_RTKConnectedMeetings)
-    * [module.exports](#exp_module_RTKConnectedMeetings--module.exports) ⏏
-        * [new module.exports(context)](#new_module_RTKConnectedMeetings--module.exports_new)
-        * [.getConnectedMeetings()](#module_RTKConnectedMeetings--module.exports+getConnectedMeetings)
-        * [.createMeetings(request)](#module_RTKConnectedMeetings--module.exports+createMeetings)
-        * [.updateMeetings(request)](#module_RTKConnectedMeetings--module.exports+updateMeetings)
-        * [.deleteMeetings(meetingIds)](#module_RTKConnectedMeetings--module.exports+deleteMeetings)
-        * [.moveParticipants(sourceMeetingId, destinationMeetingId, participantIds)](#module_RTKConnectedMeetings--module.exports+moveParticipants)
-        * [.moveParticipantsWithCustomPreset(sourceMeetingId, destinationMeetingId, participants)](#module_RTKConnectedMeetings--module.exports+moveParticipantsWithCustomPreset)
+    * [.getConnectedMeetings()](#module_RTKConnectedMeetings+getConnectedMeetings)
+    * [.createMeetings(request)](#module_RTKConnectedMeetings+createMeetings)
+    * [.updateMeetings(request)](#module_RTKConnectedMeetings+updateMeetings)
+    * [.deleteMeetings(meetingIds)](#module_RTKConnectedMeetings+deleteMeetings)
+    * [.moveParticipants(sourceMeetingId, destinationMeetingId, participantIds)](#module_RTKConnectedMeetings+moveParticipants)
+    * [.moveParticipantsWithCustomPreset(sourceMeetingId, destinationMeetingId, participants)](#module_RTKConnectedMeetings+moveParticipantsWithCustomPreset)
 
-<a name="exp_module_RTKConnectedMeetings--module.exports"></a>
+<a name="module_RTKConnectedMeetings+getConnectedMeetings"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKConnectedMeetings--module.exports_new"></a>
-
-#### new module.exports(context)
-
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-
-<a name="module_RTKConnectedMeetings--module.exports+getConnectedMeetings"></a>
-
-#### module.exports.getConnectedMeetings()
+### meeting.connectedMeetings.getConnectedMeetings()
 get connected meeting state
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKConnectedMeetings--module.exports)  
-<a name="module_RTKConnectedMeetings--module.exports+createMeetings"></a>
+**Kind**: instance method of [<code>RTKConnectedMeetings</code>](#module_RTKConnectedMeetings)  
+<a name="module_RTKConnectedMeetings+createMeetings"></a>
 
-#### module.exports.createMeetings(request)
+### meeting.connectedMeetings.createMeetings(request)
 create connected meetings
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKConnectedMeetings--module.exports)  
+**Kind**: instance method of [<code>RTKConnectedMeetings</code>](#module_RTKConnectedMeetings)  
 
 | Param | Type |
 | --- | --- |
 | request | <code>Array.&lt;{title: string}&gt;</code> | 
 
-<a name="module_RTKConnectedMeetings--module.exports+updateMeetings"></a>
+<a name="module_RTKConnectedMeetings+updateMeetings"></a>
 
-#### module.exports.updateMeetings(request)
+### meeting.connectedMeetings.updateMeetings(request)
 update meeting title
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKConnectedMeetings--module.exports)  
+**Kind**: instance method of [<code>RTKConnectedMeetings</code>](#module_RTKConnectedMeetings)  
 
 | Param | Type |
 | --- | --- |
 | request | <code>Array.&lt;{id: string, title: string}&gt;</code> | 
 
-<a name="module_RTKConnectedMeetings--module.exports+deleteMeetings"></a>
+<a name="module_RTKConnectedMeetings+deleteMeetings"></a>
 
-#### module.exports.deleteMeetings(meetingIds)
+### meeting.connectedMeetings.deleteMeetings(meetingIds)
 delete connected meetings
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKConnectedMeetings--module.exports)  
+**Kind**: instance method of [<code>RTKConnectedMeetings</code>](#module_RTKConnectedMeetings)  
 
 | Param | Type |
 | --- | --- |
 | meetingIds | <code>Array.&lt;string&gt;</code> | 
 
-<a name="module_RTKConnectedMeetings--module.exports+moveParticipants"></a>
+<a name="module_RTKConnectedMeetings+moveParticipants"></a>
 
-#### module.exports.moveParticipants(sourceMeetingId, destinationMeetingId, participantIds)
+### meeting.connectedMeetings.moveParticipants(sourceMeetingId, destinationMeetingId, participantIds)
 Trigger event to move participants
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKConnectedMeetings--module.exports)  
+**Kind**: instance method of [<code>RTKConnectedMeetings</code>](#module_RTKConnectedMeetings)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -84,12 +70,12 @@ Trigger event to move participants
 | destinationMeetingId | <code>string</code> | id of destination meeting |
 | participantIds | <code>Array.&lt;string&gt;</code> | list of id of the participants |
 
-<a name="module_RTKConnectedMeetings--module.exports+moveParticipantsWithCustomPreset"></a>
+<a name="module_RTKConnectedMeetings+moveParticipantsWithCustomPreset"></a>
 
-#### module.exports.moveParticipantsWithCustomPreset(sourceMeetingId, destinationMeetingId, participants)
+### meeting.connectedMeetings.moveParticipantsWithCustomPreset(sourceMeetingId, destinationMeetingId, participants)
 Trigger event to move participants with custom preset
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKConnectedMeetings--module.exports)  
+**Kind**: instance method of [<code>RTKConnectedMeetings</code>](#module_RTKConnectedMeetings)  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -10,7 +10,7 @@ const { showBundled = false } = Astro.props;
 
 const CODE_MODE_URL = "https://mcp.cloudflare.com/mcp";
 
-const allServers = await getCollection("cloudflare-mcps-manifest");
+const allServers = await getCollection("mcp-servers");
 
 // Code Mode first, then the rest in manifest order
 const servers = [

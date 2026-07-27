@@ -15,6 +15,7 @@ products:
 import {
 	TypeScriptExample,
 	WranglerConfig,
+	PackageManagers,
 	LinkCard,
 	CardGrid,
 } from "~/components";
@@ -31,9 +32,9 @@ If this is your first agent, start with the [Getting started tutorial](/agents/h
 
 ### Install
 
-```sh
-npm install @cloudflare/think @cloudflare/ai-chat agents ai @cloudflare/shell zod workers-ai-provider
-```
+<PackageManagers pkg="@cloudflare/think @cloudflare/ai-chat agents ai @cloudflare/shell zod workers-ai-provider" />
+
+Think supports AI SDK v6 and v7. Use `ai@^6` with `@ai-sdk/react@^3`, or use `ai@^7` with `@ai-sdk/react@^4`. Keep the AI SDK packages on matching major versions throughout your project.
 
 ### Server
 

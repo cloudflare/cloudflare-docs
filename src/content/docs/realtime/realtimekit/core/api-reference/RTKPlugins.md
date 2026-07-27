@@ -13,32 +13,18 @@ The RTKPlugins module consists of all the plugins in the meeting. It has 2 maps:
 
 
 * [RTKPlugins](#module_RTKPlugins)
-    * [module.exports](#exp_module_RTKPlugins--module.exports) ⏏
-        * [new module.exports(logger)](#new_module_RTKPlugins--module.exports_new)
-        * [.all](#module_RTKPlugins--module.exports+all)
-        * [.active](#module_RTKPlugins--module.exports+active)
+    * [.all](#module_RTKPlugins+all)
+    * [.active](#module_RTKPlugins+active)
 
-<a name="exp_module_RTKPlugins--module.exports"></a>
+<a name="module_RTKPlugins+all"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKPlugins--module.exports_new"></a>
-
-#### new module.exports(logger)
-
-| Param | Type |
-| --- | --- |
-| logger | <code>Logger</code> | 
-
-<a name="module_RTKPlugins--module.exports+all"></a>
-
-#### module.exports.all
+### meeting.plugins.all
 All plugins accessible by the current user.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKPlugins--module.exports)  
-<a name="module_RTKPlugins--module.exports+active"></a>
+**Kind**: instance property of [<code>RTKPlugins</code>](#module_RTKPlugins)  
+<a name="module_RTKPlugins+active"></a>
 
-#### module.exports.active
+### meeting.plugins.active
 All plugins that are currently enabled in the room.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKPlugins--module.exports)  
+**Kind**: instance property of [<code>RTKPlugins</code>](#module_RTKPlugins)  
