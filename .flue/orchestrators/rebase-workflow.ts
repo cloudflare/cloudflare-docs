@@ -100,11 +100,23 @@ async function swapReaction(
 ): Promise<void> {
 	if (eyesReactionId) {
 		await removeReactionFromComment(token, commentId, eyesReactionId).catch(
-			() => {},
+			(err) => {
+				console.log({
+					message: `Rebase: failed to remove 👀 reaction on comment ${commentId}: ${err instanceof Error ? err.message : String(err)}`,
+					event: "rebase_workflow",
+					action: "remove_reaction_failed",
+				});
+			},
 		);
 	}
 	await addReactionToComment(token, commentId, success ? "+1" : "-1").catch(
-		() => {},
+		(err) => {
+			console.log({
+				message: `Rebase: failed to add ${success ? "👍" : "👎"} reaction on comment ${commentId}: ${err instanceof Error ? err.message : String(err)}`,
+				event: "rebase_workflow",
+				action: "add_reaction_failed",
+			});
+		},
 	);
 }
 
@@ -260,7 +272,14 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 				// success — the subsequent full review runs against the current head.
 				if (attempt.async) {
 					await pollForBranchUpdate(token, prNumber, attempt.priorSha).catch(
-						() => null,
+						(err) => {
+							console.log({
+								message: `Rebase: branch update poll failed for PR #${prNumber}: ${err instanceof Error ? err.message : String(err)}`,
+								event: "rebase_workflow",
+								number: prNumber,
+								action: "poll_branch_update_failed",
+							});
+						},
 					);
 				}
 				await postRebaseStatus(

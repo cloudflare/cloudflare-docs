@@ -32,12 +32,14 @@ export interface AddedLine {
 export function parseAddedLines(patch: string): AddedLine[] {
 	const result: AddedLine[] = [];
 	let newLine = 0;
+	let inHunk = false;
 
 	for (const raw of patch.split("\n")) {
 		// Hunk header: @@ -old[,count] +new[,count] @@
 		const hunkMatch = raw.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
 		if (hunkMatch) {
 			newLine = parseInt(hunkMatch[1], 10);
+			inHunk = true;
 			continue;
 		}
 		// Skip git file headers (+++ b/path, --- a/path, +++ /dev/null, etc.).
@@ -56,6 +58,8 @@ export function parseAddedLines(patch: string): AddedLine[] {
 			raw.startsWith('--- "a/')
 		)
 			continue;
+		// Ignore lines outside hunks (diff --git, index, similarity, etc.)
+		if (!inHunk) continue;
 
 		if (raw.startsWith("+")) {
 			result.push({ line: newLine, content: raw.slice(1) });

@@ -91,6 +91,7 @@ export async function runCodeReview(
 					token,
 					file.filename,
 					headSha,
+					AbortSignal.timeout(30_000),
 				).catch(() => null);
 				const fileContent =
 					raw === null

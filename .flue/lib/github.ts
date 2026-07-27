@@ -205,12 +205,13 @@ export async function getRepoFileContent(
 	token: string,
 	path: string,
 	ref: string,
+	signal?: AbortSignal,
 ): Promise<string | null> {
 	// Encode each path segment but preserve the slashes the contents API needs.
 	const encodedPath = path.split("/").map(encodeURIComponent).join("/");
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
-		{ headers: apiHeaders(token) },
+		{ headers: apiHeaders(token), signal },
 	);
 	if (res.status === 404) return null;
 	if (!res.ok) {

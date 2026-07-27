@@ -57,7 +57,7 @@ export interface StyleGuideFileInput {
 function buildPrompt(input: StyleGuideFileInput): string {
 	const addedLines =
 		input.addedLines.length > 0
-			? input.addedLines.map((l) => `${l.line}: ${l.content}`).join("\n")
+			? JSON.stringify(input.addedLines, null, 2)
 			: "(none)";
 
 	return [

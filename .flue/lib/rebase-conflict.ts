@@ -378,7 +378,12 @@ export async function resolveConflictsWithAI(
 	// paths from conflictMetaMap.
 	const conflictFiles: ConflictFileForAgent[] = await Promise.all(
 		conflictCandidates.map(async (path): Promise<ConflictFileForAgent> => {
-			const meta = conflictMetaMap.get(path)!;
+			const meta = conflictMetaMap.get(path);
+			if (!meta) {
+				throw new Error(
+					`Conflict metadata missing for path ${path} — conflictMetaMap and conflictCandidates are out of sync`,
+				);
+			}
 			const isPrRename = !!prFiles.find((f) => f.path === path)?.previousPath;
 			const isProductionRename =
 				meta.productionReadPath !== path && !isPrRename;
@@ -412,12 +417,13 @@ export async function resolveConflictsWithAI(
 
 	// Halt on modify/delete conflicts: the schema only supports { path, content },
 	// so a resolution would create a blob and resurrect a file that one side
-	// intentionally removed. baseVersion !== null with a null prVersion or
-	// productionVersion means one side deleted while the other modified.
+	// intentionally removed. baseVersion !== null with exactly one side null
+	// means one side deleted while the other modified. Mutual deletes
+	// (both null) are not a conflict.
 	const deleteModifyConflicts = conflictFiles.filter(
 		(f) =>
 			f.baseVersion !== null &&
-			(f.prVersion === null || f.productionVersion === null),
+			(f.prVersion === null) !== (f.productionVersion === null),
 	);
 	if (deleteModifyConflicts.length > 0) {
 		return {

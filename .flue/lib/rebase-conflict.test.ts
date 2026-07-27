@@ -19,7 +19,7 @@ function conflictFile(
 function isDeleteModifyConflict(f: ConflictFileForAgent): boolean {
 	return (
 		f.baseVersion !== null &&
-		(f.prVersion === null || f.productionVersion === null)
+		(f.prVersion === null) !== (f.productionVersion === null)
 	);
 }
 
@@ -57,9 +57,7 @@ describe("delete/modify conflict detection", () => {
 			prVersion: null,
 			productionVersion: null,
 		});
-		// Both sides deleted — not a modify/delete, just a delete/delete.
-		// The predicate fires here, but in practice both-sides-delete won't
-		// appear as a conflict candidate. This test documents the behavior.
-		expect(isDeleteModifyConflict(f)).toBe(true);
+		// Both sides deleted — not a modify/delete conflict.
+		expect(isDeleteModifyConflict(f)).toBe(false);
 	});
 });

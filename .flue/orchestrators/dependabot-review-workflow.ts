@@ -199,6 +199,21 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 
 		// ── 4. Render + post/log the final comment ──────────────────────────────
 		await step.do("publish", async () => {
+			const token = await getInstallationToken(ghEnv);
+
+			// Head-guard: a newer push already owns the comment — do not clobber it.
+			const freshPr = await getPullRequest(token, number);
+			if (freshPr.head.sha !== ctx.headSha) {
+				console.log({
+					message: `Dependabot review: head moved during review (was ${ctx.headSha.slice(0, 7)}, now ${freshPr.head.sha.slice(0, 7)}), skipping publish`,
+					event: "dependabot_review",
+					number,
+					runId,
+					action: "head_moved_skip_publish",
+				});
+				return { finalized: false, reason: "head_moved" };
+			}
+
 			const commentBody = renderComment(result, number);
 
 			if (reviewMode === "log") {
@@ -216,7 +231,6 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 				return { finalized: true };
 			}
 
-			const token = await getInstallationToken(ghEnv);
 			const fresh = await findExistingBotComment(token, number);
 			await postOrUpdateComment(token, number, fresh, commentBody);
 

@@ -7,8 +7,9 @@
  * every long-running path is a Cloudflare Workflow that this function *kicks*
  * and returns from immediately, so the webhook always answers within GitHub's
  * delivery timeout. The only inline GitHub calls are the codeowner
- * authorization + reaction bookkeeping for slash commands, which are a handful
- * of sub-second API calls.
+ * authorization + reaction bookkeeping for slash commands, and the codeowner
+ * check for spam-filter events (to decide whether a codeowner skips the
+ * INGEST gate). These are a handful of sub-second API calls.
  *
  * Routing (ports the 0.11 `orchestrate` workflow):
  *   - codeowner slash command → handled inline (auth, 👀/👍, kick workflow or

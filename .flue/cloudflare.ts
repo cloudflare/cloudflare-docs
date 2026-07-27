@@ -571,9 +571,7 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 			// finalized, unless the existing comment is retryable (pending/failure).
 			let botComment: GitHubIssueComment | null = null;
 			if (reviewMode === "comment") {
-				const allComments = await getIssueComments(token, number).catch(
-					() => [],
-				);
+				const allComments = await getIssueComments(token, number);
 				botComment =
 					allComments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ??
 					null;
