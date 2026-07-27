@@ -1,0 +1,104 @@
+---
+pcx_content_type: how-to
+title: Export to Statsig
+description: Send OpenTelemetry traces and logs from Cloudflare Workers to Statsig.
+sidebar:
+  order: 7
+products:
+  - workers
+---
+
+import {WranglerConfig} from "~/components";
+
+Statsig is an observability and experimentation platform that helps you understand application performance and user behavior. By exporting your Cloudflare Workers application telemetry to Statsig, you can:
+
+- Visualize traces to understand request flows and identify performance bottlenecks
+- Query and analyze logs with rich filtering and aggregation
+- Set up alerts and dashboards to monitor your Workers
+
+This guide will walk you through configuring your Cloudflare Worker application to export OpenTelemetry-compliant traces and logs to Statsig.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- An active [Statsig account](https://console.statsig.com/signup) (free tier available)
+- A deployed Worker that you want to monitor
+
+## Step 1: Get your Statsig Server SDK Secret
+
+1. Log in to your [Statsig console](https://console.statsig.com/)
+2. Navigate to the **Project Settings** page
+3. Under **Keys & Environments**, find your environment or create a new one
+4. Copy the **Server SDK Secret** - this is used to authenticate OTLP requests
+
+The secret will look something like: `secret-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+
+## Step 2: Configure Cloudflare destinations
+
+Now you'll create destinations in the Cloudflare dashboard that point to Statsig.
+
+### Statsig OTLP endpoints
+
+Statsig provides separate OTLP endpoints for traces and logs:
+
+- **Traces**: `https://api.statsig.com/otlp/v1/traces`
+- **Logs**: `https://api.statsig.com/otlp/v1/logs`
+
+### Configure trace destination
+
+1. Navigate to your Cloudflare account's [Workers Observability](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/pipelines) section
+2. Click **Add destination**
+3. Configure your trace destination:
+   - **Destination Name**: `statsig-traces` (or any descriptive name)
+   - **Destination Type**: Select **Traces**
+   - **OTLP Endpoint**: `https://api.statsig.com/otlp/v1/traces`
+   - **Custom Headers**: Add the authentication header:
+     - Header name: `statsig-api-key`
+     - Header value: Your Statsig Server SDK Secret (e.g., `secret-xxxxx...`)
+4. Click **Save**
+
+### Configure logs destination
+
+Repeat the process for logs:
+
+1. Click **Add destination** again
+2. Configure your logs destination:
+   - **Destination Name**: `statsig-logs` (or any descriptive name)
+   - **Destination Type**: Select **Logs**
+   - **OTLP Endpoint**: `https://api.statsig.com/otlp/v1/logs`
+   - **Custom Headers**: Add the authentication header:
+     - Header name: `statsig-api-key`
+     - Header value: Your Statsig Server SDK Secret (same as above)
+3. Click **Save**
+
+## Step 3: Configure your Worker
+
+With your destinations created in the Cloudflare dashboard, update your Worker's configuration to enable telemetry export.
+
+<WranglerConfig>
+
+```json
+{
+  "observability": {
+    "traces": {
+      "enabled": true,
+      // Must match the destination name in the dashboard
+      "destinations": ["statsig-traces"]
+    },
+    "logs": {
+      "enabled": true,
+      // Must match the destination name in the dashboard
+      "destinations": ["statsig-logs"]
+    }
+  }
+}
+```
+
+</WranglerConfig>
+
+After updating your configuration, deploy your Worker for the changes to take effect.
+
+:::note
+It may take a few minutes after deployment for data to appear in Statsig.
+:::

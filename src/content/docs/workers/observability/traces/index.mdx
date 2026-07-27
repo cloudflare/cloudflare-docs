@@ -64,8 +64,8 @@ You can configure tracing by setting `observability.traces.enabled = true` in yo
 ### Exporting OpenTelemetry traces to a 3rd party destination
 
 Workers tracing follows [OpenTelemetry (OTel) standards](https://opentelemetry.io/). This makes it compatible with popular observability platforms,
-such as [Honeycomb](/workers/observability/exporting-opentelemetry-data/honeycomb/), [Grafana Cloud](/workers/observability/exporting-opentelemetry-data/grafana-cloud/), and
-[Axiom](/workers/observability/exporting-opentelemetry-data/axiom/), while requiring zero development effort from you. If your observability provider has an available OpenTelemetry endpoint, you can export traces (and logs)!
+such as [Honeycomb](/workers/observability/exporting-opentelemetry-data/honeycomb/), [Grafana Cloud](/workers/observability/exporting-opentelemetry-data/grafana-cloud/),
+[Axiom](/workers/observability/exporting-opentelemetry-data/axiom/), and [Statsig](/workers/observability/exporting-opentelemetry-data/statsig/), while requiring zero development effort from you. If your observability provider has an available OpenTelemetry endpoint, you can export traces (and logs)!
 
 You can also set `persist: false` to export traces to your destination without persisting them in the Cloudflare dashboard. This allows you to use a third-party observability provider as your sole traces destination.
 
