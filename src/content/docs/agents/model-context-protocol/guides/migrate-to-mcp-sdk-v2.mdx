@@ -105,7 +105,7 @@ The stateless `createMcpHandler` accepts a factory. The factory returns `McpServ
 
 3. Move server construction and registration into a factory.
 
-4. Keep the Worker object default export. Inside its `fetch()` method, pass the factory to `createMcpHandler` and invoke the returned callable as before. Calling its `.fetch()` method is equivalent.
+4. Keep the Worker object default export. Inside its `fetch()` method, pass the factory to `createMcpHandler` and invoke the returned callable as before. Use the handler's `fetch(request, options?)` method only for lower-level request integration.
 
 5. Do not default-export the callable returned by the Agents handler. Wrangler interprets function default exports as `WorkerEntrypoint` classes.
 

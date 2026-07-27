@@ -199,10 +199,10 @@ Set `legacy: "reject"` for a stateless-only endpoint. Use `createLegacyMcpHandle
 interface StatelessMcpHandler {
 	(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response>;
 
-	fetch: {
-		(request: Request, options?: McpHandlerRequestOptions): Promise<Response>;
-		(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response>;
-	};
+	fetch(
+		request: Request,
+		options?: McpHandlerRequestOptions,
+	): Promise<Response>;
 
 	notify: {
 		toolsChanged(): void;
@@ -230,9 +230,9 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-The three-argument `handler.fetch(request, env, ctx)` overload is equivalent. Do not export the callable directly as a Worker's default export. Wrangler treats function default exports as `WorkerEntrypoint` classes.
+Do not export the callable directly as a Worker's default export. Wrangler treats function default exports as `WorkerEntrypoint` classes.
 
-Use the request-options overload when another framework or authentication layer has already parsed or validated request data:
+Use `fetch()` when another framework or authentication layer has already parsed or validated request data:
 
 ```ts
 const response = await handler.fetch(request, {
