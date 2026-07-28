@@ -152,13 +152,13 @@ export function createFlueAgentHarness<TInput = unknown>(
 
 				if (historyResponse.ok) {
 					history = (await historyResponse.json()) as ConversationHistory;
-					const settled = history.settlements.some(
+					const terminal = history.settlements.findLast(
 						(s) =>
 							s.outcome === "completed" ||
 							s.outcome === "failed" ||
 							s.outcome === "aborted",
 					);
-					if (settled) break;
+					if (terminal) break;
 				} else {
 					lastHistoryError = `${historyResponse.status} ${historyResponse.statusText}`;
 				}
@@ -172,13 +172,22 @@ export function createFlueAgentHarness<TInput = unknown>(
 				);
 			}
 
-			const outcome = history.settlements.at(-1)?.outcome;
-			if (outcome !== "completed") {
-				if (outcome === "failed") throw new Error("Agent run failed");
-				if (outcome === "aborted") throw new Error("Agent run was aborted");
+			const terminal = history.settlements.findLast(
+				(s) =>
+					s.outcome === "completed" ||
+					s.outcome === "failed" ||
+					s.outcome === "aborted",
+			);
+			if (!terminal) {
 				throw new Error(
-					`Timed out waiting for agent to settle (last outcome: ${outcome ?? "none"})`,
+					`Timed out waiting for agent to settle (last outcome: ${history.settlements.at(-1)?.outcome ?? "none"})`,
 				);
+			}
+			if (terminal.outcome === "failed") {
+				throw new Error("Agent run failed");
+			}
+			if (terminal.outcome === "aborted") {
+				throw new Error("Agent run was aborted");
 			}
 
 			const reply = history.messages.findLast((m) => m.role === "assistant");
