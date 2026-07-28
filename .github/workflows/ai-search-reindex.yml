@@ -11,6 +11,15 @@ on:
         type: boolean
         default: false
 
+# Reindexing is a whole-site diff against a single shared manifest, so two runs
+# must never overlap: both would restore the same baseline, and an upsert from
+# the older run landing after a delete from the newer one would leave a stale
+# page in the index. Queue instead of cancelling, because cancelling mid-send
+# would abandon a partially delivered batch.
+concurrency:
+  group: ai-search-reindex
+  cancel-in-progress: false
+
 permissions:
   actions: read
   contents: read
