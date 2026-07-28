@@ -7,7 +7,7 @@ products:
   - r2
 ---
 
-Below is an example of using [MotherDuck](https://motherduck.com/) to connect to R2 Data Catalog. MotherDuck is a managed cloud analytics platform built on [DuckDB](https://duckdb.org/); you can attach R2 Data Catalog as a MotherDuck database to read and write Iceberg tables server-side. For more information, refer to [MotherDuck's Apache Iceberg documentation](https://motherduck.com/docs/integrations/file-formats/apache-iceberg/).
+Below is an example of using [MotherDuck](https://motherduck.com/) to connect to R2 Data Catalog. MotherDuck is a managed cloud analytics platform built on [DuckDB](https://duckdb.org/); you can attach R2 Data Catalog as a MotherDuck database to read and write Iceberg tables server-side. For more information, refer to the [MotherDuck Apache Iceberg documentation](https://motherduck.com/docs/integrations/file-formats/apache-iceberg/).
 
 ## Prerequisites
 
@@ -15,12 +15,12 @@ Below is an example of using [MotherDuck](https://motherduck.com/) to connect to
 - [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2/data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
 - [Create an R2 API token](/r2/api/tokens/) with both [R2 and data catalog permissions](/r2/api/tokens/#permissions).
 - Sign up for a [MotherDuck account](https://app.motherduck.com/).
-- Ensure your R2 Data Catalog has at least one namespace. MotherDuck cannot create a namespace in R2 Data Catalog, so a newly enabled (empty) catalog must first be seeded from another Iceberg engine or the [R2 Data Catalog REST API](/r2/data-catalog/) before you can attach it.
-- Note: Attaching an Iceberg REST catalog as a persisted MotherDuck database requires DuckDB 1.5.2 or later. In a DuckDB client, install and load the `iceberg` extension and connect to MotherDuck with `ATTACH 'md:';`. In the [MotherDuck SQL editor](https://app.motherduck.com/), the extension is already available.
+- Ensure your R2 Data Catalog has at least one namespace. MotherDuck cannot create a namespace in R2 Data Catalog, so seed a new catalog from another Iceberg engine, such as [PyIceberg](/r2/data-catalog/config-examples/pyiceberg/), before you attach it.
+- Note: Attaching R2 Data Catalog as a persisted MotherDuck database requires DuckDB 1.5.2 or later.
 
 ## Example usage
 
-In the [MotherDuck SQL editor](https://app.motherduck.com/), or a DuckDB session connected to MotherDuck, run the following commands:
+Connect to MotherDuck through the [MotherDuck SQL editor](https://app.motherduck.com/) or a DuckDB client, then run the following commands:
 
 ```sql
 -- In a DuckDB client, load the iceberg extension and connect to MotherDuck.
@@ -36,7 +36,7 @@ CREATE SECRET r2_secret IN MOTHERDUCK (
 );
 
 -- Register R2 Data Catalog as a MotherDuck database.
--- `warehouse` is required for R2 Data Catalog; if it is omitted, the attach returns a 403.
+-- `warehouse` is required for R2 Data Catalog; omitting it returns a 403.
 -- `default_schema` must reference a namespace that already exists in the catalog.
 CREATE DATABASE my_r2_catalog (
     TYPE ICEBERG,
