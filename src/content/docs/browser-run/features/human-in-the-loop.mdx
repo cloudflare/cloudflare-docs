@@ -29,11 +29,12 @@ Human in the Loop works with any [Browser Session](/browser-run/#integration-met
 Your script uses Cloudflare CDP commands to formally request human intervention and wait for completion:
 
 1. Your automation script encounters a scenario requiring human input.
-2. The script sends the `Cloudflare.handoff` CDP command with instructions for the human operator.
-3. The script automatically enters a waiting state and receives a handoff ID.
-4. A human operator opens the [Live View](/browser-run/features/live-view/) URL to complete the required actions.
-5. The script receives a `Cloudflare.handoffComplete` event when the human marks the handoff as complete or the handoff times out.
-6. The automation resumes with knowledge of whether the intervention succeeded.
+2. The script subscribes to the `Cloudflare.handoffComplete` event.
+3. The script sends `Cloudflare.getLiveView` with mode: `tab` and shares the returned URL with the human operator.
+4. The script sends the `Cloudflare.handoff` CDP command with instructions for the human operator, then waits for `Cloudflare.handoffComplete`.
+5. The operator opens the Live View (/browser-run/features/live-view/) URL, completes the required actions, and selects "Done" or "Failed".
+6. `Cloudflare.handoffComplete` fires when the human marks the handoff as complete or the handoff times out.
+7. The automation resumes with knowledge of whether the intervention succeeded.
 
 Refer to [Example: structured handoff](#example-structured-handoff) for a complete code sample.
 
@@ -67,7 +68,7 @@ const cdp = await page.createCDPSession();
 const { handoffId } = await cdp.send("Cloudflare.handoff", {
 	// targetId will automatically be resolved from the CDP session
 	instructions: "Please log in",
-	timeout: 1800000, // optional, 30 minutes
+	timeout: 1800000, // optional, max 30 minutes, if undefined handoff will have no timeout
 });
 ```
 
@@ -129,7 +130,7 @@ Generates a [Live View](/browser-run/features/live-view/) URL for the browser se
 ```js
 const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
 	targetId, // optional, defaults to the current page
-	mode: "tab", // optional, one of "tab" (default), "full", or "devtools"
+	mode: "tab", // optional, one of "tab", "full", or "devtools" (default)
 	expiresInMs: 300000, // optional, default 5 minutes, max 1 hour
 });
 console.log(`Live View URL: ${devtoolsFrontendUrl}`);
@@ -162,7 +163,7 @@ const cdp = await page.createCDPSession();
 
 // Get the Live View URL for the human operator
 const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
-	mode: "tab", // Options: "devtools", "tab", or "full"
+	mode: "tab", // required, only "tab" supports handoff
 	expiresInMs: 300000, // optional, default is 5 minutes
 });
 
@@ -222,7 +223,7 @@ const cdp = await context.newCDPSession(page);
 
 // Get the Live View URL for the human operator
 const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
-	mode: "tab", // Options: "devtools", "tab", or "full"
+	mode: "tab", // required, only "tab" supports handoff
 	expiresInMs: 300000, // optional, default is 5 minutes
 });
 
