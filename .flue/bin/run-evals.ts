@@ -4,7 +4,7 @@
  * and tears down the server. Used by `pnpm run flue:evals`.
  */
 import { spawn } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync, unlinkSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 const PORT = 5173;
@@ -34,6 +34,15 @@ if (!TOKEN) {
 		"DOCS_FLUE_INTERNAL_TOKEN not found in process.env or .flue/.env(.local)",
 	);
 	process.exit(1);
+}
+
+// The @cloudflare/vite-plugin reads Worker env vars from .dev.vars (not
+// process.env). In CI the .env files are gitignored, so we write a temporary
+// .dev.vars with the token the eval routes need.
+const DEV_VARS_PATH = join(FLUE_DIR, ".dev.vars");
+const wroteDevVars = !existsSync(DEV_VARS_PATH);
+if (wroteDevVars) {
+	writeFileSync(DEV_VARS_PATH, `DOCS_FLUE_INTERNAL_TOKEN=${TOKEN}\n`);
 }
 
 async function waitForServer(timeoutMs = 60_000): Promise<void> {
@@ -105,6 +114,13 @@ async function main() {
 		process.exit(code);
 	} finally {
 		server.kill("SIGTERM");
+		if (wroteDevVars) {
+			try {
+				unlinkSync(DEV_VARS_PATH);
+			} catch {
+				// already gone
+			}
+		}
 	}
 }
 
