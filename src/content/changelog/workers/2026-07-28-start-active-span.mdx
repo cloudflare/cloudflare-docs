@@ -1,0 +1,50 @@
+---
+title: Custom spans now support manual lifetime management with startActiveSpan and span.end()
+description: Use tracing.startActiveSpan() and span.end() to instrument operations that outlive a single callback, such as stream pipelines.
+products:
+  - workers
+date: 2026-07-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+You can now create custom spans that you end manually with `tracing.startActiveSpan()` and `span.end()`. This is useful when a span must cover an operation that extends beyond a single callback — for example, instrumenting a stream pipeline where the span should stay open until the stream is fully consumed.
+
+Previously, `tracing.enterSpan()` automatically ended a span when its callback returned, which made it difficult to trace long-lived operations. With `startActiveSpan`, the span remains open after the callback returns, and you call `span.end()` when the work is complete:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { tracing } from "cloudflare:workers";
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		const body = request.body;
+		if (!body) return new Response("No body", { status: 400 });
+
+		const stream = tracing.startActiveSpan("process-stream", (span) => {
+			return body.pipeThrough(
+				new TransformStream({
+					transform(chunk, controller) {
+						controller.enqueue(chunk);
+					},
+					flush() {
+						span.setAttribute("stream.status", "complete");
+						span.end();
+					},
+					cancel() {
+						span.setAttribute("stream.status", "cancelled");
+						span.end();
+					},
+				}),
+			);
+		});
+
+		return new Response(stream);
+	},
+};
+```
+
+</TypeScriptExample>
+
+For more details, refer to the [custom spans documentation](/workers/observability/traces/custom-spans/).
