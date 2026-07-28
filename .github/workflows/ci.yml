@@ -177,6 +177,12 @@ jobs:
           name: dist
           path: dist
 
+      - name: Upload nimbus config
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: nimbus-config
+          path: .nimbus/
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
@@ -315,6 +321,16 @@ jobs:
         with:
           name: dist
           path: dist
+
+      - name: Download nimbus config
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: nimbus-config
+          path: .nimbus
+
+      - name: Nimbus lint (preview test)
+        continue-on-error: true
+        run: pnpm run lint:nimbus
 
       - name: Deploy to Cloudflare Workers
         id: deploy
