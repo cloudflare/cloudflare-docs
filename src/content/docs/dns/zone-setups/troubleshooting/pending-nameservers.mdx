@@ -47,13 +47,21 @@ Use one of the following methods to query the parent zone directly.
 
 ### Option A - `dig +trace`
 
-`dig +trace` follows the delegation from the root zone down, so its final output shows the nameservers that the parent zone is actually publishing for your domain. In a terminal, run:
+`dig +trace` follows the delegation from the root zone down. Adding `+noall +authority +nodnssec` trims the output to just the delegation section from each level, which is what you care about when checking where the parent zone points your domain. In a terminal, run:
 
 ```sh
-dig +trace example.com NS
+dig +trace example.com NS +noall +authority +nodnssec
 ```
 
-The last section of the output should return **only** the Cloudflare nameservers assigned to your zone (or, if you use [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns), it should include them alongside your other provider's nameservers).
+- `+trace` — follows the delegation step by step, from the root nameservers down to your domain, instead of asking a single recursive resolver.
+- `+noall +authority` — hides everything except the **AUTHORITY** section returned at each hop, which is where each parent zone lists the nameservers it delegates to. The last hop shown before your domain is the parent zone (`com.`, `co.uk.`, etc.), and its authority section is what actually delegates your zone.
+- `+nodnssec` — hides DNSSEC-related records (`RRSIG`, `NSEC`, `NSEC3`, and DNSKEYs) so the output is easier to scan.
+
+The last non-empty section of the output should return **only** the Cloudflare nameservers assigned to your zone (or, if you use [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns), it should include them alongside your other provider's nameservers).
+
+:::caution
+`+nodnssec` hides `DS` records from the output. Once you have confirmed the delegation is correct at the parent zone, re-run the query without `+nodnssec` (or use `dig DS example.com` — see [Step 4](#4-check-for-stale-dnssec-ds-records)) to make sure the parent zone is not still publishing a stale `DS` record from a previous DNS provider.
+:::
 
 ### Option B - `nslookup`
 
