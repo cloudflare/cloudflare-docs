@@ -38,11 +38,21 @@ if (!TOKEN) {
 
 // The @cloudflare/vite-plugin reads Worker env vars from .dev.vars (not
 // process.env). In CI the .env files are gitignored, so we write a temporary
-// .dev.vars with the token the eval routes need.
+// .dev.vars with the token the eval routes need. The file is gitignored and
+// cleaned up on all exit paths.
 const DEV_VARS_PATH = join(FLUE_DIR, ".dev.vars");
 const wroteDevVars = !existsSync(DEV_VARS_PATH);
 if (wroteDevVars) {
 	writeFileSync(DEV_VARS_PATH, `DOCS_FLUE_INTERNAL_TOKEN=${TOKEN}\n`);
+}
+
+function removeDevVars() {
+	if (!wroteDevVars) return;
+	try {
+		unlinkSync(DEV_VARS_PATH);
+	} catch {
+		// already gone
+	}
 }
 
 async function waitForServer(timeoutMs = 60_000): Promise<void> {
@@ -88,10 +98,12 @@ async function main() {
 
 	const cleanup = () => {
 		server.kill("SIGTERM");
+		removeDevVars();
 	};
 	process.on("SIGINT", cleanup);
 	process.on("SIGTERM", cleanup);
 	process.on("exit", cleanup);
+	process.on("uncaughtException", cleanup);
 
 	try {
 		await waitForServer();
@@ -114,13 +126,7 @@ async function main() {
 		process.exit(code);
 	} finally {
 		server.kill("SIGTERM");
-		if (wroteDevVars) {
-			try {
-				unlinkSync(DEV_VARS_PATH);
-			} catch {
-				// already gone
-			}
-		}
+		removeDevVars();
 	}
 }
 

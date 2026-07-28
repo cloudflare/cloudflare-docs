@@ -59,6 +59,7 @@ tools/relevant_changed_files.txt
 # Flue agents build output, secrets, and isolated workspace artifacts
 .flue/dist/
 .flue/.env*
+.flue/.dev.vars*
 .flue/.wrangler/
 .flue/.wrangler/tmp/
 .flue/.flue-vite/
