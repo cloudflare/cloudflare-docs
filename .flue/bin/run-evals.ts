@@ -11,12 +11,12 @@ const PORT = 5173;
 const HOST = "localhost";
 const FLUE_DIR = join(import.meta.dirname, "..");
 
-function loadDotenvToken(): string | undefined {
+function loadDotenvValue(key: string): string | undefined {
 	for (const file of [".env.local", ".env"]) {
 		try {
 			const content = readFileSync(join(FLUE_DIR, file), "utf-8");
 			for (const line of content.split("\n")) {
-				const match = line.match(/^DOCS_FLUE_INTERNAL_TOKEN=(.+)$/);
+				const match = line.match(new RegExp(`^${key}=(.+)$`));
 				if (match) return match[1].trim();
 			}
 		} catch {
@@ -26,7 +26,9 @@ function loadDotenvToken(): string | undefined {
 	return undefined;
 }
 
-const TOKEN = process.env.DOCS_FLUE_INTERNAL_TOKEN ?? loadDotenvToken();
+const TOKEN =
+	process.env.DOCS_FLUE_INTERNAL_TOKEN ??
+	loadDotenvValue("DOCS_FLUE_INTERNAL_TOKEN");
 if (!TOKEN) {
 	console.error(
 		"DOCS_FLUE_INTERNAL_TOKEN not found in process.env or .flue/.env(.local)",
