@@ -12,7 +12,9 @@ products:
 
 Cloudflare runs a catalog of managed remote MCP servers which you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), our own [AI Playground](https://playground.ai.cloudflare.com/) or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
 
-These MCP servers allow your MCP client to read configurations from your account, process information, make suggestions based on data, and even make those suggested changes for you. All of these actions can happen across Cloudflare's many services including application development, security and performance. They support both the `streamable-http` transport via `/mcp` and the `sse` transport (deprecated) via `/sse`.
+These MCP servers allow your MCP client to read configurations from your account, process information, make suggestions based on data, and even make those suggested changes for you. All of these actions can happen across Cloudflare's many services including application development, security and performance.
+
+Use the Streamable HTTP endpoint at `/mcp` for new connections. The servers support MCP 2026-07-28 and stateless requests from 2025 Streamable HTTP clients. Historical `/sse` URLs remain available as aliases for the same Streamable HTTP handler, but they do not serve the deprecated HTTP+SSE transport. Clients configured to force SSE transport must switch to Streamable HTTP or automatic transport detection.
 
 ## Cloudflare API MCP server
 
