@@ -48,9 +48,24 @@ You can then use this Worker handle to send requests directly or dispatch other 
 const apiWorker = server.getWorker("api-worker");
 const response = await apiWorker.fetch("http://api.example.com/v1/users/123");
 
+// Dispatch a scheduled event to the Worker
 await apiWorker.scheduled({
 	cron: "0 0 * * *",
 	scheduledTime: new Date(),
+});
+
+// Dispatch an email event to the Worker
+await server.getWorker().email({
+	from: "sender@example.com",
+	to: "inbox@example.com",
+	raw: [
+		"From: Sender <sender@example.com>",
+		"To: Inbox <inbox@example.com>",
+		"Message-ID: <test@example.com>",
+		"Subject: Test email",
+		"",
+		"Hello from the test harness",
+	].join("\r\n"),
 });
 ```
 
