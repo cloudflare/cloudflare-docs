@@ -198,7 +198,10 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 		const result = review.result;
 
 		// ── 4. Render + post/log the final comment ──────────────────────────────
-		await step.do("publish", async () => {
+		const published = await step.do<{
+			finalized: boolean;
+			reason?: string;
+		}>("publish", async () => {
 			const token = await getInstallationToken(ghEnv);
 
 			// Head-guard: a newer push already owns the comment — do not clobber it.
@@ -260,6 +263,14 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 			});
 			return { finalized: true };
 		});
+
+		if (!published.finalized) {
+			return {
+				acted: false,
+				reason: published.reason ?? "not_finalized",
+				packageCount: ctx.packages.length,
+			};
+		}
 
 		return {
 			acted: true,
