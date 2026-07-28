@@ -173,11 +173,12 @@ export function createFlueAgentHarness<TInput = unknown>(
 			}
 
 			const outcome = history.settlements.at(-1)?.outcome;
-			if (outcome === "failed") {
-				throw new Error("Agent run failed");
-			}
-			if (outcome === "aborted") {
-				throw new Error("Agent run was aborted");
+			if (outcome !== "completed") {
+				if (outcome === "failed") throw new Error("Agent run failed");
+				if (outcome === "aborted") throw new Error("Agent run was aborted");
+				throw new Error(
+					`Timed out waiting for agent to settle (last outcome: ${outcome ?? "none"})`,
+				);
 			}
 
 			const reply = history.messages.findLast((m) => m.role === "assistant");

@@ -97,12 +97,14 @@ describeEval("reconcile reviewer", { harness }, (it) => {
 		});
 
 		const output = result.output as {
-			ignored_by_reviewer?: unknown[];
+			ignored_by_reviewer?: Array<{ id?: string; reviewer_note?: string }>;
 			active?: unknown[];
 		};
 		expect(output).toBeDefined();
 		expect(output?.ignored_by_reviewer).toBeDefined();
 		expect(output?.ignored_by_reviewer).toHaveLength(1);
+		expect(output?.ignored_by_reviewer?.[0]?.id).toBe("SG-bbb222");
+		expect(output?.ignored_by_reviewer?.[0]?.reviewer_note).toBeTruthy();
 		expect(output?.active).toHaveLength(0);
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_reconcile_result",
