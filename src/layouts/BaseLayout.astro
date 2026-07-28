@@ -155,32 +155,12 @@ const llmsUrl = Astro.site
 			import "../scripts/image-zoom.client";
 			import "../scripts/footnotes.client";
 			import "../scripts/scroll-to-top.client";
+			import "../scripts/onetrust-focus.client";
 			// Custom Zaraz analytics event wiring (link/tab/details/copy/search).
 			// Registers delegated document listeners once; safe with view transitions.
 			import "../scripts/analytics";
 
 			codeCopy();
-
-			document.addEventListener(
-				"click",
-				(event) => {
-					const target = event.target;
-					if (
-						!(target instanceof Element) ||
-						!target.closest(
-							"#onetrust-pc-btn-handler, #ot-sdk-btn.ot-sdk-show-settings, #ot-sdk-btn.optanon-show-settings",
-						)
-					)
-						return;
-
-					requestAnimationFrame(() =>
-						document
-							.querySelector<HTMLButtonElement>("#close-pc-btn-handler")
-							?.focus(),
-					);
-				},
-				true,
-			);
 		</script>
 	</body>
 </html>
