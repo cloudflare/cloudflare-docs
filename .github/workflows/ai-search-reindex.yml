@@ -37,6 +37,10 @@ jobs:
         id: published
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # This step runs before actions/checkout, so gh cannot infer the
+          # repository from a git remote. Without GH_REPO the workflow_dispatch
+          # fallback below fails with "failed to determine base repo".
+          GH_REPO: ${{ github.repository }}
           PUBLISH_RUN_ID: ${{ github.event.workflow_run.id }}
           PUBLISHED_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
@@ -87,6 +91,8 @@ jobs:
       - name: Restore previous manifest
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Explicit so these gh calls do not depend on the checked-out remote.
+          GH_REPO: ${{ github.repository }}
         run: |
           mkdir -p .ai-search
           restored=false
