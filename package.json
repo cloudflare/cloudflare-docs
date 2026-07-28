@@ -131,6 +131,7 @@
 		"redirects-in-workers": "0.0.7",
 		"rehype": "13.0.2",
 		"remark": "15.0.1",
+		"remark-gfm": "4.0.1",
 		"remark-mdx": "3.1.1",
 		"remark-parse": "11.0.0",
 		"satteri": "^0.9.1",
