@@ -129,7 +129,7 @@
 		"rehype": "13.0.2",
 		"remark": "15.0.1",
 		"satteri": "^0.9.1",
-		"sharp": "0.35.1",
+		"sharp": "0.35.2",
 		"strip-markdown": "6.0.0",
 		"svgo": "4.0.1",
 		"tailwind-merge": "3.6.0",
