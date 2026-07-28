@@ -8,7 +8,7 @@
  */
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
-import { getLegacyModels, fetchAllModelDetails } from "~/util/model-resolver";
+import { getLegacyModels, fetchAllModelDetails } from "~/util/models";
 
 export const prerender = true;
 
@@ -21,7 +21,7 @@ export const getStaticPaths = (async () => {
 
 	return models.flatMap((card) => {
 		// Detail map is keyed by slug with @ stripped
-		const detailSlug = card.modelId.replace(/^@/, "");
+		const detailSlug = card.name.replace(/^@/, "");
 		const detail = detailMap.get(detailSlug);
 		if (!detail) {
 			console.warn(
@@ -30,7 +30,7 @@ export const getStaticPaths = (async () => {
 			return [];
 		}
 		// Workers AI detail pages use short slug (last segment) as URL param
-		const urlSlug = card.modelId.split("/").at(-1)!;
+		const urlSlug = card.name.split("/").at(-1)!;
 		return [{ params: { name: urlSlug }, props: { model: detail } }];
 	});
 }) satisfies GetStaticPaths;

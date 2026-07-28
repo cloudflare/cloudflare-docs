@@ -79,6 +79,8 @@ export interface ModelView {
 	schema: { input: Record<string, unknown>; output: Record<string, unknown> };
 	/** Optional ZDR note, surfaced as the ZDR badge tooltip. */
 	zdrComment?: string | null;
+	/** Raw schema filenames from middlecache schema_manifest (detail pages only). */
+	schemaFiles?: string[];
 }
 
 /** Slim projection for the catalog index pages — drops the heavy `schema` blob. */

@@ -12,7 +12,7 @@
  */
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
-import { getResolvedModels, fetchAllModelDetails } from "~/util/model-resolver";
+import { getResolvedModels, fetchAllModelDetails } from "~/util/models";
 
 export const prerender = true;
 
@@ -25,7 +25,7 @@ export const getStaticPaths = (async () => {
 
 	return models.flatMap((card) => {
 		// Detail map is keyed by slug with @ stripped
-		const detailSlug = card.modelId.replace(/^@/, "");
+		const detailSlug = card.name.replace(/^@/, "");
 		const detail = detailMap.get(detailSlug);
 		if (!detail) {
 			console.warn(

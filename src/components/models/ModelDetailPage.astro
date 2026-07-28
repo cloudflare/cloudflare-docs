@@ -23,7 +23,6 @@ import { LinkButton } from "~/components/ui/link-button";
 import { Aside } from "~/components/ui/aside";
 import { PageActions } from "~/components/ui/page-actions";
 import ModelBadges from "~/components/models/ModelBadges.astro";
-import ModelInfo from "~/components/models/ModelInfo.astro";
 import ModelFeatures from "~/components/models/ModelFeatures.astro";
 import CopyableCode from "~/components/models/CopyableCode.astro";
 import ExampleCard from "~/components/models/ExampleCard.astro";
@@ -35,10 +34,12 @@ import SchemaFileLinks from "~/components/models/SchemaFileLinks.astro";
 import AnchorHeading from "~/components/cf/AnchorHeading.astro";
 import Render from "~/components/Render.astro";
 import { authorData } from "~/components/models/data";
-import { detectApiModes, getTopLevelVariants } from "~/util/models";
-import { hasProperty } from "~/util/model-properties";
-import { getModelAuthor, getDotTmpPath } from "~/util/model-resolver";
-import type { ResolvedModel } from "~/util/model-types";
+import {
+	detectApiModes,
+	getTopLevelVariants,
+	getDotTmpPath,
+	type ModelView,
+} from "~/util/models";
 import fs from "node:fs";
 import { join } from "node:path";
 
@@ -67,7 +68,7 @@ import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
 import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
 
 interface Props {
-	model: ResolvedModel;
+	model: ModelView;
 	basePath: string;
 	slug: string;
 }
@@ -89,7 +90,7 @@ const hasCatalogUsage = !!firstExample?.code_snippets?.length;
 // Legacy code-example overrides (only used when there is no catalog usage).
 let CodeExamples: any = null;
 if (!hasCatalogUsage) {
-	switch (model.task.name) {
+	switch (model.task) {
 		case "Text Generation":
 			CodeExamples = TextGenerationCode;
 			break;
@@ -172,7 +173,7 @@ const hasCodeExamples = hasCatalogUsage || !!CodeExamples;
 const hasRemainingExamples = remainingExamples.length > 0;
 
 const description = model.description;
-const isBeta = hasProperty(model.properties, "beta");
+const isBeta = model.beta;
 
 // Map the banner `severity` onto the four Aside types; unknown severities fall
 // back to neutral "note".
@@ -196,14 +197,13 @@ function bannerAsideType(
 // Playground: Text Generation + Cloudflare-hosted, with a defensive gpt-oss
 // exclusion (gpt-oss is not in our slice — kept as a documented dead branch).
 let hasPlayground =
-	model.task.name === "Text Generation" && model.hosting === "hosted";
+	model.task === "Text Generation" && model.hosting === "hosted";
 if (model.name.includes("@cf/openai/gpt-oss")) {
 	hasPlayground = false;
 }
 
-const authorId = getModelAuthor(model.name);
-const author = authorData[authorId];
-const authorName = author?.name ?? authorId;
+const author = authorData[model.author];
+const authorName = model.authorName;
 
 const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
 
@@ -238,7 +238,7 @@ const hasSchemaFiles =
 
 // All schema files live under /ai/models/{r2Slug}/ (@ stripped).
 // Worker proxies /ai/models/* → R2 v1/workers-ai-model-catalog/models/*.
-const r2Slug = model.modelId.replace(/^@/, "");
+const r2Slug = model.name.replace(/^@/, "");
 const schemaBasePath = `/ai/models/${r2Slug}`;
 
 // Fetch parameters.json at build time from middlecache.
@@ -406,7 +406,7 @@ const headings: MarkdownHeading[] = [
 						aria-hidden="true"
 						class="bg-accent text-muted-foreground flex h-14 w-14 shrink-0 items-center justify-center rounded-md text-2xl font-black uppercase"
 					>
-						{authorId.charAt(0)}
+						{model.author.charAt(0)}
 					</span>
 				)
 			}
@@ -421,7 +421,7 @@ const headings: MarkdownHeading[] = [
 					{isBeta && <Badge text="Beta" variant="caution" size="medium" />}
 				</div>
 				<p class="text-muted-foreground mt-1 mb-0 text-sm">
-					{model.task.name} • {authorName}
+					{model.task} • {authorName}
 				</p>
 			</div>
 		</div>
@@ -436,10 +436,6 @@ const headings: MarkdownHeading[] = [
 	<div class="not-prose mb-4"><ModelBadges model={model} /></div>
 
 	<p>{description}</p>
-
-	<div class="text-muted-foreground mb-4 text-sm">
-		<ModelInfo model={model} />
-	</div>
 
 	{
 		banner && (

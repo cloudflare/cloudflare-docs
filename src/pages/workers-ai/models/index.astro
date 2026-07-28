@@ -3,8 +3,8 @@ import { getSidebar } from "@cloudflare/nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
 import { Aside } from "~/components";
 import { docsSidebarTransform, getCfBreadcrumbs } from "~/util/sidebar";
-import ModelCatalog from "~/components/ModelCatalog.astro";
-import { getLegacyModels, toModelCardData } from "~/util/model-resolver";
+import ModelCatalog from "~/components/models/ModelCatalog.astro";
+import { getLegacyModels, toModelCardData } from "~/util/models";
 
 export const prerender = true;
 

@@ -1,0 +1,312 @@
+---
+/**
+ * ModelCatalog — filterable AI model catalog, rendered inside the docs layout.
+ *
+ * The toolbar (search + Task Types / Capabilities / Providers? / Authors
+ * multi-selects + sort) and the "We found N models" count/clear live in small
+ * React islands (FilterDropdownWrapper / SortSelectWrapper) built on base-ui,
+ * styled with Nimbus design tokens. The islands fire CustomEvents; a vanilla
+ * JS `<script>` owns filter/sort/URL state and re-flows the grid below.
+ *
+ * The card grid itself stays server-rendered here (better for SEO than a
+ * fully-client catalog, and preserves the Directory corner-mark grid). The
+ * host page resolves the model slice (`getLegacyModels` / `getResolvedModels`
+ * → `toModelCardData`) and passes it in; `basePath` selects the per-model URL
+ * prefix + card href slug form. The Providers facet is computed internally and
+ * appears only when the slice spans more than one `hosting` value.
+ */
+import ModelCard from "./ModelCard.astro";
+import { FilterDropdownWrapper } from "./FilterDropdownWrapper";
+import { SortSelectWrapper } from "./SortSelectWrapper";
+import { getFacets, type ModelCardData } from "~/util/models";
+import { resolveCols, LG_GRID_CLASS } from "~/components/directory/grid";
+
+interface Props {
+	models: ModelCardData[];
+	basePath?: string;
+}
+
+const { models, basePath = "/ai/models" } = Astro.props;
+const facets = getFacets(models);
+const cols = resolveCols(models.length);
+
+// Embed facet match maps so the vanilla script can convert selected option
+// values (e.g. author ids) to the strings stamped on card data-facet-* attrs.
+const facetMatchMaps = Object.fromEntries(
+	facets.map((f) => [
+		f.key,
+		Object.fromEntries(f.options.map((o) => [o.value, o.match])),
+	]),
+);
+---
+
+<div data-models class="not-prose">
+	{/* Toolbar */}
+	<div
+		class="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center"
+	>
+		{/* Search */}
+		<div class="relative flex-1 md:min-w-[300px]">
+			<svg
+				class="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+			</svg>
+			<input
+				id="model-search"
+				type="text"
+				class="border-border bg-card text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:outline-ring h-10 w-full rounded-lg border pr-3 pl-9 text-sm focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2"
+				placeholder="Search models"
+				aria-label="Search models"
+			/>
+		</div>
+
+		{/* Filter dropdowns (React islands) + sort */}
+		<div class="flex flex-wrap items-center gap-2">
+			{
+				facets.map((facet) => (
+					<FilterDropdownWrapper
+						label={facet.label}
+						filterKey={facet.key}
+						items={facet.options.map((o) => ({
+							value: o.value,
+							label: o.label,
+						}))}
+						client:load
+					/>
+				))
+			}
+			<SortSelectWrapper client:load />
+		</div>
+	</div>
+
+	{/* Count + clear */}
+	<div class="text-muted-foreground mb-4 flex items-center gap-3 text-sm">
+		<span aria-live="polite">
+			We found{" "}
+			<span id="model-count" class="text-foreground font-semibold">
+				{models.length}
+			</span>{" "}
+			<span id="model-count-label">
+				{models.length === 1 ? "model" : "models"}
+			</span>
+		</span>
+		<button
+			id="clear-filters"
+			type="button"
+			class="text-primary hidden cursor-pointer underline-offset-2 hover:underline"
+		>
+			Clear filters
+		</button>
+	</div>
+
+	{/* Empty state — toggled by the script. */}
+	<div
+		data-models-empty
+		hidden
+		class="border-border rounded-lg border py-10 text-center"
+	>
+		<p class="text-foreground text-lg font-semibold">No models found</p>
+		<p class="text-muted-foreground mt-1">
+			Try a different search term, or broaden your search by removing filters.
+		</p>
+	</div>
+
+	{/* Grid (server-rendered; script reflows it). */}
+	<div class="border-border relative w-full border-t border-l">
+		<div data-models-grid class={LG_GRID_CLASS[cols]}>
+			{
+				models.map((model, i) => (
+					<ModelCard model={model} index={i} cols={cols} basePath={basePath} />
+				))
+			}
+		</div>
+	</div>
+</div>
+
+<div id="model-facet-data" data-facets={JSON.stringify(facetMatchMaps)}></div>
+
+<script>
+	import {
+		LG_GRID_CLASS,
+		resolveCols,
+		cornersFor,
+		cellClass,
+		cornerSpansHTML,
+	} from "~/components/directory/grid";
+
+	type SortOrder = "newest" | "oldest";
+
+	// Facet match maps + keys injected from build-time facet data.
+	const facetMatchMaps = JSON.parse(
+		document.getElementById("model-facet-data")!.dataset.facets!,
+	) as Record<string, Record<string, string>>;
+	const facetKeys = Object.keys(facetMatchMaps);
+
+	const datasetKey = (key: string): string =>
+		`facet${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+
+	const root = document.querySelector<HTMLElement>("[data-models]")!;
+	const grid = root.querySelector<HTMLElement>("[data-models-grid]")!;
+	const empty = root.querySelector<HTMLElement>("[data-models-empty]")!;
+	const searchInput = document.getElementById(
+		"model-search",
+	) as HTMLInputElement;
+	const countEl = document.getElementById("model-count")!;
+	const countLabelEl = document.getElementById("model-count-label")!;
+	const clearBtn = document.getElementById("clear-filters")!;
+
+	const state = {
+		search: "",
+		selected: {} as Record<string, string[]>,
+		sort: "newest" as SortOrder,
+	};
+
+	function relayout(): number {
+		const cells = Array.from(
+			grid.querySelectorAll<HTMLElement>("[data-models-cell]"),
+		);
+		const query = state.search.trim().toLowerCase();
+
+		// Convert selected values to match strings using the match maps.
+		const selMatch: Record<string, string[]> = {};
+		for (const key of facetKeys) {
+			selMatch[key] = (state.selected[key] ?? []).map(
+				(v) => facetMatchMaps[key]?.[v] ?? v,
+			);
+		}
+
+		const matches = cells.filter((cell) => {
+			const nameOk = !query || (cell.dataset.name ?? "").includes(query);
+			if (!nameOk) return false;
+			return facetKeys.every((key) => {
+				const chosen = selMatch[key];
+				if (chosen.length === 0) return true;
+				const vals = (cell.dataset[datasetKey(key)] ?? "")
+					.split("|")
+					.filter(Boolean);
+				return chosen.some((c) => vals.includes(c));
+			});
+		});
+
+		// Pinned-first sort; rest by date.
+		const dir = state.sort === "oldest" ? 1 : -1;
+		matches.sort((a, b) => {
+			const pa = Number(a.dataset.pinnedIndex ?? -1);
+			const pb = Number(b.dataset.pinnedIndex ?? -1);
+			const aPinned = pa >= 0;
+			const bPinned = pb >= 0;
+			if (aPinned && !bPinned) return -1;
+			if (!aPinned && bPinned) return 1;
+			if (aPinned && bPinned) return pa - pb;
+			const da = Number(a.dataset.date ?? 0);
+			const db = Number(b.dataset.date ?? 0);
+			return da === db ? 0 : (da < db ? -1 : 1) * dir;
+		});
+
+		const lgCols = resolveCols(matches.length);
+		grid.className = LG_GRID_CLASS[lgCols] ?? LG_GRID_CLASS[1];
+		const cols =
+			typeof window !== "undefined" &&
+			window.matchMedia("(min-width: 1024px)").matches
+				? lgCols
+				: 1;
+
+		for (const cell of cells) cell.style.display = "none";
+		matches.forEach((cell, i) => {
+			cell.style.display = "";
+			cell.className = cellClass;
+			grid.appendChild(cell);
+			const marks = cell.querySelector<HTMLElement>("[data-corner-marks]");
+			if (marks) marks.innerHTML = cornerSpansHTML(cornersFor(i, cols));
+		});
+
+		if (empty) empty.hidden = matches.length > 0;
+
+		// Update count + label.
+		countEl.textContent = String(matches.length);
+		countLabelEl.textContent = matches.length === 1 ? "model" : "models";
+
+		// Clear button: show when any dropdown filter is active.
+		const hasActive = facetKeys.some(
+			(k) => (state.selected[k] ?? []).length > 0,
+		);
+		clearBtn.classList.toggle("hidden", !hasActive);
+
+		return matches.length;
+	}
+
+	function syncUrl() {
+		const params = new URLSearchParams();
+		if (state.search.trim()) params.set("search", state.search);
+		for (const key of facetKeys)
+			for (const v of state.selected[key] ?? []) params.append(key, v);
+		if (state.sort !== "newest") params.set("sort", state.sort);
+
+		const newUrl =
+			params.toString() === ""
+				? window.location.pathname
+				: `${window.location.pathname}?${params.toString()}`;
+
+		if (newUrl !== window.location.pathname + window.location.search) {
+			history.pushState(null, "", newUrl);
+		}
+	}
+
+	// Hydrate from URL once.
+	const initParams = new URLSearchParams(window.location.search);
+	const initSearch = initParams.get("search") ?? "";
+	if (initSearch) {
+		searchInput.value = initSearch;
+		state.search = initSearch;
+	}
+	const initSort = initParams.get("sort");
+	if (initSort === "oldest" || initSort === "newest") {
+		state.sort = initSort;
+	}
+	// Dropdowns self-initialise from URL via their useEffect and fire events.
+
+	// Event listeners.
+	searchInput.addEventListener("input", () => {
+		state.search = searchInput.value;
+		relayout();
+		syncUrl();
+	});
+
+	document.addEventListener("model-catalog-filter", (e: Event) => {
+		const { key, value } = (e as CustomEvent<{ key: string; value: string[] }>)
+			.detail;
+		state.selected[key] = value;
+		relayout();
+		syncUrl();
+	});
+
+	document.addEventListener("model-catalog-sort", (e: Event) => {
+		const { value } = (e as CustomEvent<{ value: SortOrder }>).detail;
+		state.sort = value;
+		relayout();
+		syncUrl();
+	});
+
+	clearBtn.addEventListener("click", () => {
+		state.selected = {};
+		document.dispatchEvent(new CustomEvent("model-catalog-clear"));
+		relayout();
+		syncUrl();
+	});
+
+	// Reflow on breakpoint changes (corner marks depend on column count).
+	window
+		.matchMedia("(min-width: 1024px)")
+		.addEventListener("change", () => relayout());
+
+	// Initial layout pass (handles URL-initialised search and sort).
+	relayout();
+</script>

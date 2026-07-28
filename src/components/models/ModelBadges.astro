@@ -1,48 +1,70 @@
 ---
-import type { WorkersAIModelsSchema } from "~/schemas";
-import type { ModelCardData, ResolvedModel } from "~/util/model-types";
-import { CAPABILITY_PROPERTIES } from "~/util/model-properties";
+/**
+ * ModelBadges — provider + capability + deprecation badges for a model:
+ *   - provider badge (Cloudflare-hosted / Third-party) — `default`
+ *   - capability badges — `default` (model) / `caution` (platform)
+ *   - deprecation — `danger` (Deprecated / Planned deprecation)
+ */
+import { Badge } from "~/components/ui/badge";
+import { CAPABILITY_PROPERTIES, type ModelCardData } from "~/util/models";
 
 interface Props {
-	model: WorkersAIModelsSchema | ResolvedModel | ModelCardData;
+	model: ModelCardData;
 }
-
-const CATEGORY_BADGE: Record<string, string> = {
-	model: "default", // gray
-	platform: "caution", // orange
-};
 
 const { model } = Astro.props;
 
-const badges = model.properties.flatMap(({ property_id, value }) => {
-	// Boolean capability badges (data-driven)
+type BadgeDef = {
+	variant: "default" | "caution" | "danger";
+	text: string;
+	/** Supplementary tooltip — only the ZDR badge carries one (zdr_comment). */
+	title?: string;
+};
+
+// Provider badge — always first.
+const providerBadge: BadgeDef = {
+	variant: "default",
+	text: model.hosting === "proxied" ? "Third-party" : "Cloudflare-hosted",
+};
+
+// Property badges — iterate the ordered property list so capability +
+// deprecation badges appear in data-array order (deprecation interleaved where
+// it appears, not forced first).
+const propertyBadges: BadgeDef[] = [];
+for (const { property_id, value } of model.propertiesList) {
 	if (property_id in CAPABILITY_PROPERTIES && value === "true") {
 		const def = CAPABILITY_PROPERTIES[property_id];
-		return [
-			{ variant: CATEGORY_BADGE[def.category] ?? "default", text: def.label },
-		];
-	}
-
-	// Special case: deprecation badge (not a boolean capability)
-	if (property_id === "planned_deprecation_date") {
-		const timestamp = Math.floor(new Date(value as string).getTime());
-		if (Date.now() > timestamp) {
-			return [{ variant: "danger", text: "Deprecated" }];
+		const badge: BadgeDef = {
+			variant: def.category === "platform" ? "caution" : "default",
+			text: def.label,
+		};
+		// ZDR badge carries the catalog `zdr_comment` as a tooltip.
+		if (property_id === "zdr" && model.zdrComment) {
+			badge.title = model.zdrComment;
 		}
-		return [{ variant: "danger", text: "Planned deprecation" }];
+		propertyBadges.push(badge);
+	} else if (property_id === "planned_deprecation_date") {
+		const ts = Math.floor(new Date(value as string).getTime());
+		propertyBadges.push({
+			variant: "danger",
+			text: Date.now() > ts ? "Deprecated" : "Planned deprecation",
+		});
 	}
+}
 
-	return [];
-});
+const badges: BadgeDef[] = [providerBadge, ...propertyBadges];
 ---
 
-<ul
-	class="m-0 flex list-none flex-wrap items-center gap-1.5 p-0 text-xs [&>li]:m-0"
->
+<ul class="m-0 flex list-none flex-wrap items-center gap-1.5 p-0">
 	{
 		badges.map((badge) => (
-			<li>
-				<span class={`sl-badge ${badge.variant}`}>{badge.text}</span>
+			<li class="m-0">
+				<Badge
+					text={badge.text}
+					variant={badge.variant}
+					size="small"
+					title={badge.title}
+				/>
 			</li>
 		))
 	}
