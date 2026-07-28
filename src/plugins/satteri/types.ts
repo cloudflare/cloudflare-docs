@@ -18,7 +18,7 @@ export function isElement(
 }
 
 export function classNames(node: Element): string[] {
-	const cn = node.properties?.className;
+	const cn: unknown = node.properties?.className;
 	if (Array.isArray(cn)) return cn.map(String);
 	if (typeof cn === "string") return cn.split(/\s+/).filter(Boolean);
 	return [];
