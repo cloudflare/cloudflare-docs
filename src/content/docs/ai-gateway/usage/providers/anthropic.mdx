@@ -6,7 +6,7 @@ products:
   - ai-gateway
 ---
 
-import { Render, Details, Tabs, TabItem } from "~/components";
+import { Render, Details, Tabs, TabItem, Aside } from "~/components";
 
 [Anthropic](https://www.anthropic.com/) helps build reliable, interpretable, and steerable AI systems.
 
@@ -124,6 +124,7 @@ import Anthropic from "@anthropic-ai/sdk";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
 
 const anthropic = new Anthropic({
+	apiKey: "placeholder", // Ignored by AI Gateway when using BYOK or Unified Billing, but the SDK requires a value.
 	baseURL,
 	defaultHeaders: {
 		Authorization: `Bearer {cf_api_token}`,
@@ -136,6 +137,10 @@ const message = await anthropic.messages.create({
 	max_tokens: 1024,
 });
 ```
+
+<Aside type="note">
+When using BYOK or Unified Billing, do not set `x-api-key` in `defaultHeaders`. AI Gateway supplies the Anthropic key for you, and adding your own `x-api-key` header will cause the request to fail. The `apiKey` value above is a placeholder to satisfy the Anthropic SDK, which requires either the `apiKey` option or the `ANTHROPIC_API_KEY` environment variable to be set.
+</Aside>
 </Details>
 
 <Render
