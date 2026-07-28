@@ -81,13 +81,7 @@ const VALUE_COLUMNS: (keyof AgentData)[] = [
 // Each distinct value maps to its own Badge tone (no danger/red), so the
 // same value always shares a color and no two values share one.
 type BadgeVariant =
-	| "default"
-	| "info"
-	| "success"
-	| "warning"
-	| "cyan"
-	| "orange"
-	| "steel";
+	"default" | "info" | "success" | "warning" | "cyan" | "orange" | "steel";
 const VALUE_VARIANT: Record<string, BadgeVariant> = {
 	subscription: "info",
 	hybrid: "warning",
