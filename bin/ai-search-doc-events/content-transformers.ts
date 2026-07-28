@@ -13,9 +13,7 @@ import { thirdPartyLicenseProcessor } from "./content-processors/third-party-lic
 import { videoProcessor } from "./content-processors/video";
 
 type Matcher =
-	| string
-	| RegExp
-	| ((context: ContentTransformerContext) => boolean);
+	string | RegExp | ((context: ContentTransformerContext) => boolean);
 
 type ProcessorRoute = {
 	processor: ContentTransformer;
