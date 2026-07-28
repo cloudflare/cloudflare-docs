@@ -1,0 +1,53 @@
+---
+title: MySQL support in Hyperdrive is now generally available
+description: Connect to MySQL and MySQL-compatible databases from Workers using Hyperdrive.
+products:
+  - hyperdrive
+date: 2026-08-03
+---
+
+import { TypeScriptExample } from "~/components";
+
+Support for MySQL in Hyperdrive is now generally available. You can connect to any MySQL database from your Workers using Hyperdrive.
+
+Hyperdrive makes your regional, MySQL databases fast when connecting from Cloudflare Workers. It eliminates unnecessary network roundtrips during connection setup, pools database connections globally, and can cache query results to provide the fastest possible response times.
+
+Best of all, you can connect using your existing drivers, ORMs, and query builders with Hyperdrive's secure credentials, no code changes required. MySQL support is available on the same [Hyperdrive plans](/hyperdrive/platform/pricing/) as Postgres.
+
+<TypeScriptExample>
+
+```ts
+import { createConnection } from "mysql2/promise";
+
+export interface Env {
+	HYPERDRIVE: Hyperdrive;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const connection = await createConnection({
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			database: env.HYPERDRIVE.database,
+			port: env.HYPERDRIVE.port,
+			disableEval: true, // Required for Workers compatibility
+		});
+
+		const [results, fields] = await connection.query("SHOW tables;");
+
+		ctx.waitUntil(connection.end());
+
+		return new Response(JSON.stringify({ results, fields }), {
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*",
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Learn more about [how Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/) and [get started building Workers that connect to MySQL with Hyperdrive](/hyperdrive/get-started/).
