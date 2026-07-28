@@ -1,13 +1,13 @@
 ---
-title: Cloudflare MCP servers support MCP 2026-07-28
-description: Cloudflare's product-specific MCP servers now use stateless MCP 2026-07-28 handlers with compatibility for 2025 Streamable HTTP clients.
+title: Cloudflare MCP servers support the new MCP 2026-07-28 Specification
+description: Cloudflare's product-specific MCP servers now support the new MCP 2026-07-28 Specification with compatibility for 2025 Streamable HTTP clients.
 products:
   - agents
   - workers
 date: 2026-07-28
 ---
 
-Cloudflare's [product-specific MCP servers](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#product-specific-mcp-servers) now support MCP 2026-07-28. Each request runs on a fresh stateless server without an MCP protocol session or protocol-specific Durable Object.
+Cloudflare's [product-specific MCP servers](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#product-specific-mcp-servers) now support the new MCP 2026-07-28 Specification. Each request runs on a fresh stateless server without an MCP protocol session or protocol-specific Durable Object.
 
 The `/mcp` endpoint also accepts stateless requests from 2025 Streamable HTTP clients. Most clients can reconnect without configuration changes.
 
