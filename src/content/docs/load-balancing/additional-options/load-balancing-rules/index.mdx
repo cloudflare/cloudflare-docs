@@ -34,3 +34,5 @@ By default, non-Enterprise customers have **one** Load Balancing rule **per load
 At the moment, you cannot use Load Balancing rules with [Cloudflare Spectrum](/spectrum/about/load-balancer/).
 
 Custom load balancing rules are incompatible with [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/). As a result, any custom rule applied to Geo-steered load balancers will not function as expected.
+
+Custom rules do work alongside [pool sets](/load-balancing/understand-basics/traffic-steering/pool-sets/). Cloudflare evaluates pool sets first, then applies custom rule overrides on top of the result. A pool set that returns a fixed response is the complete response, so custom rules are not evaluated for that request.

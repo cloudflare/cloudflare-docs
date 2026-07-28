@@ -21,11 +21,17 @@ This option is extremely useful when you want site visitors to access the endpoi
 
 :::note
 Custom load balancing rules are incompatible with Geo steering. As a result, any custom rule applied to Geo-steered Load Balancers will not function as expected.
+
+[Pool sets](/load-balancing/understand-basics/traffic-steering/pool-sets/) do work alongside custom rules. Cloudflare evaluates pool sets first, then applies custom rule overrides on top of the result.
 :::
 
 ## Pool assignment
 
 You can assign multiple pools to the same area and the load balancer will use them in failover order. Any options not explicitly defined — whether in data centers, countries, or regions — will fall back to using default pools and failover.
+
+:::note
+Geo steering uses failover order within each area and a single global fallback pool. To apply a steering policy such as weighted random or dynamic latency within one area, or to set a fallback pool per area, refer to [Pool sets](/load-balancing/understand-basics/traffic-steering/pool-sets/).
+:::
 
 ### Region steering
 
