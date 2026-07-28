@@ -1,8 +1,9 @@
 ---
-// Accordion row used inside <PlatformAccess>. Renders the header as plain text
-// and keeps its body in the prose context so inline <code>, links, and lists
-// inside the slot stay themed by the markdown pipeline.
-import { Icon } from "astro-icon/components";
+// Accordion row used inside <PlatformAccess>. Delegates to the shared
+// Accordion so it stays aligned with FAQItem and TroubleshootingItem. The
+// body slot stays in the prose context so inline <code>, links, and lists
+// render naturally.
+import Accordion from "./Accordion.astro";
 
 interface Props {
 	header: string;
@@ -12,17 +13,6 @@ interface Props {
 const { header, open } = Astro.props;
 ---
 
-<details class="group/pa border-border border-b last:border-b-0" open={open}>
-	<summary
-		class="text-foreground flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[0.9375rem] font-medium marker:content-[''] [&::-webkit-details-marker]:hidden"
-	>
-		{header}
-		<Icon
-			name="ph:caret-down"
-			class="text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200 group-open/pa:rotate-180"
-		/>
-	</summary>
-	<div class="px-5 pb-5 text-sm leading-relaxed [&>*]:m-0 [&>*+*]:mt-3">
-		<slot />
-	</div>
-</details>
+<Accordion title={header} open={open}>
+	<slot />
+</Accordion>

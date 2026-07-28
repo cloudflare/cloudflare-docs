@@ -6,7 +6,7 @@
 //     The first time Claude calls a Cloudflare tool, you'll be redirected
 //     to authorize via OAuth and choose what permissions to grant.
 //   </FAQItem>
-import { Icon } from "astro-icon/components";
+import Accordion from "./Accordion.astro";
 
 interface Props {
 	question: string;
@@ -15,19 +15,6 @@ interface Props {
 const { question } = Astro.props;
 ---
 
-<details class="group/faq border-border border-b last:border-b-0">
-	<summary
-		class="text-foreground flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[0.9375rem] font-medium marker:content-[''] [&::-webkit-details-marker]:hidden"
-	>
-		{question}
-		<Icon
-			name="ph:caret-down"
-			class="text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200 group-open/faq:rotate-180"
-		/>
-	</summary>
-	<div
-		class="[&_a]:text-primary [&_p]:text-muted-foreground px-5 pb-4 text-sm leading-relaxed [&_a]:no-underline hover:[&_a]:underline [&>*]:m-0 [&>*+*]:mt-3"
-	>
-		<slot />
-	</div>
-</details>
+<Accordion title={question}>
+	<slot />
+</Accordion>

@@ -1,112 +1,38 @@
 ---
-// Click-to-copy example prompt chips. Each prompt is a button; clicking
-// anywhere on the chip copies the text (without surrounding quotes) to the
-// clipboard and swaps the copy icon for a checkmark for 1.5s.
+// Example prompts rendered as plain-text code blocks. Each block gets the
+// standard docs code chrome for free. Long prompts wrap instead of clipping —
+// the Nimbus Code component ignores Expressive Code's `wrap` prop, so we force
+// `white-space: pre-wrap` on the rendered `<pre>`.
 //
-// All prompts are rendered in the HTML but only 5 randomly-selected ones are
-// shown on each page load (client-side shuffle).
-//
-// Mirrors the inline-script copy pattern used in PackageManagers.astro.
+// `count` prompts are randomly selected at build time (SSG) — each build picks
+// a different set, which is good enough for "feels fresh" without client JS.
+import { Code } from "~/components";
+
 interface Props {
 	prompts: string[];
 	count?: number;
 }
 
 const { prompts, count = 5 } = Astro.props;
+
+const shuffled = [...prompts].sort(() => Math.random() - 0.5);
+const selected = shuffled.slice(0, count);
 ---
 
-<div class="not-content flex flex-wrap gap-2" data-cfdocs-prompts-count={count}>
-	{
-		prompts.map((prompt) => (
-			<button
-				type="button"
-				class="group/prompt border-border bg-muted/40 text-foreground hover:border-primary focus-visible:outline-primary inline-flex max-w-full items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
-				data-cfdocs-copy-prompt
-				data-prompt={prompt}
-				aria-label={`Copy prompt: ${prompt}`}
-			>
-				<span class="text-muted-foreground min-w-0 flex-1">
-					&ldquo;{prompt}&rdquo;
-				</span>
-				<span
-					class="text-muted-foreground group-hover/prompt:text-foreground group-data-[copied]/prompt:text-primary flex size-4 shrink-0 items-center justify-center transition-colors"
-					aria-hidden="true"
-				>
-					<svg
-						class="group-data-[copied]/prompt:hidden"
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="1.75"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						viewBox="0 0 24 24"
-					>
-						<rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-						<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-					</svg>
-					<svg
-						class="hidden group-data-[copied]/prompt:block"
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						viewBox="0 0 24 24"
-					>
-						<polyline points="20 7 10 17 5 12" />
-					</svg>
-				</span>
-			</button>
-		))
-	}
+<div class="not-content agent-example-prompts flex flex-col gap-2">
+	{selected.map((prompt) => <Code code={prompt} lang="txt" />)}
 </div>
 
-<script>
-	// For each prompts container, shuffle all buttons and hide all but `count`.
-	document
-		.querySelectorAll<HTMLElement>("[data-cfdocs-prompts-count]")
-		.forEach((container) => {
-			const count = parseInt(container.dataset.cfdocsPromptsCount ?? "5", 10);
-			const btns = Array.from(
-				container.querySelectorAll<HTMLButtonElement>(
-					"[data-cfdocs-copy-prompt]",
-				),
-			);
-
-			// Fisher-Yates shuffle
-			for (let i = btns.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[btns[i], btns[j]] = [btns[j], btns[i]];
-			}
-
-			// Reorder DOM and hide extras
-			btns.forEach((btn, i) => {
-				container.appendChild(btn);
-				if (i >= count) btn.style.display = "none";
-			});
-		});
-
-	// Copy-to-clipboard
-	document
-		.querySelectorAll<HTMLButtonElement>("[data-cfdocs-copy-prompt]")
-		.forEach((btn) => {
-			btn.addEventListener("click", async () => {
-				const text = btn.dataset.prompt ?? "";
-				try {
-					await navigator.clipboard.writeText(text);
-					btn.dataset.copied = "true";
-					setTimeout(() => {
-						delete btn.dataset.copied;
-					}, 1500);
-				} catch {
-					/* clipboard unavailable */
-				}
-			});
-		});
-</script>
+<style>
+	/* The Nimbus Code component ignores Expressive Code's `wrap` prop and sets
+	   `width: max-content` on the inner <code>, so long lines scroll instead of
+	   wrapping. Override both so prompts wrap within the block. */
+	.agent-example-prompts :global(pre.astro-code) {
+		white-space: pre-wrap;
+		overflow-wrap: break-word;
+	}
+	.agent-example-prompts :global(pre.astro-code code) {
+		width: 100%;
+		min-width: 0;
+	}
+</style>
