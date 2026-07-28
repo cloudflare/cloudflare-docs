@@ -15,12 +15,13 @@ Below is an example of using [MotherDuck](https://motherduck.com/) to connect to
 - [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/r2/data-catalog/manage-catalogs/#enable-r2-data-catalog-on-a-bucket).
 - [Create an R2 API token](/r2/api/tokens/) with both [R2 and data catalog permissions](/r2/api/tokens/#permissions).
 - Sign up for a [MotherDuck account](https://app.motherduck.com/).
+- Connect to MotherDuck using the [MotherDuck SQL editor](https://app.motherduck.com/) or a [DuckDB client](https://duckdb.org/docs/installation/).
+  - Note: [DuckDB 1.5.2](https://github.com/duckdb/duckdb/releases/tag/v1.5.2) or greater is required to attach and write to [Iceberg REST catalogs](https://duckdb.org/docs/stable/core_extensions/iceberg/iceberg_rest_catalogs).
 - Ensure your R2 Data Catalog has at least one namespace. MotherDuck cannot create a namespace in R2 Data Catalog, so seed a new catalog from another Iceberg engine, such as [PyIceberg](/r2/data-catalog/config-examples/pyiceberg/), before you attach it.
-- Note: Attaching R2 Data Catalog as a persisted MotherDuck database requires DuckDB 1.5.2 or later.
 
 ## Example usage
 
-Connect to MotherDuck through the [MotherDuck SQL editor](https://app.motherduck.com/) or a DuckDB client, then run the following commands:
+In the [MotherDuck SQL editor](https://app.motherduck.com/), or a DuckDB client connected to MotherDuck, run the following commands:
 
 ```sql
 -- In a DuckDB client, load the iceberg extension and connect to MotherDuck.
