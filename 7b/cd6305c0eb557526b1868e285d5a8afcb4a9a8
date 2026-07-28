@@ -1,0 +1,19 @@
+src/content/docs/sandbox/tutorials/automated-testing-pipeline.mdx
+  s_dc1e5a14f86ea7::t_4040d6cd3f3c07 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7bcd6305c0eb557526b1868e285d5a8afcb4a9a8",
+  "prompts": {},
+  "sessions": {
+    "s_dc1e5a14f86ea7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8471-d8a6-722b-8dee-ae9486dd3916",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "scuffi <aferguson@cloudflare.com>"
+    }
+  }
+}
