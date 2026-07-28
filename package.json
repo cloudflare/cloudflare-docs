@@ -90,7 +90,7 @@
 		"codeowners-utils": "1.0.2",
 		"date-fns": "4.4.0",
 		"dedent": "1.7.2",
-		"dot-prop": "9.0.0",
+		"dot-prop": "10.2.0",
 		"eslint": "9.35.0",
 		"eslint-formatter-checkstyle": "9.0.1",
 		"eslint-plugin-astro": "1.7.0",
