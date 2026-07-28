@@ -28,6 +28,8 @@ import CopyableCode from "~/components/models/CopyableCode.astro";
 import ExampleCard from "~/components/models/ExampleCard.astro";
 import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
 import SchemaVariantTabs from "~/components/models/SchemaVariantTabs.tsx";
+import SchemaFileLinks from "~/components/models/SchemaFileLinks.astro";
+import AnchorHeading from "~/components/cf/AnchorHeading.astro";
 import { authorData } from "~/components/models/data";
 import {
 	detectApiModes,
@@ -207,11 +209,11 @@ const pageTitle = `${displayName} (${authorName})`;
 const headTitle = `${pageTitle} · Cloudflare AI docs`;
 
 const headings: MarkdownHeading[] = [
-	hasPlayground && { depth: 2, slug: "Playground", text: "Playground" },
-	hasCodeExamples && { depth: 2, slug: "Usage", text: "Usage" },
-	hasRemainingExamples && { depth: 2, slug: "Examples", text: "Examples" },
-	hasSchema && { depth: 2, slug: "Parameters", text: "Parameters" },
-	hasSchema && { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" },
+	hasPlayground && { depth: 2, slug: "playground", text: "Playground" },
+	hasCodeExamples && { depth: 2, slug: "usage", text: "Usage" },
+	hasRemainingExamples && { depth: 2, slug: "examples", text: "Examples" },
+	hasSchema && { depth: 2, slug: "parameters", text: "Parameters" },
+	hasSchema && { depth: 2, slug: "api-schemas", text: "API Schemas (Raw)" },
 ].filter(Boolean) as MarkdownHeading[];
 ---
 
@@ -356,7 +358,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasPlayground && (
 			<Fragment>
-				<h2 id="Playground">Playground</h2>
+				<AnchorHeading depth={2} title="Playground" slug="playground" />
 				<p>
 					Try out this model with Workers AI LLM Playground. It does not require
 					any setup or authentication and is an instant way to preview and test
@@ -374,7 +376,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasCatalogUsage && firstExample && (
 			<Fragment>
-				<h2 id="Usage">Usage</h2>
+				<AnchorHeading depth={2} title="Usage" slug="usage" />
 				<ExampleCard example={firstExample} layout="stack" />
 			</Fragment>
 		)
@@ -383,7 +385,7 @@ const headings: MarkdownHeading[] = [
 	{
 		!hasCatalogUsage && CodeExamples && (
 			<Fragment>
-				<h2 id="Usage">Usage</h2>
+				<AnchorHeading depth={2} title="Usage" slug="usage" />
 				<CodeExamples name={model.name} lora={false} />
 			</Fragment>
 		)
@@ -392,7 +394,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasRemainingExamples && (
 			<Fragment>
-				<h2 id="Examples">Examples</h2>
+				<AnchorHeading depth={2} title="Examples" slug="examples" />
 				{remainingExamples.map((example) => (
 					<details>
 						<summary>
@@ -411,7 +413,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasSchema && apiModes && apiModes.length > 1 ? (
 			<Fragment>
-				<h2 id="Parameters">Parameters</h2>
+				<AnchorHeading depth={2} title="Parameters" slug="parameters" />
 
 				{allInputsIdentical ? (
 					<Fragment>
@@ -469,7 +471,7 @@ const headings: MarkdownHeading[] = [
 		) : (
 			hasSchema && (
 				<Fragment>
-					<h2 id="Parameters">Parameters</h2>
+					<AnchorHeading depth={2} title="Parameters" slug="parameters" />
 					{variantTitles.length > 0 ? (
 						<div data-variant-section data-active-variant={activeVariant}>
 							<SchemaVariantTabs titles={variantTitles} client:visible />
@@ -560,7 +562,7 @@ const headings: MarkdownHeading[] = [
 	{
 		hasSchema && (
 			<Fragment>
-				<h2 id="API-Schemas">API Schemas (Raw)</h2>
+				<AnchorHeading depth={2} title="API Schemas (Raw)" slug="api-schemas" />
 				<div class="not-prose grid grid-cols-1 gap-2 sm:grid-cols-2">
 					{rawLinks.map((link) => (
 						<div class="border-border flex items-center justify-between rounded-lg border px-4 py-1.5">
@@ -570,53 +572,10 @@ const headings: MarkdownHeading[] = [
 									<span class="text-muted-foreground ml-2">{link.kind}</span>
 								)}
 							</span>
-							<span class="flex items-center gap-1">
-								<a
-									href={`${schemaBasePath}/${link.file}.json`}
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Open"
-									class="text-muted-foreground hover:bg-accent hover:text-foreground flex h-7 w-7 items-center justify-center rounded no-underline"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-										<polyline points="15 3 21 3 21 9" />
-										<line x1="10" y1="14" x2="21" y2="3" />
-									</svg>
-								</a>
-								<a
-									href={`${schemaBasePath}/${link.file}.json`}
-									download={`${link.file}.json`}
-									title="Download"
-									class="text-muted-foreground hover:bg-accent hover:text-foreground flex h-7 w-7 items-center justify-center rounded no-underline"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-										<polyline points="7 10 12 15 17 10" />
-										<line x1="12" y1="15" x2="12" y2="3" />
-									</svg>
-								</a>
-							</span>
+							<SchemaFileLinks
+								href={`${schemaBasePath}/${link.file}.json`}
+								filename={`${link.file}.json`}
+							/>
 						</div>
 					))}
 				</div>

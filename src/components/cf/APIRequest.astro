@@ -115,8 +115,7 @@ for (const segment of segments) {
 }
 
 const security = operation.security as
-	| OpenAPIV3.SecurityRequirementObject[]
-	| undefined;
+	OpenAPIV3.SecurityRequirementObject[] | undefined;
 
 if (security) {
 	const keys = security.flatMap((requirement) => Object.keys(requirement));
@@ -130,12 +129,10 @@ if (security) {
 }
 
 const requestBody = operation?.requestBody as
-	| OpenAPIV3.RequestBodyObject
-	| undefined;
+	OpenAPIV3.RequestBodyObject | undefined;
 
 const jsonSchema = requestBody?.content?.["application/json"]?.schema as
-	| OpenAPIV3.SchemaObject
-	| undefined;
+	OpenAPIV3.SchemaObject | undefined;
 
 if (jsonSchema?.required) {
 	const checkProperties = (obj?: object) => {
