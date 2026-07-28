@@ -54,6 +54,7 @@ async function main() {
 	const env = {
 		...process.env,
 		DOCS_FLUE_INTERNAL_TOKEN: TOKEN,
+		DOCS_FLUE_AGENT_EVALS: "1",
 	};
 
 	// Start the dev server. The Vite config reads DOCS_FLUE_INTERNAL_TOKEN

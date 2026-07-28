@@ -13,19 +13,25 @@ import { defineConfig } from "vite";
 //
 // The wrapped customizer also forwards DOCS_FLUE_INTERNAL_TOKEN from
 // process.env into the Worker's vars so eval routes work in CI without .env.
+// This only activates when DOCS_FLUE_AGENT_EVALS=1 is set (by run-evals.ts),
+// so normal dev/build/deploy are unaffected.
+const fluePlugin = flue();
 const flueCustomizer = flueWorkerConfig();
 
 export default defineConfig({
 	plugins: [
-		flue(),
+		fluePlugin,
 		cloudflare({
 			config: (config) => {
 				flueCustomizer(config);
-				const token = process.env.DOCS_FLUE_INTERNAL_TOKEN;
-				if (token) {
+				if (
+					process.env.DOCS_FLUE_AGENT_EVALS === "1" &&
+					process.env.DOCS_FLUE_INTERNAL_TOKEN
+				) {
 					(config as Record<string, unknown>).vars = {
 						...((config as Record<string, unknown>).vars ?? {}),
-						DOCS_FLUE_INTERNAL_TOKEN: token,
+						DOCS_FLUE_INTERNAL_TOKEN: process.env.DOCS_FLUE_INTERNAL_TOKEN,
+						DOCS_FLUE_ENABLE_EVAL_ROUTES: "1",
 					};
 				}
 			},
