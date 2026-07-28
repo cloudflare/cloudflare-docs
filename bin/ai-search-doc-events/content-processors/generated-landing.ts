@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import fg from "fast-glob";
 import { parse as parseYaml } from "yaml";
+import { AGENTS } from "../../../src/components/agent-setup/agents";
 import type { ContentTransformer, RawSection } from "../types";
 import { slugifyHeading } from "../shared";
 import { asArray, asRecord, asString, readJsonFile } from "./data";
@@ -123,16 +124,8 @@ async function agentSetupSections(): Promise<RawSection[] | undefined> {
 		if (error.code === "ENOENT") return undefined;
 		throw error;
 	});
-	const agentsSource = await readFile(
-		"src/nimbus/components/agent-setup/agents.ts",
-		"utf8",
-	).catch(() => "");
-	const agentLines = [
-		...agentsSource.matchAll(
-			/name:\s*"([^"]+)"[\s\S]*?vendor:\s*"([^"]+)"[\s\S]*?description:\s*"([^"]+)"/g,
-		),
-	].map(
-		([, name, vendor, description]) => `${name} by ${vendor}: ${description}`,
+	const agentLines = AGENTS.map(
+		({ name, vendor, description }) => `${name} by ${vendor}: ${description}`,
 	);
 	return makeSections([
 		{
