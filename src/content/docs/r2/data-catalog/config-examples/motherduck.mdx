@@ -16,7 +16,7 @@ The following example uses [MotherDuck](https://motherduck.com/) to connect to R
 - [Create an R2 API token](/r2/api/tokens/) with both [R2 and data catalog permissions](/r2/api/tokens/#permissions).
 - Sign up for a [MotherDuck account](https://app.motherduck.com/).
 - Connect to MotherDuck using the [MotherDuck SQL editor](https://app.motherduck.com/) or a [DuckDB client](https://duckdb.org/docs/installation/).
-  - Note: If you use a DuckDB client, [DuckDB 1.5.2](https://github.com/duckdb/duckdb/releases/tag/v1.5.2) or greater is required to attach and write to [Iceberg REST catalogs](https://duckdb.org/docs/stable/core_extensions/iceberg/iceberg_rest_catalogs).
+  - Note: If you use a DuckDB client, [DuckDB 1.5.2](https://github.com/duckdb/duckdb/releases/tag/v1.5.2) or greater is required to attach and write to [Iceberg REST catalogs](https://motherduck.com/docs/integrations/file-formats/apache-iceberg/#persisted-iceberg-catalogs) using MotherDuck.
 - Ensure your R2 Data Catalog has at least one namespace. MotherDuck cannot create a namespace in R2 Data Catalog, so seed a new catalog from another Iceberg engine, such as [PyIceberg](/r2/data-catalog/config-examples/pyiceberg/), before you attach it.
 
 ## Example usage
