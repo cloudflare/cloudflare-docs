@@ -1,19 +1,10 @@
-import { describe, expect, it, vi } from "vitest";
-
-// Mock modules that transitively import cloudflare:workers (sandbox/runtime
-// bindings not needed for testing pure data-transformation functions).
-vi.mock("../connectors/cloudflare-shell", () => ({
-	getShellSandbox: vi.fn(),
-	getDefaultWorkspace: vi.fn(),
-}));
-vi.mock("./github-repo-tools", () => ({ makeCodeReviewTools: vi.fn() }));
-vi.mock("./github", () => ({ getRepoFileContent: vi.fn() }));
+import { describe, expect, it } from "vitest";
 
 import {
 	mergeCodeReviewResults,
 	parseAddedLines,
 	selectCodeReviewFiles,
-} from "./code-review-inproc";
+} from "./code-review-files";
 import type {
 	CodeReviewFinding,
 	CodeReviewResult,
