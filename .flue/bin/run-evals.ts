@@ -57,10 +57,13 @@ async function main() {
 	// Start the dev server
 	const server = spawn(
 		"pnpm",
-		["exec", "vite", "dev", "--port", String(PORT)],
+		["exec", "vite", "dev", "--port", String(PORT), "--host", HOST],
 		{
-			cwd: import.meta.dirname + "/..",
-			env,
+			cwd: FLUE_DIR,
+			env: {
+				...env,
+				NODE_OPTIONS: "--max-old-space-size=8192",
+			},
 			stdio: ["ignore", "pipe", "pipe"],
 		},
 	);
@@ -83,8 +86,9 @@ async function main() {
 		await waitForServer();
 		console.log("Server ready, running evals...");
 
-		const result = await spawn("pnpm", ["run", "evals"], {
-			cwd: import.meta.dirname + "/..",
+		const evalsCmd = process.env.EVALS_CMD ?? "evals";
+		const result = await spawn("pnpm", ["run", evalsCmd], {
+			cwd: FLUE_DIR,
 			env: {
 				...env,
 				FLUE_BASE_URL: `http://${HOST}:${PORT}`,
