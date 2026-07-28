@@ -9,7 +9,9 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"typecheck": "tsc --noEmit",
-		"test": "vitest run"
+		"test": "vitest run",
+		"evals": "vitest run --config vitest.evals.config.ts",
+		"evals:json": "vitest run --config vitest.evals.config.ts --reporter=vitest-evals/reporter --reporter=json --outputFile.json=vitest-results.json"
 	},
 	"dependencies": {
 		"@cloudflare/workers-types": "4.20260526.1",
@@ -22,10 +24,12 @@
 	"devDependencies": {
 		"@cloudflare/vite-plugin": "1.46.0",
 		"@flue/cli": "0.4.0-nightly.202605211826",
+		"@flue/sdk": "0.4.0-nightly.202605211826",
 		"@flue/vite": "0.4.0-nightly.202605211826",
 		"typescript": "5.9.3",
 		"vite": "8.1.2",
 		"vitest": "4.1.10",
+		"vitest-evals": "0.15.0",
 		"wrangler": "4.113.0"
 	}
 }

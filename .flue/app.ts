@@ -1,5 +1,6 @@
 import { env as workerEnv } from "cloudflare:workers";
 import { setProvider } from "@flue/runtime";
+import { createAgentRouter } from "@flue/runtime/routing";
 import {
 	cloudflareBindingProvider,
 	type CloudflareAIBinding,
@@ -16,6 +17,11 @@ import {
 	type WebhookClassification,
 } from "./lib/webhook-classify";
 import { startReviewPipeline, type PipelineEnv } from "./lib/pipeline-entry";
+import CodeReviewFile from "./agents/code-review-file";
+import StyleGuideFile from "./agents/style-guide-file";
+import ConventionsReviewer from "./agents/conventions-reviewer";
+import ReconcileReviewer from "./agents/reconcile-reviewer";
+import SpamFilter from "./agents/spam-filter";
 
 const bindings = workerEnv as unknown as {
 	AI: CloudflareAIBinding;
@@ -133,5 +139,34 @@ app.post("/webhooks/github", async (c) => {
 	await startReviewPipeline(env, classification, rawBody);
 	return c.json({ acted: true }, 202);
 });
+
+// ── Eval routes ─────────────────────────────────────────────────────────────
+// Mount each reviewable agent behind a shared internal-token gate so
+// vitest-evals can drive them over HTTP during CI. The token reuses
+// DOCS_FLUE_INTERNAL_TOKEN (same gate as /dev/review/:number). Routes return
+// 404 when the token is unset so they are invisible in production deploys
+// that have not opted in.
+const EVAL_AGENTS = [
+	CodeReviewFile,
+	StyleGuideFile,
+	ConventionsReviewer,
+	ReconcileReviewer,
+	SpamFilter,
+] as const;
+
+app.use("/eval/agents/*", async (c, next) => {
+	const env = c.env as unknown as WebhookEnv;
+	const secret = env.DOCS_FLUE_INTERNAL_TOKEN;
+	if (!secret) return c.text("Not Found", 404);
+	const provided = c.req.header("x-dev-secret");
+	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+	await next();
+});
+
+for (const agent of EVAL_AGENTS) {
+	const name = agent.agentName;
+	if (!name) continue;
+	app.route(`/eval/agents/${name}`, createAgentRouter(agent));
+}
 
 export default app;

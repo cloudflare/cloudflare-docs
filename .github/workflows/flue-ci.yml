@@ -82,3 +82,61 @@ jobs:
     steps:
       - name: No post-build checks yet
         run: echo "No post-build checks for flue yet."
+
+  evals:
+    name: Agent Evals
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    timeout-minutes: 15
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24.x
+          cache: pnpm
+          cache-dependency-path: .flue/pnpm-lock.yaml
+
+      - name: Install node_modules
+        run: pnpm install --frozen-lockfile
+        working-directory: .flue
+
+      - name: Start Flue dev server
+        run: |
+          pnpm exec vite dev --port 5173 &
+          # Wait for the server to be ready
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:5173/health > /dev/null 2>&1; then
+              echo "Server is ready"
+              break
+            fi
+            sleep 2
+          done
+          curl -sf http://localhost:5173/health > /dev/null || { echo "Server failed to start"; exit 1; }
+        working-directory: .flue
+        env:
+          DOCS_FLUE_INTERNAL_TOKEN: ${{ secrets.DOCS_FLUE_INTERNAL_TOKEN }}
+          DOCS_FLUE_AI_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
+
+      - name: Run evals
+        run: pnpm run evals:json
+        working-directory: .flue
+        env:
+          FLUE_BASE_URL: http://localhost:5173
+          DOCS_FLUE_INTERNAL_TOKEN: ${{ secrets.DOCS_FLUE_INTERNAL_TOKEN }}
+
+      - name: Upload eval results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vitest-evals-results
+          path: .flue/vitest-results.json
+          retention-days: 30

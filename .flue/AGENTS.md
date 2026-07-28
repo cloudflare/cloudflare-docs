@@ -133,3 +133,58 @@ Functions that require bindings (Durable Objects, R2, AI, Workflows, the Flue ru
 Do not add agent review rules for issues that are already reliably caught by CI, including build failures, type checking, linting, link validation, and schema validation. Agent review rules should focus on style, clarity, maintainability, and conventions that CI cannot enforce.
 
 Before adding a rule, verify whether the repository already catches the issue in CI. If it does, do not duplicate it in agent review output. For MDX/code structure checks, prefer AST-aware checks; avoid raw line pattern matching unless the rule explicitly ignores fenced code blocks and JSX component syntax.
+
+## Agent Evals
+
+Agent evals test agent behavior against the live Workers AI model. They live in `.flue/evals/` and use `vitest-evals` with a custom harness that drives agents over HTTP through the Flue Worker's eval routes.
+
+### Architecture
+
+- **Eval routes** (`app.ts`): each reviewable agent is mounted at `/eval/agents/:agentName` behind the `DOCS_FLUE_INTERNAL_TOKEN` gate (same token as `/dev/review/:number`). Routes return 404 when the token is unset, so they are invisible in production deploys that have not configured it.
+- **Harness** (`evals/harness.ts`): a custom `createHarness` adapter that POSTs `{ message, initialData }` to the agent's HTTP endpoint with `?wait=result`, then reads `?view=history` to extract the structured `useDataWriter` output and tool-call transcript.
+- **Eval cases** (`evals/*.eval.ts`): each file uses `describeEval` with the harness, providing synthetic `initialData` fixtures and asserting on the structured output (`findings`, `is_spam`, `resolved`, etc.) and tool calls (`submit_*`).
+
+### Running evals
+
+Evals need a running Flue dev server (the Worker provides the `env.AI` binding for Workers AI):
+
+```bash
+# Terminal 1: start the dev server
+pnpm run flue:dev
+
+# Terminal 2: run evals against it
+pnpm --dir .flue run evals
+```
+
+Set `FLUE_BASE_URL` to target a deployment instead:
+
+```bash
+FLUE_BASE_URL=https://preview.example.com pnpm --dir .flue run evals
+```
+
+Both the server and the eval runner need `DOCS_FLUE_INTERNAL_TOKEN` set to the same value.
+
+### CI
+
+The `evals` job in `.github/workflows/flue-ci.yml` starts the dev server, runs evals, and uploads `vitest-results.json` as an artifact. The job is skipped for fork PRs because it needs `DOCS_FLUE_INTERNAL_TOKEN` and Workers AI access.
+
+### Adding a new eval case
+
+1. Create or edit a `.eval.ts` file in `.flue/evals/`.
+2. Import `createFlueAgentHarness` from `./harness.ts` and the agent's input type.
+3. Construct a harness with the agent name, data key, and dispatch message.
+4. Write `describeEval` cases with synthetic `initialData` and assert on the structured output.
+5. Assert that the `submit_*` tool was called (proves the agent completed its contract).
+6. Prefer deterministic assertions over LLM judges. Add judges only for semantic behavior that cannot be checked exactly.
+
+### Current eval coverage
+
+| Agent | Eval file | Cases |
+| ----- | --------- | ----- |
+| `style-guide-file` | `style-guide.eval.ts` | Full URL flag, clean root-relative link pass |
+| `conventions-reviewer` | `conventions.eval.ts` | Vague title flag, well-described PR pass |
+| `spam-filter` | `spam-filter.eval.ts` | Spam issue flag, legit typo report pass |
+| `reconcile-reviewer` | `reconcile.eval.ts` | Resolved finding, ignored-by-author, incremental carry-forward |
+| `code-review-file` | `code-review.eval.ts` | Unhandled promise flag, clean error handling pass |
+
+Not yet covered: `dependabot-reviewer` and `rebase-conflict-resolver` (need GitHub/npm tool fixtures or credentials).
