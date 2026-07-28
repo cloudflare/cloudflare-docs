@@ -4,7 +4,7 @@
  * and tears down the server. Used by `pnpm run flue:evals`.
  */
 import { spawn } from "node:child_process";
-import { readFileSync, writeFileSync, unlinkSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const PORT = 5173;
@@ -36,25 +36,6 @@ if (!TOKEN) {
 	process.exit(1);
 }
 
-// The @cloudflare/vite-plugin reads Worker env vars from .dev.vars (not
-// process.env). In CI the .env files are gitignored, so we write a temporary
-// .dev.vars with the token the eval routes need. The file is gitignored and
-// cleaned up on all exit paths.
-const DEV_VARS_PATH = join(FLUE_DIR, ".dev.vars");
-const wroteDevVars = !existsSync(DEV_VARS_PATH);
-if (wroteDevVars) {
-	writeFileSync(DEV_VARS_PATH, `DOCS_FLUE_INTERNAL_TOKEN=${TOKEN}\n`);
-}
-
-function removeDevVars() {
-	if (!wroteDevVars) return;
-	try {
-		unlinkSync(DEV_VARS_PATH);
-	} catch {
-		// already gone
-	}
-}
-
 async function waitForServer(timeoutMs = 60_000): Promise<void> {
 	const deadline = Date.now() + timeoutMs;
 	while (Date.now() < deadline) {
@@ -75,7 +56,8 @@ async function main() {
 		DOCS_FLUE_INTERNAL_TOKEN: TOKEN,
 	};
 
-	// Start the dev server
+	// Start the dev server. The Vite config reads DOCS_FLUE_INTERNAL_TOKEN
+	// from process.env and injects it into the Worker's vars.
 	const server = spawn(
 		"pnpm",
 		["exec", "vite", "dev", "--port", String(PORT), "--host", HOST],
@@ -98,12 +80,10 @@ async function main() {
 
 	const cleanup = () => {
 		server.kill("SIGTERM");
-		removeDevVars();
 	};
 	process.on("SIGINT", cleanup);
 	process.on("SIGTERM", cleanup);
 	process.on("exit", cleanup);
-	process.on("uncaughtException", cleanup);
 
 	try {
 		await waitForServer();
@@ -126,7 +106,6 @@ async function main() {
 		process.exit(code);
 	} finally {
 		server.kill("SIGTERM");
-		removeDevVars();
 	}
 }
 

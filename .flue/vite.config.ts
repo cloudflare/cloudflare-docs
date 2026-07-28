@@ -10,6 +10,25 @@ import { defineConfig } from "vite";
 // `flue()` MUST precede `cloudflare()`: the Cloudflare plugin calls
 // `flueWorkerConfig()` while Vite resolves the config, and `flue()` must have
 // scanned the project first.
+//
+// The wrapped customizer also forwards DOCS_FLUE_INTERNAL_TOKEN from
+// process.env into the Worker's vars so eval routes work in CI without .env.
+const flueCustomizer = flueWorkerConfig();
+
 export default defineConfig({
-	plugins: [flue(), cloudflare({ config: flueWorkerConfig() })],
+	plugins: [
+		flue(),
+		cloudflare({
+			config: (config) => {
+				flueCustomizer(config);
+				const token = process.env.DOCS_FLUE_INTERNAL_TOKEN;
+				if (token) {
+					(config as Record<string, unknown>).vars = {
+						...((config as Record<string, unknown>).vars ?? {}),
+						DOCS_FLUE_INTERNAL_TOKEN: token,
+					};
+				}
+			},
+		}),
+	],
 });
