@@ -112,6 +112,7 @@ jobs:
       - name: Run evals
         run: pnpm run flue:evals
         env:
+          DOCS_FLUE_INTERNAL_TOKEN: ${{ secrets.DOCS_FLUE_INTERNAL_TOKEN }}
           EVALS_CMD: evals:json
 
       - name: Upload eval results

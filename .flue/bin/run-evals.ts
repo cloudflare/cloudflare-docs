@@ -28,11 +28,11 @@ function loadDotenvToken(): string | undefined {
 
 const TOKEN = process.env.DOCS_FLUE_INTERNAL_TOKEN ?? loadDotenvToken();
 if (!TOKEN) {
-	console.warn(
-		"DOCS_FLUE_INTERNAL_TOKEN not found — generating an ephemeral token for this run.",
+	console.error(
+		"DOCS_FLUE_INTERNAL_TOKEN not found in process.env or .flue/.env(.local)",
 	);
+	process.exit(1);
 }
-const EFFECTIVE_TOKEN = TOKEN ?? crypto.randomUUID();
 
 async function waitForServer(timeoutMs = 60_000): Promise<void> {
 	const deadline = Date.now() + timeoutMs;
@@ -51,7 +51,7 @@ async function waitForServer(timeoutMs = 60_000): Promise<void> {
 async function main() {
 	const env = {
 		...process.env,
-		DOCS_FLUE_INTERNAL_TOKEN: EFFECTIVE_TOKEN,
+		DOCS_FLUE_INTERNAL_TOKEN: TOKEN,
 	};
 
 	// Start the dev server
