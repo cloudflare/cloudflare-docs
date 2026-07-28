@@ -79,19 +79,35 @@ async function main() {
 		process.stderr.write(data);
 	});
 
+	let exiting = false;
 	const cleanup = () => {
+		if (exiting) return;
+		exiting = true;
 		server.kill("SIGTERM");
 	};
-	process.on("SIGINT", cleanup);
-	process.on("SIGTERM", cleanup);
+
+	process.on("SIGINT", () => {
+		cleanup();
+		process.exit(130);
+	});
+	process.on("SIGTERM", () => {
+		cleanup();
+		process.exit(143);
+	});
 	process.on("exit", cleanup);
+
+	server.on("error", (err) => {
+		console.error("Failed to start dev server:", err);
+		cleanup();
+		process.exit(1);
+	});
 
 	try {
 		await waitForServer();
 		console.log("Server ready, running evals...");
 
 		const evalsCmd = process.env.EVALS_CMD ?? "evals";
-		const result = await spawn("pnpm", ["run", evalsCmd], {
+		const result = spawn("pnpm", ["run", evalsCmd], {
 			cwd: FLUE_DIR,
 			env: {
 				...env,
@@ -101,12 +117,16 @@ async function main() {
 		});
 
 		const code = await new Promise<number>((resolve) => {
-			result.on("exit", resolve);
+			result.on("exit", (code, signal) => {
+				if (signal) resolve(128);
+				else resolve(code ?? 1);
+			});
+			result.on("error", () => resolve(1));
 		});
 
 		process.exit(code);
 	} finally {
-		server.kill("SIGTERM");
+		cleanup();
 	}
 }
 

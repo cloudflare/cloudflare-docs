@@ -13,28 +13,46 @@ export interface FlueAgentHarnessOptions {
 	headers?: Record<string, string>;
 }
 
+interface TextPart {
+	type: "text";
+	text: string;
+}
+
+interface DataPart {
+	type: `data-${string}`;
+	data: unknown;
+}
+
+interface ToolPart {
+	type: "dynamic-tool";
+	toolName: string;
+	toolCallId: string;
+	input?: unknown;
+	output?: unknown;
+	errorText?: string;
+	state: string;
+}
+
+type ConversationPart = TextPart | DataPart | ToolPart;
+
 interface ConversationMessage {
 	id: string;
 	role: "user" | "assistant" | "system";
-	parts: Array<
-		| { type: "text"; text: string }
-		| { type: `data-${string}`; data: unknown }
-		| {
-				type: "dynamic-tool";
-				toolName: string;
-				toolCallId: string;
-				input?: unknown;
-				output?: unknown;
-				errorText?: string;
-				state: string;
-		  }
-	>;
+	parts: ConversationPart[];
 	metadata?: Record<string, unknown>;
 }
 
 interface ConversationHistory {
 	messages: ConversationMessage[];
 	settlements: Array<{ submissionId: string; outcome: string }>;
+}
+
+function isTextPart(p: ConversationPart): p is TextPart {
+	return p.type === "text";
+}
+
+function isToolPart(p: ConversationPart): p is ToolPart {
+	return p.type === "dynamic-tool";
 }
 
 function authHeaders(options: FlueAgentHarnessOptions): Record<string, string> {
@@ -51,41 +69,37 @@ function toTranscriptEvents(
 	const events: TranscriptEvent[] = [];
 	for (const msg of messages) {
 		const text = msg.parts
-			.filter((p) => p.type === "text")
-			.map((p) => (p as { type: "text"; text: string }).text)
+			.filter(isTextPart)
+			.map((p) => p.text)
 			.join("");
 		if (text) {
 			events.push({
 				type: "message",
-				role: msg.role as "user" | "assistant" | "system",
+				role: msg.role,
 				content: text,
 			});
 		}
 		for (const part of msg.parts) {
-			if (part.type !== "dynamic-tool") continue;
-			const tool = part as Extract<
-				ConversationMessage["parts"][number],
-				{ type: "dynamic-tool" }
-			>;
+			if (!isToolPart(part)) continue;
 			events.push({
 				type: "tool_call",
-				id: tool.toolCallId,
-				name: tool.toolName,
-				arguments: tool.input as Record<string, JsonValue> | undefined,
+				id: part.toolCallId,
+				name: part.toolName,
+				arguments: part.input as Record<string, JsonValue> | undefined,
 			});
-			if (tool.state === "output-error") {
+			if (part.state === "output-error") {
 				events.push({
 					type: "tool_result",
-					toolCallId: tool.toolCallId,
-					name: tool.toolName,
-					error: { message: tool.errorText ?? "unknown error" },
+					toolCallId: part.toolCallId,
+					name: part.toolName,
+					error: { message: part.errorText ?? "unknown error" },
 				});
-			} else if (tool.state === "output-available") {
+			} else if (part.state === "output-available") {
 				events.push({
 					type: "tool_result",
-					toolCallId: tool.toolCallId,
-					name: tool.toolName,
-					content: tool.output as JsonValue,
+					toolCallId: part.toolCallId,
+					name: part.toolName,
+					content: part.output as JsonValue,
 				});
 			}
 		}
@@ -100,8 +114,9 @@ export function createFlueAgentHarness<TInput = unknown>(
 		name: `flue-${options.agentName}`,
 		run: async ({ input, signal }) => {
 			const conversationId = `eval-${crypto.randomUUID()}`;
-			const base = `${options.baseUrl}/eval/agents/${options.agentName}`;
-			const conversationUrl = `${base}/${conversationId}`;
+			const base = options.baseUrl.replace(/\/+$/, "");
+			const agentPath = encodeURIComponent(options.agentName);
+			const conversationUrl = `${base}/eval/agents/${agentPath}/${conversationId}`;
 			const headers = authHeaders(options);
 
 			// Fire-and-forget: POST without ?wait=result
@@ -126,6 +141,7 @@ export function createFlueAgentHarness<TInput = unknown>(
 			// Poll history until the submission settles
 			const deadline = Date.now() + 120_000;
 			let history: ConversationHistory | undefined;
+			let lastHistoryError: string | undefined;
 			while (Date.now() < deadline) {
 				if (signal?.aborted) throw new Error("Aborted");
 
@@ -143,20 +159,32 @@ export function createFlueAgentHarness<TInput = unknown>(
 							s.outcome === "aborted",
 					);
 					if (settled) break;
+				} else {
+					lastHistoryError = `${historyResponse.status} ${historyResponse.statusText}`;
 				}
 
 				await new Promise((r) => setTimeout(r, 1000));
 			}
 
 			if (!history) {
-				throw new Error("Timed out waiting for agent to settle");
+				throw new Error(
+					`Timed out waiting for agent to settle${lastHistoryError ? ` (last history fetch error: ${lastHistoryError})` : ""}`,
+				);
+			}
+
+			const outcome = history.settlements.at(-1)?.outcome;
+			if (outcome === "failed") {
+				throw new Error("Agent run failed");
+			}
+			if (outcome === "aborted") {
+				throw new Error("Agent run was aborted");
 			}
 
 			const reply = history.messages.findLast((m) => m.role === "assistant");
 
 			const dataPart = reply?.parts.find(
 				(p) => p.type === `data-${options.dataKey}`,
-			) as { type: string; data: unknown } | undefined;
+			) as DataPart | undefined;
 
 			return {
 				output: (dataPart?.data ?? undefined) as JsonValue | undefined,

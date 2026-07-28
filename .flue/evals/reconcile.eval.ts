@@ -50,8 +50,9 @@ describeEval("reconcile reviewer", { harness }, (it) => {
 			active?: unknown[];
 		};
 		expect(output).toBeDefined();
-		expect(output!.resolved).toContain("SG-aaa111");
-		expect(output!.active).toHaveLength(0);
+		expect(output?.resolved).toBeDefined();
+		expect(output?.resolved).toContain("SG-aaa111");
+		expect(output?.active).toHaveLength(0);
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_reconcile_result",
 		);
@@ -100,8 +101,9 @@ describeEval("reconcile reviewer", { harness }, (it) => {
 			active?: unknown[];
 		};
 		expect(output).toBeDefined();
-		expect(output!.ignored_by_reviewer!.length).toBe(1);
-		expect(output!.active).toHaveLength(0);
+		expect(output?.ignored_by_reviewer).toBeDefined();
+		expect(output?.ignored_by_reviewer).toHaveLength(1);
+		expect(output?.active).toHaveLength(0);
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_reconcile_result",
 		);
@@ -138,9 +140,10 @@ describeEval("reconcile reviewer", { harness }, (it) => {
 			resolved?: string[];
 		};
 		expect(output).toBeDefined();
-		expect(output!.active!.length).toBe(1);
-		expect(output!.active![0]!.id).toBe("SG-ccc333");
-		expect(output!.resolved).not.toContain("SG-ccc333");
+		expect(output?.active).toBeDefined();
+		expect(output?.active).toHaveLength(1);
+		expect(output?.active?.[0]?.id).toBe("SG-ccc333");
+		expect(output?.resolved).not.toContain("SG-ccc333");
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_reconcile_result",
 		);

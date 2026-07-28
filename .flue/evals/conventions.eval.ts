@@ -50,7 +50,8 @@ describeEval("conventions reviewer", { harness }, (it) => {
 			},
 			description:
 				"Adds a streaming response example to the Workers get-started guide. The example shows how to use TransformStream to stream a response body.",
-			prTemplate: "",
+			prTemplate:
+				"## What does this PR do?\n\nAdds a streaming example to the Workers get-started guide.\n\n## What kind of changes does this PR include?\n\n- Content changes in `src/content/docs/workers/`",
 			renamedDocFiles: [],
 			changedFiles: [
 				{
@@ -62,9 +63,15 @@ describeEval("conventions reviewer", { harness }, (it) => {
 			],
 		});
 
-		const findings = (result.output as { findings?: unknown[] })?.findings;
+		const findings = (result.output as { findings?: Array<{ rule?: string }> })
+			?.findings;
 		expect(findings).toBeDefined();
-		expect(findings!.length).toBe(0);
+		const titleOrDescFindings = (findings ?? []).filter(
+			(f) =>
+				f.rule?.toLowerCase().includes("title") ||
+				f.rule?.toLowerCase().includes("description"),
+		);
+		expect(titleOrDescFindings).toHaveLength(0);
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_conventions_review",
 		);

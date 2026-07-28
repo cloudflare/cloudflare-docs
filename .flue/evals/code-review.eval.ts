@@ -32,14 +32,14 @@ describeEval("code review file", { harness }, (it) => {
 				{
 					line: 10,
 					content:
-						"  fetch(url).then((r) => r.json()).then((d) => return new Response(d));",
+						"  fetch(url).then((r) => r.json()).then((d) => new Response(d));",
 				},
 			],
 			fileContent: [
 				"export default {",
 				"  async fetch(request, env) {",
 				"    const url = 'https://api.example.com/data';",
-				"    fetch(url).then((r) => r.json()).then((d) => return new Response(d));",
+				"    fetch(url).then((r) => r.json()).then((d) => new Response(d));",
 				"    return new Response('ok');",
 				"  },",
 				"};",

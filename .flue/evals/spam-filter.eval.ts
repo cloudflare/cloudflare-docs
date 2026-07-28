@@ -38,7 +38,7 @@ describeEval("spam filter", { harness }, (it) => {
 		};
 		expect(verdict).toBeDefined();
 		expect(verdict!.is_spam).toBe(true);
-		expect(verdict!.confidence).not.toBe("low");
+		expect(["medium", "high"]).toContain(verdict!.confidence);
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_spam_verdict",
 		);
