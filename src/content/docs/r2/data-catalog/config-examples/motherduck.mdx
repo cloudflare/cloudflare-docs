@@ -50,6 +50,9 @@ CREATE DATABASE my_r2_catalog (
 -- Set the attached catalog and namespace as the active context.
 USE my_r2_catalog.<namespace>;
 
+-- Show all available tables.
+SHOW ALL TABLES;
+
 -- Query an existing Iceberg table.
 SELECT * FROM my_iceberg_table;
 
