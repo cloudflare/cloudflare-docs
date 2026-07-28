@@ -112,6 +112,7 @@ jobs:
       - name: Run evals
         run: pnpm run flue:evals
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           DOCS_FLUE_INTERNAL_TOKEN: ${{ secrets.DOCS_FLUE_INTERNAL_TOKEN }}
           EVALS_CMD: evals:json
 
