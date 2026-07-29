@@ -50,7 +50,7 @@ jobs:
 
           endpoint="https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com"
           timestamp=$(date -u '+%Y-%m-%dT%H-%M-%SZ')
-          destination="s3://$R2_BUCKET/$timestamp"
+          destination="s3://$R2_BUCKET/$timestamp-$PUBLISH_RUN_ID"
           manifest="$RUNNER_TEMP/manifest.json"
           checksums="$RUNNER_TEMP/MD5SUMS"
           success="$RUNNER_TEMP/_SUCCESS"
