@@ -198,13 +198,12 @@ Cloudflare dashboard SSO does not support:
 - Multiple Zero Trust domain policies. If another domain policy is required, you can create another SSO connector. This will create a second policy for that new domain in your SSO application.
 - Deleting the auto-generated Zero Trust `allow email domain` policy. If this policy is deleted, your organization's administrators cannot access the Cloudflare dashboard.
 
-## IdP-initiated SSO
+## IdP Initiated Login
 
-IdP-initiated login is supported for Cloudflare dashboard SSO, with configuration available via your identity provider (IdP).
+Step-by-step guides are currently available for Okta and Entra ID. Similar configurations are possible with other identity providers that support custom SSO endpoints.
 
-A step-by-step guide is currently available for Okta, and similar configurations are possible with other identity providers that support custom SSO endpoints.
-
-### Okta
+<details>
+<summary>Okta</summary>
 
 Configure an identity provider (IdP)-initiated single sign-on (SSO) session using Cloudflare Zero Trust and Okta.
 
@@ -220,8 +219,8 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 2. Select **Create App Integration** to start a new SAML integration to handle the IdP-initiated SSO flow. Note that this is a second, distinct Cloudflare-Okta integration, created separately from the [IdP integration with Zero Trust](/cloudflare-one/integrations/identity-providers/).
 3. In the pop-up, select **SAML 2.0** and select **Next**.
 4. Enter a name for the app and select **Next**.
-5. In the **Single Sign-On URL** field, paste the **SSO Endpoint URL** [you copied earlier](/fundamentals/manage-members/dashboard-sso/#prerequisites-1).
-6. In the **Audience URI (SP Entity ID)** field, paste the **Access Entity ID or Issuer** [you copied earlier](/fundamentals/manage-members/dashboard-sso/#prerequisites-1).
+5. In the **Single Sign-On URL** field, paste the **SSO Endpoint URL** copied from the prerequisites above.
+6. In the **Audience URI (SP Entity ID)** field, paste the **Access Entity ID or Issuer** copied from the prerequisites above.
 7. Set the **Name ID Format** to **EmailAddress**.
 8. Set the **Application Username** to **Email**.
 9. Select **Next** > **Finish** to save the integration.
@@ -235,6 +234,44 @@ If you use only one IdP (for example, Okta) for Cloudflare SSO and want users to
 2. Go to **Authentication**.
 3. Disable **Accept all available identity providers** and ensure only Okta is selected as the login method.
 4. Enable **Apply instant authentication** to allow users to skip identity provider selection.
+
+</details>
+
+<details>
+<summary>Entra ID</summary>
+
+Configure an identity provider (IdP)-initiated single sign-on (SSO) session using Cloudflare Zero Trust and Microsoft Entra ID (formerly Azure AD).
+
+#### Prerequisites
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications** > select your **SSO App**.
+2. Select **Configure** to access the application settings.
+3. In the **Basic Information** section, copy the **SSO Endpoint URL** and **Access Entity ID or Issuer**. You will need these values when configuring Entra ID.
+
+#### Configure Entra ID as the IdP
+
+1. Log in to the [Microsoft Entra admin center](https://entra.microsoft.com/) and go to **Applications** > **Enterprise applications**.
+2. Select **New application** > **Create your own application**.
+3. Enter a name for the application (for example, `Cloudflare Dashboard SSO`), select **Integrate any other application you don't find in the gallery (Non-gallery)**, then select **Create**.
+4. Once the application is created, go to **Single sign-on** in the left-hand menu and select **SAML**.
+5. In the **Basic SAML Configuration** section, select **Edit** and configure the following:
+   - **Identifier (Entity ID)**: Paste the **Access Entity ID or Issuer** copied from the prerequisites above.
+   - **Reply URL (Assertion Consumer Service URL)**: Paste the **SSO Endpoint URL** copied from the prerequisites above.
+6. Select **Save**.
+7. In the **Attributes & Claims** section, ensure the **Unique User Identifier (Name ID)** claim is set to emit the user's email address (for example, `user.mail` or `user.userprincipalname`).
+8. Assign users or groups to the application under **Users and groups** to control who can use IdP-initiated SSO.
+9. Test the integration by navigating to **Single sign-on** > **Test** and selecting **Test sign in** to verify the SSO flow.
+
+**(Optional) Enforce single IdP login with instant authentication**
+
+If you use only one IdP (for example, Entra ID) for Cloudflare SSO and want users to skip the identity provider selection prompt:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications** > select your **SSO App**.
+2. Go to **Authentication**.
+3. Disable **Accept all available identity providers** and ensure only Entra ID is selected as the login method.
+4. Enable **Apply instant authentication** to allow users to skip identity provider selection.
+
+</details>
 
 ## Bypass dashboard SSO
 
