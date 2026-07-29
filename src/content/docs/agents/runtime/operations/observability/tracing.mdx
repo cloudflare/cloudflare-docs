@@ -65,7 +65,13 @@ invoke_agent {agent class}
     └── tool_approval {tool}
 ```
 
-Spans carry the agent class, named instance, conversation, and turn IDs.
+Think automatically supplies the identity fields that the Agents dashboard uses to group runs and conversations:
+
+| Attribute                | Think default               |
+| ------------------------ | --------------------------- |
+| `gen_ai.agent.name`      | `this.constructor.name`     |
+| `gen_ai.agent.id`        | `this.name`                 |
+| `gen_ai.conversation.id` | `this.ctx.id.toString()`    |
 
 ### Flue
 
@@ -73,7 +79,7 @@ Spans carry the agent class, named instance, conversation, and turn IDs.
 
 ### AI SDK v6 and v7
 
-For direct [AI SDK](https://sdk.vercel.ai/) calls, wrap the namespace once and call the wrapped functions:
+For direct [AI SDK](https://sdk.vercel.ai/) calls, wrap the namespace once:
 
 <TypeScriptExample>
 
@@ -82,25 +88,72 @@ import * as ai from "ai";
 import { wrapAISDK } from "agents/observability/ai";
 
 const tracedAI = wrapAISDK(ai);
-
-await tracedAI.generateText({
-	model,
-	prompt: "Summarize this conversation",
-});
 ```
 
 </TypeScriptExample>
 
 `wrapAISDK()` supports AI SDK v6 and v7. It instruments `generateText`, `streamText`, `generateObject`, and `streamObject`, creating the `invoke_agent` parent before model and tool work begins.
 
-Identity configuration differs between the two SDK versions:
+Unlike Think, a direct AI SDK call has no Agent instance from which to infer dashboard identity. Supply these values on each call:
 
-| Purpose         | AI SDK v7                                            | AI SDK v6                           |
-| --------------- | ---------------------------------------------------- | ----------------------------------- |
-| Agent name      | `telemetry.functionId`                               | `experimental_telemetry.functionId` |
-| Other identity  | `runtimeContext` + `telemetry.includeRuntimeContext` | `experimental_telemetry.metadata`   |
+- **Agent name** identifies the logical agent implementation. Keep it low cardinality, such as `booking-agent`.
+- **Agent ID** identifies the stable agent instance or resource, such as `booking-agent-production`.
+- **Conversation ID** identifies the current conversation or session.
 
-Use a low-cardinality logical agent name for `functionId`. The identity keys `agentId`, `agentName`, `agentVersion`, and `conversationId` map to their standard `gen_ai.*` attributes.
+#### AI SDK v7
+
+Use native AI SDK v7 telemetry fields to supply identity. You can include additional scalar context, such as a tenant or route, to make traces easier to query:
+
+<TypeScriptExample>
+
+```ts
+await tracedAI.generateText({
+	model,
+	prompt: "Find an available appointment",
+	runtimeContext: {
+		agentId: "booking-agent-production",
+		conversationId: "conversation-123",
+		tenantId: "tenant-42",
+	},
+	telemetry: {
+		functionId: "booking-agent",
+		includeRuntimeContext: {
+			agentId: true,
+			conversationId: true,
+			tenantId: true,
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+This maps `functionId`, `agentId`, and `conversationId` to `gen_ai.agent.name`, `gen_ai.agent.id`, and `gen_ai.conversation.id`. Other included scalar values use the `cloudflare.agents.runtime_context.*` namespace.
+
+#### AI SDK v6
+
+AI SDK v6 uses `experimental_telemetry.metadata` for the same identity and additional span data:
+
+<TypeScriptExample>
+
+```ts
+await tracedAI.generateText({
+	model,
+	prompt: "Find an available appointment",
+	experimental_telemetry: {
+		functionId: "booking-agent",
+		metadata: {
+			agentId: "booking-agent-production",
+			conversationId: "conversation-123",
+			tenantId: "tenant-42",
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+Additional scalar metadata uses the `cloudflare.agents.metadata.*` namespace. Do not include credentials, tokens, user input, or other secrets in span context.
 
 ## Payload privacy
 
