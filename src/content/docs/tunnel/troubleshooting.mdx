@@ -157,7 +157,7 @@ Cloudflare recently became aware of a change in Palo Alto Networks Next Generati
 
 Palo Alto Networks Next Generation Firewall (NGFW) detects both Cloudflare Tunnel (`cloudflared`) and the Cloudflare One Client (WARP with Zero Trust) as `cloudflare-warp`, regardless of the App-ID database version. There is currently no separate App-ID for `cloudflared`.
 
-This section focuses on Cloudflare Tunnel (`cloudflared`) connecting to Cloudflare over QUIC (UDP port `7844`). If the Cloudflare One Client is impacted, refer to the [WARP ingress IPs and ports](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip).
+This issue is likely to impact the Cloudflare One Client and WARP client, because Palo Alto Networks NGFW identifies their traffic as `cloudflare-warp`. This section focuses on Cloudflare Tunnel (`cloudflared`) connecting to Cloudflare over QUIC (UDP port `7844`). For WARP client connectivity requirements, refer to [WARP ingress IPs and ports](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip).
 
 Starting with App-ID database version 9128 (released on July 27, 2026), NGFW changed the requirements for permitting this traffic. App-ID database version 9128 and later requires you to explicitly allow the `quic-base` application in addition to the previously required App-IDs and their dependencies.
 
