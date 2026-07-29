@@ -68,7 +68,7 @@ describeEval("code review file", { harness }, (it) => {
 		expect(match!.path).toBe("src/handler.ts");
 		expect(match!.line).toBe(10);
 		expect(match!.rule?.toLowerCase()).toMatch(
-			/promise|reject|unhandled|await|error|fire|discard|floating|ignored/,
+			/\b(promise|reject|unhandled|await|error|fire|discard|floating|ignored)\b/,
 		);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
@@ -81,27 +81,27 @@ describeEval("code review file", { harness }, (it) => {
 			pullRequest: PR,
 			filename: "src/handler.ts",
 			addedLines: [
-				{ line: 8, content: "  try {" },
-				{ line: 9, content: "    const res = await fetch(url);" },
-				{ line: 10, content: "    if (!res.ok) {" },
+				{ line: 4, content: "    try {" },
+				{ line: 5, content: "      const res = await fetch(url);" },
+				{ line: 6, content: "      if (!res.ok) {" },
 				{
-					line: 11,
+					line: 7,
 					content:
-						"      return new Response('upstream error', { status: 502 });",
+						"        return new Response('upstream error', { status: 502 });",
 				},
-				{ line: 12, content: "    }" },
-				{ line: 13, content: "    const data = await res.json();" },
+				{ line: 8, content: "      }" },
+				{ line: 9, content: "      const data = await res.json();" },
 				{
-					line: 14,
-					content: "    return new Response(JSON.stringify(data));",
+					line: 10,
+					content: "      return new Response(JSON.stringify(data));",
 				},
-				{ line: 15, content: "  } catch (e) {" },
+				{ line: 11, content: "    } catch (e) {" },
 				{
-					line: 16,
+					line: 12,
 					content:
-						"    return new Response('internal error', { status: 500 });",
+						"      return new Response('internal error', { status: 500 });",
 				},
-				{ line: 17, content: "  }" },
+				{ line: 13, content: "    }" },
 			],
 			fileContent: [
 				"export default {",
@@ -134,7 +134,9 @@ describeEval("code review file", { harness }, (it) => {
 				(f.severity === "warning" || f.severity === "critical") &&
 				f.rule
 					?.toLowerCase()
-					.match(/promise|reject|unhandled|await|error.handl|missing.error/),
+					.match(
+						/\b(promise|reject|unhandled|await|error.handl|missing.error)\b/,
+					),
 		);
 		expect(falsePositive).toHaveLength(0);
 

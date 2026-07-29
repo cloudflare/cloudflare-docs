@@ -90,10 +90,14 @@ describeEval("spam filter", { harness }, (it) => {
 
 		const verdict = result.output as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(true);
-		expect(["medium", "high"]).toContain(verdict!.confidence);
+		// Support requests are off-topic but not spam. The bot's ground rules
+		// say "Be conservative. When in doubt, do nothing. A false negative
+		// (missing spam) is better than a false positive (closing a legitimate
+		// contribution)." Expect the agent to identify it as off-topic without
+		// closing it.
+		expect(verdict!.is_spam).toBe(false);
 		expect(verdict!.reason?.toLowerCase()).toMatch(
-			/support|off-topic|wrong repo|community/,
+			/\b(support|off-topic|wrong repo|community)\b/,
 		);
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_spam_verdict",

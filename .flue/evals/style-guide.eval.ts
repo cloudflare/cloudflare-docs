@@ -67,12 +67,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 
 	it("passes on a clean root-relative link", async ({ run }) => {
 		const result = await run({
-			pullRequest: {
-				number: 998,
-				title: "[Workers] Fix link",
-				base: "production",
-				head: "fix-link",
-			},
+			pullRequest: PR,
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
@@ -117,6 +112,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		expect(h1Finding).toBeDefined();
 		expect(h1Finding!.severity).toBe("warning");
 		expect(h1Finding!.path).toBe("src/content/docs/workers/example.mdx");
+		expect(h1Finding!.line).toBe(15);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_style_guide",

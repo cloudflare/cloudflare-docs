@@ -47,6 +47,14 @@ interface ConversationHistory {
 	settlements: Array<{ submissionId: string; outcome: string }>;
 }
 
+function isTerminalSettlement(s: { outcome: string }): boolean {
+	return (
+		s.outcome === "completed" ||
+		s.outcome === "failed" ||
+		s.outcome === "aborted"
+	);
+}
+
 function isTextPart(p: ConversationPart): p is TextPart {
 	return p.type === "text";
 }
@@ -141,6 +149,7 @@ export function createFlueAgentHarness<TInput = unknown>(
 			// Poll history until the submission settles
 			const deadline = Date.now() + 120_000;
 			let history: ConversationHistory | undefined;
+			let terminal: { submissionId: string; outcome: string } | undefined;
 			let lastHistoryError: string | undefined;
 			while (Date.now() < deadline) {
 				if (signal?.aborted) throw new Error("Aborted");
@@ -152,12 +161,7 @@ export function createFlueAgentHarness<TInput = unknown>(
 
 				if (historyResponse.ok) {
 					history = (await historyResponse.json()) as ConversationHistory;
-					const terminal = history.settlements.findLast(
-						(s) =>
-							s.outcome === "completed" ||
-							s.outcome === "failed" ||
-							s.outcome === "aborted",
-					);
+					terminal = history.settlements.findLast(isTerminalSettlement);
 					if (terminal) break;
 				} else {
 					lastHistoryError = `${historyResponse.status} ${historyResponse.statusText}`;
@@ -172,12 +176,6 @@ export function createFlueAgentHarness<TInput = unknown>(
 				);
 			}
 
-			const terminal = history.settlements.findLast(
-				(s) =>
-					s.outcome === "completed" ||
-					s.outcome === "failed" ||
-					s.outcome === "aborted",
-			);
 			if (!terminal) {
 				throw new Error(
 					`Timed out waiting for agent to settle (last outcome: ${history.settlements.at(-1)?.outcome ?? "none"})`,
