@@ -17,30 +17,38 @@ This augments the [existing API for writing custom spans](/changelog/post/2026-0
 ```ts
 import { tracing } from "cloudflare:workers";
 
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		const body = request.body;
-		if (!body) return new Response("No body", { status: 400 });
+const encoder = new TextEncoder();
 
-		const stream = tracing.startActiveSpan("process-stream", (span) => {
-			return body.pipeThrough(
-				new TransformStream({
-					transform(chunk, controller) {
-						controller.enqueue(chunk);
-					},
-					flush() {
+export default {
+	fetch(): Response {
+		return tracing.startActiveSpan("stream-response", (span) => {
+			let timer: ReturnType<typeof setTimeout> | undefined;
+
+			const body = new ReadableStream<Uint8Array>({
+				start(controller) {
+					controller.enqueue(encoder.encode("Starting...\n"));
+
+					timer = setTimeout(() => {
+						controller.enqueue(encoder.encode("Complete.\n"));
+						controller.close();
+
 						span.setAttribute("stream.status", "complete");
 						span.end();
-					},
-					cancel() {
-						span.setAttribute("stream.status", "cancelled");
-						span.end();
-					},
-				}),
-			);
-		});
+					}, 1000);
+				},
 
-		return new Response(stream);
+				cancel() {
+					if (timer !== undefined) clearTimeout(timer);
+
+					span.setAttribute("stream.status", "cancelled");
+					span.end();
+				},
+			});
+
+			return new Response(body, {
+				headers: { "content-type": "text/plain" },
+			});
+		});
 	},
 };
 ```
