@@ -100,8 +100,7 @@ export function getTopLevelVariants(
 	schemaObj: Record<string, unknown>,
 ): SchemaVariant[] | null {
 	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
-		| Record<string, unknown>[]
-		| undefined;
+		Record<string, unknown>[] | undefined;
 	if (!variants || variants.length < 2) return null;
 
 	const titled = variants.map((v, i) => ({

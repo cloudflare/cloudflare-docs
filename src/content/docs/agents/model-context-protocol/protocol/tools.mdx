@@ -12,9 +12,9 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-MCP tools are functions that an [MCP server](/agents/model-context-protocol/) exposes for clients to call. When an LLM decides it needs to take an action — look up data, run a calculation, call an API — it invokes a tool. The MCP server executes the tool and returns the result.
+MCP tools are functions that an [MCP server](/agents/model-context-protocol/) exposes for clients to call. An LLM can invoke a tool to look up data, run a calculation, or call an API. The MCP server executes the tool and returns its result.
 
-Tools are defined using the `@modelcontextprotocol/sdk` package. The Agents SDK handles transport and lifecycle; the tool definitions are the same regardless of whether you use [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) or [`McpAgent`](/agents/model-context-protocol/apis/agent-api/).
+Use `@modelcontextprotocol/server` for a stateless `createMcpHandler` server. `McpAgent` is deprecated and feature-frozen. Existing `McpAgent` routes must keep using `@modelcontextprotocol/sdk` only while they migrate.
 
 :::note[Experimental WebMCP adapter]
 
@@ -30,21 +30,23 @@ The Agents SDK also includes the experimental `agents/experimental/webmcp` adapt
 
 ## Defining tools
 
-Use `server.tool()` to register a tool on an `McpServer` instance. Each tool has a name, a description (used by the LLM to decide when to call it), an input schema defined with [Zod](https://zod.dev), and a handler function.
+Use `server.registerTool()` to register a tool on a stateless `McpServer` instance. Each tool has a name, a description, an input schema defined with [Zod](https://zod.dev), and a handler function.
 
 <TypeScriptExample>
 
 ```ts
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 
 function createServer() {
 	const server = new McpServer({ name: "Math", version: "1.0.0" });
 
-	server.tool(
+	server.registerTool(
 		"add",
-		"Add two numbers together",
-		{ a: z.number(), b: z.number() },
+		{
+			description: "Add two numbers together",
+			inputSchema: { a: z.number(), b: z.number() },
+		},
 		async ({ a, b }) => ({
 			content: [{ type: "text", text: String(a + b) }],
 		}),
@@ -65,10 +67,12 @@ Tool results are returned as an array of content parts. The most common type is 
 <TypeScriptExample>
 
 ```ts
-server.tool(
+server.registerTool(
 	"lookup",
-	"Look up a user by ID",
-	{ userId: z.string() },
+	{
+		description: "Look up a user by ID",
+		inputSchema: { userId: z.string() },
+	},
 	async ({ userId }) => {
 		const user = await db.getUser(userId);
 
@@ -105,21 +109,23 @@ Tool inputs are defined as Zod schemas and validated automatically before the ha
 <TypeScriptExample>
 
 ```ts
-server.tool(
+server.registerTool(
 	"search",
-	"Search for documents by query",
 	{
-		query: z.string().describe("The search query"),
-		limit: z
-			.number()
-			.min(1)
-			.max(100)
-			.default(10)
-			.describe("Maximum number of results to return"),
-		category: z
-			.enum(["docs", "blog", "api"])
-			.optional()
-			.describe("Filter by content category"),
+		description: "Search for documents by query",
+		inputSchema: {
+			query: z.string().describe("The search query"),
+			limit: z
+				.number()
+				.min(1)
+				.max(100)
+				.default(10)
+				.describe("Maximum number of results to return"),
+			category: z
+				.enum(["docs", "blog", "api"])
+				.optional()
+				.describe("Filter by content category"),
+		},
 	},
 	async ({ query, limit, category }) => {
 		const results = await searchIndex(query, { limit, category });
@@ -139,33 +145,36 @@ For stateless MCP servers, define tools inside a factory function and pass the s
 <TypeScriptExample>
 
 ```ts
-import { createMcpHandler } from "agents/mcp";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { createMcpHandler } from "agents/mcp/server";
+import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 
 function createServer() {
 	const server = new McpServer({ name: "My Tools", version: "1.0.0" });
 
-	server.tool("ping", "Check if the server is alive", {}, async () => ({
-		content: [{ type: "text", text: "pong" }],
-	}));
+	server.registerTool(
+		"ping",
+		{ description: "Check if the server is alive", inputSchema: {} },
+		async () => ({
+			content: [{ type: "text", text: "pong" }],
+		}),
+	);
 
 	return server;
 }
 
 export default {
-	fetch: (request: Request, env: Env, ctx: ExecutionContext) => {
-		const server = createServer();
-		return createMcpHandler(server)(request, env, ctx);
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer)(request, env, ctx);
 	},
-} satisfies ExportedHandler<Env>;
+} satisfies ExportedHandler;
 ```
 
 </TypeScriptExample>
 
 ## Using tools with `McpAgent`
 
-For stateful MCP servers, define tools in the `init()` method of an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/). Tools have access to the agent instance via `this`, which means they can read and write state.
+This section applies only to existing legacy routes during migration. Define their tools in the `init()` method of an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/). Tools have access to the agent instance through `this`, so they can read and write state.
 
 <TypeScriptExample>
 

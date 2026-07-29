@@ -7,7 +7,7 @@ products:
   - agent-setup
 ---
 
-import { Steps } from "~/components";
+import { Steps, LinkCard } from "~/components";
 import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
 import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
 import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
@@ -58,9 +58,15 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 - The Cloudflare API MCP server uses Code Mode — Cursor writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
 - Add `@wrangler.jsonc` to your Composer prompts so Cursor sees your current bindings when generating or modifying code.
-- For more information on available MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
 
 </TipsList>
+
+<LinkCard
+	title="Cloudflare MCP server repository"
+	href="https://github.com/cloudflare/mcp-server-cloudflare"
+	icon="github"
+	description="Available MCP servers, and when to use Code Mode versus traditional MCP servers."
+/>
 
 ## FAQ
 

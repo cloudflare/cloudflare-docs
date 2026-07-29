@@ -12,7 +12,9 @@ products:
 
 import { Render, TypeScriptExample, LinkCard } from "~/components";
 
-Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. This enables your agent to interact with GitHub, Slack, databases, and other services through a standardized protocol.
+Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.20.0 uses `@modelcontextprotocol/client` and negotiates stateless or legacy behavior automatically.
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package, type, OAuth provider, and rollout changes.
 
 ## Overview
 
@@ -393,15 +395,15 @@ for (const prompt of state.prompts) {
 
 ### Elicitation
 
-[MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) lets a server request user input while handling another request, such as a tool call. The current stable MCP specification defines form and URL modes.
+MCP servers can request user input while handling another operation. On the stateless path, elicitation returns `input_required` and completes through multi-round-trip requests (MRTR). On the legacy path, the server sends pushed `elicitation/create` requests. Both use form and URL modes.
 
-Register a handler for each mode your Agent supports in `onStart()`:
+Register a handler for each mode your Agent supports in `onStart()`. The same handlers serve both lanes:
 
 <TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
-import type { ElicitRequest, ElicitResult } from "agents/mcp";
+import type { ElicitRequest, ElicitResult } from "agents/mcp/client";
 
 class MyAgent extends Agent<Env> {
 	onStart() {
@@ -432,7 +434,7 @@ The `serverId` identifies the connection that sent the request. Use it to tell t
 
 #### Capability negotiation and hibernation
 
-At the MCP `initialize` handshake, a connection advertises only the modes with configured handlers. A form-only handler advertises form mode. A URL-only handler advertises URL mode. A connection without handlers advertises no elicitation capability, which lets the server use its fallback.
+The SDK advertises only the modes with configured handlers. Connections on the legacy path advertise them during `initialize`. Requests on the stateless path carry them with request capabilities. A form-only handler advertises form mode. A URL-only handler advertises URL mode. A connection without handlers advertises no elicitation capability, which lets the server use its fallback.
 
 The SDK stores the advertised modes with each server registration. A connection restored after Durable Object hibernation can therefore advertise the same modes when it reconnects. Callback functions remain in memory and reattach when `onStart()` runs.
 
@@ -510,7 +512,7 @@ A handler returns a promise, but the response often comes from a browser. Broadc
 
 ```ts
 import { Agent, callable } from "agents";
-import type { ElicitRequest, ElicitResult } from "agents/mcp";
+import type { ElicitRequest, ElicitResult } from "agents/mcp/client";
 
 type PendingResolver = {
 	resolve: (result: ElicitResult) => void;
@@ -570,9 +572,9 @@ class MyAgent extends Agent<Env> {
 
 The example uses a 55-second timeout because MCP SDK requests default to 60 seconds. If your client call sets a longer request timeout, adjust this timeout to finish first.
 
-Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. The [`mcp-elicitation` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) is a server that sends both modes.
+Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. [`mcp-elicitation-mrtr`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) demonstrates stateless elicitation. [`mcp-elicitation`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) demonstrates legacy elicitation.
 
-To send elicitation requests from an MCP server, refer to [`elicitInput`](/agents/model-context-protocol/apis/agent-api/#elicitinputoptions-context).
+For server-side patterns, refer to [Elicitation with a stateless handler](/agents/model-context-protocol/apis/handler-api/#elicitation-with-a-stateless-handler) and [Elicitation on legacy servers](/agents/model-context-protocol/apis/agent-api/#elicitation-on-legacy-servers).
 
 ## Managing servers
 
@@ -686,7 +688,7 @@ async addMcpServer(
     callbackHost?: string;
     callbackPath?: string;
     agentsPrefix?: string;
-    client?: ClientOptions;
+    client?: McpClientOptions;
     transport?: {
       headers?: HeadersInit;
       type?: "sse" | "streamable-http" | "auto";
@@ -705,7 +707,7 @@ async addMcpServer(
   options?: {
     id?: string;
     props?: Record<string, unknown>;
-    client?: ClientOptions;
+    client?: McpClientOptions;
     retry?: RetryOptions;
   }
 ): Promise<{ id: string; state: "ready" }>
@@ -720,7 +722,7 @@ async addMcpServer(
   - `callbackHost` — Host for OAuth callback URL. Only needed for OAuth-authenticated servers. If omitted, automatically derived from the incoming request or WebSocket connection URI — you typically do not need to set this unless you are using a custom domain that differs from the Worker's hostname
   - `callbackPath` — Custom callback URL path that bypasses the default `/agents/{class}/{name}/callback` construction. **Required when `sendIdentityOnConnect` is `false`** to prevent leaking the instance name. When set, the callback URL becomes `{callbackHost}/{callbackPath}`. You must route this path to the agent instance via `getAgentByName`
   - `agentsPrefix` — URL prefix for OAuth callback path. Default: `"agents"`. Ignored when `callbackPath` is provided
-  - `client` — MCP client configuration options (passed to `@modelcontextprotocol/sdk` Client constructor). By default, includes `CfWorkerJsonSchemaValidator` for validating tool parameters against JSON schemas
+  - `client` — The Agents-supported `McpClientOptions` subset from `@modelcontextprotocol/client`. The default validator supports JSON Schema 2020-12 and legacy draft-07 schemas in Workers
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
     - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
@@ -870,17 +872,19 @@ export class MyAgent extends Agent {
 
 ### `configureElicitationHandlers()`
 
-Configure handlers for server-initiated `elicitation/create` requests. Add a handler for each elicitation mode your Agent supports.
+Configure handlers for stateless elicitation and legacy `elicitation/create` requests. Add a handler for each elicitation mode your Agent supports.
 
 ```txt
 this.mcp.configureElicitationHandlers(handlers?: {
   form?: (
     request: ElicitRequest,
     serverId: string,
+    signal?: AbortSignal,
   ) => Promise<ElicitResult>;
   url?: (
     request: ElicitRequest,
     serverId: string,
+    signal?: AbortSignal,
   ) => Promise<ElicitResult>;
 }): void
 ```
@@ -892,6 +896,7 @@ this.mcp.configureElicitationHandlers(handlers?: {
   - `url` (function, optional) — Handles URL-mode requests for out-of-band interactions.
 - `request` (`ElicitRequest`) — The MCP elicitation request. Inspect `request.params.mode` for the mode-specific fields.
 - `serverId` (string) — The ID of the MCP server connection that sent the request.
+- `signal` (`AbortSignal`, optional) — Aborts when the originating MCP operation is cancelled.
 
 Each handler returns a promise containing an `ElicitResult`. Return `accept`, `decline`, or `cancel`. Accepted form responses include `content` that matches `requestedSchema`. URL responses omit `content`.
 
@@ -899,7 +904,7 @@ Passing `undefined` clears all configured handlers.
 
 #### Capability behavior
 
-The client advertises only modes with configured handlers during the MCP `initialize` handshake. Handler changes apply immediately to live connections, but servers receive updated advertised modes after those connections reconnect.
+The client advertises only modes with configured handlers during legacy negotiation and on stateless requests. Handler changes apply immediately to live connections, but servers receive updated advertised modes after those connections reconnect.
 
 The SDK stores the handler-derived modes with each MCP server registration. Restored connections advertise those modes after Durable Object hibernation, and callbacks reattach when `onStart()` runs.
 
@@ -911,7 +916,7 @@ Configure handlers in `onStart()`:
 
 ```ts
 import { Agent } from "agents";
-import type { ElicitRequest, ElicitResult } from "agents/mcp";
+import type { ElicitRequest, ElicitResult } from "agents/mcp/client";
 
 export class MyAgent extends Agent<Env> {
 	onStart() {
