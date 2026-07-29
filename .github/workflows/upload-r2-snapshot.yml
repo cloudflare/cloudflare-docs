@@ -52,6 +52,7 @@ jobs:
           timestamp=$(date -u '+%Y-%m-%dT%H-%M-%SZ')
           destination="s3://$R2_BUCKET/$timestamp"
           manifest="$RUNNER_TEMP/manifest.json"
+          checksums="$RUNNER_TEMP/MD5SUMS"
           success="$RUNNER_TEMP/_SUCCESS"
 
           if [ -z "$(find dist -type f -name '*.html' -print -quit)" ]; then
@@ -59,11 +60,19 @@ jobs:
             exit 1
           fi
 
+          find . \( -path './.git' -o -path './dist' \) -prune -o -type f -print0 \
+            | sort -z \
+            | xargs -0 md5sum \
+            | sed 's|  \./|  source/|' > "$checksums"
+          find dist -type f -name '*.html' -print0 \
+            | sort -z \
+            | xargs -0 md5sum >> "$checksums"
+
           jq -n \
             --arg timestamp "$timestamp" \
             --arg sha "$PUBLISHED_SHA" \
             --arg publish_run_id "$PUBLISH_RUN_ID" \
-            '{timestamp: $timestamp, commitSha: $sha, publishRunId: $publish_run_id}' \
+            '{timestamp: $timestamp, commitSha: $sha, publishRunId: $publish_run_id, checksumAlgorithm: "md5", checksumFile: "MD5SUMS"}' \
             > "$manifest"
           touch "$success"
 
@@ -75,6 +84,8 @@ jobs:
           aws s3 cp dist "$destination/dist/" \
             --recursive --exclude '*' --include '*.html' --no-progress \
             --endpoint-url "$endpoint"
+          aws s3 cp "$checksums" "$destination/MD5SUMS" \
+            --no-progress --endpoint-url "$endpoint"
           aws s3 cp "$manifest" "$destination/manifest.json" \
             --no-progress --endpoint-url "$endpoint"
           aws s3 cp "$success" "$destination/_SUCCESS" \
