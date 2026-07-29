@@ -26,6 +26,7 @@ import ModelBadges from "~/components/models/ModelBadges.astro";
 import ModelFeatures from "~/components/models/ModelFeatures.astro";
 import CopyableCode from "~/components/models/CopyableCode.astro";
 import ExampleCard from "~/components/models/ExampleCard.astro";
+import Render from "~/components/Render.astro";
 import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
 import SchemaVariantTabs from "~/components/models/SchemaVariantTabs.tsx";
 import SchemaFileLinks from "~/components/models/SchemaFileLinks.astro";
@@ -139,6 +140,14 @@ if (model.name.includes("@cf/openai/gpt-oss")) {
 
 const author = authorData[model.author];
 const authorName = model.authorName;
+
+// Models that require the Workers Paid plan (not available on Workers Free).
+const workersPaidOnlyModels = [
+	"@cf/moonshotai/kimi-k2.6",
+	"@cf/moonshotai/kimi-k2.7-code",
+	"@cf/zai-org/glm-5.2",
+];
+const isWorkersPaidOnly = workersPaidOnlyModels.includes(model.name);
 
 // `hasSchema`: input must have at least one key.
 const hasSchema = Object.keys(model.schema.input).length > 0;
@@ -327,6 +336,12 @@ const headings: MarkdownHeading[] = [
 					lang="sh"
 				/>
 			</Aside>
+		)
+	}
+
+	{
+		isWorkersPaidOnly && (
+			<Render file="workers-paid-only-note" product="workers-ai" />
 		)
 	}
 
