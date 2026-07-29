@@ -237,6 +237,11 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-wan/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/multi-cloud-networking/ @steve-cloudflare @jeffh-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/partials/networking-services/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
+/src/content/changelog/cloudflare-network-firewall/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/cloudflare-wan/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/magic-transit/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/multi-cloud-networking/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/network-interconnect/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
 
 # Migration guides
 
