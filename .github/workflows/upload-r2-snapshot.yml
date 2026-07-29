@@ -1,0 +1,96 @@
+name: Upload R2 snapshot
+
+on:
+  workflow_run:
+    workflows: ["Publish"]
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  upload:
+    name: Upload production snapshot to R2
+    if: >-
+      github.repository == 'cloudflare/cloudflare-docs' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'production'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Download published site
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: site-html
+          path: dist
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Upload snapshot
+        env:
+          R2_BUCKET: ${{ vars.R2_SNAPSHOT_BUCKET }}
+          R2_ACCOUNT_ID: ${{ vars.R2_SNAPSHOT_ACCOUNT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_SNAPSHOT_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SNAPSHOT_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          PUBLISHED_SHA: ${{ github.event.workflow_run.head_sha }}
+          PUBLISH_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          : "${R2_BUCKET:?R2_SNAPSHOT_BUCKET repository variable is required}"
+          : "${R2_ACCOUNT_ID:?R2_SNAPSHOT_ACCOUNT_ID repository variable is required}"
+          : "${AWS_ACCESS_KEY_ID:?R2_SNAPSHOT_ACCESS_KEY_ID secret is required}"
+          : "${AWS_SECRET_ACCESS_KEY:?R2_SNAPSHOT_SECRET_ACCESS_KEY secret is required}"
+
+          endpoint="https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com"
+          timestamp=$(date -u '+%Y-%m-%dT%H-%M-%SZ')
+          destination="s3://$R2_BUCKET/$timestamp"
+          manifest="$RUNNER_TEMP/manifest.json"
+          success="$RUNNER_TEMP/_SUCCESS"
+
+          if [ -z "$(find dist -type f -name '*.html' -print -quit)" ]; then
+            echo "No HTML files found in the site artifact" >&2
+            exit 1
+          fi
+
+          jq -n \
+            --arg timestamp "$timestamp" \
+            --arg sha "$PUBLISHED_SHA" \
+            --arg publish_run_id "$PUBLISH_RUN_ID" \
+            '{timestamp: $timestamp, commitSha: $sha, publishRunId: $publish_run_id}' \
+            > "$manifest"
+          touch "$success"
+
+          aws configure set default.s3.max_concurrent_requests 32
+
+          aws s3 cp . "$destination/source/" \
+            --recursive --exclude '.git/*' --exclude 'dist/*' \
+            --no-follow-symlinks --no-progress --endpoint-url "$endpoint"
+          aws s3 cp dist "$destination/dist/" \
+            --recursive --exclude '*' --include '*.html' --no-progress \
+            --endpoint-url "$endpoint"
+          aws s3 cp "$manifest" "$destination/manifest.json" \
+            --no-progress --endpoint-url "$endpoint"
+          aws s3 cp "$success" "$destination/_SUCCESS" \
+            --no-progress --endpoint-url "$endpoint"
+
+      - name: Notify Google Chat on failure
+        if: failure()
+        env:
+          WEBHOOK_URL: ${{ secrets.CED_TEAM_ALERTS_CHANNEL_WEBHOOK }}
+          ACTOR: ${{ github.event.workflow_run.actor.login }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          PUBLISHED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          MESSAGE="*R2 production snapshot* failed (site already deployed).\nActor: $ACTOR\nCommit: $PUBLISHED_SHA\n<https://github.com/$REPO/actions/runs/$RUN_ID|View run>"
+          JSON_PAYLOAD=$(jq -n --arg text "$MESSAGE" '{text: $text}')
+          curl -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD"
