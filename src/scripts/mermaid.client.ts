@@ -5,6 +5,7 @@
 
 let dialog: HTMLDialogElement | null = null;
 let themeObserver: MutationObserver | null = null;
+const diagramPadding = 8;
 // Per-<pre> guard: capture source text once, before mermaid replaces innerHTML.
 const captured = new WeakSet<HTMLPreElement>();
 
@@ -183,6 +184,47 @@ function wrapDiagram(diagram: HTMLPreElement, title: string | null) {
 	}
 }
 
+export function fitSvgToContents(svg: SVGSVGElement): void {
+	let bounds: DOMRect;
+	try {
+		bounds = svg.getBBox();
+	} catch {
+		return;
+	}
+
+	if (
+		![bounds.x, bounds.y, bounds.width, bounds.height].every(Number.isFinite) ||
+		bounds.width <= 0 ||
+		bounds.height <= 0
+	) {
+		return;
+	}
+
+	const width = bounds.width + diagramPadding * 2;
+	const height = bounds.height + diagramPadding * 2;
+	// Mermaid briefly uses an oversized foreignObject to measure HTML labels.
+	// Preserve valid padding, but replace a view box based on that stale geometry.
+	const viewBox = svg
+		.getAttribute("viewBox")
+		?.trim()
+		.split(/[\s,]+/)
+		.map(Number);
+	if (
+		viewBox?.length === 4 &&
+		viewBox.every(Number.isFinite) &&
+		viewBox[2] <= width * 2 &&
+		viewBox[3] <= height * 2
+	) {
+		return;
+	}
+
+	svg.setAttribute(
+		"viewBox",
+		`${bounds.x - diagramPadding} ${bounds.y - diagramPadding} ${width} ${height}`,
+	);
+	svg.style.maxWidth = `${width}px`;
+}
+
 async function render() {
 	const diagrams = document.querySelectorAll<HTMLPreElement>("pre.mermaid");
 	if (diagrams.length === 0) return;
@@ -277,6 +319,7 @@ async function render() {
 			const title = titleElement?.textContent?.trim() || null;
 
 			wrapDiagram(diagram, title);
+			if (svgElement) fitSvgToContents(svgElement);
 			diagram.setAttribute("data-processed", "true");
 		} catch (e) {
 			showRenderError(diagram);
