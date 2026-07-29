@@ -8,13 +8,9 @@ products:
   - agents
 ---
 
-import {
-	TypeScriptExample,
-	WranglerConfig,
-	LinkCard,
-} from "~/components";
+import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
-[Workers traces](/workers/observability/traces/) cover the infrastructure layer -- fetch calls, KV reads, D1 queries. Agent tracing adds the layer above: which model was called, what tools ran, how long a human took to approve, and what the agent decided. Both show up in the same trace. Spans follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai) and don't require an OTel SDK or exporter.
+[Workers traces](/workers/observability/traces/) cover the infrastructure layer — fetch calls, KV reads, and D1 queries. Agent tracing adds the application layer: which model was called, which tools ran, and how those operations relate. Both layers appear in the same trace. Spans follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai) and do not require an OpenTelemetry SDK or exporter.
 
 ## Enable tracing
 
@@ -36,32 +32,38 @@ enabled = true
 
 Traces are available in the [Agents tab](https://dash.cloudflare.com/?to=/:account/agents) in the Cloudflare Dashboard. The overview lists every traced agent with its model, session count, runs, and total token usage.
 
-![Agents dashboard overview](~/assets/images/agents/tracing-agent_overview.png)
+![Agents dashboard listing traced agents with run and token usage metrics](~/assets/images/agents/tracing-agent_overview.png)
 
-Select an agent to see its individual traces, each with duration, token breakdown, and status.
+Select an agent to view its individual traces. Each trace shows its duration, token breakdown, and status.
 
-![Traces for a single agent](~/assets/images/agents/tracing-per-agent.png)
+![Agents dashboard showing traces for one agent](~/assets/images/agents/tracing-per-agent.png)
 
 Each trace has two views:
 
-**Conversation** lets you read back exactly what happened -- the system instructions, what the user said, the model's reasoning, which tools it called and with what arguments, and how sub-agents were involved. This is where you debug why the agent did what it did.
+**Conversation** shows recorded model messages and tool payloads when [payload storage](/agents/runtime/operations/observability/tracing/#payload-privacy) is on. Use this view to inspect system instructions, user messages, model reasoning, tool calls, and nested agents.
 
-![Conversation view](~/assets/images/agents/tracing-session-replay.png)
+![Conversation view showing model messages and tool calls](~/assets/images/agents/tracing-session-replay.png)
 
-**Timeline** lets you debug where the time went. Each operation in a turn is recorded as a span -- a timed block that shows when it started, how long it took, and how it relates to other operations. Spans nest to show the call hierarchy: an `invoke_agent` span contains `chat` spans for model calls and `execute_tool` spans for tool runs. `tool_approval` spans capture time spent waiting on human approval. Sub-agent work nests under the parent agent's span. If your agent feels slow, the timeline shows you exactly which operation is responsible.
+**Timeline** shows when each operation started, its duration, and its parent operation. An `invoke_agent` span contains `chat` spans for model calls and `execute_tool` spans for tool runs. Each `tool_approval` span is a child of its related `execute_tool` span. Nested sub-agent work appears under its parent operation.
 
-![Timeline view](~/assets/images/agents/tracing-classic-waterfall.png)
+![Timeline view showing nested agent, model, and tool spans](~/assets/images/agents/tracing-classic-waterfall.png)
+
+Approval spans are bounded lifecycle segments. The `cloudflare.agents.tool.approval.state` attribute identifies each segment as `requested`, `approved`, or `denied`. Segments close within the invocation that records the event. They do not measure how long a human waits before responding across invocations.
+
+If an invocation ends while bounded work is still running, its open spans close with `cloudflare.agents.span.truncated` set to `true`. Completion-time attributes can be absent from these spans.
 
 ## Framework setup
 
 ### Think
 
-[Think](/agents/harnesses/think/) instruments every turn automatically. No wrapper or adapter needed. When traces are on, each turn produces:
+[Think](/agents/harnesses/think/) uses `wrapAISDK()` internally to instrument every turn. You do not need to wrap the AI SDK or configure an adapter. When traces are on, spans follow this hierarchy:
 
-- `invoke_agent {agent class}` -- the full turn
-- `chat {model}` -- each model call
-- `execute_tool {tool}` -- each tool run
-- `tool_approval {tool}` -- each human-in-the-loop approval
+```txt
+invoke_agent {agent class}
+├── chat {model}
+└── execute_tool {tool}
+    └── tool_approval {tool}
+```
 
 Spans carry the agent class, named instance, conversation, and turn IDs.
 
@@ -69,33 +71,11 @@ Spans carry the agent class, named instance, conversation, and turn IDs.
 
 [Flue](https://flueframework.com/) also instruments turns automatically with the same span structure as Think.
 
+For direct AI SDK calls, `wrapAISDK()` is the single supported and recommended tracing integration for v6 and v7.
+
 ### AI SDK v7
 
-If you use [AI SDK](https://sdk.vercel.ai/) v7 directly (not through Think or Flue), register the Cloudflare telemetry adapter:
-
-<TypeScriptExample>
-
-```ts
-import { generateText, registerTelemetry } from "ai";
-import { createAISDKTelemetry } from "agents/observability/ai";
-
-registerTelemetry(createAISDKTelemetry());
-
-await generateText({
-	model,
-	prompt: "Summarize this conversation",
-});
-```
-
-</TypeScriptExample>
-
-`createAISDKTelemetry` also accepts `storeMessages` and `storeTools` options to control [payload privacy](#payload-privacy).
-
-`wrapAISDK` also works with v7. It starts an `invoke_agent` span before model and tool work, so `chat` and `execute_tool` nest under it. Use `wrapAISDK` when you want the `invoke_agent` parent-child hierarchy; use `createAISDKTelemetry` when you want the v7 lifecycle integration directly.
-
-### AI SDK v6
-
-For [AI SDK](https://sdk.vercel.ai/) v6, wrap the namespace once and call the wrapped functions instead of the originals:
+Wrap the [AI SDK](https://sdk.vercel.ai/) v7 namespace once, then call the wrapped functions:
 
 <TypeScriptExample>
 
@@ -105,7 +85,27 @@ import { wrapAISDK } from "agents/observability/ai";
 
 const tracedAI = wrapAISDK(ai);
 
-await tracedAI.streamText({
+await tracedAI.generateText({
+	model,
+	prompt: "Summarize this conversation",
+});
+```
+
+</TypeScriptExample>
+
+### AI SDK v6
+
+Use the same `wrapAISDK()` integration for direct [AI SDK](https://sdk.vercel.ai/) v6 calls:
+
+<TypeScriptExample>
+
+```ts
+import * as ai from "ai";
+import { wrapAISDK } from "agents/observability/ai";
+
+const tracedAI = wrapAISDK(ai);
+
+await tracedAI.generateText({
 	model,
 	prompt: "What should I work on next?",
 });
@@ -113,13 +113,47 @@ await tracedAI.streamText({
 
 </TypeScriptExample>
 
-`wrapAISDK` instruments `generateText`, `streamText`, `generateObject`, and `streamObject`.
+For both versions, `wrapAISDK()` instruments `generateText`, `streamText`, `generateObject`, and `streamObject`. It creates the `invoke_agent` parent before model and tool work begins.
+
+## Identify direct AI SDK traces
+
+The AI SDK `functionId` maps to `gen_ai.agent.name`. Use a low-cardinality logical agent name, not a request, user, session, or Durable Object identifier. Set `functionId` in `telemetry` for v7 or `experimental_telemetry` for v6.
+
+AI SDK v7 has no telemetry metadata bag. Put additional identity and application context in `runtimeContext`. Select telemetry-visible scalar fields with `telemetry.includeRuntimeContext`:
+
+<TypeScriptExample>
+
+```ts
+await tracedAI.generateText({
+	model,
+	prompt: "Find an available appointment",
+	runtimeContext: {
+		agentId: "asst_123",
+		conversationId: "conversation-123",
+		tenantTier: "gold",
+	},
+	telemetry: {
+		functionId: "booking-agent",
+		includeRuntimeContext: {
+			agentId: true,
+			conversationId: true,
+			tenantTier: true,
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+The identity keys `agentId`, `agentName`, `agentVersion`, and `conversationId` map to their standard `gen_ai.*` attributes. An explicit `agentName` takes precedence over `functionId`. Included application values such as `tenantTier` use the `cloudflare.agents.runtime_context.*` namespace. AI SDK v6 reads additional identity from `experimental_telemetry.metadata`.
+
+Do not include tokens, credentials, user input, or other secrets in telemetry context. Context filtering reduces accidental exposure, but it is not a security boundary.
 
 ## Payload privacy
 
-Model messages and tool payloads can contain PII, so they are not recorded by default.
+Message and tool payloads can contain personally identifiable information. Payload storage is off by default.
 
-To opt in with AI SDK v6 or v7, pass storage options to `wrapAISDK`:
+To opt in with AI SDK v6 or v7, pass storage options to `wrapAISDK()`:
 
 <TypeScriptExample>
 
@@ -154,20 +188,20 @@ export class MyAgent extends Think<Env> {
 
 ## Exporting traces
 
-Span attributes follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai), so any tool that reads OTel data can consume them. To send traces to an external destination, [configure an OTLP endpoint](/workers/observability/exporting-opentelemetry-data/) in Workers Observability.
+Span attributes follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai), so any tool that reads OpenTelemetry data can consume them. To send traces to an external destination, [configure an OpenTelemetry Protocol (OTLP) endpoint](/workers/observability/exporting-opentelemetry-data/) in Workers Observability.
 
 ## Pricing
 
 Agent tracing is free while [Workers traces](/workers/observability/traces/) is in beta. Each span counts as one observability event, sharing the same quota as Workers Logs and Traces.
 
-| Tier | Included events | Retention |
-| --- | --- | --- |
-| Workers Free | 200,000 per day | 3 days |
-| Workers Paid | 20 million per month ($0.60 per additional million) | 7 days |
+| Tier         | Included events                                     | Retention |
+| ------------ | --------------------------------------------------- | --------- |
+| Workers Free | 200,000 per day                                     | 3 days    |
+| Workers Paid | 20 million per month ($0.60 per additional million) | 7 days    |
 
-## What's next
+## Next steps
 
-- **OpenTelemetry API support** -- We are working on supporting the [OpenTelemetry API](https://opentelemetry.io/) on Workers. Once available, AI SDKs and agent frameworks that already emit OTel instrumentation will produce spans automatically without any wrapper or adapter.
+Cloudflare is working to support the [OpenTelemetry API](https://opentelemetry.io/) on Workers. Once available, AI SDKs and agent frameworks that emit OpenTelemetry instrumentation will produce spans without manual integration code.
 
 <LinkCard
 	title="Diagnostics channels"
