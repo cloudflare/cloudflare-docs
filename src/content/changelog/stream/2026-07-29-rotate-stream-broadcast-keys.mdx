@@ -1,0 +1,23 @@
+---
+title: Rotate Stream broadcast keys for live inputs
+description: Rotate credentials for a Stream live input without changing the live input ID or its other configuration.
+products:
+  - stream
+date: 2026-07-31
+---
+
+You can now rotate the broadcast credentials for a Stream live input without changing the live input identifier.
+
+Use key rotation when live input credentials may have been shared with the wrong audience, exposed in client code or a screenshare, or need to be refreshed as part of your security process. Rotating keys revokes the old credentials, disconnects broadcasts using stale credentials, and returns refreshed credentials in the API response.
+
+To rotate keys for a live input, make a `POST` request to the `rotate_keys` endpoint:
+
+```bash
+curl --request POST \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{live_input_identifier}/rotate_keys \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+Live input responses now also include `keysRotatedAt`, which indicates when the live input keys were last rotated. This field is omitted for live inputs whose keys have never been rotated.
+
+For more information, refer to the [Stream Live API docs](/stream/stream-live/stream-live-api/).
