@@ -13,10 +13,10 @@ products:
 
 import { WranglerConfig, DashButton } from "~/components";
 
-[Cloudflare Logpush](/logs/logpush/) supports the ability to send [Workers Trace Event Logs](/logs/logpush/logpush-job/datasets/account/workers_trace_events/) to a [supported destination](/logs/logpush/logpush-job/enable-destinations/). Worker's Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
+[Cloudflare Logpush](/logs/logpush/) supports the ability to send [Workers Trace Event Logs](/logs/logpush/logpush-job/datasets/account/workers_trace_events/) to a [supported destination](/logs/logpush/logpush-job/enable-destinations/). Workers Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
 
 :::note[Prefer OpenTelemetry export]
-For new integrations, consider using [OpenTelemetry export](/workers/observability/exporting-opentelemetry-data/) instead of Logpush. OpenTelemetry export supports both traces and logs, can be configured with `persist: false` to avoid dashboard storage, and works with any OTLP-compatible destination.
+For new integrations, consider using [OpenTelemetry export](/workers/observability/exporting-opentelemetry-data/) instead. OpenTelemetry export supports both traces and logs, can be configured with `persist: false` to avoid storing logs and traces in Cloudflare, and works with any OTLP-compatible destination.
 :::
 
 :::caution
