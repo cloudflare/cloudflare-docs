@@ -21,6 +21,15 @@ const PR = {
 	head: "fix-handler",
 };
 
+type Finding = {
+	severity?: string;
+	path?: string;
+	line?: number;
+	rule?: string;
+	evidence?: string;
+	suggestion?: string;
+};
+
 describeEval("code review file", { harness }, (it) => {
 	it("flags an unhandled promise rejection in a Worker handler", async ({
 		run,
@@ -48,9 +57,77 @@ describeEval("code review file", { harness }, (it) => {
 			repoAgentsMd: "# AGENTS.md\n\nThis is a test repo.",
 		});
 
-		const findings = (result.output as { findings?: unknown[] })?.findings;
+		const findings = (result.output as { findings?: Finding[] })?.findings;
 		expect(findings).toBeDefined();
 		expect(findings!.length).toBeGreaterThan(0);
+
+		const match = findings!.find(
+			(f) => f.severity === "warning" || f.severity === "critical",
+		);
+		expect(match).toBeDefined();
+		expect(match!.path).toBe("src/handler.ts");
+		expect(match!.line).toBe(10);
+		expect(match!.rule?.toLowerCase()).toMatch(
+			/promise|reject|unhandled|await|error/,
+		);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_code_review",
+		);
+	});
+
+	it("passes on a file with proper error handling", async ({ run }) => {
+		const result = await run({
+			pullRequest: PR,
+			filename: "src/handler.ts",
+			addedLines: [
+				{
+					line: 8,
+					content: "  const res = await fetch(url);",
+				},
+				{
+					line: 9,
+					content: "  if (!res.ok) {",
+				},
+				{
+					line: 10,
+					content:
+						"    return new Response('upstream error', { status: 502 });",
+				},
+				{
+					line: 11,
+					content: "  }",
+				},
+				{
+					line: 12,
+					content: "  const data = await res.json();",
+				},
+				{
+					line: 13,
+					content: "  return new Response(JSON.stringify(data));",
+				},
+			],
+			fileContent: [
+				"export default {",
+				"  async fetch(request, env) {",
+				"    const url = 'https://api.example.com/data';",
+				"    const res = await fetch(url);",
+				"    if (!res.ok) {",
+				"      return new Response('upstream error', { status: 502 });",
+				"    }",
+				"    const data = await res.json();",
+				"    return new Response(JSON.stringify(data));",
+				"  },",
+				"};",
+			].join("\n"),
+			headSha: "abc123",
+			repoAgentsMd: "# AGENTS.md\n\nThis is a test repo.",
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+		expect(findings!.length).toBe(0);
+
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_code_review",
 		);

@@ -15,15 +15,26 @@ const harness = createFlueAgentHarness<StyleGuideFileInput>({
 	token,
 });
 
+type Finding = {
+	severity?: string;
+	path?: string;
+	line?: number;
+	rule?: string;
+	evidence?: string;
+	suggestion?: string;
+};
+
+const PR = {
+	number: 999,
+	title: "[Workers] Fix link",
+	base: "production",
+	head: "fix-link",
+};
+
 describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a full URL for an internal link", async ({ run }) => {
 		const result = await run({
-			pullRequest: {
-				number: 999,
-				title: "[Workers] Fix link",
-				base: "production",
-				head: "fix-link",
-			},
+			pullRequest: PR,
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
@@ -34,9 +45,21 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 			],
 		});
 
-		const findings = (result.output as { findings?: unknown[] })?.findings;
+		const findings = (result.output as { findings?: Finding[] })?.findings;
 		expect(findings).toBeDefined();
 		expect(findings!.length).toBeGreaterThan(0);
+
+		const linkFinding = findings!.find(
+			(f) =>
+				f.rule?.toLowerCase().includes("link") ||
+				f.rule?.toLowerCase().includes("url") ||
+				f.rule?.toLowerCase().includes("root-relative"),
+		);
+		expect(linkFinding).toBeDefined();
+		expect(linkFinding!.severity).toBe("warning");
+		expect(linkFinding!.path).toBe("src/content/docs/workers/example.mdx");
+		expect(linkFinding!.line).toBe(42);
+
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_style_guide",
 		);
@@ -59,14 +82,42 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 			],
 		});
 
-		const findings = (result.output as { findings?: unknown[] })?.findings;
+		const findings = (result.output as { findings?: Finding[] })?.findings;
 		expect(findings).toBeDefined();
 		// Live model eval — the model may find a minor suggestion.
 		// Assert no warnings (the severity that matters); suggestions are noise.
-		const warnings = (findings as Array<{ severity?: string }>).filter(
-			(f) => f?.severity === "warning",
-		);
+		const warnings = (findings ?? []).filter((f) => f?.severity === "warning");
 		expect(warnings).toHaveLength(0);
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("flags a body H1 heading", async ({ run }) => {
+		const result = await run({
+			pullRequest: PR,
+			filename: "src/content/docs/workers/example.mdx",
+			addedLines: [
+				{
+					line: 15,
+					content: "# Getting Started with Workers",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+		expect(findings!.length).toBeGreaterThan(0);
+
+		const h1Finding = findings!.find(
+			(f) =>
+				f.rule?.toLowerCase().includes("h1") ||
+				f.rule?.toLowerCase().includes("heading"),
+		);
+		expect(h1Finding).toBeDefined();
+		expect(h1Finding!.severity).toBe("warning");
+		expect(h1Finding!.path).toBe("src/content/docs/workers/example.mdx");
+
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_style_guide",
 		);

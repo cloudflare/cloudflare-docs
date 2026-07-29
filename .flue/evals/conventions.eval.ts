@@ -15,6 +15,14 @@ const harness = createFlueAgentHarness<ConventionsReviewInput>({
 	token,
 });
 
+type Finding = {
+	severity?: string;
+	path?: string;
+	rule?: string;
+	evidence?: string;
+	suggestion?: string;
+};
+
 describeEval("conventions reviewer", { harness }, (it) => {
 	it("flags a vague title with no description", async ({ run }) => {
 		const result = await run({
@@ -32,9 +40,23 @@ describeEval("conventions reviewer", { harness }, (it) => {
 			],
 		});
 
-		const findings = (result.output as { findings?: unknown[] })?.findings;
+		const findings = (result.output as { findings?: Finding[] })?.findings;
 		expect(findings).toBeDefined();
 		expect(findings!.length).toBeGreaterThan(0);
+
+		const titleFinding = findings!.find((f) =>
+			f.rule?.toLowerCase().includes("title"),
+		);
+		expect(titleFinding).toBeDefined();
+		expect(titleFinding!.severity).toBe("warning");
+		expect(titleFinding!.path).toBe("pr");
+
+		const descFinding = findings!.find((f) =>
+			f.rule?.toLowerCase().includes("description"),
+		);
+		expect(descFinding).toBeDefined();
+		expect(descFinding!.severity).toBe("warning");
+
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_conventions_review",
 		);
@@ -63,8 +85,7 @@ describeEval("conventions reviewer", { harness }, (it) => {
 			],
 		});
 
-		const findings = (result.output as { findings?: Array<{ rule?: string }> })
-			?.findings;
+		const findings = (result.output as { findings?: Finding[] })?.findings;
 		expect(findings).toBeDefined();
 		const titleOrDescFindings = (findings ?? []).filter(
 			(f) =>
@@ -72,6 +93,52 @@ describeEval("conventions reviewer", { harness }, (it) => {
 				f.rule?.toLowerCase().includes("description"),
 		);
 		expect(titleOrDescFindings).toHaveLength(0);
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_conventions_review",
+		);
+	});
+
+	it("flags scope inaccuracy when a new page is added but description only mentions a typo fix", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: {
+				number: 997,
+				title: "[D1] Fix typo in concepts guide",
+			},
+			description:
+				"Fixes a small typo in the D1 concepts page — changed 'recieve' to 'receive'.",
+			prTemplate: "",
+			renamedDocFiles: [],
+			changedFiles: [
+				{
+					filename: "src/content/docs/d1/concepts.mdx",
+					status: "modified",
+					additions: 2,
+					deletions: 2,
+				},
+				{
+					filename: "src/content/docs/d1/configuration.mdx",
+					status: "added",
+					additions: 150,
+					deletions: 0,
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+		expect(findings!.length).toBeGreaterThan(0);
+
+		const scopeFinding = findings!.find(
+			(f) =>
+				f.rule?.toLowerCase().includes("scope") ||
+				f.rule?.toLowerCase().includes("description"),
+		);
+		expect(scopeFinding).toBeDefined();
+		expect(scopeFinding!.severity).toBe("warning");
+		expect(scopeFinding!.path).toBe("pr");
+
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_conventions_review",
 		);

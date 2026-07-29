@@ -150,4 +150,58 @@ describeEval("reconcile reviewer", { harness }, (it) => {
 			"submit_reconcile_result",
 		);
 	});
+
+	it("keeps a finding active when a human comment is weak or unrelated", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			currentFindings: [
+				{
+					id: "SG-ddd444",
+					severity: "warning",
+					path: "src/content/docs/workers/example.mdx",
+					line: 50,
+					rule: "Avoid contractions",
+					evidence: "Line uses 'don't' instead of 'do not'",
+					suggestion: "Change to 'do not'",
+				},
+			],
+			reviewedFiles: ["src/content/docs/workers/example.mdx"],
+			previousFindings: [
+				{
+					id: "SG-ddd444",
+					severity: "warning",
+					path: "src/content/docs/workers/example.mdx",
+					line: 50,
+					rule: "Avoid contractions",
+					evidence: "Line uses 'don't' instead of 'do not'",
+					suggestion: "Change to 'do not'",
+				},
+			],
+			humanComments: [
+				{
+					author: "doc-author",
+					created_at: "2026-01-20T12:00:00Z",
+					body: "I prefer it this way.",
+				},
+			],
+			diffMode: { type: "full" },
+		});
+
+		const output = result.output as {
+			active?: Array<{ id?: string }>;
+			ignored_by_reviewer?: unknown[];
+			resolved?: string[];
+		};
+		expect(output).toBeDefined();
+		expect(output?.active).toBeDefined();
+		expect(output?.active).toHaveLength(1);
+		expect(output?.active?.[0]?.id).toBe("SG-ddd444");
+		expect(output?.ignored_by_reviewer).toHaveLength(0);
+		expect(output?.resolved).not.toContain("SG-ddd444");
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_reconcile_result",
+		);
+	});
 });

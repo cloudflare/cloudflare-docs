@@ -29,7 +29,7 @@ The specialist and reconcile Flue agents are driven from **inside** Workflow ste
 
 ### Agents (Flue `'use agent'` modules → Durable Objects)
 
-Each agent is a `"use agent"` module whose default-export function uses hooks (`useModel`, `useSkill`, `useInitialData`, `useTool`, `useDataWriter`, `useAgentFinish`) and sets `.agentName`. The framework generates one Durable Object class per agent, named **`Flue<PascalCase(agentName)>Agent``. Per-run context (PR metadata, file content, head SHA) arrives as `initialData`; the GitHub installation token is **not** seeded through `initialData` — Flue records `initialData` durably in the DO's SQLite, so a short-lived credential would persist for the DO's lifetime. Instead, token-carrying agents mint the token in-DO from the Worker's GitHub App secrets via `getGitHubToken()` (`lib/token-provider.ts`), which calls `getInstallationToken(env)` from `cloudflare:workers` and caches with a soft TTL. Tools that need the token are built inside the render from that provider at a fixed length so the hook order is stable.
+Each agent is a `"use agent"` module whose default-export function uses hooks (`useModel`, `useSkill`, `useInitialData`, `useTool`, `useDataWriter`, `useAgentFinish`) and sets `.agentName`. The framework generates one Durable Object class per agent, named **`Flue<PascalCase(agentName)>Agent``. Per-run context (PR metadata, file content, head SHA) arrives as `initialData`; the GitHub installation token is **not** seeded through `initialData`— Flue records`initialData`durably in the DO's SQLite, so a short-lived credential would persist for the DO's lifetime. Instead, token-carrying agents mint the token in-DO from the Worker's GitHub App secrets via`getGitHubToken()` (`lib/token-provider.ts`), which calls `getInstallationToken(env)`from`cloudflare:workers` and caches with a soft TTL. Tools that need the token are built inside the render from that provider at a fixed length so the hook order is stable.
 
 | Agent (`agents/`)             | agentName                | DO class                        | Driver (`lib/`)           |
 | ----------------------------- | ------------------------ | ------------------------------- | ------------------------- |
@@ -141,7 +141,7 @@ Agent evals test agent behavior against the live Workers AI model. They live in 
 ### Architecture
 
 - **Eval routes** (`app.ts`): each reviewable agent is mounted at `/eval/agents/:agentName` behind the `DOCS_FLUE_INTERNAL_TOKEN` gate (same token as `/dev/review/:number`). Routes return 404 when the token is unset, so they are invisible in production deploys that have not configured it.
-- **Harness** (`evals/harness.ts`): a custom `createHarness` adapter that POSTs `{ message, initialData }` to the agent's HTTP endpoint with `?wait=result`, then reads `?view=history` to extract the structured `useDataWriter` output and tool-call transcript.
+- **Harness** (`evals/harness.ts`): a custom `createHarness` adapter that POSTs `{ message, initialData }` to the agent's HTTP endpoint (fire-and-forget), then polls `?view=history` until the agent settles, extracting the structured `useDataWriter` output and tool-call transcript.
 - **Eval cases** (`evals/*.eval.ts`): each file uses `describeEval` with the harness, providing synthetic `initialData` fixtures and asserting on the structured output (`findings`, `is_spam`, `resolved`, etc.) and tool calls (`submit_*`).
 
 ### Running evals
@@ -179,12 +179,12 @@ The `evals` job in `.github/workflows/flue-ci.yml` starts the dev server, runs e
 
 ### Current eval coverage
 
-| Agent | Eval file | Cases |
-| ----- | --------- | ----- |
-| `style-guide-file` | `style-guide.eval.ts` | Full URL flag, clean root-relative link pass |
-| `conventions-reviewer` | `conventions.eval.ts` | Vague title flag, well-described PR pass |
-| `spam-filter` | `spam-filter.eval.ts` | Spam issue flag, legit typo report pass |
-| `reconcile-reviewer` | `reconcile.eval.ts` | Resolved finding, ignored-by-author, incremental carry-forward |
-| `code-review-file` | `code-review.eval.ts` | Unhandled promise flag, clean error handling pass |
+| Agent                  | Eval file             | Cases                                                                                                        |
+| ---------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `style-guide-file`     | `style-guide.eval.ts` | Full URL flag (asserts rule/severity/path/line), clean root-relative link pass, body H1 flag                 |
+| `conventions-reviewer` | `conventions.eval.ts` | Vague title flag (asserts rule/severity), well-described PR pass, scope-accuracy flag (new page unmentioned) |
+| `spam-filter`          | `spam-filter.eval.ts` | Spam issue flag, legit typo report pass, support request off-topic flag, sparse PR with real diff pass       |
+| `reconcile-reviewer`   | `reconcile.eval.ts`   | Resolved finding, ignored-by-author, incremental carry-forward, weak comment stays active                    |
+| `code-review-file`     | `code-review.eval.ts` | Unhandled promise flag (asserts rule/severity/path/line), clean error handling pass                          |
 
 Not yet covered: `dependabot-reviewer` and `rebase-conflict-resolver` (need GitHub/npm tool fixtures or credentials).
