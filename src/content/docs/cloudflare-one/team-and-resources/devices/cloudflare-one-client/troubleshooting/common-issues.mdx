@@ -84,6 +84,31 @@ The client blocks outgoing traffic on port `25` to prevent spam and reputational
 ### Admin override codes expired
 [Admin override codes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) are time-sensitive and adhere to fixed-hour blocks. A code generated at 9:30 AM with a 1-hour timeout will expire at 10:00 AM because its validity is counted within the 9:00 AM-10:00 AM window.
 
+## Troubleshooting Gateway Firewall Policies
+
+Gateway Firewall Policies can be complex to configure and troubleshoot, especially when dealing with specific traffic blocking or allowing issues. Understanding policy settings and their effects is crucial for effective troubleshooting.
+
+### Common Issues with Gateway Firewall Policies
+
+- **Incorrect policy order**: Policies are evaluated in a specific order. If a policy is not being applied as expected, check the policy order and adjust it if necessary.
+- **Overly permissive or restrictive policies**: Policies that are too permissive or restrictive can cause issues with traffic blocking or allowing. Review policy settings and adjust them to achieve the desired level of security.
+- **Incorrect IP addresses or ports**: Verify that IP addresses and ports are correctly configured in the policy. A single incorrect IP address or port can cause issues with traffic blocking or allowing.
+
+### Step-by-Step Troubleshooting Guide
+
+1. **Review policy settings**: Check the policy settings to ensure they are correctly configured. Verify IP addresses, ports, and protocols.
+2. **Check policy order**: Ensure the policy order is correct. Policies are evaluated in a specific order, and an incorrect order can cause issues.
+3. **Test policy application**: Test the policy application by simulating traffic and verifying that it is being blocked or allowed as expected.
+4. **Check logs and metrics**: Review logs and metrics to identify any issues with policy application. Check for errors or warnings that may indicate a problem with the policy.
+5. **Adjust policy settings**: Adjust policy settings as necessary to resolve any issues. Verify that the policy is being applied correctly and that traffic is being blocked or allowed as expected.
+
+### Best Practices for Configuring and Deploying Gateway Firewall Policies
+
+- **Start with a deny-all approach**: Start with a deny-all approach and then add allow rules as necessary. This helps prevent overly permissive policies.
+- **Use specific IP addresses and ports**: Use specific IP addresses and ports instead of broad ranges. This helps prevent issues with traffic blocking or allowing.
+- **Test policies thoroughly**: Test policies thoroughly before deploying them to production. This helps ensure that policies are correctly configured and that traffic is being blocked or allowed as expected.
+- **Monitor logs and metrics**: Monitor logs and metrics to identify any issues with policy application. Check for errors or warnings that may indicate a problem with the policy.
+
 ---
 
 ## Next steps
