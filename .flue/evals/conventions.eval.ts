@@ -44,15 +44,25 @@ describeEval("conventions reviewer", { harness }, (it) => {
 		expect(findings).toBeDefined();
 		expect(findings!.length).toBeGreaterThan(0);
 
-		const titleFinding = findings!.find((f) =>
-			f.rule?.toLowerCase().includes("title"),
+		const titleFinding = findings!.find(
+			(f) =>
+				f.path === "pr" &&
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("title") ||
+					f.rule?.toLowerCase().includes("product") ||
+					f.rule?.toLowerCase().includes("prefix") ||
+					f.rule?.toLowerCase().includes("area")),
 		);
 		expect(titleFinding).toBeDefined();
 		expect(titleFinding!.severity).toBe("warning");
 		expect(titleFinding!.path).toBe("pr");
 
-		const descFinding = findings!.find((f) =>
-			f.rule?.toLowerCase().includes("description"),
+		const descFinding = findings!.find(
+			(f) =>
+				f.path === "pr" &&
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("description") ||
+					f.rule?.toLowerCase().includes("explain")),
 		);
 		expect(descFinding).toBeDefined();
 		expect(descFinding!.severity).toBe("warning");

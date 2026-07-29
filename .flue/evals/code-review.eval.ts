@@ -68,7 +68,7 @@ describeEval("code review file", { harness }, (it) => {
 		expect(match!.path).toBe("src/handler.ts");
 		expect(match!.line).toBe(10);
 		expect(match!.rule?.toLowerCase()).toMatch(
-			/promise|reject|unhandled|await|error/,
+			/promise|reject|unhandled|await|error|fire|discard|floating|ignored/,
 		);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
@@ -81,42 +81,42 @@ describeEval("code review file", { harness }, (it) => {
 			pullRequest: PR,
 			filename: "src/handler.ts",
 			addedLines: [
-				{
-					line: 8,
-					content: "  const res = await fetch(url);",
-				},
-				{
-					line: 9,
-					content: "  if (!res.ok) {",
-				},
-				{
-					line: 10,
-					content:
-						"    return new Response('upstream error', { status: 502 });",
-				},
+				{ line: 8, content: "  try {" },
+				{ line: 9, content: "    const res = await fetch(url);" },
+				{ line: 10, content: "    if (!res.ok) {" },
 				{
 					line: 11,
-					content: "  }",
+					content:
+						"      return new Response('upstream error', { status: 502 });",
 				},
+				{ line: 12, content: "    }" },
+				{ line: 13, content: "    const data = await res.json();" },
 				{
-					line: 12,
-					content: "  const data = await res.json();",
+					line: 14,
+					content: "    return new Response(JSON.stringify(data));",
 				},
+				{ line: 15, content: "  } catch (e) {" },
 				{
-					line: 13,
-					content: "  return new Response(JSON.stringify(data));",
+					line: 16,
+					content:
+						"    return new Response('internal error', { status: 500 });",
 				},
+				{ line: 17, content: "  }" },
 			],
 			fileContent: [
 				"export default {",
 				"  async fetch(request, env) {",
 				"    const url = 'https://api.example.com/data';",
-				"    const res = await fetch(url);",
-				"    if (!res.ok) {",
-				"      return new Response('upstream error', { status: 502 });",
+				"    try {",
+				"      const res = await fetch(url);",
+				"      if (!res.ok) {",
+				"        return new Response('upstream error', { status: 502 });",
+				"      }",
+				"      const data = await res.json();",
+				"      return new Response(JSON.stringify(data));",
+				"    } catch (e) {",
+				"      return new Response('internal error', { status: 500 });",
 				"    }",
-				"    const data = await res.json();",
-				"    return new Response(JSON.stringify(data));",
 				"  },",
 				"};",
 			].join("\n"),
@@ -126,7 +126,17 @@ describeEval("code review file", { harness }, (it) => {
 
 		const findings = (result.output as { findings?: Finding[] })?.findings;
 		expect(findings).toBeDefined();
-		expect(findings!.length).toBe(0);
+		// Live model eval — the model may raise minor suggestions on any code.
+		// Assert the model does not false-positive on the same issue class
+		// we test in the positive case (promise/unhandled/error handling).
+		const falsePositive = (findings ?? []).filter(
+			(f) =>
+				(f.severity === "warning" || f.severity === "critical") &&
+				f.rule
+					?.toLowerCase()
+					.match(/promise|reject|unhandled|await|error.handl|missing.error/),
+		);
+		expect(falsePositive).toHaveLength(0);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_code_review",

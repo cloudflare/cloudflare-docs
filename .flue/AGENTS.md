@@ -185,6 +185,6 @@ The `evals` job in `.github/workflows/flue-ci.yml` starts the dev server, runs e
 | `conventions-reviewer` | `conventions.eval.ts` | Vague title flag (asserts rule/severity), well-described PR pass, scope-accuracy flag (new page unmentioned) |
 | `spam-filter`          | `spam-filter.eval.ts` | Spam issue flag, legit typo report pass, support request off-topic flag, sparse PR with real diff pass       |
 | `reconcile-reviewer`   | `reconcile.eval.ts`   | Resolved finding, ignored-by-author, incremental carry-forward, weak comment stays active                    |
-| `code-review-file`     | `code-review.eval.ts` | Unhandled promise flag (asserts rule/severity/path/line), clean error handling pass                          |
+| `code-review-file`     | `code-review.eval.ts` | Unhandled promise flag (asserts rule/severity/path/line), no false-positive on clean error handling          |
 
 Not yet covered: `dependabot-reviewer` and `rebase-conflict-resolver` (need GitHub/npm tool fixtures or credentials).
