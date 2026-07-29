@@ -43,10 +43,10 @@ importers:
         version: 0.8.2(astro@7.1.4(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@25.9.3)(jiti@2.7.0)(rollup@4.62.2)(tsx@4.23.1)(yaml@2.9.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@cloudflare/vitest-pool-workers':
         specifier: 0.18.8
-        version: 0.18.8(@cloudflare/workers-types@4.20260615.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(vitest@4.1.10(@types/node@25.9.3)(happy-dom@20.11.1)(vite@8.1.5(@types/node@25.9.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))
+        version: 0.18.8(@cloudflare/workers-types@5.20260727.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(vitest@4.1.10(@types/node@25.9.3)(happy-dom@20.11.1)(vite@8.1.5(@types/node@25.9.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))
       '@cloudflare/workers-types':
-        specifier: 4.20260615.1
-        version: 4.20260615.1
+        specifier: 5.20260727.1
+        version: 5.20260727.1
       '@docsearch/css':
         specifier: 3.9.0
         version: 3.9.0
@@ -328,7 +328,7 @@ importers:
         version: 4.1.10(@types/node@25.9.3)(happy-dom@20.11.1)(vite@8.1.5(@types/node@25.9.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
       wrangler:
         specifier: 4.114.0
-        version: 4.114.0(@cloudflare/workers-types@4.20260615.1)
+        version: 4.114.0(@cloudflare/workers-types@5.20260727.1)
       zod:
         specifier: 4.4.3
         version: 4.4.3
@@ -836,8 +836,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20260615.1':
-    resolution: {integrity: sha512-fGOiTwoLj/8bU8mj3VAfa1EULx4ceZhDwnjvY+afDBlSXI9pvY7PE9t62rGEhJjbAOGd7i5WUDun0eZCWBDrzg==}
+  '@cloudflare/workers-types@5.20260727.1':
+    resolution: {integrity: sha512-b/wT+LMZz0oELzxibww0ujFz5BD8NRz9WJ+xd+JNZJUMXgh8IHjpibKdGDvtkbotmihWUknP5tBPUU8KluLxxA==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -6619,7 +6619,7 @@ snapshots:
     optionalDependencies:
       workerd: 1.20260722.1
 
-  '@cloudflare/vitest-pool-workers@0.18.8(@cloudflare/workers-types@4.20260615.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(vitest@4.1.10(@types/node@25.9.3)(happy-dom@20.11.1)(vite@8.1.5(@types/node@25.9.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))':
+  '@cloudflare/vitest-pool-workers@0.18.8(@cloudflare/workers-types@5.20260727.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(vitest@4.1.10(@types/node@25.9.3)(happy-dom@20.11.1)(vite@8.1.5(@types/node@25.9.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))':
     dependencies:
       '@vitest/runner': 4.1.10
       '@vitest/snapshot': 4.1.10
@@ -6627,7 +6627,7 @@ snapshots:
       esbuild: 0.28.1
       miniflare: 4.20260722.0
       vitest: 4.1.10(@types/node@25.9.3)(happy-dom@20.11.1)(vite@8.1.5(@types/node@25.9.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
-      wrangler: 4.114.0(@cloudflare/workers-types@4.20260615.1)
+      wrangler: 4.114.0(@cloudflare/workers-types@5.20260727.1)
       zod: 3.25.76
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
@@ -6649,7 +6649,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260722.1':
     optional: true
 
-  '@cloudflare/workers-types@4.20260615.1': {}
+  '@cloudflare/workers-types@5.20260727.1': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -12453,7 +12453,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260722.1
       '@cloudflare/workerd-windows-64': 1.20260722.1
 
-  wrangler@4.114.0(@cloudflare/workers-types@4.20260615.1):
+  wrangler@4.114.0(@cloudflare/workers-types@5.20260727.1):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.0
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260722.1)
@@ -12464,7 +12464,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260722.1
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20260615.1
+      '@cloudflare/workers-types': 5.20260727.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil

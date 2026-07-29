@@ -51,7 +51,7 @@
 		"@base-ui/react": "1.6.0",
 		"@cloudflare/nimbus-docs": "0.8.2",
 		"@cloudflare/vitest-pool-workers": "0.18.8",
-		"@cloudflare/workers-types": "4.20260615.1",
+		"@cloudflare/workers-types": "5.20260727.1",
 		"@docsearch/css": "3.9.0",
 		"@docsearch/js": "3.9.0",
 		"@eslint/js": "9.39.4",
