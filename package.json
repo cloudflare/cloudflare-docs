@@ -148,6 +148,11 @@
 		"wrangler": "4.114.0",
 		"zod": "4.4.3"
 	},
+	"pnpm": {
+		"overrides": {
+			"@cloudflare/nimbus-docs": "https://registry.npmjs.org/@cloudflare/nimbus-docs/-/nimbus-docs-0.8.2.tgz"
+		}
+	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx,mjs,css,json,yaml,yml,astro}": "prettier --write"
 	},
