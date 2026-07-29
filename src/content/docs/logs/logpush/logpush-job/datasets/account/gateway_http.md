@@ -165,6 +165,12 @@ Type: `string`
 
 Email used to authenticate the client.
 
+## ExperimentalFeatures
+
+Type: `object`
+
+List of experimental features, which will be either permanently added to the schema or marked for deprecation. In that case, they will be removed 3 months after the notice.
+
 ## FileInfo
 
 Type: `object`
