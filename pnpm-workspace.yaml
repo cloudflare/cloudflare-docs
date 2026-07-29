@@ -18,6 +18,11 @@ minimumReleaseAgeExclude:
 # natively (nimbus-docs pulls markdown-satteri 0.3.4, @astrojs/mdx@7 peers
 # ^0.3.1), so the old allowedVersions override is obsolete and has been removed.
 
+# Force @cloudflare/nimbus-docs to resolve from the public npm registry instead of
+# the internal registry gateway (which 404s for this package).
+overrides:
+  "@cloudflare/nimbus-docs": "https://registry.npmjs.org/@cloudflare/nimbus-docs/-/nimbus-docs-0.8.2.tgz"
+
 # Prevent transitive dependencies from using exotic sources (git repos, direct tarball URLs).
 # Only direct dependencies may use exotic sources.
 blockExoticSubdeps: true
