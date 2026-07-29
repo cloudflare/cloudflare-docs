@@ -151,7 +151,7 @@ Replace `198.41.200.43` with the IP shown in your [error message](#dialcontext-e
 	}}
 />
 
-## Cloudflare Tunnel (WARP/Cloudflare One Client/WARP) Fail to Connect through Palo Alto Networks Next-Generation Firewall (NGFW)
+## Cloudflare Tunnel (cloudflared) fails to connect through Palo Alto Networks Next-Generation Firewall (NGFW)
 
 Cloudflare recently became aware of a change in Palo Alto Networks Next Generation Firewall (NGFW) App-ID database version 9128 that affects the requirements for permitting Cloudflare Tunnel and Cloudflare One Client traffic.
 
@@ -198,7 +198,7 @@ If you revert the App-ID database, treat this as a temporary mitigation and coor
    - `cloudflare-warp`
    - `quic-base`
 5. Under **Service/URL Category**, add the custom service `cloudflared_7844_udp`.
-6. Set the rule **Action** to **Accept**.
+6. Set the rule **Action** to **Allow**.
 7. Enable logging according to your organization's security policy.
 8. Commit the policy change, then verify that Cloudflare Tunnel can establish and maintain connections through the firewall.
 
