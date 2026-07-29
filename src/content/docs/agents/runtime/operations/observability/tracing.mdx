@@ -91,67 +91,20 @@ await tracedAI.generateText({
 
 </TypeScriptExample>
 
-`wrapAISDK()` instruments `generateText`, `streamText`, `generateObject`, and `streamObject`. It preserves the installed SDK's types and forwards all call options to the original AI SDK function. AI SDK v7 options such as `telemetry`, `runtimeContext`, and `toolsContext` continue to work.
+`wrapAISDK()` supports AI SDK v6 and v7. It instruments `generateText`, `streamText`, `generateObject`, and `streamObject`, creating the `invoke_agent` parent before model and tool work begins.
 
-## Configure direct AI SDK traces
+Identity configuration differs between the two SDK versions:
 
-The wrapper reads identity and selected runtime context for Cloudflare spans. It also forwards the complete AI SDK configuration:
+| Purpose         | AI SDK v7                                            | AI SDK v6                           |
+| --------------- | ---------------------------------------------------- | ----------------------------------- |
+| Agent name      | `telemetry.functionId`                               | `experimental_telemetry.functionId` |
+| Other identity  | `runtimeContext` + `telemetry.includeRuntimeContext` | `experimental_telemetry.metadata`   |
 
-| Purpose                         | AI SDK v7                                              | AI SDK v6                           |
-| ------------------------------- | ------------------------------------------------------ | ----------------------------------- |
-| Agent name                      | `telemetry.functionId`                                 | `experimental_telemetry.functionId` |
-| Runtime context                 | `runtimeContext` + `telemetry.includeRuntimeContext`   | `experimental_context`              |
-| Additional identity             | Selected fields in `runtimeContext`                    | `experimental_telemetry.metadata`   |
-| Pluggable telemetry integrations | `telemetry.integrations` or global `registerTelemetry` | Not supported                       |
-
-AI SDK v7 telemetry options behave as follows when used with `wrapAISDK()`:
-
-| Option                  | Behavior                                                                                                       |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `functionId`            | Sets `gen_ai.agent.name` on the Cloudflare operation span and is forwarded to AI SDK integrations.            |
-| `includeRuntimeContext` | Selects scalar `runtimeContext` fields for Cloudflare spans and AI SDK integrations.                           |
-| `integrations`          | Runs the supplied AI SDK v7 telemetry integrations alongside the Cloudflare wrapper.                           |
-| `includeToolsContext`   | Selects `toolsContext` fields for AI SDK v7 telemetry integrations.                                            |
-| `recordInputs`          | Controls input capture for AI SDK v7 telemetry integrations. It does not change Cloudflare payload storage.    |
-| `recordOutputs`         | Controls output capture for AI SDK v7 telemetry integrations. It does not change Cloudflare payload storage.   |
-| `isEnabled`             | Enables or disables AI SDK v7 telemetry integrations. It does not disable spans created by `wrapAISDK()`.      |
-
-For example, use the Cloudflare wrapper and a third-party AI SDK v7 integration on the same call:
-
-<TypeScriptExample>
-
-```ts
-await tracedAI.generateText({
-	model,
-	prompt: "Find an available appointment",
-	runtimeContext: {
-		agentId: "asst_123",
-		conversationId: "conversation-123",
-		tenantTier: "gold",
-	},
-	telemetry: {
-		functionId: "booking-agent",
-		includeRuntimeContext: {
-			agentId: true,
-			conversationId: true,
-			tenantTier: true,
-		},
-		integrations: [myTelemetryIntegration],
-		recordInputs: false,
-		recordOutputs: false,
-	},
-});
-```
-
-</TypeScriptExample>
-
-The identity keys `agentId`, `agentName`, `agentVersion`, and `conversationId` map to their standard `gen_ai.*` attributes. An explicit `agentName` takes precedence over `functionId`. Included application values such as `tenantTier` use the `cloudflare.agents.runtime_context.*` namespace.
-
-Do not include tokens, credentials, user input, or other secrets in telemetry context. Context filtering reduces accidental exposure, but it is not a security boundary.
+Use a low-cardinality logical agent name for `functionId`. The identity keys `agentId`, `agentName`, `agentVersion`, and `conversationId` map to their standard `gen_ai.*` attributes.
 
 ## Payload privacy
 
-Message and tool payloads can contain personally identifiable information. Payload storage is off by default. AI SDK v7's `recordInputs` and `recordOutputs` options do not change Cloudflare payload storage.
+Message and tool payloads can contain personally identifiable information. Payload storage is off by default.
 
 To opt in with AI SDK v6 or v7, pass storage options to `wrapAISDK()`:
 
