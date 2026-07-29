@@ -130,6 +130,7 @@
 
 	.docs-content :where(code:not([class])):not(:where(pre *)) {
 		font-family: var(--nb-font-mono);
+		font-variant-ligatures: none;
 		direction: ltr;
 		unicode-bidi: isolate;
 		background: var(--nb-muted);
@@ -165,6 +166,7 @@
 		background-color: var(--nb-card);
 		overflow-x: auto;
 		font-family: var(--nb-font-mono);
+		font-variant-ligatures: none;
 		font-size: 0.875rem;
 		line-height: 1.625;
 	}
@@ -178,6 +180,7 @@
 	}
 
 	.docs-content pre.astro-code code {
+		font-variant-ligatures: none;
 		direction: ltr;
 		unicode-bidi: isolate;
 		background: none;

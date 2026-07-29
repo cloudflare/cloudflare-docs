@@ -508,8 +508,13 @@
 	color: var(--color-cl1-orange-6);
 }
 
-.agent-setup-table .check {
+.agent-setup-table .check,
+.agent-check {
 	color: var(--color-cl1-green-5);
+}
+
+:root[data-mode="dark"] .agent-check {
+	color: var(--color-cl1-green-6);
 }
 
 .agent-setup-table .dash {

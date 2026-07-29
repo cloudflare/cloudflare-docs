@@ -70,6 +70,18 @@
 	--nb-danger: oklch(0.47 0.18 25);
 	--nb-danger-muted: oklch(0.965 0.015 25);
 
+	/* Extended badge tones — additional distinct hues for multi-value
+	 * labelling (e.g. the agent comparison table). Same base+muted shape
+	 * as the status colors above. */
+	--nb-cyan: oklch(0.46 0.1 210);
+	--nb-cyan-muted: oklch(0.965 0.02 210);
+
+	--nb-orange: oklch(0.55 0.16 48);
+	--nb-orange-muted: oklch(0.965 0.025 55);
+
+	--nb-steel: oklch(0.5 0.05 250);
+	--nb-steel-muted: oklch(0.955 0.012 250);
+
 	/* Layout */
 	--nb-sidebar-width: 18.75rem;
 	--nb-toc-width: 18rem;
@@ -155,6 +167,15 @@
 
 	--nb-danger: oklch(0.72 0.14 25);
 	--nb-danger-muted: oklch(0.17 0.03 25);
+
+	--nb-cyan: oklch(0.77 0.09 210);
+	--nb-cyan-muted: oklch(0.18 0.03 210);
+
+	--nb-orange: oklch(0.78 0.12 55);
+	--nb-orange-muted: oklch(0.19 0.035 50);
+
+	--nb-steel: oklch(0.74 0.045 250);
+	--nb-steel-muted: oklch(0.2 0.02 250);
 
 	--nb-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.2);
 	--nb-shadow: 0 1px 3px oklch(0 0 0 / 0.3), 0 1px 2px oklch(0 0 0 / 0.2);

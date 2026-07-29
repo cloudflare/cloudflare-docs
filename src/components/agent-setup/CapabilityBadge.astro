@@ -22,7 +22,7 @@ const active = Object.entries(capabilities).filter(([, v]) => v);
 				const tooltip = capabilityDefinitions[k] ?? "";
 				return (
 					<span
-						class={`agent-setup-badge agent-setup-badge--${key.replace("_", "-")}`}
+						class="border-border bg-muted text-foreground inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium"
 						data-agent-tooltip={tooltip}
 						aria-label={tooltip}
 					>
