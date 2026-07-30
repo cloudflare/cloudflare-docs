@@ -90,9 +90,11 @@ describeEval("spam filter", { harness }, (it) => {
 
 		const verdict = result.output as Verdict;
 		expect(verdict).toBeDefined();
-		// The model may classify a support request as either spam (is_spam:true)
-		// or not (is_spam:false). Either is acceptable as long as the reason
-		// identifies it as off-topic/support-related rather than genuine spam.
+		// Off-topic support requests should be closed. The model returns
+		// is_spam:true with medium/high confidence, and trusted code closes
+		// the issue with the OFF_TOPIC_COMMENT redirect.
+		expect(verdict!.is_spam).toBe(true);
+		expect(["medium", "high"]).toContain(verdict!.confidence);
 		expect(verdict!.reason?.toLowerCase()).toMatch(
 			/\b(support|off-topic|wrong repo|community)\b/,
 		);
