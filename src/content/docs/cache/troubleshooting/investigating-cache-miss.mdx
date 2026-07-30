@@ -1,5 +1,5 @@
 ---
-title: Investigating cache MISS responses
+title: Investigate cache MISS responses
 pcx_content_type: troubleshooting
 products:
   - cache
@@ -32,16 +32,19 @@ Fetch the URL directly from the origin (bypassing Cloudflare) and inspect the re
 
 - `Cache-Control: no-store`, `no-cache`, or `private`, when [Origin Cache Control](/cache/concepts/cache-control/) is enabled. Refer to [Understand `no-store` and `no-cache` directives](/cache/concepts/cache-control/#understand-no-store-and-no-cache-directives) and the [Conditions](/cache/concepts/cache-control/#conditions) table for exact behavior.
 - `Cache-Control: max-age=0` with Origin Cache Control off. Cloudflare bypasses cache in this configuration.
-- A `Set-Cookie` header on the response. By default, Cloudflare treats these responses as private and does not cache them. Refer to [Interaction of `Set-Cookie` response header with Cache](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) for the interaction and how a Cache Rule can override it.
+- A `Set-Cookie` header on the response, combined with a specific configuration. With the default cache level and [Origin Cache Control](/cache/concepts/cache-control/) disabled, Cloudflare strips `Set-Cookie` and caches the asset. `Set-Cookie` only prevents caching when Origin Cache Control is enabled, or when a Cache Rule marks the response **Eligible for cache** without an explicit Edge TTL. Refer to [Interaction of `Set-Cookie` response header with Cache](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) for the full matrix.
 - Non-integer TTL values such as `Cache-Control: max-age=2.5`. These are ignored per RFC 9111 and can result in cache bypass. Return integer values only.
 
 If you need Cloudflare to cache the response even though the origin returns one of these headers, configure a [Cache Rule](/cache/how-to/cache-rules/) that sets **Edge TTL** to override the origin, or use [Cache Response Rules](/cache/how-to/cache-response-rules/) to modify the `Cache-Control` directive before it reaches cache.
 
 ## 3. Check the `Vary` header
 
-If the origin returns a `Vary` header with a value that changes on every request (for example, `Vary: User-Agent` or `Vary: Cookie` on a page where the cookie is unique per visitor), each variant is stored under a separate cache key and the practical hit rate drops to zero.
+By default, Cloudflare ignores the origin's `Vary` header — it does not fragment the cache key on its own. Vary only affects the cache key when [Vary in Cache Rules](/cache/how-to/cache-rules/settings/#vary) is configured, or when a Worker sets [`cf.vary`](/workers/runtime-apis/request/#the-cfvary-property) on a subrequest. Two exceptions to keep in mind:
 
-Refer to [Vary header](/cache/concepts/vary/) for the values Cloudflare respects. Return a narrow, stable `Vary` value, or remove the header if it is not needed.
+- A response with `Vary: *` always bypasses cache, regardless of configuration.
+- When Vary is configured for a header that has high cardinality (for example, an `Accept-Language` value that is not normalized broadly, or a per-user header), the cache fragments across many variants and the practical hit rate drops.
+
+If Vary is configured, narrow the set of headers, prefer the `normalize` action over `passthrough`, and refer to [Vary header](/cache/concepts/vary/) for the actions Cloudflare supports.
 
 ## 4. Check the cache key
 
@@ -50,7 +53,7 @@ Cloudflare builds the cache key from the request scheme, host, path, and — dep
 Repeated `MISS` on the same URL usually means the key is different on every request. Common causes:
 
 - The URL includes query parameters that change per request (session IDs, timestamps, marketing tags such as `utm_*`). By default, every unique query string is a separate cache entry. To ignore parameters that do not affect the response, configure [Cache Rules](/cache/how-to/cache-rules/) or [Cache Key Settings](/cache/how-to/cache-keys/#cache-key-settings) to sort or drop them.
-- A [custom cache key](/cache/how-to/cache-keys/) includes a cookie or header with a value that changes per user. This fragments the cache — the same behavior the cache-keys page warns about under [Impact of SSL settings on Cache behavior](/cache/how-to/cache-keys/#impact-of-ssl-settings-on-cache-behavior).
+- A [custom cache key](/cache/how-to/cache-keys/) includes a cookie or header with a value that changes per user. This fragments the cache — the same behavior the [Create custom cache keys](/cache/how-to/cache-keys/#create-custom-cache-keys) section warns about when it notes that custom keys "may reduce your cache hit rate and result in cache sharding."
 - [Cache by device type](/cache/how-to/cache-rules/examples/cache-device-type/) is enabled but a client is being classified differently than expected (for example, a bot or a client with an unusual `User-Agent`).
 
 Send two identical requests and compare the `cf-ray` and `cf-cache-status` values. If the second request is still `MISS`, the second request likely produced a different cache key. Inspect the query string, cookies, and any headers that your Cache Rule or [Cache Reserve](/cache/advanced-configuration/cache-reserve/) configuration uses.
