@@ -1,0 +1,30 @@
+---
+// Shared collapsible accordion row for the agent-setup pages. A native
+// <details>/<summary> with a caret marker. FAQItem, TroubleshootingItem, and
+// PlatformAccessDetails all delegate to this so the three stay aligned.
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	title: string;
+	open?: boolean;
+}
+
+const { title, open } = Astro.props;
+---
+
+<details class="group/acc border-border border-b last:border-b-0" open={open}>
+	<summary
+		class="text-foreground flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-[0.9375rem] font-medium marker:content-[''] [&::-webkit-details-marker]:hidden"
+	>
+		{title}
+		<Icon
+			name="ph:caret-down"
+			class="text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200 group-open/acc:rotate-180"
+		/>
+	</summary>
+	<div
+		class="text-foreground [&_a]:text-primary px-5 pb-5 text-sm leading-relaxed [&_a]:no-underline hover:[&_a]:underline [&>*]:m-0 [&>*+*]:mt-3"
+	>
+		<slot />
+	</div>
+</details>
