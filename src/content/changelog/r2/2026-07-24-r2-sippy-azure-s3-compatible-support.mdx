@@ -6,6 +6,20 @@ products:
 date: 2026-07-24
 ---
 
-[Sippy](/r2/data-migration/sippy/) can now incrementally migrate data from Azure Blob Storage and any S3-compatible object storage provider to [Cloudflare R2](/r2/), in addition to Amazon S3 and Google Cloud Storage.
+[Sippy](/r2/data-migration/sippy/) can now incrementally migrate data from Azure Blob Storage and any S3-compatible object storage provider to [Cloudflare R2](/r2/), in addition to Amazon S3 and Google Cloud Storage. Sippy copies objects to R2 as your application requests them, so you can start serving data from R2 without first moving your entire dataset or paying migration-specific egress fees.
 
-For more information, refer to the [Sippy documentation](/r2/data-migration/sippy/).
+#### Enable Sippy
+
+Run the following command and follow the prompts to select and configure your source storage provider:
+
+```sh
+npx wrangler r2 bucket sippy enable <BUCKET_NAME>
+```
+
+For Azure Blob Storage, provide your storage account name, container name, and either an account key or a shared access signature (SAS) token with read and list permissions. For an S3-compatible provider, provide the S3 API endpoint URL and read-only Access Key ID and Secret Access Key.
+
+![Azure Blob Storage source configuration in the R2 dashboard](~/assets/images/r2/sippy-azure-source-configuration.png)
+
+After you enable Sippy, requests for objects that are not yet in R2 are served from your source bucket and copied to R2. Subsequent requests for those objects are served from R2.
+
+For setup instructions and credential requirements, refer to the [Sippy documentation](/r2/data-migration/sippy/).
