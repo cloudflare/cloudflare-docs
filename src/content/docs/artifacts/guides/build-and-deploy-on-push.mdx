@@ -87,7 +87,6 @@ export class CI extends CIWorkflow {
       deps.runner({ name: 'build', command: 'bun run build' }),
     ]);
 
-    // CF_TOKEN must be configured on the Worker; credentials are exposed only to Wrangler.
     await deps.runner({
       name: 'deploy',
       command: 'bun wrangler deploy',
@@ -100,6 +99,10 @@ export class CI extends CIWorkflow {
 ```
 
 </TypeScriptExample>
+
+:::note
+The credentials on the `deploy()` step are only required when deploying the Worker to an account other than the account where the CI Workflow is running.
+:::
 
 ## Run the build pipeline
 
