@@ -218,15 +218,13 @@ export default {
 
 `this.env.AI_SEARCH.get(INSTANCE_ID)` is synchronous and resolves lazily. It does not create the instance, so `ensureInstance` creates it first. To search several instances in one call, use a namespace-level search with `ai_search_options.instance_ids`. Refer to [Namespaces](/ai-search/concepts/namespaces/).
 
-This example uses `@cf/zai-org/glm-5.2`: streaming agents need a model that emits structured tool calls, or the tool never runs and the agent cannot search. Choose a Workers AI model that supports [function calling](/workers-ai/features/function-calling/).
-
-## 5. How the tools work
+### How the tools work
 
 The `search_knowledge_base` tool calls `search()` on the instance. Because the instance indexes both vectors and keywords, retrieval uses hybrid search by default.
 
 The `save_resolution` tool calls `items.upload()`, which uploads a document to built-in storage and queues it for indexing. The call returns quickly, and the content becomes searchable once background indexing finishes. Uploading a file with the same name overwrites and re-indexes it.
 
-## 6. Test it locally
+## 5. Test it locally
 
 Generate types and start the development server:
 
@@ -244,7 +242,7 @@ You know the integration works when:
 - The `wrangler dev` logs show a request to `/agents/search-agent/<name>`, followed by the `search_knowledge_base` tool running before the reply.
 - The agent's answer is grounded in the seeded content and cites it, rather than answering generically.
 
-## 7. Deploy
+## 6. Deploy
 
 Log in with your Cloudflare account:
 

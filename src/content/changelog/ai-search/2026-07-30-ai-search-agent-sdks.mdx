@@ -1,19 +1,19 @@
 ---
-title: Use AI Search with the Agents SDK, Vercel AI SDK, and LangChain
+title: Use AI Search with the Agents SDK, AI SDK, and LangChain
 description: New guides show how to use an AI Search instance from the Cloudflare Agents SDK, the Vercel AI SDK, and LangChain.
 products:
   - ai-search
-date: 2026-07-15
+date: 2026-07-30
 publish_future_dated_entry: true
 ---
 
 import { TypeScriptExample } from "~/components";
 
-You can now use [AI Search](/ai-search/) directly from popular agent and application frameworks, adding grounded retrieval to an existing app instead of calling the REST API by hand. The new [Agents](/ai-search/agent-sdks/) section has guides for the [Vercel AI SDK](/ai-search/agent-sdks/ai-sdk/), [LangChain](/ai-search/agent-sdks/langchain/), and the [Cloudflare Agents SDK](/ai-search/agent-sdks/agents-sdk/). The AI SDK and LangChain integrations are new packages.
+You can now use [AI Search](/ai-search/) directly from popular agent frameworks, adding grounded retrieval to an existing app instead of calling the REST API by hand. The new [Agents](/ai-search/agent-sdks/) section has guides for the [Vercel AI SDK](/ai-search/agent-sdks/ai-sdk/), [LangChain](/ai-search/agent-sdks/langchain/), and the [Cloudflare Agents SDK](/ai-search/agent-sdks/agents-sdk/). The AI SDK integration is a new package, and the LangChain integration is a new retriever in the existing `langchain-cloudflare` package.
 
 ## Vercel AI SDK
 
-The [`ai-search-provider`](https://www.npmjs.com/package/ai-search-provider) package connects AI Search to the AI SDK. Pass `instance.chat()` to `generateText` or `streamText` to generate a response grounded in your indexed content, with the retrieved chunks returned as `sources`. You can also expose `instance.search()` as a tool for agent loops.
+The [`ai-search-provider`](https://www.npmjs.com/package/ai-search-provider) package connects AI Search to the AI SDK, and targets AI SDK v6 (`ai@^6`). Pass `instance.chat()` to `generateText` or `streamText` to generate a response grounded in your indexed content, with the retrieved chunks returned as `sources`. You can also expose `instance.search()` as a tool for agent loops.
 
 <TypeScriptExample>
 
@@ -33,7 +33,7 @@ const { text, sources } = await generateText({
 
 ## LangChain
 
-The [`langchain-cloudflare`](https://pypi.org/project/langchain-cloudflare/) package provides `CloudflareAISearchRetriever`, a standard LangChain retriever backed by AI Search. Use it on its own, wrap it with `create_retriever_tool` to give an agent a search tool, or drop it into a RAG chain. It works with REST credentials or a Worker binding inside a Python Worker.
+The `langchain-cloudflare` package ([PyPI](https://pypi.org/project/langchain-cloudflare/), [GitHub](https://github.com/cloudflare/langchain-cloudflare)) provides `CloudflareAISearchRetriever`, a standard LangChain retriever backed by AI Search. Use it on its own, wrap it with `create_retriever_tool` to give an agent a search tool, or drop it into a RAG chain. It works with REST credentials or a Worker binding inside a Python Worker.
 
 ```python
 from langchain_cloudflare import CloudflareAISearchRetriever
