@@ -163,4 +163,10 @@ To activate, restart your keyless instance:
 - systemd: `sudo service gokeyless restart`
 - upstart/sysvinit: `sudo /etc/init.d/gokeyless restart`
 
+:::note
+
+The first time the key server starts with the hostname, Zone ID, and Origin CA API key set, it automatically generates its own private key and certificate signing request (CSR), submits the CSR to Cloudflare, and saves the signed authentication certificate it presents for mutual TLS. You do not need to create this certificate manually. If those three values are not set, the key server will not start and will ask you to set them — or to run it with `--config-only` or `--manual-activation` to generate the key and CSR interactively.
+
+:::
+
 If this command fails, try troubleshooting by [checking the logs](/ssl/keyless-ssl/troubleshooting/).
