@@ -58,54 +58,31 @@ Here is an example of how to set up your Workflow to use runners and cache to in
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-// Install dependencies — cached based on pnpm-lock.yaml so later
-// runs skip this step when the lockfile has not changed.
-const { workspace } = await ci.workspace.runner({
-	name: "install dependencies",
-	command: "pnpm install --frozen-lockfile",
-	workingDirectory: "repo",
-	cache: {
-		inputs: ["repo/pnpm-lock.yaml"],
-	},
-});
+import { CIWorkflow, cloudflareArtifacts } from './src/pipeline';
+import type { CiContext, CiParams, CloudflareArtifacts } from './src/pipeline';
+import type { WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 
-// Run checks in parallel — all three must pass before the pipeline continues.
-await Promise.all([
-	workspace.runner({
-		name: "lint",
-		command: "pnpm lint",
-		workingDirectory: "repo",
-	}),
-	workspace.runner({
-		name: "typecheck",
-		command: "pnpm typecheck",
-		workingDirectory: "repo",
-	}),
-	workspace.runner({
-		name: "test",
-		command: "pnpm test",
-		workingDirectory: "repo",
-	}),
-]);
+export class CI extends CIWorkflow({ provider }) {
+  protected async pipeline(
+    event: WorkflowEvent<CiParams<CloudflareArtifacts>>,
+    step: WorkflowStep,
+    ci: CiContext
+  ): Promise<void> {
+    // Install once, then run independent checks from the shared snapshot.
+    const deps = await ci.runner({
+      name: 'install',
+      command: 'bun install --frozen-lockfile',
+      cache: { inputs: ['package.json', 'bun.lock'] },
+    });
 
-// Build the project — produces dist/worker.mjs.
-const { workspace: build } = await workspace.runner({
-	name: "build",
-	command: "pnpm build",
-	workingDirectory: "repo",
-});
-
-// Deploy — only this runner receives the CLOUDFLARE_API_TOKEN secret.
-await build.runner({
-	name: "deploy Worker",
-	command: "node ./ci/deploy-worker.mjs",
-	workingDirectory: "repo",
-	environment: {
-		CLOUDFLARE_ACCOUNT_ID: "<YOUR_ACCOUNT_ID>",
-		WORKER_NAME: "my-application",
-	},
-	secrets: ["CLOUDFLARE_API_TOKEN"],
-});
+    await Promise.all([
+      deps.runner({ name: 'lint', command: 'bun run lint' }),
+      deps.runner({ name: 'test', command: 'bun run test' }),
+      deps.runner({ name: 'typecheck', command: 'bun run typecheck' }),
+      deps.runner({ name: 'build', command: 'bun run build' }),
+    ]);
+  }
+}
 ```
 
 </TypeScriptExample>
