@@ -24,10 +24,9 @@ Cloudflare returns `BYPASS` — not `MISS` — for responses it chooses not to c
 
 Rule out two conditions that bypass cache regardless of the request or the origin response:
 
-- [Development Mode](/cache/reference/development-mode/) is enabled on the zone. Development Mode suspends Cloudflare's cache for three hours.
-- A recent purge — [Purge Everything](/cache/how-to/purge-cache/purge-everything/), [purge by URL](/cache/how-to/purge-cache/purge-by-single-file/), [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), [purge by tag](/cache/how-to/purge-cache/purge-by-tags/), or [purge by hostname](/cache/how-to/purge-cache/purge-by-hostname/) — has just cleared the cache. The next request in each data center repopulates cache and will not return `HIT`.
+- A recent purge — [Purge Everything](/cache/how-to/purge-cache/purge-everything/), [purge by URL](/cache/how-to/purge-cache/purge-by-single-file/), [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), [purge by tag](/cache/how-to/purge-cache/purge-by-tags/), or [purge by hostname](/cache/how-to/purge-cache/purge-by-hostname/) has just cleared the cache. The next request in each data center repopulates cache and returns `MISS` before subsequent requests return `HIT`.
 
-If either applies, address it before continuing.
+If that applies, wait for the cache to repopulate before continuing.
 
 ## DYNAMIC — request not eligible for cache
 
@@ -36,6 +35,7 @@ Cloudflare made the "do not cache" decision at request time, before looking in t
 - **The file extension is not in the [default cached file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) list** — for example, `.html` or a JSON API response — and no rule enables caching for it. Add a [Cache Rule](/cache/how-to/cache-rules/) with **Eligible for cache** set to *Yes*.
 - **A rule instructs Cloudflare to bypass cache.** Check whether a Cache Rule with the [Bypass cache](/cache/how-to/cache-rules/settings/#bypass-cache) setting, or a legacy `Cache Level: Bypass` [Configuration Rule](/rules/configuration-rules/) or [Page Rule](/rules/page-rules/), matches the URL. Use [Rule Trace](/rules/trace-request/) to confirm which rules apply.
 - **The request method is not `GET` or `HEAD`.** Cloudflare only caches these two methods.
+- **[Development Mode](/cache/reference/development-mode/) is enabled on the zone.** Development Mode suspends cache for three hours and returns `DYNAMIC` for every response.
 
 Once the request is eligible, subsequent responses reflect the response-time decision (`HIT`, `MISS`, `BYPASS`, and so on).
 
