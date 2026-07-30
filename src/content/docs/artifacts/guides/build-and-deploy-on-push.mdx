@@ -40,65 +40,6 @@ This is useful when you need to:
 2. **Run the CI Workflow** — The event starts a Workflow that checks out the commit, installs and caches dependencies, and runs CI steps — build, lint, typecheck, and format — in parallel. A failed step stops the Workflow before deployment.
 3. **Deploy the Worker** — The Workflow deploys the built Worker either directly to your account or as a User Worker, if using Workers for Platforms
 
-## Start a build when code changes
-
-When a user or agent pushes a commit to an Artifacts repo, Artifacts emits an event that identifies the repo, branch, and commit that changed. You will use this event to start a Workflow that runs a CI pipeline by checking out the commit, installing dependencies, running checks, building the project, and deploying the Worker.
-
-This guide defines those CI steps in a Workflow class named `CIWorkflow`. To start this Workflow automatically after each push, add an `artifacts.push` trigger to your Wrangler configuration:
-
-<WranglerConfig>
-
-```json
-{
-	"name": "my-ci-cd-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "2026-07-21",
-
-	"workflows": [
-		{
-			"name": "ci-workflow",
-			"binding": "BUILD_AND_DEPLOY",
-			"class_name": "CIWorkflow"
-		}
-	],
-
-	"artifacts": [
-		{
-			"binding": "ARTIFACTS",
-			"namespace": "customer-projects"
-		}
-	],
-
-	"triggers": [
-		{
-			"type": "cf.repo.push",
-			"filter": {
-				"repoName": "my-repo",
-				"namespace": "ARTIFACTS"
-			},
-			"target": {
-				"type": "workflow",
-				"workflowName": "ci-workflow"
-			}
-		}
-	],
-
-	"observability": {
-		"enabled": true
-	}
-}
-```
-
-</WranglerConfig>
-
-:::note
-If you are running CI for a User Worker, include `"dispatch_namespace": "<DISPATCH_NAMESPACE>"` in your trigger target.
-:::
-
-## Run the build pipeline
-
-To run the build pipeline, the Workflow first needs the files from the pushed commit. It clones the repo, then uses runners to install dependencies, run checks, build the project, and deploy the Worker.
-
 ### Define the CI steps
 
 Use the `@cloudflare/ci` SDK to define the CI steps. The SDK provides two tools to help you build the pipeline:
@@ -169,13 +110,110 @@ await build.runner({
 
 </TypeScriptExample>
 
+## Run the build pipeline
+
+To run the build pipeline, the Workflow first needs the files from the pushed commit. It clones the repo, then uses runners to install dependencies, run checks, build the project, and deploy the Worker.
+
+## Start a build when code changes
+
+When a user or agent pushes a commit to an Artifacts repo, Artifacts emits an event that identifies the repo, branch, and commit that changed. You will use this event to start a Workflow that runs a CI pipeline by checking out the commit, installing dependencies, running checks, building the project, and deploying the Worker.
+
+This guide defines those CI steps in a Workflow class named `CIWorkflow`. To start this Workflow automatically after each push, add an `cf.artifacts.repo.pushed` trigger to your Wrangler configuration. You should also include:
+
+- R2 binding: the bucket where your the snapshot of your cached dependencies will be stored
+- Container (and Durable Object) binding: create a binding to your container to access sandboxes during each `runner()` step
+- Workflows binding
+- Artifacts binding
+- Observability (optional): inspect your CI jobs as a Workflow instance with [Workers observability](/workers/observability/)
+
+<WranglerConfig>
+
+```json
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "<worker-name>",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "artifacts": [
+    {
+      "binding": "ARTIFACTS",
+      "namespace": "<artifacts-namespace>"
+    }
+  ],
+  "containers": [
+    {
+      "class_name": "CiSandbox",
+      "image": "./Dockerfile",
+      "max_instances": 10,
+      "instance_type": "standard-4"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SANDBOX",
+        "class_name": "CiSandbox"
+      }
+    ]
+  },
+  "workflows": [
+    {
+      "name": "<workflow-name>",
+      "binding": "CI_WORKFLOW",
+      "class_name": "CI"
+    }
+  ],
+  "exports": {
+    "CiSandbox": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  },
+  "r2_buckets": [
+    {
+      "binding": "BACKUP_BUCKET",
+      "bucket_name": "<backup-bucket-name>"
+    }
+  ],
+  "triggers": {
+    "events": [
+      {
+        "type": "cf.artifacts.repo.push",
+        // filter is optional. If you don't set repoName we will run the same workflow for every push on any repo in your Artifacts namespace
+        "filter": {
+          "namespace": "CI",
+          "repoName": "my-repo"
+        },
+        "target": {
+          "scriptName": "<worker-name>",
+          "workflowName": "<workflow-name>"
+        }
+      }
+    ]
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true
+    }
+  }
+}
+```
+
+</WranglerConfig>
+
+:::note
+If you are running CI for a User Worker, include `"dispatch_namespace": "<DISPATCH_NAMESPACE>"` in your trigger target.
+:::
+
 ### View build status
 
 The `[observability]` setting in your Wrangler configuration records the status and logs for each pipeline run. To identify which stage failed, inspect the instance in the Workflows dashboard:
 
 <DashButton url="/?to=/:account/workers/workflows" />
 
-Each runner displays its own logs and status, so you can identify the command that failed. When a runner fails, the Workflow records its output and does not start stages that need its files.
+Each runner displays its own input, output, and status, so you can identify the command that failed. When a runner fails, the Workflow records its output and does not start stages that need its files.
 
 ## Deploy the application
 
