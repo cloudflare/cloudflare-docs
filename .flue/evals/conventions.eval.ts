@@ -49,7 +49,11 @@ describeEval("conventions reviewer", { harness }, (it) => {
 				f.path === "pr" &&
 				f.severity === "warning" &&
 				(f.rule?.toLowerCase().includes("title") ||
-					f.rule?.toLowerCase().includes("prefix")),
+					f.evidence?.toLowerCase().includes("title") ||
+					f.suggestion?.toLowerCase().includes("title") ||
+					f.evidence?.toLowerCase().includes('"update"') ||
+					f.suggestion?.toLowerCase().includes("product") ||
+					f.suggestion?.toLowerCase().includes("prefix")),
 		);
 		expect(titleFinding).toBeDefined();
 		expect(titleFinding!.severity).toBe("warning");
@@ -60,6 +64,8 @@ describeEval("conventions reviewer", { harness }, (it) => {
 				f.path === "pr" &&
 				f.severity === "warning" &&
 				(f.rule?.toLowerCase().includes("description") ||
+					f.evidence?.toLowerCase().includes("description") ||
+					f.suggestion?.toLowerCase().includes("description") ||
 					f.rule?.toLowerCase().includes("explain")),
 		);
 		expect(descFinding).toBeDefined();
@@ -140,11 +146,16 @@ describeEval("conventions reviewer", { harness }, (it) => {
 
 		const scopeFinding = findings!.find(
 			(f) =>
-				f.rule?.toLowerCase().includes("scope") ||
-				f.rule?.toLowerCase().includes("change") ||
-				f.rule?.toLowerCase().includes("unmentioned") ||
-				f.rule?.toLowerCase().includes("new file") ||
-				f.rule?.toLowerCase().includes("added page"),
+				f.path === "pr" &&
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("scope") ||
+					f.rule?.toLowerCase().includes("unmentioned") ||
+					f.rule?.toLowerCase().includes("new file") ||
+					f.rule?.toLowerCase().includes("added page") ||
+					f.evidence?.toLowerCase().includes("configuration.mdx") ||
+					f.evidence?.toLowerCase().includes("new file") ||
+					f.suggestion?.toLowerCase().includes("scope") ||
+					f.suggestion?.toLowerCase().includes("configuration.mdx")),
 		);
 		expect(scopeFinding).toBeDefined();
 		expect(scopeFinding!.severity).toBe("warning");

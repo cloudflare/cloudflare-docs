@@ -39,9 +39,9 @@ describeEval("code review file", { harness }, (it) => {
 			filename: "src/handler.ts",
 			addedLines: [
 				{
-					line: 10,
+					line: 4,
 					content:
-						"  fetch(url).then((r) => r.json()).then((d) => new Response(d));",
+						"    fetch(url).then((r) => r.json()).then((d) => new Response(d));",
 				},
 			],
 			fileContent: [
@@ -66,7 +66,7 @@ describeEval("code review file", { harness }, (it) => {
 		);
 		expect(match).toBeDefined();
 		expect(match!.path).toBe("src/handler.ts");
-		expect(match!.line).toBe(10);
+		expect(match!.line).toBe(4);
 		expect(match!.rule?.toLowerCase()).toMatch(
 			/\b(promise|reject|unhandled|await|error|fire|discard|floating|ignored)\b/,
 		);
