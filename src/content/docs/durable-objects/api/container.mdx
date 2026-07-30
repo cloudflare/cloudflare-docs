@@ -132,6 +132,8 @@ export class MyContainer extends Container {
   - `cwd` (`string`) — working directory for the process.
   - `env` (`Record<string, string>`) — environment additions and overrides. The process inherits existing Container variables. Matching keys use the per-execution value.
   - `user` (`string`) — image user for the process.
+  - `signal` (`AbortSignal`, optional) — cancels the process. When the signal aborts, the runtime terminates the process with `SIGKILL` (signal `9`). Passing a signal that is already aborted rejects `exec()` before any process starts.
+  - `pty` (`boolean | ContainerExecPtyOptions`, optional) — allocates a pseudo-terminal (PTY) for the process. Pass `true` to use the default size of 80 columns by 24 rows, or a `ContainerExecPtyOptions` object to set the size. A `ContainerExecPtyOptions` has `cols` (`number`) and `rows` (`number`), each an integer from `1` through `65535`. A PTY exposes a single stream that merges standard output and standard error, so when `pty` is set `stdin` defaults to `"pipe"` and `stderr` defaults to (and must be) `"combined"`.
 
 #### Return values
 
@@ -146,6 +148,7 @@ An `ExecProcess` has these fields and methods:
 - `exitCode` (`Promise<number>`) — resolves when the process exits. Nonzero codes resolve normally instead of rejecting.
 - `output()` (`Promise<ExecOutput>`) — reads buffered output once. `ExecOutput` contains `stdout` (`ArrayBuffer`), `stderr` (`ArrayBuffer`), and `exitCode` (`number`). Ignored streams produce empty buffers. Use `TextDecoder` to decode text.
 - `kill(signal?: number)` (`void`) — queues a signal for the process. The default is `SIGTERM`, signal `15`. The signal must be from `1` through `64`.
+- `resize(cols: number, rows: number)` (`void`) — resizes the PTY window to `cols` columns by `rows` rows. Only valid when the process was started with `pty`. Both values are integers from `1` through `65535`.
 
 With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `ArrayBuffer` on `ExecOutput`. Read both output channels from `stdout`.
 
@@ -153,15 +156,64 @@ With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `Arr
 
 `exec` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
 
+To cancel a process from outside, pass an `AbortSignal` as `options.signal`. Aborting the signal terminates the process with `SIGKILL`. Pair it with `AbortSignal.timeout()` to enforce a deadline, or with an `AbortController` to cancel on demand. If the signal is already aborted, `exec()` rejects with the signal's reason (an `AbortError` by default) and starts no process. When the signal aborts after the process starts, `exitCode` resolves normally with the terminated process's exit code.
+
+Set `pty` to run the process under a pseudo-terminal, which programs use to enable interactive behavior such as line editing and colored output. Because a PTY merges standard output and standard error into one stream, read the combined output from `stdout`; `stderr` is `null` on the `ExecProcess`. Call `resize()` on the returned `ExecProcess` when the terminal dimensions change.
+
 #### Exceptions
 
 - `exec()` throws when the Container is not running.
 - `exec()` throws a `TypeError` when `cmd` is empty, an option mode is invalid, or `stderr: "combined"` is used with `stdout: "ignore"`.
 - `exec()` rejects if the runtime cannot create or start the process.
+- `exec()` rejects with the abort reason of `options.signal` (an `AbortError` by default) when that signal is already aborted.
 - Environment variable names cannot contain `=` or null characters. Environment values, `cwd`, and `user` cannot contain null characters.
 - `kill()` throws a `RangeError` when the signal is outside the supported range.
+- `resize()` throws a `TypeError` when the process was not started with `pty`.
+- `resize()` throws a `RangeError` when `cols` or `rows` is outside `1` through `65535`.
 
 For task-oriented examples, refer to [Execute commands](/containers/execute-commands/).
+
+### `inspect`
+
+`inspect` returns information about the running Container, including the labels it started with and its image reference.
+
+:::note
+`inspect()` is available behind the `experimental` [compatibility flag](/workers/configuration/compatibility-flags/). Enable it by adding `experimental` to `compatibility_flags` in your [Wrangler configuration file](/workers/wrangler/configuration/).
+:::
+
+```ts
+inspect(): Promise<ContainerInfo | null>
+```
+
+<TypeScriptExample>
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async currentImage() {
+		if (!this.ctx.container.running) {
+			await this.start();
+		}
+
+		const info = await this.ctx.container.inspect();
+		return info?.image ?? null;
+	}
+}
+```
+</TypeScriptExample>
+
+#### Parameters
+
+None.
+
+#### Return values
+
+Returns `Promise<ContainerInfo | null>`. Resolves to `null` when the Container is not running.
+
+A `ContainerInfo` has these fields:
+
+- `labels` (`Record<string, string>`) — the labels the Container was started with. Empty when the Container started without labels.
+- `image` (`string`) — the Container's image registry reference, for example `registry.example.com/namespace/image:latest`.
 
 ### `destroy`
 
