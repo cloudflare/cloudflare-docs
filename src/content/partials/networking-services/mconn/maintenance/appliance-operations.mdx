@@ -1,18 +1,18 @@
 ---
 ---
 
-import { Aside, DashButton, Markdown, Tabs, TabItem } from '~/components';
+import { Aside, DashButton, Tabs, TabItem } from "~/components";
 
 You can restart, reboot, or shut down a Cloudflare One Appliance (formerly Magic WAN Connector) from the dashboard or via API. Operations are asynchronous — the appliance executes them the next time it checks in.
 
-| Operation | Effect |
-| --- | --- |
-| **Restart** | Restart managed services. Purges temporary and (optionally) persistent state. |
-| **Reboot** | Power cycle the appliance. Optionally, purge persistent state. Re-applies configuration starting from scratch. |
+| Operation    | Effect                                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| **Restart**  | Restart managed services. Purges temporary and (optionally) persistent state.                                             |
+| **Reboot**   | Power cycle the appliance. Optionally, purge persistent state. Re-applies configuration starting from scratch.            |
 | **Shutdown** | Power off the appliance. Optionally, purge persistent state. The machine will be offline until manually powered on again. |
 
 <Aside type="caution">
-Operations may disrupt service. Only one operation can be pending at a time.
+	Operations may disrupt service. Only one operation can be pending at a time.
 </Aside>
 
 <Tabs syncKey="dashPlusAPI">
