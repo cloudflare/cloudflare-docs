@@ -140,7 +140,25 @@ Add your Cloudflare account details to the configuration file located at `/etc/k
 
 1. Set the hostname of the key server, for example, <code>{props.one}</code>. This is also the value you entered when you uploaded your keyless certificate and is the hostname of your key server that holds the key for this certificate.
 2. Set the Zone ID (found on **Overview** tab of the Cloudflare dashboard).
-3. [Set the Origin CA API key](/fundamentals/api/get-started/ca-keys).
+3. Set the authentication credential for server certificate enrollment. gokeyless supports two options:
+
+   - **API Token (recommended):** [Create an API Token](/fundamentals/api/get-started/create-token/) with the **Zone > SSL and Certificates > Edit** permission. Set it in your configuration:
+
+     ```yaml
+     api_token: "<YOUR_API_TOKEN>"
+     ```
+
+     Or use the environment variable `KEYLESS_API_TOKEN`.
+
+   - **Origin CA API key (deprecated):** [Set the Origin CA API key](/fundamentals/api/get-started/ca-keys/). This option will stop working on September 30, 2026.
+
+:::caution[Origin CA Service Keys are removed September 30, 2026]
+The Origin CA API key (Service Key) used for Keyless SSL enrollment is deprecated and will be removed on **September 30, 2026**. After that date, key server enrollment and certificate refresh using only a Service Key will fail.
+
+**To migrate**, upgrade to gokeyless 1.18.0 or later, create an API Token with **Zone > SSL and Certificates > Edit**, and set the `api_token` value in `/etc/keyless/gokeyless.yaml` (or the `KEYLESS_API_TOKEN` environment variable). You can then remove the `origin_ca_api_key` value.
+
+Refer to the [gokeyless 1.18.0 release notes](https://github.com/cloudflare/gokeyless/releases/tag/v1.18.0) and the [Origin CA keys deprecation notice](/fundamentals/api/get-started/ca-keys/) for details.
+:::
 
 ### Populate keys
 
