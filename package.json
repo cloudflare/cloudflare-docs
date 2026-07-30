@@ -35,6 +35,7 @@
 		"flue:deploy": "pnpm run flue:build && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json --secrets-file .env",
 		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
 		"flue:reset:local": "rm -rf .flue/.wrangler/state .flue/.wrangler/tmp .flue/dist/cloudflare_docs_flue/.wrangler/state && echo 'Cleared local flue dev state (Durable Objects + R2). Stop the dev server before running this.'",
+		"flue:evals": "tsx .flue/bin/run-evals.ts",
 		"lint": "eslint",
 		"prepare": "husky"
 	},
