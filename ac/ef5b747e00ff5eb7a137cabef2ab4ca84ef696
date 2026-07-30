@@ -1,0 +1,36 @@
+src/content/changelog/workers/2026-05-14-domains-tab.mdx
+  5d30afd01ba1f877 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "acef5b747e00ff5eb7a137cabef2ab4ca84ef696",
+  "prompts": {
+    "5d30afd01ba1f877": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1d9624d47ffehRUQkjGHW6R8dw",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "yomna",
+      "messages": [],
+      "total_additions": 1256,
+      "total_deletions": 40,
+      "accepted_lines": 1256,
+      "overriden_lines": 0
+    },
+    "84dff175abac85ac": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1dc4b173dffexXQYtBgTG90jS9",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "yomna",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  }
+}
