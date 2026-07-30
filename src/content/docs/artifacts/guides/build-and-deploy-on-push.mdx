@@ -58,18 +58,23 @@ Here is an example of how to set up your Workflow to use runners and cache to in
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { CIWorkflow, cloudflareArtifacts } from './src/pipeline';
-import type { CiContext, CiParams, CloudflareArtifacts } from './src/pipeline';
+import { CIWorkflow } from './src/pipeline';
+import type {
+  CiContext,
+  CiParams,
+  CiRunnerResult,
+  CloudflareArtifacts,
+} from './src/pipeline';
 import type { WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 
-export class CI extends CIWorkflow({ provider }) {
+export class CI extends CIWorkflow {
   protected async pipeline(
-    event: WorkflowEvent<CiParams<CloudflareArtifacts>>,
-    step: WorkflowStep,
+    _event: WorkflowEvent<CiParams<CloudflareArtifacts>>,
+    _step: WorkflowStep,
     ci: CiContext
   ): Promise<void> {
     // Install once, then run independent checks from the shared snapshot.
-    const deps = await ci.runner({
+    const deps: CiRunnerResult = await ci.runner({
       name: 'install',
       command: 'bun install --frozen-lockfile',
       cache: { inputs: ['package.json', 'bun.lock'] },
@@ -81,6 +86,15 @@ export class CI extends CIWorkflow({ provider }) {
       deps.runner({ name: 'typecheck', command: 'bun run typecheck' }),
       deps.runner({ name: 'build', command: 'bun run build' }),
     ]);
+
+    // CF_TOKEN must be configured on the Worker; credentials are exposed only to Wrangler.
+    await deps.runner({
+      name: 'deploy',
+      command: 'bun wrangler deploy',
+      cloudflareCredentials: {
+        accountId: this.env.CLOUDFLARE_DEPLOY_ACCOUNT_ID,
+      },
+    });
   }
 }
 ```
@@ -105,7 +119,7 @@ This guide defines those CI steps in a Workflow class named `CIWorkflow`. To sta
 
 <WranglerConfig>
 
-```json
+```jsonc
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "<worker-name>",
