@@ -33,7 +33,7 @@ MCP server portals provide the following capabilities:
 
 - **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). This managed OAuth configuration applies to the portal's Access application. It is separate from upstream OAuth used by individual MCP servers in the portal. Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect. You can also connect using [Access service tokens](#connect-with-a-service-token) for machine-to-machine access.
 
-- **Code Mode**: Code Mode collapses all upstream tools into two tools for search and code execution. The AI agent writes JavaScript that calls typed methods for each tool. The code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. Admins can control whether Code Mode is unavailable, optional, on by default, or required. Refer to [Code Mode](#code-mode) for configuration and connection instructions.
+- **Code Mode**: Code Mode replaces upstream tools with two tools for search and code execution. The AI agent writes JavaScript that calls typed methods for each tool. The code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. Admins can control whether Code Mode is unavailable, optional, on by default, or required. Refer to [Code Mode](#code-mode) for configuration and connection instructions.
 
 - **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal. You can optionally route portal traffic through [Cloudflare Gateway](#route-portal-traffic-through-gateway) for richer HTTP logging and data loss prevention (DLP) scanning.
 
@@ -584,7 +584,7 @@ For the full list of supported resource arguments, refer to the [Terraform provi
 
 ## Code Mode
 
-[Code Mode](/agents/tools/codemode/) reduces context window usage by replacing upstream tool definitions with two tools for search and code execution. The connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. Authentication credentials and environment variables remain outside the model context.
+[Code Mode](/agents/tools/codemode/) reduces context window usage by replacing upstream tools with `portal_codemode_search` and `portal_codemode_execute`. The connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. Authentication credentials and environment variables remain outside the model context.
 
 Code Mode is useful for portals with many MCP servers or tools. Context window usage stays fixed as the portal adds tools.
 
@@ -645,7 +645,7 @@ For MCP clients with server configuration files, use the portal URL with the que
 }
 ```
 
-When Code Mode is active, the portal advertises `portal_codemode_search` and `portal_codemode_execute`. The AI agent can discover tools and compose multiple tool calls in one execution.
+When Code Mode is active, the portal advertises `portal_codemode_search` and `portal_codemode_execute` to connected MCP clients. The AI agent searches the available tool definitions, then composes one or more tool calls in the Dynamic Worker environment.
 
 For more information on building with Code Mode, refer to the [Code Mode SDK reference](/agents/tools/codemode/api-reference/).
 
