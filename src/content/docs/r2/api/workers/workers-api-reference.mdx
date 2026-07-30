@@ -273,9 +273,9 @@ A multipart upload can be completed or aborted at any time, either through the S
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
 
-- `range` <Type text="R2Range" />
+- `range` <Type text="R2Range | Headers" />
 
-  - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
+  - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned given the range in the `R2Range` or in the range Headers. Refer to [Ranged reads](#ranged-reads).
 
 - `ssecKey` <Type text="ArrayBuffer | string" />
 
