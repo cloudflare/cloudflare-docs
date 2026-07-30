@@ -28,8 +28,6 @@ The resource was found in Cloudflare's cache.
 
 The response is eligible for cache but was not present in Cloudflare's cache at request time, so it was served from the origin web server. Responses that Cloudflare chooses not to cache return [`BYPASS`](#bypass) instead of `MISS`.
 
-If a URL keeps returning `MISS` when you expect a `HIT`, refer to [Investigate uncached responses](/cache/troubleshooting/investigating-uncached-responses/#repeated-miss--cacheable-but-not-in-cache) for the common causes.
-
 ## NONE/UNKNOWN
 
 Cloudflare generated a response that denotes the asset is not eligible for caching. This may have happened because:
@@ -67,6 +65,8 @@ If you configured a [Cache Rule](/cache/how-to/cache-rules/) with **Eligible for
 :::
 
 BYPASS means the decision not to cache was made at **response time** — the request was initially eligible for caching, but the origin response or response headers instructed Cloudflare not to cache. For example, a Cache Rule that sets `"cache": true` enables caching at request time, but if the origin returns `Cache-Control: no-store`, the response will be BYPASS.
+
+If you expected a URL to be cached but see `BYPASS`, refer to [Investigate uncached responses](/cache/troubleshooting/investigating-uncached-responses/#bypass--origin-response-is-not-cacheable) for a step-by-step diagnostic.
 
 ## REVALIDATED
 
