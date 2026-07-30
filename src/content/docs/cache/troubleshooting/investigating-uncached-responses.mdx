@@ -1,0 +1,90 @@
+---
+title: Investigate uncached responses
+pcx_content_type: troubleshooting
+products:
+  - cache
+description: Diagnose why a URL you expected to be cached is served from the origin, using the cf-cache-status header to isolate the cause.
+sidebar:
+  order: 1
+---
+
+If a URL you expected to be cached is served from the origin every time, the `cf-cache-status` response header identifies which cache decision Cloudflare made. Fetch the URL, inspect the header, and follow the section that matches the value you see:
+
+- `DYNAMIC` — Cloudflare decided the request was not eligible for cache before it looked in the cache. Refer to [DYNAMIC — request not eligible for cache](#dynamic--request-not-eligible-for-cache).
+- `BYPASS` — Cloudflare was ready to cache the response, but the origin response prevented it. Refer to [BYPASS — origin response is not cacheable](#bypass--origin-response-is-not-cacheable).
+- `MISS` on multiple consecutive requests from the same client — the response is cacheable but keeps missing the cache. Refer to [Repeated MISS — cacheable but not in cache](#repeated-miss--cacheable-but-not-in-cache).
+
+For any other status, refer to [Cache responses](/cache/concepts/cache-responses/) for the full list.
+
+:::note
+Since May 2026, Cloudflare returns `BYPASS` — not `MISS` — for responses it chooses not to cache. `MISS` is now reserved for cacheable responses that were not in cache at request time. Refer to the [BYPASS status changelog](/changelog/post/2026-05-26-bypass-status-for-uncacheable-responses/) for context.
+:::
+
+## Before you start
+
+Rule out two conditions that bypass cache regardless of the request or the origin response:
+
+- [Development Mode](/cache/reference/development-mode/) is enabled on the zone. Development Mode suspends Cloudflare's cache for three hours.
+- A recent purge — [Purge Everything](/cache/how-to/purge-cache/purge-everything/), [purge by URL](/cache/how-to/purge-cache/purge-by-single-file/), [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), [purge by tag](/cache/how-to/purge-cache/purge-by-tags/), or [purge by hostname](/cache/how-to/purge-cache/purge-by-hostname/) — has just cleared the cache. The next request in each data center repopulates cache and will not return `HIT`.
+
+If either applies, address it before continuing.
+
+## DYNAMIC — request not eligible for cache
+
+Cloudflare made the "do not cache" decision at request time, before looking in the cache. Common causes:
+
+- **The file extension is not in the [default cached file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) list** — for example, `.html` or a JSON API response — and no rule enables caching for it. Add a [Cache Rule](/cache/how-to/cache-rules/) with **Eligible for cache** set to *Yes*.
+- **A rule instructs Cloudflare to bypass cache.** Check whether a Cache Rule with the [Bypass cache](/cache/how-to/cache-rules/settings/#bypass-cache) setting, or a legacy `Cache Level: Bypass` [Configuration Rule](/rules/configuration-rules/) or [Page Rule](/rules/page-rules/), matches the URL. Use [Rule Trace](/rules/trace-request/) to confirm which rules apply.
+- **The request method is not `GET` or `HEAD`.** Cloudflare only caches these two methods.
+
+Once the request is eligible, subsequent responses reflect the response-time decision (`HIT`, `MISS`, `BYPASS`, and so on).
+
+## BYPASS — origin response is not cacheable
+
+The request was eligible for cache, but the origin response or configuration prevented Cloudflare from storing it. Common causes:
+
+- **The response exceeds the [cacheable size limit](/cache/concepts/default-cache-behavior/#cacheable-size-limits) for your plan.** Serve large downloads or video from [R2](/r2/) with cache in front, or move to a plan with a higher limit.
+- **The origin returned `Cache-Control: no-store`, `no-cache`, or `private`, and [Origin Cache Control](/cache/concepts/cache-control/) is enabled.** Refer to [Understand `no-store` and `no-cache` directives](/cache/concepts/cache-control/#understand-no-store-and-no-cache-directives) and the [Conditions](/cache/concepts/cache-control/#conditions) table for the exact behavior. To cache the response anyway, configure a [Cache Rule](/cache/how-to/cache-rules/) with an explicit Edge TTL, or use [Cache Response Rules](/cache/how-to/cache-response-rules/) to rewrite the `Cache-Control` directive before cache.
+- **The origin returned a `Set-Cookie` header** under a configuration that prevents caching. With the default cache level and Origin Cache Control disabled, Cloudflare strips `Set-Cookie` and caches the asset. `Set-Cookie` only prevents caching when Origin Cache Control is enabled, or when a Cache Rule marks the response **Eligible for cache** without an explicit Edge TTL. Refer to [Interaction of `Set-Cookie` response header with Cache](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) for the full matrix.
+- **The origin returned `Vary: *`.** This value always bypasses cache, regardless of other configuration.
+- **The request included an `Authorization` header** and Cloudflare treated the response as private.
+
+Refer to [BYPASS](/cache/concepts/cache-responses/#bypass) for the reference definition of this status.
+
+## Repeated MISS — cacheable but not in cache
+
+`MISS` on the first request in each data center is expected — that request populates the cache. If the same URL keeps returning `MISS` across consecutive requests from the same client, one of the following is happening.
+
+### Cache key variance
+
+Cloudflare builds the cache key from the request scheme, host, path, and — depending on configuration — the query string, cookies, headers, and device type. Repeated `MISS` almost always means the key is different on every request. Common patterns:
+
+- **Query parameters that change per request** — session IDs, timestamps, or marketing tags such as `utm_*`. By default, every unique query string is a separate cache entry. To ignore parameters that do not affect the response, configure [Cache Rules](/cache/how-to/cache-rules/) or [Cache Key Settings](/cache/how-to/cache-keys/#cache-key-settings) to sort or drop them.
+- **A [custom cache key](/cache/how-to/cache-keys/) includes a cookie or header with a value that changes per user.** The [Create custom cache keys](/cache/how-to/cache-keys/#create-custom-cache-keys) section warns that custom keys "may reduce your cache hit rate and result in cache sharding" — this is the same behavior.
+- **[Cache by device type](/cache/how-to/cache-rules/examples/cache-device-type/) classifies clients differently than expected**, particularly for bots or clients with unusual `User-Agent` values.
+- **[Vary in Cache Rules](/cache/how-to/cache-rules/settings/#vary) is configured for a high-cardinality header** — for example, an unnormalized `Accept-Language` value or a per-user header. Each variant is a separate cache entry.
+
+To confirm the key is the cause, send two identical requests and inspect the responses. If both return `MISS`, compare the query string, cookies, and any headers your Cache Rule or [Cache Reserve](/cache/advanced-configuration/cache-reserve/) configuration uses.
+
+### Eviction and low-traffic assets
+
+Low-traffic assets can be evicted from the cache before the next request arrives. If two consecutive requests to the same URL from the same data center both return `MISS`, enable [Tiered Cache](/cache/how-to/tiered-cache/) or [Cache Reserve](/cache/advanced-configuration/cache-reserve/) to retain long-tail content longer.
+
+If you are testing from many different networks, each request reaches a different Cloudflare data center and produces its own `MISS`. Repeat the test from the same client and network to confirm the second request returns `HIT`.
+
+## Confirm the response reaches cache
+
+After adjusting configuration, request the URL twice from the same client. On the second request, verify all of the following:
+
+- `cf-cache-status: HIT`.
+- An `Age` header appears and increases on subsequent requests.
+- No `Set-Cookie` header, unless a Cache Rule is explicitly configured to allow it.
+
+If the response is still `MISS` or `BYPASS` after these checks, capture two full responses (request and response headers, including `cf-ray` values) and open a support case. The `cf-ray` values are required to trace the request through the Cloudflare network.
+
+## Related resources
+
+- [Cache responses](/cache/concepts/cache-responses/) — reference for every `cf-cache-status` value.
+- [Default cache behavior](/cache/concepts/default-cache-behavior/) — when Cloudflare caches successfully by default.
+- [Cache Rules](/cache/how-to/cache-rules/) — configure Edge TTL, eligibility, and cache key.
+- [Cache Analytics](/cache/performance-review/cache-analytics/) — measure hit rate and identify low-performing URLs.
