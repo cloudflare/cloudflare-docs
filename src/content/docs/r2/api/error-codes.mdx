@@ -41,7 +41,7 @@ For the **S3-compatible API**, errors are returned as XML in the response body:
 |------------|------|-------------|---------|-----------------|
 | 10002 | Unauthorized | 401 | Missing or invalid authentication credentials. | Verify your [API token](/r2/api/tokens/) or access key credentials are correct and have not expired. |
 | 10003 | AccessDenied | 403 | Insufficient permissions for the requested operation. | Check that your [API token](/r2/api/tokens/) has the required permissions for the bucket and operation. |
-| 10018 | ExpiredRequest | `403` | Presigned URL or request signature has expired. | Regenerate the [presigned URL](/r2/api/s3/presigned-urls/) or signature. |
+| 10018 | ExpiredRequest | 403 | Presigned URL or request signature has expired. | Regenerate the [presigned URL](/r2/api/s3/presigned-urls/) or signature. |
 | 10035 | SignatureDoesNotMatch | 403 | Request signature does not match calculated signature. | Verify your secret key and signing algorithm. Check for URL encoding issues. |
 | 10042 | NotEntitled | 403 | Account not entitled to this feature. | Ensure your account has an [R2 subscription](/r2/pricing/). |
 
