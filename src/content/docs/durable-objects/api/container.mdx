@@ -109,17 +109,19 @@ export class MyContainer extends Container {
 			await this.start();
 		}
 
-		const process = await this.ctx.container.exec(["node", "--version"]);
-		const output = await process.output();
+    	const process = await this.ctx.container.exec(["node", "--version"]);
+    	const output = await process.output();
 
-		return {
-			pid: process.pid,
-			exitCode: output.exitCode,
-			stdout: new TextDecoder().decode(output.stdout),
-		};
-	}
+    	return {
+    		pid: process.pid,
+    		exitCode: output.exitCode,
+    		stdout: new TextDecoder().decode(output.stdout),
+    	};
+    }
+
 }
-```
+
+````
 </TypeScriptExample>
 
 #### Parameters
@@ -169,7 +171,7 @@ For task-oriented examples, refer to [Execute commands](/containers/execute-comm
 
 ```js
 this.ctx.container.destroy("Manually Destroyed");
-```
+````
 
 #### Parameters
 
@@ -331,6 +333,29 @@ this.ctx.container.interceptOutboundHttps("*", worker);
 
 - `target` (string): A hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
 - `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle matching requests.
+
+#### Return values
+
+- None.
+
+### `interceptOutboundTcp`
+
+`interceptOutboundTcp` routes outbound TCP connections matching a host:port, IP address, or IP:port through a `WorkerEntrypoint`. The Worker's `connect()` handler receives the raw TCP stream. Can be called before or after starting the container. Open connections pick up the new handler without being dropped.
+
+```js
+const worker = this.ctx.exports.MyWorker({ props: {} });
+
+// Match a specific host:port
+this.ctx.container.interceptOutboundTcp("api.example.com:8080", worker);
+
+// Match an IP:port
+this.ctx.container.interceptOutboundTcp("15.0.0.1:80", worker);
+```
+
+#### Parameters
+
+- `target` (string): A host:port, IP address, or IP:port to match.
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance whose `connect()` handler will process matching TCP streams.
 
 #### Return values
 
