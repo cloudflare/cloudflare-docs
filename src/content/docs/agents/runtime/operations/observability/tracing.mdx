@@ -10,11 +10,13 @@ products:
 
 import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
-[Workers traces](/workers/observability/traces/) cover the infrastructure layer — fetch calls, KV reads, and D1 queries. Agent tracing adds the application layer: which model was called, which tools ran, and how those operations relate. Both layers appear in the same trace. Spans follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai) and do not require an OpenTelemetry SDK or exporter.
+Agent tracing helps you understand what an agent did at every turn, including its model calls, tool runs, and approval requests. Use traces to investigate unexpected behavior, find slow operations, and review token usage.
+
+Agent activity appears alongside runtime events such as fetch calls, KV reads, and D1 queries in [Workers traces](/workers/observability/traces/).
 
 ## Enable tracing
 
-Set `observability.traces.enabled` to `true` in your Wrangler configuration:
+Enable tracing in your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -28,35 +30,31 @@ enabled = true
 
 </WranglerConfig>
 
-## View traces in the dashboard
+## View agent activity
 
-Traces are available in the [Agents tab](https://dash.cloudflare.com/?to=/:account/agents) in the Cloudflare Dashboard. The overview lists every traced agent with its model, session count, runs, and total token usage.
+Open the [Agents tab](https://dash.cloudflare.com/?to=/:account/agents) in the Cloudflare Dashboard to see traced agents and subagents. The overview shows each agent's model, session count, runs, and total token usage.
 
-![Agents dashboard listing traced agents with run and token usage metrics](~/assets/images/agents/tracing-agent_overview.png)
+A session is a conversation made up of one or more turns. A turn is one request to an agent and its response.
 
-Select an agent to view its individual traces. Each trace shows its duration, token breakdown, and status.
+> **Image placeholder:** Agents dashboard listing traced agents with run and token usage metrics.
 
-![Agents dashboard showing traces for one agent](~/assets/images/agents/tracing-per-agent.png)
+Select an agent to see its traces. Each trace includes its duration, token breakdown, and status.
 
-Each trace has two views:
+> **Image placeholder:** Agents dashboard showing traces for one agent.
 
-**Conversation** shows recorded model messages and tool payloads when [payload storage](/agents/runtime/operations/observability/tracing/#payload-privacy) is on. Use this view to inspect system instructions, user messages, model reasoning, tool calls, and nested agents.
+There are two ways to follow what an agent did: **Session replay** and **Trace**.
 
-![Conversation view showing model messages and tool calls](~/assets/images/agents/tracing-session-replay.png)
+**Session replay** shows the recorded conversation across turns, including messages, reasoning, tool calls, and subagent activity. What appears depends on your [payload recording settings](/agents/runtime/operations/observability/tracing/#payload-privacy).
 
-**Timeline** shows when each operation started, its duration, and its parent operation. An `invoke_agent` span contains `chat` spans for model calls and `execute_tool` spans for tool runs. Each `tool_approval` span is a child of its related `execute_tool` span. Nested sub-agent work appears under its parent operation.
+> **Image placeholder:** Session replay showing model messages and tool calls.
 
-![Timeline view showing nested agent, model, and tool spans](~/assets/images/agents/tracing-classic-waterfall.png)
+**Trace** is a waterfall of the operations performed during one turn. It shows when each operation started, how long it took, and which operation called it.
 
-Approval spans are bounded lifecycle segments. The `cloudflare.agents.tool.approval.state` attribute identifies each segment as `requested`, `approved`, or `denied`. Segments close within the invocation that records the event. They do not measure how long a human waits before responding across invocations.
+> **Image placeholder:** Trace waterfall showing nested agent, model, and tool spans.
 
-If an invocation ends while bounded work is still running, its open spans close with `cloudflare.agents.span.truncated` set to `true`. Completion-time attributes can be absent from these spans.
+## Trace structure
 
-## Framework setup
-
-### Think
-
-[Think](/agents/harnesses/think/) uses `wrapAISDK()` internally to instrument every turn. You do not need to wrap the AI SDK or configure an adapter. When traces are on, spans follow this hierarchy:
+Each turn produces a trace made of spans, one for each timed operation:
 
 ```txt
 invoke_agent {agent class}
@@ -65,13 +63,60 @@ invoke_agent {agent class}
     └── tool_approval {tool}
 ```
 
-Think automatically supplies the identity fields that the Agents dashboard uses to group runs and conversations:
+The `invoke_agent` span covers the turn. Model calls, tool runs, and approvals appear as nested spans. Subagent work appears under the operation that invoked it.
+
+:::note
+Approval spans represent lifecycle events within a Worker invocation. They do not measure the time a person waits before responding across invocations.
+:::
+
+### Agent identity
+
+Agent spans use three fields to identify the work shown in the dashboard:
+
+- **Agent name** identifies the logical agent implementation. Use a shared name such as `booking-agent`.
+- **Agent ID** identifies the stable agent instance or resource, such as `booking-agent-production`.
+- **Conversation ID** identifies the current conversation or session.
+
+Do not derive the agent name from a request, conversation, or user identifier. This creates too many distinct agent names in the dashboard.
+
+### Payload privacy
+
+Message and tool payloads can contain personally identifiable information. Only record payloads that are safe to store. Each integration controls payload recording differently, so configure it in the relevant [Framework setup](/agents/runtime/operations/observability/tracing/#framework-setup) section.
+
+Think and `wrapAISDK()` use `storeMessages` to record input and output messages on `chat` spans. They use `storeTools` to record arguments and results on `execute_tool` spans.
+
+## Framework setup
+
+Tracing and payload controls depend on the integration. Think and Flue instrument turns automatically. Direct AI SDK calls and custom harnesses need additional setup.
+
+### Think
+
+[Think](/agents/harnesses/think/) uses `wrapAISDK()` internally and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
+
+Think supplies these identity fields:
 
 | Attribute                | Think default               |
 | ------------------------ | --------------------------- |
 | `gen_ai.agent.name`      | `this.constructor.name`     |
 | `gen_ai.agent.id`        | `this.name`                 |
 | `gen_ai.conversation.id` | `this.ctx.id.toString()`    |
+
+#### Store payloads
+
+Think does not store message or tool payloads by default. To record them, override the properties on the agent class:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	override storeMessages = true;
+	override storeTools = true;
+}
+```
+
+</TypeScriptExample>
 
 ### Flue
 
@@ -94,11 +139,9 @@ const tracedAI = wrapAISDK(ai);
 
 `wrapAISDK()` supports AI SDK v6 and v7. It instruments `generateText`, `streamText`, `generateObject`, and `streamObject`, creating the `invoke_agent` parent before model and tool work begins.
 
-Unlike Think, a direct AI SDK call has no Agent instance from which to infer dashboard identity. Supply these values on each call:
+Unlike Think, a direct AI SDK call has no Agent instance from which to infer dashboard identity. Supply the [agent identity fields](/agents/runtime/operations/observability/tracing/#agent-identity) on each call.
 
-- **Agent name** identifies the logical agent implementation. Keep it low cardinality, such as `booking-agent`.
-- **Agent ID** identifies the stable agent instance or resource, such as `booking-agent-production`.
-- **Conversation ID** identifies the current conversation or session.
+Only include context that is safe to store. Do not include credentials, tokens, user input, or other secrets.
 
 #### AI SDK v7
 
@@ -153,13 +196,11 @@ await tracedAI.generateText({
 
 </TypeScriptExample>
 
-Additional scalar metadata uses the `cloudflare.agents.metadata.*` namespace. Do not include credentials, tokens, user input, or other secrets in span context.
+Additional scalar metadata uses the `cloudflare.agents.metadata.*` namespace.
 
-## Payload privacy
+#### Store payloads
 
-Message and tool payloads can contain personally identifiable information. Payload storage is off by default.
-
-To opt in with AI SDK v6 or v7, pass storage options to `wrapAISDK()`:
+`wrapAISDK()` does not store message or tool payloads by default. To record them with AI SDK v6 or v7, pass storage options when wrapping the namespace:
 
 <TypeScriptExample>
 
@@ -175,22 +216,26 @@ const tracedAI = wrapAISDK(ai, {
 
 </TypeScriptExample>
 
-For Think, override the properties on the agent class:
+### Custom harnesses
 
-<TypeScriptExample>
+If your agent does not use one of our currently supported frameworks, instrument it with the [Workers custom spans API](/workers/observability/traces/custom-spans/). Create an `invoke_agent` span for each turn, with `chat` spans for model calls, `execute_tool` spans for tool runs, and `tool_approval` spans for approvals.
 
-```ts
-import { Think } from "@cloudflare/think";
+For span names, attributes, and implementation examples, refer to the [OpenTelemetry GenAI reference implementations](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/reference/README.md). Adapt these examples to the Workers custom spans API because Workers does not yet support the OpenTelemetry API directly.
 
-export class MyAgent extends Think<Env> {
-	override storeMessages = true;
-	override storeTools = true;
-}
-```
+#### Add agent identity
 
-</TypeScriptExample>
+Add these attributes to both the `invoke_agent` and `chat` spans so the Agents dashboard can associate the telemetry with the agent and conversation:
 
-`storeMessages` writes input and output messages as JSON on `chat` spans. `storeTools` writes arguments and results on `execute_tool` spans.
+| Attribute                | `invoke_agent` span                           | `chat` span                                   |
+| ------------------------ | --------------------------------------------- | --------------------------------------------- |
+| `gen_ai.operation.name`  | `invoke_agent`                                | `chat`                                        |
+| `gen_ai.agent.name`      | A shared agent name, such as `booking-agent`  | The same agent name                           |
+| `gen_ai.agent.id`        | A stable identifier for the agent instance    | The same agent ID                             |
+| `gen_ai.conversation.id` | The conversation, session, or thread identifier | The same conversation, session, or thread ID |
+
+#### Store payloads
+
+For custom spans, add payload attributes manually. Use `gen_ai.input.messages`, `gen_ai.output.messages`, and `gen_ai.system_instructions` on model spans. Use `gen_ai.tool.call.arguments` and `gen_ai.tool.call.result` on tool spans. The custom spans API accepts scalar attribute values, so serialize structured payloads with `JSON.stringify()`. These values are recorded whenever the invocation is sampled. Only add payloads that are safe to store.
 
 ## Exporting traces
 
@@ -206,8 +251,6 @@ Agent tracing is free while [Workers traces](/workers/observability/traces/) is 
 | Workers Paid | 20 million per month ($0.60 per additional million) | 7 days    |
 
 ## Next steps
-
-Cloudflare is working to support the [OpenTelemetry API](https://opentelemetry.io/) on Workers. Once available, AI SDKs and agent frameworks that emit OpenTelemetry instrumentation will produce spans without manual integration code.
 
 <LinkCard
 	title="Diagnostics channels"
