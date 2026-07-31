@@ -1,0 +1,9 @@
+---
+title: interceptOutboundTcp for Container API
+description: The Durable Object Container API now supports `interceptOutboundTcp` for routing outbound TCP connections through a `WorkerEntrypoint`.
+products:
+  - durable-objects
+date: 2026-07-31
+---
+
+You can now use `interceptOutboundTcp` to route outbound TCP connections from a container through a `WorkerEntrypoint`. The Worker's `connect()` handler receives the raw TCP stream, allowing you to proxy traffic, inspect bytes, or route database connections through [Hyperdrive](/hyperdrive/).
