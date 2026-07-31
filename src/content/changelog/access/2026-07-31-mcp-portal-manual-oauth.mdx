@@ -1,0 +1,15 @@
+---
+title: Static OAuth client credentials for MCP server portals
+description: Connect MCP servers that require a pre-registered OAuth client to an MCP server portal.
+date: 2026-07-31
+products:
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) can now connect to upstream MCP servers that require a pre-registered OAuth client. This supports OAuth providers that do not offer Dynamic Client Registration or have disabled it.
+
+When adding an MCP server, administrators can enter the client ID and client secret from an OAuth application registered with the upstream provider. The configuration also supports custom OAuth endpoints, scopes, and the `client_secret_post` and `client_secret_basic` token endpoint authentication methods.
+
+Cloudflare stores the client secret encrypted. Users still authenticate to the upstream server with their own accounts when they connect through a portal.
+
+For setup instructions, refer to [Configure manual OAuth credentials](/cloudflare-one/access-controls/ai-controls/mcp-portals/#configure-manual-oauth-credentials).
