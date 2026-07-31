@@ -3,7 +3,7 @@ import { Icon } from "astro-icon/components";
 import { Button } from "./ui/button";
 import { LinkButton } from "./ui/link-button";
 import { ThemeToggle } from "./ui/theme-toggle";
-import { DocSearch } from "./ui/search";
+import { Search } from "./ui/search";
 import { config } from "virtual:nimbus/config";
 import { getSidebarSections } from "@cloudflare/nimbus-docs";
 import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
@@ -111,7 +111,7 @@ const navLinks = [
 		</div>
 
 		<div class="flex items-center gap-2">
-			{config.search !== false && <DocSearch />}
+			{config.search !== false && <Search />}
 			{
 				config.github && (
 					<LinkButton

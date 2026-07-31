@@ -27,6 +27,10 @@
 <script>
 	import { openGlobalSearch } from "../util/search";
 
+	function on404Page(): boolean {
+		return document.getElementById("404-search-link") !== null;
+	}
+
 	// Read at call time (not module load) so it's correct across 404 soft-navs.
 	function currentQuery(): string {
 		return decodeURIComponent(
@@ -44,4 +48,37 @@
 
 	wire404();
 	document.addEventListener("astro:page-load", wire404);
+
+	if (!document.documentElement.hasAttribute("data-404-search-key")) {
+		document.documentElement.setAttribute("data-404-search-key", "true");
+		document.addEventListener(
+			"click",
+			(event) => {
+				const trigger =
+					event.target instanceof Element
+						? event.target.closest("[data-search-trigger]")
+						: null;
+				if (!on404Page() || !trigger) return;
+				event.preventDefault();
+				event.stopPropagation();
+				openGlobalSearch(currentQuery());
+			},
+			{ capture: true },
+		);
+		document.addEventListener(
+			"keydown",
+			(keyboardEvent) => {
+				if (
+					on404Page() &&
+					(keyboardEvent.metaKey || keyboardEvent.ctrlKey) &&
+					keyboardEvent.key.toLowerCase() === "k"
+				) {
+					keyboardEvent.preventDefault();
+					keyboardEvent.stopPropagation();
+					openGlobalSearch(currentQuery());
+				}
+			},
+			{ capture: true },
+		);
+	}
 </script>

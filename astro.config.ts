@@ -84,7 +84,7 @@ const nimbusConfig = defineNimbusConfig({
 	socialImage: "/og-docs.png",
 	socialImageAlt: "Cloudflare Docs",
 	// "custom" renders the search UI slot but skips the built-in Pagefind index;
-	// Nimbus mounts AI Search instead (see ui/search/DocSearch.astro).
+	// Nimbus mounts AI Search instead (see ui/search/Search.astro).
 	search: { provider: "custom" },
 	sidebar: {
 		items: sidebarItems,
