@@ -165,6 +165,12 @@ Type: `string`
 
 Email used to authenticate the client.
 
+## ExperimentalFeatures
+
+Type: `object`
+
+List of experimental features, which will be either permanently added to the schema or marked for deprecation. In that case, they will be removed 3 months after the notice.
+
 ## FileInfo
 
 Type: `object`
@@ -206,6 +212,12 @@ Version name for the HTTP request.
 Type: `bool`
 
 If the requested was isolated with Cloudflare Browser Isolation or not.
+
+## PackageInfo
+
+Type: `object`
+
+Information about the software package detected in the HTTP request, including its ecosystem, namespace, name, version, and package URL (PURL).
 
 ## PolicyID
 
