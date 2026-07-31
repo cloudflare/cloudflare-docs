@@ -72,6 +72,7 @@ export { default as AiSearchQueryingDiagram } from "./components/AiSearchQueryin
 export { default as AiSearchVoiceDiagram } from "./components/AiSearchVoiceDiagram.astro";
 export { default as ArtifactsCIPipelineDiagram } from "./components/ArtifactsCIPipelineDiagram.astro";
 export { default as ArtifactsCIWorkflowDiagram } from "./components/ArtifactsCIWorkflowDiagram.astro";
+export { default as ArtifactsPlatformSharedCIDiagram } from "./components/ArtifactsPlatformSharedCIDiagram.astro";
 export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
 export { default as WorkersArchitectureDiagram } from "./components/cf/WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./components/cf/WorkersIsolateDiagram.astro";

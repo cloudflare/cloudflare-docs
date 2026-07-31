@@ -11,6 +11,7 @@ products:
 import {
 	ArtifactsCIPipelineDiagram,
 	ArtifactsCIWorkflowDiagram,
+	ArtifactsPlatformSharedCIDiagram,
 	DashButton,
 	PackageManagers,
 	Tabs,
@@ -46,6 +47,8 @@ Use the `@cloudflare/ci` SDK to define the CI steps. The SDK provides two tools 
 
 - **Runners** — each `runner()` call spins up an isolated sandbox and executes a shell command. You use the same commands you already run locally or in another CI system. Each runner captures its own logs, status, and output files.
 - **Cache** — the `cache` option on a runner caches installed dependencies so that later runs do not reinstall them. Pass the files that determine the dependencies, such as `pnpm-lock.yaml`, to `cache.inputs`. When those files have not changed, the SDK restores the cached result instead of running the command again.
+
+![Diagram showing three sequential commits: commit 1 has a cache miss so the install step runs and its sandbox snapshot is cached; commit 2 has an unchanged pnpm-lock.yaml so the cache key matches and the cached snapshot is served, skipping install; commit 3 has a changed pnpm-lock.yaml so the cache key misses and install runs again.](~/assets/images/artifacts/snapshot-cache-flow.svg)
 
 A cached runner takes a [snapshot](/sandbox/api/backups/) of its sandbox, which later runners reuse. Multiple runners can branch from the same cached result — for example, lint, type-check, and test runners can all reuse one cached install.
 
@@ -214,3 +217,36 @@ Each runner displays its own input, output, and status, so you can identify the 
 To deploy a Worker, pass `wrangler deploy` to your final `runner()` step, i.e. `workspace.runner({ name: "deploy", command: "wrangler deploy" })`.
 
 To deploy a User Worker, pass `wrangler deploy --dispatch_namespace <DISPATCH_NAMESPACE>` to your final `runner()` step.
+
+## Run one workflow for every repo in a namespace
+
+The `filter` in your trigger is optional. When you set `repoName`, only pushes to that specific repo start the Workflow. When you omit `repoName`, Cloudflare runs the same Workflow for every push to any repo in your Artifacts namespace.
+
+This is useful for platforms that author and own a single CI Workflow and want to apply it uniformly across every customer repo in a namespace. Instead of maintaining a separate trigger per repo, one shared Workflow builds, checks, and deploys each repo on push.
+
+<ArtifactsPlatformSharedCIDiagram />
+
+To run the same Workflow for every repo in a namespace, drop `repoName` from the trigger `filter` and keep only the `namespace`:
+
+<WranglerConfig>
+
+```json
+{
+	"triggers": [
+		{
+			"type": "cf.repo.push",
+			"filter": {
+				"namespace": "ARTIFACTS"
+			},
+			"target": {
+				"type": "workflow",
+				"workflowName": "ci-workflow"
+			}
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Each push still starts its own Workflow instance for the repo, branch, and commit that changed, so you can deploy a separate Worker per repo from the same shared Workflow definition.
