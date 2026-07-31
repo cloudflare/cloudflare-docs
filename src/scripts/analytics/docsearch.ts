@@ -1,11 +1,15 @@
 import { track } from "~/util/zaraz";
 
-// Fire prod's "click docs search pop-up" event on a click within #docsearch.
-// Delegated so it survives view transitions and the button's mount re-render.
+// Delegated so it survives view transitions without counting modal interactions.
 export function registerDocSearch() {
+	const trackSearchOpen = () => track("click docs search pop-up");
+
 	document.addEventListener("click", (event) => {
-		const trigger = (event.target as Element | null)?.closest("#docsearch");
+		const trigger = (event.target as Element | null)?.closest(
+			"[data-search-trigger]",
+		);
 		if (!trigger) return;
-		track("click docs search pop-up");
+		trackSearchOpen();
 	});
+	document.addEventListener("docs-search-open", trackSearchOpen);
 }

@@ -1,14 +1,15 @@
 ---
-// Mounts the same `@docsearch/js` modal as prod (via starlight-docsearch),
-// using prod's client options, so search behavior is 1:1. Only the chrome is
-// re-themed to Nimbus tokens below. `transition:persist` keeps the single
-// mounted instance (and its global Cmd/Ctrl+K listener) alive across view
-// transitions; the pre-rendered button is a placeholder DocSearch replaces.
-import "@docsearch/css/dist/modal.css";
+const aiSearchApiUrl =
+	"https://ai-search.developers.cloudflare.com/api/ai-search";
 ---
 
 <cfdocs-docsearch id="docsearch" transition:persist="docsearch">
-	<button type="button" class="DocSearch DocSearch-Button" aria-label="Search">
+	<button
+		type="button"
+		class="DocSearch DocSearch-Button"
+		aria-label="Search"
+		data-search-trigger
+	>
 		<span class="DocSearch-Button-Container">
 			<svg
 				width="20"
@@ -27,62 +28,26 @@ import "@docsearch/css/dist/modal.css";
 			</svg>
 			<span class="DocSearch-Button-Placeholder">Search</span>
 		</span>
-		<span class="DocSearch-Button-Keys"></span>
+		<span class="DocSearch-Button-Keys">
+			<kbd class="DocSearch-Button-Key" data-search-shortcut-modifier>Ctrl</kbd>
+			<kbd class="DocSearch-Button-Key">K</kbd>
+		</span>
 	</button>
+	<search-modal-snippet
+		api-url={aiSearchApiUrl}
+		placeholder="Search documentation..."
+		max-results="50"
+		max-render-results="10"
+		group-by="product"
+		hide-thumbnails="true"
+		show-url="false"></search-modal-snippet>
 </cfdocs-docsearch>
 
 <style is:global>
-	/* Modal theming — DocSearch vars remapped to Nimbus tokens (which already
-   * flip under [data-mode="dark"], so no separate dark block). */
-	:root {
-		--docsearch-primary-color: var(--nb-primary);
-		--docsearch-text-color: var(--nb-foreground);
-		--docsearch-spacing: 12px;
-		--docsearch-icon-stroke-width: 1.4;
-		--docsearch-highlight-color: var(--nb-primary);
-		--docsearch-muted-color: var(--nb-muted-foreground);
-		--docsearch-container-background: oklch(0 0 0 / 0.5);
-
-		--docsearch-modal-width: 560px;
-		--docsearch-modal-height: 600px;
-		--docsearch-modal-background: var(--nb-card);
-		--docsearch-modal-shadow: var(--nb-shadow-lg);
-
-		--docsearch-searchbox-height: 56px;
-		--docsearch-searchbox-background: var(--nb-muted);
-		--docsearch-searchbox-focus-background: var(--nb-card);
-		--docsearch-searchbox-shadow: inset 0 0 0 1px var(--docsearch-primary-color);
-
-		--docsearch-hit-height: 56px;
-		--docsearch-hit-color: var(--nb-foreground);
-		--docsearch-hit-active-color: var(--nb-primary-foreground);
-		--docsearch-hit-background: var(--nb-card);
-		--docsearch-hit-shadow: none;
-
-		--docsearch-key-gradient: linear-gradient(
-			var(--nb-muted) 0%,
-			var(--nb-muted) 100%
-		);
-		--docsearch-key-shadow: none;
-
-		--docsearch-footer-height: 44px;
-		--docsearch-footer-background: var(--nb-card);
-		--docsearch-footer-shadow: 0 -1px 0 0 var(--nb-border);
-	}
-
-	.DocSearch-Modal {
-		border: 1px solid var(--nb-border);
-	}
-	.DocSearch-Logo svg * {
-		fill: var(--docsearch-muted-color);
-	}
-
-	/* Trigger button — styled for the Nimbus header. */
 	#docsearch {
 		display: inline-flex;
 	}
-	/* Mobile: icon-only square button, no pill chrome. The pill (border, fill,
-   * placeholder, keys) is added at >=768px below. */
+
 	#docsearch .DocSearch-Button {
 		margin: 0;
 		display: inline-flex;
@@ -103,31 +68,35 @@ import "@docsearch/css/dist/modal.css";
 			background-color 150ms,
 			border-color 150ms;
 	}
+
 	#docsearch .DocSearch-Button:hover {
 		color: var(--nb-foreground);
 		background-color: var(--nb-muted);
 		box-shadow: none;
 	}
+
 	#docsearch .DocSearch-Button:focus-visible {
 		outline: 2px solid var(--nb-primary);
 		outline-offset: 2px;
 	}
-	/* Collapse the wrapper so icon + placeholder + keys are direct flex children
-   * of the button (matches starlight-docsearch); otherwise they stack. */
+
 	#docsearch .DocSearch-Button-Container {
 		display: contents;
 	}
+
 	#docsearch .DocSearch-Search-Icon {
 		width: 1rem;
 		height: 1rem;
 		color: currentColor;
 		stroke-width: 1.6;
 	}
+
 	#docsearch .DocSearch-Button-Placeholder {
 		display: none;
 		padding: 0;
 		font-size: 0.875rem;
 	}
+
 	#docsearch .DocSearch-Button-Keys {
 		display: none;
 		align-items: center;
@@ -135,6 +104,7 @@ import "@docsearch/css/dist/modal.css";
 		min-width: auto;
 		margin-inline-start: 0.5rem;
 	}
+
 	#docsearch .DocSearch-Button-Key {
 		display: inline-flex;
 		align-items: center;
@@ -152,7 +122,50 @@ import "@docsearch/css/dist/modal.css";
 		font-weight: 600;
 	}
 
-	/* >=768px: expand to the full pill with placeholder + keys. */
+	#docsearch search-modal-snippet {
+		display: contents;
+		--search-snippet-font-family: var(--nb-font-sans);
+		--search-snippet-background: var(--nb-background);
+		--search-snippet-surface: var(--nb-card);
+		--search-snippet-hover-background: var(--nb-accent);
+		--search-snippet-border-color: var(--nb-border);
+		--search-snippet-text-color: var(--nb-foreground);
+		--search-snippet-text-secondary: var(--nb-muted-foreground);
+		--search-snippet-text-description: var(--nb-muted-foreground);
+		--search-snippet-primary-color: var(--nb-primary);
+		--search-snippet-primary-hover: var(--nb-primary-hover);
+		--search-snippet-focus-ring: color-mix(
+			in oklch,
+			var(--nb-primary) 20%,
+			transparent
+		);
+		--search-snippet-result-icon-size: 20px;
+		--search-snippet-result-icon-color: var(--nb-muted-foreground);
+		--search-snippet-result-icon-active-color: var(--nb-primary);
+	}
+
+	#docsearch search-modal-snippet::part(result-icon-page),
+	#docsearch search-modal-snippet::part(result-icon-section) {
+		display: block;
+		background-color: currentColor;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+
+	#docsearch search-modal-snippet::part(result-icon-page) {
+		-webkit-mask-image: url("@phosphor-icons/core/regular/file.svg");
+		mask-image: url("@phosphor-icons/core/regular/file.svg");
+	}
+
+	#docsearch search-modal-snippet::part(result-icon-section) {
+		-webkit-mask-image: url("@phosphor-icons/core/regular/hash.svg");
+		mask-image: url("@phosphor-icons/core/regular/hash.svg");
+	}
+
 	@media (min-width: 768px) {
 		#docsearch .DocSearch-Button {
 			width: auto;
@@ -160,13 +173,16 @@ import "@docsearch/css/dist/modal.css";
 			border-color: var(--nb-border);
 			background-color: var(--nb-card);
 		}
+
 		#docsearch .DocSearch-Button:hover {
 			border-color: var(--nb-border-strong);
 			background-color: var(--nb-card);
 		}
+
 		#docsearch .DocSearch-Button-Placeholder {
 			display: inline;
 		}
+
 		#docsearch .DocSearch-Button-Keys {
 			display: flex;
 		}
@@ -174,40 +190,35 @@ import "@docsearch/css/dist/modal.css";
 </style>
 
 <script>
-	import docsearch from "@docsearch/js";
-	import { docSearchOptions, getIndexName } from "./docsearch-config";
+	import "@cloudflare/ai-search-snippet/search";
+	import type { SearchModalSnippet } from "@cloudflare/ai-search-snippet/search";
 
 	class DocSearchElement extends HTMLElement {
-		connectedCallback() {
-			// Persisted element: mount once for the app's lifetime. Mark mounted only
-			// after mount() succeeds so a throw here retries on the next connect.
-			if (this.dataset.mounted) return;
-			this.mount();
-			this.dataset.mounted = "true";
+		private trigger: HTMLButtonElement | null = null;
+		private modal: SearchModalSnippet | null = null;
 
-			// Prod re-picks the index on every (full) page load. Under view
-			// transitions this instance persists, so refresh the index when the
-			// /style-guide/ boundary is crossed. Re-invoking docsearch() reconciles
-			// into the same container (no stacked listeners).
-			document.addEventListener("astro:page-load", () => {
-				if (getIndexName() !== this.dataset.index) this.mount();
-			});
+		private open = async () => {
+			await customElements.whenDefined("search-modal-snippet");
+			this.modal?.open();
+		};
+
+		private close = () => this.modal?.close();
+
+		connectedCallback() {
+			this.trigger = this.querySelector("[data-search-trigger]");
+			this.modal = this.querySelector("search-modal-snippet");
+			this.trigger?.addEventListener("click", this.open);
+			// document.addEventListener("astro:before-preparation", this.close);
+
+			const modifier = this.querySelector("[data-search-shortcut-modifier]");
+			if (modifier && /Mac|iPhone|iPad|iPod/.test(navigator.platform)) {
+				modifier.textContent = "⌘";
+			}
 		}
 
-		mount() {
-			const indexName = getIndexName();
-			this.dataset.index = indexName;
-			docsearch({
-				...docSearchOptions,
-				indexName,
-				container: this,
-				// Prod's button text; remaining strings are @docsearch/js English
-				// defaults, matching what Starlight injects in prod.
-				placeholder: "Search",
-				translations: {
-					button: { buttonText: "Search", buttonAriaLabel: "Search" },
-				},
-			});
+		disconnectedCallback() {
+			this.trigger?.removeEventListener("click", this.open);
+			document.removeEventListener("astro:before-preparation", this.close);
 		}
 	}
 

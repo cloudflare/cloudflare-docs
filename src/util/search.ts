@@ -1,31 +1,37 @@
-export const openGlobalSearch = (searchTerm?: string) => {
-	// Try multiple selectors for DocSearch
-	const docSearchButton =
-		(document.querySelector("#docsearch button") as HTMLButtonElement) ||
-		(document.querySelector(".DocSearch-Button") as HTMLButtonElement) ||
-		(document.querySelector("[data-docsearch-button]") as HTMLButtonElement);
+import type { SearchModalSnippet } from "@cloudflare/ai-search-snippet/search";
 
-	if (docSearchButton) {
-		// Click the DocSearch button to open the modal
-		docSearchButton.click();
+export const openGlobalSearch = async (searchTerm?: string) => {
+	const snippet = document.querySelector<SearchModalSnippet>(
+		"search-modal-snippet",
+	);
+	if (snippet) {
+		await customElements.whenDefined("search-modal-snippet");
+		const modal = document.querySelector<SearchModalSnippet>(
+			"search-modal-snippet",
+		);
+		if (!modal) return;
 
-		if (searchTerm) {
-			// Wait for modal to open and set the search term
-			setTimeout(() => {
-				const searchInput =
-					(document.querySelector(".DocSearch-Input") as HTMLInputElement) ||
-					(document.querySelector("#docsearch-input") as HTMLInputElement) ||
-					(document.querySelector(
-						"[data-docsearch-input]",
-					) as HTMLInputElement);
+		document.dispatchEvent(new Event("docs-search-open"));
+		if (searchTerm) await modal.search(searchTerm);
+		else modal.open();
+		return;
+	}
 
-				if (searchInput) {
-					searchInput.value = searchTerm;
-					searchInput.focus();
-					// Trigger search
-					searchInput.dispatchEvent(new Event("input", { bubbles: true }));
-				}
-			}, 100);
-		}
+	const docSearchButton = document.querySelector<HTMLButtonElement>(
+		"#docsearch button, .DocSearch-Button, [data-docsearch-button]",
+	);
+	if (!docSearchButton) return;
+	docSearchButton.click();
+
+	if (searchTerm) {
+		setTimeout(() => {
+			const searchInput = document.querySelector<HTMLInputElement>(
+				".DocSearch-Input, #docsearch-input, [data-docsearch-input]",
+			);
+			if (!searchInput) return;
+			searchInput.value = searchTerm;
+			searchInput.focus();
+			searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+		}, 100);
 	}
 };
