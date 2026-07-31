@@ -220,7 +220,11 @@ const tracedAI = wrapAISDK(ai, {
 
 If your agent does not use one of our currently supported frameworks, instrument it with the [Workers custom spans API](/workers/observability/traces/custom-spans/). Create an `invoke_agent` span for each turn, with `chat` spans for model calls, `execute_tool` spans for tool runs, and `tool_approval` spans for approvals.
 
-For span names, attributes, and implementation examples, refer to the [OpenTelemetry GenAI reference implementations](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/reference/README.md). Adapt these examples to the Workers custom spans API because Workers does not yet support the OpenTelemetry API directly.
+For span names, attributes, and implementation examples, refer to the [OpenTelemetry GenAI reference implementations](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/reference/README.md). Adapt these examples to the Workers custom spans API.
+
+:::note
+Workers does not yet support the [OpenTelemetry API](https://opentelemetry.io/) directly. Cloudflare is working to add support so libraries and agent frameworks that emit OpenTelemetry spans can integrate without manual custom-span instrumentation.
+:::
 
 #### Add agent identity
 
