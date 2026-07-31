@@ -9,6 +9,9 @@ jobs:
     if: github.repository == 'cloudflare/cloudflare-docs'
     name: Production
     runs-on: ubuntu-22.04
+    concurrency:
+      group: publish-production
+      cancel-in-progress: false
     permissions:
       contents: read
     steps:
