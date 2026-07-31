@@ -21,7 +21,7 @@ By default, data written to a Workers KV namespace is replicated globally across
 
 Jurisdictions are used to create Workers KV namespaces that only durably store data within a region, to help comply with data locality regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
-Workers may still access a namespace constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the namespace's data is durably stored. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
+Workers may still access a namespace constrained to a jurisdiction from anywhere in the world, and KV data can be cached outside the jurisdiction location on Cloudflare's network. The jurisdiction constraint only controls where the namespace's data is durably stored. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 
 :::note
 
