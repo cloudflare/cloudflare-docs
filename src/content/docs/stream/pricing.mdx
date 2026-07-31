@@ -36,7 +36,7 @@ Storage is a prepaid pricing dimension purchased in increments of $5 per 1,000 m
 Storage is consumed by:
 
 - Original videos uploaded to your account
-- Recordings of live broadcasts
+- Recordings of live broadcasts using RTMP or SRT
 - The reserved `maxDurationSeconds` for Direct Creator and TUS uploads which have not been completed. After these uploads are complete or the upload link expires, this reservation is released.
 
 Storage is not consumed by:
@@ -46,6 +46,7 @@ Storage is not consumed by:
 - Deleted videos
 - Downloadable files generated for [MP4 Downloads](/stream/viewing-videos/download-videos/)
 - Multiple quality levels that Stream generates for each uploaded original
+- WebRTC broadcasts cannot currently be recorded, thus no storage is consumed
 
 Storage consumption is rounded up to the second of video duration; file size does not matter. Video stored in Stream does not incur additional storage fees from other storage products such as R2.
 
@@ -64,7 +65,8 @@ Delivery is a post-paid, usage-based pricing dimension billed at $1 per 1,000 mi
 
 Delivery is counted for the following uses:
 
-- Playback on the web or an app using [Stream's built-in player](/stream/viewing-videos/using-the-stream-player/) or the [HLS or DASH manifests](/stream/viewing-videos/using-own-player/)
+- Playback using [Stream's built-in player](/stream/viewing-videos/using-the-stream-player/) or the [HLS or DASH manifests](/stream/viewing-videos/using-own-player/)
+- [WebRTC (WHEP)](/stream/webrtc-beta/) playback
 - MP4 Downloads
 - Simulcasting via SRT or RTMP live outputs
 
