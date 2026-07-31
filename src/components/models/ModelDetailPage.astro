@@ -141,7 +141,9 @@ if (model.name.includes("@cf/openai/gpt-oss")) {
 const author = authorData[model.author];
 const authorName = model.authorName;
 
-const requiresWorkersPaid = model.properties.require_workers_paid === "true";
+const requiresWorkersPaid =
+	model.properties.require_workers_paid === true ||
+	model.properties.require_workers_paid === "true";
 
 // `hasSchema`: input must have at least one key.
 const hasSchema = Object.keys(model.schema.input).length > 0;
