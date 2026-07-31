@@ -92,15 +92,15 @@ If your D1 database already has tables and you want to start using the migration
 
 A baseline migration records your existing schema as the first entry in your migration history, so every future migration builds on a known starting point. This lets anyone recreate the database from scratch — for example, when a new developer sets up a local database, when CI/CD spins up fresh test databases, or when you want a complete schema history in your git repository.
 
-The baseline is a suggestion, not a requirement. Migrations are useful even if you work solo, so that you can roll your schema forward and back over time. You only need a baseline if you want to reproduce the database from your migration files. If you never recreate the database and only ever apply new migrations to it, you can skip this step and start with your next migration.
+The baseline is a suggestion, not a requirement. Migrations are useful even if you work solo because they track schema changes over time. You only need a baseline if you want to reproduce the database from your migration files. If you never recreate the database and only ever apply new migrations to it, you can skip this step and start with your next migration.
 
 <Steps>
 
-1. Get your current schema, including tables, indexes, and views:
+1. Get your current schema, including tables, indexes, views, and triggers:
 
 	```sh
 	npx wrangler d1 execute <DATABASE_NAME> --remote \
-		--command="SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT LIKE '_cf%' AND name != 'sqlite_sequence' AND name != 'd1_migrations'"
+		--command="SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT GLOB '_cf*' AND name != 'sqlite_sequence' AND name != 'd1_migrations'"
 	```
 
 2. Create a baseline migration:
@@ -109,7 +109,7 @@ The baseline is a suggestion, not a requirement. Migrations are useful even if y
 	npx wrangler d1 migrations create <DATABASE_NAME> baseline
 	```
 
-3. Copy the output from step 1 into the migration file. Add `IF NOT EXISTS` to each `CREATE TABLE` statement so the migration is safe to run against the live database:
+3. Copy the output from step 1 into the migration file. Add `IF NOT EXISTS` to each `CREATE` statement so the migration is safe to run against the live database:
 
 	```sql
 	-- migrations/0001_baseline.sql
@@ -129,7 +129,7 @@ The baseline is a suggestion, not a requirement. Migrations are useful even if y
 
 </Steps>
 
-The `IF NOT EXISTS` clause prevents the existing tables from being recreated. The migration is recorded in the `d1_migrations` table, establishing a starting point for all future migrations.
+The `IF NOT EXISTS` clause prevents existing schema objects from being recreated. The migration is recorded in the `d1_migrations` table, establishing a starting point for all future migrations.
 
 ## Foreign key constraints
 
