@@ -1,0 +1,154 @@
+---
+title: Command Code + Cloudflare
+description: Use Command Code with Cloudflare projects, Cloudflare Skills, the Cloudflare MCP servers, and Wrangler from your terminal.
+template: splash
+pcx_content_type: how-to
+products:
+  - agent-setup
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="command-code" />
+
+## Quick start
+
+<Steps>
+	1. **Install Command Code**
+
+		```sh
+		npm i -g command-code@latest
+		```
+
+		On Windows, the short alias is `cmdc` instead of `cmd`, because `cmd` is already the built-in Windows command shell.
+
+	2. **Open your Cloudflare project**
+
+		Change into the directory that contains your Cloudflare project — the one with your `wrangler.jsonc` file:
+
+		```sh
+		cd my-worker
+		```
+
+	3. **Install Cloudflare Skills**
+
+		```sh
+		cmd skills add https://github.com/cloudflare/skills
+		```
+
+		This installs the Cloudflare Skills into `.commandcode/skills/`, including `wrangler`, `workers-best-practices`, `durable-objects`, and `agents-sdk`. Pass `--skill <name>` to install a single skill, or `--global` to install into `~/.commandcode/skills/` for every project.
+
+	4. **Add the Cloudflare MCP server**
+
+		```sh
+		cmd mcp add --transport http cloudflare https://mcp.cloudflare.com/mcp
+		```
+
+		Complete the OAuth authorization flow in your browser when Command Code prompts you, then choose the permissions to grant.
+
+	5. **Start a session and try a prompt**
+
+		```sh
+		cmd
+		```
+
+		Ask Command Code to investigate a task, make changes, and run the relevant tests. Review its diffs and command output before keeping changes.
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess />
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- Install Cloudflare Skills first. They give Command Code persistent Cloudflare knowledge without spending tokens on tool schemas, so reach for them before adding MCP servers.
+- `cmd skills add` writes to `.commandcode/skills/` for the current project. Add `--global` to install into `~/.commandcode/skills/` and make the skills available everywhere.
+- Add the Cloudflare MCP server with `--scope project` to save it to `.mcp.json` and share it with your team.
+- Use the Cloudflare API MCP server for account resources and domain-specific servers for focused workflows.
+- Record project conventions in `AGENTS.md` so they carry across sessions.
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		All three, and start with Skills. Skills give Command Code persistent
+		Cloudflare expertise — when to reach for Durable Objects over KV, how to
+		structure a Workers project, and when to call the CLI instead of the API. The
+		Cloudflare API MCP server handles account operations, such as DNS, WAF, R2,
+		and Zero Trust. Wrangler handles local development, deployments, and
+		migrations; Command Code runs local shell commands, so it can call Wrangler
+		directly.
+	</FAQItem>
+	<FAQItem question="How do I give Command Code access to my Cloudflare account?">
+		Run <code>cmd mcp add --transport http cloudflare https://mcp.cloudflare.com/mcp</code>.
+		When Command Code prompts you, complete the OAuth authorization flow in your
+		browser and choose the permissions to grant.
+	</FAQItem>
+	<FAQItem question="Where does cmd skills add install the Cloudflare Skills?">
+		Into <code>.commandcode/skills/</code> for the current project, or
+		<code>~/.commandcode/skills/</code> when you pass <code>--global</code>.
+		Skills already in <code>.agents/skills/</code> are picked up automatically.
+		Run <code>cmd skills list</code> to confirm what is installed.
+	</FAQItem>
+	<FAQItem question="What does Code Mode mean for MCP?">
+		Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints
+		into about 1,000 tokens. Instead of exposing every endpoint as a separate
+		tool, it exposes <code>search()</code> and <code>execute()</code>. Command
+		Code writes JavaScript to call them. For more information, refer to
+		<a href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a>.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server not connecting">
+		Run <code>cmd mcp list</code> to check the server status. Confirm that the
+		server URL is <code>https://mcp.cloudflare.com/mcp</code> and that you passed
+		<code>--transport http</code>. Remove the server with
+		<code>cmd mcp remove cloudflare</code> and add it again.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Add the Cloudflare documentation MCP server at
+		<code>https://docs.mcp.cloudflare.com/mcp</code> so Command Code can retrieve
+		current documentation. Alternatively, point Command Code to
+		<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for a directory of
+		all products, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="MCP server authentication fails">
+		Remove and re-add the MCP server. When Command Code prompts you, complete the
+		OAuth authorization flow in your browser.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="command-code" />

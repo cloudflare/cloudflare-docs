@@ -255,4 +255,36 @@ export const AGENTS: AgentData[] = [
 			website: "https://lmstudio.ai/",
 		},
 	},
+	{
+		name: "Command Code",
+		vendor: "Command Code",
+		slug: "command-code",
+		icon: "command-code",
+		description:
+			"Command Code is one of the most used coding agents for open models. It automatically learns your coding taste and self-improves as you use it.",
+		capabilities: {
+			ide: false,
+			terminal: true,
+			standalone: true,
+			cloud: true,
+			extension: true,
+			open_source: false,
+		},
+		features: [
+			"Learns from every accept, reject, and edit",
+			"Auto-generated project-level skills",
+			"Persistent memory and custom agents",
+			"Skills, commands, MCP servers, and plugins",
+		],
+		pricing_model: "subscription",
+		model_flexibility: "multi_provider",
+		context_approach: "project_memory",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
+			docs: "https://commandcode.ai/docs",
+			website: "https://commandcode.ai",
+		},
+	},
 ];
