@@ -30,7 +30,7 @@ Some properties of `Request` control the behavior of `fetch()` on the client sid
 
 ### `connect()`
 
-The `connect()` method of the `WorkerEntrypoint` class is reserved for opening a socket-like connection to your Worker. This is currently not implemented or supported — though you can [open a TCP socket from a Worker](/workers/runtime-apis/tcp-sockets/) or connect directly to databases over a TCP socket with [Hyperdrive](/hyperdrive/get-started/).
+The `connect()` method of the `WorkerEntrypoint` class handles inbound TCP socket connections to your Worker, equivalent to the [connect handler](/workers/runtime-apis/handlers/connect/). You can also [open a TCP socket from a Worker](/workers/runtime-apis/tcp-sockets/) or connect directly to databases over a TCP socket with [Hyperdrive](/hyperdrive/get-started/).
 
 ## Disallowed Method Names
 

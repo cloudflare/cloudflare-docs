@@ -1,0 +1,242 @@
+---
+pcx_content_type: configuration
+title: Connect Handler
+description: Handle inbound TCP socket connections in Cloudflare Workers using the connect() handler.
+products:
+  - workers
+---
+
+import { TabItem, Tabs, WranglerConfig } from "~/components";
+
+## Background
+
+The `connect()` handler handles inbound TCP socket connections to your Worker. When a client opens a TCP connection to a socket configured for your Worker, the runtime invokes the `connect()` handler and passes a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket) object representing the connection.
+
+:::note
+
+The `connect()` handler is experimental and requires the `experimental` compatibility flag. It is subject to change.
+
+:::
+
+To enable the `connect()` handler, add the `experimental` flag to your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_flags": ["experimental"]
+}
+```
+
+</WranglerConfig>
+
+## Syntax
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async connect(socket, env, ctx) {
+		const reader = socket.readable.getReader();
+		const writer = socket.writable.getWriter();
+		// Read and write data...
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+	async connect(
+		socket: Socket,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		const reader = socket.readable.getReader();
+		const writer = socket.writable.getWriter();
+		// Read and write data...
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def connect(self, socket, env, ctx):
+        reader = socket.readable.get_reader()
+        writer = socket.writable.get_writer()
+        # Read and write data...
+```
+
+</TabItem></Tabs>
+
+### Parameters
+
+- `socket` [Socket](/workers/runtime-apis/tcp-sockets/#socket)
+
+  - A TCP socket with [`readable`](/workers/runtime-apis/tcp-sockets/#socket) and [`writable`](/workers/runtime-apis/tcp-sockets/#socket) streams representing the inbound connection.
+
+- `env` object
+
+  - The [bindings](/workers/runtime-apis/bindings/) available to the Worker.
+
+- `ctx` object
+
+  - The [execution context](/workers/runtime-apis/context/) for the handler. Contains `waitUntil` and `passThroughOnException`.
+
+### Socket properties
+
+The `socket` object passed to the `connect()` handler supports the same interface as an outbound socket created with [`connect()`](/workers/runtime-apis/tcp-sockets/):
+
+- `readable` [`ReadableStream`](/workers/runtime-apis/streams/readablestream/)
+
+  - The readable side of the TCP socket.
+
+- `writable` [`WritableStream`](/workers/runtime-apis/streams/writablestream/)
+
+  - The writable side of the TCP socket. Only accepts chunks of `Uint8Array` or its views.
+
+- `opened` `Promise<SocketInfo>`
+
+  - Resolves when the socket connection is established. The resolved `SocketInfo` includes `localAddress`, which contains the address the client connected to.
+
+- `closed` `Promise<void>`
+
+  - Resolves when the socket is closed.
+
+- `close()` `Promise<void>`
+
+  - Closes the TCP socket.
+
+## Examples
+
+### Echo server
+
+The following example reads data from the client and writes it back:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async connect(socket) {
+		await socket.readable.pipeTo(socket.writable);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+	async connect(socket: Socket) {
+		await socket.readable.pipeTo(socket.writable);
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def connect(self, socket, env, ctx):
+        await socket.readable.pipe_to(socket.writable)
+```
+
+</TabItem></Tabs>
+
+### Proxy to an upstream server
+
+The following example proxies inbound connections to an upstream TCP server:
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { connect } from 'cloudflare:sockets';
+
+export default {
+	async connect(socket) {
+		const upstream = connect('upstream.example.com:8080');
+		await Promise.all([
+			socket.readable.pipeTo(upstream.writable),
+			upstream.readable.pipeTo(socket.writable),
+		]);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { connect } from 'cloudflare:sockets';
+
+export default {
+	async connect(socket: Socket) {
+		const upstream = connect('upstream.example.com:8080');
+		await Promise.all([
+			socket.readable.pipeTo(upstream.writable),
+			upstream.readable.pipeTo(socket.writable),
+		]);
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+import asyncio
+from cloudflare.sockets import connect
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def connect(self, socket, env, ctx):
+        upstream = connect('upstream.example.com:8080')
+        await asyncio.gather(
+            socket.readable.pipe_to(upstream.writable),
+            upstream.readable.pipe_to(socket.writable)
+        )
+```
+
+</TabItem></Tabs>
+
+### WorkerEntrypoint
+
+The `connect()` handler is also supported on [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) classes, which allows a Worker to accept TCP connections over a [service binding](/workers/runtime-apis/bindings/service-bindings/):
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class TcpService extends WorkerEntrypoint {
+	async connect(socket) {
+		const enc = new TextEncoder();
+		const writer = socket.writable.getWriter();
+		await writer.write(enc.encode("hello"));
+		await writer.close();
+	}
+}
+```
+
+Clients can then connect to this entrypoint using the service binding:
+
+```js
+const socket = env.TCP_SERVICE.connect("example.com:1234");
+await socket.opened;
+// Read from socket.readable...
+```
+
+## Considerations
+
+- The `connect()` handler is experimental and requires the `experimental` compatibility flag.
+- TLS is not currently supported for inbound connections handled by the `connect()` handler.
+- Each open inbound TCP socket counts towards the maximum number of [simultaneous open connections](/workers/platform/limits/#simultaneous-open-connections).
+
+## Related resources
+
+- [TCP sockets](/workers/runtime-apis/tcp-sockets/)
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/)
