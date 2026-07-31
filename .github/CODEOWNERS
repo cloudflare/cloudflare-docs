@@ -169,7 +169,7 @@ package.json @cloudflare/content-engineering
 /src/content/partials/pages/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK
 /src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
 /src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
-/src/content/docs/kv/ @elithrar @thomasgauvin @oxyjun @cloudflare/product-owners
+/src/content/docs/kv/ @elithrar @thomasgauvin @oxyjun @irvinebroque @rts-rob @vy-ton @cloudflare/product-owners
 /src/content/release-notes/kv.yaml @elithrar @thomasgauvin @oxyjun @cloudflare/product-owners
 /src/content/partials/kv/ @elithrar @thomasgauvin @oxyjun @cloudflare/product-owners
 /src/content/docs/queues/ @elithrar @jonesphillip @harshil1712 @mia303 @cloudflare/product-owners
