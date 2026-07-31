@@ -94,7 +94,7 @@ describe("Preview anti-indexing", () => {
 			const dom = parse(html);
 
 			const meta = dom.querySelector("meta[name='robots']");
-			expect(meta).toBeDefined();
+			expect(meta).not.toBeNull();
 			expect(meta?.attributes.content).toBe(ROBOTS_POLICY);
 		});
 
