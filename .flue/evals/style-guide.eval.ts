@@ -88,6 +88,63 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 	});
 
+	it("does not flag an Oxford comma when the serial comma is already present before final or", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			filename: "src/content/docs/stream/stream-live/start-stream-live.mdx",
+			addedLines: [
+				{
+					line: 144,
+					content:
+						"Rotate the broadcast credentials for a live input when credentials may have been shared with the wrong audience, exposed in client code or a screenshare, or need to be refreshed as part of your security process. Rotating keys does not change the live input ID or its other configuration.",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const oxfordFindings = (findings ?? []).filter((f) =>
+			`${f.rule ?? ""} ${f.evidence ?? ""} ${f.suggestion ?? ""}`.match(
+				/oxford|serial comma/i,
+			),
+		);
+		expect(oxfordFindings).toHaveLength(0);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("flags a missing Oxford comma before final and", async ({ run }) => {
+		const result = await run({
+			pullRequest: PR,
+			filename: "src/content/docs/workers/example.mdx",
+			addedLines: [
+				{
+					line: 30,
+					content: "Workers support bindings for KV, R2 and D1.",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const oxfordFindings = (findings ?? []).filter((f) =>
+			`${f.rule ?? ""} ${f.evidence ?? ""} ${f.suggestion ?? ""}`.match(
+				/oxford|serial comma/i,
+			),
+		);
+		expect(oxfordFindings.length).toBeGreaterThan(0);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
 	it("flags a body H1 heading", async ({ run }) => {
 		const result = await run({
 			pullRequest: PR,
