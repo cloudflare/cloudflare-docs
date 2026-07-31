@@ -2,23 +2,11 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    versioning-strategy: "increase"
-    commit-message:
-      prefix: "[Docs Site] "
     schedule:
       interval: "weekly"
-      day: "tuesday"
-    cooldown:
-      default-days: 1
-    assignees:
-      - "kodster28"
-      - "mvvmm"
-    reviewers:
-      - "cloudflare/content-engineering"
-    groups:
-      non-major:
-        update-types:
-          - "minor"
-          - "patch"
-        patterns:
-          - "*"
+    open-pull-requests-limit: 10
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
