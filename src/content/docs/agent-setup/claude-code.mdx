@@ -19,6 +19,7 @@ import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.as
 import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
 import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
 import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+import { LinkCard } from "~/components";
 
 <AgentHeader slug="claude-code" />
 
@@ -74,9 +75,15 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 - The Cloudflare API MCP server uses Code Mode — Claude writes JavaScript against a TypeScript API to hit any of 2,500+ endpoints in ~1,000 tokens.
 - Claude Code works best from the root of your Workers project where `wrangler.jsonc` lives — this is what the agent uses to understand your bindings.
 - Use `claude mcp list` to verify Cloudflare servers are connected. For CI/CD, skip OAuth by passing a Cloudflare API token as a bearer token instead.
-- For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
 
 </TipsList>
+
+<LinkCard
+	title="Cloudflare MCP server repository"
+	href="https://github.com/cloudflare/mcp-server-cloudflare"
+	icon="github"
+	description="Installing additional MCP servers, and when to use Code Mode versus traditional MCP servers."
+/>
 
 ## FAQ
 

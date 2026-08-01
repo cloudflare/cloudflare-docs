@@ -1,13 +1,9 @@
 // "Was this helpful?" docs feedback widget. Ported from the Starlight
 // src/components/FeedbackPrompt.tsx, re-themed onto nimbus tokens.
 import { useState } from "react";
-import {
-	MdOutlineThumbUp,
-	MdOutlineThumbDown,
-	MdCheckCircleOutline,
-} from "react-icons/md";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { track } from "~/util/zaraz";
+import PhosphorIcon from "./PhosphorIcon";
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -44,7 +40,7 @@ function Buttons({
 				}}
 				className="border-border bg-background text-foreground hover:bg-accent hover:text-foreground inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-[13px] font-medium shadow-none transition-colors duration-150"
 			>
-				<MdOutlineThumbUp size={18} className="opacity-70" />
+				<PhosphorIcon name="thumbs-up" className="size-[18px] opacity-70" />
 				<span>Yes</span>
 			</button>
 			<button
@@ -54,7 +50,7 @@ function Buttons({
 				}}
 				className="border-border bg-background text-foreground hover:bg-accent hover:text-foreground inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border px-3 text-[13px] font-medium shadow-none transition-colors duration-150"
 			>
-				<MdOutlineThumbDown size={18} className="opacity-70" />
+				<PhosphorIcon name="thumbs-down" className="size-[18px] opacity-70" />
 				<span>No</span>
 			</button>
 		</div>
@@ -148,7 +144,7 @@ function Form({
 function SuccessState() {
 	return (
 		<div className="border-success/20 bg-success/10 text-success mt-3 flex items-center gap-2 rounded-lg border px-3 py-2.5 text-[13px]">
-			<MdCheckCircleOutline size={16} />
+			<PhosphorIcon name="check-circle" className="size-4" />
 			<span>Thank you for your feedback!</span>
 		</div>
 	);

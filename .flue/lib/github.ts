@@ -205,12 +205,13 @@ export async function getRepoFileContent(
 	token: string,
 	path: string,
 	ref: string,
+	signal?: AbortSignal,
 ): Promise<string | null> {
 	// Encode each path segment but preserve the slashes the contents API needs.
 	const encodedPath = path.split("/").map(encodeURIComponent).join("/");
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
-		{ headers: apiHeaders(token) },
+		{ headers: apiHeaders(token), signal },
 	);
 	if (res.status === 404) return null;
 	if (!res.ok) {
@@ -425,14 +426,7 @@ export async function addReactionToComment(
 	token: string,
 	commentId: number,
 	reaction:
-		| "+1"
-		| "-1"
-		| "laugh"
-		| "confused"
-		| "heart"
-		| "hooray"
-		| "rocket"
-		| "eyes",
+		"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes",
 ): Promise<number | null> {
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}/reactions`,
@@ -553,13 +547,17 @@ export async function updatePullRequestBranch(
 	token: string,
 	pullNumber: number,
 	updateMethod: "merge" | "rebase",
+	expectedHeadSha?: string,
 ): Promise<UpdateBranchResult> {
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/update-branch`,
 		{
 			method: "PUT",
 			headers: apiHeaders(token),
-			body: JSON.stringify({ update_method: updateMethod }),
+			body: JSON.stringify({
+				update_method: updateMethod,
+				...(expectedHeadSha ? { expected_head_sha: expectedHeadSha } : {}),
+			}),
 		},
 	);
 	if (res.status === 202) return { ok: true, async: true };

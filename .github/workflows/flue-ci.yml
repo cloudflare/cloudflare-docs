@@ -82,3 +82,46 @@ jobs:
     steps:
       - name: No post-build checks yet
         run: echo "No post-build checks for flue yet."
+
+  evals:
+    name: Agent Evals
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    timeout-minutes: 15
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24.x
+          cache: pnpm
+          cache-dependency-path: .flue/pnpm-lock.yaml
+
+      - name: Install node_modules
+        run: pnpm install --frozen-lockfile
+        working-directory: .flue
+
+      - name: Run evals
+        run: pnpm run flue:evals
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DOCS_FLUE_INTERNAL_TOKEN: ${{ secrets.DOCS_FLUE_INTERNAL_TOKEN }}
+          DOCS_FLUE_AI_GATEWAY_ID: ${{ secrets.DOCS_FLUE_AI_GATEWAY_ID }}
+          EVALS_CMD: evals:json
+
+      - name: Upload eval results
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: vitest-evals-results
+          path: .flue/vitest-results.json
+          retention-days: 30
+          if-no-files-found: ignore
