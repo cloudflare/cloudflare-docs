@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Exporting OpenTelemetry Data
-description: Export traces and logs from Cloudflare Workers to any OpenTelemetry-compatible destination.
+description: Export traces and logs from Cloudflare Workers to any OpenTelemetry-compatible destination. Zero dependencies required.
 sidebar:
   order: 5
 products:
@@ -10,7 +10,7 @@ products:
 
 import { Badge, DirectoryListing, WranglerConfig } from "~/components";
 
-Cloudflare Workers supports exporting OpenTelemetry (OTel)-compliant telemetry data to any destination with an available OTel endpoint, allowing you to integrate with your existing monitoring and observability stack.
+Cloudflare Workers supports exporting OpenTelemetry (OTel)-compliant telemetry data to any destination with an available OTel endpoint. This is built in to the Workers platform — you do not need to import additional dependencies or use Tail Workers to export telemetry data.
 
 ### Supported telemetry types
 
