@@ -99,7 +99,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		structure a Workers project, and when to call the CLI instead of the API. The
 		Cloudflare API MCP server handles account operations, such as DNS, WAF, R2,
 		and Zero Trust. Wrangler handles local development, deployments, and
-		migrations; Command Code runs local shell commands, so it can call Wrangler
+		migrations. Command Code runs local shell commands, so it can call Wrangler
 		directly.
 	</FAQItem>
 	<FAQItem question="How do I give Command Code access to my Cloudflare account?">
@@ -109,9 +109,8 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	</FAQItem>
 	<FAQItem question="Where does cmd skills add install the Cloudflare Skills?">
 		Into <code>.commandcode/skills/</code> for the current project, or
-		<code>~/.commandcode/skills/</code> when you pass <code>--global</code>.
-		Skills already in <code>.agents/skills/</code> are picked up automatically.
-		Run <code>cmd skills list</code> to confirm what is installed.
+		<code>~/.commandcode/skills/</code> when you pass <code>--global</code>. Run
+		<code>cmd skills list</code> to confirm what is installed.
 	</FAQItem>
 	<FAQItem question="What does Code Mode mean for MCP?">
 		Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints
