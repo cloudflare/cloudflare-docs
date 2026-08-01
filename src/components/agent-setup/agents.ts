@@ -261,7 +261,7 @@ export const AGENTS: AgentData[] = [
 		slug: "command-code",
 		icon: "command-code",
 		description:
-			"Command Code is one of the most used coding agents for open models. It automatically learns your coding taste and self-improves as you work.",
+			"Command Code is one of the most used coding agents for open models. It automatically learns your coding taste and self-improves as you\u00A0work.",
 		capabilities: {
 			ide: false,
 			terminal: true,
