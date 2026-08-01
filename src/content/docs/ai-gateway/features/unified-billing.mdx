@@ -55,6 +55,20 @@ You can configure AI Gateway to automatically replenish your credits when they f
 
 When your balance falls below the set threshold, AI Gateway will automatically apply the auto top-up amount to your account.
 
+## Credential precedence
+
+When a request reaches AI Gateway, credentials are resolved in this order:
+
+1. **Provider key on the request** — if the request carries provider authentication (for example, an `Authorization` header), AI Gateway forwards it to the provider unchanged. BYOK and Unified Billing are not consulted.
+2. **BYOK (stored key)** — if no provider key is on the request and the gateway has a [stored key](/ai-gateway/configuration/bring-your-own-keys/) for the provider under the `default` alias, that key is used.
+3. **Unified Billing** — if neither of the above applies, the request is served with Cloudflare-managed credentials and billed against your Cloudflare credit balance.
+
+:::note
+On requests routed through Unified Billing endpoints (for example, `env.AI.run()` or `/ai/v1/chat/completions`), only the BYOK key stored under the `default` alias prevents fall-through to Unified Billing. Keys stored under other aliases are not consulted on this path — a request will fall through to Unified Billing even if you have a key stored under, for example, `production` or `testing`.
+
+The `cf-aig-byok-alias` header selects a non-default alias only on [direct provider-passthrough](/ai-gateway/usage/providers/) requests.
+:::
+
 ## Use Unified Billing
 
 Unified Billing works in two ways: through the AI binding or through the HTTP API. Both deduct credits from your account automatically without requiring provider API keys.

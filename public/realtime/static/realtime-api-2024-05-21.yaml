@@ -687,6 +687,14 @@ paths:
                       waitForAck: true
                       sessionId: "2a45361d5fd7cc14eface0587c276c94"
                       dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+              remote_datachannels_can_reply:
+                description: Consume a remote data channel and admit reverse traffic to the publisher
+                value:
+                  datachannels:
+                    - location: remote
+                      canReply: true
+                      sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                      dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
       security:
         - secret: []
       parameters:
@@ -727,6 +735,69 @@ paths:
                       - sessionId: 2a45361d5fd7cc14eface0587c276c94
                         location: remote
                         dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                        id: 4
+  /apps/{appId}/sessions/{sessionId}/datachannels/update:
+    put:
+      tags:
+        - Update data channel(s)
+      summary: Update flags on already pulled remote data channel(s), such as granting or revoking canReply
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DataChannelsRequest"
+            examples:
+              grant_can_reply:
+                description: Grant return-to-publisher admission on a pulled remote data channel
+                value:
+                  datachannels:
+                    - location: remote
+                      canReply: true
+                      sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                      dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+              revoke_can_reply:
+                description: Revoke return-to-publisher admission
+                value:
+                  datachannels:
+                    - location: remote
+                      canReply: false
+                      sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                      dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+          description: Current PeerConnection session ID (the subscriber session that pulled the channel)
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataChannelsResponse"
+              examples:
+                grant_can_reply:
+                  value:
+                    datachannels:
+                      - sessionId: 2a45361d5fd7cc14eface0587c276c94
+                        location: remote
+                        dataChannelName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                        canReply: true
                         id: 4
   /apps/{appId}/sessions/{sessionId}/datachannels/close:
     put:
@@ -1173,6 +1244,16 @@ components:
             The acknowledgment is consumed by the SFU and is not forwarded. It must arrive within
             15 seconds of creating the remote DataChannel; otherwise the SFU tears down the gated
             channel. Ignored for local DataChannels.
+        canReply:
+          type: boolean
+          default: false
+          description: >
+            For remote DataChannels only. When true, this subscriber may send reverse traffic on
+            the DataChannel to the publisher. Reverse messages are delivered only to the publisher
+            and are not fanned out to other subscribers. At most one subscriber may hold canReply
+            for a given publisher DataChannel at a time; granting canReply to another subscriber
+            replaces the previous selection. Set on datachannels/new at pull time, or grant and
+            revoke later with datachannels/update. Ignored for local DataChannels.
         id:
           type: number
           description: Data channel id

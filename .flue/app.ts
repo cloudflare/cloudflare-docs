@@ -1,5 +1,6 @@
 import { env as workerEnv } from "cloudflare:workers";
 import { setProvider } from "@flue/runtime";
+import { createAgentRouter } from "@flue/runtime/routing";
 import {
 	cloudflareBindingProvider,
 	type CloudflareAIBinding,
@@ -16,6 +17,11 @@ import {
 	type WebhookClassification,
 } from "./lib/webhook-classify";
 import { startReviewPipeline, type PipelineEnv } from "./lib/pipeline-entry";
+import CodeReviewFile from "./agents/code-review-file";
+import StyleGuideFile from "./agents/style-guide-file";
+import ConventionsReviewer from "./agents/conventions-reviewer";
+import ReconcileReviewer from "./agents/reconcile-reviewer";
+import SpamFilter from "./agents/spam-filter";
 
 const bindings = workerEnv as unknown as {
 	AI: CloudflareAIBinding;
@@ -38,6 +44,7 @@ setProvider(
 type WebhookEnv = PipelineEnv & {
 	GITHUB_WEBHOOK_SECRET?: string;
 	DOCS_FLUE_INTERNAL_TOKEN?: string;
+	DOCS_FLUE_ENABLE_EVAL_ROUTES?: string;
 };
 
 const app = new Hono();
@@ -133,5 +140,36 @@ app.post("/webhooks/github", async (c) => {
 	await startReviewPipeline(env, classification, rawBody);
 	return c.json({ acted: true }, 202);
 });
+
+// ── Eval routes ─────────────────────────────────────────────────────────────
+// Mount each reviewable agent behind a shared internal-token gate so
+// vitest-evals can drive them over HTTP during CI. Requires both
+// DOCS_FLUE_ENABLE_EVAL_ROUTES=1 and DOCS_FLUE_INTERNAL_TOKEN to be set in
+// the Worker env. The Vite config only injects these during eval runs
+// (DOCS_FLUE_AGENT_EVALS=1), so eval routes are never live in production or
+// normal dev.
+const EVAL_AGENTS = [
+	CodeReviewFile,
+	StyleGuideFile,
+	ConventionsReviewer,
+	ReconcileReviewer,
+	SpamFilter,
+] as const;
+
+app.use("/eval/agents/*", async (c, next) => {
+	const env = c.env as unknown as WebhookEnv;
+	if (env.DOCS_FLUE_ENABLE_EVAL_ROUTES !== "1") return c.text("Not Found", 404);
+	const secret = env.DOCS_FLUE_INTERNAL_TOKEN;
+	if (!secret) return c.text("Not Found", 404);
+	const provided = c.req.header("x-dev-secret");
+	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+	await next();
+});
+
+for (const agent of EVAL_AGENTS) {
+	const name = agent.agentName;
+	if (!name) continue;
+	app.route(`/eval/agents/${name}`, createAgentRouter(agent));
+}
 
 export default app;

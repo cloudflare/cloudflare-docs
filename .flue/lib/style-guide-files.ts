@@ -26,7 +26,7 @@ export const STYLE_GUIDE_REVIEWABLE_PATH_RE =
 export const STYLE_GUIDE_MAX_FILES = 20;
 // Default fan-out concurrency; bounds how many per-file reads the driver awaits
 // at once (each file is its own agent instance / Durable Object).
-export const STYLE_GUIDE_CONCURRENCY = 5;
+export const STYLE_GUIDE_CONCURRENCY = 2;
 
 /**
  * Default per-file hard timeout. On timeout the driver aborts that file's

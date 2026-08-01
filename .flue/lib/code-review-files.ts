@@ -90,7 +90,7 @@ export const CODE_REVIEW_MAX_FILES = 20;
 // (its own Durable Object / isolate), so peak heap is bounded by the DO model
 // rather than by deleting sessions; concurrency here bounds how many per-file
 // reads the driver awaits at once.
-export const CODE_REVIEW_CONCURRENCY = 5;
+export const CODE_REVIEW_CONCURRENCY = 2;
 
 /**
  * Default per-file hard timeout. A single file's agent run is multi-turn with
