@@ -8,7 +8,7 @@ products:
 
 import { Tabs, TabItem, TypeScriptExample } from "~/components";
 
-[Neon AI Gateway](https://neon.com/docs/ai-gateway/overview) is an OpenAI-compatible inference gateway built into Neon. A single Neon credential gives you access to models from multiple providers, without separate provider accounts.
+[Neon AI Gateway](https://neon.com/docs/ai-gateway/overview) is an OpenAI-compatible inference gateway from Neon. A single Neon credential gives you access to models from multiple providers, without separate provider accounts.
 
 :::note
 Neon AI Gateway is in beta. It requires a paid Neon plan and is only available in the AWS US East (Ohio) region (`aws-us-east-2`).
@@ -34,7 +34,7 @@ When making requests to Neon AI Gateway, ensure you have the following:
 - A Cloudflare API token with the `AI Gateway - Run` permission, if your gateway has [Authenticated Gateway](/ai-gateway/configuration/authentication/) turned on.
 - A Neon credential with the `ai_gateway:invoke` scope. Refer to [AI Gateway authentication](https://neon.com/docs/ai-gateway/authentication) in the Neon documentation.
 - The AI Gateway host of your Neon branch, available in the Neon Console as `NEON_AI_GATEWAY_BASE_URL`. It follows the format `br-<name>-api.ai.<cell>.<region>.aws.neon.tech`.
-- The ID of a model in the [Neon model catalog](https://neon.com/docs/ai-gateway/models).
+- The ID of a model that the [Neon model catalog](https://neon.com/docs/ai-gateway/models) lists for the `chat/completions` endpoint.
 
 ## Create the custom provider
 
@@ -47,7 +47,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gatew
   --data '{
     "name": "Neon AI Gateway",
     "slug": "neon",
-    "base_url": "https://br-example-branch-api.ai.c-2.us-east-2.aws.neon.tech",
+    "base_url": "https://<your-neon-branch-host>",
     "link": "https://neon.com/docs/ai-gateway/overview",
     "enable": true
   }'
@@ -62,14 +62,16 @@ AI Gateway appends everything after `custom-neon/` to the branch host:
 | Component    | Value                                                                                            |
 | ------------ | ------------------------------------------------------------------------------------------------ |
 | Gateway URL  | `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-neon/v1/chat/completions` |
-| `base_url`   | `https://br-example-branch-api.ai.c-2.us-east-2.aws.neon.tech`                                   |
-| Upstream URL | `https://br-example-branch-api.ai.c-2.us-east-2.aws.neon.tech/v1/chat/completions`               |
+| `base_url`   | `https://<your-neon-branch-host>`                                                                |
+| Upstream URL | `https://<your-neon-branch-host>/v1/chat/completions`                                            |
 
 Pass your Neon credential as a bearer token on every request. You do not need separate provider API keys.
 
 If your gateway has [Authenticated Gateway](/ai-gateway/configuration/authentication/) turned on, also send your Cloudflare API token in the `cf-aig-authorization` header. Each example on this page has a tab for both cases.
 
 ## Examples
+
+These examples cover text chat completions and model listing. Neon serves some of its models, along with image generation, only through the [OpenAI Responses API](https://neon.com/docs/ai-gateway/openai-responses) at `/openai/v1/responses`. The `/v1/chat/completions` examples below do not reach that endpoint. Because `base_url` is the branch root, you reach it at `custom-neon/openai/v1/responses`.
 
 ### cURL
 
@@ -197,4 +199,4 @@ You can also browse Neon model IDs, pricing, and capabilities on [Models.dev](ht
 
 ## Unified API
 
-Because Neon is OpenAI-compatible, you can also reach it through the Unified API by setting the model to `custom-neon/{model}`. Refer to [Custom Providers](/ai-gateway/configuration/custom-providers/) for the request format.
+Because Neon's chat completions endpoint is OpenAI-compatible, you can also reach it through the Unified API by setting the model to `custom-neon/{model}`. The Unified API is fixed to the `/chat/completions` path, so it does not reach `/v1/models` or Neon's Responses endpoint. Refer to [Custom Providers](/ai-gateway/configuration/custom-providers/) for the request format.
