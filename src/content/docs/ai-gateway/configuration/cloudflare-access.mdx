@@ -1,0 +1,67 @@
+---
+title: Cloudflare Access
+description: Add identity-aware controls to AI Gateway so users authenticate with your identity provider before they can call your gateway.
+pcx_content_type: how-to
+sidebar:
+  order: 9
+products:
+  - ai-gateway
+---
+
+Use [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/) to add identity-aware controls to your gateway. Users authenticate with your identity provider before they can send requests, and AI Gateway records the authenticated user's identity on each request.
+
+With this integration, you can:
+
+- Set spend limits by authenticated user.
+- Control which models different users can access.
+- Filter logs and analytics by user.
+- Build policies without passing user IDs from the client application.
+
+## Prerequisites
+
+- [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/) activated on your account.
+- A [custom domain](/ai-gateway/configuration/custom-domains/) configured for the gateway you want to protect. Access is applied to the custom domain, not to the default `gateway.ai.cloudflare.com` endpoint.
+
+## How it works
+
+When a request to a custom domain includes a valid Cloudflare Access JWT, AI Gateway accepts the Access JWT as the request credential. The client does not need to send an AI Gateway token for that request.
+
+AI Gateway also adds the verified Access user ID to request metadata as [`cf.user_id`](/ai-gateway/observability/custom-metadata/#reserved-metadata). This value is the Access JWT `sub` claim, not the user's email address. You can then filter logs, analytics, and spend by the authenticated user.
+
+Before AI Gateway forwards the request to the upstream provider, it removes Cloudflare-only credentials such as the Access JWT and AI Gateway authorization headers.
+
+## Set up Access on a gateway
+
+1. [Set up a custom domain](/ai-gateway/configuration/custom-domains/) for the gateway you want to protect.
+2. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **AI** > **AI Gateway**.
+3. Select the gateway you configured with a custom domain.
+4. Go to the **Access** tab and set up Cloudflare Access on the gateway.
+5. Add Access policies that define which users can call the gateway.
+
+After setup, users can make requests to the custom domain after authenticating through Access. Requests with a valid Access user subject include `cf.user_id` in AI Gateway metadata.
+
+## Make a request
+
+After the user authenticates to Access, send requests to the custom domain without the account ID or gateway ID in the path:
+
+```bash
+curl -X POST "https://ai.example.com/openai/v1/chat/completions" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "gpt-4.1-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+If you call the custom domain from a non-browser client, include the Access token using the header or cookie format supported by Cloudflare Access. For example, [`cloudflared access curl`](/cloudflare-one/access-controls/authenticate-agents/#make-requests-with-cloudflared-access-curl) can send the Access token for command-line requests.
+
+## Limitations
+
+- `cf.user_id` is only added when AI Gateway receives a valid Access JWT with a non-empty user subject.
+- Service-token requests do not include `cf.user_id` because they do not represent an individual Access user.
+- You may not supply metadata keys that begin with `cf.`. These keys are reserved and are not saved.

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Custom domains
-description: Use a custom hostname for AI Gateway and protect it with Cloudflare Access.
+description: Send AI Gateway requests through a hostname that you own, such as ai.example.com.
 sidebar:
   order: 8
 products:
@@ -10,13 +10,17 @@ products:
 
 import { CURL } from "~/components";
 
-Custom domains let you send AI Gateway requests through a hostname that you own, such as `ai.example.com`. You can then protect that hostname with [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/) so users authenticate with your identity provider before they can call your gateway.
+Custom domains let you send AI Gateway requests through a hostname that you own, such as `ai.example.com`, instead of the default `gateway.ai.cloudflare.com` endpoint.
 
-When a request to a custom domain includes a valid Cloudflare Access JWT, AI Gateway accepts the Access JWT as the request credential. The client does not need to send an AI Gateway token for that request. AI Gateway also adds the verified Access user ID to request metadata as [`cf.user_id`](/ai-gateway/observability/custom-metadata/#reserved-metadata), so you can filter logs, analytics, and spend by the authenticated user.
+The hostname identifies your account and gateway, so you can omit the account ID and gateway ID from request URLs. Requests go directly to AI Gateway provider-native routes and OpenAI-compatible `compat` routes.
+
+Custom domains are also the foundation for [identity-aware controls with Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), which let users authenticate with your identity provider before they can call your gateway.
+
+:::note
+Custom domains work with the AI Gateway endpoint (`gateway.ai.cloudflare.com`). They do not work with the [Cloudflare REST API](/api/) (`api.cloudflare.com`).
+:::
 
 ## How it works
-
-Custom domains let you omit the account ID and gateway ID from request URLs. The hostname identifies the account and gateway, so requests can go directly to AI Gateway provider-native routes and OpenAI-compatible `compat` routes.
 
 For example, if your custom domain is `ai.example.com`, an OpenAI provider request uses:
 
@@ -30,7 +34,7 @@ Instead of:
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/v1/chat/completions
 ```
 
-For example, `https://ai.example.com/compat/chat/completions` routes through the same gateway using the OpenAI-compatible endpoint. Before AI Gateway forwards the request to the upstream provider, it removes Cloudflare-only credentials such as the Access JWT and AI Gateway authorization headers.
+The same applies to the OpenAI-compatible endpoint. For example, `https://ai.example.com/compat/chat/completions` routes through the same gateway using the `compat` route.
 
 ## Set up a custom domain in the dashboard
 
@@ -40,13 +44,11 @@ To add a custom domain:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **AI** > **AI Gateway**.
 2. Select the gateway you want to configure.
-3. Go to **Settings** > **Custom domains**.
-4. Add the hostname you want to use for this gateway.
-5. Create the DNS record shown in the dashboard. The custom domain remains in a pending state until domain control validation completes.
-6. After the custom domain is active, create a [Cloudflare Access self-hosted application](/cloudflare-one/access-controls/applications/http-apps/) for the same hostname.
-7. Add Access policies that define which users can call the gateway.
+3. Go to the **Domains** tab.
+4. Select **Add Domain** and enter the hostname you want to use. Optionally, choose a subdomain.
+5. AI Gateway automatically creates the DNS record in the dashboard.
 
-After setup, users can make requests to the custom domain after authenticating through Access. Requests with a valid Access user subject include `cf.user_id` in AI Gateway metadata.
+After the domain is set up, you can send requests to it. To require users to authenticate before they can call the gateway, [set up Cloudflare Access on the domain](/ai-gateway/configuration/cloudflare-access/).
 
 ## Set up a custom domain via API
 
@@ -126,7 +128,7 @@ The custom domain remains in `pending_dcv` until domain control validation compl
 
 ## Example request
 
-After the user authenticates to Access, send requests to the custom domain without the account ID or gateway ID in the path:
+Send requests to the custom domain without the account ID or gateway ID in the path:
 
 ```bash
 curl -X POST "https://ai.example.com/openai/v1/chat/completions" \
@@ -142,11 +144,8 @@ curl -X POST "https://ai.example.com/openai/v1/chat/completions" \
   }'
 ```
 
-If you call the custom domain from a non-browser client, include the Access token using the header or cookie format supported by Cloudflare Access. For example, [`cloudflared access curl`](/cloudflare-one/access-controls/authenticate-agents/#make-requests-with-cloudflared-access-curl) can send the Access token for command-line requests.
+If the domain is protected by Cloudflare Access, the request must also include a valid Access token. For details, refer to [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/).
 
 ## Limitations
 
-- Newer AI Gateway REST API endpoints are not yet supported on custom domains.
-- `cf.user_id` is only added when AI Gateway receives a valid Access JWT with a non-empty user subject.
-- Service-token requests do not include `cf.user_id` because they do not represent an individual Access user.
-- Customer-supplied metadata keys that begin with `cf.` are reserved and are not saved.
+- Custom domains are not yet supported on the newer AI Gateway endpoints served through the [Cloudflare REST API](/api/) (`api.cloudflare.com`).
