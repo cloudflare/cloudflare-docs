@@ -33,6 +33,13 @@ const PR = {
 
 const HEAD_SHA = "abc123def456";
 
+// Fixture refs for image eval cases — the mock read_repo_file (wired via
+// Vite alias in eval builds) returns synthetic file content keyed by these.
+const RAW_IMG_SHA = "eval-style-raw-img";
+const IMAGES_PATH_SHA = "eval-style-images-path";
+const CORRECT_IMG_SHA = "eval-style-correct-img";
+const FENCED_IMG_SHA = "eval-style-fenced-img";
+
 describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a full URL for an internal link", async ({ run }) => {
 		const result = await run({
@@ -186,7 +193,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a raw <img> tag for a content image", async ({ run }) => {
 		const result = await run({
 			pullRequest: PR,
-			headSha: HEAD_SHA,
+			headSha: RAW_IMG_SHA,
 			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
 			addedLines: [
 				{
@@ -224,7 +231,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	}) => {
 		const result = await run({
 			pullRequest: PR,
-			headSha: HEAD_SHA,
+			headSha: IMAGES_PATH_SHA,
 			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
 			addedLines: [
 				{
@@ -258,7 +265,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	}) => {
 		const result = await run({
 			pullRequest: PR,
-			headSha: HEAD_SHA,
+			headSha: CORRECT_IMG_SHA,
 			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
 			addedLines: [
 				{
@@ -290,7 +297,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	it("does not flag <img> inside a fenced HTML code block", async ({ run }) => {
 		const result = await run({
 			pullRequest: PR,
-			headSha: HEAD_SHA,
+			headSha: FENCED_IMG_SHA,
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
