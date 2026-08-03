@@ -169,7 +169,7 @@ package.json @cloudflare/content-engineering
 /src/content/partials/pages/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK
 /src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
 /src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
-/src/content/docs/kv/ @elithrar @thomasgauvin @oxyjun @cloudflare/product-owners
+/src/content/docs/kv/ @elithrar @thomasgauvin @oxyjun @irvinebroque @rts-rob @vy-ton @cloudflare/product-owners
 /src/content/release-notes/kv.yaml @elithrar @thomasgauvin @oxyjun @cloudflare/product-owners
 /src/content/partials/kv/ @elithrar @thomasgauvin @oxyjun @cloudflare/product-owners
 /src/content/docs/queues/ @elithrar @jonesphillip @harshil1712 @mia303 @cloudflare/product-owners
@@ -251,6 +251,11 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-wan/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/multi-cloud-networking/ @steve-cloudflare @jeffh-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/partials/networking-services/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
+/src/content/changelog/cloudflare-network-firewall/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/cloudflare-wan/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/magic-transit/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/multi-cloud-networking/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/network-interconnect/ @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/pm-changelogs @cloudflare/product-owners
 
 # Migration guides
 
@@ -275,9 +280,9 @@ package.json @cloudflare/content-engineering
 /src/content/directory/cache-reserve.yaml @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/directory/cache-rules.yaml @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/directory/tiered-cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/docs/health-checks/ @cloudflare/product-owners @ncrouch-cflare
-/src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
-/src/content/partials/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
+/src/content/docs/health-checks/ @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
+/src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
+/src/content/partials/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
 /src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/smart-shield/configuration/cache-reserve/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
 /src/content/docs/smart-shield/configuration/regional-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
@@ -333,7 +338,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/client-side-security/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @xmflsct @danielegm @cloudflare/product-owners
 /src/content/docs/secrets-store/ @baubuchon-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/security/ @cloudflare/appsec-reviewers @elithrar @xmflsct @danielegm @cloudflare/product-owners @davejbax @zrkn @hemanthk1099
-/src/content/docs/ssl/ @baubuchon-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/ssl/ @baubuchon-cf @lgarofalo @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/partials/ssl/ @baubuchon-cf @lgarofalo @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/security-center/ @jwcrisp @alexmoraru7 @cloudflare/appsec-reviewers @elithrar @danielegm @cloudflare/product-owners @davejbax @zrkn @hemanthk1099 @bseel-cfone
 /src/content/changelog/security-center/ @jwcrisp @alexmoraru7 @cloudflare/appsec-reviewers @elithrar @danielegm @cloudflare/pm-changelogs @cloudflare/product-owners @davejbax @zrkn @hemanthk1099 @bseel-cfone @hoan-pom
 /src/content/partials/security-center/ @cloudflare/appsec-reviewers @danielegm @cloudflare/product-owners @davejbax @zrkn @hemanthk1099 @bseel-cfone

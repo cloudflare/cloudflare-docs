@@ -33,6 +33,9 @@ importers:
       '@flue/cli':
         specifier: 0.4.0-nightly.202605211826
         version: 0.4.0-nightly.202605211826(@types/node@26.1.0)(esbuild@0.28.1)(hono@4.12.25)(typescript@5.9.3)(ws@8.21.0)(yaml@2.9.0)(zod@4.4.3)
+      '@flue/sdk':
+        specifier: 0.4.0-nightly.202605211826
+        version: 0.4.0-nightly.202605211826
       '@flue/vite':
         specifier: 0.4.0-nightly.202605211826
         version: 0.4.0-nightly.202605211826(hono@4.12.25)(typescript@5.9.3)(vite@8.1.2(@types/node@26.1.0)(esbuild@0.28.1)(yaml@2.9.0))(ws@8.21.0)(zod@4.4.3)
@@ -45,6 +48,9 @@ importers:
       vitest:
         specifier: 4.1.10
         version: 4.1.10(@opentelemetry/api@1.9.0)(@types/node@26.1.0)(vite@8.1.2(@types/node@26.1.0)(esbuild@0.28.1)(yaml@2.9.0))
+      vitest-evals:
+        specifier: 0.15.0
+        version: 0.15.0(ai@6.0.219(zod@4.4.3))(tinyrainbow@3.1.0)(vitest@4.1.10(@opentelemetry/api@1.9.0)(@types/node@26.1.0)(vite@8.1.2(@types/node@26.1.0)(esbuild@0.28.1)(yaml@2.9.0)))(zod@4.4.3)
       wrangler:
         specifier: 4.113.0
         version: 4.113.0(@cloudflare/workers-types@4.20260526.1)
@@ -411,6 +417,11 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
+  '@durable-streams/client@0.2.6':
+    resolution: {integrity: sha512-uHKKbWpsKLhFMeGjG0PgM6LXE3oEIi7FHKlJZkmYGxcqd4Yjjd/QEvnQnDzteRP4Av1uJVM8qjTL7kfKsgeS/w==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   '@earendil-works/pi-agent-core@0.80.10':
     resolution: {integrity: sha512-nwnOR3SuLYGRFfyQm8ri4Nj5VGVAvAM9GuqQd3u7BUQj0d6hmD2F8w7OHAAjThE3CuySIdM+v8E22QJG6/RfCg==}
     engines: {node: '>=22.19.0'}
@@ -596,6 +607,9 @@ packages:
   '@flue/runtime@0.4.0-nightly.202605211826':
     resolution: {integrity: sha512-ffg2mWhJOg72G+08v7dLL3KQ1w5x1xHSz42jZwECKvKgaXxo3Wo4BV7W8fPyfhM76E/qrf2G6Hgem0Tn/ywgVg==}
     engines: {node: '>=22.19.0'}
+
+  '@flue/sdk@0.4.0-nightly.202605211826':
+    resolution: {integrity: sha512-2r+1kAmlkKgrvkGmhR3Ksw5zYJY2ao10PLoSSlsNkNllFA8fLFMTIGWq3D/AO6470Cy+J5Yhpno0eLtMTOM2Rg==}
 
   '@flue/vite@0.4.0-nightly.202605211826':
     resolution: {integrity: sha512-w7xCojME2zG61zfgFDxbkLWfbWK3rR3licCNMS6UZzAgVarVlqTht4J1oSNjiC0ouF0gjS/pqxG0uYINYTlVtA==}
@@ -810,6 +824,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
+
+  '@microsoft/fetch-event-source@2.0.1':
+    resolution: {integrity: sha512-W6CLUJ2eBMw3Rec70qrsEW0jOm/3twwJv21mrmj2yORiaVmVYGS4sSS5yUwvQc1ZlDLYGPnClVWmUUMagKNsfA==}
 
   '@mistralai/mistralai@2.2.6':
     resolution: {integrity: sha512-W8pX7zHxjJvMIpw8JMxeJEleapXX0Q9NPszdNzqkM3MIEoIGPObdodujj+WHteXEvGfaP/AMwlNyRfEzSY6dQQ==}
@@ -1146,6 +1163,12 @@ packages:
   '@vercel/oidc@3.2.0':
     resolution: {integrity: sha512-UycprH3T6n3jH0k44NHMa7pnFHGu/N05MjojYr+Mc6I7obkoLIJujSWwin1pCvdy/eOxrI/l3uDLQsmcrOb4ug==}
     engines: {node: '>= 20'}
+
+  '@vitest-evals/core@0.15.0':
+    resolution: {integrity: sha512-kqyg3ocVtZxr3rP9oh01oAycRgXNRasvTgLZ8MbFGBJ4BRd4tk7Bgww253HY7fw7ZFUp4UPYNmDp5AcHajm++w==}
+
+  '@vitest-evals/report-ui@0.15.0':
+    resolution: {integrity: sha512-icrutiRhZ2T1MrHo2RW09hcEwfi/tV/FgsGAE76Wd0C02tZyCleQRjt11RWhBJiYDPpsjjjTHGCHIO6tmtX5zQ==}
 
   '@vitest/expect@4.1.10':
     resolution: {integrity: sha512-YsCn+qAk1GWjQOWFEsEcL2gNQ0zmVmQu3T03qP6UyjhtmdtwtbuI+DASn/7iQB3HGTXkdBwGddzxPlmiql5vlA==}
@@ -1512,6 +1535,9 @@ packages:
   fast-xml-parser@5.9.3:
     resolution: {integrity: sha512-brCNCeScma/kqa54J4PIDriSSSLssRkuYaUCpvHJulGc3HGI/xxKUCTDcYkAdqJsyb//ydpbxecjC3hB9+tb/g==}
     hasBin: true
+
+  fastq@1.20.1:
+    resolution: {integrity: sha512-GGToxJ/w1x32s/D2EKND7kTil4n8OVk/9mycTc4VDza13lOvpUZTGX3mFSCtV9ksdGBVzvsyAVLM6mHFThxXxw==}
 
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
@@ -2071,6 +2097,10 @@ packages:
     resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
     engines: {node: '>= 4'}
 
+  reusify@1.1.0:
+    resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
+    engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
+
   rolldown@1.1.4:
     resolution: {integrity: sha512-IjZYiLxZwpnhwhdBH2ugdTGVSdhCQUmLxLoqyjiL0JxYjyRst+5a0P3xfrTxJ5F638j4Mvvw5FAX5XE6eHpXbA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -2392,6 +2422,20 @@ packages:
       tsx:
         optional: true
       yaml:
+        optional: true
+
+  vitest-evals@0.15.0:
+    resolution: {integrity: sha512-bOYALQdLXKYFRCV8aQ+yLeH7XkmYsTxUWQxLHzJdIEcIBx2v/kPgG3Zg6m231jMCphuoM6xH4YQB3+0pDP7LLw==}
+    hasBin: true
+    peerDependencies:
+      ai: '>=4 <7'
+      tinyrainbow: '>=2 <4'
+      vitest: '>=4 <5'
+      zod: '>=3 <5'
+    peerDependenciesMeta:
+      ai:
+        optional: true
+      zod:
         optional: true
 
   vitest@4.1.10:
@@ -3022,6 +3066,11 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
+  '@durable-streams/client@0.2.6':
+    dependencies:
+      '@microsoft/fetch-event-source': 2.0.1
+      fastq: 1.20.1
+
   '@earendil-works/pi-agent-core@0.80.10(@modelcontextprotocol/sdk@1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3))(ws@8.21.0)(zod@4.4.3)':
     dependencies:
       '@earendil-works/pi-ai': 0.80.10(@modelcontextprotocol/sdk@1.29.0(@cfworker/json-schema@4.1.1)(zod@4.4.3))(ws@8.21.0)(zod@4.4.3)
@@ -3208,6 +3257,10 @@ snapshots:
       - utf-8-validate
       - ws
       - zod
+
+  '@flue/sdk@0.4.0-nightly.202605211826':
+    dependencies:
+      '@durable-streams/client': 0.2.6
 
   '@flue/vite@0.4.0-nightly.202605211826(hono@4.12.25)(typescript@5.9.3)(vite@8.1.2(@types/node@26.1.0)(esbuild@0.28.1)(yaml@2.9.0))(ws@8.21.0)(zod@4.4.3)':
     dependencies:
@@ -3401,6 +3454,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@microsoft/fetch-event-source@2.0.1': {}
 
   '@mistralai/mistralai@2.2.6(@opentelemetry/api@1.9.0)':
     dependencies:
@@ -3723,6 +3778,14 @@ snapshots:
 
   '@vercel/oidc@3.2.0':
     optional: true
+
+  '@vitest-evals/core@0.15.0':
+    dependencies:
+      zod: 4.4.3
+
+  '@vitest-evals/report-ui@0.15.0':
+    dependencies:
+      '@vitest-evals/core': 0.15.0
 
   '@vitest/expect@4.1.10':
     dependencies:
@@ -4108,6 +4171,10 @@ snapshots:
       path-expression-matcher: 1.6.1
       strnum: 2.4.1
       xml-naming: 0.1.0
+
+  fastq@1.20.1:
+    dependencies:
+      reusify: 1.1.0
 
   fdir@6.5.0(picomatch@4.0.5):
     optionalDependencies:
@@ -4650,6 +4717,8 @@ snapshots:
 
   retry@0.13.1: {}
 
+  reusify@1.1.0: {}
+
   rolldown@1.1.4:
     dependencies:
       '@oxc-project/types': 0.138.0
@@ -4962,6 +5031,16 @@ snapshots:
       esbuild: 0.28.1
       fsevents: 2.3.3
       yaml: 2.9.0
+
+  vitest-evals@0.15.0(ai@6.0.219(zod@4.4.3))(tinyrainbow@3.1.0)(vitest@4.1.10(@opentelemetry/api@1.9.0)(@types/node@26.1.0)(vite@8.1.2(@types/node@26.1.0)(esbuild@0.28.1)(yaml@2.9.0)))(zod@4.4.3):
+    dependencies:
+      '@vitest-evals/core': 0.15.0
+      '@vitest-evals/report-ui': 0.15.0
+      tinyrainbow: 3.1.0
+      vitest: 4.1.10(@opentelemetry/api@1.9.0)(@types/node@26.1.0)(vite@8.1.2(@types/node@26.1.0)(esbuild@0.28.1)(yaml@2.9.0))
+    optionalDependencies:
+      ai: 6.0.219(zod@4.4.3)
+      zod: 4.4.3
 
   vitest@4.1.10(@opentelemetry/api@1.9.0)(@types/node@26.1.0)(vite@8.1.2(@types/node@26.1.0)(esbuild@0.28.1)(yaml@2.9.0)):
     dependencies:

@@ -52,6 +52,12 @@ Operations can come from several sources:
 
 These sources contribute to the same operation inventory. You do not need to review every discovered operation before security detections can use operation context.
 
+## Operation states and profile learning
+
+Operations can be in the `candidate`, `shadow`, or `full` state. Promoting a candidate or shadow operation moves it to the `full` state and starts collecting data for profile learning. For more information, refer to [Promote an operation](/security/web-assets/manage-operations/#promote-an-operation).
+
+For API endpoints, configure protections such as [Schema Validation](/api-shield/security/schema-validation/) separately.
+
 ## Describe operations context
 
 [Labels](/security/web-assets/label-operations/) describe what an operation does, such as a login flow, sign-up flow, AI-powered operation, or another use case.
