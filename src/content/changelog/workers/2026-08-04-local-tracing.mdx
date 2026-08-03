@@ -1,0 +1,25 @@
+---
+title: AI agents can debug Workers with local tracing
+description: AI agents can inspect local traces and logs to find, fix, and verify Worker failures.
+products:
+  - workers
+date: 2026-08-04
+---
+
+`wrangler dev` and `vite dev` automatically capture structured OpenTelemetry traces and correlated console logs during local Worker invocations.
+
+## Debug with AI agents
+
+When the tooling detects an AI agent session, it prints a terminal hint pointing to the [Local Explorer API](/workers/local-development/local-explorer/#api) at `/cdn-cgi/explorer/api`. The API serves an OpenAPI schema and exposes a read-only observability query endpoint for discovering telemetry, querying traces and logs, and inspecting binding state.
+
+The agent can identify the exact failing operation, fix the code, rerun the request, and verify the result. This debug loop requires no deployment or temporary logs.
+
+## Inspect traces in Local Explorer
+
+Humans can inspect the same [traces](/workers/observability/traces/) and correlated console logs in the Local Explorer browser UI. Each trace shows spans, timing, attributes, and errors.
+
+![Local Explorer showing a failed Worker trace with spans, timing, and errors](~/assets/images/workers/observability/local-trace-failed-request.png)
+
+Automatic spans cover handler calls, outbound `fetch()` calls, and binding calls. Custom spans appear alongside these automatic spans.
+
+For more details, refer to the [Local Explorer documentation](/workers/local-development/local-explorer/).

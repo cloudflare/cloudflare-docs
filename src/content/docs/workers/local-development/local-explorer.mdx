@@ -19,7 +19,7 @@ Local Explorer works with both [Wrangler](/workers/wrangler/) and the [Cloudflar
 
 ## Prerequisites
 
-- Wrangler 4.82.1 or later, or the latest [Cloudflare Vite plugin](/workers/vite-plugin/) (1.32.0+)
+- Wrangler 4.118.0 or later, or [Cloudflare Vite plugin](/workers/vite-plugin/) 1.50.0 or later
 
 ## Open Local Explorer
 
@@ -63,6 +63,8 @@ The **Logs** view captures all `console.*` output from your Worker. Filter by le
 
 Each Worker invocation appears as a trace. Select any trace to see every binding operation with timing, status, and error details.
 
+Tracing also captures operations made through [remote bindings](/workers/local-development/#remote-bindings), so you can inspect calls from your locally running Worker to deployed resources.
+
 For example, if a request makes two D1 calls and the second one fails, the trace shows you exactly which call succeeded and which errored without adding `console.log()` or try/catch blocks.
 
 ![Trace view for POST /api/todos showing two D1 database spans: the first INSERT succeeded, the second failed with error "no such table: audit_log"](~/assets/images/workers/observability/local-trace-failed-request.png)
@@ -79,7 +81,21 @@ curl http://localhost:8787/cdn-cgi/explorer/api
 
 ### Use with AI agents
 
-When Wrangler detects it is running inside an AI agent, it prints a hint with the Local Explorer API endpoint directly to the terminal. The agent can fetch the [OpenAPI specification](https://www.openapis.org/) from that endpoint to discover all available operations, then make API calls to read or modify local data, query traces and logs, and debug your Worker.
+When Wrangler or the Cloudflare Vite plugin detects it is running inside an AI agent, it prints a hint with the Local Explorer API endpoint directly to the terminal. The agent can fetch the [OpenAPI specification](https://www.openapis.org/) from that endpoint to discover all available operations, then make API calls to read or modify local data, query traces and logs, and debug your Worker.
+
+The hint includes the API URL and relevant endpoints:
+
+```txt output
+This dev session is running in an AI agent.
+
+The Local Explorer API is available at
+http://localhost:8787/cdn-cgi/explorer/api
+
+...
+
+Debug with traces:
+POST /cdn-cgi/explorer/api/local/observability/query -- query traces and logs with SQL
+```
 
 This can be useful as an alternative to the CLI when you want an agent to:
 
@@ -88,4 +104,3 @@ This can be useful as an alternative to the CLI when you want an agent to:
 - Trigger or retry a [Workflow](/workflows/) run with different input data
 - Upload test files to a local [R2](/r2/) bucket
 - Find recent requests with errors and drill into failing spans
-
