@@ -36,21 +36,21 @@ Open the [Agents tab](https://dash.cloudflare.com/?to=/:account/agents) in the C
 
 A session is a conversation made up of one or more turns. A turn is one request to an agent and its response.
 
-> **Image placeholder:** Agents dashboard listing traced agents with run and token usage metrics.
+![Agents dashboard showing agents with session, run, and token totals](~/assets/images/workers-observability/agent_overview.png)
 
 Select an agent to see its traces. Each trace includes its duration, token breakdown, and status.
 
-> **Image placeholder:** Agents dashboard showing traces for one agent.
+![Agent details showing recent traces and token totals](~/assets/images/workers-observability/agent_tracing_turn_view.png)
 
 There are two ways to follow what an agent did: **Session replay** and **Trace**.
 
 **Session replay** shows the recorded conversation across turns, including messages, reasoning, tool calls, and subagent activity. What appears depends on your [payload recording settings](/agents/runtime/operations/observability/tracing/#payload-privacy).
 
-> **Image placeholder:** Session replay showing model messages and tool calls.
+![Session replay showing messages, reasoning, and subagent tool calls](~/assets/images/workers-observability/agent_tracing_session_replay.png)
 
 **Trace** is a waterfall of the operations performed during one turn. It shows when each operation started, how long it took, and which operation called it.
 
-> **Image placeholder:** Trace waterfall showing nested agent, model, and tool spans.
+![Trace waterfall showing nested agent, model, tool, and D1 spans](~/assets/images/workers-observability/agent_tracing_waterfall.png)
 
 ## Trace structure
 
@@ -91,15 +91,7 @@ Tracing and payload controls depend on the integration. Think and Flue instrumen
 
 ### Think
 
-[Think](/agents/harnesses/think/) uses `wrapAISDK()` internally and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
-
-Think supplies these identity fields:
-
-| Attribute                | Think default               |
-| ------------------------ | --------------------------- |
-| `gen_ai.agent.name`      | `this.constructor.name`     |
-| `gen_ai.agent.id`        | `this.name`                 |
-| `gen_ai.conversation.id` | `this.ctx.id.toString()`    |
+Think automatically instruments your agent and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
 
 #### Store payloads
 
@@ -120,9 +112,24 @@ export class MyAgent extends Think<Env> {
 
 ### Flue
 
-[Flue](https://flueframework.com/) also instruments turns automatically with the same span structure as Think.
+[Flue v2+](https://flueframework.com/blog/flue-2/) also automatically instruments your agent and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
 
-### AI SDK v6 and v7
+#### Exclude payloads
+
+Flue stores messages, system instructions, tool definitions, arguments, and results by default. To stop recording them, set content to false:
+
+<TypeScriptExample>
+
+```ts
+import { instrument } from "@flue/runtime";
+import { createCloudflareTracing } from "@flue/runtime/cloudflare";
+
+instrument(createCloudflareTracing({ content: false }));
+```
+
+</TypeScriptExample>
+
+### AI SDK
 
 For direct [AI SDK](https://sdk.vercel.ai/) calls, wrap the namespace once:
 
@@ -230,11 +237,11 @@ Workers does not yet support the [OpenTelemetry API](https://opentelemetry.io/) 
 
 Add these attributes to both the `invoke_agent` and `chat` spans so the Agents dashboard can associate the telemetry with the agent and conversation:
 
-| Attribute                | `invoke_agent` span                           | `chat` span                                   |
-| ------------------------ | --------------------------------------------- | --------------------------------------------- |
-| `gen_ai.operation.name`  | `invoke_agent`                                | `chat`                                        |
-| `gen_ai.agent.name`      | A shared agent name, such as `booking-agent`  | The same agent name                           |
-| `gen_ai.agent.id`        | A stable identifier for the agent instance    | The same agent ID                             |
+| Attribute                | `invoke_agent` span                             | `chat` span                                  |
+| ------------------------ | ----------------------------------------------- | -------------------------------------------- |
+| `gen_ai.operation.name`  | `invoke_agent`                                  | `chat`                                       |
+| `gen_ai.agent.name`      | A shared agent name, such as `booking-agent`    | The same agent name                          |
+| `gen_ai.agent.id`        | A stable identifier for the agent instance      | The same agent ID                            |
 | `gen_ai.conversation.id` | The conversation, session, or thread identifier | The same conversation, session, or thread ID |
 
 #### Store payloads
@@ -247,12 +254,22 @@ Span attributes follow the [OpenTelemetry Generative AI semantic conventions](ht
 
 ## Pricing
 
-Agent tracing is free while [Workers traces](/workers/observability/traces/) is in beta. Each span counts as one observability event, sharing the same quota as Workers Logs and Traces.
+Agent traces use [Workers tracing](/workers/observability/traces/) and follow Workers Observability pricing.
+
+The Agents view shows your agent's operations. The full Worker trace may include additional spans from SDK internals and other Worker-level operations. To inspect the full trace, select **View in Observability**.
+
+Every span counts as one observability event, including spans not shown in the Agents view. Tracing is free while in beta. Beginning September 1, 2026, tracing will be included in existing Workers Observability pricing:
 
 | Tier         | Included events                                     | Retention |
 | ------------ | --------------------------------------------------- | --------- |
 | Workers Free | 200,000 per day                                     | 3 days    |
 | Workers Paid | 20 million per month ($0.60 per additional million) | 7 days    |
+
+## Limitations
+
+- Use agent traces for debugging and observability. Traces are not a complete or lossless record of a conversation.
+- Payload data is subject to span size limits. Long messages, reasoning, tool arguments, and results may be truncated. These limits may change.
+- Session replay does not display images.
 
 ## Next steps
 
