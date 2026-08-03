@@ -43,12 +43,18 @@ The name of the product area.
 
 **type:** `string`
 
-The name of a specific entry to hide.
+The id of a specific entry to hide.
 
-### `scheduled`
+### `publish_future_dated_entry`
 
 **type:** `boolean`
 
 **default:** `false`
 
-Used to only show scheduled entries (i.e for WAF changelogs).
+Set to `true` to show future-dated entries (used for WAF scheduled changelogs).
+
+### `numberOfEntries`
+
+**type:** `number`
+
+Limits the number of entries shown.

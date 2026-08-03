@@ -27,7 +27,7 @@ Component imports must appear after the frontmatter block. A used-but-not-import
 | `pcx_content_type` | Required. Must be one of the valid values below.                                                 |
 | `description`      | Required for all pages with `pcx_content_type`. 1–2 self-contained sentences, 50–160 characters. |
 
-Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
+Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `glossary`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
 
 ### Optional fields
 
@@ -43,7 +43,7 @@ Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `desig
 | `noindex`              | boolean | Adds `noindex` to the page — use for deprecated/legacy content.                       |
 | `chatbot_deprioritize` | boolean | De-prioritizes the page in Support AI responses. Companion to `noindex`.              |
 | `canonical`            | string  | Override the `<link rel="canonical">` URL.                                            |
-| `hideChildren`         | boolean | Collapses this nav group to a single link to the index page.                          |
+| `hideChildren`         | boolean | Collapses this nav group to a single link to the index page (legacy passthrough; Nimbus also reads `sidebar.group.hideIndex`). |
 | `feedback`             | boolean | Show/hide the feedback prompt. Defaults to `true`.                                    |
 
 Example:
@@ -292,7 +292,7 @@ All components are imported from `~/components`. Imports must appear after the f
 | `Render`                              | Embed a reusable partial from `src/content/partials/{product}/{file}.mdx`           |
 | `TypeScriptExample`                   | Workers TS example with auto-generated JS tab                                       |
 | `WranglerConfig`                      | Wrangler config in synced TOML + JSON tabs                                          |
-| `PackageManagers`                     | Package install/exec command across npm, yarn, pnpm                                 |
+| `PackageManagers`                     | Package install/exec command across npm, yarn, pnpm, bun                            |
 | `WranglerCommand`                     | Auto-generated full Wrangler command reference                                      |
 | `WranglerNamespace`                   | Auto-generated Wrangler namespace command listing                                   |
 | `Tabs` / `TabItem`                    | Switchable tabs (`syncKey="dashPlusAPI"` or `"workersExamples"`)                    |
@@ -300,7 +300,7 @@ All components are imported from `~/components`. Imports must appear after the f
 | `Details`                             | Collapsible section for supplementary content                                       |
 | `FileTree`                            | File and directory tree display                                                     |
 | `Width`                               | Constrain content to `"large"` (75%), `"medium"` (50%), or `"small"` (25%) width    |
-| `Plan`                                | Plan availability badge (`type="all"`, `"paid"`, `"pro"`, `"business"`, `"add-on"`) |
+| `Plan`                                | Plan availability badge (`type="all"`, `"paid"`, `"pro"`, `"business"`, `"enterprise"`, `"add-on"`) |
 | `FeatureTable`                        | Feature availability by plan from `src/content/plans/` (dot-notation `id`)          |
 | `ProductFeatures`                     | Full feature list for a product from `src/content/plans/`                           |
 | `ProductChangelog`                    | Inline changelog entries for a product or area                                      |
@@ -322,7 +322,6 @@ All components are imported from `~/components`. Imports must appear after the f
 | `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type`, tags, or products                   |
 | `PublicStats`                         | Inline live statistic (data centers, bandwidth, etc.)                               |
 | `YouTube`                             | Embed a YouTube video by ID                                                         |
-| `YouTubeVideos`                       | Grid of YouTube videos for a product from `src/content/videos/`                     |
 | `Stream`                              | Embed a Cloudflare Stream video by ID or collection file                            |
 | `APIRequest`                          | Generate a `curl` command from the Cloudflare OpenAPI schema                        |
 | `CURL`                                | Generate a `curl` command for arbitrary URLs                                        |
@@ -383,7 +382,7 @@ For full rules see `.agents/references/procedures.md`.
 - Partials: `src/content/partials/{product}/`
 - Images: `src/assets/images/{product}/` — images must not go in `src/content/`
 - Changelogs: `src/content/changelog/{product}/`
-- Allowed file types in `src/content/`: `.mdx`, `.json`, `.yml`, `.yaml`, `.txt` only. CI rejects everything else.
+- Allowed file types in `src/content/`: `.mdx`, `.md`, `.json`, `.yml`, `.yaml`, `.txt` only. CI rejects everything else.
 
 ---
 

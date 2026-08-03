@@ -19,4 +19,4 @@ import { AnchorHeading } from "~/components";
 />
 ```
 
-Props: `title` (required), `slug` (required, custom anchor ID), `depth` (heading level, e.g. `2` for H2).
+Props: `title` (required), `slug` (optional, custom anchor ID — defaults to slugified `title`), `depth` (heading level, e.g. `2` for H2).

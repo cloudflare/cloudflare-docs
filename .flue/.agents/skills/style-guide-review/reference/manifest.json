@@ -96,7 +96,7 @@
 		"id": "component-steps",
 		"file": "reference/components/steps.md",
 		"load": "component",
-		"componentNames": ["Steps"],
+		"componentNames": ["Steps", "Step"],
 		"when": "Patch contains `<Steps` or imports `Steps`."
 	},
 	{
