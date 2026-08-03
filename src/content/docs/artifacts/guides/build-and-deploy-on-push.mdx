@@ -22,7 +22,7 @@ import {
 
 Artifacts events can build and deploy projects stored in Artifacts repos. When a user or agent pushes a commit, the event triggers a [Workflow instance](/workflows/build/trigger-workflows/).
 
-Within the Workflow, continuous integration (CI) tooling caches dependencies, runs checks, and builds the project. The pipeline can deploy output as a [Worker](/workers/) or a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) User Worker.
+Within the Workflow, you define a continuous integration (CI) pipeline with the `@cloudflare/ci` SDK to cache dependencies, run checks, and build the project. The final step in your CI pipeline can deploy the output to a [Worker](/workers/) or a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) User Worker.
 
 This is useful when you need to:
 
@@ -41,7 +41,7 @@ This is useful when you need to:
 2. **Run the CI Workflow** — The event starts a Workflow that checks out the commit, installs and caches dependencies, and runs CI steps — build, lint, typecheck, and format — in parallel. A failed step stops the Workflow before deployment.
 3. **Deploy the Worker** — The Workflow deploys the built Worker either directly to your account or as a User Worker, if using Workers for Platforms
 
-### Define the CI steps
+### Run the CI Workflow
 
 Use the `@cloudflare/ci` SDK to define the CI steps. The SDK provides two tools to help you build the pipeline:
 
@@ -107,13 +107,9 @@ export class CI extends CIWorkflow {
 The credentials on the `deploy()` step are only required when deploying the Worker to an account other than the account where the CI Workflow is running.
 :::
 
-## Run the build pipeline
-
-To run the build pipeline, the Workflow first needs the files from the pushed commit. It clones the repo, then uses runners to install dependencies, run checks, build the project, and deploy the Worker.
-
 ## Start a build when code changes
 
-When a user or agent pushes a commit to an Artifacts repo, Artifacts emits an event that identifies the repo, branch, and commit that changed. You will use this event to start a Workflow that runs a CI pipeline by checking out the commit, installing dependencies, running checks, building the project, and deploying the Worker.
+When a user or agent pushes a commit to an Artifacts repo, Artifacts emits an event that identifies the repo, branch, and commit that changed. You will use this event to trigger a Workflow instance which runs a CI pipeline by automatically checking out the commit and cloning the repo before installing dependencies, running checks, building the project, and/or deploying the Worker, according to your code.
 
 This guide defines those CI steps in a Workflow class named `CIWorkflow`. To start this Workflow automatically after each push, add an `cf.artifacts.repo.pushed` trigger to your Wrangler configuration. You should also include:
 
@@ -230,20 +226,22 @@ To run the same Workflow for every repo in a namespace, drop `repoName` from the
 
 <WranglerConfig>
 
-```json
+```jsonc
 {
-	"triggers": [
-		{
-			"type": "cf.repo.push",
-			"filter": {
-				"namespace": "ARTIFACTS"
-			},
-			"target": {
-				"type": "workflow",
-				"workflowName": "ci-workflow"
+	"triggers": {
+		"events": [
+			{
+				"type": "cf.artifacts.repo.push",
+				"filter": {
+					"namespace": "CI"
+				},
+				"target": {
+					"scriptName": "my-ci-worker",
+					"workflowName": "ci-workflow"
+				}
 			}
-		}
-	]
+		]
+	}
 }
 ```
 

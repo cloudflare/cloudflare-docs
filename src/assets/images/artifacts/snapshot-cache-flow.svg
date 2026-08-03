@@ -12,6 +12,9 @@
     </marker>
   </defs>
 
+  <!-- white background so the diagram stays legible in dark mode -->
+  <rect x="0" y="0" width="1500" height="620" rx="12" fill="#ffffff"/>
+
   <!-- =============== TIMELINE =============== -->
   <text x="250"  y="55" font-size="28" font-weight="800" fill="#1D1D1D" text-anchor="middle">commit 1</text>
   <text x="750"  y="55" font-size="28" font-weight="800" fill="#1D1D1D" text-anchor="middle">commit 2</text>
