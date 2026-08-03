@@ -141,13 +141,9 @@ if (model.name.includes("@cf/openai/gpt-oss")) {
 const author = authorData[model.author];
 const authorName = model.authorName;
 
-// Models that require the Workers Paid plan (not available on Workers Free).
-const workersPaidOnlyModels = [
-	"@cf/moonshotai/kimi-k2.6",
-	"@cf/moonshotai/kimi-k2.7-code",
-	"@cf/zai-org/glm-5.2",
-];
-const isWorkersPaidOnly = workersPaidOnlyModels.includes(model.name);
+const requiresWorkersPaid =
+	model.properties.require_workers_paid === true ||
+	model.properties.require_workers_paid === "true";
 
 // `hasSchema`: input must have at least one key.
 const hasSchema = Object.keys(model.schema.input).length > 0;
@@ -340,7 +336,7 @@ const headings: MarkdownHeading[] = [
 	}
 
 	{
-		isWorkersPaidOnly && (
+		requiresWorkersPaid && (
 			<Render file="workers-paid-only-note" product="workers-ai" />
 		)
 	}

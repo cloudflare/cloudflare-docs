@@ -2,6 +2,10 @@
     "name": "@cf/moonshotai/kimi-k2.7-code",
     "properties": [
         {
+            "property_id": "require_workers_paid",
+            "value": "true"
+        },
+        {
             "property_id": "context_window",
             "value": "262144"
         },
