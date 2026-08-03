@@ -426,14 +426,7 @@ export async function addReactionToComment(
 	token: string,
 	commentId: number,
 	reaction:
-		| "+1"
-		| "-1"
-		| "laugh"
-		| "confused"
-		| "heart"
-		| "hooray"
-		| "rocket"
-		| "eyes",
+		"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes",
 ): Promise<number | null> {
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}/reactions`,

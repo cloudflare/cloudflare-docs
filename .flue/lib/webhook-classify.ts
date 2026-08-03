@@ -90,8 +90,7 @@ export function classifyWebhook(
 
 	const pullRequest = asRecord(body.pull_request);
 	const prAuthorLogin = asRecord(pullRequest?.user)?.login as
-		| string
-		| undefined;
+		string | undefined;
 	const isDependabotPr =
 		eventType === "pull_request" && prAuthorLogin === "dependabot[bot]";
 
@@ -121,8 +120,7 @@ export function classifyWebhook(
 	const command = isOnPullRequest ? commandFromComment(commentBody) : null;
 	const commentId = asRecord(body.comment)?.id as number | undefined;
 	const commentPrAuthorLogin = asRecord(issue?.user)?.login as
-		| string
-		| undefined;
+		string | undefined;
 
 	return {
 		eventType,
