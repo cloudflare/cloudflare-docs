@@ -16,6 +16,9 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
+import ArtifactsCIPipelineDiagram from "~/components/ArtifactsCIPipelineDiagram.astro";
+import ArtifactsCIWorkflowDiagram from "~/components/ArtifactsCIWorkflowDiagram.astro";
+import ArtifactsPlatformSharedCIDiagram from "~/components/ArtifactsPlatformSharedCIDiagram.astro";
 
 Artifacts events can build and deploy projects stored in Artifacts repos. When a user or agent pushes a commit, the event triggers a [Workflow instance](/workflows/build/trigger-workflows/).
 
@@ -32,7 +35,7 @@ This is useful when you need to:
 
 ## How it works
 
-![Diagram showing the store, build, and deploy stages of the Artifacts CI pipeline: a commit and push to Artifacts triggers the build stage, which installs and caches dependencies and runs CI steps (build, lint, typecheck, and test), then ships the artifact to a production deploy.](~/assets/images/artifacts/store-build-deploy-pipeline.png)
+<ArtifactsCIWorkflowDiagram />
 
 1. **Push repo changes** — A `git push` to the Artifacts repo emits an `artifacts.repo.pushed` event that identifies the pushed repo, branch, and commit.
 2. **Run the CI Workflow** — The event starts a Workflow that checks out the commit, installs and caches dependencies, and runs CI steps — build, lint, typecheck, and format — in parallel. A failed step stops the Workflow before deployment.
@@ -48,6 +51,8 @@ Use the `@cloudflare/ci` SDK to define the CI steps. The SDK provides two tools 
 ![Diagram showing three sequential commits: commit 1 has a cache miss so the install step runs and its sandbox snapshot is cached; commit 2 has an unchanged pnpm-lock.yaml so the cache key matches and the cached snapshot is served, skipping install; commit 3 has a changed pnpm-lock.yaml so the cache key misses and install runs again.](~/assets/images/artifacts/snapshot-cache-flow.svg)
 
 A cached runner takes a [snapshot](/sandbox/api/backups/) of its sandbox, which later runners reuse. Multiple runners can branch from the same cached result — for example, lint, type-check, and test runners can all reuse one cached install.
+
+<ArtifactsCIPipelineDiagram />
 
 A failed runner retries according to its [step configuration](/workflows/build/sleeping-and-retrying/#retry-steps), where you can define the number of retry attempts, backoff schedule, and timeouts. Runners that depend on a previous step do not start until its retry succeeds. If the configured retry limit is reached, the Workflow terminates in an `Errored` state.
 
@@ -215,7 +220,7 @@ The `filter` in your trigger is optional. When you set `repoName`, only pushes t
 
 This is useful for platforms that author and own a single CI Workflow and want to apply it uniformly across every customer repo in a namespace. Instead of maintaining a separate trigger per repo, one shared Workflow builds, checks, and deploys each repo on push.
 
-![Diagram showing a single shared CI Workflow, authored and owned by the platform, that runs build, lint, test, and typecheck steps. Five Artifact repos (A through E) in a platform namespace all fan in to the shared workflow, which then fans out to a separate deploy per repo (deploy A through deploy E).](~/assets/images/artifacts/platform-shared-ci.png)
+<ArtifactsPlatformSharedCIDiagram />
 
 To run the same Workflow for every repo in a namespace, drop `repoName` from the trigger `filter` and keep only the `namespace`:
 
