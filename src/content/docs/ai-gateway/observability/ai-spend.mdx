@@ -12,7 +12,7 @@ The AI Spend dashboard shows how much your organization spends on AI, which iden
 
 ## Attribute usage to identities
 
-AI Spend is available to all AI Gateway customers at no additional cost and works on any traffic through your gateway. Without an identity on each request, usage is grouped under an anonymous identifier.
+AI Spend is available to all AI Gateway customers at no additional cost and works on any traffic through your gateway. Without an identity or custom metadata on your requests, all usage is grouped under a single anonymous identifier, and AI Spend cannot distinguish between individual users.
 
 To attribute usage to individual users, add a user identifier with [custom metadata](/ai-gateway/observability/custom-metadata/), or put your gateway behind [Cloudflare Access](/cloudflare-one/access-controls/). With Access, each authenticated request carries a verified identity you can filter spend and analytics by.
 
