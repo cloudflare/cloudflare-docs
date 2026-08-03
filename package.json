@@ -81,7 +81,6 @@
 		"@types/react-dom": "19.0.4",
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.65.0",
-		"algoliasearch": "5.56.0",
 		"astro": "^7.1.4",
 		"astro-icon": "1.1.5",
 		"astro-skills": "0.1.1",
