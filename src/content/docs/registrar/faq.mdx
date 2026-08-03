@@ -34,7 +34,7 @@ If you still need to use different nameservers, you will have to [move your doma
 
 ### Why did my domain stop resolving or show a parked or suspension page, and I never got the verification email
 
-If you registered your domain through Cloudflare Registrar, ICANN requires you to verify the registrant email address. If that email is unverified or the verification link expired, ICANN places a hold on the domain and Cloudflare temporarily replaces your nameservers with parking nameservers, which is why the site stops resolving. Once you complete verification, your nameservers are automatically restored.
+If you registered your domain through Cloudflare Registrar, ICANN requires you to verify the registrant email address. If that email is unverified or the verification link expired, ICANN requires the registrar to place a hold on the domain and Cloudflare temporarily replaces your nameservers with parking nameservers, which is why the site stops resolving. Once you complete verification, your nameservers are automatically restored.
 
 To fix it, verify your registrant email:
 
@@ -106,13 +106,14 @@ If you enter an incorrect auth code (also referred to as authentication code or 
 
 Cloudflare Registrar only supports transfers of domains that are active on a Cloudflare [full setup](/dns/zone-setups/full-setup/). Domains on Cloudflare use [nameservers assigned by Cloudflare](/dns/nameservers/nameserver-options/#assignment-method) to the associated account and those nameservers must remain in place for the domain to be Active.
 
-### Why did my domain's expiration date change after transferring it to Cloudflare
+### Why didn't my domain's expiration date change after transferring it to Cloudflare
 
-ICANN requires that any transfer also extends the expiration date of your domain by at least one year, that is, one year from your current expiration date, not one year from the date of transfer. For example, if your domain's current expiration date is a few months away when you transfer it, your new expiration date will be one year after that original expiration date, not one year from the transfer date.
+For most generic TLDs (`.com`, `.net`, `.org`, and similar), a transfer adds one year to your current expiration date. However, some TLDs do not add a year on transfer:
 
-Whenever a domain is first registered, the registrant purchases control of that domain for some number of years, up to 10 years. For example, a newly registered domain will have an expiration date on the same month and day in a future year, anywhere from one to 10 years later, depending on the number of years originally purchased.
+- **`.uk` and `.nz` domains**: These country-code TLDs do not add an additional year during the transfer process.
+- **Domains at or near the maximum term**: ICANN-governed TLDs cap the registration term at 10 years. If your domain already has 10 years on the term, no additional year can be added. Some country-code TLDs have shorter caps (for example, `.co` has a 5-year cap), so transfers of those domains may also not add a year.
 
-Transferring a domain adds time to the current expiration date, unless your domain already has [10 years on the term](#if-i-registered-my-domain-for-10-years-at-another-registrar-will-i-gain-another-year-if-i-transfer-it-to-cloudflare).
+If none of the above apply and your expiration date still did not change, refer to [My domain's registration was not extended by one year after transferring to Cloudflare](#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare) for the 45-day renewal restriction.
 
 ### If I registered my domain for 10 years at another registrar, will I gain another year if I transfer it to Cloudflare
 
@@ -174,7 +175,7 @@ During this period you may renew/extend the domain at any time from within the d
 
 The redemption period lasts for 30 days. During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
 
-If the domain is in a state where it can be restored, the Manage Domain page in the Registrar section of dash will display a message indicating the domain is restorable. You will then be able to initiate the restore process directly from the dashboard.
+If the domain is in a state where it can be restored, the Manage Domain page in the Registrar section of the dashboard will display a message indicating the domain is restorable. You will then be able to initiate the restore process directly from the dashboard.
 
 Cloudflare does not guarantee against domain loss in the sense of fully indemnifying you for business losses if you lose your domain. However, mechanisms are in place to alert you of domain expiration and redemption grace periods should your domain expire. You can also elect to set up your domain registration to renew automatically. For an additional layer of control over your domains, refer to [Domain Protection Service](https://www.cloudflare.com/products/registrar/custom-domain-protection/).
 
@@ -186,7 +187,7 @@ For example, say `example.com` expires and you renew it a few days later, extend
 
 To avoid this, wait at least 45 days after renewal before transferring.
 
-If this already happened, you have effectively paid twice for the same year. Per ICANN rules, you are entitled to request a refund from your previous registrar.
+If this already happened, you have effectively paid twice for the same year. You are entitled to request a refund from your previous registrar.
 
 ---
 
@@ -208,16 +209,16 @@ You will be billed when you input your authorization code and initiate the trans
 
 ### Why was I charged to transfer a domain, or why do I see two charges
 
-A transfer into Cloudflare is not free because ICANN requires every transfer to include at least one additional year of registration. Cloudflare charges that year at cost, with no markup, and adds it to your current expiration date. Some country-code domains, such as `.uk`, have no transfer fee.
+A transfer into Cloudflare is not free because most registries require every transfer to include at least one additional year of registration. Cloudflare charges that year at cost, with no markup, and adds it to your current expiration date. Some country-code domains, such as `.uk` and `.nz`, have no transfer fee.
 
 Two things people read as double charging that usually are not:
 
 - A failed-then-retried checkout can leave a temporary authorization hold that drops off. This is not a second charge.
-- If you renewed at your old registrar and then transferred to Cloudflare within 45 days of that renewal, the registry does not add the extra year even though you paid for the transfer, so you have effectively paid twice for the same year. Per ICANN rules, you are entitled to request a refund from your previous registrar. To avoid this, wait at least 45 days after a renewal before transferring. Refer to [My domain's registration was not extended by one year after transferring to Cloudflare](#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare).
+- If you renewed at your old registrar and then transferred to Cloudflare within 45 days of that renewal, the registry does not add the extra year even though you paid for the transfer, so you have effectively paid twice for the same year. You are entitled to request a refund from your previous registrar. To avoid this, wait at least 45 days after a renewal before transferring. Refer to [My domain's registration was not extended by one year after transferring to Cloudflare](#my-domains-registration-was-not-extended-by-one-year-after-transferring-to-cloudflare).
 
-### Is there a fee to transfer a .UK domain
+### Is there a fee to transfer a .UK or .NZ domain
 
-No, there is no fee to transfer a `.uk` domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.
+No, there is no fee to transfer a `.uk` or `.nz` domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.
 
 ---
 
@@ -227,7 +228,7 @@ No, there is no fee to transfer a `.uk` domain. Also, an additional year is NOT 
 
 Domains that are in the Redemption Period and have an EPP status of redemptionPeriod may be restored. For most TLDs this will include domains that are between 40 and 70 days past expiration.
 
-Currently `.uk` domains cannot be restored using this process. We are working on an alternative process for `.uk` domains and will provide additional information at a later date.
+`.uk` domains cannot be restored using the standard redemption process. However, `.uk` domains can be restored by renewing the domain (no additional restore fee) up until 90 days after expiration.
 
 ### Is there a fee to restore a domain
 
