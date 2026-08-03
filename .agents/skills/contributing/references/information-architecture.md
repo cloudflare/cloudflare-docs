@@ -11,14 +11,14 @@ Decide where a change lives before you write it. Putting content in the right pl
 | Image / asset      | `src/assets/images/{product}/`        |
 | Changelog entry    | `src/content/changelog/{product}/`    |
 | Glossary terms     | `src/content/glossary/{product}.yaml` |
-| Product metadata   | `src/content/products/{product}.yaml` |
+| Product metadata   | `src/content/directory/{slug}.yaml`   |
 | Directory entry    | `src/content/directory/{slug}.yaml`   |
 
 Rules:
 
 - Filenames are lowercase with dashes: `get-started.mdx`, `create-api-token.mdx`.
 - Every folder must have an `index.mdx`.
-- Only `.mdx`, `.json`, `.yml`, `.yaml`, `.txt` are allowed under `src/content/`. Images must not go there.
+- Only `.mdx`, `.md`, `.json`, `.yml`, `.yaml`, `.txt` are allowed under `src/content/`. Images must not go there.
 
 ## Find the right spot
 
@@ -26,7 +26,7 @@ Before creating a file:
 
 1. **Read the surrounding pages.** Open the product's `index.mdx` and 2–3 sibling pages. Match their structure, depth, and content type.
 2. **Check for existing coverage.** Search the docs (and use the `cloudflare-docs` search tool) for the topic. If a page already covers it, edit that page or link to it — do not create a near-duplicate.
-3. **Place it in the navigation.** The left-nav order comes from `sidebar.order` in frontmatter (lower = higher). Slot the new page among its siblings by setting an order consistent with neighbors; use `sidebar.label` only when the title is too long for the nav. `hideChildren` collapses a group to its index page.
+3. **Place it in the navigation.** The left-nav order comes from `sidebar.order` in frontmatter (lower = higher). Slot the new page among its siblings by setting an order consistent with neighbors; use `sidebar.label` only when the title is too long for the nav. `hideChildren` (or `sidebar.group.hideIndex`) collapses a group to its index page.
 
 ## Link to the source of truth
 
@@ -62,16 +62,15 @@ Adding redirects for renamed/moved files is also a documentation-checklist item 
 
 When documenting a product that does not exist in the repo yet:
 
-1. Add product metadata to `src/content/products/{product}.yaml`.
-2. Add a directory entry under `src/content/directory/`. Every directory file needs a unique 6-character `id` on the first line. **Never hand-write the `id`** — generate it:
+1. Add a directory entry under `src/content/directory/{slug}.yaml`. Every directory file needs a unique 6-character `id` on the first line. **Never hand-write the `id`** — generate it:
 
    ```bash
    node tools/directory-entry-ids --fix
    ```
 
-3. Create the docs folder with an `index.mdx` (`pcx_content_type: overview`).
+2. Create the docs folder with an `index.mdx` (`pcx_content_type: overview`).
 
-Changelog entries also require the product folder to exist under `src/content/products/`.
+Changelog entries require the changelog folder name to match a `directory` entry id (the folder name under `src/content/changelog/` must correspond to a file in `src/content/directory/`).
 
 ## Glossary terms
 
