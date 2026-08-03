@@ -774,6 +774,8 @@ await instance.delete();
 
 </TypeScriptExample>
 
+If a Workflow deletes its own instance, execution stops during `await instance.delete()`. Code after the call does not run.
+
 ### sendEvent
 
 [Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
