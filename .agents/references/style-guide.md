@@ -400,6 +400,8 @@ Guidelines:
 - Do not include sensitive information (redact if needed).
 - Avoid including the sidebar navigation (it changes frequently).
 - Always provide descriptive alt text.
+- Use Markdown image syntax for content images. Do not use raw `<img>` tags for screenshots or diagrams.
+- Store images in `src/assets/images/{product}/` and reference them with `~/assets/images/{product}/...`. Do not reference `public/images/` from MDX content pages.
 
 ```mdx
 ![Cloudflare dashboard showing the DNS records page with an A record highlighted](~/assets/images/dns/dns-records.png)

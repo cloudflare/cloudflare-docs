@@ -43,6 +43,8 @@ export interface RunStyleGuideOptions {
 	concurrency?: number;
 	/** Per-file hard timeout in ms. Defaults to STYLE_GUIDE_FILE_TIMEOUT_MS. */
 	fileTimeoutMs?: number;
+	/** PR head SHA — pinned to `read_repo_file` so the agent can read the full file for surrounding context. */
+	headSha: string;
 }
 
 /**
@@ -59,6 +61,7 @@ export async function runStyleGuide(
 		runId,
 		concurrency = STYLE_GUIDE_CONCURRENCY,
 		fileTimeoutMs = STYLE_GUIDE_FILE_TIMEOUT_MS,
+		headSha,
 	} = options;
 
 	if (files.length === 0) {
@@ -91,6 +94,7 @@ export async function runStyleGuide(
 						pullRequest,
 						filename: file.filename,
 						addedLines,
+						headSha,
 					},
 					instanceId: `${runId}:sg:${index}`,
 					fileTimeoutMs,

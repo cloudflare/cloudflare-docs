@@ -31,10 +31,13 @@ const PR = {
 	head: "fix-link",
 };
 
+const HEAD_SHA = "abc123def456";
+
 describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a full URL for an internal link", async ({ run }) => {
 		const result = await run({
 			pullRequest: PR,
+			headSha: HEAD_SHA,
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
@@ -68,6 +71,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	it("passes on a clean root-relative link", async ({ run }) => {
 		const result = await run({
 			pullRequest: PR,
+			headSha: HEAD_SHA,
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
@@ -93,6 +97,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	}) => {
 		const result = await run({
 			pullRequest: PR,
+			headSha: HEAD_SHA,
 			filename: "src/content/docs/stream/stream-live/start-stream-live.mdx",
 			addedLines: [
 				{
@@ -121,6 +126,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a missing Oxford comma before final and", async ({ run }) => {
 		const result = await run({
 			pullRequest: PR,
+			headSha: HEAD_SHA,
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
@@ -148,6 +154,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a body H1 heading", async ({ run }) => {
 		const result = await run({
 			pullRequest: PR,
+			headSha: HEAD_SHA,
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
@@ -170,6 +177,147 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		expect(h1Finding!.severity).toBe("warning");
 		expect(h1Finding!.path).toBe("src/content/docs/workers/example.mdx");
 		expect(h1Finding!.line).toBe(15);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("flags a raw <img> tag for a content image", async ({ run }) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
+			addedLines: [
+				{
+					line: 50,
+					content:
+						'<img src="/images/precursor/precursor-rules.png" alt="Precursor mode selector" style="border:1px solid #e5e7eb;" />',
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+		expect(findings!.length).toBeGreaterThan(0);
+
+		const imgFinding = findings!.find(
+			(f) =>
+				f.rule?.toLowerCase().includes("img") ||
+				f.rule?.toLowerCase().includes("image") ||
+				f.rule?.toLowerCase().includes("markdown image"),
+		);
+		expect(imgFinding).toBeDefined();
+		expect(imgFinding!.severity).toBe("warning");
+		expect(imgFinding!.path).toBe(
+			"src/content/docs/cloudflare-challenges/precursor.mdx",
+		);
+		expect(imgFinding!.line).toBe(50);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("flags a Markdown image using /images/ instead of ~/assets/images/", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
+			addedLines: [
+				{
+					line: 35,
+					content:
+						"![Precursor mode selector](/images/precursor/precursor-rules.png)",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const pathFinding = (findings ?? []).filter(
+			(f) =>
+				f.rule?.toLowerCase().includes("image") ||
+				f.rule?.toLowerCase().includes("path") ||
+				f.rule?.toLowerCase().includes("asset") ||
+				f.evidence?.includes("/images/"),
+		);
+		expect(pathFinding.length).toBeGreaterThan(0);
+		expect(pathFinding[0].severity).toBe("warning");
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("passes on correct Markdown image syntax with ~/assets/images/", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
+			addedLines: [
+				{
+					line: 35,
+					content:
+						"![Precursor mode selector showing Minimize Friction and Maximize Security options](~/assets/images/cloudflare-challenges/precursor-rules.png)",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const imageWarnings = (findings ?? []).filter(
+			(f) =>
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("img") ||
+					f.rule?.toLowerCase().includes("image") ||
+					f.rule?.toLowerCase().includes("path") ||
+					f.rule?.toLowerCase().includes("asset")),
+		);
+		expect(imageWarnings).toHaveLength(0);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("does not flag <img> inside a fenced HTML code block", async ({ run }) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/workers/example.mdx",
+			addedLines: [
+				{
+					line: 10,
+					content: "```html",
+				},
+				{
+					line: 11,
+					content: '<img src="/static/logo.png" alt="Logo" />',
+				},
+				{
+					line: 12,
+					content: "```",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const imgFindings = (findings ?? []).filter(
+			(f) =>
+				f.rule?.toLowerCase().includes("img") ||
+				f.rule?.toLowerCase().includes("image") ||
+				f.evidence?.includes("<img"),
+		);
+		expect(imgFindings).toHaveLength(0);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_style_guide",
