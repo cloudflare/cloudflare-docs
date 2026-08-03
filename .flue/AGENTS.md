@@ -134,6 +134,8 @@ Do not add agent review rules for issues that are already reliably caught by CI,
 
 Before adding a rule, verify whether the repository already catches the issue in CI. If it does, do not duplicate it in agent review output. For MDX/code structure checks, prefer AST-aware checks; avoid raw line pattern matching unless the rule explicitly ignores fenced code blocks and JSX component syntax.
 
+For guidance on writing, wiring, and evaluating new style-guide review rules, see `.flue/.agents/skills/style-guide-review/reference/rule-authoring.md`.
+
 ## Agent Evals
 
 Agent evals test agent behavior against the live Workers AI model. They live in `.flue/evals/` and use `vitest-evals` with a custom harness that drives agents over HTTP through the Flue Worker's eval routes.

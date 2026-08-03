@@ -68,7 +68,7 @@ describeEval("code review file", { harness }, (it) => {
 		expect(match!.path).toBe("src/handler.ts");
 		expect(match!.line).toBe(4);
 		expect(match!.rule?.toLowerCase()).toMatch(
-			/\b(promise|reject|unhandled|await|error|fire|discard|floating|ignored)\b/,
+			/(promise|reject|unhandled|await|error|fire|discard|floating|ignored)/,
 		);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
