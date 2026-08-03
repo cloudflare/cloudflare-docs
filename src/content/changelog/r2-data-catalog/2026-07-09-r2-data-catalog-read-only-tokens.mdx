@@ -1,0 +1,20 @@
+---
+title: R2 Data Catalog now supports read-only API tokens
+description: Connect query engines to R2 Data Catalog using read-only API tokens
+products:
+  - r2
+date: 2026-07-13
+---
+
+[R2 Data Catalog](/r2-data-catalog/) now accepts read-only API tokens, so query engines and clients that only read data no longer need a read-write token. Previously, every catalog operation required an **Admin Read & Write** token, which meant read-only clients were granted more access than they needed.
+
+You can now authenticate your Iceberg engine based on your workload:
+
+- **Read-only** operations (such as listing namespaces, loading tables, and querying data) work with an **Admin Read only** token (R2 Data Catalog read and R2 storage read).
+- **Write** operations (such as creating or dropping tables and committing transactions) continue to require an **Admin Read & Write** token.
+
+This lets you follow the principle of least privilege — for example, using a read-write token for the pipeline that writes to your tables and read-only tokens for engines like [R2 SQL](/r2-sql/), [DuckDB](/r2-data-catalog/config-examples/duckdb/), or [PyIceberg](/r2-data-catalog/config-examples/pyiceberg/) that query them.
+
+Note that credentials vended by the catalog inherit the R2 storage permissions of the token used to authenticate. To ensure read-only access to your underlying data, scope the R2 storage permission to read-only as well.
+
+For details on choosing and creating the right token, refer to [Authenticate your Iceberg engine](/r2-data-catalog/manage-catalogs/#authenticate-your-iceberg-engine).
