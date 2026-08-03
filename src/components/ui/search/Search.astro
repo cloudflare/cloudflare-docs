@@ -139,7 +139,8 @@ const aiSearchApiUrl =
 	}
 
 	#search search-modal-snippet::part(result-icon-page),
-	#search search-modal-snippet::part(result-icon-section) {
+	#search search-modal-snippet::part(result-icon-section),
+	#search search-modal-snippet::part(result-icon-changelog) {
 		display: block;
 		background-color: currentColor;
 		-webkit-mask-position: center;
@@ -158,6 +159,11 @@ const aiSearchApiUrl =
 	#search search-modal-snippet::part(result-icon-section) {
 		-webkit-mask-image: url("@phosphor-icons/core/regular/hash.svg");
 		mask-image: url("@phosphor-icons/core/regular/hash.svg");
+	}
+
+	#search search-modal-snippet::part(result-icon-changelog) {
+		-webkit-mask-image: url("@phosphor-icons/core/regular/megaphone.svg");
+		mask-image: url("@phosphor-icons/core/regular/megaphone.svg");
 	}
 
 	@media (min-width: 768px) {
