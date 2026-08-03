@@ -1,0 +1,23 @@
+---
+title: See fallback pool traffic separately in load balancing analytics
+description: Load balancing analytics now graphs traffic served by the fallback pool as its own series, so you can tell health-based routing apart from last-resort routing.
+products:
+  - load-balancing
+date: 2026-09-01
+---
+
+Load balancing analytics now shows traffic served by your [fallback pool](/load-balancing/understand-basics/health-details/#fallback-pools) separately from traffic routed to the same pool by normal steering.
+
+Previously, requests were grouped by pool name alone. If the pool acting as your fallback also received traffic through your steering policy, both appeared as a single series, so it was not obvious from the graph whether Cloudflare was still making health-based routing decisions or had fallen back to the pool of last resort. Because the fallback pool ignores health, that distinction matters when you are diagnosing an outage or reviewing how much traffic was shed.
+
+Fallback traffic is now labeled with the pool name followed by `(Fallback)`. A pool named `eu-west`, for example, is shown as `eu-west (Fallback)`. This label appears as its own entry in:
+
+- **Requests over time**, as a separate series in the chart.
+- **Pool distribution**, as a separate segment.
+- **Top endpoints**, as a separate card for the pool.
+
+The **Latency** view and the health event **Logs** are unchanged.
+
+To see this, go to **Traffic** > **Load Balancing Analytics** for a zone. The same breakdown appears in the analytics view for an individual load balancer under **Load Balancing** at the account level.
+
+Refer to [load balancing analytics](/load-balancing/reference/load-balancing-analytics/) to learn more.
