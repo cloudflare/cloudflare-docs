@@ -1,0 +1,23 @@
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/partners/intune.mdx
+  s_f8cadb94c35e17::t_123dbcd02de9d9 344-347
+src/content/warp-releases/macos/ga/2026.6.822.0.yaml
+  s_f8cadb94c35e17::t_9ccbb659c4d8a1 36
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/known-limitations.mdx
+  s_f8cadb94c35e17::t_efe7661e48a51f 251-274
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7d79572dae6f53aad88d86528da1ad2b55ed3d0b",
+  "prompts": {},
+  "sessions": {
+    "s_f8cadb94c35e17": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0a2c05b99ffeVgC3KRnUNgS7jN",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Rhett Griggs <rhett@cloudflare.com>"
+    }
+  }
+}
