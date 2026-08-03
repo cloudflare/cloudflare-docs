@@ -1,0 +1,122 @@
+---
+title: Python and JavaScript Workers can now call each other via RPC
+description: Workers RPC now supports cross-language calls between Python and JavaScript Workers without additional dependencies or schema definitions.
+products:
+  - workers
+date: 2026-08-03
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+You can now call methods between Python and JavaScript Workers using [Workers RPC](/workers/runtime-apis/rpc/). This works through [Service bindings](/workers/runtime-apis/bindings/service-bindings/rpc/) without extra dependencies, schema definitions, or serialization code.
+
+Cross-language RPC calls behave like ordinary function calls. Exceptions propagate to the call site. You can pass [structured cloneable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) as parameters or return values, and Pyodide Foreign Function Interface (FFI) automatically converts types between languages.
+
+## Call a TypeScript Worker from Python
+
+Define a method in a TypeScript Worker:
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class RpcService extends WorkerEntrypoint {
+	async add(a: number, b: number): Promise<number> {
+		return a + b;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Call it from a Python Worker through a Service binding:
+
+```python
+from workers import Response, WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		rpc = self.env.RPC
+		result = await rpc.add(42, 144)
+		return Response.json({"result": result})
+```
+
+Configure the Service binding in the Python Worker's Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"services": [
+		{
+			"binding": "RPC",
+			"service": "ts-rpc-server",
+			"entrypoint": "RpcService"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## Call a Python Worker from JavaScript
+
+Define a method in a Python Worker:
+
+```python
+from workers import WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+	async def highlight_code(self, code: str, language: str) -> dict:
+		from pygments.formatters import HtmlFormatter
+		from pygments import highlight
+		from pygments.lexers import get_lexer_by_name
+
+		lexer = get_lexer_by_name(language, stripall=True)
+		formatter = HtmlFormatter(linenos=True, cssclass="highlight", style="monokai")
+		highlighted_html = highlight(code, lexer, formatter)
+		css = formatter.get_style_defs(".highlight")
+
+		return {
+			"html": highlighted_html,
+			"css": css
+		}
+```
+
+Call it from a JavaScript Worker through a Service binding:
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request, env) {
+		const rpc = env.PYTHON_RPC;
+		const result = await rpc.highlight_code("print(42)", "python");
+		return Response.json(result);
+	},
+};
+```
+
+</TypeScriptExample>
+
+Configure the Service binding in the JavaScript Worker's Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"services": [
+		{
+			"binding": "PYTHON_RPC",
+			"service": "py-rpc-server"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+For more details on the announcement, read the [blog post](https://blog.cloudflare.com/python-workers-rpc/).
+
+For more information, refer to the [Workers RPC documentation](/workers/runtime-apis/rpc/) and the [Python Workers overview](/workers/languages/python/).
