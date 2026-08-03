@@ -27,7 +27,7 @@ Severities:
 1. **Be specific.** The condition must be checkable by mechanical pattern matching on added lines. Avoid vague guidance like "consider improving clarity."
 2. **Include false-positive exceptions.** If a rule could fire inside code blocks, JSX component props, or application code examples, add an explicit exception.
 3. **Do not duplicate CI.** Before adding a rule, verify the repository does not already catch the issue in CI (build, typecheck, lint, link validation, schema validation).
-4. **Remember the agent sees added lines only.** Rules match on the content of added/changed lines with their new-file line numbers. The agent does not see the full file or surrounding context unless it uses a tool to read it.
+4. **Remember the agent sees added lines by default.** Rules match on the content of added/changed lines with their new-file line numbers. The agent can optionally use `read_repo_file` to read the full current file for surrounding context (e.g. to check whether an added line is inside a fenced code block), but rules should be written to match on the added lines themselves whenever possible.
 5. **Provide examples.** Include correct and incorrect examples in the reference file so the model can pattern-match accurately.
 
 ## Wiring a new rule
