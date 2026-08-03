@@ -9,9 +9,6 @@ products:
 ---
 
 import {
-	ArtifactsCIPipelineDiagram,
-	ArtifactsCIWorkflowDiagram,
-	ArtifactsPlatformSharedCIDiagram,
 	DashButton,
 	PackageManagers,
 	Tabs,
@@ -19,6 +16,9 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
+import ArtifactsCIPipelineDiagram from "~/components/ArtifactsCIPipelineDiagram.astro";
+import ArtifactsCIWorkflowDiagram from "~/components/ArtifactsCIWorkflowDiagram.astro";
+import ArtifactsPlatformSharedCIDiagram from "~/components/ArtifactsPlatformSharedCIDiagram.astro";
 
 Artifacts events can build and deploy projects stored in Artifacts repos. When a user or agent pushes a commit, the event triggers a [Workflow instance](/workflows/build/trigger-workflows/).
 
@@ -37,7 +37,7 @@ This is useful when you need to:
 
 <ArtifactsCIWorkflowDiagram />
 
-1. **Push repo changes** — A `git push` to the Artifacts repo emits an `artifacts.push` event that identifies the pushed repo, branch, and commit.
+1. **Push repo changes** — A `git push` to the Artifacts repo emits an `artifacts.repo.pushed` event that identifies the pushed repo, branch, and commit.
 2. **Run the CI Workflow** — The event starts a Workflow that checks out the commit, installs and caches dependencies, and runs CI steps — build, lint, typecheck, and format — in parallel. A failed step stops the Workflow before deployment.
 3. **Deploy the Worker** — The Workflow deploys the built Worker either directly to your account or as a User Worker, if using Workers for Platforms
 
@@ -61,43 +61,43 @@ Here is an example of how to set up your Workflow to use runners and cache to in
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { CIWorkflow } from './src/pipeline';
+import { CIWorkflow } from "./src/pipeline";
 import type {
-  CiContext,
-  CiParams,
-  CiRunnerResult,
-  CloudflareArtifacts,
-} from './src/pipeline';
-import type { WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
+	CiContext,
+	CiParams,
+	CiRunnerResult,
+	CloudflareArtifacts,
+} from "./src/pipeline";
+import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
 
 export class CI extends CIWorkflow {
-  protected async pipeline(
-    _event: WorkflowEvent<CiParams<CloudflareArtifacts>>,
-    _step: WorkflowStep,
-    ci: CiContext
-  ): Promise<void> {
-    // Install once, then run independent checks from the shared snapshot.
-    const deps: CiRunnerResult = await ci.runner({
-      name: 'install',
-      command: 'bun install --frozen-lockfile',
-      cache: { inputs: ['package.json', 'bun.lock'] },
-    });
+	protected async pipeline(
+		_event: WorkflowEvent<CiParams<CloudflareArtifacts>>,
+		_step: WorkflowStep,
+		ci: CiContext,
+	): Promise<void> {
+		// Install once, then run independent checks from the shared snapshot.
+		const deps: CiRunnerResult = await ci.runner({
+			name: "install",
+			command: "bun install --frozen-lockfile",
+			cache: { inputs: ["package.json", "bun.lock"] },
+		});
 
-    await Promise.all([
-      deps.runner({ name: 'lint', command: 'bun run lint' }),
-      deps.runner({ name: 'test', command: 'bun run test' }),
-      deps.runner({ name: 'typecheck', command: 'bun run typecheck' }),
-      deps.runner({ name: 'build', command: 'bun run build' }),
-    ]);
+		await Promise.all([
+			deps.runner({ name: "lint", command: "bun run lint" }),
+			deps.runner({ name: "test", command: "bun run test" }),
+			deps.runner({ name: "typecheck", command: "bun run typecheck" }),
+			deps.runner({ name: "build", command: "bun run build" }),
+		]);
 
-    await deps.runner({
-      name: 'deploy',
-      command: 'bun wrangler deploy',
-      cloudflareCredentials: {
-        accountId: this.env.CLOUDFLARE_DEPLOY_ACCOUNT_ID,
-      },
-    });
-  }
+		await deps.runner({
+			name: "deploy",
+			command: "bun wrangler deploy",
+			cloudflareCredentials: {
+				accountId: this.env.CLOUDFLARE_DEPLOY_ACCOUNT_ID,
+			},
+		});
+	}
 }
 ```
 
@@ -172,7 +172,7 @@ This guide defines those CI steps in a Workflow class named `CIWorkflow`. To sta
   "triggers": {
     "events": [
       {
-        "type": "cf.artifacts.repo.push",
+        "type": "cf.artifacts.repo.pushed",
         // filter is optional. If you don't set repoName we will run the same workflow for every push on any repo in your Artifacts namespace
         "filter": {
           "namespace": "CI",
@@ -231,7 +231,7 @@ To run the same Workflow for every repo in a namespace, drop `repoName` from the
 	"triggers": {
 		"events": [
 			{
-				"type": "cf.artifacts.repo.push",
+				"type": "cf.artifacts.repo.pushed",
 				"filter": {
 					"namespace": "CI"
 				},

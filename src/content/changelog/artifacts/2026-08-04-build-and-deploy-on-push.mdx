@@ -1,0 +1,75 @@
+---
+title: Build and deploy Artifacts repos on every push
+description: Trigger a Workflow on push to run CI checks and deploy your Artifacts repo as a Worker or User Worker.
+products:
+  - artifacts
+  - workflows
+date: 2026-08-04
+publish_future_dated_entry: true
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+You can now run your CI/CD pipeline on your [Artifacts](/artifacts/) repo by defining a CI [Workflow](/workflows/) with the [CI SDK](https://github.com/cloudflare/ci), automatically triggered on Artifacts push events.
+
+This allows you to:
+
+- Automatically build and deploy application code stored in Artifacts.
+- Run linting, type checking, tests, and other checks on every push.
+- Reuse dependencies when the lockfile (i.e. `pnpm-lock.yaml`) has not changed.
+- Stop deployment when a check or build fails.
+- Restrict API token access to the deployment step.
+- Deploy output as a Worker or User Worker.
+
+Define your CI steps with `@cloudflare/ci`. Each `ci.runner()` spins up an isolated sandbox, and the `cache` option reuses installed dependencies across each sandboxed step in your CI job.
+
+Point `cache.inputs` at your lockfile (i.e. `pnpm-lock.yaml`, `bun.lock`), and the install step only runs again when that lockfile changes:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+const deps = await ci.runner({
+	name: "install",
+	command: "bun install --frozen-lockfile",
+	cache: { inputs: ["package.json", "bun.lock"] },
+});
+
+await Promise.all([
+	deps.runner({ name: "lint", command: "bun run lint" }),
+	deps.runner({ name: "test", command: "bun run test" }),
+	deps.runner({ name: "typecheck", command: "bun run typecheck" }),
+	deps.runner({ name: "build", command: "bun run build" }),
+]);
+
+await deps.runner({ name: "deploy", command: "bun wrangler deploy" });
+```
+
+</TypeScriptExample>
+
+To start the Workflow automatically after each push, add a `cf.artifacts.repo.pushed` trigger to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"triggers": {
+		"events": [
+			{
+				"type": "cf.artifacts.repo.pushed",
+				"filter": {
+					"namespace": "CI",
+					"repoName": "my-repo",
+				},
+				"target": {
+					"scriptName": "my-ci-worker",
+					"workflowName": "ci-workflow",
+				},
+			},
+		],
+	},
+}
+```
+
+</WranglerConfig>
+
+To learn more, refer to [Build and deploy Artifacts repos](/artifacts/guides/build-and-deploy-on-push/).
