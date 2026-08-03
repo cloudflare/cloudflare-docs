@@ -1,13 +1,13 @@
 ---
 title: Codex + Cloudflare
-description: "Lightweight open-source terminal agent that reads and writes files, runs commands, and browses the web in a sandbox. Made by OpenAI."
+description: "OpenAI coding agent available as a terminal CLI and desktop app. It reads and writes files, runs commands, and browses the web in a sandbox."
 template: splash
 pcx_content_type: how-to
 products:
   - agent-setup
 ---
 
-import { Steps, Tabs, TabItem } from "~/components";
+import { Steps, Tabs, TabItem, LinkCard } from "~/components";
 import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
 import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
 import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
@@ -58,7 +58,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 				<RandomPrompt />
 		</Steps>
 	</TabItem>
-	<TabItem label="Standalone">
+	<TabItem label="Desktop">
 		<Steps>
 			1. **Download Codex**
 
@@ -68,7 +68,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 				In the Codex app, go to **Plugins** and install **Cloudflare**.
 
-				![Install the Cloudflare plugin in the Codex standalone app.](~/assets/images/agent-setup/codex-standalone.png)
+				![Install the Cloudflare plugin in the Codex desktop app.](~/assets/images/agent-setup/codex-desktop.png)
 		</Steps>
 	</TabItem>
 </Tabs>
@@ -87,9 +87,15 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 - The Cloudflare API MCP server uses Code Mode — Codex writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
 - Try the `/cloudflare:build-agent` slash command to scaffold a complete Agents SDK project, or `/cloudflare:build-mcp` for a remote MCP server.
-- For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
 
 </TipsList>
+
+<LinkCard
+	title="Cloudflare MCP server repository"
+	href="https://github.com/cloudflare/mcp-server-cloudflare"
+	icon="github"
+	description="Installing additional MCP servers, and when to use Code Mode versus traditional MCP servers."
+/>
 
 ## FAQ
 

@@ -22,7 +22,7 @@ Discovered operations can be used for matching and downstream security detection
 
 Add an operation when traffic you want to protect does not appear, or when you want to define the operation structure yourself.
 
-Refine an operation when the current grouping does not match how the traffic should be grouped or protected. For example, you may want a separate operation for a login flow, password reset flow, or payment flow.
+Promote a discovered API endpoint to move its operation into the `full` state and learn its traffic profile. Refine an operation when its method, hostname pattern, or path pattern does not match how the traffic should be grouped or protected.
 
 For more information, refer to [Manage operations](/security/web-assets/manage-operations/).
 
@@ -46,7 +46,7 @@ Certain metrics, such as latency, may not populate when a request is handled by 
 
 ## Use learned schemas
 
-Schema learning observes live API traffic to discover the parameters, headers, and body formats your operations accept. You can export learned schemas in OpenAPI `v3.0.0` format.
+Schema learning observes live API traffic for operations in the `full` state. It discovers the parameters, headers, and body formats that your operations accept. You can export learned schemas in OpenAPI `v3.0.0` format.
 
 If you already maintain OpenAPI schemas, you can upload them to create operations and use them with API Shield [Schema Validation](/api-shield/security/schema-validation/).
 
