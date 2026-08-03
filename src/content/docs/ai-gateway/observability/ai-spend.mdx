@@ -10,6 +10,12 @@ products:
 
 The AI Spend dashboard shows how much your organization spends on AI, which identities are responsible for that spend, and which users deviate from their typical usage. It uses the traffic already flowing through your gateway, so there is no additional setup.
 
+## Attribute usage to identities
+
+AI Spend is available to all AI Gateway customers at no additional cost and works on any traffic through your gateway. Without an identity on each request, usage is grouped under an anonymous identifier.
+
+To attribute usage to individual users, add a user identifier with [custom metadata](/ai-gateway/observability/custom-metadata/), or put your gateway behind [Cloudflare Access](/cloudflare-one/access-controls/). With Access, each authenticated request carries a verified identity you can filter spend and analytics by.
+
 ## Key metrics
 
 At the top of the AI Spend page, you can view the following organization-wide metrics for the selected time range:
@@ -54,9 +60,3 @@ Select a user to see their usage in detail:
 - **Last seen**: Most recent activity, from the daily spend trend.
 - **Active days**: Number of days the user sent traffic in this range.
 - **Identity coverage**: Share of the user's requests attributed to an identity.
-
-## Attribute usage to identities
-
-AI Spend is available to all AI Gateway customers at no additional cost and works on any traffic through your gateway. Without an identity on each request, usage is grouped under an anonymous identifier.
-
-To attribute usage to individual users, add a user identifier with [custom metadata](/ai-gateway/observability/custom-metadata/), or put your gateway behind [Cloudflare Access](/cloudflare-one/access-controls/). With Access, each authenticated request carries a verified identity you can filter spend and analytics by.
