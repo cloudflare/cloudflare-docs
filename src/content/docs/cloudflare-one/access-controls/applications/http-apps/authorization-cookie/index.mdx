@@ -149,7 +149,9 @@ The Cookie Path Attribute adds the application's path URL to the `CF_Authorizati
 
 When turned on, the Eager redirect cookie setting preemptively sets a `CF_Authorization` cookie for every concrete domain in a multi-domain application. Access redirects the browser through each domain after the user first authenticates. This setting is turned on by default for new applications.
 
-Some browsers can have trouble with the redirect chain across many domains. Turn off this setting if users encounter sign-in loops. Access will instead set the cookie when a user visits each domain.
+:::caution
+Browser behavior can become unreliable when the redirect chain exceeds 10 redirects. If your application has more than 10 domains, turn off this setting or thoroughly test the authentication flow before you deploy it. When turned off, Access sets the cookie as a user visits each domain.
+:::
 
 ## Allow third-party cookies in the browser
 
