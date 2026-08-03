@@ -1,5 +1,6 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { flue, flueWorkerConfig } from "@flue/vite";
+import path from "node:path";
 import { defineConfig, type Plugin } from "vite";
 
 // Flue 2.0 build. `flue()` scans the source root for `'use agent'` modules and
@@ -33,7 +34,7 @@ const evalRepoFileMock: Plugin = {
 		// Only redirect the style-guide agent's import of github-repo-tools.
 		if (
 			source.endsWith("/lib/github-repo-tools") &&
-			importer.includes("style-guide-file")
+			path.basename(importer) === "style-guide-file.ts"
 		) {
 			return this.resolve("/evals/mocks/github-repo-tools", importer, {
 				skipSelf: true,
