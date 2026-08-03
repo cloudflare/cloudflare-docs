@@ -1,6 +1,6 @@
 ---
 title: Build and deploy Artifacts repos on every push
-description: Trigger a Workflow on push to run CI checks and deploy your Artifacts repo as a Worker or User Worker.
+description: Trigger a Workflow on push to run CI checks and deploy your Artifacts repo to a Worker or User Worker.
 products:
   - artifacts
   - workflows
@@ -19,7 +19,7 @@ This allows you to:
 - Reuse dependencies when the lockfile (i.e. `pnpm-lock.yaml`) has not changed.
 - Stop deployment when a check or build fails.
 - Restrict API token access to the deployment step.
-- Deploy output as a Worker or User Worker.
+- Deploy the output to a [Worker](/workers/) or a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) User Worker.
 
 Define your CI steps with `@cloudflare/ci`. Each `ci.runner()` spins up an isolated sandbox, and the `cache` option reuses installed dependencies across each sandboxed step in your CI job.
 
