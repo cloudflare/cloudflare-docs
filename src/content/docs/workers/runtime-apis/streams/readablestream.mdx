@@ -7,6 +7,8 @@ products:
   - workers
 ---
 
+import { TypeScriptExample } from "~/components";
+
 ## Background
 
 A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/workers/runtime-apis/streams/transformstream/).
@@ -46,17 +48,21 @@ let reader = readable.getReader({ mode: 'byob' });
 
 * `tee()` : \[ReadableStream, ReadableStream]
 
-  * Locks the stream and returns an array of two new `ReadableStream` instances, each of which reads the same data as the original stream. Chunks are shared between the two branches, not copied, and backpressure to the underlying source follows the branch with the most unread data. This avoids unbounded buffering when one branch reads more slowly than the other, as long as the underlying source responds to backpressure. Refer to [workerd's streams documentation](https://github.com/cloudflare/workerd/blob/main/src/workerd/api/streams/README.md#tee-behavior) for implementation details.
+  * Locks the stream and returns an array of two new `ReadableStream` instances, each of which reads the same data as the original stream. Backpressure to the underlying source follows the branch with the most unread data, which avoids unbounded buffering when one branch reads more slowly than the other, as long as the underlying source responds to backpressure. Refer to [workerd's streams documentation](https://github.com/cloudflare/workerd/blob/main/src/workerd/api/streams/README.md#tee-behavior) for implementation details.
 
 * <code>values(optionsObject)</code> : AsyncIterableIterator
 
   * Returns an async iterator that reads and consumes the chunks of the stream. This method accepts an object argument indicating options. The only supported option is `preventCancel`, which, when `true`, prevents the stream from being canceled when the iterator exits early (for example, from a `break` statement). A `ReadableStream` is also async iterable directly:
 
-```js
+<TypeScriptExample>
+
+```ts
 for await (const chunk of readable) {
   console.log(chunk);
 }
 ```
+
+</TypeScriptExample>
 
 
 
@@ -78,7 +84,9 @@ for await (const chunk of readable) {
 
   * Creates a new `ReadableStream` whose chunks are the values yielded by `asyncIterable`, which may be any iterable or async iterable, including an async generator.
 
-```js
+<TypeScriptExample>
+
+```ts
 const stream = ReadableStream.from(
   (async function* () {
     yield 'hello ';
@@ -86,6 +94,8 @@ const stream = ReadableStream.from(
   })()
 );
 ```
+
+</TypeScriptExample>
 
 ***
 
