@@ -277,7 +277,7 @@ Shared reference files in `.agents/references/`:
 
 ## Terminology and naming preferences
 
-- **Do not use "PayGo" in public-facing documentation.** Leadership prefers the term **"Free"** when referring to standalone Free accounts that can be created from the dashboard.
+- **Do not use "PayGo" in public-facing documentation.** Instead use the term **"Free"** when referring to standalone Free accounts that can be created from the dashboard.
 
 ## Commit conventions
 
