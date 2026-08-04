@@ -10,3 +10,4 @@ include:
   - component: $CI_SERVER_FQDN/cloudflare/ci/ai/opencode@~latest
     inputs:
       runOnMR: true
+  - component: $CI_SERVER_FQDN/$COMPONENT_1
