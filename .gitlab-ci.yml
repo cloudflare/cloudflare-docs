@@ -1,5 +1,6 @@
 stages:
   - review
+  - deploy
 
 default:
   id_tokens:
