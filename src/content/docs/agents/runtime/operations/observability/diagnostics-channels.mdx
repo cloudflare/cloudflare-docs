@@ -1,16 +1,16 @@
 ---
-title: Observability
-description: Subscribe to structured Agent events for RPC calls, state changes, schedules, workflows, and MCP connections via diagnostics channels.
-pcx_content_type: concept
+title: Diagnostics channels
+description: Subscribe to structured agent events for RPC calls, state changes, schedules, workflows, and MCP connections.
+pcx_content_type: reference
 sidebar:
-  order: 30
+  order: 2
 products:
   - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-Agents emit structured events for every significant operation — RPC calls, state changes, schedule execution, workflow transitions, MCP connections, and more. These events are published to [diagnostics channels](/workers/runtime-apis/nodejs/diagnostics-channel/) and are silent by default (zero overhead when nobody is listening).
+Agents publish structured events to [diagnostics channels](/workers/runtime-apis/nodejs/diagnostics-channel/) for every significant operation -- RPC calls, state changes, schedule execution, workflow transitions, MCP connections, and more. Publishing has zero overhead when nobody is listening.
 
 ## Event structure
 
@@ -298,6 +298,12 @@ These events track chat message lifecycle, client-side tool interactions, and Th
 ## Next steps
 
 <LinkCard
+	title="Tracing"
+	href="/agents/runtime/operations/observability/tracing/"
+	description="Trace model calls, tool runs, and approvals with Workers traces."
+/>
+
+<LinkCard
 	title="Configuration"
 	href="/agents/runtime/operations/configuration/"
 	description="wrangler.jsonc setup and deployment."
@@ -307,10 +313,4 @@ These events track chat message lifecycle, client-side tool interactions, and Th
 	title="Tail Workers"
 	href="/workers/observability/logs/tail-workers/"
 	description="Forward diagnostics channel events to a Tail Worker for production monitoring."
-/>
-
-<LinkCard
-	title="Agents API"
-	href="/agents/runtime/agents-api/"
-	description="Complete API reference for the Agents SDK."
 />
