@@ -1,0 +1,192 @@
+The `name` field in each payload is the Worker name at the time the event fired, and that name can change. The stable identifier for a Worker is the script tag in `source.id`. When a Worker is renamed, the `worker.updated` event reports the new name, and the previous name is not included in the event.
+
+#### `deployment.created`
+
+Triggered when a deployment is created and rolled out.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.deployment.created",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "id": "bcf48806-b317-4351-9ee7-36e7d557d4de",
+    "strategy": "percentage",
+    "versions": [
+      {
+        "versionId": "3f9e2c1a-7b4d-4e8f-9a01-2b3c4d5e6f70",
+        "percentage": 100
+      }
+    ]
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+The `versions` array describes the default traffic split, and the `percentage` values always sum to 100. The `strategy` field is currently always `percentage`. Deployments that use cohorts can route traffic to versions that do not appear in `versions`.
+
+#### `deployment.deleted`
+
+Triggered when a deployment is deleted.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.deployment.deleted",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "id": "bcf48806-b317-4351-9ee7-36e7d557d4de"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `version.created`
+
+Triggered when a new version of the Worker is uploaded.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.version.created",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "id": "3f9e2c1a-7b4d-4e8f-9a01-2b3c4d5e6f70"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `version.deleted`
+
+Triggered when a version is deleted.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.version.deleted",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "id": "3f9e2c1a-7b4d-4e8f-9a01-2b3c4d5e6f70"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `worker.created`
+
+Triggered when a Worker is created.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.worker.created",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `worker.updated`
+
+Triggered when a Worker's unversioned configuration changes.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.worker.updated",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "changed": ["logpush", "tags"]
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+The `changed` array lists which unversioned configuration fields changed. The possible values are `name`, `tags`, `subdomain`, `observability`, `logpush`, `tail_consumers`, `preview_defaults`, and `usage_model`. These values are snake_case because they are the literal Workers API field names, unlike the camelCase keys used elsewhere in the event. Values are sorted and de-duplicated. The event does not include the previous or new value of a changed field.
+
+#### `worker.deleted`
+
+Triggered when a Worker is deleted.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.worker.deleted",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
