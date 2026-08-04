@@ -152,7 +152,7 @@ Add the following to Claude Code's [`settings.json`](https://docs.anthropic.com/
 
 ```json title="~/.claude/settings.json"
 {
-	"apiKeyHelper": "cloudflared access login --no-verbose -app=https://ai-gateway.example.com",
+	"apiKeyHelper": "cloudflared access login --no-verbose https://ai-gateway.example.com",
 	"env": {
 		"ANTHROPIC_BASE_URL": "https://ai-gateway.example.com/anthropic"
 	}
