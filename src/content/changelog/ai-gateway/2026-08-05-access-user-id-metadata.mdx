@@ -7,8 +7,11 @@ products:
 date: 2026-08-05
 ---
 
-AI Gateway now supports identity-aware controls through a new Cloudflare Access integration. When traffic reaches AI Gateway through an Access-protected custom domain, AI Gateway can use the authenticated user's Access identity in logs, analytics, routing, and spend controls.
+AI Gateway now integrates with Cloudflare Access, giving you two new capabilities:
 
-This means you can set spend limits by authenticated user, control which gateways different users can access, filter logs by user, and build policies without passing user IDs from the client application. AI Gateway adds the verified Access user ID to request metadata as `cf.user_id`.
+- **Protect your gateway endpoint.** Put your AI Gateway behind Access so you can set policies that control who is allowed to call a specific gateway's endpoint.
+- **Identity-aware controls.** When traffic reaches AI Gateway through an Access-protected custom domain, AI Gateway can use the authenticated user's Access identity in logs, analytics, routing, and spend controls.
+
+With identity-aware controls, you can set spend limits by authenticated user, control which gateways different users can access, filter logs by user, and build policies without passing user IDs from the client application. AI Gateway adds the verified Access user ID to request metadata as `cf.user_id`.
 
 For setup instructions, refer to [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/).
