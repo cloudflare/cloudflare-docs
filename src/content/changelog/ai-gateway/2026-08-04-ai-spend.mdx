@@ -1,0 +1,15 @@
+---
+title: Track AI spend and detect anomalies with AI Spend
+description: Monitor organization-wide AI spend, attribute usage to identities, and flag sessions that deviate from a user's baseline.
+products:
+  - ai-gateway
+date: 2026-08-04
+---
+
+AI Gateway now includes **AI Spend**, a dashboard that shows how much your organization spends on AI, which identities are responsible for that spend, and which users deviate from their typical usage. It works on the traffic already flowing through your gateway, so there is no additional setup.
+
+AI Spend baselines each user's normal usage from their 95th percentile (p95) session cost over the last 30 days, then flags sessions that exceed both that baseline and an organization-level threshold. This helps you catch a compromised credential or a misbehaving agent before it shows up on your bill.
+
+To attribute usage to individual users, add a user identifier with [custom metadata](/ai-gateway/observability/custom-metadata/) or put your gateway behind [Cloudflare Access](/cloudflare-one/access-controls/).
+
+AI Spend is available to all AI Gateway customers at no additional cost. For more details, refer to the [AI Spend documentation](/ai-gateway/observability/ai-spend/).
