@@ -52,9 +52,11 @@ For SSL for SaaS certificates, refer to [Renew certificates](/cloudflare-for-pla
 
 <Render file="dcv-definition" product="ssl" />
 
-[HTTP validation](/ssl/edge-certificates/changing-dcv-method/methods/http/) is attempted on renewals but will fall back to TXT validation depending on the certificate validity period:
+[HTTP validation](/ssl/edge-certificates/changing-dcv-method/methods/http/) is attempted on renewals and may fall back to TXT validation for certificate flows covered by this schedule:
 
 <Render file="http-to-txt-schedule" product="ssl" />
+
+This schedule does not describe normal ACME Custom Hostname renewals. Those renewals preserve the configured validation method. For more information, refer to [Renew Custom Hostname certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/renew-certificates/).
 
 ## Benefits of shorter validity periods
 
