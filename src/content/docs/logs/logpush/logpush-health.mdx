@@ -138,7 +138,7 @@ When Cloudflare cannot receive an HTTP status code from your destination — for
 | `1101` | `ConnectionError` | A non-timeout network error occurred while Cloudflare was connecting to your destination (for example, a TCP reset or a refused connection). |
 | `1102` | `ConnectionTimeout` | Cloudflare could not open a TCP connection to your destination within the [connection timeout](#upload-timeouts). Typically caused by firewalls, network paths, or unreachable hosts. |
 | `1103` | `InternalLogpushError` | Cloudflare encountered an internal error while processing the upload. If you see this code repeatedly, [contact Cloudflare Support](/support/contacting-cloudflare-support/). |
-| `1104` | `ConfigError` | The job configuration is invalid or references credentials that can no longer be used (for example, a revoked destination token). Re-validate the job with the [validate endpoint](/logs/logpush/logpush-job/api-configuration/#validate-logpush-jobs). |
+| `1104` | `ConfigError` | The job configuration is invalid. Verify the destination URL, credentials, and access permissions, and use the [validate endpoints](/logs/logpush/logpush-job/api-configuration/#endpoints) to test the configuration. |
 | `1105` | `DNSError` | Cloudflare could not resolve the hostname of your destination. Verify DNS records for the destination endpoint. |
 | `1106` | `Timeout` | The request stalled or exceeded the [overall HTTP client timeout](#upload-timeouts). Common when a destination accepts the connection but stops reading the body, or when a TLS handshake takes too long. |
 | `1107` | `RequestError` | The HTTP request failed before a status code was returned, and the failure is not classified as a timeout. Often caused by an HTTP/2 connection being closed by the destination mid-request. |
@@ -157,7 +157,7 @@ Cloudflare applies several timeouts at different layers of the upload path. Unde
 | ------- | ------- | ---------- | ------------------ |
 | TCP connection (dial) | 5 seconds | All destinations that use HTTP | `1102 ConnectionTimeout` |
 | TLS handshake | 5 seconds | All HTTPS destinations | `1106 Timeout` |
-| No-progress watchdog | 10 seconds | Most destinations (HTTP endpoints, Cloudflare R2, Amazon S3, Google Cloud Storage, Microsoft Azure) | `1106 Timeout` |
+| No-progress watchdog | 10 seconds | Destinations that use the shared Cloudflare HTTP transport (HTTP endpoints, Cloudflare R2, Splunk, Datadog, New Relic, CrowdStrike, Cloudflare Pipelines) | `1106 Timeout` |
 | Idle connection reuse | 10 seconds | Persistent HTTP connections | Not surfaced as an error. The connection is closed and reopened as needed. |
 | Overall HTTP client timeout | 2 minutes | HTTP endpoint family only: `https://`, Datadog, New Relic, CrowdStrike, Cloudflare Pipelines | `1106 Timeout` |
 | HTTP/2 idle read plus ping | 10 seconds idle, 15 seconds ping timeout | HTTP/2 connections | `1107 RequestError` |
@@ -169,9 +169,9 @@ Cloudflare applies several timeouts at different layers of the upload path. Unde
 - If you terminate connections at a load balancer or WAF, verify that idle-connection and read timeouts are not shorter than the values in the timeout table. Aggressive tuning at the receiver frequently manifests as `1106` or `1107` errors on the Cloudflare side.
 - If you rely on HTTP/2, make sure your server responds to `PING` frames within 15 seconds.
 
-### Object storage and SDK-based destinations
+### Object storage destinations
 
-Amazon S3, Cloudflare R2, Google Cloud Storage, Microsoft Azure, and Splunk destinations do not use the 2-minute overall HTTP client timeout. They use timeouts provided by their respective vendor SDKs. The 10-second no-progress watchdog still applies. Individual object-store uploads may therefore run longer than 2 minutes before failing.
+Amazon S3, Google Cloud Storage, and Microsoft Azure destinations do not use the shared Cloudflare HTTP transport. They use client libraries that configure their own timeouts, so none of the values in the timeout table apply. Individual uploads may therefore run longer than 2 minutes before failing.
 
 ## Retry behavior
 
