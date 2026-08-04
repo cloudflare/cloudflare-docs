@@ -3,6 +3,14 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-08-04"
+    title: Add AS-level connectivity and upstream providers widgets to Cloudflare Radar
+    description: |-
+      * Added an **AS-level connectivity** graph to AS [routing pages](https://radar.cloudflare.com/routing/as13335), aggregating the BGP paths an AS uses to reach the Tier-1 networks across every prefix it announces, as observed by selected RouteViews collectors. A **Show full paths** toggle switches between the simplified view and all observed paths, and an IP version selector switches between IPv4 and IPv6.
+      * Added an **Upstream providers** timeseries widget to AS routing pages, tracking the share of an AS's observed paths carried by each direct upstream network over time. Up to 10 upstreams appear as their own series, with the remainder grouped into **Other**.
+      * Added two new endpoints to the [`BGP`](/api/resources/radar/subresources/bgp/) API:
+        * [`/bgp/routes/paths/{asn}`](/api/resources/radar/subresources/bgp/subresources/routes/subresources/paths/methods/list/) - Returns the ordered AS path segments an AS uses to reach the Tier-1 networks, each with its observed path count, peer count, and contributing collectors.
+        * [`/bgp/routes/upstreams/{asn}/timeseries`](/api/resources/radar/subresources/bgp/subresources/routes/subresources/upstreams/methods/timeseries/) - Returns the share of an AS's observed paths carried by each direct upstream over time, split by IP version.
   - publish_date: "2026-05-29"
     title: Add TLS bug detection to the Radar post-quantum TLS support checker
     description: |-
