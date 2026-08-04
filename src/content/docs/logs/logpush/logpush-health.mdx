@@ -158,7 +158,7 @@ Cloudflare applies several timeouts at different layers of the upload path. Unde
 | TCP connection (dial) | 5 seconds | All destinations that use HTTP | `1102 ConnectionTimeout` |
 | TLS handshake | 5 seconds | All HTTPS destinations | `1106 Timeout` |
 | No-progress watchdog | 10 seconds | Most destinations (HTTP endpoints, Cloudflare R2, Amazon S3, Google Cloud Storage, Microsoft Azure) | `1106 Timeout` |
-| Idle connection reuse | 10 seconds | Persistent HTTP connections | Not surfaced as an error; the connection is closed and reopened as needed |
+| Idle connection reuse | 10 seconds | Persistent HTTP connections | Not surfaced as an error. The connection is closed and reopened as needed. |
 | Overall HTTP client timeout | 2 minutes | HTTP endpoint family only: `https://`, Datadog, New Relic, CrowdStrike, Cloudflare Pipelines | `1106 Timeout` |
 | HTTP/2 idle read plus ping | 10 seconds idle, 15 seconds ping timeout | HTTP/2 connections | `1107 RequestError` |
 | HTTP/2 write stall | 10 seconds | HTTP/2 connections | `1106 Timeout` or `1107 RequestError` |
@@ -166,21 +166,18 @@ Cloudflare applies several timeouts at different layers of the upload path. Unde
 ### Guidance for HTTP endpoint operators
 
 - Ensure your endpoint acknowledges each `POST` within 2 minutes end-to-end, and keeps the request body flowing with no gap longer than 10 seconds between chunks.
-- If you terminate connections at a load balancer or WAF, verify that idle-connection and read timeouts are not shorter than the values above. Aggressive tuning at the receiver frequently manifests as `1106` or `1107` errors on the Cloudflare side.
+- If you terminate connections at a load balancer or WAF, verify that idle-connection and read timeouts are not shorter than the values in the timeout table. Aggressive tuning at the receiver frequently manifests as `1106` or `1107` errors on the Cloudflare side.
 - If you rely on HTTP/2, make sure your server responds to `PING` frames within 15 seconds.
 
 ### Object storage and SDK-based destinations
 
 Amazon S3, Cloudflare R2, Google Cloud Storage, Microsoft Azure, and Splunk destinations do not use the 2-minute overall HTTP client timeout. They use timeouts provided by their respective vendor SDKs. The 10-second no-progress watchdog still applies. Individual object-store uploads may therefore run longer than 2 minutes before failing.
 
-## Understanding retry behavior
+## Retry behavior
 
 Logpush is designed to handle temporary destination issues through automatic retries. When your destination is temporarily unavailable, Cloudflare buffers the affected batches and retries them.
 
-Retries do not stop after a fixed number of attempts. Instead, Cloudflare continues to retry a batch until one of the following happens:
-
-- The upload succeeds and the batch is marked as delivered.
-- The buffered data ages out of the internal retention window, at which point the batch is dropped (recorded as [`1201 FlushMaxLag`](#destination-error-codes)) and its log lines are permanently lost.
+Retries do not stop after a fixed number of attempts. Instead, Cloudflare continues to retry a batch until either the upload succeeds and the batch is marked as delivered, or the buffered data ages out of the internal retention window. When data ages out, the batch is dropped (recorded as [`1201 FlushMaxLag`](#destination-error-codes)) and the log lines it contained are permanently lost.
 
 If no batch has been successfully delivered for **24 hours**, Cloudflare assumes the destination is permanently unavailable and disables the job. You can re-enable the job from the [Cloudflare dashboard](https://dash.cloudflare.com/) once the destination issue is resolved. Cloudflare cannot backfill logs generated while the job was disabled.
 
