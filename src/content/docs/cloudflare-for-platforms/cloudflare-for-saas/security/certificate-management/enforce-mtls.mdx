@@ -188,8 +188,8 @@ In the API documentation, refer to [SSL properties of a custom hostname](/api/re
   method="PATCH"
 	json={{
 		ssl: {
-			method: "http",
-			type: "dv",
+			method: "<CURRENT_SSL_METHOD>",
+			type: "<CURRENT_SSL_TYPE>",
 			settings: {
 				"min_tls_version:": "1.2"
 				}
@@ -273,8 +273,8 @@ In the API documentation, refer to [SSL properties of a custom hostname](/api/re
   method="PATCH"
 	json={{
 		ssl: {
-			method: "http",
-			type: "dv",
+			method: "<CURRENT_SSL_METHOD>",
+			type: "<CURRENT_SSL_TYPE>",
 			settings: {
 				"ciphers": ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-RSA-AES128-GCM-SHA256"]
 				}
