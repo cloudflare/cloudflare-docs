@@ -275,6 +275,10 @@ Shared reference files in `.agents/references/`:
 | `components.md`  | Full MDX component catalog with props and usage examples    |
 | `procedures.md`  | Rules for writing step-by-step procedural instructions      |
 
+## Terminology and naming preferences
+
+- **Do not use "PayGo" in public-facing documentation.** Instead use the term **"Free"** when referring to standalone Free accounts that can be created from the dashboard.
+
 ## Commit conventions
 
 - Format: `[Product] description` or `type: description`
