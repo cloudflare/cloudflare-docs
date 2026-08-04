@@ -54,7 +54,7 @@ Indicates that a batch of logs was uploaded to your destination without errors o
 
 #### Retry attempts
 
-Additional upload attempts made after an initial failure. The count includes the first failed attempt. Retries continue until the batch is successfully delivered or the retry limit is reached.
+Additional upload attempts made after an initial failure. The count includes the first failed attempt. Retries continue until the batch is successfully delivered or the buffered data ages out of the retention window.
 
 #### Failed
 
@@ -129,14 +129,63 @@ The Logpush Health Dashboards help you monitor the status, reliability, and perf
 | **Avg. Upload Duration** | Long upload times | Uploads are taking longer than expected, indicating latency or oversized batches. | - Large batches or uncompressed payloads. <br/> - Network or regional latency. <br/> - Destination processing delays. | - Review **Avg. Upload Duration** trends. <br/> - Reduce batch size for faster uploads. <br/> - Verify destination throughput and rate limit settings. |
 | **Destination Availability** | Low or unstable availability | Cloudflare cannot consistently connect to your destination. | - Destination downtime, DNS errors, or authentication issues. <br/> - Firewall or network restrictions blocking Cloudflare. | - Check **Destination Availability** for dips. <br/> - Confirm destination credentials and endpoint uptime. <br/> - Review allowlists or network access settings. |
 
-## Understanding retry behavior
+## Destination error codes
 
-Logpush is designed to handle temporary destination issues through automatic retries. When your destination is temporarily unavailable, Logpush will retry approximately five times over five minutes. However, if Cloudflare persistently receives errors from your destination and cannot keep up with incoming batches, Logpush will eventually drop logs.
+When Cloudflare cannot receive an HTTP status code from your destination — for example, the connection never completes or the request is aborted — the delivery attempt is recorded with a Cloudflare-generated error code instead of an HTTP status. These codes appear in the [Health Dashboard](#upload-reliability) and in the `logpushHealthAdaptiveGroups` GraphQL dataset.
 
-If errors continue for a prolonged period, Logpush assumes the destination is permanently unavailable and disables your push job. You can re-enable the job once the destination issue is resolved.
+| Code | Name | Meaning |
+| ---- | ---- | ------- |
+| `1101` | `ConnectionError` | A non-timeout network error occurred while Cloudflare was connecting to your destination (for example, a TCP reset or a refused connection). |
+| `1102` | `ConnectionTimeout` | Cloudflare could not open a TCP connection to your destination within the [connection timeout](#upload-timeouts). Typically caused by firewalls, network paths, or unreachable hosts. |
+| `1103` | `InternalLogpushError` | Cloudflare encountered an internal error while processing the upload. If you see this code repeatedly, [contact Cloudflare Support](/support/contacting-cloudflare-support/). |
+| `1104` | `ConfigError` | The job configuration is invalid or references credentials that can no longer be used (for example, a revoked destination token). Re-validate the job with the [validate endpoint](/logs/logpush/logpush-job/api-configuration/#validate-logpush-jobs). |
+| `1105` | `DNSError` | Cloudflare could not resolve the hostname of your destination. Verify DNS records for the destination endpoint. |
+| `1106` | `Timeout` | The request stalled or exceeded the [overall HTTP client timeout](#upload-timeouts). Common when a destination accepts the connection but stops reading the body, or when a TLS handshake takes too long. |
+| `1107` | `RequestError` | The HTTP request failed before a status code was returned, and the failure is not classified as a timeout. Often caused by an HTTP/2 connection being closed by the destination mid-request. |
+| `1108` | `TransferError` | Cloudflare encountered an error while transferring the request body — typically the connection was reset during the upload. |
+| `1201` | `FlushMaxLag` | Cloudflare dropped a batch because the buffered data aged out of the retention window before it could be delivered. This code indicates persistent delivery failure — investigate the destination and the earlier codes in the same time range. |
 
 :::note
-These retry counts and timeframes are approximations. Actual behavior may vary based on the nature of the error and destination response times.
+Codes in the `1100` range describe Cloudflare-side connection or request failures. When your destination returns an HTTP status code (for example, `403`, `429`, or `5xx`), that status appears instead in the **Uploaded Logs by Status Code** chart.
 :::
 
-To monitor retry behavior and destination availability, use the [Health Dashboard](#upload-reliability) metrics, particularly the **Retry Attempts** and **Destination Availability** charts.
+## Upload timeouts
+
+Cloudflare applies several timeouts at different layers of the upload path. Understanding each layer helps you interpret [destination error codes](#destination-error-codes) and tune your destination endpoint.
+
+| Timeout | Default | Applies to | Related error code |
+| ------- | ------- | ---------- | ------------------ |
+| TCP connection (dial) | 5 seconds | All destinations that use HTTP | `1102 ConnectionTimeout` |
+| TLS handshake | 5 seconds | All HTTPS destinations | `1106 Timeout` |
+| No-progress watchdog | 10 seconds | Most destinations (HTTP endpoints, Cloudflare R2, Amazon S3, Google Cloud Storage, Microsoft Azure) | `1106 Timeout` |
+| Idle connection reuse | 10 seconds | Persistent HTTP connections | Not surfaced as an error; the connection is closed and reopened as needed |
+| Overall HTTP client timeout | 2 minutes | HTTP endpoint family only: `https://`, Datadog, New Relic, CrowdStrike, Cloudflare Pipelines | `1106 Timeout` |
+| HTTP/2 idle read plus ping | 10 seconds idle, 15 seconds ping timeout | HTTP/2 connections | `1107 RequestError` |
+| HTTP/2 write stall | 10 seconds | HTTP/2 connections | `1106 Timeout` or `1107 RequestError` |
+
+### Guidance for HTTP endpoint operators
+
+- Ensure your endpoint acknowledges each `POST` within 2 minutes end-to-end, and keeps the request body flowing with no gap longer than 10 seconds between chunks.
+- If you terminate connections at a load balancer or WAF, verify that idle-connection and read timeouts are not shorter than the values above. Aggressive tuning at the receiver frequently manifests as `1106` or `1107` errors on the Cloudflare side.
+- If you rely on HTTP/2, make sure your server responds to `PING` frames within 15 seconds.
+
+### Object storage and SDK-based destinations
+
+Amazon S3, Cloudflare R2, Google Cloud Storage, Microsoft Azure, and Splunk destinations do not use the 2-minute overall HTTP client timeout. They use timeouts provided by their respective vendor SDKs. The 10-second no-progress watchdog still applies. Individual object-store uploads may therefore run longer than 2 minutes before failing.
+
+## Understanding retry behavior
+
+Logpush is designed to handle temporary destination issues through automatic retries. When your destination is temporarily unavailable, Cloudflare buffers the affected batches and retries them.
+
+Retries do not stop after a fixed number of attempts. Instead, Cloudflare continues to retry a batch until one of the following happens:
+
+- The upload succeeds and the batch is marked as delivered.
+- The buffered data ages out of the internal retention window, at which point the batch is dropped (recorded as [`1201 FlushMaxLag`](#destination-error-codes)) and its log lines are permanently lost.
+
+If no batch has been successfully delivered for **24 hours**, Cloudflare assumes the destination is permanently unavailable and disables the job. You can re-enable the job from the [Cloudflare dashboard](https://dash.cloudflare.com/) once the destination issue is resolved. Cloudflare cannot backfill logs generated while the job was disabled.
+
+When a destination is slow but still accepting uploads, Logpush automatically increases the number of parallel uploads to catch up. Once the destination recovers and lag returns to normal, concurrency scales back down.
+
+:::note
+Retry cadence and concurrency are automatic and cannot be configured. To monitor them, use the **Retry Attempts** and **Destination Availability** charts on the [Health Dashboard](#upload-reliability).
+:::
