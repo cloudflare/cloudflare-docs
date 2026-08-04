@@ -16,9 +16,10 @@ Indexes enable D1 to improve query performance over the indexed columns for comm
 
 Indexes are useful:
 
-* When you want to improve the read performance over columns that are regularly used in predicates - for example, a `WHERE email_address = ?` or `WHERE user_id = 'a793b483-df87-43a8-a057-e5286d3537c5'` - email addresses, usernames, user IDs and/or dates are good choices for columns to index in typical web applications or services.
-* For enforcing uniqueness constraints on a column or columns - for example, an email address or user ID via the `CREATE UNIQUE INDEX`.
-* In cases where you query over multiple columns together - `(customer_id, transaction_date)`.
+- When you want to improve the read performance over columns that are regularly used in predicates - for example, a `WHERE email_address = ?` or `WHERE user_id = 'a793b483-df87-43a8-a057-e5286d3537c5'` - email addresses, usernames, user IDs and/or dates are good choices for columns to index in typical web applications or services.
+- For enforcing uniqueness constraints on a column or columns - for example, an email address or user ID via the `CREATE UNIQUE INDEX`.
+- In cases where you query over multiple columns together - `(customer_id, transaction_date)`.
+- For columns used to join tables together - for example, the `ON orders.customer_id = customers.id` in a `JOIN`. A suitable index can avoid repeated scans or the creation of a temporary index. Use [`EXPLAIN QUERY PLAN`](#test-an-index) to verify the query plan.
 
 Indexes are automatically updated when the table and column(s) they reference are inserted, updated or deleted. You do not need to manually update an index after you write to the table it references.
 
@@ -112,9 +113,31 @@ This is also a fairly common use-case for an index. Finding a user based on thei
 
 Using an index can reduce the number of rows read by a query. Use the `meta` object to estimate your usage. Refer to ["Can I use an index to reduce the number of rows read by a query?"](/d1/platform/pricing/#can-i-use-an-index-to-reduce-the-number-of-rows-read-by-a-query) and ["How can I estimate my (eventual) bill?"](/d1/platform/pricing/#how-can-i-estimate-my-eventual-bill).
 
+## Indexes and your bill
+
+D1 [bills by the number of rows read and rows written](/d1/platform/pricing/), not by the number of rows your query returns. A query that scans an entire table to return a single row is billed for every row it scans. Adding an index so that D1 can jump straight to the rows it needs is therefore one of the most effective ways to reduce both latency **and** cost.
+
+Most unexpectedly large D1 bills come from a small number of frequently run queries that each read (or write) far more rows than they return. The table below lists common patterns that touch too many rows, along with how to fix them. Use [`EXPLAIN QUERY PLAN`](#test-an-index) to check whether a query does a full `SCAN` (reads every row) or a `SEARCH ... USING INDEX` (jumps to matching rows).
+
+| Pattern                                                                                 | Why it reads or writes too many rows                                                                                                                                     | Fix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WHERE column = ?` on an unindexed column                                               | D1 scans the whole table on every call.                                                                                                                                  | Create an index on the filtered column.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `WHERE a = ? AND b = ?` with no index on either column                                  | D1 scans the whole table. An index on just one of the two columns avoids the full scan, but D1 still reads every row matching that column before filtering on the other. | Create a [multi-column index](#multi-column-indexes) on `(a, b)` so D1 can narrow on both columns at once.                                                                                                                                                                                                                                                                                                                                                                                        |
+| `JOIN other ON other.x = main.y` where `other.x` is unindexed                           | Depending on the query plan, D1 may scan the joined table repeatedly or create a temporary index.                                                                        | Index the column used in the join's `ON` condition (here, `other.x`), then verify the plan with `EXPLAIN QUERY PLAN`.                                                                                                                                                                                                                                                                                                                                                                             |
+| A correlated subquery such as `WHERE id = (SELECT ... WHERE inner.key = outer.key ...)` | Depending on the query plan, D1 may evaluate the inner query for each candidate row. A scan in the inner query can multiply the number of rows read.                     | Index the column(s) the subquery filters and joins on, then verify the plan with `EXPLAIN QUERY PLAN`.                                                                                                                                                                                                                                                                                                                                                                                            |
+| `ORDER BY RANDOM() LIMIT 1`                                                             | D1 must read and sort the entire result set to pick a random row - an index cannot help.                                                                                 | Avoid `ORDER BY RANDOM()` on large tables. Choose a sampling strategy that fits the primary key type, distribution, and required randomness.                                                                                                                                                                                                                                                                                                                                                      |
+| `WHERE column LIKE '%term%'` (leading wildcard), including inside `COUNT(*)`            | A leading `%` prevents a regular B-tree index from optimizing `LIKE`, so the query usually requires a full scan.                                                         | Remove the leading wildcard where possible. A prefix search such as `LIKE 'term%'` can use an index in some cases. For arbitrary substring searches, consider [FTS5 with the trigram tokenizer](https://www.sqlite.org/fts5.html#the_trigram_tokenizer), which can optimize patterns containing at least three consecutive non-wildcard Unicode characters. FTS5 indexes increase storage and write costs, so benchmark them for your workload. Verify either approach with `EXPLAIN QUERY PLAN`. |
+| Re-running `CREATE INDEX` (or other schema changes) on every request                    | Building an index writes a row for every row it indexes, and writes are billed at a higher rate than reads. Doing this per request repeats that cost.                    | Run schema changes once with [D1 migrations](/d1/reference/migrations/), not on your application's hot path.                                                                                                                                                                                                                                                                                                                                                                                      |
+
+:::note
+An index only pays off when a query runs often enough for the saved rows to matter. A single expensive query that runs thousands of times per day is far more important to fix than a complex query that runs occasionally. Check the [D1 dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1) or the `meta.rows_read` and `meta.rows_written` fields in your query results to find your most expensive queries.
+
+When trying to spot queries that might be improved by adding an index, focus on read-heavy queries with a large value for `Rows read / rows returned`.
+:::
+
 ## Multi-column indexes
 
-For a multi-column index (an index that specifies multiple columns), queries will only use the index if they specify either *all* of the columns, or a subset of the columns provided all columns to the "left" are also within the query.
+For a multi-column index (an index that specifies multiple columns), queries will only use the index if they specify either _all_ of the columns, or a subset of the columns provided all columns to the "left" are also within the query.
 
 Given an index of `CREATE INDEX idx_customer_id_transaction_date ON transactions(customer_id, transaction_date)`, the following table shows when the index is used (or not):
 
@@ -126,16 +149,16 @@ Given an index of `CREATE INDEX idx_customer_id_transaction_date ON transactions
 
 Notes:
 
-* If you created an index over three columns instead — `customer_id`, `transaction_date` and `shipping_status` — a query that uses both `customer_id` and `transaction_date` would use the index, as you are including all columns "to the left".
-* With the same index, a query that uses only `transaction_date` and `shipping_status` would *not* use the index, as you have not used `customer_id` (the leftmost column) in the query.
+- If you created an index over three columns instead — `customer_id`, `transaction_date` and `shipping_status` — a query that uses both `customer_id` and `transaction_date` would use the index, as you are including all columns "to the left".
+- With the same index, a query that uses only `transaction_date` and `shipping_status` would _not_ use the index, as you have not used `customer_id` (the leftmost column) in the query.
 
 ## Partial indexes
 
 Partial indexes are indexes over a subset of rows in a table. Partial indexes are defined by the use of a `WHERE` clause when creating the index. A partial index can be useful to omit certain rows, such as those where values are `NULL` or where rows with a specific value are present across queries.
 
-* A concrete example of a partial index would be on a table with a `order_status INTEGER` column, where `6` might represent `"order complete"` in your application code.
-* This would allow queries against orders that are yet to be fulfilled, shipped or are in-progress, which are likely to be some of the most common users (users checking their order status).
-* Partial indexes also keep the index from growing unbounded over time. The index does not need to keep a row for every completed order, and completed orders are likely to be queried far fewer times than in-progress orders.
+- A concrete example of a partial index would be on a table with a `order_status INTEGER` column, where `6` might represent `"order complete"` in your application code.
+- This would allow queries against orders that are yet to be fulfilled, shipped or are in-progress, which are likely to be some of the most common users (users checking their order status).
+- Partial indexes also keep the index from growing unbounded over time. The index does not need to keep a row for every completed order, and completed orders are likely to be queried far fewer times than in-progress orders.
 
 A partial index that filters out completed orders from the index would resemble the following:
 
@@ -153,7 +176,7 @@ Use `DROP INDEX` to remove an index. Dropped indexes cannot be restored.
 
 Take note of the following considerations when creating indexes:
 
-* Indexes are not always a free performance boost. You should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained. When you write to an indexed column, the database needs to write to the table and the index. The performance benefit of an index and reduction in rows read will, in nearly all cases, offset this additional write.
-* You cannot create indexes that reference other tables or use non-deterministic functions, since the index would not be stable.
-* Indexes cannot be updated. To add or remove a column from an index, [remove](#remove-indexes) the index and then [create a new index](#create-an-index) with the new columns.
-* Indexes contribute to the overall storage required by your database: an index is effectively a table itself.
+- Indexes are not always a free performance boost. You should create indexes only on columns that reflect your most-queried columns. Indexes themselves need to be maintained. When you write to an indexed column, the database needs to write to the table and the index. The performance benefit of an index and reduction in rows read will, in nearly all cases, offset this additional write.
+- You cannot create indexes that reference other tables or use non-deterministic functions, since the index would not be stable.
+- Indexes cannot be updated. To add or remove a column from an index, [remove](#remove-indexes) the index and then [create a new index](#create-an-index) with the new columns. Apply these schema changes once through a versioned system such as [D1 migrations](/d1/reference/migrations/).
+- Indexes contribute to the overall storage required by your database: an index is effectively a table itself.
