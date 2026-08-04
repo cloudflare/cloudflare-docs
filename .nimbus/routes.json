@@ -345,6 +345,7 @@
 		"/ai-search/configuration",
 		"/ai-search/configuration/data-source",
 		"/ai-search/configuration/data-source/built-in-storage",
+		"/ai-search/configuration/data-source/parse-types",
 		"/ai-search/configuration/data-source/r2",
 		"/ai-search/configuration/data-source/website",
 		"/ai-search/configuration/indexing",

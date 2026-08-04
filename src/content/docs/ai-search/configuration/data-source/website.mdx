@@ -24,6 +24,8 @@ You can connect a website when creating a new instance through the [dashboard](/
 
 ## How website crawling works
 
+The [parse type](/ai-search/configuration/data-source/parse-types/) determines how the crawler finds pages. This section describes the default `sitemap` parse type. To follow links instead of reading sitemaps, use the [`discover` parse type](/ai-search/configuration/data-source/parse-types/#discover).
+
 When you connect a domain, the crawler looks for your website's sitemap to determine which pages to visit:
 
 1. If you configure one or more custom sitemap URLs in the dashboard under **Parser options** > **Specific sitemap**, AI Search crawls only those sitemap URLs.
@@ -73,6 +75,10 @@ For supported file types and size limits, refer to [Data source](/ai-search/conf
 ### Parsing options
 
 You can configure parsing options during onboarding or in your instance settings under **Parser options**.
+
+#### Parse type
+
+**Parse type** selects how the crawler finds pages. **Sitemap** reads your XML sitemaps, and **Discover** follows links from the source URL. Refer to [Parse types](/ai-search/configuration/data-source/parse-types/) for the available options and their defaults.
 
 #### Specific sitemap
 

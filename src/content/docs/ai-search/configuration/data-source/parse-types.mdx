@@ -1,0 +1,163 @@
+---
+title: Parse types
+description: Choose how AI Search finds pages on a website data source.
+pcx_content_type: concept
+sidebar:
+  order: 3
+products:
+  - ai-search
+---
+
+import { DashButton, Steps } from "~/components";
+
+The parse type controls how AI Search finds the pages to index on a [website data source](/ai-search/configuration/data-source/website/). AI Search supports two parse types.
+
+| Parse type          | Page discovery                                                                      | Use when                                                                     |
+| ------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `sitemap` (default) | Reads the XML sitemaps declared in `robots.txt`, or the sitemap URLs you configure. | Your site publishes a complete and current sitemap.                          |
+| `discover`          | Starts at the source URL and follows links across the site.                         | Your site has no sitemap, or its sitemap does not cover every page you need. |
+
+Set the parse type in `source_params.web_crawler.parse_type`. If you do not set it, AI Search uses `sitemap`.
+
+:::caution
+Changing the parse type on an existing instance triggers a full resync. AI Search rediscovers and reindexes every page.
+:::
+
+## Sitemap
+
+The `sitemap` parse type enumerates pages from your sitemaps, and re-crawls a page when its `<lastmod>` date changes. Refer to [Website](/ai-search/configuration/data-source/website/#how-website-crawling-works) for sitemap resolution order, indexing order, and `robots.txt` recommendations.
+
+`sitemap` requires a domain that you have onboarded onto the same Cloudflare account.
+
+## Discover
+
+The `discover` parse type delegates page discovery to the Browser Run [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/). AI Search starts a crawl job at your source URL, follows links across the site, and stores every page it fetches in [built-in storage](/ai-search/configuration/data-source/built-in-storage/).
+
+Because discovery does not depend on your sitemap, `discover` reaches pages that a sitemap omits. It also accepts a source URL on a domain that is not onboarded onto your Cloudflare account.
+
+### How discovery works
+
+1. AI Search starts a crawl job at the source URL.
+2. The crawler collects candidate URLs from sitemaps, from links on crawled pages, or from both, depending on the discovery source.
+3. The crawler follows links up to the configured depth and stops once it reaches the page limit.
+4. Each fetched page is stored in built-in storage, converted to Markdown, chunked, and indexed.
+
+The crawler identifies itself as `Cloudflare-AI-Search` on domains in your Cloudflare account, and as `Cloudflare-AI-Search-External` on every other domain. Pages that `robots.txt` disallows are recorded with the `blocked_by_robots_txt` [indexing error code](/ai-search/troubleshooting/indexing-error-codes/) instead of being indexed.
+
+:::note
+The crawler declares the `search` and `ai-input` crawl purposes. A site that sets either purpose to `no` in a `robots.txt` [Content Signals](/browser-run/quick-actions/crawl-endpoint/#content-signals) directive rejects the crawl.
+:::
+
+### Configure in the dashboard
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **AI Search** page.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+2. Select **Create**, then select **Website** as your data source.
+3. Under **Crawl Target**, enter the website URL.
+4. Under **Parse type**, select **Discover**.
+5. Under **Crawl Options**, adjust **Crawl source**, **Page limit**, **Crawl depth**, **Max cache age**, **Include external links**, and **Include subdomains**.
+6. Complete the setup process to create your instance.
+
+</Steps>
+
+To change these options later, select your instance, open the **Settings** tab, and edit **Crawl options** under **Parser options**. Saving the change starts a new indexing job that reindexes every item.
+
+### Configure with the API
+
+Set `parse_type` to `discover`, then pass any non-default settings in `discover_options`.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "my-ai-search",
+    "type": "web-crawler",
+    "source": "example.com",
+    "source_params": {
+      "web_crawler": {
+        "parse_type": "discover",
+        "discover_options": {
+          "source": "links",
+          "limit": 5000,
+          "depth": 3,
+          "max_age": 86400,
+          "include_subdomains": true
+        }
+      }
+    }
+  }'
+```
+
+## Discover options
+
+The following options apply only when `parse_type` is `discover`. All of them are optional.
+
+| Option                   | Type    | Default  | Range or values            | Description                                                           |
+| ------------------------ | ------- | -------- | -------------------------- | --------------------------------------------------------------------- |
+| `source`                 | string  | `all`    | `all`, `sitemaps`, `links` | Where the crawler looks for candidate URLs.                           |
+| `limit`                  | number  | `100000` | 1 to 100,000               | Maximum number of pages to crawl.                                     |
+| `depth`                  | number  | `5`      | 1 to 100,000               | Maximum number of link hops to follow from the source URL.            |
+| `max_age`                | number  | `86400`  | 0 to 604,800 seconds       | How long the crawler reuses cached page content before it re-fetches. |
+| `include_external_links` | boolean | `false`  | —                          | Whether to follow links that point to other domains.                  |
+| `include_subdomains`     | boolean | `false`  | —                          | Whether to follow links that point to subdomains of the source URL.   |
+
+### Discovery source
+
+The `source` option selects where candidate URLs come from:
+
+- `all` — Uses both sitemaps and links found on crawled pages.
+- `sitemaps` — Uses only URLs listed in sitemaps.
+- `links` — Uses only links found on crawled pages.
+
+Use `links` when your sitemap is missing or unreliable. Use `sitemaps` when you want sitemap coverage without following in-page links.
+
+### Page limit and depth
+
+The `limit` option caps the number of pages the crawler indexes, up to a maximum of `100000`. Values above that maximum are rejected when you create or update the instance. Your [instance object limit](/ai-search/platform/limits-pricing/) still applies, so the effective cap is whichever value is lower.
+
+The `depth` option caps how far the crawler travels from the source URL. A depth of `1` crawls only the pages linked directly from the source URL.
+
+### Cache age
+
+The `max_age` option sets the maximum age, in seconds, of cached page content that the crawler accepts before it re-fetches the page from your origin. Set it to `0` to always fetch from the origin.
+
+In the dashboard, **Max cache age** offers **No cache**, **1 hour**, **1 day**, **3 days**, and **7 days**.
+
+### External links and subdomains
+
+By default, the crawler stays on the host of the source URL. Enable `include_subdomains` to follow links into subdomains, and `include_external_links` to follow links to other domains.
+
+:::caution
+Either option can grow a crawl well beyond your own site. Pair them with `limit`, `depth`, and [path filtering](/ai-search/configuration/indexing/path-filtering/).
+:::
+
+## Options shared with sitemap
+
+The following website settings apply to both parse types:
+
+- [Path filtering](/ai-search/configuration/indexing/path-filtering/) — Include and exclude URL patterns. Excluded pages are never fetched.
+- [Content selectors](/ai-search/configuration/data-source/website/#content-selectors) — Restrict indexing to the elements a CSS selector matches.
+- [Extra headers](/ai-search/configuration/data-source/website/#extra-headers) — Custom HTTP headers sent with each request.
+- [Custom metadata](/ai-search/configuration/data-source/website/#custom-metadata) — Metadata extracted from `<meta>` tags.
+- [Rendering mode](/ai-search/configuration/data-source/website/#rendering-mode) — Whether pages load in a headless browser.
+
+## Unsupported options
+
+`parse_options.specific_sitemaps` is only valid when `parse_type` is `sitemap`. Sending it with `discover` returns a validation error.
+
+## Sync behavior
+
+Each [sync job](/ai-search/configuration/indexing/syncing/) starts a new crawl job. AI Search reindexes the pages the crawl returns, and removes pages it can no longer reach.
+
+If a crawl does not finish, or if it stops at the page limit, AI Search keeps the pages it indexed previously rather than deleting the pages that crawl did not reach.
+
+`discover` does not read the `<lastmod>` or `<changefreq>` sitemap attributes. Use `max_age` to control how often the crawler returns to your origin.
+
+## Limits and pricing
+
+The regular AI Search [limits and pricing](/ai-search/platform/limits-pricing/) apply. Browser Run and storage are included for AI Search crawling.

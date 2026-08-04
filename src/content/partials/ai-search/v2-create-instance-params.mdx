@@ -42,7 +42,7 @@ Additional parameters for the data source.
   - Configuration for web crawler sources.
 
   - `parse_type` <Type text="string" /> <MetaInfo text="optional" />
-    - The parsing method. Valid value: `sitemap`.
+    - How pages are discovered. Valid values: `sitemap` (reads XML sitemaps), `discover` (follows links from the source URL). Defaults to `sitemap`. Refer to [Parse types](/ai-search/configuration/data-source/parse-types/).
 
   - `parse_options` <Type text="object" /> <MetaInfo text="optional" />
     - `include_headers` <Type text="object" /> <MetaInfo text="optional" />
@@ -52,10 +52,31 @@ Additional parameters for the data source.
       - Whether to include images in the index.
 
     - `specific_sitemaps` <Type text="array" /> <MetaInfo text="optional" />
-      - Specific sitemap URLs to crawl. For example: `["https://example.com/sitemap.xml"]`.
+      - Specific sitemap URLs to crawl. For example: `["https://example.com/sitemap.xml"]`. Only valid when `parse_type` is `sitemap`.
 
     - `use_browser_rendering` <Type text="boolean" /> <MetaInfo text="optional" />
       - Use Browser Run (formerly Browser Rendering) to crawl JavaScript-rendered pages.
+
+  - `discover_options` <Type text="object" /> <MetaInfo text="optional" />
+    - Crawl settings that apply when `parse_type` is `discover`.
+
+    - `source` <Type text="string" /> <MetaInfo text="optional" />
+      - Where the crawler looks for candidate URLs. Valid values: `all`, `sitemaps`, `links`. Defaults to `all`.
+
+    - `limit` <Type text="number" /> <MetaInfo text="optional" />
+      - Maximum number of pages to crawl. Valid values: `1` to `100000`. Defaults to `100000`.
+
+    - `depth` <Type text="number" /> <MetaInfo text="optional" />
+      - Maximum number of link hops to follow from the source URL. Valid values: `1` to `100000`. Defaults to `5`.
+
+    - `max_age` <Type text="number" /> <MetaInfo text="optional" />
+      - How long, in seconds, the crawler reuses cached page content before it re-fetches from the origin. Valid values: `0` to `604800`. Defaults to `86400`.
+
+    - `include_external_links` <Type text="boolean" /> <MetaInfo text="optional" />
+      - Whether to follow links that point to other domains. Defaults to `false`.
+
+    - `include_subdomains` <Type text="boolean" /> <MetaInfo text="optional" />
+      - Whether to follow links that point to subdomains of the source URL. Defaults to `false`.
 
   - `store_options` <Type text="object" /> <MetaInfo text="optional" />
     - `storage_type` <Type text="string" /> <MetaInfo text="optional" />
