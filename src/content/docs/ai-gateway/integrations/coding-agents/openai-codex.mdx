@@ -73,7 +73,7 @@ Before you start, you need:
    </TabItem>
    </Tabs>
 
-3. Start Codex with the profile and send a prompt. Requests now route through AI Gateway.
+3. Start Codex with the profile and send a prompt. Requests now route through AI Gateway. The `cloudflare-aig` profile name matches the `cloudflare-aig.config.toml` file you created.
 
    ```bash
    codex --profile cloudflare-aig
@@ -85,7 +85,7 @@ Before you start, you need:
 
 If your gateway is protected by [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), Codex can authenticate with a short-lived Access token instead of a Cloudflare API token. Point the provider at your [custom domain](/ai-gateway/configuration/custom-domains/), and configure the provider's `auth` command to fetch the token with [`cloudflared`](/cloudflare-one/access-controls/authenticate-agents/#make-requests-with-cloudflared-access-curl) instead of passing a token through an environment variable.
 
-Update your profile so the provider points at your custom domain and uses `cloudflared` for authentication. Replace `ai-gateway.example.com` with your custom domain.
+Update the same `~/.codex/cloudflare-aig.config.toml` profile from the setup above so the provider points at your custom domain and uses `cloudflared` for authentication. The `cloudflare-aig` in `codex --profile cloudflare-aig` refers to this file's name. Replace `ai-gateway.example.com` with your custom domain.
 
 ```toml title="~/.codex/cloudflare-aig.config.toml"
 model_provider = "cloudflare-ai-gateway"
