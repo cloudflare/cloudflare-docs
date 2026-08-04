@@ -153,7 +153,17 @@ Triggered when a Worker's unversioned configuration changes.
   },
   "payload": {
     "name": "my-worker",
-    "changed": ["logpush", "tags"]
+    "changed": {
+      "tags": {
+        "added": ["prod"],
+        "removed": ["staging"]
+      },
+      "logpush": {
+        "from": false,
+        "to": true
+      },
+      "preview_defaults": {}
+    }
   },
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
@@ -164,7 +174,13 @@ Triggered when a Worker's unversioned configuration changes.
 }
 ```
 
-The `changed` array lists which unversioned configuration fields changed. The possible values are `name`, `tags`, `subdomain`, `observability`, `logpush`, `tail_consumers`, `preview_defaults`, and `usage_model`. These values are snake_case because they are the literal Workers API field names, unlike the camelCase keys used elsewhere in the event. Values are sorted and de-duplicated. The event does not include the previous or new value of a changed field.
+The `changed` object is keyed by the unversioned configuration fields that changed, and only fields that changed are present. The possible keys are `name`, `tags`, `subdomain`, `observability`, `logpush`, `tail_consumers`, `preview_defaults`, and `usage_model`. These keys are snake_case because they are the literal Workers API field names, unlike the camelCase keys used elsewhere in the event.
+
+Each value describes how that field changed:
+
+- Scalar fields report `from` and `to`.
+- Set-valued fields, such as `tags` and `tail_consumers`, report `added` and `removed`. Either key is omitted when it would be empty. If the members stay the same but their order changes, the field reports `from` and `to` instead.
+- The `preview_defaults` field reports an empty object, which means the field changed but its values are not published.
 
 #### `worker.deleted`
 
