@@ -6,10 +6,10 @@ products:
 date: 2026-08-04
 ---
 
-AI Gateway now includes **AI Spend**, a dashboard that gives you two things at once: clear visibility into how much your organization spends on AI, and a security signal that surfaces users whose usage suddenly looks abnormal. It works on the traffic already flowing through your gateway, so there is no additional setup.
+AI Gateway now includes AI Spend, a dashboard that gives you two things at once: clear visibility into how much your organization spends on AI, and a security signal that surfaces users whose usage suddenly looks abnormal. It works on the traffic already flowing through your gateway, so there is no additional setup.
 
-On the spend side, AI Spend shows organization-wide totals for cost, requests, tokens, and adoption, and lets you drill into an individual user to see their spend, top models and providers, cache hit rate, and more. To attribute usage to individual users, add a user identifier with [custom metadata](/ai-gateway/observability/custom-metadata/) or put your gateway behind [Cloudflare Access](/cloudflare-one/access-controls/).
+On the spend side, AI Spend shows organization-wide totals for cost, requests, tokens, and adoption, and lets you drill into an individual user to see their spend, top models and providers, cache hit rate, and more. To attribute usage to individual users, add a user identifier with custom metadata or put your gateway behind Cloudflare Access.
 
 On the security side, AI Spend baselines each user's normal usage from their 95th percentile (p95) session cost over the last 30 days, then flags sessions that exceed both that baseline and an organization-level threshold. A sudden jump above a user's own pattern is often the first sign of a compromised credential or a misbehaving agent, so you can investigate before it shows up on your bill.
 
-AI Spend is available to all AI Gateway customers at no additional cost. For more details, refer to the [AI Spend documentation](/ai-gateway/observability/ai-spend/).
+AI Spend is available to all AI Gateway customers at no additional cost.
