@@ -8,9 +8,11 @@ interface Props {
 
 const { label = "Cookie Settings" } = Astro.props;
 
-const isProduction = import.meta.env.PROD;
+const isProductionDeployment =
+	import.meta.env.CF_PAGES_BRANCH === "production" ||
+	import.meta.env.GITHUB_REF_NAME === "production";
 
-const uuid = isProduction
+const uuid = isProductionDeployment
 	? "b1e05d49-f072-4bae-9116-bdb78af15448"
 	: "b1e05d49-f072-4bae-9116-bdb78af15448-test";
 ---

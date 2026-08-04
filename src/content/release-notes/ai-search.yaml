@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-07-30"
+    title: Use AI Search with the Agents SDK, Vercel AI SDK, and LangChain
+    description: |-
+      New guides show how to use an AI Search instance from popular frameworks: the [Cloudflare Agents SDK](/ai-search/agent-sdks/agents-sdk/), the [Vercel AI SDK](/ai-search/agent-sdks/ai-sdk/), and [LangChain](/ai-search/agent-sdks/langchain/). The AI SDK integration is a new `ai-search-provider` package, and the LangChain integration is a new retriever in the existing `langchain-cloudflare` package. Refer to the [Agents](/ai-search/agent-sdks/) section.
   - publish_date: "2026-07-08"
     title: GIF and BMP image support
     description: |-

@@ -11,7 +11,7 @@ sidebar:
   label: MCP server portals
 ---
 
-import { Render, Tabs, TabItem, CURL } from "~/components";
+import { Render, Tabs, TabItem, CURL, Steps } from "~/components";
 
 An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint.
 
@@ -49,7 +49,7 @@ The following diagram shows how requests flow through an MCP server portal.
 4. When the user calls a tool, the portal identifies the target server from the [tool namespace](#tool-namespacing), attaches the appropriate credentials, and proxies the request. If [Gateway routing](#route-portal-traffic-through-gateway) is turned on, the request passes through Cloudflare Gateway for HTTP logging and DLP inspection.
 5. The upstream server processes the request and returns a response through the same path.
 
-Background synchronization of tools and prompts runs approximately every two hours using admin credentials. This sync connects directly to upstream servers and does not route through Gateway.
+For servers that use automatic OAuth registration, background synchronization of tools and prompts runs approximately every two hours using admin credentials. This sync connects directly to upstream servers and does not route through Gateway.
 
 ### Transport
 
@@ -107,7 +107,7 @@ To add an MCP server:
 3. Select **Add an MCP server**.
 4. Enter any name for the server.
 5. (Optional) Enter a custom string for the **Server ID**.
-6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize), enter `https://docs.mcp.cloudflare.com/mcp`.
+6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-ai-search), enter `https://docs.mcp.cloudflare.com/mcp`.
 7. Add [Access policies](/cloudflare-one/access-controls/policies/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Users who do not pass an Allow policy will not see this server through any portals.
 
    :::caution
@@ -118,6 +118,37 @@ To add an MCP server:
 9. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the admin credential for that MCP server. You can [configure an MCP portal](#create-a-portal) to use this admin credential to make requests.
 
 Cloudflare Access will validate the server connection and retrieve a list of resources, prompts, and tools. Once the server is successfully connected, the [server status](#server-status) will change to **Ready**. You can now add the MCP server to an [MCP server portal](#create-a-portal).
+
+### Configure manual OAuth credentials
+
+Use manual OAuth credentials when the upstream provider does not support [OAuth Dynamic Client Registration](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#dynamic-client-registration). This flow uses an OAuth application that you register with the upstream provider.
+
+<Steps>
+
+1. Add the MCP server with **OAuth** as its authentication method.
+2. In **Zero Trust** > **Access controls** > **AI controls**, go to the **MCP servers** tab.
+3. Find the server, select the three dots > **Edit**, and go to **Authentication**.
+4. Under **OAuth credentials**, select **Manual credentials**.
+5. Copy the displayed **Redirect URI to register at the upstream provider**. Add it to the OAuth application's allowed redirect URIs.
+6. Select **Discover OAuth endpoints**. If discovery fails, expand **Show OAuth endpoints (advanced)** and enter the **Authorization endpoint** and **Token endpoint**. You can also enter an optional **Revocation endpoint** and **Issuer**.
+7. Enter the OAuth application's **Client ID** and **Client secret**.
+8. (Optional) Enter the space-separated **Scope** values requested from users.
+9. (Optional) Enter the **Token endpoint auth method** expected by the provider. Supported values are `client_secret_post` and `client_secret_basic`.
+10. Select **Save server**.
+
+</Steps>
+
+The dashboard uses the [shared Cloudflare callback URL](#shared-cloudflare-callback-url-opt-in) when you switch a server from automatic to manual credentials:
+
+```txt
+https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
+```
+
+Always register the redirect URI displayed in the dashboard. OAuth providers typically require an exact URI match.
+
+Cloudflare stores the client secret encrypted and does not return it through the dashboard or API. When editing the server, leave **Client secret** blank to keep the existing value. To rotate the secret, create or activate the replacement at the upstream provider, enter the new value, and save the server.
+
+Manual credentials require per-user authentication. Leave **Require user auth** enabled when you add the server to a portal. The server remains in **Waiting** status until the first user completes upstream OAuth. Cloudflare then retrieves the server capabilities and changes its status to **Ready**.
 
 ### MCP Apps
 
@@ -132,7 +163,7 @@ The MCP server status indicates the synchronization status of the MCP server to 
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) for more information. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                    |
 | Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                                   |
-| Waiting       | The server's tools, prompts, and resources are being synchronized.                                                                                                                                                     |
+| Waiting       | The server's tools, prompts, and resources are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                                        |
 | Ready         | The server was successfully synchronized and all tools, prompts, and resources are available.                                                                                                                          |
 
 #### Error details
@@ -161,7 +192,7 @@ You will be redirected to log in to your OAuth provider. The account used to aut
 
 ### Synchronize the MCP server
 
-Cloudflare Access automatically synchronizes tools and prompts from your MCP server approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
+For servers that use automatic OAuth registration, Cloudflare Access synchronizes tools and prompts approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
 
 :::note
 Synchronization uses the admin credential, not individual user credentials. If the admin credential's refresh token has expired or been revoked, the [server status](#server-status) will change to **Sync Required** and you will need to [reauthenticate the server](#reauthenticate-the-mcp-server). This will not impact end users' ability to connect to the MCP server. It will impact the ability to fetch tool and prompt information or additions and removals.
@@ -1000,7 +1031,7 @@ MCP server portals have the following known limitations:
 
 - **Some MCP servers block proxy-based clients.** Certain MCP servers reject requests from proxy-based clients like MCP server portals, returning a `403` error on the registration endpoint. These servers are not compatible with MCP server portals until those providers add Cloudflare as a supported MCP client.
 
-- **Not all MCP servers support OAuth dynamic client registration.** MCP servers that do not support [OAuth dynamic client registration](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#dynamic-client-registration) cannot use the portal's OAuth authentication flow. For these servers, select **Custom Headers** as the authentication method and provide static credentials (for example, API keys or personal access tokens) instead.
+- **Manual OAuth capabilities are captured during the first user authorization.** Servers configured with [manual OAuth credentials](#configure-manual-oauth-credentials) remain in **Waiting** status until a user completes upstream OAuth. Cloudflare stores the tools and prompts returned during that connection. Background and manual capability synchronization do not refresh them.
 
 - **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync Required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
 

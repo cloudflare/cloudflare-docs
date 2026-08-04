@@ -10,7 +10,7 @@ description: Rules for the SubtractIPCalculator component.
 ## Example
 
 ```mdx
-import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+import { SubtractIPCalculator } from "~/components";
 
 <SubtractIPCalculator client:load />
 

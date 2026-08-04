@@ -8,14 +8,7 @@ sidebar:
   order: 1
 ---
 
-import {
-	GlossaryTooltip,
-	Render,
-	Tabs,
-	TabItem,
-	Steps,
-	DashButton,
-} from "~/components";
+import { GlossaryTooltip, Steps, DashButton } from "~/components";
 
 Most development teams struggle to keep track of their APIs. Cloudflare API Discovery helps you map out and understand your API attack surface — the full set of endpoints that could be targeted by attackers.
 
@@ -80,24 +73,13 @@ Your API endpoints are discovered with both session identifier-based discovery a
 
 To access machine learning-based discovery:
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+<Steps>
+1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
-          <DashButton url="/?to=/:account/:zone/security/web-assets" />
-      2. Go to the **Discovery** tab.
-      3. Filter the source results by `Session Identifier` or `Machine Learning` to view results from each discovery method.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **API Shield** > **Discovery**.
-      3. Filter the source results by `Session Identifier` or `Machine Learning` to view results from each discovery method.
-    </Steps>
-  </TabItem>
-</Tabs>
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+2. Go to the **Discovery** tab.
+3. Filter the source results by `Session Identifier` or `Machine Learning` to view results from each discovery method.
+</Steps>
 
 If all of your zone's API traffic contains the <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. Machine learning-based discovery can identify API traffic regardless of whether your API uses a session identifier.
 

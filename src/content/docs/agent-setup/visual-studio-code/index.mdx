@@ -1,0 +1,150 @@
+---
+title: Visual Studio Code + Cloudflare
+description: "Free, open-source code editor with native Model Context Protocol (MCP) client support and Copilot Chat integration. Made by Microsoft."
+template: splash
+pcx_content_type: how-to
+products:
+  - agent-setup
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="visual-studio-code" />
+
+## Quick start
+
+<Steps>
+	1. **Install Visual Studio Code and GitHub Copilot**
+
+		Install [Visual Studio Code](https://code.visualstudio.com/) and make sure it is fully up to date. Then install the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) and sign in with a GitHub account. The Copilot free tier is enough to try this.
+
+	2. **Configure the Cloudflare MCP server**
+
+		Create `.vscode/mcp.json` inside your workspace folder:
+
+		```json
+		{
+		  "servers": {
+		    "cloudflare-api": {
+		      "type": "http",
+		      "url": "https://mcp.cloudflare.com/mcp"
+		    }
+		  }
+		}
+		```
+
+		Visual Studio Code uses `servers` as the root key. Configurations copied from Cursor or Claude Desktop use `mcpServers` and will silently do nothing here. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
+
+	3. **Start the server and authorize**
+
+		After you save `mcp.json`, Visual Studio Code shows a **Start** CodeLens on the `cloudflare-api` server definition. Select it and complete the OAuth flow to authorize the Cloudflare MCP server against your account. Start with a demo account until you are comfortable with the scope you grant.
+
+	4. **Try a prompt**
+
+		Open Copilot Chat (**Ctrl+Shift+I** / **Cmd+Shift+I**), switch to agent mode, and try a prompt — for example:
+
+		<RandomPrompt />
+
+</Steps>
+
+For a screenshot-by-screenshot walkthrough — including the OAuth authorization page, verifying the server is running, and using natural language to create and delete DNS records — refer to the [detailed walkthrough](/agent-setup/visual-studio-code/detailed-walkthrough/).
+
+## Cloudflare platform access
+
+<PlatformAccess />
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Cloudflare API MCP server uses Code Mode — the agent writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens. That is why you see only three tools registered, not thousands.
+- Visual Studio Code's MCP configuration uses `servers` as the root key. Configurations copied from other agents (Cursor, Claude Desktop) use `mcpServers` and will not work in Visual Studio Code.
+- Scope the OAuth grant to a single account, and start with **Read only** or a **Custom** permission set before granting **Full access**.
+- Revoke the grant at any time from the Cloudflare dashboard under **My Profile → Access Management → Connected Applications**.
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Why does the MCP server only show three tools?">
+		The Cloudflare API specification is roughly two million tokens, which is far
+		too large to hand an agent directly. The Cloudflare MCP server uses a
+		code-execution pattern: the agent gets a tool to search the API spec and a
+		tool to execute calls, and the spec stays server-side. Three tools is the
+		correct, healthy state.
+	</FAQItem>
+	<FAQItem question="Does this only work with Visual Studio Code?">
+		No. The same server URL (`https://mcp.cloudflare.com/mcp`) works in Claude
+		Code, Cursor, Claude Desktop, or any MCP-capable client. Visual Studio Code
+		is one option among many.
+	</FAQItem>
+	<FAQItem question="Can I use a Cloudflare API token instead of OAuth?">
+		Yes. You can pass a Cloudflare API token as a bearer credential, which makes
+		sense for CI/CD or shared automation. For interactive editor use, OAuth is
+		the recommended path. API tokens using Client IP Address Filtering are not
+		supported.
+	</FAQItem>
+	<FAQItem question="Do I need GitHub Copilot to use MCP in Visual Studio Code?">
+		Copilot Chat is the MCP client used in this guide, so yes — you need Copilot
+		(or another MCP-capable extension) to actually drive the server. Visual
+		Studio Code itself provides the MCP configuration and lifecycle, but the
+		chat UI comes from Copilot.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="Chat throws 'Cannot read properties of undefined'">
+		The Visual Studio Code build and the Copilot extension are out of sync.
+		Update Visual Studio Code from the blue button in the title bar, let it
+		restart, and try again.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Writes fail with API error 10000, but reads work">
+		The OAuth grant is read-only even though you intended to grant full access.
+		This can happen if you authorize more than once — subsequent flows can
+		silently come through with a reduced scope. Revoke the application under
+		**My Profile → Access Management → Connected Applications** in the
+		Cloudflare dashboard, sign out of the MCP session in Visual Studio Code (the
+		account icon at the bottom of the activity bar), then start the server
+		again.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="No Start button appears in mcp.json">
+		Check the root key in the JSON. Visual Studio Code requires `servers`, not
+		`mcpServers`. Also confirm the file is at `.vscode/mcp.json` inside the open
+		folder, not at the folder root.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="The agent suggests creating an API token to work around an error">
+		Decline. If authentication is broken, the fix is the OAuth grant, not
+		pasting a bearer token into a chat window. Follow the API error 10000
+		troubleshooting steps to re-grant cleanly.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="401 errors in the Visual Studio Code logs">
+		Expected behavior until you select **Allow in this Session** in the Copilot
+		Chat authorization prompt.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="visual-studio-code" />
