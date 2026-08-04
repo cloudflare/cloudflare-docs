@@ -1,5 +1,5 @@
 ---
-title: AI Spend
+title: User Insights
 description: Track organization-wide AI spend, attribute usage to identities, and detect anomalous sessions in AI Gateway.
 pcx_content_type: reference
 sidebar:
@@ -8,17 +8,17 @@ products:
   - ai-gateway
 ---
 
-The AI Spend dashboard shows how much your organization spends on AI, which identities are responsible for that spend, and which users deviate from their typical usage. It uses the traffic already flowing through your gateway, so there is no additional setup.
+The User Insights dashboard shows how much your organization spends on AI, which identities are responsible for that spend, and which users deviate from their typical usage. It uses the traffic already flowing through your gateway, so there is no additional setup.
 
 ## Attribute usage to identities
 
-AI Spend is available to all AI Gateway customers at no additional cost and works on any traffic through your gateway. Without an identity or custom metadata on your requests, all usage is grouped under a single anonymous identifier, and AI Spend cannot distinguish between individual users.
+User Insights is available to all AI Gateway customers at no additional cost and works on any traffic through your gateway. Without an identity or custom metadata on your requests, all usage is grouped under a single anonymous identifier, and User Insights cannot distinguish between individual users.
 
 To attribute usage to individual users, add a user identifier with [custom metadata](/ai-gateway/observability/custom-metadata/), or put your gateway behind [Cloudflare Access](/cloudflare-one/access-controls/). With Access, each authenticated request carries a verified identity you can filter spend and analytics by.
 
 ## Key metrics
 
-At the top of the AI Spend page, you can view the following organization-wide metrics for the selected time range:
+At the top of the User Insights page, you can view the following organization-wide metrics for the selected time range:
 
 - **Active users**: Identities with gateway usage.
 - **Total requests**: Gateway requests in this range.
@@ -31,9 +31,9 @@ At the top of the AI Spend page, you can view the following organization-wide me
 
 ## Anomaly detection
 
-AI Spend baselines each user's normal usage and flags sessions that fall outside it, which can indicate a compromised credential or a misbehaving agent.
+User Insights baselines each user's normal usage and flags sessions that fall outside it, which can indicate a compromised credential or a misbehaving agent.
 
-Baselines are calculated per session, not per request. For each user, AI Spend uses the 95th percentile (p95) session cost over the last 30 days. The baseline is rolling and updates as usage changes.
+Baselines are calculated per session, not per request. For each user, User Insights uses the 95th percentile (p95) session cost over the last 30 days. The baseline is rolling and updates as usage changes.
 
 A session is flagged when it exceeds both of the following thresholds:
 
@@ -42,7 +42,7 @@ A session is flagged when it exceeds both of the following thresholds:
 
 Both thresholds must be met. This avoids flagging small spikes from low-usage users and routine high-cost sessions from heavy users.
 
-Flagged users appear in a filtered view with the sessions that triggered the flag and their cost. AI Spend does not block requests.
+Flagged users appear in a filtered view with the sessions that triggered the flag and their cost. User Insights does not block requests.
 
 ## User view
 

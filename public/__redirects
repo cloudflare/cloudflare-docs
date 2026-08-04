@@ -330,6 +330,7 @@
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
 /ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
+/ai-gateway/observability/ai-spend/ /ai-gateway/observability/user-insights/ 301
 /ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
 /ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations/set-up-evaluations/ 301
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
