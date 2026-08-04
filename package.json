@@ -55,7 +55,7 @@
 		"@cloudflare/workers-types": "5.20260727.1",
 		"@docsearch/css": "3.9.0",
 		"@docsearch/js": "3.9.0",
-		"@eslint/js": "9.39.4",
+		"@eslint/js": "9.39.5",
 		"@floating-ui/react": "0.27.20",
 		"@fontsource-variable/inter": "5.3.0",
 		"@fontsource-variable/jetbrains-mono": "5.3.0",
