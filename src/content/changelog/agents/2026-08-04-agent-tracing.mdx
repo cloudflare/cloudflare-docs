@@ -1,67 +1,49 @@
 ---
-title: Agent traces for Think, Flue, and AI SDK instrumented by Agents SDK
-description: Agent traces show model calls, tool runs, approvals, token usage, and runtime operations for each turn.
+title: Cloudflare Agents and Tracing
+description: Trace model calls, tool runs, and approvals across agent sessions, and inspect them with session replay and trace waterfalls in the Cloudflare Dashboard.
 products:
   - agents
   - workers
 date: 2026-08-04
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { WranglerConfig } from "~/components";
 
-Agent tracing is now available for applications built with the Agents SDK. Traces show each agent turn alongside model calls, tool runs, approvals, token usage, and Workers runtime operations.
+[Cloudflare Agents](https://dash.cloudflare.com/?to=/:account/agents) now has a dedicated home in the Cloudflare dashboard that lists your traced agents and subagents.
 
-Turn on Workers tracing in your Wrangler configuration:
+Select an agent to inspect its traces in two ways:
+
+**Replay a session** assembles the full conversation for a turn: system instructions, user messages, model reasoning, tool calls with arguments and results, and the final response.
+
+![Session replay showing messages, reasoning, and subagent tool calls](~/assets/images/workers-observability/agent_tracing_session_replay.png)
+
+**View a trace** shows the execution timeline, connecting agent operations to Workers infrastructure so you can see where time was spent.
+
+![Trace waterfall showing nested agent, model, tool, and D1 spans](~/assets/images/workers-observability/agent_tracing_waterfall.png)
+
+Enable tracing in your Wrangler configuration:
 
 <WranglerConfig>
 
-```toml
-[observability.traces]
-enabled = true
+```jsonc
+{
+	"observability": {
+		"enabled": true,
+		"traces": {
+			"enabled": true
+		}
+	}
+}
 ```
 
 </WranglerConfig>
 
-Think and Flue applications emit agent traces automatically. For direct AI SDK calls, wrap the AI SDK namespace once. `wrapAISDK()` supports AI SDK v6 and v7. This AI SDK v7 example also supplies the agent identity:
+## Framework support
 
-<TypeScriptExample>
+Think and Flue agents are instrumented automatically. For direct AI SDK calls, wrap the namespace with [`wrapAISDK()`](/agents/runtime/operations/observability/tracing/#ai-sdk). Custom harnesses can use the [Workers custom spans API](/workers/observability/traces/custom-spans/) with [OpenTelemetry Generative AI semantic conventions](https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/).
 
-```ts
-import * as ai from "ai";
-import { wrapAISDK } from "agents/observability/ai";
+## Get Started
 
-const tracedAI = wrapAISDK(ai);
+Check out the full blog post: [Introducing: Cloudflare Agents](https://blog.cloudflare.com/agents-on-cloudflare).
 
-await tracedAI.generateText({
-	model,
-	prompt: "Find an available appointment",
-	runtimeContext: {
-		agentId: "booking-agent-production",
-		conversationId: "conversation-123",
-	},
-	telemetry: {
-		functionId: "booking-agent",
-		includeRuntimeContext: {
-			agentId: true,
-			conversationId: true,
-		},
-	},
-});
-```
-
-</TypeScriptExample>
-
-Message and tool payload recording is off by default. Turn it on only when the payloads are safe to store:
-
-<TypeScriptExample>
-
-```ts
-const tracedAI = wrapAISDK(ai, {
-	storeMessages: true,
-	storeTools: true,
-});
-```
-
-</TypeScriptExample>
-
-Open the [**Agents** tab](https://dash.cloudflare.com/?to=/:account/agents) in the Cloudflare dashboard to inspect sessions, replay conversations, and view trace waterfalls. For advanced setup, privacy controls, and trace structure, refer to [Agent tracing](/agents/runtime/operations/observability/tracing/).
+For setup details, refer to the [Agent tracing documentation](/agents/runtime/operations/observability/tracing/).
