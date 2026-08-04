@@ -169,8 +169,8 @@ export const AGENTS: AgentData[] = [
 		description:
 			"A full IDE with an agent manager built in — the command center for managing all your agents in one place. Made by Cognition.",
 		capabilities: {
-			terminal: true,
 			ide: true,
+			terminal: true,
 			standalone: true,
 			cloud: true,
 			extension: true,
