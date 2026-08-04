@@ -159,7 +159,7 @@ export default {
 
 Creating a Custom Domain will also generate an [Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/) on your target zone for your target hostname.
 
-This includes multi-level subdomains such as `realms.app.example.com`. [Universal SSL](/ssl/edge-certificates/universal-ssl/) covers the apex and one level of subdomain only, so a hostname at the second level or deeper is not covered by it. The certificate generated for the Custom Domain covers it instead, and no separate Advanced Certificate Manager subscription is required.
+This includes multi-level subdomains such as `realms.app.example.com`. [Universal SSL](/ssl/edge-certificates/universal-ssl/) covers the apex and one level of subdomain only, so Universal SSL does not cover a hostname at the second level or deeper. The certificate generated for the Custom Domain covers it instead, and no separate Advanced Certificate Manager subscription is required.
 
 These certificates are generated with default settings. To override these settings, delete the generated certificate and create your own certificate in the Cloudflare dashboard. Refer to [Manage advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) for instructions.
 
