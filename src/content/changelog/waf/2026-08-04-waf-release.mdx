@@ -1,0 +1,138 @@
+---
+title: "WAF Release - 2026-08-04"
+description: Cloudflare WAF managed rulesets 2026-08-04
+date: 2026-08-04
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new rules and updates Microsoft SharePoint RCE alongside enhanced SSRF cloud protection rule actions.
+
+**Key Findings**
+
+- CVE-2026-50522: An insecure deserialization vulnerability in Microsoft SharePoint Server. This may allow an unauthenticated attacker to execute arbitrary code using crafted requests.
+- CVE-2026-66066: An improper input processing vulnerability in Ruby on Rails Active Storage image variant transformations. This may allow an unauthenticated attacker to perform arbitrary file reads and achieve Remote Code Execution (RCE) using maliciously crafted payload requests.
+- Generic Cloud Protections: Added improved detection logic targeting Server-Side Request Forgery (SSRF) in cloud-hosted applications.
+
+
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="91aee93c31944828bf86f068052b07cf" />
+			</td>
+			<td>N/A</td>
+			<td>Microsoft SharePoint - Remote Code Execution - CVE:CVE-2026-50522</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="91aee93c31944828bf86f068052b07cf" />
+			</td>
+			<td>N/A</td>
+			<td>Rails - Arbitrary File Read & RCE - CVE:CVE-2026-66066</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>
+				This was labeled as File Upload - RCE.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="ae40661b4ef24f9c8abd98338242627b" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Local</td>
+			<td>Disabled</td>
+			<td> - </td>
+			<td>
+				This detection has been removed.
+			</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="98bfd6bb46074d5b8d1c4b39743a63ec" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Local - 2 - Beta</td>
+			<td>Disabled</td>
+			<td> - </td>
+			<td>
+				This detection has been removed.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="54e1733b10da4a599e06c6fbc2e84e2d" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Cloud - Beta</td>
+			<td>Disabled</td>
+			<td> - </td>
+			<td>
+				This detection has been removed.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="ecd26d61a75e46f6a4449a06ab8af26f" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Cloud - 2 - Beta</td>
+			<td>Disabled</td>
+			<td> - </td>
+			<td>
+				This detection has been removed.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="281a1b7086b84db7a695220725ba9d7c" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Cloud</td>
+			<td>Disabled</td>
+			<td>Block</td>
+			<td>
+				We are changing the action for this rule from Disabled to BLOCK
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="158177dec2504acdba1f2da201a076eb" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Local - Beta</td>
+			<td>Disabled</td>
+			<td> - </td>
+			<td>
+				This detection has been removed.
+			</td>
+		</tr>
+	
+	</tbody>
+</table>
