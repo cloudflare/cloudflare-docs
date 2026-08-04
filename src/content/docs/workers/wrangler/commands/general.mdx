@@ -42,12 +42,16 @@ wrangler login [OPTIONS]
 - `--scopes` <Type text="string" /> <MetaInfo text="optional" />
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
     for example, `npx wrangler login --scopes account:read user:read`.
+- `--browser` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Defaults to `true`. Automatically opens the OAuth link in your default browser. Use `--browser=false` to print the link instead of opening it.
 - `--callback-host` <Type text="string" /> <MetaInfo text="optional" />
-  - Defaults to `localhost`. Sets the IP or hostname where Wrangler should listen for the OAuth callback.
-- `--callback-port` <Type text="string" /> <MetaInfo text="optional" />
-  - Defaults to `8976`. Sets the port where Wrangler should listen for the OAuth callback.
+  - Defaults to `localhost`. Sets the IP or hostname where Wrangler should listen for the OAuth callback. Cannot be combined with `--device`.
+- `--callback-port` <Type text="number" /> <MetaInfo text="optional" />
+  - Defaults to `8976`. Sets the port where Wrangler should listen for the OAuth callback. Cannot be combined with `--device`.
 - `--use-keyring` <Type text="boolean" /> <MetaInfo text="optional" />
   - Stores the OAuth credentials in your operating system keychain instead of the default plaintext TOML file. Refer to [Storing OAuth credentials in the OS keychain](#storing-oauth-credentials-in-the-os-keychain) for details. Use `--no-use-keyring` to opt back out. The choice is persisted across Wrangler invocations.
+- `--device` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Defaults to `false`. Uses the OAuth 2.0 Device Authorization Grant ([RFC 8628](https://www.rfc-editor.org/rfc/rfc8628)) instead of the default `localhost` callback flow. Refer to [Use `wrangler login` without a local callback server](#use-wrangler-login-without-a-local-callback-server).
 
 :::note
 
@@ -83,6 +87,8 @@ Leave the login flow active. Open a second terminal session. In that second term
 curl <LOCALHOST_URL>
 ```
 
+To avoid this second terminal session entirely, use [`wrangler login --device`](#use-wrangler-login-without-a-local-callback-server), which does not rely on a `localhost` callback URL.
+
 ### Use `wrangler login` in a container
 
 The Cloudflare OAuth provider will always redirect to a callback server at `localhost:8976`. If you are running Wrangler inside a container, this server might not be accessible from your host machine's browser - even after authorizing the connection, your login command will hang.
@@ -111,6 +117,56 @@ docker run -p 8976:9000 <your-image>
 
 # Inside the container
 npx wrangler login --callback-host=0.0.0.0 --callback-port=9000
+```
+
+If you would rather not map ports at all, use [`wrangler login --device`](#use-wrangler-login-without-a-local-callback-server), which does not start a callback server.
+
+### Use `wrangler login` without a local callback server
+
+The default `wrangler login` flow needs your browser to be able to reach a temporary local server on `localhost:8976`. In some environments — remote SSH sessions, containers without forwarded ports, GitHub Codespaces, or otherwise restricted networks — that callback URL is unreachable from the browser, and setting up the workarounds for remote machines and containers may be difficult.
+
+For those cases, pass `--device` to use the [OAuth 2.0 Device Authorization Grant](https://www.rfc-editor.org/rfc/rfc8628) instead. This flow does not start a local callback server. Instead, Wrangler prints a verification URL and a short user code to the terminal, opens the verification URL in your default browser, and polls Cloudflare for an access token while you approve the request.
+
+```sh
+npx wrangler login --device
+```
+
+```sh output
+ ⛅️ wrangler 4.119.0
+────────────────────
+Attempting to login via OAuth Device Authorization Grant...
+To authorize Wrangler, please visit:
+
+  https://dash.cloudflare.com/oauth2/device
+
+and enter the code:
+
+  WDJB-MJHT
+
+You have 5 minutes to approve this request.
+
+Opening a link in your default browser: https://dash.cloudflare.com/oauth2/device?user_code=WDJB-MJHT
+Successfully logged in.
+```
+
+The URL Wrangler opens in your browser has the user code already filled in, so you only need to confirm the code and approve the request. Wrangler always prints the plain verification URL and the user code as well, so you can approve on a phone or another machine, or enter the code by hand if the browser cannot open.
+
+Wrangler stops polling after 5 minutes, or sooner if Cloudflare sets a shorter expiry on the user code. If the code expires before you approve it, run `wrangler login --device` again to get a new one.
+
+Pass `--browser=false` to stop Wrangler from opening the browser for you and copy the verification URL yourself:
+
+```sh
+npx wrangler login --device --browser=false
+```
+
+`--callback-host` and `--callback-port` configure the temporary local callback server, which this flow does not use. Wrangler rejects the combination with an error rather than ignoring the flags:
+
+```sh
+npx wrangler login --device --callback-host=0.0.0.0
+```
+
+```sh output
+✘ [ERROR] `--callback-host` and `--callback-port` cannot be used with `--device`; the device authorization flow does not use a local callback server.
 ```
 
 ### Storing OAuth credentials in the OS keychain
