@@ -53,7 +53,7 @@
 		"@cloudflare/nimbus-docs": "0.8.2",
 		"@cloudflare/vitest-pool-workers": "0.18.8",
 		"@cloudflare/workers-types": "5.20260727.1",
-		"@docsearch/css": "3.9.0",
+		"@docsearch/css": "4.7.0",
 		"@docsearch/js": "3.9.0",
 		"@eslint/js": "9.39.4",
 		"@floating-ui/react": "0.27.20",
