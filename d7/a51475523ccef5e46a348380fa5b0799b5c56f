@@ -1,0 +1,30 @@
+src/content/docs/workers/framework-guides/web-apps/nextjs.mdx
+  s_46b199818d8a63::t_9569059123b5e6 19,21
+  s_46b199818d8a63::t_00651431da69ad 205-206,208-209
+  s_46b199818d8a63::t_19d84ccd00e33e 207
+src/content/docs/workers/framework-guides/automatic-configuration.mdx
+  s_46b199818d8a63::t_00651431da69ad 37-48
+  s_46b199818d8a63::t_9569059123b5e6 167,169
+  s_46b199818d8a63::t_a3c7aeb04a3fcd 34-36,165,171
+src/content/docs/pages/framework-guides/nextjs/index.mdx
+  s_46b199818d8a63::t_9569059123b5e6 14
+src/content/docs/workers/framework-guides/web-apps/opennext.mdx
+  s_46b199818d8a63::t_19d84ccd00e33e 19
+  s_46b199818d8a63::t_a3c7aeb04a3fcd 49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d7a51475523ccef5e46a348380fa5b0799b5c56f",
+  "prompts": {},
+  "sessions": {
+    "s_46b199818d8a63": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_032adbe6bffeXa3Lc3EwXa2whA",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
