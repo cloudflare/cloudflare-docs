@@ -173,7 +173,15 @@ const facetMatchMaps = Object.fromEntries(
 		const cells = Array.from(
 			grid.querySelectorAll<HTMLElement>("[data-models-cell]"),
 		);
-		const query = state.search.trim().toLowerCase();
+		// Split the query into whitespace-separated tokens; each must appear
+		// somewhere in the card's searchable text (name + shortName +
+		// description). This lets "happy horse" match a "HappyHorse" model
+		// whose term only lives in the description.
+		const queryTokens = state.search
+			.trim()
+			.toLowerCase()
+			.split(/\s+/)
+			.filter(Boolean);
 
 		// Convert selected values to match strings using the match maps.
 		const selMatch: Record<string, string[]> = {};
@@ -184,7 +192,10 @@ const facetMatchMaps = Object.fromEntries(
 		}
 
 		const matches = cells.filter((cell) => {
-			const nameOk = !query || (cell.dataset.name ?? "").includes(query);
+			const haystack = cell.dataset.search ?? cell.dataset.name ?? "";
+			const nameOk =
+				queryTokens.length === 0 ||
+				queryTokens.every((token) => haystack.includes(token));
 			if (!nameOk) return false;
 			return facetKeys.every((key) => {
 				const chosen = selMatch[key];
