@@ -8,8 +8,6 @@ products:
   - style-guide
 ---
 
-import { GitHubCode } from "~/components";
-
 Page-level metadata - content type, associated products, last updated, word count - lets you take a broader, more strategic view of your content.
 
 It helps you answer questions like the following:
@@ -54,13 +52,25 @@ We set two values at a folder level, `Product` and `Product Group`. We take this
 
 For example, here's the content from our [DNS folder](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/products/dns.yaml).
 
-<GitHubCode
-	repo="cloudflare/cloudflare-docs"
-	file="src/content/products/dns.yaml"
-	commit="eeb4aadac6e1ca1f25f698385c1217cabda1adac"
-	lang="yaml"
-	code={{ title: "dns.yaml", mark: [4, 6] }}
-/>
+```yaml title="dns.yaml" {4,6}
+name: DNS
+
+product:
+  title: DNS
+  url: /dns/
+  group: Application performance
+
+meta:
+  title: Cloudflare DNS docs
+  description: Cloudflare DNS provides the fastest, most resilient, and simplest
+    managed DNS platform to meet your needs.
+  author: "@cloudflare"
+
+resources:
+  community: https://community.cloudflare.com/tags/c/reliability/7/none
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/dns
+  learning_center: https://www.cloudflare.com/learning/dns/what-is-dns/
+```
 
 ### Page-level attributes
 
@@ -68,14 +78,18 @@ We primarily set page-level attributes through the [page's frontmatter](/style-g
 
 For example, here are the values set for our [Build a Slackbot tutorial](/workers/tutorials/build-a-slackbot/).
 
-<GitHubCode
-	repo="cloudflare/cloudflare-docs"
-	file="src/content/docs/workers/tutorials/build-a-slackbot/index.mdx"
-	commit="c33f3a8f71fd7b8c7d68d9f0b179abdc1e8d330a"
-	lang="mdx"
-	lines="1-10"
-	code={{ title: "build-a-slackbot.mdx", mark: [2, 4, 6, 7] }}
-/>
+```mdx title="build-a-slackbot.mdx" {2,4,6,7}
+---
+updated: 2024-06-05
+difficulty: Beginner
+pcx_content_type: tutorial
+title: Build a Slackbot
+tags:
+  - Hono
+languages:
+  - TypeScript
+---
+```
 
 However, the `last_modified` value is pulled automatically from the git history of a file.
 
@@ -99,14 +113,16 @@ For example, these are the `meta` properties and values on the [AI Crawl Control
 
 We render these values using a custom override for our [`Head.astro`](https://github.com/cloudflare/cloudflare-docs/blob/production/src/components/overrides/Head.astro) file. If specific values are set, we then add them as meta tags onto the page.
 
-<GitHubCode
-	repo="cloudflare/cloudflare-docs"
-	file="src/components/overrides/Head.astro"
-	commit="80573b88bd2a491240e404938feb506d347093db"
-	lang="ts"
-	lines="65-72"
-	code={{ title: "Head.astro" }}
-/>
+```ts title="Head.astro"
+		if (product.data.product.title) {
+			["pcx_product", "algolia_product_filter"].map((name) => {
+				metaTags.push({
+					name,
+					content: product.data.product.title,
+				});
+			});
+		}
+```
 
 ### Benefits
 

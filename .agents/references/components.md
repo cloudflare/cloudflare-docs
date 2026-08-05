@@ -310,43 +310,6 @@ Props: `url` (required, must exist in `src/content/dash-routes/index.json` — b
 
 ---
 
-## GitHubCode
-
-Fetches and displays a file from a Cloudflare GitHub repository. Use a full 40-character commit hash — never a branch name — so the content stays stable as the repo evolves.
-
-```mdx
-import { GitHubCode } from "~/components";
-
-<GitHubCode
-	repo="cloudflare/workers-rs"
-	file="templates/hello-world/src/lib.rs"
-	commit="ab3951b5c95329a600a7baa9f9bb1a7a95f1aeaa"
-	lang="rs"
-/>
-
-<!-- TypeScript with auto-generated JS tab: -->
-
-<GitHubCode
-	repo="cloudflare/workflows-starter"
-	file="src/index.ts"
-	commit="a844e629ec80968118d4b116d4b26f5dcb107137"
-	lang="ts"
-	useTypeScriptExample={true}
-/>
-
-<!-- Filter by line range: -->
-
-<GitHubCode repo="..." file="..." commit="..." lang="..." lines="1-3" />
-
-<!-- Filter by tag (source must wrap content in <docs-tag name="..."> comments): -->
-
-<GitHubCode repo="..." file="..." commit="..." lang="..." tag="no-logging" />
-```
-
-Props: `repo` (`cloudflare/<name>`), `file` (path within repo), `commit` (40-char hash), `lang`, `useTypeScriptExample` (boolean), `lines` (range string), `tag` (string), `code` (Astro `Code` options).
-
----
-
 ## DirectoryListing
 
 Auto-generates a listing of child pages. Used in `navigation` and `overview` pages.

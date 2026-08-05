@@ -8,8 +8,6 @@ products:
   - style-guide
 ---
 
-import { GitHubCode } from "~/components";
-
 Though valuable for user understanding, images are difficult to maintain. We have a few strategies that we use to help make this easier.
 
 ## Guidelines
@@ -43,14 +41,23 @@ What the GitHub action does is:
 
 In combination with [flagging unused images](#flag-unused-images), we also have logic in our [build process](https://github.com/cloudflare/cloudflare-docs/blob/production/astro.config.ts) to validate image paths.
 
-<GitHubCode
-	repo="cloudflare/cloudflare-docs"
-	file="astro.config.ts"
-	commit="aaacc3c3c2a7517ee307ddfc56962cbea9847202"
-	lang="ts"
-	lines="62-76"
-	code={{ title: "astro.config.ts", mark: 5 }}
-/>
+```ts title="astro.config.ts" {5}
+export default defineConfig({
+	site: "https://developers.cloudflare.com",
+	markdown: {
+		smartypants: false,
+		remarkPlugins: [remarkValidateImages],
+		rehypePlugins: [
+			rehypeMermaid,
+			rehypeExternalLinks,
+			rehypeHeadingSlugs,
+			rehypeAutolinkHeadings,
+			// @ts-expect-error plugins types are outdated but functional
+			rehypeTitleFigure,
+			rehypeShiftHeadings,
+		],
+	},
+```
 
 This ensures that the build-time `nimbus/image-ref` lint rule validates all image paths. If the path does not exist, we throw an error and prevent the site from building.
 
