@@ -33,13 +33,13 @@ By default, DataChannels are reliable and ordered: every message is delivered, a
 
 Set these optional fields when you create a DataChannel with the [HTTPS API](/realtime/sfu/https-api/), on the publisher (`location: "local"`) and on each subscriber (`location: "remote"`):
 
-- `ordered` (boolean, default `true`) — when `false`, messages may arrive out of order and do not block later messages.
-- `maxRetransmits` (integer) — maximum retransmissions per message. Use `0` for no retransmits (unreliable). Omit for unlimited retransmits.
-- `maxPacketLifeTime` (integer) — maximum time in milliseconds the stack may spend trying to send a message. Omit for unlimited lifetime.
+- `ordered` (boolean, default `true`) — when `false`, messages may arrive out of order. A delayed message does not block later messages.
+- `maxRetransmits` (integer) — maximum number of times the WebRTC transport may retransmit a message after the first send. Use `0` for no retransmits (unreliable). Omit for unlimited retransmits.
+- `maxPacketLifeTime` (integer) — maximum time in milliseconds that the WebRTC transport may spend trying to deliver a message before giving up. Omit for unlimited lifetime.
 
 `maxRetransmits` and `maxPacketLifeTime` are mutually exclusive; do not set both on the same channel.
 
-Because Realtime DataChannels use negotiated IDs, also pass the same options to `createDataChannel()` on the publisher and on each subscriber. The browser does not learn reliability from an in-band OPEN message.
+Because Realtime DataChannels use negotiated IDs, also pass the same options to `createDataChannel()` on the publisher and on each subscriber. The browser does not learn these reliability settings from the remote peer.
 
 Create an unreliable, unordered publisher channel:
 
