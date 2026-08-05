@@ -12,7 +12,7 @@
 		"directory": "./dist",
 		"binding": "ASSETS",
 		"not_found_handling": "404-page",
-		"run_worker_first": true
+		"run_worker_first": false
 	},
 	"previews": {
 		"r2_buckets": [{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" }]
