@@ -193,10 +193,10 @@ const facetMatchMaps = Object.fromEntries(
 
 		const matches = cells.filter((cell) => {
 			const haystack = cell.dataset.search ?? cell.dataset.name ?? "";
-			const nameOk =
+			const searchOk =
 				queryTokens.length === 0 ||
 				queryTokens.every((token) => haystack.includes(token));
-			if (!nameOk) return false;
+			if (!searchOk) return false;
 			return facetKeys.every((key) => {
 				const chosen = selMatch[key];
 				if (chosen.length === 0) return true;
