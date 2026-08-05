@@ -567,7 +567,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
 
 - `preview_database_id` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview ID of this D1 database. If provided, `wrangler dev` uses this ID. Otherwise, it uses `database_id`.
+  - The preview ID of this D1 database. If provided, `wrangler dev` uses this ID. Otherwise, it uses `database_id`. This option is recommended when using `wrangler dev --remote` to avoid using your production database.
 
 - `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
   - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files (for example, if you have a mono-repo setup, and want to use a single D1 instance across your apps/packages).
