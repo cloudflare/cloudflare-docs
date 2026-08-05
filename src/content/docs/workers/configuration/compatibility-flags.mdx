@@ -56,9 +56,11 @@ If your compatibility date is 2024-09-22 or before and you want to enable v2, ad
 If your compatibility date is after 2024-09-23, but you want to disable v2 to avoid increasing your bundle size, add the `no_nodejs_compat_v2` in addition to the `nodejs_compat flag`.
 :::
 
-A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/):
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs/), with no need to add polyfills to your own code.
 
 <Render file="nodejs_compat" product="workers" />
+
+As of compatibility date `2026-08-04`, the `nodejs_compat` flag is enabled by default. Workers using an older compatibility date can still opt in by adding `nodejs_compat` to their `compatibility_flags`:
 
 <WranglerConfig>
 
@@ -72,7 +74,7 @@ A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available 
 
 </WranglerConfig>
 
-As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
+To explicitly opt out, add `no_nodejs_compat` to your `compatibility_flags`.
 
 The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
 

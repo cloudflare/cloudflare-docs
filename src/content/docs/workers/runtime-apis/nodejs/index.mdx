@@ -20,7 +20,9 @@ Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
 ## Get Started
 
-To enable built-in Node.js APIs and add polyfills, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/), and ensure that your Worker's [compatibility date](/workers/configuration/compatibility-dates/) is 2024-09-23 or later. [Learn more about the Node.js compatibility flag and v2](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
+For compatibility dates of `2026-08-04` or later, Workers enables Node.js compatibility by default. Built-in Node.js APIs and polyfills are available without additional configuration. For more information, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
+
+If your compatibility date is earlier, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in, and ensure that your compatibility date is `2024-09-23` or later:
 
 <WranglerConfig>
 

@@ -4,7 +4,9 @@
 
 import { WranglerConfig } from "~/components";
 
-To enable both built-in runtime APIs and polyfills for your Worker or Pages project, add the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) to your [Wrangler configuration file](/workers/wrangler/configuration/), and set your compatibility date to September 23rd, 2024 or later. This will enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Workers project.
+As of compatibility date `2026-08-04`, [Node.js compatibility](/workers/runtime-apis/nodejs/) is enabled by default for all Workers and Pages projects. If your compatibility date is `2026-08-04` or later, built-in runtime APIs and polyfills are available without any additional configuration.
+
+If your compatibility date is before `2026-08-04`, add the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in:
 
 <WranglerConfig>
 

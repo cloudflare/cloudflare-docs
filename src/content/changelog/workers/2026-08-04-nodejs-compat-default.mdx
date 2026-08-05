@@ -1,0 +1,27 @@
+---
+title: "nodejs_compat compatibility flag is now enabled by default"
+description: Workers with a compatibility date of 2026-08-04 or later have Node.js compatibility enabled by default.
+products:
+  - workers
+date: 2026-08-04
+---
+
+The `nodejs_compat` compatibility flag is now enabled by default for all Workers
+with a [compatibility date](/workers/configuration/compatibility-dates/) of
+`2026-08-04` or later. You no longer need to explicitly add `nodejs_compat` to
+your `compatibility_flags` array.
+
+This means all [Node.js built-in APIs](/workers/runtime-apis/nodejs/) supported
+by the Workers runtime are available by default, including `node:crypto`,
+`node:buffer`, `node:stream`, `node:net`, `node:dns`, `node:fs`, `node:http`,
+and more. npm packages that depend on these APIs will work without additional
+configuration.
+
+Existing Workers are not affected. If your Worker already specifies `nodejs_compat`
+in `compatibility_flags`, it will continue to work as before. If your Worker uses
+an older compatibility date, you can still opt in by adding `nodejs_compat` to
+`compatibility_flags` manually.
+
+To explicitly opt out, add `no_nodejs_compat` to your `compatibility_flags`.
+
+For more information, refer to the [Node.js compatibility documentation](/workers/runtime-apis/nodejs/).
