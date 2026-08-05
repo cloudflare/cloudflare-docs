@@ -3,7 +3,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"preinstall": "pnpx only-allow pnpm",
+		"preinstall": "npx --yes only-allow pnpm",
 		"astro": "astro",
 		"prebuild": "tsx bin/fetch-skills.ts",
 		"build": "astro build",
