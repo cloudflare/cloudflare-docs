@@ -72,7 +72,7 @@ Depending on your Cloudflare networking configuration, you may need to remove ad
 In Include mode, add the following to your include list:
 
 - `100.96.0.0/12` — Mesh IPs (device IPs)
-- `100.80.0.0/16` and `2606:4700:0cf1:4000::/64` — Hostname routing (if used)
+- `172.64.128.0/20` and `2606:4700:0cf1:4000::/64` — Hostname routing (if used)
 - Any CIDR routes you have [configured for your Mesh nodes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/)
 
 ## Firewall considerations
