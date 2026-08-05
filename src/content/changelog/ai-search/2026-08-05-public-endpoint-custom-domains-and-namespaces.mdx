@@ -18,13 +18,13 @@ https://search.example.com/search
 
 Set `public_endpoint_params.custom_domains` on an instance or namespace, then create a proxied `CNAME` record in your zone. Set `default_domain_enabled` to `false` to serve the custom domain only.
 
-Refer to [Custom domains](/ai-search/configuration/retrieval/custom-domains/).
+Refer to [Custom domains](/ai-search/configuration/retrieval/public-endpoint/custom-domains/).
 
 ## Cloudflare Access
 
 Because a custom domain routes through your own zone, you can protect a public endpoint with [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/). Users authenticate with your identity provider before any request reaches AI Search, and MCP clients authenticate with a service token.
 
-Refer to [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/).
+Refer to [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/).
 
 ## Namespace public endpoints
 
@@ -41,4 +41,4 @@ curl https://ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com/search \
 
 Set `public_endpoint_params.instances_allowed` on the namespace to control which instances the endpoint can reach.
 
-Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/namespace-public-endpoint/).
+Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/).

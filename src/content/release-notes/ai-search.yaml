@@ -67,7 +67,7 @@ entries:
   - publish_date: "2026-03-23"
     title: Public endpoint, UI snippets, and MCP support
     description: |-
-      AI Search now supports [public endpoints](/ai-search/configuration/retrieval/public-endpoint/), [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/), and [MCP](/ai-search/api/search/mcp/), making it easy to add search to your website or connect AI agents.
+      AI Search now supports [public endpoints](/ai-search/configuration/retrieval/public-endpoint/), [UI snippets](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/), and [MCP](/ai-search/api/search/mcp/), making it easy to add search to your website or connect AI agents.
   - publish_date: "2026-03-23"
     title: New REST API endpoints
     description: |-

@@ -12,11 +12,11 @@ import { DashButton, LinkCard, Aside } from "~/components";
 
 Configure public endpoints to expose your AI Search instance directly to users without requiring authentication. This enables you to share your AI Search functionality with external users, or to integrate it into public-facing applications.
 
-A [namespace](/ai-search/concepts/namespaces/) can also expose a public endpoint that searches across several instances. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/namespace-public-endpoint/).
+You can enable a public endpoint on a single instance or on a whole [namespace](/ai-search/concepts/namespaces/), which searches across several instances and merges the results. Everything on this page applies to both. For what is specific to namespaces, such as choosing which instances the endpoint can reach, refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/).
 
 ## Available endpoints
 
-Each AI Search instance can expose three public endpoints:
+An instance or a namespace can expose three public endpoints:
 
 | Endpoint            | Description                                   |
 | ------------------- | --------------------------------------------- |
@@ -24,25 +24,25 @@ Each AI Search instance can expose three public endpoints:
 | `/chat/completions` | OpenAI-compatible chat completion endpoint    |
 | `/search`           | Search endpoint that returns relevant chunks  |
 
-For details on how to use these endpoints, refer to [Public endpoint usage](/ai-search/api/search/public-endpoint/).
+No other paths are supported. For details on how to use these endpoints, refer to [Public endpoint usage](/ai-search/api/search/public-endpoint/).
 
 ## Public URL format
 
-When enabled, public endpoints are accessible at:
+Cloudflare generates the hostname when you enable the endpoint. It is not the instance or namespace name.
 
-```
-https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/<endpoint>
-```
-
-The `<PUBLIC_ENDPOINT_ID>` is your instance's unique public endpoint identifier. It is not the instance name.
+| Hostname                                              | Serves                                                                                                            |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com`       | A single instance.                                                                                                |
+| `ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com` | A [namespace](/ai-search/configuration/retrieval/public-endpoint/namespace/), searching across several instances. |
 
 For example:
 
-- `https://abc123.search.ai.cloudflare.com/mcp`
-- `https://abc123.search.ai.cloudflare.com/chat/completions`
 - `https://abc123.search.ai.cloudflare.com/search`
+- `https://ns-abc123.search.ai.cloudflare.com/search`
 
-You can also serve the same endpoints from a hostname that you own, such as `https://search.example.com/search`. Refer to [Custom domains](/ai-search/configuration/retrieval/custom-domains/).
+The identifier is generated the first time you enable the endpoint and is never rotated. Disabling the endpoint keeps the identifier, so re-enabling it reuses the same URL.
+
+You can also serve the same endpoints from a hostname that you own, such as `https://search.example.com/search`. Refer to [Custom domains](/ai-search/configuration/retrieval/public-endpoint/custom-domains/).
 
 ## Enabling and disabling public endpoints
 
@@ -50,11 +50,13 @@ You can enable or disable each public endpoint independently:
 
 1. Log in to your Cloudflare account, and go to **AI Search**.
    <DashButton url="/?to=/:account/ai/ai-search" />
-2. Select your AI Search instance.
+2. Select your AI Search instance or namespace.
 3. Go to **Settings** > **Public Endpoints**.
 4. Toggle on **Public Endpoints** to enable the feature, then toggle each individual endpoint on or off as needed.
 
 Each endpoint has its own configuration panel for granular control.
+
+To enable a namespace endpoint through the API, refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/#enable-a-namespace-public-endpoint).
 
 ## Rate limiting
 
@@ -81,7 +83,7 @@ You can customize allowed origins in the **Public Endpoints** settings by adding
 
 <Aside type="caution">
 
-Allowed origins are a browser control, not an access control. They set CORS response headers, which only browsers honor. A request from `curl`, a script, or any non-browser client ignores them. To restrict who can query your content, refer to [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/).
+Allowed origins are a browser control, not an access control. They set CORS response headers, which only browsers honor. A request from `curl`, a script, or any non-browser client ignores them. To restrict who can query your content, refer to [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/).
 
 </Aside>
 
@@ -102,7 +104,7 @@ or use Acme products.
 
 A public endpoint does not require authentication. Anyone who knows the URL can query your indexed content.
 
-To restrict who can query the endpoint, add a [custom domain](/ai-search/configuration/retrieval/custom-domains/) and protect it with [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/). Users then authenticate with your identity provider before any request reaches AI Search.
+To restrict who can query the endpoint, add a [custom domain](/ai-search/configuration/retrieval/public-endpoint/custom-domains/) and protect it with [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/). Users then authenticate with your identity provider before any request reaches AI Search.
 
 If you keep the endpoint open:
 
@@ -115,24 +117,24 @@ If you keep the endpoint open:
 
 <LinkCard
 	title="Custom domains"
-	href="/ai-search/configuration/retrieval/custom-domains/"
+	href="/ai-search/configuration/retrieval/public-endpoint/custom-domains/"
 	description="Serve a public endpoint from a hostname that you own."
 />
 
 <LinkCard
 	title="Cloudflare Access"
-	href="/ai-search/configuration/retrieval/cloudflare-access/"
+	href="/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/"
 	description="Require users to authenticate before they can query your content."
 />
 
 <LinkCard
 	title="Namespace public endpoints"
-	href="/ai-search/configuration/retrieval/namespace-public-endpoint/"
+	href="/ai-search/configuration/retrieval/public-endpoint/namespace/"
 	description="Search across several instances from a single public endpoint."
 />
 
 <LinkCard
 	title="UI snippets"
-	href="/ai-search/configuration/retrieval/embed-search-snippets/"
+	href="/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/"
 	description="Add pre-built search and chat components to your website."
 />

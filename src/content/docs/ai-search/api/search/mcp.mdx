@@ -23,6 +23,16 @@ Enable public endpoints for your AI Search instance:
 4. Turn on **Enable Public Endpoint**.
 5. Copy the public endpoint URL.
 
+## Namespace MCP endpoints
+
+You can enable a public endpoint on a single instance or on a whole [namespace](/ai-search/configuration/retrieval/public-endpoint/namespace/). A namespace endpoint serves `/mcp` as well, and searches across the instances you allow in that namespace. Its hostname is prefixed with `ns-`:
+
+```txt
+https://ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com/mcp
+```
+
+The tools and request format are the same for both. The examples on this page use the instance hostname.
+
 ## Available tools
 
 The AI Search MCP endpoint exposes a `search` tool that queries your indexed content.
@@ -53,3 +63,17 @@ curl https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/mcp \
     }
   }'
 ```
+
+## Bring your own domain
+
+You can serve the MCP endpoint from a hostname that you own, such as `https://search.example.com/mcp`, instead of the generated one. The hostname must belong to a zone on the same Cloudflare account. To attach a custom domain:
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/ai/ai-search" />
+2. Select your instance or namespace.
+3. Go to **Public Endpoints** and enable the public endpoint. A custom domain requires an active public endpoint.
+4. Go to **Custom Domains** and attach your hostname.
+
+A custom domain routes requests through your own zone, so you can then put [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/) in front of the endpoint. MCP clients authenticate with an Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/), sent as `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers, so your agents can reach the endpoint and the public internet cannot.
+
+To attach a domain through the API instead, refer to [Custom domains](/ai-search/configuration/retrieval/public-endpoint/custom-domains/).

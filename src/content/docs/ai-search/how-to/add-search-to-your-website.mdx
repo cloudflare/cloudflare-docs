@@ -17,7 +17,7 @@ import {
 	LinkCard,
 } from "~/components";
 
-This tutorial creates an AI Search instance that indexes your website, then adds a working search bar, chat bubble, and search modal to your site's frontend. It uses the [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/), pre-built web components that connect to your instance's public endpoint, so you add search with only a few lines of frontend code.
+This tutorial creates an AI Search instance that indexes your website, then adds a working search bar, chat bubble, and search modal to your site's frontend. It uses the [UI snippets](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/), pre-built web components that connect to your instance's public endpoint, so you add search with only a few lines of frontend code.
 
 **What you will build:** An AI Search instance that indexes your website, and a search bar, chat bubble, and search modal added to your site's frontend that query that content.
 
@@ -27,7 +27,7 @@ This tutorial creates an AI Search instance that indexes your website, then adds
 
 <Render file="prereqs" product="workers" />
 
-This tutorial adds search to an existing React app. If you are starting a new project, scaffold one first with the [React framework guide](/workers/framework-guides/web-apps/react/), then follow the next steps. The snippets are framework-agnostic web components, so the same approach works in other frameworks or plain HTML, as shown in [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/).
+This tutorial adds search to an existing React app. If you are starting a new project, scaffold one first with the [React framework guide](/workers/framework-guides/web-apps/react/), then follow the next steps. The snippets are framework-agnostic web components, so the same approach works in other frameworks or plain HTML, as shown in [UI snippets](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/).
 
 ## 1. Create an AI Search instance
 
@@ -72,7 +72,7 @@ The UI snippets connect to your instance through its public endpoint.
 
 ## 3. Install the snippet library
 
-In your website's project, install the [AI Search UI snippet library](/ai-search/configuration/retrieval/embed-search-snippets/):
+In your website's project, install the [AI Search UI snippet library](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/):
 
 <PackageManagers type="add" pkg="@cloudflare/ai-search-snippet" />
 
@@ -160,7 +160,7 @@ Start your development server:
 
 <PackageManagers type="run" args="dev" />
 
-Open your site in the browser (a Vite app runs on `http://localhost:5173`). Type in the search bar to see results in a dropdown, select the chat bubble in the corner to ask a question, or press `Cmd/Ctrl+K` to open the search modal. For the full set of components, attributes, and theming options, refer to [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/).
+Open your site in the browser (a Vite app runs on `http://localhost:5173`). Type in the search bar to see results in a dropdown, select the chat bubble in the corner to ask a question, or press `Cmd/Ctrl+K` to open the search modal. For the full set of components, attributes, and theming options, refer to [UI snippets](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/).
 
 ## 7. Go to production
 
@@ -170,7 +170,7 @@ The snippets work anywhere your site is served. When you deploy your site to its
 
 <LinkCard
 	title="UI snippets"
-	href="/ai-search/configuration/retrieval/embed-search-snippets/"
+	href="/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/"
 	description="All snippet components, attributes, and CSS theming options."
 />
 

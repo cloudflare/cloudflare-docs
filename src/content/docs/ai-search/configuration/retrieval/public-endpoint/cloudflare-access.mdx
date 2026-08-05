@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Cloudflare Access
 description: Require users and agents to authenticate with your identity provider before they can query an AI Search public endpoint.
 sidebar:
-  order: 9
+  order: 3
 products:
   - ai-search
 ---
@@ -12,7 +12,7 @@ import { Steps, Aside, LinkCard, Tabs, TabItem } from "~/components";
 
 A [public endpoint](/ai-search/configuration/retrieval/public-endpoint/) is unauthenticated by design. Anyone who knows the URL can query your indexed content.
 
-Put a [custom domain](/ai-search/configuration/retrieval/custom-domains/) in front of the public endpoint and protect it with [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/). Users then authenticate with your identity provider before any request reaches AI Search. This turns a public knowledge base into an internal one without writing an authentication layer.
+Put a [custom domain](/ai-search/configuration/retrieval/public-endpoint/custom-domains/) in front of the public endpoint and protect it with [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/). Users then authenticate with your identity provider before any request reaches AI Search. This turns a public knowledge base into an internal one without writing an authentication layer.
 
 ## How it works
 
@@ -31,7 +31,7 @@ This routing is called [orange-to-orange](/cloudflare-for-platforms/cloudflare-f
 
 ## Prerequisites
 
-- A [custom domain](/ai-search/configuration/retrieval/custom-domains/) on the instance or namespace you want to protect, with a **Proxied** `CNAME` record.
+- A [custom domain](/ai-search/configuration/retrieval/public-endpoint/custom-domains/) on the instance or namespace you want to protect, with a **Proxied** `CNAME` record.
 - Cloudflare Access enabled on your account.
 - An [identity provider](/cloudflare-one/integrations/identity-providers/) connected to Cloudflare Access, or Cloudflare's one-time PIN.
 
@@ -80,8 +80,8 @@ For the full set of options, refer to [Publish a self-hosted application](/cloud
 
 An application with no policy denies every request. Add at least one [Allow policy](/cloudflare-one/access-controls/policies/#allow) that describes who may query your content.
 
-| Action | Rule type | Selector      | Value         |
-| ------ | --------- | ------------- | ------------- |
+| Action | Rule type | Selector         | Value          |
+| ------ | --------- | ---------------- | -------------- |
 | Allow  | Include   | Emails ending in | `@example.com` |
 
 Use the email, country, IP range, or identity provider group [selectors](/cloudflare-one/access-controls/policies/#cloudflare-access-selectors) to match your organization. Refer to [Common policies](/cloudflare-one/access-controls/policies/common-policies/) for more examples.
@@ -167,7 +167,7 @@ The response is a `404` with error code `60018`.
 
 ## Limitations
 
-- **UI snippets on a public website stop working.** [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/) call the public endpoint from the visitor's browser. Behind Access, only visitors who pass your policies can use them. Use Access for internal sites, and leave the endpoint open for public marketing sites.
+- **UI snippets on a public website stop working.** [UI snippets](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/) call the public endpoint from the visitor's browser. Behind Access, only visitors who pass your policies can use them. Use Access for internal sites, and leave the endpoint open for public marketing sites.
 - **Cross-origin browser requests need an Access CORS configuration.** If a page on a different origin calls the protected hostname, configure CORS settings on the Access application in addition to the [allowed origins](/ai-search/configuration/retrieval/public-endpoint/#cors-configuration) on the public endpoint.
 - **Rate limits still apply.** AI Search enforces its own rate limit after Access, and it is shared across all authenticated callers.
 - **Allowed origins are not authentication.** The `authorized_hosts` setting sets CORS response headers, which only browsers honor. It does not stop a direct request from `curl` or a script.
@@ -176,18 +176,18 @@ The response is a `404` with error code `60018`.
 
 Once the `CNAME` record is proxied, other Cloudflare products also apply to the hostname:
 
-| Product                                            | Use it to                                                   |
-| -------------------------------------------------- | ------------------------------------------------------------ |
-| [WAF custom rules](/waf/custom-rules/)             | Allow specific countries, ASNs, IP ranges, or headers        |
-| [Rate limiting rules](/waf/rate-limiting-rules/)   | Apply per-client limits beyond the public endpoint limit     |
-| [Bot Management](/bots/)                           | Score and challenge automated traffic                        |
-| [Turnstile](/turnstile/)                           | Verify humans before a browser client calls the endpoint     |
+| Product                                          | Use it to                                                |
+| ------------------------------------------------ | -------------------------------------------------------- |
+| [WAF custom rules](/waf/custom-rules/)           | Allow specific countries, ASNs, IP ranges, or headers    |
+| [Rate limiting rules](/waf/rate-limiting-rules/) | Apply per-client limits beyond the public endpoint limit |
+| [Bot Management](/bots/)                         | Score and challenge automated traffic                    |
+| [Turnstile](/turnstile/)                         | Verify humans before a browser client calls the endpoint |
 
 ## Next steps
 
 <LinkCard
 	title="Custom domains"
-	href="/ai-search/configuration/retrieval/custom-domains/"
+	href="/ai-search/configuration/retrieval/public-endpoint/custom-domains/"
 	description="Serve a public endpoint from a hostname that you own."
 />
 

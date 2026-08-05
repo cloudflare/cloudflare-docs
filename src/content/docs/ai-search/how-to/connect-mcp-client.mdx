@@ -96,7 +96,7 @@ To test the endpoint directly or build your own client, refer to [MCP](/ai-searc
 
 The public endpoint does not require authentication, so anyone with the URL can query your indexed content.
 
-To require authentication, add a [custom domain](/ai-search/configuration/retrieval/custom-domains/) and protect it with [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/). MCP clients then authenticate with an Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) sent as request headers.
+To require authentication, add a [custom domain](/ai-search/configuration/retrieval/public-endpoint/custom-domains/) and protect it with [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/). MCP clients then authenticate with an Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) sent as request headers.
 
 If you keep the endpoint open:
 
@@ -122,7 +122,7 @@ Refer to [Public endpoint settings](/ai-search/configuration/retrieval/public-en
 
 <LinkCard
 	title="Cloudflare Access"
-	href="/ai-search/configuration/retrieval/cloudflare-access/"
+	href="/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/"
 	description="Require MCP clients to authenticate before they can search."
 />
 

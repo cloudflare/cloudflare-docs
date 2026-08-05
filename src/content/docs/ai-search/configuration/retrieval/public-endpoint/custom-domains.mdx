@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Custom domains
 description: Serve an AI Search public endpoint from a hostname that you own, such as search.example.com.
 sidebar:
-  order: 8
+  order: 2
 products:
   - ai-search
 ---
@@ -20,7 +20,7 @@ https://search.example.com/chat/completions
 https://search.example.com/mcp
 ```
 
-Custom domains are also the foundation for [restricting access with Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/), which lets users authenticate with your identity provider before they can query your indexed content.
+Custom domains are also the foundation for [restricting access with Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/), which lets users authenticate with your identity provider before they can query your indexed content.
 
 ## Requirements
 
@@ -46,7 +46,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-searc
   }'
 ```
 
-The same field is available on namespaces. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/namespace-public-endpoint/).
+The same field is available on namespaces. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/).
 
 Cloudflare issues a certificate for the hostname and begins domain control validation.
 
@@ -82,7 +82,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" 
 
 <Aside type="note" title="Keep the record proxied">
 
-Set the record to **Proxied**, not **DNS only**. A proxied record routes traffic through your own zone before it reaches AI Search, so your zone settings apply first. This is what makes [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/), [WAF custom rules](/waf/custom-rules/), and [Bot Management](/bots/) usable in front of your public endpoint.
+Set the record to **Proxied**, not **DNS only**. A proxied record routes traffic through your own zone before it reaches AI Search, so your zone settings apply first. This is what makes [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/), [WAF custom rules](/waf/custom-rules/), and [Bot Management](/bots/) usable in front of your public endpoint.
 
 </Aside>
 
@@ -105,7 +105,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-searc
   }'
 ```
 
-Turn this off whenever you put security controls in front of the custom domain. Those controls run in your own zone, so any traffic that reaches the default hostname skips them. Refer to [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/).
+Turn this off whenever you put security controls in front of the custom domain. Those controls run in your own zone, so any traffic that reaches the default hostname skips them. Refer to [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/).
 
 Three rules apply:
 
@@ -148,7 +148,7 @@ Deleting the instance or namespace removes its custom domains and certificates.
 
 <LinkCard
 	title="Cloudflare Access"
-	href="/ai-search/configuration/retrieval/cloudflare-access/"
+	href="/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/"
 	description="Require users to authenticate before they can query your public endpoint."
 />
 

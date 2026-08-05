@@ -433,7 +433,8 @@
 /ai-search/configuration/system-prompt/ /ai-search/configuration/retrieval/system-prompt/ 301
 /ai-search/configuration/cache/ /ai-search/configuration/retrieval/cache/ 301
 /ai-search/configuration/public-endpoint/ /ai-search/configuration/retrieval/public-endpoint/ 301
-/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/embed-search-snippets/ 301
+/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
+/ai-search/configuration/retrieval/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
