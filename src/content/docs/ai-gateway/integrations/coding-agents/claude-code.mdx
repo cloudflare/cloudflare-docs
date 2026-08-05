@@ -10,7 +10,7 @@ products:
 
 import { Tabs, TabItem, Steps } from "~/components";
 
-[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) reads its endpoint and credentials from environment variables. This configuration sends requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/), authenticated with your Cloudflare gateway token. The Anthropic endpoint exposes the same `/v1/messages` API that Claude Code expects. When AI Gateway supplies the Anthropic credentials for you — using either an Anthropic API key you [store as a provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) or [Unified Billing](/ai-gateway/features/unified-billing/) credits — the `ANTHROPIC_API_KEY` that Claude Code requires can be any placeholder value.
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) reads its endpoint and credentials from environment variables. If your gateway is protected by Cloudflare Access, refer to [Use with Cloudflare Access](#use-with-cloudflare-access). This configuration sends requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/), authenticated with your Cloudflare gateway token. The Anthropic endpoint exposes the same `/v1/messages` API that Claude Code expects. When AI Gateway supplies the Anthropic credentials for you — using either an Anthropic API key you [store as a provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/) or [Unified Billing](/ai-gateway/features/unified-billing/) credits — the `ANTHROPIC_API_KEY` that Claude Code requires can be any placeholder value.
 
 ## Prerequisites
 
@@ -143,5 +143,22 @@ To run Claude models through [Google Vertex AI](/ai-gateway/usage/providers/vert
    ```
 
 </Steps>
+
+## Use with Cloudflare Access
+
+If your gateway is protected by [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), Claude Code can authenticate with a short-lived Access token instead of a gateway token. Point `ANTHROPIC_BASE_URL` at your [custom domain](/ai-gateway/configuration/custom-domains/) and use Claude Code's `apiKeyHelper` to fetch the token with [`cloudflared`](/cloudflare-one/access-controls/authenticate-agents/#make-requests-with-cloudflared-access-curl). Claude Code sends the token as the API key, and Access verifies it at the edge.
+
+Add the following to Claude Code's [`settings.json`](https://docs.anthropic.com/en/docs/claude-code/settings#settings-files), replacing `ai-gateway.example.com` with your custom domain:
+
+```json title="~/.claude/settings.json"
+{
+	"apiKeyHelper": "cloudflared access login --no-verbose https://ai-gateway.example.com",
+	"env": {
+		"ANTHROPIC_BASE_URL": "https://ai-gateway.example.com/anthropic"
+	}
+}
+```
+
+The first request opens your identity provider's login flow. After you authenticate, requests route through AI Gateway with your Access identity attached as [`cf.user_id`](/ai-gateway/observability/custom-metadata/#reserved-metadata).
 
 To confirm traffic reaches AI Gateway, refer to [Verify it works](/ai-gateway/integrations/coding-agents/#verify-it-works).
