@@ -13,6 +13,16 @@ minimumReleaseAgeExclude:
   - miniflare
   - workerd
   - "@cloudflare/workers-types"
+  # Rolldown 1.2.3 contains the native memory fix tested by this branch.
+  - rolldown@1.2.3
+  - "@rolldown/*"
+
+overrides:
+  # rolldown 1.1.x has a memory leak (rolldown/rolldown#10554) that causes
+  # Workers Builds to OOM. Vite 8.2.0+ depends on rolldown ~1.2.0, but Astro
+  # pins Vite ~8.1.0, so the override is needed until Astro bumps its Vite
+  # range to >=8.2.0 (which resolves rolldown >=1.2.3).
+  rolldown: 1.2.3
 
 # On Astro 7 the @astrojs/mdx → @astrojs/markdown-satteri peer is satisfied
 # natively (nimbus-docs pulls markdown-satteri 0.3.4, @astrojs/mdx@7 peers
