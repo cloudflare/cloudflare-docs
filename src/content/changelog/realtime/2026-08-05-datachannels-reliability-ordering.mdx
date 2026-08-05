@@ -10,11 +10,11 @@ date: 2026-08-05
 
 By default, DataChannels remain reliable and ordered. For latency-sensitive payloads such as game state or live sensor updates, you can opt into unordered delivery or partial reliability when you create a channel with the [HTTPS API](/realtime/sfu/https-api/).
 
-Set the same optional fields on the publisher (`location: "local"`) and each subscriber (`location: "remote"`):
+Set the same optional fields on the publisher (`location: "local"`), each subscriber (`location: "remote"`), and `createDataChannel()` on every client:
 
-- `ordered` (default `true`) — when `false`, messages may arrive out of order and do not block later messages
-- `maxRetransmits` — maximum retransmissions per message; use `0` for fully unreliable delivery
-- `maxPacketLifeTime` — maximum time in milliseconds to keep trying to send a message
+- `ordered` (default `true`) — when `false`, messages may arrive out of order. A delayed message does not block later messages
+- `maxRetransmits` — maximum number of times the WebRTC transport may retransmit a message; use `0` for fully unreliable delivery
+- `maxPacketLifeTime` — maximum time in milliseconds that the WebRTC transport may spend trying to deliver a message before giving up
 
 `maxRetransmits` and `maxPacketLifeTime` are mutually exclusive. Because Realtime DataChannels use negotiated IDs, also pass the same options to `createDataChannel()` on the publisher and each subscriber.
 

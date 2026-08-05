@@ -1257,22 +1257,25 @@ components:
           default: true
           description: >
             When true (default), messages are delivered in send order. When false, messages may
-            arrive out of order and do not block later messages. Set on both local (publisher)
-            and remote (subscriber) DataChannels, and mirror the value on createDataChannel().
+            arrive out of order. A delayed message does not block later messages. Set on both
+            local (publisher) and remote (subscriber) DataChannels, and mirror the value on
+            createDataChannel().
         maxRetransmits:
           type: integer
           minimum: 0
           description: >
-            Maximum number of retransmissions per message. 0 means no retransmits (unreliable).
-            Omit for unlimited retransmits (reliable). Mutually exclusive with maxPacketLifeTime.
-            Set on both local and remote DataChannels, and mirror the value on createDataChannel().
+            Maximum number of times the WebRTC transport may retransmit a message after the first
+            send. 0 means no retransmits (unreliable). Omit for unlimited retransmits (reliable).
+            Mutually exclusive with maxPacketLifeTime. Set on both local and remote DataChannels,
+            and mirror the value on createDataChannel().
         maxPacketLifeTime:
           type: integer
           minimum: 0
           description: >
-            Maximum time in milliseconds the stack may spend trying to transmit a message.
-            Omit for unlimited lifetime (reliable). Mutually exclusive with maxRetransmits.
-            Set on both local and remote DataChannels, and mirror the value on createDataChannel().
+            Maximum time in milliseconds that the WebRTC transport may spend trying to deliver a
+            message before giving up. Omit for unlimited lifetime (reliable). Mutually exclusive
+            with maxRetransmits. Set on both local and remote DataChannels, and mirror the value
+            on createDataChannel().
         waitForAck:
           type: boolean
           default: false
