@@ -66,7 +66,7 @@ The UI snippets connect to your instance through its public endpoint.
 2. Select your `my-search` instance.
 3. Go to **Settings** > **Public Endpoint**.
 4. Turn on **Enable Public Endpoint**.
-5. Copy the public endpoint ID from the URL, `https://<INSTANCE_ID>.search.ai.cloudflare.com/`. You will use it in the next steps.
+5. Copy the public endpoint ID from the URL, `https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/`. You will use it in the next steps.
 
 </Steps>
 
@@ -78,7 +78,7 @@ In your website's project, install the [AI Search UI snippet library](/ai-search
 
 ## 4. Add the search components
 
-Import the snippet library in one of your components and add the tags where you want search to appear. Importing the package once registers the components with the browser. The following example adds a search bar, a floating chat bubble, and a search modal that opens with `Cmd/Ctrl+K` to the app's root component. Replace `<INSTANCE_ID>` with your public endpoint ID from step two.
+Import the snippet library in one of your components and add the tags where you want search to appear. Importing the package once registers the components with the browser. The following example adds a search bar, a floating chat bubble, and a search modal that opens with `Cmd/Ctrl+K` to the app's root component. Replace `<PUBLIC_ENDPOINT_ID>` with your public endpoint ID from step two.
 
 ```tsx title="src/App.tsx"
 import "@cloudflare/ai-search-snippet";
@@ -87,7 +87,7 @@ export default function App() {
 	return (
 		<div>
 			<search-bar-snippet
-				api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+				api-url="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/"
 				placeholder="Search..."
 				max-results={50}
 				max-render-results={10}
@@ -95,7 +95,7 @@ export default function App() {
 				show-date="true"
 			/>
 			<chat-bubble-snippet
-				api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+				api-url="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/"
 				style={
 					{
 						"--search-snippet-primary-color": "#F6821F",
@@ -103,7 +103,7 @@ export default function App() {
 				}
 			/>
 			<search-modal-snippet
-				api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+				api-url="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/"
 				placeholder="Search documentation..."
 				shortcut="k"
 				show-url="true"

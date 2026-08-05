@@ -1,0 +1,154 @@
+---
+pcx_content_type: concept
+title: Namespace public endpoints
+description: Expose several AI Search instances through a single public endpoint scoped to a namespace.
+sidebar:
+  order: 10
+products:
+  - ai-search
+---
+
+import { Aside, LinkCard } from "~/components";
+
+A [namespace](/ai-search/concepts/namespaces/) can expose its own public endpoint. A single URL then searches across several instances in that namespace and merges the results.
+
+This is the multi-instance equivalent of an [instance public endpoint](/ai-search/configuration/retrieval/public-endpoint/). The two are independent. A namespace endpoint and the endpoints of the instances inside it can be enabled or disabled separately.
+
+Use a namespace endpoint when one search experience covers content that lives in several instances, such as documentation, a blog, and a support portal.
+
+## Available endpoints
+
+| Endpoint            | Description                                            |
+| ------------------- | ------------------------------------------------------ |
+| `/search`           | Returns relevant chunks from across the instances      |
+| `/chat/completions` | Generates a response from across the instances         |
+| `/mcp`              | Model Context Protocol endpoint for AI agents          |
+
+No other paths are supported. A request to any other path returns a `404` with error `60006`.
+
+## Public URL format
+
+A namespace public endpoint identifier is prefixed with `ns-`:
+
+```txt
+https://ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com/search
+```
+
+The identifier is generated the first time you enable the endpoint and is never rotated. Clearing the configuration keeps the identifier, so re-enabling the endpoint reuses the same URL.
+
+Namespace endpoints support [custom domains](/ai-search/configuration/retrieval/custom-domains/) and [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/) in the same way instance endpoints do.
+
+## Enable a namespace public endpoint
+
+Set `public_endpoint_params` on the namespace and list the instances to expose in `instances_allowed`.
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/<NAMESPACE>" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "public_endpoint_params": {
+      "enabled": true,
+      "instances_allowed": ["docs", "blog", "support"]
+    }
+  }'
+```
+
+The response returns the generated `public_endpoint_id`.
+
+## The instances allowlist
+
+`instances_allowed` controls which instances the endpoint can reach.
+
+- Every entry must be an existing instance in that namespace. An unknown entry returns error `7097`.
+- The list holds up to 10 instances.
+- An empty list means nothing is searchable. This is the state a namespace starts in when you first enable the endpoint.
+- Deleting an instance, or moving it to another namespace, removes it from the allowlist.
+
+A request that resolves to no searchable instance returns a `404` with error `60013`. This response is identical whether the instance does not exist, is outside the allowlist, or the allowlist is empty, so callers cannot discover which instances a namespace contains.
+
+## Search a subset of instances
+
+By default, a request searches every instance in the allowlist. To narrow a single request, set `ai_search_options.instance_ids` in the request body.
+
+```bash
+curl https://ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com/search \
+  --header "Content-Type: application/json" \
+  --data '{
+    "messages": [
+      {
+        "content": "How do I configure AI Search?",
+        "role": "user"
+      }
+    ],
+    "ai_search_options": {
+      "instance_ids": ["docs", "support"]
+    }
+  }'
+```
+
+Every value must be in the allowlist. Rules for this field:
+
+- Omitting the field, or setting it to `null`, searches the full allowlist.
+- A malformed value, such as an empty array or a non-string entry, returns a `400` with error `60012`.
+- A value outside the allowlist returns a `404` with error `60013`.
+
+<Aside type="note">
+
+The request body must be a JSON object. An array, a string, or an empty body returns a `400` with error `60015`.
+
+</Aside>
+
+## Shared settings
+
+Namespace endpoints accept the same configuration as instance endpoints, including `rate_limit`, `authorized_hosts`, `mcp`, `search_endpoint`, `chat_completions_endpoint`, `custom_domains`, and `default_domain_enabled`. Refer to [Public endpoint settings](/ai-search/configuration/retrieval/public-endpoint/).
+
+<Aside type="caution">
+
+`public_endpoint_params` is replaced in full on every update. Send the complete object, including `instances_allowed`, or omitted fields revert to their defaults. Omitting `instances_allowed` resets it to an empty list and makes the endpoint return `404` for every request.
+
+</Aside>
+
+## Disable a namespace public endpoint
+
+Set `public_endpoint_params` to `null`. This clears the configuration and stops serving traffic, but keeps the identifier so the URL is reused if you enable the endpoint again.
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/<NAMESPACE>" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "public_endpoint_params": null
+  }'
+```
+
+## Errors
+
+| Code    | Message                                            | HTTP status | Cause                                                                 |
+| ------- | -------------------------------------------------- | ----------- | ---------------------------------------------------------------------- |
+| `7097`  | `instances_allowed_contains_unknown_instances`     | 400         | An entry in `instances_allowed` is not an instance in this namespace. |
+| `7099`  | `namespace_modified_concurrently_please_retry`     | 409         | Another update changed the namespace at the same time. Retry.         |
+| `60012` | `invalid ai_search_options.instance_ids`           | 400         | The `instance_ids` value is malformed.                                |
+| `60013` | `ai_search_not_found`                              | 404         | No searchable instance matched the request.                           |
+| `60015` | `request body must be a JSON object`               | 400         | The request body is not a JSON object.                                |
+| `60006` | `endpoint not found`                               | 404         | The path is not `/search`, `/chat/completions`, or `/mcp`.            |
+
+## Next steps
+
+<LinkCard
+	title="Namespaces"
+	href="/ai-search/concepts/namespaces/"
+	description="Group instances into namespaces and manage them from a Workers binding."
+/>
+
+<LinkCard
+	title="Search across multiple instances"
+	href="/ai-search/how-to/search-multiple-sources/"
+	description="Query several instances from a Worker or the REST API."
+/>
+
+<LinkCard
+	title="Custom domains"
+	href="/ai-search/configuration/retrieval/custom-domains/"
+	description="Serve a namespace public endpoint from a hostname that you own."
+/>

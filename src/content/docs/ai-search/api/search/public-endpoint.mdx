@@ -27,12 +27,24 @@ Enable public endpoints for your AI Search instance:
 
 For configuration options like rate limiting and CORS, refer to [Public endpoint configuration](/ai-search/configuration/retrieval/public-endpoint/).
 
+## Endpoint hostnames
+
+The examples below use the default hostname. Two other hostnames serve the same endpoints:
+
+| Hostname                                                | Description                                                                                                      |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com`                | Default hostname for an instance.                                                                                |
+| `search.example.com`                                    | A [custom domain](/ai-search/configuration/retrieval/custom-domains/) that you own.                              |
+| `ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com`   | A [namespace endpoint](/ai-search/configuration/retrieval/namespace-public-endpoint/) that searches many instances. |
+
+The request and response formats are identical across all three.
+
 ## Chat completions
 
 The `/chat/completions` endpoint searches your data source and generates a response using the model and retrieved context. It uses the same OpenAI-compatible format as the [REST API](/ai-search/api/search/rest-api/#chat-completions).
 
 ```bash
-curl https://<INSTANCE_ID>.search.ai.cloudflare.com/chat/completions \
+curl https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
     "messages": [
@@ -51,7 +63,7 @@ For the full list of options, refer to the [Chat Completions API reference](/api
 The `/search` endpoint returns relevant chunks from your data source without generating a response. It uses the same format as the [REST API](/ai-search/api/search/rest-api/#search).
 
 ```bash
-curl https://<INSTANCE_ID>.search.ai.cloudflare.com/search \
+curl https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/search \
   -H "Content-Type: application/json" \
   -d '{
     "messages": [
@@ -70,3 +82,5 @@ For the full list of options, refer to the [Search API reference](/api/resources
 - [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/) - Add pre-built search and chat components to your website.
 - [MCP](/ai-search/api/search/mcp/) - Connect AI agents using the Model Context Protocol.
 - [Public endpoint configuration](/ai-search/configuration/retrieval/public-endpoint/) - Configure rate limiting, CORS, and security settings.
+- [Custom domains](/ai-search/configuration/retrieval/custom-domains/) - Serve these endpoints from a hostname that you own.
+- [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/) - Require callers to authenticate before they reach these endpoints.

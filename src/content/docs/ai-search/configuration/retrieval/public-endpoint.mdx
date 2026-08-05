@@ -8,9 +8,11 @@ products:
   - ai-search
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, LinkCard, Aside } from "~/components";
 
 Configure public endpoints to expose your AI Search instance directly to users without requiring authentication. This enables you to share your AI Search functionality with external users, or to integrate it into public-facing applications.
+
+A [namespace](/ai-search/concepts/namespaces/) can also expose a public endpoint that searches across several instances. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/namespace-public-endpoint/).
 
 ## Available endpoints
 
@@ -29,16 +31,18 @@ For details on how to use these endpoints, refer to [Public endpoint usage](/ai-
 When enabled, public endpoints are accessible at:
 
 ```
-https://<hash>.search.ai.cloudflare.com/<endpoint>
+https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/<endpoint>
 ```
 
-The `<hash>` is your instance's unique public endpoint identifier.
+The `<PUBLIC_ENDPOINT_ID>` is your instance's unique public endpoint identifier. It is not the instance name.
 
 For example:
 
 - `https://abc123.search.ai.cloudflare.com/mcp`
 - `https://abc123.search.ai.cloudflare.com/chat/completions`
 - `https://abc123.search.ai.cloudflare.com/search`
+
+You can also serve the same endpoints from a hostname that you own, such as `https://search.example.com/search`. Refer to [Custom domains](/ai-search/configuration/retrieval/custom-domains/).
 
 ## Enabling and disabling public endpoints
 
@@ -73,7 +77,13 @@ The default allowed origins depend on your data source type:
 - **Website data sources**: The source domain is automatically added as an allowed origin.
 - **Other data sources**: All origins (`*`) are allowed by default.
 
-You can customize allowed origins in the **Public Endpoints** settings by adding specific hostnames to the CORS rules.
+You can customize allowed origins in the **Public Endpoints** settings by adding specific hostnames to **Authorized hosts**.
+
+<Aside type="caution">
+
+Allowed origins are a browser control, not an access control. They set CORS response headers, which only browsers honor. A request from `curl`, a script, or any non-browser client ignores them. To restrict who can query your content, refer to [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/).
+
+</Aside>
 
 ## Tool description
 
@@ -90,11 +100,39 @@ or use Acme products.
 
 ## Security considerations
 
-- Public endpoints do not require authentication.
-- Consider enabling rate limiting to prevent abuse.
-- Use CORS rules to restrict access to specific domains.
+A public endpoint does not require authentication. Anyone who knows the URL can query your indexed content.
+
+To restrict who can query the endpoint, add a [custom domain](/ai-search/configuration/retrieval/custom-domains/) and protect it with [Cloudflare Access](/ai-search/configuration/retrieval/cloudflare-access/). Users then authenticate with your identity provider before any request reaches AI Search.
+
+If you keep the endpoint open:
+
+- Only index content that is safe to expose publicly.
+- Set a [rate limit](#rate-limiting) to limit abuse.
+- Disable the endpoints you do not use, such as `/mcp`.
 - Monitor usage through your dashboard analytics.
 
 ## Related
 
-- [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/) - Add pre-built search and chat components to your website using your public endpoints.
+<LinkCard
+	title="Custom domains"
+	href="/ai-search/configuration/retrieval/custom-domains/"
+	description="Serve a public endpoint from a hostname that you own."
+/>
+
+<LinkCard
+	title="Cloudflare Access"
+	href="/ai-search/configuration/retrieval/cloudflare-access/"
+	description="Require users to authenticate before they can query your content."
+/>
+
+<LinkCard
+	title="Namespace public endpoints"
+	href="/ai-search/configuration/retrieval/namespace-public-endpoint/"
+	description="Search across several instances from a single public endpoint."
+/>
+
+<LinkCard
+	title="UI snippets"
+	href="/ai-search/configuration/retrieval/embed-search-snippets/"
+	description="Add pre-built search and chat components to your website."
+/>
