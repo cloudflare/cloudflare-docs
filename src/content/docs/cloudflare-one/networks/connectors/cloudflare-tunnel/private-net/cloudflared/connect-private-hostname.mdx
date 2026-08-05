@@ -10,9 +10,11 @@ sidebar:
   order: 2
 ---
 
-import { Render, Details, GlossaryTooltip } from "~/components";
+import { Render, Details, GlossaryTooltip, TunnelHostnameRoutingDiagram } from "~/components";
 
 Instead of managing static IP lists and routes, you can connect users to private HTTP and non-HTTP applications using their hostnames (for example, `wiki.internal.local`). Private hostname routes are especially useful when the application has an unknown or ephemeral IP, which often occurs when infrastructure is provisioned by a third-party cloud provider.
+
+<TunnelHostnameRoutingDiagram />
 
 When a user requests a private hostname, Cloudflare Gateway assigns an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> to route the traffic through your tunnel to the correct private IP address. By default, this IP is drawn from a Cloudflare-owned public IPv4 range (`172.64.128.0/20`) rather than Carrier-Grade NAT (CGNAT) space, so it does not trigger [Google Chrome's Local Network Access restrictions](#google-chrome-restricts-access-to-private-hostnames). You can also [configure a custom range](/cloudflare-one/networks/routes/configure-initial-resolved-ips/) if it conflicts with your existing network. For a deep dive into the architecture and packet flow, refer to our [announcement blog post](https://blog.cloudflare.com/tunnel-hostname-routing/).
 

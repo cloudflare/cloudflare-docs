@@ -23,14 +23,14 @@ Alongside GA, the default IPv4 range used for <GlossaryTooltip term="initial res
 
 **Why this is changing:** Starting with [Chrome 142](https://developer.chrome.com/release-notes/142), Local Network Access (LNA) restrictions block background requests to CGNAT addresses (`100.64.0.0/10`), which included the previous initial resolved IP default (`100.80.0.0/16`). LNA is implemented at the Chromium engine level, so it affects all Chromium-based browsers (for example, Microsoft Edge, Brave, and Opera), not only Google Chrome. This could silently break hostname-based Gateway features for users of these browsers, and required Chrome Enterprise policy workarounds. The new default range is public Cloudflare address space, so it is not affected by this restriction.
 
-**What's affected:** Initial resolved IPs are used by several features that associate a DNS query with the network connection that follows it:
+**What is affected:** Initial resolved IPs are used by several features that associate a DNS query with the network connection that follows it:
 
 - [Private](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) and [public](/cloudflare-one/traffic-policies/egress-policies/egress-cloudflared/) hostname routing for Cloudflare Tunnel
 - [Hostname routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes) for Cloudflare Mesh
 - [Access private applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) on non-HTTPS ports
 - [Egress policy host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) (Domain, Host, Application, and Content Categories)
 
-**Rollout:** Cloudflare is migrating all accounts to the new default range over the next few days. Once migration is complete, you can check your account's current range, or configure a custom range, at any time from **Zero Trust** > **Team & Resources** > **Device profiles**, or using the [Initial Resolved IP Subnet API](https://developers.cloudflare.com/api/resources/zero_trust/subresources/networks/subresources/subnets/#(resource)%20zero_trust.networks.subnets.initial_resolved_ip).
+**Rollout:** Cloudflare is migrating all accounts to the new default range over the next few days. Once migration is complete, you can check your account's current range, or configure a custom range, at any time from **Zero Trust** > **Team & Resources** > **Device profiles**, or using the [Initial Resolved IP Subnet API](/api/resources/zero_trust/subresources/networks/subresources/subnets/#(resource)%20zero_trust.networks.subnets.initial_resolved_ip).
 
 <DashButton url="/?to=/:account/team-resources/devices/device-profiles" zeroTrust />
 
