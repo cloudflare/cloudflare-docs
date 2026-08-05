@@ -1,0 +1,25 @@
+---
+title: New module registry with import.meta, lazy compilation, and URL-based resolution
+description: A new module registry implementation is available via the new_module_registry compatibility flag, bringing import.meta support, URL-based specifier resolution, lazy compilation, shared caching, and WebAssembly source phase imports.
+products:
+  - workers
+date: 2026-08-05
+---
+
+A new module registry implementation is available via the `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry). The new registry resolves module specifiers as URLs rather than filesystem-style paths, and includes several new capabilities and performance improvements.
+
+## New capabilities
+
+- **`import.meta`** -- `import.meta.url`, `import.meta.main`, and `import.meta.resolve()` are now supported.
+- **URL-based specifier resolution** -- relative imports resolve the same way `new URL(specifier, base)` does. Query strings and fragments create distinct module instances, matching browser behavior.
+- **Singleton `node:` built-ins** -- `node:` modules return the same instance whether accessed via static `import`, dynamic `import()`, `require()`, or `process.getBuiltinModule()`.
+- **Import attribute validation** -- import attributes (`with { type: 'json' }`) are correctly validated. Unrecognized attribute keys and type mismatches throw errors instead of being silently ignored.
+- **`require(esm)` support** -- `require()` on an ES module follows Node.js `require(esm)` rules, including the `'module.exports'` named export convention and the top-level `await` restriction.
+- **WebAssembly source phase imports** -- import a compiled `WebAssembly.Module` directly with `import source mod from './module.wasm'` or `await import.source('./module.wasm')`.
+
+## Performance improvements
+
+- **Lazy compilation** -- modules are compiled on first import rather than all at startup, reducing cold start time for Workers with modules that are not always used.
+- **Shared compiled code** -- compiled V8 bytecode is produced once and shared across all isolate replicas of a Worker, eliminating redundant compilation.
+
+For the full reference, refer to the [module registry documentation](/workers/reference/module-registry/).
