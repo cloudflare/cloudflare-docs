@@ -344,6 +344,7 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 						pullRequest: stylePr,
 						files: selected,
 						runId,
+						headSha,
 					});
 					return { ok: true, result };
 				} catch (err) {

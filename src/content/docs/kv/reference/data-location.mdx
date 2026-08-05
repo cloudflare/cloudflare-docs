@@ -1,0 +1,42 @@
+---
+title: Data location
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+:::note
+
+Jurisdictions for Workers KV are currently in private beta. To enroll, contact your Cloudflare account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+:::
+
+Learn how the location of data stored in Workers KV is determined, including how you can restrict a namespace to a specific jurisdiction.
+
+## Automatic (default)
+
+By default, data written to a Workers KV namespace is replicated globally across Cloudflare's network with no jurisdictional restriction, allowing your data to be read with low latency from anywhere in the world.
+
+## Restrict a namespace to a jurisdiction
+
+Jurisdictions are used to create Workers KV namespaces that only durably store data within a region, to help comply with data locality regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+
+Workers may still access a namespace constrained to a jurisdiction from anywhere in the world, and KV data can be cached outside the jurisdiction location on Cloudflare's network. The jurisdiction constraint only controls where the namespace's data is durably stored. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
+
+:::note
+
+Jurisdictions can only be set when a namespace is created and cannot be added or changed afterwards.
+
+:::
+
+### Supported jurisdictions
+
+| Parameter | Location                       |
+| --------- | ------------------------------- |
+| eu        | The European Union              |
+| fedramp   | FedRAMP-compliant data centers  |
+| us        | The United States of America    |
+
+### Get access
+
+Workers KV jurisdictions are in private beta. If you are interested in restricting your namespaces to a supported jurisdiction, contact your Cloudflare account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to request access.

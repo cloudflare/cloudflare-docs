@@ -27,7 +27,7 @@ cloudflare-docs/
 │   ├── layouts/            # Page layout components
 │   ├── pages/              # Dynamic route pages (changelog, llms.txt, RSS, etc.)
 │   ├── schemas/            # Zod schemas for all content collections
-│   ├── plugins/            # Satteri hast pipeline plugins, Algolia DocSearch config
+│   ├── plugins/            # Satteri hast pipeline plugins
 │   ├── scripts/            # Client-side scripts (analytics, mermaid, webmcp, etc.)
 │   ├── styles/             # CSS (Tailwind 4)
 │   ├── icons/              # Product SVG icons (~110)
@@ -75,7 +75,7 @@ pcx_content_type: how-to # Page type (see below)
 sidebar:
   order: 1 # Sort order in sidebar
   label: Custom Label # Override sidebar text
-products: # References to src/content/products/ entries
+products: # References to src/content/directory/ entries
   - workers
 difficulty: Beginner # For tutorials: Beginner | Intermediate | Advanced
 reviewed: 2025-01-15 # YYYY-MM-DD of last content review
@@ -176,7 +176,7 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 7. **Wrong image location** — images go in `src/assets/images/`, never in `src/content/`.
 8. **Skipping heading levels** — H2 then H4 without H3 will violate style guide rules.
 9. **`$` prefix in terminal commands** — the copy button copies verbatim, including the `$`.
-10. **Invalid changelog product folders** — the product directory must exist in `src/content/products/`.
+10. **Invalid changelog product folders** — the changelog folder name must match a `directory` entry id in `src/content/directory/`.
 11. **Redirect issues** — source URLs in `public/__redirects` must end in `/` (or `*`, `.xml`, `.json`, `.html`). No fragments in source URLs. No infinite loops.
 12. **Hand-crafted directory entry IDs** — never manually write `id` values in `src/content/directory/` files. Always run `node tools/directory-entry-ids --fix` to generate them.
 
@@ -190,7 +190,6 @@ The site defines 20 content collections in `src/content.config.ts` with schemas 
 | `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)          |
 | `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                 |
 | `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                    |
-| `products`          | `src/content/products/`          | Product metadata (YAML)                  |
 | `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                 |
 | `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)              |
 | `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
@@ -275,6 +274,10 @@ Shared reference files in `.agents/references/`:
 | `style-guide.md` | Canonical writing and formatting rules for all content work |
 | `components.md`  | Full MDX component catalog with props and usage examples    |
 | `procedures.md`  | Rules for writing step-by-step procedural instructions      |
+
+## Terminology and naming preferences
+
+- **Do not use "PayGo" in public-facing documentation.** Instead use the term **"Free"** when referring to standalone Free accounts that can be created from the dashboard.
 
 ## Commit conventions
 

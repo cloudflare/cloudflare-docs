@@ -8,8 +8,6 @@ products:
   - style-guide
 ---
 
-import { GitHubCode } from "~/components";
-
 We work (and appreciate working) in [GitHub](https://github.com/cloudflare/cloudflare-docs), but it's not a perfect tool by any means.
 
 We've added several ergonomic improvements to help us triage incoming work, streamline reviews, and automate communication.
@@ -24,16 +22,6 @@ For pull requests, we use a specific [GitHub action](https://github.com/cloudfla
 
 - [Label products](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/actions/label-products/): We add labels for the top-level product folder, which helps writers scan incoming pull requests and see which are relevant to them.
 - [Label size](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/actions/label-size/): We add labels for the size of the pull request, which helps writers see the relative size of the difference. It's not a perfect measure, but we use the lines changed to estimate the size of the pull request:
-
-  <GitHubCode
-  	repo="cloudflare/cloudflare-docs"
-  	file=".github/actions/label-size/index.ts"
-  	commit="3dd03fdad79b2663631a6530794dfd1ad15bdc03"
-  	lines="20-36"
-  	lang="ts"
-  	code={{ title: "label-size.ts" }}
-  />
-
 - [Assign codeowners](https://github.com/cloudflare/cloudflare-docs/tree/production/.github/actions/assign-pr): We use our [CODEOWNERS](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/CODEOWNERS) file to automatically assign people to pull requests based on the files changed. This assignment helps writers scan and filter to see which pull requests are relevant to them.
 
 ### Issues

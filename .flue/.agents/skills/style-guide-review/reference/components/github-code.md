@@ -21,4 +21,4 @@ import { GitHubCode } from "~/components";
 />
 ```
 
-Props: `repo` (`cloudflare/<name>`), `file` (path within repo), `commit` (40-char hash), `lang`, `useTypeScriptExample` (boolean), `lines` (range string e.g. `"1-3"`), `tag` (string), `code` (Expressive Code options).
+Props: `repo` (`cloudflare/<name>`), `file` (path within repo), `commit` (40-char hash), `lang`, `useTypeScriptExample` (boolean), `lines` (range string e.g. `"1-3"`), `tag` (string), `code` (Astro `Code` options).

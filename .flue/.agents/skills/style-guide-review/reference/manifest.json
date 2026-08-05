@@ -30,6 +30,12 @@
 		"when": "Patch changes frontmatter fields at the top of the file."
 	},
 	{
+		"id": "images",
+		"file": "reference/conditional/images.md",
+		"load": "conditional",
+		"when": "Patch contains image syntax (![), <img, /images/, public/images, ~/assets/images, or common image file extensions."
+	},
+	{
 		"id": "component-anchor-heading",
 		"file": "reference/components/anchor-heading.md",
 		"load": "component",
@@ -96,7 +102,7 @@
 		"id": "component-steps",
 		"file": "reference/components/steps.md",
 		"load": "component",
-		"componentNames": ["Steps"],
+		"componentNames": ["Steps", "Step"],
 		"when": "Patch contains `<Steps` or imports `Steps`."
 	},
 	{
