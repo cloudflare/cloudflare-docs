@@ -27,7 +27,7 @@ You can connect a website when creating a new instance through the [dashboard](/
 AI Search finds the pages on your site, fetches each one, converts it to Markdown, splits it into chunks, and adds it to the index. The [parse type](/ai-search/configuration/data-source/website/parse-types/) controls how pages are found:
 
 - **Sitemap** (default): reads the XML sitemaps your site publishes.
-- **Discover**: starts at the source URL and follows links across the site.
+- **Discover**: starts at the source URL and, by default, uses both your sitemaps and the links it finds on the pages it crawls.
 
 Refer to [Parse types](/ai-search/configuration/data-source/website/parse-types/) for how each type finds pages, how each one handles sitemaps and syncing, and which settings apply to only one of them.
 
@@ -41,15 +41,16 @@ To see the items parsed from your website, [list the instance's items](/ai-searc
 
 Configure these options during onboarding, or later in your instance settings under **Parser options**.
 
-| Option                                                                                         | Description                                                                                                                                   |
-| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Path filtering](#path-filtering)                                                              | Include and exclude URL patterns that decide which pages are crawled.                                                                         |
-| [Parse type](/ai-search/configuration/data-source/website/parse-types/)                        | How the crawler finds pages. **Sitemap** reads your XML sitemaps, and **Discover** follows links from the source URL.                         |
-| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) | Crawl a set of sitemap URLs that you choose instead of the ones AI Search discovers. Up to five URLs. Applies to the sitemap parse type only. |
-| [Rendering mode](#rendering-mode)                                                              | Whether pages are downloaded as raw HTML or loaded in a headless browser first.                                                               |
-| [Authentication headers](/ai-search/configuration/data-source/website/authentication-headers/) | Custom HTTP headers sent with each request, so the crawler can reach pages behind authentication. Up to five headers.                         |
-| [Content selectors](/ai-search/configuration/data-source/website/content-selectors/)           | Restrict indexing to the elements that a CSS selector matches, so you skip navigation, sidebars, and footers.                                 |
-| [Custom metadata](/ai-search/configuration/data-source/website/custom-metadata/)               | Values extracted from the `<meta>` tags in each page's `<head>`, stored alongside the indexed content.                                        |
+| Option                                                                                         | Description                                                                                                                                                              |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Path filtering](#path-filtering)                                                              | Include and exclude URL patterns that decide which pages are crawled.                                                                                                    |
+| [Parse type](/ai-search/configuration/data-source/website/parse-types/)                        | How the crawler finds pages. **Sitemap** reads your XML sitemaps. **Discover** starts at the source URL and, by default, uses both your sitemaps and the links it finds. |
+| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) | Crawl a set of sitemap URLs that you choose instead of the ones AI Search discovers. Up to five URLs. Applies to the sitemap parse type only.                            |
+| [Discover options](/ai-search/configuration/data-source/website/parse-types/#discover-options) | Discovery source, page limit, crawl depth, cache age, and whether to follow external links and subdomains. Applies to the discover parse type only.                      |
+| [Rendering mode](#rendering-mode)                                                              | Whether pages are downloaded as raw HTML or loaded in a headless browser first.                                                                                          |
+| [Authentication headers](/ai-search/configuration/data-source/website/authentication-headers/) | Custom HTTP headers sent with each request, so the crawler can reach pages behind authentication. Up to five headers.                                                    |
+| [Content selectors](/ai-search/configuration/data-source/website/content-selectors/)           | Restrict indexing to the elements that a CSS selector matches, so you skip navigation, sidebars, and footers.                                                            |
+| [Custom metadata](/ai-search/configuration/data-source/website/custom-metadata/)               | Values extracted from the `<meta>` tags in each page's `<head>`, stored alongside the indexed content.                                                                   |
 
 ### Path filtering
 

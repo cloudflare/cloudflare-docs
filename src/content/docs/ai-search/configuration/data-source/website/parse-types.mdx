@@ -19,6 +19,8 @@ The parse type controls how AI Search finds the pages to index on a [website dat
 
 Set the parse type in `source_params.web_crawler.parse_type`. If you do not set it, AI Search uses `sitemap`.
 
+Both parse types require a source URL on a domain that you have onboarded onto the same Cloudflare account. Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) if your domain is not on Cloudflare yet.
+
 ## Which parse type to use
 
 Both parse types can read your sitemaps, so the choice is not simply "sitemap or links". `discover` defaults to a [discovery source](#discovery-source) of `all`, which means it reads your sitemaps **and** follows links. What differs is how thoroughly each one uses the sitemap.
@@ -30,7 +32,7 @@ If your site publishes a sitemap that covers the pages you want indexed, prefer 
 - **You control the order.** `sitemap` indexes pages by their `<priority>` value, so your most important pages are indexed first if you hit an instance limit.
 - **You can narrow the crawl.** [Specific sitemap](#specific-sitemap) is not supported with `discover`.
 
-Choose `discover` when a sitemap is missing, incomplete, or stale, or when the source URL is on a domain that is not onboarded onto your Cloudflare account, which `sitemap` requires.
+Choose `discover` when a sitemap is missing, incomplete, or stale.
 
 :::caution
 Changing the parse type on an existing instance triggers a full resync. AI Search rediscovers and reindexes every page.
@@ -40,8 +42,6 @@ Changing the parse type on an existing instance triggers a full resync. AI Searc
 
 The `sitemap` parse type is the default. AI Search reads the XML sitemaps your site publishes to decide which pages to index, and re-crawls a page when its `<lastmod>` date changes.
 
-`sitemap` requires a domain that you have onboarded onto the same Cloudflare account. Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) if your domain is not on Cloudflare yet.
-
 ### How pages are found
 
 When you connect a domain, the crawler looks for your website's sitemap to determine which pages to visit:
@@ -49,7 +49,7 @@ When you connect a domain, the crawler looks for your website's sitemap to deter
 1. If you configure one or more custom sitemap URLs in the dashboard under **Parser options** > **Specific sitemap**, AI Search crawls only those sitemap URLs.
 2. Otherwise, the crawler checks `robots.txt` for listed sitemaps.
 3. If no `robots.txt` is found, the crawler checks for a sitemap at `/sitemap.xml`.
-4. If no sitemap is available, the domain cannot be crawled.
+4. If no sitemap is available, the domain cannot be crawled with the `sitemap` parse type. Use [`discover`](#discover) instead.
 
 ### Indexing order
 
@@ -169,7 +169,7 @@ The `discover` parse type delegates page discovery to the Browser Run [`/crawl` 
 
 By default, `discover` collects candidate URLs from both your sitemaps and the links on the pages it crawls. Use the [discovery source](#discovery-source) option to restrict it to one or the other.
 
-Because `discover` does not depend on a sitemap, it reaches pages that a sitemap omits. It also accepts a source URL on a domain that is not onboarded onto your Cloudflare account.
+Because `discover` does not depend on a sitemap, it reaches pages that a sitemap omits.
 
 ### How discovery works
 
@@ -178,7 +178,7 @@ Because `discover` does not depend on a sitemap, it reaches pages that a sitemap
 3. The crawler follows links up to the configured depth and stops once it reaches the page limit.
 4. Each fetched page is stored in built-in storage, converted to Markdown, chunked, and indexed.
 
-The crawler identifies itself as `Cloudflare-AI-Search` on domains in your Cloudflare account, and as `Cloudflare-AI-Search-External` on every other domain. Pages that `robots.txt` disallows are recorded with the `blocked_by_robots_txt` [indexing error code](/ai-search/troubleshooting/indexing-error-codes/) instead of being indexed.
+The crawler identifies itself as `Cloudflare-AI-Search` on domains in your Cloudflare account. If you enable [external links or subdomains](#external-links-and-subdomains) and the crawl reaches a domain outside your account, it identifies itself as `Cloudflare-AI-Search-External`. Pages that `robots.txt` disallows are recorded with the `blocked_by_robots_txt` [indexing error code](/ai-search/troubleshooting/indexing-error-codes/) instead of being indexed.
 
 :::note
 The crawler declares the `search` and `ai-input` crawl purposes. A site that sets either purpose to `no` in a `robots.txt` [Content Signals](/browser-run/quick-actions/crawl-endpoint/#content-signals) directive rejects the crawl.
@@ -193,9 +193,9 @@ The crawler declares the `search` and `ai-input` crawl purposes. A site that set
    <DashButton url="/?to=/:account/ai/ai-search" />
 
 2. Select **Create**, then select **Website** as your data source.
-3. Under **Crawl Target**, enter the website URL.
+3. Under **Crawl target**, enter the website URL.
 4. Under **Parse type**, select **Discover**.
-5. Under **Crawl Options**, adjust **Crawl source**, **Page limit**, **Crawl depth**, **Max cache age**, **Include external links**, and **Include subdomains**.
+5. Under **Crawl options**, adjust **Crawl source**, **Page limit**, **Crawl depth**, **Max cache age**, **Include external links**, and **Include subdomains**.
 6. Complete the setup process to create your instance.
 
 </Steps>

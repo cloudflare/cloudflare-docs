@@ -40,8 +40,8 @@ Without content selectors, AI Search applies a default processing pipeline that 
 Content selectors are configured in the `source_params.web_crawler.parse_options.content_selector` field when creating or updating an AI Search instance. The field accepts an array of objects, each with a `path` and `selector` property.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-search/instances" \
-  -H "Authorization: Bearer {api_token}" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
     "id": "my-ai-search",
@@ -113,8 +113,4 @@ If a CSS selector does not match any elements on a page, the resulting Markdown 
 
 ## Limits
 
-| Limit                            | Value          |
-| -------------------------------- | -------------- |
-| Maximum content selector entries | 10             |
-| Maximum path pattern length      | 200 characters |
-| Maximum selector length          | 200 characters |
+Refer to [Website](/ai-search/configuration/data-source/website/#limits) for the limits that apply to content selectors.

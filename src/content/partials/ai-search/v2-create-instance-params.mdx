@@ -37,7 +37,7 @@ Additional parameters for the data source.
 - `web_crawler` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for web crawler sources.
   - `parse_type` <Type text="string" /> <MetaInfo text="optional" />
-    - How pages are discovered. Valid values: `sitemap` (reads XML sitemaps), `discover` (follows links from the source URL). Defaults to `sitemap`. Refer to [Parse types](/ai-search/configuration/data-source/website/parse-types/).
+    - How pages are discovered. Valid values: `sitemap` (reads XML sitemaps), `discover` (starts at the source URL and, by default, uses both sitemaps and links found on crawled pages). Defaults to `sitemap`. Refer to [Parse types](/ai-search/configuration/data-source/website/parse-types/).
   - `parse_options` <Type text="object" /> <MetaInfo text="optional" />
     - `include_headers` <Type text="object" /> <MetaInfo text="optional" />
       - Custom HTTP headers to include when crawling.

@@ -16,6 +16,24 @@ If your website has pages behind authentication or pages that are only visible t
 
 This setting is labeled **Extra headers** in the dashboard, under **Parser options**. In the [REST API](/ai-search/api/instances/rest-api/) and in Wrangler, it is the `source_params.web_crawler.parse_options.include_headers` field.
 
+## Configure in the dashboard
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **AI Search** page.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+2. Select **Create**, then select **Website** as your data source. To add headers to an existing instance, select the instance and open the **Settings** tab.
+3. Under **Parser options**, locate **Extra headers**.
+4. Add a header, entering the header name in **Key** and the header value in **Value**. For example, **Key** `Authorization` and **Value** `Bearer <TOKEN>`.
+5. Repeat for each header you need, up to five.
+6. Save your changes.
+
+</Steps>
+
+The crawler sends every header you configure with each request it makes to your site. Adding or changing headers on an existing instance starts a new indexing job that reindexes every item.
+
 ## Indexing your site protected by Cloudflare Access
 
 To allow AI Search to crawl a site protected by [Cloudflare Access](/cloudflare-one/access-controls/), you need to create service token credentials and configure them as custom headers.
@@ -43,7 +61,7 @@ Service tokens bypass user authentication, so ensure your Access policies are co
 
 5. Select **Create**.
 6. Select **Website** as your data source.
-7. Under **Parse options**, locate **Extra headers** and add the following two headers using your saved credentials:
+7. Under **Parser options**, locate **Extra headers** and add the following two headers using your saved credentials:
    - Header 1:
      - **Key**: `CF-Access-Client-Id`
      - **Value**: `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.access`

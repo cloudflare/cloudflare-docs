@@ -25,6 +25,8 @@ The following limits apply based on your [Workers plan](/workers/platform/pricin
 | Max custom metadata fields                  | 5 per AI Search instance | 5 per AI Search instance     |
 | Max text metadata value length              | 500 characters           | 500 characters               |
 
+Website crawling is bounded by several of these limits at once. A `discover` crawl accepts up to 100,000 pages, but the files per instance and maximum pages crawled per day limits also apply, so the number of pages you end up with is whichever of those values is lowest. On Workers Free, the daily limit of 500 pages is the binding one.
+
 For the limits that apply only to website data sources, refer to [Website](/ai-search/configuration/data-source/website/#limits).
 
 :::note[Need a higher limit?]
