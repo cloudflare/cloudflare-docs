@@ -27,7 +27,7 @@ cloudflare-docs/
 │   ├── layouts/            # Page layout components
 │   ├── pages/              # Dynamic route pages (changelog, llms.txt, RSS, etc.)
 │   ├── schemas/            # Zod schemas for all content collections
-│   ├── plugins/            # Satteri hast pipeline plugins, Algolia DocSearch config
+│   ├── plugins/            # Satteri hast pipeline plugins
 │   ├── scripts/            # Client-side scripts (analytics, mermaid, webmcp, etc.)
 │   ├── styles/             # CSS (Tailwind 4)
 │   ├── icons/              # Product SVG icons (~110)

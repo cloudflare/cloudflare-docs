@@ -3,7 +3,7 @@ import { registerTabs } from "./analytics/tabs";
 import { registerDetails } from "./analytics/details";
 import { registerCopyButtons } from "./analytics/codeblocks";
 import { registerHeader } from "./analytics/header";
-import { registerDocSearch } from "./analytics/docsearch";
+import { registerSearch } from "./analytics/search";
 
 // Listeners are delegated on `document`; the guard registers them once per
 // document (idempotent across view transitions / module re-evaluation).
@@ -21,5 +21,5 @@ if (!window.__nbAnalyticsRegistered) {
 	registerDetails();
 	registerCopyButtons();
 	registerHeader();
-	registerDocSearch();
+	registerSearch();
 }
