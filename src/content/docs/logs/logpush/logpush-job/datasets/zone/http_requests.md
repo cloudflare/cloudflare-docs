@@ -249,6 +249,12 @@ Type: `int`
 
 The smoothed average of TCP round-trip time (SRTT). For the initial request on a connection, this is measured only during connection setup. For a subsequent request on the same connection, it is measured over the entire connection lifetime up until the time that request is received.
 
+## ClientTLSKeyExchangeGroup
+
+Type: `string`
+
+TLS key exchange group between the client and Cloudflare (for example, 'X25519MLKEM768'). 'UNK' means it could not be determined. 'NONE' means TLS was not used.
+
 ## ClientXRequestedWith
 
 Type: `string`
