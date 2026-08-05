@@ -1951,7 +1951,6 @@
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 /r2/objects/multipart-objects/ /r2/objects/upload-objects/ 301
-/r2/data-catalog/ /r2-data-catalog/ 301
 /r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
 
 # r2 sql
