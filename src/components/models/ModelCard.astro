@@ -48,6 +48,10 @@ const authorLogo = authorData[model.author]?.logo;
 <div
 	data-models-cell
 	data-name={model.name.toLowerCase()}
+	data-search={[model.name, model.shortName, model.description]
+		.filter(Boolean)
+		.join(" ")
+		.toLowerCase()}
 	data-facet-tasks={facetValues(model, "tasks").join("|")}
 	data-facet-capabilities={facetValues(model, "capabilities").join("|")}
 	data-facet-providers={facetValues(model, "providers").join("|")}
