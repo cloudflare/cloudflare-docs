@@ -1,0 +1,110 @@
+---
+title: Website
+description: Connect a domain you own as a data source so AI Search can crawl and index your website pages.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - ai-search
+---
+
+import { DashButton, Steps } from "~/components";
+
+You can connect a website you own as a data source for your AI Search instance. AI Search crawls and indexes the pages automatically.
+
+You can only crawl domains that you have onboarded onto the same Cloudflare account. Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
+
+:::caution[Bot protection may block crawling]
+If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [Web Application Firewall (WAF)](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the AI Search crawler. Make sure to configure an exception or an allow-list for the AI Search crawler in your settings.
+:::
+
+## Get started
+
+You can connect a website when creating a new instance through the [dashboard](/ai-search/get-started/dashboard/), the [REST API](/ai-search/get-started/api/), or [Wrangler](/ai-search/get-started/wrangler/). Website is an optional data source that you can add alongside [built-in storage](/ai-search/configuration/data-source/built-in-storage/).
+
+## How website crawling works
+
+AI Search finds the pages on your site, fetches each one, converts it to Markdown, splits it into chunks, and adds it to the index. The [parse type](/ai-search/configuration/data-source/website/parse-types/) controls how pages are found:
+
+- **Sitemap** (default): reads the XML sitemaps your site publishes.
+- **Discover**: starts at the source URL and follows links across the site.
+
+Refer to [Parse types](/ai-search/configuration/data-source/website/parse-types/) for how each type finds pages, how each one handles sitemaps and syncing, and which settings apply to only one of them.
+
+## Storage
+
+Crawled pages are stored in built-in storage automatically.
+
+To see the items parsed from your website, [list the instance's items](/ai-search/api/items/workers-binding/#itemslist) with the Items API, or open the **Items** tab in the dashboard (**AI** > **AI Search** > your instance > **Items**).
+
+## Configuration
+
+Configure these options during onboarding, or later in your instance settings under **Parser options**.
+
+| Option                                                                                         | Description                                                                                                                                   |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Path filtering](#path-filtering)                                                              | Include and exclude URL patterns that decide which pages are crawled.                                                                         |
+| [Parse type](/ai-search/configuration/data-source/website/parse-types/)                        | How the crawler finds pages. **Sitemap** reads your XML sitemaps, and **Discover** follows links from the source URL.                         |
+| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) | Crawl a set of sitemap URLs that you choose instead of the ones AI Search discovers. Up to five URLs. Applies to the sitemap parse type only. |
+| [Rendering mode](#rendering-mode)                                                              | Whether pages are downloaded as raw HTML or loaded in a headless browser first.                                                               |
+| [Authentication headers](/ai-search/configuration/data-source/website/authentication-headers/) | Custom HTTP headers sent with each request, so the crawler can reach pages behind authentication. Up to five headers.                         |
+| [Content selectors](/ai-search/configuration/data-source/website/content-selectors/)           | Restrict indexing to the elements that a CSS selector matches, so you skip navigation, sidebars, and footers.                                 |
+| [Custom metadata](/ai-search/configuration/data-source/website/custom-metadata/)               | Values extracted from the `<meta>` tags in each page's `<head>`, stored alongside the indexed content.                                        |
+
+### Path filtering
+
+You can control which pages get indexed by defining include and exclude rules for URL paths. Use this to limit indexing to specific sections of your site or to exclude content you do not want searchable.
+
+:::note
+Path filtering matches against the full URL, including the scheme, hostname, and subdomains. For example, a page at `https://www.example.com/blog/post` requires a pattern like `**/blog/**` to match. Using `/blog/**` alone will not match because it does not account for the hostname.
+:::
+
+For example, to index only blog posts while excluding drafts:
+
+- **Include:** `**/blog/**`
+- **Exclude:** `**/blog/drafts/**`
+
+Refer to [Path filtering](/ai-search/configuration/indexing/path-filtering/) for pattern syntax, filtering behavior, and more examples.
+
+For supported file types and size limits, refer to [Data source](/ai-search/configuration/data-source/#supported-file-types).
+
+### Rendering mode
+
+You can choose how pages are parsed during crawling:
+
+- **Static sites**: Downloads the raw HTML for each page.
+- **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content.
+
+## Allow the AI Search crawler through WAF
+
+If you have Security rules configured to block bot activity, you can add a rule to allowlist the crawler bot.
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+     <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. To create a new empty rule, select **Create rule** > **Custom rules**.
+3. Enter a descriptive name for the rule in **Rule name**, such as `Allow AI Search`.
+4. Under **When incoming requests match**, use the **Field** drop-down list to choose _Bot Detection ID_. For **Operator**, select _equals_. For **Value**, enter `122933950`.
+5. Under **Then take action**, in the **Choose action** dropdown, choose _Skip_.
+6. Under **Place at**, select the order of the rule in the **Select order** dropdown to be _First_. Setting the order as _First_ allows this rule to be applied before subsequent rules.
+7. To save and deploy your rule, select **Deploy**.
+
+</Steps>
+
+## Limits
+
+The regular AI Search [limits](/ai-search/platform/limits-pricing/) apply when using the Website data source. The following limits apply to website data sources on both Workers plans:
+
+| Limit                                                                                                                | Value                             |
+| -------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| Pages per crawl, [`discover` parse type](/ai-search/configuration/data-source/website/parse-types/#discover)         | 100,000                           |
+| Crawl depth, [`discover` parse type](/ai-search/configuration/data-source/website/parse-types/#page-limit-and-depth) | 100,000 link hops (defaults to 5) |
+| Cached page age, [`discover` parse type](/ai-search/configuration/data-source/website/parse-types/#cache-age)        | 604,800 seconds (7 days)          |
+| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) URLs                  | 5 per instance                    |
+| [Authentication headers](/ai-search/configuration/data-source/website/authentication-headers/)                       | 5 per instance                    |
+| [Content selector](/ai-search/configuration/data-source/website/content-selectors/) entries                          | 10 per instance                   |
+| Content selector path pattern and selector length                                                                    | 200 characters each               |
+
+The [files per instance](/ai-search/platform/limits-pricing/#limits) limit also applies, so the effective cap is whichever value is lower. The crawler indexes the first pages it visits until it reaches that cap, and any file it downloads that exceeds the maximum file size is not indexed.

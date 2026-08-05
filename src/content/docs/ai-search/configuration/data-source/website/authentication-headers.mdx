@@ -1,0 +1,56 @@
+---
+title: Authentication headers
+description: Send custom HTTP headers with every crawl request so AI Search can index pages that sit behind authentication.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - ai-search
+---
+
+import { DashButton, Steps } from "~/components";
+
+You can only crawl domains that you have onboarded onto the same Cloudflare account. Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
+
+If your website has pages behind authentication or pages that are only visible to logged-in users, you can configure custom HTTP headers to allow the AI Search crawler to access this protected content. You can add up to five custom HTTP headers to the requests AI Search sends when crawling your site.
+
+This setting is labeled **Extra headers** in the dashboard, under **Parser options**. In the [REST API](/ai-search/api/instances/rest-api/) and in Wrangler, it is the `source_params.web_crawler.parse_options.include_headers` field.
+
+## Indexing your site protected by Cloudflare Access
+
+To allow AI Search to crawl a site protected by [Cloudflare Access](/cloudflare-one/access-controls/), you need to create service token credentials and configure them as custom headers.
+
+Service tokens bypass user authentication, so ensure your Access policies are configured appropriately for the content you want to index. The service token will allow the AI Search crawler to access all content covered by the Service Auth policy.
+
+<Steps>
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), [create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token). Once the Client ID and Client Secret are generated, save them for the next steps. For example they can look like:
+
+   ```
+   CF-Access-Client-Id: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.access
+   CF-Access-Client-Secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   ```
+
+2. [Create a policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) with the following configuration:
+   - Add an **Include** rule with **Selector** set to **Service token**.
+   - In **Value**, select the Service Token you created in step 1.
+3. [Add your self-hosted application to Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) with the following configuration:
+   - In Access policies, click **Select existing policies**.
+   - Select the policy that you have just created and select **Confirm**.
+4. In the Cloudflare dashboard, go to the **AI Search** page.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+5. Select **Create**.
+6. Select **Website** as your data source.
+7. Under **Parse options**, locate **Extra headers** and add the following two headers using your saved credentials:
+   - Header 1:
+     - **Key**: `CF-Access-Client-Id`
+     - **Value**: `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.access`
+   - Header 2:
+     - **Key**: `CF-Access-Client-Secret`
+     - **Value**: `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+
+8. Complete the AI Search setup process to create your search instance.
+
+</Steps>
