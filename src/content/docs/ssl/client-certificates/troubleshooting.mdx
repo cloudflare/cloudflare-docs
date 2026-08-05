@@ -13,7 +13,7 @@ tags:
   - mTLS
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps, TypeScriptExample } from "~/components";
 
 If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 
@@ -69,24 +69,36 @@ To review mTLS rules, consider the steps below. For further guidance refer to [C
 
 You can use [Cloudflare Workers](/workers/) to debug client certificate validation failures.
 
-1. Create a Worker to debug print [cf.properties](/workers/runtime-apis/request/#incomingrequestcfproperties):
+:::caution
+Do not enable `global_fetch_strictly_public` for this Worker. When enabled, `fetch(request)` can invoke the Worker again instead of reaching the origin.
+:::
 
-   ```js
+<Steps>
+
+1. Create a Worker that logs [incoming request `cf` properties](/workers/runtime-apis/request/#incomingrequestcfproperties) and forwards each request to your origin:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
    export default {
-     async fetch(request, env, ctx) {
+     async fetch(request): Promise<Response> {
        console.info({ message: JSON.stringify(request.cf, null, 2) });
-       return new Response(JSON.stringify(request.cf, null, 2))
-     }
-   };
+       return fetch(request);
+     },
+   } satisfies ExportedHandler;
    ```
 
-2. Associate the Worker with the hostname where mTLS is enabled using a [Worker route](/workers/configuration/routing/routes/) or a [Custom Domain](/workers/configuration/routing/custom-domains/).
+   </TypeScriptExample>
+
+2. Associate the Worker with the hostname where mTLS is enabled using a [Worker route](/workers/configuration/routing/routes/).
 
 3. Make requests to the hostname and/or path configured, with and without sending the mTLS client certificate.
 
-4. View your logs on the [Observability](/workers/observability/) dashboard and compare the responses against the expected values listed below.
+4. In the [Observability](/workers/observability/) dashboard, compare the logged `tlsClientAuth` values with the expected values.
 
 	 <DashButton url="/?to=/:account/workers-and-pages/observability" />
+
+</Steps>
 
 - Valid certificate
 
