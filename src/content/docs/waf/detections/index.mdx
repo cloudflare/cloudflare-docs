@@ -17,9 +17,15 @@ import {
 	DashButton,
 } from "~/components";
 
-Traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection scores or classifies requests by populating one or more fields. These fields appear as filters in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and you can use them in rule expressions.
+Traffic detections check incoming requests for malicious, potentially malicious, or non-conforming activity. Each enabled detection scores or classifies requests by populating one or more fields. These fields appear as filters in the [Security Analytics](/waf/analytics/security-analytics/) dashboard, and you can use them in rule expressions.
 
 Detections are always on once enabled, even if you have not configured any security rules that use them. You can review detection results in [Security Analytics](/waf/analytics/security-analytics/) to identify traffic patterns and spot potentially malicious traffic. For example, you can analyze traffic based on [attack score](/waf/detections/attack-score/), [bot score](/bots/concepts/bot-score/), [content scan results](/waf/detections/malicious-uploads/), or the [presence of personally identifiable information (PII)](/waf/detections/ai-security-for-apps/) in large language model (LLM) prompts.
+
+[Application Profiles](/waf/detections/application-profiles/) compare requests with application-specific expected structures. Profile detections do not mitigate traffic without a security rule.
+
+:::note[Application Profiles availability]
+Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is opening a closed beta to invited Enterprise customers without API Security. Interested customers can contact their account team to express interest. Closed-beta access does not imply future plan availability or pricing.
+:::
 
 Cloudflare provides the following detections:
 
@@ -39,9 +45,9 @@ Cloudflare provides the following detections:
 
 For more information on bot score, refer to [Bot scores](/bots/concepts/bot-score/).
 
-## Turn on a detection
+## Turn on a settings-managed detection
 
-To turn on a traffic detection:
+For detections managed through Security settings:
 
 <Steps>
 
@@ -54,7 +60,7 @@ To turn on a traffic detection:
 
 </Steps>
 
-Enabled detections will run for all incoming traffic.
+Detections enabled through Security settings run for all incoming traffic. Application Profiles instead evaluate requests after a learned or uploaded profile becomes available.
 
 :::note[Notes]
 

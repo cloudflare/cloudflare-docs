@@ -9,10 +9,11 @@ sidebar:
 
 ---
 
-import { DirectoryListing } from "~/components"
+[Application Profiles](/waf/detections/application-profiles/) provides the shared profile detection, analytics, and mitigation model. Schema Profile is its only current profile type.
 
+[Schema Learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/) learns a Schema Profile from traffic. [Schema Validation](/api-shield/security/schema-validation/) supplies the same profile type through uploaded OpenAPI schemas.
 
-Cloudflare offers the following features to help secure your APIs:
+API Shield provides API inventory, schema governance, OpenAPI export, and automation. Cloudflare also offers these API security features:
 
 | Discovery & management | Posture management | Runtime protection |
 | --- | --- | --- |
@@ -21,7 +22,6 @@ Cloudflare offers the following features to help secure your APIs:
 | [Sequence Analytics](/api-shield/security/sequence-analytics/) | [BOLA vulnerability detection](/api-shield/security/bola-vulnerability-detection/) | [Sequence mitigation](/api-shield/security/sequence-mitigation/) |
 | | [Risk labels](/api-shield/management-and-monitoring/endpoint-labels/#risk-labels) | [Mutual TLS (mTLS)](/api-shield/security/mtls/) |
 | | [Vulnerability Scanner](/api-shield/security/vulnerability-scanner/) | [GraphQL query protection](/api-shield/security/graphql-protection/) |
-
 
 ## Example Cloudflare solutions
 
@@ -39,7 +39,7 @@ The following table maps each OWASP vulnerability to the Cloudflare features tha
 | Unrestricted Access to Sensitive Business Flows | [Sequence mitigation], [Bot Management], [GraphQL Query Protection]                                                                                    |
 | Server Side Request Forgery                     | [Schema validation], [WAF managed rules], [WAF custom rules](/waf/custom-rules/)                                                                       |
 | Security Misconfiguration                       | [Sequence mitigation], [Schema validation], [WAF managed rules], [GraphQL Query Protection]                                                            |
-| Improper Inventory Management                   | [Discovery](/api-shield/security/api-discovery/), [Schema learning](/api-shield/management-and-monitoring/#endpoint-schema-learning)                   |
+| Improper Inventory Management                   | [Discovery](/api-shield/security/api-discovery/), [Schema learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/)       |
 | Unsafe Consumption of APIs                      | [JWT validation], [WAF managed rules]                                                                                                                  |
 
 [Schema validation]: /api-shield/security/schema-validation/

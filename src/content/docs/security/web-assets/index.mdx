@@ -20,7 +20,7 @@ To access Web Assets in the Cloudflare dashboard, go to the **Web Assets** page.
 
 ## Definition of an operation
 
-An operation is a group of HTTP requests that serve the same purpose in your application. Each operation is defined by:
+An operation is Cloudflare's term for an endpoint. Each operation is identified by:
 
 - HTTP method
 - Hostname pattern
@@ -52,11 +52,15 @@ Operations can come from several sources:
 
 These sources contribute to the same operation inventory. You do not need to review every discovered operation before security detections can use operation context.
 
+Discovery and manual entry do not start profile learning. Select **Learn profile** for an operation to start intentionally.
+
 ## Operation states and profile learning
 
-Operations can be in the `candidate`, `shadow`, or `full` state. Promoting a candidate or shadow operation moves it to the `full` state and starts collecting data for profile learning. For more information, refer to [Promote an operation](/security/web-assets/manage-operations/#promote-an-operation).
+Operations can be in the `candidate`, `shadow`, or `full` state. These states control operation matching and available features.
 
-For API endpoints, configure protections such as [Schema Validation](/api-shield/security/schema-validation/) separately.
+An operation state alone does not start profile learning. To learn a Schema Profile, select **Learn profile** from the operation overflow menu.
+
+For the profile lifecycle, refer to [Application Profiles](/waf/detections/application-profiles/). For uploaded OpenAPI schemas, refer to [Schema Validation](/api-shield/security/schema-validation/).
 
 ## Describe operations context
 
