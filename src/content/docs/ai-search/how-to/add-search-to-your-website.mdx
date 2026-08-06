@@ -81,6 +81,7 @@ In your website's project, install the [AI Search UI snippet library](/ai-search
 Import the snippet library in one of your components and add the tags where you want search to appear. Importing the package once registers the components with the browser. The following example adds a search bar, a floating chat bubble, and a search modal that opens with `Cmd/Ctrl+K` to the app's root component. Replace `<PUBLIC_ENDPOINT_ID>` with your public endpoint ID from step two.
 
 ```tsx title="src/App.tsx"
+import type { CSSProperties } from "react";
 import "@cloudflare/ai-search-snippet";
 
 export default function App() {
@@ -99,7 +100,7 @@ export default function App() {
 				style={
 					{
 						"--search-snippet-primary-color": "#F6821F",
-					} as React.CSSProperties
+					} as CSSProperties
 				}
 			/>
 			<search-modal-snippet

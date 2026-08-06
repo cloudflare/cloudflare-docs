@@ -221,3 +221,5 @@ When testing locally (for example, `http://localhost:3000`), you need to allow y
 5. Select **Save**.
 
 </Steps>
+
+When you deploy, replace `*` with your production origin so that other sites cannot embed your search components. Allowed origins are a browser control, not an access control, so this does not stop a direct request from `curl` or a script. To restrict who can query the endpoint, refer to [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/).

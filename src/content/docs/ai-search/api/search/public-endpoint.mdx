@@ -58,7 +58,7 @@ The hostname must belong to a zone on the same Cloudflare account. To attach a c
 3. Go to **Public Endpoints** and enable the public endpoint. A custom domain requires an active public endpoint.
 4. Go to **Custom Domains** and attach your hostname.
 
-A custom domain routes requests through your own zone, so you can also put [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/) in front of the endpoint and require callers to authenticate before they reach AI Search.
+A custom domain routes requests through your own zone, so you can also put [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/) in front of the endpoint and require callers to authenticate before they reach AI Search. Access only protects the custom hostname, so set `default_domain_enabled` to `false` as well. Otherwise the default `<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com` hostname keeps answering unauthenticated requests.
 
 To attach a domain through the API instead, refer to [Custom domains](/ai-search/configuration/retrieval/public-endpoint/custom-domains/).
 

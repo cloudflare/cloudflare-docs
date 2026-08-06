@@ -74,6 +74,6 @@ You can serve the MCP endpoint from a hostname that you own, such as `https://se
 3. Go to **Public Endpoints** and enable the public endpoint. A custom domain requires an active public endpoint.
 4. Go to **Custom Domains** and attach your hostname.
 
-A custom domain routes requests through your own zone, so you can then put [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/) in front of the endpoint. MCP clients authenticate with an Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/), sent as `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers, so your agents can reach the endpoint and the public internet cannot.
+A custom domain routes requests through your own zone, so you can then put [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/) in front of the endpoint. MCP clients authenticate with an Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/), sent as `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers, so only the agents you issue tokens to can reach the endpoint. Access only protects the custom hostname, so set `default_domain_enabled` to `false` as well. Otherwise the default `<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com` hostname keeps answering unauthenticated requests.
 
 To attach a domain through the API instead, refer to [Custom domains](/ai-search/configuration/retrieval/public-endpoint/custom-domains/).
