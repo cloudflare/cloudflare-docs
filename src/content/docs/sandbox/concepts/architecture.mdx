@@ -125,7 +125,7 @@ Enable RPC transport by setting the `SANDBOX_TRANSPORT` variable in your Worker'
 
 WebSocket transport is deprecated. Use RPC transport for new applications.
 
-The transport layer is transparent to your application code — all SDK methods work identically regardless of transport. See [Transport modes](/sandbox/configuration/transport/) for details on when to use each transport and configuration examples.
+The transport layer is transparent to your application code — all SDK methods work identically regardless of transport. For details on when to use each transport and configuration examples, refer to [Transport modes](/sandbox/configuration/transport/).
 
 ## Request flow
 
@@ -144,12 +144,12 @@ await sandbox.exec("python script.py");
 
 **RPC transport flow**:
 
-1. **Client SDK** validates parameters and sends requests over a persistent connection
-2. **Durable Object** maintains the connection and multiplexes concurrent requests
+1. **Client SDK** validates parameters and sends the request to the Durable Object
+2. **Durable Object** maintains the persistent connection to the container and multiplexes concurrent requests
 3. **Container Runtime** adapts RPC messages to HTTP-style request and response handling
 4. **Response flows back** over the same connection with proper error transformation
 
-The persistent connection is established on first SDK call and reused for all subsequent operations, reducing overhead for high-frequency operations.
+The Durable Object establishes the persistent connection to the container on first SDK call and reuses it for all subsequent operations, reducing overhead for high-frequency operations.
 
 ## Related resources
 
