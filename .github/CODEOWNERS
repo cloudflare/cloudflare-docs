@@ -18,7 +18,7 @@ package.json @cloudflare/content-engineering
 /src/scripts/analytics/search.ts @cloudflare/content-engineering @cloudflare/ai-search
 /src/scripts/webmcp.ts @cloudflare/content-engineering @cloudflare/ai-search
 /src/util/search.ts @cloudflare/content-engineering @cloudflare/ai-search
-/src/content/workers-ai-models/ @craigsdennis @cloudflare/content-engineering @cloudflare/product-owners @kodster28
+/src/content/workers-ai-models/ @craigsdennis @mchenco @superhighfives @ethulia @kflansburg @cloudflare/product-owners
 /public/__redirects @cloudflare/content-engineering @cloudflare/product-owners
 
 
@@ -37,8 +37,12 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/product-owners
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @G4brym @mchenco @cloudflare/product-owners
 /src/content/release-notes/ai-search.yaml @rita3ko @irvinebroque @aninibread @G4brym @mchenco @cloudflare/product-owners
-/src/content/catalog-models/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners
-/bin/fetch-catalog-models.ts @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/product-owners @kodster28
+/src/content/catalog-models/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @kflansburg @cloudflare/content-engineering @cloudflare/product-owners
+/src/components/models/ @mchenco @superhighfives @ethulia @kflansburg @cloudflare/content-engineering @cloudflare/product-owners
+/src/pages/ai/models/ @mchenco @superhighfives @ethulia @kflansburg @cloudflare/content-engineering @cloudflare/product-owners
+/src/pages/workers-ai/models/ @mchenco @superhighfives @ethulia @kflansburg @cloudflare/content-engineering @cloudflare/product-owners
+/src/util/models/ @mchenco @superhighfives @ethulia @kflansburg @cloudflare/content-engineering @cloudflare/product-owners
+/bin/fetch-catalog-models.ts @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @mattrothenberg @ethulia @kflansburg @cloudflare/content-engineering @cloudflare/product-owners
 /src/content/docs/agent-memory/ @lambrospetrou @rts-rob @pmesgari @cloudflare/product-owners
 /public/icons/agents @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/assets/images/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
