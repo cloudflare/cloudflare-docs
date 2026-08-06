@@ -80,7 +80,7 @@ Refer to the [recording SDK app examples](https://github.com/cloudflare/realtime
 
 ## Recording SDK reference
 
-The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit) or [Core SDK](/realtime/realtimekit/core). The `RealtimeKitRecording` class is used for managing the recording functionality within the SDK.
+The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit) or [Core SDK](/realtime/realtimekit/core). The [`@cloudflare/realtimekit-recording-sdk` package](https://www.npmjs.com/package/@cloudflare/realtimekit-recording-sdk) provides the `RealtimeKitRecording` class for managing recording functionality.
 
 ### Constructor
 
@@ -126,29 +126,29 @@ cleanup();
 
 Performs cleanup tasks after leaving the meeting, such as clearing added listeners and closing WebSocket connections.
 
-### Usage example
+## Create a custom recording app
 
 Perform the following steps to create the recording app for your RealtimeKit meetings.
 
-#### Step 1: Install the SDK
+### Step 1: Install the SDK
 
 ```js
 npm i @cloudflare/realtimekit-recording-sdk
 ```
 
-#### Step 2: Import the `RealtimeKitRecording` object
+### Step 2: Import the `RealtimeKitRecording` object
 
 ```js
 import { RealtimeKitRecording } from "@cloudflare/realtimekit-recording-sdk";
 ```
 
-#### Step 3: Create the `RealtimeKitRecording` object
+### Step 3: Create the `RealtimeKitRecording` object
 
 ```js
 const recordingSdk = new RealtimeKitRecording(options);
 ```
 
-#### Step 4: Initialize the recording SDK
+### Step 4: Initialize the recording SDK
 
 Call `init` after creating the meeting object and before `joinRoom` is called.
 
@@ -157,7 +157,7 @@ Call `init` after creating the meeting object and before `joinRoom` is called.
 await recordingSdk.init(meeting);
 ```
 
-#### (Optional) Step 5: Manually start the recording
+### (Optional) Step 5: Manually start the recording
 
 To manually start the recording, call the `startRecording()` function. For example, you want to start a recording after you have loaded your UI content in the app and `autoStart` is not set to true. In such cases, you can manually call the `startRecording()` function when you are ready to begin the recording.
 
@@ -166,7 +166,7 @@ To manually start the recording, call the `startRecording()` function. For examp
 await recordingSdk.startRecording();
 ```
 
-#### (Optional) Step 6: Manually stop the recording
+### (Optional) Step 6: Manually stop the recording
 
 To manually stop the recording, use `stopRecording`.
 
@@ -177,10 +177,10 @@ await recordingSdk.stopRecording();
 
 Once `stopRecording` is called, the recorder in your recording app will exit after a few seconds. After this point, you won't be able to perform any further actions within your recording app.
 
-#### Step 7: Deploy the recording app
+### Step 7: Deploy the recording app
 
 Once you've created the app, deploy it using a platform like [Cloudflare Workers](https://cloudflare.com/workers). Make sure to note the URL where you have deployed the app, as you will have to enter this URL in RealtimeKit's recording API.
 
-#### Step 8: Specify the custom URL
+### Step 8: Specify the custom URL
 
 In the [Start Recording a Meeting](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, provide the custom URL (obtained from the previous step) to indicate the location of your deployed app. Do not append an `authToken` to this URL. RealtimeKit adds the generated `authToken` and `config` parameters when it loads the app.
