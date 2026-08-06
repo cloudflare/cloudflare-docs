@@ -1,0 +1,27 @@
+---
+title: "Introducing Kitesurf, an agent-first browser on Browser Run"
+description: "Kitesurf is a new stateless browser that runs entirely on Workers and is built for AI agents. It is available for free while in beta."
+products:
+  - browser-run
+date: 2026-08-06
+---
+
+[Kitesurf](/browser-run/kitesurf/) is Cloudflare's new stateless, highly scalable browser that runs entirely on top of [Workers](/workers/) and was built specifically for AI agents. It is available for free while in beta.
+
+Compared to Chromium, Kitesurf uses 3–7× less CPU and memory for common agentic tasks like screenshots and HTML extraction, so you can run more sessions and scale better for bursty, AI-driven workloads.
+
+Your existing clients already work. To opt in, add the `browser=kitesurf` parameter to any Browser Run [CDP](/browser-run/cdp/) or [Quick Action](/browser-run/quick-actions/) endpoint:
+
+```sh
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/screenshot?browser=kitesurf' \
+  -H 'Authorization: Bearer <API_TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com"
+  }' \
+  --output "screenshot.png"
+```
+
+You can also explore Kitesurf without writing any code in the [public playground](https://kitesurf.cloudflare.app/).
+
+For more information, refer to the [Kitesurf documentation](/browser-run/kitesurf/) and the [blog announcement](https://blog.cloudflare.com/kitesurf).

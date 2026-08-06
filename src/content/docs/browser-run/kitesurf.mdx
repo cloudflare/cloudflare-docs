@@ -1,0 +1,132 @@
+---
+pcx_content_type: concept
+title: Kitesurf
+description: Use Kitesurf, Cloudflare's stateless, agent-first browser that runs entirely on Workers, with Browser Run for screenshots, HTML extraction, and automation.
+sidebar:
+  order: 9
+  badge: Beta
+products:
+  - browser-run
+---
+
+import { Details } from "~/components";
+
+Kitesurf is Cloudflare's stateless, highly scalable browser that runs entirely on top of [Workers](/workers/) and was built specifically for AI agents. Instead of shipping a full desktop browser engine like Chromium, Kitesurf focuses on what matters to an agent — token count, context windows, scalability, performance, and cost — while trading away features that only humans need, such as tabs, themes, extensions, and pixel-perfect rendering.
+
+For common agentic tasks like screenshots and HTML extraction, Kitesurf uses significantly less CPU and memory than Chromium, which means you can run more sessions and scale better for bursty, AI-driven workloads.
+
+:::note
+Learn more about Kitesurf and how it was built in the [blog announcement](https://blog.cloudflare.com/kitesurf).
+:::
+
+:::note[Pricing]
+Kitesurf is in beta and available for free, behind per-account [limits](/browser-run/limits/). To use it, add the `browser=kitesurf` parameter to any Browser Run [CDP](/browser-run/cdp/) or [Quick Action](/browser-run/quick-actions/) endpoint.
+:::
+
+## How Kitesurf compares to Chromium
+
+Kitesurf is designed to be lightweight and efficient. It uses less CPU and memory than Chromium for common agentic tasks, at the cost of slightly slower wall time and rendering that is not pixel-perfect.
+
+The table below shows the medians of five Browser Run [Quick Action](/browser-run/quick-actions/) runs across a [14-URL corpus](https://kitesurf.cloudflare.app/corpus.txt), comparing Chromium (warm pool) with Kitesurf:
+
+| Metric                     | Kitesurf | Chromium (warm pool) | Kitesurf, relative          |
+| -------------------------- | -------: | -------------------: | --------------------------- |
+| CPU: screenshot            |   380 ms |             1,173 ms | 3.1× less CPU than Chromium |
+| CPU: HTML extraction       |   229 ms |               877 ms | 3.8× less than Chromium     |
+| Memory: screenshot         | 57.8 MiB |            271.0 MiB | 4.7× less than Chromium     |
+| Memory: HTML extraction    | 39.4 MiB |            273.7 MiB | 7.0× less than Chromium     |
+| Wall time: screenshot      | 1,148 ms |               637 ms | 1.8× slower than Chromium   |
+| Wall time: HTML extraction |   820 ms |               472 ms | 1.7× slower than Chromium   |
+
+Kitesurf wins on the memory and CPU that drive your bill (by 3–7×), while Chromium wins wall time because a warm just-in-time compiler beats a cold software renderer.
+
+## Standards compliance
+
+Kitesurf is tested against the [Web Platform Tests (WPT)](https://github.com/web-platform-tests/wpt), the shared suite used to measure conformance to [W3C](https://www.w3.org/) standards. As of the latest run, Kitesurf passes over **235,000 subtests**, and coverage is expanding quickly.
+
+The parts of a browser that matter most to agents have strong coverage:
+
+| Area      | Subtest coverage |
+| --------- | ---------------- |
+| DOM       | 97%              |
+| HTML      | 96%              |
+| Selection | 99%              |
+| SVG       | 97%              |
+| Encoding  | 99%              |
+| CORS      | 95%              |
+| XHR       | 95%              |
+| URL       | 83%              |
+
+:::note
+These numbers are a snapshot and improve over time. WPT measures conformance to web standards, not a browser's ability to render and interact with every real-world website. The best way to confirm a specific site works is to try it in the [playground](https://kitesurf.cloudflare.app/).
+:::
+
+## When to use Kitesurf
+
+Kitesurf is a good fit for:
+
+- AI agents that need to render pages but can accept the trade-offs of not using a full-featured, pixel-perfect Chromium browser.
+- Automations and applications that rely on one-shot [Quick Actions](/browser-run/quick-actions/), such as extracting content from a page or generating PDFs and screenshots for compatible sites.
+- Bursty, AI-driven workloads that benefit from an ephemeral, fully-isolated, stateless engine designed to exist only for the duration of a task.
+
+Kitesurf correctly renders pages such as [TodoMVC](https://todomvc.com/) (vanilla, React, Vue, Angular, Preact), Wikipedia, Hacker News, the Cloudflare Blog, and much of the Cloudflare dashboard.
+
+### What Kitesurf cannot do yet
+
+Kitesurf is not yet the right option if you need to:
+
+- Play video or render WebGL.
+- Negotiate a bot-challenge handshake with real TLS fingerprints.
+- Start a long-running, authenticated session that requires persistent state.
+
+For these cases, use Browser Run's default browser, which is powered by Chromium.
+
+The best way to know whether a specific site is compatible with Kitesurf is to try it — either through the APIs below or in the [public playground](https://kitesurf.cloudflare.app/).
+
+## Use Kitesurf with the CDP endpoint
+
+The [Browser Run CDP endpoint](/browser-run/cdp/) supports Kitesurf as an option, so your existing [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [chrome-remote-interface](https://www.npmjs.com/package/chrome-remote-interface), or any AI agent that speaks MCP and CDP already works. To opt in, add the `browser=kitesurf` parameter to the endpoint.
+
+For example, to use Kitesurf from an [MCP client](/browser-run/cdp/mcp-clients/), add `browser=kitesurf` to the `--wsEndpoint` URL:
+
+```json
+{
+	"mcp": {
+		"kitesurf": {
+			"type": "local",
+			"command": [
+				"npx",
+				"-y",
+				"chrome-devtools-mcp@latest",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?browser=kitesurf",
+				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+			],
+			"enabled": true
+		}
+	}
+}
+```
+
+Replace `<ACCOUNT_ID>` with your Cloudflare account ID and `<API_TOKEN>` with a Browser Run API token.
+
+## Use Kitesurf with Quick Actions
+
+You can also use Kitesurf with Browser Run's [Quick Actions](/browser-run/quick-actions/). Add `browser=kitesurf` to any Quick Action endpoint.
+
+For example, to take a screenshot with Kitesurf:
+
+```sh
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/screenshot?browser=kitesurf' \
+  -H 'Authorization: Bearer <API_TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com"
+  }' \
+  --output "screenshot.png"
+```
+
+## Try the Kitesurf playground
+
+To start exploring Kitesurf without writing any code, use the [public playground](https://kitesurf.cloudflare.app/). Type in any URL to see how Kitesurf renders the page and interact with it.
+
+The playground injects Chrome DevTools into the UI, so you can inspect expanded DOM elements, read console messages, and watch network activity while Kitesurf renders a page. The [Memory panel](https://developer.chrome.com/docs/devtools/memory) reports the WebAssembly footprint of each isolate, including frames, so you can see the resources each page consumes.
