@@ -93,7 +93,7 @@ Executes code in isolation with full Linux capabilities.
 
 ## Communication transports
 
-The SDK supports two transport protocols for communication between the Durable Object and container:
+The SDK supports three transport protocols for communication between the Durable Object and container:
 
 ### HTTP transport (default)
 
@@ -105,23 +105,27 @@ const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 await sandbox.exec("python script.py");
 ```
 
-### WebSocket transport
+### RPC transport
 
-Multiplexes all SDK calls over a single persistent WebSocket connection. Avoids [subrequest limits](/workers/platform/limits/#subrequests) when making many concurrent operations.
+Multiplexes all SDK calls over a single persistent connection. It avoids [subrequest limits](/workers/platform/limits/#subrequests) when making many concurrent operations.
 
-Enable WebSocket transport by setting the `SANDBOX_TRANSPORT` variable in your Worker's configuration:
+Enable RPC transport by setting the `SANDBOX_TRANSPORT` variable in your Worker's configuration:
 
 <WranglerConfig>
 ```jsonc
 {
 	"vars": {
-		"SANDBOX_TRANSPORT": "websocket"
+		"SANDBOX_TRANSPORT": "rpc"
 	},
 }
 ```
 </WranglerConfig>
 
-The transport layer is transparent to your application code - all SDK methods work identically regardless of transport. See [Transport modes](/sandbox/configuration/transport/) for details on when to use each transport and configuration examples.
+### WebSocket transport
+
+WebSocket transport is deprecated. Use RPC transport for new applications.
+
+The transport layer is transparent to your application code — all SDK methods work identically regardless of transport. See [Transport modes](/sandbox/configuration/transport/) for details on when to use each transport and configuration examples.
 
 ## Request flow
 
@@ -138,14 +142,14 @@ await sandbox.exec("python script.py");
 3. **Container Runtime** validates inputs, executes command, captures output
 4. **Response flows back** through all layers with proper error transformation
 
-**WebSocket transport flow**:
+**RPC transport flow**:
 
-1. **Client SDK** validates parameters and sends request over persistent WebSocket connection
-2. **Durable Object** maintains WebSocket connection, multiplexes concurrent requests
-3. **Container Runtime** adapts WebSocket messages to HTTP-style request/response
-4. **Response flows back** over same WebSocket connection with proper error transformation
+1. **Client SDK** validates parameters and sends requests over a persistent connection
+2. **Durable Object** maintains the connection and multiplexes concurrent requests
+3. **Container Runtime** adapts RPC messages to HTTP-style request and response handling
+4. **Response flows back** over the same connection with proper error transformation
 
-The WebSocket connection is established on first SDK call and reused for all subsequent operations, reducing overhead for high-frequency operations.
+The persistent connection is established on first SDK call and reused for all subsequent operations, reducing overhead for high-frequency operations.
 
 ## Related resources
 
