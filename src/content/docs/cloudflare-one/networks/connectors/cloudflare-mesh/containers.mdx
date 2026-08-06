@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 description: Run a Cloudflare Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD environments.
-title: Containers
+title: Run Mesh in Docker / Kubernetes
 products:
   - mesh
 tags:
@@ -68,7 +68,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/warp_connector/
 The response contains the token string. Pass it to the container as `MESH_NODE_TOKEN`.
 
 :::note
-A [Terraform resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_cloudflared) (`cloudflare_zero_trust_tunnel_cloudflared`) can also create and manage Mesh nodes. Set the tunnel type to `warp_connector` when using Terraform.
+Mesh nodes can also be managed with Terraform using the [`cloudflare_zero_trust_tunnel_warp_connector`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_warp_connector) resource. To manage node configuration, use [`cloudflare_zero_trust_tunnel_warp_connector_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_warp_connector_config).
 :::
 
 </TabItem> </Tabs>
@@ -387,7 +387,7 @@ With `SRCNAT_ENABLED=true`, destinations see the Mesh node's local address. With
 
 ## Troubleshooting
 
-### Node registers as a regular WARP device
+### Node registers as a regular Cloudflare One Client device
 
 Confirm that the correct Mesh node token is set in `MESH_NODE_TOKEN`. Existing registration state in the persistent volume takes precedence — remove the volume only when you intentionally want to discard that registration and create a new identity.
 
