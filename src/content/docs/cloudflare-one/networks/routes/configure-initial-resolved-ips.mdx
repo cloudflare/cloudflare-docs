@@ -16,22 +16,26 @@ By default, initial resolved IPs are assigned from:
 
 <Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one" />
 
-You can configure a custom IPv4 range if the default conflicts with your existing private network, or if your account still uses a legacy range within Carrier-Grade NAT (CGNAT) address space and you want to move off it (for example, to avoid [Google Chrome's Local Network Access restrictions](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#google-chrome-restricts-access-to-private-hostnames)). The IPv6 range is not configurable.
+The IPv6 range is not configurable.
+
+:::caution
+If you configure a custom IPv4 range within Carrier-Grade NAT (CGNAT) address space, this can lead to [Google Chrome's Local Network Access restrictions](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#google-chrome-restricts-access-to-private-hostnames), which the public default range avoids.
+:::
 
 ## Prerequisites
 
-- You have the [Cloudflare One Networks Write](/fundamentals/api/reference/permissions/) permission (for API access), or dashboard access to **Zero Trust** > **Team & Resources** > **Device profiles**.
+- You have the [Cloudflare One Networks Write](/fundamentals/api/reference/permissions/) permission (for API access), or dashboard access to **Networking** > **IP addresses** > **Address space** > **Custom IPs**.
 - Your new range does not conflict with existing routes or other reserved [Cloudflare One subnets](/cloudflare-one/networks/routes/reserved-ips/) in your account.
 
 ## Check your current range
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Zero Trust** > **Team & Resources** > **Device profiles**.
+1. Go to **Networking** > **IP addresses** > **Address space** > **Custom IPs**.
 
-   <DashButton url="/?to=/:account/team-resources/devices/device-profiles" zeroTrust />
+   <DashButton url="/?to=/:account/ip-addresses/address-space/custom-ips" />
 
-2. Find **Initial resolved IP** to see your account's current IPv4 range.
+2. Find the row where **Assign to** is **Initial Resolved IP** to see your account's current IPv4 range.
 
 </TabItem> <TabItem label="API">
 
@@ -47,19 +51,15 @@ Send a `GET` request to the [Get Initial Resolved IP Subnet](/api/resources/zero
 
 </TabItem> </Tabs>
 
-:::note
-This range is also reflected in **Networking** > **Routes** and **Networking** > **IP addresses** > **Address space** > **Custom IPs**, but **Device profiles** is the only place to change it.
-:::
-
 ## Update your range
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Zero Trust** > **Team & Resources** > **Device profiles**.
+1. Go to **Networking** > **IP addresses** > **Address space** > **Custom IPs**.
 
-   <DashButton url="/?to=/:account/team-resources/devices/device-profiles" zeroTrust />
+   <DashButton url="/?to=/:account/ip-addresses/address-space/custom-ips" />
 
-2. Find **Initial resolved IP** and edit the IPv4 range.
+2. Find the row where **Assign to** is **Initial Resolved IP**, select the three dots menu, and select **Edit**.
 3. Enter your new IPv4 range and save your changes.
 
 </TabItem> <TabItem label="API">
@@ -89,4 +89,4 @@ Only the IPv4 range is configurable. The IPv6 initial resolved IP range (`2606:4
 
 After you change your range, update your [Split Tunnel configuration](/cloudflare-one/networks/routes/reserved-ips/#split-tunnel-configuration) so that traffic to the new range routes through the Cloudflare One Client, and remove the old range if it is no longer used by any other reserved IP purpose.
 
-Existing connections continue to use the previous range until they end. New DNS queries use the new range once the change propagates across Cloudflare's network.
+Initial resolved IPs have a TTL of approximately 10 minutes. DNS queries resolved before you change your range continue to use the previous range until that TTL expires. After that, new DNS queries receive an initial resolved IP from the new range.
