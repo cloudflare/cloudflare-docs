@@ -26,8 +26,14 @@ All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, 
 | Workers Paid | 10,000 Neurons per day | $0.011 / 1,000 Neurons        |
 
 :::note
-Some models are not available on the Workers Free plan and require the [Workers Paid plan](/workers/platform/pricing/#workers). This applies to `@cf/moonshotai/kimi-k2.6`, `@cf/moonshotai/kimi-k2.7-code`, and `@cf/zai-org/glm-5.2`.
+Some models require a paid billing method. This applies to `@cf/moonshotai/kimi-k2.6`, `@cf/moonshotai/kimi-k2.7-code`, and `@cf/zai-org/glm-5.2`. You can access these models with either the [Workers Paid plan](/workers/platform/pricing/#workers) or prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/).
 :::
+
+## Pay with AI Gateway credits
+
+You can use prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/) to pay for Workers AI inference. Set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**, then specify that gateway in the [AI binding](/ai-gateway/usage/worker-binding-methods/) or REST API request.
+
+Requests to frontier models that use prepaid credits receive [higher rate limits](/workers-ai/platform/limits/#frontier-models).
 
 ## What are Neurons?
 

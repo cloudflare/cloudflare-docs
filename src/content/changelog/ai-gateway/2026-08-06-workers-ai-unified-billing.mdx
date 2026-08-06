@@ -1,0 +1,50 @@
+---
+title: Workers AI and AI Gateway unify model access and billing
+description: Call Workers AI and third-party models through shared APIs, observability, and prepaid billing.
+products:
+  - ai-gateway
+  - workers-ai
+date: 2026-08-06
+---
+
+import { TypeScriptExample } from "~/components";
+
+Workers AI and AI Gateway now provide a unified path for accessing models and managing inference traffic. Use the same AI binding and REST API to call models hosted on Workers AI or by supported third-party providers, with AI Gateway providing observability, logging, caching, security, and billing controls.
+
+## Unified entrypoints and observability
+
+The [AI binding](/ai-gateway/usage/worker-binding-methods/) supports both Workers AI and third-party models through `env.AI.run()`. The [REST API](/ai-gateway/usage/rest-api/) provides shared `/ai/` endpoints with Cloudflare authentication across providers.
+
+Route a Workers AI request through AI Gateway by specifying a gateway ID. Use `default` to automatically create a gateway on the first authenticated request, or specify an existing gateway to separate applications and workloads:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.AI.run(
+	"@cf/zai-org/glm-5.2",
+	{
+		messages: [{ role: "user", content: "What is the capital of France?" }],
+	},
+	{
+		gateway: { id: "default" },
+	},
+);
+```
+
+</TypeScriptExample>
+
+Requests routed through AI Gateway can be logged and included in analytics for request volume, errors, latency, token usage, and costs. You can also configure controls such as caching, rate limiting, and request retries on the gateway.
+
+## Unified billing and higher rate limits
+
+You can now use prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/) to pay for Workers AI inference. This provides one credit balance for Workers AI and supported third-party model providers. To use credits for Workers AI, set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**. Workers AI requests routed through that gateway deduct from your credit balance in real time.
+
+Prepaid credits also provide access to the following Workers AI frontier models without requiring the Workers Paid plan. Each frontier Workers AI model has a rate limit of 50 requests per minute per account, per model when billed with AI Gateway credits, compared to 20 requests per minute through standard Workers AI billing:
+
+- [`@cf/moonshotai/kimi-k2.6`](/workers-ai/models/kimi-k2.6/)
+- [`@cf/moonshotai/kimi-k2.7-code`](/workers-ai/models/kimi-k2.7-code/)
+- [`@cf/zai-org/glm-5.2`](/workers-ai/models/glm-5.2/)
+
+These limits are designed for typical agentic and coding workloads, where requests to frontier models can take longer to complete.
+
+For details, refer to [Workers AI limits](/workers-ai/platform/limits/), [Workers AI pricing](/workers-ai/platform/pricing/), [Unified Billing](/ai-gateway/features/unified-billing/), and the [AI Gateway model catalog](/ai/models/).
