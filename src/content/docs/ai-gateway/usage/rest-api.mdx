@@ -31,7 +31,11 @@ The `/ai/v1/messages` endpoint strictly uses Anthropic's API schema and supports
 
 ## Authentication
 
-Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has `AI Gateway` permission. Pass it in the `Authorization` header.
+Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has the **Account** > **Workers AI** > **Read** permission. Pass it in the `Authorization` header.
+
+All `/accounts/{account_id}/ai/*` endpoints require the Workers AI permission. This applies to third-party models and to Workers AI (`@cf/`) models. A token that holds only an `AI Gateway` permission returns `401` with error code `10000`.
+
+The `AI Gateway` permissions apply to the `/accounts/{account_id}/ai-gateway/*` endpoints, which manage gateway configuration, logs, and routes.
 
 :::note
 Ensure your Cloudflare account has [sufficient credits loaded](/ai-gateway/features/unified-billing/#load-credits) before calling third-party models.
