@@ -108,6 +108,7 @@ export async function getChangelogs({
 }: GetChangelogsOptions): Promise<Array<CollectionEntry<"changelog">>> {
 	let entries = await getCollection("changelog");
 
+	const slugCounts = new Map<string, number>();
 	entries = await Promise.all(
 		entries.map(async (e) => {
 			const slug = e.id.split("/").slice(1).join("/");
@@ -126,9 +127,15 @@ export async function getChangelogs({
 				e.data.products.push(product);
 			}
 
+			// Deduplicate: when entries from different product folders share
+			// the same slug, prefix later occurrences with the folder name.
+			const count = slugCounts.get(slug) ?? 0;
+			slugCounts.set(slug, count + 1);
+			const dedupedId = count === 0 ? slug : `${folder}/${slug}`;
+
 			return {
 				...e,
-				id: slug,
+				id: dedupedId,
 			};
 		}),
 	);

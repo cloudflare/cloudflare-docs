@@ -23,7 +23,22 @@ import {
 const NOINDEX_PRODUCTS = ["email-security"];
 
 export const prerender = true;
-export const getStaticPaths = getDocsStaticPaths;
+export const getStaticPaths = (async (...args) => {
+	const paths = await getDocsStaticPaths(...args);
+	// Content stubs that have a corresponding explicit src/pages route.
+	// The explicit page wins; filtering them here avoids duplicate-slug warnings.
+	const shadowed = new Set([
+		"ai/models",
+		"workers-ai/models",
+		"ruleset-engine/rules-language/fields/reference",
+		"waf/change-log/changelog",
+	]);
+	return paths.filter((p) => {
+		const slug = p.params.slug;
+		if (!slug) return true;
+		return !shadowed.has(slug);
+	});
+}) as typeof getDocsStaticPaths;
 
 const { entry, Content, headings } = await getDocsPageProps(Astro, {
 	partialHeadings: {

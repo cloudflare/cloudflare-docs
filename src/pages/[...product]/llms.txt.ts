@@ -19,6 +19,10 @@ export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 	const docs = await getCollection("docs");
 
+	// Deduplicate by URL path: multiple directory entries may share the same
+	// entry.url (e.g. SDK variants). Keep only the first per URL.
+	const seen = new Set<string>();
+
 	return directory
 		.map((entry) => {
 			const productUrl = entry.data.entry?.url;
@@ -30,6 +34,9 @@ export const getStaticPaths = (async () => {
 
 			const urlPath = productUrl.slice(1, -1);
 			if (!urlPath) return null;
+
+			if (seen.has(urlPath)) return null;
+			seen.add(urlPath);
 
 			const prefix = urlPath;
 			const pages = docs.filter(
