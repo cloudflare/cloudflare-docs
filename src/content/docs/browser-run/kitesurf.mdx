@@ -9,14 +9,12 @@ products:
   - browser-run
 ---
 
-import { Details } from "~/components";
-
-Kitesurf is Cloudflare's stateless, highly scalable browser that runs entirely on top of [Workers](/workers/) and was built specifically for AI agents. Instead of shipping a full desktop browser engine like Chromium, Kitesurf focuses on what matters to an agent — token count, context windows, scalability, performance, and cost — while trading away features that only humans need, such as tabs, themes, extensions, and pixel-perfect rendering.
+Kitesurf is Cloudflare's stateless, highly scalable browser that runs entirely on top of [Workers](/workers/) and is designed for AI agents. Instead of shipping a full desktop browser engine like Chromium, Kitesurf focuses on what matters to an agent — token count, context windows, scalability, performance, and cost — while trading away features that only humans need, such as tabs, themes, extensions, and pixel-perfect rendering.
 
 For common agentic tasks like screenshots and HTML extraction, Kitesurf uses significantly less CPU and memory than Chromium, which means you can run more sessions and scale better for bursty, AI-driven workloads.
 
 :::note
-Learn more about Kitesurf and how it was built in the [blog announcement](https://blog.cloudflare.com/kitesurf).
+For more information about Kitesurf and how it was built, refer to the [blog announcement](https://blog.cloudflare.com/kitesurf).
 :::
 
 :::note[Pricing]
@@ -81,7 +79,7 @@ Kitesurf is not yet the right option if you need to:
 
 For these cases, use Browser Run's default browser, which is powered by Chromium.
 
-The best way to know whether a specific site is compatible with Kitesurf is to try it — either through the APIs below or in the [public playground](https://kitesurf.cloudflare.app/).
+The best way to know whether a specific site is compatible with Kitesurf is to try it — either through the [CDP endpoint](/browser-run/cdp/) and [Quick Actions](/browser-run/quick-actions/) or in the [public playground](https://kitesurf.cloudflare.app/).
 
 ## Use Kitesurf with the CDP endpoint
 
