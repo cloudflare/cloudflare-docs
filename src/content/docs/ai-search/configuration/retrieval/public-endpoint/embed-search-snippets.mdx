@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: UI snippets
 description: Add AI Search to your website using pre-built, customizable web components for search and chat.
 sidebar:
-  order: 8
+  order: 4
 products:
   - ai-search
 ---
@@ -49,12 +49,12 @@ UI snippets connect to your AI Search instance through a public endpoint. You ne
 
 <Steps>
 
-1. Add the script tag to your HTML file (for example, `index.html`). Replace `<INSTANCE_ID>` with your AI Search instance's public endpoint ID, which you can find in your AI Search instance's **Settings** > **Public Endpoint**.
+1. Add the script tag to your HTML file (for example, `index.html`). Replace `<PUBLIC_ENDPOINT_ID>` with your AI Search instance's public endpoint ID, which you can find in your AI Search instance's **Settings** > **Public Endpoint**.
 
    ```html
    <script
    	type="module"
-   	src="https://<INSTANCE_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
+   	src="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
    ></script>
    ```
 
@@ -62,7 +62,7 @@ UI snippets connect to your AI Search instance through a public endpoint. You ne
 
    ```html
    <search-bar-snippet
-   	api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+   	api-url="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/"
    	placeholder="Search..."
    ></search-bar-snippet>
    ```
@@ -81,12 +81,12 @@ The following example shows a complete HTML page with a search bar. When a user 
 	<head>
 		<script
 			type="module"
-			src="https://<INSTANCE_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
+			src="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
 		></script>
 	</head>
 	<body>
 		<search-bar-snippet
-			api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+			api-url="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/"
 			placeholder="Search..."
 			max-results="10"
 		></search-bar-snippet>
@@ -119,7 +119,7 @@ The following example shows a complete HTML page with a search bar. When a user 
    export default function App() {
    	return (
    		<search-bar-snippet
-   			api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+   			api-url="https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/"
    			placeholder="Search..."
    		/>
    	);
@@ -157,7 +157,7 @@ The package includes TypeScript types and works with React, Next.js, and other R
    <script setup>
    import "@cloudflare/ai-search-snippet";
 
-   const apiUrl = "https://<INSTANCE_ID>.search.ai.cloudflare.com/";
+   const apiUrl = "https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/";
    </script>
    ```
 
@@ -221,3 +221,5 @@ When testing locally (for example, `http://localhost:3000`), you need to allow y
 5. Select **Save**.
 
 </Steps>
+
+When you deploy, replace `*` with your production origin so that other sites cannot embed your search components. Allowed origins are a browser control, not an access control, so this does not stop a direct request from `curl` or a script. To restrict who can query the endpoint, refer to [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/).
