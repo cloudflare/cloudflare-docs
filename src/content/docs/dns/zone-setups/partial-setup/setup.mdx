@@ -108,3 +108,16 @@ If your zone stays in **Pending Nameserver Update** status after adding the veri
 ## Other record types
 
 If you are preparing a conversion from CNAME setup (partial) to primary setup (full), or if you have a more specific use case, you can use the [Create DNS Record](/api/resources/dns/subresources/records/methods/create/) API endpoint to create DNS records of any supported type.
+
+
+---
+
+## Use with a SaaS provider (O2O)
+
+If you use a partial setup and a SaaS platform that runs on Cloudflare, you can send traffic through your Cloudflare zone and then the provider's zone. That path is called [orange-to-orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/).
+
+1. In your Cloudflare zone, create a [proxied](/dns/proxy-status/) CNAME for the hostname that targets the name your SaaS provider specifies.
+2. At your authoritative DNS provider, keep DNS that delivers visitors to Cloudflare for that hostname (for example `{hostname}.cdn.cloudflare.net`, or the provider's Cloudflare hostname when their guide uses that pattern).
+3. Follow your [provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/) for activation and product limits.
+
+Partial setup does not require moving nameservers to Cloudflare. O2O depends on the proxied CNAME in your Cloudflare zone once visitor traffic reaches Cloudflare for that hostname.
