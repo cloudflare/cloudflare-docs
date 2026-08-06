@@ -61,7 +61,7 @@ When multiple <GlossaryTooltip term="proxy status">proxied DNS records</Glossary
 :::note[Orange-to-orange (O2O)]
 The priority order on this page decides which **single** configuration owns a hostname when the same name appears in more than one place.
 
-[Orange-to-orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) is different. When your zone has a proxied CNAME to a SaaS provider hostname on another account, Cloudflare applies your zone first and the SaaS provider zone second. Refer to the O2O documentation for that path.
+[Orange-to-orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) is different. When your zone has a proxied `CNAME` to a SaaS provider hostname on another account, Cloudflare applies your zone first and the SaaS provider zone second. Refer to the O2O documentation for that path.
 :::
 
 Cloudflare determines this priority in the following order, assuming each record exists and is proxied (orange-clouded):
