@@ -1,0 +1,27 @@
+---
+title: Container image for Cloudflare Mesh
+description: Run a Cloudflare Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD environments.
+date: 2026-08-06
+products:
+  - mesh
+  - cloudflare-one
+---
+
+import { DashButton } from "~/components";
+
+The [`cloudflare/mesh`](https://hub.docker.com/r/cloudflare/mesh) Docker image is now available on Docker Hub. You can deploy a Cloudflare Mesh node as a container in Docker Compose, Kubernetes, or any container runtime — no host-level package installation required.
+
+The image supports `amd64` and `arm64` architectures and includes built-in [source NAT](/cloudflare-one/networks/connectors/cloudflare-mesh/containers/#source-nat) so return traffic routes correctly without VPC route table changes.
+
+### Deployment patterns
+
+- **Docker Compose** — add a `cloudflare-mesh` service to your `compose.yaml` and connect your entire stack to a private network.
+- **Kubernetes StatefulSet** — deploy a standalone Mesh node with persistent registration state.
+- **Kubernetes sidecar** — add the Mesh image as a sidecar container in a Pod to connect an application to Cloudflare without application changes.
+- **CI/CD** — pull the image in a pipeline step, join the Mesh, run integration tests against private infrastructure, and tear down. The node disappears when the container exits.
+
+For [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/), run multiple replicas with the same Mesh node token. Cloudflare operates replicas in active-passive mode with automatic failover.
+
+<DashButton url="/?to=/:account/mesh" />
+
+For setup steps, runtime configuration, and deployment examples, refer to [Containers](/cloudflare-one/networks/connectors/cloudflare-mesh/containers/).
