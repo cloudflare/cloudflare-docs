@@ -13,7 +13,7 @@ minimumReleaseAgeExclude:
   - miniflare
   - workerd
   - "@cloudflare/workers-types"
-  # Rolldown 1.2.3 contains the native memory fix tested by this branch.
+  # Exempt rolldown 1.2.3 from the 24h wait — required by the overrides below.
   - rolldown@1.2.3
   - "@rolldown/*"
 
