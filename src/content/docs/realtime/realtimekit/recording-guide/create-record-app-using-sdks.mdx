@@ -20,17 +20,75 @@ If you wish to have a customized layout for your recording application, Realtime
 - Customized background for your recording
 - Portrait layout, and so on and so forth
 
-Let's dive in to understand the steps involved in creating a custom appearance for your RealtimeKit recording app.
+## How the recorder works
+
+When you call [Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/), RealtimeKit launches a Cloudflare container, opens a Chrome browser inside it, and loads the recording app URL. If you do not provide a custom URL in the [`url` parameter](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/), RealtimeKit's internal recording app is used.
+
+### URL parameters
+
+Before loading your custom recording app in the Chrome browser, RealtimeKit appends the `authToken` and `config` query parameters to the URL. For example, if you provide this URL in the [Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API:
+
+```txt
+https://example.com/my-custom-recorder
+```
+
+RealtimeKit loads the app with the following parameters:
+
+```txt
+https://example.com/my-custom-recorder?authToken=AUTH_TOKEN_CREATED_BY_REALTIMEKIT&config=CONFIG_CREATED_BY_REALTIMEKIT
+```
+
+The placeholder values represent parameters supplied by RealtimeKit. Do not add `authToken` or `config` yourself to the URL submitted to the Start Recording API. Your app must read both parameters from the URL.
+
+### Auth token
+
+RealtimeKit generates the `authToken` automatically for the meeting whose recording you start. It generates this token with the `recorder_preset_v2` preset. If you have not created a `recorder_preset_v2` preset, RealtimeKit uses a global preset with the same name that is managed by RealtimeKit and is not visible in your account.
+
+Your custom recording app **must** accept this `authToken` and use it to initialize the RealtimeKit SDK to get `meeting` object.
+
+### Config parameter
+
+Any configuration that you provide in the Start Recording API, such as watermark settings, is passed to the recording app through the `config` query parameter. The default recording app reads and applies this configuration automatically.
+
+If you use a custom recording app, you are responsible for reading and applying `config`. Whatever your app produces in the browser is recorded as-is. RealtimeKit does not apply any additional layout, watermark, or other processing to the output of a custom recording app.
+
+### Recording preset flags
+
+The `hidden_participant` flag controls only the recorder's visibility. When enabled, it hides the recorder from other participants in the meeting.
+
+The `is_recorder` flag identifies the participant as a recorder and ensures that recording works correctly. If you create a custom `recorder_preset_v2` preset to customize colors or the look and feel of the recording, you must keep `is_recorder` enabled. Removing `is_recorder` can cause the recording to fail. Removing `hidden_participant` can cause the recorder to be visible to other participants.
+
+### Local testing
+
+Local testing lets you view the recording app UI. Opening the recording app URL directly on your local machine does not start a recording.
+
+For local testing only, create any preset with `hidden_preset: true`, then pass an auth token created with that preset in the `authToken` query parameter when you open the local recording app URL. This lets you see the look and feel of the recorder UI. Do not include a local testing token as the `authToken` in the URL submitted to the Start Recording API. In an actual recording, RealtimeKit generates and passes the recorder token automatically.
+
+To speed up development, use a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local recording app. For example, if your app is running on port `1111`, start a [Quick Tunnel](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) with:
+
+```sh
+cloudflared tunnel --url http://localhost:1111
+```
+
+Replace `1111` with the port used by your local app. `cloudflared` prints a public `trycloudflare.com` URL. You can use this URL as the custom recording app URL when starting a recording, so the Cloudflare container can load your local app.
+
+You might see a WebSocket error in the browser console while testing locally because your browser cannot connect to `localhost:8080`. You can ignore this error during local testing. The recorder runs with this port inside the hosting Cloudflare container, and the WebSocket connection is how the recording app tells the container to record the rendered webpage.
+
+### Examples
+
+Refer to the [recording SDK app examples](https://github.com/cloudflare/realtimekit-web-examples/tree/main/recording-sdk-app-examples) for sample implementations, including a [recording with watermark example](https://github.com/cloudflare/realtimekit-web-examples/tree/main/recording-sdk-app-examples/react-examples/recording-with-watermark).
+
+## Recording SDK reference
 
 The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit) or [Core SDK](/realtime/realtimekit/core). The `RealtimeKitRecording` class is used for managing the recording functionality within the SDK.
 
-## Constructor
+### Constructor
 
 `constructor(options)`
 
 Creates an instance of the `RealtimeKitRecording` class.
 
-### Parameters
+#### Constructor parameters
 
 `options (object)`: The options object.
 
@@ -68,38 +126,38 @@ cleanup();
 
 Performs cleanup tasks after leaving the meeting, such as clearing added listeners and closing WebSocket connections.
 
-## Usage Example
+### Usage Example
 
 Perform the following steps to create the recording app for your RealtimeKit meetings.
 
-### Step 1: Install the SDK
+#### Step 1: Install the SDK
 
 ```js
 npm i @cloudflare/realtimekit-recording-sdk
 ```
 
-### Step 2: Import the `RealtimeKitRecording` object
+#### Step 2: Import the `RealtimeKitRecording` object
 
 ```js
-import { RealtimeKitRecording } from '@cloudflare/realtimekit-recording-sdk';
+import { RealtimeKitRecording } from "@cloudflare/realtimekit-recording-sdk";
 ```
 
-### Step 3: Create the `RealtimeKitRecording` object
+#### Step 3: Create the `RealtimeKitRecording` object
 
 ```js
 const recordingSdk = new RealtimeKitRecording(options);
 ```
 
-### Step 4: Initialize the recording SDK
+#### Step 4: Initialize the recording SDK
 
 Call `init` after creating the meeting object and before `joinRoom` is called.
 
 ```js
-// Call this after you have called initMeeting
-await recordingSdk.init();
+// Call this after you have initialized the RealtimeKit SDK and have the meeting object
+await recordingSdk.init(meeting);
 ```
 
-### (Optional) Step 5: Manually start the recording
+#### (Optional) Step 5: Manually start the recording
 
 To manually start the recording, call the `startRecording()` function. For example, you want to start a recording after you have loaded your UI content in the app and `autoStart` is not set to true. In such cases, you can manually call the `startRecording()` function when you are ready to begin the recording.
 
@@ -108,7 +166,7 @@ To manually start the recording, call the `startRecording()` function. For examp
 await recordingSdk.startRecording();
 ```
 
-### (Optional) Step 6: Manually stop the recording
+#### (Optional) Step 6: Manually stop the recording
 
 To manually stop the recording, use `stopRecording`.
 
@@ -119,18 +177,10 @@ await recordingSdk.stopRecording();
 
 Once `stopRecording` is called, the recorder in your recording app will exit after a few seconds. After this point, you won't be able to perform any further actions within your recording app.
 
-### Step 7: Deploy the recording app
+#### Step 7: Deploy the recording app
 
 Once you've created the app, deploy it using a platform like [Cloudflare Workers](https://cloudflare.com/workers). Make sure to note the URL where you have deployed the app, as you will have to enter this URL in RealtimeKit's recording API.
 
-### Step 8: Specify the custom URL
+#### Step 8: Specify the custom URL
 
-In the [Start Recording a Meeting](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, provide the custom URL (obtained from the previous step) to indicate the location of your deployed app.
-
-<head>
-  <title>Create Custom Recording App Using Recording SDKs Guide</title>
-  <meta
-    name="description"
-    content="Learn how to create a recording app using RealtimeKit's SDKs. Follow our guide for effective app creation and integration."
-  />
-</head>
+In the [Start Recording a Meeting](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, provide the custom URL (obtained from the previous step) to indicate the location of your deployed app. Do not append an `authToken` to this URL. RealtimeKit adds the generated `authToken` and `config` parameters when it loads the app.
