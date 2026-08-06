@@ -137,15 +137,18 @@ export default class extends WorkerEntrypoint<Env> {
 	}
 
 	private async handleRequest(request: Request): Promise<Response> {
-		// Let Image Resizing subrequests pass directly to ASSETS to avoid
-		// request loops — without this, the Worker intercepts the subrequest
-		// Image Resizing makes to fetch the source image.
-		if (/image-resizing/.test(request.headers.get("via") ?? "")) {
-			return this.env.ASSETS.fetch(request);
-		}
-
 		const url = new URL(request.url);
 		const { pathname } = url;
+
+		// Image Resizing makes a subrequest to fetch the source image. Scope the
+		// bypass to /_astro/ so only asset paths skip the Worker, not arbitrary
+		// client requests with a spoofed Via header.
+		if (
+			pathname.startsWith("/_astro/") &&
+			/image-resizing/.test(request.headers.get("via") ?? "")
+		) {
+			return this.env.ASSETS.fetch(request);
+		}
 
 		// Preview-only robots.txt — disallows all crawling and AI content signals
 		if (pathname === "/robots.txt") {

@@ -13,10 +13,6 @@ minimumReleaseAgeExclude:
   - miniflare
   - workerd
   - "@cloudflare/workers-types"
-  # Exempt rolldown 1.2.3 from the 24h wait — required by the overrides below.
-  - rolldown@1.2.3
-  - "@rolldown/*"
-
 overrides:
   # rolldown 1.1.x has a memory leak (rolldown/rolldown#10554) that causes
   # Workers Builds to OOM. Vite 8.2.0+ depends on rolldown ~1.2.0, but Astro
