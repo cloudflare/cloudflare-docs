@@ -148,19 +148,19 @@ try {
 }
 ```
 
-## Proxying external API requests
+## Handle outbound traffic
 
-Passing credentials directly to a sandbox — via environment variables or files — means the sandbox process holds a live credential that any code running inside it can read. A Worker proxy removes that exposure by keeping credentials exclusively in the Worker and giving the sandbox a short-lived JWT instead.
+Passing credentials directly to a sandbox — via environment variables or files — means the sandbox process holds a live credential that any code running inside it can read. Outbound handlers remove that exposure by keeping credentials in the Worker and injecting them into outbound requests.
 
 The flow works as follows:
 
-```
-Sandbox (short-lived JWT) → Worker proxy (validates JWT, injects real credentials) → External API
+```txt
+Sandbox request → Outbound handler (injects real credentials) → External API
 ```
 
-The sandbox never sees the real credential. If the JWT is compromised, it expires after a short window and cannot be reused.
+The sandbox never sees the real credential. Rotate the secret in your Worker's environment and every request uses the updated value.
 
-This pattern is useful when accessing GitHub for private repository operations, AI services, or object storage where you want to keep credentials out of the container entirely. Refer to [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) for a complete implementation.
+This pattern is useful when accessing GitHub for private repository operations, AI services, or object storage where you want to keep credentials out of the container entirely. For implementation details, refer to [Handle outbound traffic](/sandbox/guides/outbound-traffic/).
 
 ## What the SDK protects against
 
