@@ -81,6 +81,13 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
+		// Let Image Resizing subrequests pass directly to ASSETS to avoid
+		// request loops — without this, the Worker intercepts the subrequest
+		// Image Resizing makes to fetch the source image.
+		if (/image-resizing/.test(request.headers.get("via") ?? "")) {
+			return this.env.ASSETS.fetch(request);
+		}
+
 		const url = new URL(request.url);
 		const { pathname } = url;
 
