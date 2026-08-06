@@ -902,6 +902,37 @@ function Chat() {
 
 Use `isToolContinuation` when your UI should distinguish a fresh user submit from a continuation after a tool result. For example, show a typing indicator only for `status === "submitted" && !isToolContinuation`, while keeping loading controls disabled whenever `isStreaming` is true.
 
+### Non-React clients
+
+`useAgentChat` is React-specific. For Vue, Svelte, or vanilla JavaScript, `agents/chat/transport` exports `WebSocketChatTransport`, which adapts an `AgentClient` WebSocket connection to the AI SDK transport interface. This entry point requires no React peer dependency.
+
+<TypeScriptExample>
+
+```ts
+import { useChat } from "@ai-sdk/vue";
+import { AgentClient } from "agents/client";
+import { WebSocketChatTransport } from "agents/chat/transport";
+
+const agent = new AgentClient({
+	agent: "ChatAgent",
+	name: "user-123",
+	host: window.location.host,
+});
+
+const { messages, sendMessage, status } = useChat({
+	transport: new WebSocketChatTransport({
+		agent,
+		cancelOnClientAbort: true,
+	}),
+});
+```
+
+</TypeScriptExample>
+
+The transport covers new turns, regenerated turns, and stream cancellation. It is a lower-level primitive than `useAgentChat`: loading persisted history, automatic stream resume after a reconnect, cross-tab transcript synchronization, and client-side tool continuations remain the React hook's responsibility. Implement whichever of those your client needs on top of the transport.
+
+The [`vue-chat` example](https://github.com/cloudflare/agents/tree/main/examples/vue-chat) shows a minimal Vue client, and [`ai-chat`](https://github.com/cloudflare/agents/tree/main/examples/ai-chat) shows the full React integration for comparison.
+
 ## Tools
 
 `AIChatAgent` supports three tool patterns, all using the AI SDK's `tool()` function:
@@ -1708,6 +1739,7 @@ The originating client receives the streaming response. All other clients receiv
 | `@cloudflare/ai-chat/react` | `useAgentChat`, `extractClientToolSchemas`, `getToolPartState`, `getToolCallId`, `getToolInput`, `getToolOutput`, `getToolApproval`                                                                                  |
 | `@cloudflare/ai-chat/types` | `MessageType`, `OutgoingMessage`, `IncomingMessage`                                                                                                                                                                  |
 | `agents/chat`               | Shared advanced chat primitives such as `SaveMessagesResult`, `SaveMessagesOptions`, `CHAT_MESSAGE_TYPES`, `ROW_MAX_BYTES`, and `isReplayChunk()`                                                                    |
+| `agents/chat/transport`     | `WebSocketChatTransport` and its `AgentConnection` connection types, for non-React clients                                                                                                                           |
 
 ### WebSocket protocol
 
