@@ -62,9 +62,9 @@ The `is_recorder` flag identifies the participant as a recorder and ensures that
 
 Local testing lets you view the recording app UI. Opening the recording app URL directly on your local machine does not start a recording.
 
-For local testing only, create any preset with `hidden_preset: true`, then pass an auth token created with that preset in the `authToken` query parameter when you open the local recording app URL. This lets you see the look and feel of the recorder UI. Do not include a local testing token as the `authToken` in the URL submitted to the Start Recording API. In an actual recording, RealtimeKit generates and passes the recorder token automatically.
+For local testing only, create any preset with `hidden_participant: true`, then pass an auth token created with that preset in the `authToken` query parameter when you open the local recording app URL. This lets you see the look and feel of the recorder UI. Do not include a local testing token as the `authToken` in the URL submitted to the Start Recording API. In an actual recording, RealtimeKit generates and passes the recorder token automatically.
 
-To speed up development, use a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local recording app. For example, if your app is running on port `1111`, start a [Quick Tunnel](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) with:
+To speed up development, use a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local recording app. For example, if your app is running on port `1111`, start a [Quick Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) with:
 
 ```sh
 cloudflared tunnel --url http://localhost:1111
@@ -126,7 +126,7 @@ cleanup();
 
 Performs cleanup tasks after leaving the meeting, such as clearing added listeners and closing WebSocket connections.
 
-### Usage Example
+### Usage example
 
 Perform the following steps to create the recording app for your RealtimeKit meetings.
 
