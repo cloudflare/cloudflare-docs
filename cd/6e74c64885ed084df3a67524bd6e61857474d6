@@ -1,0 +1,79 @@
+src/content/docs/api-shield/management-and-monitoring/api-routing.mdx
+  s_add75964d108c9::t_12a6d90ffc8af3 11,26-34,40-49
+src/content/docs/api-shield/management-and-monitoring/developer-portal.mdx
+  s_add75964d108c9::t_b53399c54b65bb 11,17-18,20-25,27-31,33
+src/content/docs/api-shield/management-and-monitoring/endpoint-labels.mdx
+  s_add75964d108c9::t_3bd0535c91ff3a 14
+src/content/docs/api-shield/management-and-monitoring/endpoint-management/index.mdx
+  s_add75964d108c9::t_7f4b74d37c4620 11,29-36,44-48,52-56,60-65,75-80,114-118
+src/content/docs/api-shield/security/api-discovery.mdx
+  s_add75964d108c9::t_57f27e14253434 11,76-82
+src/content/docs/api-shield/security/authentication-posture.mdx
+  s_add75964d108c9::t_8e370f0e24f595 13,29-37
+src/content/docs/api-shield/security/jwt-validation/index.mdx
+  s_add75964d108c9::t_cc633d348c0a50 13,27-36,44-58
+src/content/docs/api-shield/security/schema-validation/index.mdx
+  s_add75964d108c9::t_cd0452e5db7af9 47-55,63-71,77-87,101-112,120-129,141-149,159-167,175-183,189-197,209-218,263
+src/content/docs/api-shield/security/volumetric-abuse-detection.mdx
+  s_add75964d108c9::t_c3b02940523a3c 11,29,45,71-72
+src/content/docs/bots/additional-configurations/ai-labyrinth.mdx
+  s_782f753d478856::t_ee3136ee8df695 15,23-24,26-30
+src/content/docs/bots/additional-configurations/managed-robots-txt.mdx
+  s_add75964d108c9::t_204a017898b694 14,118-125,178-179,181-182
+src/content/docs/bots/additional-configurations/static-resources.mdx
+  s_add75964d108c9::t_a0ad59bb1c2987 11,24-31
+src/content/docs/bots/concepts/feedback-loop.mdx
+  s_add75964d108c9::t_f59f42fcb463b0 11,47-55
+src/content/docs/bots/get-started/bot-fight-mode.mdx
+  s_add75964d108c9::t_02981fce213582 14,52-59,76
+src/content/docs/bots/troubleshooting/wordpress-loopback-issue.mdx
+  s_782f753d478856::t_035b5afa0af29f 13,25-32
+src/content/docs/client-side-security/detection/review-changed-scripts.mdx
+  s_591f86b63705b8::t_8abffcbeeb17c7 12,25-30
+src/content/docs/client-side-security/detection/review-malicious-scripts.mdx
+  s_591f86b63705b8::t_4336162a7b1c7f 14,27-33,43,53-59,66
+src/content/docs/client-side-security/get-started.mdx
+  s_591f86b63705b8::t_82709dbfbd1b62 12,38-43
+src/content/docs/use-cases/solutions/discover-secure-api-endpoints.mdx
+  s_add75964d108c9::t_df6e42c2b0b391 19,146,154,165,175,263,273
+src/content/docs/use-cases/solutions/stop-malicious-bots.mdx
+  s_add75964d108c9::t_e074037f9d8de0 13,17-24
+src/content/docs/waf/analytics/security-events.mdx
+  s_add75964d108c9::t_addd41e1862a3f 89,160
+src/content/docs/waf/managed-rules/check-for-exposed-credentials/upgrade-to-leaked-credentials-detection.mdx
+  s_add75964d108c9::t_44370ae7edcda9 13
+src/content/docs/waf/tools/scrape-shield/email-address-obfuscation.mdx
+  s_add75964d108c9::t_34fb5a41408466 32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cd6e74c64885ed084df3a67524bd6e61857474d6",
+  "prompts": {},
+  "sessions": {
+    "s_591f86b63705b8": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_04d692d13ffeLqNdobC7Utnpy3",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Daniele <daniele@cloudflare.com>"
+    },
+    "s_782f753d478856": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_04d692de8ffef8QcUNu0JL0x0y",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Daniele <daniele@cloudflare.com>"
+    },
+    "s_add75964d108c9": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0517090d1ffeh7JAEGOBrYo3lF",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Daniele <daniele@cloudflare.com>"
+    }
+  }
+}
