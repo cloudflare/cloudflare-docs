@@ -58,6 +58,12 @@ Cloudflare uses the following order to determine the certificate and settings us
 
 When multiple <GlossaryTooltip term="proxy status">proxied DNS records</GlossaryTooltip> exist for a hostname, in multiple <GlossaryTooltip term="zone">zones</GlossaryTooltip> — usually due to [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) — only one record will control the zone settings and associated origin server.
 
+:::note[Orange-to-orange (O2O)]
+The priority order on this page decides which **single** configuration owns a hostname when the same name appears in more than one place.
+
+[Orange-to-orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) is different. When your zone has a proxied CNAME to a SaaS provider hostname on another account, Cloudflare applies your zone first and the SaaS provider zone second. Refer to the O2O documentation for that path.
+:::
+
 Cloudflare determines this priority in the following order, assuming each record exists and is proxied (orange-clouded):
 
 1. **Exact hostname match**:
@@ -77,7 +83,7 @@ If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudf
 
 #### Scenario 1
 
-Customer1 uses Cloudflare as authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) `shop.example.com`. Afterward, traffic starts routing over Customer2's zone:
+Customer1 has a Cloudflare zone for `shop.example.com` (full or [partial](/dns/zone-setups/partial-setup/) setup). Customer2 is a SaaS provider that creates and successfully [verifies the new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) `shop.example.com`. Afterward, traffic starts routing over Customer2's zone:
 
 * If Customer1 wants to regain control of their zone, Customer1 contacts Customer2 and requests them to delete the custom hostname record. Customer1 should make sure to have their record target updated to something other than the SaaS provider target, otherwise Customer1 would get a [`1014` error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1014/).
 * If Customer1 already has a proxied record for `www.example.com` when Customer2 creates and verifies a new custom hostname `www.example.com`, [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) applies.
