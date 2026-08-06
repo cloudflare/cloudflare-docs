@@ -38,11 +38,11 @@ The first profile appears after the next weekly learning run. This can take up t
 3. From the operation overflow menu, select **Learn profile**. Discovery and manual creation do not start profiling.
 4. Allow Cloudflare to collect enough qualifying traffic.
 5. From the operation overflow menu, select **View details**. Review the learned schema under **Security overview**.
-6. In **Security** > **Analytics**, open **Profile Analysis**. Review conforming and violating requests.
+6. In **Security** > **Analytics**, open **Profile Analysis**. Review request time series for profile conformance and violations.
 
    <DashButton url="/?to=/:account/:zone/security/analytics" />
 
-7. Filter Security Analytics with `cf.schema_validation.learned.violated`.
+7. Drill into sampled logs to review violation reasons.
 8. After reviewing representative production traffic, [create a Custom Rule](/waf/custom-rules/create-dashboard/).
 9. Scope the rule to the intended hostname, path, or operation. Then choose a mitigation action.
 

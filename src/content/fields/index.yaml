@@ -515,6 +515,18 @@ entries:
     keywords: [request, api shield, client, visitor]
     summary: Indicates whether the request [violated the schema](/api-shield/security/schema-validation/) assigned to the respective saved endpoint.
 
+  - name: cf.schema_validation.learned.violated
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, schema validation, learned profile]
+    summary: Returns `true` when an evaluated request [violates the learned profile](/waf/detections/application-profiles/fields/).
+
+  - name: cf.schema_validation.uploaded.violated
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema]
+    summary: Returns `true` when an evaluated request [violates the supplied schema](/waf/detections/application-profiles/fields/).
+
   - name: cf.api_gateway.fallthrough_detected
     data_type: Boolean
     categories: [Request]
