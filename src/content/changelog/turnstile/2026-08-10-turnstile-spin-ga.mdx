@@ -1,12 +1,12 @@
 ---
 title: Turnstile Spin is now generally available
-description: Set up Turnstile end to end from the dashboard, Wrangler, or your AI coding agent, including server-side token verification.
+description: Create a Turnstile widget from the dashboard, Wrangler, or your AI coding agent, then wire server-side token verification by hand or with your agent.
 date: 2026-08-10
 ---
 
-[Turnstile Spin](/turnstile/spin/) is now generally available. Spin is a setup flow for installing Turnstile end to end. Start in the dashboard, with Wrangler, or from your AI coding agent. Each path creates the same widget. You can then wire the integration by hand or have your agent embed the widget and add canonical server-side siteverify to your existing backend.
+[Turnstile Spin](/turnstile/spin/) is now generally available with three setup paths for creating a Turnstile widget and wiring canonical server-side siteverify into your existing backend. Start in the dashboard, with Wrangler, or from your AI coding agent. All three paths create the same widget. You can complete the integration by hand or have your agent embed the widget, wire siteverify, and validate it.
 
-## Why it matters
+## Server-side verification
 
 Turnstile setup has two parts: embed the widget in your frontend, then call siteverify from your backend. Without the second part, the widget appears on the page but does not protect the request.
 
@@ -14,12 +14,12 @@ Turnstile setup has two parts: embed the widget in your frontend, then call site
 - The Turnstile dashboard flags existing widgets with no matching siteverify traffic. Select **Fix with Spin** to copy a prompt that guides your agent through wiring siteverify into your backend.
 - Before finishing, the agent runs a real Turnstile token through your protected endpoint, checks that it passes, then replays the token to confirm the endpoint rejects it on the second try. If a check fails, the agent stops and shows you where.
 
-## How to run Spin
+## Run Spin
 
 You can run Spin three ways:
 
-- In the **Turnstile dashboard**, select **Set up with Spin** when you create a widget. The dashboard creates the widget and gives you a prompt with the sitekey and skill URL for your agent.
-- From the **Wrangler CLI**, run [`wrangler turnstile widget create`](/turnstile/spin/#set-up-from-the-wrangler-cli). Wrangler prints the sitekey and secret. You wire the frontend and siteverify by hand.
+- In the **Turnstile dashboard**, select **Set up with Spin**, enter your domains, then select **Set up**. Spin creates the widget and returns the sitekey, secret, and a prompt for your agent.
+- From the `Wrangler CLI`, run [`wrangler turnstile widget create`](/turnstile/spin/#set-up-from-the-wrangler-cli). Wrangler prints the sitekey and secret. You wire the frontend and siteverify by hand.
 - From your **AI coding agent**, paste the [Spin prompt](/turnstile/spin/#set-up-from-an-ai-coding-agent) into Claude Code, Cursor, Codex, OpenCode, or GitHub Copilot Chat. Your agent fetches the skill, creates the widget, then embeds it and wires siteverify.
 
 To get started, refer to the [Turnstile Spin documentation](/turnstile/spin/).
