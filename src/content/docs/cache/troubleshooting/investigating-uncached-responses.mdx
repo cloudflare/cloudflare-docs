@@ -82,7 +82,7 @@ If your requests reach different Cloudflare data centers, each produces its own 
 
 After adjusting configuration, request the URL twice from the same client and verify the expected outcome for your configuration:
 
-- **Fresh, positive Edge TTL:** `cf-cache-status: HIT` and an `Age` header that increases on subsequent requests. `Age` may be absent on the first request served by a lower-tier data center after it populates its cache from an upper tier via [Tiered Cache](/cache/how-to/tiered-cache/); subsequent requests include it.
+- **Fresh, positive Edge TTL:** `cf-cache-status: HIT` and an `Age` header that increases on subsequent requests. `Age` may be absent on the first request served by a lower-tier data center after it populates its cache from an upper tier via [Tiered Cache](/cache/how-to/tiered-cache/). Subsequent requests include it.
 - **Origin returns `Cache-Control: no-cache` with [Origin Cache Control](/cache/concepts/cache-control/) enabled:** `cf-cache-status: REVALIDATED` when the origin confirms the cached copy is unchanged, or [`EXPIRED`](/cache/concepts/cache-responses/#expired) when the origin returns new content. Both indicate the response is cached. `must-revalidate` on its own does not force revalidation on every request — it only prevents serving stale content after the freshness TTL expires.
 
 If the response is still `MISS` or `BYPASS` after these checks, capture two full responses (request and response headers, including `cf-ray` values) and open a support case. The `cf-ray` values are required to trace the request through the Cloudflare network.
