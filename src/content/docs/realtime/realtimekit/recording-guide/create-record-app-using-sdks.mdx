@@ -80,7 +80,7 @@ Refer to the [recording SDK app examples](https://github.com/cloudflare/realtime
 
 ## Recording SDK reference
 
-The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit) or [Core SDK](/realtime/realtimekit/core). The [`@cloudflare/realtimekit-recording-sdk` package](https://www.npmjs.com/package/@cloudflare/realtimekit-recording-sdk) provides the `RealtimeKitRecording` class for managing recording functionality.
+The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit/) or [Core SDK](/realtime/realtimekit/core/). The [`@cloudflare/realtimekit-recording-sdk` package](https://www.npmjs.com/package/@cloudflare/realtimekit-recording-sdk) provides the `RealtimeKitRecording` class for managing recording functionality.
 
 ### Constructor
 
@@ -90,15 +90,15 @@ Creates an instance of the `RealtimeKitRecording` class.
 
 #### Constructor parameters
 
-`options (object)`: The options object.
+`options (object)`: The options object. All constructor options are optional. If you omit an option, RealtimeKit uses its default value.
 
-| **options (object)**            | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `options.waitTimeMs (number)`   | The time (in milliseconds) to wait after all peers have left before leaving the meeting. This option is ignored if `autoStop` is set to true.                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `options.autoStart (boolean)`   | Set to true if you want to manually call the `startRecording` function. By default, the `autoStart` parameter is set to `true`. If you wish to delay the start of the recording, you can set the value of this parameter to `false`. In that case, you can manually call the `startRecording()` function later. Note that there is a timeout of 2 minutes associated with the `startRecording()` method. If this method is not called within 2 minutes of the WebSocket connection being established, the recording process will encounter an error. |
-| `options.autoStop (boolean)`    | Set to true if you want to disable automatic peer leave and manually call the `stopRecording` function.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `options.scanInterval (number)` | The interval (in milliseconds) between scans for automatic peer leave.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `options.devMode (boolean)`     | Set to true to enable development mode, which enables logs and disables certain functionality. Also you must ensure that this is set this to true when testing your recording-app locally.                                                                                                                                                                                                                                                                                                                                                           |
+| **options (object)**            | **Description**                                                                                                                                                                                                                                                                        |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options.waitTimeMs (number)`   | The time (in milliseconds) to wait after all peers have left before stopping the recording. This option applies when `autoStop` is set to true.                                                                                                                                        |
+| `options.autoStart (boolean)`   | Defaults to `true`, so recording starts automatically when `init()` is called. Set it to `false` only when you want to start recording manually with `startRecording()`. When set to `false`, you must call `startRecording()` within 2 minutes of the WebSocket connection being established, or the recording process will encounter an error. |
+| `options.autoStop (boolean)`    | Defaults to `true`, so recording stops automatically after all peers have left. Set it to `false` only when you want to stop recording manually with `stopRecording()`.                                                                                                              |
+| `options.scanInterval (number)` | The interval (in milliseconds) between scans for automatic peer leave.                                                                                                                                                                                                                 |
+| `options.devMode (boolean)`     | Set to true to enable development mode, which enables logs and disables certain functionality. Also you must ensure that this is set this to true when testing your recording-app locally.                                                                                             |
 
 ### Methods
 
@@ -112,13 +112,13 @@ Initiates the SDK by providing a `RealtimeKitClient` object. Call this after cre
 startRecording();
 ```
 
-Manually starts the recording. Ensure that `autoStart` is passed as true in the constructor options.
+In most cases, leave `autoStart` set to `true` (the default) so the recording starts automatically. To start the recording manually, set `autoStart` to `false` in the constructor options before calling this method.
 
 ```js
 stopRecording();
 ```
 
-Manually stops the recording. Ensure that `autoStop` is passed as true in the constructor options.
+You usually do not need to call this method because `autoStop` defaults to `true`. To stop the recording manually, set `autoStop` to `false` in the constructor options before calling this method.
 
 ```js
 cleanup();
@@ -159,19 +159,17 @@ await recordingSdk.init(meeting);
 
 ### (Optional) Step 5: Manually start the recording
 
-To manually start the recording, call the `startRecording()` function. For example, you want to start a recording after you have loaded your UI content in the app and `autoStart` is not set to true. In such cases, you can manually call the `startRecording()` function when you are ready to begin the recording.
+To manually start the recording, set `autoStart` to `false` in the `RealtimeKitRecording` constructor options. Then call `startRecording()` after you have loaded your UI content and are ready to begin recording.
 
 ```js
-// This throws an exception if autoStart is set to false.
 await recordingSdk.startRecording();
 ```
 
 ### (Optional) Step 6: Manually stop the recording
 
-To manually stop the recording, use `stopRecording`.
+To manually stop the recording, set `autoStop` to `false` in the `RealtimeKitRecording` constructor options. Then call `stopRecording()` when you are ready to stop recording.
 
 ```js
-// This throws an exception if autoStop is set to false.
 await recordingSdk.stopRecording();
 ```
 
