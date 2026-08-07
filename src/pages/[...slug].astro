@@ -106,9 +106,7 @@ const socialImage = entry.data.socialImage ?? (await getOgImage(entry));
 // emits the direct-hit meta refresh and noindex metadata.
 const externalLink = entry.data.external_link;
 const head = entry.data.head ?? [];
-const sectionProduct = sectionSegment
-	? await getDirectoryEntryBySection(sectionSegment)
-	: undefined;
+const sectionProduct = await getDirectoryEntryBySection(sectionSegment);
 const productRefs = (entry.data.products ?? []).map((product) =>
 	typeof product === "string"
 		? ({ collection: "directory", id: product } as const)

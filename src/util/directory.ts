@@ -5,7 +5,7 @@
  *
  * CF source: cloudflare-docs/src/util/directory.ts (faithful port).
  */
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export const directory = await getCollection("directory");
 
@@ -44,9 +44,7 @@ export async function getDirectoryEntryBySection(
 	section: string | undefined,
 ): Promise<CollectionEntry<"directory"> | undefined> {
 	if (!section || NON_PRODUCT_SECTIONS.has(section)) return undefined;
-	const cached = directoryBySection.get(section);
-	if (cached) return cached;
-	return await getEntry("directory", section);
+	return directoryBySection.get(section);
 }
 
 export const directoryByGroup = Object.entries(
