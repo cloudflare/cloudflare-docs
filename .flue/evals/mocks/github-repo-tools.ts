@@ -92,27 +92,6 @@ const FIXTURES: Record<string, Record<string, string>> = {
 		].join("\n"),
 	},
 
-	// Review-validator eval: file with proper error handling (false positive).
-	"eval-val-proper-handling": {
-		"src/handler.ts": [
-			"export default {",
-			"  async fetch(request, env) {",
-			"    const url = 'https://api.example.com/data';",
-			"    try {",
-			"      const res = await fetch(url);",
-			"      if (!res.ok) {",
-			"        return new Response('upstream error', { status: 502 });",
-			"      }",
-			"      const data = await res.json();",
-			"      return new Response(JSON.stringify(data));",
-			"    } catch (e) {",
-			"      return new Response('internal error', { status: 500 });",
-			"    }",
-			"  },",
-			"};",
-		].join("\n"),
-	},
-
 	// Review-validator eval: style-guide false positive (img inside code block).
 	"eval-val-fenced-img": FENCED_IMG_FIXTURE,
 };

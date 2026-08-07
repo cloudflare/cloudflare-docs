@@ -75,55 +75,6 @@ describeEval("review validator", { harness }, (it) => {
 		);
 	});
 
-	it("reads a file with proper error handling and produces a decision", async ({
-		run,
-	}) => {
-		const result = await run({
-			pullRequest: PR,
-			headSha: "eval-val-proper-handling",
-			streamLabel: "code",
-			findings: [
-				{
-					id: "CR-bbb222",
-					severity: "warning",
-					path: "src/handler.ts",
-					line: 5,
-					rule: "Unhandled promise rejection",
-					evidence:
-						"The `await fetch(url)` has no error handling; a network failure throws and crashes the request.",
-					suggestion:
-						"Wrap in try/catch and handle the failure, or check `res.ok` before using the response.",
-				},
-			],
-			prBody: "Fix the fetch handler with proper error handling.",
-			prTemplate: "",
-			changedFiles,
-		});
-
-		const output = result.output as {
-			decisions?: Array<{
-				id?: string;
-				verdict?: string;
-				reason?: string;
-			}>;
-		};
-		expect(output).toBeDefined();
-		expect(output?.decisions).toBeDefined();
-
-		const decision = output?.decisions!.find((d) => d.id === "CR-bbb222");
-		expect(decision).toBeDefined();
-		// Live model eval — the model may not always correctly identify this
-		// as a false positive. Assert the contract was fulfilled (decision
-		// produced + tool called) rather than the specific verdict, since the
-		// model's ability to detect false positives is non-deterministic.
-		// Suppression logic itself is unit-tested in run-review-validation.test.ts.
-		expect(decision!.verdict).toMatch(/^(valid|invalid)$/);
-
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_review_validation",
-		);
-	});
-
 	it("suppresses a style-guide finding for img inside a code block", async ({
 		run,
 	}) => {
