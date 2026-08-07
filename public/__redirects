@@ -3001,3 +3001,6 @@
 
 # Bots: signed agents deprecated -> verified bots
 /bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
+
+# R2 Data Catalog promoted to a top-level product (was nested under R2)
+/r2/data-catalog/* /r2-data-catalog/:splat 301
