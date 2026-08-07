@@ -36,8 +36,8 @@ try {
 		// error.context.reason, error.context.retryAfterMs
 	}
 	if (error instanceof OperationInterruptedError) {
-		// Convenience getters: error.reason, error.retryable
-		// Also on context: error.context.admitted
+		// Convenience getters: error.reason, error.retryable, error.operationName
+		// admitted is only on context: error.context.admitted
 	}
 	if (error instanceof RPCTransportError) {
 		// Convenience getters: error.kind, error.originalMessage
@@ -147,7 +147,7 @@ These errors come from ordinary start, idle stop, replace, or lost contact while
 | `recovery_exhausted` | Recovery attempts were exhausted |
 | `unknown` | Unclassified interruption |
 
-Also on the error: `admitted: true | 'unknown'`, `retryable: boolean`, and optional fields such as `operationId`, `phase`, and backup-related metadata.
+Convenience getters on the error: `reason`, `retryable`, and `operationName`. Other fields such as `admitted`, `operationId`, `phase`, and backup-related metadata are on `error.context` only (`admitted` is `true | "unknown"`).
 
 ### `RPCTransportError` kinds
 

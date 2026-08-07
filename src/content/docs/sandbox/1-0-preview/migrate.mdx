@@ -242,6 +242,10 @@ Background on container rollouts: [Containers rollouts](/containers/platform-det
 7. Confirm secrets are not stored in sandbox env. Use outbound handlers where needed.
 8. Grep again for removed APIs (transport, sessions, `execStream`, `startProcess`, `sandbox.terminal`, `gitCheckout`, xterm `sessionId`).
 
+## Coding agents
+
+Install [Cloudflare Skills](https://github.com/cloudflare/skills) for your agent ([Agent setup](/agent-setup/)). The **`sandbox-v1-migration`** skill performs this migration. For new apps on `@next`, use **`sandbox-sdk`**. For stable-only deprecated-API cleanup, use **`sandbox-2026-deprecation`** before or instead of this guide.
+
 ## Related
 
 - [1.0 preview overview](/sandbox/1-0-preview/)

@@ -213,6 +213,11 @@ Returns the WebSocket upgrade `Response` your Worker should return to the client
 <TypeScriptExample>
 ```ts
 const url = new URL(request.url);
+const terminalId = url.searchParams.get("terminalId");
+if (!terminalId) {
+	return new Response("terminalId is required", { status: 400 });
+}
+
 const terminal = await sandbox.getTerminal(terminalId);
 if (!terminal) {
 	return new Response("Terminal not found", { status: 404 });

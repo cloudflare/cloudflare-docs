@@ -22,10 +22,7 @@ For the announcement and rationale, refer to the [deprecation changelog entry](/
 
 ## Before you migrate
 
-Update to the latest Sandbox SDK release before changing transport or session configuration.
-
-- RPC transport: if your project uses a version earlier than `0.9.1`, deploy a newer `@cloudflare/sandbox` package and container image before switching to RPC.
-- Session isolation with `enableDefaultSession: false`: requires Sandbox SDK `0.10.3` or newer. On `0.9.1`–`0.10.2`, upgrade first, then set the flag.
+Update to the latest Sandbox SDK release before changing transport or session configuration. If your project uses a version earlier than `0.9.1`, deploy a newer `@cloudflare/sandbox` package and container image before switching to RPC transport. Session isolation with `enableDefaultSession: false` requires Sandbox SDK `0.10.3` or newer — on `0.9.1`–`0.10.2`, upgrade first, then set the flag.
 
 Search your codebase for deprecated configuration and APIs:
 
@@ -193,9 +190,9 @@ Use this checklist before you depend on a Sandbox SDK release that has removed t
 - Streaming file and command code uses the base APIs.
 - Your Worker has been deployed and smoke-tested.
 
-## Agent skill
+## Coding agents
 
-An agent skill is available to assist with the migration: [deprecation skill](/sandbox/guides/2026-deprecation/SKILL/).
+Install [Cloudflare Skills](https://github.com/cloudflare/skills) with your agent ([Agent setup](/agent-setup/)). The **`sandbox-2026-deprecation`** skill walks this stable-line cleanup. For a full move to Sandbox SDK 1.0 (`@next`), use **`sandbox-v1-migration`** instead.
 
 ## 1.0 preview
 

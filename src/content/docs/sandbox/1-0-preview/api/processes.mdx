@@ -447,7 +447,7 @@ interface ProcessFailure {
 
 ## Common errors
 
-`getProcess` and `listProcesses` do not throw for missing work. They return `null` or `[]` when no container is up, the ID is unknown in the current container, or the process belonged to a previous container. The error classes below apply to operations on a process handle (and to launch), not to those lookups.
+`getProcess` and `listProcesses` do not throw for missing work. They return `null` or `[]` when no container is up, the ID is unknown in the current container, or the process belonged to a previous container. The following error classes apply to operations on a process handle (and to launch), not to those lookups.
 
 | Situation | Class / outcome |
 | --------- | --------------- |
