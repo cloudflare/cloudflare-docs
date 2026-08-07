@@ -12,7 +12,7 @@ date: 2026-08-04
 
 The **AS-level connectivity** graph aggregates the BGP paths an AS uses to reach the Tier-1 networks, unioned across all the prefixes it announces, as observed by selected RouteViews collectors. It reads from left to right, starting at the queried AS and ending at the Tier-1 networks, and each node is labeled with its AS number, country, and organization name. Tier-1 nodes are marked so they stand apart from the intermediate networks that lead to them.
 
-By default, the graph shows the network's direct connections to Tier-1 networks plus the paths it uses to reach any Tier-1 network it is not directly connected to, which keeps the view readable. A **Show full paths** toggle expands it to every observed path, including transit through Tier-1 networks the AS already connects to. An IP version selector switches between IPv4 and IPv6, because the paths reaching Tier-1 networks may differ between the two address families.
+By default, the graph shows the network's direct connections to Tier-1 networks plus the indirect paths, which keeps the view readable. A **Show full paths** toggle expands it to every observed path, including transit through Tier-1 networks the AS already connects to. An IP version selector switches between IPv4 and IPv6, because the paths reaching Tier-1 networks may differ between the two address families.
 
 ![AS-level connectivity graph for AS13335, showing Tier-1 networks it reaches directly alongside paths that reach others through intermediate networks](~/assets/images/radar/as-level-connectivity-graph.png)
 
