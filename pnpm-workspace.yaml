@@ -28,24 +28,6 @@ overrides:
 # Only direct dependencies may use exotic sources.
 blockExoticSubdeps: true
 
-# Explicit allowlist of packages permitted to run install scripts.
-# Workers Builds currently uses pnpm 10.11, which reads this legacy list.
-onlyBuiltDependencies:
-  - tldjs
-
-# Newer pnpm versions use the per-package allow/deny map.
-allowBuilds:
-  esbuild: false
-  sharp: false
-  tldjs: true
-  workerd: false
-  # Transitive deps of @flue/runtime and agents — native binaries not needed by this repo
-  "@google/genai": false
-  "@mongodb-js/zstd": false
-  core-js-pure: false
-  node-liblzma: false
-  protobufjs: false
-
 # Always save dependencies as exact versions and to devDependencies by default.
 saveExact: true
 saveDev: true
