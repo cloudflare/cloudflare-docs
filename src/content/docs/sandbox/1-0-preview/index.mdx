@@ -102,7 +102,7 @@ const sandbox = getSandbox(env.Sandbox, "user-123");
 
 That sandbox runs in a **container**. The ID is stable; the container instance behind it is not always the same one. Processes and terminals you start exist only in the **current** container. When that container stops or is replaced, those processes and terminals are gone — old handles fail closed instead of quietly attaching to a new container for the same sandbox ID.
 
-Container stop and replace already happened on the stable line. The preview makes process and terminal APIs honest about that lifetime. Full model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/). Process detail: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives/). Recovery: [Errors and recovery](/sandbox/1-0-preview/errors/).
+Container stop and replace already happened on the stable line. The preview makes process and terminal APIs honest about that lifetime. Full model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/). Process detail: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives). Recovery: [Errors and recovery](/sandbox/1-0-preview/errors/).
 
 ## What usually stays the same
 
