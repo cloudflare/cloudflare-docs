@@ -6,7 +6,7 @@ products:
   - workers
 ---
 
-import { DashButton, Steps, Tabs, TabItem } from "~/components";
+import { DashButton, Steps, Tabs, TabItem, WranglerConfig } from "~/components";
 
 With Cloudflare Access, you can restrict who is authorized to access your application. You decide who is approved, and every request is checked before your Worker runs. Approved visitors are let through, while everyone else is shown a login page or blocked.
 
@@ -51,9 +51,14 @@ Dashboard path: **Workers & Pages** overview page > **Protect all Workers**.
 
 2. Find the **Protect all Workers** card.
 3. If the card says **Not enabled**, select **Enable Access**.
-4. Choose **Previews** or **Production & Previews**.
+4. Choose **Previews only** or **All traffic**.
 5. Under **Authentication policy**, select an existing policy or configure one of the [policy options](#policy-options).
 6. Select **Enable Access**.
+7. (Optional) Review the session duration.
+
+   ![Manage Access for all Workers dialog showing traffic scope and policy options.](~/assets/images/workers/access/manage-access-all-workers.png)
+
+8. Select **Apply Access**.
 </Steps>
 
 </TabItem>
@@ -103,9 +108,12 @@ Dashboard path: **Workers & Pages** > select your Worker > **Access**.
 2. Select your Worker from the application list.
 3. Select the **Access** tab.
 4. Select **Protect this Worker behind Access**.
-5. Choose **Previews** or **Production & Previews**.
+5. Choose **Previews only** or **All traffic**.
 6. Under **Authentication policy**, select an existing policy or configure one of the [policy options](#policy-options).
 7. (Optional) Review the session duration.
+
+   ![Enable Access on one Worker dialog showing traffic scope and policy options.](~/assets/images/workers/access/enable-access-one-worker.png)
+
 8. Select **Apply Access**.
 </Steps>
 
@@ -247,9 +255,75 @@ export default {
 };
 ```
 
-:::note
-`ctx.access` is not populated during local development with `wrangler dev`. Access runs on Cloudflare's network, not your local machine, so `ctx.access` will always be `undefined` locally.
-:::
+## Testing ctx.access locally
+
+When developing locally with `wrangler dev`, you can simulate authenticated Cloudflare Access identities without deploying or going through an Access login flow.
+
+Add a `dev` block inside the `access` configuration in your `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"access": {
+		// ... your Access policies, session_duration, etc.
+		"dev": {
+			"aud": "my-app",
+			"identity": { "email": "admin@company.com" }
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+When you run `wrangler dev`, your Worker will receive this identity through `ctx.access` — the same way it would in production. Calling `ctx.access.getIdentity()` returns the identity object you configured above.
+
+### Switching between users
+
+To test as a different user, update the identity in your `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"access": {
+		"dev": {
+			"aud": "my-app",
+			"identity": { "email": "ic@company.com" }
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+### Testing unauthenticated requests
+
+To test what happens when a request is not authenticated, remove the `dev` block (or comment it out). `ctx.access` will be `undefined`, just as it would be for an unauthenticated request in production.
+
+### Example Worker
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		if (!ctx.access) {
+			return new Response("Not authenticated", { status: 403 });
+		}
+
+		const identity = await ctx.access.getIdentity();
+		const email = identity?.email ?? "unknown";
+
+		return new Response(`Hello, ${email}`);
+	},
+};
+```
+
+With the `dev` config above, running `wrangler dev` and visiting `localhost:8787` would return `Hello, admin@company.com`.
+
+### Identity fields
+
+For the full list of fields available on the identity object, refer to [Application token — User identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/).
 
 ## Disable Access
 
