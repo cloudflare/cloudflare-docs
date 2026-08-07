@@ -45,7 +45,7 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-The same recovery events are available through `agents/observability` on the `chat` channel; transcript repairs are emitted on the `transcript` channel. Refer to [Observability](/agents/runtime/operations/observability/#chat-recovery-events).
+The same recovery events are available through `agents/observability` on the `chat` channel; transcript repairs are emitted on the `transcript` channel. Refer to [Diagnostics channels](/agents/runtime/operations/observability/diagnostics-channels/#chat-recovery-events).
 
 ## onChatRecovery
 
@@ -232,7 +232,7 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-Use either layer alone, or both together: the proactive guard avoids most overflows, and the reactive backstop catches any that still slip through (for example, a turn that starts already over budget, or a single tool result so large that compaction cannot help — in which case it terminalizes cleanly). Both apply to every turn entry path (WebSocket, sub-agent `chat()`, and programmatic `saveMessages()` / `submitMessages()`), and both emit a `chat:context:compacted` [observability event](/agents/runtime/operations/observability/#chat-context-events).
+Use either layer alone, or both together: the proactive guard avoids most overflows, and the reactive backstop catches any that still slip through (for example, a turn that starts already over budget, or a single tool result so large that compaction cannot help — in which case it terminalizes cleanly). Both apply to every turn entry path (WebSocket, sub-agent `chat()`, and programmatic `saveMessages()` / `submitMessages()`), and both emit a `chat:context:compacted` [diagnostics channel event](/agents/runtime/operations/observability/diagnostics-channels/#chat-context-events).
 
 :::note
 A no-op compaction cannot rescue an over-budget turn, so recovery is only as effective as your compaction configuration. For tool-heavy histories, configure a `tokenCounter` on `compactAfter()` (refer to [Sessions](/agents/runtime/lifecycle/sessions/#auto-compaction)).

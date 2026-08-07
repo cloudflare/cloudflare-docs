@@ -313,6 +313,7 @@
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
+/agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 
 # ai-audit
@@ -330,6 +331,7 @@
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
 /ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
+/ai-gateway/observability/ai-spend/ /ai-gateway/observability/user-insights/ 301
 /ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
 /ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations/set-up-evaluations/ 301
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
@@ -431,7 +433,8 @@
 /ai-search/configuration/system-prompt/ /ai-search/configuration/retrieval/system-prompt/ 301
 /ai-search/configuration/cache/ /ai-search/configuration/retrieval/cache/ 301
 /ai-search/configuration/public-endpoint/ /ai-search/configuration/retrieval/public-endpoint/ 301
-/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/embed-search-snippets/ 301
+/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
+/ai-search/configuration/retrieval/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
@@ -2998,3 +3001,6 @@
 
 # Bots: signed agents deprecated -> verified bots
 /bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
+
+# R2 Data Catalog promoted to a top-level product (was nested under R2)
+/r2/data-catalog/* /r2-data-catalog/:splat 301
