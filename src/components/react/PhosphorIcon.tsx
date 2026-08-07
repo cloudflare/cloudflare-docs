@@ -1,42 +1,33 @@
-// Renders a Phosphor icon inside a React island. astro-icon's <Icon> is
-// Astro-only, so React islands can't use it directly — this resolves icon
-// data from the already-installed @iconify-json/ph set at runtime (cheap,
-// synchronous, no network fetch) via the same @iconify/utils helpers already
-// used for build-time icon resolution in src/pages/directory.astro.
-import { getIconData, iconToSVG } from "@iconify/utils";
-import phIcons from "@iconify-json/ph/icons.json";
+import thumbsUp from "@phosphor-icons/core/regular/thumbs-up.svg?raw";
+import thumbsDown from "@phosphor-icons/core/regular/thumbs-down.svg?raw";
+import checkCircle from "@phosphor-icons/core/regular/check-circle.svg?raw";
+import magnifyingGlass from "@phosphor-icons/core/regular/magnifying-glass.svg?raw";
+import x from "@phosphor-icons/core/regular/x.svg?raw";
+import checkBold from "@phosphor-icons/core/bold/check-bold.svg?raw";
+
+const icons = {
+	"thumbs-up": thumbsUp,
+	"thumbs-down": thumbsDown,
+	"check-circle": checkCircle,
+	"magnifying-glass": magnifyingGlass,
+	x,
+	"check-bold": checkBold,
+};
+
+type IconName = keyof typeof icons;
 
 interface Props {
-	/** Icon name from the Phosphor set, e.g. "thumbs-up", "magnifying-glass". */
-	name: string;
+	name: IconName;
 	className?: string;
 }
 
-const cache = new Map<string, { viewBox: string; body: string }>();
-
-function resolve(name: string) {
-	let entry = cache.get(name);
-	if (!entry) {
-		const data = getIconData(phIcons, name);
-		if (!data) {
-			throw new Error(`PhosphorIcon: unknown icon "${name}"`);
-		}
-		const { attributes, body } = iconToSVG(data);
-		entry = { viewBox: String(attributes.viewBox), body };
-		cache.set(name, entry);
-	}
-	return entry;
-}
-
 export default function PhosphorIcon({ name, className }: Props) {
-	const { viewBox, body } = resolve(name);
+	const svg = icons[name];
 	return (
-		<svg
-			viewBox={viewBox}
-			fill="currentColor"
+		<span
 			aria-hidden
 			className={className}
-			dangerouslySetInnerHTML={{ __html: body }}
+			dangerouslySetInnerHTML={{ __html: svg }}
 		/>
 	);
 }
