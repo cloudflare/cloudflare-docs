@@ -13,7 +13,7 @@ import { FeatureTable, GlossaryTooltip } from "~/components";
 
 Certificate Transparency (CT) Monitoring is an [opt-in](#opt-in-and-out) feature that lets you double-check any SSL/TLS certificates issued for your domain.
 
-CT Monitoring alerts are triggered whenever a certificate that covers your monitored domain is issued by a [Certificate Authority (CA)](https://developers.cloudflare.com/ssl/reference/certificate-authorities/) and added to a public CT log. Alerts for certificates Cloudflare issues on your behalf, including backup certificates, are automatically filtered out. You can [learn more about the filtering behavior](https://blog.cloudflare.com/certificate-transparency-monitoring-ga) in our GA announcement, or read the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-monitoring/) to learn more about how CT Monitoring works.
+CT Monitoring alerts are triggered whenever a certificate that covers your monitored domain is issued by a [Certificate Authority (CA)](/ssl/reference/certificate-authorities/) and added to a public CT log. Alerts for certificates Cloudflare issues on your behalf, including backup certificates, are automatically filtered out. You can [learn more about the filtering behavior](https://blog.cloudflare.com/certificate-transparency-monitoring-ga) in our GA announcement, or read the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-monitoring/) to learn more about how CT Monitoring works.
 
 :::caution[Aspects to consider]
 
@@ -46,15 +46,15 @@ Cloudflare filters out the certificates it issues for you, so every alert you ge
 Most alerts are routine. Open the email and check three things:
 
 1. **Your domain.** Does it match what you own?
-2. **The issuer.** Is it a [Certificate Authority](https://developers.cloudflare.com/ssl/reference/certificate-authorities/) you recognize? Common ones: Let's Encrypt, Google Trust Services, Sectigo, SSL.com.
+2. **The issuer.** Did you or your organization request this certificate, or was it requested by a service you use? The issuer is listed as the [Certificate Authority](/ssl/reference/certificate-authorities/) in the email.
 3. **The DNS names and validity dates.** Do they look reasonable?
 
-If all three check out, you're done. You can view all certificates for your domain on the [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) in the dashboard.
+If you can confirm that your organization or a service you use requested the certificate, no action is required. Otherwise, investigate the issuance with your security team or certificate provider. You can review certificates configured on Cloudflare from the [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) in the dashboard. For external certificates, review the CT log entry or use [Certificate Search](https://crt.sh/).
 
 Take action if:
 
-- You don't recognize the issuer.
-- You don't recognize the DNS names.
+- You do not recognize the issuer or did not request the certificate.
+- You do not recognize the DNS names.
 - Your website has been acting strangely.
 
 ---
