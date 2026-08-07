@@ -14,7 +14,7 @@ Triggered when a deployment is created and rolled out.
     "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
   },
   "payload": {
-    "name": "my-worker",
+    "workerName": "my-worker",
     "id": "bcf48806-b317-4351-9ee7-36e7d557d4de",
     "strategy": "percentage",
     "versions": [
@@ -22,7 +22,12 @@ Triggered when a deployment is created and rolled out.
         "versionId": "3f9e2c1a-7b4d-4e8f-9a01-2b3c4d5e6f70",
         "percentage": 100
       }
-    ]
+    ],
+    "annotations": {
+      "workers/message": "Fix redirect handling"
+    },
+    "authorEmail": "developer@example.com",
+    "createdOn": "2025-05-01T02:48:57Z"
   },
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
@@ -33,7 +38,7 @@ Triggered when a deployment is created and rolled out.
 }
 ```
 
-The `versions` array describes the default traffic split, and the `percentage` values always sum to 100. The `strategy` field is currently always `percentage`. Deployments that use cohorts can route traffic to versions that do not appear in `versions`.
+The `versions` array describes the default traffic split, and the `percentage` values always sum to 100. Deployments that use cohorts can route traffic to versions that do not appear in `versions`.
 
 #### `deployment.deleted`
 
@@ -162,8 +167,9 @@ Triggered when a Worker's unversioned configuration changes.
         "from": false,
         "to": true
       },
-      "preview_defaults": {}
-    }
+      "previews_base_config": {}
+    },
+    "updatedOn": "2025-05-01T02:48:57Z"
   },
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
@@ -174,13 +180,15 @@ Triggered when a Worker's unversioned configuration changes.
 }
 ```
 
-The `changed` object is keyed by the unversioned configuration fields that changed, and only fields that changed are present. The possible keys are `name`, `tags`, `subdomain`, `observability`, `logpush`, `tail_consumers`, `preview_defaults`, and `usage_model`. These keys are snake_case because they are the literal Workers API field names, unlike the camelCase keys used elsewhere in the event.
+`updatedOn` is an RFC 3339 UTC timestamp recording when the configuration changed.
+
+The `changed` object is keyed by the unversioned configuration fields that changed, and only fields that changed are present. The possible keys are `name`, `tags`, `subdomain`, `observability`, `logpush`, `tail_consumers`, `previews_base_config`, and `usage_model`.
 
 Each value describes how that field changed:
 
 - Scalar fields report `from` and `to`.
 - Set-valued fields, such as `tags` and `tail_consumers`, report `added` and `removed`. Either key is omitted when it would be empty. If the members stay the same but their order changes, the field reports `from` and `to` instead.
-- The `preview_defaults` field reports an empty object, which means the field changed but its values are not published.
+- The `previews_base_config` field reports an empty object, which means the field changed but its values are not published. This keeps preview secrets out of the event.
 
 #### `worker.deleted`
 
