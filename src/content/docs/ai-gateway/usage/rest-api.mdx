@@ -121,7 +121,60 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   }'
 ```
 
-To use prepaid AI Gateway credits for Workers AI, use the model-in-path endpoint shown above, set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**, and include its ID in the `cf-aig-gateway-id` header. Requests to frontier models billed with prepaid credits receive [higher rate limits](/workers-ai/platform/limits/#frontier-models).
+### Background requests and webhooks
+
+By default, `/ai/run` requests are synchronous — the connection stays open until the model finishes and the result comes back in the response. For long-running models — such as image, video, or audio generation — or when you do not want to hold a connection open, run the request in the background and have AI Gateway notify a webhook when it completes.
+
+Set `background` to `true` and provide a `webhookUrl`. Both are fields on the `options` object of the `/ai/run` body, alongside `model` and `input`.
+
+```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "google/nano-banana",
+    "input": {
+      "prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
+      "aspect_ratio": "16:9"
+    },
+    "options": {
+      "background": true,
+      "webhookUrl": "https://example.com/my-webhook"
+    }
+  }'
+```
+
+A background request returns immediately while the model runs. The result is delivered to your webhook when the run completes.
+
+#### Webhook payload
+
+When the run completes, AI Gateway sends a single `POST` request to your `webhookUrl` with the run outcome:
+
+```json
+{
+	"id": "<run-id>",
+	"state": "<run-state>",
+	"result": {},
+	"error": null,
+	"provider": "google-vertex-ai",
+	"model": "google/nano-banana",
+	"usage": {}
+}
+```
+
+Webhook delivery is best-effort and is not retried. The destination must be an HTTPS URL that does not resolve to a private network address.
+
+#### Webhook format
+
+Use the optional `webhookFormat` field (also on `options`) to control the shape of the webhook body. The default is `raw`.
+
+| Format      | Description                                                                                                                        |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `raw`       | Sends the payload as-is (default).                                                                                                 |
+| `chat`      | Wraps the payload in `{ "text": "<prettified JSON>" }`, matching the incoming-webhook body accepted by Google Chat and Slack.      |
+| `replicate` | Sends the raw payload and adds an `X-Webhook-Signature` header (HMAC-SHA256 of the run ID) so you can verify the request's origin. |
 
 ## `/ai/v1/chat/completions` — OpenAI compatible
 
