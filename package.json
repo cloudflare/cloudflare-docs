@@ -83,7 +83,7 @@
 		"@types/react-dom": "19.0.4",
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.65.0",
-		"astro": "^7.2.0",
+		"astro": "https://pkg.pr.new/astro@17632",
 		"astro-icon": "1.1.5",
 		"astro-skills": "0.1.1",
 		"cidr-tools": "12.1.2",
