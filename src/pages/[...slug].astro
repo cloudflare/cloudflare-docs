@@ -1,8 +1,8 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
-import { getEntries, getEntry } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import { getCollection, getEntries, getEntry } from "astro:content";
 import {
-	getDocsStaticPaths,
 	getDocsPageProps,
 	getSidebar,
 	getPrevNext,
@@ -22,7 +22,16 @@ import {
 const NOINDEX_PRODUCTS = ["email-security"];
 
 export const prerender = true;
-export const getStaticPaths = getDocsStaticPaths;
+export const getStaticPaths: GetStaticPaths = async () =>
+	(
+		await getCollection("docs", ({ data }) =>
+			import.meta.env.PROD ? !data.draft : true,
+		)
+	).map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+		cacheKey: String(entry.digest),
+	}));
 
 const { entry, Content, headings } = await getDocsPageProps(Astro, {
 	partialHeadings: {

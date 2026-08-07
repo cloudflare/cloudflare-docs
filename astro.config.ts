@@ -268,6 +268,9 @@ const appVite = {
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
+	experimental: {
+		incrementalBuild: true,
+	},
 	prefetch: {
 		prefetchAll: true,
 		defaultStrategy: "hover",
