@@ -60,10 +60,7 @@ Short symptom → fix map. Deeper recovery: [Errors and recovery](/sandbox/1-0-p
 
 | Symptom | What to check |
 | ------- | ------------- |
-| `404` on `/v1/sandbox/:id/exec` | Preview bridge has **no** `/exec`. Use `/processes` and log routes. [Bridge HTTP API](/sandbox/1-0-preview/bridge/http-api/). |
-| Session header ignored / session routes missing | Sessions are removed on the preview bridge template. |
-| `/pty` missing | Use `/terminals` and `/connect`. |
-| Deployed bridge still looks like stable | Redeploy from the [`next` template](https://github.com/cloudflare/sandbox-sdk/tree/next/bridge/worker), not `main`. |
+| Bridge `/exec`, sessions, or `/pty` behavior differs from `@next` Worker SDK docs | The self-deployed bridge is not part of the 1.0 preview. Use the [stable bridge](/sandbox/bridge/) with matching stable package and container image. |
 
 ## Coding agents and long jobs
 
@@ -84,5 +81,4 @@ See [Process execution](/sandbox/1-0-preview/processes/), [Migrate](/sandbox/1-0
 - [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
 - [Process API](/sandbox/1-0-preview/api/processes/)
 - [Terminal API](/sandbox/1-0-preview/api/terminals/)
-- [Bridge](/sandbox/1-0-preview/bridge/)
 - [Migrate](/sandbox/1-0-preview/migrate/)

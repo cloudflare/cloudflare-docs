@@ -1,6 +1,6 @@
 ---
 name: sandbox-v1-migration
-description: Use when migrating a Cloudflare Sandbox SDK app from the stable package to @cloudflare/sandbox@next (Sandbox SDK 1.0 preview), or when stable APIs such as string exec, sessions, execStream, startProcess, sandbox.terminal, gitCheckout, SANDBOX_TRANSPORT, or bridge /exec appear in code that should move to 1.0.
+description: Use when migrating a Cloudflare Sandbox SDK app from the stable package to @cloudflare/sandbox@next (Sandbox SDK 1.0 preview), or when stable APIs such as string exec, sessions, execStream, startProcess, sandbox.terminal, gitCheckout, or SANDBOX_TRANSPORT appear in code that should move to 1.0.
 ---
 
 # Migrate to Sandbox SDK 1.0 preview (`@next`)
@@ -36,6 +36,7 @@ Stop after any step that needs a user decision.
 - Do **not** invent APIs: no `gitCheckout` on core, no process stdin, no string-exec completion helper, no custom extension authoring guide.
 - No internal release calendars in user-facing text.
 - Prefer installed `@next` TypeScript types when resolving API details.
+- The self-deployed bridge is not part of the preview. Keep bridge deployments, clients, the Worker package, and the container image on the stable release line.
 
 ## 1. Review — what changes
 
@@ -50,13 +51,12 @@ Stop after any step that needs a user decision.
 | Interpreter methods on `Sandbox` | `withInterpreter` → `sandbox.interpreter.*` |
 | `gitCheckout` | argv `git` via `exec` |
 | String kill signals | Numeric only |
-| Bridge `/exec`, sessions, `/pty`, `timeout_ms` | `/processes`, `/terminals`, `timeout` |
 | Files, mounts, backups, ports, tunnels, `proxyToSandbox` | Mostly unchanged (ignore session/transport bits on stable pages) |
 
 ## 2. Audit
 
 ```sh
-rg 'SANDBOX_TRANSPORT|transport:|setTransport|enableDefaultSession|createSession|getSession|deleteSession|execStream\(|startProcess\(|killProcess\(|sandbox\.terminal\(|sessionId|gitCheckout\(|SandboxTransport|ExecutionSession|/v1/sandbox/.*/exec|/v1/sandbox/.*/session|/v1/sandbox/.*/pty|timeout_ms|Session-Id'
+rg 'SANDBOX_TRANSPORT|transport:|setTransport|enableDefaultSession|createSession|getSession|deleteSession|execStream\(|startProcess\(|killProcess\(|sandbox\.terminal\(|sessionId|gitCheckout\(|SandboxTransport|ExecutionSession'
 ```
 
 Also search: string `exec(`, patterns of `cd` then a later `exec`, bare `createCodeContext` / `runCode` on `Sandbox`.
@@ -66,7 +66,7 @@ For each hit, note the replacement from this file. Ask the user before guessing.
 ## 3. Clarify (ask when needed)
 
 - OK to cut production with immediate container rollout (live container processes/terminals/streams stop)?
-- Self-deployed bridge Worker in scope?
+- Self-deployed bridge Worker present? Leave it on the stable release line; this runbook is for Worker SDK apps only.
 - Python interpreter → must use **`-python`** image variant?
 - Any call site not covered below?
 
@@ -87,7 +87,7 @@ FROM cloudflare/sandbox:next
 # FROM cloudflare/sandbox:next-python
 ```
 
-Use the same exact prerelease tag on Worker and image when not on the floating `next` tag. Bridge template (if used): https://github.com/cloudflare/sandbox-sdk/tree/next/bridge/worker
+Use the same exact prerelease tag on Worker and image when not on the floating `next` tag.
 
 ### 4.2 Remove transport
 
@@ -256,22 +256,11 @@ Depth: https://developers.cloudflare.com/sandbox/1-0-preview/errors/
 
 `getProcess` / `getTerminal` / `list*` do **not** start a container; they return `null` / `[]` when none is running.
 
-### 4.10 Bridge (only if audit found bridge clients)
+### 4.10 Bridge
 
-Self-deployed Worker (not a Cloudflare-hosted shared API).
+This runbook covers Worker SDK applications on `@next`.
 
-1. Redeploy from https://github.com/cloudflare/sandbox-sdk/tree/next/bridge/worker  
-2. Pair `@cloudflare/sandbox@next` with `cloudflare/sandbox:next`  
-3. Update HTTP clients:
-
-| Stable bridge | Preview bridge |
-| ------------- | -------------- |
-| `POST …/exec` | `POST …/processes` then `GET …/processes/:id/logs` |
-| Sessions / `Session-Id` | Removed — `cwd`/`env` on each create |
-| `GET …/pty` | `POST …/terminals` then connect |
-| Body `timeout_ms` | `timeout` |
-
-Depth: https://developers.cloudflare.com/sandbox/1-0-preview/bridge/
+The self-deployed bridge stays on the stable release line. Keep its Worker package, container image, and HTTP clients on matching stable versions. Do not pair a bridge deployment with `@cloudflare/sandbox@next`.
 
 ### 4.11 Deploy cutover
 
@@ -284,7 +273,6 @@ npx wrangler deploy --containers-rollout=immediate
 - Does **not** clear `rollout_active_grace_period`. Leave grace at default `0` for cutover (or set `0` if raised).
 - Before cutover: finish or stop work you must keep.
 - After cutover: treat pre-deploy process/terminal IDs as invalid; start work again; run Validate.
-- If you run a bridge, redeploy it in the same window.
 
 Depth: https://developers.cloudflare.com/sandbox/1-0-preview/migrate/  
 Containers rollouts: https://developers.cloudflare.com/containers/platform-details/rollouts/
@@ -299,7 +287,7 @@ Containers rollouts: https://developers.cloudflare.com/containers/platform-detai
 6. Smoke interpreter if used (correct image variant)  
 7. Error handling distinguishes unavailable / interrupted-RPC / stale / local wait  
 8. No live secrets in sandbox env  
-9. Grep again for removed APIs (and bridge `/exec` / sessions / `/pty` / `timeout_ms`)  
+9. Grep again for removed Worker SDK APIs
 10. Production cutover used `--containers-rollout=immediate`
 
 ## Red flags — stop and fix
