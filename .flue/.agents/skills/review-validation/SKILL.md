@@ -40,6 +40,7 @@ For each finding:
 1. **Read the cited file** at the PR head SHA using `read_repo_file`. If the finding cites a line number, read the surrounding context (at least 20 lines before and after).
 
 2. **Check the evidence**:
+   - If the cited file was deleted in this PR (check `args.changedFiles` for `status: "removed"`), or `read_repo_file` returns "File not found", the finding is `invalid` — a finding about a file that no longer exists is not actionable.
    - Does the cited issue actually exist at or near the cited line?
    - If the line number is wrong but the issue exists elsewhere in the file, the finding is still `valid`.
    - If the cited evidence does not exist anywhere in the file, the finding is `invalid`.
@@ -48,7 +49,11 @@ For each finding:
    - Is the rule relevant to this file type and context?
    - For style-guide findings: is the issue inside a fenced code block? Code blocks should not be flagged for prose style rules. If the finding flags content inside a code block, it is `invalid`.
    - For code-review findings: is the issue something CI already catches (type errors, lint rules, formatting)? If so, it is `invalid`.
-   - For conventions findings: is the rule one of the three defined conventions rules (product identified, description explains the work, scope accuracy)? If the finding uses an unrecognized rule, it is `invalid`.
+   - For conventions findings: is the rule one of the three defined conventions rules? The conventions-check skill defines them as:
+     - **Product or area identified** — the PR title should name the product, feature, or content area the change affects.
+     - **Description explains the work** — the PR description should contain a human-written explanation of what the PR does.
+     - **Scope accuracy** — the PR description must account for every core change the PR makes.
+   - If the finding uses an unrecognized rule, it is `invalid`.
 
 4. **Check the suggestion**:
    - Is the suggested fix correct and feasible?

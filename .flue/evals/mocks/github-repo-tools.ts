@@ -12,6 +12,23 @@ import { defineTool, type ToolDefinition } from "@flue/runtime";
 import type { TokenProvider } from "../../lib/token-provider";
 import * as v from "valibot";
 
+/** Shared fixture: file with an <img> tag inside a fenced HTML code block. */
+const FENCED_IMG_FIXTURE = {
+	"src/content/docs/workers/example.mdx": [
+		"---",
+		"title: Example",
+		"---",
+		"",
+		"Here is an example:",
+		"",
+		"```html",
+		'<img src="/static/logo.png" alt="Logo" />',
+		"```",
+		"",
+		"That's it.",
+	].join("\n"),
+};
+
 /** Fixtures keyed by ref (eval headSha) → path → file content. */
 const FIXTURES: Record<string, Record<string, string>> = {
 	// Style-guide eval: raw <img> tag not inside a code block.
@@ -38,21 +55,7 @@ const FIXTURES: Record<string, Record<string, string>> = {
 	},
 
 	// Style-guide eval: <img> inside a fenced code block.
-	"eval-style-fenced-img": {
-		"src/content/docs/workers/example.mdx": [
-			"---",
-			"title: Example",
-			"---",
-			"",
-			"Here is an example:",
-			"",
-			"```html",
-			'<img src="/static/logo.png" alt="Logo" />',
-			"```",
-			"",
-			"That's it.",
-		].join("\n"),
-	},
+	"eval-style-fenced-img": FENCED_IMG_FIXTURE,
 
 	// Style-guide eval: Markdown image with /images/ path.
 	"eval-style-images-path": {
@@ -111,21 +114,7 @@ const FIXTURES: Record<string, Record<string, string>> = {
 	},
 
 	// Review-validator eval: style-guide false positive (img inside code block).
-	"eval-val-fenced-img": {
-		"src/content/docs/workers/example.mdx": [
-			"---",
-			"title: Example",
-			"---",
-			"",
-			"Here is an example:",
-			"",
-			"```html",
-			'<img src="/static/logo.png" alt="Logo" />',
-			"```",
-			"",
-			"That's it.",
-		].join("\n"),
-	},
+	"eval-val-fenced-img": FENCED_IMG_FIXTURE,
 };
 
 /** Mock `read_repo_file` — drop-in replacement for the real tool in evals. */

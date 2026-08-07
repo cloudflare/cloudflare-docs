@@ -129,6 +129,29 @@ export default function ReviewValidator(_props: AgentProps): string {
 				"Submit the validation result. Call exactly once with a decision (valid or invalid) for each finding and a one-line summary. This is the only way to return your result.",
 			input: ReviewValidationSchema,
 			run: ({ data }) => {
+				const findingIds = new Set(input.findings.map((f) => f.id));
+				const seenIds = new Set<string>();
+
+				if (data.decisions.length !== input.findings.length) {
+					throw new Error(
+						`Expected ${input.findings.length} decisions (one per finding), got ${data.decisions.length}. Submit exactly one decision for each finding.`,
+					);
+				}
+
+				for (const d of data.decisions) {
+					if (!findingIds.has(d.id)) {
+						throw new Error(
+							`Decision id "${d.id}" does not match any finding. Valid ids: ${[...findingIds].join(", ")}.`,
+						);
+					}
+					if (seenIds.has(d.id)) {
+						throw new Error(
+							`Duplicate decision for finding "${d.id}". Each finding must have exactly one decision.`,
+						);
+					}
+					seenIds.add(d.id);
+				}
+
 				writeResult(data);
 				return "Validation recorded.";
 			},

@@ -37,7 +37,7 @@ Each agent is a `"use agent"` module whose default-export function uses hooks (`
 | `style-guide-file.ts`         | style-guide-file         | FlueStyleGuideFileAgent         | run-style-guide.ts        |
 | `conventions-reviewer.ts`     | conventions-reviewer     | FlueConventionsReviewerAgent    | run-conventions-review.ts |
 | `reconcile-reviewer.ts`       | reconcile-reviewer       | FlueReconcileReviewerAgent      | run-reconcile.ts          |
-| `review-validator.ts`          | review-validator          | FlueReviewValidatorAgent        | run-review-validation.ts  |
+| `review-validator.ts`      | review-validator          | FlueReviewValidatorAgent        | run-review-validation.ts   |
 | `spam-filter.ts`              | spam-filter              | FlueSpamFilterAgent             | run-spam-filter.ts        |
 | `dependabot-reviewer.ts`      | dependabot-reviewer      | FlueDependabotReviewerAgent     | run-dependabot-review.ts  |
 | `rebase-conflict-resolver.ts` | rebase-conflict-resolver | FlueRebaseConflictResolverAgent | run-rebase-conflict.ts    |
