@@ -274,7 +274,7 @@ const appVite = {
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	experimental: {
-		incrementalBuild: false,
+		incrementalBuild: true,
 	},
 	prefetch: {
 		prefetchAll: true,
