@@ -3,7 +3,7 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
-  - publish_date: "2026-08-04"
+  - publish_date: "2026-08-07"
     title: Add AS-level connectivity and upstream providers widgets to Cloudflare Radar
     description: |-
       * Added an **AS-level connectivity** graph to AS [routing pages](https://radar.cloudflare.com/routing/as13335), aggregating the BGP paths an AS uses to reach the Tier-1 networks across every prefix it announces, as observed by selected RouteViews collectors. A **Show full paths** toggle switches between the simplified view and all observed paths, and an IP version selector switches between IPv4 and IPv6.
