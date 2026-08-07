@@ -34,7 +34,8 @@ const evalRepoFileMock: Plugin = {
 		// Only redirect the style-guide agent's import of github-repo-tools.
 		if (
 			source.endsWith("/lib/github-repo-tools") &&
-			path.basename(importer) === "style-guide-file.ts"
+			(path.basename(importer) === "style-guide-file.ts" ||
+				path.basename(importer) === "review-validator.ts")
 		) {
 			return this.resolve("/evals/mocks/github-repo-tools", importer, {
 				skipSelf: true,

@@ -75,6 +75,57 @@ const FIXTURES: Record<string, Record<string, string>> = {
 			"![Precursor mode selector](~/assets/images/cloudflare-challenges/precursor-rules.png)",
 		].join("\n"),
 	},
+
+	// Review-validator eval: file with an unhandled promise rejection.
+	"eval-val-unhandled-promise": {
+		"src/handler.ts": [
+			"export default {",
+			"  async fetch(request, env) {",
+			"    const url = 'https://api.example.com/data';",
+			"    fetch(url).then((r) => r.json()).then((d) => new Response(d));",
+			"    return new Response('ok');",
+			"  },",
+			"};",
+		].join("\n"),
+	},
+
+	// Review-validator eval: file with proper error handling (false positive).
+	"eval-val-proper-handling": {
+		"src/handler.ts": [
+			"export default {",
+			"  async fetch(request, env) {",
+			"    const url = 'https://api.example.com/data';",
+			"    try {",
+			"      const res = await fetch(url);",
+			"      if (!res.ok) {",
+			"        return new Response('upstream error', { status: 502 });",
+			"      }",
+			"      const data = await res.json();",
+			"      return new Response(JSON.stringify(data));",
+			"    } catch (e) {",
+			"      return new Response('internal error', { status: 500 });",
+			"    }",
+			"  },",
+			"};",
+		].join("\n"),
+	},
+
+	// Review-validator eval: style-guide false positive (img inside code block).
+	"eval-val-fenced-img": {
+		"src/content/docs/workers/example.mdx": [
+			"---",
+			"title: Example",
+			"---",
+			"",
+			"Here is an example:",
+			"",
+			"```html",
+			'<img src="/static/logo.png" alt="Logo" />',
+			"```",
+			"",
+			"That's it.",
+		].join("\n"),
+	},
 };
 
 /** Mock `read_repo_file` — drop-in replacement for the real tool in evals. */
@@ -107,6 +158,22 @@ export function makeReadRepoFileTool(
 				return refFixtures[path];
 			}
 			return `File not found: ${path}`;
+		},
+	});
+}
+
+/** Mock `search_repo` — returns no results in evals. */
+export function makeSearchRepoTool(_getToken: TokenProvider): ToolDefinition {
+	return defineTool({
+		name: "search_repo",
+		description:
+			"Search the cloudflare/cloudflare-docs repo for a string or pattern. Returns matching file paths and line snippets.",
+		input: v.object({
+			query: v.pipe(v.string(), v.description("Search term.")),
+			path: v.optional(v.string()),
+		}),
+		run() {
+			return "No results found.";
 		},
 	});
 }
