@@ -38,6 +38,27 @@ You can view and manage all of your Access policies in the **Access** tab of the
 
 ![Access tab showing all configured Access policies](~/assets/images/changelog/workers/access-policies.png)
 
+**See who is accessing your Worker**
+
+When Access is enabled on your Worker, every authenticated request includes `ctx.access`. Call [`ctx.access.getIdentity()`](/workers/runtime-apis/context/#access) to get the user's email, name, and groups — no manual JWT validation required.
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    if (!ctx.access) {
+      return new Response("Access did not run", { status: 401 });
+    }
+
+    const identity = await ctx.access.getIdentity();
+    return Response.json({ aud: ctx.access.aud, email: identity?.email });
+  },
+};
+```
+
+**Test Access locally**
+
+TODO: Add details about testing Access locally.
+
 **API and programmatic access**
 
 You can also set up these policies through the Workers API instead of the dashboard.
