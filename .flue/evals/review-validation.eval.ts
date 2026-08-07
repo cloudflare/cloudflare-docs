@@ -75,7 +75,7 @@ describeEval("review validator", { harness }, (it) => {
 		);
 	});
 
-	it("suppresses a false-positive finding on proper error handling", async ({
+	it("reads a file with proper error handling and produces a decision", async ({
 		run,
 	}) => {
 		const result = await run({
@@ -116,6 +116,7 @@ describeEval("review validator", { harness }, (it) => {
 		// as a false positive. Assert the contract was fulfilled (decision
 		// produced + tool called) rather than the specific verdict, since the
 		// model's ability to detect false positives is non-deterministic.
+		// Suppression logic itself is unit-tested in run-review-validation.test.ts.
 		expect(decision!.verdict).toMatch(/^(valid|invalid)$/);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
