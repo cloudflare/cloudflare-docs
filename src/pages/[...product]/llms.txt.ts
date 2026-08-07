@@ -20,23 +20,34 @@ export const getStaticPaths = (async () => {
 	const docs = await getCollection("docs");
 
 	// Deduplicate by URL path: multiple directory entries may share the same
-	// entry.url (e.g. SDK variants). Keep only the first per URL.
-	const seen = new Set<string>();
+	// entry.url (e.g. SDK variants). For shared URLs, prefer the generic
+	// entry (e.g. `sdk`) over language-specific variants (e.g. `go-sdk`).
+	const CANONICAL_IDS = new Set(["sdk"]);
 
-	return directory
+	const entriesByUrl = new Map<string, (typeof directory)[number]>();
+	for (const entry of directory) {
+		const productUrl = entry.data.entry?.url;
+		if (!productUrl || productUrl === "/" || productUrl.includes("#")) {
+			continue;
+		}
+		if (isDisallowedByRobots(productUrl)) continue;
+
+		const urlPath = productUrl.slice(1, -1);
+		if (!urlPath) continue;
+
+		const existing = entriesByUrl.get(urlPath);
+		if (!existing || CANONICAL_IDS.has(entry.id)) {
+			entriesByUrl.set(urlPath, entry);
+		}
+	}
+
+	return [...entriesByUrl.values()]
 		.map((entry) => {
 			const productUrl = entry.data.entry?.url;
-			if (!productUrl || productUrl === "/" || productUrl.includes("#")) {
-				return null;
-			}
-
-			if (isDisallowedByRobots(productUrl)) return null;
+			if (!productUrl) return null;
 
 			const urlPath = productUrl.slice(1, -1);
 			if (!urlPath) return null;
-
-			if (seen.has(urlPath)) return null;
-			seen.add(urlPath);
 
 			const prefix = urlPath;
 			const pages = docs.filter(

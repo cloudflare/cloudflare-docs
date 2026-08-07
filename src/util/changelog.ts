@@ -108,11 +108,30 @@ export async function getChangelogs({
 }: GetChangelogsOptions): Promise<Array<CollectionEntry<"changelog">>> {
 	let entries = await getCollection("changelog");
 
+	// First pass: extract slug + folder for every entry (synchronous,
+	// deterministic — collection order is alphabetical by file path).
+	const parsed = entries.map((e) => {
+		const slug = e.id.split("/").slice(1).join("/");
+		const folder = e.id.split("/")[0];
+		return { entry: e, slug, folder };
+	});
+
+	// Identify which slugs appear more than once.
 	const slugCounts = new Map<string, number>();
+	for (const { slug } of parsed) {
+		slugCounts.set(slug, (slugCounts.get(slug) ?? 0) + 1);
+	}
+
+	// For duplicate slugs, the first folder in alphabetical order owns the
+	// bare slug; later folders are prefixed. This is deterministic because
+	// `getCollection` returns entries in alphabetical file-path order.
+	// Explicit overrides can force a specific canonical owner.
+	const CANONICAL_OWNERS: Record<string, string> = {
+		"2026-04-01-l4-transport-telemetry-fields": "workers",
+	};
+
 	entries = await Promise.all(
-		entries.map(async (e) => {
-			const slug = e.id.split("/").slice(1).join("/");
-			const folder = e.id.split("/")[0];
+		parsed.map(async ({ entry: e, slug, folder }) => {
 			const product = { collection: "directory", id: folder } as const;
 
 			const isValidProduct = await getEntry(product);
@@ -127,11 +146,24 @@ export async function getChangelogs({
 				e.data.products.push(product);
 			}
 
-			// Deduplicate: when entries from different product folders share
-			// the same slug, prefix later occurrences with the folder name.
-			const count = slugCounts.get(slug) ?? 0;
-			slugCounts.set(slug, count + 1);
-			const dedupedId = count === 0 ? slug : `${folder}/${slug}`;
+			const count = slugCounts.get(slug) ?? 1;
+			const canonicalOwner = CANONICAL_OWNERS[slug];
+			let dedupedId: string;
+
+			if (count <= 1) {
+				dedupedId = slug;
+			} else if (canonicalOwner && folder === canonicalOwner) {
+				dedupedId = slug;
+			} else if (canonicalOwner) {
+				dedupedId = `${folder}/${slug}`;
+			} else {
+				// No explicit owner: first folder alphabetically wins.
+				const folders = parsed
+					.filter((p) => p.slug === slug)
+					.map((p) => p.folder);
+				const firstFolder = folders.sort()[0];
+				dedupedId = folder === firstFolder ? slug : `${folder}/${slug}`;
+			}
 
 			return {
 				...e,

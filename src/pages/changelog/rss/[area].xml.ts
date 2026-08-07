@@ -21,30 +21,23 @@ export const prerender = true;
 const slugifyArea = (value: string) => value.replaceAll(" ", "-").toLowerCase();
 
 export const getStaticPaths = (async () => {
-	const [products, directory] = await Promise.all([
-		getCollection("directory", (e) => Boolean(e.data.entry?.group)),
-		getCollection("directory"),
-	]);
-
-	// Product IDs that would collide with area slugs — the product route
-	// owns those URLs, so skip them here to avoid route conflicts.
-	const productIds = new Set(directory.map((e) => e.id));
+	const products = await getCollection("directory", (e) =>
+		Boolean(e.data.entry?.group),
+	);
 
 	const areas = Object.entries(
 		Object.groupBy(products, (p) => p.data.entry!.group!),
 	);
 
-	return areas
-		.map(([area, products]) => {
-			if (!products)
-				throw new Error(`[Changelog] No products attributed to "${area}"`);
+	return areas.map(([area, products]) => {
+		if (!products)
+			throw new Error(`[Changelog] No products attributed to "${area}"`);
 
-			return {
-				params: { area: slugifyArea(area) },
-				props: { title: area, products },
-			};
-		})
-		.filter((p) => !productIds.has(p.params.area));
+		return {
+			params: { area: slugifyArea(area) },
+			props: { title: area, products },
+		};
+	});
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;

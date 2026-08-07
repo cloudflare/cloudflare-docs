@@ -6,6 +6,7 @@ import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { config } from "virtual:nimbus/config";
 import { getChangelogs, getRSSItems } from "~/util/changelog";
+import { groups } from "~/util/directory";
 
 import type {
 	APIRoute,
@@ -16,15 +17,23 @@ import type {
 
 export const prerender = true;
 
+const slugifyArea = (value: string) => value.replaceAll(" ", "-").toLowerCase();
+
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 
-	return directory.map((entry) => {
-		return {
-			params: { product: entry.id },
-			props: { product: entry },
-		};
-	});
+	// Area group slugs that would collide with product IDs — the area
+	// route owns those URLs, so skip them here to avoid route conflicts.
+	const areaSlugs = new Set(groups.map(slugifyArea));
+
+	return directory
+		.filter((entry) => !areaSlugs.has(entry.id))
+		.map((entry) => {
+			return {
+				params: { product: entry.id },
+				props: { product: entry },
+			};
+		});
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
