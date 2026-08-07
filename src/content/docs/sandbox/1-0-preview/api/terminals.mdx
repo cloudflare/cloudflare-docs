@@ -23,9 +23,7 @@ For the mental model and browser connect walkthrough, refer to [Terminals](/sand
 Start a terminal from **argv** (usually a shell). Resolves when the terminal resource is created. Same rules as process `exec`: no implicit shell wrapping, and argv entries are not shell-escaped.
 
 ```ts
-const terminal = await sandbox.createTerminal(
-	options: CreateTerminalOptions,
-): Promise<Terminal>;
+createTerminal(options: CreateTerminalOptions): Promise<Terminal>
 ```
 
 ### `CreateTerminalOptions`
@@ -66,7 +64,7 @@ Return a handle for a terminal in the **current container**, or `null`.
 Does not start a container if none is running. Returns `null` when no container is up, when the terminal ID is unknown in the current container, or when that terminal belonged to a previous container for the same sandbox ID.
 
 ```ts
-const terminal = await sandbox.getTerminal(id: string): Promise<Terminal | null>;
+getTerminal(id: string): Promise<Terminal | null>
 ```
 
 ## `listTerminals()`
@@ -74,7 +72,7 @@ const terminal = await sandbox.getTerminal(id: string): Promise<Terminal | null>
 List terminals in the current container for this sandbox. Does not start a container if none is running. Returns an empty list when no container is up.
 
 ```ts
-const terminals = await sandbox.listTerminals(): Promise<Terminal[]>;
+listTerminals(): Promise<Terminal[]>
 ```
 
 ## `Terminal`
@@ -108,7 +106,7 @@ interface TerminalSnapshot {
 ### `write()`
 
 ```ts
-await terminal.write(data: Uint8Array): Promise<void>;
+write(data: Uint8Array): Promise<void>
 ```
 
 Write bytes to the PTY. Browser keystrokes normally arrive through `connect()` instead.
@@ -116,14 +114,13 @@ Write bytes to the PTY. Browser keystrokes normally arrive through `connect()` i
 ### `resize()`
 
 ```ts
-await terminal.resize(cols: number, rows: number): Promise<void>;
+resize(cols: number, rows: number): Promise<void>
 ```
 
 ### `output()`
 
 ```ts
-const stream = await terminal.output(options?: TerminalOutputOptions);
-// ReadableStream<TerminalOutputEvent>
+output(options?: TerminalOutputOptions): Promise<ReadableStream<TerminalOutputEvent>>
 ```
 
 #### `TerminalOutputOptions`
@@ -175,10 +172,10 @@ Retain the latest `cursor` from delivered events if you reconnect or call `outpu
 ### `waitForExit()`
 
 ```ts
-const exit = await terminal.waitForExit(options?: {
+waitForExit(options?: {
 	timeout?: number;
 	signal?: AbortSignal;
-}): Promise<ProcessExit>;
+}): Promise<ProcessExit>
 ```
 
 Local `timeout` / `signal` cancel only the wait. They do not terminate the terminal. Call `terminate()` or `interrupt()` when you intend to stop it.
@@ -186,8 +183,8 @@ Local `timeout` / `signal` cancel only the wait. They do not terminate the termi
 ### `interrupt()` and `terminate()`
 
 ```ts
-await terminal.interrupt(): Promise<void>;
-await terminal.terminate(): Promise<void>;
+interrupt(): Promise<void>
+terminate(): Promise<void>
 ```
 
 These are terminal control operations. They are not the same as process `kill(signal)` on an `exec` handle.
@@ -197,14 +194,14 @@ These are terminal control operations. They are not the same as process `kill(si
 Attach a browser (or other) WebSocket upgrade request to this terminal.
 
 ```ts
-const response = await terminal.connect(
+connect(
 	request: Request,
 	options?: {
 		cursor?: string;
 		cols?: number;
 		rows?: number;
 	},
-): Promise<Response>;
+): Promise<Response>
 ```
 
 - `request` must be a WebSocket upgrade request.

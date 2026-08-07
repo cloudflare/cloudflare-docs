@@ -42,7 +42,7 @@ If you still need stable-line cleanup first (RPC transport, `exposePort`, stream
 | Process / stream **stdin**                                           | No process stdin on the handle. Non-interactive: argv/`cwd`/`env`. Interactive PTY: [terminals](/sandbox/1-0-preview/terminals/). |
 | `sandbox.terminal(request)` / session `terminal()`                   | `createTerminal`, then `terminal.connect(request)`.                            |
 | xterm `sessionId`                                                    | `terminalId` (and optional `cursor`).                                          |
-| `sandbox.gitCheckout(...)`                                           | Removed. Run `git` with argv `exec`, for example `['git', 'clone', url, dir]`, then `output()` / waits as needed. |
+| `sandbox.gitCheckout(...)`                                           | Removed. Run `git` with argv `exec`, for example `['git', 'clone', '--', url, dir]`, then `output()` / waits as needed. |
 
 Files, mounts, backups, ports, tunnels, `proxyToSandbox`, and most lifecycle options stay available. Use the main Sandbox docs for those signatures. Where a stable page still describes sessions, transport selection, string `exec` helpers, or `sandbox.terminal`, follow this preview section instead.
 
@@ -155,7 +155,7 @@ Use the **`-python`** image variant when you run Python. Keep the Worker package
 
 ```ts
 const clone = await sandbox.exec(
-	["git", "clone", "--depth", "1", repoUrl, "/workspace/repo"],
+	["git", "clone", "--depth", "1", "--", repoUrl, "/workspace/repo"],
 	{ cwd: "/workspace" },
 );
 const result = await clone.output({ encoding: "utf8" });

@@ -25,10 +25,7 @@ Process handles have **no standard input**. Use `cwd`, `env`, and argv (or an ex
 Start a process from **argv** (executable, then arguments). Resolves when launch succeeds, not when the process exits. The SDK does not run a shell and does not shell-escape argv — each entry is one process argument.
 
 ```ts
-const process = await sandbox.exec(
-	command: SandboxCommand,
-	options?: ExecOptions,
-): Promise<SandboxProcess>;
+exec(command: SandboxCommand, options?: ExecOptions): Promise<SandboxProcess>
 ```
 
 ### `SandboxCommand`
@@ -70,7 +67,7 @@ Return a handle for a process running in the **current container** for this sand
 Does not start a container if none is running. Returns `null` when no container is up, when the process ID is unknown in the current container, or when that process belonged to a previous container for the same sandbox ID.
 
 ```ts
-const process = await sandbox.getProcess(id: string): Promise<SandboxProcess | null>;
+getProcess(id: string): Promise<SandboxProcess | null>
 ```
 
 Process IDs are not durable across container stop or replace. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
@@ -80,7 +77,7 @@ Process IDs are not durable across container stop or replace. See [How long a pr
 List processes in the current container for this sandbox. Does not start a container if none is running. Returns an empty list when no container is up.
 
 ```ts
-const statuses = await sandbox.listProcesses(): Promise<ProcessStatus[]>;
+listProcesses(): Promise<ProcessStatus[]>
 ```
 
 Each entry is a [ProcessStatus](#processstatus) value (the same shape as `status()`).
@@ -105,7 +102,7 @@ There is no process stdin API on this handle.
 ### `status()`
 
 ```ts
-const status = await process.status(): Promise<ProcessStatus>;
+status(): Promise<ProcessStatus>
 ```
 
 See [ProcessStatus](#processstatus). A process stays `running` until the supervised **process group** has settled, even if the root pid exits while descendants continue.
@@ -115,15 +112,10 @@ See [ProcessStatus](#processstatus). A process stays `running` until the supervi
 Buffer stdout and stderr until the process completes (or the local wait ends), then return exit metadata.
 
 ```ts
-// Default: binary bodies
-const output = await process.output(
-	options?: ProcessOutputOptions,
-): Promise<ProcessOutput<Uint8Array>>;
-
-// String bodies
-const text = await process.output(
+output(options?: ProcessOutputOptions): Promise<ProcessOutput<Uint8Array>>
+output(
 	options: ProcessOutputOptions & { encoding: "utf8" },
-): Promise<ProcessOutput<string>>;
+): Promise<ProcessOutput<string>>
 ```
 
 #### `ProcessOutput`
@@ -168,8 +160,7 @@ console.log(result.exitCode, result.stdout, result.timedOut, result.truncated);
 Stream replayable log events with an opaque cursor.
 
 ```ts
-const stream = await process.logs(options?: ProcessLogsOptions);
-// Promise<ReadableStream<ProcessLogEvent>>
+logs(options?: ProcessLogsOptions): Promise<ReadableStream<ProcessLogEvent>>
 ```
 
 #### `ProcessLogsOptions`
@@ -247,10 +238,10 @@ for (;;) {
 Wait until the supervised process group settles.
 
 ```ts
-const exit = await process.waitForExit(options?: {
+waitForExit(options?: {
 	timeout?: number;
 	signal?: AbortSignal;
-}): Promise<ProcessExit>;
+}): Promise<ProcessExit>
 ```
 
 | Field     | Type          | Description                                               |
@@ -275,10 +266,10 @@ console.log(exit.code, exit.signal, exit.timedOut);
 Wait until stdout and/or stderr matches a pattern.
 
 ```ts
-const result = await process.waitForLog(
+waitForLog(
 	pattern: string | RegExp,
 	options?: WaitForLogOptions,
-): Promise<WaitForLogResult>;
+): Promise<WaitForLogResult>
 ```
 
 #### `WaitForLogOptions`
@@ -325,10 +316,7 @@ console.log(ready.stream, ready.match);
 Wait until a port is ready, or fail if the process exits first or the local wait ends.
 
 ```ts
-await process.waitForPort(
-	port: number,
-	options?: WaitForPortOptions,
-): Promise<void>;
+waitForPort(port: number, options?: WaitForPortOptions): Promise<void>
 ```
 
 #### `WaitForPortOptions`
@@ -383,7 +371,7 @@ Typical failures:
 Send a numeric signal to the process.
 
 ```ts
-await process.kill(signal?: number): Promise<void>;
+kill(signal?: number): Promise<void>
 ```
 
 - Default `signal` is `15` (`SIGTERM`).

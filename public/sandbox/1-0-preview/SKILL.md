@@ -211,7 +211,7 @@ await sandbox.gitCheckout(repoUrl, { targetDir: "/workspace/repo" });
 
 // Preview
 const clone = await sandbox.exec(
-  ["git", "clone", "--depth", "1", repoUrl, "/workspace/repo"],
+  ["git", "clone", "--depth", "1", "--", repoUrl, "/workspace/repo"],
   { cwd: "/workspace" },
 );
 const result = await clone.output({ encoding: "utf8" });

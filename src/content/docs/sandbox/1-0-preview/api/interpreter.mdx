@@ -8,8 +8,6 @@ products:
   - sandbox
 ---
 
-import { TypeScriptExample } from "~/components";
-
 :::note[Path to Sandbox SDK 1.0]
 This page documents `@cloudflare/sandbox/interpreter` on `@cloudflare/sandbox@next`. For today's stable package, refer to [Interpreter API](/sandbox/api/interpreter/).
 :::
@@ -19,9 +17,7 @@ Methods live on `sandbox.interpreter` after you attach `withInterpreter` on your
 ## `createCodeContext()`
 
 ```ts
-const context = await sandbox.interpreter.createCodeContext(
-	options?: CreateContextOptions,
-): Promise<CodeContext>;
+createCodeContext(options?: CreateContextOptions): Promise<CodeContext>
 ```
 
 ### `CreateContextOptions`
@@ -44,10 +40,7 @@ const context = await sandbox.interpreter.createCodeContext(
 ## `runCode()`
 
 ```ts
-const result = await sandbox.interpreter.runCode(
-	code: string,
-	options?: RunCodeOptions,
-): Promise<ExecutionResult>;
+runCode(code: string, options?: RunCodeOptions): Promise<ExecutionResult>
 ```
 
 ### `RunCodeOptions`
@@ -92,10 +85,10 @@ interface ExecutionError {
 ## `runCodeStream()`
 
 ```ts
-const stream = await sandbox.interpreter.runCodeStream(
+runCodeStream(
 	code: string,
 	options?: RunCodeOptions,
-): Promise<ReadableStream<Uint8Array>>;
+): Promise<ReadableStream<Uint8Array>>
 ```
 
 Returns an SSE byte stream of execution events. Canceling the stream may interrupt the in-flight run.
@@ -103,18 +96,18 @@ Returns an SSE byte stream of execution events. Canceling the stream may interru
 ## `listCodeContexts()`
 
 ```ts
-const contexts = await sandbox.interpreter.listCodeContexts(): Promise<CodeContext[]>;
+listCodeContexts(): Promise<CodeContext[]>
 ```
 
 ## `deleteCodeContext()`
 
 ```ts
-await sandbox.interpreter.deleteCodeContext(contextId: string): Promise<void>;
+deleteCodeContext(contextId: string): Promise<void>
 ```
 
 ## Errors
 
-Interpreter failures may surface as `InterpreterNotReadyError`, `ContextNotFoundError`, or `CodeExecutionError`. See [Errors API](/sandbox/1-0-preview/api/errors/) and [Errors and recovery](/sandbox/1-0-preview/errors/).
+Interpreter failures may surface as `InterpreterNotReadyError`, `ContextNotFoundError`, or `CodeExecutionError`. Refer to [Errors API](/sandbox/1-0-preview/api/errors/) and [Errors and recovery](/sandbox/1-0-preview/errors/).
 
 Python requires the **`-python`** container image variant. Deploy the Worker package and container image from the same preview line.
 

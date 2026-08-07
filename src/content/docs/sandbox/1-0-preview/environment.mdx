@@ -33,15 +33,13 @@ Worker bindings in your `fetch` handler are not process environment variables. O
 ## `setEnvVars()`
 
 ```ts
-await sandbox.setEnvVars(
-	envVars: Record<string, string | undefined>,
-): Promise<void>;
+setEnvVars(envVars: Record<string, string | undefined>): Promise<void>
 ```
 
 | Value | Effect |
 | ----- | ------ |
 | string | Store the name for later `exec()` launches |
-| `undefined` or `null` | Remove a stored name |
+| `undefined` | Remove a stored name |
 
 On each `exec()`, the SDK merges stored names into that process’s environment at launch.
 
