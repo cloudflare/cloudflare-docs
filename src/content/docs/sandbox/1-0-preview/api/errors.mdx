@@ -36,10 +36,11 @@ try {
 		// error.context.reason, error.context.retryAfterMs
 	}
 	if (error instanceof OperationInterruptedError) {
-		// error.reason, error.retryable, error.context.admitted
+		// Convenience getters: error.reason, error.retryable
+		// Also on context: error.context.admitted
 	}
 	if (error instanceof RPCTransportError) {
-		// error.kind, error.originalMessage
+		// Convenience getters: error.kind, error.originalMessage
 	}
 }
 ```
@@ -172,7 +173,7 @@ Deploy the Worker package and the sandbox container image from the same `@cloudf
 
 | Class | Code | Key context | Details | Recommended fix |
 | ----- | ---- | ----------- | ------- | ---------------- |
-| `RuntimeControlProtocolError` | `INTERNAL_ERROR` | `reason` | Worker and container could not complete setup together (metadata or protocol mismatch). | Deploy the Worker package and container image from the same release line. Fix configuration if needed. |
+| `RuntimeControlProtocolError` | `INTERNAL_ERROR` | `reason` | Worker and container could not complete setup together (metadata or protocol mismatch). The code is the shared `INTERNAL_ERROR` value — identify this class with `instanceof RuntimeControlProtocolError` or by pairing `code === "INTERNAL_ERROR"` with `context.reason`. | Deploy the Worker package and container image from the same release line. Fix configuration if needed. |
 
 ### `RuntimeControlProtocolError` reasons
 

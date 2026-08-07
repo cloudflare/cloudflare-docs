@@ -447,11 +447,14 @@ interface ProcessFailure {
 
 ## Common errors
 
+`getProcess` and `listProcesses` do not throw for missing work. They return `null` or `[]` when no container is up, the ID is unknown in the current container, or the process belonged to a previous container. The error classes below apply to operations on a process handle (and to launch), not to those lookups.
+
 | Situation | Class / outcome |
 | --------- | --------------- |
-| Unknown process ID in the current container | `ProcessNotFoundError` |
 | `getProcess` / `listProcesses` while no container is running | `null` / `[]` (not an error; does not start a container) |
-| Handle or process ID from a previous container | `StaleProcessHandleError` |
+| `getProcess` for an unknown ID or a process from a previous container | `null` |
+| Operation on a handle after the container was replaced | `StaleProcessHandleError` |
+| Operation on a handle when the process is gone in the current container | `ProcessNotFoundError` |
 | Local wait timed out (`output` / `waitForExit` / `waitForLog`) | `ProcessWaitTimeoutError` |
 | Local `AbortSignal` on a wait or stream | `ProcessAbortedError` |
 | Port not ready before local timeout | `ProcessReadyTimeoutError` |

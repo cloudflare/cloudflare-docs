@@ -11,7 +11,7 @@ products:
 import { TypeScriptExample } from "~/components";
 
 :::note[Path to Sandbox SDK 1.0]
-This page documents environment variables on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable package, refer to [Environment variables](/sandbox/configuration/environment-variables/).
+This page documents environment variables on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For the current stable package, refer to [Environment variables](/sandbox/configuration/environment-variables/).
 :::
 
 Each `exec()` and `createTerminal()` starts an independent process. Shell `export` in one process does not apply to the next launch. Configure process environment with the container image, `setEnvVars`, and per-launch `env`.
@@ -38,8 +38,8 @@ setEnvVars(envVars: Record<string, string | undefined>): Promise<void>
 
 | Value | Effect |
 | ----- | ------ |
-| string | Store the name for later `exec()` launches |
-| `undefined` | Remove a stored name |
+| string | Set this environment variable for later `exec()` launches |
+| `undefined` | Remove a previously stored variable |
 
 On each `exec()`, the SDK merges stored names into that process’s environment at launch.
 

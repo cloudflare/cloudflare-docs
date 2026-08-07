@@ -16,13 +16,16 @@ This guide is for apps that **stay on the current stable** `@cloudflare/sandbox`
 To move onto **Sandbox SDK 1.0** (`@cloudflare/sandbox@next`), use [Migrate to the 1.0 preview](/sandbox/1-0-preview/migrate/) instead. That path covers argv `exec`, removed sessions, terminals, interpreter attach, and container cutover. Completing this stable-line guide first is still useful if you use the older transports or stream helpers.
 :::
 
-This guide walks through migrating away from Sandbox SDK features deprecated in the [June 2026 announcement](/changelog/sandbox/2026-06-09-deprecating-sandbox-sdk-features/). Do not build new work on these APIs. Finish this cleanup on the stable package, then move to the [1.0 preview](/sandbox/1-0-preview/) when you can.
+This guide walks through migrating away from Sandbox SDK features deprecated in the [deprecation announcement](/changelog/sandbox/2026-06-09-deprecating-sandbox-sdk-features/). Do not build new work on these APIs. Finish this cleanup on the stable package, then move to the [1.0 preview](/sandbox/1-0-preview/) when you can.
 
 For the announcement and rationale, refer to the [deprecation changelog entry](/changelog/sandbox/2026-06-09-deprecating-sandbox-sdk-features/).
 
 ## Before you migrate
 
-Update to the latest Sandbox SDK release before changing transport or session configuration. If your project uses a version earlier than `0.9.1`, deploy the newer `@cloudflare/sandbox` package and container image before switching to RPC transport.
+Update to the latest Sandbox SDK release before changing transport or session configuration.
+
+- RPC transport: if your project uses a version earlier than `0.9.1`, deploy a newer `@cloudflare/sandbox` package and container image before switching to RPC.
+- Session isolation with `enableDefaultSession: false`: requires Sandbox SDK `0.10.3` or newer. On `0.9.1`–`0.10.2`, upgrade first, then set the flag.
 
 Search your codebase for deprecated configuration and APIs:
 
@@ -192,7 +195,7 @@ Use this checklist before you depend on a Sandbox SDK release that has removed t
 
 ## Agent skill
 
-An agent skill is available to assist with the migration: [SKILL.md](/sandbox/guides/2026-deprecation/SKILL.md).
+An agent skill is available to assist with the migration: [deprecation skill](/sandbox/guides/2026-deprecation/SKILL/).
 
 ## 1.0 preview
 

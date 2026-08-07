@@ -212,6 +212,7 @@ Returns the WebSocket upgrade `Response` your Worker should return to the client
 
 <TypeScriptExample>
 ```ts
+const url = new URL(request.url);
 const terminal = await sandbox.getTerminal(terminalId);
 if (!terminal) {
 	return new Response("Terminal not found", { status: 404 });
@@ -236,6 +237,7 @@ For the full Worker + xterm.js path, refer to [Terminals](/sandbox/1-0-preview/t
 import { SandboxAddon } from "@cloudflare/sandbox/xterm";
 
 const addon = new SandboxAddon({
+	// `origin` is already a WebSocket origin (`wss://` or `ws://`).
 	getWebSocketUrl: ({ sandboxId, terminalId, cursor, origin }) => {
 		const params = new URLSearchParams({ sandboxId });
 		if (terminalId) params.set("terminalId", terminalId);

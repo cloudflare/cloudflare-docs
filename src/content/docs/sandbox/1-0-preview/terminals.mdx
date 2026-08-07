@@ -11,7 +11,7 @@ products:
 import { TypeScriptExample, PackageManagers } from "~/components";
 
 :::note[Path to Sandbox SDK 1.0]
-This page documents terminals on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable terminal helpers, refer to [Terminal connections](/sandbox/concepts/terminal/) and [Terminal API](/sandbox/api/terminal/).
+This page documents terminals on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For the current stable terminal helpers, refer to [Terminal connections](/sandbox/concepts/terminal/) and [Terminal API](/sandbox/api/terminal/).
 :::
 
 A **terminal** is an interactive PTY in the current container for a sandbox. Use it for full-duplex terminal I/O: a browser shell, resize, interrupt, and reconnect.
@@ -115,6 +115,8 @@ Create the terminal from an application route when the UI needs one:
 
 <TypeScriptExample>
 ```ts
+const sandboxId = "user-123";
+const sandbox = getSandbox(env.Sandbox, sandboxId);
 const terminal = await sandbox.createTerminal({ command: ["bash"] });
 return Response.json({ sandboxId, terminalId: terminal.id });
 ```
@@ -137,6 +139,7 @@ import "@xterm/xterm/css/xterm.css";
 const term = new Terminal({ cursorBlink: true });
 const fitAddon = new FitAddon();
 const sandboxAddon = new SandboxAddon({
+	// `origin` is already a WebSocket origin (`wss://` or `ws://`).
 	getWebSocketUrl: ({ sandboxId, terminalId, cursor, origin }) => {
 		const params = new URLSearchParams({ sandboxId });
 		if (terminalId) params.set("terminalId", terminalId);
@@ -151,6 +154,9 @@ term.loadAddon(sandboxAddon);
 term.open(document.getElementById("terminal")!);
 fitAddon.fit();
 
+// Values returned by your create-terminal route
+const sandboxId = "user-123";
+const terminalId = "term_...";
 sandboxAddon.connect({ sandboxId, terminalId });
 ```
 </TypeScriptExample>

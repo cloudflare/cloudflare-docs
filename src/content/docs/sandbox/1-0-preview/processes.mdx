@@ -16,7 +16,7 @@ This page documents process execution on `@cloudflare/sandbox@next`, the preview
 
 In the 1.0 preview, treat the sandbox as a computer you drive with explicit programs.
 
-Each `exec()` starts a **new supervised process** from **argv**. The call resolves when launch succeeds (you receive a process ID and a pid), not when the process exits. Each launch is independent: pass `cwd` and `env` when the process needs them, or put multi-step shell syntax in one explicit shell argv. For an interactive PTY, use the [terminal](/sandbox/1-0-preview/terminals/) API.
+Each `exec()` starts a **new supervised process** from **argv**. The call resolves when launch succeeds (you receive a process handle with `id` and `pid` properties), not when the process exits. Each launch is independent: pass `cwd` and `env` when the process needs them, or put multi-step shell syntax in one explicit shell argv. For an interactive PTY, use the [terminal](/sandbox/1-0-preview/terminals/) API.
 
 Long-running work often spans many short Worker requests. A process ID is enough only while the **same container** still has that process. Across idle stop, failure, or replace, store the full launch (command, options, and any app checkpoint) so you can start again. Refer to [Continue work across requests](#continue-work-across-requests).
 
@@ -35,14 +35,14 @@ Three different things are in play:
 | Term | Meaning |
 | ---- | ------- |
 | **Sandbox ID** | The stable string your app uses to find that sandbox again (for example `"user-123"`). |
-| **Container** | The [Containers](/containers/) instance currently running work for that sandbox. Sandboxes run on containers. The sandbox ID is stable; the container instance behind it is not always the same one. |
+| **Container** | The [Containers](/containers/) instance currently running work for that sandbox. Sandboxes run on containers. The sandbox ID is stable. The container instance behind it is not always the same one. |
 | **Process** | A program you start with `exec()` **inside the current container**. The handle and `process.id` mean “this program in this container,” not “this sandbox ID forever.” |
 
 **Same sandbox ID does not mean the same container.** Processes live only in the container that started them. After a new container serves that ID, start new processes — you do not resume the old ones. Full sandbox model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
 
 ## Command model
 
-Compared with the current stable package:
+The command model changes in the 1.0 preview compared with the current stable package:
 
 | Current stable package | 1.0 preview |
 | ---------------------- | ----------- |
@@ -88,7 +88,7 @@ Sandbox-wide values use `setEnvVars`. Refer to [Environment variables](/sandbox/
 
 `await sandbox.exec(argv)` returns a **process handle**:
 
-| Capability | Methods |
+| Capability | Members |
 | ---------- | ------- |
 | Identity | `id`, `pid` |
 | Observe | `status()`, `logs()`, `output()`, `waitForExit()`, `waitForLog()`, `waitForPort()`, `exitCode` |
@@ -127,7 +127,7 @@ Container stop and replace are not new in 1.0. The preview makes process handles
 
 Recovery procedures: [Errors and recovery](/sandbox/1-0-preview/errors/).
 
-### Keeping the container running
+### Keep the container running
 
 While a process or terminal is active, the container can stay running so work continues across requests. When nothing is active, the container may stop again after idle time. Long-running product flows should either keep meaningful work active or rely on checkpoints and relaunch.
 
@@ -182,11 +182,11 @@ await process.waitForPort(3000, { timeout: 60_000 });
 ```
 </TypeScriptExample>
 
-If the job also depends on files that lived only in the previous container, [back up and restore](/sandbox/guides/backup-restore/) those directories or mount durable storage before relying on the tree again. Backup and restore replace filesystem state; they do not bring back old process IDs or log buffers.
+If the job also depends on files that lived only in the previous container, [back up and restore](/sandbox/guides/backup-restore/) those directories or mount durable storage before relying on the tree again. Backup and restore replace filesystem state. They do not bring back old process IDs or log buffers.
 
 If the container is not ready yet, you may get `ContainerUnavailableError` — back off and run the same unit of work again. Refer to [Errors and recovery](/sandbox/1-0-preview/errors/).
 
-### Choosing a path
+### Choose a path
 
 <TypeScriptExample>
 ```ts

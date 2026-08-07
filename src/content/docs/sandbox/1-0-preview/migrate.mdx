@@ -194,7 +194,7 @@ When you migrate long-running work:
 2. Persist the command, `cwd`, `env`, and any app checkpoint you need to relaunch.
 3. On a later request, call `getProcess(id)` / `getTerminal(id)` only if that resource might still be running in the current container. If you get `null` or a stale-handle error, start again from the stored work.
 
-Minimum handlers:
+Handle at least these errors as follows:
 
 | Error | What to do |
 | ----- | ---------- |

@@ -8,8 +8,10 @@ products:
   - sandbox
 ---
 
+import { TypeScriptExample } from "~/components";
+
 :::note[Path to Sandbox SDK 1.0]
-This page documents sandbox lifecycle on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable package, also refer to [Sandbox lifecycle](/sandbox/concepts/sandboxes/). Platform placement and shutdown details live in [Lifecycle of a Container](/containers/platform-details/architecture/).
+This page documents sandbox lifecycle on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For the current stable package, also refer to [Sandbox lifecycle](/sandbox/concepts/sandboxes/). Platform placement and shutdown details live in [Lifecycle of a Container](/containers/platform-details/architecture/).
 :::
 
 Your app addresses a sandbox with a **sandbox ID**. The Linux environment that runs commands and holds local files is a **container**. The ID can outlive any one container.
@@ -76,7 +78,7 @@ To continue work later, store the **job** (what to run, `cwd`, `env`, and any ap
 
 After idle stop or replace, the next real work may start a **new** container for the same sandbox ID. Old process and terminal handles are invalid. Recovery procedures: [Errors and recovery](/sandbox/1-0-preview/errors/).
 
-`keepAlive` and `sleepAfter` change idle behavior. They do not keep one container instance forever. See the stable [Lifecycle API](/sandbox/api/lifecycle/) and [Sandbox options](/sandbox/configuration/sandbox-options/) (ignore transport and default-session options on `@next`).
+`keepAlive` and `sleepAfter` change idle behavior. They do not keep one container instance forever. Refer to the stable [Lifecycle API](/sandbox/api/lifecycle/) and [Sandbox options](/sandbox/configuration/sandbox-options/) (ignore transport and default-session options on `@next`).
 
 ## State that outlives a container
 
