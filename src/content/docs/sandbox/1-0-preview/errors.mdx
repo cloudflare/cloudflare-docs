@@ -16,7 +16,7 @@ This page documents error handling on `@cloudflare/sandbox@next`, the preview of
 
 Some failures mean the container never started your work. Others mean the work may already have started. Those cases need different recovery.
 
-The same **sandbox ID** can later use a **new container**. Processes, terminals, and local files from the previous container do not return on their own. See [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+The same **sandbox ID** can later use a **new container**. Processes, terminals, and local files from the previous container do not return on their own. Refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 Class catalog: [Errors API](/sandbox/1-0-preview/api/errors/). Symptom table: [Troubleshooting](/sandbox/1-0-preview/troubleshooting/).
 
@@ -30,6 +30,7 @@ The error context includes `retryable: true`, a `reason` (for example `container
 
 Do not use that same “always retry” rule for failures that occur after the container may already have started the work.
 
+<TypeScriptExample>
 ```ts
 import { ContainerUnavailableError } from "@cloudflare/sandbox";
 
@@ -44,6 +45,7 @@ try {
 	}
 }
 ```
+</TypeScriptExample>
 
 ## After the container may have started the work
 
@@ -53,7 +55,7 @@ Once the container has accepted an operation, a failure can leave partial result
 
 `OperationInterruptedError` means the container or sandbox changed while the call was already underway. The work may have started.
 
-Use `reason` and `retryable` on the error (see [Errors API](/sandbox/1-0-preview/api/errors/) for fields). If the steps change state, check the sandbox or your own records before running the same steps again.
+Use `reason` and `retryable` on the error (refer to [Errors API](/sandbox/1-0-preview/api/errors/) for fields). If the steps change state, check the sandbox or your own records before running the same steps again.
 
 ### SDK lost contact during a call
 
@@ -88,7 +90,7 @@ Some failures mean the Worker package and container image do not match, the imag
 | ------ | -------- |
 | `RuntimeControlProtocolError` (for example `unsupported-protocol-version`, missing or malformed metadata) | Deploy the Worker package and container image from the same `@cloudflare/sandbox@next` line. Do not mix preview and stable packages. |
 | Wrong or missing image, or the container exits before it is ready | Fix `wrangler`, the image, or the entrypoint. Retrying the same application call will not help. |
-| Account or location capacity limits | Lower concurrency or raise limits. See [Platform limits](/sandbox/platform/limits/). |
+| Account or location capacity limits | Lower concurrency or raise limits. Refer to [Platform limits](/sandbox/platform/limits/). |
 
 Catalog detail: [Worker and container image mismatch](/sandbox/1-0-preview/api/errors/#worker-and-container-image-mismatch).
 
@@ -147,7 +149,7 @@ Correct the path, environment, or command (or the files in the image if the bina
 ## Example
 
 <TypeScriptExample>
-```
+```ts
 import {
 	ContainerUnavailableError,
 	OperationInterruptedError,

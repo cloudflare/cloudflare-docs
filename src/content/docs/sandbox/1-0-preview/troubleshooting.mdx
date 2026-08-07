@@ -12,14 +12,14 @@ products:
 This page is for `@cloudflare/sandbox@next`. Stable-package symptoms may differ.
 :::
 
-Short symptom → fix map. Deeper recovery: [Errors and recovery](/sandbox/1-0-preview/errors/). Lifecycle: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+Use this symptom-to-fix map. For deeper recovery, refer to [Errors and recovery](/sandbox/1-0-preview/errors/). For lifecycle behavior, refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
 
 ## Deploy and image
 
 | Symptom | What to check |
 | ------- | ------------- |
 | `RuntimeControlProtocolError`, control/protocol failures after deploy | Worker package and container image are on different lines. Use the same `@next` / `cloudflare/sandbox:next` (or the same exact prerelease) pair. |
-| Container never becomes ready; repeated `ContainerUnavailableError` | Cold start or capacity. Back off using `retryAfterMs` when set, then retry the **work**. See [Errors and recovery](/sandbox/1-0-preview/errors/). |
+| Container never becomes ready, or you see repeated `ContainerUnavailableError` | Cold start or capacity. Back off using `retryAfterMs` when set, then retry the **work**. Refer to [Errors and recovery](/sandbox/1-0-preview/errors/). |
 | Works in `wrangler dev`, fails in production only | Production-only limits and cold start. Still keep package/image matched. |
 
 ## Processes
@@ -72,7 +72,7 @@ For agents and long-running tools on `@next`:
 4. On a later request: `getProcess(id)` while the same container may still hold it; otherwise `exec` again.
 5. Use a [terminal](/sandbox/1-0-preview/terminals/) only when you need a human PTY, not as a session substitute.
 
-See [Process execution](/sandbox/1-0-preview/processes/), [Migrate](/sandbox/1-0-preview/migrate/), and examples in the [sandbox-sdk](https://github.com/cloudflare/sandbox-sdk/tree/next/examples) repo (`claude-code`, `codex`, `opencode`, and others).
+Refer to [Process execution](/sandbox/1-0-preview/processes/), [Migrate](/sandbox/1-0-preview/migrate/), and examples in the [sandbox-sdk](https://github.com/cloudflare/sandbox-sdk/tree/next/examples) repo (`claude-code`, `codex`, `opencode`, and others).
 
 ## Related
 

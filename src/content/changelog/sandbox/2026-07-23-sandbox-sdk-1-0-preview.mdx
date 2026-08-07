@@ -24,12 +24,11 @@ In the preview:
 - **Terminals as resources** — interactive PTYs use `createTerminal` / `connect`, not the older session-shaped helpers.
 - **Interpreter as an extension** — attach the code interpreter on your `Sandbox` subclass instead of calling interpreter methods on the core class.
 
-Sandboxes still run on containers. A stable **sandbox ID** still finds the same logical sandbox; the **container** behind that ID can stop or be replaced. What 1.0 makes explicit is that process and terminal handles belong to the **current** container and fail closed after replace — they are not silent stand-ins for “this sandbox ID forever.”
+Sandboxes still run on containers. A stable **sandbox ID** still finds the same logical sandbox. The **container** behind that ID can stop or be replaced. What 1.0 makes explicit is that process and terminal handles belong to the **current** container and fail closed after replace — they are not silent stand-ins for “this sandbox ID forever.”
 
 ## Who should use it
 
-- **New projects** — start on `@cloudflare/sandbox@next` and follow the [1.0 preview](/sandbox/1-0-preview/) docs.
-- **Existing apps** — migrate when you can, so you are ready when 1.0 becomes the stable release. Use [Migrate](/sandbox/1-0-preview/migrate/) for the full path, including deploying the Worker package and container image from the **same** `@next` line.
+**New projects** should start on `@cloudflare/sandbox@next` and follow the [1.0 preview](/sandbox/1-0-preview/) docs. **Existing apps** should migrate when you can, so you are ready when 1.0 becomes the stable release. Use [Migrate](/sandbox/1-0-preview/migrate/) for the full path, including deploying the Worker package and container image from the **same** `@next` line.
 
 The main [Sandbox documentation](/sandbox/) still describes today's stable package. Preview documentation lives under a dedicated section:
 

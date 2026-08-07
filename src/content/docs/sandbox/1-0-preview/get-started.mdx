@@ -24,11 +24,13 @@ Build and deploy the Worker **and** the sandbox container image from the same pr
 
 ## 2. Export your Sandbox class
 
+<TypeScriptExample>
 ```ts
 import { Sandbox } from "@cloudflare/sandbox";
 
 export { Sandbox };
 ```
+</TypeScriptExample>
 
 Keep your `wrangler` Durable Object binding and container configuration. Preview-specific transport variables are not required.
 
@@ -39,7 +41,7 @@ Keep your `wrangler` Durable Object binding and container configuration. Preview
 Collect results with handle methods such as `output()`, or stream with `logs()`.
 
 <TypeScriptExample>
-```
+```ts
 import { getSandbox, proxyToSandbox } from "@cloudflare/sandbox";
 
 export { Sandbox } from "@cloudflare/sandbox";
@@ -72,6 +74,7 @@ Each argv entry is one argument to the process. The SDK does **not** run a shell
 
 Shell syntax (`&&`, pipes, redirects, globs) needs an explicit shell, with the script as its own argument:
 
+<TypeScriptExample>
 ```ts
 const process = await sandbox.exec([
 	"/bin/bash",
@@ -80,12 +83,13 @@ const process = await sandbox.exec([
 ]);
 const { stdout } = await process.output({ encoding: "utf8" });
 ```
+</TypeScriptExample>
 
 ## 4. How this differs from the stable package
 
-- `await sandbox.exec(...)` creates a process; it does **not** wait for exit. Use `output()`, `waitForExit()`, or other handle methods for completion.
+- `await sandbox.exec(...)` creates a process. It does **not** wait for exit. Use `output()`, `waitForExit()`, or other handle methods for completion.
 - Each `exec()` is independent. A `cd` or `export` in one call is not remembered in the next.
-- Pass `cwd` and `env` on each `exec()` when you need them (or use `setEnvVars` for sandbox-wide values — [Environment variables](/sandbox/1-0-preview/environment/)).
+- Pass `cwd` and `env` on each `exec()` when you need them, or use `setEnvVars` for sandbox-wide values. Refer to [Environment variables](/sandbox/1-0-preview/environment/).
 - A process runs only in the **current container** for that sandbox. After the container stops or is replaced, start a new process. Model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
 - Before production traffic, learn which failures are safe to retry: [Errors and recovery](/sandbox/1-0-preview/errors/).
 

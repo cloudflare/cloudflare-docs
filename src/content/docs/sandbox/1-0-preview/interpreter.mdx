@@ -20,6 +20,7 @@ Signatures and types: [Interpreter API](/sandbox/1-0-preview/api/interpreter/).
 
 ## Attach
 
+<TypeScriptExample>
 ```ts
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withInterpreter } from "@cloudflare/sandbox/interpreter";
@@ -28,6 +29,7 @@ export class Sandbox extends BaseSandbox<Env> {
 	interpreter = withInterpreter(this);
 }
 ```
+</TypeScriptExample>
 
 Export that class from your Worker. The sidecar provisions on first use.
 
@@ -38,12 +40,13 @@ Export that class from your Worker. The sidecar provisions on first use.
 | JavaScript / TypeScript | Default sandbox image (or any variant with a JS runtime) |
 | Python | **`-python`** image variant |
 
-Use the same preview Worker package and container image line. See [Dockerfile](/sandbox/configuration/dockerfile/).
+Use the same preview Worker package and container image line. Refer to [Dockerfile](/sandbox/configuration/dockerfile/).
 
 ## Run code
 
 A **context** keeps variables and imports until you delete it or the container is replaced.
 
+<TypeScriptExample>
 ```ts
 const sandbox = getSandbox(env.Sandbox, "user-123");
 
@@ -61,12 +64,13 @@ if (result.error) {
 	console.log(result.results, result.logs.stdout);
 }
 ```
+</TypeScriptExample>
 
 If you omit `context`, `runCode` uses a default context for the language (default language: `python`). Languages: `python`, `javascript`, `typescript`.
 
 For result fields, streaming (`runCodeStream`), and list/delete context methods, see the [Interpreter API](/sandbox/1-0-preview/api/interpreter/).
 
-Contexts exist only in the **current container**. After stop or replace, create new ones. See [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+Contexts exist only in the **current container**. After stop or replace, create new ones. Refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
 
 ## Related
 

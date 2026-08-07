@@ -16,7 +16,7 @@ This guide moves a project onto `@cloudflare/sandbox@next`, the preview of Sandb
 
 ## Before you start
 
-1. Work on a branch or staging deployment. Finish the code changes below, then cut production over in one deploy.
+1. Work on a branch or staging deployment. Finish the code migration steps in this guide, then cut production over in one deploy.
 2. Expect a short cutover window. Live processes, terminals, and other container work stop when the new image replaces the old one.
 3. Inventory call sites in the Worker:
    - Commands: `exec`, `execStream`, `startProcess`, string kill signals, process stdin
@@ -36,7 +36,7 @@ If you still need stable-line cleanup first (RPC transport, `exposePort`, stream
 | `execStream`, `startProcess`, process log helpers                    | Process handle: `logs`, `kill`, `waitFor*`.                                    |
 | Default session / `enableDefaultSession`                             | Gone. Each `exec` is independent.                                              |
 | `createSession` / `ExecutionSession`                                 | Gone from the core public surface. Pass `cwd`/`env` per `exec`, or one shell argv script. |
-| Interpreter methods on `Sandbox`                                     | Same method names on `sandbox.interpreter` after `withInterpreter`. `runCode` returns plain `ExecutionResult`. See [Code interpreter](/sandbox/1-0-preview/interpreter/). |
+| Interpreter methods on `Sandbox`                                     | Same method names on `sandbox.interpreter` after `withInterpreter`. `runCode` returns plain `ExecutionResult`. Refer to [Code interpreter](/sandbox/1-0-preview/interpreter/). |
 | String kill signals                                                  | Numeric signals on `process.kill`.                                             |
 | `waitForPort` default mode                                           | Preview default is **`tcp`**. Pass `mode: "http"` for HTTP checks.             |
 | Process / stream **stdin**                                           | No process stdin on the handle. Non-interactive: argv/`cwd`/`env`. Interactive PTY: [terminals](/sandbox/1-0-preview/terminals/). |
@@ -64,7 +64,7 @@ Delete `SANDBOX_TRANSPORT`, the `transport` option on `getSandbox()`, `SandboxTr
 
 Stable:
 
-```ts
+```txt
 const result = await sandbox.exec("npm test");
 console.log(result.stdout, result.exitCode);
 ```
@@ -72,7 +72,7 @@ console.log(result.stdout, result.exitCode);
 Preview:
 
 <TypeScriptExample>
-```
+```ts
 const process = await sandbox.exec(["/bin/bash", "-lc", "npm test"]);
 const result = await process.output({ encoding: "utf8" });
 console.log(result.stdout, result.exitCode);
@@ -89,7 +89,7 @@ Rules:
 ### Background processes and streaming
 
 <TypeScriptExample>
-```
+```ts
 const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
 	cwd: "/workspace/app",
 });
@@ -107,7 +107,7 @@ await server.kill(); // numeric signal; default 15
 
 Process handle details (waits, log events, `kill`, no stdin): [Processes API](/sandbox/1-0-preview/api/processes/).
 
-Across Worker requests, keep `server.id` and resume with `getProcess(id)` only while that process may still be running in the current container. If the container stopped, `getProcess` may return `null`. If you still hold a handle from a previous container, expect a stale-handle error. In both cases, start a new `exec` from the work you still need to run. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+Across Worker requests, keep `server.id` and resume with `getProcess(id)` only while that process may still be running in the current container. If the container stopped, `getProcess` may return `null`. If you still hold a handle from a previous container, expect a stale-handle error. In both cases, start a new `exec` from the work you still need to run. Refer to [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 ### Working directory and environment
 
@@ -136,8 +136,9 @@ User isolation remains **one sandbox per user** (or per trust boundary), not ses
 
 ## Attach the interpreter
 
-See [Code interpreter](/sandbox/1-0-preview/interpreter/). Minimum:
+Refer to [Code interpreter](/sandbox/1-0-preview/interpreter/). Minimum:
 
+<TypeScriptExample>
 ```ts
 import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
 import { withInterpreter } from "@cloudflare/sandbox/interpreter";
@@ -146,6 +147,7 @@ export class Sandbox extends BaseSandbox<Env> {
 	interpreter = withInterpreter(this);
 }
 ```
+</TypeScriptExample>
 
 Use the **`-python`** image variant when you run Python. Keep the Worker package and container image on the same `@next` line.
 
@@ -153,6 +155,7 @@ Use the **`-python`** image variant when you run Python. Keep the Worker package
 
 `sandbox.gitCheckout` is removed. Clone or fetch with argv `exec`, for example:
 
+<TypeScriptExample>
 ```ts
 const clone = await sandbox.exec(
 	["git", "clone", "--depth", "1", "--", repoUrl, "/workspace/repo"],
@@ -160,6 +163,7 @@ const clone = await sandbox.exec(
 );
 const result = await clone.output({ encoding: "utf8" });
 ```
+</TypeScriptExample>
 
 ## Terminals
 
@@ -205,7 +209,7 @@ Minimum handlers:
 
 ## Deploy the cutover
 
-Finish the code changes above on a branch first. Production cutover is one deploy of the preview Worker package and the matching container image.
+Finish the code migration steps in this guide on a branch first. Production cutover is one deploy of the preview Worker package and the matching container image.
 
 Stable Sandbox and `@next` use different control protocols. A mixed pair does not work in either direction:
 
@@ -223,7 +227,7 @@ npx wrangler deploy --containers-rollout=immediate
 Before production:
 
 1. Finish or stop work you need to keep through the cutover.
-2. Deploy with the command above.
+2. Deploy with the immediate container rollout command from the previous section.
 3. Wait until the new container image is serving traffic.
 4. Treat process and terminal IDs from before the deploy as invalid. Start that work again and keep the new IDs.
 5. Run the checks in [Verify](#verify).
@@ -238,7 +242,7 @@ Background on container rollouts: [Containers rollouts](/containers/platform-det
 4. If the app uses a browser terminal: create, connect, and resume with `getTerminal` while the container still has it.
 5. Exercise the interpreter only if your app uses that extension (Python needs `-python`).
 6. Confirm error handling distinguishes unavailable, interrupted/RPC, stale handle, and local wait timeouts — [Errors and recovery](/sandbox/1-0-preview/errors/).
-7. Confirm secrets are not stored in sandbox env; outbound handlers where needed.
+7. Confirm secrets are not stored in sandbox env. Use outbound handlers where needed.
 8. Grep again for removed APIs (transport, sessions, `execStream`, `startProcess`, `sandbox.terminal`, `gitCheckout`, xterm `sessionId`).
 
 ## Related

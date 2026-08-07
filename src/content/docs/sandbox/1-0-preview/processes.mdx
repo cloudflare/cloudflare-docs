@@ -8,6 +8,8 @@ products:
   - sandbox
 ---
 
+import { TypeScriptExample } from "~/components";
+
 :::note[Path to Sandbox SDK 1.0]
 This page documents process execution on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable command and session behavior, refer to [Commands](/sandbox/api/commands/) and [Sessions](/sandbox/concepts/sessions/).
 :::
@@ -16,21 +18,23 @@ In the 1.0 preview, treat the sandbox as a computer you drive with explicit prog
 
 Each `exec()` starts a **new supervised process** from **argv**. The call resolves when launch succeeds (you receive a process ID and a pid), not when the process exits. Each launch is independent: pass `cwd` and `env` when the process needs them, or put multi-step shell syntax in one explicit shell argv. For an interactive PTY, use the [terminal](/sandbox/1-0-preview/terminals/) API.
 
-Long-running work often spans many short Worker requests. A process ID is enough only while the **same container** still has that process. Across idle stop, failure, or replace, store the full launch (command, options, and any app checkpoint) so you can start again. See [Continue work across requests](#continue-work-across-requests).
+Long-running work often spans many short Worker requests. A process ID is enough only while the **same container** still has that process. Across idle stop, failure, or replace, store the full launch (command, options, and any app checkpoint) so you can start again. Refer to [Continue work across requests](#continue-work-across-requests).
 
 ## Sandbox ID, container, and process
 
 Most applications use **one sandbox per user or task**:
 
+<TypeScriptExample>
 ```ts
 const sandbox = getSandbox(env.Sandbox, "user-123");
 ```
+</TypeScriptExample>
 
 Three different things are in play:
 
 | Term | Meaning |
 | ---- | ------- |
-| **Sandbox ID** | The stable string your app uses to find that sandbox again (`"user-123"` above). |
+| **Sandbox ID** | The stable string your app uses to find that sandbox again (for example `"user-123"`). |
 | **Container** | The [Containers](/containers/) instance currently running work for that sandbox. Sandboxes run on containers. The sandbox ID is stable; the container instance behind it is not always the same one. |
 | **Process** | A program you start with `exec()` **inside the current container**. The handle and `process.id` mean “this program in this container,” not “this sandbox ID forever.” |
 
@@ -48,13 +52,16 @@ Compared with the current stable package:
 
 Use argv for a single binary:
 
+<TypeScriptExample>
 ```ts
 const process = await sandbox.exec(["node", "--version"]);
 const output = await process.output({ encoding: "utf8" });
 ```
+</TypeScriptExample>
 
 Use an explicit shell when you need shell syntax:
 
+<TypeScriptExample>
 ```ts
 const process = await sandbox.exec([
 	"/bin/bash",
@@ -62,17 +69,20 @@ const process = await sandbox.exec([
 	"cd /workspace/app && npm test",
 ]);
 ```
+</TypeScriptExample>
 
 Or pass `cwd` and `env` on the launch instead of relying on a previous command:
 
+<TypeScriptExample>
 ```ts
 const process = await sandbox.exec(["npm", "test"], {
 	cwd: "/workspace/app",
 	env: { NODE_ENV: "test" },
 });
 ```
+</TypeScriptExample>
 
-Sandbox-wide values use `setEnvVars`. See [Environment variables](/sandbox/1-0-preview/environment/).
+Sandbox-wide values use `setEnvVars`. Refer to [Environment variables](/sandbox/1-0-preview/environment/).
 
 ## Process handles
 
@@ -140,6 +150,7 @@ A process ID is a resume key for the **current** container only. It is not enoug
 
 Use this path when the work is still running and the container has not been replaced — for example another request arrives seconds later while a build or server is up.
 
+<TypeScriptExample>
 ```ts
 const process = await sandbox.getProcess(storedProcessId);
 if (process) {
@@ -152,6 +163,7 @@ if (process) {
 	return;
 }
 ```
+</TypeScriptExample>
 
 You can also call `status()`, `waitForPort()`, `waitForExit()`, or `kill()` on that handle. Log cursors apply only while this process still exists in this container.
 
@@ -159,6 +171,7 @@ You can also call `status()`, `waitForPort()`, `waitForExit()`, or `kill()` on t
 
 Use this path when `getProcess` returns `null`, a call throws `StaleProcessHandleError`, or enough time has passed that the container may have stopped or been replaced.
 
+<TypeScriptExample>
 ```ts
 const process = await sandbox.exec(storedCommand, {
 	cwd: storedCwd,
@@ -167,13 +180,15 @@ const process = await sandbox.exec(storedCommand, {
 // persist process.id (and clear any old cursor)
 await process.waitForPort(3000, { timeout: 60_000 });
 ```
+</TypeScriptExample>
 
 If the job also depends on files that lived only in the previous container, [back up and restore](/sandbox/guides/backup-restore/) those directories or mount durable storage before relying on the tree again. Backup and restore replace filesystem state; they do not bring back old process IDs or log buffers.
 
-If the container is not ready yet, you may get `ContainerUnavailableError` — back off and run the same unit of work again. See [Errors and recovery](/sandbox/1-0-preview/errors/).
+If the container is not ready yet, you may get `ContainerUnavailableError` — back off and run the same unit of work again. Refer to [Errors and recovery](/sandbox/1-0-preview/errors/).
 
 ### Choosing a path
 
+<TypeScriptExample>
 ```ts
 async function continueJob(sandbox: Sandbox, job: StoredJob) {
 	if (job.processId) {
@@ -194,6 +209,7 @@ async function continueJob(sandbox: Sandbox, job: StoredJob) {
 	return process;
 }
 ```
+</TypeScriptExample>
 
 If you still hold a handle object from before the container stopped, calls on that handle throw `StaleProcessHandleError`. Prefer `getProcess(id)` on each new request instead of reusing an old handle across requests.
 
@@ -212,10 +228,12 @@ Both follow the same [container lifetime rules](#how-long-a-process-lives). Term
 
 `output()` buffers stdout and stderr and may set `truncated: true`. Prefer `logs()` when output may be large or the process runs longer than one Worker request.
 
+<TypeScriptExample>
 ```ts
 const stream = await process.logs({ follow: true, replay: true });
 // each data/terminal event includes a cursor — store the latest
 ```
+</TypeScriptExample>
 
 On a later request against the **same still-running container**, call `getProcess(id)` and resume with `logs({ since: cursor, replay: true, follow: true })`. After a new container starts for the sandbox, start a new process; the old cursor does not apply.
 

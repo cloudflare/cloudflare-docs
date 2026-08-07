@@ -20,9 +20,11 @@ That distinction matters for processes, terminals, files, and recovery after idl
 
 Most apps use one sandbox per user or task:
 
+<TypeScriptExample>
 ```ts
 const sandbox = getSandbox(env.Sandbox, "user-123");
 ```
+</TypeScriptExample>
 
 | | Meaning |
 | - | ------- |
@@ -38,7 +40,7 @@ const sandbox = getSandbox(env.Sandbox, "user-123");
 
 `getSandbox()` returns immediately. It does not start a container by itself.
 
-The container starts when an operation needs it — for example `exec()`, `createTerminal()`, or writing a file. The first start after deploy or idle can take longer than a warm call. If the container is not ready yet, the SDK may throw `ContainerUnavailableError`. That error means the operation did not start inside the container. See [Errors and recovery](/sandbox/1-0-preview/errors/).
+The container starts when an operation needs it — for example `exec()`, `createTerminal()`, or writing a file. The first start after deploy or idle can take longer than a warm call. If the container is not ready yet, the SDK may throw `ContainerUnavailableError`. That error means the operation did not start inside the container. Refer to [Errors and recovery](/sandbox/1-0-preview/errors/).
 
 ## While the container is running
 

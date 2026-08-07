@@ -28,10 +28,11 @@ Command execution uses [`exec`](/sandbox/1-0-preview/processes/) and process han
 | Stop | `kill(signal?)` | `interrupt()` / `terminate()` |
 | Lookup | `getProcess` / `listProcesses` | `getTerminal` / `listTerminals` |
 
-Both kinds of resource live only in the current container for a sandbox ID. Lookup methods do not start a container. See [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+Both kinds of resource live only in the current container for a sandbox ID. Lookup methods do not start a container. Refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) and [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 ## Create a terminal
 
+<TypeScriptExample>
 ```ts
 const terminal = await sandbox.createTerminal({
 	command: ["bash"],
@@ -42,19 +43,22 @@ const terminal = await sandbox.createTerminal({
 
 console.log(terminal.id);
 ```
+</TypeScriptExample>
 
 You can write to the PTY from the Worker, resize it, stream output, or end it:
 
+<TypeScriptExample>
 ```ts
 await terminal.write(new TextEncoder().encode("uname -a\n"));
 await terminal.resize(100, 30);
 await terminal.terminate();
 ```
+</TypeScriptExample>
 
 ## Lifetime
 
 - A terminal exists only in the **current container** for that sandbox ID.
-- `getTerminal` / `listTerminals` return `null` / `[]` when no container is running; they do not start one.
+- `getTerminal` / `listTerminals` return `null` / `[]` when no container is running. They do not start one.
 - After the container stops or is replaced, old terminal IDs are invalid. Create a new terminal if you need one again.
 - An active terminal can keep the container alive across Worker requests, as an active process can.
 
@@ -69,7 +73,7 @@ Store `terminal.id` to resume the same PTY while that container is still up.
 ### Worker
 
 <TypeScriptExample>
-```
+```ts
 import { getSandbox } from "@cloudflare/sandbox";
 
 export { Sandbox } from "@cloudflare/sandbox";
@@ -109,10 +113,12 @@ export default {
 
 Create the terminal from an application route when the UI needs one:
 
+<TypeScriptExample>
 ```ts
 const terminal = await sandbox.createTerminal({ command: ["bash"] });
 return Response.json({ sandboxId, terminalId: terminal.id });
 ```
+</TypeScriptExample>
 
 ### Browser (xterm.js)
 
@@ -122,7 +128,7 @@ return Response.json({ sandboxId, terminalId: terminal.id });
 />
 
 <TypeScriptExample>
-```
+```ts
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import { SandboxAddon } from "@cloudflare/sandbox/xterm";

@@ -44,7 +44,7 @@ createTerminal(options: CreateTerminalOptions): Promise<Terminal>
 `Promise<Terminal>` — a handle for the terminal in the **current container**.
 
 <TypeScriptExample>
-```
+```ts
 const terminal = await sandbox.createTerminal({
 	command: ["bash"],
 	cwd: "/workspace",
@@ -130,7 +130,7 @@ output(options?: TerminalOutputOptions): Promise<ReadableStream<TerminalOutputEv
 | `since`   | `string`      | Opaque cursor; resume after a previous event.    |
 | `replay`  | `boolean`     | Include buffered history when resuming.          |
 | `follow`  | `boolean`     | Keep the stream open for live output.            |
-| `signal`  | `AbortSignal` | Cancel this subscription only; terminal keeps running. |
+| `signal`  | `AbortSignal` | Cancel this subscription only. The terminal keeps running. |
 
 #### `TerminalOutputEvent`
 
@@ -211,7 +211,7 @@ connect(
 Returns the WebSocket upgrade `Response` your Worker should return to the client.
 
 <TypeScriptExample>
-```
+```ts
 const terminal = await sandbox.getTerminal(terminalId);
 if (!terminal) {
 	return new Response("Terminal not found", { status: 404 });
@@ -231,6 +231,7 @@ For the full Worker + xterm.js path, refer to [Terminals](/sandbox/1-0-preview/t
 
 `SandboxAddon` integrates [xterm.js](https://xtermjs.org/) with preview terminals.
 
+<TypeScriptExample>
 ```ts
 import { SandboxAddon } from "@cloudflare/sandbox/xterm";
 
@@ -247,6 +248,7 @@ const addon = new SandboxAddon({
 	},
 });
 ```
+</TypeScriptExample>
 
 | Item | Preview detail |
 | ---- | -------------- |

@@ -52,7 +52,7 @@ type SandboxCommand = readonly [executable: string, ...args: string[]];
 `Promise<SandboxProcess>`
 
 <TypeScriptExample>
-```
+```ts
 const process = await sandbox.exec(["node", "--version"]);
 const output = await process.output({ encoding: "utf8" });
 
@@ -70,7 +70,7 @@ Does not start a container if none is running. Returns `null` when no container 
 getProcess(id: string): Promise<SandboxProcess | null>
 ```
 
-Process IDs are not durable across container stop or replace. See [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+Process IDs are not durable across container stop or replace. Refer to [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
 
 ## `listProcesses()`
 
@@ -105,7 +105,7 @@ There is no process stdin API on this handle.
 status(): Promise<ProcessStatus>
 ```
 
-See [ProcessStatus](#processstatus). A process stays `running` until the supervised **process group** has settled, even if the root pid exits while descendants continue.
+Refer to [ProcessStatus](#processstatus). A process stays `running` until the supervised **process group** has settled, even if the root pid exits while descendants continue.
 
 ### `output()`
 
@@ -145,7 +145,7 @@ Default body encoding is binary (`Uint8Array`) unless you pass `encoding: "utf8"
 `maxBytes` must be a non-negative finite number when set.
 
 <TypeScriptExample>
-```
+```ts
 const process = await sandbox.exec(["/bin/bash", "-lc", "npm test"], {
 	cwd: "/workspace/app",
 });
@@ -206,7 +206,7 @@ type ProcessLogEvent =
 Retain the latest `cursor` from delivered events if a later Worker request resumes with `logs({ since: cursor, replay: true, follow: true })` on the **same** process in the **same** container.
 
 <TypeScriptExample>
-```
+```ts
 const process = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
 	cwd: "/workspace/app",
 });
@@ -252,7 +252,7 @@ waitForExit(options?: {
 Returns [ProcessExit](#processexit). Local timeout surfaces as `ProcessWaitTimeoutError`. Local abort surfaces as `ProcessAbortedError`.
 
 <TypeScriptExample>
-```
+```ts
 const build = await sandbox.exec(["/bin/bash", "-lc", "npm run build"], {
 	cwd: "/workspace/app",
 });
@@ -298,7 +298,7 @@ interface WaitForLogResult {
 If the process exits before a match, the SDK throws `ProcessExitedBeforeLogError`. A local wait timeout throws `ProcessWaitTimeoutError`.
 
 <TypeScriptExample>
-```
+```ts
 const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
 	cwd: "/workspace/app",
 });
@@ -333,7 +333,7 @@ waitForPort(port: number, options?: WaitForPortOptions): Promise<void>
 **TCP mode** (default) succeeds when the port accepts a connection:
 
 <TypeScriptExample>
-```
+```ts
 const db = await sandbox.exec(["redis-server"]);
 
 await db.waitForPort(6379, {
@@ -346,7 +346,7 @@ await db.waitForPort(6379, {
 **HTTP mode** issues an HTTP request and checks the response status:
 
 <TypeScriptExample>
-```
+```ts
 const server = await sandbox.exec(["/bin/bash", "-lc", "npm run dev"], {
 	cwd: "/workspace/app",
 });
@@ -374,15 +374,14 @@ Send a numeric signal to the process.
 kill(signal?: number): Promise<void>
 ```
 
-- Default `signal` is `15` (`SIGTERM`).
-- Pass a numeric signal only (for example `9` for `SIGKILL`). String signal names are not accepted.
+Default `signal` is `15` (`SIGTERM`). Pass a numeric signal only (for example `9` for `SIGKILL`). String signal names are not accepted.
 
 Stopping the process is separate from cancelling a local wait or log subscription.
 
 ### `exitCode`
 
 ```ts
-const code: Promise<number> = process.exitCode;
+readonly exitCode: Promise<number>
 ```
 
 Resolves to the exit code when the supervised process group has settled (the same completion boundary as `waitForExit()`). Prefer `waitForExit()` when you also need `signal` or `timedOut`.
@@ -435,7 +434,7 @@ interface ProcessExit {
 }
 ```
 
-Signals delivered only to descendants do not rewrite this outcome. See [Process execution](/sandbox/1-0-preview/processes/).
+Signals delivered only to descendants do not rewrite this outcome. Refer to [Process execution](/sandbox/1-0-preview/processes/).
 
 ### `ProcessFailure`
 

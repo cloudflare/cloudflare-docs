@@ -11,7 +11,7 @@ products:
   - sandbox
 ---
 
-import { CardGrid, LinkTitleCard, PackageManagers } from "~/components";
+import { CardGrid, LinkTitleCard, PackageManagers, TypeScriptExample } from "~/components";
 
 **Sandbox SDK 1.0** is the next major release of the SDK. It is available now as a preview on the npm `@next` tag. The current stable package remains published for existing apps.
 
@@ -59,6 +59,7 @@ Procedures: [Migrate](/sandbox/1-0-preview/migrate/). Mental model: [Process exe
 
 **Preview:** `sandbox.exec()` takes **argv** and resolves when the process **starts**. The same handle covers short commands and long-running services.
 
+<TypeScriptExample>
 ```ts
 // Current stable package
 const result = await sandbox.exec("npm test");
@@ -69,6 +70,7 @@ const process = await sandbox.exec(["npm", "test"]);
 const result = await process.output({ encoding: "utf8" });
 console.log(result.stdout, result.exitCode);
 ```
+</TypeScriptExample>
 
 Shell features such as pipes and `&&` need an explicit shell, for example `['/bin/bash', '-lc', 'cd app && npm test']`. Pass `cwd` and `env` on each `exec()` when the process needs them. Details: [Process execution](/sandbox/1-0-preview/processes/), [Processes API](/sandbox/1-0-preview/api/processes/).
 
@@ -100,11 +102,13 @@ Shell features such as pipes and `&&` need an explicit shell, for example `['/bi
 
 This is **not** a new container product. You still address a sandbox with a stable **sandbox ID**:
 
+<TypeScriptExample>
 ```ts
 const sandbox = getSandbox(env.Sandbox, "user-123");
 ```
+</TypeScriptExample>
 
-That sandbox runs in a **container**. The ID is stable; the container instance behind it is not always the same one. Processes and terminals you start exist only in the **current** container. When that container stops or is replaced, those processes and terminals are gone — old handles fail closed instead of quietly attaching to a new container for the same sandbox ID.
+That sandbox runs in a **container**. The ID is stable. The container instance behind it is not always the same one. Processes and terminals you start exist only in the **current** container. When that container stops or is replaced, those processes and terminals are gone — old handles fail closed instead of quietly attaching to a new container for the same sandbox ID.
 
 Container stop and replace already happened on the stable line. The preview makes process and terminal APIs honest about that lifetime. Full model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/). Process detail: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives). Recovery: [Errors and recovery](/sandbox/1-0-preview/errors/).
 

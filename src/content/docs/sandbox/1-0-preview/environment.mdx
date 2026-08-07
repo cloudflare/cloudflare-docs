@@ -23,7 +23,7 @@ Use environment variables for **non-secret** configuration (paths, feature flags
 When a process starts, the runtime builds its environment from:
 
 1. The **container** environment (image `ENV` and defaults).
-2. Names from **`setEnvVars`**, when you use `exec()` (see below).
+2. Names from **`setEnvVars`**, when you use `exec()` (described in the next section).
 3. The **`env` option** on that launch, if you pass one.
 
 Later launches do not keep overlays from earlier launches. A command that runs `export FOO=bar` inside one process does not change the next `exec()`.
@@ -46,7 +46,7 @@ On each `exec()`, the SDK merges stored names into that process’s environment 
 Stored names live in the sandbox Durable Object’s memory. They are not written to the container filesystem and are not part of a backup. After the Durable Object is evicted or replaced, call `setEnvVars` again if you still need those names, or pass `env` on each `exec()`.
 
 <TypeScriptExample>
-```
+```ts
 const sandbox = getSandbox(env.Sandbox, "user-123");
 
 await sandbox.setEnvVars({
@@ -74,6 +74,7 @@ await sandbox.setEnvVars({
 
 ## `env` on `exec()`
 
+<TypeScriptExample>
 ```ts
 const process = await sandbox.exec(["node", "app.js"], {
 	cwd: "/workspace/app",
@@ -83,6 +84,7 @@ const process = await sandbox.exec(["node", "app.js"], {
 	},
 });
 ```
+</TypeScriptExample>
 
 | Behavior | Detail |
 | -------- | ------ |
@@ -94,6 +96,7 @@ Omit `env` when sandbox-wide names (and the container environment) are enough.
 
 ## `env` on `createTerminal()`
 
+<TypeScriptExample>
 ```ts
 const terminal = await sandbox.createTerminal({
 	command: ["bash"],
@@ -104,16 +107,17 @@ const terminal = await sandbox.createTerminal({
 	},
 });
 ```
+</TypeScriptExample>
 
 The terminal’s launch `env` overlays the container environment for that terminal only. Pass the names the terminal needs on `createTerminal`.
 
-Inside an interactive shell, `export` applies for the life of that terminal. It does not apply to later `exec()` calls. See [Terminals](/sandbox/1-0-preview/terminals/).
+Inside an interactive shell, `export` applies for the life of that terminal. It does not apply to later `exec()` calls. Refer to [Terminals](/sandbox/1-0-preview/terminals/).
 
 ## External APIs and credentials
 
 Code inside the sandbox should not hold live provider credentials. Keep secrets in the Worker and intercept outbound HTTP(S) with `outboundByHost` (and related policy such as `enableInternet` / `allowedHosts`). The sandbox can send ordinary requests—or placeholders client libraries require—while the Worker attaches real credentials before the request leaves your account.
 
-See [Handle outbound traffic](/sandbox/guides/outbound-traffic/), including securely injecting credentials. For Workers bindings (KV, R2, and similar) reached by hostname from the sandbox, see [Connect to Workers bindings](/sandbox/guides/workers-connections/).
+Refer to [Handle outbound traffic](/sandbox/guides/outbound-traffic/), including securely injecting credentials. For Workers bindings (KV, R2, and similar) reached by hostname from the sandbox, refer to [Connect to Workers bindings](/sandbox/guides/workers-connections/).
 
 ## Related
 

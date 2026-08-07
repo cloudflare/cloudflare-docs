@@ -8,6 +8,8 @@ products:
   - sandbox
 ---
 
+import { TypeScriptExample } from "~/components";
+
 :::note[Path to Sandbox SDK 1.0]
 This page is the error reference for `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. When to retry or relaunch: [Errors and recovery](/sandbox/1-0-preview/errors/).
 :::
@@ -18,6 +20,7 @@ Error classes and codes returned by the Sandbox SDK 1.0 preview, with short reco
 
 Operations throw exceptions you can catch. Prefer `instanceof` on classes from `@cloudflare/sandbox`. Use `code` and `context` for metrics and stable field access.
 
+<TypeScriptExample>
 ```ts
 import {
 	ContainerUnavailableError,
@@ -40,11 +43,13 @@ try {
 	}
 }
 ```
+</TypeScriptExample>
 
 ### Imports
 
 Common lifecycle, process, terminal, and backup errors are available from the package root:
 
+<TypeScriptExample>
 ```ts
 import {
 	ContainerUnavailableError,
@@ -54,9 +59,11 @@ import {
 	// ...
 } from "@cloudflare/sandbox";
 ```
+</TypeScriptExample>
 
 The full module also exports `ErrorCode`, `SandboxError`, `createErrorFromResponse`, and other domain errors (files, ports, interpreter, mounts, and related context types):
 
+<TypeScriptExample>
 ```ts
 import {
 	ErrorCode,
@@ -66,15 +73,18 @@ import {
 	// ...
 } from "@cloudflare/sandbox/errors";
 ```
+</TypeScriptExample>
 
 Platform helpers (not `SandboxError` subclasses):
 
+<TypeScriptExample>
 ```ts
 import {
 	isPlatformTransientError,
 	isDurableObjectCodeUpdateReset,
 } from "@cloudflare/sandbox";
 ```
+</TypeScriptExample>
 
 ### `SandboxError` shape
 
@@ -90,7 +100,7 @@ Most SDK errors extend `SandboxError`:
 | `operation` | Operation label when provided |
 | `suggestion` | Optional actionable suggestion |
 | `timestamp` | ISO timestamp when provided |
-| `toJSON()` | Serializes the fields above for logs |
+| `toJSON()` | Serializes the error fields for logs |
 
 `RuntimeIdentityInactiveError` extends `Error` directly (not `SandboxError`). It means the current container is no longer the active one for this handle or call.
 
@@ -175,13 +185,13 @@ Deploy the Worker package and the sandbox container image from the same `@cloudf
 | `malformed-metadata` | Setup metadata could not be parsed | Bad or incomplete image/build |
 | `activation-mismatch` | Activation did not match the expected container | Can appear after container replace; if it keeps happening, check Worker and image pairing |
 
-Related permanent problems (not always a typed `RuntimeControlProtocolError`, but same response):
+The following permanent problems are related and return the same response:
 
 | Problem | Recommended fix |
 | ------- | ---------------- |
 | Wrong or missing container image in `wrangler` / registry | Deploy the Worker package and container image from the same release line. Fix configuration if needed. |
 | Container exits before it becomes ready | Fix the image or entrypoint and redeploy. Do not only retry the app call. |
-| Account or location capacity limits | See [Production capacity limits](#production-capacity-limits) |
+| Account or location capacity limits | Refer to [Production capacity limits](#production-capacity-limits) |
 
 ---
 
@@ -265,7 +275,7 @@ These helpers complement `SandboxError` subclasses. They do not replace the reco
 
 In production, the Containers platform may reject work when account or deployment limits are exceeded (for example `SURPASSED_BASE_LIMITS`, `SURPASSED_TOTAL_LIMITS`, `LOCATION_SURPASSED_BASE_LIMITS`). Retrying the same overload does not fix that. Reduce concurrency, raise limits, or fail to an operator path. These limits usually do not appear in local `wrangler dev`.
 
-See [Platform limits](/sandbox/platform/limits/).
+Refer to [Platform limits](/sandbox/platform/limits/).
 
 ---
 
