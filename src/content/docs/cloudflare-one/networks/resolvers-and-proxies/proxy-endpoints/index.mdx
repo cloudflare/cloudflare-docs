@@ -336,7 +336,9 @@ Firefox uses its own proxy settings and does not inherit the operating system pr
 
 <Details header="Safari">
 
-Safari relies on your operating system's proxy server settings. Configure the PAC file URL in your [macOS proxy settings](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/#configure-system-proxy-settings).
+:::caution
+Safari does not support the HTTPS proxy type required by Cloudflare proxy endpoints. Apple has confirmed that Safari (on both macOS and iOS/iPadOS) does not support HTTPS proxies. Use a [Chromium-based browser](#chromium-based-browsers) or [Firefox](#mozilla-firefox) instead.
+:::
 
 </Details>
 
@@ -522,6 +524,10 @@ To filter this traffic, you have two options:
 
 - Set up an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block or allow all traffic matching the `auth-proxy-non-identity@<your-team-name>.cloudflareaccess.com` email address.
 - To restrict non-identity traffic to specific source IPs, create a [network policy](/cloudflare-one/traffic-policies/network-policies/) that matches both the source IP and the proxy endpoint.
+
+### Safari and iOS not supported
+
+Safari (on macOS) and all browsers on iOS/iPadOS do not support the HTTPS proxy type that Cloudflare proxy endpoints require. This is a platform-level limitation confirmed by Apple. On macOS, use a Chromium-based browser or Firefox instead. On iOS/iPadOS, proxy endpoints cannot be used.
 
 ### Traffic limitations
 

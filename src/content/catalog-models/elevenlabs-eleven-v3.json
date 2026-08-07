@@ -1,0 +1,173 @@
+{
+	"model_id": "elevenlabs/eleven-v3",
+	"provider_id": "elevenlabs",
+	"name": "Eleven v3",
+	"description": "ElevenLabs' latest text-to-speech model for highly expressive, natural speech generation with advanced voice control.",
+	"task": "Text-to-Speech",
+	"tags": [
+		"Text-to-Speech",
+		"Audio Generation",
+		"Expressive Speech"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Expressive Speech",
+			"description": "Generate expressive speech with a selected ElevenLabs voice",
+			"input": {
+				"text": "Welcome to Cloudflare AI Gateway. This is ElevenLabs speech synthesis with a natural, expressive delivery.",
+				"voice_id": "JBFqnCBsd6RMkjVDRZzb",
+				"output_format": "mp3_44100_128"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-v3/expressive-speech.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-v3/expressive-speech.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'elevenlabs/eleven-v3',\n  {\n    text: 'Welcome to Cloudflare AI Gateway. This is ElevenLabs speech synthesis with a natural, expressive delivery.',\n    voice_id: 'JBFqnCBsd6RMkjVDRZzb',\n    output_format: 'mp3_44100_128',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"elevenlabs/eleven-v3\",\n  \"input\": {\n    \"text\": \"Welcome to Cloudflare AI Gateway. This is ElevenLabs speech synthesis with a natural, expressive delivery.\",\n    \"voice_id\": \"JBFqnCBsd6RMkjVDRZzb\",\n    \"output_format\": \"mp3_44100_128\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://elevenlabs.io/docs/api-reference/text-to-speech/convert",
+	"terms": "https://elevenlabs.io/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Output Formats": "MP3, WAV, PCM, Opus, u-law, A-law",
+		"Voice Control": "Voice settings, seed, text normalization",
+		"Voices": "Supports ElevenLabs voice IDs"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-07-24 20:20:34",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The text to convert into speech.",
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 10000
+				},
+				"voice_id": {
+					"description": "The ElevenLabs voice ID to use for generation.",
+					"type": "string",
+					"minLength": 1
+				},
+				"output_format": {
+					"type": "string",
+					"enum": [
+						"mp3_22050_32",
+						"mp3_24000_48",
+						"mp3_44100_128",
+						"mp3_44100_192",
+						"mp3_44100_32",
+						"mp3_44100_64",
+						"mp3_44100_96",
+						"opus_48000_128",
+						"opus_48000_192",
+						"opus_48000_32",
+						"opus_48000_64",
+						"opus_48000_96"
+					]
+				},
+				"language_code": {
+					"description": "ISO 639-1 language code to enforce.",
+					"type": "string"
+				},
+				"voice_settings": {
+					"type": "object",
+					"properties": {
+						"stability": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"similarity_boost": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"style": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"use_speaker_boost": {
+							"type": "boolean"
+						},
+						"speed": {
+							"type": "number",
+							"minimum": 0.7,
+							"maximum": 1.2
+						}
+					},
+					"additionalProperties": false
+				},
+				"seed": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 4294967295
+				},
+				"previous_text": {
+					"type": "string"
+				},
+				"next_text": {
+					"type": "string"
+				},
+				"apply_text_normalization": {
+					"type": "string",
+					"enum": [
+						"auto",
+						"on",
+						"off"
+					]
+				}
+			},
+			"required": [
+				"text",
+				"voice_id"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"description": "Base64-encoded data URI for the generated audio file.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

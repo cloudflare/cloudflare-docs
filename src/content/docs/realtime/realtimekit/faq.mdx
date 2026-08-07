@@ -184,6 +184,18 @@ If you are still unable to send a message, please contact support.
 
 </Details>
 
+### Recording
+
+<Details header="Watermark images appear broken in recordings">
+
+When you pass a watermark image URL via the [Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, the recorder loads that image inside a browser running in a Cloudflare container. If the image appears broken, check the following:
+
+- **CORS headers**: The image URL must return proper CORS headers (for example, `Access-Control-Allow-Origin: *`) in the HTTP response. Without these headers, the browser blocks the image from loading.
+- **Direct image URL**: The URL must point directly to the image file (for example, `https://example.com/logo.png`), not to an HTML page that embeds the image.
+- **No redirects**: The URL must not redirect to another location. The recorder fetches the URL as-is, so redirects may cause the image to fail to load.
+
+</Details>
+
 ### Demo App
 
 <Details header="Can I use the Cloudflare hosted demo app or examples in my website as an iframe?">

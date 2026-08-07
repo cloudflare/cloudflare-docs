@@ -13,6 +13,8 @@ products:
 import {
 	DirectoryListing,
 	Render,
+	TabItem,
+	Tabs,
 	YouTube,
 	WranglerConfig,
 	TypeScriptExample,
@@ -89,7 +91,9 @@ Consider the following example:
 
 </WranglerConfig>
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 import { WorkerEntrypoint, RpcTarget } from "cloudflare:workers";
@@ -122,6 +126,8 @@ export default {
 
 </TypeScriptExample>
 
+</Tabs>
+
 The method `increment` can be called directly by the client, as can the public property `value`:
 
 <WranglerConfig>
@@ -143,7 +149,9 @@ The method `increment` can be called directly by the client, as can the public p
 
 </WranglerConfig>
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 export default {
@@ -163,9 +171,31 @@ export default {
 
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        counter = await self.env.COUNTER_SERVICE.new_counter()
+
+        await counter.increment(2)  # returns 2
+        await counter.increment(1)  # returns 3
+        await counter.increment(-5)  # returns -2
+
+        count = await counter.value  # returns -2
+
+        return Response(str(count))
+```
+
+</TabItem>
+
+</Tabs>
+
 :::note
 
-Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the example above.
+Refer to [Explicit Resource Management](/workers/runtime-apis/rpc/lifecycle) to learn more about the `using` declaration shown in the JavaScript/TypeScript example above.
 :::
 
 Classes that extend `RpcTarget` work a lot like functions: the object itself is not serialized, but is instead replaced by a stub. In this case, the stub itself is not callable, but its methods are. Calling any method on the stub actually makes an RPC back to the original object, where it was created.
@@ -186,7 +216,9 @@ Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This di
 
 When you call an RPC method and get back an object, it's common to immediately call a method on the object:
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 // Two round trips.
@@ -196,13 +228,27 @@ await counter.increment();
 
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+# Two round trips.
+counter = await self.env.COUNTER_SERVICE.get_counter()
+await counter.increment()
+```
+
+</TabItem>
+
+</Tabs>
+
 But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/configuration/placement/) or [Durable Objects](/durable-objects). The code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`. We'd like to avoid this.
 
 With most RPC systems, the only way to avoid the problem would be to combine the two calls into a single "batch" call, perhaps called `getCounterAndIncrement()`. However, this makes the interface worse. You wouldn't design a local interface this way.
 
 Workers RPC allows a different approach: You can simply omit the first `await`:
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 // Only one round trip! Note the missing `await`.
@@ -212,13 +258,27 @@ await promiseForCounter.increment();
 
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+# Only one round trip! Note the missing await.
+promise_for_counter = self.env.COUNTER_SERVICE.get_counter()
+await promise_for_counter.increment()
+```
+
+</TabItem>
+
+</Tabs>
+
 In this code, `getCounter()` returns a promise for a counter. Normally, the only thing you would do with a promise is `await` it. However, Workers RPC promises are special: they also allow you to initiate speculative calls on the future result of the promise. These calls are sent to the server immediately, without waiting for the initial call to complete. Thus, multiple chained calls can be completed in a single round trip.
 
 How does this work? The promise returned by an RPC is not a real JavaScript `Promise`. Instead, it is a custom ["Thenable"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#thenables). It has a `.then()` method like `Promise`, which allows it to be used in all the places where you'd use a normal `Promise`. For instance, you can `await` it. But, in addition to that, an RPC promise also acts like a stub. Calling any method name on the promise forms a speculative call on the promise's eventual result. This is known as "promise pipelining".
 
 This works when calling properties of objects returned by RPC methods as well. For example:
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -236,7 +296,27 @@ export class MyService extends WorkerEntrypoint {
 
 </TypeScriptExample>
 
-<TypeScriptExample>
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint
+
+class MyService(WorkerEntrypoint):
+    async def foo(self):
+        return {
+            "bar": {
+                "baz": lambda: "qux",
+            },
+        }
+```
+
+</TabItem>
+
+</Tabs>
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 export default {
@@ -249,6 +329,22 @@ export default {
 ```
 
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        foo = self.env.MY_SERVICE.foo()
+        baz = await foo.bar.baz()
+        return Response(baz)
+```
+
+</TabItem>
+
+</Tabs>
 
 If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
 
@@ -264,7 +360,9 @@ In all cases, ownership of the stream is transferred to the recipient. The sende
 
 A stub received over RPC from one Worker can be forwarded over RPC to another Worker.
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 using counter = env.COUNTER_SERVICE.getCounter();
@@ -272,6 +370,17 @@ await env.ANOTHER_SERVICE.useCounter(counter);
 ```
 
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+counter = self.env.COUNTER_SERVICE.get_counter()
+await self.env.ANOTHER_SERVICE.use_counter(counter)
+```
+
+</TabItem>
+
+</Tabs>
 
 Here, three different workers are involved:
 

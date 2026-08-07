@@ -22,16 +22,19 @@ The `CF_Authorization` cookie contains the user's identity in the form of a [JSO
 Access generates two separate `CF_Authorization` tokens depending on the domain:
 
 - **Global session token**: Generated when a user logs in to Access. This token is stored as a cookie at your <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> (for example, `https://<your-team-name>.cloudflareaccess.com`) and prevents a user from needing to log in to each application.
-
 - [**Application token**](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/): Generated for each application that a user reaches. This token is stored as a cookie on the protected domain (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json) on your origin.
 
 ### Multi-domain applications
 
 Cloudflare Access allows you to protect and manage multiple domains in a single [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). After a user has successfully authenticated to one domain, Access will automatically issue a `CF_Authorization` cookie when they go to another domain in the same Access application. This means that users only need to authenticate once to a multi-domain application.
 
-For Access applications with five or fewer domains, Access preemptively sets the cookie for all domains through a series of redirects when the user first authenticates. This allows single-page applications (SPAs) to retrieve data from other subdomains without requiring the user to visit each subdomain individually. Wildcarded subdomains (for example, `*.example.com`) cannot receive preemptive cookies because Access does not know which concrete subdomain to redirect to. Wildcarded paths are supported.
+Access can preemptively set the cookie for every domain through a series of redirects when the user first authenticates. This allows single-page applications (SPAs) to retrieve data from other subdomains before the user visits each subdomain. Wildcarded subdomains (for example, `*.example.com`) cannot receive preemptive cookies because Access does not know which concrete subdomain to redirect to. Wildcarded paths are supported.
 
-For Access applications with more than five domains, Access does not preemptively set cookies. Instead, cookies are issued as the user visits each domain. This avoids the latency that would result from redirecting through a large number of domains during authentication.
+Use the [Eager redirect cookie](#eager-redirect-cookie) setting to control this behavior.
+
+:::note
+Access previously chose the cookie behavior based on the number of domains. It preemptively set cookies for applications with five or fewer domains and issued cookies as users visited each domain for applications with more than five domains. Applications without a saved setting retain this behavior. Administrators can override it by turning the Eager redirect cookie setting on or off.
+:::
 
 ## Access cookies
 
@@ -69,8 +72,8 @@ The following Access cookies are essential to Access functionality. Cookies that
 
 ### CF_Device
 
-| Details                                                                                                                                                    | Expiration | HttpOnly | SameSite | Required? |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- | -------- | --------- |
+| Details                                                                                                                                                                                                                                                                                                                                           | Expiration | HttpOnly | SameSite | Required? |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- | -------- | --------- |
 | Cookie set on the `cloudflareaccess.com` [team domain](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name), used to prevent abuse of [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) and [multi-factor authentication](/cloudflare-one/access-controls/access-settings/independent-mfa/) flows | 30 days    | Yes      | Strict   | Required  |
 
 ## Cookie settings
@@ -81,17 +84,14 @@ Cloudflare Access provides optional security settings that can be added to the b
 - [HttpOnly flag](#httponly)
 - [Binding cookie](#binding-cookie)
 - [Cookie path](#cookie-path-attribute)
+- [Eager redirect cookie](#eager-redirect-cookie)
 
 To enable these settings:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-
 2. Locate the application you would like to configure and select **Configure**.
-
 3. Select **Advanced settings** and scroll down to **Cookie settings**.
-
 4. Configure the desired cookie settings.
-
 5. Select **Save**.
 
 ### SameSite Attribute
@@ -144,6 +144,14 @@ Do not enable Binding Cookie if:
 ### Cookie Path Attribute
 
 The Cookie Path Attribute adds the application's path URL to the `CF_Authorization` cookie. When enabled, a user who logs in to `example.com/path1` must re-authenticate to access `example.com/path2`. When disabled, the `CF_Authorization` cookie is only scoped to the domain and subdomain.
+
+### Eager redirect cookie
+
+When turned on, the Eager redirect cookie setting preemptively sets a `CF_Authorization` cookie for every concrete domain in a multi-domain application. Access redirects the browser through each domain after the user first authenticates. This setting is turned on by default for new applications.
+
+:::caution
+Browser behavior can become unreliable when the redirect chain exceeds 10 redirects. If your application has more than 10 domains, turn off this setting or thoroughly test the authentication flow before you deploy it. When turned off, Access sets the cookie as a user visits each domain.
+:::
 
 ## Allow third-party cookies in the browser
 

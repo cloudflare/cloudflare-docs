@@ -36,6 +36,8 @@ import {
 import styleGuideSkill from "../.agents/skills/style-guide-review/SKILL.md";
 import { useBotRole } from "../lib/bot-role";
 import { StyleGuideResultFromModelSchema } from "../lib/style-guide-results";
+import { makeReadRepoFileTool } from "../lib/github-repo-tools";
+import { getGitHubToken } from "../lib/token-provider";
 import type { AddedLine } from "../lib/code-review-files";
 import type { StyleGuidePullRequest } from "../lib/style-guide-files";
 
@@ -52,6 +54,8 @@ export interface StyleGuideFileInput {
 	filename: string;
 	/** Added/changed lines with new-file line numbers, pre-parsed in trusted code. */
 	addedLines: AddedLine[];
+	/** PR head SHA — the ref `read_repo_file` is pinned to. */
+	headSha: string;
 }
 
 function buildPrompt(input: StyleGuideFileInput): string {
@@ -82,6 +86,11 @@ export default function StyleGuideFile(_props: AgentProps): string {
 	useBotRole();
 
 	const input = useInitialData<StyleGuideFileInput>();
+
+	// read_repo_file pinned to the PR head SHA, so the agent can read the
+	// full current file when it needs surrounding context (e.g. checking
+	// whether an added line is inside a fenced code block).
+	useTool(makeReadRepoFileTool(getGitHubToken, input.headSha));
 
 	const writeReview = useDataWriter(STYLE_GUIDE_FILE_DATA, {
 		schema: StyleGuideResultFromModelSchema,

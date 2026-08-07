@@ -18,6 +18,8 @@ The prompt provides the pull request metadata (number, title, base, head), the f
 
 **Diff data** — the pull request metadata and the added lines to review are provided directly in the prompt. There is no workspace to read.
 
+**Full file context** — use the `read_repo_file` tool to read the full current content of the file under review (pinned to the PR head SHA). Use this **only** when you need surrounding context to determine whether an added line matches a rule — for example, checking whether an added `<img>` tag is inside a fenced code block whose fence lines were not part of the added lines. Do not use `read_repo_file` to browse other files in the repo. Do not flag findings on unchanged lines — only flag violations on the added lines provided in the prompt.
+
 **Style guide references** — packaged skill resources; read them with the `read_skill_resource` tool. The `<skill_resources>` section lists every reference file with its advertised read path. To read one, find its entry there and read the path shown after `→ read_skill_resource`:
 
 - Reference manifest: `reference/manifest.json`
@@ -42,6 +44,7 @@ For the file under review:
 - Read `reference/conditional/code-blocks.md` when the patch contains fenced code blocks.
 - Read `reference/conditional/imports.md` when the patch contains `import` statements or JSX component tags.
 - Read `reference/conditional/frontmatter.md` when the patch changes frontmatter fields at the top of the file.
+- Read `reference/conditional/images.md` when the patch contains image syntax (`![`, `<img`, `/images/`, `public/images`, `~/assets/images`, or common image file extensions).
 - Read a component reference only when the patch contains that component tag or imports that component name.
 - For component references, use the manifest `componentNames` field to match component names.
 - Do not read all component reference files by default.
@@ -62,6 +65,8 @@ The added lines are provided in the prompt as `line: content` pairs with accurat
 - Do not flag speculative issues.
 - Do not flag stale or missing `reviewed` dates.
 - Do not flag formatting preferences that are not explicit loaded rules.
+- If you need to check whether an added line is inside a fenced code block or JSX component, use `read_repo_file` to read the current file and verify. Only do this when the added line itself is ambiguous — do not read the file for every line.
+- Never flag findings on unchanged lines. `read_repo_file` is for disambiguating added lines only, not for finding new violations in surrounding context.
 
 ## Severity
 

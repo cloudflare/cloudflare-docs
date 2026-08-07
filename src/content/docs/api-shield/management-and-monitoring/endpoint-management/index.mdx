@@ -8,14 +8,7 @@ sidebar:
   order: 1
 ---
 
-import {
-	GlossaryTooltip,
-	Plan,
-	Steps,
-	Tabs,
-	TabItem,
-	DashButton,
-} from "~/components";
+import { GlossaryTooltip, Plan, Steps, DashButton } from "~/components";
 
 <Plan type="all" />
 
@@ -29,44 +22,23 @@ When an endpoint uses [Cloudflare Workers](/workers/), some metrics are not popu
 
 ## Access
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+<Steps>
+1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
-          <DashButton url="/?to=/:account/:zone/security/web-assets" />
-      2. Go to the **Operations** tab.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **API Shield** > **Endpoint Management**.
-    </Steps>
-  </TabItem>
-</Tabs>
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+2. Go to the **Operations** tab.
+</Steps>
 
 ### Add endpoints from API Discovery
 
 The **Learn profile** action is available to API Shield customers using unified operation discovery and other customers with access to profile learning.
 
-In the new dashboard, this workflow promotes an existing discovered operation. In the old dashboard, it adds a discovered endpoint to Endpoint Management.
+This workflow promotes an existing discovered operation.
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. From **Web Assets** > **Operations**, open the row actions for a candidate or shadow operation.
-      2. Select **Learn profile**.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. From **Endpoint Management**, select **Add endpoints** > **Select from Discovery** tab.
-      2. Select the discovered endpoints you would like to add.
-      3. Select **Add endpoints**.
-    </Steps>
-  </TabItem>
-</Tabs>
+<Steps>
+1. From **Web Assets** > **Operations**, open the row actions for a candidate or shadow operation.
+2. Select **Learn profile**.
+</Steps>
 
 Cloudflare promotes the operation to the `full` state. The row action then changes to **Profile learned**. For more information, refer to [Promote an operation](/security/web-assets/manage-operations/#promote-an-operation).
 
@@ -74,49 +46,23 @@ You do not need to promote every discovered operation. Candidate operations can 
 
 ### Add endpoints from Schema validation
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. From **Web Assets** > **Operations**, select **Add operation**.
-      2. Select **Upload schema**.
-      3. Upload a schema file.
-      4. Select **Add schema and endpoints**.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Add a schema by [configuring Schema validation](/api-shield/security/schema-validation/).
-      2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
-      3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the schema is saved as a draft or published.
-    </Steps>
-  </TabItem>
-</Tabs>
+<Steps>
+1. From **Web Assets** > **Operations**, select **Add operation**.
+2. Select **Upload schema**.
+3. Upload a schema file.
+4. Select **Add schema and endpoints**.
+</Steps>
 
 API Shield looks for duplicate operations with the same hostname, method, and path. Duplicate operations are not added.
 
-:::note
-In the old dashboard, endpoints are not added if you deselect **Save new endpoints to endpoint management**.
-:::
-
 ### Add endpoints manually
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. From **Web Assets** > **Operations**, select **Add operation**.
-      2. Select **Manually add**.
-      3. Select the method and enter the hostname pattern and path pattern.
-      4. Select **Add operation**.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. From Endpoint Management, select **Add endpoints** > **Manually add**.
-      2. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
-      3. Select **Add endpoints**.
-    </Steps>
-  </TabItem>
-</Tabs>
+<Steps>
+1. From **Web Assets** > **Operations**, select **Add operation**.
+2. Select **Manually add**.
+3. Select the method and enter the hostname pattern and path pattern.
+4. Select **Add operation**.
+</Steps>
 
 When adding an operation manually, you can specify variable fields in the path or hostname. Enclose variables in braces, such as `/api/user/{var1}/details` or `{hostVar1}.example.com`.
 
@@ -144,7 +90,7 @@ For more information on how Cloudflare uses variables in API Shield, refer to th
 
 ### Edit operations
 
-In the new dashboard, you can edit the identity of an operation.
+You can edit the identity of an operation.
 
 <Steps>
 
@@ -165,20 +111,10 @@ Cloudflare computes operation IDs from the HTTP method, hostname, and path. Clou
 
 You can delete endpoints one at a time or in bulk.
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. From **Web Assets** > **Operations**, select the operations that you want to delete.
-      2. Select **Delete operations**.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. From Endpoint Management, select the checkboxes for the endpoints that you want to delete.
-      2. Select **Delete endpoints**.
-    </Steps>
-  </TabItem>
-</Tabs>
+<Steps>
+1. From **Web Assets** > **Operations**, select the operations that you want to delete.
+2. Select **Delete operations**.
+</Steps>
 
 :::caution
 When you delete a full operation, Cloudflare stops tracking its associated performance and analytics data. Its previous historical metrics cannot be restored. If the operation returns to the `full` state, metric tracking restarts from that point.
