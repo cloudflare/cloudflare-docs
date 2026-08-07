@@ -1,11 +1,11 @@
 ---
 name: sandbox-2026-deprecation
-description: Migrate Cloudflare Sandbox SDK codebases away from features deprecated in June 2026 (HTTP and WebSocket transports, desktop, exposePort, default sessions, and stream-specific file and command APIs).
+description: Migrate Cloudflare Sandbox SDK codebases away from deprecated stable-package features (HTTP and WebSocket transports, desktop, exposePort, default sessions, and stream-specific file and command APIs).
 ---
 
 # Sandbox SDK 2026 deprecation migration
 
-Use this skill when migrating a codebase that depends on the Cloudflare Sandbox SDK away from features deprecated in June 2026.
+Use this skill when migrating a codebase that depends on the Cloudflare Sandbox SDK away from deprecated stable-package features announced in the June 2026 changelog.
 
 For the announcement, refer to the [changelog entry](https://developers.cloudflare.com/changelog/sandbox/2026-06-09-deprecating-sandbox-sdk-features/). For detailed documentation, refer to the [migration guide](https://developers.cloudflare.com/sandbox/guides/2026-deprecation/).
 

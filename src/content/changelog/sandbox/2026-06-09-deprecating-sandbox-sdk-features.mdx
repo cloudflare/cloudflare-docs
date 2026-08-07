@@ -12,13 +12,13 @@ A preview of **Sandbox SDK 1.0** is available on `@cloudflare/sandbox@next`. For
 
 Today we are announcing the deprecation of several features from the Sandbox SDK. The SDK has grown and matured substantially since it first launched. As agent workflows have developed, we have shipped many new features and experiments so developers can easily integrate secure, isolated code execution into their workflows.
 
-We want the SDK to continue providing a stable foundation for agentic workflows while we iterate quickly on the codebase. These deprecated features have either been superseded by newer capabilities or seen low adoption. They will remain in the codebase until July 9, 2026, after which they will no longer be present in future Sandbox SDK versions.
+We want the SDK to continue providing a stable foundation for agentic workflows while we iterate quickly on the codebase. These deprecated features have either been superseded by newer capabilities or seen low adoption. Do not build new work on them. Migrate using the [2026 deprecation migration guide](/sandbox/guides/2026-deprecation/), or move to the [Sandbox SDK 1.0 preview](/sandbox/1-0-preview/) when you can.
 
 ## HTTP and WebSocket transports
 
-In April 2026, we released the new RPC transport and deprecated the WebSocket transport. This setting governs how the sandbox container talks to the Workers ecosystem. The RPC transport removes the limitations of both the HTTP and WebSocket transports. As of June 9, 2026, it is the recommended default. HTTP and WebSocket transports will no longer be present in Sandbox SDK versions released after July 9, 2026.
+In April 2026, we released the new RPC transport and deprecated the WebSocket transport. This setting governs how the sandbox container talks to the Workers ecosystem. The RPC transport removes the limitations of both the HTTP and WebSocket transports. As of this announcement, RPC is the recommended default. HTTP and WebSocket transports are deprecated and will not ship in future Sandbox SDK majors.
 
-To migrate before July 9, 2026, update the `SANDBOX_TRANSPORT` variable to `rpc` or set the `transport` option when calling `getSandbox()`. For more information, refer to the [transport configuration documentation](/sandbox/configuration/transport/).
+To migrate, update the `SANDBOX_TRANSPORT` variable to `rpc` or set the `transport` option when calling `getSandbox()`. For more information, refer to the [transport configuration documentation](/sandbox/configuration/transport/).
 
 ## Desktop
 

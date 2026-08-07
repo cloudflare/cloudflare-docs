@@ -65,10 +65,7 @@ That does **not** mean the interrupted call did nothing. Prefer checkpoints and 
 
 ### Stale process or terminal handles
 
-Process and terminal IDs belong to the **current** container for a sandbox ID. After stop or replace:
-
-- Calls on an old handle throw `StaleProcessHandleError` or `StaleTerminalHandleError`.
-- `getProcess`, `getTerminal`, `listProcesses`, and `listTerminals` do not start a container. They return `null` or `[]` when no container is running, or when the ID is unknown in the current container. That is not an exception.
+Process and terminal IDs belong to the **current** container for a sandbox ID. After stop or replace, calls on an old handle throw `StaleProcessHandleError` or `StaleTerminalHandleError`. `getProcess`, `getTerminal`, `listProcesses`, and `listTerminals` do not start a container. They return `null` or `[]` when no container is running, or when the ID is unknown in the current container. That is not an exception.
 
 Store the job (command, `cwd`, `env`, checkpoint), not only the resource ID. Then start a new `exec` or `createTerminal` when the old handle is gone.
 

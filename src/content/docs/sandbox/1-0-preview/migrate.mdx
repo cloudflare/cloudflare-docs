@@ -211,10 +211,7 @@ Minimum handlers:
 
 Finish the code migration steps in this guide on a branch first. Production cutover is one deploy of the preview Worker package and the matching container image.
 
-Stable Sandbox and `@next` use different control protocols. A mixed pair does not work in either direction:
-
-- New Worker code against an old container image fails.
-- Old Worker code against a new container image fails.
+Stable Sandbox and `@next` use different control protocols. A mixed pair does not work in either direction: new Worker code against an old container image fails, and old Worker code against a new container image fails.
 
 On a normal `wrangler deploy`, Worker code becomes active immediately while container instances can still update gradually. That leaves a window where new Worker code can reach old containers. For this migration, roll containers out in one step:
 
