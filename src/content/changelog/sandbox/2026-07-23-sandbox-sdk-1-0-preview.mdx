@@ -1,6 +1,6 @@
 ---
 title: Sandbox SDK 1.0 preview on @next
-description: A thinner Sandbox SDK on Cloudflare Containers — unified process handles, no sessions or transport selection, and dual-track docs for @cloudflare/sandbox@next.
+description: Preview a thinner Sandbox SDK on Cloudflare Containers — one process handle API, no sessions or transport selection, interpreter as an extension.
 products:
   - sandbox
 date: 2026-07-23
@@ -8,43 +8,32 @@ date: 2026-07-23
 
 import { PackageManagers } from "~/components";
 
-**Sandbox SDK 1.0** is available as a preview on the npm `@next` tag. The current stable package remains published for existing apps.
+**Sandbox SDK 1.0** is available to preview under the npm `@next` tag. For existing applications, the current stable package remains published on the 0.12.x line.
 
-Sandbox SDK first shipped to give developers a rich way to run untrusted and agent-driven work on [Cloudflare Containers](/containers/). Since then, both Sandbox and Containers have matured. This preview is a thinner SDK on that same foundation: less session and transport machinery inside the package, and one clear model for starting and observing work in a sandbox.
+Sandbox SDK first shipped to provide a rich library for running untrusted and agent-driven work on [Cloudflare Containers](/containers/). Since then, both Sandbox and Containers have matured. This preview is a thinner SDK built on a richer Cloudflare Containers foundation.
 
 <PackageManagers pkg="@cloudflare/sandbox@next" />
 
 ## What this preview is
 
-In the preview:
+- **A single execution interface** — `sandbox.exec()` takes an argument list, returns when the process **starts**, and gives you a handle for output, logs, waits, and signals. Both short commands and long-running services use the same API.
+- **Removed session execution** — the SDK no longer maintains shell state between executions. Each launch is independent. Pass `cwd` and `env` when you need them, or put multi-step shell syntax in one explicit shell command.
+- **RPC as the only transport** — the SDK talks to the container exclusively over RPC. Remove `SANDBOX_TRANSPORT`, `transport` on `getSandbox()`, and `setTransport()`.
+- **Improved PTY and terminal interface** — interactive PTYs use `createTerminal` / `connect`, not the older session-shaped helpers.
+- **Code interpreter as an extension** — configure the code interpreter on your `Sandbox` subclass so you only ship what you need.
 
-- **One process model** — `sandbox.exec()` takes an argument list, returns when the process **starts**, and gives you a handle for output, logs, waits, and signals. Short commands and long-running services use the same API.
-- **No session execution** — each launch is independent. Pass `cwd` and `env` when you need them, or put multi-step shell syntax in one explicit shell command.
-- **No transport selection** — the SDK talks to the container over RPC. Remove `SANDBOX_TRANSPORT`, `transport` on `getSandbox()`, and `setTransport()`.
-- **Terminals as resources** — interactive PTYs use `createTerminal` / `connect`, not the older session-shaped helpers.
-- **Interpreter as an extension** — attach the code interpreter on your `Sandbox` subclass instead of calling interpreter methods on the core class.
+Start new projects on `@next`. Migrate existing apps when you can so you are ready when 1.0 becomes stable. Deploy the Worker package and container image from the **same** `@next` line.
 
-Sandboxes still run on containers. A stable **sandbox ID** still finds the same logical sandbox. The **container** behind that ID can stop or be replaced. What 1.0 makes explicit is that process and terminal handles belong to the **current** container and fail closed after replace — they are not silent stand-ins for “this sandbox ID forever.”
+The main [Sandbox documentation](/sandbox/) still describes today's stable package. Preview docs:
 
-## Who should use it
-
-**New projects** should start on `@cloudflare/sandbox@next` and follow the [1.0 preview](/sandbox/1-0-preview/) docs. **Existing apps** should migrate when you can, so you are ready when 1.0 becomes the stable release. Use [Migrate](/sandbox/1-0-preview/migrate/) for the full path, including deploying the Worker package and container image from the **same** `@next` line.
-
-The main [Sandbox documentation](/sandbox/) still describes today's stable package. Preview documentation lives under a dedicated section:
-
-- [Sandbox SDK 1.0 preview](/sandbox/1-0-preview/)
+- [1.0 preview](/sandbox/1-0-preview/)
 - [Get started](/sandbox/1-0-preview/get-started/)
-- [Migrate from the stable SDK](/sandbox/1-0-preview/migrate/)
-- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
-- [Process execution](/sandbox/1-0-preview/processes/)
-- [Terminals](/sandbox/1-0-preview/terminals/)
-- [Errors and recovery](/sandbox/1-0-preview/errors/)
-- [Environment variables](/sandbox/1-0-preview/environment/)
-- [Code interpreter](/sandbox/1-0-preview/interpreter/)
-- [API reference](/sandbox/1-0-preview/api/) ([processes](/sandbox/1-0-preview/api/processes/), [terminals](/sandbox/1-0-preview/api/terminals/), [errors](/sandbox/1-0-preview/api/errors/), [interpreter](/sandbox/1-0-preview/api/interpreter/))
-- [Extensions](/sandbox/1-0-preview/extensions/)
-- [Troubleshooting](/sandbox/1-0-preview/troubleshooting/)
+- [Migrate](/sandbox/1-0-preview/migrate/)
+- [Processes](/sandbox/1-0-preview/processes/) · [Terminals](/sandbox/1-0-preview/terminals/) · [Errors](/sandbox/1-0-preview/errors/)
+- [API reference](/sandbox/1-0-preview/api/)
 
-The self-deployed Sandbox bridge is not part of this preview. Continue using the [stable bridge](/sandbox/bridge/) with the matching stable package and container image.
+The self-deployed Sandbox bridge is not currently part of this preview. We are working on bringing it in line with the latest code. Until then, use the [stable bridge](/sandbox/bridge/) with the matching stable package and container image.
 
-Stable pages that change in 1.0 point to the matching preview topic.
+## Timeline for 1.0
+
+Further Cloudflare Containers features will let us keep reducing the size of the Sandbox SDK. We aim to ship Sandbox SDK 1.0 once those are in. In the meantime we continue to support and maintain the 1.0 preview (`@next`) alongside the current stable release.
