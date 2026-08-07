@@ -1,8 +1,8 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
-import type { GetStaticPaths } from "astro";
-import { getCollection, getEntries, getEntry } from "astro:content";
+import { getEntries } from "astro:content";
 import {
+	getDocsStaticPaths,
 	getDocsPageProps,
 	getSidebar,
 	getPrevNext,
@@ -14,6 +14,7 @@ import { config } from "virtual:nimbus/config";
 import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
 import { getOgImage } from "~/util/og";
+import { getDirectoryEntryBySection } from "~/util/directory";
 import {
 	pageHasRuntimeHeadings,
 	scrapeRenderedHeadings,
@@ -22,16 +23,7 @@ import {
 const NOINDEX_PRODUCTS = ["email-security"];
 
 export const prerender = true;
-export const getStaticPaths: GetStaticPaths = async () =>
-	(
-		await getCollection("docs", ({ data }) =>
-			import.meta.env.PROD ? !data.draft : true,
-		)
-	).map((entry) => ({
-		params: { slug: entry.id },
-		props: { entry },
-		cacheKey: String(entry.digest),
-	}));
+export const getStaticPaths = getDocsStaticPaths;
 
 const { entry, Content, headings } = await getDocsPageProps(Astro, {
 	partialHeadings: {
@@ -114,9 +106,7 @@ const socialImage = entry.data.socialImage ?? (await getOgImage(entry));
 // emits the direct-hit meta refresh and noindex metadata.
 const externalLink = entry.data.external_link;
 const head = entry.data.head ?? [];
-const sectionProduct = sectionSegment
-	? await getEntry("directory", sectionSegment.replaceAll(".", ""))
-	: undefined;
+const sectionProduct = await getDirectoryEntryBySection(sectionSegment);
 const productRefs = (entry.data.products ?? []).map((product) =>
 	typeof product === "string"
 		? ({ collection: "directory", id: product } as const)

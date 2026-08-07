@@ -9,6 +9,7 @@ import skills from "astro-skills";
 import nimbus, {
 	defineConfig as defineNimbusConfig,
 } from "@cloudflare/nimbus-docs";
+import { satteri } from "@astrojs/markdown-satteri";
 import { hastPlugins } from "./src/plugins/satteri";
 import { createSitemapLastmodSerializer } from "./sitemap.serializer";
 import { isDisallowedByRobots } from "./src/util/robots";
@@ -200,7 +201,6 @@ const markdown = {
 		type: "shiki" as const,
 		excludeLangs: ["math", "mermaid"],
 	},
-	smartypants: false,
 };
 
 const integrations = [
@@ -210,7 +210,12 @@ const integrations = [
 	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
-		markdown: { hastPlugins },
+		markdown: {
+			processor: satteri({
+				features: { smartPunctuation: false },
+				hastPlugins,
+			}),
+		},
 		validateMdx: false,
 		// Sitemap parity (T3): drop excluded URLs, stamp lastmod on the rest.
 		sitemap: {
@@ -269,7 +274,7 @@ const appVite = {
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	experimental: {
-		incrementalBuild: true,
+		incrementalBuild: false,
 	},
 	prefetch: {
 		prefetchAll: true,
