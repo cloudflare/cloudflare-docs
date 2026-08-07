@@ -28,6 +28,9 @@ overrides:
 # Only direct dependencies may use exotic sources.
 blockExoticSubdeps: true
 
+patchedDependencies:
+  astro-icon@1.1.5: patches/astro-icon@1.1.5.patch
+
 # Always save dependencies as exact versions and to devDependencies by default.
 saveExact: true
 saveDev: true

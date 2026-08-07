@@ -1,0 +1,15 @@
+diff --git a/dist/loaders/loadLocalCollection.js b/dist/loaders/loadLocalCollection.js
+index 2d8e1d4f32ea05b73080eb1f483ad2dc14dbd488..e0d6203ddf1d62a3ab85797441e10ecf9d4bc5a3 100644
+--- a/dist/loaders/loadLocalCollection.js
++++ b/dist/loaders/loadLocalCollection.js
+@@ -41,7 +41,9 @@ export default async function createLocalCollection(dir, options = { plugins: ["
+         // Update icon
+         local.fromSVG(name, svg);
+     });
+-    return local.export(true);
++    const collection = local.export(true);
++    delete collection.lastModified;
++    return collection;
+ }
+ async function convertToCurrentColor(svg) {
+     await parseColors(svg, {
