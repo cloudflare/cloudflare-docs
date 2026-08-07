@@ -30,6 +30,14 @@ blockExoticSubdeps: true
 
 # Explicit allowlist of packages permitted to run install scripts.
 # These are well-known packages that require build scripts to download platform-specific binaries.
+# Workers Builds currently uses pnpm 10.11, which reads this legacy list.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - tldjs
+  - workerd
+
+# Newer pnpm versions use the per-package allow/deny map.
 allowBuilds:
   esbuild: true
   sharp: true
