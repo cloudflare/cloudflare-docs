@@ -60,7 +60,7 @@ When returning state from a step, you must make sure that the returned value is 
 
 - <code>step.sleep(name, duration)</code>
   - `name` — the name of the step.
-  - `duration` — the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+  - `duration` — the duration to sleep until, as a number of milliseconds or as a `WorkflowDuration` compatible string.
 
 ```python
 async def run(self, event, step):
