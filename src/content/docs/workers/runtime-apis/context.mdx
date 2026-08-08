@@ -209,7 +209,7 @@ For full API details, refer to [Custom spans](/workers/observability/traces/cust
 `ctx.waitUntil()` extends the lifetime of your Worker, allowing you to perform work without blocking returning a response, and that may continue after a response is returned. It accepts a `Promise`, which the Workers runtime will continue executing, even after a response has been returned by the Worker's [handler](/workers/runtime-apis/handlers/).
 
 :::caution[Background work needs `await` or `waitUntil()`]
-Starting an async task and neither awaiting it nor passing it to `ctx.waitUntil()` does not keep the Worker alive after you return a response. The runtime may cancel that work when the invocation ends, which can drop logs, leave writes unfinished, or fail silently. Use `await` when the response depends on the result, or `ctx.waitUntil()` for work that should continue after the response is sent.
+An async call that is neither awaited nor passed to `ctx.waitUntil()` can be cancelled when the invocation ends — dropping logs, leaving writes unfinished, or failing silently.
 :::
 
 Use `ctx.waitUntil()` for work that can run after the response is sent, such as logging, analytics, or cache writes, as long as the work can finish within the `waitUntil()` time limit. If the client is still receiving the response, including a streamed response body, the Worker invocation remains active without `ctx.waitUntil()`. If your response depends on the work, `await` the work before returning the response or stream the response as the work completes.
