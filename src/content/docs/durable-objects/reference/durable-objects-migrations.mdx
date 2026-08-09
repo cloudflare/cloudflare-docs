@@ -384,7 +384,7 @@ A pending transfer persists until the source Worker commits with a `transferred`
 
 Live entries (`state: "created"` and `state: "expecting-transfer"`) must declare a `storage` value:
 
-- `"sqlite"` selects the SQLite storage backend. This is the recommended and only path for new namespaces. SQLite-backed namespaces support [SQL](/durable-objects/api/sqlite-storage-api/), [Point-in-Time Recovery](/durable-objects/api/sqlite-storage-api/#point-in-time-recovery-api), and a higher per-object storage limit.
+- `"sqlite"` selects the SQLite storage backend. This is the recommended and only path for new namespaces. SQLite-backed namespaces support [SQL](/durable-objects/api/sqlite-storage-api/), [Point-in-Time Recovery](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api), and a higher per-object storage limit.
 - `"legacy-kv"` selects the key-value storage backend. Cloudflare only accepts this value for namespaces that were already provisioned with key-value storage (typically Workers that started on the [legacy `migrations` array](/durable-objects/reference/durable-object-class-migrations-legacy/) before SQLite was the default). You cannot create a **new** key-value-backed namespace through `exports`.
 
 <Render file="do-plans-note" product="durable-objects" />
