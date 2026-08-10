@@ -1,0 +1,31 @@
+---
+title: D1 custom bindings for platform operators
+description: Platform Workers can inspect D1 operations before execution.
+products:
+  - d1
+  - workers
+date: 2026-08-10
+---
+
+D1 custom bindings let platform operators route User Worker D1 calls through a platform-owned Worker before the query reaches D1.
+
+The User Worker keeps using the standard D1 API. The Platform Worker implements a `query()` entrypoint that can log, limit, reject, or forward each database operation.
+
+Use this pattern to track tenant usage, rate-limit in-flight queries, enforce inline policies, and audit live D1 activity.
+
+```json
+{
+	"compatibility_date": "2026-08-10",
+	"compatibility_flags": ["d1_custom_binding"],
+	"bindings": [
+		{
+			"type": "service",
+			"name": "DB",
+			"service": "d1-platform-worker",
+			"entrypoint": "D1CustomBinding"
+		}
+	]
+}
+```
+
+For more information, refer to [D1 custom bindings](/d1/platform/custom-bindings/).
