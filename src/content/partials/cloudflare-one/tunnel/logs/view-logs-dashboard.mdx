@@ -10,11 +10,11 @@ To stream tunnel logs from the dashboard:
 
    <DashButton url="/?to=/:account/tunnels" />
 
-2. Go to the **Live Logs** tab.
-3. Select **Begin log stream**.
+2. Go to the **Live logs** tab.
+3. Select **Live** to start streaming.
 
 #### View logs for a replica
 
-If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/)), you can stream logs from a specific replica or from all replicas at once. Logs are grouped by hostname, making it easy to identify which host machine produced each log entry.
+If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/tunnel/configuration/#replicas-and-high-availability)), logs from all connected replicas are streamed automatically and grouped by hostname, making it easy to identify which host machine produced each log entry.
 
-In the **Connectors** list on the tunnel overview, select the connector for the replica you want to view, then select **Begin log stream**. To stream logs from multiple replicas simultaneously, begin a log stream for each replica.
+To filter the stream to specific replicas, select the **Filter** icon and expand the **Replicas** section. You can also filter by **Log Level** and **Event Type**.
