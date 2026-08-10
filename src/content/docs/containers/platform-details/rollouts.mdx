@@ -12,7 +12,7 @@ import { WranglerConfig, PackageManagers } from "~/components";
 
 After you [deploy](/containers/deploy/) a Worker that uses Containers, the new Worker version goes live. Running **container instances** then move to the new image through a rollout.
 
-A **container instance** is one running copy of your container image on Cloudflare's network. Inside it, Linux runs your image entrypoint (the main process started by your Dockerfile or base image). Rollouts replace those instances over time. They do not change Durable Object storage.
+A **container instance** is one running copy of your container image on Cloudflare's network. It runs the process your image is built to start (from your Dockerfile `ENTRYPOINT`/`CMD`, or the base image default). Rollouts replace those instances over time. They do not change Durable Object storage.
 
 This page is the source of truth for rollout behavior. Field names and allowed values are also listed under [Containers configuration](/workers/wrangler/configuration/#containers).
 
@@ -47,9 +47,9 @@ When the rollout selects a container instance to update:
 
 ### Requests while an instance starts
 
-The new instance must boot your image entrypoint. Startup often takes on the order of seconds, depending on image size and what the entrypoint does. See [cold starts](/containers/platform-details/architecture/#starting-a-container).
+The new instance must start that process. Startup often takes on the order of seconds, depending on image size and what runs at start. See [cold starts](/containers/platform-details/architecture/#starting-a-container).
 
-A request that needs that instance may wait until the container is ready, or fail if a client or Worker timeout is shorter than startup. Keep entrypoints fast, use port readiness checks if you configure them, and set timeouts with startup in mind.
+A request that needs that instance may wait until the container is ready, or fail if a client or Worker timeout is shorter than startup. Keep startup work fast, use port readiness checks if you configure them, and set timeouts with startup in mind.
 
 ## Rollout active grace period
 
