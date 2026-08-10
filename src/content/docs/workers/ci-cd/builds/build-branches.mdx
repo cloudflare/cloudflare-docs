@@ -8,9 +8,11 @@ products:
   - workers
 ---
 
-When you connect a git repository to Workers, commits on the production git branch trigger a Workers Build. You can also enable **non-production branch builds** so pushes to other branches run a build.
+When you connect a git repository to Workers, commits made on the production git branch will produce a Workers Build. If you want to take advantage of [preview URLs](/workers/versions-and-deployments/preview-urls/) and [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment), you can additionally enable "non-production branch builds" in order to trigger a build on all branches of your repository.
 
-For many Workers, the default non-production deploy command (`npx wrangler versions upload`) creates a [Worker version](/workers/versions-and-deployments/) and a [preview URL](/workers/versions-and-deployments/preview-urls/), and can power [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment). Preview URLs are not generated for Workers that use [Durable Objects](/durable-objects/), including [Containers](/containers/). Refer to [Deploy Containers](/containers/deploy/#before-production) if your Worker uses containers.
+:::note
+[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that use [Durable Objects](/durable-objects/), including [Containers](/containers/). Refer to [Deploy Containers](/containers/deploy/#before-production) if your Worker uses containers.
+:::
 
 ## Change production branch
 
@@ -28,4 +30,4 @@ To enable or disable non-production branch builds:
 1. In **Overview**, select your Workers project.
 2. Go to **Settings** > **Build** > **Branch control**. The checkbox **Builds for non-production branches** allows you to enable or disable builds for non-production branches.
 
-When enabled, every push to a non-production branch triggers a build, then runs the [non-production branch deploy command](/workers/ci-cd/builds/configuration/#non-production-branch-deploy-command) (default `npx wrangler versions upload`). That uploads a Worker version without promoting it to the active production deployment. It does not create a separate production environment by itself.
+When enabled, every push event made to a non-production branch will trigger a build and execute the [build command](/workers/ci-cd/builds/configuration/#deploy-command), followed by the [non-production branch deploy command](/workers/ci-cd/builds/configuration/#non-production-branch-deploy-command).
