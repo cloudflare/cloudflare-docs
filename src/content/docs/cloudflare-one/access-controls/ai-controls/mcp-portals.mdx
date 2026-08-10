@@ -553,8 +553,32 @@ The `auth_type` field accepts the following values:
 | Value             | Description                                                                                                                                          |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `oauth`           | The server requires OAuth authentication. After creating the server, you will need to authenticate via the dashboard to establish admin credentials. |
-| `bearer`          | The server uses a static bearer token for authentication. Provide the token in `auth_credentials`.                                                   |
+| `bearer`          | The server uses a static bearer token or custom authentication headers. Provide the credentials in `auth_credentials` (refer to [Bearer authentication credentials](#bearer-authentication-credentials)). |
 | `unauthenticated` | The server does not require authentication.                                                                                                          |
+
+#### Bearer authentication credentials
+
+The `auth_credentials` field accepts two forms:
+
+- **A raw bearer token** — the portal sends the value as the `Authorization: Bearer <token>` header on requests to the upstream MCP server:
+
+  ```json
+  {
+    "auth_type": "bearer",
+    "auth_credentials": "your-bearer-token"
+  }
+  ```
+
+- **A JSON-encoded object of custom headers** — for upstream MCP servers that require multiple headers or a non-standard header name:
+
+  ```json
+  {
+    "auth_type": "bearer",
+    "auth_credentials": "{\"headers\":{\"X-Api-Key\":\"<api-key>\",\"X-Client-Id\":\"<client-id>\"}}"
+  }
+  ```
+
+  The value of `auth_credentials` must be a JSON string. The parsed object must have a `headers` field mapping header names to string values. The portal forwards all headers verbatim to the upstream MCP server.
 
 ### Force sync an MCP server
 
