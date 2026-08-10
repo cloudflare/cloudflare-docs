@@ -65,7 +65,7 @@ An Example:
 
 ## How do container updates and rollouts work?
 
-On `wrangler deploy`, the Worker goes live first. Container instances update with a gradual rollout by default. Refer to [Deploy Containers](/containers/deploy/) and [Rollouts](/containers/platform-details/rollouts/).
+On `wrangler deploy`, the Worker goes live first. Container instances update with a gradual rollout by default. Refer to [Rollouts](/containers/platform-details/rollouts/) for steps, grace periods, and modes. Refer to [Deploy Containers](/containers/deploy/) to run a deploy.
 
 ## How do Workers Builds work with Containers?
 
@@ -129,11 +129,10 @@ manually, it will continue to run unless its host server is restarted. This
 happens on an irregular cadence, but frequently enough where Cloudflare does not
 guarantee that any instance will run for any set period of time.
 
-When a container instance is going to be shut down, the platform sends `SIGTERM`
-to the main process in the container, then `SIGKILL` after 15 minutes if it has
-not exited. Handle `SIGTERM` if you need cleanup. The instance is started again
-elsewhere shortly after. The same stop sequence is used during image
-[rollouts](/containers/platform-details/rollouts/).
+When a container instance shuts down, the platform sends `SIGTERM` to the main
+process, then `SIGKILL` after 15 minutes if needed. Handle `SIGTERM` if you need
+cleanup. The instance starts again elsewhere shortly after. See also
+[Rollouts](/containers/platform-details/rollouts/).
 
 ## How can I pass secrets to my container?
 

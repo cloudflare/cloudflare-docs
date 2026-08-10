@@ -1277,12 +1277,10 @@ The following options are available:
     instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
     the see [instance types documentation](/containers/platform-details#instance-types).
   - To specify a custom instance type, see [here](#custom-instance-types).
-
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
   - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
   - Defaults to 20.
   - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
-
 - `name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of your container. Used as an identifier. This will default to a combination of your Worker name, the class
     name, and your environment.
@@ -1291,13 +1289,9 @@ The following options are available:
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
   - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 - `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
-  - During a [rollout](/containers/platform-details/rollouts/), the minimum number of seconds a Durable Object must have been connected to a container instance before that instance may be replaced. Recently connected instances are skipped until they pass this window. Defaults to `0` (no extra delay). After an instance is selected, the platform still sends `SIGTERM` and waits up to 15 minutes before `SIGKILL`. This setting still applies when you pass `--containers-rollout=immediate`.
+  - During a [rollout](/containers/platform-details/rollouts/), minimum seconds the Durable Object must have been connected to a container instance before that instance may be replaced. Defaults to `0`. Still applies with `--containers-rollout=immediate`.
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
-  - Configures what percentage of instances should be updated at each step of a [rollout](/containers/platform-details/rollouts/).
-  - If this is set to a single number, each step will rollout to that percentage of instances. The options are `5`, `10`, `20`, `25`, `50` or `100`.
-  - If this is an array of numbers, each step specifies the cumulative rollout progress, so the final step must be `100`.
-  - Defaults to `[10, 100]`.
-  - Override for one deploy with `--containers-rollout=immediate`, which uses a single step that targets 100% of instances. That does not replace every instance at the same instant; each instance still stops and starts on its own timeline. The flag does not override `rollout_active_grace_period`.
+  - Percentage of instances to update at each [rollout](/containers/platform-details/rollouts/) step. A single number uses that step size (`5`, `10`, `20`, `25`, `50`, or `100`). An array is cumulative and must end in `100`. Defaults to `[10, 100]`. Override for one deploy with `--containers-rollout=immediate` (single 100% step; does not override grace period).
 - `ssh` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for SSH through Wrangler. Refer to [SSH](#ssh).
 - `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional deprecated, use `ssh`" />
@@ -1792,26 +1786,26 @@ A common example of using a redirected configuration is where a custom build too
 - First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
   <WranglerConfig>
-    
-      ```jsonc
-      {
-      	"$schema": "./node_modules/wrangler/config-schema.json",
-      	"name": "my-worker",
-      	"main": "src/index.ts",
-      	"vars": {
-      		"MY_VARIABLE": "production variable",
-      	},
-      	"env": {
-      		"staging": {
-      			"vars": {
-      				"MY_VARIABLE": "staging variable",
-      			},
-      		},
-      	},
-      }
-      ```
-    
-      </WranglerConfig>
+      
+        ```jsonc
+        {
+        	"$schema": "./node_modules/wrangler/config-schema.json",
+        	"name": "my-worker",
+        	"main": "src/index.ts",
+        	"vars": {
+        		"MY_VARIABLE": "production variable",
+        	},
+        	"env": {
+        		"staging": {
+        			"vars": {
+        				"MY_VARIABLE": "staging variable",
+        			},
+        		},
+        	},
+        }
+        ```
+      
+        </WranglerConfig>
 
   This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
 
@@ -1825,13 +1819,13 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-    		- dist/
-    			- index.js
-    			- wrangler.jsonc
-    		- .wrangler/
-    			- deploy/
-    				- config.json
-      </FileTree>
+      		- dist/
+      			- index.js
+      			- wrangler.jsonc
+      		- .wrangler/
+      			- deploy/
+      				- config.json
+        </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:
 
