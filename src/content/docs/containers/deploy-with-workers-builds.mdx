@@ -110,9 +110,7 @@ If you use only pre-built registry images (no Dockerfile on deploy), Docker is n
 
 1. Build history shows success for the commit you expect.
 2. For production `wrangler deploy`, Worker **Deployments** shows a new active deployment.
-3. Apply the [minimum or higher-confidence confirm checks](/containers/deployments/#confirm-a-deploy) that match how careful this release needs to be.
-4. Hit a route that must reach the container and confirm behavior matches the Worker and image you intended.
-5. If you used a gradual rollout, allow time for steps to finish before requiring every instance to show the new image.
+3. Confirm the deploy using [Confirm a deploy](/containers/deployments/#confirm-a-deploy) (Worker active or version present, container route behaves as expected, rollout still in progress if gradual).
 
 ## Common failure modes
 

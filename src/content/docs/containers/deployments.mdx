@@ -87,22 +87,17 @@ On later deploys, Wrangler uploads a new Worker version, publishes image changes
 
 ## Confirm a deploy
 
-There is no single global containers-ready indicator in the dashboard. Choose checks that match the risk of the change. These signals reduce uncertainty; they do not prove that every instance worldwide has already switched.
+A successful `wrangler deploy` (or CI deploy command) means the Worker upload finished and Wrangler submitted the container configure and rollout work for that command. It does **not** mean every running instance has already moved to the new image.
 
-### Minimum checks (safe to treat the deploy command as successful)
+After the command succeeds:
 
-1. **Wrangler (or your CI deploy command) finished without errors.** The Worker upload and the container configure or rollout requests for that command completed.
-2. **Worker Deployments** (for a standard `wrangler deploy`) shows the new active deployment, or your preview version exists if you only ran `versions upload`.
-3. **A request that must hit the container** returns the behavior you expect for the Worker code you just shipped (knowing instances may still be on a mixed image set during a gradual rollout).
+1. Confirm the Worker side. For a standard deploy, **Deployments** shows the new active deployment. For `versions upload`, confirm the new version exists (it is not active until you deploy or promote it).
+2. Hit a route that must reach the container and check that behavior matches what you just shipped.
+3. If you need to inspect account state, run `npx wrangler containers list` and `npx wrangler containers images list`, or open the [Containers dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers).
 
-### Higher-confidence checks (before you require a uniform image)
+During a **gradual** rollout, expect a mix of old and new images until the steps finish. Busy instances may wait on [`rollout_active_grace_period`](/workers/wrangler/configuration/#containers). An **immediate** rollout shortens cutover but still waits on grace period and instance startup. There is no single dashboard signal that every instance worldwide has switched; use rollout settings plus your own app behavior (or a version string you control in Worker and image) to decide when the release is done enough for you.
 
-1. Meet the minimum checks.
-2. Inspect apps and images with `npx wrangler containers list` and `npx wrangler containers images list`, or use the [Containers dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers). These views show target configuration and account-level image state; they are not a per-instance worldwide census.
-3. Allow gradual rollout steps to finish, and account for [`rollout_active_grace_period`](/workers/wrangler/configuration/#containers), before you expect long-lived instances to have moved. After `--containers-rollout=immediate`, expect a shorter cutover that is still subject to grace period and instance startup time.
-4. Re-check application behavior on paths that exercise long-lived instances, not only a single cold start. Prefer an app-level version signal you control in both Worker and image when you need stronger proof.
-
-If the Worker answers but the container path errors right after a first deploy, wait for provisioning and check logs before assuming the configuration is wrong.
+If the Worker answers but the container path errors right after a **first** deploy, wait for image provisioning and check logs before assuming the configuration is wrong.
 
 ## CI and git-connected deploys
 
