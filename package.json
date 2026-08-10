@@ -9,7 +9,7 @@
 		"build": "astro build",
 		"typegen:worker": "wrangler types ./worker/worker-configuration.d.ts",
 		"check": "pnpm run check:astro && pnpm run check:worker",
-		"check:astro": "astro check",
+		"check:astro": "astro check --minimumFailingSeverity=warning",
 		"check:worker": "tsc --noEmit -p ./worker/tsconfig.json",
 		"predev": "tsx bin/fetch-skills.ts --soft",
 		"dev": "astro dev",
