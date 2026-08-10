@@ -316,7 +316,6 @@ All components are imported from `~/components`. Imports must appear after the f
 | `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages                            |
 | `LinkCard` / `CardGrid`               | Nimbus link cards, optionally in a grid                                          |
 | `DashButton`                          | Button linking to a validated dashboard deeplink                                    |
-| `GitHubCode`                          | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash)       |
 | `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                            |
 | `ListTutorials`                       | Auto-generated tutorial table for the current product                               |
 | `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type`, tags, or products                   |

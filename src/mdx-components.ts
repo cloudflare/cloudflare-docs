@@ -33,7 +33,6 @@ import YouTube from "./components/cf/YouTube.astro";
 import Example from "./components/cf/Example.astro";
 import Markdown from "./components/cf/Markdown.astro";
 import CURL from "./components/cf/CURL.astro";
-import GitHubCode from "./components/cf/GitHubCode.astro";
 import Width from "./components/cf/Width.astro";
 import RuleID from "./components/cf/RuleID.astro";
 import PublicStats from "./components/cf/PublicStats.astro";
@@ -65,7 +64,6 @@ export const components = {
 	Feature,
 	FeatureTable,
 	FileTree,
-	GitHubCode,
 	Glossary,
 	GlossaryDefinition,
 	GlossaryTooltip,
