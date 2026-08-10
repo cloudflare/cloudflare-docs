@@ -36,7 +36,7 @@ Preview URLs are only available for Worker versions uploaded after 2024-09-25.
 
 ### Versioned Preview URLs
 
-Every time you create a new [version](/workers/versions-and-deployments/#versions) of your Worker, a unique static version preview URL is generated automatically. These URLs use a version prefix and follow the format `<VERSION_PREFIX>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`.
+When preview URLs are available for your Worker, each new [version](/workers/versions-and-deployments/#versions) gets a unique static version preview URL. These URLs use a version prefix and follow the format `<VERSION_PREFIX>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`. See [Limitations](#limitations) for Workers that do not get preview URLs.
 
 New versions of a Worker are created when you run:
 
@@ -52,7 +52,7 @@ Minimum required Wrangler version: 3.74.0. Check your version by running `wrangl
 
 #### View versioned preview URLs using Wrangler
 
-The [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload) command uploads a new [version](/workers/versions-and-deployments/#versions) of your Worker and returns a preview URL for each version uploaded.
+The [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload) command uploads a new [version](/workers/versions-and-deployments/#versions) of your Worker and, when preview URLs are available, returns a preview URL for that version.
 
 #### View versioned preview URLs on the Workers dashboard
 
@@ -168,7 +168,7 @@ If you enable or disable Preview URLs in the Cloudflare dashboard, but do not up
 
 ## Limitations
 
-- Preview URLs are not generated for Workers that implement a [Durable Object](/durable-objects/).
+- Preview URLs are not generated for Workers that implement a [Durable Object](/durable-objects/). That includes [Containers](/containers/) Workers and [Sandbox](/sandbox/) Workers, which use Durable Object classes. You can still upload versions with [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions-upload); you do not get a preview URL for those versions. For how to test Containers changes before production, refer to [Deploy Containers](/containers/deploy/#before-production).
 - Preview URLs are not currently generated for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers). This is a temporary limitation, we are working to remove it.
 - You cannot currently configure Preview URLs to run on a subdomain other than [`workers.dev`](/workers/configuration/routing/workers-dev/).
 - You cannot view logs for Preview URLs today, this includes Workers Logs, Wrangler tail and Logpush.
