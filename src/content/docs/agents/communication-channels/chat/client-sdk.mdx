@@ -628,7 +628,11 @@ import { AgentClient } from "agents/client";
 import { WebSocketChatTransport } from "agents/chat/transport";
 
 const transport = new WebSocketChatTransport({
-	agent: new AgentClient({ agent: "ChatAgent", name: "user-123" }),
+	agent: new AgentClient({
+		agent: "ChatAgent",
+		name: "user-123",
+		host: window.location.host,
+	}),
 });
 ```
 
