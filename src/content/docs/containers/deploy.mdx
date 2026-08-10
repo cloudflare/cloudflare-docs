@@ -20,7 +20,7 @@ import { Steps, DashButton, PackageManagers } from "~/components";
 
 3. Wait for the command to finish.
 
-`wrangler deploy` uploads your Worker, publishes the container image when needed, then updates running container instances. The new Worker version goes live when the deploy completes. Container instances update with a [gradual rollout](/containers/platform-details/rollouts/) by default, so new Worker code may briefly talk to containers that still run the previous image.
+`wrangler deploy` uploads your Worker, publishes the container image when needed, then updates running container instances. The new Worker version goes live when the deploy completes. Container instances update with a [gradual rollout](/containers/platform-details/rollouts/) by default, so new Worker code may briefly talk to containers that still run the previous image. A successful deploy starts that rollout; it does not mean every instance has already finished replacing.
 
 :::note[First deploy]
 The first deploy can take several minutes while Cloudflare provisions the image. The Worker URL may respond before container routes succeed.

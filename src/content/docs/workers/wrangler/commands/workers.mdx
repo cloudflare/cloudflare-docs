@@ -242,9 +242,10 @@ None of the options for this command are required. Also, many can be set in your
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
   - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
 - `--containers-rollout` <Type text="immediate | gradual | none" /> <MetaInfo text="optional" />
-  - Specify the [rollout strategy](/containers/faq#how-do-container-updates-and-rollouts-work) for [Containers](/containers) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. Note that `rollout_active_grace_period`, if configured, still applies.
-  - If set to `none`, Wrangler deploys the Worker without building or updating associated Containers.
-  - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
+  - Specify the [rollout strategy](/containers/platform-details/rollouts/) for [Containers](/containers/) associated with the Worker.
+  - `gradual` (default): rolling update using `rollout_step_percentage` (default 10% then 100%).
+  - `immediate`: one rollout step that targets 100% of instances, overriding `rollout_step_percentage`. Instances still stop and start over time; not a simultaneous fleet restart. `rollout_active_grace_period` still applies.
+  - `none`: deploy the Worker without building or updating associated Containers.
 - `--strict` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular, this mode prevents deployments if the deployment would potentially override remote settings in non-interactive environments.
 - `--tag` <Type text="string" /> <MetaInfo text="optional" />

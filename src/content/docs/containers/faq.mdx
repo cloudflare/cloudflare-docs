@@ -129,10 +129,11 @@ manually, it will continue to run unless its host server is restarted. This
 happens on an irregular cadence, but frequently enough where Cloudflare does not
 guarantee that any instance will run for any set period of time.
 
-When a container instance is going to be shut down, it is sent a `SIGTERM` signal,
-and then a `SIGKILL` signal after 15 minutes. You should perform any necessary
-cleanup to ensure a graceful shutdown in this time. The container instance
-will be rebooted elsewhere shortly after this.
+When a container instance is going to be shut down, the platform sends `SIGTERM`
+to the main process in the container, then `SIGKILL` after 15 minutes if it has
+not exited. Handle `SIGTERM` if you need cleanup. The instance is started again
+elsewhere shortly after. The same stop sequence is used during image
+[rollouts](/containers/platform-details/rollouts/).
 
 ## How can I pass secrets to my container?
 

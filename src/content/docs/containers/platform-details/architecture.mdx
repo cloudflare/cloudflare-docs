@@ -97,9 +97,12 @@ By setting `sleepAfter`, the container will stay alive for approximately the spe
 
 You can manually shut down a container instance by calling [`stop()`](/containers/container-class/#stop) or [`destroy()`](/containers/container-class/#destroy) on it.
 
-When a container instance is going to be shut down, it is sent a `SIGTERM` signal,
-and then a `SIGKILL` signal after 15 minutes. You should perform any necessary
-cleanup to ensure a graceful shutdown in this time.
+When a container instance is going to be shut down (including during a
+[rollout](/containers/platform-details/rollouts/)), the platform sends `SIGTERM`
+to the main process in the container, then `SIGKILL` after 15 minutes if it has
+not exited. Handle `SIGTERM` if you need to finish in-flight work. While a
+replacement instance starts, requests that need it may wait until the container
+is ready, or fail if a timeout is shorter than startup.
 
 ### Lifecycle hooks
 

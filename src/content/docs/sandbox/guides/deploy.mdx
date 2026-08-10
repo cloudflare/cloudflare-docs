@@ -35,7 +35,7 @@ When you bump the npm package:
    npx wrangler deploy --containers-rollout=immediate
    ```
 
-   Use this for stable to `@next` cutovers and other breaking package/image pairs. Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/platform-details/rollouts/).
+   Use this for stable to `@next` cutovers and other breaking package/image pairs. Immediate still replaces instances over time (one 100% step, not a simultaneous fleet restart). Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/platform-details/rollouts/).
 
 Do not mix a stable package with a `@next` image, or the reverse.
 
