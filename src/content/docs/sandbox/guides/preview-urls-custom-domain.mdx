@@ -18,7 +18,7 @@ Custom domain setup is only needed if you use `exposePort()` to expose services 
 For public URLs without custom-domain setup, [`sandbox.tunnels`](/sandbox/api/tunnels/) is an alternative: quick tunnels for development, named tunnels for stable hostnames in production.
 :::
 
-:::note[Coming soon: Sandbox SDK 1.0]
+:::note[Sandbox SDK 1.0 preview]
 Command examples that use `startProcess` are stable-only. On **`@next`**, use argv `exec` process handles. Refer to [Process execution](/sandbox/1-0-preview/processes/). Package and image still must match on the same release line.
 :::
 
@@ -87,7 +87,7 @@ Redeploy the Worker so the route configuration takes effect:
 npx wrangler deploy
 ```
 
-If this deploy also changes your sandbox image or package, follow [Deploy a Sandbox application](/sandbox/guides/deploy/) for rollout and package/image pairing. For route-only changes you can still use a normal deploy; use `--containers-rollout=none` only when you intentionally skip container image and instance updates.
+If this deploy also changes your sandbox image or package, follow [Deploy a Sandbox application](/sandbox/guides/deploy/) for rollout and package/image pairing. For route-only changes you can still use a normal deploy. Use `--containers-rollout=none` only when you intentionally skip container image and instance updates.
 
 ## Verify
 
@@ -110,7 +110,7 @@ Visit the URL in your browser to confirm your service is accessible.
 ## Troubleshooting
 
 - **CustomDomainRequiredError**: Verify your Worker is not deployed only to `.workers.dev` and that the wildcard DNS record and route are configured correctly.
-- **SSL/TLS errors**: Wait a few minutes for certificate provisioning. Verify the DNS record is proxied and SSL/TLS mode is set to "Full" or "Full (strict)" in your dashboard. If your Worker is on a subdomain (for example, `sandbox.yourdomain.com`), Universal SSL will not cover the second-level wildcard `*.sandbox.yourdomain.com` - see the [TLS caution](#subdomain-depth-matters-for-tls) at the top of this page for options.
+- **SSL/TLS errors**: Wait a few minutes for certificate provisioning. Verify the DNS record is proxied and SSL/TLS mode is set to "Full" or "Full (strict)" in your dashboard. If your Worker is on a subdomain (for example, `sandbox.yourdomain.com`), Universal SSL will not cover the second-level wildcard `*.sandbox.yourdomain.com`. Refer to the [TLS caution](#subdomain-depth-matters-for-tls) at the top of this page for options.
 - **Preview URL not resolving**: Confirm the wildcard DNS record exists and is proxied. Wait 30–60 seconds for DNS propagation.
 - **Port not accessible**: Ensure your service binds to `0.0.0.0` (not `localhost`) and that `proxyToSandbox()` is called first in your Worker's fetch handler.
 

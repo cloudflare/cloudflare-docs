@@ -15,8 +15,8 @@ Sandbox runs on [Containers](/containers/). For deploy commands, Workers Builds,
 
 To put `exposePort()` on a custom domain, refer to [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
 
-:::note[Coming soon: Sandbox SDK 1.0]
-This guide targets today's stable `@cloudflare/sandbox` package.
+:::note[Sandbox SDK 1.0 preview]
+This guide targets the stable `@cloudflare/sandbox` package.
 
 On **`@cloudflare/sandbox@next`**, keep the Worker package and container image on the same preview line. For a breaking cutover, refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover).
 :::
@@ -31,9 +31,7 @@ When you bump the npm package:
 2. Run `wrangler deploy` so the new image is published.
 3. If the Worker and image must cut over together, deploy with an immediate rollout:
 
-   ```sh
-   npx wrangler deploy --containers-rollout=immediate
-   ```
+   <PackageManagers type="exec" pkg="wrangler" args="deploy --containers-rollout=immediate" />
 
    Use this for stable to `@next` cutovers and other breaking package/image pairs. Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/platform-details/rollouts/).
 

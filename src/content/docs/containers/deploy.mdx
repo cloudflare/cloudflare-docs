@@ -13,12 +13,16 @@ import { Steps, DashButton, PackageManagers } from "~/components";
 
 ## Deploy from your machine
 
+<Steps>
+
 1. If `image` in your Wrangler config is a path to a Dockerfile (or a directory that contains one), start [Docker](https://www.docker.com/) or another Docker-compatible engine. If `image` is a registry reference (Cloudflare Registry, Docker Hub, Amazon ECR, or Google Artifact Registry), you do not need Docker at deploy time. Refer to [Image management](/containers/platform-details/image-management/).
 2. From your project directory, run:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 3. Wait for the command to finish.
+
+</Steps>
 
 `wrangler deploy` uploads your Worker, publishes the container image when needed, then updates running container instances. The new Worker version goes live when the deploy completes. Container instances update with a [gradual rollout](/containers/platform-details/rollouts/) by default, so new Worker code may briefly talk to containers that still run the previous image. A successful deploy starts that rollout; it does not mean every container instance has already finished replacing.
 
@@ -77,9 +81,15 @@ Do not set the Workers Builds **non-production branch deploy command** on your p
 
 After `wrangler deploy` or a production Workers Builds deploy:
 
+<Steps>
+
 1. Confirm the new Worker deployment is active in the dashboard.
 2. Send a request that must reach the container and confirm the behavior you expect.
-3. Optionally run `npx wrangler containers list` and `npx wrangler containers images list`, or open the [Containers dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers).
+3. Optionally run `npx wrangler containers list` and `npx wrangler containers images list`, or open the Containers dashboard:
+
+   <DashButton url="/?to=/:account/workers/containers" />
+
+</Steps>
 
 For gradual steps, grace periods, and rollout modes, refer to [Rollouts](/containers/platform-details/rollouts/).
 

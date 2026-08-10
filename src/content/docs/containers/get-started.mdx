@@ -41,7 +41,7 @@ When you want to deploy a code change to either the Worker or Container code, yo
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-On deploy, Wrangler uploads your Worker, builds and pushes the container image with Docker, and updates container instances on Cloudflare's network. The first build and push usually take the longest; later deploys [reuse cached image layers](https://docs.docker.com/build/cache/).
+On deploy, Wrangler uploads your Worker, builds and pushes the container image with Docker, and updates container instances on Cloudflare's network. The first build and push usually take the longest. Later deploys [reuse cached image layers](https://docs.docker.com/build/cache/).
 
 :::note
 After you deploy your Worker for the first time, wait several minutes before you expect container requests to succeed. The Worker URL may respond while Cloudflare is still provisioning containers. During that time, calls into the container can error.
@@ -62,7 +62,7 @@ List images in the Cloudflare Registry:
 Open the URL for your Worker. It should look like `https://hello-containers.<YOUR_WORKERS_SUBDOMAIN>.workers.dev`.
 
 - Requests to `/container/1` or `/container/2` route to specific containers. Each path after `/container/` maps to a unique container.
-- Requests to `/lb` load-balance across 3 containers chosen at random.
+- Requests to `/lb` load-balance across three containers chosen at random.
 
 Read the response body to confirm which instance handled the request. If the Worker responds but container routes still error, wait for provisioning, then check [Containers](https://dash.cloudflare.com/?to=/:account/workers/containers) logs in the dashboard.
 
