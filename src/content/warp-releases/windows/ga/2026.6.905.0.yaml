@@ -1,0 +1,8 @@
+releaseNotes: This hotfix addresses an uncommon and intermittent case on Windows
+  devices where the device is unable to reconnect after the device is woken from
+  sleep.
+version: 2026.6.905.0
+releaseDate: 2026-08-10T20:28:46.022Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2026.6.905.0
+packageSize: 59052032
+platformName: Windows
