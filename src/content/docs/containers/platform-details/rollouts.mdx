@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Rollouts
-description: Configure rolling deployments for Containers, including step percentages and grace periods for active instances.
+description: Configure rolling deployments for Containers, including step percentages, grace periods, and rollout modes.
 sidebar:
   order: 2
 products:
@@ -10,25 +10,63 @@ products:
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
-## How rollouts work
+This page describes how container instances update after a deploy. For why Worker code and container instances can temporarily disagree, and what a full deploy changes, see [Deployments](/containers/deployments/).
 
-When you run `wrangler deploy`, the Worker code is updated immediately and Container
-instances are updated using a rolling deploy strategy. The default rollout configuration is two steps,
-where the first step updates 10% of the instances, and the second step updates the remaining 90%.
-This can be configured in your Wrangler config file using the [`rollout_step_percentage`](/workers/wrangler/configuration/#containers) property.
+## Defaults
 
-When deploying a change, you can also configure a [`rollout_active_grace_period`](/workers/wrangler/configuration/#containers), which is the minimum
-number of seconds to wait before an active container instance becomes eligible for updating during a rollout.
-At that point, the container will be sent a `SIGTERM` signal and still has 15 minutes to shut down gracefully.
-If the instance does not stop within 15 minutes, it is forcefully stopped with a `SIGKILL` signal.
-If you have cleanup that must occur before a Container instance is stopped, you should do it during this 15 minute period.
+When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) with Containers configured:
 
-Once stopped, the instance is replaced with a new instance running the updated code. Requests may hang while the container is starting up again.
+| Subject               | Default behavior                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| Worker code           | Updates when the new Worker version becomes active (immediately on a standard deploy) |
+| Container instances   | Update with a gradual rollout                                                         |
+| Default rollout steps | Two steps: 10% of instances, then the remaining 90% (`[10, 100]`)                     |
+| Active grace period   | `0` seconds (instances become eligible to replace without an extra delay)             |
+| Stop signal           | `SIGTERM`, then `SIGKILL` after 15 minutes if the process is still running            |
 
-Because Worker code updates immediately while container instances roll out gradually, keep
-changes backwards compatible across both versions until the rollout completes.
+Configure step percentages with [`rollout_step_percentage`](/workers/wrangler/configuration/#containers). Configure the active grace period with [`rollout_active_grace_period`](/workers/wrangler/configuration/#containers).
 
-Here is an example configuration that sets a 5 minute grace period and a two step rollout where the first step updates 10% of instances and the second step updates 100% of instances:
+## Instance replace sequence
+
+When an instance is selected to update during a rollout:
+
+1. The instance must be past `rollout_active_grace_period` (minimum seconds after it became active before it is eligible).
+2. The platform sends `SIGTERM` to the container process.
+3. The process has 15 minutes to exit. Perform cleanup in that window if you need a graceful stop.
+4. If the process is still running after 15 minutes, the platform sends `SIGKILL`.
+5. A new instance starts with the target image. Requests may hang while the new instance starts.
+
+Disk remains [ephemeral](/containers/faq/#is-disk-persistent-what-happens-to-my-disk-when-my-container-sleeps) across replace and sleep cycles unless you persist data outside the container filesystem.
+
+## Rollout modes
+
+The `--containers-rollout` flag applies to [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) only. It does not apply to [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions), which does not build images or roll out instances. See [Deployments](/containers/deployments/#commands-that-are-not-a-full-container-deploy).
+
+| Mode              | Flag                                     | Instance behavior                                                    |
+| ----------------- | ---------------------------------------- | -------------------------------------------------------------------- |
+| Gradual (default) | omit flag, or behavior from config steps | Replaces instances in steps defined by `rollout_step_percentage`     |
+| Immediate         | `--containers-rollout=immediate`         | Rolls out to 100% of eligible instances in one step                  |
+| None              | `--containers-rollout=none`              | Skips image build/push and instance rollout; deploys the Worker only |
+
+`rollout_active_grace_period` still applies in immediate mode. Instances that are not yet eligible remain on the previous image until they pass the grace period and drain.
+
+### Immediate rollouts
+
+Use an immediate rollout when Worker code and the container image must cut over together:
+
+<PackageManagers
+	pkg="wrangler"
+	type="exec"
+	args="deploy --containers-rollout=immediate"
+/>
+
+### None
+
+Use `--containers-rollout=none` when you need to ship Worker-only changes and leave container images and instances unchanged. If your config points at a Dockerfile and Docker is unavailable, Wrangler may require this flag (or a working Docker setup) so the deploy can skip container build steps.
+
+## Example configuration
+
+Five-minute grace period and two steps (10%, then 100%):
 
 <WranglerConfig>
 
@@ -62,14 +100,12 @@ Here is an example configuration that sets a 5 minute grace period and a two ste
 
 </WranglerConfig>
 
-## Immediate rollouts
+## Compatibility during a rollout
 
-If you need to do a one-off deployment that rolls out to 100% of container instances in one step, you can deploy with:
+Worker code updates on deploy while container instances follow the rollout mode above. Until the rollout finishes, new Worker code may run against previous images. Keep changes backward compatible across that window, or use an immediate rollout for breaking cutovers. Background: [Deployments: Version skew](/containers/deployments/#version-skew).
 
-<PackageManagers
-	pkg="wrangler"
-	type="exec"
-	args="deploy --containers-rollout=immediate"
-/>
+## Related
 
-Note that `rollout_active_grace_period`, if configured, will still apply.
+- [Deployments](/containers/deployments/) — Deploy timeline, artifacts, and CI notes
+- [Image management](/containers/platform-details/image-management/) — Build and push behavior
+- [Containers configuration](/workers/wrangler/configuration/#containers) — Field reference

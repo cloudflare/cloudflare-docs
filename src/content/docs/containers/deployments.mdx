@@ -1,0 +1,117 @@
+---
+pcx_content_type: concept
+title: Deployments
+description: Learn what changes when you deploy a Worker that uses Containers, including Worker versions, images, instance rollouts, and version skew.
+sidebar:
+  order: 2.4
+products:
+  - containers
+---
+
+When you deploy a Worker that uses [Containers](/containers/), more happens than a Worker script upload. This page explains what a deployment changes, in what order, and why Worker code and container instances can temporarily disagree.
+
+For a first hands-on deploy, start with [Get started](/containers/get-started/). For rollout knobs and flags, see [Rollouts](/containers/platform-details/rollouts/). For image build and registry behavior, see [Image management](/containers/platform-details/image-management/).
+
+## Two planes
+
+A Containers app has two planes that update on different schedules:
+
+| Plane      | What it is                                                                                                               | When it changes on `wrangler deploy`                                              |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Worker     | Your Worker script, bindings, and Durable Object classes that drive containers                                           | As soon as the new Worker [version](/workers/versions-and-deployments/) goes live |
+| Containers | Container images and the running [container instances](/containers/platform-details/architecture/) that run those images | After the Worker upload: images build or resolve, then instances roll out         |
+
+Code in the Worker plane decides when to start instances, how to route requests, and which Durable Object ID maps to which workload. Code and files in the container image define the process that runs inside each instance.
+
+Those planes are related, but they are not a single atomic unit. Understanding that split is the key to safe deploys.
+
+## What `wrangler deploy` does
+
+For a Worker with a [`containers`](/workers/wrangler/configuration/#containers) configuration, [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) roughly follows this sequence:
+
+1. **Upload the Worker.** Cloudflare creates a new Worker version. For a normal deploy, that version becomes the active deployment and starts serving traffic.
+2. **Build or resolve the container image.** If `image` points at a Dockerfile (or a directory that contains one), Wrangler builds with Docker and pushes to the [Cloudflare container registry](/containers/platform-details/image-management/). If `image` is already a registry reference, Wrangler resolves that reference instead.
+3. **Update container configuration for each configured class.** Wrangler applies image and instance settings for the Durable Object classes listed under `containers`.
+4. **Roll out container instances.** Existing instances move to the new image according to your [rollout](/containers/platform-details/rollouts/) settings. The default is a gradual rollout, not an instant replace of every instance.
+
+Wrangler only runs the container steps when container rollout is enabled for the deploy. The default is a gradual instance rollout. You can pass [`--containers-rollout`](/containers/platform-details/rollouts/#rollout-modes) to change that behavior for one command.
+
+### Artifacts that change
+
+| Artifact                                | Changed by a full `wrangler deploy`? | Notes                                                                                 |
+| --------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------- |
+| Active Worker version                   | Yes                                  | Serves new Worker code immediately on a standard deploy                               |
+| Container image in the account registry | Yes, when you build or push an image | Dockerfile deploys build and push; pre-built image refs resolve without a local build |
+| Running container instances             | Yes, via rollout                     | Default gradual steps; not all instances switch at once                               |
+| Durable Object storage                  | No (not replaced by deploy)          | Object storage is separate from the container filesystem                              |
+
+### Commands that are not a full container deploy
+
+| Command                                                                    | Worker version uploaded?                                      | Image build/push?             | Instance rollout?                       |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------- | --------------------------------------- |
+| [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) (default)  | Yes, and it becomes active                                    | Yes, when the config needs it | Yes (gradual by default)                |
+| `wrangler deploy --containers-rollout=immediate`                           | Yes, active                                                   | Yes, when needed              | Yes, all eligible instances in one step |
+| `wrangler deploy --containers-rollout=none`                                | Yes, active                                                   | No                            | No                                      |
+| [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions) | Yes (version only; not active until you deploy or promote it) | No                            | No                                      |
+
+`wrangler versions upload` still records that the Worker version is associated with container-backed classes. It does not publish a new container image or roll running instances. Container image and instance changes take effect only after a `wrangler deploy` that performs the container steps.
+
+This matters for [Workers Builds](/workers/ci-cd/builds/) and any CI job that uses `versions upload` on non-production branches: preview Worker code can move forward while the container image from the last full deploy stays unchanged.
+
+## Version skew
+
+Because the Worker becomes active before every container instance has the new image, the two planes can disagree for a while. During that window you may see:
+
+- New Worker code talking to instances that still run the previous image
+- A mix of old and new images across instances, when a gradual rollout is in progress
+- Requests that wait while an instance stops, starts, or pulls a new image
+
+Design deploys so that overlap is safe:
+
+- Prefer backward-compatible changes when you use the default gradual rollout (for example, additive APIs, tolerant readers, feature flags).
+- Use an [immediate rollout](/containers/platform-details/rollouts/#immediate-rollouts) when Worker code and the image must switch together (breaking protocol changes, mismatched entrypoints, or hard dependency on a new binary).
+- Remember that [`rollout_active_grace_period`](/workers/wrangler/configuration/#containers) still delays replacing busy instances, even on an immediate rollout.
+
+Rollout steps, signals, and grace periods are spelled out in [Rollouts](/containers/platform-details/rollouts/).
+
+## First deploy versus later deploys
+
+### First deploy
+
+The first time you deploy a Containers Worker, Cloudflare still has to make the image available and ready instances across the network. That provisioning often takes several minutes. During that period the Worker may already be reachable, while calls into the container fail or wait until an instance can start.
+
+Cached image layers and later deploys are usually faster than the first push. Refer to [Image management](/containers/platform-details/image-management/) for build and push behavior, and [Lifecycle of a Container](/containers/platform-details/architecture/) for how instances start on the network after the image exists.
+
+### Later deploys
+
+On later deploys, Wrangler uploads a new Worker version, publishes image changes when needed, and rolls instances. Only some instances move at each rollout step unless you override the default. Idle or newly started instances pick up the target image according to rollout rules; long-lived busy instances may wait until they pass the active grace period and drain.
+
+## Confirm a deploy
+
+There is no single global containers-ready indicator in the dashboard. Combine a few signals:
+
+1. **Wrangler finished without errors.** A successful `wrangler deploy` means the Worker upload and the container configure/rollout requests that Wrangler makes for that command completed. It does not mean every instance worldwide has already finished replacing.
+2. **`wrangler containers list` and `wrangler containers images list`.** Use these to see container apps and images in the account after deploy. Refer to [Containers Wrangler commands](/containers/wrangler-commands/).
+3. **Containers dashboard.** Check status, logs, and metrics under [Workers & Pages > Containers](https://dash.cloudflare.com/?to=/:account/workers/containers).
+4. **Application behavior.** Send a request that must hit the container. Confirm the response matches the Worker and image you intended (for example a version path, env var, or binary output you control).
+5. **Rollout expectations.** After a gradual rollout, assume a mix of images until steps complete. After `--containers-rollout=immediate`, expect a shorter cutover, still subject to grace period and instance startup time.
+
+If the Worker answers but the container path errors right after a first deploy, wait for provisioning and check logs before assuming the configuration is wrong.
+
+## CI and git-connected deploys
+
+[Workers Builds](/workers/ci-cd/builds/) runs your configured build and deploy commands in a managed environment. It does not use a separate Containers pipeline. Whatever command you configure is what performs the deploy:
+
+- A production deploy command of `npx wrangler deploy` runs the full path above, including image build when your config uses a Dockerfile. The build environment provides Docker for that path.
+- A non-production command of `npx wrangler versions upload` (the common preview default) uploads a Worker version only. It does not build or roll out container images.
+
+Treat "build green" as "the command finished," not as "every container instance runs the new image." Align branch deploy commands with whether you intend a full container rollout.
+
+## Related tasks
+
+- [Get started](/containers/get-started/) — Deploy your first Containers Worker.
+- [Rollouts](/containers/platform-details/rollouts/) — Step percentages, grace period, immediate and none modes.
+- [Image management](/containers/platform-details/image-management/) — Dockerfile builds, Cloudflare registry, external registries.
+- [Lifecycle of a Container](/containers/platform-details/architecture/) — Request path, placement, shutdown signals.
+- [Workers Builds](/workers/ci-cd/builds/) — Git-connected build and deploy commands.
+- [Versions & deployments](/workers/versions-and-deployments/) — Worker versions versus active deployments.

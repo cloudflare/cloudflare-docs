@@ -15,8 +15,7 @@ After you deploy an application with a Container, your image is uploaded to
 Cloudflare will pre-schedule instances and pre-fetch images across the globe to ensure quick start
 times when scaling up the number of concurrent container instances.
 
-Unlike Workers, which are updated immediately on deploy, container instances are updated using a rolling deploy strategy.
-This allows you to gracefully shut down any running instances during a rollout. Refer to [rollouts](/containers/platform-details/rollouts/) for more details.
+Worker code and container instances update on different schedules. The Worker version goes live on deploy; container instances follow a [rollout](/containers/platform-details/rollouts/). For the deploy timeline, artifacts, and version skew, see [Deployments](/containers/deployments/).
 
 ## Lifecycle of a Request
 
@@ -107,11 +106,8 @@ cleanup to ensure a graceful shutdown in this time.
 The [`Container` class](/containers/container-class/) provides hooks that run Worker code when the container changes state:
 
 - [`onStart()`](/containers/container-class/#onstart) — Runs after the container has started.
-
 - [`onStop()`](/containers/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
-
 - [`onActivityExpired()`](/containers/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
-
 - [`onError()`](/containers/container-class/#onerror) — Runs when the container exits with an error.
 
 Refer to the [status hooks example](/containers/examples/status-hooks/) for a full implementation.
