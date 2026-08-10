@@ -41,6 +41,9 @@ await document.modelContext.registerTool({
 		const response = await fetch(
 			`/api/products?q=${encodeURIComponent(query)}`,
 		);
+		if (!response.ok) {
+			throw new Error(`Product search failed: ${response.status}`);
+		}
 		return response.json();
 	},
 });
