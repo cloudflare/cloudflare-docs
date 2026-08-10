@@ -9,7 +9,7 @@ products:
   - browser-run
 ---
 
-import { Render, CURL, Example } from "~/components";
+import { Render, CURL, Example, TypeScriptExample } from "~/components";
 
 [WebMCP](https://developer.chrome.com/blog/webmcp-epp) (Web Model Context Protocol) is a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
 
@@ -21,7 +21,9 @@ Site authors register tools with `document.modelContext`. This authoring API is 
 
 The registration method returns a Promise. Await it when you expose a tool:
 
-```js
+<TypeScriptExample>
+
+```ts
 await document.modelContext.registerTool({
 	name: "search-products",
 	description: "Search the product catalog",
@@ -43,6 +45,8 @@ await document.modelContext.registerTool({
 	},
 });
 ```
+
+</TypeScriptExample>
 
 Use `navigator.modelContextTesting` in a Browser Run lab session to inspect and invoke the tools that a site registers.
 
@@ -253,7 +257,7 @@ You can now view the live browser session and interact with it.
 ## Limitations
 
 - Lab sessions use Chrome 146 beta, which may have stability issues.
-- WebMCP APIs (`document.modelContext`, `navigator.modelContextTesting`) only work in lab sessions.
+- In Browser Run, WebMCP and the `navigator.modelContextTesting` testing API are only available in lab sessions.
 - Lab sessions count against your regular [rate limits](/browser-run/limits/) and [pricing](/browser-run/pricing/).
 - The `lab` parameter is not yet supported in `@cloudflare/puppeteer` or `@cloudflare/playwright`. Acquire the session manually and connect with `sessionId`.
 
