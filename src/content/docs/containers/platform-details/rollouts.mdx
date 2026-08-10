@@ -12,7 +12,7 @@ import { WranglerConfig, PackageManagers } from "~/components";
 
 After you [deploy](/containers/deploy/) a Worker that uses Containers, the new Worker version goes live. Running **container instances** then move to the new image through a rollout.
 
-A **container instance** is one running copy of your container image on Cloudflare's network. It runs the process your image is built to start (from your Dockerfile `ENTRYPOINT`/`CMD`, or the base image default). Rollouts replace those instances over time. They do not change Durable Object storage.
+A **container instance** is one running copy of your container image on Cloudflare's network. It runs the process your image is built to start (from your Dockerfile `ENTRYPOINT`/`CMD`, or the base image default). Rollouts replace those container instances over time. They do not change Durable Object storage.
 
 This page is the source of truth for rollout behavior. Field names and allowed values are also listed under [Containers configuration](/workers/wrangler/configuration/#containers).
 
@@ -20,49 +20,49 @@ This page is the source of truth for rollout behavior. Field names and allowed v
 
 | Setting                                  | Default                                                                             |
 | ---------------------------------------- | ----------------------------------------------------------------------------------- |
-| `rollout_step_percentage`                | `[10, 100]` (about 10% of instances, then the rest)                                 |
+| `rollout_step_percentage`                | `[10, 100]` (about 10% of container instances, then the rest)                                 |
 | `rollout_active_grace_period`            | `0` seconds                                                                         |
-| Stop sequence when replacing an instance | `SIGTERM` to the main process, then `SIGKILL` after 15 minutes if it has not exited |
+| Stop sequence when replacing an container instance | `SIGTERM` to the main process, then `SIGKILL` after 15 minutes if it has not exited |
 
 ## Gradual rollouts
 
 By default, Wrangler starts a rolling rollout using `rollout_step_percentage`. With `[10, 100]`:
 
-1. First step: target 10% of instances on the new image.
-2. Next step: target 100%.
+1. First step: target 10% of container instances on the new image.
+2. Next step: target 100% of container instances.
 
 Until the rollout finishes, some requests can still reach containers on the previous image while the Worker already runs new code. Prefer backward-compatible Worker and image changes across that window, or use an [immediate](#immediate) rollout when they must cut over together.
 
-A successful `wrangler deploy` **starts** the rollout. It does not mean every instance has already finished replacing.
+A successful `wrangler deploy` **starts** the rollout. It does not mean every container instance has already finished replacing.
 
-## How an instance is replaced
+## How an container instance is replaced
 
 When the rollout selects a container instance to update:
 
-1. **Grace period (if configured).** If `rollout_active_grace_period` is greater than `0`, instances that only recently became connected to their [Durable Object](/durable-objects/) are skipped until they pass that window. Default `0` means no extra wait. See [Rollout active grace period](#rollout-active-grace-period).
+1. **Grace period (if configured).** If `rollout_active_grace_period` is greater than `0`, container instances that only recently became connected to their [Durable Object](/durable-objects/) are skipped until they pass that window. Default `0` means no extra wait. See [Rollout active grace period](#rollout-active-grace-period).
 2. **Stop the main process.** The platform sends `SIGTERM` so your app can stop accepting new work and finish in-flight work.
 3. **Drain.** The process has up to 15 minutes to exit. Handle `SIGTERM` in your image, or use [`onStop`](/containers/container-class/#onstop) on the Container class, if you need cleanup.
 4. **Force stop if needed.** If the process is still running after 15 minutes, the platform sends `SIGKILL`.
-5. **Start a new instance** with the target image. Disk is [ephemeral](/containers/faq/#is-disk-persistent-what-happens-to-my-disk-when-my-container-sleeps) unless you store data outside the container filesystem.
+5. **Start a new container instance** with the target image. Disk is [ephemeral](/containers/faq/#is-disk-persistent-what-happens-to-my-disk-when-my-container-sleeps) unless you store data outside the container filesystem.
 
-### Requests while an instance starts
+### Requests while an container instance starts
 
-The new instance must start that process. Startup often takes on the order of seconds, depending on image size and what runs at start. See [cold starts](/containers/platform-details/architecture/#starting-a-container).
+The new container instance must start that process. Startup often takes on the order of seconds, depending on image size and what runs at start. See [cold starts](/containers/platform-details/architecture/#starting-a-container).
 
-A request that needs that instance may wait until the container is ready, or fail if a client or Worker timeout is shorter than startup. Keep startup work fast, use port readiness checks if you configure them, and set timeouts with startup in mind.
+A request that needs that container instance may wait until the container is ready, or fail if a client or Worker timeout is shorter than startup. Keep startup work fast, use port readiness checks if you configure them, and set timeouts with startup in mind.
 
 ## Rollout active grace period
 
-`rollout_active_grace_period` applies only **during a rollout**, when the platform is choosing which instances to replace.
+`rollout_active_grace_period` applies only **during a rollout**, when the platform is choosing which container instances to replace.
 
 Containers are [backed by Durable Objects](/containers/platform-details/architecture/#worker-to-durable-object). Each running container instance is associated with a Durable Object instance that starts it and sends it traffic. The grace period is how long that connection must already have been up before a rollout may shut the container down. It is not measured from deploy completion.
 
 | Value                                | Effect                                                                                                                           |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| `0` (default)                        | No extra protection. Selected instances may be replaced immediately.                                                             |
+| `0` (default)                        | No extra protection. Selected container instances may be replaced immediately.                                                             |
 | Greater than `0` (for example `300`) | Container instances connected to their Durable Object for less than this many seconds are left alone until they pass the window. |
 
-Use a non-zero value when short sessions should finish before a rollout replaces the container. Instances that have been connected longer can still be replaced once they pass the window.
+Use a non-zero value when short sessions should finish before a rollout replaces the container. Container instances that have been connected longer can still be replaced once they pass the window.
 
 Grace period still applies with `--containers-rollout=immediate`.
 
@@ -73,8 +73,8 @@ Grace period still applies with `--containers-rollout=immediate`.
 | Mode              | Flag                             | Behavior                                                                      |
 | ----------------- | -------------------------------- | ----------------------------------------------------------------------------- |
 | Gradual (default) | omit flag                        | Rolling rollout using `rollout_step_percentage` (default `[10, 100]`)         |
-| Immediate         | `--containers-rollout=immediate` | Same replace machinery, with a **single step that targets 100%** of instances |
-| None              | `--containers-rollout=none`      | No image publish and no instance rollout; Worker code only                    |
+| Immediate         | `--containers-rollout=immediate` | Same replace machinery, with a **single step that targets 100%** of container instances |
+| None              | `--containers-rollout=none`      | No image publish and no container instance rollout; Worker code only                    |
 
 ### Immediate
 
@@ -86,7 +86,7 @@ Use when Worker code and the container image should cut over together (for examp
 	args="deploy --containers-rollout=immediate"
 />
 
-Immediate does not restart every instance at the same moment. Wrangler still starts a rolling rollout; the plan is one step at 100% instead of intermediate percentages. Each instance still stops, respects grace period if set, and starts on the new image over wall-clock time. Deploy success still means the rollout started, not that every instance has finished.
+Immediate does not restart every container instance at the same moment. Wrangler still starts a rolling rollout; the plan is one step at 100% instead of intermediate percentages. Each container instance still stops, respects grace period if set, and starts on the new image over wall-clock time. Deploy success still means the rollout started, not that every container instance has finished.
 
 ### None
 
