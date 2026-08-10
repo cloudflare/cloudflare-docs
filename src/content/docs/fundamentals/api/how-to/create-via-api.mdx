@@ -20,13 +20,13 @@ The API Token Template [**Create additional tokens**](/fundamentals/api/referenc
 
 ## Generating the initial token
 
-Before you can use the API, you need to [generate the initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard. The required permission depends on the API operation. To grant users access to an account as members, select **Account** > **Account Settings** > **Edit**. To create API tokens, select **Account** > **Account API Tokens** > **Edit**.
+Before you can use the API, you need to [generate an initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard. The required permission depends on the API operation. To grant users access to an account as members, create a token with **Account** > **Account Settings** > **Edit**. To create API tokens, use the **Create additional tokens** template, which grants **Account** > **Account API Tokens** > **Edit**.
 
 <Render file="new-token-warning" product="fundamentals" />
 
 ### Recommendations
 
-Cloudflare highly recommends that you do not grant other permissions to the token when using this template. Make sure you safeguard the new token because it can create tokens with access to any of a user's resources.
+When using the **Create additional tokens** template, Cloudflare highly recommends that you do not grant other permissions to the token. Make sure you safeguard the new token because it can create tokens with access to any of a user's resources.
 
 Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/fundamentals/api/how-to/restrict-tokens/) for more information.
 
