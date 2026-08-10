@@ -65,11 +65,11 @@ An Example:
 
 ## How do container updates and rollouts work?
 
-`wrangler deploy` updates Worker code when the new version becomes active, then builds or resolves images and rolls out container instances. Instances default to a gradual rollout, so Worker code and images can temporarily disagree. See [Deployments](/containers/deployments/) for the model and [Rollouts](/containers/platform-details/rollouts/) for steps, grace periods, and flags.
+`wrangler deploy` updates Worker code when the new version becomes active, then builds or resolves images and rolls out container instances. Instances default to a gradual rollout, so Worker code and images can temporarily disagree. See [Container deployments](/containers/deployments/) for the model and [Rollouts](/containers/platform-details/rollouts/) for steps, grace periods, and flags.
 
 ## How do Workers Builds work with Containers?
 
-Workers Builds runs your deploy command. Production defaults to `wrangler deploy` (full container path). Non-production defaults to `wrangler versions upload` (Worker version only; no image build or instance rollout). See [Deploy with Workers Builds](/containers/deploy-with-workers-builds/).
+Workers Builds runs your deploy command. Production defaults to `wrangler deploy` (full container path). Non-production defaults to `wrangler versions upload` (Worker version only; no image build or instance rollout). See [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/).
 
 ## How does scaling work?
 
@@ -100,7 +100,7 @@ on image size and code execution time, among other factors.
 
 ## How do I use an existing container image?
 
-See [image management](/containers/platform-details/image-management/#use-pre-built-container-images). For when the image updates relative to Worker code on deploy, see [Deployments](/containers/deployments/).
+See [image management](/containers/platform-details/image-management/#use-pre-built-container-images). For when the image updates relative to Worker code on deploy, see [Container deployments](/containers/deployments/).
 
 ## Is disk persistent? What happens to my disk when my container sleeps?
 

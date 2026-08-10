@@ -145,10 +145,10 @@ This will:
 2. Push it to Cloudflare's Container Registry
 3. Deploy your Worker globally
 
-Worker code can become active before every sandbox instance runs the new image. For rollouts, package/image pairing, and Workers Builds, see [Deploy a Sandbox application](/sandbox/guides/deploy/) and [Containers deployments](/containers/deployments/).
+Worker code can become active before every sandbox instance runs the new image. For package/image pairing and day-to-day deploys, see [Deploy a Sandbox application](/sandbox/guides/deploy/). For the platform deploy model, see [Container deployments](/containers/deployments/).
 
 :::caution[Wait for provisioning]
-After first deployment, wait 2-3 minutes before making requests. The Worker deploys immediately, but the container needs time to provision.
+After the first deployment, wait several minutes before you expect sandbox requests to succeed. The Worker deploys immediately, but the container image still has to provision.
 :::
 
 Check deployment status:

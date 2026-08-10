@@ -75,14 +75,14 @@ If a build succeeds, it is uploaded as a version. If the build is configured to 
 
 If your Worker uses [Containers](/containers/), Workers Builds still runs only your configured build and deploy commands. There is no separate container pipeline.
 
-| Branch         | Default command                | Container image and instance rollout                          |
-| -------------- | ------------------------------ | ------------------------------------------------------------- |
-| Production     | `npx wrangler deploy`          | Yes, when your Wrangler config needs a full deploy            |
-| Non-production | `npx wrangler versions upload` | No — Worker version only; image stays at the last full deploy |
+| Branch         | Default command                | Container image and instances           |
+| -------------- | ------------------------------ | --------------------------------------- |
+| Production     | `npx wrangler deploy`          | Updated when config needs a full deploy |
+| Non-production | `npx wrangler versions upload` | Unchanged — Worker version only         |
 
-Dockerfile builds can run during `wrangler deploy` in the Builds environment. A successful build means the commands finished, not that every container instance has finished rolling out.
+A successful build means the commands finished, not that every container instance has finished rolling out. Do not set the production Worker's non-production deploy command to `wrangler deploy` solely to refresh an image from a feature branch.
 
-For setup, preview footguns, and verification, see [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/). For the deploy model, see [Containers deployments](/containers/deployments/).
+Setup and preview guidance: [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/). Deploy model: [Container deployments](/containers/deployments/).
 
 ## Disconnecting builds
 

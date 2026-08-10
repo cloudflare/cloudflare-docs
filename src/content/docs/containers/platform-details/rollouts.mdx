@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Rollouts
-description: Configure rolling deployments for Containers, including step percentages, grace periods, and rollout modes.
+description: Configure rolling updates for container instances, including step percentages, grace periods, and rollout modes.
 sidebar:
   order: 2
 products:
@@ -10,7 +10,9 @@ products:
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
-This page describes how container instances update after a deploy. For why Worker code and container instances can temporarily disagree, and what a full deploy changes, see [Deployments](/containers/deployments/).
+This page is the reference for how **container instances** update after a deploy: defaults, replace sequence, and `--containers-rollout` modes.
+
+For what a full deploy changes (Worker, image, and instances) and why they can temporarily disagree, see [Container deployments](/containers/deployments/).
 
 ## Defaults
 
@@ -40,7 +42,7 @@ Disk remains [ephemeral](/containers/faq/#is-disk-persistent-what-happens-to-my-
 
 ## Rollout modes
 
-The `--containers-rollout` flag applies to [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) only. It does not apply to [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions), which does not build images or roll out instances. See [Deployments](/containers/deployments/#commands-that-are-not-a-full-container-deploy).
+The `--containers-rollout` flag applies to [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) only. It does not apply to [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions), which does not build images or roll out instances. Command comparison: [Container deployments](/containers/deployments/#which-commands-change-which-artifacts).
 
 | Mode              | Flag                                     | Instance behavior                                                    |
 | ----------------- | ---------------------------------------- | -------------------------------------------------------------------- |
@@ -102,10 +104,10 @@ Five-minute grace period and two steps (10%, then 100%):
 
 ## Compatibility during a rollout
 
-Worker code updates on deploy while container instances follow the rollout mode above. Until the rollout finishes, new Worker code may run against previous images. Keep changes backward compatible across that window, or use an immediate rollout for breaking cutovers. Background: [Deployments: Version skew](/containers/deployments/#version-skew).
+Worker code updates on deploy while container instances follow the rollout mode above. Until the rollout finishes, new Worker code may run against previous images. Keep changes backward compatible across that window, or use an immediate rollout for breaking cutovers. Background: [Version skew](/containers/deployments/#version-skew).
 
 ## Related
 
-- [Deployments](/containers/deployments/) — Deploy timeline, artifacts, and CI notes
+- [Container deployments](/containers/deployments/) — Deploy timeline, artifacts, and readiness
 - [Image management](/containers/platform-details/image-management/) — Build and push behavior
 - [Containers configuration](/workers/wrangler/configuration/#containers) — Field reference

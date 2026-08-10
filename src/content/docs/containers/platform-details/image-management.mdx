@@ -36,7 +36,7 @@ Just provide the path to your Dockerfile:
 
 And deploy your Worker with `wrangler deploy`. No other image management is necessary.
 
-On subsequent deploys, Wrangler will only push image layers that have changed, which saves space and time. Image build and push run after the Worker upload on a full deploy. For that timeline and for commands that skip image publish, see [Deployments](/containers/deployments/).
+On subsequent deploys, Wrangler will only push image layers that have changed, which saves space and time. Image build and push run after the Worker upload on a full deploy. For that timeline and for commands that skip image publish, see [Container deployments](/containers/deployments/).
 
 :::note
 Docker or a Docker-compatible CLI tool must be running for Wrangler to build and push images.
