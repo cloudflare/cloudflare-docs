@@ -39,7 +39,7 @@ A successful `wrangler deploy` **starts** the rollout. It does not mean every in
 
 When the rollout selects a container instance to update:
 
-1. **Grace period (if configured).** If `rollout_active_grace_period` is greater than `0`, instances whose Durable Object (the object in your Worker that owns that container) connected only recently are skipped until they pass that window. Default `0` means no extra wait. See [Rollout active grace period](#rollout-active-grace-period).
+1. **Grace period (if configured).** If `rollout_active_grace_period` is greater than `0`, instances that only recently became connected to their [Durable Object](/durable-objects/) are skipped until they pass that window. Default `0` means no extra wait. See [Rollout active grace period](#rollout-active-grace-period).
 2. **Stop the main process.** The platform sends `SIGTERM` so your app can stop accepting new work and finish in-flight work.
 3. **Drain.** The process has up to 15 minutes to exit. Handle `SIGTERM` in your image, or use [`onStop`](/containers/container-class/#onstop) on the Container class, if you need cleanup.
 4. **Force stop if needed.** If the process is still running after 15 minutes, the platform sends `SIGKILL`.
@@ -55,14 +55,14 @@ A request that needs that instance may wait until the container is ready, or fai
 
 `rollout_active_grace_period` applies only **during a rollout**, when the platform is choosing which instances to replace.
 
-It is the minimum number of seconds that the Durable Object in your Worker must have been **connected** to a given container instance before that instance may be shut down for the rollout. It is not measured from deploy completion.
+Containers are [backed by Durable Objects](/containers/platform-details/architecture/#worker-to-durable-object). Each running container instance is associated with a Durable Object instance that starts it and sends it traffic. The grace period is how long that connection must already have been up before a rollout may shut the container down. It is not measured from deploy completion.
 
-| Value                                | Effect                                                                                                                       |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `0` (default)                        | No extra protection. Selected instances may be replaced immediately.                                                         |
-| Greater than `0` (for example `300`) | Instances whose Durable Object connected more recently than this many seconds are left alone until they age past the window. |
+| Value                                | Effect                                                                                                                           |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `0` (default)                        | No extra protection. Selected instances may be replaced immediately.                                                             |
+| Greater than `0` (for example `300`) | Container instances connected to their Durable Object for less than this many seconds are left alone until they pass the window. |
 
-Use a non-zero value when short sessions should finish before a rollout tears down the container. Long-running instances still move once they pass the window.
+Use a non-zero value when short sessions should finish before a rollout replaces the container. Instances that have been connected longer can still be replaced once they pass the window.
 
 Grace period still applies with `--containers-rollout=immediate`.
 
