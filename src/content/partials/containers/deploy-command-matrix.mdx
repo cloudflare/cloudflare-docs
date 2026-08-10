@@ -1,6 +1,0 @@
-| Command                                                                    | Worker version                                            | Image build or push           | Instance rollout                        |
-| -------------------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------- | --------------------------------------- |
-| [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) (default)  | Uploaded and becomes active                               | Yes, when the config needs it | Yes (gradual by default)                |
-| `wrangler deploy --containers-rollout=immediate`                           | Uploaded and becomes active                               | Yes, when needed              | Yes, all eligible instances in one step |
-| `wrangler deploy --containers-rollout=none`                                | Uploaded and becomes active                               | No                            | No                                      |
-| [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions) | Uploaded only (not active until you deploy or promote it) | No                            | No                                      |

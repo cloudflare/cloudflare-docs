@@ -73,16 +73,9 @@ If a build succeeds, it is uploaded as a version. If the build is configured to 
 
 ## Workers with Containers
 
-If your Worker uses [Containers](/containers/), Workers Builds still runs only your configured build and deploy commands. There is no separate container pipeline.
+If your Worker uses [Containers](/containers/), production Builds that run `wrangler deploy` can build images and roll out instances. Non-production defaults to `wrangler versions upload`, which updates Worker code only and leaves the container image unchanged.
 
-| Branch         | Default command                | Container image and instances           |
-| -------------- | ------------------------------ | --------------------------------------- |
-| Production     | `npx wrangler deploy`          | Updated when config needs a full deploy |
-| Non-production | `npx wrangler versions upload` | Unchanged — Worker version only         |
-
-A successful build means the commands finished, not that every container instance has finished rolling out. Do not set the production Worker's non-production deploy command to `wrangler deploy` solely to refresh an image from a feature branch.
-
-Full Containers deploy guidance (including preview defaults): [Deploy Containers](/containers/deploy/#deploy-with-workers-builds).
+Refer to [Deploy Containers](/containers/deploy/#deploy-with-workers-builds).
 
 ## Disconnecting builds
 

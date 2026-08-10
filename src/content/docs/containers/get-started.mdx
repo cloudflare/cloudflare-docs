@@ -41,7 +41,7 @@ When you want to deploy a code change to either the Worker or Container code, yo
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-On deploy, Wrangler uploads your Worker, builds and pushes the container image with Docker, and sets up container instances on Cloudflare's network. The first build and push usually take the longest; later deploys [reuse cached image layers](https://docs.docker.com/build/cache/). Worker code and container instances do not always update at the same moment — see [Deploy Containers](/containers/deploy/) when you need the full model.
+On deploy, Wrangler uploads your Worker, builds and pushes the container image with Docker, and updates container instances on Cloudflare's network. The first build and push usually take the longest; later deploys [reuse cached image layers](https://docs.docker.com/build/cache/).
 
 :::note
 After you deploy your Worker for the first time, wait several minutes before you expect container requests to succeed. The Worker URL may respond while Cloudflare is still provisioning containers. During that time, calls into the container can error.
@@ -235,7 +235,6 @@ After launching your Worker, go to the Containers Dashboard by selecting
 To do more:
 
 - Modify the image by changing the Dockerfile and running `wrangler deploy`
-- Read [Deploy Containers](/containers/deploy/) when you ship from your machine or Workers Builds
-- Review [Rollouts](/containers/platform-details/rollouts/) when you need gradual or immediate instance updates
+- Read [Deploy Containers](/containers/deploy/) for Workers Builds and day-to-day deploys
 - Browse [examples](/containers/examples/) for more patterns
 - Check the [Frequently Asked Questions](/containers/faq/) for platform behavior and limitations

@@ -10,7 +10,9 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-This guide configures **preview URLs** for `exposePort()` on a custom domain. It does **not** deploy or roll out your sandbox container image. For Worker and image deploys, see [Deploy a Sandbox application](/sandbox/guides/deploy/).
+Set up wildcard DNS, routes, and TLS so `exposePort()` preview URLs work on your domain.
+
+This does not deploy your sandbox image. To deploy the Worker and image, refer to [Deploy a Sandbox application](/sandbox/guides/deploy/).
 
 :::note[Only required for preview URLs]
 Custom domain setup is only needed if you use `exposePort()` to expose services from sandboxes. If your application does not use `exposePort()`, you can deploy to `.workers.dev` without this configuration.

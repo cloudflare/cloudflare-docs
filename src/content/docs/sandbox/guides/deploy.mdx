@@ -3,7 +3,7 @@ title: Deploy a Sandbox application
 pcx_content_type: how-to
 sidebar:
   order: 9
-description: Ship Sandbox Worker package and container image changes on the same release line, with safe rollouts and CI defaults.
+description: Deploy a Sandbox Worker and keep the npm package and container image on the same release line.
 products:
   - sandbox
   - containers
@@ -11,94 +11,56 @@ products:
 
 import { PackageManagers } from "~/components";
 
-This guide covers what is specific to deploying a [Sandbox](/sandbox/) app: keeping the Worker package and sandbox container image aligned, choosing a rollout when they must cut over together, and avoiding preview CI skew.
+Deploy a [Sandbox](/sandbox/) app after [Get started](/sandbox/get-started/) (or an existing project).
 
-Sandbox runs on [Containers](/containers/). For platform deploy behavior — what `wrangler deploy` changes, version skew, readiness checks, and Workers Builds — see [Deploy Containers](/containers/deploy/) and [Rollouts](/containers/platform-details/rollouts/).
+Sandbox runs on [Containers](/containers/). For the shared deploy path, Workers Builds defaults, and rollout flags, refer to [Deploy Containers](/containers/deploy/) and [Rollouts](/containers/platform-details/rollouts/).
 
-This page is **not** custom-domain setup for `exposePort()` preview URLs. That is a separate task: [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
+This page is not custom-domain setup for `exposePort()`. For that, refer to [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
 
 :::note[Coming soon: Sandbox SDK 1.0]
 This guide targets today's stable `@cloudflare/sandbox` package.
 
-On **`@cloudflare/sandbox@next`**, keep the Worker package and container image on the same preview line. Breaking protocol cutovers use an immediate container rollout — see [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover).
+On **`@cloudflare/sandbox@next`**, keep the Worker package and container image on the same preview line. For a breaking cutover, refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover).
 :::
 
-## Before you start
+## Keep the package and image aligned
 
-- A working Sandbox app from [Get started](/sandbox/get-started/) (or an existing project)
-- [Docker](https://www.docker.com/) running locally if your Wrangler `image` points at a Dockerfile
-- Familiarity with your [Wrangler configuration](/sandbox/configuration/wrangler/)
+The Worker depends on `@cloudflare/sandbox` (or `@cloudflare/sandbox@next`). The container image must use the same release line as that package (Dockerfile and base image tags from the template or docs for that version).
 
-## Keep package and image on the same release line
+When you bump the npm package:
 
-The Worker depends on `@cloudflare/sandbox` (or `@cloudflare/sandbox@next`). The container image must come from the **same release line** as that package — the Dockerfile and base image tags your template or docs prescribe for that version.
+1. Update the Dockerfile or image reference for the same line.
+2. Run a full deploy (`wrangler deploy`) so the new image publishes. `wrangler versions upload` alone does not update the image.
+3. If the Worker and image must cut over together (breaking protocol), use an immediate rollout:
 
-After you bump the npm package:
+   ```sh
+   npx wrangler deploy --containers-rollout=immediate
+   ```
 
-1. Update the Dockerfile (or image reference) for the same line.
-2. Publish the new image with a full deploy (`wrangler deploy`), not `wrangler versions upload` alone.
-3. For breaking Worker↔image protocol changes, use an [immediate rollout](#when-to-use-an-immediate-rollout).
+   Typical cases include a stable → `@next` cutover ([Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover)) and entrypoint changes the old Worker cannot drive. Refer to [Rollouts](/containers/platform-details/rollouts/).
 
-Do not mix packages and images from **different release lines** (for example stable Worker package with a `@next` image, or the reverse). Within one release line, prefer matching versions on full deploys. Preview CI may briefly run a newer package against an older image from the last full deploy — only if that pair stays protocol-compatible. See [Workers Builds](#workers-builds).
-
-Compare which Wrangler commands build images or roll instances in [Deploy Containers](/containers/deploy/#which-commands-change-which-artifacts).
+Do not mix a stable package with a `@next` image, or the reverse.
 
 ## Deploy from your machine
 
-1. Confirm Docker is running if you build from a Dockerfile.
+1. Start Docker if you build from a Dockerfile.
 2. From the project root:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-3. Wait for Wrangler to finish. The first Containers deploy can take several minutes while the image provisions. See [First deploy](/containers/deploy/#first-deploy-versus-later-deploys).
-4. Confirm the Worker URL responds, then exercise a sandbox path (for example run a command or open a route that uses the sandbox).
-5. Optionally list containers and images:
+3. Confirm the Worker URL responds, then exercise a sandbox route.
 
-   <PackageManagers type="exec" pkg="wrangler" args="containers list" />
-
-   <PackageManagers type="exec" pkg="wrangler" args="containers images list" />
-
-How to confirm a deploy: [Confirm a deploy](/containers/deploy/#confirm-a-deploy).
-
-## When to use an immediate rollout
-
-Use the default gradual rollout when Worker and image changes stay backward compatible.
-
-Use an immediate container rollout when they must cut over together:
-
-```sh
-npx wrangler deploy --containers-rollout=immediate
-```
-
-Typical Sandbox cases:
-
-- SDK major or preview line cutover (stable → `@next`, or other breaking protocol bumps) — detailed steps in [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover)
-- Image entrypoint or control-plane changes the old Worker cannot drive
-- Any change where mixed old/new package and image pairs fail hard
-
-[`rollout_active_grace_period`](/workers/wrangler/configuration/#containers) still applies. Leave it at `0` for hard cutovers unless you intentionally drain longer. See [Rollouts](/containers/platform-details/rollouts/).
+The first deploy can take several minutes while the image provisions. More detail: [Deploy Containers](/containers/deploy/).
 
 ## Workers Builds
 
-[Workers Builds](/workers/ci-cd/builds/) runs your configured deploy command. It does not add a Sandbox-specific pipeline.
+Production Builds default to `npx wrangler deploy` and can update the sandbox image. Non-production defaults to `npx wrangler versions upload`, which does **not** update the image.
 
-- Production defaults to `npx wrangler deploy` (full container path, including Dockerfile builds in the Builds environment).
-- Non-production defaults to `npx wrangler versions upload` (Worker version only; **sandbox image does not update**).
-
-Preview builds can therefore run new Worker code — and a newer `@cloudflare/sandbox` package — against the **image from the last full deploy**. That is safe only while the newer package remains protocol-compatible with that image. If the package bump needs a new image, validate the pair on a non-production Worker or environment, or land both through the production full deploy path. Do not point the production Worker's preview deploy command at `wrangler deploy` to refresh an image from a feature branch.
-
-Full CI setup: [Deploy Containers](/containers/deploy/#deploy-with-workers-builds).
-
-## Preview URLs are a separate task
-
-Deploying the Worker and image does **not** configure wildcard DNS for `exposePort()` preview URLs. `.workers.dev` is enough when you do not need those URLs.
-
-To serve preview URLs on your domain: [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
+Preview can therefore run a newer `@cloudflare/sandbox` package against the last full-deploy image. Keep that pair protocol-compatible, or ship package and image together on a full deploy. Refer to [Deploy Containers](/containers/deploy/#deploy-with-workers-builds).
 
 ## Related
 
-- [Deploy Containers](/containers/deploy/) — Platform deploy model, local and CI deploys
-- [Rollouts](/containers/platform-details/rollouts/) — Steps, grace period, flags
-- [Wrangler configuration](/sandbox/configuration/wrangler/) — Sandbox bindings and image
-- [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/) — DNS and TLS for `exposePort()`
-- [Migrate to Sandbox SDK 1.0 preview](/sandbox/1-0-preview/migrate/) — Breaking cutover checklist
+- [Deploy Containers](/containers/deploy/)
+- [Rollouts](/containers/platform-details/rollouts/)
+- [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/)
+- [Migrate to Sandbox SDK 1.0 preview](/sandbox/1-0-preview/migrate/)
