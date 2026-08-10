@@ -54,7 +54,7 @@ The first deploy can take several minutes while the image provisions.
 
 For production, use `wrangler deploy` so the package and image can update together.
 
-Non-production Builds default to `wrangler versions upload`, which does not publish a new image. Sandbox Workers use Durable Objects, so [preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for them. Test with `wrangler dev`, or with a staging Worker or [environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) that runs `wrangler deploy`.
+Non-production Workers Builds defaults to `wrangler versions upload`, which does not publish a new image. Sandbox uses Durable Objects to manage each sandbox container, so [preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for these Workers. Test with `wrangler dev`, or with a staging Worker or [environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) that runs `wrangler deploy`.
 
 More detail: [Before production](/containers/deploy/#before-production).
 

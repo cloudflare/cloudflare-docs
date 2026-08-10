@@ -32,10 +32,10 @@ For rollout flags and step configuration, refer to [Rollouts](/containers/platfo
 
 [Workers Builds](/workers/ci-cd/builds/) runs the build and deploy commands you configure on the Worker.
 
-| Git branch                                                                                            | Default deploy command         | Containers                                                                                                              |
-| ----------------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| Production branch                                                                                     | `npx wrangler deploy`          | Publishes the image when needed and rolls out container instances. Dockerfile builds can run in the Builds environment. |
-| Other branches (if [non-production branch builds](/workers/ci-cd/builds/build-branches/) are enabled) | `npx wrangler versions upload` | Uploads Worker code only. Does not publish a new image or roll out container instances.                                 |
+| Git branch                                                                                            | Default deploy command         | Containers                                                                                                                      |
+| ----------------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| Production branch                                                                                     | `npx wrangler deploy`          | Publishes the image when needed and rolls out container instances. Dockerfile builds can run in the Workers Builds environment. |
+| Other branches (if [non-production branch builds](/workers/ci-cd/builds/build-branches/) are enabled) | `npx wrangler versions upload` | Uploads Worker code only. Does not publish a new image or roll out container instances.                                         |
 
 ### Production
 
@@ -47,7 +47,7 @@ For rollout flags and step configuration, refer to [Rollouts](/containers/platfo
 
 2. Set **Deploy command** to `npx wrangler deploy`, or to a package script that runs a full deploy.
 
-3. Keep your Wrangler config and Dockerfile or image reference under the Builds [root directory](/workers/ci-cd/builds/configuration/).
+3. Keep your Wrangler config and Dockerfile or image reference under the Workers Builds [root directory](/workers/ci-cd/builds/configuration/).
 
 4. Push to your [production branch](/workers/ci-cd/builds/build-branches/).
 
@@ -59,25 +59,29 @@ To connect a repository, refer to [Workers Builds](/workers/ci-cd/builds/).
 
 ### Before production
 
-Containers run on [Durable Object](/durable-objects/) classes. That shapes how you test changes:
+Each container is started and addressed from a [Durable Object](/durable-objects/) in your Worker. The public [`Container`](/containers/container-class/) class extends `DurableObject`, and the runtime exposes the container on that object as `ctx.container`. Your Worker routes to a Durable Object instance; that object starts, stops, and talks to its container process. The container image and the fleet of running container instances are configured when you run `wrangler deploy`, not when you only upload a Worker version. See [Lifecycle of a Container](/containers/platform-details/architecture/).
 
-- **`wrangler deploy`** is what publishes container images and rolls out container instances.
-- **`wrangler versions upload`** (the default non-production Builds command) uploads a new Worker version only. It does not update the image or container instances.
-- **[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that use Durable Objects**, including Containers Workers. A green non-production build does not give you a full-app preview URL the way a simple Worker might.
+That matters for pre-production testing:
+
+- **`wrangler deploy`** publishes container images (when needed) and rolls out container instances for the Durable Object namespace tied to this Worker.
+- **`wrangler versions upload`** (the default non-production branch deploy command in Workers Builds) uploads a new Worker version only. It does not publish a new image or roll out container instances.
+- **[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that implement Durable Objects**, which includes Containers Workers. A successful non-production Workers Builds run still creates a Worker version, but it does not give you a Durable Object-capable preview URL for the full app.
 
 Use these paths instead:
 
-| Goal                                                                    | What to do                                                                                                                                                                                                                                                                                 |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Change Worker and container together on your machine                    | [Local development](/containers/local-dev/) with `wrangler dev`                                                                                                                                                                                                                            |
-| Share a deployed environment with its own image and container instances | A [Wrangler environment](/workers/wrangler/environments/) or second Worker, connected to Builds with a full deploy command such as `npx wrangler deploy --env staging`. Refer to [Workers Builds and Wrangler environments](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
-| Update production                                                       | Merge to the production branch (or run `wrangler deploy` locally)                                                                                                                                                                                                                          |
+| Goal                                                                    | What to do                                                                                                                                                                                                                                                                                              |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Change Worker and container together on your machine                    | [Local development](/containers/local-dev/) with `wrangler dev`                                                                                                                                                                                                                                         |
+| Share a deployed environment with its own image and container instances | A [Wrangler environment](/workers/wrangler/environments/) or second Worker, each connected to Workers Builds with a full deploy command such as `npx wrangler deploy --env staging`. Refer to [Workers Builds and Wrangler environments](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
+| Update production                                                       | Merge to the production branch (or run `wrangler deploy` locally)                                                                                                                                                                                                                                       |
 
-Do not set the production Worker's non-production deploy command to `wrangler deploy` only to try a new image from a feature branch. That can roll the container instances that already serve production traffic on that Worker.
+:::caution
+On this Worker, do not set the Workers Builds **non-production branch deploy command** to `wrangler deploy` only to try a new image from a feature branch. `wrangler deploy` updates the container application for this Worker's Durable Object namespace and can roll the container instances that already serve production traffic. Use local development or a separate staging Worker or environment instead.
+:::
 
 ## Check your deploy
 
-After `wrangler deploy` or a production Builds deploy:
+After `wrangler deploy` or a production Workers Builds deploy:
 
 1. Confirm the new Worker deployment is active in the dashboard.
 2. Send a request that must reach the container and confirm the behavior you expect.
@@ -87,12 +91,12 @@ During a gradual rollout, some container instances may still run the previous im
 
 ## Troubleshooting
 
-| Problem                                                            | What to do                                                                                                                                                                                                                                                   |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Non-production build succeeds but you cannot fully preview the app | Use [local development](/containers/local-dev/) or a staging Worker or environment with `wrangler deploy`. Refer to [Before production](#before-production).                                                                                                  |
-| Deploy or build succeeds but container instances look unchanged    | A gradual rollout may still be running, or the command did not update containers (`versions upload` or `--containers-rollout=none`). Refer to [Rollouts](/containers/platform-details/rollouts/).                                                            |
-| Deploy fails because Docker is missing                             | Required only when `image` is a Dockerfile path. Start Docker, use Workers Builds, switch to a [registry image](/containers/platform-details/image-management/#use-pre-built-container-images), or use `--containers-rollout=none` for a Worker-only deploy. |
-| First deploy: Worker works, container routes error                 | Wait several minutes for provisioning, then check logs.                                                                                                                                                                                                      |
+| Problem                                                                         | What to do                                                                                                                                                                                                                                                   |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Non-production Workers Builds run succeeds but you cannot fully preview the app | Use [local development](/containers/local-dev/) or a staging Worker or environment with `wrangler deploy`. Refer to [Before production](#before-production).                                                                                                 |
+| Deploy or Workers Builds run succeeds but container instances look unchanged    | A gradual rollout may still be running, or the command did not update containers (`versions upload` or `--containers-rollout=none`). Refer to [Rollouts](/containers/platform-details/rollouts/).                                                            |
+| Deploy fails because Docker is missing                                          | Required only when `image` is a Dockerfile path. Start Docker, use Workers Builds, switch to a [registry image](/containers/platform-details/image-management/#use-pre-built-container-images), or use `--containers-rollout=none` for a Worker-only deploy. |
+| First deploy: Worker works, container routes error                              | Wait several minutes for provisioning, then check logs.                                                                                                                                                                                                      |
 
 ## Related
 

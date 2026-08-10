@@ -69,7 +69,7 @@ On `wrangler deploy`, the Worker goes live first. Container instances update wit
 
 ## How do Workers Builds work with Containers?
 
-Production Builds should run `wrangler deploy` so images and container instances can update. Non-production builds default to `wrangler versions upload`, which does not update images. Containers Workers use Durable Objects, so preview URLs are not generated for them. Refer to [Deploy Containers](/containers/deploy/#before-production).
+On the production branch, Workers Builds should run `wrangler deploy` so images and container instances can update. Non-production Workers Builds defaults to `wrangler versions upload`, which does not update images. Containers Workers implement Durable Objects, so preview URLs are not generated for them. Refer to [Deploy Containers](/containers/deploy/#before-production).
 
 ## How does scaling work?
 
