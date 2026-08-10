@@ -59,15 +59,9 @@ To connect a repository, refer to [Workers Builds](/workers/ci-cd/builds/).
 
 ### Before production
 
-Each container is started and addressed from a [Durable Object](/durable-objects/) in your Worker. The public [`Container`](/containers/container-class/) class extends `DurableObject`, and the runtime exposes the container on that object as `ctx.container`. Your Worker routes to a Durable Object instance; that object starts, stops, and talks to its container process. The container image and the fleet of running container instances are configured when you run `wrangler deploy`, not when you only upload a Worker version. See [Lifecycle of a Container](/containers/platform-details/architecture/).
-
-That matters for pre-production testing:
-
-- **`wrangler deploy`** publishes container images (when needed) and rolls out container instances for the Durable Object namespace tied to this Worker.
+- **`wrangler deploy`** publishes container images (when needed) and rolls out container instances for this Worker.
 - **`wrangler versions upload`** (the default non-production branch deploy command in Workers Builds) uploads a new Worker version only. It does not publish a new image or roll out container instances.
-- **[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that implement Durable Objects**, which includes Containers Workers. A successful non-production Workers Builds run still creates a Worker version, but it does not give you a Durable Object-capable preview URL for the full app.
-
-Use these paths instead:
+- **[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that implement [Durable Objects](/durable-objects/)**, which includes Containers Workers. A successful non-production Workers Builds run still creates a Worker version, but not a full-app preview URL.
 
 | Goal                                                                    | What to do                                                                                                                                                                                                                                                                                              |
 | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -76,7 +70,7 @@ Use these paths instead:
 | Update production                                                       | Merge to the production branch (or run `wrangler deploy` locally)                                                                                                                                                                                                                                       |
 
 :::caution
-On this Worker, do not set the Workers Builds **non-production branch deploy command** to `wrangler deploy` only to try a new image from a feature branch. `wrangler deploy` updates the container application for this Worker's Durable Object namespace and can roll the container instances that already serve production traffic. Use local development or a separate staging Worker or environment instead.
+On this Worker, do not set the Workers Builds **non-production branch deploy command** to `wrangler deploy` only to try a new image from a feature branch. That runs a full container deploy for this Worker and can roll the container instances that already serve production traffic. Use local development or a separate staging Worker or environment instead.
 :::
 
 ## Check your deploy
