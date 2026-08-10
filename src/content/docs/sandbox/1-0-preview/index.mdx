@@ -11,7 +11,12 @@ products:
   - sandbox
 ---
 
-import { CardGrid, LinkTitleCard, PackageManagers, TypeScriptExample } from "~/components";
+import {
+	CardGrid,
+	LinkTitleCard,
+	PackageManagers,
+	TypeScriptExample,
+} from "~/components";
 
 **Sandbox SDK 1.0** is the next major release of the SDK. It is available now as a preview on the npm `@next` tag. The current stable package remains published for existing apps.
 
@@ -29,7 +34,7 @@ The self-deployed Sandbox bridge is not part of the 1.0 preview. Use the [stable
 
 <PackageManagers pkg="@cloudflare/sandbox@next" />
 
-Deploy the Worker package and the sandbox container image from the **same** preview line. Do not mix a preview Worker package with a stable container image (or the reverse). Day-to-day deploy behavior is covered in [Deploy a Sandbox application](/sandbox/guides/deploy/). Breaking cutover details, including an immediate container rollout, are in [Migrate](/sandbox/1-0-preview/migrate/).
+Deploy the Worker package and the sandbox container image from the **same** preview line. Do not mix a preview Worker package with a stable container image (or the reverse). For ongoing deploys, refer to [Deploy a Sandbox application](/sandbox/guides/deploy/). For a breaking cutover, refer to [Migrate](/sandbox/1-0-preview/migrate/).
 
 ## What 1.0 is aiming at
 
@@ -37,14 +42,14 @@ The stable package grew several ways to run commands (`exec`, `startProcess`, `e
 
 The preview collapses that toward a smaller contract:
 
-| You want… | In the preview |
-| --------- | -------------- |
-| Run a program | `exec(argv)` → process handle when **launch** succeeds |
-| See output or wait for readiness | `output()`, `logs()`, `waitForExit()`, `waitForLog()`, `waitForPort()` on the handle |
-| Stop a process | `kill(signal?)` (numeric signal; default `15`) |
-| Keep shell state across many interactive steps | A [terminal](/sandbox/1-0-preview/terminals/) (PTY), not a hidden default session |
-| Run Python / JS cells | [Code interpreter](/sandbox/1-0-preview/interpreter/) extension on your `Sandbox` subclass |
-| Talk to the container control plane | Always RPC — no transport setting |
+| You want…                                      | In the preview                                                                             |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Run a program                                  | `exec(argv)` → process handle when **launch** succeeds                                     |
+| See output or wait for readiness               | `output()`, `logs()`, `waitForExit()`, `waitForLog()`, `waitForPort()` on the handle       |
+| Stop a process                                 | `kill(signal?)` (numeric signal; default `15`)                                             |
+| Keep shell state across many interactive steps | A [terminal](/sandbox/1-0-preview/terminals/) (PTY), not a hidden default session          |
+| Run Python / JS cells                          | [Code interpreter](/sandbox/1-0-preview/interpreter/) extension on your `Sandbox` subclass |
+| Talk to the container control plane            | Always RPC — no transport setting                                                          |
 
 Procedures: [Migrate](/sandbox/1-0-preview/migrate/). Mental model: [Process execution](/sandbox/1-0-preview/processes/) and [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
 
@@ -66,7 +71,8 @@ console.log(result.stdout, result.exitCode);
 const process = await sandbox.exec(["npm", "test"]);
 const result = await process.output({ encoding: "utf8" });
 console.log(result.stdout, result.exitCode);
-```
+
+````
 </TypeScriptExample>
 
 Shell features such as pipes and `&&` need an explicit shell, for example `['/bin/bash', '-lc', 'cd app && npm test']`. Pass `cwd` and `env` on each `exec()` when the process needs them. Details: [Process execution](/sandbox/1-0-preview/processes/), [Processes API](/sandbox/1-0-preview/api/processes/).
@@ -102,7 +108,8 @@ This is **not** a new container product. You still address a sandbox with a stab
 <TypeScriptExample>
 ```ts
 const sandbox = getSandbox(env.Sandbox, "user-123");
-```
+````
+
 </TypeScriptExample>
 
 That sandbox runs in a **container**. The ID is stable. The container instance behind it is not always the same one. Processes and terminals you start exist only in the **current** container. When that container stops or is replaced, those processes and terminals are gone — old handles fail closed instead of quietly attaching to a new container for the same sandbox ID.

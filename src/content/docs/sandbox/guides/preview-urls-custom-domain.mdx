@@ -10,9 +10,7 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-Set up wildcard DNS, routes, and TLS so `exposePort()` preview URLs work on your domain.
-
-This does not deploy your sandbox image. To deploy the Worker and image, refer to [Deploy a Sandbox application](/sandbox/guides/deploy/).
+Set up wildcard DNS, routes, and TLS so `exposePort()` preview URLs work on your domain. To deploy the Worker and sandbox image, refer to [Deploy a Sandbox application](/sandbox/guides/deploy/).
 
 :::note[Only required for preview URLs]
 Custom domain setup is only needed if you use `exposePort()` to expose services from sandboxes. If your application does not use `exposePort()`, you can deploy to `.workers.dev` without this configuration.
@@ -21,7 +19,7 @@ For public URLs without custom-domain setup, [`sandbox.tunnels`](/sandbox/api/tu
 :::
 
 :::note[Coming soon: Sandbox SDK 1.0]
-Command examples that use `startProcess` are stable-only. On **`@next`**, use argv `exec` process handles - [Process execution](/sandbox/1-0-preview/processes/). Package and image still must match on the same release line.
+Command examples that use `startProcess` are stable-only. On **`@next`**, use argv `exec` process handles. Refer to [Process execution](/sandbox/1-0-preview/processes/). Package and image still must match on the same release line.
 :::
 
 Preview URLs need wildcard DNS because each exposed port gets a unique subdomain: `https://8080-abc123.yourdomain.com`.
@@ -120,7 +118,7 @@ For detailed troubleshooting, see the [Workers routing documentation](/workers/c
 
 ## Related
 
-- [Deploy a Sandbox application](/sandbox/guides/deploy/) - Worker and image deploy and rollouts
+- [Deploy a Sandbox application](/sandbox/guides/deploy/) - Deploy Worker and image
 - [Preview URLs](/sandbox/concepts/preview-urls/) - How preview URLs work
 - [Expose services](/sandbox/guides/expose-services/) - Patterns for exposing ports
 - [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for development

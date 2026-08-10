@@ -11,11 +11,9 @@ products:
 
 import { PackageManagers } from "~/components";
 
-Deploy after [Get started](/sandbox/get-started/) or from an existing project.
+Sandbox runs on [Containers](/containers/). For deploy commands, Workers Builds, and rollout flags, refer to [Deploy Containers](/containers/deploy/) and [Rollouts](/containers/platform-details/rollouts/).
 
-Sandbox runs on [Containers](/containers/). Shared deploy behavior, Workers Builds, and rollout flags are in [Deploy Containers](/containers/deploy/) and [Rollouts](/containers/platform-details/rollouts/).
-
-For `exposePort()` on a custom domain, refer to [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/). That is separate from deploying the image.
+To put `exposePort()` on a custom domain, refer to [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
 
 :::note[Coming soon: Sandbox SDK 1.0]
 This guide targets today's stable `@cloudflare/sandbox` package.
@@ -25,19 +23,19 @@ On **`@cloudflare/sandbox@next`**, keep the Worker package and container image o
 
 ## Keep the package and image aligned
 
-The Worker depends on `@cloudflare/sandbox` (or `@cloudflare/sandbox@next`). The container image must use the same release line as that package (Dockerfile and base image tags from the template or docs for that version).
+The Worker depends on `@cloudflare/sandbox` (or `@cloudflare/sandbox@next`). The container image must come from the same release line (Dockerfile and base image tags from the template or docs for that version).
 
 When you bump the npm package:
 
 1. Update the Dockerfile or image reference for the same line.
-2. Run `wrangler deploy` so the new image publishes. `wrangler versions upload` does not update the image.
-3. If the Worker and image must cut over together, use an immediate rollout:
+2. Run `wrangler deploy` so the new image is published.
+3. If the Worker and image must cut over together, deploy with an immediate rollout:
 
    ```sh
    npx wrangler deploy --containers-rollout=immediate
    ```
 
-   Use this for stable to `@next` cutovers ([Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover)) and other breaking package/image pairs. Refer to [Rollouts](/containers/platform-details/rollouts/).
+   Use this for stable to `@next` cutovers and other breaking package/image pairs. Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/platform-details/rollouts/).
 
 Do not mix a stable package with a `@next` image, or the reverse.
 
@@ -50,15 +48,15 @@ Do not mix a stable package with a `@next` image, or the reverse.
 
 3. Confirm the Worker URL responds, then exercise a sandbox route.
 
-The first deploy can take several minutes while the image provisions. Refer to [Deploy Containers](/containers/deploy/).
+The first deploy can take several minutes while the image provisions.
 
 ## Workers Builds
 
-Production Builds should run `wrangler deploy` so package and image can update together.
+For production, use `wrangler deploy` so the package and image can update together.
 
-Non-production Builds default to `wrangler versions upload`. That does not publish a new sandbox image. Sandbox Workers also use Durable Objects, so [preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for them. Use `wrangler dev`, or a staging Worker or [environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) that runs full `wrangler deploy`, to test image changes before production.
+Non-production Builds default to `wrangler versions upload`, which does not publish a new image. Sandbox Workers use Durable Objects, so [preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for them. Test with `wrangler dev`, or with a staging Worker or [environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) that runs `wrangler deploy`.
 
-Details: [Feature branches and versions upload](/containers/deploy/#feature-branches-and-versions-upload).
+More detail: [Before production](/containers/deploy/#before-production).
 
 ## Related
 

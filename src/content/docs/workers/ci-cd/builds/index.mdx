@@ -73,9 +73,7 @@ If a build succeeds, it is uploaded as a version. If the build is configured to 
 
 ## Workers with Containers
 
-Production Builds that run `wrangler deploy` can publish container images and roll out container instances. Non-production builds default to `wrangler versions upload`, which does not update images. Containers Workers use Durable Objects, so [preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for them.
-
-Refer to [Deploy Containers](/containers/deploy/#feature-branches-and-versions-upload).
+Use `wrangler deploy` on the production branch so container images and container instances can update. Non-production builds default to `wrangler versions upload`, which does not update images. Containers Workers use Durable Objects, so [preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for them. Refer to [Deploy Containers](/containers/deploy/#before-production).
 
 ## Disconnecting builds
 
