@@ -16,7 +16,7 @@ Indexes enable D1 to improve query performance over the indexed columns for comm
 
 Indexes are useful:
 
-- When you want to improve the read performance over columns that are regularly used in predicates - for example, a `WHERE email_address = ?` or `WHERE user_id = 'a793b483-df87-43a8-a057-e5286d3537c5'` - email addresses, usernames, user IDs and/or dates are good choices for columns to index in typical web applications or services.
+- When you want to improve the read performance over columns that are regularly used in predicates - for example, a `WHERE email_address = ?` or `WHERE user_id = 'a793b483-df87-43a8-a057-e5286d3537c5'` - email addresses, usernames, user IDs, and dates are good choices for columns to index in typical web applications or services.
 - For enforcing uniqueness constraints on a column or columns - for example, an email address or user ID via the `CREATE UNIQUE INDEX`.
 - In cases where you query over multiple columns together - `(customer_id, transaction_date)`.
 - For columns used to join tables together - for example, the `ON orders.customer_id = customers.id` in a `JOIN`. A suitable index can avoid repeated scans or the creation of a temporary index. Use [`EXPLAIN QUERY PLAN`](#test-an-index) to verify the query plan.
@@ -117,7 +117,7 @@ Using an index can reduce the number of rows read by a query. Use the `meta` obj
 
 D1 [bills by the number of rows read and rows written](/d1/platform/pricing/), not by the number of rows your query returns. A query that scans an entire table to return a single row is billed for every row it scans. Adding an index so that D1 can jump straight to the rows it needs is therefore one of the most effective ways to reduce both latency **and** cost.
 
-Most unexpectedly large D1 bills come from a small number of frequently run queries that each read (or write) far more rows than they return. The table below lists common patterns that touch too many rows, along with how to fix them. Use [`EXPLAIN QUERY PLAN`](#test-an-index) to check whether a query does a full `SCAN` (reads every row) or a `SEARCH ... USING INDEX` (jumps to matching rows).
+Most unexpectedly large D1 bills come from a small number of frequently run queries that each read (or write) far more rows than they return. The following table lists common patterns that touch too many rows, along with how to fix them. Use [`EXPLAIN QUERY PLAN`](#test-an-index) to check whether a query does a full `SCAN` (reads every row) or a `SEARCH ... USING INDEX` (jumps to matching rows).
 
 | Pattern                                                                                 | Why it reads or writes too many rows                                                                                                                                     | Fix                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -149,7 +149,7 @@ Given an index of `CREATE INDEX idx_customer_id_transaction_date ON transactions
 
 Notes:
 
-- If you created an index over three columns instead — `customer_id`, `transaction_date` and `shipping_status` — a query that uses both `customer_id` and `transaction_date` would use the index, as you are including all columns "to the left".
+- If you created an index over three columns instead — `customer_id`, `transaction_date`, and `shipping_status` — a query that uses both `customer_id` and `transaction_date` would use the index, as you are including all columns "to the left".
 - With the same index, a query that uses only `transaction_date` and `shipping_status` would _not_ use the index, as you have not used `customer_id` (the leftmost column) in the query.
 
 ## Partial indexes
@@ -157,7 +157,7 @@ Notes:
 Partial indexes are indexes over a subset of rows in a table. Partial indexes are defined by the use of a `WHERE` clause when creating the index. A partial index can be useful to omit certain rows, such as those where values are `NULL` or where rows with a specific value are present across queries.
 
 - A concrete example of a partial index would be on a table with a `order_status INTEGER` column, where `6` might represent `"order complete"` in your application code.
-- This would allow queries against orders that are yet to be fulfilled, shipped or are in-progress, which are likely to be some of the most common users (users checking their order status).
+- This would allow queries against orders that are unfulfilled, in-progress, or shipped, which are likely to be some of the most common queries (users checking their order status).
 - Partial indexes also keep the index from growing unbounded over time. The index does not need to keep a row for every completed order, and completed orders are likely to be queried far fewer times than in-progress orders.
 
 A partial index that filters out completed orders from the index would resemble the following:
