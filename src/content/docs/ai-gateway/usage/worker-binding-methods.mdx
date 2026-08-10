@@ -64,6 +64,8 @@ const resp = await env.AI.run(
 
 </TypeScriptExample>
 
+To use prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/), set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing** and specify that gateway in the binding request. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#frontier-models).
+
 **Third-party model:**
 
 <TypeScriptExample>
@@ -96,14 +98,14 @@ Browse available models in the [model catalog](/ai/models/).
 
 The third argument to `env.AI.run()` accepts a `gateway` object with the following parameters:
 
-| Parameter    | Type      | Default    | Description                                                                                      |
-| ------------ | --------- | ---------- | ------------------------------------------------------------------------------------------------ |
+| Parameter    | Type      | Default    | Description                                                                                                                                                                                                                                                                               |
+| ------------ | --------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `id`         | `string`  | _required_ | Name of your [AI Gateway](/ai-gateway/get-started/). Must be in the same account as your Worker. Use `"default"` to automatically create a gateway on the first authenticated request. Refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway) for details. |
-| `skipCache`  | `boolean` | `false`    | Skip the [cache](/ai-gateway/features/caching/) for this request.                                |
-| `cacheTtl`   | `number`  | —          | [Cache TTL](/ai-gateway/features/caching/) in seconds.                                           |
-| `cacheKey`   | `string`  | —          | Custom [cache key](/ai-gateway/features/caching/) for this request.                              |
-| `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request.                  |
-| `metadata`   | `object`  | —          | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry.        |
+| `skipCache`  | `boolean` | `false`    | Skip the [cache](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                         |
+| `cacheTtl`   | `number`  | —          | [Cache TTL](/ai-gateway/features/caching/) in seconds.                                                                                                                                                                                                                                    |
+| `cacheKey`   | `string`  | —          | Custom [cache key](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                       |
+| `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request.                                                                                                                                                                                                           |
+| `metadata`   | `object`  | —          | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry.                                                                                                                                                                                                 |
 
 ## `env.AI.aiGatewayLogId`
 
@@ -197,5 +199,3 @@ const anthropic = createAnthropic({
 	baseURL: await env.AI.gateway("my-gateway").getUrl("anthropic"),
 });
 ```
-
-

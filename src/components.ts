@@ -37,7 +37,6 @@ export { default as YouTube } from "./components/cf/YouTube.astro";
 export { default as Example } from "./components/cf/Example.astro";
 export { default as Markdown } from "./components/cf/Markdown.astro";
 export { default as CURL } from "./components/cf/CURL.astro";
-export { default as GitHubCode } from "./components/cf/GitHubCode.astro";
 export { default as Flex } from "./components/cf/Flex.astro";
 export { default as Width } from "./components/cf/Width.astro";
 export { default as RuleID } from "./components/cf/RuleID.astro";
@@ -53,7 +52,6 @@ export { default as PagesBuildPresetsTable } from "./components/cf/PagesBuildPre
 export { default as ComponentsUsage } from "./components/cf/ComponentsUsage.astro";
 export { default as GranularControlApplicationsList } from "./components/cf/GranularControlApplicationsList.astro";
 export { default as ProductAvailabilityText } from "./components/cf/ProductAvailabilityText.astro";
-export { default as WorkersTemplates } from "./components/cf/WorkersTemplates.astro";
 export { default as AvailableNotifications } from "./components/cf/AvailableNotifications.astro";
 export { default as ExtraFlagDetails } from "./components/cf/ExtraFlagDetails.astro";
 export { default as FourCardGrid } from "./components/cf/FourCardGrid.astro";

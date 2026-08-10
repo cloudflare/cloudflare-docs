@@ -10,6 +10,13 @@ products:
 
 import { WranglerConfig } from "~/components";
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents production preview-URL setup for today's stable package.
+
+Command examples that use `startProcess` are stable-only. On **`@next`**, use argv `exec` process handles — [Process execution](/sandbox/1-0-preview/processes/). Package and image still must match on the same release line.
+:::
+
+
 :::note[Only required for preview URLs]
 This guide covers `exposePort()` in production. Custom domain setup is ONLY needed if you use `exposePort()` to expose services from sandboxes. If your application does not use `exposePort()`, you can deploy to `.workers.dev` without this configuration.
 

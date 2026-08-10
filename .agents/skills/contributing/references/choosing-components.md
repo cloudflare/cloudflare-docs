@@ -20,7 +20,6 @@ Two rules first:
 | A step that navigates the dashboard                    | `DashButton`                                 | Yes        |
 | A Cloudflare API endpoint to call                      | `APIRequest`                                 | —          |
 | A non-Cloudflare curl command                          | `CURL`                                       | —          |
-| Code that lives in a Cloudflare GitHub repo            | `GitHubCode` (pin a full commit hash)        | —          |
 | A full Wrangler command or namespace reference         | `WranglerCommand` / `WranglerNamespace`      | —          |
 | A parameter/field data type or constraint              | `Type` / `MetaInfo`                          | —          |
 | Mutually exclusive paths (Dashboard vs API, languages) | `Tabs` / `TabItem`                           | —          |
@@ -60,7 +59,6 @@ Two rules first:
 - **`TypeScriptExample`** — any Workers JS/TS. Auto-generates the JS tab from TS, so there is one source to maintain. Do not use bare `ts`/`js` fences.
 - **`WranglerConfig`** — any Wrangler config. Provide TOML or JSON; the other is generated. Use `$today` for `compatibility_date`. Note minimum compatibility dates in a `:::note`.
 - **`PackageManagers`** — install/exec commands across npm, yarn, pnpm, and bun tabs.
-- **`GitHubCode`** — show real code from a Cloudflare repo without copying it into the page; pin a full 40-character commit so it stays stable.
 - **`WranglerCommand` / `WranglerNamespace`** — auto-generated Wrangler CLI reference for a command or a whole namespace.
 - **Plain fenced block** — any other language (Python, Rust, Go) or non-Workers config (JSON, YAML). Use a lowercase language; use `txt` for generic output. For command output, add the `output` suffix to a second fence.
 

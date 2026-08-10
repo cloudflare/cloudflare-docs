@@ -109,7 +109,7 @@ export const sidebarSections: SidebarSection[] = [
 				collapsed: true,
 				nodes: [
 					link("R2", "/r2/"),
-					link("R2 Data Catalog", "/r2/data-catalog/"),
+					link("R2 Data Catalog", "/r2-data-catalog/"),
 					link("R2 SQL", "/r2-sql/"),
 					link("Pipelines", "/pipelines/"),
 					link("D1", "/d1/"),
