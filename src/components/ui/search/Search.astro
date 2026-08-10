@@ -264,7 +264,7 @@ const aiSearchApiUrl =
 			this.prepareModal();
 
 			const modifier = this.querySelector("[data-search-shortcut-modifier]");
-			if (modifier && /Mac|iPhone|iPad|iPod/.test(navigator.platform)) {
+			if (modifier && /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)) {
 				modifier.textContent = "⌘";
 			}
 		}
