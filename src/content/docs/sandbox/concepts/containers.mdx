@@ -8,6 +8,12 @@ products:
   - sandbox
 ---
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents containers on today's stable `@cloudflare/sandbox` package.
+
+Examples that use `startProcess` apply to the stable package. On **`@next`**, long-running work uses `exec(argv)` process handles — [Process execution](/sandbox/1-0-preview/processes/).
+:::
+
 Each sandbox runs in an isolated Linux container with Python, Node.js, and common development tools pre-installed. For a complete list of pre-installed software and how to customize the container image, see [Dockerfile reference](/sandbox/configuration/dockerfile/).
 
 ## Runtime software installation

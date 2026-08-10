@@ -10,6 +10,12 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents file watching on today's stable `@cloudflare/sandbox` package, including `sessionId` and session helpers.
+
+On the **1.0 preview** (`@next`), `watch` remains available without sessions. Refer to [Migrate](/sandbox/1-0-preview/migrate/) for the sessionless execution model.
+:::
+
 Monitor filesystem changes in real-time using Linux's native inotify system. The `watch()` method returns a Server-Sent Events (SSE) stream of file change events that you consume with `parseSSEStream()`.
 
 ## Methods

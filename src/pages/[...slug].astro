@@ -1,6 +1,6 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
-import { getEntries, getEntry } from "astro:content";
+import { getEntries } from "astro:content";
 import {
 	getDocsStaticPaths,
 	getDocsPageProps,
@@ -14,6 +14,7 @@ import { config } from "virtual:nimbus/config";
 import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
 import { getOgImage } from "~/util/og";
+import { getDirectoryEntryBySection } from "~/util/directory";
 import {
 	pageHasRuntimeHeadings,
 	scrapeRenderedHeadings,
@@ -105,9 +106,7 @@ const socialImage = entry.data.socialImage ?? (await getOgImage(entry));
 // emits the direct-hit meta refresh and noindex metadata.
 const externalLink = entry.data.external_link;
 const head = entry.data.head ?? [];
-const sectionProduct = sectionSegment
-	? await getEntry("directory", sectionSegment.replaceAll(".", ""))
-	: undefined;
+const sectionProduct = await getDirectoryEntryBySection(sectionSegment);
 const productRefs = (entry.data.products ?? []).map((product) =>
 	typeof product === "string"
 		? ({ collection: "directory", id: product } as const)
