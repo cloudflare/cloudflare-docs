@@ -28,7 +28,7 @@ When a commit is pushed to your connected repository, Workers Builds runs a two-
 For preview builds (commits to branches other than your production branch), the deploy command is replaced with a **preview deploy command** (defaults to `npx wrangler versions upload`), which creates a preview version without promoting it to production.
 
 :::note[Workers that use Containers]
-`wrangler deploy` can build Dockerfile images and roll out container instances. `wrangler versions upload` does not. Preview defaults therefore update Worker code only and leave the container image from the last full deploy in place. See [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/) and [Container deployments](/containers/deployments/).
+`wrangler deploy` can build Dockerfile images and roll out container instances. `wrangler versions upload` does not. Preview defaults therefore update Worker code only and leave the container image from the last full deploy in place. See [Deploy Containers](/containers/deploy/#deploy-with-workers-builds).
 :::
 
 ## Build settings
@@ -67,7 +67,7 @@ Examples of other deploy commands you can set include:
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npx wrangler deploy --assets ./public/`             | Deploy your Worker along with static assets from the specified directory. Alternatively, you can use the [assets binding](/workers/static-assets/binding/).                                                                                                                     |
 | `npx wrangler deploy --env staging`                  | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
-| `npx wrangler deploy --containers-rollout=immediate` | For [Containers](/containers/) Workers that need Worker code and container instances to cut over together. See [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/).                                                                                |
+| `npx wrangler deploy --containers-rollout=immediate` | For [Containers](/containers/) Workers that need Worker code and container instances to cut over together. See [Deploy Containers](/containers/deploy/).                                                                                                                        |
 | `npx wrangler deploy --containers-rollout=none`      | Deploy the Worker only; skip container image build/push and instance rollout.                                                                                                                                                                                                   |
 
 ### Non-production branch deploy command
@@ -76,7 +76,7 @@ The non-production branch deploy command is only applicable when you have enable
 
 It defaults to `npx wrangler versions upload`, producing a [preview URL](/workers/versions-and-deployments/preview-urls/). Like the build and deploy commands, it can be customized to instead run anything.
 
-For Workers that use [Containers](/containers/), the default preview command uploads a Worker version only. It does not build container images or roll out instances. If you need to validate a new image before production, use a separate Worker or Wrangler environment — do not point this production Worker's non-production command at `wrangler deploy` just to refresh images. See [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/#configure-non-production-preview-builds).
+For Workers that use [Containers](/containers/), the default preview command uploads a Worker version only. It does not build container images or roll out instances. If you need to validate a new image before production, use a separate Worker or Wrangler environment — do not point this production Worker's non-production command at `wrangler deploy` just to refresh images. See [Deploy Containers](/containers/deploy/#configure-non-production-preview-builds).
 
 Examples of other non-production branch deploy commands you can set include:
 

@@ -627,6 +627,8 @@
 /containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
 /containers/container-package/ /containers/container-class/ 301
 /containers/platform-details/ /containers/platform-details/architecture/ 301
+/containers/deployments/ /containers/deploy/ 301
+/containers/deploy-with-workers-builds/ /containers/deploy/ 301
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
