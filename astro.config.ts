@@ -281,10 +281,7 @@ export default defineConfig({
 	markdown,
 	image: {
 		service: {
-			entrypoint: "astro/assets/services/sharp",
-			config: {
-				limitInputPixels: false,
-			},
+			entrypoint: "@astrojs/cloudflare/image-service",
 		},
 	},
 	server: {

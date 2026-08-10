@@ -140,6 +140,16 @@ export default class extends WorkerEntrypoint<Env> {
 		const url = new URL(request.url);
 		const { pathname } = url;
 
+		// Image Resizing makes a subrequest to fetch the source image. Scope the
+		// bypass to /_astro/ so only asset paths skip the Worker, not arbitrary
+		// client requests with a spoofed Via header.
+		if (
+			pathname.startsWith("/_astro/") &&
+			/image-resizing/.test(request.headers.get("via") ?? "")
+		) {
+			return this.env.ASSETS.fetch(request);
+		}
+
 		// Preview-only robots.txt — disallows all crawling and AI content signals
 		if (pathname === "/robots.txt") {
 			return new Response(PREVIEW_ROBOTS_TXT, {
