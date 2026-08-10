@@ -278,7 +278,6 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
-	cacheDir: ".astro-cache",
 	markdown,
 	image: {
 		service: {
@@ -296,7 +295,7 @@ export default defineConfig({
 		...appVite,
 		server: {
 			watch: {
-				ignored: ["**/dist/**", "**/.astro-cache/**"],
+				ignored: ["**/dist/**"],
 			},
 		},
 	},
