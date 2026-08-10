@@ -8,7 +8,7 @@ export { Badge } from "./components/ui/badge";
 export { Code } from "./components/ui/code";
 export { FileTree } from "./components/ui/file-tree";
 export { default as LinkButton } from "./components/ui/link-button/LinkButton.astro";
-export { Icon, Icon as AstroIcon } from "astro-icon/components";
+export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";

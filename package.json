@@ -84,7 +84,6 @@
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.65.0",
 		"astro": "^7.1.4",
-		"astro-icon": "1.1.5",
 		"astro-skills": "0.1.1",
 		"cidr-tools": "12.1.2",
 		"clsx": "2.1.1",
