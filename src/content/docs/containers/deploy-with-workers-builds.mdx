@@ -1,0 +1,140 @@
+---
+pcx_content_type: how-to
+title: Deploy with Workers Builds
+description: Run Container image builds and instance rollouts through Workers Builds without surprising preview or production skew.
+sidebar:
+  order: 2.45
+products:
+  - containers
+  - workers
+---
+
+import { Steps, DashButton } from "~/components";
+
+This guide shows how to deploy a Worker that uses [Containers](/containers/) with [Workers Builds](/workers/ci-cd/builds/) (Git-connected builds).
+
+Workers Builds does not use a separate Containers pipeline. It runs the **build command** and **deploy command** you configure. Those commands decide whether images build and instances roll out.
+
+For what a local or CI `wrangler deploy` changes, see [Deployments](/containers/deployments/). For git connect steps only, see [Workers Builds](/workers/ci-cd/builds/).
+
+## Before you start
+
+- A Worker with a [`containers`](/workers/wrangler/configuration/#containers) entry in Wrangler config
+- The Worker [connected to a Git repository](/workers/ci-cd/builds/) in the Cloudflare dashboard
+- Docker-based images: your config uses a Dockerfile path (or directory), or you already publish images another way and reference a registry image
+
+## How Builds interacts with Containers
+
+| Branch type              | Default deploy command         | Worker version                                            | Container image build/push | Instance rollout         |
+| ------------------------ | ------------------------------ | --------------------------------------------------------- | -------------------------- | ------------------------ |
+| Production               | `npx wrangler deploy`          | Uploaded and becomes active                               | Yes, when config needs it  | Yes (gradual by default) |
+| Non-production (preview) | `npx wrangler versions upload` | Uploaded only (not active until you deploy or promote it) | No                         | No                       |
+
+Implications:
+
+- A green production build that runs `wrangler deploy` performs the same container path as a local full deploy, including Dockerfile builds when configured.
+- A green preview build that runs `wrangler versions upload` can ship new Worker code against the **container image from the last full deploy**. It does not refresh images or roll instances.
+- Build success means the configured commands finished. It does not mean every container instance worldwide already runs the new image.
+
+The Workers Builds environment provides Docker so Dockerfile-based `wrangler deploy` can build and push images during the deploy command.
+
+## Configure production for a full container deploy
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Workers & Pages**, open your Worker, then go to **Settings** > **Builds**.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Set **Deploy command** to a full deploy, for example:
+
+   ```sh
+   npx wrangler deploy
+   ```
+
+   Customize only if you already use Wrangler environments or a package script, for example `npm run deploy` or `npx wrangler deploy --env production`. See [Deploy command](/workers/ci-cd/builds/configuration/#deploy-command).
+
+3. Keep the Dockerfile (or image reference) and `containers` config in the repo path that Builds uses as the [root directory](/workers/ci-cd/builds/configuration/).
+
+4. Push to your [production branch](/workers/ci-cd/builds/build-branches/).
+
+5. Open the build in the dashboard and confirm it succeeds. Then verify containers as in [Confirm a deploy](/containers/deployments/#confirm-a-deploy).
+
+</Steps>
+
+### Optional: immediate container cutover from CI
+
+If Worker code and the image must switch together (breaking protocol or entrypoint changes), put the flag on the deploy command:
+
+```sh
+npx wrangler deploy --containers-rollout=immediate
+```
+
+[`rollout_active_grace_period`](/workers/wrangler/configuration/#containers) still applies. See [Rollouts](/containers/platform-details/rollouts/).
+
+### Optional: Worker-only production deploy
+
+To update Worker code without building images or rolling instances:
+
+```sh
+npx wrangler deploy --containers-rollout=none
+```
+
+Use this only when you intend to leave the running container image unchanged.
+
+## Configure preview branches
+
+Non-production builds default to `npx wrangler versions upload`. For Container Workers that means:
+
+| Goal                                                          | Preview deploy command                                                                                                                                                               |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Preview **Worker** code only; keep production container image | Keep `npx wrangler versions upload` (default)                                                                                                                                        |
+| Preview needs a **new image** or instance rollout             | Use `npx wrangler deploy` (and accept that this is a full deploy path for that build’s Wrangler config/env — not a production promotion by itself unless you point it at production) |
+
+Most teams keep `versions upload` on preview and reserve image changes for production `wrangler deploy`. If preview Worker code depends on a new image or protocol, either:
+
+- Keep Worker and image backward compatible until production deploy, or
+- Run a full deploy command on a dedicated non-production Worker/environment that has its own container config, or
+- Deploy the image-changing commit with `wrangler deploy` from a controlled branch/environment
+
+Set the preview command under **Non-production branch deploy command** when [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds) are enabled. See [Configuration](/workers/ci-cd/builds/configuration/#non-production-branch-deploy-command).
+
+## Dockerfile and build environment
+
+When the production deploy command runs `wrangler deploy` and `image` points at a Dockerfile:
+
+1. Builds starts a managed build environment for your job.
+2. Your **build command** runs (if set).
+3. Your **deploy command** runs Wrangler.
+4. Wrangler builds the image with Docker in that environment, pushes to the account registry when needed, then configures containers and starts a rollout.
+
+You do not need to install Docker in your repo for that path. You still need a valid Dockerfile and a Wrangler version that supports your Containers config (from your project dependencies when you invoke `npx wrangler`).
+
+If you use only pre-built registry images (no local Dockerfile on deploy), Docker is not required for the image step; Wrangler resolves the image reference instead. See [Image management](/containers/platform-details/image-management/).
+
+## Verify after a Builds deploy
+
+1. Build history shows success for the commit you expect.
+2. For production `wrangler deploy`: Worker **Deployments** shows a new active deployment.
+3. Run `npx wrangler containers list` and `npx wrangler containers images list` locally (authenticated), or use the [Containers dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers).
+4. Hit a route that must reach the container and confirm behavior matches the new Worker and image.
+5. If you used a gradual rollout, allow time for steps to finish before requiring every instance to show the new image.
+
+Details and limits of “ready”: [Confirm a deploy](/containers/deployments/#confirm-a-deploy).
+
+## Common failure modes
+
+| Symptom                                            | Likely cause                                                              | What to do                                                                                                                                 |
+| -------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Preview Worker breaks talking to containers        | Preview used `versions upload`; image still old                           | Keep APIs compatible, or deploy image changes with `wrangler deploy` on the environment that should run them                               |
+| Production build green but instances look old      | Gradual rollout still in progress, or grace period holding busy instances | Wait for rollout steps; check [Rollouts](/containers/platform-details/rollouts/); confirm you did not pass `--containers-rollout=none`     |
+| Deploy fails needing Docker                        | Dockerfile image but deploy cannot use Docker                             | Use Workers Builds (Docker available), run Docker locally, switch to a pre-built image ref, or `--containers-rollout=none` for Worker-only |
+| First Containers deploy errors on container routes | Image still provisioning                                                  | Wait several minutes; check logs; see [First deploy](/containers/deployments/#first-deploy)                                                |
+
+## Related
+
+- [Deployments](/containers/deployments/) — Model for Worker vs container updates
+- [Rollouts](/containers/platform-details/rollouts/) — Steps, grace period, immediate and none
+- [Image management](/containers/platform-details/image-management/) — Registry and Dockerfile behavior
+- [Workers Builds configuration](/workers/ci-cd/builds/configuration/) — Build and deploy command settings
+- [Build branches](/workers/ci-cd/builds/build-branches/) — Production vs non-production builds

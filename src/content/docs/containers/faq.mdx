@@ -67,6 +67,10 @@ An Example:
 
 `wrangler deploy` updates Worker code when the new version becomes active, then builds or resolves images and rolls out container instances. Instances default to a gradual rollout, so Worker code and images can temporarily disagree. See [Deployments](/containers/deployments/) for the model and [Rollouts](/containers/platform-details/rollouts/) for steps, grace periods, and flags.
 
+## How do Workers Builds work with Containers?
+
+Workers Builds runs your deploy command. Production defaults to `wrangler deploy` (full container path). Non-production defaults to `wrangler versions upload` (Worker version only; no image build or instance rollout). See [Deploy with Workers Builds](/containers/deploy-with-workers-builds/).
+
 ## How does scaling work?
 
 Containers scale by creating or addressing specific instances. For stateless routing across a

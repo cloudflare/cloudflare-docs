@@ -8,7 +8,13 @@ products:
   - workers
 ---
 
-import { DirectoryListing, Render, Tabs, TabItem, DashButton } from "~/components";
+import {
+	DirectoryListing,
+	Render,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 When connecting your Git repository to your Worker, you can customize the configurations needed to build and deploy your Worker.
 
@@ -20,6 +26,10 @@ When a commit is pushed to your connected repository, Workers Builds runs a two-
 2. **Deploy command** - Deploys your Worker to Cloudflare (defaults to `npx wrangler deploy`)
 
 For preview builds (commits to branches other than your production branch), the deploy command is replaced with a **preview deploy command** (defaults to `npx wrangler versions upload`), which creates a preview version without promoting it to production.
+
+:::note[Workers that use Containers]
+`wrangler deploy` can build Dockerfile images and roll out container instances. `wrangler versions upload` does not. Preview defaults therefore update Worker code only and leave the container image from the last full deploy in place. See [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/) and [Containers deployments](/containers/deployments/).
+:::
 
 ## Build settings
 
@@ -35,7 +45,7 @@ Note that when you update and save build settings, the updated settings will be 
 | **Git repository**                                                                                                    | Choose the Git repository you would like to connect your Worker to.                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | **Git branch**                                                                                                        | Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to `main`.                                                                                                                                                                                                                                                                                                                                                                            |
 | **Build command** _(Optional)_                                                                                        | Set a build command if your project requires a build step (e.g. `npm run build`). This is necessary, for example, when using a [front-end framework](/workers/ci-cd/builds/configuration/#framework-support) such as Next.js or Remix.                                                                                                                                                                                                                                                 |
-| **[Deploy command](/workers/ci-cd/builds/configuration/#deploy-command)**                                             | The deploy command lets you set the [specific Wrangler command](/workers/wrangler/commands/general/#deploy) used to deploy your Worker. Your deploy command will default to `npx wrangler deploy` but you may customize this command. Workers Builds will use the Wrangler version set in your `package json`.                                                                                                                                                                                 |
+| **[Deploy command](/workers/ci-cd/builds/configuration/#deploy-command)**                                             | The deploy command lets you set the [specific Wrangler command](/workers/wrangler/commands/general/#deploy) used to deploy your Worker. Your deploy command will default to `npx wrangler deploy` but you may customize this command. Workers Builds will use the Wrangler version set in your `package json`.                                                                                                                                                                         |
 | **[Non-production branch deploy command](/workers/ci-cd/builds/configuration/#non-production-branch-deploy-command)** | Set a command to run when executing [a build for commit on a non-production branch](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds). This will default to `npx wrangler versions upload` but you may customize this command. Workers Builds will use the Wrangler version set in your `package json`.                                                                                                                                                    |
 | **Root directory** _(Optional)_                                                                                       | Specify the path to your project. The root directory defines where the build command will be run and can be helpful in [monorepos](/workers/ci-cd/builds/advanced-setups/#monorepos) to isolate a specific project within the repository for builds.                                                                                                                                                                                                                                   |
 | **[API token](/workers/ci-cd/builds/configuration/#api-token)** _(Optional)_                                          | The API token is used to authenticate your build request and authorize the upload and deployment of your Worker to Cloudflare. By default, Cloudflare will automatically generate an API token for your account when using Workers Builds, and continue to use this API token for all subsequent builds. Alternatively, you can [create your own API token](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/authentication/#generate-tokens), or select one that you already own. |
@@ -53,16 +63,20 @@ If you have added a Wrangler deploy command as a script in your `package.json`, 
 
 Examples of other deploy commands you can set include:
 
-| Example Command                          | Description                                                                                                                                                                                                                                                                     |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npx wrangler deploy --assets ./public/` | Deploy your Worker along with static assets from the specified directory. Alternatively, you can use the [assets binding](/workers/static-assets/binding/).                                                                                                                     |
-| `npx wrangler deploy --env staging`      | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
+| Example Command                                      | Description                                                                                                                                                                                                                                                                     |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npx wrangler deploy --assets ./public/`             | Deploy your Worker along with static assets from the specified directory. Alternatively, you can use the [assets binding](/workers/static-assets/binding/).                                                                                                                     |
+| `npx wrangler deploy --env staging`                  | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
+| `npx wrangler deploy --containers-rollout=immediate` | For [Containers](/containers/) Workers that need Worker code and container instances to cut over together. See [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/).                                                                                |
+| `npx wrangler deploy --containers-rollout=none`      | Deploy the Worker only; skip container image build/push and instance rollout.                                                                                                                                                                                                   |
 
 ### Non-production branch deploy command
 
 The non-production branch deploy command is only applicable when you have enabled [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds).
 
 It defaults to `npx wrangler versions upload`, producing a [preview URL](/workers/versions-and-deployments/preview-urls/). Like the build and deploy commands, it can be customized to instead run anything.
+
+For Workers that use [Containers](/containers/), the default preview command uploads a Worker version only. It does not build container images or roll out instances. If preview code requires a new image, see [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/#configure-preview-branches).
 
 Examples of other non-production branch deploy commands you can set include:
 

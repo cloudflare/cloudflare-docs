@@ -56,7 +56,7 @@ Wrangler only runs the container steps when container rollout is enabled for the
 
 `wrangler versions upload` still records that the Worker version is associated with container-backed classes. It does not publish a new container image or roll running instances. Container image and instance changes take effect only after a `wrangler deploy` that performs the container steps.
 
-This matters for [Workers Builds](/workers/ci-cd/builds/) and any CI job that uses `versions upload` on non-production branches: preview Worker code can move forward while the container image from the last full deploy stays unchanged.
+This matters for [Workers Builds](/workers/ci-cd/builds/) and any CI job that uses `versions upload` on non-production branches: preview Worker code can move forward while the container image from the last full deploy stays unchanged. See [Deploy with Workers Builds](/containers/deploy-with-workers-builds/).
 
 ## Version skew
 
@@ -107,9 +107,12 @@ If the Worker answers but the container path errors right after a first deploy, 
 
 Treat "build green" as "the command finished," not as "every container instance runs the new image." Align branch deploy commands with whether you intend a full container rollout.
 
+For step-by-step Builds setup, preview configuration, and failure modes, see [Deploy with Workers Builds](/containers/deploy-with-workers-builds/).
+
 ## Related tasks
 
 - [Get started](/containers/get-started/) — Deploy your first Containers Worker.
+- [Deploy with Workers Builds](/containers/deploy-with-workers-builds/) — Git-connected container deploys and preview skew.
 - [Rollouts](/containers/platform-details/rollouts/) — Step percentages, grace period, immediate and none modes.
 - [Image management](/containers/platform-details/image-management/) — Dockerfile builds, Cloudflare registry, external registries.
 - [Lifecycle of a Container](/containers/platform-details/architecture/) — Request path, placement, shutdown signals.
