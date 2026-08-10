@@ -72,22 +72,25 @@ Here are examples of the scope required to run Wrangler commands:
 
 ## Legacy Workers permissions
 
-These legacy permissions are being replaced by the new Workers roles. There is no deprecation date right now. Existing permissions continue to work, and customers will receive advance notice before any deprecation.
+These legacy permissions and roles are being replaced by the new Workers roles. There is no deprecation date right now. Existing permissions and roles continue to work, and customers will receive advance notice before any deprecation.
 
-These legacy permissions were account-level permissions. To preserve the same behavior, assign the replacement role at the Workers product scope, which applies across all Workers in the account. Use per-Worker scopes only when you intentionally want to limit access to selected Workers.
+These legacy permissions and roles were account-level. To preserve the same behavior, assign the replacement role at the scope shown below. Use per-Worker scopes only when you intentionally want to limit access to selected Workers.
 
-| Legacy permission                    | Replaced by                                                                                                                      |
-| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| Workers CI Read                      | `Content Read-Only`                                                                                                              |
-| Workers CI Edit                      | `Editor`                                                                                                                         |
-| Workers Observability Read           | `Metadata Read-Only`                                                                                                             |
-| Workers Observability Edit           | `Editor`                                                                                                                         |
-| Workers Observability Telemetry Edit | `Editor`                                                                                                                         |
-| Workers Routes Read                  | `Metadata Read-Only`                                                                                                             |
-| Workers Routes Edit                  | `Editor`, plus [zone-level permission](/fundamentals/manage-members/scope/#specific-domains) for each zone referenced by routes |
-| Workers Tail Read                    | `Metadata Read-Only`                                                                                                             |
-| Workers Scripts Read                 | `Content Read-Only`                                                                                                              |
-| Workers Scripts Edit                 | `Editor`                                                                                                                         |
+| Legacy permission or role             | Replaced by                                                                                                                      |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Workers Platform (Read-only)          | `Content Read-Only` at the Developer Platform scope                                                                              |
+| Workers Platform Admin                | `Admin` at the Developer Platform scope                                                                                          |
+| Workers Platform Metadata (Read-Only) | `Metadata Read-Only` at the Developer Platform scope                                                                             |
+| Workers CI Read                       | `Content Read-Only` at the Workers product scope                                                                                 |
+| Workers CI Edit                       | `Editor` at the Workers product scope                                                                                            |
+| Workers Observability Read            | `Metadata Read-Only` at the Workers product scope                                                                                |
+| Workers Observability Edit            | `Editor` at the Workers product scope                                                                                            |
+| Workers Observability Telemetry Edit  | `Editor` at the Workers product scope                                                                                            |
+| Workers Routes Read                   | `Metadata Read-Only` at the Workers product scope                                                                                |
+| Workers Routes Edit                   | `Editor` at the Workers product scope, plus [zone-level permission](/fundamentals/manage-members/scope/#specific-domains) for each zone referenced by routes |
+| Workers Tail Read                     | `Metadata Read-Only` at the Workers product scope                                                                                |
+| Workers Scripts Read                  | `Content Read-Only` at the Workers product scope                                                                                 |
+| Workers Scripts Edit                  | `Editor` at the Workers product scope                                                                                            |
 
 ## Cloudflare Pages
 
