@@ -296,80 +296,71 @@ wrangler preview delete --name <preview-name> [OPTIONS]
 
 ### `preview secret put`
 
-Add or update a secret for one Preview.
+Create or update a secret on a Preview. This patches the named Preview's latest deployment and creates a new deployment that goes live immediately.
 
 ```txt
-wrangler preview secret put SECRET_NAME --name <preview-name> [OPTIONS]
+wrangler preview secret put SECRET_NAME [OPTIONS]
 ```
 
-- `SECRET_NAME` <Type text="string" />
+- `SECRET_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the secret to add or update.
-- `--name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Preview to update.
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the Preview to update. Defaults to the current git branch.
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
+  - A descriptive message for this deployment.
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - A tag for this deployment.
 
 ---
 
 ### `preview secret delete`
 
-Delete a secret from one Preview.
+Delete a secret from a Preview. This patches the named Preview's latest deployment and creates a new deployment that goes live immediately.
 
 ```txt
-wrangler preview secret delete SECRET_NAME --name <preview-name> [OPTIONS]
+wrangler preview secret delete SECRET_NAME [OPTIONS]
 ```
 
-- `SECRET_NAME` <Type text="string" />
+- `SECRET_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the secret to delete.
-- `--name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Preview to update.
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the Preview to update. Defaults to the current git branch.
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
+  - A descriptive message for this deployment.
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - A tag for this deployment.
 
 ---
 
 ### `preview secret list`
 
-List secrets configured for one Preview.
+List all secrets on a Preview. Reads from the named Preview's latest deployment. Secret values are masked in the output.
 
 ```txt
-wrangler preview secret list --name <preview-name> [OPTIONS]
+wrangler preview secret list [OPTIONS]
 ```
 
-- `--name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Preview to inspect.
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the Preview to inspect. Defaults to the current git branch.
 
 ---
 
 ### `preview secret bulk`
 
-Upload multiple secrets for one Preview.
+Upload multiple secrets to a Preview. This patches the named Preview's latest deployment and creates a new deployment that goes live immediately. Setting a key to `null` in JSON format deletes that secret, matching the behavior of `wrangler secret bulk`.
 
 ```txt
-wrangler preview secret bulk --name <preview-name> [OPTIONS]
+wrangler preview secret bulk [FILE] [OPTIONS]
 ```
 
-- `--name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Preview to update.
-
----
-
-### `preview base-config push`
-
-Update the base configuration from your Wrangler `previews` block. New Previews start with this base configuration.
-
-```txt
-wrangler preview base-config push [OPTIONS]
-```
-
-- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Apply the base configuration change to Previews that already exist, instead of new Previews only.
-
-For example:
-
-```sh
-npx wrangler preview base-config push
-```
-
-```sh
-npx wrangler preview base-config push --apply-to-existing
-```
+- `FILE` <Type text="string" /> <MetaInfo text="optional" />
+  - The file of key-value pairs to upload, as JSON or `.env` format. Reads from stdin if omitted.
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the Preview to update. Defaults to the current git branch.
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
+  - A descriptive message for this deployment.
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - A tag for this deployment.
 
 ---
 

@@ -64,7 +64,7 @@ Add a `previews` block to your Wrangler file for Preview-specific variables and 
 
 ### Secrets
 
-Secrets cannot be stored in Wrangler configuration files. Use Wrangler commands to add or remove secrets in the base configuration or for one Preview.
+Secrets cannot be stored in Wrangler configuration files. Use Wrangler commands to add or remove secrets in the base configuration or for one Preview. Each per-Preview secret change patches the latest deployment and creates a new deployment that goes live immediately.
 
 | I want to                                            | Command                                                           |
 | ---------------------------------------------------- | ----------------------------------------------------------------- |
@@ -72,6 +72,10 @@ Secrets cannot be stored in Wrangler configuration files. Use Wrangler commands 
 | Remove a secret from the **base configuration**      | `npx wrangler preview base-config secret delete SECRET_NAME`      |
 | Add or update a secret for **one Preview**           | `npx wrangler preview secret put SECRET_NAME --name <preview>`    |
 | Remove a secret for **one Preview**                  | `npx wrangler preview secret delete SECRET_NAME --name <preview>` |
+| List secrets for **one Preview**                     | `npx wrangler preview secret list --name <preview>`               |
+| Bulk upload secrets for **one Preview**              | `npx wrangler preview secret bulk secrets.json --name <preview>`  |
+
+The `--name` flag defaults to the current git branch if omitted. For `bulk`, setting a key to `null` in JSON format deletes that secret.
 
 ### How Wrangler applies Preview settings
 
@@ -80,20 +84,6 @@ If your team manages Preview settings in Git, the `previews` block in your Wrang
 The Preview name decides which Preview receives the settings. For details, refer to [Preview names](/workers/previews/#preview-names).
 
 Running `wrangler deploy` updates production with your top-level Wrangler configuration, but does not update the base configuration.
-
-To store the `previews` block in Cloudflare's API and dashboard as the base configuration, run:
-
-```sh
-npx wrangler preview base-config push
-```
-
-Use this command when Previews created outside your local branch should start with those settings, or when you want to view and manage those values in the dashboard or API.
-
-The change applies to new Previews. To also apply it to all active Previews on their next deployment, add `--apply-to-existing`:
-
-```sh
-npx wrangler preview base-config push --apply-to-existing
-```
 
 ## Dashboard
 

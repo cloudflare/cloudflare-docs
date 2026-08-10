@@ -19,7 +19,7 @@ Previews do **not** inherit bindings from your top-level Wrangler configuration.
 | `previews` field | How it behaves |
 | --- | --- |
 | `vars` | Plain-text and JSON string environment variables. Production vars stay separate from Preview vars. Preview base/default vars apply to new Previews. One Preview can override vars without affecting production or another Preview. Never put secrets in `vars`. |
-| Preview secrets | Secrets are not stored in Wrangler config. Use `wrangler preview secret put` to add a secret to one Preview, or `wrangler preview base secret put` to add it to the base configuration. Secret values are write-only — API GET responses redact them. |
+| Preview secrets | Secrets are not stored in Wrangler config. Use `wrangler preview secret put` to add a secret to one Preview (defaults to the current git branch), or `wrangler preview base-config secret put` to add it to the base configuration. Each secret change creates a new Preview deployment. Secret values are write-only — API GET responses redact them. |
 
 <WranglerConfig>
 

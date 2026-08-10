@@ -289,7 +289,7 @@ Replace `wrangler deploy --env staging` and `wrangler deploy --env production` w
 | `wrangler deploy --env staging` | `wrangler preview --name staging` |
 | `wrangler deploy --env production` | `wrangler deploy` |
 | Two Workers: `my-app-staging`, `my-app` | One Worker: `my-app` |
-| Secrets per env: `wrangler secret put X --env staging` | Preview secrets: `wrangler preview secret put X` |
+| Secrets per env: `wrangler secret put X --env staging` | Preview secrets: `wrangler preview secret put X --name staging` |
 | Bindings duplicated in both envs | Production top-level, preview overrides in `previews {}` |
 
 ### Update your config
