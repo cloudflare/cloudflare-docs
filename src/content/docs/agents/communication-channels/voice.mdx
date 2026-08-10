@@ -677,7 +677,7 @@ export class MyAgent extends VoiceAgent<Env> {
 
 </TypeScriptExample>
 
-`TelnyxTTS` defaults to `backend: "rest"`. Set `backend: "websocket"` for lower time-to-first-audio; that backend requires the Workers runtime.
+`TelnyxTTS` defaults to `backend: "rest"`. Set `backend: "websocket"` for lower time-to-first-audio. That backend requires the Workers runtime.
 
 ## Telephony
 
@@ -693,11 +693,11 @@ Providers take one of two approaches, which determines where call audio arrives 
 
 ### Server-side adapters (Twilio and Plivo)
 
-```sh
-npm install @cloudflare/voice-twilio
-# or
-npm install @cloudflare/voice-plivo
-```
+Install the adapter for your provider:
+
+<PackageManagers pkg="@cloudflare/voice-twilio" />
+
+<PackageManagers pkg="@cloudflare/voice-plivo" />
 
 The adapter terminates the provider's audio WebSocket in your Worker and converts between the provider's 8 kHz mulaw audio and the agent's 16 kHz PCM protocol:
 
@@ -711,9 +711,7 @@ Beyond that path, the two providers differ in what they need from you. Twilio is
 
 ### Browser WebRTC bridge (Telnyx)
 
-```sh
-npm install @cloudflare/voice-telnyx
-```
+<PackageManagers pkg="@cloudflare/voice-telnyx" />
 
 Telnyx bridges the PSTN call through WebRTC in the browser and reuses your existing voice client transport:
 
