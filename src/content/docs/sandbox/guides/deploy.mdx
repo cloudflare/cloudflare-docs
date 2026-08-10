@@ -13,7 +13,7 @@ import { PackageManagers } from "~/components";
 
 This guide covers what is specific to deploying a [Sandbox](/sandbox/) app: keeping the Worker package and sandbox container image aligned, choosing a rollout when they must cut over together, and avoiding preview CI skew.
 
-Sandbox runs on [Containers](/containers/). Platform deploy behavior — what `wrangler deploy` changes, version skew, readiness checks, and Workers Builds — is documented once under Containers:
+Sandbox runs on [Containers](/containers/). For platform deploy behavior — what `wrangler deploy` changes, version skew, readiness checks, and Workers Builds — see:
 
 - [Container deployments](/containers/deployments/)
 - [Rollouts](/containers/platform-details/rollouts/)
@@ -43,9 +43,9 @@ After you bump the npm package:
 2. Publish the new image with a full deploy (`wrangler deploy`), not `wrangler versions upload` alone.
 3. For breaking Worker↔image protocol changes, use an [immediate rollout](#when-to-use-an-immediate-rollout).
 
-Do not mix a new Worker package with an old sandbox image, or the reverse.
+Do not mix packages and images from **different release lines** (for example stable Worker package with a `@next` image, or the reverse). Within one release line, prefer matching versions on full deploys. Preview CI may briefly run a newer package against an older image from the last full deploy — only if that pair stays protocol-compatible. See [Workers Builds](#workers-builds).
 
-Which commands build images or roll instances is listed under [Container deployments](/containers/deployments/#which-commands-change-which-artifacts).
+Compare which Wrangler commands build images or roll instances in [Container deployments](/containers/deployments/#which-commands-change-which-artifacts).
 
 ## Deploy from your machine
 
@@ -62,7 +62,7 @@ Which commands build images or roll instances is listed under [Container deploym
 
    <PackageManagers type="exec" pkg="wrangler" args="containers images list" />
 
-Readiness checks: [Confirm a deploy](/containers/deployments/#confirm-a-deploy).
+How to confirm a deploy: [Confirm a deploy](/containers/deployments/#confirm-a-deploy).
 
 ## When to use an immediate rollout
 
@@ -89,7 +89,7 @@ Typical Sandbox cases:
 - Production defaults to `npx wrangler deploy` (full container path, including Dockerfile builds in the Builds environment).
 - Non-production defaults to `npx wrangler versions upload` (Worker version only; **sandbox image does not update**).
 
-Preview builds can therefore run new Worker code — and a newer `@cloudflare/sandbox` package — against the **image from the last full deploy**. Keep package and image compatible across that gap, or validate image-changing deploys on a non-production Worker or environment. Do not point the production Worker's preview deploy command at `wrangler deploy` to "get a new image" on a feature branch.
+Preview builds can therefore run new Worker code — and a newer `@cloudflare/sandbox` package — against the **image from the last full deploy**. That is safe only while the newer package remains protocol-compatible with that image. If the package bump needs a new image, validate the pair on a non-production Worker or environment, or land both through the production full deploy path. Do not point the production Worker's preview deploy command at `wrangler deploy` to refresh an image from a feature branch.
 
 Full CI setup: [Deploy Containers with Workers Builds](/containers/deploy-with-workers-builds/).
 

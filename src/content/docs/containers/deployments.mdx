@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Container deployments
-description: What changes when you deploy a Worker that uses Containers — Worker versions, images, instance rollouts, version skew, and how to confirm a deploy.
+description: Learn what changes when you deploy a Worker that uses Containers, including Worker versions, images, instance rollouts, version skew, and how to confirm a deploy.
 sidebar:
   order: 2.4
   label: Deployments
@@ -42,7 +42,7 @@ Wrangler runs the container steps only when container rollout is enabled for the
 
 ### Which commands change which artifacts
 
-This table is the canonical summary of deploy commands for Containers. Other pages link here instead of restating it.
+Use this table to compare common Wrangler commands and what each one updates:
 
 <Render file="deploy-command-matrix" product="containers" />
 
@@ -87,22 +87,22 @@ On later deploys, Wrangler uploads a new Worker version, publishes image changes
 
 ## Confirm a deploy
 
-There is no single global containers-ready indicator in the dashboard. Choose a bar that matches the risk of the change.
+There is no single global containers-ready indicator in the dashboard. Choose checks that match the risk of the change. These signals reduce uncertainty; they do not prove that every instance worldwide has already switched.
 
-### Minimum bar (safe to treat the deploy command as successful)
+### Minimum checks (safe to treat the deploy command as successful)
 
 1. **Wrangler (or your CI deploy command) finished without errors.** The Worker upload and the container configure or rollout requests for that command completed.
 2. **Worker Deployments** (for a standard `wrangler deploy`) shows the new active deployment, or your preview version exists if you only ran `versions upload`.
 3. **A request that must hit the container** returns the behavior you expect for the Worker code you just shipped (knowing instances may still be on a mixed image set during a gradual rollout).
 
-### Strict bar (every instance should be on the new image)
+### Higher-confidence checks (before you require a uniform image)
 
-1. Meet the minimum bar.
-2. Inspect apps and images with `npx wrangler containers list` and `npx wrangler containers images list`, or use the [Containers dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers).
-3. Allow gradual rollout steps to finish before you require a uniform image. After `--containers-rollout=immediate`, expect a shorter cutover that is still subject to grace period and instance startup time.
-4. Re-check application behavior on paths that exercise long-lived instances, not only a single cold start.
+1. Meet the minimum checks.
+2. Inspect apps and images with `npx wrangler containers list` and `npx wrangler containers images list`, or use the [Containers dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers). These views show target configuration and account-level image state; they are not a per-instance worldwide census.
+3. Allow gradual rollout steps to finish, and account for [`rollout_active_grace_period`](/workers/wrangler/configuration/#containers), before you expect long-lived instances to have moved. After `--containers-rollout=immediate`, expect a shorter cutover that is still subject to grace period and instance startup time.
+4. Re-check application behavior on paths that exercise long-lived instances, not only a single cold start. Prefer an app-level version signal you control in both Worker and image when you need stronger proof.
 
-A successful command never means every instance worldwide has already finished replacing. If the Worker answers but the container path errors right after a first deploy, wait for provisioning and check logs before assuming the configuration is wrong.
+If the Worker answers but the container path errors right after a first deploy, wait for provisioning and check logs before assuming the configuration is wrong.
 
 ## CI and git-connected deploys
 
