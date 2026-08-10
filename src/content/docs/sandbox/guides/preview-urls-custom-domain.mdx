@@ -21,7 +21,7 @@ For public URLs without custom-domain setup, [`sandbox.tunnels`](/sandbox/api/tu
 :::
 
 :::note[Coming soon: Sandbox SDK 1.0]
-Command examples that use `startProcess` are stable-only. On **`@next`**, use argv `exec` process handles — [Process execution](/sandbox/1-0-preview/processes/). Package and image still must match on the same release line.
+Command examples that use `startProcess` are stable-only. On **`@next`**, use argv `exec` process handles - [Process execution](/sandbox/1-0-preview/processes/). Package and image still must match on the same release line.
 :::
 
 Preview URLs need wildcard DNS because each exposed port gets a unique subdomain: `https://8080-abc123.yourdomain.com`.
@@ -112,7 +112,7 @@ Visit the URL in your browser to confirm your service is accessible.
 ## Troubleshooting
 
 - **CustomDomainRequiredError**: Verify your Worker is not deployed only to `.workers.dev` and that the wildcard DNS record and route are configured correctly.
-- **SSL/TLS errors**: Wait a few minutes for certificate provisioning. Verify the DNS record is proxied and SSL/TLS mode is set to "Full" or "Full (strict)" in your dashboard. If your Worker is on a subdomain (for example, `sandbox.yourdomain.com`), Universal SSL will not cover the second-level wildcard `*.sandbox.yourdomain.com` — see the [TLS caution](#subdomain-depth-matters-for-tls) at the top of this page for options.
+- **SSL/TLS errors**: Wait a few minutes for certificate provisioning. Verify the DNS record is proxied and SSL/TLS mode is set to "Full" or "Full (strict)" in your dashboard. If your Worker is on a subdomain (for example, `sandbox.yourdomain.com`), Universal SSL will not cover the second-level wildcard `*.sandbox.yourdomain.com` - see the [TLS caution](#subdomain-depth-matters-for-tls) at the top of this page for options.
 - **Preview URL not resolving**: Confirm the wildcard DNS record exists and is proxied. Wait 30–60 seconds for DNS propagation.
 - **Port not accessible**: Ensure your service binds to `0.0.0.0` (not `localhost`) and that `proxyToSandbox()` is called first in your Worker's fetch handler.
 
@@ -120,9 +120,9 @@ For detailed troubleshooting, see the [Workers routing documentation](/workers/c
 
 ## Related
 
-- [Deploy a Sandbox application](/sandbox/guides/deploy/) — Worker and image deploy and rollouts
-- [Preview URLs](/sandbox/concepts/preview-urls/) — How preview URLs work
-- [Expose services](/sandbox/guides/expose-services/) — Patterns for exposing ports
-- [Tunnels API](/sandbox/api/tunnels/) — Zero-config `*.trycloudflare.com` URLs for development
-- [Workers routing](/workers/configuration/routing/) — Advanced routing configuration
-- [Cloudflare DNS](/dns/) — DNS management
+- [Deploy a Sandbox application](/sandbox/guides/deploy/) - Worker and image deploy and rollouts
+- [Preview URLs](/sandbox/concepts/preview-urls/) - How preview URLs work
+- [Expose services](/sandbox/guides/expose-services/) - Patterns for exposing ports
+- [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for development
+- [Workers routing](/workers/configuration/routing/) - Advanced routing configuration
+- [Cloudflare DNS](/dns/) - DNS management

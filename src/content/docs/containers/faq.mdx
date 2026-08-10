@@ -69,7 +69,7 @@ On `wrangler deploy`, the Worker goes live first. Container instances update wit
 
 ## How do Workers Builds work with Containers?
 
-Workers Builds runs your deploy command. Production defaults to `wrangler deploy`. Non-production defaults to `wrangler versions upload`, which does not update container images. Refer to [Deploy Containers](/containers/deploy/#deploy-with-workers-builds).
+Production Builds that run `wrangler deploy` can publish images and roll out instances. Preview builds default to `wrangler versions upload`, which changes Worker code only and keeps the last deployed image. Refer to [Deploy Containers](/containers/deploy/#preview-versions-and-containers).
 
 ## How does scaling work?
 

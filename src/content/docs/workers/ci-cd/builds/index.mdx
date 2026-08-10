@@ -73,7 +73,7 @@ If a build succeeds, it is uploaded as a version. If the build is configured to 
 
 ## Workers with Containers
 
-If your Worker uses [Containers](/containers/), production Builds that run `wrangler deploy` can build images and roll out instances. Non-production defaults to `wrangler versions upload`, which updates Worker code only and leaves the container image unchanged.
+Production Builds that run `wrangler deploy` can publish container images and roll out instances. Preview builds default to `wrangler versions upload`, which uploads Worker code only. Preview versions still use the container image from the last full deploy on that Worker.
 
 Refer to [Deploy Containers](/containers/deploy/#deploy-with-workers-builds).
 
