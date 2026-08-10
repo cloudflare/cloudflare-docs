@@ -48,10 +48,11 @@ Configure the steps with `rollout_step_percentage` in Wrangler. Override the def
 When the rollout selects a container instance to update:
 
 1. **Grace period (if configured).** If `rollout_active_grace_period` is greater than `0`, container instances that only recently became connected to their [Durable Object](/durable-objects/) are skipped until they pass that window. Default `0` means no extra wait. Refer to [Rollout active grace period](#rollout-active-grace-period).
-2. **Stop the main process.** The platform sends `SIGTERM` so your app can stop accepting new work and finish in-flight work.
-3. **Drain.** The process has up to 15 minutes to exit. Handle `SIGTERM` in your image, or use [`onStop`](/containers/container-class/#onstop) on the Container class, if you need cleanup.
+2. **Signal stop.** The platform sends `SIGTERM` to the main process so it can stop accepting new work and finish in-flight work. Handle `SIGTERM` in your image if that process needs cleanup before exit.
+3. **Drain.** The process has up to 15 minutes to exit after `SIGTERM`.
 4. **Force stop if needed.** If the process is still running after 15 minutes, the platform sends `SIGKILL`.
-5. **Start a new container instance** with the target image. Disk is [ephemeral](/containers/faq/#is-disk-persistent-what-happens-to-my-disk-when-my-container-sleeps) unless you store data outside the container filesystem.
+5. **After exit.** The Container class [`onStop`](/containers/container-class/#onstop) hook can run in the Worker once the container process has exited.
+6. **Start a new container instance** with the target image. Disk is [ephemeral](/containers/faq/#is-disk-persistent-what-happens-to-my-disk-when-my-container-sleeps) unless you store data outside the container filesystem.
 
 Each selected container instance follows this sequence on its own schedule. The fleet does not restart in a single moment.
 
