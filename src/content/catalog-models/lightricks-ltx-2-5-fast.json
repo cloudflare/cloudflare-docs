@@ -39,34 +39,6 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"lightricks/ltx-2-5-fast\",\n  \"input\": {\n    \"prompt\": \"A cinematic aerial shot of ocean waves at sunset\",\n    \"duration\": 8,\n    \"resolution\": \"1920x1080\",\n    \"fps\": 24,\n    \"generate_audio\": true\n  }\n}'"
 				}
 			]
-		},
-		{
-			"name": "Image-to-Video",
-			"description": "Animate a reference image with a final frame",
-			"input": {
-				"prompt": "The camera moves forward while the trees sway in the wind",
-				"image_uri": "https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg",
-				"last_frame_uri": "https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg",
-				"duration": 8,
-				"resolution": "1920x1080",
-				"fps": 24,
-				"generate_audio": true
-			},
-			"output": {
-				"video": "https://examples.aig.cloudflare.com/lightricks/ltx-2-5-fast/image-to-video.mp4"
-			},
-			"code_snippets": [
-				{
-					"label": "typescript",
-					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'lightricks/ltx-2-5-fast',\n  {\n    prompt: 'The camera moves forward while the trees sway in the wind',\n    image_uri:\n      'https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg',\n    last_frame_uri:\n      'https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg',\n    duration: 8,\n    resolution: '1920x1080',\n    fps: 24,\n    generate_audio: true,\n  },\n)\nconsole.log(response)"
-				},
-				{
-					"label": "curl",
-					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"lightricks/ltx-2-5-fast\",\n  \"input\": {\n    \"prompt\": \"The camera moves forward while the trees sway in the wind\",\n    \"image_uri\": \"https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg\",\n    \"last_frame_uri\": \"https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg\",\n    \"duration\": 8,\n    \"resolution\": \"1920x1080\",\n    \"fps\": 24,\n    \"generate_audio\": true\n  }\n}'"
-				}
-			]
 		}
 	],
 	"default_example": null,
