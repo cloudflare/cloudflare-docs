@@ -31,68 +31,53 @@ Start with the shape of your data and the guarantees your application needs. Som
 flowchart TD
     START(["Start"])
 
-    START --> EXT{"Is your primary data already in Postgres or MySQL?"}
-    EXT -->|"Yes"| EXT_KEEP{"Do you want to keep that database as the system of record?"}
-    EXT_KEEP -->|"Yes"| HYPERDRIVE["Use Hyperdrive"]
-    EXT_KEEP -->|"No, move to Cloudflare-native storage"| FILES
-    EXT -->|"No"| FILES
+    START --> EXISTING{"Is your data already in Postgres or MySQL?"}
+    EXISTING -->|"Yes, keep it as the source of truth"| HYPERDRIVE["Use Hyperdrive"]
+    EXISTING -->|"No"| OBJECTS
 
-    FILES{"Are you storing files, blobs, media, backups, datasets, or large unstructured objects?"}
-    FILES -->|"Yes"| STREAM_TO_OBJECTS{"Do you need high-throughput streaming ingestion or batching before storage?"}
-    STREAM_TO_OBJECTS -->|"Yes"| PIPELINES["Use Pipelines, usually writing to R2"]
-    STREAM_TO_OBJECTS -->|"No"| R2["Use R2"]
-    FILES -->|"No"| EVENTS
+    OBJECTS{"Are you storing files, blobs, media, logs, or datasets?"}
+    OBJECTS -->|"Yes"| INGEST{"Need streaming ingestion or batching first?"}
+    INGEST -->|"Yes"| PIPELINES["Use Pipelines, usually writing to R2"]
+    INGEST -->|"No"| R2["Use R2"]
+    OBJECTS -->|"No"| EVENTS
 
-    EVENTS{"Are you collecting events, telemetry, usage metrics, or time-series data?"}
-    EVENTS -->|"Yes"| EVENT_QUERY{"Do you need built-in SQL analytics over high-cardinality time-series data?"}
+    EVENTS{"Are you storing events, metrics, or telemetry for analysis?"}
+    EVENTS -->|"Yes"| EVENT_QUERY{"Need built-in SQL analytics over high-cardinality data?"}
     EVENT_QUERY -->|"Yes"| ANALYTICS["Use Workers Analytics Engine"]
-    EVENT_QUERY -->|"No, store raw events for later processing"| PIPELINES
+    EVENT_QUERY -->|"No, store raw events"| PIPELINES
     EVENTS -->|"No"| VECTORS
 
-    VECTORS{"Are you storing embeddings for semantic search, classification, recommendations, or RAG?"}
-    VECTORS -->|"Yes"| VECTOR_QUERY{"Do you need nearest-neighbor vector queries?"}
-    VECTOR_QUERY -->|"Yes"| VECTORIZE["Use Vectorize"]
-    VECTOR_QUERY -->|"No, only store model metadata or results"| SQL
+    VECTORS{"Are you storing embeddings for semantic search, recommendations, or RAG?"}
+    VECTORS -->|"Yes"| VECTORIZE["Use Vectorize"]
     VECTORS -->|"No"| ASYNC
 
-    ASYNC{"Is the workload mainly background work, buffering, retries, or service-to-service messaging?"}
-    ASYNC -->|"Yes"| ASYNC_RETRY{"Can the work run asynchronously and be retried or batched?"}
-    ASYNC_RETRY -->|"Yes"| QUEUES["Use Queues"]
-    ASYNC_RETRY -->|"No, it needs live coordination"| COORD
-    ASYNC -->|"No"| KV_Q
+    ASYNC{"Is this background work, buffering, retries, or service-to-service messaging?"}
+    ASYNC -->|"Yes"| QUEUES["Use Queues"]
+    ASYNC -->|"No"| KEY_VALUE
 
-    KV_Q{"Is the data mostly read by key with low write volume?"}
-    KV_Q -->|"Yes"| KV_CONSISTENCY{"Is eventual consistency acceptable after writes?"}
-    KV_CONSISTENCY -->|"Yes"| KV["Use Workers KV"]
-    KV_CONSISTENCY -->|"No, writes must be immediately consistent"| COORD
-    KV_Q -->|"No"| SQL
+    KEY_VALUE{"Is the data mostly read by key with low write volume?"}
+    KEY_VALUE -->|"Yes"| CONSISTENCY{"Is eventual consistency acceptable?"}
+    CONSISTENCY -->|"Yes"| KV["Use Workers KV"]
+    CONSISTENCY -->|"No"| COORDINATION
+    KEY_VALUE -->|"No"| SQL
 
-    SQL{"Do you need SQL, joins, relational constraints, or ad hoc queries over structured data?"}
-    SQL -->|"No"| COORD
-    SQL -->|"Yes"| SCOPE{"Is the data primarily application-wide or tenant-wide?"}
+    SQL{"Do you need SQL, joins, or ad hoc queries over structured data?"}
+    SQL -->|"No"| COORDINATION
+    SQL -->|"Yes"| SCOPE{"Do queries span many users, accounts, orders, or records?"}
+    SCOPE -->|"Yes"| D1["Use D1"]
+    SCOPE -->|"No, data belongs to one actor, room, document, customer, game, or shard"| OWNER
 
-    SCOPE -->|"Yes"| CROSS_QUERY{"Do you need to query across many users, accounts, orders, or records?"}
-    CROSS_QUERY -->|"Yes"| D1["Use D1"]
-    CROSS_QUERY -->|"No, each entity is isolated"| ENTITY
+    OWNER{"Does that owner need serialized writes, WebSockets, alarms, or in-memory state?"}
+    OWNER -->|"Yes"| DO["Use SQLite-backed Durable Objects"]
+    OWNER -->|"No"| D1
 
-    SCOPE -->|"No, it belongs to one actor, room, document, customer, game, or shard"| ENTITY
+    COORDINATION{"Do you need a globally unique coordinator for one actor, room, document, customer, game, or shard?"}
+    COORDINATION -->|"Yes"| DO
+    COORDINATION -->|"No"| REVIEW["Review product overviews or combine products"]
 
-    ENTITY{"Does one object need to coordinate concurrent access or keep live state?"}
-    ENTITY -->|"Yes"| DO_FEATURES{"Do you need serialization, WebSockets, alarms, or in-memory state?"}
-    DO_FEATURES -->|"Yes"| DO["Use SQLite-backed Durable Objects"]
-    DO_FEATURES -->|"No"| QUERY_PRIORITY{"Is cross-object querying or reporting the main access pattern?"}
-    QUERY_PRIORITY -->|"Yes"| D1
-    QUERY_PRIORITY -->|"No"| DO
-
-    ENTITY -->|"No"| D1
-
-    COORD{"Do you need a globally unique coordinator for a room, user, document, customer, game, session, or shard?"}
-    COORD -->|"Yes"| DO
-    COORD -->|"No"| UNSURE["Review the product overviews or combine products"]
-
-    DO --> BOTH_CONSIDER{"Also need app-wide SQL queries or reporting across objects?"}
-    BOTH_CONSIDER -->|"Yes"| BOTH["Use Durable Objects for per-object coordination and D1 for app-wide queries or reporting"]
-    BOTH_CONSIDER -->|"No"| DO_FINAL["Use Durable Objects"]
+    DO --> BOTH{"Also need app-wide SQL queries or reporting?"}
+    BOTH -->|"Yes"| COMBINE["Use Durable Objects for coordination and D1 for reporting"]
+    BOTH -->|"No"| DO_ONLY["Use Durable Objects"]
 ```
 
 :::note[Pages Functions]
