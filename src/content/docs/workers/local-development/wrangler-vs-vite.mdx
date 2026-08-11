@@ -14,6 +14,8 @@ Wrangler and the Cloudflare Vite plugin both provide local development environme
 
 Choose based on the build tools your project uses. You can also use the Vite plugin for development and builds while using Wrangler for deployment and other Workers commands.
 
+Vite 8 uses Rolldown to handle CommonJS and ECMAScript module (ESM) dependencies and produce optimized output chunks. This can affect packages that depend on Node.js module behavior. For details, refer to [npm package compatibility](/workers/runtime-apis/nodejs/#npm-package-compatibility).
+
 ## Compare Wrangler and Vite
 
 | Capability or workflow                         | Wrangler                                           | Cloudflare Vite plugin                                         |
@@ -28,10 +30,6 @@ Choose based on the build tools your project uses. You can also use the Vite plu
 | Deployment and resource management             | Supported                     | Use Wrangler after `vite build`                                |
 | [Rust Workers](/workers/languages/rust/)       | Supported | Not supported                         |
 | [Python Workers](/workers/languages/python/)   | Use [`pywrangler`](/workers/languages/python/) instead of `wrangler`             | Not supported                               |
-
-Use the [Cloudflare Vite plugin](/workers/vite-plugin/) when your project already uses Vite or would benefit from its build pipeline. Vite is valid for standalone backend Workers, not only frontend applications.
-
-Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) when your project does not use Vite or you want a direct command-line workflow. Wrangler also provides deployment and resource management commands.
 
 For local development that requires deployed resources, both tools support [remote bindings](/workers/local-development/#remote-bindings). Your Worker runs locally while selected bindings connect to deployed Cloudflare resources.
 

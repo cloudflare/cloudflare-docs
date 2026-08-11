@@ -105,6 +105,16 @@ Adding polyfills maximizes compatibility with existing npm packages by providing
 
 This allows you to import packages that use these Node.js modules, even if certain methods are not supported.
 
+## npm package compatibility
+
+Runtime API support is one part of npm package compatibility. Your build tool also selects package entry points, handles CommonJS and ECMAScript modules (ESM), and determines which module boundaries reach the Workers runtime.
+
+For new JavaScript and TypeScript projects that use NPM packages, Cloudflare recommends [Vite 8 with the Cloudflare Vite plugin](/workers/vite-plugin/). Vite 8 uses [Rolldown](https://vite.dev/blog/announcing-vite8/) for dependency pre-bundling and production builds. The Cloudflare Vite plugin configures Rolldown's [`node` platform](https://rolldown.rs/reference/InputOptions.platform) when it builds your Worker. This setting ensures maximum compatibility with CommonJS modules that you `require()` in your code. Rolldown provides [CommonJS and ESM interoperability](https://rolldown.rs/in-depth/bundling-cjs), and the Cloudflare Vite plugin uploads each JavaScript output chunk as a separate Workers runtime module.
+
+With the [`new_module_registry` compatibility flag](/workers/configuration/compatibility-flags/), Workers compiles an uploaded runtime module when it is first imported. Workers can also reuse compiled code across isolate replicas. Each uploaded ESM module receives metadata such as `import.meta.url` and `import.meta.resolve()`. Modules with `file:` URLs also receive `import.meta.dirname` and `import.meta.filename`.
+
+Wrangler's built-in [`esbuild` bundler](/workers/wrangler/bundling/) combines JavaScript dependencies into one output module by default. You can still use Wrangler for deployment and resource management while building with Vite.
+
 ## Enable only AsyncLocalStorage
 
 If you need to enable only the Node.js `AsyncLocalStorage` API, you can enable the `nodejs_als` compatibility flag:
