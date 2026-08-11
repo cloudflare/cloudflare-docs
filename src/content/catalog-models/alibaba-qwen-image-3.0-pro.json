@@ -18,7 +18,8 @@
 			"name": "Simple Generation",
 			"description": "Basic text-to-image generation",
 			"input": {
-				"prompt": "A golden retriever puppy playing in autumn leaves"
+				"prompt": "A golden retriever puppy playing in autumn leaves",
+				"size": "1024x1024"
 			},
 			"output": {
 				"images": [
@@ -29,12 +30,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/qwen-image-3.0-pro',\n  { prompt: 'A golden retriever puppy playing in autumn leaves' },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen-image-3.0-pro',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen-image-3.0-pro\",\n  \"input\": {\n    \"prompt\": \"A golden retriever puppy playing in autumn leaves\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen-image-3.0-pro\",\n  \"input\": {\n    \"prompt\": \"A golden retriever puppy playing in autumn leaves\",\n    \"size\": \"1024x1024\"\n  }\n}'"
 				}
 			]
 		}
@@ -65,7 +66,6 @@
 					"type": "string"
 				},
 				"size": {
-					"default": "1024x1024",
 					"type": "string",
 					"pattern": "^\\d+x\\d+$"
 				},

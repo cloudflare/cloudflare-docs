@@ -26,6 +26,7 @@ import ideogram from "~/assets/images/workers-ai/ideogram.svg";
 import inworld from "~/assets/images/workers-ai/inworld.svg";
 import kling from "~/assets/images/workers-ai/kling.svg";
 import leonardo from "~/assets/images/workers-ai/leonardo.svg";
+import lightricks from "~/assets/images/workers-ai/lightricks.svg";
 import luma from "~/assets/images/workers-ai/luma.svg";
 import meta from "~/assets/images/workers-ai/meta.svg";
 import microsoft from "~/assets/images/workers-ai/microsoft.svg";
@@ -139,6 +140,10 @@ export const authorData: Record<string, { name: string; logo: string }> = {
 	leonardo: {
 		name: "Leonardo",
 		logo: leonardo.src,
+	},
+	lightricks: {
+		name: "Lightricks",
+		logo: lightricks.src,
 	},
 	luma: {
 		name: "Luma",

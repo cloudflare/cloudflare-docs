@@ -12,7 +12,7 @@
 		"Reasoning",
 		"Agentic"
 	],
-	"context_length": null,
+	"context_length": 1000000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"examples": [
@@ -49,12 +49,10 @@
 	"supports_async": false,
 	"zdr": false,
 	"zdr_comment": null,
-	"external_info": "https://www.qwencloud.com/models/qwen3.7-plus",
+	"external_info": "https://modelstudio.console.alibabacloud.com/",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/qwen3.7-plus.png",
-	"metadata": {
-		"Context Window": "1M tokens"
-	},
+	"metadata": {},
 	"request_formats": [
 		"chat-completions",
 		"responses"
