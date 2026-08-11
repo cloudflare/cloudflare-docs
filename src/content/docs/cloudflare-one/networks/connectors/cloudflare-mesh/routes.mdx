@@ -203,7 +203,7 @@ To filter DNS queries from the subnet using [Cloudflare Gateway](/cloudflare-one
 
 3. **Configure Split Tunnels**: Ensure the following IPs route through the Mesh node in your [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration:
    - The subnet's internal DNS resolver IP
-   - Gateway initial resolved IP range: `100.80.0.0/16` (IPv4) and `2606:4700:0cf1:4000::/64` (IPv6)
+   - Gateway initial resolved IP range: `172.64.128.0/20` (IPv4) and `2606:4700:0cf1:4000::/64` (IPv6)
 
 Gateway logs DNS queries with the private source IP of the originating device. You can use this to create [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) for internal DNS records.
 
@@ -233,7 +233,7 @@ For a deeper look at the packet flow behind hostname routing, refer to the [anno
   | --------------------------- | --------------- | -------------------------- |
   | Mesh device IP range        | `100.96.0.0/12` | `2606:4700:cf1:1000::/64`  |
   | Cloudflare source IP range  | `100.64.0.0/12` | `2606:4700:cf1:5000::/64`  |
-  | Hostname routing (token IPs) | `100.80.0.0/16` | `2606:4700:0cf1:4000::/64` |
+  | Hostname routing (token IPs) | `172.64.128.0/20` | `2606:4700:0cf1:4000::/64` |
 
 - **Remove the hostname's top-level domain from [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/)** on client devices, so the DNS query is sent to Cloudflare Gateway for resolution.
 
@@ -295,7 +295,7 @@ You only need a Gateway [resolver policy](/cloudflare-one/traffic-policies/resol
 If the DNS server is reached through a Mesh node, you cannot run it on the **same machine** as that node — the node's DNS interface binds port `53`. Host the DNS server on a separate machine in the same private network. In that case, configure return routes on the subnet so the DNS server's responses can reach the client:
 
 - **Mesh device IP range**: `100.96.0.0/12` → next hop is the Mesh node's local IP
-- **Initial resolved IP range**: `100.80.0.0/16` → next hop is the Mesh node's local IP
+- **Initial resolved IP range**: `172.64.128.0/20` → next hop is the Mesh node's local IP
 
 :::
 
