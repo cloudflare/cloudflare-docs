@@ -3,13 +3,12 @@
 export const capabilityDefinitions = {
 	terminal:
 		"Runs as a command-line tool. Great for scripting, automation, and CI pipelines.",
-	ide: "A full code editor with AI built in. Visual diffs, inline suggestions, multi-file edits.",
+	desktop:
+		"Runs as a graphical desktop app, including dedicated agent apps and AI code editors.",
 	cloud:
 		"Runs on hosted infrastructure. Accessible from anywhere, good for async long-running tasks.",
 	extension:
 		"Add-on that plugs into an existing editor. Lightweight install, inherits the editor's features.",
-	standalone:
-		"Can run on its own without embedding in an editor or extension host.",
 	open_source: "Source code is openly licensed and available on GitHub.",
 } as const;
 
@@ -33,10 +32,9 @@ export const capabilityTooltips: Record<string, string> = {
 
 export const capabilityLabels: Record<string, string> = {
 	terminal: "Terminal",
-	ide: "IDE",
+	desktop: "Desktop app",
 	cloud: "Cloud",
-	extension: "Extension",
-	standalone: "Standalone",
+	extension: "IDE extension",
 	open_source: "Open Source",
 	subscription: "Subscription",
 	byok: "BYOK",

@@ -9,9 +9,8 @@ export interface AgentData {
 	icon: string;
 	description: string;
 	capabilities: {
-		ide: boolean;
 		terminal: boolean;
-		standalone: boolean;
+		desktop: boolean;
 		cloud: boolean;
 		extension: boolean;
 		open_source: boolean;

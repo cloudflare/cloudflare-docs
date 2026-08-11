@@ -12,9 +12,9 @@ const { agents } = Astro.props;
 const FILTERS = [
 	{ key: "all", label: "All" },
 	{ key: "terminal", label: "Terminal" },
-	{ key: "ide", label: "IDE" },
+	{ key: "desktop", label: "Desktop app" },
 	{ key: "cloud", label: "Cloud" },
-	{ key: "extension", label: "Extension" },
+	{ key: "extension", label: "IDE extension" },
 ] as const;
 ---
 
@@ -136,7 +136,7 @@ const FILTERS = [
 	// clash. Handles filter chip selection, URL sync, visibility toggling, and
 	// the empty state.
 	const FILTER_PARAM = "workflow";
-	const VALID_FILTERS = ["all", "terminal", "ide", "cloud", "extension"];
+	const VALID_FILTERS = ["all", "terminal", "desktop", "cloud", "extension"];
 
 	// Initialize tippy tooltips on all capability badges. Appending to body
 	// escapes the table's overflow clip.
