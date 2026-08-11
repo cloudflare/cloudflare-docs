@@ -1,0 +1,17 @@
+---
+interface Props {
+	label: string;
+	value: string;
+}
+
+const { label, value } = Astro.props;
+---
+
+<div
+	data-agent-workflow-option
+	data-label={label}
+	data-value={value}
+	role="region"
+>
+	<slot />
+</div>

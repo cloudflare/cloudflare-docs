@@ -52,6 +52,7 @@ const FILTERS = [
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" data-agent-grid>
 			{
 				agents.map((agent) => {
+					const baseHref = `/agent-setup/${agent.slug}/`;
 					const matchKeys = [
 						...Object.entries(agent.capabilities)
 							.filter(([, v]) => v)
@@ -62,7 +63,9 @@ const FILTERS = [
 
 					return (
 						<a
-							href={`/agent-setup/${agent.slug}/`}
+							href={baseHref}
+							data-base-href={baseHref}
+							data-workflow-links={JSON.stringify(agent.workflow_links ?? {})}
 							class="group/agent-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 [&[hidden]]:hidden"
 							data-agent-card
 							data-match={matchKeys}
@@ -136,7 +139,6 @@ const FILTERS = [
 	// clash. Handles filter chip selection, URL sync, visibility toggling, and
 	// the empty state.
 	const FILTER_PARAM = "workflow";
-	const VALID_FILTERS = ["all", "terminal", "desktop", "cloud", "extension"];
 
 	// Initialize tippy tooltips on all capability badges. Appending to body
 	// escapes the table's overflow clip.
@@ -151,6 +153,11 @@ const FILTERS = [
 
 	function initCatalog(root: HTMLElement) {
 		const chips = root.querySelectorAll<HTMLButtonElement>("[data-filter]");
+		const validFilters = new Set(
+			Array.from(chips, (chip) => chip.dataset.filter).filter(
+				(filter): filter is string => Boolean(filter),
+			),
+		);
 		const cards = root.querySelectorAll<HTMLElement>("[data-agent-card]");
 		const emptyEl = root.querySelector<HTMLElement>("[data-filter-empty]");
 		const clearBtn = root.querySelector<HTMLButtonElement>(
@@ -166,6 +173,12 @@ const FILTERS = [
 					(card.dataset.match?.split(/\s+/).includes(filter) ?? false);
 				card.hidden = !matches;
 				if (matches) visible++;
+
+				const baseHref = card.dataset.baseHref;
+				if (baseHref && card instanceof HTMLAnchorElement) {
+					const workflowLinks = JSON.parse(card.dataset.workflowLinks ?? "{}");
+					card.href = workflowLinks[filter] ?? baseHref;
+				}
 			});
 
 			// Chip active state (drives Tailwind `aria-pressed:` styling)
@@ -198,7 +211,7 @@ const FILTERS = [
 		// Read initial filter from URL
 		const params = new URLSearchParams(window.location.search);
 		const initial = params.get(FILTER_PARAM);
-		if (initial && VALID_FILTERS.includes(initial)) {
+		if (initial && validFilters.has(initial)) {
 			applyFilter(initial);
 		}
 	}

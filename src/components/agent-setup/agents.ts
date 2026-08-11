@@ -24,6 +24,9 @@ export const AGENTS: AgentData[] = [
 		pricing_model: "subscription",
 		model_flexibility: "locked",
 		context_approach: "project_memory",
+		workflow_links: {
+			desktop: "/agent-setup/claude-code/?view=desktop",
+		},
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
@@ -55,6 +58,9 @@ export const AGENTS: AgentData[] = [
 		pricing_model: "hybrid",
 		model_flexibility: "locked",
 		context_approach: "project_memory",
+		workflow_links: {
+			desktop: "/agent-setup/codex/?view=desktop",
+		},
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
@@ -117,6 +123,10 @@ export const AGENTS: AgentData[] = [
 		pricing_model: "subscription",
 		model_flexibility: "multi_provider",
 		context_approach: "indexed_codebase",
+		workflow_links: {
+			terminal: "/agent-setup/github-copilot/?view=terminal",
+			desktop: "/agent-setup/github-copilot/?view=desktop",
+		},
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
@@ -148,6 +158,9 @@ export const AGENTS: AgentData[] = [
 		pricing_model: "byok",
 		model_flexibility: "multi_provider",
 		context_approach: "project_memory",
+		workflow_links: {
+			desktop: "/agent-setup/opencode/?view=desktop",
+		},
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
