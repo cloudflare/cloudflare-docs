@@ -24,10 +24,8 @@ function initPackageManager(container: HTMLElement): () => void {
 		.querySelectorAll<HTMLButtonElement>("[data-nb-pm-copy]")
 		.forEach((btn) => {
 			// Toggle between the two icons instead of replacing the button's
-			// children. Icon renders the first `ph:copy`/`ph:check` on the
-			// page as a shared `<symbol>` and every other instance as a `<use>`
-			// reference to it; removing the button that hosts the definition would
-			// orphan every other copy icon on the page. Never remove the nodes.
+			// children. Both icons are always present in the DOM; toggling
+			// visibility avoids the cost of re-rendering SVG nodes on each copy.
 			const copyIcon = btn.querySelector<SVGElement>('[data-icon="ph:copy"]');
 			const checkIcon = btn.querySelector<SVGElement>('[data-icon="ph:check"]');
 			const handlerInfo: {
