@@ -25,17 +25,6 @@
 					"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/simple-generation.png"
 				]
 			},
-			"raw_response": {
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				},
-				"result": {
-					"images": [
-						"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/simple-generation.png"
-					]
-				},
-				"state": "Completed"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -64,20 +53,6 @@
 					"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/multiple-variants-3.png"
 				]
 			},
-			"raw_response": {
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				},
-				"result": {
-					"images": [
-						"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/multiple-variants-0.png",
-						"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/multiple-variants-1.png",
-						"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/multiple-variants-2.png",
-						"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/multiple-variants-3.png"
-					]
-				},
-				"state": "Completed"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -102,17 +77,6 @@
 				"images": [
 					"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/negative-prompt.png"
 				]
-			},
-			"raw_response": {
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				},
-				"result": {
-					"images": [
-						"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/negative-prompt.png"
-					]
-				},
-				"state": "Completed"
 			},
 			"code_snippets": [
 				{

@@ -27,15 +27,6 @@
 			"output": {
 				"video": "https://examples.aig.cloudflare.com/lightricks/ltx-2-5-fast/text-to-video.mp4"
 			},
-			"raw_response": {
-				"state": "Completed",
-				"result": {
-					"video": "https://examples.aig.cloudflare.com/lightricks/ltx-2-5-fast/text-to-video.mp4"
-				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -63,15 +54,6 @@
 			},
 			"output": {
 				"video": "https://examples.aig.cloudflare.com/lightricks/ltx-2-5-fast/image-to-video.mp4"
-			},
-			"raw_response": {
-				"state": "Completed",
-				"result": {
-					"video": "https://examples.aig.cloudflare.com/lightricks/ltx-2-5-fast/image-to-video.mp4"
-				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
 			},
 			"code_snippets": [
 				{
