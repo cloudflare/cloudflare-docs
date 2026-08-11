@@ -3,6 +3,11 @@ link: "/pages/platform/changelog/"
 productName: Pages
 productLink: "/pages/"
 entries:
+  - publish_date: "2026-08-11"
+    title: Superseded queued builds are now skipped automatically
+    description: |-
+      - Pages now automatically skips a queued build when a newer build for the same project, branch, and deployment target is also queued. This reduces queue times and prevents outdated changes from being built.
+      - Skipped builds do not consume build minutes. This behavior is available to all customers and requires no configuration.
   - publish_date: "2025-04-18"
     title: Action recommended - Node.js 18 end-of-life and impact on Pages Build System V2
     description: |-
