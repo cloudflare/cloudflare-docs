@@ -9,6 +9,12 @@ sidebar:
 
 The descriptions below detail the fields available for `firewall_events`.
 
+## AISecurityCustomTopicCategories
+
+Type: `object`
+
+Customer-defined AI Security topic labels and their relevance scores. A score of 1 indicates the highest relevance, and 99 indicates the lowest relevance.
+
 ## AISecurityInjectionScore
 
 Type: `int`

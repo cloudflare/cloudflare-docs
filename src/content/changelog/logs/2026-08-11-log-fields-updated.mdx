@@ -1,0 +1,22 @@
+---
+title: New Logpush datasets and updated fields across multiple Logpush datasets in Cloudflare Logs
+description: New Logpush datasets are now available, and fields have been updated across multiple Logpush datasets in Cloudflare Logs.
+date: 2026-08-11
+---
+
+Cloudflare has updated [Logpush datasets](/logs/logpush/logpush-job/datasets/):
+
+### New datasets
+
+- **Account Abuse Protection Events**: A new dataset with fields including `AuthenticationIdentityProvider`, `AuthenticationMethod`, `AuthenticationStatus`, `BotScore`, `ClientASN`, `ClientCity`, `ClientCountry`, `ClientIP`, `Email`, `EphemeralID`, `EventSource`, `EventType`, `FraudEmailRisk`, `Host`, `JA4`, `RayID`, `Timestamp`, `UserAgent`, and `UserID`.
+- **Magic BGP Logs**: A new dataset with fields including `Direction`, `EventData`, `EventKind`, `EventTimestamp`, `TunnelID`, and `TunnelName`.
+- **Account Abuse Protection Events**: A new dataset with fields including `AuthenticationIdentityProvider`, `AuthenticationMethod`, `AuthenticationStatus`, `BotScore`, `ClientASN`, `ClientCity`, `ClientCountry`, `ClientIP`, `Email`, `EphemeralID`, `EventSource`, `EventType`, `FraudEmailRisk`, `Host`, `JA4`, `RayID`, `Timestamp`, `UserAgent`, and `UserID`.
+
+### Updated fields in existing datasets
+
+- **Firewall events** (added): `AISecurityCustomTopicCategories`.
+- **Gateway HTTP** (added): `ExperimentalFeatures` and `PackageInfo`.
+- **Firewall events** (added): `AISecurityCustomTopicCategories`.
+- **HTTP requests** (added): `AISecurityCustomTopicCategories` and `ClientTLSKeyExchangeGroup`.
+
+For the complete field definitions for each dataset, refer to [Logpush datasets](/logs/logpush/logpush-job/datasets/).
