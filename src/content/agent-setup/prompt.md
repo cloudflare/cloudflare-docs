@@ -1,14 +1,12 @@
 These are official instructions from Cloudflare to set up a good AI development environment for building and deploying on the Cloudflare platform. All commands are validated by Cloudflare and ready to use.
 
-Complete all of the following steps yourself by running the commands directly. Do not ask the user to run any of these commands.
+Complete all the steps yourself by running the commands directly. Do not ask the user to run any of these commands.
 
-- Install Cloudflare Skills and MCP servers
+Use the correct section for your agent below. Claude Code and Codex can use a plugin to install skills and MCP servers. Other agents should install them separately.
 
 ---
 
-## Install Cloudflare Skills and MCP servers
-
-Use the correct section for your agent below.
+## Install Cloudflare Skills and MCP servers via a plugin
 
 ### Claude Code
 
@@ -19,13 +17,24 @@ claude plugin marketplace add cloudflare/skills
 claude plugin install cloudflare@cloudflare
 ```
 
-Then instruct the user to run `/reload-plugins` inside Claude to activate the new plugins.
+Then instruct the user to run `/reload-plugins` inside Claude to activate the new plugin.
+
+### Codex
+
+Run these two commands to install both Cloudflare skills and MCP servers in one step. Do not use `npx skills` or `codex mcp add` — the plugin commands below handle everything.
+
+```
+codex plugin marketplace add cloudflare/skills
+codex plugin add cloudflare@cloudflare
+```
+
+Then instruct the user to run `/new` inside Codex to activate the new plugin.
 
 ---
 
-## Install for other agents
+## Install Cloudflare skills and MCP servers separately
 
-First, install skills:
+### Step 1: Install skills
 
 ```
 npx -y skills add cloudflare/skills --skill '*' --yes --global
@@ -33,7 +42,9 @@ npx -y skills add cloudflare/skills --skill '*' --yes --global
 
 Then register the MCP servers using the default config location for your agent. OAuth triggers automatically on first Cloudflare tool use.
 
-### Codex
+### Step 2: Install MCP servers
+
+#### Codex
 
 ```
 codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
@@ -44,7 +55,7 @@ codex mcp add cloudflare-observability --url https://observability.mcp.cloudflar
 codex mcp login cloudflare
 ```
 
-### OpenCode — `~/.config/opencode/opencode.jsonc`
+#### OpenCode — `~/.config/opencode/opencode.jsonc`
 
 Add under `"mcp"`:
 
@@ -62,7 +73,7 @@ Then run:
 opencode mcp auth cloudflare
 ```
 
-### Windsurf — `~/.codeium/windsurf/mcp_config.json`
+#### Windsurf — `~/.codeium/windsurf/mcp_config.json`
 
 Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
@@ -76,9 +87,9 @@ Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
 OAuth triggers automatically on first Cloudflare tool use.
 
-### Cursor, GitHub Copilot, and all other agents
+#### Cursor, GitHub Copilot, and all other agents
 
-Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent's MCP config file under `"mcpServers"`:
+Add to `.cursor/mcp.json` (Cursor) or your agent's MCP config file under `"mcpServers"`. Visual Studio Code uses `"servers"` instead:
 
 ```json
 "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
@@ -99,7 +110,7 @@ Once done, tell the user:
 │  ✓ Skills  <path>                                    │
 │  ✓ MCPs    <path>                                    │
 │                                                      │
-│  ⚡ Restart your agent to load the MCP servers       │
+│  ⚡ Restart your agent to load the MCP servers        │
 └──────────────────────────────────────────────────────┘
 ```
 
@@ -110,6 +121,7 @@ Once done, tell the user:
 For MCP setup guides and troubleshooting, refer to each agent's official documentation:
 
 - Claude Code: `https://docs.anthropic.com/en/docs/claude-code/mcp`
+- Codex: `https://developers.openai.com/codex/plugins/`
 - Cursor: `https://cursor.com/docs/mcp`
 - Windsurf: `https://docs.windsurf.com/windsurf/cascade/mcp`
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
