@@ -1,5 +1,5 @@
 ---
-import { Icon as AstroIcon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 interface Props {
 	autoPlay?: boolean;
@@ -95,7 +95,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 					<span class="asvd-tools-label">tool</span>
 					<a class="asvd-tool" href="/ai-search/">
 						<span class="asvd-tool-icon" aria-hidden="true">
-							<AstroIcon name="ai-search" />
+							<Icon name="ai-search" />
 						</span>
 						<span class="asvd-tool-title">AI Search</span>
 						<span class="asvd-tool-sub">retrieval</span>

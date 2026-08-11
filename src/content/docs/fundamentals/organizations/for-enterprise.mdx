@@ -81,7 +81,7 @@ Before you create an Organization:
 
 - Your user must have Super Admin role access to an account with an Enterprise plan.
 - You (the Organization creator) must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on your Cloudflare user account. This is a per-user requirement — 2FA/SSO is not an account-level setting.
-- You must be a Super Administrator on the accounts you want to assign. You can add accounts of any plan type (Enterprise, PAYGO, or Free).
+- You must be a Super Administrator on the accounts you want to assign. You can add accounts of any plan type (eg Enterprise, or Free).
 - Each Organization supports a maximum of **500 accounts** and **5,000 zones**. Refer to [Limitations](/fundamentals/organizations/limitations/) for details.
 - You may only create a single Organization. You, or another member of your company, must not have already created an Organization.
 - Your accounts must not already belong to another Organization.
@@ -98,7 +98,7 @@ The Organization overview page displays after creation.
 
 ### Assign accounts
 
-After creating an Organization, you can assign existing accounts to manage them centrally. You can add accounts of any plan type (Enterprise, PAYGO, or Free) as long as you are a Super Administrator of the account.
+After creating an Organization, you can assign existing accounts to manage them centrally. You can add accounts of any plan type (eg Enterprise, or Free) as long as you are a Super Administrator of the account.
 
 1. From the Organization overview, select **Assign an account**.
 2. Search for an account name. Only accounts where you are a Super Administrator will appear.
@@ -223,7 +223,7 @@ You can manage Organizations using the [Cloudflare Terraform provider](https://r
 The Terraform provider currently requires **API Keys** for authentication with Organization resources. API Token support is not yet fully available for all Organization operations.
 :::
 
-## What you cannot do 
+## What you cannot do
 
 ### Create new accounts
 Enterprise Organizations cannot self-serve create new accounts. To add a new account, contact [Cloudflare Support](/support/contacting-cloudflare-support/) to create it, then assign it to your Organization.
