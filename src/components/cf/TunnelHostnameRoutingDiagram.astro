@@ -1,17 +1,22 @@
 ---
-import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+/* `role="list"` on the `<ol>` below is intentional, not redundant: Safari
+   + VoiceOver drop the implicit list role when `list-style: none` is
+   applied, so the explicit role is required to preserve list semantics
+   for screen reader users. */
+/* eslint-disable astro/jsx-a11y/no-redundant-roles */
+import { Icon as AstroIcon } from "astro-icon/components";
 ---
 
 <figure
-	class="mesh-hostname-diagram not-content"
-	aria-label="How hostname routing works with a Cloudflare Mesh node: a client requests a hostname, Cloudflare Gateway assigns a token IP and rewrites the destination, and the Mesh node delivers the traffic to the private host"
+	class="tunnel-hostname-diagram not-content"
+	aria-label="How hostname routing works with Cloudflare Tunnel: a client requests a hostname, Cloudflare Gateway assigns a token IP and rewrites the destination, and the tunnel delivers the traffic to a private host on your network or egresses it to the public Internet"
 >
-	<ol class="flow">
+	<ol class="flow" role="list">
 		<li class="flow-step">
 			<div class="node-card client-card">
 				<div class="node-header">
 					<span class="node-icon client-icon" aria-hidden="true"
-						><Icon name="warp-client" /></span
+						><AstroIcon name="warp-client" /></span
 					>
 					<a
 						class="node-title"
@@ -34,15 +39,14 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 			<div class="node-card gateway-card">
 				<div class="node-header">
 					<span class="node-icon gateway-icon" aria-hidden="true"
-						><Icon name="gateway" /></span
+						><AstroIcon name="gateway" /></span
 					>
 					<a class="node-title" href="/cloudflare-one/traffic-policies/"
 						>Cloudflare Gateway</a
 					>
 				</div>
 				<p class="node-caption">
-					Returns a token IP, then rewrites the destination to the real private
-					IP.
+					Returns a token IP, then rewrites the destination to the real IP.
 				</p>
 				<div class="pill-row">
 					<span class="token-pill"><code>172.64.128.0/20</code></span>
@@ -51,28 +55,25 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 		</li>
 
 		<li class="flow-connector">
-			<a
-				class="connector-label"
-				href="/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes"
-				>Hostname route</a
-			>
+			<span class="connector-label">Hostname route</span>
 			<span class="connector-arrow" aria-hidden="true">↓</span>
 		</li>
 
 		<li class="flow-step">
-			<div class="node-card mesh-card">
+			<div class="node-card tunnel-card">
 				<div class="node-header">
-					<span class="node-icon mesh-icon" aria-hidden="true"
-						><Icon name="cloudflare-mesh" /></span
+					<span class="node-icon tunnel-icon" aria-hidden="true"
+						><AstroIcon name="tunnel" /></span
 					>
 					<a
 						class="node-title"
-						href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
-						>Mesh node</a
+						href="/cloudflare-one/networks/connectors/cloudflare-tunnel/"
+						>Cloudflare Tunnel</a
 					>
 				</div>
 				<p class="node-caption">
-					Forwards traffic to the host on the local network
+					Forwards traffic to your private network, or egresses it to the public
+					Internet
 				</p>
 			</div>
 		</li>
@@ -85,7 +86,7 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 			<div class="node-card host-card">
 				<div class="node-header">
 					<span class="node-icon host-icon" aria-hidden="true"
-						><Icon name="dns" /></span
+						><AstroIcon name="dns" /></span
 					>
 					<span class="node-title">Private host</span>
 				</div>
@@ -98,17 +99,16 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 </figure>
 
 <style>
-	.mesh-hostname-diagram {
+	.tunnel-hostname-diagram {
 		--map-bg: light-dark(#fafafa, #0f0f10);
 		--map-card: light-dark(#ffffff, #171719);
 		--map-elevated: light-dark(#fafafa, #111113);
 		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
 		--map-text: light-dark(#171717, #f5f5f5);
 		--map-strong: light-dark(#525252, #a3a3a3);
-		--map-subtle: light-dark(#737373, #d4d4d4);
 		--map-caption: light-dark(#737373, #a3a3a3);
 		--map-brand: #f6821f;
-		--map-mesh: light-dark(#7c3aed, #a78bfa);
+		--map-tunnel: light-dark(#4f46e5, #818cf8);
 		--map-gateway: light-dark(#0ea5e9, #38bdf8);
 		--map-host: light-dark(#10b981, #34d399);
 
@@ -129,7 +129,7 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 		letter-spacing: -0.01em;
 	}
 
-	.mesh-hostname-diagram a {
+	.tunnel-hostname-diagram a {
 		color: inherit;
 		text-decoration: none;
 	}
@@ -213,9 +213,9 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 		color: var(--map-gateway);
 	}
 
-	.mesh-icon {
-		background: color-mix(in srgb, var(--map-mesh) 14%, transparent);
-		color: var(--map-mesh);
+	.tunnel-icon {
+		background: color-mix(in srgb, var(--map-tunnel) 14%, transparent);
+		color: var(--map-tunnel);
 	}
 
 	.host-icon {
@@ -263,14 +263,6 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 		font-size: 11px;
 		font-weight: 500;
 		line-height: 1;
-	}
-
-	a.connector-label {
-		transition: color 150ms ease;
-	}
-
-	a.connector-label:hover {
-		color: var(--map-brand);
 	}
 
 	.connector-arrow {
