@@ -293,3 +293,28 @@ postgresql://tenant_user:tenant_password@tenant-A.example:5432/database?sslmode=
 Use this helper to generate a syntactically valid PostgreSQL placeholder connection string. Each value is randomized in your browser and uses the reserved `.example` domain, so the result never points at a real database or contains real credentials.
 
 <PlaceholderConnectionString />
+
+## Pricing
+
+Hyperdrive with Dynamic Workers adds a separate usage charge for active Hyperdrive configurations. This charge applies only to Hyperdrive configurations created at runtime with `HYPERDRIVE.get()`.
+
+This pricing does not change standard [Hyperdrive pricing](/hyperdrive/platform/pricing/). Hyperdrive connection pooling and query caching remain included in Workers Paid.
+
+| Billable unit                   | Rate                                |
+| ------------------------------- | ----------------------------------- |
+| Active Hyperdrive configuration | $0.002 per configuration per day    |
+
+[Dynamic Workers pricing](/dynamic-workers/pricing/) still applies separately. Dynamic Workers created daily, requests, and CPU time remain part of Dynamic Workers billing.
+
+### Active configurations
+
+A Hyperdrive configuration is active for a UTC day if either action occurs during that day:
+
+- It serves at least one customer-originated database query through Hyperdrive. This includes cached and uncached queries.
+- It opens or maintains at least one origin database connection.
+
+Each active configuration counts once per UTC day. Query volume does not increase the Hyperdrive with Dynamic Workers charge for the same configuration and day.
+
+### Billing example
+
+If 1,000 Hyperdrive configurations are active every day for a 30-day billing period, the charge is 1,000 × 30 × $0.002, or $60.00.
