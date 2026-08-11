@@ -24,7 +24,6 @@ export interface AgentData {
 	links: {
 		skills?: string;
 		mcp_server?: string;
-		mcp_server_domain?: string;
 		cli?: string;
 		docs?: string;
 		website?: string;
