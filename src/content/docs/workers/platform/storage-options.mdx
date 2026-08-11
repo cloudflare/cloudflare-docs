@@ -17,11 +17,83 @@ This guide describes the storage & database products available as part of Cloudf
 
 ## Choose a storage product
 
-The following table maps our storage & database products to common industry terms as well as recommended use-cases:
+The following table maps Cloudflare storage and database products to common industry terms and recommended use cases. Use the table to compare products, then use the decision tree to choose the first product to evaluate.
 
 <Render file="storage-products-table" product="workers" />
 
-Applications can build on multiple storage & database products: for example, using Workers KV for session data; R2 for large file storage, media assets and user-uploaded files; and Hyperdrive to connect to a hosted Postgres or MySQL database.
+Applications can build on multiple storage and database products. For example, use R2 for files, KV for cached configuration, Queues for background work, and D1 or Durable Objects for application state.
+
+## Decision tree
+
+Start with the shape of your data and the guarantees your application needs. Some applications use more than one product.
+
+```mermaid
+flowchart TD
+    START(["Start"])
+
+    START --> EXT{"Is your primary data already in Postgres or MySQL?"}
+    EXT -->|"Yes"| EXT_KEEP{"Do you want to keep that database as the system of record?"}
+    EXT_KEEP -->|"Yes"| HYPERDRIVE["Use Hyperdrive"]
+    EXT_KEEP -->|"No, move to Cloudflare-native storage"| FILES
+    EXT -->|"No"| FILES
+
+    FILES{"Are you storing files, blobs, media, backups, datasets, or large unstructured objects?"}
+    FILES -->|"Yes"| STREAM_TO_OBJECTS{"Do you need high-throughput streaming ingestion or batching before storage?"}
+    STREAM_TO_OBJECTS -->|"Yes"| PIPELINES["Use Pipelines, usually writing to R2"]
+    STREAM_TO_OBJECTS -->|"No"| R2["Use R2"]
+    FILES -->|"No"| EVENTS
+
+    EVENTS{"Are you collecting events, telemetry, usage metrics, or time-series data?"}
+    EVENTS -->|"Yes"| EVENT_QUERY{"Do you need built-in SQL analytics over high-cardinality time-series data?"}
+    EVENT_QUERY -->|"Yes"| ANALYTICS["Use Workers Analytics Engine"]
+    EVENT_QUERY -->|"No, store raw events for later processing"| PIPELINES
+    EVENTS -->|"No"| VECTORS
+
+    VECTORS{"Are you storing embeddings for semantic search, classification, recommendations, or RAG?"}
+    VECTORS -->|"Yes"| VECTOR_QUERY{"Do you need nearest-neighbor vector queries?"}
+    VECTOR_QUERY -->|"Yes"| VECTORIZE["Use Vectorize"]
+    VECTOR_QUERY -->|"No, only store model metadata or results"| SQL
+    VECTORS -->|"No"| ASYNC
+
+    ASYNC{"Is the workload mainly background work, buffering, retries, or service-to-service messaging?"}
+    ASYNC -->|"Yes"| ASYNC_RETRY{"Can the work run asynchronously and be retried or batched?"}
+    ASYNC_RETRY -->|"Yes"| QUEUES["Use Queues"]
+    ASYNC_RETRY -->|"No, it needs live coordination"| COORD
+    ASYNC -->|"No"| KV_Q
+
+    KV_Q{"Is the data mostly read by key with low write volume?"}
+    KV_Q -->|"Yes"| KV_CONSISTENCY{"Is eventual consistency acceptable after writes?"}
+    KV_CONSISTENCY -->|"Yes"| KV["Use Workers KV"]
+    KV_CONSISTENCY -->|"No, writes must be immediately consistent"| COORD
+    KV_Q -->|"No"| SQL
+
+    SQL{"Do you need SQL, joins, relational constraints, or ad hoc queries over structured data?"}
+    SQL -->|"No"| COORD
+    SQL -->|"Yes"| SCOPE{"Is the data primarily application-wide or tenant-wide?"}
+
+    SCOPE -->|"Yes"| CROSS_QUERY{"Do you need to query across many users, accounts, orders, or records?"}
+    CROSS_QUERY -->|"Yes"| D1["Use D1"]
+    CROSS_QUERY -->|"No, each entity is isolated"| ENTITY
+
+    SCOPE -->|"No, it belongs to one actor, room, document, customer, game, or shard"| ENTITY
+
+    ENTITY{"Does one object need to coordinate concurrent access or keep live state?"}
+    ENTITY -->|"Yes"| DO_FEATURES{"Do you need serialization, WebSockets, alarms, or in-memory state?"}
+    DO_FEATURES -->|"Yes"| DO["Use SQLite-backed Durable Objects"]
+    DO_FEATURES -->|"No"| QUERY_PRIORITY{"Is cross-object querying or reporting the main access pattern?"}
+    QUERY_PRIORITY -->|"Yes"| D1
+    QUERY_PRIORITY -->|"No"| DO
+
+    ENTITY -->|"No"| D1
+
+    COORD{"Do you need a globally unique coordinator for a room, user, document, customer, game, session, or shard?"}
+    COORD -->|"Yes"| DO
+    COORD -->|"No"| UNSURE["Review the product overviews or combine products"]
+
+    DO --> BOTH_CONSIDER{"Also need app-wide SQL queries or reporting across objects?"}
+    BOTH_CONSIDER -->|"Yes"| BOTH["Use Durable Objects for per-object coordination and D1 for app-wide queries or reporting"]
+    BOTH_CONSIDER -->|"No"| DO_FINAL["Use Durable Objects"]
+```
 
 :::note[Pages Functions]
 
@@ -34,8 +106,8 @@ Storage options can also be used by your front-end application built with Cloudf
 There are three options for SQL-based databases available when building applications with Workers.
 
 - **Hyperdrive** if you have an existing Postgres or MySQL database, require large (1TB, 100TB or more) single databases, and/or want to use your existing database tools. You can also connect Hyperdrive to database platforms like [PlanetScale](https://planetscale.com/) or [Neon](https://neon.tech/).
-- **D1** for lightweight, serverless applications that are read-heavy, have global users that benefit from D1's [read replication](/d1/best-practices/read-replication/), and do not require you to manage and maintain a traditional RDBMS.
-- **Durable Objects** for stateful serverless workloads, per-user or per-customer SQL state, and building distributed systems (D1 and Queues are built on Durable Objects) where Durable Object's [strict serializability](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) enables global ordering of requests and storage operations.
+- **D1** for relational application data, especially when you need SQL queries across users, accounts, products, orders, customer records, or other structured datasets.
+- **Durable Objects** for per-object state that needs coordination, serialization, or WebSockets, such as a room, document, user, customer, game, session, or shard. SQLite-backed Durable Objects are also useful when the data belongs to one globally unique object.
 
 ### Session storage
 
@@ -87,7 +159,6 @@ To get started with R2:
 Durable Objects provide low-latency coordination and consistent storage for the Workers platform through global uniqueness and a transactional storage API.
 
 - Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world. Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
-
 - The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
 It is ideal for projects that require:
