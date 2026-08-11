@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-description: Reusable components resources and guides for Zero Trust.
+description: Define lists, tags, posture checks, and custom pages once, then reference them from Cloudflare One policies.
 products:
   - cloudflare-one
 title: Reusable components
@@ -11,5 +11,13 @@ sidebar:
 ---
 
 import { DirectoryListing } from "~/components";
+
+Some objects in Cloudflare One are defined once and then referenced from many policies. Editing the object updates every policy that uses it, which keeps large rule sets consistent.
+
+- [Lists](/cloudflare-one/reusable-components/lists/) group URLs, hostnames, or other entries so a single rule can match many items.
+- [IP lists](/cloudflare-one/reusable-components/use-rules-list/) reference Cloudflare custom lists of IP addresses, hostnames, or ASNs in rule expressions.
+- [Posture checks](/cloudflare-one/reusable-components/posture-checks/) require a managed or healthy device before a user reaches a protected resource.
+- [Tags](/cloudflare-one/reusable-components/tags/) label applications so that you can target groups of them in Access policies.
+- [Custom pages](/cloudflare-one/reusable-components/custom-pages/) replace the default block and login screens your users see.
 
 <DirectoryListing />
