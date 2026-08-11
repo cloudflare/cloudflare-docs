@@ -73,14 +73,14 @@ Wrangler uses the token's permissions. If the token is scoped to a specific Work
 
 Wrangler commands can require different permissions depending on what they manage:
 
-| What you want to do         | Example Wrangler command                               | Required access                                                                                                               |
-| --------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| Deploy an existing Worker   | `wrangler deploy`                                      | `Editor` scoped to that Worker, or `Editor` at the Workers product scope.                                                     |
-| Create a new Worker         | `wrangler deploy` for a Worker that does not exist yet | `Admin` at the Workers product scope.                                                                                         |
-| Tail logs for one Worker    | `wrangler tail`                                        | `Metadata Read-Only` scoped to that Worker, or `Metadata Read-Only` at the Workers product scope.                             |
-| List KV namespaces          | `wrangler kv namespace list`                           | Developer Platform `Metadata Read-Only` at a scope that includes KV.                                                          |
-| Create a KV namespace       | `wrangler kv namespace create`                         | Developer Platform `Admin` at a scope that includes KV.                                                                       |
-| Deploy a Worker with routes | `wrangler deploy`                                      | `Editor` for the Worker, plus the [zone-level permissions](/fundamentals/manage-members/scope/#specific-domains/) for routes. |
+| What you want to do                           | Example Wrangler command                               | Required access                                                                                                           |
+| --------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Deploy an existing Worker                     | `wrangler deploy`                                      | `Editor` scoped to that Worker, or `Editor` at the Workers product scope.                                                 |
+| Create a new Worker                           | `wrangler deploy` for a Worker that does not exist yet | `Admin` at the Workers product scope.                                                                                     |
+| Tail logs for one Worker                      | `wrangler tail`                                        | `Metadata Read-Only` scoped to that Worker, or `Metadata Read-Only` at the Workers product scope.                         |
+| List KV namespaces                            | `wrangler kv namespace list`                           | Developer Platform `Metadata Read-Only` at a scope that includes KV.                                                      |
+| Create a KV namespace                         | `wrangler kv namespace create`                         | Developer Platform `Admin` at a scope that includes KV.                                                                   |
+| Deploy a Worker with Routes or Custom Domains | `wrangler deploy`                                      | `Editor` for the Worker, plus the required [zone permissions](/workers/authorization/workers/#routes-and-custom-domains). |
 
 ## Bindings
 
@@ -90,12 +90,12 @@ Permissions on bound resources are only required if you need to access those res
 
 ## Common access patterns
 
-| Use case                                                | Scope                                                                                                                                         | Role               |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| View settings, logs, and metrics across all products    | Platform                                                                                                                                      | Metadata Read-Only |
-| Read Worker code without modifying it                   | Workers product                                                                                                                               | Content Read-Only  |
-| Deploy any existing Worker, no access to other products | Workers product                                                                                                                               | Editor             |
-| Deploy a Worker that uses routes                        | Workers product and [domain-level permissions](/fundamentals/manage-members/scope/#specific-domains) for each domain referenced by the routes | Editor             |
-| Create or delete Workers                                | Workers product                                                                                                                               | Admin              |
-| Automated deployments from CI/CD or agents              | API token with Workers product                                                                                                                | Editor             |
-| Automated deployments to one specific Worker            | API token with individual Worker                                                                                                              | Editor             |
+| Use case                                                | Scope                                  | Role                                                                                                  |
+| ------------------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| View settings, logs, and metrics across all products    | Platform                               | Metadata Read-Only                                                                                    |
+| Read Worker code without modifying it                   | Workers product                        | Content Read-Only                                                                                     |
+| Deploy any existing Worker, no access to other products | Workers product                        | Editor                                                                                                |
+| Deploy a Worker with Routes or Custom Domains           | Workers product and each affected zone | Editor and the required [zone permissions](/workers/authorization/workers/#routes-and-custom-domains) |
+| Create or delete Workers                                | Workers product                        | Admin                                                                                                 |
+| Automated deployments from CI/CD or agents              | API token with Workers product         | Editor                                                                                                |
+| Automated deployments to one specific Worker            | API token with individual Worker       | Editor                                                                                                |
