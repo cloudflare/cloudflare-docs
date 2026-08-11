@@ -25,6 +25,10 @@ Before sending a request to the provider, AI Gateway evaluates all applicable sp
 
 Spend limits are eventually consistent. The current request's cost is recorded after completion, so a burst of concurrent requests can briefly exceed the limit before enforcement catches up.
 
+## Time windows
+
+Each rule's window is a fixed length of time. Windows are not aligned to calendar months or to a custom start date. A 30-day window is not a calendar month.
+
 ## Scoping with dimensions
 
 Each rule can be scoped by model, provider, or custom metadata dimensions. Each dimension can be configured in one of two modes:
