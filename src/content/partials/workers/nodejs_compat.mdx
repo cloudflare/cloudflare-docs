@@ -4,7 +4,7 @@
 
 import { WranglerConfig } from "~/components";
 
-As of compatibility date `2026-08-04`, [Node.js compatibility](/workers/runtime-apis/nodejs/) is enabled by default for all Workers and Pages projects. If your compatibility date is `2026-08-04` or later, built-in runtime APIs and polyfills are available without any additional configuration.
+For compatibility dates of `2026-08-04` or later, Workers and Pages projects enable both `nodejs_compat` and `nodejs_compat_v2` by default. Built-in runtime APIs and polyfills are available without additional configuration. Do not add either flag explicitly because the `workerd` runtime rejects redundant flags.
 
 If your compatibility date is before `2026-08-04`, add the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in:
 
@@ -14,9 +14,10 @@ If your compatibility date is before `2026-08-04`, add the [`nodejs_compat`](/wo
 {
 	"compatibility_flags": [
 		"nodejs_compat"
-	],
-	"compatibility_date": "$today"
+	]
 }
 ```
 
 </WranglerConfig>
+
+To turn off [Node.js compatibility](/workers/runtime-apis/nodejs/) completely for a compatibility date of `2026-08-04` or later, add both `no_nodejs_compat` and `no_nodejs_compat_v2`. For configuration examples, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
