@@ -16,6 +16,18 @@ Hyperdrive performs connection setup at the edge and pools connections near your
 
 Refer to [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/) for the full request path.
 
+## Understand the request path
+
+Hyperdrive splits every database connection into two halves. A **Client** component runs on the same server as your Worker and handles connection setup locally. An **Endpoint** component runs in the data center closest to your origin database and maintains a pool of warm connections.
+
+When your Worker connects, the database driver handshakes with Client instead of crossing the network to your database. Client inspects the query and serves it from the local Cloudflare cache when possible. On a cache miss, Client forwards the query to Endpoint over a pre-established internal connection with no additional TCP or TLS handshakes.
+
+Endpoint checks its own cache. On a miss, it checks out a warm connection from the pool and sends the query to your origin database. The result flows back through both layers and is stored in both caches for subsequent requests.
+
+Hyperdrive uses transaction-mode pooling. A pool connection is checked out when a query or transaction begins and returned when it ends. This supports high concurrency while preserving transactional semantics.
+
+For diagrams and protocol-level detail, refer to [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/) and [How Hyperdrive speeds up database access](https://blog.cloudflare.com/how-hyperdrive-speeds-up-database-access/).
+
 ## Choose an architecture
 
 ### Separate cached and cache-disabled reads
@@ -106,6 +118,14 @@ Compare connection and query latency with your database metrics.
 
 Use [Hyperdrive metrics](/hyperdrive/observability/metrics/), [pool tuning guidance](/hyperdrive/configuration/tune-connection-pool/), and [published limits](/hyperdrive/platform/limits/) when sizing pools.
 
+### Understand pool internals
+
+Each connection string has its own pool. Hyperdrive may shard connections across multiple internal pool instances for redundancy. This sharding is an internal implementation detail and may change.
+
+The `max_connections` parameter sets the ceiling on outbound database sockets that a single Hyperdrive pool instance maintains to your origin. It does not limit inbound requests at the edge. Hyperdrive multiplexes many incoming edge requests into a smaller number of persistent connections up to that ceiling, protecting your database from connection exhaustion during traffic spikes. This limit is soft — Hyperdrive can temporarily exceed it during unusual traffic.
+
+When the last active connection in a pool closes, the pool stays alive for an additional idle window before shutting down. This avoids cold starts on subsequent traffic. The idle duration is an internal implementation detail and may change.
+
 ### Connect to a direct endpoint
 
 Point Hyperdrive at a direct database endpoint. Do not place PgBouncer or another transaction pooler between Hyperdrive and the database.
@@ -122,11 +142,19 @@ A session-level `SET` does not persist after pool return. Apply settings within 
 
 Refer to [Pooling mode](/hyperdrive/concepts/connection-pooling/#pooling-mode) and [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/#long-running-transactions).
 
+### Scale with Dynamic Hyperdrive
+
+Static Hyperdrive configurations count against account-level configuration limits. Dynamic Hyperdrive generates connection parameters at runtime in your Worker code, which bypasses static configuration limits. Configuration capacities for the dynamic execution path are a soft limit.
+
+Use Dynamic Hyperdrive when the number of distinct connection targets grows with your user base, for example in multi-tenant applications where each tenant has a separate database.
+
 ## Cache queries safely
 
 ### Treat caching as best effort
 
 Your database must handle cache misses and early evictions. Cached entries can disappear before their configured expiration.
+
+Hyperdrive caches query results at two layers. The Client component caches results in the data center running your Worker. The Endpoint component caches results near your origin database. A cache hit at the Client layer returns results without leaving the Worker data center. A miss at the Client layer can still hit the Endpoint cache, avoiding a round trip to the origin.
 
 Cache settings apply to each Hyperdrive configuration. Refer to [Query caching](/hyperdrive/concepts/query-caching/#default-cache-settings) for current settings and constraints.
 
@@ -200,6 +228,14 @@ Refer to [Troubleshoot and debug](/hyperdrive/observability/troubleshooting/) fo
 
 Design against the current [Hyperdrive limits](/hyperdrive/platform/limits/). Do not copy limit values into application assumptions because they can change.
 
+## Observe per-tenant metrics
+
+Use the [GraphQL Analytics API](/analytics/graphql-api/) to query Hyperdrive metrics programmatically. Filter by `configId` to retrieve connection counts, query latency, error rates, and cache hit ratios for individual Hyperdrive configurations.
+
+In multi-tenant applications, each tenant Hyperdrive configuration maps to a unique `configId`. Query the `hyperdriveQueriesAdaptiveGroups` and `hyperdrivePoolSizesAdaptiveGroups` datasets to build tenant-facing dashboards with live data from your own infrastructure.
+
+Refer to [Metrics and analytics](/hyperdrive/observability/metrics/) for the full dataset schema and example GraphQL queries.
+
 ## Related resources
 
 - [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/)
@@ -207,3 +243,4 @@ Design against the current [Hyperdrive limits](/hyperdrive/platform/limits/). Do
 - [Query caching](/hyperdrive/concepts/query-caching/)
 - [Metrics and analytics](/hyperdrive/observability/metrics/)
 - [Supported databases and features](/hyperdrive/reference/supported-databases-and-features/)
+- [How Hyperdrive speeds up database access](https://blog.cloudflare.com/how-hyperdrive-speeds-up-database-access/) (blog)
