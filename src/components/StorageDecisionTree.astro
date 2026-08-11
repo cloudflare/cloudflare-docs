@@ -1,0 +1,343 @@
+<figure
+	class="storage-decision-tree not-content"
+	aria-labelledby="storage-decision-tree-caption"
+>
+	<figcaption id="storage-decision-tree-caption">
+		Start with the first question. If neither answer describes your application,
+		continue to the next numbered question.
+	</figcaption>
+
+	<ol class="decision-list">
+		<li class="decision-card">
+			<div class="question">
+				<span class="question-number">1</span>
+				<p>Is your data already in Postgres or MySQL?</p>
+			</div>
+			<div class="routes">
+				<div class="route result">
+					<span class="route-label">Yes</span>
+					<p>
+						Keep it as the source of truth and start with <a href="/hyperdrive/"
+							>Hyperdrive</a
+						>.
+					</p>
+				</div>
+				<div class="route continue">
+					<span class="route-label">No</span>
+					<p>Continue to question 2.</p>
+				</div>
+			</div>
+		</li>
+
+		<li class="decision-card">
+			<div class="question">
+				<span class="question-number">2</span>
+				<p>Are you storing files, blobs, media, logs, or datasets?</p>
+			</div>
+			<div class="routes">
+				<div class="route branch">
+					<span class="route-label">Yes</span>
+					<p class="follow-up">Do you need streaming ingestion or batching?</p>
+					<div class="outcomes">
+						<p>
+							<strong>Yes:</strong> Use <a href="/pipelines/">Pipelines</a>,
+							usually writing to <a href="/r2/">R2</a>.
+						</p>
+						<p><strong>No:</strong> Use <a href="/r2/">R2</a>.</p>
+					</div>
+				</div>
+				<div class="route continue">
+					<span class="route-label">No</span>
+					<p>Continue to question 3.</p>
+				</div>
+			</div>
+		</li>
+
+		<li class="decision-card">
+			<div class="question">
+				<span class="question-number">3</span>
+				<p>Are you storing events, metrics, or telemetry for analysis?</p>
+			</div>
+			<div class="routes">
+				<div class="route branch">
+					<span class="route-label">Yes</span>
+					<p class="follow-up">
+						Do you need built-in SQL analytics over high-cardinality data?
+					</p>
+					<div class="outcomes">
+						<p>
+							<strong>Yes:</strong> Use <a href="/analytics/analytics-engine/"
+								>Workers Analytics Engine</a
+							>.
+						</p>
+						<p>
+							<strong>No:</strong> Use <a href="/pipelines/">Pipelines</a> to store
+							raw events.
+						</p>
+					</div>
+				</div>
+				<div class="route continue">
+					<span class="route-label">No</span>
+					<p>Continue to question 4.</p>
+				</div>
+			</div>
+		</li>
+
+		<li class="decision-card">
+			<div class="question">
+				<span class="question-number">4</span>
+				<p>
+					Are you storing embeddings for semantic search, recommendations, or
+					retrieval-augmented generation?
+				</p>
+			</div>
+			<div class="routes">
+				<div class="route result">
+					<span class="route-label">Yes</span>
+					<p>Start with <a href="/vectorize/">Vectorize</a>.</p>
+				</div>
+				<div class="route continue">
+					<span class="route-label">No</span>
+					<p>Continue to question 5.</p>
+				</div>
+			</div>
+		</li>
+
+		<li class="decision-card">
+			<div class="question">
+				<span class="question-number">5</span>
+				<p>
+					Do you need background work, buffering, retries, or service-to-service
+					messaging?
+				</p>
+			</div>
+			<div class="routes">
+				<div class="route result">
+					<span class="route-label">Yes</span>
+					<p>Start with <a href="/queues/">Queues</a>.</p>
+				</div>
+				<div class="route continue">
+					<span class="route-label">No</span>
+					<p>Continue to question 6.</p>
+				</div>
+			</div>
+		</li>
+
+		<li class="decision-card">
+			<div class="question">
+				<span class="question-number">6</span>
+				<p>
+					Is your data read by key, written infrequently, and suitable for
+					eventual consistency?
+				</p>
+			</div>
+			<div class="routes">
+				<div class="route result">
+					<span class="route-label">Yes</span>
+					<p>Start with <a href="/kv/">Workers KV</a>.</p>
+				</div>
+				<div class="route continue">
+					<span class="route-label">No</span>
+					<p>Continue to question 7.</p>
+				</div>
+			</div>
+		</li>
+
+		<li class="decision-card">
+			<div class="question">
+				<span class="question-number">7</span>
+				<p>Do you need SQL, joins, or ad hoc queries over structured data?</p>
+			</div>
+			<div class="routes final-routes">
+				<div class="route branch">
+					<span class="route-label">Yes</span>
+					<p class="follow-up">
+						Do queries span many users, accounts, orders, or records?
+					</p>
+					<div class="outcomes">
+						<p><strong>Yes:</strong> Use <a href="/d1/">D1</a>.</p>
+						<p>
+							<strong>No:</strong> Use <a href="/durable-objects/"
+								>Durable Objects</a
+							> when one owner needs serialized writes, WebSockets, alarms, or in-memory
+							state. Otherwise, use <a href="/d1/">D1</a>.
+						</p>
+					</div>
+				</div>
+				<div class="route branch">
+					<span class="route-label">No</span>
+					<p class="follow-up">
+						Do you need one globally unique coordinator for an actor, room,
+						document, customer, game, or shard?
+					</p>
+					<div class="outcomes">
+						<p>
+							<strong>Yes:</strong> Use <a href="/durable-objects/"
+								>Durable Objects</a
+							>.
+						</p>
+						<p>
+							<strong>No:</strong> Review the product overviews or combine products.
+						</p>
+					</div>
+				</div>
+			</div>
+			<p class="combination-note">
+				Combine Durable Objects with D1 when you need coordination and
+				application-wide SQL queries or reporting.
+			</p>
+		</li>
+	</ol>
+</figure>
+
+<style>
+	.storage-decision-tree {
+		--tree-surface: rgb(255 255 255);
+		--tree-surface-muted: rgb(250 250 250);
+		--tree-border: rgb(212 212 212);
+		--tree-text: rgb(38 38 38);
+		--tree-muted: rgb(82 82 82);
+		--tree-accent: rgb(194 65 12);
+		--tree-accent-soft: rgb(255 247 237);
+		margin: 1.5rem 0;
+		color: var(--tree-text);
+		font: inherit;
+		font-size: 1rem;
+		line-height: 1.5;
+	}
+
+	:root[data-theme="dark"] .storage-decision-tree {
+		--tree-surface: rgb(23 23 23);
+		--tree-surface-muted: rgb(30 30 30);
+		--tree-border: rgb(82 82 82);
+		--tree-text: rgb(245 245 245);
+		--tree-muted: rgb(212 212 212);
+		--tree-accent: rgb(251 146 60);
+		--tree-accent-soft: rgb(67 32 19);
+	}
+
+	figcaption {
+		margin-bottom: 1rem;
+		color: var(--tree-muted);
+		font-size: 0.9375rem;
+	}
+
+	.decision-list {
+		display: grid;
+		gap: 0.875rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.decision-card {
+		overflow: hidden;
+		border: 1px solid var(--tree-border);
+		border-radius: 0.375rem;
+		background: var(--tree-surface);
+	}
+
+	.question {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.875rem 1rem;
+		border-bottom: 1px solid var(--tree-border);
+		background: var(--tree-surface-muted);
+		font-weight: 600;
+	}
+
+	.question-number {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 1.75rem;
+		height: 1.75rem;
+		border: 1px solid var(--tree-accent);
+		border-radius: 0.25rem;
+		color: var(--tree-accent);
+		font-size: 0.875rem;
+		font-weight: 700;
+	}
+
+	.question p,
+	.route p,
+	.combination-note {
+		margin: 0;
+	}
+
+	.routes {
+		display: grid;
+		grid-template-columns: minmax(0, 1.45fr) minmax(10rem, 0.55fr);
+	}
+
+	.final-routes {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.route {
+		position: relative;
+		padding: 1rem;
+	}
+
+	.route + .route {
+		border-left: 1px solid var(--tree-border);
+	}
+
+	.result,
+	.branch {
+		background: var(--tree-accent-soft);
+	}
+
+	.continue {
+		color: var(--tree-muted);
+	}
+
+	.route-label {
+		display: block;
+		margin-bottom: 0.375rem;
+		color: var(--tree-muted);
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.follow-up {
+		font-weight: 600;
+	}
+
+	.outcomes {
+		display: grid;
+		gap: 0.375rem;
+		margin-top: 0.625rem;
+		padding-top: 0.625rem;
+		border-top: 1px solid var(--tree-border);
+	}
+
+	a {
+		color: var(--tree-accent);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
+	}
+
+	.combination-note {
+		padding: 0.75rem 1rem;
+		border-top: 1px solid var(--tree-border);
+		color: var(--tree-muted);
+		font-size: 0.9375rem;
+	}
+
+	@media (max-width: 42rem) {
+		.routes,
+		.final-routes {
+			grid-template-columns: 1fr;
+		}
+
+		.route + .route {
+			border-top: 1px solid var(--tree-border);
+			border-left: 0;
+		}
+	}
+</style>

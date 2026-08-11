@@ -12,6 +12,7 @@ products:
 ---
 
 import { Render, Details } from "~/components";
+import StorageDecisionTree from "~/components/StorageDecisionTree.astro";
 
 This guide describes the storage & database products available as part of Cloudflare Workers, including recommended use-cases and best practices.
 
@@ -22,6 +23,12 @@ The following table maps our storage & database products to common industry term
 <Render file="storage-products-table" product="workers" />
 
 Applications can build on multiple storage & database products: for example, using Workers KV for session data; R2 for large file storage, media assets and user-uploaded files; and Hyperdrive to connect to a hosted Postgres or MySQL database.
+
+## Decision tree
+
+Start with the shape of your data and the guarantees your application needs. Some applications use more than one product.
+
+<StorageDecisionTree />
 
 :::note[Pages Functions]
 
