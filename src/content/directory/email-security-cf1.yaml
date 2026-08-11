@@ -4,7 +4,8 @@ name: Email security
 entry:
   title: Email security
   url: /cloudflare-one/email-security/
+  llms_top_level: true
   group: Cloudflare One
 
 meta:
-  description: Protect your email, web, and network from phishing and malware attacks
+  description: Detect and block phishing, malware, and impersonation across inbound and outbound email

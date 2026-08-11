@@ -5,6 +5,7 @@ entry:
   title: CASB
   group: Cloudflare One
   url: /cloudflare-one/integrations/cloud-and-saas/
+  llms_top_level: true
 
 meta:
   description: Scan SaaS applications and cloud environments for data security issues

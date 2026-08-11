@@ -5,8 +5,9 @@ entry:
   title: Access
   group: Cloudflare One
   url: /cloudflare-one/access-controls/policies/
+  llms_top_level: true
 
 meta:
   title: Cloudflare Access docs
-  description: Determine who can reach your application using policies
+  description: Authenticate users for self-hosted, SaaS, and private applications, and log every request
   author: "@cloudflare"

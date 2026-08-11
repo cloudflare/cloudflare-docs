@@ -5,6 +5,7 @@ entry:
   title: Cloudflare Mesh
   group: Cloudflare One
   url: /cloudflare-one/networks/connectors/cloudflare-mesh/
+  llms_top_level: true
 
 meta:
   description: Connect services and devices with post-quantum encrypted mesh networking

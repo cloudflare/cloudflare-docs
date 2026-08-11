@@ -5,6 +5,7 @@ entry:
   title: Gateway
   group: Cloudflare One
   url: /cloudflare-one/traffic-policies/
+  llms_top_level: true
 
 meta:
   description: Set up policies to inspect DNS, Network, HTTP, and Egress traffic

@@ -5,7 +5,8 @@ entry:
   title: Cloudflare One Client
   group: Cloudflare One
   url: /cloudflare-one/team-and-resources/devices/cloudflare-one-client/
+  llms_top_level: true
   wrap: true
 
 meta:
-  description: Connect corporate devices to your Zero Trust organization
+  description: Send device traffic to Cloudflare and report device health for posture checks (formerly WARP)

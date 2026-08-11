@@ -5,6 +5,7 @@ entry:
   title: Data Loss Prevention
   group: Cloudflare One
   url: /cloudflare-one/data-loss-prevention/
+  llms_top_level: true
 
 meta:
   description: Scan your web traffic and SaaS applications for sensitive data

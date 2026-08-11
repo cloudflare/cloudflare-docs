@@ -5,6 +5,7 @@ entry:
   title: Cloudflare Tunnel for SASE
   group: Cloudflare One
   url: /cloudflare-one/networks/connectors/cloudflare-tunnel/
+  llms_top_level: true
 
 meta:
-  description: Connect private networks and resources to Cloudflare One
+  description: Connect private networks to Cloudflare with outbound-only tunnels, without exposing a public IP
