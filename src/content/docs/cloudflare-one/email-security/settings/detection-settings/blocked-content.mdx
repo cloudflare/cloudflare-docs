@@ -1,0 +1,95 @@
+---
+title: Blocked content
+pcx_content_type: how-to
+description: Blocked content rules in Email Security.
+products:
+  - cloudflare-one
+sidebar:
+  order: 3
+---
+
+import { Example } from "~/components";
+
+Email security allows you to configure blocked content rules that match against the content of incoming messages. When a message matches a rule, Email security marks it with a malicious [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/), preventing it from reaching users' inboxes.
+
+Blocked content rules are available for the following Email security packages:
+
+- **Enterprise**
+- **Enterprise + PhishGuard**
+
+## How blocked content works
+
+Blocked content rules let you define your own content-based blocking criteria. Each rule specifies a pattern — either a plaintext string or a regular expression — and the part of the message that Email security should scan for it.
+
+You can scan the following fields:
+
+- **Subject**: Match the pattern against the message subject line.
+- **Body**: Match the pattern against the message body.
+- **Subject and body**: Match the pattern against both the subject and the body.
+
+If the pattern matches, Email security marks the message as malicious. Blocked content rules only support the block action.
+
+<Example title="Example of a blocked content rule">
+
+Your organization is being targeted by a phishing campaign that uses subject lines containing variations of `Urgent: Payroll Update Required`. You can create a blocked content rule with the regular expression `(?i)urgent.*payroll.*update` scanning the **Subject** field to block any message that matches this pattern.
+
+</Example>
+
+## Configure a blocked content rule
+
+To create a blocked content rule:
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+2. Select **Email security**.
+3. Go to **Policies & rules** > **Blocked content**.
+4. Select **Add a rule**.
+5. Enter the rule information:
+   - **Name**: A descriptive name for the rule.
+   - **Match type**: Choose between:
+     - **Plaintext**: Email security matches the exact string you enter.
+     - **Regular expression**: Email security evaluates the pattern as a regular expression. Regular expressions must be valid Java expressions.
+   - **Pattern**: The plaintext string or regular expression to match against.
+   - **Search location**: Choose which parts of the message to scan:
+     - **Subject**
+     - **Body**
+     - **Subject and body**
+   - **Notes** (optional): Provide additional information about the rule.
+6. (Optional) Use the built-in **Regular expression checker** to validate your pattern before saving. The checker lets you test your pattern against sample text to confirm it matches as expected.
+7. Select **Save**.
+
+## Validate a regular expression
+
+When you choose **Regular expression** as the match type, Email security provides a regular expression checker to help you validate your pattern before saving the rule.
+
+To validate a regular expression:
+
+1. On the **Add a rule** page, select **Regular expression** as the match type.
+2. Enter your regular expression in the **Pattern** field.
+3. In the **Test your expression** field, enter sample text that represents the content you want to match.
+4. Email security displays whether the sample text matches your pattern.
+5. Adjust the pattern as needed and repeat until it behaves as expected.
+
+Cloudflare recommends validating every regular expression before saving to avoid false positives and false negatives.
+
+## Edit a blocked content rule
+
+To edit a blocked content rule:
+
+1. On the **Blocked content** page, select the rule you want to edit.
+2. Select the three dots > **Edit**.
+3. Edit the rule.
+4. Select **Save**.
+
+## Delete a blocked content rule
+
+To delete a blocked content rule:
+
+1. On the **Blocked content** page, select the rule you want to delete.
+2. Select the three dots > **Delete**.
+3. On the pop-up message, select **Delete**.
+
+To delete multiple blocked content rules at once:
+
+1. On the **Blocked content** page, select the rules you want to delete.
+2. Select **Action**.
+3. Select **Delete**.
