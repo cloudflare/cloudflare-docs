@@ -8,7 +8,7 @@ sidebar:
   order: 4
 ---
 
-import { CURL, DashButton, Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
+import { CURL, Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 <GlossaryTooltip term="initial resolved IP">Initial resolved IPs</GlossaryTooltip> (also called token IPs) are ephemeral addresses that Gateway assigns to DNS queries so it can associate hostname-based traffic with the correct policy or tunnel at the network layer, where hostname information is not usually available. Refer to [Gateway initial resolved IPs](/cloudflare-one/networks/routes/reserved-ips/#gateway-initial-resolved-ips) for a list of features that depend on this range.
 
@@ -24,18 +24,16 @@ If you configure a custom IPv4 range within Carrier-Grade NAT (CGNAT) address sp
 
 ## Prerequisites
 
-- You have the [Cloudflare One Networks Write](/fundamentals/api/reference/permissions/) permission (for API access), or dashboard access to **Networking** > **IP addresses** > **Address space** > **Custom IPs**.
+- You have the [Cloudflare One Networks Write](/fundamentals/api/reference/permissions/) permission (for API access), or dashboard access to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles**.
 - Your new range does not conflict with existing routes or other reserved [Cloudflare One subnets](/cloudflare-one/networks/routes/reserved-ips/) in your account.
 
 ## Check your current range
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Networking** > **IP addresses** > **Address space** > **Custom IPs**.
-
-   <DashButton url="/?to=/:account/ip-addresses/address-space/custom-ips" />
-
-2. Find the row where **Assign to** is **Initial Resolved IP** to see your account's current IPv4 range.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles**.
+2. Select the **Initial resolved IP** filter.
+3. View your account's current IPv4 range in the **IP subnet range** field.
 
 </TabItem> <TabItem label="API">
 
@@ -55,12 +53,11 @@ Send a `GET` request to the [Get Initial Resolved IP Subnet](/api/resources/zero
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Networking** > **IP addresses** > **Address space** > **Custom IPs**.
-
-   <DashButton url="/?to=/:account/ip-addresses/address-space/custom-ips" />
-
-2. Find the row where **Assign to** is **Initial Resolved IP**, select the three dots menu, and select **Edit**.
-3. Enter your new IPv4 range and save your changes.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles**.
+2. Select the **Initial resolved IP** filter.
+3. Select **Configure**.
+4. Enter your new IPv4 range in **IP subnet CIDR**.
+5. Select **Save**.
 
 </TabItem> <TabItem label="API">
 

@@ -10,11 +10,6 @@
 		"parent": ["Networking", "Routes"]
 	},
 	{
-		"deeplink": "/?to=/:account/ip-addresses/address-space/custom-ips",
-		"name": "Custom IPs",
-		"parent": ["Networking", "IP addresses", "Address space"]
-	},
-	{
 		"deeplink": "/?to=/:account/data-catalog/overview",
 		"name": "R2 Data Catalog",
 		"parent": ["Storage & databases", "R2 object storage"]
