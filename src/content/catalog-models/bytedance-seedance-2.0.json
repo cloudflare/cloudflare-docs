@@ -185,6 +185,42 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0\",\n  \"input\": {\n    \"prompt\": \"A sweeping cinematic shot of a futuristic city skyline at dusk, flying past glass towers with neon reflections and dramatic clouds\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"4k\"\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Virtual Avatar Reference",
+			"description": "Use a virtual character avatar from the trusted asset library",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "The scene gently animates with subtle motion",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p",
+				"use_virtual_avatar": true
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0/virtual-avatar-reference.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0/virtual-avatar-reference.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt: 'The scene gently animates with subtle motion',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n    use_virtual_avatar: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"The scene gently animates with subtle motion\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\",\n    \"use_virtual_avatar\": true\n  }\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -291,6 +327,11 @@
 					"type": "integer",
 					"minimum": -9007199254740991,
 					"maximum": 9007199254740991
+				},
+				"use_virtual_avatar": {
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
+					"default": false,
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -300,7 +341,8 @@
 				"aspect_ratio",
 				"fps",
 				"camera_fixed",
-				"watermark"
+				"watermark",
+				"use_virtual_avatar"
 			],
 			"additionalProperties": false
 		},

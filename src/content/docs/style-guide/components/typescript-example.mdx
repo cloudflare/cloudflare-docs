@@ -11,8 +11,6 @@ products:
 
 The `TypeScriptExample` component uses [`ts-blank-space`](https://github.com/bloomberg/ts-blank-space) to remove TypeScript-specific syntax from your example and provide a JavaScript tab. This reduces maintenance burden by only having a single example to maintain.
 
-This component is automatically used in the [`GitHubCode`](/style-guide/components/github-code/) component when the `lang` is set to `ts`.
-
 :::note
 Some TypeScript syntax influences runtime behaviour, and cannot be stripped.
 
@@ -97,6 +95,6 @@ If set to `true`, a [`Run Worker in Playground`](/style-guide/formatting/code-bl
 
 **type**: `object`
 
-Props to pass to the [Expressive Code component](https://expressive-code.com/key-features/code-component/).
+Props to pass to the [Astro `Code` component](https://docs.astro.build/en/reference/api-reference/#code-).
 
 These props will apply to both code blocks and so options like `collapse` may not work as expected, as lines may be removed from the TypeScript code.

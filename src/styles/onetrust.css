@@ -1,0 +1,717 @@
+/*
+ * Match www.cloudflare.com's OneTrust shell without changing the shared
+ * tenant. Keep these rules unlayered so they reliably override vendor styles.
+ */
+#onetrust-consent-sdk {
+	--ot-font-sans: var(--nb-font-sans);
+	--ot-bg: #ffffff;
+	--ot-bg-elevated: #f8f8f8;
+	--ot-fg: #262626;
+	--ot-fg-muted: rgba(38, 38, 38, 0.6);
+	--ot-border: #f0f0f0;
+	--ot-accent: var(--nb-primary);
+	--ot-accent-hover: var(--nb-primary-hover);
+	--ot-light-fg: #ffffff;
+	--ot-overlay: rgba(0, 0, 0, 0.5);
+	--ot-radius: 12px;
+	--ot-radius-sm: 8px;
+	--ot-radius-btn: 9999px;
+	--ot-shadow:
+		0 16px 48px -8px rgba(0, 0, 0, 0.12), 0 4px 16px -2px rgba(0, 0, 0, 0.08);
+	--ot-toggle-on: var(--nb-primary);
+	--ot-toggle-off: rgba(38, 38, 38, 0.2);
+}
+
+#onetrust-consent-sdk,
+#onetrust-consent-sdk *,
+#onetrust-consent-sdk ::before,
+#onetrust-consent-sdk ::after {
+	box-sizing: border-box !important;
+	font-family: var(--ot-font-sans) !important;
+	-webkit-font-smoothing: antialiased !important;
+	text-rendering: optimizeLegibility !important;
+}
+
+#onetrust-consent-sdk #onetrust-banner-sdk,
+#onetrust-consent-sdk #onetrust-pc-sdk {
+	outline: none !important;
+}
+
+#onetrust-banner-sdk {
+	background: var(--ot-bg) !important;
+	border-top: 1px solid var(--ot-border) !important;
+	box-shadow: 0 -4px 24px -4px rgba(0, 0, 0, 0.08) !important;
+	color: var(--ot-fg) !important;
+	padding: 20px 24px !important;
+	text-align: left !important;
+	z-index: 2147483645 !important;
+}
+
+#onetrust-banner-sdk .ot-sdk-container {
+	margin: 0 !important;
+	max-width: 100% !important;
+	padding: 0 !important;
+	width: 100% !important;
+}
+
+#onetrust-consent-sdk #onetrust-banner-sdk .ot-sdk-row {
+	align-items: center !important;
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 32px !important;
+	margin: 0 !important;
+	max-width: 100% !important;
+}
+
+#onetrust-banner-sdk #onetrust-group-container,
+#onetrust-banner-sdk #onetrust-button-group-parent {
+	float: none !important;
+	margin: 0 !important;
+	min-width: 0 !important;
+	padding: 0 !important;
+}
+
+#onetrust-banner-sdk #onetrust-group-container {
+	position: relative !important;
+}
+
+#onetrust-banner-sdk #onetrust-button-group-parent {
+	flex: 0 1 auto !important;
+	width: auto !important;
+}
+
+#onetrust-banner-sdk #onetrust-policy {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+#onetrust-banner-sdk #onetrust-policy-title {
+	color: var(--ot-fg) !important;
+	font-size: 1rem !important;
+	font-weight: 500 !important;
+	letter-spacing: -0.0215em !important;
+	line-height: 1.2 !important;
+	margin: 0 0 6px !important;
+}
+
+#onetrust-banner-sdk #onetrust-policy-text,
+#onetrust-banner-sdk #onetrust-policy-text * {
+	color: var(--ot-fg-muted) !important;
+	font-size: 0.875rem !important;
+	font-weight: 400 !important;
+	letter-spacing: -0.015em !important;
+	line-height: 1.4 !important;
+}
+
+#onetrust-banner-sdk #onetrust-policy-text {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+#onetrust-banner-sdk #onetrust-policy-text a,
+#onetrust-banner-sdk .ot-b-addl-desc a,
+#onetrust-banner-sdk .ot-gv-list-handler,
+#onetrust-pc-sdk #ot-pc-desc a,
+#onetrust-pc-sdk .ot-pc-desc a {
+	color: var(--ot-accent) !important;
+	font-weight: 500 !important;
+	text-decoration: underline !important;
+	text-underline-offset: 2px !important;
+}
+
+#onetrust-banner-sdk #onetrust-button-group {
+	align-items: center !important;
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 8px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: auto !important;
+}
+
+#onetrust-banner-sdk #onetrust-accept-btn-handler,
+#onetrust-banner-sdk #onetrust-reject-all-handler,
+#onetrust-banner-sdk #onetrust-pc-btn-handler,
+#onetrust-banner-sdk .ot-sdk-button {
+	align-items: center !important;
+	border-radius: var(--ot-radius-btn) !important;
+	box-shadow: none !important;
+	cursor: pointer !important;
+	display: inline-flex !important;
+	float: none !important;
+	font-size: 0.875rem !important;
+	font-weight: 500 !important;
+	justify-content: center !important;
+	letter-spacing: 0 !important;
+	line-height: 1 !important;
+	margin: 0 !important;
+	min-height: 40px !important;
+	outline: none !important;
+	padding: 10px 20px !important;
+	text-transform: none !important;
+	text-align: center !important;
+	white-space: normal !important;
+	width: auto !important;
+}
+
+#onetrust-banner-sdk #onetrust-pc-btn-handler {
+	min-width: 167.578px !important;
+}
+
+#onetrust-banner-sdk #onetrust-reject-all-handler {
+	min-width: 125px !important;
+}
+
+#onetrust-banner-sdk #onetrust-accept-btn-handler {
+	min-width: 162.672px !important;
+}
+
+#onetrust-banner-sdk #onetrust-accept-btn-handler,
+#onetrust-pc-sdk button#accept-recommended-btn-handler {
+	background-color: var(--ot-accent) !important;
+	border: 1px solid var(--ot-accent) !important;
+	color: var(--ot-light-fg) !important;
+}
+
+#onetrust-banner-sdk #onetrust-reject-all-handler,
+#onetrust-banner-sdk #onetrust-pc-btn-handler {
+	background-color: var(--ot-bg) !important;
+	border: 1px solid var(--ot-border) !important;
+}
+
+#onetrust-banner-sdk #onetrust-reject-all-handler {
+	color: var(--ot-accent) !important;
+}
+
+#onetrust-banner-sdk #onetrust-pc-btn-handler {
+	color: var(--ot-fg) !important;
+	opacity: 0.9 !important;
+	text-decoration: underline !important;
+	text-underline-offset: 2px !important;
+}
+
+#onetrust-banner-sdk .onetrust-close-btn-handler,
+#onetrust-banner-sdk .banner-close-button,
+#onetrust-banner-sdk .ot-close-icon,
+#onetrust-pc-sdk #close-pc-btn-handler,
+#onetrust-pc-sdk .ot-close-icon {
+	align-items: center !important;
+	background: transparent !important;
+	border: 0 !important;
+	border-radius: var(--ot-radius-btn) !important;
+	color: var(--ot-fg-muted) !important;
+	cursor: pointer !important;
+	display: flex !important;
+	height: 28px !important;
+	justify-content: center !important;
+	opacity: 1 !important;
+	padding: 0 !important;
+	position: absolute !important;
+	right: 8px !important;
+	top: 8px !important;
+	width: 28px !important;
+}
+
+#onetrust-banner-sdk .onetrust-close-btn-handler,
+#onetrust-banner-sdk .banner-close-button,
+#onetrust-banner-sdk .ot-close-icon {
+	right: 12px !important;
+	top: 26px !important;
+}
+
+#onetrust-banner-sdk #onetrust-close-btn-container {
+	bottom: auto !important;
+	height: 28px !important;
+	margin: 0 !important;
+	position: absolute !important;
+	right: 0 !important;
+	top: 0 !important;
+	width: 28px !important;
+}
+
+#onetrust-banner-sdk .onetrust-close-btn-handler::before,
+#onetrust-banner-sdk .banner-close-button::before,
+#onetrust-banner-sdk .ot-close-icon::before,
+#onetrust-pc-sdk #close-pc-btn-handler::before,
+#onetrust-pc-sdk .ot-close-icon::before {
+	background: url("https://cdn.cookielaw.org/logos/static/ot_close.svg")
+		center / contain no-repeat !important;
+	content: "" !important;
+	display: block !important;
+	height: 12px !important;
+	width: 12px !important;
+}
+
+#onetrust-consent-sdk .onetrust-pc-dark-filter,
+#onetrust-consent-sdk #ot-pc-overlay {
+	backdrop-filter: blur(4px) !important;
+	background: var(--ot-overlay) !important;
+	z-index: 2147483644 !important;
+}
+
+#onetrust-pc-sdk {
+	background: var(--ot-bg) !important;
+	border: 1px solid var(--ot-border) !important;
+	border-radius: var(--ot-radius) !important;
+	box-shadow: var(--ot-shadow) !important;
+	color: var(--ot-fg) !important;
+	display: flex !important;
+	flex-direction: column !important;
+	inset: 50% auto auto 50% !important;
+	margin: 0 !important;
+	max-height: calc(100dvh - 24px) !important;
+	max-width: min(680px, calc(100vw - 24px)) !important;
+	min-height: min(700px, 85dvh) !important;
+	min-width: 0 !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: fixed !important;
+	transform: translate(-50%, -50%) !important;
+	width: calc(100% - 24px) !important;
+	z-index: 2147483645 !important;
+}
+
+/* OneTrust hides the preference center with an inline display:none. Honor
+   that closed state instead of leaving an invisible flexbox over the page. */
+#onetrust-pc-sdk[style*="display: none"] {
+	display: none !important;
+}
+
+#onetrust-pc-sdk .ot-pc-header {
+	background: var(--ot-bg) !important;
+	border-bottom: 0 !important;
+	flex-shrink: 0 !important;
+	height: auto !important;
+	margin: 0 !important;
+	min-height: 0 !important;
+	padding: 8px 16px 0 !important;
+	position: relative !important;
+}
+
+#onetrust-pc-sdk #ot-pc-title,
+#onetrust-pc-sdk .ot-pc-title {
+	color: var(--ot-fg) !important;
+	font-size: 1.25rem !important;
+	font-weight: 500 !important;
+	letter-spacing: -0.02em !important;
+	line-height: 1.2 !important;
+	margin-top: 0 !important;
+	margin-bottom: 8px !important;
+	padding: 0 !important;
+}
+
+#onetrust-pc-sdk #ot-pc-desc,
+#onetrust-pc-sdk .ot-pc-desc {
+	color: var(--ot-fg-muted) !important;
+	font-size: 0.875rem !important;
+	font-weight: 400 !important;
+	line-height: 1.5 !important;
+	margin: 20px 0 0 !important;
+	padding: 0 !important;
+}
+
+#onetrust-pc-sdk #ot-pc-desc {
+	max-width: 80% !important;
+}
+
+#onetrust-pc-sdk .ot-title-cntr,
+#onetrust-pc-sdk .ot-close-cntr {
+	position: static !important;
+}
+
+#onetrust-pc-sdk .ot-close-cntr {
+	transform: none !important;
+}
+
+#onetrust-pc-sdk#onetrust-pc-sdk #ot-pc-content.ot-pc-scrollbar {
+	flex: 1 !important;
+	margin: 0 !important;
+	max-width: 100% !important;
+	min-height: 0 !important;
+	min-width: 0 !important;
+	overflow: hidden auto !important;
+	padding: 8px 28px 24px !important;
+	scrollbar-color: color-mix(in srgb, var(--ot-fg) 15%, transparent) transparent !important;
+	scrollbar-width: thin !important;
+	width: 100% !important;
+}
+
+#onetrust-pc-sdk#onetrust-pc-sdk #ot-pc-lst {
+	background: var(--ot-bg) !important;
+	color: var(--ot-fg-muted) !important;
+	flex: 1 !important;
+	margin: 0 !important;
+	max-width: 100% !important;
+	min-height: 0 !important;
+	min-width: 0 !important;
+	overflow: hidden auto !important;
+	padding: 16px 24px 24px !important;
+	width: 100% !important;
+}
+
+#onetrust-pc-sdk #ot-pc-lst #ot-lst-title,
+#onetrust-pc-sdk #ot-pc-lst #ot-search-cntr,
+#onetrust-pc-sdk #ot-pc-lst #ot-fltr-cntr {
+	transform: translateY(-20px) !important;
+}
+
+#onetrust-pc-sdk:has(#ot-pc-lst:not(.ot-hide)) .ot-pc-header,
+#onetrust-pc-sdk:has(#ot-pc-lst:not(.ot-hide)) .ot-title-cntr,
+#onetrust-pc-sdk:has(#ot-pc-lst:not(.ot-hide)) .ot-close-cntr,
+#onetrust-pc-sdk:has(#ot-pc-lst:not(.ot-hide)) #close-pc-btn-handler {
+	overflow: visible !important;
+	z-index: 20 !important;
+}
+
+#onetrust-pc-sdk #ot-pc-content.ot-sdk-row:not(.ot-hide),
+#onetrust-pc-sdk .ot-pc-scrollbar.ot-sdk-row:not(.ot-hide) {
+	align-items: stretch !important;
+	display: flex !important;
+	flex-flow: column !important;
+	max-width: 100% !important;
+	min-width: 0 !important;
+}
+
+#onetrust-pc-sdk #ot-category-title {
+	color: var(--ot-fg) !important;
+	font-size: 0.9375rem !important;
+	font-weight: 500 !important;
+	margin: 6px 0 8px !important;
+}
+
+#onetrust-pc-sdk .ot-accordion-layout {
+	border: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	position: relative !important;
+}
+
+#onetrust-pc-sdk .ot-accordion-layout > button[ot-accordion] {
+	background: transparent !important;
+	border: 0 !important;
+	cursor: pointer !important;
+	height: 48px !important;
+	margin: 0 !important;
+	opacity: 0 !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: calc(100% - 52px) !important;
+	z-index: 2 !important;
+}
+
+#onetrust-pc-sdk .ot-acc-hdr {
+	align-items: center !important;
+	background: transparent !important;
+	border-bottom: 1px solid var(--ot-border) !important;
+	display: flex !important;
+	flex-direction: row !important;
+	gap: 12px !important;
+	justify-content: space-between !important;
+	padding: 14px 0 !important;
+	width: 100% !important;
+}
+
+#onetrust-pc-sdk .ot-cat-header {
+	color: var(--ot-fg) !important;
+	flex: 1 !important;
+	font-size: 0.875rem !important;
+	font-weight: 500 !important;
+	line-height: 1.3 !important;
+	margin: 0 !important;
+	min-width: 0 !important;
+}
+
+#onetrust-pc-sdk .ot-plus-minus {
+	align-items: center !important;
+	display: inline-flex !important;
+	flex-shrink: 0 !important;
+	height: 14px !important;
+	justify-content: center !important;
+	margin: 0 !important;
+	overflow: visible !important;
+	padding: 0 !important;
+	position: relative !important;
+	width: 14px !important;
+}
+
+#onetrust-pc-sdk .ot-plus-minus > span {
+	background: var(--ot-fg-muted) !important;
+	border-radius: 1px !important;
+	display: block !important;
+	left: 50% !important;
+	position: absolute !important;
+	top: 50% !important;
+}
+
+#onetrust-pc-sdk .ot-plus-minus > span:first-child {
+	height: 1.5px !important;
+	transform: translate(-50%, -50%) !important;
+	width: 10px !important;
+}
+
+#onetrust-pc-sdk .ot-plus-minus > span:last-child {
+	height: 10px !important;
+	transform: translate(-50%, -50%) !important;
+	width: 1.5px !important;
+}
+
+#onetrust-pc-sdk .ot-always-active {
+	color: var(--ot-accent) !important;
+	font-size: 0.75rem !important;
+	font-weight: 500 !important;
+	white-space: nowrap !important;
+}
+
+#onetrust-pc-sdk .ot-tgl {
+	flex-shrink: 0 !important;
+	height: 22px !important;
+	position: relative !important;
+	width: 40px !important;
+	z-index: 3 !important;
+}
+
+#onetrust-pc-sdk .ot-tgl input[type="checkbox"] {
+	cursor: pointer !important;
+	height: 100% !important;
+	margin: 0 !important;
+	opacity: 0 !important;
+	position: absolute !important;
+	width: 100% !important;
+	z-index: 1 !important;
+}
+
+#onetrust-pc-sdk .ot-tgl .ot-switch,
+#onetrust-pc-sdk .ot-tgl .ot-switch-nob {
+	background-color: var(--ot-toggle-off) !important;
+	border: 0 !important;
+	border-radius: 11px !important;
+	cursor: pointer !important;
+	height: 22px !important;
+	inset: 0 !important;
+	margin: 0 !important;
+	position: absolute !important;
+	width: 40px !important;
+}
+
+#onetrust-pc-sdk .ot-tgl .ot-switch::before,
+#onetrust-pc-sdk .ot-tgl .ot-switch-nob::before {
+	background-color: #ffffff !important;
+	border-radius: 50% !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+	content: "" !important;
+	height: 18px !important;
+	left: 2px !important;
+	position: absolute !important;
+	top: 2px !important;
+	width: 18px !important;
+}
+
+#onetrust-pc-sdk .ot-tgl input:checked + .ot-switch,
+#onetrust-pc-sdk .ot-tgl input:checked + .ot-switch-nob,
+#onetrust-pc-sdk .ot-tgl input:checked ~ .ot-switch,
+#onetrust-pc-sdk .ot-tgl input:checked ~ .ot-switch-nob {
+	background-color: var(--ot-toggle-on) !important;
+}
+
+#onetrust-pc-sdk .ot-tgl input:checked + .ot-switch::before,
+#onetrust-pc-sdk .ot-tgl input:checked + .ot-switch-nob::before,
+#onetrust-pc-sdk .ot-tgl input:checked ~ .ot-switch::before,
+#onetrust-pc-sdk .ot-tgl input:checked ~ .ot-switch-nob::before {
+	transform: translateX(18px) !important;
+}
+
+#onetrust-pc-sdk .ot-acc-grpcntr,
+#onetrust-pc-sdk .ot-acc-txt {
+	background: var(--ot-bg-elevated) !important;
+	border-bottom: 1px solid var(--ot-border) !important;
+	border-radius: var(--ot-radius-sm) !important;
+	color: var(--ot-fg-muted) !important;
+	margin: 0 !important;
+	padding: 12px 16px !important;
+}
+
+#onetrust-pc-sdk .ot-pc-footer {
+	align-items: center !important;
+	background: var(--ot-bg) !important;
+	border-top: 1px solid var(--ot-border) !important;
+	display: flex !important;
+	flex-direction: row !important;
+	flex: 0 0 auto !important;
+	gap: 8px !important;
+	padding: 16px 24px 48px !important;
+	width: 100% !important;
+	z-index: 10 !important;
+}
+
+#onetrust-pc-sdk .ot-btn-container {
+	align-items: stretch !important;
+	display: flex !important;
+	flex: auto !important;
+	flex-flow: wrap !important;
+	gap: 8px !important;
+	justify-content: stretch !important;
+	margin: 0 !important;
+	min-width: 0 !important;
+	width: 100% !important;
+}
+
+#onetrust-pc-sdk .ot-btn-container > button.save-preference-btn-handler,
+#onetrust-pc-sdk .ot-btn-container > .ot-btn-subcntr {
+	flex: calc(50% - 4px) !important;
+	max-width: 100% !important;
+	min-width: 0 !important;
+}
+
+#onetrust-pc-sdk .ot-btn-container > .ot-btn-subcntr {
+	display: flex !important;
+}
+
+#onetrust-pc-sdk .ot-btn-container .ot-btn-subcntr button {
+	width: 100% !important;
+}
+
+#onetrust-pc-sdk .ot-pc-footer button,
+#onetrust-pc-sdk .ot-btn-container button,
+#onetrust-pc-sdk button#accept-recommended-btn-handler,
+#onetrust-pc-sdk button.save-preference-btn-handler,
+#onetrust-pc-sdk button.ot-pc-refuse-all-handler {
+	align-items: center !important;
+	border-radius: var(--ot-radius-btn) !important;
+	box-shadow: none !important;
+	cursor: pointer !important;
+	display: inline-flex !important;
+	font-size: 0.875rem !important;
+	font-weight: 500 !important;
+	justify-content: center !important;
+	letter-spacing: 0 !important;
+	line-height: 1.2 !important;
+	margin: 0 !important;
+	max-width: 100% !important;
+	min-height: 40px !important;
+	min-width: 0 !important;
+	padding: 10px 16px !important;
+	white-space: normal !important;
+	width: auto !important;
+}
+
+#onetrust-pc-sdk button#accept-recommended-btn-handler {
+	margin: 16px 0 4px !important;
+}
+
+#onetrust-pc-sdk button.save-preference-btn-handler {
+	background-color: var(--ot-bg) !important;
+	border: 1px solid var(--ot-border) !important;
+	color: var(--ot-accent) !important;
+}
+
+#onetrust-pc-sdk button.ot-pc-refuse-all-handler {
+	background-color: transparent !important;
+	border: 1px solid var(--ot-border) !important;
+	color: var(--ot-fg) !important;
+}
+
+#onetrust-pc-sdk .ot-pc-footer-logo,
+#onetrust-pc-sdk .ot-pc-logo,
+#onetrust-pc-sdk .pc-logo,
+#onetrust-pc-sdk .powered-by-logo,
+#onetrust-pc-sdk [class*="powered-by"] {
+	display: none !important;
+}
+
+#onetrust-banner-sdk button:focus-visible,
+#onetrust-pc-sdk #close-pc-btn-handler:focus-visible,
+#onetrust-pc-sdk button:focus-visible,
+#onetrust-pc-sdk .ot-tgl input:focus-visible + .ot-switch,
+#onetrust-pc-sdk .ot-tgl input:focus-visible + .ot-switch-nob {
+	outline: 2px solid var(--ot-accent) !important;
+	outline-offset: 2px !important;
+}
+
+#onetrust-pc-sdk
+	.ot-accordion-layout:has(> button[ot-accordion]:focus-visible)
+	> .ot-acc-hdr {
+	outline: 2px solid var(--ot-accent) !important;
+	outline-offset: 2px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#onetrust-consent-sdk,
+	#onetrust-consent-sdk * {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+@media (min-width: 897px) and (max-width: 1023px) {
+	#onetrust-banner-sdk #onetrust-button-group-parent {
+		left: 80% !important;
+		position: absolute !important;
+		top: 50% !important;
+		transform: translateY(-50%) !important;
+	}
+}
+
+/* Compensate for the unavailable FT Kunst metrics at its two wrap thresholds. */
+@media (min-width: 1024px) and (max-width: 1050px),
+	(min-width: 937px) and (max-width: 969px) {
+	#onetrust-banner-sdk #onetrust-policy-text,
+	#onetrust-banner-sdk #onetrust-policy-text * {
+		letter-spacing: -0.025em !important;
+	}
+}
+
+@media (min-width: 601px) {
+	#onetrust-banner-sdk #onetrust-group-container {
+		padding-inline-end: 32px !important;
+	}
+}
+
+@media (max-width: 600px) {
+	#onetrust-banner-sdk .onetrust-close-btn-handler,
+	#onetrust-banner-sdk .banner-close-button,
+	#onetrust-banner-sdk .ot-close-icon {
+		top: 16px !important;
+	}
+
+	#onetrust-banner-sdk #onetrust-policy-text,
+	#onetrust-banner-sdk #onetrust-policy-text * {
+		letter-spacing: -0.03em !important;
+	}
+
+	#onetrust-banner-sdk #onetrust-group-container,
+	#onetrust-banner-sdk #onetrust-button-group-parent {
+		display: block !important;
+		flex: 0 0 100% !important;
+		width: 100% !important;
+	}
+
+	#onetrust-banner-sdk #onetrust-button-group {
+		align-items: stretch !important;
+		flex-direction: column !important;
+		width: 100% !important;
+	}
+
+	#onetrust-banner-sdk #onetrust-pc-btn-handler,
+	#onetrust-banner-sdk #onetrust-reject-all-handler,
+	#onetrust-banner-sdk #onetrust-accept-btn-handler {
+		width: 100% !important;
+	}
+
+	#onetrust-pc-sdk {
+		border-radius: 0 !important;
+		height: 100dvh !important;
+		inset: 0 !important;
+		max-height: 100dvh !important;
+		max-width: 100vw !important;
+		transform: none !important;
+		width: 100vw !important;
+	}
+
+	#onetrust-pc-sdk #ot-pc-content.ot-pc-scrollbar {
+		padding: 0 !important;
+	}
+
+	#onetrust-pc-sdk #ot-pc-desc {
+		max-width: 100% !important;
+	}
+}

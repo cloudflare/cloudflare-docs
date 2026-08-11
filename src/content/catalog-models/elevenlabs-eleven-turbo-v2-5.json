@@ -59,7 +59,7 @@
 	"metadata": {
 		"Languages": "32",
 		"Latency": "Low (~250-300ms)",
-		"Output Formats": "MP3, Opus",
+		"Output Formats": "MP3, WAV, PCM, Opus, u-law, A-law",
 		"Voices": "Supports ElevenLabs voice IDs"
 	},
 	"request_formats": null,
@@ -162,7 +162,7 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "URL to the generated audio file.",
+					"description": "Base64-encoded data URI for the generated audio file.",
 					"type": "string"
 				}
 			},

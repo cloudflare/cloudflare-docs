@@ -98,14 +98,17 @@ openssl genpkey \
 openssl req -new \
   -key leaf.key \
   -out leaf.csr \
-  -subj "/CN=origin.example.com"
+  -subj "/CN=origin.example.com" \
+  -addext basicConstraints=CA:FALSE \
+  -addext keyUsage=digitalSignature \
+  -addext subjectAltName=DNS:origin.example.com
 openssl x509 -req \
   -in leaf.csr \
   -CA ca.crt -CAkey ca.key \
   -CAcreateserial \
   -out leaf.crt \
   -days 5475 \
-  -extfile <(printf "basicConstraints=CA:FALSE\nkeyUsage=digitalSignature\nsubjectAltName=DNS:origin.example.com\n")
+  -copy_extensions copy
 ```
 
 The `-provparam ml-dsa.output_formats=seed-only` flag is required so that the private key is written in the FIPS 204 seed form rather than as the expanded private key. This is the only form Cloudflare currently accepts on upload.

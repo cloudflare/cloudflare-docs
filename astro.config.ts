@@ -9,6 +9,7 @@ import skills from "astro-skills";
 import nimbus, {
 	defineConfig as defineNimbusConfig,
 } from "@cloudflare/nimbus-docs";
+import { satteri } from "@astrojs/markdown-satteri";
 import { hastPlugins } from "./src/plugins/satteri";
 import { createSitemapLastmodSerializer } from "./sitemap.serializer";
 import { isDisallowedByRobots } from "./src/util/robots";
@@ -84,7 +85,7 @@ const nimbusConfig = defineNimbusConfig({
 	socialImage: "/og-docs.png",
 	socialImageAlt: "Cloudflare Docs",
 	// "custom" renders the search UI slot but skips the built-in Pagefind index;
-	// Nimbus mounts Algolia DocSearch instead (see ui/search/DocSearch.astro).
+	// Nimbus mounts AI Search instead (see ui/search/Search.astro).
 	search: { provider: "custom" },
 	sidebar: {
 		items: sidebarItems,
@@ -200,7 +201,6 @@ const markdown = {
 		type: "shiki" as const,
 		excludeLangs: ["math", "mermaid"],
 	},
-	smartypants: false,
 };
 
 const integrations = [
@@ -210,7 +210,12 @@ const integrations = [
 	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
-		markdown: { hastPlugins },
+		markdown: {
+			processor: satteri({
+				features: { smartPunctuation: false },
+				hastPlugins,
+			}),
+		},
 		validateMdx: false,
 		// Sitemap parity (T3): drop excluded URLs, stamp lastmod on the rest.
 		sitemap: {
@@ -273,14 +278,10 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
-	cacheDir: ".astro-cache",
 	markdown,
 	image: {
 		service: {
-			entrypoint: "astro/assets/services/sharp",
-			config: {
-				limitInputPixels: false,
-			},
+			entrypoint: "@astrojs/cloudflare/image-service",
 		},
 	},
 	server: {
@@ -291,7 +292,7 @@ export default defineConfig({
 		...appVite,
 		server: {
 			watch: {
-				ignored: ["**/dist/**", "**/.astro-cache/**"],
+				ignored: ["**/dist/**"],
 			},
 		},
 	},

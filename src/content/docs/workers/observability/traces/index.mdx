@@ -67,6 +67,8 @@ Workers tracing follows [OpenTelemetry (OTel) standards](https://opentelemetry.i
 such as [Honeycomb](/workers/observability/exporting-opentelemetry-data/honeycomb/), [Grafana Cloud](/workers/observability/exporting-opentelemetry-data/grafana-cloud/), and
 [Axiom](/workers/observability/exporting-opentelemetry-data/axiom/), while requiring zero development effort from you. If your observability provider has an available OpenTelemetry endpoint, you can export traces (and logs)!
 
+You can also set `persist: false` to export traces to your destination without persisting them in the Cloudflare dashboard. This allows you to use a third-party observability provider as your sole traces destination.
+
 Learn more about exporting OpenTelemetry data from Workers [here](/workers/observability/exporting-opentelemetry-data/).
 
 ### Sampling
@@ -114,7 +116,7 @@ Sampling is [head-based](https://opentelemetry.io/docs/concepts/sampling/#head-s
 
 Workers tracing is currently **free** during the initial beta period. This includes all tracing functionality such as collecting traces, storing them, and viewing them in the Cloudflare dashboard.
 
-Starting on March 1, 2026, tracing will be billed as part of your usage on the Workers Free Paid and Enterprise plans. Each span in a trace represents one observability event, sharing the same monthly quota and pricing as [Workers logs](/workers/platform/pricing/#workers-logs):
+Starting on October 1, 2026, tracing will be billed as part of your usage on the Workers Free Paid and Enterprise plans. Each span in a trace represents one observability event, sharing the same monthly quota and pricing as [Workers logs](/workers/platform/pricing/#workers-logs):
 
 |                  | Events (trace spans or log events)                                 | Retention |
 | ---------------- | ------------------------------------------------------------------ | --------- |

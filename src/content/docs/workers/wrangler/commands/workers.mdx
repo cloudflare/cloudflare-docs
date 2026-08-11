@@ -239,8 +239,9 @@ None of the options for this command are required. Also, many can be set in your
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
   - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
-- `--containers-rollout` <Type text="immediate | gradual" /> <MetaInfo text="optional" />
+- `--containers-rollout` <Type text="immediate | gradual | none" /> <MetaInfo text="optional" />
   - Specify the [rollout strategy](/containers/faq#how-do-container-updates-and-rollouts-work) for [Containers](/containers) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. Note that `rollout_active_grace_period`, if configured, still applies.
+  - If set to `none`, Wrangler deploys the Worker without building or updating associated Containers.
   - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
 - `--strict` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular, this mode prevents deployments if the deployment would potentially override remote settings in non-interactive environments.
@@ -527,21 +528,42 @@ To generate types for only a specific environment, use the `--env` flag.
 
 ### `startup`
 
-Generate a CPU profile of your Worker's startup phase.
+Analyze your Worker's startup phase. Wrangler reports bundle size and a summary of local CPU activity. It also saves a detailed CPU profile.
 
-After you run `wrangler check startup`, you can import the profile into Chrome DevTools or open it directly in VSCode to view a flamegraph of your Worker's startup phase. Additionally, when a Worker deployment fails with a startup time error Wrangler will automatically generate a CPU profile for easy investigation.
+```sh
+wrangler check startup
+```
+
+```txt output
+Bundle: 42.31 KiB / gzip: 11.24 KiB
+
+Local startup profile:
+  Profile window: 25.2 ms
+  Sampled time: 24.8 ms
+  Active: 18.4 ms (including 1.2 ms garbage collection)
+  Idle: 6.4 ms
+  Samples: 25
+```
+
+The local startup profile includes the following metrics:
+
+| Metric | Description |
+| --- | --- |
+| Profile window | Elapsed time between the start and end of the profiling session. |
+| Sampled time | Total time represented by the captured CPU samples. |
+| Active | Sampled time that the Worker was not idle, including garbage collection. |
+| Idle | Sampled time that the Worker was idle. |
+| Samples | Number of CPU samples captured during the profiling session. |
+
+Import the generated `.cpuprofile` file into Chrome DevTools or open it directly in VS Code to view a flamegraph. When a Worker deployment fails with a startup time error, Wrangler also generates this profile automatically.
 
 :::note
 
 This command measures performance of your Worker locally, on your own machine — which has a different CPU than when your Worker runs on Cloudflare. This means results can vary widely.
 
-You should use the CPU profile that `wrangler check startup` generates in order to understand where time is spent at startup, but you should not expect the overall startup time in the profile to match exactly what your Worker's startup time will be when deploying to Cloudflare.
+Use the summary and CPU profile to understand where your Worker spends time during startup. Do not expect the local profile duration to match your Worker's startup time on Cloudflare.
 
 :::
-
-```sh
-wrangler check startup
-```
 
 - `--args` <Type text="string" /> <MetaInfo text="optional" />
   - To customise the way `wrangler check startup` builds your Worker for analysis, provide the exact arguments you use when deploying your Worker with `wrangler deploy`, or your Pages project with `wrangler pages functions build`. For instance, if you deploy your Worker with `wrangler deploy --no-bundle`, you should use `wrangler check startup --args="--no-bundle"` to profile the startup phase.

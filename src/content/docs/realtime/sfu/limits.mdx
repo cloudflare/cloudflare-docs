@@ -23,6 +23,8 @@ Understanding the limits and timeouts of Cloudflare Realtime is crucial for opti
 
 * **Tracks per Session**: There's no upper limit to the number of tracks a session can contain, the practical limit is governed by your connection's bandwidth to and from Cloudflare.
 
+* **DataChannel canReply exclusivity**: At most one subscriber may hold `canReply` for a given publisher DataChannel at a time. Granting `canReply` to another subscriber replaces the previous selection. The publisher receives reverse traffic only, and it is not fanned out to other subscribers. For more information, refer to [Return to publisher (canReply)](/realtime/sfu/datachannels/#return-to-publisher-canreply).
+
 ## Inactivity Timeout
 
 * **Track Timeout**: Tracks will automatically timeout and be garbage collected after 30 seconds of inactivity, where inactivity is defined as no media packets being received by Cloudflare. This mechanism ensures efficient use of resources and session cleanliness across all Sessions that use a track.

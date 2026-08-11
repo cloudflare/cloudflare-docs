@@ -93,14 +93,6 @@ const legalText = legalLinks
 	})
 	.join(" ");
 
-let isProduction = false;
-if (
-	import.meta.env.CF_PAGES_BRANCH === "production" ||
-	import.meta.env.GITHUB_REF_NAME === "production"
-) {
-	isProduction = true;
-}
-
 const mobileLinkClass =
 	"pointer-events-auto inline-flex w-fit items-center justify-center gap-0 whitespace-nowrap p-0 text-[14px] leading-[20px] font-medium text-foreground-100 underline-offset-2 transition-colors duration-200 ease-out hover:text-accent-100 hover:underline";
 ---
@@ -251,14 +243,8 @@ const mobileLinkClass =
 					<div class="max-w-[32ch] sm:max-w-none">
 						<Fragment set:html={legalText} />
 					</div>
-					{
-						isProduction && (
-							<>
-								<span class="mx-1.5 hidden sm:inline">|</span>
-								<OneTrust label="Your privacy choices" />
-							</>
-						)
-					}
+					<span aria-hidden="true" class="mx-1.5 hidden sm:inline">|</span>
+					<OneTrust label="Your privacy choices" />
 				</div>
 			</div>
 		</div>

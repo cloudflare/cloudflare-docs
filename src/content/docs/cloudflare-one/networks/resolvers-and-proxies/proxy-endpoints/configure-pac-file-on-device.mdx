@@ -14,7 +14,7 @@ import { Details, Tabs, TabItem } from "~/components";
 
 After you [create a proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) and [create a PAC file](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#2-create-a-pac-file), configure your devices to use the PAC file URL. You can configure system-level proxy settings (which apply to most browsers) or configure individual browsers separately.
 
-Chromium-based browsers (Google Chrome, Microsoft Edge, Brave) and Safari use the operating system proxy settings. Firefox uses its own proxy settings by default and must be configured separately.
+Chromium-based browsers (Google Chrome, Microsoft Edge, Brave) use the operating system proxy settings. Firefox uses its own proxy settings by default and must be configured separately. Safari and iOS/iPadOS do not support the HTTPS proxy type required by proxy endpoints.
 
 ## Prerequisites
 
@@ -26,7 +26,7 @@ Before you configure a PAC file on your device, make sure you have:
 
 ## Configure system proxy settings
 
-Configure your operating system to use the PAC file. This applies the proxy to all browsers that use system proxy settings (Chrome, Edge, Brave, Safari).
+Configure your operating system to use the PAC file. This applies the proxy to all browsers that use system proxy settings (Chrome, Edge, Brave).
 
 <Tabs>
 
@@ -57,7 +57,11 @@ For more information, refer to [Change proxy settings on Mac](https://support.ap
 5. Turn on **Automatic proxy configuration**.
 6. In the **URL** field, enter your PAC file URL.
 
-The setting saves automatically. Chromium-based browsers and Safari will now route traffic through your proxy endpoint.
+The setting saves automatically. Chromium-based browsers will now route traffic through your proxy endpoint.
+
+:::note
+Safari does not support the HTTPS proxy type required by Cloudflare proxy endpoints. Use a Chromium-based browser (Chrome, Edge, Brave) or [Firefox](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/#configure-firefox-separately) on macOS instead.
+:::
 
 </TabItem>
 
@@ -92,16 +96,8 @@ Most Linux command-line tools (such as `curl` and `wget`) do not natively suppor
 
 <TabItem label="iOS / iPadOS">
 
-iOS does not have a global proxy setting. You must configure the proxy for each Wi-Fi network. Cellular connections do not support PAC files without MDM.
-
-1. Open **Settings** > **Wi-Fi**.
-2. Tap the info button next to your connected network.
-3. Scroll to **HTTP Proxy** and tap **Configure Proxy**.
-4. Select **Automatic**.
-5. In the **URL** field, enter your PAC file URL.
-
-:::note
-No official Apple Support page exists for iOS proxy configuration. For enterprise deployment, refer to [Network Proxy Configuration settings](https://support.apple.com/guide/deployment/network-proxy-configuration-settings-depb27492e34/web) in the Apple Platform Deployment guide.
+:::caution
+iOS and iPadOS do not support the HTTPS proxy settings which are used by Gateway proxy endpoints. iOS and iPadOS are not supported at this time. Cloudflare recommends installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) where possible.
 :::
 
 </TabItem>

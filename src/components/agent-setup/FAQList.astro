@@ -5,6 +5,10 @@
 //     <FAQItem question="...">answer body</FAQItem>
 //     <FAQItem question="...">answer body</FAQItem>
 //   </FAQList>
+import CornerMarks from "~/components/CornerMarks.astro";
 ---
 
-<slot />
+<div class="border-border relative border">
+	<CornerMarks />
+	<slot />
+</div>

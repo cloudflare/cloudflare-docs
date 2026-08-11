@@ -1,0 +1,354 @@
+{
+	"model_id": "black-forest-labs/flux-3-video",
+	"provider_id": "black-forest-labs",
+	"name": "FLUX 3 Video",
+	"description": "FLUX 3 Video is Black Forest Labs' video generation model. It generates video from a text prompt (t2v), animates one or more reference images (i2v), or continues an existing clip (v2v), with synchronized audio, up to fhd resolution, and 5-20 second durations.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image to Video",
+		"Audio"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Text to Video",
+			"description": "Generate a video from a text prompt alone (t2v), with synchronized ambient audio.",
+			"input": {
+				"mode": "t2v",
+				"prompt": "A cozy ramen shop on a rainy Tokyo night, steam rising from the broth. Rain patter and quiet kitchen sounds.",
+				"resolution": "hd",
+				"duration": 5,
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/black-forest-labs/flux-3-video/text-to-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/black-forest-labs/flux-3-video/text-to-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-3-video',\n  {\n    mode: 't2v',\n    prompt:\n      'A cozy ramen shop on a rainy Tokyo night, steam rising from the broth. Rain patter and quiet kitchen sounds.',\n    resolution: 'hd',\n    duration: 5,\n    generate_audio: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-3-video\",\n  \"input\": {\n    \"mode\": \"t2v\",\n    \"prompt\": \"A cozy ramen shop on a rainy Tokyo night, steam rising from the broth. Rain patter and quiet kitchen sounds.\",\n    \"resolution\": \"hd\",\n    \"duration\": 5,\n    \"generate_audio\": true\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://blackforestlabs.ai/",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/black-forest-labs/flux-3-video.png",
+	"metadata": {
+		"Audio Generation": "Yes",
+		"Max Duration": "20s",
+		"Max Resolution": "FHD",
+		"Modes": "Text-to-video, image-to-video, video continuation"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-08-04 19:40:03",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"anyOf": [
+				{
+					"type": "object",
+					"properties": {
+						"mode": {
+							"type": "string",
+							"const": "t2v"
+						},
+						"prompt": {
+							"description": "Free-form prompt describing the video.",
+							"type": "string",
+							"minLength": 1
+						},
+						"aspect_ratio": {
+							"description": "Output aspect ratio. `auto` (default) picks one from the prompt and any references.",
+							"type": "string",
+							"enum": [
+								"auto",
+								"21:9",
+								"2:1",
+								"16:9",
+								"4:3",
+								"1:1",
+								"3:4",
+								"9:16"
+							]
+						},
+						"duration": {
+							"description": "Video duration in seconds (any whole second from 5 to 20), or \"auto\" (default) to fit the content.",
+							"anyOf": [
+								{
+									"type": "integer",
+									"minimum": 5,
+									"maximum": 20
+								},
+								{
+									"type": "string",
+									"const": "auto"
+								}
+							]
+						},
+						"resolution": {
+							"description": "`hd` (default) or `fhd` for a higher-resolution result finished by the video upsampler.",
+							"type": "string",
+							"enum": [
+								"hd",
+								"fhd"
+							]
+						},
+						"generate_audio": {
+							"description": "Generate synchronized audio alongside the video. Defaults to true.",
+							"type": "boolean"
+						},
+						"safety_tolerance": {
+							"description": "Tolerance for input/output harm moderation, 0 (strictest) to 4. Defaults to 2. Sexual content is capped at level 3 and hate content at level 2 regardless of the requested tolerance; requests with conditioning media are capped at level 2.",
+							"type": "integer",
+							"minimum": 0,
+							"maximum": 4
+						},
+						"draft": {
+							"description": "Generate a fast, low-cost preview instead of a final render, at a reduced flat price. Only available at hd resolution.",
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"mode",
+						"prompt"
+					],
+					"additionalProperties": false
+				},
+				{
+					"type": "object",
+					"properties": {
+						"mode": {
+							"type": "string",
+							"const": "i2v"
+						},
+						"prompt": {
+							"description": "Free-form prompt describing the video.",
+							"type": "string",
+							"minLength": 1
+						},
+						"keyframes": {
+							"anyOf": [
+								{
+									"description": "A single image (HTTPS URL or base64) as the opening frame.",
+									"type": "string"
+								},
+								{
+									"description": "A single [seconds, image] pair.",
+									"type": "array",
+									"prefixItems": [
+										{
+											"type": "number"
+										},
+										{
+											"type": "string"
+										}
+									]
+								},
+								{
+									"description": "Untimed images (1-10). One starts the video; two start and end it; with more, the first starts it, the last ends it, and the rest fall evenly in between. 3+ images require an explicit whole-number `duration`.",
+									"minItems": 1,
+									"maxItems": 10,
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								{
+									"description": "Timed [seconds, image] pairs (1-10), e.g. [[0, \"...\"], [3.5, \"...\"]]. With `duration: \"auto\"` the video runs to the last pair's second, rounded up (20s max).",
+									"minItems": 1,
+									"maxItems": 10,
+									"type": "array",
+									"items": {
+										"type": "array",
+										"prefixItems": [
+											{
+												"type": "number"
+											},
+											{
+												"type": "string"
+											}
+										]
+									}
+								}
+							]
+						},
+						"aspect_ratio": {
+							"description": "Output aspect ratio. `auto` (default) picks one from the prompt and any references.",
+							"type": "string",
+							"enum": [
+								"auto",
+								"21:9",
+								"2:1",
+								"16:9",
+								"4:3",
+								"1:1",
+								"3:4",
+								"9:16"
+							]
+						},
+						"duration": {
+							"description": "Video duration in seconds (any whole second from 5 to 20), or \"auto\" (default) to fit the content.",
+							"anyOf": [
+								{
+									"type": "integer",
+									"minimum": 5,
+									"maximum": 20
+								},
+								{
+									"type": "string",
+									"const": "auto"
+								}
+							]
+						},
+						"resolution": {
+							"description": "`hd` (default) or `fhd` for a higher-resolution result finished by the video upsampler.",
+							"type": "string",
+							"enum": [
+								"hd",
+								"fhd"
+							]
+						},
+						"generate_audio": {
+							"description": "Generate synchronized audio alongside the video. Defaults to true.",
+							"type": "boolean"
+						},
+						"safety_tolerance": {
+							"description": "Tolerance for input/output harm moderation, 0 (strictest) to 4. Defaults to 2. Sexual content is capped at level 3 and hate content at level 2 regardless of the requested tolerance; requests with conditioning media are capped at level 2.",
+							"type": "integer",
+							"minimum": 0,
+							"maximum": 4
+						},
+						"draft": {
+							"description": "Generate a fast, low-cost preview instead of a final render, at a reduced flat price. Only available at hd resolution.",
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"mode",
+						"prompt",
+						"keyframes"
+					],
+					"additionalProperties": false
+				},
+				{
+					"type": "object",
+					"properties": {
+						"mode": {
+							"type": "string",
+							"const": "v2v"
+						},
+						"prompt": {
+							"description": "Free-form prompt describing the video.",
+							"type": "string",
+							"minLength": 1
+						},
+						"start_video": {
+							"description": "The video to continue: an HTTPS URL or base64 mp4 (<= 50MB, <= 15s). The generated clip carries on from its final frames.",
+							"type": "string"
+						},
+						"aspect_ratio": {
+							"description": "Output aspect ratio. `auto` (default) picks one from the prompt and any references.",
+							"type": "string",
+							"enum": [
+								"auto",
+								"21:9",
+								"2:1",
+								"16:9",
+								"4:3",
+								"1:1",
+								"3:4",
+								"9:16"
+							]
+						},
+						"duration": {
+							"description": "Video duration in seconds (any whole second from 5 to 20), or \"auto\" (default) to fit the content.",
+							"anyOf": [
+								{
+									"type": "integer",
+									"minimum": 5,
+									"maximum": 20
+								},
+								{
+									"type": "string",
+									"const": "auto"
+								}
+							]
+						},
+						"resolution": {
+							"description": "`hd` (default) or `fhd` for a higher-resolution result finished by the video upsampler.",
+							"type": "string",
+							"enum": [
+								"hd",
+								"fhd"
+							]
+						},
+						"generate_audio": {
+							"description": "Generate synchronized audio alongside the video. Defaults to true.",
+							"type": "boolean"
+						},
+						"safety_tolerance": {
+							"description": "Tolerance for input/output harm moderation, 0 (strictest) to 4. Defaults to 2. Sexual content is capped at level 3 and hate content at level 2 regardless of the requested tolerance; requests with conditioning media are capped at level 2.",
+							"type": "integer",
+							"minimum": 0,
+							"maximum": 4
+						},
+						"draft": {
+							"description": "Generate a fast, low-cost preview instead of a final render, at a reduced flat price. Only available at hd resolution.",
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"mode",
+						"prompt",
+						"start_video"
+					],
+					"additionalProperties": false
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "Signed URL to the generated mp4 (24fps, with audio by default). Expires ~2 hours after ready \u2014 download promptly.",
+					"type": "string",
+					"format": "uri"
+				},
+				"draft_cache": {
+					"description": "Draft-mode cache bundle URL, only present for draft: true requests.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}
