@@ -1,4 +1,4 @@
-The `name` field in each payload is the Worker name at the time the event fired, and that name can change. The stable identifier for a Worker is the script tag in `source.id`. When a Worker is renamed, the `worker.updated` event reports the new name, and the previous name is not included in the event.
+The `name` field in each payload is the Worker name at the time the event fired, and that name can change. The stable identifier for a Worker is the script tag in `source.id`. When a Worker is renamed, the `worker.updated` event reports the new name in `payload.name`, and reports both the previous and new names in `payload.changed.name`.
 
 #### `deployment.created`
 
@@ -39,6 +39,8 @@ Triggered when a deployment is created and rolled out.
 ```
 
 The `versions` array describes the default traffic split, and the `percentage` values always sum to 100. Deployments that use cohorts can route traffic to versions that do not appear in `versions`.
+
+The `annotations` and `authorEmail` fields are omitted when they are empty.
 
 #### `deployment.deleted`
 
