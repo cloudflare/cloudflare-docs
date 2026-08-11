@@ -109,7 +109,45 @@ This allows you to import packages that use these Node.js modules, even if certa
 
 Runtime API support is one part of npm package compatibility. Your build tool also selects package entry points, handles CommonJS and ECMAScript modules (ESM), and determines which module boundaries reach the Workers runtime.
 
-For new JavaScript and TypeScript projects that use NPM packages, Cloudflare recommends [Vite 8 with the Cloudflare Vite plugin](/workers/vite-plugin/). Vite 8 uses [Rolldown](https://vite.dev/blog/announcing-vite8/) for dependency pre-bundling and production builds. The Cloudflare Vite plugin configures Rolldown's [`node` platform](https://rolldown.rs/reference/InputOptions.platform) when it builds your Worker. This setting ensures maximum compatibility with CommonJS modules that you `require()` in your code. Rolldown provides [CommonJS and ESM interoperability](https://rolldown.rs/in-depth/bundling-cjs), and the Cloudflare Vite plugin uploads each JavaScript output chunk as a separate Workers runtime module.
+For new JavaScript and TypeScript projects that use npm packages, Cloudflare recommends [Vite 8 with the Cloudflare Vite plugin](/workers/vite-plugin/). Vite 8 uses [Rolldown](https://vite.dev/blog/announcing-vite8/) for dependency pre-bundling and production builds. Rolldown provides [CommonJS and ESM interoperability](https://rolldown.rs/in-depth/bundling-cjs) and produces optimized output chunks. Wrangler deploys each JavaScript output chunk as a separate Workers runtime module.
+
+### Configure the Rolldown platform
+
+The Cloudflare Vite plugin currently configures Rolldown's [`neutral` platform](https://rolldown.rs/reference/InputOptions.platform). If a dependency expects Node-style `require()` behavior, you can configure the `node` platform for your Worker's Vite environment:
+
+```ts title="vite.config.ts"
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [
+		cloudflare(),
+		{
+			name: "worker-node-platform",
+			configEnvironment(name) {
+				if (name !== "my_worker") {
+					return;
+				}
+
+				return {
+					build: {
+						rolldownOptions: { platform: "node" },
+					},
+					optimizeDeps: {
+						rolldownOptions: { platform: "node" },
+					},
+				};
+			},
+		},
+	],
+});
+```
+
+Replace `my_worker` with your [Worker's Vite environment name](/workers/vite-plugin/reference/vite-environments/). By default, a standalone Worker uses its Worker name with hyphens replaced by underscores. Framework integrations often use `ssr`.
+
+Setting both `build` and `optimizeDeps` applies the platform consistently in production builds and local development. If the package imports Node.js built-in modules, enable the `nodejs_compat` flag as described in [Get Started](#get-started).
+
+The `node` platform does not add unsupported Node.js APIs or guarantee that every npm package will work. Rolldown also does not automatically rewrite CommonJS `__dirname` when producing ESM output. Packages that use `__dirname` to load adjacent files may require package-specific changes.
 
 With the [`new_module_registry` compatibility flag](/workers/configuration/compatibility-flags/), Workers compiles an uploaded runtime module when it is first imported. Workers can also reuse compiled code across isolate replicas. Each uploaded ESM module receives metadata such as `import.meta.url` and `import.meta.resolve()`. Modules with `file:` URLs also receive `import.meta.dirname` and `import.meta.filename`.
 
