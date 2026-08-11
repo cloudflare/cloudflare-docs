@@ -57,7 +57,7 @@ API tokens use the same Workers roles and scopes as members and User Groups, but
 
 Workers permissions alone are not sufficient to add, update, or remove Routes or Custom Domains. You also need permission for every zone that contains a domain attached to the Worker.
 
-Members need a [zone-scoped role](/fundamentals/manage-members/scope/#specific-domains) with Zone Settings edit access, such as [Domain Administrator](/fundamentals/manage-members/roles/#domain-scoped-roles), for each affected zone.
+Members need `Zone Settings Edit`, scoped to each affected zone.
 
 API tokens need _Zone_ > _Zone Settings_ > _Edit_, scoped to each affected zone.
 
