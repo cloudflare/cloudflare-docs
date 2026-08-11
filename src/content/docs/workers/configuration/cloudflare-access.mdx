@@ -266,7 +266,6 @@ Add a `dev` block inside the `access` configuration in your `wrangler.jsonc`:
 ```jsonc
 {
 	"access": {
-		// ... your Access policies, session_duration, etc.
 		"dev": {
 			"aud": "my-app",
 			"identity": { "email": "admin@company.com" }
@@ -277,32 +276,7 @@ Add a `dev` block inside the `access` configuration in your `wrangler.jsonc`:
 
 </WranglerConfig>
 
-When you run `wrangler dev`, your Worker will receive this identity through `ctx.access` — the same way it would in production. Calling `ctx.access.getIdentity()` returns the identity object you configured above.
-
-### Switching between users
-
-To test as a different user, update the identity in your `wrangler.jsonc`:
-
-<WranglerConfig>
-
-```jsonc
-{
-	"access": {
-		"dev": {
-			"aud": "my-app",
-			"identity": { "email": "ic@company.com" }
-		}
-	}
-}
-```
-
-</WranglerConfig>
-
-### Testing unauthenticated requests
-
-To test what happens when a request is not authenticated, remove the `dev` block (or comment it out). `ctx.access` will be `undefined`, just as it would be for an unauthenticated request in production.
-
-### Example Worker
+When you run `wrangler dev`, your Worker will receive this identity through `ctx.access`. Calling `ctx.access.getIdentity()` returns the identity object you configured above. To test as a different user, change the identity fields. To test unauthenticated requests, remove the `dev` block -- `ctx.access` will be `undefined`, just as it would be for a request that didn't go through Access in production.
 
 ```js
 export default {
@@ -319,11 +293,9 @@ export default {
 };
 ```
 
-With the `dev` config above, running `wrangler dev` and visiting `localhost:8787` would return `Hello, admin@company.com`.
+With the config above, visiting `localhost:8787` would return `Hello, admin@company.com`.
 
-### Identity fields
-
-For the full list of fields available on the identity object, refer to [Application token — User identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/).
+The identity object accepts any fields that match the production Access identity shape. For the full list, refer to [Application token — User identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/).
 
 ## Disable Access
 
