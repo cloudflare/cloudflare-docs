@@ -5,8 +5,7 @@ productLink: "/workers/"
 entries:
   - publish_date: "2026-07-24"
     description: |-
-      - [Workers Builds](/workers/ci-cd/builds/) now automatically skips a queued build when a newer build for the same build trigger is also queued. This reduces queue times and prevents outdated changes from being built.
-      - Skipped builds do not consume [build minutes](/workers/ci-cd/builds/limits-and-pricing/). This behavior is available to all customers and requires no configuration.
+      - [Workers Builds](/workers/ci-cd/builds/) now automatically skips a queued build when a newer build for the same build trigger is also queued. This reduces queue times and prevents outdated changes from being built. This behavior is available to all customers and requires no configuration.
   - publish_date: "2026-06-04"
     description: |-
       - Updated v8 to version 15.0.
