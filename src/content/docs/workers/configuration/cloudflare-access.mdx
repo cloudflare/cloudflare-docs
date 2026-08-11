@@ -278,6 +278,8 @@ Add a `dev` block inside the `access` configuration in your `wrangler.jsonc`:
 
 When you run `wrangler dev`, your Worker will receive this identity through `ctx.access`. Calling `ctx.access.getIdentity()` returns the identity object you configured above. To test as a different user, change the identity fields. To test unauthenticated requests, remove the `dev` block -- `ctx.access` will be `undefined`, just as it would be for a request that didn't go through Access in production.
 
+### Example Worker
+
 ```js
 export default {
 	async fetch(request, env, ctx) {
@@ -294,6 +296,8 @@ export default {
 ```
 
 With the config above, visiting `localhost:8787` would return `Hello, admin@company.com`.
+
+### Identity fields
 
 The identity object accepts any fields that match the production Access identity shape. For the full list, refer to [Application token — User identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/).
 
