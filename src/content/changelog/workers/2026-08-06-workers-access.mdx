@@ -57,7 +57,20 @@ export default {
 
 **Test Access locally**
 
-TODO: Add details about testing Access locally.
+You can now test Cloudflare Access locally with `wrangler dev`. Add a `dev` block to your `wrangler.jsonc`:
+
+```json
+{
+  "access": {
+    "dev": {
+      "aud": "my-app",
+      "identity": { "email": "admin@company.com" }
+    }
+  }
+}
+```
+
+Your Worker will receive this identity through `ctx.access` and `ctx.access.getIdentity()`, letting you test authenticated and unauthenticated flows without deploying. Remove the `dev` block to simulate unauthenticated requests.
 
 **API and programmatic access**
 
