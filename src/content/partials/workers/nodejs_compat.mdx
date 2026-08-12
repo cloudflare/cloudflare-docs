@@ -4,7 +4,9 @@
 
 import { WranglerConfig } from "~/components";
 
-To enable both built-in runtime APIs and polyfills for your Worker or Pages project, add the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) to your [Wrangler configuration file](/workers/wrangler/configuration/), and set your compatibility date to September 23rd, 2024 or later. This will enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Workers project.
+For compatibility dates of `2026-08-04` or later, Workers and Pages projects enable both `nodejs_compat` and `nodejs_compat_v2` by default. Built-in runtime APIs and polyfills are available without additional configuration. These flags are not used for these compatibility dates. Existing projects do not need to remove them when updating their compatibility date.
+
+If your compatibility date is before `2026-08-04`, add the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in:
 
 <WranglerConfig>
 
@@ -12,9 +14,10 @@ To enable both built-in runtime APIs and polyfills for your Worker or Pages proj
 {
 	"compatibility_flags": [
 		"nodejs_compat"
-	],
-	"compatibility_date": "$today"
+	]
 }
 ```
 
 </WranglerConfig>
+
+To turn off [Node.js compatibility](/workers/runtime-apis/nodejs/) completely for a compatibility date of `2026-08-04` or later, remove the positive flags if present. Then add both `no_nodejs_compat` and `no_nodejs_compat_v2`. For configuration examples, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
