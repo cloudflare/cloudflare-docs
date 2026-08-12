@@ -87,7 +87,7 @@ describeEval("review validator", { harness }, (it) => {
 					id: "SG-ccc333",
 					severity: "warning",
 					path: "src/content/docs/workers/example.mdx",
-					line: 11,
+					line: 8,
 					rule: "Raw <img> tag",
 					evidence:
 						"Line uses a raw <img> tag instead of Markdown image syntax.",
