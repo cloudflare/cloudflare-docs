@@ -130,14 +130,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Restore Astro assets from cache
+      - name: Restore Astro cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
-            node_modules/.astro/assets
-          key: astro-assets-${{ hashFiles('src/assets/**') }}
+            node_modules/.astro
+          key: astro-cache-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.event.pull_request.head.sha || github.sha }}
           restore-keys: |
-            astro-assets-
+            astro-cache-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            astro-cache-${{ runner.os }}-
 
       - name: Build
         id: build
