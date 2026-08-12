@@ -92,6 +92,8 @@ None of the options for this command are required. Many of these options can be 
   - Path to a custom certificate.
 - `--local-upstream` <Type text="string" /> <MetaInfo text="optional" />
   - Host to act as origin in local mode, defaults to `dev.host` or route.
+- `--infer-origin-from-routes` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - Use the first configured route to infer the origin (`request.url` and the `Host` header) seen by the Worker in local mode. Set to `false` to preserve the real local origin, for example `localhost:8787`, so that Host- or Origin-sensitive logic behaves the same as the actual local request. An explicit `--host`, `--local-upstream`, or `dev.host` takes precedence either way.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
