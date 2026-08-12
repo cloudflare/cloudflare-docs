@@ -91,9 +91,7 @@ should be built for the `linux/amd64` architecture, and should stay within
 
 ### Container shutdown
 
-If you do not set [`sleepAfter`](/containers/container-class/#sleepafter)
-on your Container class, or stop the instance manually, the container will shut down soon after the container stops receiving requests.
-By setting `sleepAfter`, the container will stay alive for approximately the specified duration.
+The Container class sets [`sleepAfter`](/containers/container-class/#sleepafter) to 10 minutes by default. Its default [`onActivityExpired()`](/containers/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook.
 
 You can stop a container instance yourself with [`stop()`](/containers/container-class/#stop) or [`destroy()`](/containers/container-class/#destroy).
 

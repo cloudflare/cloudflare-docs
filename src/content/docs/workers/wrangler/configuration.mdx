@@ -1291,7 +1291,7 @@ The following options are available:
 - `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
   - During a [rollout](/containers/platform-details/rollouts/), minimum seconds a container instance must already have been connected to its Durable Object before it may be replaced. Defaults to `0`. Still applies with `--containers-rollout=immediate`.
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
-  - Percentage of container instances to update at each [rollout](/containers/platform-details/rollouts/) step. A single number uses that step size (`5`, `10`, `20`, `25`, `50`, or `100`). An array is cumulative and must end in `100`. Defaults to `[10, 100]`. Override for one deploy with `--containers-rollout=immediate` (single 100% step; does not override grace period).
+  - Percentage of container instances to update at each [rollout](/containers/platform-details/rollouts/) step. A single number uses that step size (`5`, `10`, `20`, `25`, `50`, or `100`). An array must contain ascending integer values from `10` through `100`, end in `100`, contain at most 10 entries, and contain no more entries than `max_instances`; its values are cumulative. Defaults to `100` if `max_instances` is omitted or less than `2`; otherwise defaults to `[10, 100]`. Override for one deploy with `--containers-rollout=immediate` (single 100% step; does not override grace period).
 - `ssh` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for SSH through Wrangler. Refer to [SSH](#ssh).
 - `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional deprecated, use `ssh`" />

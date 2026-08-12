@@ -15,7 +15,7 @@ import { Steps, DashButton, PackageManagers } from "~/components";
 
 <Steps>
 
-1. If `image` in your Wrangler config is a path to a Dockerfile (or a directory that contains one), start [Docker](https://www.docker.com/) or another Docker-compatible engine. If `image` is a registry reference (Cloudflare Registry, Docker Hub, Amazon ECR, or Google Artifact Registry), you do not need Docker at deploy time. Refer to [Image management](/containers/platform-details/image-management/).
+1. If `image` in your Wrangler config is a path to a Dockerfile, start [Docker](https://www.docker.com/) or another Docker-compatible engine. Specify the Dockerfile itself, not its directory. If `image` is a registry reference (Cloudflare Registry, Docker Hub, Amazon ECR, or Google Artifact Registry), you do not need Docker at deploy time. Refer to [Image management](/containers/platform-details/image-management/).
 2. From your project directory, run:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
@@ -24,7 +24,9 @@ import { Steps, DashButton, PackageManagers } from "~/components";
 
 </Steps>
 
-`wrangler deploy` uploads your Worker, publishes the container image when needed, then updates running container instances. The new Worker version goes live when the deploy completes. Container instances update with a [gradual rollout](/containers/platform-details/rollouts/) by default, so new Worker code may briefly talk to containers that still run the previous image. A successful deploy starts that rollout; it does not mean every container instance has already finished replacing.
+`wrangler deploy` uploads and activates your Worker before it processes the container configuration. For a Dockerfile image, Wrangler then builds and pushes the image when needed. For a registry image, it uses the configured image reference. These steps are not transactional: an image build, image push, or [rollout](/containers/platform-details/rollouts/) error can happen after the new Worker is already live.
+
+For an existing container application, Wrangler starts a rollout when the effective container configuration changes. The command does not wait for every container instance to be replaced, so new Worker code may briefly talk to containers that still run the previous image. The first deploy creates the container application directly, and a deploy with no effective container changes starts no rollout.
 
 :::note[First deploy]
 The first deploy can take several minutes while Cloudflare provisions the image. The Worker URL may respond before container routes succeed.

@@ -10,36 +10,38 @@ products:
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
-A **rollout** replaces running **container instances** with a new container image after you [deploy](/containers/deploy/) a Worker that uses Containers.
+## How rollouts work
 
-A **container instance** is one running copy of your container image on Cloudflare's network. It runs the process your image starts (`ENTRYPOINT`/`CMD` in the Dockerfile, or the base image default). Rollouts change those container instances. They do not change Durable Object storage.
+A **rollout** applies a target container application configuration after you [deploy](/containers/deploy/) a Worker that uses Containers. The target can change the image, instance type, limits, placement, or other container settings.
 
-When `wrangler deploy` finishes successfully:
+A **container instance** is one running copy of your container image on Cloudflare's network. It runs the process your image starts (`ENTRYPOINT`/`CMD` in the Dockerfile, or the base image default). When the target changes the image, the rollout replaces container instances with copies that run the target image. Rollouts do not change Durable Object storage.
 
-1. The new Worker version is live, including Durable Object class code.
-2. A new container image is published when the deploy includes one.
-3. A rollout starts so running container instances move to that image.
+When an existing container application's effective configuration changes, `wrangler deploy`:
 
-Deploy success means the rollout started. It does not mean every container instance has finished replacing.
+1. Uploads and activates the new Worker version, including Durable Object class code.
+2. Builds and pushes a Dockerfile image when needed, or uses the configured registry image reference.
+3. Starts a rollout to apply the target container configuration.
 
-Until the rollout finishes, new Worker code can still reach container instances on the previous image. Prefer Worker and image changes that work together during that window, or choose [immediate](#immediate) when you need the shortest mixed window the platform allows.
+The Worker is active before the image and rollout steps begin. These steps are not transactional, so the Worker can remain active if a later image or rollout step fails. Deploy success means the rollout started, not that every container instance has finished replacing. The first deploy creates the container application directly, and a deploy with no effective container changes starts no rollout.
+
+When the image changes, new Worker code can still reach container instances on the previous image until the rollout finishes. Prefer Worker and image changes that work together during that window, or choose [immediate](#immediate) when you need the shortest mixed window the platform allows.
 
 Field names and allowed values are listed under [Containers configuration](/workers/wrangler/configuration/#containers).
 
 ## Defaults
 
-| Setting                                           | Default                                                             |
-| ------------------------------------------------- | ------------------------------------------------------------------- |
-| `rollout_step_percentage`                         | `[10, 100]` (about 10% of container instances, then the rest)       |
-| `rollout_active_grace_period`                     | `0` seconds                                                         |
+| Setting                                           | Default                                                                             |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `rollout_step_percentage`                         | `100` if `max_instances` is omitted or less than `2`; otherwise `[10, 100]`         |
+| `rollout_active_grace_period`                     | `0` seconds                                                                         |
 | Stop sequence when replacing a container instance | `SIGTERM` to the main process, then `SIGKILL` after 15 minutes if it has not exited |
 
 ## Gradual rollouts
 
-By default, Wrangler starts a rolling rollout using `rollout_step_percentage`. With `[10, 100]`:
+By default, Wrangler starts a rolling rollout using `rollout_step_percentage`. If `max_instances` is omitted or less than `2`, Wrangler uses one `100` step. Otherwise, Wrangler requests `[10, 100]`:
 
-1. Target about 10% of container instances on the new image.
-2. Target 100% of container instances on the new image.
+1. Request a target of about 10% of container instances with the new configuration. The platform raises this percentage when necessary so the step represents at least one instance at the configured `max_instances`.
+2. Target 100% of container instances with the new configuration.
 
 Configure the steps with `rollout_step_percentage` in Wrangler. Override the default plan for one deploy with [`--containers-rollout`](#rollout-modes).
 
@@ -48,7 +50,7 @@ Configure the steps with `rollout_step_percentage` in Wrangler. Override the def
 When the rollout selects a container instance to update:
 
 1. **Grace period (if configured).** If `rollout_active_grace_period` is greater than `0`, container instances that only recently became connected to their [Durable Object](/durable-objects/) are skipped until they pass that window. Default `0` means no extra wait. Refer to [Rollout active grace period](#rollout-active-grace-period).
-2. **Signal stop.** The platform sends `SIGTERM` to the main process so it can stop accepting new work and finish in-flight work. Handle `SIGTERM` in your image if that process needs cleanup before exit.
+2. **Signal stop.** The platform sends `SIGTERM` to the main process in the container so it can stop accepting new work and finish in-flight work. Handle `SIGTERM` in your image if that process needs cleanup before exit.
 3. **Drain.** The process has up to 15 minutes to exit after `SIGTERM`.
 4. **Force stop if needed.** If the process is still running after 15 minutes, the platform sends `SIGKILL`.
 5. **After exit.** The Container class [`onStop`](/containers/container-class/#onstop) hook can run in the Worker once the container process has exited.
@@ -81,17 +83,19 @@ Use a non-zero value when short sessions should finish before a rollout replaces
 
 `--containers-rollout` applies to [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) only. It does not apply to [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions).
 
-On a full deploy, the Worker version always goes live when the command finishes. Rollout mode controls only how running container instances move to a new image.
+On a full deploy, Wrangler activates the Worker before it processes the container image and rollout. Rollout mode controls how the target container configuration is applied.
 
-| Mode              | Flag                             | Container instances                                                                                      |
-| ----------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Gradual (default) | omit flag                        | Replace in stages using `rollout_step_percentage` (default about 10%, then the rest)                     |
-| Immediate         | `--containers-rollout=immediate` | Target 100% of running container instances in one step                                                   |
-| None              | `--containers-rollout=none`      | Leave images and running container instances unchanged; deploy Worker code only                          |
+| Mode              | Flag                             | Container instances                                                             |
+| ----------------- | -------------------------------- | ------------------------------------------------------------------------------- |
+| Gradual (default) | omit flag                        | Use `rollout_step_percentage`, which can contain one or multiple steps          |
+| Immediate         | `--containers-rollout=immediate` | Target 100% of container instances in one step                                  |
+| None              | `--containers-rollout=none`      | Leave images and running container instances unchanged; deploy Worker code only |
+
+<span id="immediate-rollouts"></span>
 
 ### Immediate
 
-Immediate sets the rollout plan to a single step that targets 100% of running container instances. There is no intermediate percentage hold.
+Immediate sets the rollout plan to a single step that targets 100% of container instances. There is no intermediate percentage hold.
 
 <PackageManagers
 	pkg="wrangler"
@@ -103,10 +107,11 @@ Use immediate when Worker code and the container image need to stay compatible a
 
 Behavior:
 
-- The new Worker version is live when deploy finishes.
+- The new Worker version is activated before the container image and rollout are processed.
 - The rollout then replaces container instances toward 100% using the same [replace sequence](#how-a-container-instance-is-replaced) as gradual mode, including grace period when configured.
 - Replacements complete over wall-clock time. How long depends on how many container instances are running, how long each takes to stop and start, and any grace period.
-- Deploy success means the rollout started.
+- When the image changes, immediate minimizes but does not eliminate the period when the new Worker can reach instances on the previous image.
+- Deploy success means the rollout started, not that replacements finished.
 
 ### None
 
