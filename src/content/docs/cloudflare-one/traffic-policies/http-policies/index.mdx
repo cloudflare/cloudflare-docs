@@ -11,7 +11,7 @@ tags:
   - SAML
 ---
 
-import { Details, InlineBadge, Render } from "~/components";
+import { Badge, Details, InlineBadge, Render } from "~/components";
 
 :::note
 To use HTTP policies, install a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/).
@@ -635,16 +635,12 @@ Use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention
 | ----------- | -------------------------------------------------------------------- |
 | DLP Profile | `any(dlp.profiles[*] in {\"a0cabf16-7491-4c9a-ac02-f64cabc66394\"})` |
 
-### Experimental - Is MCP
-
-:::note
-Experimental selectors and log fields are available in a beta capacity to all customers and may change before being made generally available. These changes will be communicated to customers before documentation is updated.
-:::
+### Is MCP <Badge text="Beta" variant="caution"/>
 
 Whether the HTTP request was identified as [Model Context Protocol (MCP)](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) traffic. Gateway detects MCP traffic by inspecting protocol-specific headers and JSON-RPC 2.0 payload characteristics in HTTP requests. Use this selector to build policies that allow, block, or isolate MCP traffic across your network.
 
-| UI name | API example                               |
-| ------- | ----------------------------------------- |
+| UI name | API example                   |
+| ------- | ----------------------------- |
 | Is MCP  | `experimental.is_mcp == true` |
 
 ### Host
