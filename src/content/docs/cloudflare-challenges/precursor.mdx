@@ -88,13 +88,21 @@ Use **Minimize Friction** on endpoints that should not require challenge-style s
 
 ## Relationship to JavaScript Detections
 
-Precursor supersedes JavaScript Detections (JSD):
+Precursor supersedes JavaScript Detections (JSD). JSD and Precursor both collect client-side signals, but Precursor evaluates them continuously across a session instead of as a one-time check.
 
-- moves from one-time execution to continuous verification
-- introduces session-based state
-- enables dynamic runtime control
+- Precursor moves from one-time execution to continuous verification
+- Precursor introduces session-based state
+- Precursor enables dynamic runtime control
 
-If you enable Precursor, you should disable JavaScript Detections (JSD).
+When either JSD or Precursor contributes to bot score, Cloudflare exposes the source as **JavaScript Fingerprinting**.
+
+#### If you already use JSD
+
+Disable JSD on the zone when you enable Precursor to avoid running both features on the same traffic. Precursor includes all detections previously covered by JSD, and any JSD-driven Security Rules will still apply.
+
+#### If you do not use JSD
+
+If you enable Precursor without previously using JSD, you may see more traffic with bot score below 30.
 
 ## Relationship to Challenge Pages
 
