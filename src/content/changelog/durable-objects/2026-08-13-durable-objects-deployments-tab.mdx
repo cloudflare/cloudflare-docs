@@ -1,6 +1,6 @@
 ---
 title: View deployments for Durable Objects in the dashboard
-description: Durable Object namespaces now have a Deployments tab showing the backing Worker's active versions, traffic split, and per-version request, error, and wall time metrics.
+description: Durable Object namespaces now have a Deployments tab showing the backing Worker's active versions, traffic split (actual and configured), and per-version request, error, and wall time metrics.
 products:
   - durable-objects
   - workers
@@ -11,12 +11,20 @@ import { DashButton } from "~/components";
 
 Durable Object namespaces now have a **Deployments** tab in the Cloudflare dashboard, showing the [versions](/workers/versions-and-deployments/#versions) of the backing Worker that are currently live and the traffic split between them.
 
+![The Deployments tab for a Durable Object namespace, showing two versions with their traffic %, requests/sec, error rate, and median wall time](~/assets/images/changelog/durable-objects/durable-objects-deployments-tab.png)
+
 <DashButton url="/?to=/:account/workers/durable-objects" />
 
 A Durable Object namespace is backed by a Worker script, so its deployments are the same as that Worker's deployments. Previously, checking on a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) in progress for a Durable Object meant leaving the namespace and finding the backing Worker under Workers & Pages. The new tab surfaces that information directly on the namespace, alongside the metrics that matter for it: requests, error rate, and wall time per version, rather than the CPU time shown on the Worker's own Deployments tab. Wall time better reflects Durable Object performance, since it includes time spent waiting on I/O such as storage reads.
 
 The tab is read-only — promoting, rolling back, or splitting traffic on a deployment is still managed from the backing Worker's Deployments tab.
 
-To view it, go to **Workers & Pages** > **Durable Objects**, select a namespace, then select the **Deployments** tab.
+## Actual vs. configured traffic split
 
-For details on how Durable Objects are assigned to Worker versions during a gradual deployment, refer to [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/).
+The **Traffic %** column, for both Workers and Durable Objects, now shows the actual, observed traffic share for each version next to the percentage you configured — shown as the headline number and filled bar, with the configured split marked as a tick. Previously, this column only showed the configured percentage. If you moved a deployment from 50/50 to 100% on a new version, the configured number updated immediately, but requests take time to catch up, and there was no way to tell how far along that shift was without checking metrics elsewhere.
+
+This gap between actual and configured is especially useful for Durable Objects. Because [each Durable Object is pinned to the version it started on until you create a new deployment](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/), a namespace's observed traffic split can lag its configured split for much longer than a stateless Worker — sometimes for as long as its objects stay alive. Seeing both numbers side by side makes it clear whether a deployment has actually finished rolling out or is still catching up.
+
+Actual traffic share is calculated from the same [GraphQL Analytics API](/analytics/graphql-api/) data that powers other Workers and Durable Objects metrics, so standard ingestion delay and [sampling](/analytics/faq/graphql-api-inconsistent-results/) apply. Durable Objects analytics can lag Workers analytics by several minutes, so a version's actual share may take a little longer to catch up after a change.
+
+To view this, go to **Workers & Pages** > **Durable Objects**, select a namespace, then select the **Deployments** tab. For more on how gradual deployments work, refer to [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/).
