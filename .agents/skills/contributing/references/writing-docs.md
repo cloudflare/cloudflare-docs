@@ -47,7 +47,7 @@ Mandatory mappings (do not use bare fences for these):
 - Multi-step procedure → `Steps`
 - Dashboard navigation step → `DashButton`
 
-Remember to import every component you use from `~/components`, after the frontmatter block. Remove unused imports.
+Remember to import every barrel-exported component you use from `~/components`, after the frontmatter block. Page-specific wrapper components or one-off components not in the barrel may use deep paths. Remove unused imports.
 
 ## 6. Handle assets and related artifacts
 

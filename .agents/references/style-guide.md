@@ -277,7 +277,7 @@ Package install commands must use `PackageManagers`.
 
 ## Components
 
-All components are imported from `~/components`. Imports must appear after the frontmatter block.
+Components exported from the `~/components` barrel must be imported from `~/components`. Page-specific wrapper components or one-off components not in the barrel may use deep paths (e.g. `~/components/models/AIModelCatalog.astro`). Imports must appear after the frontmatter block.
 
 **Mandatory component usage** — do not use bare fences for these:
 
