@@ -121,6 +121,8 @@ API value: `redirect`
 - [Source Country IP Geolocation](#source-country)
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
+- [Traffic destinations](#traffic-destinations)
+- [Traffic sources](#traffic-sources)
 - [URL](#url)
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
@@ -180,6 +182,8 @@ API value: `isolate`
 - [Security Risks](#security-risks)
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
+- [Traffic destinations](#traffic-destinations)
+- [Traffic sources](#traffic-sources)
 - [URL](#url)
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
@@ -223,6 +227,8 @@ API value: `off`
 - [Source Country IP Geolocation](#source-country)
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
+- [Traffic destinations](#traffic-destinations)
+- [Traffic sources](#traffic-sources)
 - [Virtual Network](#virtual-network)
 
 **Identity**
@@ -270,6 +276,8 @@ API value: `noisolate`
 - [Security Risks](#security-risks)
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
+- [Traffic destinations](#traffic-destinations)
+- [Traffic sources](#traffic-sources)
 - [URL](#url)
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
@@ -314,6 +322,8 @@ API value: `noscan`
 - [Source Country IP Geolocation](#source-country)
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
+- [Traffic destinations](#traffic-destinations)
+- [Traffic sources](#traffic-sources)
 - [URL](#url)
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
@@ -365,6 +375,8 @@ API value: `quarantine`
 - [Source Country IP Geolocation](#source-country)
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
+- [Traffic destinations](#traffic-destinations)
+- [Traffic sources](#traffic-sources)
 - [URL](#url)
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
@@ -694,6 +706,17 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.src_ip" }}
 />
+
+### Traffic destinations
+
+<Render
+	file="gateway/selectors/traffic-destinations"
+	product="cloudflare-one"
+/>
+
+### Traffic sources
+
+<Render file="gateway/selectors/traffic-sources" product="cloudflare-one" />
 
 ### URL
 

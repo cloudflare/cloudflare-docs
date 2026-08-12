@@ -16,6 +16,8 @@ import { GlossaryDefinition, GlossaryTooltip, Badge } from "~/components";
 
 Similar to the network onboarding practices in the [Replace your VPN](/learning-paths/replace-vpn/connect-private-network/) implementation guide, there are a number of ways to on-ramp your network traffic to the Cloudflare global network. This guide will quickly explore all of the options to on-ramp traffic to Cloudflare Gateway to inspect, apply policies, and filter.
 
+After you choose an on-ramp, you can scope Gateway policies by traffic path. Use [Traffic sources](/cloudflare-one/traffic-policies/network-policies/#traffic-sources) to match how traffic enters Gateway. Use [Traffic destinations](/cloudflare-one/traffic-policies/network-policies/#traffic-destinations) to match where Gateway sends traffic next.
+
 :::note
 The following steps are identical to [Connect user devices](/learning-paths/replace-vpn/connect-devices/) in the Replace your VPN implementation guide. If you have already completed Replace your VPN, you can skip ahead to [Network on-ramps](#network-on-ramps).
 :::

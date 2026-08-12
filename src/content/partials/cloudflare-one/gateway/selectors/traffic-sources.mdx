@@ -1,0 +1,19 @@
+---
+{}
+---
+
+Use this selector to match Gateway policies by the type of path that carried traffic into Gateway.
+
+| UI name         | API example                          |
+| --------------- | ------------------------------------ |
+| Traffic sources | `net.onramp.type == "device_client"` |
+
+| Display label         | API value           | Meaning                                                                                                        |
+| --------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Cloudflare One Client | `device_client`     | Traffic that entered through a managed device running the Cloudflare One Client.                               |
+| Mesh                  | `mesh`              | Traffic that entered through any Mesh node in your Mesh network. This is type-level, not a specific node.      |
+| Cloudflare WAN        | `cloudflare_wan`    | Traffic that entered through a Cloudflare WAN connection, such as IPsec, GRE, or CNI.                          |
+| Clientless RDP        | `clientless_rdp`    | Traffic that entered through a clientless Remote Desktop Protocol session.                                     |
+| Proxy Endpoint        | `proxy_endpoint`    | Traffic that entered through a Cloudflare-managed Gateway proxy endpoint, including PAC-driven configurations. |
+| Browser Isolation     | `browser_isolation` | Traffic that originated in a Browser Isolation session.                                                        |
+| MCP Portal            | `mcp_portal`        | Traffic that entered through a Cloudflare MCP server portal.                                                   |

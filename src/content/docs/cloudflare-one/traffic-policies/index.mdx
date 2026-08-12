@@ -171,6 +171,8 @@ The connection method (on-ramp) you use determines which policy types Gateway ca
 
 You can combine multiple on-ramps. For example, use the Cloudflare One Client for remote employees and network tunnels for branch offices.
 
+When you combine on-ramps, you can scope policies by traffic path. Use [Traffic sources](/cloudflare-one/traffic-policies/network-policies/#traffic-sources) to match how traffic enters Gateway. Use [Traffic destinations](/cloudflare-one/traffic-policies/network-policies/#traffic-destinations) to match where Gateway sends traffic next.
+
 ## How Gateway processes traffic
 
 When a user makes a request, Gateway inspects it at multiple layers before allowing the connection through. The following diagram shows the end-to-end flow:

@@ -141,7 +141,7 @@ The IP used to correlate existing FQDN matching policy between Gateway DNS and G
 
 Type: `string`
 
-The type of destination to which the network session was routed. <br />Possible values are <em>INTERNET</em> \| <em>MAGIC</em> \| <em>CFD_TUNNEL</em> \| <em>WARP</em>.
+The type of destination to which the network session was routed. <br />Possible values are <em>INTERNET</em> \| <em>MAGIC</em> \| <em>CFD_TUNNEL</em> \| <em>DEVICE_CLIENT</em> \| <em>MESH</em>.
 
 ## OriginIP
 

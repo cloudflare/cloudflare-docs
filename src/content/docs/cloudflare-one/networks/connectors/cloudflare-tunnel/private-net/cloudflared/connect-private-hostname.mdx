@@ -129,6 +129,8 @@ You can create an [Access self-hosted application](/cloudflare-one/access-contro
 
 If you prefer to secure the application using a traditional firewall model, you can build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
 
+Use [Traffic sources](/cloudflare-one/traffic-policies/network-policies/#traffic-sources) to scope a Network policy to one on-ramp type. Use [Traffic destinations](/cloudflare-one/traffic-policies/network-policies/#traffic-destinations) to match traffic that exits through Cloudflare Tunnel. Traffic destinations do not apply to Network Override policies.
+
     <Details header="Example network policies">
     The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
 

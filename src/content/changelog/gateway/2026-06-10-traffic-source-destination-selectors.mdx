@@ -1,0 +1,25 @@
+---
+title: Filter Gateway policies by traffic source and destination
+description: Cloudflare Gateway now supports the Traffic sources and Traffic destinations selectors, allowing administrators to scope policies by where traffic enters and exits Gateway.
+products:
+  - gateway
+date: 2026-06-10
+---
+
+Cloudflare Gateway now supports the **Traffic sources** and **Traffic destinations** selectors in the policy builder. Administrators can use these selectors to scope policies by where traffic enters Gateway and where Gateway sends traffic next.
+
+Traffic sources are available in [HTTP](/cloudflare-one/traffic-policies/http-policies/), [Network](/cloudflare-one/traffic-policies/network-policies/), and [Egress](/cloudflare-one/traffic-policies/egress-policies/) policies. Traffic destinations are available in HTTP and Network policies, except Network Override policies.
+
+For example, you can match traffic from Cloudflare One Client devices to the public Internet:
+
+```txt
+net.onramp.type == "device_client" and net.offramp.type == "internet"
+```
+
+You can also use these selectors to:
+
+- Apply controls only to traffic from Browser Isolation.
+- Apply Data Loss Prevention (DLP) only to Internet-bound traffic.
+- Exclude Cloudflare Tunnel traffic from TLS inspection.
+
+For more information, refer to [Network policy selectors](/cloudflare-one/traffic-policies/network-policies/#selectors), [HTTP policy selectors](/cloudflare-one/traffic-policies/http-policies/#selectors), and [Egress policy selectors](/cloudflare-one/traffic-policies/egress-policies/#selectors).
