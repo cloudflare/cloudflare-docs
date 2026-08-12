@@ -6,7 +6,7 @@ This covers the components in the synced catalog (`.agents/references/components
 
 Two rules first:
 
-- Import every component you use from `~/components`, after the frontmatter. A used-but-unimported component is a silent build failure.
+- Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`, after the frontmatter. Page-specific wrapper components or one-off components may use deep paths instead of adding to the barrel. A used-but-unimported component is a silent build failure.
 - For the mandatory mappings below, never use a bare code fence.
 
 ## Reverse lookup: the data you have → the component

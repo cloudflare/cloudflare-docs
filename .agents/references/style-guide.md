@@ -277,7 +277,7 @@ Package install commands must use `PackageManagers`.
 
 ## Components
 
-All components are imported from `~/components`. Imports must appear after the frontmatter block.
+Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`. Page-specific wrapper components or one-off components may use deep paths (e.g. `~/components/BaseSchemaProperties.astro`) instead of adding to the barrel. Imports must appear after the frontmatter block.
 
 **Mandatory component usage** — do not use bare fences for these:
 

@@ -330,4 +330,73 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 			"submit_style_guide",
 		);
 	});
+
+	it("flags a barrel-exported component imported via a deep path", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/workers/example.mdx",
+			addedLines: [
+				{
+					line: 3,
+					content: 'import Tabs from "~/components/ui/tabs/Tabs.astro";',
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const importFinding = (findings ?? []).find(
+			(f) =>
+				f.rule?.toLowerCase().includes("import") ||
+				f.rule?.toLowerCase().includes("component") ||
+				f.rule?.toLowerCase().includes("barrel") ||
+				f.evidence?.includes("~/components/ui/"),
+		);
+		expect(importFinding).toBeDefined();
+		expect(importFinding!.severity).toBe("warning");
+		expect(importFinding!.path).toBe("src/content/docs/workers/example.mdx");
+		expect(importFinding!.line).toBe(3);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("does not flag a page-specific wrapper component imported via a deep path", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/ai/models/index.mdx",
+			addedLines: [
+				{
+					line: 15,
+					content:
+						'import BaseSchemaProperties from "~/components/BaseSchemaProperties.astro";',
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const importWarnings = (findings ?? []).filter(
+			(f) =>
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("import") ||
+					f.rule?.toLowerCase().includes("component") ||
+					f.rule?.toLowerCase().includes("barrel") ||
+					f.evidence?.includes("~/components/BaseSchemaProperties")),
+		);
+		expect(importWarnings).toHaveLength(0);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
 });
