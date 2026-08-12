@@ -1,5 +1,3 @@
-The `name` field in each payload is the Worker name at the time the event fired, and that name can change. The stable identifier for a Worker is the script tag in `source.id`. When a Worker is renamed, the `worker.updated` event reports the new name in `payload.name`, and reports both the previous and new names in `payload.changed.name`.
-
 #### `deployment.created`
 
 Triggered when a deployment is created and rolled out.
@@ -24,7 +22,8 @@ Triggered when a deployment is created and rolled out.
       }
     ],
     "annotations": {
-      "workers/message": "Fix redirect handling"
+      "workers/message": "Fix redirect handling",
+      "workers/triggered_by": "deployment"
     },
     "authorEmail": "developer@example.com",
     "createdOn": "2025-05-01T02:48:57Z"
@@ -39,6 +38,8 @@ Triggered when a deployment is created and rolled out.
 ```
 
 The `versions` array describes the default traffic split, and the `percentage` values always sum to 100. Deployments that use cohorts can route traffic to versions that do not appear in `versions`.
+
+The `annotations` object uses two keys. `workers/message` is the optional deployment message, and `workers/triggered_by` records what caused the deployment. Deployments made through the deployments API always report `"workers/triggered_by": "deployment"`. Deployments recorded by older Workers APIs report the operation that created them, such as `upload`, `rollback`, or `secret`.
 
 The `annotations` and `authorEmail` fields are omitted when they are empty.
 
@@ -70,7 +71,7 @@ Triggered when a deployment is deleted.
 
 #### `version.created`
 
-Triggered when a new version of the Worker is uploaded.
+Triggered when a new version of the Worker is created. Uploading a Worker creates a version, and so does any operation that copies an existing version, such as a rollback or a change to the Worker's secrets. Those operations emit `version.created` without an upload.
 
 **Example:**
 
