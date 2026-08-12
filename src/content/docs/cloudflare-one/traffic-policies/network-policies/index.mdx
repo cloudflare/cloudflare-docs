@@ -274,6 +274,14 @@ Gateway matches network traffic against the following selectors, or criteria.
 	params={{ policyType: "network" }}
 />
 
+### Browser Isolation <Badge text="Beta" variant="caution"/>
+
+Whether the current session is running inside [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/). Use this selector to apply different policy behavior to isolated and non-isolated traffic.
+
+| UI name           | API example               |
+| ----------------- | ------------------------- |
+| Browser Isolation | `net.is_isolated == true` |
+
 ### Content Categories
 
 <Render
@@ -389,6 +397,16 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 ### Source Port
 
 <Render file="gateway/selectors/source-port" product="cloudflare-one" />
+
+### Traffic Source <Badge text="Beta" variant="caution"/>
+
+The method used to on-ramp traffic to Cloudflare. Use this selector to apply policies based on how traffic reaches Gateway.
+
+| UI name        | API example                          |
+| -------------- | ------------------------------------ |
+| Traffic Source  | `net.onramp.type == "device_client"` |
+
+Available values: `device_client` (Device client), `mesh` (Mesh), `cloudflare_wan` (Cloudflare WAN), `clientless_rdp` (Clientless RDP), `proxy_endpoint` (Proxy endpoint), `agentless_biso` (Clientless Browser Isolation), `mcp_portal` (MCP portal).
 
 ### Users
 

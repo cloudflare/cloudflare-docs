@@ -460,6 +460,14 @@ The phase of an HTTP request. You can use this selector to specify whether to sc
 When combining this selector with the [Download and Upload File Types selectors](#download-and-upload-file-types), ensure you use the matching phase together. For example, use the `download` body phase with the Download File Types selector. If body phase and file type selector logic do not match, the policy may not filter traffic as intended.
 :::
 
+### Browser Isolation <Badge text="Beta" variant="caution"/>
+
+Whether the current session is running inside [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/). Use this selector to apply different policy behavior to isolated and non-isolated traffic.
+
+| UI name           | API example              |
+| ----------------- | ------------------------ |
+| Browser Isolation | `net.is_isolated == true` |
+
 ### Content Categories
 
 <Render
@@ -702,6 +710,16 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.src_ip" }}
 />
+
+### Traffic Source <Badge text="Beta" variant="caution"/>
+
+The method used to on-ramp traffic to Cloudflare. Use this selector to apply policies based on how traffic reaches Gateway.
+
+| UI name        | API example                          |
+| -------------- | ------------------------------------ |
+| Traffic Source  | `net.onramp.type == "device_client"` |
+
+Available values: `device_client` (Device client), `mesh` (Mesh), `cloudflare_wan` (Cloudflare WAN), `clientless_rdp` (Clientless RDP), `proxy_endpoint` (Proxy endpoint), `agentless_biso` (Clientless Browser Isolation), `mcp_portal` (MCP portal).
 
 ### URL
 
