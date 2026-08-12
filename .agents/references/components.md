@@ -1,6 +1,6 @@
 # Cloudflare Docs — Component Reference
 
-Full usage details for MDX components available in this repository. Components exported from the `~/components` barrel must be imported from `~/components`. Page-specific wrapper components or one-off components not in the barrel may use deep paths. Imports must appear after the frontmatter block.
+Full usage details for MDX components available in this repository. Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`. Page-specific wrapper components or one-off components may use deep paths instead of adding to the barrel. Imports must appear after the frontmatter block.
 
 ---
 

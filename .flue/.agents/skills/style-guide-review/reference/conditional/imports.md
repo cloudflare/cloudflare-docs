@@ -5,8 +5,8 @@ description: Rules for importing and using MDX components.
 
 ## Rules
 
-- Components exported from the `~/components` barrel must be imported from `~/components`, not via a deep path (e.g. `~/components/ui/tabs.astro`). If a barrel-exported component is imported via a deep path → **warning**.
-- Page-specific wrapper components or one-off components that are **not** exported from the `~/components` barrel may be imported via a deep path (e.g. `~/components/models/AIModelCatalog.astro`). These do not belong in the barrel. Deep imports for non-barrel components are allowed and should **not** be flagged.
+- Reusable components must be added to the `~/components` barrel export (`src/components.ts`) and imported from `~/components`. If a reusable component is imported via a deep path instead of from the barrel → **warning**.
+- Page-specific wrapper components or one-off components may be imported via a deep path (e.g. `~/components/models/AIModelCatalog.astro`) instead of adding to the barrel. Deep imports for these components are allowed and should **not** be flagged.
 - Exception: `SubtractIPCalculator` is exported from `~/components` and should be imported from there. The direct path `~/components/SubtractIPCalculator.tsx` is a legacy shim and should not be used in new content.
 
 ## Import Pattern

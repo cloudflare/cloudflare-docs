@@ -98,7 +98,7 @@ Documentation should read as timeless. Do not use:
 | Package install/run commands | `PackageManagers`                         | Shows npm/yarn/pnpm tabs automatically                           |
 | Everything else              | Standard code fences with a language hint | Only when no named component fits                                |
 
-Import barrel-exported components from `~/components`. Page-specific wrapper components or one-off components not in the barrel may use deep paths:
+Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`. Page-specific wrapper components or one-off components may use deep paths instead:
 
 ```mdx
 import {
