@@ -48,7 +48,11 @@ export const getStaticPaths = (async () => {
 				props: { entry, pages },
 			};
 		})
-		.filter((p): p is NonNullable<typeof p> => p !== null);
+		.filter((p): p is NonNullable<typeof p> => p !== null)
+		.filter(
+			(p, index, self) =>
+				self.findIndex((q) => q.params.product === p.params.product) === index,
+		);
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
