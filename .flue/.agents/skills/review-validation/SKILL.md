@@ -57,7 +57,7 @@ For each finding:
    - If the suggestion is merely a preference (not wrong, just optional), the finding is still `valid` — the human reviewer decides whether to apply it.
 
 5. **Check for false positives**:
-   - Is the finding about pre-existing code the PR did not change? If so, it is `invalid` (reviewers should only flag issues introduced or touched by the PR).
+   - Is the finding about pre-existing code the PR did not change? To check, read the file at the base ref using `read_repo_file` with `ref: args.pullRequest.base`, then compare the cited line/area against the head version. If the code is identical at both refs, it is pre-existing → `invalid` (reviewers should only flag issues introduced or touched by the PR).
    - Is the finding speculative with no concrete impact? If so, it is `invalid`.
    - For style-guide findings: is the pattern actually correct (e.g., a root-relative link, not a full URL)? If the finding incorrectly flags correct content, it is `invalid`.
 
