@@ -78,3 +78,4 @@ export { TunnelOutbound } from "./components/react/tunnel/TunnelOutbound";
 export { TunnelIdentity } from "./components/react/tunnel/TunnelIdentity";
 export { TunnelQuickNested } from "./components/react/tunnel/TunnelQuickNested";
 export { TunnelTraffic } from "./components/react/tunnel/TunnelTraffic";
+export { default as CustomBindingsDiagram } from "./components/cf/CustomBindingsDiagram.astro";

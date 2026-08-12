@@ -1,0 +1,286 @@
+---
+import { Icon as AstroIcon } from "astro-icon/components";
+---
+
+<figure
+	class="custom-bindings-diagram not-content"
+	aria-label="Custom binding request flow: User Worker calls a binding like env.SITE_BUCKET or env.DB, which routes to a Platform Worker entrypoint that enforces policy, then forwards to the underlying resource such as R2 or D1"
+>
+	<ol class="flow">
+		<li class="flow-step">
+			<div class="node-card user-card">
+				<div class="node-header">
+					<span class="node-icon user-icon" aria-hidden="true"
+						><AstroIcon name="workers" /></span
+					>
+					<span class="node-title">User Worker</span>
+				</div>
+				<p class="node-caption">
+					Calls <code>env.SITE_BUCKET</code> or <code>env.DB</code> like a normal
+					binding
+				</p>
+			</div>
+		</li>
+
+		<li class="flow-connector">
+			<span class="connector-label">service binding</span>
+			<span class="connector-arrow" aria-hidden="true">↓</span>
+		</li>
+
+		<li class="flow-step">
+			<div class="node-card platform-card">
+				<div class="node-header">
+					<span class="node-icon platform-icon" aria-hidden="true"
+						><AstroIcon name="cloudflare-for-platforms" /></span
+					>
+					<span class="node-title">Platform Worker</span>
+				</div>
+				<p class="node-caption">
+					Enforces quota, rate limits, logging, and policy before forwarding
+				</p>
+				<div class="pill-row">
+					<span class="props-pill"><code>ctx.props</code></span>
+				</div>
+			</div>
+		</li>
+
+		<li class="flow-connector">
+			<span class="connector-label">forward</span>
+			<span class="connector-arrow" aria-hidden="true">↓</span>
+		</li>
+
+		<li class="flow-step">
+			<div class="node-card resource-card">
+				<div class="node-header resource-header">
+					<div class="resource-item">
+						<span class="node-icon r2-icon" aria-hidden="true"
+							><AstroIcon name="r2" /></span
+						>
+						<span class="node-title">R2 bucket</span>
+					</div>
+					<span class="resource-divider" aria-hidden="true">/</span>
+					<div class="resource-item">
+						<span class="node-icon d1-icon" aria-hidden="true"
+							><AstroIcon name="d1" /></span
+						>
+						<span class="node-title">D1 database</span>
+					</div>
+				</div>
+				<p class="node-caption">
+					The real resource, passed through <code>props</code>
+				</p>
+			</div>
+		</li>
+	</ol>
+</figure>
+
+<style>
+	.custom-bindings-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-caption: light-dark(#737373, #a3a3a3);
+		--map-brand: #f6821f;
+		--map-platform: light-dark(#7c3aed, #a78bfa);
+		--map-r2: light-dark(#0ea5e9, #38bdf8);
+		--map-d1: light-dark(#10b981, #34d399);
+
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin: 1.25rem 0;
+		padding: 18px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 14px 14px;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.custom-bindings-diagram a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.flow {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.flow-step {
+		display: block;
+		width: 100%;
+		max-width: 360px;
+	}
+
+	.node-card {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 12px 14px;
+		border: 1px solid var(--map-line);
+		border-radius: 10px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		color: var(--map-text);
+	}
+
+	.node-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+	}
+
+	.resource-header {
+		gap: 14px;
+	}
+
+	.resource-item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.resource-divider {
+		color: var(--map-strong);
+		font-size: 14px;
+		font-weight: 300;
+	}
+
+	.node-title {
+		min-width: 0;
+		color: var(--map-text);
+		font-size: 14px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.node-icon {
+		display: inline-flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 7px;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.node-icon :global(svg) {
+		width: 18px;
+		height: 18px;
+		fill: currentColor;
+	}
+
+	.user-icon {
+		background: color-mix(in srgb, var(--map-brand) 14%, transparent);
+		color: var(--map-brand);
+	}
+
+	.platform-icon {
+		background: color-mix(in srgb, var(--map-platform) 14%, transparent);
+		color: var(--map-platform);
+	}
+
+	.r2-icon {
+		background: color-mix(in srgb, var(--map-r2) 14%, transparent);
+		color: var(--map-r2);
+	}
+
+	.d1-icon {
+		background: color-mix(in srgb, var(--map-d1) 14%, transparent);
+		color: var(--map-d1);
+	}
+
+	.node-caption {
+		margin: 0;
+		color: var(--map-caption);
+		font-size: 12px;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.node-caption code {
+		display: inline;
+		padding: 1px 6px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+
+	.flow-connector {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 2px;
+		padding: 2px 0;
+		color: var(--map-strong);
+	}
+
+	.connector-label {
+		color: var(--map-caption);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 1;
+	}
+
+	.connector-arrow {
+		font-size: 18px;
+		line-height: 1;
+		color: var(--map-strong);
+	}
+
+	.pill-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 6px;
+	}
+
+	.props-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 4px 10px;
+		border: 1px solid
+			color-mix(in srgb, var(--map-platform) 35%, var(--map-line));
+		border-radius: 6px;
+		background: color-mix(in srgb, var(--map-platform) 6%, var(--map-card));
+	}
+
+	.props-pill code {
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--map-platform);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+</style>
