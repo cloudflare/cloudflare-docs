@@ -341,7 +341,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 			addedLines: [
 				{
 					line: 3,
-					content: 'import { Tabs } from "~/components/ui/tabs.astro";',
+					content: 'import Tabs from "~/components/ui/tabs/Tabs.astro";',
 				},
 			],
 		});
@@ -377,7 +377,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 				{
 					line: 15,
 					content:
-						'import AIModelCatalog from "~/components/models/AIModelCatalog.astro";',
+						'import BaseSchemaProperties from "~/components/BaseSchemaProperties.astro";',
 				},
 			],
 		});
@@ -391,7 +391,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 				(f.rule?.toLowerCase().includes("import") ||
 					f.rule?.toLowerCase().includes("component") ||
 					f.rule?.toLowerCase().includes("barrel") ||
-					f.evidence?.includes("~/components/models/")),
+					f.evidence?.includes("~/components/BaseSchemaProperties")),
 		);
 		expect(importWarnings).toHaveLength(0);
 
