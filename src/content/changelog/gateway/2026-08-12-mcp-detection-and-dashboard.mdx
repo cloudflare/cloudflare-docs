@@ -1,0 +1,30 @@
+---
+title: MCP protocol detection and AI Security dashboard
+description: Cloudflare Gateway now detects Model Context Protocol (MCP) traffic and surfaces MCP usage data in a new AI Security dashboard.
+products:
+  - gateway
+  - cloudflare-one
+date: 2026-08-12
+---
+
+Cloudflare Gateway now automatically detects [Model Context Protocol (MCP)](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) traffic flowing through your network. MCP is the standard protocol used by AI agents to connect to external tools and data sources. Gateway identifies MCP requests by inspecting protocol-specific headers and JSON-RPC 2.0 payload characteristics, and logs the detection result alongside each HTTP request.
+
+### MCP policy selector
+
+A new `experimental.is_mcp` selector is available in [HTTP policies](/cloudflare-one/traffic-policies/http-policies/#experimental---is-mcp). Use this selector to build Gateway rules that allow, block, or isolate MCP traffic. For example, you can block all MCP connections that are not routed through an approved [MCP portal](/cloudflare-one/applications/configure-apps/mcp-servers/mcp-portals/).
+
+:::note
+Experimental selectors and log fields are available in a beta capacity to all customers and may change before being made generally available. These changes will be communicated to customers before documentation is updated.
+:::
+
+### AI Security dashboard
+
+A new **AI Security** dashboard under **Insights and Logs > Dashboards** provides visibility into MCP usage across your organization. The dashboard includes:
+
+- Total MCP request volume, unique users, and unique MCP servers
+- A timeseries chart of unique MCP servers observed over time
+- A summary of Gateway policies that target MCP traffic
+
+![AI Security dashboard showing MCP detection data including total MCP requests, users, servers, and Gateway policies for MCP](~/assets/images/changelog/gateway/gateway-mcp-dashboard.png)
+
+For more information, refer to [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
