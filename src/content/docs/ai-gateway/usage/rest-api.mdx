@@ -127,7 +127,7 @@ To use prepaid AI Gateway credits for Workers AI, use the model-in-path endpoint
 
 By default, `/ai/run` requests are synchronous — the connection stays open until the model finishes and the result comes back in the response. For long-running models — such as image, video, or audio generation — or when you do not want to hold a connection open, run the request in the background and have AI Gateway notify a webhook when it completes.
 
-Set `background` to `true` and provide a `webhookUrl`. Both are top-level fields of the `/ai/run` body, alongside `model` and `input`.
+Set `background` to `true` and provide a `webhookUrl`. Both are fields of the `options` object in the `/ai/run` body, alongside `model` and `input`.
 
 `webhookUrl` can only be provided when `background` is `true`. Providing a `webhookUrl` without `background: true` returns a `400` error.
 
@@ -143,8 +143,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
       "prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
       "aspect_ratio": "16:9"
     },
-    "background": true,
-    "webhookUrl": "https://example.com/my-webhook"
+    "options": {
+      "background": true,
+      "webhookUrl": "https://example.com/my-webhook"
+    }
   }'
 ```
 
@@ -170,7 +172,7 @@ Webhook delivery is best-effort and is not retried. The destination must be an H
 
 #### Webhook format
 
-Use the optional `webhookFormat` top-level field to control the shape of the webhook body. The default is `raw`. `webhookFormat` can only be provided when `webhookUrl` is present; otherwise the request returns a `400` error.
+Use the optional `webhookFormat` field in the `options` object to control the shape of the webhook body. The default is `raw`. `webhookFormat` can only be provided when `webhookUrl` is present; otherwise the request returns a `400` error.
 
 | Format | Description                                                                                                                   |
 | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
