@@ -59,15 +59,9 @@ A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available 
 
 <Render file="nodejs_compat" product="workers" />
 
-For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. Do not add either flag explicitly. The `workerd` runtime rejects a redundant `nodejs_compat` flag with the following error:
+For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. These flags are not used for these compatibility dates because the compatibility date enables the same behavior. Wrangler, Miniflare, the Cloudflare Vite plugin, and Vitest Pool Workers ignore these redundant flags when starting the runtime. Existing projects do not need to remove them when updating their compatibility date. Omit them from new configurations.
 
-```txt output
-The compatibility flag nodejs_compat became the default as of 2026-08-04 so does not need to be specified anymore.
-```
-
-Remove `nodejs_compat` and `nodejs_compat_v2` from your configuration to resolve the error. Node.js compatibility remains enabled through the compatibility date. Wrangler, the Cloudflare Vite plugin, and Vitest Pool Workers infer today's date when `compatibility_date` is missing. Therefore, you can encounter this error without updating your configuration.
-
-To turn off Node.js compatibility completely for a compatibility date of `2026-08-04` or later, add both of the following flags:
+To turn off Node.js compatibility completely for a compatibility date of `2026-08-04` or later, remove `nodejs_compat` and `nodejs_compat_v2` if present. Then add both of the following flags:
 
 <WranglerConfig>
 

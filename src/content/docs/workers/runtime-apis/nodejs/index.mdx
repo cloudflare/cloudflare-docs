@@ -22,7 +22,7 @@ Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
 For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. Built-in Node.js APIs and polyfills are available without additional configuration.
 
-Do not add either flag explicitly for these compatibility dates. The `workerd` runtime rejects redundant flags. Remove them from your configuration to resolve the error. Node.js compatibility remains enabled through the compatibility date.
+For these compatibility dates, `nodejs_compat` and `nodejs_compat_v2` are not used because the compatibility date enables the same behavior. Existing projects do not need to remove these flags when updating their compatibility date. Omit them from new configurations.
 
 For compatibility dates from `2024-09-23` through `2026-08-03`, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in:
 
@@ -37,7 +37,7 @@ For compatibility dates from `2024-09-23` through `2026-08-03`, add the `nodejs_
 
 </WranglerConfig>
 
-To turn off Node.js compatibility completely with a compatibility date of `2026-08-04` or later, add both `no_nodejs_compat` and `no_nodejs_compat_v2`. For configuration examples, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
+To turn off Node.js compatibility completely with a compatibility date of `2026-08-04` or later, remove the positive flags if present. Then add both `no_nodejs_compat` and `no_nodejs_compat_v2`. For configuration examples, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
 ## Supported Node.js APIs
 

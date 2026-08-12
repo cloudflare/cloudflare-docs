@@ -1,10 +1,9 @@
 ---
 {}
-
 ---
 
 :::note
 
-For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. Do not add either flag explicitly because the `workerd` runtime rejects redundant flags. For earlier dates, add `nodejs_compat` to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in. For instructions to turn off Node.js compatibility or resolve errors, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
+For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. These flags are not used for these compatibility dates. Existing projects do not need to remove them when updating their compatibility date. For earlier dates, add `nodejs_compat` to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in. For instructions to turn off Node.js compatibility, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
 :::

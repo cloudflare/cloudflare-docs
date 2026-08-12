@@ -10,8 +10,8 @@ import { WranglerConfig } from "~/components";
 
 Workers now enable the `nodejs_compat` and `nodejs_compat_v2` compatibility
 flags by default for [compatibility dates](/workers/configuration/compatibility-dates/)
-of `2026-08-04` or later. Do not add either flag to the `compatibility_flags`
-array for these compatibility dates.
+of `2026-08-04` or later. These flags are not used for these compatibility
+dates because the compatibility date enables the same behavior.
 
 This means all [Node.js built-in APIs](/workers/runtime-apis/nodejs/) supported
 by the Workers runtime are available by default, including `node:crypto`,
@@ -22,18 +22,13 @@ configuration.
 Workers using an earlier compatibility date are not affected. They can still
 opt in by adding `nodejs_compat` to `compatibility_flags`.
 
-When updating an existing Worker to `2026-08-04` or later, remove explicit
-`nodejs_compat` and `nodejs_compat_v2` flags. The `workerd` runtime rejects a
-redundant `nodejs_compat` flag with the following error:
+New projects do not need to add either flag. Existing projects can update their
+compatibility date without removing them. Wrangler, Miniflare, the Cloudflare
+Vite plugin, and Vitest Pool Workers ignore these redundant flags when starting
+the runtime.
 
-```txt output
-The compatibility flag nodejs_compat became the default as of 2026-08-04 so does not need to be specified anymore.
-```
-
-Remove `nodejs_compat` and `nodejs_compat_v2` to resolve the error. Node.js
-compatibility remains enabled through the compatibility date.
-
-To turn off Node.js compatibility completely, add both of the following flags:
+To turn off Node.js compatibility completely, remove any `nodejs_compat` and
+`nodejs_compat_v2` flags. Then add both of the following flags:
 
 <WranglerConfig>
 
