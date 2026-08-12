@@ -33,7 +33,7 @@ If Flue is older than v2 or AI SDK is not v6 or v7, ask the user before upgradin
 Inspect `observability.traces` in the Wrangler configuration and environment used for deployment.
 
 - Preserve a valid existing `head_sampling_rate`.
-- Without a configured rate, tracing samples every request by default.
+- When `head_sampling_rate` is omitted, it defaults to `1` (100% sampling). Add it only when the user wants a lower rate.
 - When enabling tracing without an existing rate, ask the user to choose `1` for every request, `0.05` for five percent, or a custom value from `0` to `1`.
 - Require confirmation for `0` because it produces no traces.
 
@@ -79,7 +79,7 @@ Add or preserve `head_sampling_rate` when required. Do not change log sampling.
 
 ## Configure the framework
 
-Apply each relevant branch once. Do not wrap model calls already owned by another branch.
+Follow only one framework branch for each detected agent entry point. Skip all other branches. Do not wrap model calls already owned by another branch.
 
 ### Think
 
@@ -89,18 +89,24 @@ To record payloads, set both properties to `true` on every deployed Think agent 
 
 ### Flue
 
-Flue v2 and later instruments turns automatically and records payloads by default.
+Flue v2 and later instruments turns automatically. A fresh project may not have a Cloudflare tracing registration. Add one to the project's startup path, or update the existing call instead of adding a second one.
 
-For metadata only, configure the existing Flue bootstrap once:
+Cloudflare tracing records payloads by default. To record payloads, call `createCloudflareTracing()` with no arguments:
 
 ```ts
 import { instrument } from "@flue/runtime";
 import { createCloudflareTracing } from "@flue/runtime/cloudflare";
 
+instrument(createCloudflareTracing());
+```
+
+For metadata only, pass `{ content: false }`:
+
+```ts
 instrument(createCloudflareTracing({ content: false }));
 ```
 
-Update an existing registration instead of adding another. For payload recording, remove `content: false` or set the existing option to `true`.
+For Flue with Vite, inspect the project manifest and run its existing type-check and Vite build scripts with the project's package manager. Confirm that the build invokes `vite build`. If either script is missing, report that validation as unavailable instead of inventing a script name. Do not use `wrangler deploy --dry-run` as a substitute because Vite creates the Worker entry point.
 
 ### AI SDK
 
@@ -141,7 +147,7 @@ Confirm all of the following:
 - Direct AI SDK calls include all three identity fields.
 - No sensitive values were added to tracing context.
 
-Run the project's formatter, type checker, tests, and a Wrangler dry run when available. Do not report success if tracing changes fail validation.
+Run the validation commands for the selected framework. For non-Flue projects, run the project's formatter, type checker, tests, and a Wrangler dry run when compatible. Do not report success if tracing changes fail validation.
 
 Once done, tell the user:
 
