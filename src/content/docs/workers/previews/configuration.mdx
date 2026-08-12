@@ -79,11 +79,9 @@ The `--name` flag defaults to the current git branch if omitted. For `bulk`, set
 
 ### How Wrangler applies Preview settings
 
-If your team manages Preview settings in Git, the `previews` block in your Wrangler file is enough. When you run `wrangler preview`, Wrangler reads the `previews` block from your current branch and applies those settings to that Preview. Those settings become that Preview's own settings. They do not change the base configuration.
+When you run `wrangler preview`, Wrangler reads the `previews` block from your current branch and applies those settings to that Preview. Those settings are pushed to the API and appear in the dashboard under that individual Preview. The Preview name decides which Preview receives the settings. For details, refer to [Preview names](/workers/previews/#preview-names).
 
-The Preview name decides which Preview receives the settings. For details, refer to [Preview names](/workers/previews/#preview-names).
-
-Running `wrangler deploy` updates production with your top-level Wrangler configuration, but does not update the base configuration.
+Running `wrangler deploy` updates production with your top-level Wrangler configuration. It does not update the Preview base configuration in the dashboard. If you check the dashboard and do not see your Preview settings reflected in the base configuration, that is intentional — your Wrangler configuration file is the single source of truth for Preview settings. There is no separate command to push to the base configuration, and nothing outside your Wrangler file is part of your Preview configuration. Everything your Preview needs lives in your Wrangler file and is version-controlled alongside your code.
 
 ## Dashboard
 
