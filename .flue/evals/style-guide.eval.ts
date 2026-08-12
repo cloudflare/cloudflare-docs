@@ -301,12 +301,24 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
-					line: 10,
+					line: 7,
 					content: "```html",
 				},
 				{
+					line: 8,
+					content: '<div class="gallery">',
+				},
+				{
+					line: 9,
+					content: '  <img src="/static/logo.png" alt="Company Logo" />',
+				},
+				{
+					line: 10,
+					content: '  <img src="/static/banner.png" alt="Banner" />',
+				},
+				{
 					line: 11,
-					content: '<img src="/static/logo.png" alt="Logo" />',
+					content: "</div>",
 				},
 				{
 					line: 12,
