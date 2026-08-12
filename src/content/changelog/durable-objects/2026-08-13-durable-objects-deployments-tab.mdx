@@ -1,0 +1,22 @@
+---
+title: View deployments for Durable Objects in the dashboard
+description: Durable Object namespaces now have a Deployments tab showing the backing Worker's active versions, traffic split, and per-version request, error, and wall time metrics.
+products:
+  - durable-objects
+  - workers
+date: 2026-08-13
+---
+
+import { DashButton } from "~/components";
+
+Durable Object namespaces now have a **Deployments** tab in the Cloudflare dashboard, showing the [versions](/workers/versions-and-deployments/#versions) of the backing Worker that are currently live and the traffic split between them.
+
+<DashButton url="/?to=/:account/workers/durable-objects" />
+
+A Durable Object namespace is backed by a Worker script, so its deployments are the same as that Worker's deployments. Previously, checking on a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) in progress for a Durable Object meant leaving the namespace and finding the backing Worker under Workers & Pages. The new tab surfaces that information directly on the namespace, alongside the metrics that matter for it: requests, error rate, and wall time per version, rather than the CPU time shown on the Worker's own Deployments tab. Wall time better reflects Durable Object performance, since it includes time spent waiting on I/O such as storage reads.
+
+The tab is read-only — promoting, rolling back, or splitting traffic on a deployment is still managed from the backing Worker's Deployments tab.
+
+To view it, go to **Workers & Pages** > **Durable Objects**, select a namespace, then select the **Deployments** tab.
+
+For details on how Durable Objects are assigned to Worker versions during a gradual deployment, refer to [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/).
