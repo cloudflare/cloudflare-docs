@@ -33,6 +33,8 @@ Set up Cloudflare Mesh so your devices and servers can reach each other by priva
 	Client-to-client connectivity works without any Mesh nodes. Two enrolled laptops can reach each other directly by Mesh IP. Mesh nodes are for running the client in headless mode on a server — either to make that server reachable by its Mesh IP, or to [route traffic to a private subnet](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) behind it. You still need to complete the setup wizard to configure your account — you can skip the Mesh node installation step and connect the node later.
 	:::
 
+	Cloudflare Mesh requires [MASQUE](/cloudflare-one/networks/connectors/cloudflare-mesh/#protocol-requirement), the default protocol for the Cloudflare One Client. Hostname routes, IPv6 CIDR routes, and high availability do not work if a node or device has been switched to WireGuard.
+
 ## 1. Run the setup wizard
 
 The setup wizard [configures your account for Mesh networking](#what-the-wizard-configures) and optionally guides you through creating a Mesh node. This is a one-time setup.
