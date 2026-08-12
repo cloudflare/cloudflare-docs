@@ -172,7 +172,7 @@ Webhook delivery is best-effort and is not retried. The destination must be an H
 
 #### Webhook format
 
-Use the optional `webhookFormat` field in the `options` object to control the shape of the webhook body. The default is `raw`. `webhookFormat` can only be provided when `webhookUrl` is present; otherwise the request returns a `400` error.
+Use the optional `webhookFormat` field in the `options` object to control the shape of the webhook body. The default is `raw`. `webhookFormat` can only be provided when `webhookUrl` is present. Otherwise, the request returns a `400` error.
 
 | Format | Description                                                                                                                   |
 | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
