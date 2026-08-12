@@ -5,7 +5,7 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { config } from "virtual:nimbus/config";
-import { getChangelogs, getRSSItems } from "~/util/changelog";
+import { getChangelogs, getRSSItems, slugifyArea } from "~/util/changelog";
 
 import type {
 	APIRoute,
@@ -15,8 +15,6 @@ import type {
 } from "astro";
 
 export const prerender = true;
-
-const slugifyArea = (value: string) => value.replaceAll(" ", "-").toLowerCase();
 
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
