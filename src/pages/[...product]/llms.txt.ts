@@ -57,10 +57,12 @@ export const getStaticPaths = (async () => {
 	const byProduct = new Map<string, (typeof mapped)[number]>();
 	for (const p of mapped) {
 		const existing = byProduct.get(p.params.product);
+		const nameLen = (name: string | undefined) =>
+			name === undefined ? Infinity : name.length;
+
 		if (
 			!existing ||
-			(p.props.entry.data.name ?? "").length <
-				(existing.props.entry.data.name ?? "").length
+			nameLen(p.props.entry.data.name) < nameLen(existing.props.entry.data.name)
 		) {
 			byProduct.set(p.params.product, p);
 		}
