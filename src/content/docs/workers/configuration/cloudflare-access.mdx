@@ -93,6 +93,12 @@ Send these `destinations` in a `POST /accounts/{account_id}/access/apps` request
 
 Require sign-in on a single Worker. This automatically protects every domain associated with the Worker, including its routes, Custom Domains, `workers.dev` hostname, and previews. You can require sign-in on only preview deployments, or on both production and preview deployments.
 
+:::caution[WebSocket limitation]
+Worker-level Access applications (Worker Destinations) do not currently support WebSocket connections. WebSocket upgrade requests to a Worker protected by a worker-level Access application will fail with a `403` error.
+
+If your Worker uses WebSockets (including Durable Objects, real-time applications, or RDP-over-WebSocket), protect it with a [hostname-based Access application](/cloudflare-one/access-controls/applications/choose-application-type/) instead.
+:::
+
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
