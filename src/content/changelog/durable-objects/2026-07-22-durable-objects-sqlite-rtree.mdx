@@ -1,0 +1,66 @@
+---
+title: Spatial and range queries with the SQLite R*Tree module
+description: Durable Objects and D1 now support SQLite's R*Tree module, so you can create spatial indexes for fast bounding box and range queries.
+products:
+  - durable-objects
+  - d1
+  - workers
+date: 2026-07-22
+---
+
+import { TypeScriptExample } from "~/components";
+
+SQLite-backed Durable Objects and D1 databases now support the [R\*Tree module](https://www.sqlite.org/rtree.html). An R\*Tree is a specialized index for range queries. Given a query rectangle, it returns every entry that overlaps or falls inside that rectangle without scanning the whole table.
+
+The R\*Tree suits any query that filters on the minimum and maximum values of one to five dimensions: which delivery zones cover a coordinate, which events were active during a time window, or which objects a camera can see in 3D space. Previously, these queries required a full table scan or a manually maintained index such as a geohash column.
+
+Create the index as a virtual table, then query it with an ordinary `WHERE` clause:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class DeliveryZones extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// Two dimensions: five columns, plus an auxiliary column for the name.
+		ctx.storage.sql.exec(`
+			CREATE VIRTUAL TABLE IF NOT EXISTS delivery_zones USING rtree(
+				id, minLng, maxLng, minLat, maxLat, +name
+			);
+		`);
+	}
+
+	zonesCovering(lng: number, lat: number) {
+		return this.ctx.storage.sql
+			.exec(
+				`SELECT id, name FROM delivery_zones
+				 WHERE minLng <= ? AND maxLng >= ?
+					 AND minLat <= ? AND maxLat >= ?`,
+				lng,
+				lng,
+				lat,
+				lat,
+			)
+			.toArray();
+	}
+}
+```
+
+</TypeScriptExample>
+
+An R\*Tree stores coordinates as 32-bit floats and rounds bounding boxes outwards, so a query can return rows that do not truly match. Treat it as a fast pre-filter and confirm each result against exact coordinates. To store coordinates as 32-bit signed integers instead, use `rtree_i32`.
+
+**Limits:**
+
+- The primary key and coordinate columns must total an odd number between 3 and 11, so an R\*Tree indexes a maximum of five dimensions. Auxiliary columns, prefixed with `+`, are counted separately, up to 100 columns in total.
+- Each R\*Tree is backed by three shadow tables, so writes count more rows written than an equivalent ordinary table. Refer to [Durable Objects pricing](/durable-objects/platform/pricing/) and [D1 pricing](/d1/platform/pricing/).
+- Writing to an R\*Tree while a query against the same R\*Tree is still open fails with `SQLITE_LOCKED`.
+- Only `rtreecheck()` is available. Custom geometry callbacks and the Geopoly module are not supported, so you cannot `MATCH` against application-defined regions.
+- D1 cannot export a database containing a virtual table. This already applied to FTS5 tables and now applies to R\*Tree tables.
+
+This works the same way in local development with `wrangler dev` as it does in production. Run `npm update wrangler` to ensure you are on a version with this support.
+
+For more information, refer to [Spatial and range indexes with R\*Tree](/durable-objects/best-practices/access-durable-objects-storage/#spatial-and-range-indexes-with-rtree).
