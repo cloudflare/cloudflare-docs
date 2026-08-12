@@ -39,8 +39,6 @@ Triggered when a deployment is created and rolled out.
 
 The `versions` array describes the default traffic split, and the `percentage` values always sum to 100.
 
-The `annotations` object uses two keys. `workers/message` is the optional deployment message, and `workers/triggered_by` records what caused the deployment. Deployments made through the deployments API always report `"workers/triggered_by": "deployment"`. Deployments recorded by older Workers APIs report the operation that created them, such as `upload`, `rollback`, or `secret`.
-
 The `annotations` and `authorEmail` fields are omitted when they are empty.
 
 #### `deployment.deleted`
