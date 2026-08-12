@@ -43,10 +43,10 @@ AI Gateway handles this complexity for you. When you store your AWS credentials 
 
 ### Authentication methods comparison
 
-| Method | `cf-aig-authorization` header | `Authorization` header | Signing |
-| --- | --- | --- | --- |
-| **BYOK (Recommended)** | `Bearer {CF_AIG_TOKEN}` | Not needed | Gateway signs automatically |
-| **Client-side signing** | `Bearer {CF_AIG_TOKEN}` | Pre-signed AWS headers | You sign with `aws4fetch` or AWS SDK |
+| Method                  | `cf-aig-authorization` header | `Authorization` header | Signing                              |
+| ----------------------- | ----------------------------- | ---------------------- | ------------------------------------ |
+| **BYOK (Recommended)**  | `Bearer {CF_AIG_TOKEN}`       | Not needed             | Gateway signs automatically          |
+| **Client-side signing** | `Bearer {CF_AIG_TOKEN}`       | Pre-signed AWS headers | You sign with `aws4fetch` or AWS SDK |
 
 :::caution[Do not confuse the headers]
 `cf-aig-authorization` authenticates your request to AI Gateway. When using BYOK, you do not need to include any AWS authorization headers because AI Gateway signs the request for you.
@@ -185,6 +185,13 @@ AI Gateway provides a [Unified API](/ai-gateway/usage/chat-completion/) that let
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
 ```
 
+### Authentication
+
+The Unified API supports two ways to authenticate with Bedrock:
+
+- **BYOK (SigV4)**: Store your AWS credentials (including `region`) as a [provider key](/ai-gateway/configuration/bring-your-own-keys/). AI Gateway signs each request with SigV4. The region comes from your stored credentials.
+- **Bedrock API key (bearer)**: Pass a [Bedrock API key](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html) directly as the request's API key. A bearer token carries no region, so AI Gateway defaults to `us-east-1`. If your models live in another region, AWS returns its own region or access error — store SigV4 credentials with an explicit `region` to target a different region.
+
 ### cURL
 
 With your AWS credentials [stored as a provider key](/ai-gateway/configuration/bring-your-own-keys/), specify the model using the `aws-bedrock/{model}` format:
@@ -228,4 +235,32 @@ const response = await client.chat.completions.create({
 console.log(response.choices[0].message.content);
 ```
 
+### Using a Bedrock API key
 
+If you have a [Bedrock API key](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html), pass it as the API key instead of storing SigV4 credentials. AI Gateway defaults the region to `us-east-1` for this path:
+
+```javascript
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "{BEDROCK_API_KEY}",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+const response = await client.chat.completions.create({
+	model: "aws-bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0",
+	messages: [
+		{
+			role: "user",
+			content: "What is Cloudflare?",
+		},
+	],
+});
+
+console.log(response.choices[0].message.content);
+```
+
+:::note
+A Bedrock API key defaults to the `us-east-1` region. To use a different region, store AWS SigV4 credentials with an explicit `region` field using [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+:::
