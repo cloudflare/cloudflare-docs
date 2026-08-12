@@ -191,7 +191,6 @@ Each value describes how that field changed:
 
 - Scalar fields report `from` and `to`.
 - Set-valued fields, such as `tags` and `tail_consumers`, report `added` and `removed`. Either key is omitted when it would be empty. If the members stay the same but their order changes, the field reports `from` and `to` instead.
-- The `previews_base_config` field reports an empty object, which means the field changed but its values are not published. This keeps preview secrets out of the event.
 
 #### `worker.deleted`
 
