@@ -1,0 +1,16 @@
+---
+title: Custom bindings for R2 and D1
+description: Place a Platform Worker in front of R2 or D1 to enforce quota, rate limits, and policy before operations reach the resource.
+products:
+  - workers-for-platforms
+date: 2026-10-01
+---
+
+Custom bindings let platform operators route User Worker calls through a platform-owned Worker before operations reach [R2](/r2/) or [D1](/d1/).
+
+The User Worker keeps using the standard binding API. The Platform Worker exports a `WorkerEntrypoint` class that intercepts each operation and can enforce quota, rate limits, logging, validation, or other policy controls.
+
+- **R2** — Wrap `get`, `put`, and `delete` methods to enforce per-bucket storage quotas.
+- **D1** — Implement a `query()` hook to inspect, log, limit, or reject database operations. Requires the `d1_custom_binding` compatibility flag on the User Worker.
+
+For more information, refer to [Custom bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-bindings/).
