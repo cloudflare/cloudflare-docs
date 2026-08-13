@@ -104,10 +104,12 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		migrations. Command Code runs local shell commands, so it can call Wrangler
 		directly.
 	</FAQItem>
+	{/* Keep the cmd mcp add command on one line: wrapping it leaks the source indentation into the inline code span. */}
+	{/* prettier-ignore */}
 	<FAQItem question="How do I give Command Code access to my Cloudflare account?">
-		Run `cmd mcp add --transport http cloudflare
-		https://mcp.cloudflare.com/mcp`. When Command Code prompts you, complete the
-		OAuth flow in your browser and choose the permissions to grant.
+		Run `cmd mcp add --transport http cloudflare https://mcp.cloudflare.com/mcp`.
+		When Command Code prompts you, complete the OAuth flow in your browser and
+		choose the permissions to grant.
 	</FAQItem>
 	<FAQItem question="Where does cmd skills add install the Cloudflare Skills?">
 		Into `.commandcode/skills/` for the current project, or
