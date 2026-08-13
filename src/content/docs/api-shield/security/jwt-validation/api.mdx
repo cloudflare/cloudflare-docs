@@ -170,12 +170,12 @@ Inspect both `result` and `messages` to confirm the effective credentials.
 
 After you create a token configuration, Cloudflare checks every request in the zone for a JWT at the configured token sources and validates any token it finds. You do not need a token validation rule or an operation in Endpoint Management for validation. Rules determine how Cloudflare acts on the results.
 
-To act on the results, choose one of the following rule types:
+For new security policies, Cloudflare generally recommends using WAF custom rules.
 
-- **[WAF custom rules](/waf/custom-rules/)** — use these for policies based on verified JWT claims. Custom rules can combine claims with other signals, such as [attack score](/waf/detections/attack-score/). Endpoints do not need to be in Endpoint Management.
-- **Token validation rules** — use these to require a valid token or scope enforcement to specific endpoints in Endpoint Management. These rules support the `is_jwt_valid()` and `is_jwt_present()` functions, which are not available in custom rules.
+- **[WAF custom rules](/waf/custom-rules/)** — use these for zone-wide policies based on verified JWT claims. Custom rules can combine claims with other signals, such as [attack score](/waf/detections/attack-score/). Endpoints do not need to be in Endpoint Management.
+- **Token validation rules** — use these when enforcement must apply only to specific operations in Endpoint Management. These rules support the `is_jwt_valid()` and `is_jwt_present()` functions, which are not available in custom rules.
 
-To reference a claim in a rule expression, use [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) with your token configuration ID and the claim name. For a complete example, refer to [Issue challenge for admin user in JWT claim based on attack score](/waf/custom-rules/use-cases/check-jwt-claim-to-protect-admin-user/). For all available fields, refer to the [JWT validation fields](/ruleset-engine/rules-language/fields/reference/?field-category=JWT+validation) reference.
+To reference a custom claim in a rule expression, you can use `lookup_json_*` functions like [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) with your token configuration ID and the claim name. For a complete example, refer to [Issue challenge for admin user in JWT claim based on attack score](/waf/custom-rules/use-cases/check-jwt-claim-to-protect-admin-user/). For all available fields and standard claims, refer to the [JWT validation fields](/ruleset-engine/rules-language/fields/reference/?field-category=JWT+validation) reference.
 
 ## Token validation rules
 
@@ -194,9 +194,9 @@ Token validation rules can be configured using the Cloudflare API or [dashboard]
 
 ### Selectors
 
-Selectors control where Cloudflare applies the action of a token validation rule.
+Selectors control to which operations from Endpoint Management Cloudflare applies the action of a token validation rule.
 
-If you only need enforcement on specific hostnames or subdomains of your apex domain, use the hostname in a selector to include it in the JWT validation rule.
+If you only need enforcement on specific hostnames or subdomains of your apex domain, use the hostname in a selector to include matching operations in the JWT validation rule.
 
 If you need to exclude endpoints from enforcement, use the endpoint's operation ID in a selector. For example, you can exclude an endpoint that issues or refreshes JWTs.
 

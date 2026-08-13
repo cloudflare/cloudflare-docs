@@ -20,7 +20,7 @@ API Shield's JWT validation cryptographically verifies incoming JWTs before they
 
 JWT validation has two parts: a token configuration that tells Cloudflare how to find and verify JWTs, and a rule that acts on the validation results.
 
-After you create a token configuration, Cloudflare checks every request in the zone for a JWT at the configured locations. When Cloudflare finds a JWT, it validates the token and makes the verified claims available in `http.request.jwt.claims` fields. You do not need a rule or an operation in [Endpoint Management](/api-shield/management-and-monitoring/) for validation. Rules determine how Cloudflare acts on the results.
+After you create a token configuration, Cloudflare checks every request in the zone for a JWT at the configured locations. When Cloudflare finds a JWT, it validates the token and makes the verified claims available in `http.request.jwt.claims` fields. For available fields and standard claims, refer to the [JWT validation fields](/ruleset-engine/rules-language/fields/reference/?field-category=JWT+validation) reference. You do not need a rule or an operation in [Endpoint Management](/api-shield/management-and-monitoring/) for validation. Rules determine how Cloudflare acts on the results.
 
 ### Add a token validation configuration
 
@@ -41,14 +41,14 @@ To automatically keep your JWKS up to date when your identity provider refreshes
 
 ### Act on JWT validation results
 
-Choose one of the following rule types:
+For new security policies, Cloudflare generally recommends using WAF custom rules.
 
-- **[WAF custom rules](/waf/custom-rules/)** — use these for policies based on verified JWT claims. Custom rules can combine claims with other signals, such as [attack score](/waf/detections/attack-score/). Endpoints do not need to be in Endpoint Management.
-- **JWT validation rules** — use these to require a valid token or scope enforcement to specific endpoints in [Endpoint Management](/api-shield/management-and-monitoring/). These rules support the `is_jwt_valid()` and `is_jwt_present()` functions, which are not available in custom rules.
+- **[WAF custom rules](/waf/custom-rules/)** — use these for zone-wide policies based on verified JWT claims. Custom rules can combine claims with other signals, such as [attack score](/waf/detections/attack-score/). Endpoints do not need to be in Endpoint Management.
+- **JWT validation rules** — use these when enforcement must apply only to specific operations in [Endpoint Management](/api-shield/management-and-monitoring/). These rules support the `is_jwt_valid()` and `is_jwt_present()` functions, which are not available in custom rules.
 
 Cloudflare validates JWTs the same way regardless of which rule type you choose.
 
-To reference a claim in a rule expression, use [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) with your token configuration ID and the claim name:
+For example, to reference a simple string claim in a rule expression, use [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) with your token configuration ID and the claim name:
 
 ```txt
 lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")
@@ -67,7 +67,7 @@ JWT validation rules use operations from Endpoint Management to control where Cl
 2. On API JWT validation rules, select **Create rule**.
 3. Add a name for your rule.
 4. Select a hostname to protect requests with saved endpoints using the rule.
-5. Deselect any endpoints that you want JWT validation to ignore (for example, an endpoint used to generate a JWT).
+5. Deselect any endpoints that you want to exclude from the JWT validation rule's enforcement.
 6. Select the token configuration that corresponds to the incoming requests.
 7. Choose whether to strictly enforce token presence on these endpoints.
    - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose *Ignore*. JWT validation will still validate JWTs that are present.
@@ -78,7 +78,7 @@ JWT validation rules use operations from Endpoint Management to control where Cl
 
 :::note
 
-JWT validation rules automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule.
+JWT validation rules automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule's selector.
 :::
 
 ---
@@ -87,11 +87,11 @@ JWT validation rules automatically apply to new endpoints added to Endpoint Mana
 
 ### Validate two JWTs with different identity providers on a single request
 
-If you expect that two different JWTs should be present in a request and you want to validate both, you must create two different token configurations. In a JWT validation rule, select both configurations. Then select _Validate all configurations_ under **Validation behavior for multiple configurations**.
+If you expect that two different JWTs should be present in a request and you want to validate both, you must create two different token configurations. When selecting the two configurations in your validation rule, select _Validate all configurations_ under **Validation behavior for multiple configurations**.
 
 ### Support a migration from one identity provider to another
 
-To support this migration with JWT validation rules, create two token configurations and two rules. Associate each rule with a different token configuration. You can then change the action for each rule as the migration progresses.
+If you expect to migrate between two different identity providers, you must create two different token configurations and two different validation rules, each corresponding to its own configuration. With this setup, you can change the action for different validation rules depending on the state of your migration.
 
 ### JSON Web Tokens with the `Bearer` prefix
 
@@ -103,7 +103,7 @@ API Shield will verify JSON Web Tokens regardless of whether they have the `Bear
 
 Due to cross-origin resource sharing (CORS) security, web browsers will send "pre-flight" requests using the `OPTIONS` verb to API endpoints before sending a `GET` (or other verb) request. By definition, `OPTIONS` preflight requests do not include credentials (authentication headers or cookies) and are anonymous.
 
-To prevent a JWT validation rule from blocking browser preflight requests, add `or http.request.method eq "OPTIONS"` to the rule expression.
+If you expect web browsers to be valid clients of your API, and to prevent blocking `OPTIONS` requests from those browsers, Cloudflare recommends adding `or http.request.method eq "OPTIONS"` to your JWT validation rules.
 
 ---
 
