@@ -24,7 +24,7 @@ A Durable Object may be replaced in the event of a network partition or a softwa
 
 Code changes for Workers and Durable Objects are released globally in an eventually consistent manner. A request can reach the latest version of your Worker, which then calls a unique Durable Object running a previous version of your code.
 
-With [delayed code updates](/durable-objects/concepts/durable-object-lifecycle/#code-updates), an active Durable Object can continue running a previous version until it hibernates or reaches the update timeout. Gradual deployments can extend this period while your deployment uses more than one version. If you deploy multiple versions before an object hibernates, it might skip intermediate versions and use the latest version when it wakes.
+With a [deployment grace period](/durable-objects/reference/durable-objects-code-updates/), an active Durable Object can continue running a previous version until it hibernates or the grace period ends. Gradual deployments can extend this period while your deployment uses more than one version. If you deploy multiple versions before an object hibernates, it might skip intermediate versions and use the latest version when it wakes.
 
 Ensure that API changes between your Workers and Durable Objects are forward and backward compatible across code updates.
 

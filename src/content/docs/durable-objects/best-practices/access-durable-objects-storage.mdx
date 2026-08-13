@@ -19,7 +19,7 @@ access to a Durable Object's attached storage.
 
 A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object remains in memory. Inactive Durable Objects with no incoming request traffic can be evicted.
 
-[Code updates](/durable-objects/concepts/durable-object-lifecycle/#code-updates) can wait for an active Durable Object to hibernate instead of restarting it immediately. The object still loses its in-memory state when it hibernates or an update forces a restart. Use the Storage API to persist state that must survive hibernation, eviction, or restart.
+A [deployment grace period](/durable-objects/reference/durable-objects-code-updates/) can wait for an active Durable Object to hibernate instead of restarting it immediately. The object still loses its in-memory state when it hibernates or the grace period forces a restart. Use the Storage API to persist state that must survive hibernation, eviction, or restart.
 
 ## Access storage
 

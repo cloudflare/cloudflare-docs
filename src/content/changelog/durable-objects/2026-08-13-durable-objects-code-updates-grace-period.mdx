@@ -1,0 +1,24 @@
+---
+title: Delay code updates until active Durable Objects hibernate
+description: Set a deployment grace period so active Durable Objects finish their current work before a code update replaces them.
+products:
+  - durable-objects
+  - workers
+date: 2026-08-13
+---
+
+import { PackageManagers } from "~/components";
+
+{/* TODO: Confirm the launch date and compatibility date before publication. */}
+
+Deploying a new Worker version used to reset every active Durable Object right away, dropping in-flight requests, closing WebSockets, and interrupting storage operations. Now you can set a deployment grace period so an active object keeps running its current code until it hibernates, then picks up the update on its own.
+
+Add `deployment_grace_period` to `durable_objects` in your Wrangler configuration, or pass it as a flag for a single deployment:
+
+<PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-deployment-grace-period 30" />
+
+The value is in seconds. The default is 30, and the maximum is 300 (five minutes). Set it to `0` to reset active objects immediately — useful when you need to ship a fix during an incident or force a busy object off old code.
+
+A grace period is best-effort, not a guarantee. Cloudflare can still reset an object early because of a crash, a resource limit, or an unrelated runtime update.
+
+For more information, including how this interacts with gradual deployments, refer to [Delay code updates until hibernation](/durable-objects/reference/durable-objects-code-updates/).

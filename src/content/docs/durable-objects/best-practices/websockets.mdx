@@ -719,9 +719,9 @@ A full example is available in [Build a WebSocket server](/durable-objects/examp
 
 Connections accepted with the WebSocket Hibernation API remain connected when a Durable Object adopts new code after hibernating.
 
-A forced code update disconnects WebSockets attached to the running instance. This happens when the update timeout expires before hibernation or when you set the timeout to `0s`. The Web Standard WebSocket API prevents hibernation, so its connections are disconnected when the timeout expires.
+A forced code update disconnects WebSockets attached to the running instance. This happens when the deployment grace period ends before hibernation, or when you set the grace period to `0`. The Web Standard WebSocket API prevents hibernation, so its connections are disconnected when the grace period ends.
 
-Refer to [Code updates in the Durable Object lifecycle](/durable-objects/concepts/durable-object-lifecycle/#code-updates) for more information.
+Refer to [Delay code updates until hibernation](/durable-objects/reference/durable-objects-code-updates/) for more information.
 
 :::
 

@@ -1,0 +1,138 @@
+---
+title: Delay code updates until hibernation
+description: Configure a deployment grace period so active Durable Objects finish their current work before a code update replaces them.
+pcx_content_type: concept
+sidebar:
+  order: 11
+products:
+  - durable-objects
+---
+
+import { WranglerConfig, PackageManagers } from "~/components";
+
+{/* TODO: Confirm the compatibility date and launch date before publication.
+    TODO: Confirm the REST API field name with the EWC/API team. The engineering
+    spec still calls this field `durable_objects_hibernation_timeout`; this page
+    uses `durable_objects_deployment_grace_period` to match the renamed Wrangler
+    flag and config field. Update this page once the spec and schema catch up. */}
+
+When you deploy new code, Cloudflare resets every active Durable Object that receives the update. The reset drops in-flight requests, closes WebSocket connections, and interrupts storage operations, because a Durable Object can only run one version of your code at a time.
+
+A deployment grace period lets an active Durable Object keep running its current code until it hibernates, instead of resetting it right away. The update still applies once the object hibernates, or once the grace period ends, whichever comes first.
+
+## How it works
+
+1. You deploy a new version. Cloudflare assigns it to every Durable Object in the deployment.
+2. An inactive object starts the new version the next time it receives a request or event. This is unchanged from today.
+3. An active object keeps running its current version. It keeps handling requests, events, storage operations, and messages on WebSockets accepted with the [Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api).
+4. If the object hibernates before the grace period ends, it applies the new version when it next wakes up. Hibernated WebSockets stay connected throughout.
+5. If the object is still active when the grace period ends, Cloudflare resets it and applies the update, the same way it does today.
+
+Deploying again before an object hibernates does not restart its grace period. The object still applies the latest version once it hibernates or the original grace period ends, and it might skip versions you deployed in between.
+
+:::note[Best effort, not a guarantee]
+A grace period is best-effort. Cloudflare can still reset an object before the grace period ends because of a crash, a resource limit, or a runtime update unrelated to your deployment.
+:::
+
+## Configure a grace period
+
+Add `deployment_grace_period` alongside `bindings` in the `durable_objects` object of your [Wrangler configuration file](/workers/wrangler/configuration/#durable-objects):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "CHAT_ROOM",
+				"class_name": "ChatRoom",
+			},
+		],
+		"deployment_grace_period": 30,
+	},
+}
+```
+
+</WranglerConfig>
+
+The value is in seconds. The default is `30`. The maximum is `300` (five minutes). Set `deployment_grace_period` to `0` to reset active objects immediately, the same as every code update before this feature existed.
+
+## Default behavior and compatibility dates
+
+This is a breaking change to existing behavior, so Cloudflare rolls out the new default behind a compatibility date:
+
+- Workers with a compatibility date before `COMPATIBILITY_DATE` reset active Durable Objects immediately on every code update, unless you set `deployment_grace_period` yourself.
+- Workers with a compatibility date of `COMPATIBILITY_DATE` or later use a 30-second grace period by default, unless you set a different value.
+
+An explicit `deployment_grace_period`, whether in your Wrangler configuration, passed as a flag, or sent through the REST API, always overrides the compatibility-date default.
+
+## Override a grace period for one deployment
+
+Pass `--durable-objects-deployment-grace-period` to `wrangler versions deploy` or `wrangler versions rollback` (or their `wrangler deploy` and `wrangler rollback` aliases) to override the configured value for a single deployment:
+
+<PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-deployment-grace-period 0" />
+
+Wrangler resolves the grace period in this order:
+
+1. The `--durable-objects-deployment-grace-period` flag.
+2. `durable_objects.deployment_grace_period` in your Wrangler configuration.
+3. The default for your compatibility date.
+
+## Use the REST API
+
+Add `durable_objects_deployment_grace_period` to a [Create deployment](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) request. This field belongs to the deployment, not the Worker version.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/deployments" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "strategy": "percentage",
+    "versions": [
+      {
+        "version_id": "f3b5b2d2-75d6-4c3f-ae3d-4df2f9cfeb7a",
+        "percentage": 100
+      }
+    ],
+    "durable_objects_deployment_grace_period": 0
+  }'
+```
+
+Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the grace period Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history. Both endpoints return the grace period Cloudflare applied, including the compatibility-date default when you omit the field.
+
+:::note
+The REST API field name above reflects the naming decided for Wrangler and is not yet final. Check back here or in the [API reference](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) before you build automation against it.
+:::
+
+## Gradual deployments
+
+During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/), Cloudflare assigns each Durable Object to one of the versions in the deployment. Increasing a version's traffic percentage assigns more objects to it. Only newly assigned objects start a grace period. Objects that already run that version, and objects still assigned to an earlier version, are not affected.
+
+Different objects can be on different grace-period clocks at the same time. If a later progression sets a shorter grace period, the shorter value applies to the objects that progression reassigns.
+
+Keep your Worker and Durable Object code forward and backward compatible for as long as any version might still be running, not just for the length of the deployment. Refer to [Code updates](/durable-objects/platform/known-issues/#code-updates).
+
+## When to set a grace period to zero
+
+Set `deployment_grace_period` to `0` when waiting is worse than resetting. Common cases:
+
+- You need to ship a correctness or security fix immediately, even if it interrupts active objects.
+- Some of your objects rarely or never hibernate, and you need to force them onto new code, or reduce their duration costs, without waiting.
+
+A `0` grace period behaves exactly like a code update did before this feature existed.
+
+## Limitations
+
+- A grace period is best-effort. Cloudflare does not guarantee an object keeps its old code for the full grace period, or that it resets exactly when the grace period ends.
+- A grace period only delays resets caused by code updates. It does not delay resets caused by process sandbox migrations, resource limits, crashes, or other Workers runtime updates.
+- An object might skip versions entirely if you deploy more than once while it is waiting to hibernate.
+- A grace period does not make incompatible Worker and Durable Object versions safe to run together. Keep your interfaces compatible across versions.
+
+## Related resources
+
+- [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/)
+- [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/)
+- [Code updates](/durable-objects/platform/known-issues/#code-updates)
+- [Troubleshoot Durable Object resets](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated)
