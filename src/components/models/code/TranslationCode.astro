@@ -11,6 +11,26 @@ const props = z.object({
 
 const { name } = props.parse(Astro.props);
 
+const isIndicTrans2 = name === "@cf/ai4bharat/indictrans2-en-indic-1B";
+
+const workerInput = isIndicTrans2
+	? `        text: "Hello, how are you?",
+        target_language: "hin_Deva",`
+	: `        text: "I'll have an order of the moule frites",
+        source_lang: "english", // defaults to english
+        target_lang: "french",`;
+
+const pythonInput = isIndicTrans2
+	? `  "text": "Hello, how are you?",
+  "target_language": "hin_Deva"`
+	: `  "text": "I'll have an order of the moule frites",
+  "source_lang": "english",
+  "target_lang": "french"`;
+
+const curlInput = isIndicTrans2
+	? `{ "text": "Hello, how are you?", "target_language": "hin_Deva" }`
+	: `{ "text": "Ill have an order of the moule frites", "source_lang": "english", "target_lang": "french" }`;
+
 const worker = `
 export interface Env {
   AI: Ai;
@@ -22,9 +42,7 @@ export default {
     const response = await env.AI.run(
       "${name}",
       {
-        text: "I'll have an order of the moule frites",
-        source_lang: "english", // defaults to english
-        target_lang: "french",
+${workerInput}
       }
     );
 
@@ -44,9 +62,7 @@ def run(model, input):
     return response.json()
 
 output = run('${name}', {
-  "text": "I'll have an order of the moule frites",
-  "source_lang": "english",
-  "target_lang": "french"
+${pythonInput}
 })
 
 print(output)
@@ -56,7 +72,7 @@ const curl = `
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
     -X POST  \\
     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
-    -d '{ "text": "Ill have an order of the moule frites", "source_lang": "english", "target_lang": "french" }'
+    -d '${curlInput}'
 `;
 ---
 
