@@ -91,9 +91,9 @@ COOKIE_SIGNING_KEY=
 
 :::caution[Production secrets]
 
-Deploy to Cloudflare treats every uncommented entry in `.dev.vars.example` or `.env.example` as a required setup input. The value supplied during setup is stored as a secret on the deployed Worker.
+Entries in `.dev.vars.example` or `.env.example` define Worker secrets that users configure during deployment.
 
-Use these files to list the secrets required for a production deployment, not as a collection of local development defaults. Comment out local-only or optional entries, and do not include defaults such as authentication bypass flags or localhost URLs that would be unsafe in production.
+Use these files for secrets needed by the deployed Worker, not for local development defaults. Comment out local-only or optional entries, and do not include defaults such as authentication bypass flags or localhost URLs that would be unsafe in production.
 
 :::
 
