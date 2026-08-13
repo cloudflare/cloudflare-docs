@@ -1,6 +1,6 @@
 ---
 title: Get started
-description: Connect to Privacy Proxy, configure your client, and verify that traffic is proxied correctly.
+description: Run the Privacy Proxy web or CLI demo to compare direct and proxied requests without a provisioned customer deployment.
 pcx_content_type: get-started
 sidebar:
   order: 2
@@ -8,105 +8,149 @@ products:
   - privacy-proxy
 ---
 
-This guide walks you through connecting to Privacy Proxy and verifying that traffic is proxied correctly.
+import { Steps, TabItem, Tabs } from "~/components";
+
+Try Privacy Proxy with this self-serve demo. See the full flow of a single-hop deployment by sending an HTTPS request along two paths with and without Privacy Proxy.
+
+There are two ways to experience this demo: a guided Web demo or a guided CLI demo. Both versions demonstrate the same flow and features using our `pvcli` client, showing how Privacy Proxy hides your client IP address while preserving geolocation context.
+
+:::caution
+`pvcli` is experimental software and has not been audited. Use it only for testing.
+:::
 
 ## Before you begin
 
-Privacy Proxy is a managed service. Before you can connect, Cloudflare will provision an endpoint and provide you with:
+Both demo versions require a macOS or Linux computer with these tools:
 
-- **Proxy endpoint URL**: The hostname for your Privacy Proxy instance (for example, `https://your-proxy.example.com`).
-- **Pre-shared key (PSK)**: A secret key for proof-of-concept authentication.
-- **Egress IP ranges**: The IP addresses that destination servers will see for proxied traffic.
+- [Rust and Cargo](https://www.rust-lang.org/tools/install)
+- Git and CMake
+- C and C++ build tools
 
-[Contact us](https://www.cloudflare.com/lp/privacy-edge/) to request access and receive your configuration details.
+On macOS, install the Apple command line tools. On Linux, install Clang, libclang, and `pkg-config`. The first installation builds networking and security dependencies and can take several minutes.
 
----
+## Install pvcli
 
-## 1. Configure your client
+<Steps>
 
-Privacy Proxy accepts connections over HTTP/2 and HTTP/3 using the HTTP CONNECT method. Because Privacy Proxy requires authentication headers, you cannot configure browsers to connect directly. Instead, use one of the following approaches:
-
-### Use curl for testing locally
-
-For quick tests, use curl with the `--proxy` and `--proxy-header` flags to pass authentication directly:
-
-```sh
-curl -v \
-  --proxy https://your-proxy.example.com \
-  --proxy-header "Proxy-Authorization: Preshared <YOUR_PSK>" \
-  https://example.com
-```
-
-### Use Chaussette 
-
-[Chaussette](/privacy-proxy/reference/client-libraries/#chaussette) is a local SOCKS5 proxy that handles authentication and forwards requests to Privacy Proxy.
-
-1. Start Chaussette with your PSK and proxy endpoint:
+1. Install `pvcli` from its public GitHub repository:
 
    ```sh
-   MASQUE_PRESHARED_KEY=<YOUR_PSK> chaussette \
-     --listen 127.0.0.1:1987 \
-     --proxy https://your-proxy.example.com:443
+   cargo install --git https://github.com/cloudflareresearch/pvcli --locked
    ```
 
-2. Configure your browser to use the local SOCKS5 proxy:
+2. Confirm that `pvcli` is available:
 
    ```sh
-   google-chrome --proxy-server="socks5://127.0.0.1:1987"
+   pvcli --help
    ```
 
----
+   A list of options confirms that the installation succeeded.
 
-## 2. Verify the connection
+</Steps>
 
-To confirm that traffic is routing through Privacy Proxy, check your apparent IP address:
+## Choose a demo
 
-```sh
-curl -v \
-  --proxy https://your-proxy.example.com \
-  --proxy-header "Proxy-Authorization: Preshared <YOUR_PSK>" \
-  https://cloudflare.com/cdn-cgi/trace
-```
+Both options send one direct request and one proxied request. Choose the interface that you prefer:
 
-The response includes connection metadata. Look for the `ip` field, which should show a Cloudflare egress IP address rather than your real IP.
+| Demo     | Interface            | Experience                                           |
+| -------- | -------------------- | ---------------------------------------------------- |
+| Web demo | Browser and terminal | Guided flow with a side-by-side, visualized result   |
+| CLI demo | Terminal             | Interactive script with results in the terminal      |
 
-```txt title="Example response"
-fl=123f456
-h=cloudflare.com
-ip=162.159.xxx.xxx
-ts=1234567890.123
-visit_scheme=https
-uag=curl/8.0.0
-colo=SJC
-http=http/2
-loc=US
-tls=TLSv1.3
-```
+<Tabs>
 
-The `ip` value confirms the egress IP address used by the proxy.
+<TabItem label="Web demo">
 
----
+The Web demo generates two commands for you to copy and run and displays what the destination observes about each alongside a visualization.
 
-## 3. (Optional) Test geolocation
+<Steps>
 
-Privacy Proxy preserves user geolocation by selecting egress IP addresses based on the client's location. You can specify a geohash to test this behavior:
+1. Go to the [Privacy Proxy demo](https://privacy-proxy-demo.cloudflare.app/) and select **Start demo**.
 
-```sh
-curl -v \
-  --proxy https://your-proxy.example.com \
-  --proxy-header "Proxy-Authorization: Preshared <YOUR_PSK>" \
-  --proxy-header "sec-ch-geohash: xn76c-JP" \
-  https://cloudflare.com/cdn-cgi/trace
-```
+2. In **Direct Request**, select **Copy**. Run the copied command in your terminal, and the destination will read and display your client IP address and its estimated location.
 
-The `sec-ch-geohash` header provides a [geohash](https://en.wikipedia.org/wiki/Geohash) that the proxy uses to select an appropriate egress IP. The format is `<geohash>-<country_code>`.
+3. Select **Try the same request with the Privacy Proxy**.
 
-The response should show a `loc` value corresponding to the geohash region.
+4. Choose an **Obfuscation level**. This setting controls the precision of the geohash sent to Privacy Proxy, which can be seen in the Geohash Visualization.
 
----
+5. In **Privacy Proxy Request**, select **Copy**. Run the copied command in your terminal. `pvcli` mints a fresh Privacy Pass token, uses it to authenticate to the proxy, and sends the request. The destination displays a Cloudflare egress IP address while preserving your estimated location from before.
+
+6. Select **Compare results side by side** for a direct comparison of the results with additional explanation.
+
+</Steps>
+
+</TabItem>
+
+<TabItem label="CLI demo">
+
+The CLI demo runs the same walkthrough in your terminal. It builds the proxied command one flag at a time with you and prints both destination observations.
+
+It also requires Bash, `curl`, and `jq`.
+
+<Steps>
+
+1. Download [privacy-proxy-demo.sh](https://privacy-proxy-demo.cloudflare.app/privacy-proxy-demo.sh).
+
+2. In your terminal, open your Downloads folder and allow the script to run:
+
+   ```sh
+   cd ~/Downloads
+   chmod +x privacy-proxy-demo.sh
+   ```
+
+3. Start the walkthrough:
+
+   ```sh
+   ./privacy-proxy-demo.sh
+   ```
+
+4. To send the **Direct Request**, press **Enter** when the prompt appears. The terminal displays all information seen by the destination.
+
+5. For the **Privacy Proxy Request**, follow the prompts to build the proxied command flag by flag.
+
+6. Continue when the script adds `--pat-issuer`. This option tells `pvcli` to mint a fresh Privacy Pass token when the completed command runs.
+
+7. Choose an obfuscation level. The script calculates a geohash from your approximate location.
+
+8. Press **Enter** to mint the token and send the proxied request. The terminal displays all information seen by the destination and compares the direct and proxied observations.
+
+</Steps>
+
+The script does not print the Privacy Pass token or signed session value.
+
+</TabItem>
+
+</Tabs>
+
+## Authentication
+
+Both demos use Privacy Pass authentication. `pvcli` uses the demo issuer to mint a fresh token for each proxied request.
+
+The `--pat-issuer` option triggers token issuance. `pvcli` then adds the token to the CONNECT request as a `Proxy-Authorization` header. The demos do not print the token or include it in displayed commands.
+
+To explore token issuance separately, refer to the [Privacy Pass Get started guide](/privacy-pass/getting-started/).
+
+## Understand the results
+
+| Request path  | Observed IP address       | Estimated location                        |
+| ------------- | ------------------------- | ----------------------------------------- |
+| Direct        | Client IP address    | Location associated with your client IP   |
+| Privacy Proxy | Cloudflare egress address | Location associated with Cloudflare egress IP, which is accurate to your real location relative to the selected geohash |
+
+Privacy Proxy hides the client's IP address from the destination, while the geohash helps select an egress address associated with the client's real location to preserve geolocation context. To understand how geohashes work, refer to [Geolocation](https://developers.cloudflare.com/privacy-proxy/concepts/geolocation/).
+
+## Demo scope
+
+The demo uses a single-hop deployment where `pvcli` creates an HTTPS tunnel through Privacy Proxy with HTTP CONNECT over HTTP/2.
+
+The proxied command uses `--pat-issuer` to mint a Privacy Pass token. `pvcli` adds the token to the CONNECT request as a `Proxy-Authorization` header.
+
+The command also sends `sec-ch-geohash` as a proxy header on the CONNECT request. Neither proxy header is sent through the tunnel to the destination.
+
+The demo does not cover HTTP/3, CONNECT-UDP, or double-hop deployments. For supported options in a production deployment, refer to [Deployment models](/privacy-proxy/concepts/deployment-models/).
 
 ## Next steps
 
-- Learn about [deployment models](/privacy-proxy/concepts/deployment-models/) to understand single-hop versus double-hop architectures.
-- Review [authentication methods](/privacy-proxy/concepts/authentication/) for production deployments using Privacy Pass.
-- Configure [observability](/privacy-proxy/reference/metrics/) to monitor proxy traffic with GraphQL Analytics and OpenTelemetry.
+- To test a provisioned deployment, refer to [Production deployment testing](/privacy-proxy/production-deployment-testing/).
+- Review [How Privacy Proxy works](/privacy-proxy/concepts/how-it-works/).
+- Understand [geolocation preservation](/privacy-proxy/concepts/geolocation/).
