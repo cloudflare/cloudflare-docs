@@ -69,7 +69,6 @@ export { default as AiSearchOverviewDiagram } from "./components/AiSearchOvervie
 export { default as AiSearchQueryingDiagram } from "./components/AiSearchQueryingDiagram.astro";
 export { default as AiSearchVoiceDiagram } from "./components/AiSearchVoiceDiagram.astro";
 export { default as RealtimeKitMeetingBlueprintDiagram } from "./components/RealtimeKitMeetingBlueprintDiagram.astro";
-export { default as RealtimeKitMeetingLifecycleDiagram } from "./components/RealtimeKitMeetingLifecycleDiagram.astro";
 export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
 export { default as WorkersArchitectureDiagram } from "./components/cf/WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./components/cf/WorkersIsolateDiagram.astro";

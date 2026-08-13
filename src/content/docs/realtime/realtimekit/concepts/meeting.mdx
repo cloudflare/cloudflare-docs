@@ -9,11 +9,7 @@ products:
   - realtime
 ---
 
-import {
-  Details,
-  RealtimeKitMeetingBlueprintDiagram,
-  RealtimeKitMeetingLifecycleDiagram,
-} from "~/components";
+import { Details, RealtimeKitMeetingBlueprintDiagram } from "~/components";
 
 Meeting is a **re-usable virtual room** that you can join and interact in, in real-time.
 
@@ -31,10 +27,6 @@ A **Session** is a live instance of a Meeting. It starts automatically when th
 A Session inherits all settings (like features and title) from its parent Meeting.
 
 Because the Meeting is persistent, it can have many different Sessions over time.
-
-The following diagram shows how one Meeting can contain multiple Sessions over time:
-
-<RealtimeKitMeetingLifecycleDiagram />
 
 Example - **Think of a Meeting as a recurring weekly standup event.**
 
