@@ -219,7 +219,7 @@ Get the `client_id` from the [connections endpoint](#view-replicas). Use the `id
 
 - High availability is set at node creation time and cannot be changed afterward.
 - You must install the client on at least two hosts for failover to work. A single replica means no redundancy.
-- High availability requires the MASQUE transport protocol. WireGuard does not support HA. Mesh nodes use MASQUE by default.
+- High availability requires that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol), the default protocol for the Cloudflare One Client. It does not work if the device profile uses WireGuard instead.
 
 ### Network configuration
 

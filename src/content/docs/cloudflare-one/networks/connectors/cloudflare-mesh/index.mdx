@@ -64,9 +64,9 @@ All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare
 
 ## Protocol requirement
 
-Cloudflare Mesh requires MASQUE, the default protocol for the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol). Most deployments do not need to change anything.
+Cloudflare Mesh requires that the [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) of each Mesh node is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol), the default protocol for the Cloudflare One Client. Most deployments do not need to change anything.
 
-If a Mesh node uses WireGuard, the following capabilities will not work:
+If a Mesh node's device profile uses WireGuard instead, the following capabilities will not work:
 
 - [Hostname routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes)
 - [IPv6 CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#manage-cidr-routes)

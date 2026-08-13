@@ -22,7 +22,7 @@ By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/n
 
 When you add a route, the Mesh node acts as a gateway: traffic destined for the advertised CIDR or hostname is forwarded to the node, which delivers it to the appropriate host on the local network (or egresses it to the public Internet).
 
-Both IPv4 and IPv6 CIDR routes are supported. IPv6 routes require [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol) and will not work if the node uses WireGuard.
+Both IPv4 and IPv6 CIDR routes are supported. IPv6 routes require that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol); they will not work if the device profile uses WireGuard instead.
 
 ## When to use routes
 
@@ -223,7 +223,7 @@ For a deeper look at the packet flow behind hostname routing, refer to the [anno
 ### Prerequisites
 
 - **Run a supported Mesh node version.** Hostname routing requires the Mesh node to run Linux Cloudflare One Client version `2026.6.822.0` or newer.
-- **Use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol)**, the default protocol for the Cloudflare One Client. Hostname routing does not work if the node uses WireGuard.
+- **Configure the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol).** Hostname routing does not work if the device profile uses WireGuard instead.
 - **Enable the Gateway proxy** with TCP, UDP, and ICMP:
 
   <Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
