@@ -3,10 +3,11 @@ title: You can now enable Access on a Worker or all Workers at once
 description: Two new ways to protect Workers with Cloudflare Access. Apply a policy to a single Worker across all its domains, or set a default policy for every Worker in your account.
 products:
   - workers
+  - access
 date: 2026-08-13
 ---
 
-You now have two new ways to protect your Workers with Cloudflare Access.
+You now have two new ways to protect your [Workers](/workers/) with [Cloudflare Access](/workers/configuration/cloudflare-access/).
 
 **Protect an application across all its domains at once**
 
@@ -64,7 +65,7 @@ You can now test Cloudflare Access locally with `wrangler dev`. Add a `dev` bloc
   "access": {
     "dev": {
       "aud": "my-app",
-      "identity": { "email": "admin@company.com" }
+      "identity": { "email": "admin@example.com" }
     }
   }
 }
@@ -74,4 +75,4 @@ Your Worker will receive this identity through `ctx.access` and `ctx.access.getI
 
 **API and programmatic access**
 
-You can also set up these policies through the Workers API instead of the dashboard.
+You can also set up these policies through the [Workers API](/workers/configuration/cloudflare-access/) instead of the dashboard.
