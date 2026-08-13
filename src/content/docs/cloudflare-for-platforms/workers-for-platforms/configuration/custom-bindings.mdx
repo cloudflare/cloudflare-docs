@@ -286,11 +286,11 @@ export default {
 };
 ```
 
-The User Worker must be uploaded with the `d1_custom_binding` compatibility flag. This tells the runtime to route D1 calls through your Platform Worker instead of directly to D1.
+The User Worker must be uploaded with the `d1_binding_jsrpc` compatibility flag. This tells the runtime to route D1 calls through your Platform Worker instead of directly to D1.
 
 ```json
 {
-	"compatibility_flags": ["d1_custom_binding"]
+	"compatibility_flags": ["d1_binding_jsrpc"]
 }
 ```
 
@@ -329,7 +329,7 @@ curl -X PUT \
   -H "Authorization: Bearer $API_TOKEN" \
   -F 'metadata={
     "main_module": "worker.js",
-    "compatibility_flags": ["d1_custom_binding"],
+    "compatibility_flags": ["d1_binding_jsrpc"],
     "bindings": [
       {
         "type": "service",
