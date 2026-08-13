@@ -12,7 +12,7 @@ sidebar:
 Package registry security requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on for the traffic you want to inspect.
 :::
 
-Gateway can detect software package downloads across seven major package ecosystems and give you policy control over supply chain traffic. When a developer or CI/CD pipeline downloads a package through Gateway, the proxy identifies the registry protocol from the request URL and extracts the package ecosystem, name, version, and namespace. You can then write HTTP policies using `pkg.*` selectors to allow, block, or log package downloads at whatever granularity you need, from blocking an entire ecosystem to restricting a single package version.
+Gateway can detect software package downloads across seven major package ecosystems and give you policy control over supply chain traffic. When a developer or CI/CD pipeline downloads a package through Gateway, the proxy identifies the registry protocol from the request URL and extracts the package ecosystem, name, version, and namespace. You can then write HTTP policies using `pkg.*` selectors to allow or block package downloads at whatever granularity you need, from blocking an entire ecosystem to restricting a single package version.
 
 ## How it works
 
@@ -50,7 +50,7 @@ The following selectors are available for [HTTP policies](/cloudflare-one/traffi
 | `pkg.namespace` | Package Namespace | `pkg.namespace == "@babel"` | The package namespace, when the ecosystem supports one. For npm this is the scope, for Maven this is the group ID, and for Go this is the module path. |
 | `pkg.purl` | Package URL | `pkg.purl == "pkg:npm/lodash@4.17.21"` | The [Package URL (PURL)](https://github.com/package-url/purl-spec) derived from the detected coordinates. Available in the API only. |
 
-### Building expressions in the dashboard
+### Build expressions in the dashboard
 
 In the dashboard, **Package Ecosystem** is the primary selector. Selecting it reveals nested fields for specifying package name, version, and namespace. The following rules apply:
 
