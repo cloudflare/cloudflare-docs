@@ -2653,27 +2653,6 @@
 				}
 			}
 		},
-		"cert_transparency": {
-			"title": "Certificate Transparency Monitoring",
-			"link": "/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Available on all plans.",
-					"free": "Yes",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				},
-				"email_recipients": {
-					"title": "Email Recipients",
-					"free": "All account members",
-					"pro": "All account members",
-					"biz": "Specified email addresses",
-					"ent": "Specified email addresses"
-				}
-			}
-		},
 		"opportunistic_encryption": {
 			"title": "Opportunistic Encryption",
 			"link": "/ssl/edge-certificates/additional-options/opportunistic-encryption/",
