@@ -9,7 +9,7 @@ head: []
 description: Certificate Transparency (CT) Monitoring emails you when a new SSL/TLS certificate is issued for your domain, so you can spot unauthorized or mis-issued certificates.
 ---
 
-import { FeatureTable, GlossaryTooltip } from "~/components";
+import { GlossaryTooltip } from "~/components";
 
 Certificate Transparency (CT) Monitoring is an [opt-in](#opt-in-and-out) feature that lets you double-check any SSL/TLS certificates issued for your domain.
 
@@ -22,12 +22,6 @@ CT Monitoring alerts are triggered whenever a certificate that covers your monit
 - CT Monitoring does not detect phishing attempts. For example, for `cloudflare.com`, an alert would not trigger if a certificate was issued for `cloudf1are.com` or `cloud-flare.com`.
 
 :::
-
----
-
-## Availability
-
-<FeatureTable id="ssl.cert_transparency" />
 
 ---
 
