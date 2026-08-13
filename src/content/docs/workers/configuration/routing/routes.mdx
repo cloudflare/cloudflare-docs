@@ -203,7 +203,7 @@ The following examples illustrate the difference between `*example.com/*` and `*
 
 :::note[Zone scope]
 
-A Workers route is scoped to the [zone](/dns/zone-setups/) where it was created. A route in the `example.com` zone is not evaluated for requests to `myexample.com` or `not-example.com`; those rows illustrate the wildcard's string-matching behavior.
+Cloudflare evaluates a Workers route only within the [zone](/dns/zone-setups/) where you create it. For example, Cloudflare does not evaluate a route in the `example.com` zone for requests to `myexample.com` or `not-example.com`. Those rows illustrate the wildcard's string-matching behavior.
 
 The distinction matters for subdomain patterns within a zone. For example, `*sub.example.com/*` in the `example.com` zone matches `sub.example.com`, `foo.sub.example.com`, and `notsub.example.com`.
 
