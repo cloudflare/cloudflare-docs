@@ -86,8 +86,16 @@ Cloudflare will read the Wrangler configuration file of your source repo to dete
 [Worker secrets](/workers/configuration/secrets/) can be defined in a `.dev.vars.example` or `.env.example` file with a [dotenv](https://www.npmjs.com/package/dotenv) format:
 
 ```ini title=".dev.vars.example"
-COOKIE_SIGNING_KEY=my-secret # comment
+COOKIE_SIGNING_KEY=
 ```
+
+:::caution[Production secrets]
+
+Deploy to Cloudflare treats every uncommented entry in `.dev.vars.example` or `.env.example` as a required setup input. The value supplied during setup is stored as a secret on the deployed Worker.
+
+Use these files to list the secrets required for a production deployment, not as a collection of local development defaults. Comment out local-only or optional entries, and do not include defaults such as authentication bypass flags or localhost URLs that would be unsafe in production.
+
+:::
 
 [Secrets Store](/secrets-store/) secrets can be configured in the Wrangler configuration file as normal:
 
