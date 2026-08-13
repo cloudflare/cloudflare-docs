@@ -1645,6 +1645,7 @@
 /ruleset-engine/rules-language/fields/http-request-header/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-body/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-response/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/reference/cf.tls_ciphers_sha1/ /ruleset-engine/rules-language/fields/reference/cf.tls_client_ciphers_sha1/ 301
 /ruleset-engine/rules-language/fields/magic-firewall/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
 # security center
 /security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
