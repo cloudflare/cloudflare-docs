@@ -11,7 +11,8 @@ const props = z.object({
 
 const { name } = props.parse(Astro.props);
 
-const isIndicTrans2 = name === "@cf/ai4bharat/indictrans2-en-indic-1B";
+const INDIC_TRANS2_MODELS = new Set(["@cf/ai4bharat/indictrans2-en-indic-1B"]);
+const isIndicTrans2 = INDIC_TRANS2_MODELS.has(name);
 
 const workerInput = isIndicTrans2
 	? `        text: "Hello, how are you?",
