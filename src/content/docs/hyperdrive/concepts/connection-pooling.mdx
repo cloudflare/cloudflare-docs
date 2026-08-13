@@ -26,12 +26,14 @@ The `max_size` parameter acts as a soft limit - Hyperdrive may temporarily creat
 
 ## Restart the connection pool
 
-Hyperdrive manages the connection pool for you. You can also restart the pool manually from the Cloudflare dashboard. Select your Hyperdrive configuration, go to the **Settings** tab, and select **Restart** under **Danger zone**.
+Hyperdrive manages the connection pool for you, including automatic detection and recovery from most database failovers. In rare cases, you may need to restart the pool manually as a break-glass action — for example, after a database failover where Hyperdrive has not yet cycled its connections to the new primary.
 
-Restarting a configuration drains the existing connection pool and establishes new connections to your origin database. Use a restart to rebuild the pool during a database failover or a similar event, without recreating the configuration.
+To restart, select your Hyperdrive configuration in the Cloudflare dashboard, go to the **Settings** tab, and select **Restart** under **Danger zone**. Restarting requires the [**Hyperdrive Admin** role](/fundamentals/manage-members/roles/).
+
+Restarting drains the existing connection pool and forces Hyperdrive to establish new connections to your origin database. After a restart, the **Settings** tab shows when the configuration was last manually restarted.
 
 :::caution
-Restarting a configuration drops all active connections in your connection pool and forces them to be re-established. In-flight queries may see brief errors while the pool rebuilds.
+Restarting drops all active connections in the pool and forces them to be re-established. In-flight queries may see brief errors while the pool rebuilds.
 :::
 
 ## Pooling mode
