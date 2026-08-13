@@ -229,6 +229,7 @@ Package metadata is available in the `PackageInfo` object in the `gateway_http` 
 ## Limitations
 
 - Package detection requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on. Packages downloaded over connections that bypass TLS inspection (due to Do Not Inspect policies or applications on the [inspection limitations list](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#inspection-limitations)) are not detected.
+- Some language runtimes and HTTP clients maintain their own certificate trust stores separate from the operating system. If the certificate used for inspection (such as the Cloudflare managed certificate) is only installed in the OS trust store, package downloads from these clients may fail with certificate verification errors. Refer to [Install certificate manually](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/) for instructions on adding the certificate to application-specific trust stores, including Python, Node.js, Ruby, Rust, Java, and Go.
 - Only **download** operations are detected. Metadata lookups (resolve), package publishing, and other registry operations are not classified.
 - Version comparison uses each ecosystem's native ordering rules. Cross-ecosystem version comparisons are not supported.
 - Ecosystem-specific range syntax (such as npm `^1.2.3`, PyPI `~=1.4`, or Maven interval notation) is not supported. Use the individual comparison operators (`>`, `<`, `>=`, `<=`) instead.
