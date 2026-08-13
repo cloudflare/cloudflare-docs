@@ -213,6 +213,12 @@ Type: `string`
 
 The gateway policy UUID applied to the request, if any.
 
+## PackageInfo
+
+Type: `object`
+
+Information about the software package detected within the HTTP request, if any. Refer to [Package protection](/cloudflare-one/traffic-policies/http-policies/package-protection/) for details.
+
 ## PolicyName
 
 Type: `string`
