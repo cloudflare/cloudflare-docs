@@ -11,6 +11,6 @@ Custom bindings let platform operators route User Worker calls through a platfor
 The User Worker keeps using the standard binding API. The Platform Worker exports a `WorkerEntrypoint` class that intercepts each operation and can enforce quota, rate limits, logging, validation, or other policy controls.
 
 - **R2** — Wrap `get`, `put`, and `delete` methods to enforce per-bucket storage quotas.
-- **D1** — Implement a `query()` hook to inspect, log, limit, or reject database operations. Requires the `d1_custom_binding` compatibility flag on the User Worker.
+- **D1** — Implement a `query()` hook to inspect, log, limit, or reject database operations. Requires the `d1_binding_jsrpc` compatibility flag on the User Worker.
 
 For more information, refer to [Custom bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-bindings/).
