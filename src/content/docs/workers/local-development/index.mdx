@@ -301,7 +301,7 @@ There are two recommended patterns for this:
 
 ### Important Considerations
 
-- **Cloudflare Access**: If your Worker is protected by [Cloudflare Access](/workers/configuration/cloudflare-access/), Wrangler must authenticate with Access when connecting to remote bindings. Refer to [Connect to Access-protected Workers](#connect-to-access-protected-workers).
+- [Cloudflare Access](/workers/configuration/cloudflare-access/): If your Worker is protected by Cloudflare Access, Wrangler must authenticate with Access when connecting to remote bindings. Refer to [Connect to Access-protected Workers](#connect-to-access-protected-workers).
 
 - **Data modification**: Operations (writes, deletes, updates) on bindings connected remotely will affect your actual data in the targeted Cloudflare resource (be it preview or production).
 

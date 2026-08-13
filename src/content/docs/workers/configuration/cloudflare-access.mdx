@@ -6,7 +6,7 @@ products:
   - workers
 ---
 
-import { DashButton, Steps, Tabs, TabItem, WranglerConfig } from "~/components";
+import { DashButton, Steps, Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components";
 
 With Cloudflare Access, you can restrict who is authorized to access your application. You decide who is approved, and every request is checked before your Worker runs. Approved visitors are let through, while everyone else is shown a login page or blocked.
 
@@ -42,7 +42,7 @@ Require sign-in on every Worker in your account, including Workers you deploy in
 
 Dashboard path: **Workers & Pages** overview page > **Protect all Workers**.
 
-![Workers & Pages overview showing the Protect all Workers card above the Workers application list.](~/assets/images/workers/access/protect-all-workers-card.png)
+![Workers & Pages overview showing the Protect all Workers card and the Workers application list.](~/assets/images/workers/access/protect-all-workers-card.png)
 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
@@ -220,7 +220,20 @@ Dashboard path: **Workers & Pages** > select your Worker > **Access**.
 </TabItem>
 <TabItem label="API">
 
-Create a Worker-level Access application with a bypass policy. Use the `worker` destination, set `worker_id` to your Worker's ID, and set the policy `decision` to `bypass`.
+Create a Worker-level Access application with a bypass policy. Use the `worker` destination, set `worker_id` to your Worker's ID, and set the policy `decision` to `bypass` with an `include` rule that matches everyone:
+
+```json
+"policies": [
+  {
+    "decision": "bypass",
+    "include": [
+      {
+        "everyone": {}
+      }
+    ]
+  }
+]
+```
 
 </TabItem>
 </Tabs>
@@ -246,6 +259,8 @@ Use this to personalize responses, enforce fine-grained permissions, or log acti
 
 `ctx.access` is `undefined` if Access did not authenticate the request.
 
+<TypeScriptExample>
+
 ```js
 export default {
 	async fetch(request, env, ctx) {
@@ -261,7 +276,9 @@ export default {
 };
 ```
 
-## Testing ctx.access locally
+</TypeScriptExample>
+
+## Test ctx.access locally
 
 When developing locally with `wrangler dev`, you can simulate authenticated Cloudflare Access identities without deploying or going through an Access login flow.
 
@@ -274,7 +291,7 @@ Add a `dev` block inside the `access` configuration in your `wrangler.jsonc`:
 	"access": {
 		"dev": {
 			"aud": "my-app",
-			"identity": { "email": "admin@company.com" }
+			"identity": { "email": "admin@example.com" }
 		}
 	}
 }
@@ -282,9 +299,11 @@ Add a `dev` block inside the `access` configuration in your `wrangler.jsonc`:
 
 </WranglerConfig>
 
-When you run `wrangler dev`, your Worker will receive this identity through `ctx.access`. Calling `ctx.access.getIdentity()` returns the identity object you configured above. To test as a different user, change the identity fields. To test unauthenticated requests, remove the `dev` block -- `ctx.access` will be `undefined`, just as it would be for a request that didn't go through Access in production.
+When you run `wrangler dev`, your Worker will receive this identity through `ctx.access`. Calling `ctx.access.getIdentity()` returns the identity object in the `dev` block. To test as a different user, change the identity fields. To test unauthenticated requests, remove the `dev` block — `ctx.access` will be `undefined`, just as it would be for a request that did not go through Access in production.
 
 ### Example Worker
+
+<TypeScriptExample>
 
 ```js
 export default {
@@ -301,7 +320,9 @@ export default {
 };
 ```
 
-With the config above, visiting `localhost:8787` would return `Hello, admin@company.com`.
+</TypeScriptExample>
+
+With this configuration, visiting `localhost:8787` would return `Hello, admin@example.com`.
 
 ### Identity fields
 
