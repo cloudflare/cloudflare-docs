@@ -52,7 +52,7 @@
 		"@astrojs/sitemap": "3.7.3",
 		"@base-ui/react": "1.6.0",
 		"@cloudflare/ai-search-snippet": "0.0.43",
-		"@cloudflare/nimbus-docs": "0.10.0",
+		"@cloudflare/nimbus-docs": "https://pkg.pr.new/@cloudflare/nimbus-docs@90",
 		"@cloudflare/vitest-pool-workers": "0.18.8",
 		"@cloudflare/workers-types": "5.20260727.1",
 		"@eslint/js": "9.39.4",
