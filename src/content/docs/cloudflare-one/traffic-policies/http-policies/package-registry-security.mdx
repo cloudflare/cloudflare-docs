@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Package protection
+title: Package registry security
 description: Use Gateway HTTP policies to detect and control software package downloads across seven major package ecosystems.
 products:
   - cloudflare-one
@@ -9,7 +9,7 @@ sidebar:
 ---
 
 :::note
-Package protection requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on for the traffic you want to inspect.
+Package registry security requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on for the traffic you want to inspect.
 :::
 
 Gateway can detect software package downloads across seven major package ecosystems and give you policy control over supply chain traffic. When a developer or CI/CD pipeline downloads a package through Gateway, the proxy identifies the registry protocol from the request URL and extracts the package ecosystem, name, version, and namespace. You can then write HTTP policies using `pkg.*` selectors to allow, block, or log package downloads at whatever granularity you need, from blocking an entire ecosystem to restricting a single package version.
@@ -48,7 +48,19 @@ The following selectors are available for [HTTP policies](/cloudflare-one/traffi
 | `pkg.name` | Package Name | `pkg.name == "lodash"` | The package name extracted from the download URL. |
 | `pkg.version` | Package Version | `pkg.version == "4.17.21"` | The package version extracted from the download URL. Supports exact match and ecosystem-aware comparison operators. |
 | `pkg.namespace` | Package Namespace | `pkg.namespace == "@babel"` | The package namespace, when the ecosystem supports one. For npm this is the scope, for Maven this is the group ID, and for Go this is the module path. |
-| `pkg.purl` | Package URL | `pkg.purl == "pkg:npm/lodash@4.17.21"` | The [Package URL (PURL)](https://github.com/package-url/purl-spec) derived from the detected coordinates. |
+| `pkg.purl` | Package URL | `pkg.purl == "pkg:npm/lodash@4.17.21"` | The [Package URL (PURL)](https://github.com/package-url/purl-spec) derived from the detected coordinates. Available in the API only. |
+
+### Building expressions in the dashboard
+
+In the dashboard, **Package Ecosystem** is the primary selector. Selecting it reveals nested fields for specifying package name, version, and namespace. The following rules apply:
+
+- You must select an ecosystem before any other package fields become available.
+- You must select exactly one ecosystem to enable the nested fields. If you use the `in` or `not in` operator to match multiple ecosystems, the nested package name, version, and namespace fields are disabled.
+- You must add a package name before you can add a version constraint.
+- The namespace field is only available for ecosystems that support one. The label changes based on the selected ecosystem: **Scope** for npm, **Group ID** for Maven, and **Module namespace** for Go.
+- The `pkg.purl` (Package URL) selector is not available in the dashboard. Use the API to write expressions that match on PURL.
+
+When using the API directly, these selectors can be combined freely in wirefilter expressions without these constraints.
 
 ### Version comparison operators
 

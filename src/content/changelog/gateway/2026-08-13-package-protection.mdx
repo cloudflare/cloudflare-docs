@@ -1,5 +1,5 @@
 ---
-title: Detect and control software package downloads with package protection
+title: Detect and control software package downloads with package registry security
 description: Gateway HTTP policies can now detect and control software package downloads across seven major package ecosystems using pkg.* selectors.
 products:
   - gateway
@@ -24,7 +24,7 @@ Gateway detects package downloads for the following ecosystems:
 
 ### Selectors
 
-Five new selectors are available for HTTP policies with the Allow and Block actions:
+In the dashboard, select **Package Ecosystem** to access the package registry selectors. After selecting a single ecosystem, nested fields for package name, version, and namespace become available. Five `pkg.*` selectors are available for HTTP policies with the Allow and Block actions:
 
 | Selector | Description |
 | --- | --- |
@@ -32,10 +32,10 @@ Five new selectors are available for HTTP policies with the Allow and Block acti
 | `pkg.name` | The package name extracted from the download URL. |
 | `pkg.version` | The package version, with support for ecosystem-aware comparison operators. |
 | `pkg.namespace` | The package namespace, when the ecosystem supports one. |
-| `pkg.purl` | The [Package URL (PURL)](https://github.com/package-url/purl-spec) derived from the detected coordinates. |
+| `pkg.purl` | The [Package URL (PURL)](https://github.com/package-url/purl-spec) derived from the detected coordinates. Available in the API only. |
 
 Detection is based on the registry protocol rather than the hostname, so it works the same way whether traffic goes to a public registry, a corporate proxy such as Artifactory or Nexus, or a self-hosted mirror.
 
-Package protection requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on.
+Package registry security requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on.
 
-For more information, refer to [Package protection](/cloudflare-one/traffic-policies/http-policies/package-protection/).
+For more information, refer to [Package registry security](/cloudflare-one/traffic-policies/http-policies/package-registry-security/).
