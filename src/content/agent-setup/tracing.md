@@ -125,7 +125,7 @@ const tracedAI = wrapAISDK(ai);
 
 For payload recording, pass `{ storeMessages: true, storeTools: true }` to `wrapAISDK()`.
 
-Supply a shared agent name, stable agent ID, and opaque conversation ID on every call. For AI SDK v7, use `telemetry.functionId`, add the IDs to `runtimeContext`, and set both IDs to `true` in `telemetry.includeRuntimeContext`. For v6, use `experimental_telemetry.functionId` and `metadata`. Merge existing telemetry fields and include no credentials, user input, or personal data.
+Supply a shared agent name, stable agent ID, and opaque conversation ID on every call. For AI SDK v7, set `telemetry.functionId` to the shared agent name. Add only `agentId` and `conversationId` to `runtimeContext`, and set those two keys to `true` in `telemetry.includeRuntimeContext`. For v6, use `experimental_telemetry.functionId` and `metadata`. Merge existing telemetry fields and include no credentials, user input, or personal data.
 
 If identity sources are unclear, show the call sites and ask the user where each value comes from.
 
