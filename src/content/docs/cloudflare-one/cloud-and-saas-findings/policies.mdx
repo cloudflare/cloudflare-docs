@@ -1,0 +1,97 @@
+---
+pcx_content_type: how-to
+description: Automatically remediate findings or send webhooks with CASB policies in Cloudflare One.
+products:
+  - cloudflare-one
+title: Policies
+sidebar:
+  order: 2
+tags:
+  - Compliance
+---
+
+:::note[Availability]
+Requires a paid Cloudflare CASB plan. Policies are not available with Free CASB integrations.
+:::
+
+Use CASB policies to automatically remediate a finding or send a webhook as soon as CASB detects it. A policy defines the vendor, the finding type that triggers it, and the action to take, so Cloudflare can respond to matching findings without a person reviewing each instance first.
+
+Policies build on [manual remediation](/cloudflare-one/cloud-and-saas-findings/manage-findings/#remediate-findings) and [CASB webhooks](/cloudflare-one/integrations/cloud-and-saas/webhooks/). Instead of reviewing and actioning each finding instance yourself, a policy applies your response automatically to every matching instance.
+
+## Prerequisites
+
+- You have added a [Cloud and SaaS integration](/cloudflare-one/integrations/cloud-and-saas/).
+- To use a policy for remediation, your integration must have [Read-Write permissions](/cloudflare-one/cloud-and-saas-findings/manage-findings/#configure-remediation-permissions).
+- To use a policy to send webhooks, you have [configured a webhook destination](/cloudflare-one/integrations/cloud-and-saas/webhooks/#create-a-webhook).
+
+## How policies work
+
+When CASB detects a finding, it checks whether the finding matches a policy. If a policy matches, Cloudflare runs the policy's configured action against that finding instance automatically. You do not need to open the finding or select an action yourself.
+
+A policy can run a remediation action, send a webhook, or both.
+
+## Create a policy
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Policies**.
+2. Select **Create a policy**.
+3. Under **Basic information**, enter a **Policy name**. Optionally, enter a **Description**.
+4. Under **Choose how you want to trigger the policy**, select a **Vendor**.
+5. Select one or more **Integrations**, or leave this field unset to apply the policy to every integration for the vendor.
+6. Select a **Finding type**. Only finding types available for the selected vendor and integrations appear here.
+7. Under **Define what to do with findings that match your trigger**, choose one or both actions:
+   - **Run Remediation** to have Cloudflare perform a first-party remediation action against the SaaS integration API. This option is unavailable for finding types that do not support remediation.
+   - **Send webhooks** to send a notification to one or more webhook destinations.
+8. Under **Status**, turn on **Enable policy**.
+9. Select **Create policy**.
+
+Cloudflare applies the policy to new instances of the matching finding type going forward. A policy does not act on instances that existed before you created the policy.
+
+Your policies appear in a list showing each policy's name, integration, finding type, webhook, remediation action, status, and the time it last ran.
+
+### Run remediations
+
+Remediation actions perform a first-party fix directly against the integration's API, such as revoking a public file share.
+
+CASB currently supports remediation actions for Microsoft 365 and Google Workspace file and folder finding types. If a finding type does not support remediation, **Run Remediation** displays **No automated remediation available for this finding type** and cannot be enabled.
+
+Remediation requires [Read-Write permissions](/cloudflare-one/cloud-and-saas-findings/manage-findings/#configure-remediation-permissions) on the integration. If the integration only has Read permissions, upgrade the integration before the policy can remediate matching findings.
+
+For the statuses a remediated instance can move through, refer to [Manage remediated findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/#manage-remediated-findings).
+
+### Send webhooks
+
+Webhook actions send the finding instance to a webhook destination that you [configured in advance](/cloudflare-one/integrations/cloud-and-saas/webhooks/). Use this to route findings to systems such as Slack, Microsoft Teams, Jira, ServiceNow, Tines, or a custom HTTPS endpoint.
+
+CASB webhooks support posture finding instances only. When a policy sends a webhook, the payload uses the same format as a webhook sent manually from a finding instance. For the payload structure and field descriptions, refer to [Payload format](/cloudflare-one/integrations/cloud-and-saas/webhooks/#payload-format).
+
+## Edit, turn off, or delete a policy
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Policies**.
+2. Select the policy you want to update.
+3. Modify the policy's basic information, trigger, or actions.
+4. Select **Save changes**.
+
+To turn a policy on or off, use the **Enable policy** toggle under **Status**. A policy's status displays as **Enabled** or **Disabled** in the policy list. A disabled policy stops matching new findings until you turn it back on.
+
+To delete a policy, open the policy and select **Delete**.
+
+## Logs
+
+Every policy produces two categories of logs, available under **Insights** in Cloudflare One:
+
+- **Admin Activity logs** record changes to a policy definition, including who created, edited, or disabled the policy, and when.
+- **Cloud & SaaS Security policies logs** record the runtime outcome of each policy invocation, including the finding that triggered the policy, the asset acted on, whether the action succeeded or failed, and the error returned by the vendor if it failed (for example, a `401 Unauthorized` response or a rate limit error).
+
+For compliance reporting, the Cloud & SaaS Security policies log ties a specific finding to a specific automated action and timestamp.
+
+For more information on logs in Cloudflare One, refer to [Cloudflare One Logs](/cloudflare-one/insights/logs/).
+
+## Limitations
+
+- Remediation actions in a policy are only available for Microsoft 365 and Google Workspace file and folder finding types.
+- Webhook actions in a policy support posture finding instances only. Policies do not send content findings to webhooks.
+- A policy only applies to new instances of a finding type detected after you create the policy.
+
+## Troubleshooting
+
+If a policy does not remediate a finding or does not send a webhook, refer to [CASB troubleshooting](/cloudflare-one/integrations/cloud-and-saas/troubleshooting/casb/).
