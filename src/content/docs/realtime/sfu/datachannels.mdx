@@ -45,6 +45,8 @@ Set these optional fields when you create a DataChannel with the [HTTPS API](/re
 
 `maxRetransmits` and `maxPacketLifeTime` are mutually exclusive. Do not set both on the same channel.
 
+Ordering and retry behavior are independent. For reliable, unordered delivery, set `ordered: false` and omit both `maxRetransmits` and `maxPacketLifeTime`. Messages may arrive out of order, but the transport continues to retry failed deliveries.
+
 Use the same values on the publisher (`location: "local"`), each subscriber (`location: "remote"`), and each client's `createDataChannel()` call. Realtime DataChannels use negotiated IDs, so the browser does not receive these settings from the remote peer.
 
 Create an unreliable, unordered publisher channel:
@@ -98,7 +100,7 @@ Set `waitForAck: true` on a remote DataChannel to delay delivery until the subsc
 - `waitForAck` applies only to `location: "remote"` DataChannels and defaults to `false`.
 - While the gate is closed, the SFU holds delivery to that subscriber.
 - After the DataChannel opens, the subscriber sends any message, such as `"ack"`. The SFU consumes this first message, opens the gate, and starts forwarding publisher messages.
-- The acknowledgment must reach the SFU within 15 seconds after creating the remote DataChannel. Otherwise, the SFU tears down the gated channel. Create the remote DataChannel again to retry.
+- The acknowledgment must reach the SFU within 30 seconds after creating the remote DataChannel. Otherwise, the SFU tears down the gated channel. Create the remote DataChannel again to retry.
 
 Without [`canReply`](#return-to-publisher-canreply), later subscriber messages are not forwarded to the publisher.
 

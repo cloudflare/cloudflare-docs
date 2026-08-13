@@ -24,14 +24,15 @@ Delivery settings answer two questions: whether newer messages can bypass a dela
 
 Choose the policy that matches how long your payload remains useful:
 
-| Goal                                 | Settings                                                  | Use when                                                                |
-| ------------------------------------ | --------------------------------------------------------- | ----------------------------------------------------------------------- |
-| Reliable, ordered delivery (default) | Omit `ordered`, `maxRetransmits`, and `maxPacketLifeTime` | Messages remain useful and must arrive in order                         |
-| No retries or ordering               | Set `ordered: false` and `maxRetransmits: 0`              | The application tolerates message loss and discards out-of-date updates |
-| Limited retries                      | Set `maxRetransmits: <COUNT>`                             | Brief recovery is useful, but repeated retries are not                  |
-| Time-bounded delivery                | Set `maxPacketLifeTime: <MILLISECONDS>`                   | A message loses value after a known time window                         |
+| Goal                                 | Settings                                                  | Use when                                                                        |
+| ------------------------------------ | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Reliable, ordered delivery (default) | Omit `ordered`, `maxRetransmits`, and `maxPacketLifeTime` | Messages remain useful and must arrive in order                                 |
+| Reliable, unordered delivery         | Set `ordered: false`; omit both retry fields              | Messages remain useful, but later messages should not wait for earlier messages |
+| No retries or ordering               | Set `ordered: false` and `maxRetransmits: 0`              | The application tolerates message loss and discards out-of-date updates         |
+| Limited retries                      | Set `maxRetransmits: <COUNT>`                             | Brief recovery is useful, but repeated retries are not                          |
+| Time-bounded delivery                | Set `maxPacketLifeTime: <MILLISECONDS>`                   | A message loses value after a known time window                                 |
 
-`maxRetransmits` and `maxPacketLifeTime` are alternative retry budgets. Set at most one for each channel. Omitting both preserves reliable delivery. You can use `ordered: false` with either retry budget.
+`ordered` controls ordering independently from retries. `maxRetransmits` and `maxPacketLifeTime` are alternative retry budgets, so set at most one for each channel. Omit both for reliable delivery, whether ordered or unordered.
 
 ## Apply the policy end to end
 
