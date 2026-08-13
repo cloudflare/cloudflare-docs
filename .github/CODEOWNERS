@@ -169,7 +169,7 @@ package.json @cloudflare/content-engineering
 
 # Developer Platform
 
-/src/content/docs/artifacts/ @elithrar @dmmulroy @mattzcarey @dinasaur404 @cloudflare/product-owners
+/src/content/docs/artifacts/ @elithrar @dmmulroy @mattzcarey @dinasaur404 @zebp @cloudflare/product-owners
 /src/content/docs/containers/ @mikenomitch @th0m @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/partials/containers/ @mikenomitch @th0m @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/docs/d1/ @elithrar @rita3ko @irvinebroque @vy-ton @ivoryibu @rts-rob @joshthoward @lambrospetrou @cloudflare/product-owners
