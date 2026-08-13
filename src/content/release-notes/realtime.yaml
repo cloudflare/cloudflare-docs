@@ -3,7 +3,7 @@ link: "/realtime/changelog/"
 productName: Realtime
 productLink: "/realtime/"
 entries:
-  - publish_date: "2026-08-05"
+  - publish_date: "2026-08-13"
     title: DataChannels reliability and ordering (ordered, maxRetransmits, maxPacketLifeTime)
     description: |-
       DataChannels now accept reliability settings on both publisher (`location: "local"`) and subscriber (`location: "remote"`) channels, so unreliable and unordered delivery is honored end to end.

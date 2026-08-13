@@ -1,0 +1,103 @@
+---
+title: Control Realtime SFU DataChannel delivery
+description: Configure unordered and partially reliable delivery for latency-sensitive Realtime SFU DataChannels.
+products:
+  - realtime
+date: 2026-08-13
+---
+
+import { Steps } from "~/components";
+
+[Cloudflare Realtime SFU](/realtime/sfu/) is a [WebRTC selective forwarding unit](/realtime/sfu/calls-vs-sfus/) that runs on Cloudflare's global network. It forwards audio, video, and application data between WebRTC clients without requiring you to manage SFU infrastructure or regions.
+
+[DataChannels](/realtime/sfu/datachannels/) are WebRTC channels for application messages. A client publishes a named DataChannel to Realtime SFU, and the SFU forwards its messages to every client that subscribes to that channel. Use DataChannels for low-latency payloads such as chat messages, game state, sensor updates, and control events.
+
+## What changed
+
+Realtime SFU DataChannels now support unordered and partially reliable delivery. DataChannels remain reliable and ordered by default, so existing channels keep their current behavior.
+
+With ordered delivery, a delayed message can block later messages. For game state or sensor updates, recent data may be more useful than recovering an older message. Unordered delivery lets later messages proceed, while partial reliability limits retransmission attempts or delivery time.
+
+## Choose delivery behavior
+
+Delivery settings answer two questions: whether newer messages can bypass a delayed message, and when the transport should stop retrying delivery.
+
+Choose the policy that matches how long your payload remains useful:
+
+| Goal                                 | Settings                                                  | Use when                                                                |
+| ------------------------------------ | --------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Reliable, ordered delivery (default) | Omit `ordered`, `maxRetransmits`, and `maxPacketLifeTime` | Messages remain useful and must arrive in order                         |
+| No retries or ordering               | Set `ordered: false` and `maxRetransmits: 0`              | The application tolerates message loss and discards out-of-date updates |
+| Limited retries                      | Set `maxRetransmits: <COUNT>`                             | Brief recovery is useful, but repeated retries are not                  |
+| Time-bounded delivery                | Set `maxPacketLifeTime: <MILLISECONDS>`                   | A message loses value after a known time window                         |
+
+`maxRetransmits` and `maxPacketLifeTime` are alternative retry budgets. Set at most one for each channel. Omitting both preserves reliable delivery. You can use `ordered: false` with either retry budget.
+
+## Apply the policy end to end
+
+Realtime DataChannels use negotiated IDs, so browsers do not receive delivery settings from the remote peer. Apply the same settings when the publisher creates the local channel, each subscriber pulls the remote channel, and each client calls `createDataChannel()`.
+
+The following example configures unordered delivery with no retransmissions. It begins after you [establish a DataChannel transport on both sessions and complete any required SDP exchange](/realtime/sfu/datachannels/#set-up-a-datachannel). Run the API requests from your backend with `APP_ID`, `APP_TOKEN`, `PUBLISHER_SESSION_ID`, and `SUBSCRIBER_SESSION_ID` set in your environment.
+
+<Steps>
+1. On the publisher session, create the local DataChannel:
+
+```bash
+curl --request POST \
+	--url "https://rtc.live.cloudflare.com/v1/apps/$APP_ID/sessions/$PUBLISHER_SESSION_ID/datachannels/new" \
+	--header "Authorization: Bearer $APP_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data @- <<EOF
+{
+	"dataChannels": [
+		{
+			"location": "local",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
+}
+EOF
+```
+
+2. On each subscriber session, pull the remote DataChannel with the same delivery settings:
+
+```bash
+curl --request POST \
+	--url "https://rtc.live.cloudflare.com/v1/apps/$APP_ID/sessions/$SUBSCRIBER_SESSION_ID/datachannels/new" \
+	--header "Authorization: Bearer $APP_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data @- <<EOF
+{
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "$PUBLISHER_SESSION_ID",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
+}
+EOF
+```
+
+3. In the publisher and subscriber clients, create the negotiated browser DataChannel with the same settings. In this example, `pc` is the active `RTCPeerConnection`, and `channelId` is the ID returned by the corresponding API request:
+
+```ts
+const channel = pc.createDataChannel("player-state", {
+	negotiated: true,
+	id: channelId,
+	ordered: false,
+	maxRetransmits: 0,
+});
+```
+
+</Steps>
+
+## Related documentation
+
+- [Realtime SFU overview](/realtime/sfu/)
+- [DataChannels](/realtime/sfu/datachannels/)
+- [Connection API](/realtime/sfu/https-api/)
