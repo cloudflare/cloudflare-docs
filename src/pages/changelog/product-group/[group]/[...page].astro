@@ -31,11 +31,16 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 		if (notes.length === 0) return [];
 
-		return paginate(notes, {
+		const pages = paginate(notes, {
 			params: { group: slug },
 			props: { groupName },
 			pageSize: 25,
 		});
+		const digest = notes.map((n) => n.digest).join(",");
+		return pages.map((p) => ({
+			...p,
+			cacheKey: `${slug}:${p.params.page ?? 1}:${digest}`,
+		}));
 	});
 }) satisfies GetStaticPaths;
 

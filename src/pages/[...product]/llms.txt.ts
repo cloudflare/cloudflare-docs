@@ -46,6 +46,7 @@ export const getStaticPaths = (async () => {
 			return {
 				params: { product: urlPath },
 				props: { entry, pages },
+				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}`,
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);

@@ -33,6 +33,7 @@ export const getStaticPaths = (async () => {
 			return {
 				params: { product: entry.id },
 				props: { product: entry },
+				cacheKey: String(entry.digest),
 			};
 		});
 }) satisfies GetStaticPaths;

@@ -12,32 +12,40 @@ export const prerender = true;
 
 export const getStaticPaths = (async () => {
 	const models = await getResolvedModels();
-	const paths: { params: { schema: string }; props: { schema: unknown } }[] =
-		[];
+	const paths: {
+		params: { schema: string };
+		props: { schema: unknown };
+		cacheKey?: string;
+	}[] = [];
 
 	for (const model of models) {
 		const slug = model.slug;
 		const modes = detectApiModes(model.schema);
+		const dk = String(model.digest);
 
 		if (modes) {
 			for (const mode of modes) {
 				paths.push({
 					params: { schema: `${slug}/${mode.id}-input` },
 					props: { schema: mode.input },
+					cacheKey: `${dk}:${mode.id}-input`,
 				});
 				paths.push({
 					params: { schema: `${slug}/${mode.id}-output` },
 					props: { schema: mode.output },
+					cacheKey: `${dk}:${mode.id}-output`,
 				});
 			}
 		} else {
 			paths.push({
 				params: { schema: `${slug}/schema-input` },
 				props: { schema: model.schema.input },
+				cacheKey: `${dk}:schema-input`,
 			});
 			paths.push({
 				params: { schema: `${slug}/schema-output` },
 				props: { schema: model.schema.output },
+				cacheKey: `${dk}:schema-output`,
 			});
 		}
 	}

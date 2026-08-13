@@ -27,7 +27,12 @@ export const getStaticPaths = (async ({ paginate }) => {
 			entry.data.products.some((p) => p.id === "waf"),
 	});
 
-	return paginate(entries, { pageSize: 25 });
+	const pages = paginate(entries, { pageSize: 25 });
+	const digest = entries.map((e) => e.digest).join(",");
+	return pages.map((p) => ({
+		...p,
+		cacheKey: `waf:${p.params.page ?? 1}:${digest}`,
+	}));
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;

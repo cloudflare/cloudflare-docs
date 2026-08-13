@@ -34,6 +34,7 @@ export const getStaticPaths = (async () => {
 		return {
 			params: { area: slugifyArea(area) },
 			props: { title: area, products },
+			cacheKey: products.map((p) => p.digest).join(","),
 		};
 	});
 }) satisfies GetStaticPaths;

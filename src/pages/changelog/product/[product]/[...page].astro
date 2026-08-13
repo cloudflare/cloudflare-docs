@@ -30,10 +30,15 @@ export const getStaticPaths = (async ({ paginate }) => {
 			note.data.products.some((p) => p.id === productId),
 		);
 
-		return paginate(notes, {
+		const pages = paginate(notes, {
 			params: { product: productId },
 			pageSize: 25,
 		});
+		const digest = notes.map((n) => n.digest).join(",");
+		return pages.map((p) => ({
+			...p,
+			cacheKey: `${productId}:${p.params.page ?? 1}:${digest}`,
+		}));
 	});
 }) satisfies GetStaticPaths;
 
