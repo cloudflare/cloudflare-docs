@@ -46,12 +46,18 @@ Lines starting with a `#` will be treated as comments.
 
 ### Per file
 
+Redirects are classified by their source and position in the file:
+
+- A **static redirect** has an exact source path and appears before any dynamic redirects.
+- A **dynamic redirect** has a splat (`*`) or placeholder (`:name`) in its source path. After the first dynamic redirect, every subsequent redirect is also counted as dynamic, even if its source path is exact.
+
+The destination does not affect this classification. For example, a source containing `*` is dynamic even if its destination does not use `:splat`.
+
 A `_redirects` file is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.
 
 In your `_redirects` file:
 
-- The order of your redirects matter. If there are multiple redirects for the same `source` path, the top-most redirect is applied.
-- Static redirects should appear before dynamic redirects.
+- The order of your redirects matters. If there are multiple redirects for the same `source` path, the top-most redirect is applied.
 - Redirects are always followed, regardless of whether or not an asset matches the incoming request.
 
 A complete example with multiple redirects may look like the following:
