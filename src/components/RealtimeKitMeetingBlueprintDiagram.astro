@@ -1,0 +1,329 @@
+<figure
+	class="rt-meeting-blueprint not-content"
+	aria-label="A RealtimeKit Meeting is a reusable virtual room with a title, enabled features, feature configuration, and participants who are authorized to join."
+>
+	<div class="rt-blueprint-canvas" aria-hidden="true">
+		<div class="rt-blueprint-scope">
+			<div class="rt-blueprint-label">Meeting blueprint</div>
+
+			<div class="rt-blueprint-title">
+				<div class="rt-title-icon">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+						<rect x="3" y="5" width="18" height="14" rx="3"></rect>
+						<path d="m9 10 3 2 3-2v4l-3 2-3-2z"></path>
+					</svg>
+				</div>
+				<div>
+					<span>Title</span>
+					<strong>Weekly standup</strong>
+				</div>
+				<span class="rt-room-badge">Reusable room</span>
+			</div>
+
+			<div class="rt-blueprint-grid">
+				<section class="rt-blueprint-card">
+					<div class="rt-card-heading">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+							<path d="M8 6h8M6 12h12M9 18h6"></path>
+							<circle cx="6" cy="6" r="1.5"></circle>
+							<circle cx="18" cy="12" r="1.5"></circle>
+							<circle cx="7" cy="18" r="1.5"></circle>
+						</svg>
+						<strong>Features</strong>
+					</div>
+					<div class="rt-chip-list">
+						<span>Chat</span>
+						<span>Recording</span>
+						<span>Transcription</span>
+					</div>
+				</section>
+
+				<section class="rt-blueprint-card">
+					<div class="rt-card-heading">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+							<path d="M4 7h8M16 7h4M4 17h4M12 17h8"></path>
+							<circle cx="14" cy="7" r="2"></circle>
+							<circle cx="10" cy="17" r="2"></circle>
+						</svg>
+						<strong>Configuration</strong>
+					</div>
+					<div class="rt-chip-list">
+						<span>Recording</span>
+						<span>Persistent chat</span>
+						<span>AI</span>
+					</div>
+				</section>
+
+				<section class="rt-blueprint-card rt-participant-card">
+					<div class="rt-card-heading">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+							<circle cx="9" cy="8" r="3"></circle>
+							<path
+								d="M3.5 18a5.5 5.5 0 0 1 11 0M16 8.5a2.5 2.5 0 0 1 0 5M17 16a4 4 0 0 1 3.5 2"
+							></path>
+						</svg>
+						<strong>Participants</strong>
+					</div>
+					<div class="rt-authorized-participants">
+						<div class="rt-avatar-list">
+							<span>A</span>
+							<span>B</span>
+							<span>C</span>
+							<span>D</span>
+						</div>
+						<small>Authorized to join</small>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</figure>
+
+<style>
+	.rt-meeting-blueprint {
+		--rtb-background: var(--nb-background, #fff);
+		--rtb-surface: var(--nb-card, #fff);
+		--rtb-surface-subtle: var(--nb-muted, #f7f7f8);
+		--rtb-border: var(--nb-border, #dedee2);
+		--rtb-border-strong: var(--nb-border-strong, #b7b7be);
+		--rtb-text: var(--nb-foreground, #202023);
+		--rtb-muted: var(--nb-muted-foreground, #6f6f76);
+		--rtb-accent: color-mix(
+			in oklch,
+			var(--nb-primary, #f6821f) 58%,
+			var(--rtb-text)
+		);
+		container-type: inline-size;
+		margin: 1.5rem 0;
+	}
+
+	.rt-blueprint-canvas {
+		padding: 2rem 1.25rem 1.25rem;
+		border: 1px solid var(--rtb-border);
+		border-radius: 0.75rem;
+		background-color: var(--rtb-background);
+		background-image: radial-gradient(
+			circle at 1px 1px,
+			color-mix(in srgb, var(--rtb-border-strong) 36%, transparent) 1px,
+			transparent 0
+		);
+		background-size: 14px 14px;
+	}
+
+	.rt-blueprint-scope {
+		position: relative;
+		max-width: 700px;
+		margin: 0 auto;
+		padding: 1.35rem 1rem 1rem;
+		border: 1px dashed color-mix(in srgb, var(--rtb-accent) 75%, transparent);
+		border-radius: 0.75rem;
+	}
+
+	.rt-blueprint-label {
+		position: absolute;
+		top: -0.75rem;
+		left: 1rem;
+		padding: 0.2rem 0.55rem;
+		border: 1px solid var(--rtb-accent);
+		border-radius: 999px;
+		background: var(--rtb-background);
+		color: var(--rtb-accent);
+		font-family: var(--nb-font-mono, ui-monospace, monospace);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.rt-blueprint-title {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		padding: 0.75rem;
+		border: 1px solid var(--rtb-border);
+		border-radius: 0.55rem;
+		background: var(--rtb-surface);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+		color: var(--rtb-text);
+	}
+
+	.rt-title-icon {
+		display: grid;
+		width: 2rem;
+		height: 2rem;
+		place-items: center;
+		border-radius: 0.45rem;
+		background: color-mix(in srgb, var(--rtb-accent) 12%, transparent);
+		color: var(--rtb-accent);
+	}
+
+	.rt-title-icon svg {
+		width: 1.15rem;
+		height: 1.15rem;
+		stroke-width: 1.5;
+	}
+
+	.rt-blueprint-title > div:nth-child(2) {
+		display: flex;
+		flex-direction: column;
+		gap: 0.08rem;
+	}
+
+	.rt-blueprint-title > div:nth-child(2) span {
+		color: var(--rtb-muted);
+		font-family: var(--nb-font-mono, ui-monospace, monospace);
+		font-size: 0.58rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.rt-blueprint-title strong {
+		font-size: 0.875rem;
+	}
+
+	.rt-room-badge {
+		margin-left: auto;
+		padding: 0.25rem 0.45rem;
+		border: 1px solid var(--rtb-border);
+		border-radius: 999px;
+		color: var(--rtb-muted);
+		font-family: var(--nb-font-mono, ui-monospace, monospace);
+		font-size: 0.56rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.rt-blueprint-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.7rem;
+		margin-top: 0.7rem;
+	}
+
+	.rt-blueprint-card {
+		min-width: 0;
+		padding: 0.7rem;
+		border: 1px solid var(--rtb-border);
+		border-radius: 0.55rem;
+		background: var(--rtb-surface);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+		color: var(--rtb-text);
+	}
+
+	.rt-card-heading {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding-bottom: 0.55rem;
+		border-bottom: 1px solid var(--rtb-border);
+		font-size: 0.72rem;
+	}
+
+	.rt-card-heading svg {
+		width: 1rem;
+		height: 1rem;
+		color: var(--rtb-accent);
+		stroke-width: 1.5;
+	}
+
+	.rt-chip-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3rem;
+		padding-top: 0.6rem;
+	}
+
+	.rt-chip-list span {
+		padding: 0.22rem 0.38rem;
+		border: 1px solid var(--rtb-border);
+		border-radius: 0.3rem;
+		background: var(--rtb-surface-subtle);
+		color: var(--rtb-muted);
+		font-size: 0.58rem;
+	}
+
+	.rt-authorized-participants {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding-top: 0.75rem;
+	}
+
+	.rt-avatar-list {
+		display: flex;
+	}
+
+	.rt-avatar-list span {
+		display: grid;
+		width: 1.6rem;
+		height: 1.6rem;
+		margin-right: -0.35rem;
+		place-items: center;
+		border: 2px solid var(--rtb-surface);
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--rtb-accent) 13%, var(--rtb-surface));
+		color: var(--rtb-accent);
+		font-size: 0.58rem;
+		font-weight: 700;
+	}
+
+	.rt-authorized-participants small {
+		color: var(--rtb-muted);
+		font-size: 0.56rem;
+		text-align: right;
+	}
+
+	@container (max-width: 560px) {
+		.rt-blueprint-canvas {
+			padding: 1.75rem 0.75rem 0.75rem;
+		}
+
+		.rt-blueprint-scope {
+			padding: 1.25rem 0.7rem 0.7rem;
+		}
+
+		.rt-blueprint-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.rt-blueprint-card {
+			display: grid;
+			grid-template-columns: minmax(7.5rem, 0.8fr) 1fr;
+			align-items: center;
+			gap: 0.7rem;
+		}
+
+		.rt-card-heading {
+			padding: 0;
+			border-right: 1px solid var(--rtb-border);
+			border-bottom: 0;
+		}
+
+		.rt-chip-list,
+		.rt-authorized-participants {
+			padding-top: 0;
+		}
+	}
+
+	@container (max-width: 360px) {
+		.rt-room-badge {
+			display: none;
+		}
+
+		.rt-blueprint-card {
+			display: block;
+		}
+
+		.rt-card-heading {
+			padding-bottom: 0.55rem;
+			border-right: 0;
+			border-bottom: 1px solid var(--rtb-border);
+		}
+
+		.rt-chip-list,
+		.rt-authorized-participants {
+			padding-top: 0.6rem;
+		}
+	}
+</style>

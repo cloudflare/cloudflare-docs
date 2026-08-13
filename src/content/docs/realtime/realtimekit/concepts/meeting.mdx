@@ -9,7 +9,11 @@ products:
   - realtime
 ---
 
-import { Details } from "~/components";
+import {
+  Details,
+  RealtimeKitMeetingBlueprintDiagram,
+  RealtimeKitMeetingLifecycleDiagram,
+} from "~/components";
 
 Meeting is a **re-usable virtual room** that you can join and interact in, in real-time.
 
@@ -19,50 +23,7 @@ Because Meetings do not have a specific date or time, you can create them well i
 
 The following diagram shows the blueprint of a Meeting:
 
-```mermaid
----
-title: Meeting
----
-flowchart TB
-  accTitle: Meeting blueprint
-  accDescr: Diagram showing blueprint of a Meeting
-
-  subgraph details [ ]
-      direction LR
-      subgraph feat ["<b>Features</b>"]
-          feat-content["Chat<br>...<br>Recording<br>...<br>Transcriptions"]
-      end
-      subgraph config ["<b>Configuration</b>"]
-          config-content["record_on_start<br>...<br>persist_chat<br>...<br>ai_config"]
-      end
-  end
-
-  subgraph participants ["<b>Participants</b>"]
-      direction LR
-      subgraph participants-row2 [ ]
-          direction TB
-          P3["<br>Participant 3
-          <br>
-          "]
-          P4["<br>Participant 4
-          <br>
-          "]
-      end
-      subgraph participants-row1 [ ]
-          direction TB
-          P1["<br>Participant 1
-          <br>
-          "]
-          P2["<br>Participant 2
-          <br>
-          "]
-      end
-  end
-
-  style participants-row1 fill:none,stroke:none
-  style participants-row2 fill:none,stroke:none
-  style details fill:none,stroke:none
-```
+<RealtimeKitMeetingBlueprintDiagram />
 
 ### Session
 
@@ -70,6 +31,10 @@ A **Session** is a live instance of a Meeting. It starts automatically when th
 A Session inherits all settings (like features and title) from its parent Meeting.
 
 Because the Meeting is persistent, it can have many different Sessions over time.
+
+The following diagram shows how one Meeting can contain multiple Sessions over time:
+
+<RealtimeKitMeetingLifecycleDiagram />
 
 Example - **Think of a Meeting as a recurring weekly standup event.**
 
