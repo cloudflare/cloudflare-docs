@@ -1,0 +1,19 @@
+astro.config.ts
+  s_6651b41d3c0872::t_e2b2a14112a6d1 276
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5e221281ba9cd1fb5dc1bedb92178013685b13fb",
+  "prompts": {},
+  "sessions": {
+    "s_6651b41d3c0872": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb4da-b802-7713-8b94-52cde892dfbf",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}
