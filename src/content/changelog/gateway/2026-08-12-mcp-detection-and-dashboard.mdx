@@ -11,9 +11,18 @@ Cloudflare Gateway now automatically detects [Model Context Protocol (MCP)](http
 
 ### MCP policy selector
 
-A new **Is MCP** selector (`experimental.is_mcp`) is available in [HTTP policies](/cloudflare-one/traffic-policies/http-policies/#is-mcp). Use this selector to build Gateway rules that allow, block, or isolate MCP traffic. For example, you can block all MCP connections that are not routed through an approved [MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/).
+A new **Is MCP** selector (`experimental.is_mcp`) is available in [HTTP policies](/cloudflare-one/traffic-policies/http-policies/#is-mcp). Use this selector to build Gateway rules that allow, block, or isolate MCP traffic.
 
 This selector is currently in beta and may change before general availability.
+
+For example, the following policy blocks MCP traffic that does not arrive through an approved [MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/):
+
+| Selector       | Operator | Value        | Logic | Action |
+| -------------- | -------- | ------------ | ----- | ------ |
+| Is MCP         | is       | _True_       | And   | Block  |
+| Traffic Source  | is not   | _MCP portal_ |       |        |
+
+![Example Gateway policy that blocks MCP traffic not arriving through an MCP portal](~/assets/images/changelog/gateway/gateway-block-unknown-mcp.png)
 
 ### AI Security dashboard
 

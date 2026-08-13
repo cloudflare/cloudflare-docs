@@ -651,6 +651,13 @@ Whether the HTTP request was identified as [Model Context Protocol (MCP)](https:
 | ------- | ----------------------------- |
 | Is MCP  | `experimental.is_mcp == true` |
 
+For example, the following policy blocks MCP traffic that does not arrive through an [MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/):
+
+| Selector       | Operator | Value        | Logic | Action |
+| -------------- | -------- | ------------ | ----- | ------ |
+| Is MCP         | is       | _True_       | And   | Block  |
+| Traffic Source  | is not   | _MCP portal_ |       |        |
+
 ### Host
 
 <Render
