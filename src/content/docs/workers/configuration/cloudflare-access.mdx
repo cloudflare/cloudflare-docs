@@ -299,7 +299,10 @@ Add a `dev` block inside the `access` configuration in your `wrangler.jsonc`:
 
 </WranglerConfig>
 
-When you run `wrangler dev`, your Worker will receive this identity through `ctx.access`. Calling `ctx.access.getIdentity()` returns the identity object in the `dev` block. To test as a different user, change the identity fields. To test unauthenticated requests, remove the `dev` block — `ctx.access` will be `undefined`, just as it would be for a request that did not go through Access in production.
+- `aud` (required) — your Access application's audience tag, available as `ctx.access.aud`. Wrangler will not start without it.
+- `identity` (optional) — simulates the authenticated user's identity claims (email, name, groups, and so on) returned by `ctx.access.getIdentity()`. Include it if your Worker reads user identity. Omit it if your Worker only checks whether Access is enabled.
+
+To test as a different user, change the identity fields and restart. To test unauthenticated requests, remove the `dev` block — `ctx.access` will be `undefined`, just as it would be for a request that did not go through Access in production.
 
 ### Example Worker
 
