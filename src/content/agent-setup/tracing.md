@@ -151,7 +151,7 @@ Run the validation commands for the selected framework. For non-Flue projects, r
 
 Once done, tell the user:
 
-```txt
+```
 ┌─ Cloudflare Agent Tracing Configured ─────────────────┐
 │ ✓ Tracing  <frameworks>                               │
 │ ✓ Sampling <rate and percentage>                      │
