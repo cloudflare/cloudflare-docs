@@ -10,16 +10,19 @@ import FourOhFour from "~/components/404.astro";
 export const prerender = true;
 
 export const getStaticPaths = (async () => {
-	const sections = await getCollection("docs", (e) => {
-		return e.id.split("/").length === 1;
-	});
+	const allDocs = await getCollection("docs");
+	const sections = allDocs.filter((e) => e.id.split("/").length === 1);
 
 	return sections.map((section) => {
+		const productDocs = allDocs.filter(
+			(e) => e.id === section.id || e.id.startsWith(section.id + "/"),
+		);
+		const digest = productDocs.map((d) => d.digest ?? d.id).join(",");
 		return {
 			params: {
 				product: section.id,
 			},
-			cacheKey: String(section.digest),
+			cacheKey: `${section.digest ?? section.id}:${digest}`,
 		};
 	});
 }) satisfies GetStaticPaths;

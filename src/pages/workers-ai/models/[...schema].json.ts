@@ -21,7 +21,7 @@ export const getStaticPaths = (async () => {
 	for (const model of models) {
 		const slug = model.name.split("/").at(-1)!;
 		const modes = detectApiModes(model.schema);
-		const dk = String(model.digest);
+		const dk = String(model.digest ?? model.id);
 
 		if (modes) {
 			for (const mode of modes) {

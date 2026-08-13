@@ -36,11 +36,15 @@ export const getStaticPaths = (async ({ paginate }) => {
 			props: { groupName },
 			pageSize: 25,
 		});
-		const digest = notes.map((n) => n.digest).join(",");
-		return pages.map((p) => ({
-			...p,
-			cacheKey: `${slug}:${p.params.page ?? 1}:${digest}`,
-		}));
+		return pages.map((p) => {
+			const pageDigest = (p.props.page.data as typeof notes)
+				.map((n) => n.digest ?? n.id)
+				.join(",");
+			return {
+				...p,
+				cacheKey: `${slug}:${p.params.page ?? 1}:${pageDigest}`,
+			};
+		});
 	});
 }) satisfies GetStaticPaths;
 

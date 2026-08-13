@@ -34,11 +34,15 @@ export const getStaticPaths = (async ({ paginate }) => {
 			params: { product: productId },
 			pageSize: 25,
 		});
-		const digest = notes.map((n) => n.digest).join(",");
-		return pages.map((p) => ({
-			...p,
-			cacheKey: `${productId}:${p.params.page ?? 1}:${digest}`,
-		}));
+		return pages.map((p) => {
+			const pageDigest = (p.props.page.data as typeof notes)
+				.map((n) => n.digest ?? n.id)
+				.join(",");
+			return {
+				...p,
+				cacheKey: `${productId}:${p.params.page ?? 1}:${pageDigest}`,
+			};
+		});
 	});
 }) satisfies GetStaticPaths;
 

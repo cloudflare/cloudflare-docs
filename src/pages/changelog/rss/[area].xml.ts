@@ -22,6 +22,7 @@ export const getStaticPaths = (async () => {
 	const products = await getCollection("directory", (e) =>
 		Boolean(e.data.entry?.group),
 	);
+	const allNotes = await getChangelogs({});
 
 	const areas = Object.entries(
 		Object.groupBy(products, (p) => p.data.entry!.group!),
@@ -31,10 +32,20 @@ export const getStaticPaths = (async () => {
 		if (!products)
 			throw new Error(`[Changelog] No products attributed to "${area}"`);
 
+		const sortedProducts = [...products].sort((a, b) =>
+			a.id.localeCompare(b.id),
+		);
+		const productIds = new Set(sortedProducts.map((p) => p.id));
+		const areaNotes = allNotes.filter((n) =>
+			n.data.products.some((p) => productIds.has(p.id)),
+		);
+		const productDigest = sortedProducts.map((p) => p.digest ?? p.id).join(",");
+		const notesDigest = areaNotes.map((n) => n.digest ?? n.id).join(",");
+
 		return {
 			params: { area: slugifyArea(area) },
 			props: { title: area, products },
-			cacheKey: products.map((p) => p.digest).join(","),
+			cacheKey: `${productDigest}:${notesDigest}`,
 		};
 	});
 }) satisfies GetStaticPaths;

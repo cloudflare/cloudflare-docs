@@ -28,11 +28,12 @@ export const getStaticPaths = (async ({ paginate }) => {
 	});
 
 	const pages = paginate(entries, { pageSize: 25 });
-	const digest = entries.map((e) => e.digest).join(",");
-	return pages.map((p) => ({
-		...p,
-		cacheKey: `waf:${p.params.page ?? 1}:${digest}`,
-	}));
+	return pages.map((p) => {
+		const pageDigest = (p.props.page.data as typeof entries)
+			.map((e) => e.digest ?? e.id)
+			.join(",");
+		return { ...p, cacheKey: `waf:${p.params.page ?? 1}:${pageDigest}` };
+	});
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
