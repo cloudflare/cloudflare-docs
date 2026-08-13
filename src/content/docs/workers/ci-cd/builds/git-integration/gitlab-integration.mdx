@@ -22,6 +22,10 @@ If a commit is on a merge request, Cloudflare will automatically post a comment 
 
 A [preview URL](/workers/versions-and-deployments/preview-urls/) will be provided for any builds which perform `wrangler versions upload`. This is particularly useful when reviewing your pull request, as it allows you to compare the code changes alongside an updated version of your Worker.
 
+:::note
+Preview URLs are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. Refer to [Preview URL limitations](/workers/versions-and-deployments/preview-urls/#limitations).
+:::
+
 :::note[Enabling GitLab Merge Request events for existing connections]
 New GitLab connections are automatically configured to receive merge request events, which enable commenting functionality. For existing connections, you'll need to manually enable `Merge request events` in the Webhooks tab of your project's settings. You can follow GitLab's documentation for guidance on [managing webhooks](https://docs.gitlab.com/user/project/integrations/webhooks/#manage-webhooks).
 :::
