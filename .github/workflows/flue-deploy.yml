@@ -1,0 +1,62 @@
+name: Flue Deploy
+
+on:
+  push:
+    branches:
+      - production
+    paths:
+      - ".flue/**"
+      - ".github/workflows/flue-deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: flue-deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.repository == 'cloudflare/cloudflare-docs'
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24.x
+          cache: pnpm
+          cache-dependency-path: .flue/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: .flue
+
+      - name: Build
+        run: pnpm run flue:build
+
+      - name: Deploy
+        run: pnpm run flue:deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.FLUE_DEPLOY_TOKEN }}
+
+      - name: Notify Google Chat on failure
+        if: failure()
+        env:
+          WEBHOOK_URL: ${{ secrets.CED_TEAM_ALERTS_CHANNEL_WEBHOOK }}
+          ACTOR: ${{ github.actor }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          MESSAGE="❌ *Flue Deploy* workflow failed.\nActor: $ACTOR\n<https://github.com/$REPO/actions/runs/$RUN_ID|View run>"
+          JSON_PAYLOAD=$(jq -n --arg text "$MESSAGE" '{text: $text}')
+
+          curl -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD"

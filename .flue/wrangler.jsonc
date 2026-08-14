@@ -189,4 +189,12 @@
 			"head_sampling_rate": 1,
 		},
 	},
+	"secrets": {
+		"required": [
+			"DOCS_FLUE_GITHUB_APP_ID",
+			"DOCS_FLUE_GITHUB_APP_PRIVATE_KEY",
+			"DOCS_FLUE_GITHUB_INSTALLATION_ID",
+			"GITHUB_WEBHOOK_SECRET",
+		],
+	},
 }

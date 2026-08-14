@@ -32,7 +32,7 @@
 		"flue:dev": "NODE_OPTIONS=--max-old-space-size=8192 pnpm --dir .flue exec vite dev",
 		"flue:dev:wrangler": "pnpm --dir .flue exec vite build && cp -f .flue/.env.local .flue/dist/cloudflare_docs_flue/.dev.vars && pnpm --dir .flue exec wrangler dev --config dist/cloudflare_docs_flue/wrangler.json --remote",
 		"flue:build": "pnpm --dir .flue exec vite build",
-		"flue:deploy": "pnpm run flue:build && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json --secrets-file .env",
+		"flue:deploy": "pnpm run flue:build && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json",
 		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
 		"flue:reset:local": "rm -rf .flue/.wrangler/state .flue/.wrangler/tmp .flue/dist/cloudflare_docs_flue/.wrangler/state && echo 'Cleared local flue dev state (Durable Objects + R2). Stop the dev server before running this.'",
 		"flue:evals": "tsx .flue/bin/run-evals.ts",
