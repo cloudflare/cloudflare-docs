@@ -20,7 +20,7 @@ By default, SSH servers authenticate the Unix username against the principals li
 
 :::note
 
-If you would like to use short-lived certificates with the browser-based terminal, the user's email address prefix needs to matches their Unix username.
+If you would like to use short-lived certificates with the browser-based terminal, the user's email address prefix needs to match their Unix username.
 :::
 
 **Username matches a different email**
@@ -48,7 +48,7 @@ Match user vmuser
   AuthorizedPrincipalsFile /etc/ssh/vmusers-list.txt
 ```
 
-This tells the SSH server to load a list of principles from a file. Then, in `/etc/ssh/vmusers-list.txt`, list the email prefixes that can log in as `vmuser`, one per line:
+This tells the SSH server to load a list of principals from a file. Then, in `/etc/ssh/vmusers-list.txt`, list the email prefixes that can log in as `vmuser`, one per line:
 
 ```txt
 jdoe

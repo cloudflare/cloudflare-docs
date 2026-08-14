@@ -126,9 +126,9 @@ For demonstration purposes, we will create a TightVNC server on an Ubuntu virtua
 		```
 	2. Create a new service configuration file:
 
-	```sh
-	sudo vim /etc/systemd/system/vncserver@.service
-	```
+		```sh
+		sudo vim /etc/systemd/system/vncserver@.service
+		```
 
 	3. Copy and paste the following content. Replace `[YOUR_USERNAME]` with the VNC server user. If needed, update `/usr/bin/vncserver` to your `vncserver` path.
 
@@ -152,13 +152,13 @@ For demonstration purposes, we will create a TightVNC server on an Ubuntu virtua
 		WantedBy=multi-user.target
 		```
 
-		4. Reload `systemd` to read in the new service file:
+	4. Reload `systemd` to read in the new service file:
 
 		```sh
 		sudo systemctl daemon-reload
 		```
 
-		5. Enable the service to start at boot:
+	5. Enable the service to start at boot:
 
 		```sh
 		sudo systemctl enable vncserver@1.service
@@ -166,19 +166,19 @@ For demonstration purposes, we will create a TightVNC server on an Ubuntu virtua
 
 		The `1` variable configures the VNC service to use display `:1` (which runs on port `5901`).
 
-		6. By default, `systemd` user services only run when that user is logged in. To allow your VNC service to start on boot (before you log in), enable user linger for your user:
+	6. By default, `systemd` user services only run when that user is logged in. To allow your VNC service to start on boot (before you log in), enable user linger for your user:
 
 		```sh
 		sudo loginctl enable-linger [YOUR_USERNAME]
 		```
 
-		7. Start the service:
+	7. Start the service:
 
 		```sh
 		sudo systemctl start vncserver@1.service
 		```
 
-		8. Check its status:
+	8. Check its status:
 
 		```sh
 		sudo systemctl status vncserver@1.service

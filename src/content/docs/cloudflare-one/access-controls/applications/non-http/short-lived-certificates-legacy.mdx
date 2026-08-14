@@ -44,21 +44,11 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ## 3. Generate a short-lived certificate public key
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **SSH**.
-
-2. Select **Add a certificate**.
-
-3. In the **Application** dropdown, choose the Access application that represents your SSH server.
-
-4. Select **Generate certificate**. A new row will appear in the short-lived certificates table with the name of your Access application.
-
-5. Select the short-lived certificate for your application.
-
-6. Copy its **CA public key**. You can return to copy this public key at any time.
+<Render file="ssh/short-lived-cert-ca" product="cloudflare-one" />
 
 ## 4. Save your public key
 
-1. Copy the public key generated from the dashboard in Step 3.
+Copy the public key generated from the dashboard in Step 3.
 
 <Render file="ssh/public-key" product="cloudflare-one" />
 
@@ -94,7 +84,7 @@ Match host vm.example.com exec "/usr/local/bin/cloudflared access ssh-gen --host
 
 ### Connect through a browser-based terminal
 
-End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. To enable, refer to [Browser-rendered terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
+End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. To enable, refer to [Browser rendering](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
 
 By default, the browser-based terminal prompts the user for a username/password login. If you would like to use certificate based authentication, make sure you have [created a short-lived certificate](#3-generate-a-short-lived-certificate-public-key) for the specific Access application configured for browser-rendered SSH.
 
