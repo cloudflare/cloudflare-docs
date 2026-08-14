@@ -1,0 +1,55 @@
+{
+	"model_id": "bytedance/seedance-2.5",
+	"provider_id": "bytedance",
+	"name": "Seedance 2.5",
+	"description": "ByteDance's audio-video generation model for creating 30-second videos with reference control and editing capabilities. It supports extended storytelling, audio and visual editing, white-model control, and green-screen editing.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Audio Generation",
+		"Video Editing",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Text to Video",
+			"description": "Generate an audio-video clip from a text prompt.",
+			"input": {
+				"prompt": "A rain-soaked city street at night. A cyclist passes glowing storefronts as distant traffic and rainfall create a quiet urban soundtrack."
+			},
+			"output": {},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.5',\n  {\n    prompt:\n      'A rain-soaked city street at night. A cyclist passes glowing storefronts as distant traffic and rainfall create a quiet urban soundtrack.',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.5\",\n  \"input\": {\n    \"prompt\": \"A rain-soaked city street at night. A cyclist passes glowing storefronts as distant traffic and rainfall create a quiet urban soundtrack.\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://seed.bytedance.com/en/seedance2_5",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Max Duration": "30 seconds",
+		"Extensions": "Up to 2",
+		"Audio-Video Generation": "Yes",
+		"Reference Control": "Yes",
+		"Editing": "Audio, visual, white-model, and green-screen"
+	},
+	"request_formats": null,
+	"banner": null
+}

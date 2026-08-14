@@ -277,7 +277,7 @@ Package install commands must use `PackageManagers`.
 
 ## Components
 
-All components are imported from `~/components`. Imports must appear after the frontmatter block.
+Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`. Page-specific wrapper components or one-off components may use deep paths (e.g. `~/components/BaseSchemaProperties.astro`) instead of adding to the barrel. Imports must appear after the frontmatter block.
 
 **Mandatory component usage** — do not use bare fences for these:
 
@@ -316,7 +316,6 @@ All components are imported from `~/components`. Imports must appear after the f
 | `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages                            |
 | `LinkCard` / `CardGrid`               | Nimbus link cards, optionally in a grid                                          |
 | `DashButton`                          | Button linking to a validated dashboard deeplink                                    |
-| `GitHubCode`                          | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash)       |
 | `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                            |
 | `ListTutorials`                       | Auto-generated tutorial table for the current product                               |
 | `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type`, tags, or products                   |

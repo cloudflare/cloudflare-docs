@@ -313,6 +313,7 @@
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
+/agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 
 # ai-audit
@@ -330,6 +331,7 @@
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
 /ai-gateway/pricing/ /ai-gateway/reference/pricing/ 301
+/ai-gateway/observability/ai-spend/ /ai-gateway/observability/user-insights/ 301
 /ai-gateway/observability/evaluations/ /ai-gateway/evaluations/ 301
 /ai-gateway/observability/evaluations/set-up-evaluations/ /ai-gateway/evaluations/set-up-evaluations/ 301
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
@@ -431,7 +433,8 @@
 /ai-search/configuration/system-prompt/ /ai-search/configuration/retrieval/system-prompt/ 301
 /ai-search/configuration/cache/ /ai-search/configuration/retrieval/cache/ 301
 /ai-search/configuration/public-endpoint/ /ai-search/configuration/retrieval/public-endpoint/ 301
-/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/embed-search-snippets/ 301
+/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
+/ai-search/configuration/retrieval/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
@@ -627,6 +630,7 @@
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
+/sandbox/guides/production-deployment/ /sandbox/guides/preview-urls-custom-domain/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
@@ -1368,6 +1372,8 @@
 /cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
 # CF1 MSP page moved under tiered-policies
 /cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-policies/tiered-policies/tenant-api/ 301
+# CF1 package protection renamed to package registry security
+/cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-policies/http-policies/package-registry-security/ 301
 # CF1 packet filtering overview rename
 /cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
 # cross-product magic-firewall slug renames
@@ -1780,6 +1786,7 @@
 /style-guide/components/compatibility-flag/ /style-guide/formatting/notes-and-other-notation-types/ 301
 /style-guide/components/flex/ /style-guide/how-we-docs/image-maintenance/ 301
 /style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
+/style-guide/components/github-code/ /style-guide/components/index/ 301
 /style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
 /style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
 /style-guide/components/workers-templates/ /style-guide/components/index/ 301
@@ -2998,3 +3005,6 @@
 
 # Bots: signed agents deprecated -> verified bots
 /bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
+
+# R2 Data Catalog promoted to a top-level product (was nested under R2)
+/r2/data-catalog/* /r2-data-catalog/:splat 301

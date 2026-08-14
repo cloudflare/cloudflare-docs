@@ -33,23 +33,23 @@ When using the Sandbox SDK from Workers or Durable Objects, you are subject to [
 - **Workers Free**: 50 subrequests per request
 - **Workers Paid**: 1,000 subrequests per request
 
-### Avoid subrequest limits with WebSocket transport
+### Avoid subrequest limits with RPC transport
 
-Enable WebSocket transport to multiplex all SDK calls over a single persistent connection:
+Enable RPC transport to multiplex all SDK calls over a single persistent connection:
 
 <WranglerConfig>
 ```jsonc
 {
 	"vars": {
-		"SANDBOX_TRANSPORT": "websocket"
+		"SANDBOX_TRANSPORT": "rpc"
 	},
 }
 ```
 </WranglerConfig>
 
-With WebSocket transport enabled:
+With RPC transport enabled:
 
-- The WebSocket upgrade counts as one subrequest
+- The persistent connection counts as one subrequest
 - All subsequent SDK operations use the existing connection (no additional subrequests)
 - Ideal for workflows with many SDK operations per request
 
@@ -62,4 +62,4 @@ To work within these limits:
 - **Right-size your instances** - Choose the appropriate [instance type](/containers/platform-details/limits/#instance-types) based on your workload requirements
 - **Clean up unused sandboxes** - Terminate sandbox sessions when they are no longer needed to free up resources
 - **Optimize images** - Keep your [custom Dockerfiles](/sandbox/configuration/dockerfile/) lean to reduce image size
-- **Use WebSocket transport for high-frequency operations** - Enable `SANDBOX_TRANSPORT=websocket` to avoid subrequest limits when making many SDK calls per request
+- **Use RPC transport for high-frequency operations** - Enable `SANDBOX_TRANSPORT=rpc` to avoid subrequest limits when making many SDK calls per request

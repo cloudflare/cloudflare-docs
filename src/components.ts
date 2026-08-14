@@ -8,7 +8,7 @@ export { Badge } from "./components/ui/badge";
 export { Code } from "./components/ui/code";
 export { FileTree } from "./components/ui/file-tree";
 export { default as LinkButton } from "./components/ui/link-button/LinkButton.astro";
-export { Icon, Icon as AstroIcon } from "astro-icon/components";
+export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
@@ -37,7 +37,6 @@ export { default as YouTube } from "./components/cf/YouTube.astro";
 export { default as Example } from "./components/cf/Example.astro";
 export { default as Markdown } from "./components/cf/Markdown.astro";
 export { default as CURL } from "./components/cf/CURL.astro";
-export { default as GitHubCode } from "./components/cf/GitHubCode.astro";
 export { default as Flex } from "./components/cf/Flex.astro";
 export { default as Width } from "./components/cf/Width.astro";
 export { default as RuleID } from "./components/cf/RuleID.astro";
@@ -53,7 +52,6 @@ export { default as PagesBuildPresetsTable } from "./components/cf/PagesBuildPre
 export { default as ComponentsUsage } from "./components/cf/ComponentsUsage.astro";
 export { default as GranularControlApplicationsList } from "./components/cf/GranularControlApplicationsList.astro";
 export { default as ProductAvailabilityText } from "./components/cf/ProductAvailabilityText.astro";
-export { default as WorkersTemplates } from "./components/cf/WorkersTemplates.astro";
 export { default as AvailableNotifications } from "./components/cf/AvailableNotifications.astro";
 export { default as ExtraFlagDetails } from "./components/cf/ExtraFlagDetails.astro";
 export { default as FourCardGrid } from "./components/cf/FourCardGrid.astro";
@@ -82,3 +80,4 @@ export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelec
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
 export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
+export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";

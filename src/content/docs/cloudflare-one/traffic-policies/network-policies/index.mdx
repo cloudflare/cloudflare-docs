@@ -51,6 +51,7 @@ API value: `allow`
 - [Access Infrastructure Target](#access-infrastructure-target)
 - [Access Private App](#access-private-app)
 - [Application](#application)
+- [Browser Isolation](#browser-isolation)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
@@ -67,6 +68,7 @@ API value: `allow`
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
+- [Traffic Source](#traffic-source)
 - [Virtual Network](#virtual-network)
 
 **Identity**
@@ -150,6 +152,7 @@ API value: `block`
 - [Access Infrastructure Target](#access-infrastructure-target)
 - [Access Private App](#access-private-app)
 - [Application](#application)
+- [Browser Isolation](#browser-isolation)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
@@ -166,6 +169,7 @@ API value: `block`
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
+- [Traffic Source](#traffic-source)
 - [Virtual Network](#virtual-network)
 
 **Identity**
@@ -273,6 +277,14 @@ Gateway matches network traffic against the following selectors, or criteria.
 	product="cloudflare-one"
 	params={{ policyType: "network" }}
 />
+
+### Browser Isolation <Badge text="Beta" variant="caution"/>
+
+Whether the current session is running inside [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/). Use this selector to apply different policy behavior to isolated and non-isolated traffic.
+
+| UI name           | API example               |
+| ----------------- | ------------------------- |
+| Browser Isolation | `net.is_isolated == true` |
 
 ### Content Categories
 
@@ -389,6 +401,16 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 ### Source Port
 
 <Render file="gateway/selectors/source-port" product="cloudflare-one" />
+
+### Traffic Source <Badge text="Beta" variant="caution"/>
+
+The method used to on-ramp traffic to Cloudflare. Use this selector to apply policies based on how traffic reaches Gateway.
+
+| UI name        | API example                          |
+| -------------- | ------------------------------------ |
+| Traffic Source  | `net.onramp.type == "device_client"` |
+
+Available values: `device_client` (Device client), `mesh` (Mesh), `cloudflare_wan` (Cloudflare WAN), `clientless_rdp` (Clientless RDP), `proxy_endpoint` (Proxy endpoint), `agentless_biso` (Clientless Browser Isolation), `mcp_portal` (MCP portal).
 
 ### Users
 

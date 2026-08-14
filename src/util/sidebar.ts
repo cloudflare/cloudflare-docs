@@ -9,6 +9,7 @@ import type {
 	SidebarItem,
 	SidebarTransform,
 } from "@cloudflare/nimbus-docs/types";
+import { getDirectoryEntryBySection } from "~/util/directory";
 
 export const sectionTitleResolver: SectionTitleResolver = async ({
 	sectionSlug,
@@ -20,7 +21,7 @@ export const sectionTitleResolver: SectionTitleResolver = async ({
 		return entry ? { rail: `${entry.data.title} (Learning Paths)` } : undefined;
 	}
 
-	const entry = await getEntry("directory", sectionSlug);
+	const entry = await getDirectoryEntryBySection(sectionSlug);
 	return entry ? { rail: entry.data.entry?.title } : undefined;
 };
 
@@ -28,7 +29,7 @@ export const sectionTitleResolver: SectionTitleResolver = async ({
 const sectionTitleCache = new Map<string, string | undefined>();
 async function directoryTitle(seg0: string): Promise<string | undefined> {
 	if (sectionTitleCache.has(seg0)) return sectionTitleCache.get(seg0);
-	const entry = await getEntry("directory", seg0);
+	const entry = await getDirectoryEntryBySection(seg0);
 	const title = entry?.data.entry?.title;
 	sectionTitleCache.set(seg0, title);
 	return title;
@@ -105,7 +106,7 @@ export const agentResourcesTransform: SidebarTransform = async ({
 }) => {
 	if (!sectionSlug || NO_LLM_RESOURCES.has(sectionSlug)) return tree;
 
-	const product = await getEntry("directory", sectionSlug);
+	const product = await getDirectoryEntryBySection(sectionSlug);
 	if (!product) return tree;
 
 	const baseUrl = product.data.entry?.url ?? `/${sectionSlug}/`;

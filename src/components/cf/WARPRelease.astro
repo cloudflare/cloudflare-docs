@@ -6,7 +6,7 @@ import { z } from "astro/zod";
 import prettyBytes from "pretty-bytes";
 import { warpReleasesSchema } from "~/schemas";
 import platforms from "~/util/warp-platforms.json";
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { LinkButton } from "@/components/ui/link-button";
 
 type Props = z.infer<typeof props>;

@@ -92,6 +92,8 @@ None of the options for this command are required. Many of these options can be 
   - Path to a custom certificate.
 - `--local-upstream` <Type text="string" /> <MetaInfo text="optional" />
   - Host to act as origin in local mode, defaults to `dev.host` or route.
+- `--infer-origin-from-routes` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - Use the first configured route to infer the origin (`request.url` and the `Host` header) seen by the Worker in local mode. Set to `false` to preserve the real local origin, for example `localhost:8787`, so that Host- or Origin-sensitive logic behaves the same as the actual local request. An explicit `--host`, `--local-upstream`, or `dev.host` takes precedence either way.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
@@ -239,9 +241,8 @@ None of the options for this command are required. Also, many can be set in your
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
   - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
-- `--containers-rollout` <Type text="immediate | gradual" /> <MetaInfo text="optional" />
-  - Specify the [rollout strategy](/containers/faq#how-do-container-updates-and-rollouts-work) for [Containers](/containers) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. Note that `rollout_active_grace_period`, if configured, still applies.
-  - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
+- `--containers-rollout` <Type text="immediate | gradual | none" /> <MetaInfo text="optional" />
+  - [Rollout](/containers/platform-details/rollouts/) mode for Containers on this deploy. `gradual` (default) uses `rollout_step_percentage`. `immediate` uses one 100% step (not a simultaneous restart of every container instance). `none` skips container image and instance updates.
 - `--strict` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Turns on strict mode for the deployment command, meaning that the command will be more defensive and prevent deployments which could introduce potential issues. In particular, this mode prevents deployments if the deployment would potentially override remote settings in non-interactive environments.
 - `--tag` <Type text="string" /> <MetaInfo text="optional" />

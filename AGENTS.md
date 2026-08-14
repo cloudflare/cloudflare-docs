@@ -27,7 +27,7 @@ cloudflare-docs/
 │   ├── layouts/            # Page layout components
 │   ├── pages/              # Dynamic route pages (changelog, llms.txt, RSS, etc.)
 │   ├── schemas/            # Zod schemas for all content collections
-│   ├── plugins/            # Satteri hast pipeline plugins, Algolia DocSearch config
+│   ├── plugins/            # Satteri hast pipeline plugins
 │   ├── scripts/            # Client-side scripts (analytics, mermaid, webmcp, etc.)
 │   ├── styles/             # CSS (Tailwind 4)
 │   ├── icons/              # Product SVG icons (~110)
@@ -274,6 +274,10 @@ Shared reference files in `.agents/references/`:
 | `style-guide.md` | Canonical writing and formatting rules for all content work |
 | `components.md`  | Full MDX component catalog with props and usage examples    |
 | `procedures.md`  | Rules for writing step-by-step procedural instructions      |
+
+## Terminology and naming preferences
+
+- **Do not use "PayGo" in public-facing documentation.** Instead use the term **"Free"** when referring to standalone Free accounts that can be created from the dashboard.
 
 ## Commit conventions
 
