@@ -759,7 +759,7 @@ npx wrangler secret put OPENAI_API_KEY --env production
 
 ### Separate Durable Objects
 
-Durable Object bindings are not inherited by named environments, so repeat them in every environment as shown above. Each environment gets its own Durable Objects. Staging agents do not share state with production agents.
+Named environments do not inherit Durable Object bindings. Repeat the bindings for each environment, as in the [multi-environment setup](#multi-environment-setup). Each environment gets its own Durable Objects. Staging agents do not share state with production agents.
 
 To explicitly separate:
 
