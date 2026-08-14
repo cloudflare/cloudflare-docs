@@ -45,7 +45,6 @@ export { default as RSSButton } from "./components/cf/RSSButton.astro";
 export { default as GlossaryDefinition } from "./components/cf/GlossaryDefinition.astro";
 export { default as WranglerCommand } from "./components/cf/WranglerCommand.astro";
 export { default as AnchorHeading } from "./components/cf/AnchorHeading.astro";
-export { default as FeatureTable } from "./components/cf/FeatureTable.astro";
 export { default as ProductFeatures } from "./components/cf/ProductFeatures.astro";
 export { default as PagesBuildPreset } from "./components/cf/PagesBuildPreset.astro";
 export { default as PagesBuildPresetsTable } from "./components/cf/PagesBuildPresetsTable.astro";
