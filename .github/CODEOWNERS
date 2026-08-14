@@ -294,7 +294,6 @@ package.json @cloudflare/content-engineering
 /src/content/partials/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/changelog/cache/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf @zaidoon1
 /src/assets/images/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/plans/index.json @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/directory/always-online.yaml @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/directory/cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1
 /src/content/directory/cache-reserve.yaml @cloudflare/product-owners @ack-cf @zaidoon1

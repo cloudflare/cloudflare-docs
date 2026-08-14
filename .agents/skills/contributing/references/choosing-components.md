@@ -30,7 +30,7 @@ Two rules first:
 | A heading with a custom anchor (inside a component)    | `AnchorHeading`                          | —          |
 | Reusable content shared across pages                   | `Render` (a partial)                     | —          |
 | A formatted Markdown string inside JSX                 | `Markdown`                               | —          |
-| Plan availability for a feature                        | `Plan` or `ProductFeatures`              | —          |
+| Plan availability for a feature                        | `Plan`                                   | —          |
 | Lifecycle status (Beta/Alpha) inline or in a heading   | `ProductAvailabilityText`, `Badge`       | —          |
 | A small inline status pill                             | `InlineBadge` (avoid; prefer `Badge`)    | —          |
 | Inline changelog entries for a product                 | `ProductChangelog`                       | —          |

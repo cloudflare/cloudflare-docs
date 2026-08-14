@@ -631,20 +631,6 @@ Props: `header` (required, product name), `href` (required), `product` (required
 
 ---
 
-## ProductFeatures
-
-Renders a full feature list for a product grouping, sourced from `src/content/plans/index.json`.
-
-```mdx
-import { ProductFeatures } from "~/components";
-
-<ProductFeatures id="dns" />
-```
-
-Props: `id` (required, product key in `src/content/plans/`).
-
----
-
 ## ProductChangelog
 
 Embeds changelog entries for a product inline on a docs page.

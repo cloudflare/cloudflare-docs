@@ -301,7 +301,7 @@ Add reusable components to the `~/components` barrel export (`src/components.ts`
 | `FileTree`                            | File and directory tree display                                                                     |
 | `Width`                               | Constrain content to `"large"` (75%), `"medium"` (50%), or `"small"` (25%) width                    |
 | `Plan`                                | Plan availability badge (`type="all"`, `"paid"`, `"pro"`, `"business"`, `"enterprise"`, `"add-on"`) |
-| `ProductFeatures`                     | Full feature list for a product from `src/content/plans/`                                           |
+| `FeatureTable`                        | Feature availability by plan from `src/content/plans/` (dot-notation `id`)                          |
 | `ProductChangelog`                    | Inline changelog entries for a product or area                                                      |
 | `ProductAvailabilityText`             | Inline lifecycle status (Beta, Alpha) — renders nothing for GA                                      |
 | `Feature`                             | Feature card for product overview pages                                                             |
