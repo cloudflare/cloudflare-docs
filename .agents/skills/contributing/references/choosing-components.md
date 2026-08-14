@@ -87,12 +87,6 @@ Two rules first:
 ### Availability and status
 
 - **`Plan`** — plan availability badge near a feature or at the top of an overview.
-  <<<<<<< HEAD
-- **`FeatureTable`** — availability by plan, sourced from `src/content/plans/`.
-  \=======
-
-> > > > > > > production
-
 - **`ProductAvailabilityText`** — inline Beta/Alpha status that renders nothing once GA, so it is safe to leave in place.
 - **`Badge`** — status label in a heading or sidebar. Prefer it over `InlineBadge`.
 - **`InlineBadge`** — a small inline status pill. Avoid it; prefer `Badge` or stating status in prose.
