@@ -44,7 +44,7 @@ jobs:
       - name: Deploy
         run: pnpm run flue:deploy
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.FLUE_DEPLOY_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_DOCS_BOT_FLUE_DEPLOY }}
 
       - name: Notify Google Chat on failure
         if: failure()
