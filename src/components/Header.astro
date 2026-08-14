@@ -120,7 +120,7 @@ const navLinks = [
 					if (isLoggedIn) {
 						document.currentScript?.parentElement?.classList.add("logged-in");
 					}
-				} catch {}
+				} catch { /* ignore - keeps logged out state /*}
 			</script>
 			{config.search !== false && <Search />}
 			{
