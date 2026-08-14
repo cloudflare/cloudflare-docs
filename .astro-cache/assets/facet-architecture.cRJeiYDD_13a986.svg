@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 510" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .heading { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+    .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .code { font-size: 11px; font-family: 'SF Mono', 'Menlo', 'Fira Code', monospace; fill: #6b7280; }
+    .db-label { font-size: 11px; font-weight: 600; fill: #fff; }
+    .iso-label { font-size: 10px; fill: #dc2626; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f6821f"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="510" fill="#fafafa" rx="8"/>
+
+  <!-- ─── Left column: Request + Worker ─── -->
+  <!-- Vertically centered on the supervisor box (y=50..230, midpoint=140) -->
+
+  <!-- Request box -->
+  <rect x="30" y="115" width="110" height="50" rx="6" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="85" y="137" text-anchor="middle" class="label">Request</text>
+  <text x="85" y="152" text-anchor="middle" class="sublabel">HTTP / RPC</text>
+
+  <!-- Arrow: Request → Worker -->
+  <line x1="140" y1="140" x2="175" y2="140" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Worker box -->
+  <rect x="180" y="100" width="120" height="80" rx="6" fill="#fff7ed" stroke="#f6821f" stroke-width="1.5"/>
+  <text x="240" y="145" text-anchor="middle" class="label" style="fill: #c2410c;">Worker</text>
+
+  <!-- Arrow: Worker → Supervisor (with breathing room for label) -->
+  <line x1="300" y1="140" x2="455" y2="140" stroke="#f6821f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <text x="378" y="132" text-anchor="middle" class="code">getByName()</text>
+
+  <!-- ─── Durable Object instance (outer container) ─── -->
+  <rect x="460" y="30" width="430" height="430" rx="8" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="675" y="22" text-anchor="middle" class="heading">Durable Object instance</text>
+
+  <!-- ─── Supervisor section ─── -->
+  <rect x="480" y="50" width="390" height="180" rx="6" fill="#fff7ed" stroke="#f6821f" stroke-width="1.5"/>
+  <text x="500" y="75" class="label" style="fill: #c2410c;">Supervisor</text>
+  <text x="500" y="92" class="sublabel">Your code — you deploy this normally</text>
+
+  <!-- Supervisor SQLite DB -->
+  <rect x="500" y="110" width="150" height="80" rx="5" fill="#f6821f"/>
+  <text x="575" y="155" text-anchor="middle" class="db-label">SQLite DB</text>
+
+  <!-- ctx.facets.get box (inside supervisor), contains LOADER.get -->
+  <rect x="675" y="105" width="180" height="90" rx="4" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.2"/>
+  <text x="765" y="124" text-anchor="middle" class="code" style="fill: #7c3aed;">const facet = ctx.facets</text>
+  <text x="765" y="138" text-anchor="middle" class="code" style="fill: #7c3aed;">.get(name, cb)</text>
+
+  <!-- Worker Loader (nested inside ctx.facets.get) -->
+  <rect x="695" y="155" width="140" height="32" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="765" y="175" text-anchor="middle" class="code">LOADER.get(id)</text>
+
+  <!-- Arrow: facet.fetch(request) sends the request across the boundary -->
+  <line x1="655" y1="230" x2="655" y2="286" stroke="#f6821f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <text x="663" y="248" class="code" style="fill: #c2410c;">facet.fetch(req)</text>
+
+  <!-- ─── Isolation boundary ─── -->
+  <line x1="470" y1="262" x2="880" y2="262" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+  <!-- ─── Facet section ─── -->
+  <rect x="480" y="290" width="390" height="155" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="500" y="313" class="label" style="fill: #1d4ed8;">Facet</text>
+  <text x="500" y="330" class="sublabel">Untrusted code — dynamically loaded at runtime</text>
+
+  <!-- Facet SQLite DB -->
+  <rect x="500" y="345" width="150" height="80" rx="5" fill="#3b82f6"/>
+  <text x="575" y="390" text-anchor="middle" class="db-label">SQLite DB</text>
+
+  <!-- Facet storage API callout -->
+  <rect x="705" y="364" width="130" height="42" rx="4" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+  <text x="770" y="383" text-anchor="middle" class="code" style="fill: #1d4ed8;">ctx.storage.sql</text>
+  <text x="770" y="397" text-anchor="middle" class="code" style="fill: #1d4ed8;">.exec("SELECT …")</text>
+
+  <!-- Arrow: sql exec → facet's SQLite DB -->
+  <line x1="705" y1="385" x2="655" y2="385" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+
+
+  <!-- ─── Bottom legend ─── -->
+  <line x1="30" y1="478" x2="850" y2="478" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="100" y="488" width="10" height="10" rx="2" fill="#f6821f"/>
+  <text x="116" y="498" class="sublabel">Your code (deployed)</text>
+  <rect x="280" y="488" width="10" height="10" rx="2" fill="#3b82f6"/>
+  <text x="296" y="498" class="sublabel">Dynamic code</text>
+  <rect x="420" y="488" width="10" height="10" rx="2" fill="#faf5ff" stroke="#7c3aed" stroke-width="1"/>
+  <text x="436" y="498" class="sublabel">Facets API</text>
+  <line x1="530" y1="493" x2="555" y2="493" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="561" y="498" class="sublabel">Isolation boundary</text>
+</svg>

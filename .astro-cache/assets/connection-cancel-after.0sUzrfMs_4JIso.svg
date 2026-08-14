@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 230" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .phase { font-size: 11px; font-weight: 600; fill: #fff; }
+    .phase-body { font-size: 11px; fill: #0369a1; }
+    .annotation { font-size: 10px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="time-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d1d5db"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="230" fill="#fafafa" rx="8"/>
+
+  <!-- Time axis -->
+  <line x1="40" y1="30" x2="720" y2="30" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#time-arrow)"/>
+  <text x="735" y="34" class="sublabel">time</text>
+
+  <!-- Connection bar: headers phase -->
+  <path d="M44,52 h76 v36 h-76 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <text x="80" y="75" text-anchor="middle" class="phase">headers</text>
+
+  <!-- "Freed" marker at end of headers -->
+  <line x1="120" y1="42" x2="120" y2="112" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="128" y="115" class="sublabel" style="fill: #16a34a;">freed</text>
+
+  <!-- Body: same alternating read/gap/read/gap pattern, but in blue (no longer counted) -->
+  <!-- read 1 -->
+  <rect x="120" y="52" width="60" height="36" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="150" y="75" text-anchor="middle" class="phase-body">body</text>
+  <!-- gap 1 -->
+  <rect x="180" y="52" width="30" height="36" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" stroke-dasharray="3 2"/>
+  <!-- read 2 -->
+  <rect x="210" y="52" width="70" height="36" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="245" y="75" text-anchor="middle" class="phase-body">body</text>
+  <!-- gap 2 -->
+  <rect x="280" y="52" width="30" height="36" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" stroke-dasharray="3 2"/>
+  <!-- read 3 -->
+  <rect x="310" y="52" width="60" height="36" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="340" y="75" text-anchor="middle" class="phase-body">body</text>
+  <!-- gap 3 -->
+  <rect x="370" y="52" width="30" height="36" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" stroke-dasharray="3 2"/>
+  <!-- read 4 -->
+  <rect x="400" y="52" width="70" height="36" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="435" y="75" text-anchor="middle" class="phase-body">body</text>
+  <!-- gap 5 — no longer a problem -->
+  <rect x="470" y="52" width="30" height="36" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" stroke-dasharray="3 2"/>
+  <!-- read 5 — completes normally -->
+  <path d="M500,52 h76 q4,0 4,4 v28 q0,4 -4,4 h-76 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="538" y="75" text-anchor="middle" class="phase-body">body</text>
+
+  <!-- Completed marker -->
+  <text x="595" y="68" class="label" style="fill: #16a34a;">✓</text>
+  <text x="613" y="68" class="sublabel" style="fill: #16a34a;">completes</text>
+
+  <!-- Explanation -->
+  <text x="40" y="148" class="sublabel">The body phase is no longer counted against the connection limit.</text>
+  <text x="40" y="163" class="sublabel">Gaps from decompression or buffering cannot trigger cancellation.</text>
+
+  <!-- Legend -->
+  <rect x="40" y="185" width="740" height="32" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="58" y="194" width="24" height="14" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="89" y="205" class="sublabel">Bytes flowing (not counted)</text>
+  <rect x="270" y="194" width="24" height="14" rx="3" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="301" y="205" class="sublabel">Brief pause (not counted)</text>
+</svg>
