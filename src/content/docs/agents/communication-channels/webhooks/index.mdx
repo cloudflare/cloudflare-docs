@@ -53,8 +53,23 @@ async function verifyGitHubWebhook(
 
 export class WebhookAgent extends Agent<Env> {
 	async onRequest(request: Request): Promise<Response> {
-		const payload: unknown = await request.json();
-		await this.processEvent(payload);
+		if (request.method !== "POST") {
+			return new Response("Method not allowed", { status: 405 });
+		}
+
+		const rawBody = await request.text();
+		const signature = request.headers.get("X-Hub-Signature-256");
+		if (
+			!(await verifyGitHubWebhook(
+				rawBody,
+				signature,
+				this.env.WEBHOOK_SECRET,
+			))
+		) {
+			return new Response("Invalid signature", { status: 401 });
+		}
+
+		await this.processEvent(JSON.parse(rawBody));
 		return new Response("OK");
 	}
 
@@ -218,7 +233,7 @@ The quick start's `verifyGitHubWebhook()` helper verifies GitHub's `sha256=<hex>
 
 ### The onRequest handler
 
-Use `onRequest()` to handle incoming webhooks in your agent:
+Use `onRequest()` to handle incoming webhooks in your agent. If the Worker has not already verified the request, verify it before parsing the body. This example reuses the quick start's `verifyGitHubWebhook()` helper:
 
 <TypeScriptExample>
 
@@ -230,14 +245,16 @@ export class WebhookAgent extends Agent {
 			return new Response("Method not allowed", { status: 405 });
 		}
 
-		// 2. Get event type from headers
-		const eventType = request.headers.get("X-Event-Type");
+		// 2. Get the GitHub event type
+		const eventType = request.headers.get("X-GitHub-Event") ?? "unknown";
 
-		// 3. Verify signature
-		const signature = request.headers.get("X-Signature");
+		// 3. Verify the GitHub signature
+		const signature = request.headers.get("X-Hub-Signature-256");
 		const body = await request.text();
 
-		if (!(await this.verifySignature(body, signature))) {
+		if (
+			!(await verifyGitHubWebhook(body, signature, this.env.WEBHOOK_SECRET))
+		) {
 			return new Response("Invalid signature", { status: 401 });
 		}
 
