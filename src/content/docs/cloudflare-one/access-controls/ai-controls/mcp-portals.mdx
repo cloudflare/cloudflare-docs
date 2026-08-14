@@ -272,10 +272,13 @@ When you add an MCP server to a portal, all of its tools and prompts are availab
 
 To hide specific tools or prompts from portal users:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Find the portal you want to configure, then select the three dots > **Edit**.
-3. Under **MCP servers**, find the server whose tools you want to manage.
-4. Turn off the toggle next to any tool or prompt that you want to hide from users.
+3. Under **Servers**, select the server name to open its tools panel.
+4. Scroll down to the **Tools** section, then turn off the toggle next to any tool or prompt that you want to hide from users.
+
+   ![The tools panel for an MCP server shows a list of tools with a toggle next to each one.](~/assets/images/cloudflare-one/applications/mcp-portal-manage-tools.png)
+
 5. Select **Save**.
 
 Turned-off tools will not appear in the portal's tool list. Users will not be able to call them.
