@@ -1,0 +1,555 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+interface Props {
+	autoPlay?: boolean;
+	loop?: boolean;
+}
+
+const { autoPlay = true, loop = true } = Astro.props;
+---
+
+<figure
+	class="hyperdrive-dynamic-diagram not-content"
+	aria-label="Hyperdrive with Dynamic Workers runtime flow. The Dynamic Worker calls getHyperdriveConnectionString() with the real database connection string, and Hyperdrive returns a generated connection string that points at the hyperdrive-dynamic.local hostname. The Dynamic Worker's database client calls connect() with the generated connection string. globalOutbound routes the outbound connection to the OutboundInterceptor. The interceptor detects the hyperdrive-dynamic.local hostname, then calls DYNAMIC_HYPERDRIVE.get() with the real database credentials. Hyperdrive opens or reuses a pooled connection to the origin database. The interceptor then bridges bytes between the Dynamic Worker's socket and the Hyperdrive connection for the duration of the session."
+>
+	<cfdocs-hyperdrive-dynamic-diagram
+		data-autoplay={String(autoPlay)}
+		data-loop={String(loop)}
+	>
+		<div class="hdd-track">
+			<!-- Dynamic Worker requests a generated connection string -->
+			<div class="hdd-node hdd-worker" data-step="0">
+				<span class="hdd-node-head">Dynamic Worker</span>
+				<span class="hdd-node-body">
+					<span class="hdd-icon" aria-hidden="true"
+						><Icon name="dynamic-workers" /></span
+					>
+					<span class="hdd-node-title"
+						>getHyperdriveConnectionString(<code>PG_CONNECTION_STRING</code
+						>)</span
+					>
+				</span>
+			</div>
+
+			<!-- Hyperdrive returns a generated connection string -->
+			<div class="hdd-connector" data-step="1">
+				<span class="hdd-connector-label"
+					>Generated connection string <code>hyperdrive-dynamic.local</code
+					></span
+				>
+			</div>
+
+			<!-- Database client connects with the generated string -->
+			<div class="hdd-node hdd-worker" data-step="2">
+				<span class="hdd-node-head">Dynamic Worker · database client</span>
+				<span class="hdd-node-body">
+					<span class="hdd-icon" aria-hidden="true"
+						><Icon name="dynamic-workers" /></span
+					>
+					<span class="hdd-node-title"
+						>connect() to <code>hyperdrive-dynamic.local</code></span
+					>
+				</span>
+			</div>
+
+			<!-- globalOutbound routes the connection to the interceptor -->
+			<div class="hdd-connector" data-step="3">
+				<span class="hdd-connector-label"><code>globalOutbound</code></span>
+			</div>
+
+			<!-- The interceptor detects the hostname and swaps in real credentials -->
+			<div class="hdd-node hdd-interceptor" data-step="4">
+				<span class="hdd-node-head">OutboundInterceptor</span>
+				<span class="hdd-node-body">
+					<span class="hdd-icon" aria-hidden="true"
+						><Icon name="dynamic-workers" /></span
+					>
+					<span class="hdd-node-copy">
+						<span class="hdd-node-title"
+							>Detect <code>hyperdrive-dynamic.local</code></span
+						>
+						<span class="hdd-node-sub"
+							>Call <code>DYNAMIC_HYPERDRIVE.get()</code> with real credentials</span
+						>
+					</span>
+				</span>
+			</div>
+
+			<!-- Hyperdrive opens or reuses a pooled connection to the database -->
+			<div class="hdd-connector" data-step="5">
+				<span class="hdd-connector-label">Real database credentials</span>
+			</div>
+
+			<div class="hdd-node hdd-hyperdrive" data-step="6">
+				<span class="hdd-node-head">Hyperdrive</span>
+				<span class="hdd-node-body">
+					<span class="hdd-icon" aria-hidden="true"
+						><Icon name="hyperdrive" /></span
+					>
+					<span class="hdd-node-title">Pooled connection and query caching</span
+					>
+				</span>
+			</div>
+
+			<div class="hdd-connector" data-step="7"></div>
+
+			<!-- Origin database -->
+			<div class="hdd-node hdd-database" data-step="8">
+				<span class="hdd-node-head">Origin database</span>
+				<span class="hdd-node-body">
+					<span class="hdd-icon" aria-hidden="true">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<ellipse cx="12" cy="5" rx="8" ry="3"></ellipse>
+							<path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"></path>
+							<path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"></path>
+						</svg>
+					</span>
+					<span class="hdd-node-title">PostgreSQL or MySQL</span>
+				</span>
+			</div>
+
+			<!-- The pump bridges bytes in both directions for the session -->
+			<div class="hdd-pump" data-step="9" aria-hidden="true">
+				<span class="hdd-pump-label"
+					>pump() bridges bytes both directions for the session</span
+				>
+				<svg
+					class="hdd-pump-arrows"
+					viewBox="0 0 24 40"
+					preserveAspectRatio="none"
+				>
+					<path d="M8 2 L8 38" vector-effect="non-scaling-stroke"></path>
+					<path d="M4 6 L8 2 L12 6" vector-effect="non-scaling-stroke"></path>
+					<path d="M16 2 L16 38" vector-effect="non-scaling-stroke"></path>
+					<path d="M12 34 L16 38 L20 34" vector-effect="non-scaling-stroke"
+					></path>
+				</svg>
+			</div>
+		</div>
+	</cfdocs-hyperdrive-dynamic-diagram>
+</figure>
+
+<style>
+	.hyperdrive-dynamic-diagram {
+		/* Neutral, Kumo-style monochrome palette with product accents */
+		--hdd-panel: #fbfbfb;
+		--hdd-dot: rgb(0 0 0 / 8%);
+		--hdd-card: #ffffff;
+		--hdd-head: #f4f4f5;
+		--hdd-border: #e3e3e6;
+		--hdd-line: #c1c1c8;
+		--hdd-joint: #ffffff;
+		--hdd-text: #1a1a1c;
+		--hdd-muted: #8a8a90;
+		/* Workers orange traces the Dynamic Worker path. */
+		--hdd-accent: #f6821f;
+		--hdd-accent-soft: rgb(246 130 31 / 14%);
+		/* Hyperdrive blue marks the managed connection. */
+		--hdd-blue: #0055dc;
+
+		margin: 1.5rem 0;
+		/* Respond to the diagram's own available width, not the viewport. */
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .hyperdrive-dynamic-diagram {
+		--hdd-panel: #121213;
+		--hdd-dot: rgb(255 255 255 / 9%);
+		--hdd-card: #1b1b1d;
+		--hdd-head: #242427;
+		--hdd-border: #38383c;
+		--hdd-line: #4d4d54;
+		--hdd-joint: #1b1b1d;
+		--hdd-text: #f3f3f5;
+		--hdd-muted: #9a9aa2;
+		--hdd-blue: #4d94ff;
+	}
+
+	cfdocs-hyperdrive-dynamic-diagram {
+		display: block;
+		width: 100%;
+		padding: 1.5rem 1rem;
+		border: 1px solid var(--hdd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--hdd-dot) 1px, transparent 1px),
+			var(--hdd-panel);
+		background-size: 16px 16px;
+	}
+
+	.hdd-track {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		max-width: 460px;
+		margin: 0 auto;
+	}
+
+	/* --- Cards --- */
+	.hdd-node {
+		position: relative;
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 420px;
+		background: var(--hdd-card);
+		border: 1px solid var(--hdd-border);
+		border-radius: 0.625rem;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		color: inherit;
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	/* Output port — every non-terminal box emits its line from a centred
+	   node on its bottom edge. */
+	.hdd-node::after {
+		content: "";
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--hdd-joint);
+		border: 2px solid var(--hdd-line);
+		box-sizing: border-box;
+		transform: translateX(-50%);
+		transition: border-color 0.25s ease;
+		z-index: 2;
+	}
+
+	.hdd-database::after {
+		display: none;
+	}
+
+	.hdd-node-head {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.25rem 0.625rem;
+		background: var(--hdd-head);
+		border-bottom: 1px solid var(--hdd-border);
+		border-radius: 0.5625rem 0.5625rem 0 0;
+		white-space: nowrap;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		letter-spacing: 0.01em;
+		color: var(--hdd-muted);
+	}
+
+	.hdd-node-body {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 0.625rem;
+	}
+
+	.hdd-node-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.hdd-node-title {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.25;
+		color: var(--hdd-text);
+	}
+
+	.hdd-node-sub {
+		font-size: 0.6875rem;
+		line-height: 1.25;
+		color: var(--hdd-muted);
+	}
+
+	.hdd-node code,
+	.hdd-connector-label code {
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.9em;
+	}
+
+	/* --- Accent framing per role --- */
+	.hdd-worker .hdd-icon {
+		color: var(--hdd-accent);
+	}
+
+	.hdd-interceptor {
+		border-color: color-mix(in srgb, var(--hdd-accent) 45%, var(--hdd-border));
+	}
+
+	.hdd-interceptor .hdd-icon {
+		color: var(--hdd-accent);
+	}
+
+	.hdd-hyperdrive {
+		border-color: color-mix(in srgb, var(--hdd-blue) 45%, var(--hdd-border));
+	}
+
+	.hdd-hyperdrive .hdd-icon,
+	.hdd-database .hdd-icon {
+		color: var(--hdd-blue);
+	}
+
+	/* Icon chip — normalise every product glyph to currentColor */
+	.hdd-icon {
+		flex: none;
+		width: 1.25rem;
+		height: 1.25rem;
+		color: var(--hdd-muted);
+	}
+
+	.hdd-icon :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.hdd-icon :global(svg path) {
+		fill: currentColor;
+	}
+
+	/* The inline database glyph is a stroked SVG, not a filled product icon. */
+	.hdd-database .hdd-icon svg {
+		fill: none;
+		stroke: currentColor;
+	}
+
+	.hdd-database .hdd-icon svg path,
+	.hdd-database .hdd-icon svg ellipse {
+		fill: none;
+	}
+
+	/* --- Connectors (vertical wires with optional labels) --- */
+	.hdd-connector {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2px;
+		min-height: 2.5rem;
+		margin: 0 auto;
+		background: var(--hdd-line);
+		transition: background-color 0.25s ease;
+	}
+
+	.hdd-connector.active {
+		background: var(--hdd-accent);
+	}
+
+	.hdd-connector-label {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 0.15rem 0.5rem;
+		background: var(--hdd-panel);
+		border: 1px solid var(--hdd-border);
+		border-radius: 9999px;
+		white-space: nowrap;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: var(--hdd-muted);
+	}
+
+	/* --- Pump: a two-way bridge rail next to the managed connection --- */
+	.hdd-pump {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: 0.75rem;
+		padding: 0.4rem 0.75rem;
+		border: 1px dashed
+			color-mix(in srgb, var(--hdd-blue) 45%, var(--hdd-border));
+		border-radius: 9999px;
+		background: var(--hdd-card);
+	}
+
+	.hdd-pump.active {
+		border-color: var(--hdd-blue);
+	}
+
+	.hdd-pump-label {
+		font-size: 0.6875rem;
+		font-weight: 600;
+		color: var(--hdd-text);
+	}
+
+	.hdd-pump-arrows {
+		flex: none;
+		width: 1rem;
+		height: 1.5rem;
+	}
+
+	.hdd-pump-arrows path {
+		stroke: var(--hdd-blue);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		fill: none;
+	}
+
+	/* --- Active / current animation states --- */
+	.hdd-node.current {
+		border-color: var(--hdd-accent);
+		box-shadow: 0 0 0 2px var(--hdd-accent-soft);
+		animation: hdd-pulse 1.2s ease-in-out infinite;
+	}
+
+	.hdd-hyperdrive.current,
+	.hdd-database.current {
+		border-color: var(--hdd-blue);
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--hdd-blue) 20%, transparent);
+	}
+
+	.hdd-node.active::after,
+	.hdd-node.current::after {
+		border-color: var(--hdd-accent);
+	}
+
+	.hdd-hyperdrive.active::after,
+	.hdd-hyperdrive.current::after {
+		border-color: var(--hdd-blue);
+	}
+
+	@keyframes hdd-pulse {
+		0%,
+		100% {
+			box-shadow: 0 0 0 2px var(--hdd-accent-soft);
+		}
+		50% {
+			box-shadow: 0 0 0 5px transparent;
+		}
+	}
+
+	/* --- Responsive: tighten spacing and let labels wrap on narrow screens. --- */
+	@container (max-width: 460px) {
+		cfdocs-hyperdrive-dynamic-diagram {
+			padding: 1.25rem 0.6rem;
+		}
+
+		.hdd-node-head {
+			white-space: normal;
+			font-size: 0.5625rem;
+		}
+
+		.hdd-node-title {
+			font-size: 0.75rem;
+		}
+
+		.hdd-connector-label {
+			white-space: normal;
+			max-width: 12rem;
+			text-align: center;
+		}
+	}
+
+	/* --- Reduced motion: leave the complete, neutral diagram static --- */
+	@media (prefers-reduced-motion: reduce) {
+		.hdd-node,
+		.hdd-icon,
+		.hdd-connector,
+		.hdd-pump,
+		.hdd-node::after {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	class HyperdriveDynamicDiagramElement extends HTMLElement {
+		private loop = false;
+		private steps: Element[][] = [];
+		private timer: number | null = null;
+
+		connectedCallback() {
+			this.loop = this.dataset.loop === "true";
+			this.groupSteps();
+
+			const reduced = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+
+			// Only animate when asked to and motion is allowed. Otherwise the
+			// diagram simply rests in its complete, neutral state.
+			if (!reduced && this.dataset.autoplay === "true") {
+				this.timer = window.setTimeout(() => this.play(), 500);
+			}
+		}
+
+		disconnectedCallback() {
+			if (this.timer !== null) window.clearTimeout(this.timer);
+		}
+
+		/** Group every [data-step] element by its step number, in order. */
+		private groupSteps() {
+			const byStep = new Map<number, Element[]>();
+			this.querySelectorAll<HTMLElement>("[data-step]").forEach((el) => {
+				const step = Number(el.dataset.step);
+				if (Number.isNaN(step)) return;
+				const group = byStep.get(step) ?? [];
+				group.push(el);
+				byStep.set(step, group);
+			});
+			this.steps = [...byStep.keys()]
+				.sort((a, b) => a - b)
+				.map((key) => byStep.get(key)!);
+		}
+
+		private reset() {
+			this.steps
+				.flat()
+				.forEach((el) => el.classList.remove("active", "current"));
+		}
+
+		private play() {
+			this.reset();
+			this.advance(0);
+		}
+
+		private advance(index: number) {
+			if (index > 0) {
+				// The previous group is done processing — leave it solid.
+				this.steps[index - 1]?.forEach((el) => el.classList.remove("current"));
+			}
+
+			if (index >= this.steps.length) {
+				if (this.loop) {
+					this.timer = window.setTimeout(() => this.play(), 2200);
+				}
+				return;
+			}
+
+			this.steps[index].forEach((el) => {
+				el.classList.add("active");
+				// Connectors just light up; cards pulse while "current".
+				if (!el.classList.contains("hdd-connector")) {
+					el.classList.add("current");
+				}
+			});
+
+			// Connectors are quick; cards linger so the pulse reads.
+			const isConnectorOnly = this.steps[index].every((el) =>
+				el.classList.contains("hdd-connector"),
+			);
+			const duration = isConnectorOnly ? 600 : 1100;
+			this.timer = window.setTimeout(() => this.advance(index + 1), duration);
+		}
+	}
+
+	customElements.define(
+		"cfdocs-hyperdrive-dynamic-diagram",
+		HyperdriveDynamicDiagramElement,
+	);
+</script>

@@ -2,7 +2,6 @@ export { Aside } from "./components/ui/aside";
 export { Card } from "./components/ui/card";
 export { CardGrid } from "./components/ui/card-grid";
 export { PackageManagers } from "./components/ui/package-managers";
-export { default as PlaceholderConnectionString } from "./components/PlaceholderConnectionString.astro";
 export { Step, Steps } from "./components/ui/steps";
 export { TabItem, Tabs } from "./components/ui/tabs";
 export { Badge } from "./components/ui/badge";
@@ -73,6 +72,7 @@ export { default as WorkersIsolateDiagram } from "./components/cf/WorkersIsolate
 export { default as AnimatedWorkflowDiagram } from "./components/cf/AnimatedWorkflowDiagram.astro";
 export { default as AgentsPlatformDiagram } from "./components/cf/AgentsPlatformDiagram.astro";
 export { default as R2LocalUploadsDiagram } from "./components/cf/R2LocalUploadsDiagram.astro";
+export { default as HyperdriveDynamicWorkersDiagram } from "./components/HyperdriveDynamicWorkersDiagram.astro";
 export { default as WorkersVPCEgressDiagram } from "./components/cf/WorkersVPCEgressDiagram.astro";
 export { default as WorkersVPCOverviewDiagram } from "./components/cf/WorkersVPCOverviewDiagram.astro";
 export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelector.astro";
