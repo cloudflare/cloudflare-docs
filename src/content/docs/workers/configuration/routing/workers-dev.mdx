@@ -30,8 +30,6 @@ When enabled, your `workers.dev` URL is available publicly. To require visitors 
 
 Access can protect one Worker's production `workers.dev` URL, preview URLs, or both. You can also protect all Workers or all Worker previews in an account.
 
-For defense in depth, [validate the Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker code so unauthenticated requests cannot reach your application if Access is ever removed or misconfigured.
-
 To use details about the signed-in user in your Worker, use [`ctx.access`](/workers/configuration/cloudflare-access/#read-authenticated-user-identity-with-ctxaccess). You can also read the [user's identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) from the validated JWT or the `/cdn-cgi/access/get-identity` endpoint.
 
 ## Disabling `workers.dev`

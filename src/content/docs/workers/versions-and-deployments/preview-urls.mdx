@@ -97,8 +97,6 @@ When enabled, Preview URLs are available publicly. To require visitors to sign i
 
 Access can protect previews for one Worker or every Worker in an account. You can also protect both production and preview deployments.
 
-For defense in depth, [validate the Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker code so unauthenticated requests cannot reach your application if Access is ever removed or misconfigured.
-
 To use details about the signed-in user in your Worker, read the [user's identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) from the validated JWT or the `/cdn-cgi/access/get-identity` endpoint.
 
 ## Toggle Preview URLs (Enable or Disable)
