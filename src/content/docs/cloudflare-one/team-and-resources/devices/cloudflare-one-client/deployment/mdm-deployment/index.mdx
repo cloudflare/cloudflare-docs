@@ -64,7 +64,7 @@ To uninstall the Cloudflare One Client:
 1. First, locate the `.msi` package with the following PowerShell command:
 
 ```powershell
-Get-WmiObject Win32_Product | Where-Object { $_.Name -match "WARP" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
+Get-WmiObject Win32_Product | Where-Object { $_.Name -match "Cloudflare One Client" } | Sort-Object -Property Name | Format-Table IdentifyingNumber, Name, LocalPackage -AutoSize
 ```
 
 ```txt output
