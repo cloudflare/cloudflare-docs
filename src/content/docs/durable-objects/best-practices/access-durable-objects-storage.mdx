@@ -19,7 +19,11 @@ access to a Durable Object's attached storage.
 
 A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object remains in memory. Inactive Durable Objects with no incoming request traffic can be evicted.
 
-A [deployment grace period](/durable-objects/reference/durable-objects-code-updates/) can wait for an active Durable Object to hibernate instead of restarting it immediately. The object still loses its in-memory state when it hibernates or the grace period forces a restart. Use the Storage API to persist state that must survive hibernation, eviction, or restart.
+When you deploy a code change to Durable Objects, by default this change is immediately applied — Cloudflare creates a fresh isolate that runs the new version of your code, and any in-memory state is discarded.
+
+To give your application time to finish in-flight work or persist in-memory state to [SQLite](/durable-objects/api/sqlite-storage-api/) or to external storage, you can set a [deployment grace period](/durable-objects/reference/durable-objects-code-updates/). If you set a deployment grace period, when you deploy a code change, Cloudflare will wait for an active Durable Object to become inactive or to "hibernate", and only once this happens or the grace period is exceeded, Cloudflare will create a fresh isolate that runs the new version of your code, discarding any in-memory state.
+
+Just like other compute environments where compute instances do not live forever, you should persist any state that must be durable across code deployments to Durable Storage. Durable Objects makes this simple — each individual Durable Object has its own SQLite database that you can read from and write to synchronously.
 
 ## Access storage
 

@@ -22,11 +22,11 @@ A deployment grace period lets an active Durable Object keep running its current
 
 ## How it works
 
-1. You deploy a new version. Cloudflare assigns it to every Durable Object in the deployment.
-2. An inactive object starts the new version the next time it receives a request or event. This is unchanged from today.
-3. An active object keeps running its current version. It keeps handling requests, events, storage operations, and messages on WebSockets accepted with the [Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api).
-4. If the object hibernates before the grace period ends, it applies the new version when it next wakes up. Hibernated WebSockets stay connected throughout.
-5. If the object is still active when the grace period ends, Cloudflare resets it and applies the update, the same way it does today.
+1. You deploy a code change
+2. A client makes a request to an inactive Durable Object, or creates a new Durable Object. This uses the latest version of your code.
+3. Some set of Durable Objects are currently active — they are performing work or holding open connections. Because you have set a grace period, these objects continue running using the existing version of your code. They continue handling requests, events, storage operations, and messages on WebSockets accepted with the [Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api).
+4. If an existing, already active Durable Object hibernates before the grace period ends, Cloudflare will apply the new version the next time that Durable Object "wakes up" in response to an incoming request or WebSocket message. Hibernated WebSocket connections stay connected throughout.
+5. If after the grace period ends, a Durable Object is still active, Cloudflare resets it and applies your code  update.
 
 Deploying again before an object hibernates does not restart its grace period. The object still applies the latest version once it hibernates or the original grace period ends, and it might skip versions you deployed in between.
 
@@ -126,7 +126,7 @@ A `0` grace period behaves exactly like a code update did before this feature ex
 ## Limitations
 
 - A grace period is best-effort. Cloudflare does not guarantee an object keeps its old code for the full grace period, or that it resets exactly when the grace period ends.
-- A grace period only delays resets caused by code updates. It does not delay resets caused by process sandbox migrations, resource limits, crashes, or other Workers runtime updates.
+- A grace period delays code updates that you make to your Durable Objects. Your Durable Objects can will still restart immediately when a Durable Object exceeds memory limits, crashes, or when Cloudflare updates the Workers runtime.
 - An object might skip versions entirely if you deploy more than once while it is waiting to hibernate.
 - A grace period does not make incompatible Worker and Durable Object versions safe to run together. Keep your interfaces compatible across versions.
 
