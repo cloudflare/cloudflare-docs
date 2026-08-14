@@ -20,7 +20,7 @@ To access Web Assets in the Cloudflare dashboard, go to the **Web Assets** page.
 
 ## Definition of an operation
 
-An operation is Cloudflare's term for an endpoint. Each operation is identified by:
+An operation is a group of HTTP requests that serve the same purpose in your application. Each operation is defined by:
 
 - HTTP method
 - Hostname pattern
@@ -51,8 +51,6 @@ Operations can come from several sources:
 - **Schema upload**: You can [upload an OpenAPI schema](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-from-schema-validation) to create operations from an existing API definition.
 
 These sources contribute to the same operation inventory. You do not need to review every discovered operation before security detections can use operation context.
-
-Discovery and manual entry do not start profile learning. Select **Learn profile** for an operation to start intentionally.
 
 ## Operation states and profile learning
 

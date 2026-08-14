@@ -6,7 +6,6 @@ products:
   - api-shield
 tags:
   - Terraform
-
 ---
 
 import { GlossaryTooltip } from "~/components";
@@ -21,7 +20,7 @@ The following resources are available to configure through Terraform:
 
 **Web Assets operations**
 
-- [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> as operations.
+- [`api_shield_operation`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_shield_operation) for configuring <GlossaryTooltip term="API endpoint">operations</GlossaryTooltip>.
 
 **Schema validation**
 
@@ -49,7 +48,7 @@ resource "cloudflare_api_shield" "session_identifiers" {
 
 ## Manage Web Assets operations
 
-Use operation resources to manage endpoints by method, hostname, and path. These operations appear in the Web Assets inventory.
+Manage operations by method, hostname, and path. Operations appear in the Web Assets inventory.
 
 ```tf title="Example configuration"
 resource "cloudflare_api_shield_operation" "get_image" {

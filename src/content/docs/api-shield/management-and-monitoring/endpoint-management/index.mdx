@@ -16,10 +16,10 @@ Endpoint Management content uses the current [Web Assets](/security/web-assets/)
 
 An operation is Cloudflare's term for an endpoint identified by HTTP method, hostname pattern, and path pattern. Web Assets continuously discovers operations, and you can add them manually.
 
-Discovery and manual creation only add operations to inventory. To start profiling, select **Learn profile** for the intended operation.
+Cloudflare discovered operations are only added to the inventory. To start profiling, select **Learn profile** for the intended operation.
 
 :::note[Schema Profile availability]
-Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is opening a closed beta to invited Enterprise customers without API Security. Interested customers can contact their account team to express interest. Closed-beta access does not imply future plan availability or pricing.
+Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is opening a closed beta to invited Enterprise customers without API Security. Interested customers can contact their account team to express interest. Closed beta access does not imply future plan availability or pricing.
 :::
 
 :::note
@@ -65,8 +65,6 @@ API Shield looks for duplicate operations with the same hostname, method, and pa
 4. Select **Add operation**.
 </Steps>
 
-Manual operation creation does not start profile learning.
-
 When adding an operation manually, you can specify variable fields in the path or hostname. Enclose variables in braces, such as `/api/user/{var1}/details` or `{hostVar1}.example.com`.
 
 Cloudflare supports hostname variables in the following formats:
@@ -103,8 +101,6 @@ You can edit the identity of an operation.
 4. Select **Save**.
 
 </Steps>
-
-Editing an operation updates its inventory identity. It does not start profile learning.
 
 :::caution[Editing this operation will change its ID]
 Cloudflare computes operation IDs from the HTTP method, hostname, and path. Changing these values creates a different operation ID.
