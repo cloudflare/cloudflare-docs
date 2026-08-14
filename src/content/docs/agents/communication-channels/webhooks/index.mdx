@@ -19,9 +19,32 @@ Receive webhook events from external services and route them to dedicated agent 
 ```ts
 import { Agent, getAgentByName, routeAgentRequest } from "agents";
 
-type GitHubWebhookPayload = {
-	repository?: { full_name?: string };
-};
+export class WebhookAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method !== "POST") {
+			return new Response("Method not allowed", { status: 405 });
+		}
+
+		const rawBody = await request.text();
+		const signature = request.headers.get("X-Hub-Signature-256");
+		if (
+			!(await verifyGitHubWebhook(
+				rawBody,
+				signature,
+				this.env.WEBHOOK_SECRET,
+			))
+		) {
+			return new Response("Invalid signature", { status: 401 });
+		}
+
+		await this.processEvent(JSON.parse(rawBody));
+		return new Response("OK");
+	}
+
+	private async processEvent(payload: unknown) {
+		// Store event, update state, trigger actions...
+	}
+}
 
 async function verifyGitHubWebhook(
 	rawBody: string,
@@ -51,33 +74,6 @@ async function verifyGitHubWebhook(
 	);
 }
 
-export class WebhookAgent extends Agent<Env> {
-	async onRequest(request: Request): Promise<Response> {
-		if (request.method !== "POST") {
-			return new Response("Method not allowed", { status: 405 });
-		}
-
-		const rawBody = await request.text();
-		const signature = request.headers.get("X-Hub-Signature-256");
-		if (
-			!(await verifyGitHubWebhook(
-				rawBody,
-				signature,
-				this.env.WEBHOOK_SECRET,
-			))
-		) {
-			return new Response("Invalid signature", { status: 401 });
-		}
-
-		await this.processEvent(JSON.parse(rawBody));
-		return new Response("OK");
-	}
-
-	private async processEvent(payload: unknown) {
-		// Store event, update state, trigger actions...
-	}
-}
-
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
@@ -95,7 +91,9 @@ export default {
 				return new Response("Invalid signature", { status: 401 });
 			}
 
-			const payload = JSON.parse(rawBody) as GitHubWebhookPayload;
+			const payload = JSON.parse(rawBody) as {
+				repository?: { full_name?: string };
+			};
 			const repository = payload.repository?.full_name;
 			if (!repository) {
 				return new Response("Missing repository", { status: 400 });
@@ -187,7 +185,9 @@ export default {
 				return new Response("Invalid signature", { status: 401 });
 			}
 
-			const payload = JSON.parse(rawBody) as GitHubWebhookPayload;
+			const payload = JSON.parse(rawBody) as {
+				repository?: { full_name?: string };
+			};
 			const repository = payload.repository?.full_name;
 			if (!repository) {
 				return new Response("Missing repository", { status: 400 });
@@ -507,7 +507,7 @@ If the webhook owns application side effects around a turn, such as restoring a 
 
 ### Multi-provider routing
 
-Keep provider-specific verification and parsing behind one typed seam. Its implementation must validate the raw request according to the provider documentation linked under [Common webhook providers](#common-webhook-providers), then derive `agentName` only from the verified body.
+Use one typed helper for provider-specific verification and parsing. It must validate the raw request according to the provider documentation linked under [Common webhook providers](#common-webhook-providers), then derive `agentName` only from the verified body.
 
 <TypeScriptExample>
 
