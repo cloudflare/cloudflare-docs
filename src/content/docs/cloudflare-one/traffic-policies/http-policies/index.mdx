@@ -659,6 +659,46 @@ The HTTP response status code received by the traffic.
 | ------- | ------------------------------------ |
 | URL     | `http.response.status_code == "200"` |
 
+### Package Ecosystem
+
+The package registry ecosystem detected from the HTTP request URL. For more information, refer to [Package registry security](/cloudflare-one/traffic-policies/http-policies/package-registry-security/).
+
+| UI name           | API example              |
+| ----------------- | ------------------------ |
+| Package Ecosystem | `pkg.ecosystem == "npm"` |
+
+### Package Name
+
+The name of the package detected from the HTTP request URL.
+
+| UI name      | API example             |
+| ------------ | ----------------------- |
+| Package Name | `pkg.name == "lodash"` |
+
+### Package Namespace
+
+The namespace of the package, when the ecosystem supports one. For npm, this is the scope. For Maven, this is the group ID. For Go, this is the module path.
+
+| UI name           | API example                  |
+| ----------------- | ---------------------------- |
+| Package Namespace | `pkg.namespace == "@babel"` |
+
+### Package URL (PURL)
+
+The [Package URL](https://github.com/package-url/purl-spec) derived from the detected package coordinates.
+
+| UI name     | API example                              |
+| ----------- | ---------------------------------------- |
+| Package URL | `pkg.purl == "pkg:npm/lodash@4.17.21"` |
+
+### Package Version
+
+The version of the package detected from the HTTP request URL. Supports exact match and ecosystem-aware version comparison operators. For more information on version comparison semantics, refer to [Package registry security](/cloudflare-one/traffic-policies/http-policies/package-registry-security/#version-comparison-operators).
+
+| UI name         | API example                 |
+| --------------- | --------------------------- |
+| Package Version | `pkg.version == "4.17.21"` |
+
 ### Proxy Endpoint
 
 <Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
