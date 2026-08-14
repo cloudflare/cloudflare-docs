@@ -30,7 +30,7 @@ Two rules first:
 | A heading with a custom anchor (inside a component)    | `AnchorHeading`                              | —          |
 | Reusable content shared across pages                   | `Render` (a partial)                         | —          |
 | A formatted Markdown string inside JSX                 | `Markdown`                                   | —          |
-| Plan availability for a feature                        | `Plan`, `FeatureTable`, or `ProductFeatures` | —          |
+| Plan availability for a feature                        | `Plan` or `FeatureTable`                     | —          |
 | Lifecycle status (Beta/Alpha) inline or in a heading   | `ProductAvailabilityText`, `Badge`           | —          |
 | A small inline status pill                             | `InlineBadge` (avoid; prefer `Badge`)        | —          |
 | Inline changelog entries for a product                 | `ProductChangelog`                           | —          |
@@ -87,7 +87,7 @@ Two rules first:
 ### Availability and status
 
 - **`Plan`** — plan availability badge near a feature or at the top of an overview.
-- **`FeatureTable` / `ProductFeatures`** — availability by plan, sourced from `src/content/plans/`.
+- **`FeatureTable`** — availability by plan, sourced from `src/content/plans/`.
 - **`ProductAvailabilityText`** — inline Beta/Alpha status that renders nothing once GA, so it is safe to leave in place.
 - **`Badge`** — status label in a heading or sidebar. Prefer it over `InlineBadge`.
 - **`InlineBadge`** — a small inline status pill. Avoid it; prefer `Badge` or stating status in prose.

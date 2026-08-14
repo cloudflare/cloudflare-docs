@@ -46,7 +46,6 @@ export { default as GlossaryDefinition } from "./components/cf/GlossaryDefinitio
 export { default as WranglerCommand } from "./components/cf/WranglerCommand.astro";
 export { default as AnchorHeading } from "./components/cf/AnchorHeading.astro";
 export { default as FeatureTable } from "./components/cf/FeatureTable.astro";
-export { default as ProductFeatures } from "./components/cf/ProductFeatures.astro";
 export { default as PagesBuildPreset } from "./components/cf/PagesBuildPreset.astro";
 export { default as PagesBuildPresetsTable } from "./components/cf/PagesBuildPresetsTable.astro";
 export { default as ComponentsUsage } from "./components/cf/ComponentsUsage.astro";
