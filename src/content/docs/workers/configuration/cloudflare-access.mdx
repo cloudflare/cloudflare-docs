@@ -174,7 +174,7 @@ For the full request schema, including [policy options](#policy-options) and ses
 
 ## Protect a specific hostname, Custom Domain, or path
 
-Use hostname-based Access when only a specific URL that routes to your Worker should require sign-in, such as a `workers.dev` hostname, a Custom Domain, a subdomain, or a path. Hostname-based Access protects only that exact URL, whereas [protecting a Worker](#protect-one-worker) protects the entire Worker. For example, you can protect `my-worker.example.workers.dev`, `admin.example.com`, or a single path such as `example.com/login` to make only part of your Worker private.
+Use hostname-based Access when only a specific URL that routes to your Worker should require sign-in, such as a `workers.dev` hostname, a Custom Domain, a subdomain, or a path. Hostname-based Access protects only that exact URL, whereas [protecting a Worker](#protect-one-worker) protects the entire Worker regardless of how it is accessed. For example with hostname-based Access, you can protect `my-worker.example.workers.dev`, `admin.example.com`, or a single path such as `example.com/login` to make only part of your Worker private.
 
 In both the dashboard and the API, you protect a hostname or path by creating a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) and using the hostname or path as the application domain.
 
