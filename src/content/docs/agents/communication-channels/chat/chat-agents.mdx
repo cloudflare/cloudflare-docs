@@ -8,7 +8,11 @@ products:
   - agents
 ---
 
-import { TypeScriptExample, LinkCard } from "~/components";
+import {
+	TypeScriptExample,
+	LinkCard,
+	PackageManagers,
+} from "~/components";
 
 Build AI-powered chat interfaces with `AIChatAgent` and `useAgentChat`. Messages are automatically persisted to SQLite, streams resume on disconnect, and tool calls work across server and client.
 
@@ -36,9 +40,7 @@ Built on the [AI SDK](https://ai-sdk.dev) and Cloudflare Durable Objects, you ge
 
 ### Install
 
-```sh
-npm install @cloudflare/ai-chat agents ai workers-ai-provider
-```
+<PackageManagers pkg="@cloudflare/ai-chat agents ai @ai-sdk/react workers-ai-provider" />
 
 ### Server
 
