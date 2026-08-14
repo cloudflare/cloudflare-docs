@@ -11,32 +11,30 @@ const { autoPlay = true, loop = true } = Astro.props;
 
 <figure
 	class="hyperdrive-dynamic-diagram not-content"
-	aria-label="Hyperdrive with Dynamic Workers runtime flow. The Dynamic Worker calls getHyperdriveConnectionString() with the real database connection string, and Hyperdrive returns a generated connection string that points at the hyperdrive-dynamic.local hostname. The Dynamic Worker's database client calls connect() with the generated connection string. globalOutbound routes the outbound connection to the OutboundInterceptor. The interceptor detects the hyperdrive-dynamic.local hostname, then calls DYNAMIC_HYPERDRIVE.get() with the real database credentials. Hyperdrive opens or reuses a pooled connection to the origin database. The interceptor then bridges bytes between the Dynamic Worker's socket and the Hyperdrive connection for the duration of the session."
+	aria-label="Hyperdrive with Dynamic Workers runtime flow. The loader Worker retrieves the tenant database details from Workers KV, including the real connection string and the generated connection string. The loader Worker loads the Dynamic Worker and passes the generated connection string to it. The Dynamic Worker's database client calls connect() with the generated connection string. globalOutbound routes the outbound connection to the OutboundInterceptor. The interceptor parses the host from the generated connection string, confirms the connection matches, then calls DYNAMIC_HYPERDRIVE.get() with the real database credentials. Hyperdrive opens or reuses a pooled connection to the origin database. The interceptor then bridges bytes between the Dynamic Worker's socket and the Hyperdrive connection for the duration of the session."
 >
 	<cfdocs-hyperdrive-dynamic-diagram
 		data-autoplay={String(autoPlay)}
 		data-loop={String(loop)}
 	>
 		<div class="hdd-track">
-			<!-- Dynamic Worker requests a generated connection string -->
+			<!-- Loader Worker retrieves tenant database details from KV -->
 			<div class="hdd-node hdd-worker" data-step="0">
-				<span class="hdd-node-head">Dynamic Worker</span>
+				<span class="hdd-node-head">Loader Worker</span>
 				<span class="hdd-node-body">
 					<span class="hdd-icon" aria-hidden="true"
 						><Icon name="dynamic-workers" /></span
 					>
 					<span class="hdd-node-title"
-						>getHyperdriveConnectionString(<code>PG_CONNECTION_STRING</code
-						>)</span
+						>Retrieve tenant database details from <code>KV</code></span
 					>
 				</span>
 			</div>
 
-			<!-- Hyperdrive returns a generated connection string -->
+			<!-- Loader Worker loads the Dynamic Worker with the generated string -->
 			<div class="hdd-connector" data-step="1">
 				<span class="hdd-connector-label"
-					>Generated connection string <code>hyperdrive-dynamic.local</code
-					></span
+					>Load Dynamic Worker with generated connection string</span
 				>
 			</div>
 
@@ -48,7 +46,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 						><Icon name="dynamic-workers" /></span
 					>
 					<span class="hdd-node-title"
-						>connect() to <code>hyperdrive-dynamic.local</code></span
+						>connect() with generated connection string</span
 					>
 				</span>
 			</div>
@@ -67,7 +65,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 					>
 					<span class="hdd-node-copy">
 						<span class="hdd-node-title"
-							>Detect <code>hyperdrive-dynamic.local</code></span
+							>Match host from generated connection string</span
 						>
 						<span class="hdd-node-sub"
 							>Call <code>DYNAMIC_HYPERDRIVE.get()</code> with real credentials</span
