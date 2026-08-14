@@ -1,0 +1,25 @@
+---
+title: "DeepSeek V4 Flash and Pro now available on Workers AI"
+description: DeepSeek's latest reasoning models are now on Workers AI, with DeepSeek V4 Pro bringing the first full one million token context window to the platform.
+products:
+  - workers-ai
+date: 2026-08-14
+---
+
+[`@cf/deepseek-ai/deepseek-v4-pro-0813`](/workers-ai/models/deepseek-v4-pro-0813/) and [`@cf/deepseek-ai/deepseek-v4-flash-0731`](/workers-ai/models/deepseek-v4-flash-0731/) are now available on Workers AI.
+
+DeepSeek V4 Pro is the first Workers AI model with a full **one million (1,048,576) token context window**. Use it for long-horizon agentic workflows, large codebases, and multi-step reasoning that exceed the context limits of every other model hosted on the platform.
+
+DeepSeek V4 Flash is the faster, lower-cost sibling with a **384,000 token context window**. This release supersedes the preview version with substantially enhanced agentic capabilities.
+
+**Key capabilities:**
+
+- **Reasoning**: Both models support thinking mode for complex, step-by-step problem-solving.
+- **Function calling**: Build agents that invoke tools and APIs across multiple conversation turns.
+- **Long context**: DeepSeek V4 Pro supports 1,048,576 tokens, and DeepSeek V4 Flash supports 384,000 tokens.
+
+Both models require the [Workers Paid plan](/workers/platform/pricing/#workers) or prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/).
+
+Use these models through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`), the REST API, the [OpenAI-compatible endpoint](/workers-ai/configuration/open-ai-compatibility/), or [AI Gateway](/ai-gateway/).
+
+For more information, refer to the [DeepSeek V4 Pro model page](/workers-ai/models/deepseek-v4-pro-0813/), the [DeepSeek V4 Flash model page](/workers-ai/models/deepseek-v4-flash-0731/), and [pricing](/workers-ai/platform/pricing/).
