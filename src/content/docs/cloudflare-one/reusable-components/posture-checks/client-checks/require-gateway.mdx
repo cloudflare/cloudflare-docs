@@ -23,10 +23,10 @@ The check result depends on the [client mode](/cloudflare-one/team-and-resources
 
 | Client mode          | Result   | Reason                                                        |
 | -------------------- | -------- | ------------------------------------------------------------- |
-| Traffic and DNS mode | ✅ Pass  | Device traffic is routed through and filtered by your organization's Gateway |
-| Traffic only mode    | ✅ Pass  | Device traffic is routed through Gateway (DNS handled by the OS) |
+| Traffic and DNS mode | ✅ Pass  | Device traffic is routed through and filtered by Gateway |
+| Traffic only mode    | ✅ Pass  | Device traffic is routed through Gateway except the DNS queries |
 | DNS only mode        | ❌ Fail  | Only DNS queries are forwarded; network traffic does not flow through Gateway |
-| Local proxy mode     | ❌ Fail  | Only explicitly proxied application traffic is sent; the device is not fully enrolled in Gateway |
+| Local proxy mode     | ⚠️ Partial | The check passes only for traffic explicitly configured to use the local SOCKS/HTTP proxy on port `40000`, as this traffic is tunneled through Gateway. Traffic not routed through the proxy bypasses Gateway and fails the check. |
 | Posture only mode    | ❌ Fail  | The client is enrolled and collects posture data, but does not route traffic through Gateway |
 
 ## Prerequisites
