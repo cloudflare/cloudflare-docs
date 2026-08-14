@@ -14,7 +14,7 @@ head:
     content: Cache Keys
 ---
 
-import { FeatureTable, DashButton } from "~/components"
+import { DashButton } from "~/components"
 
 A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
 
@@ -159,7 +159,17 @@ User feature fields add features about the end-user (client) into the Cache Key.
 
 Cache keys options availability varies according to your plan.
 
-<FeatureTable id="cache.cache_key" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Cache deception armor | Yes | Yes | Yes | Yes |
+| Cache by device type | Yes | Yes | Yes | Yes |
+| Ignore query string | Yes | Yes | Yes | Yes |
+| Sort query string | Yes | Yes | Yes | Yes |
+| Query string | No | No | No | Yes |
+| Headers | No | No | No | Yes |
+| Cookie | No | No | No | Yes |
+| Host | No | No | No | Yes |
+| User features | No | No | No | Yes |
 
 ## Troubleshooting
 

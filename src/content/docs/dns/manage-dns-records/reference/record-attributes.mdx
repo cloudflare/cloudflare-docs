@@ -12,8 +12,6 @@ head:
 
 ---
 
-import { FeatureTable } from "~/components"
-
 Use DNS record comments and tags to categorize and clarify the purpose of DNS records within Cloudflare.
 
 Comments provide a unique descriptions for specific records, whereas tags group similar records into categories.
@@ -40,11 +38,20 @@ Comments and tags are only supported for [primary zones (full setup)](/dns/zone-
 
 ### Record comments
 
-<FeatureTable id="dns.record_comments" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Character limit | 100 | 500 | 500 | 500 |
+| Comments per record | 1 | 1 | 1 | 1 |
 
 ### Record tags
 
-<FeatureTable id="dns.record_tags" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | Yes | Yes | Yes |
+| Name character limit<br><br>(everything before the colon) | N/A | 32 | 32 | 32 |
+| Value character limit<br><br>(everything after the colon) | N/A | 100 | 100 | 100 |
+| Tags per record | N/A | 20 | 20 | 20 |
 
 ***
 
