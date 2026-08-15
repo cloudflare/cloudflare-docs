@@ -27,7 +27,7 @@ The `assets.directory` field in this file is automatically populated with the pa
 It is therefore not necessary to provide the `assets.directory` field in your input Worker configuration.
 
 :::note[Cloudflare Access context]
-The Vite plugin can add Static Assets to the generated deployment configuration even when the input Wrangler configuration does not include `assets`. Workers with Static Assets cannot currently access `ctx.access` in the user Worker. Local development can currently expose `ctx.access` even though it is `undefined` after deployment.
+The Vite plugin can add Static Assets to the generated deployment configuration even when the input Wrangler configuration does not include `assets`. Workers with Static Assets cannot currently access `ctx.access` in the user Worker.
 
 This behavior affects frameworks that use the Cloudflare Vite plugin, including TanStack Start. For more information, refer to [`ctx.access` limitations](/workers/configuration/cloudflare-access/#ctxaccess-limitations).
 :::

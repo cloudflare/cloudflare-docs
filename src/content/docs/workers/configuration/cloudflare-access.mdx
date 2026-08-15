@@ -285,7 +285,7 @@ export default {
 
 Workers with [Static Assets](/workers/static-assets/) execute behind an internal router Worker. Access still protects the application and its assets. However, the router does not currently pass `ctx.access` to the user Worker.
 
-Local and deployed behavior can currently differ. The Cloudflare Vite plugin can add `assets` to the generated deployment configuration when the input Wrangler configuration omits it. Frameworks that use the plugin, including TanStack Start, can expose `ctx.access` locally while it is `undefined` after deployment.
+The Cloudflare Vite plugin can add `assets` to the generated deployment configuration when the input Wrangler configuration omits it. Frameworks that use the plugin, including TanStack Start, can therefore be affected even when their source configuration does not declare Static Assets.
 :::
 
 ## Test ctx.access locally
