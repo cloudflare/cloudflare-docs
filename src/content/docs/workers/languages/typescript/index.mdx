@@ -53,7 +53,7 @@ See [the `wrangler types` command docs](/workers/wrangler/commands/general/#type
 
 This will generate a `d.ts` file and (by default) save it to `worker-configuration.d.ts`. This will include `Env` types based on your Worker bindings _and_ runtime types based on your Worker's compatibility date and flags.
 
-You should then add that file to your `tsconfig.json`'s `compilerOptions.types` array. If you have the `nodejs_compat` compatibility flag, you should also install `@types/node`.
+You should then add that file to your `tsconfig.json`'s `compilerOptions.types` array. If Node.js compatibility is enabled by your compatibility date or flags, you should also install `@types/node`.
 
 You can commit your types file to git if you wish.
 
@@ -105,9 +105,9 @@ You can now remove any imports from `@cloudflare/workers-types` in your Worker c
 
 Note that if you have specified a custom path for the runtime types file, you should use that in your `compilerOptions.types` array instead of the default path.
 
-#### 4. Add @types/node if you are using [`nodejs_compat`](/workers/runtime-apis/nodejs/) (Optional)
+#### 4. Add @types/node if you use [Node.js compatibility](/workers/runtime-apis/nodejs/) (Optional)
 
-If you are using the `nodejs_compat` compatibility flag, you should also install `@types/node`.
+If Node.js compatibility is enabled by your compatibility date or flags, install `@types/node`.
 
 <PackageManagers type="add" pkg="@types/node" />
 

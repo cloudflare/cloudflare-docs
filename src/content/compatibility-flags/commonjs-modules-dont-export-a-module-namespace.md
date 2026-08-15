@@ -11,4 +11,10 @@ enable_flag: "export_commonjs_default"
 disable_flag: "export_commonjs_namespace"
 ---
 
-CommonJS modules were previously exporting a module namespace (an object like `{ default: module.exports }`) rather than exporting only the `module.exports`. When this flag is enabled, the export is fixed.
+The `export_commonjs_default` and `export_commonjs_namespace` flags apply only to the legacy module registry.
+
+The legacy registry previously exported a module namespace like `{ default: module.exports }`. The `export_commonjs_default` flag exports `module.exports` directly.
+
+The `export_commonjs_namespace` flag restores the previous namespace behavior.
+
+Neither flag affects the new module registry. For its Node.js `require(esm)` behavior, refer to the [module registry reference](/workers/reference/module-registry/#use-require-with-es-modules).

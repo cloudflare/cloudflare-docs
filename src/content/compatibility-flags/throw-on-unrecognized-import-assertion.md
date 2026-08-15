@@ -11,12 +11,10 @@ enable_flag: "throw_on_unrecognized_import_assertion"
 disable_flag: "ignore_unrecognized_import_assertion"
 ---
 
-The `throw_on_unrecognized_import_assertion` flag controls how Workers handle
-import attributes that are not recognized by the runtime. Previously, Workers
-would ignore all import attributes, which is not compliant with the
-specification. Runtimes are expected to throw an error when an import
-attribute is encountered that is not recognized.
+The `throw_on_unrecognized_import_assertion` and `ignore_unrecognized_import_assertion` flags apply only to the legacy module registry.
 
-When the `ignore_unrecognized_import_assertion` flag is set, Workers will
-ignore unrecognized import attributes.
+The legacy registry previously ignored unrecognized import attributes. The `throw_on_unrecognized_import_assertion` flag rejects them instead.
 
+The `ignore_unrecognized_import_assertion` flag restores the previous behavior.
+
+The [new module registry](/workers/reference/module-registry/#validate-import-attributes) always validates import attributes. Neither legacy flag changes this behavior.

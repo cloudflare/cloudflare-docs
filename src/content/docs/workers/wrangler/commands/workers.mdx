@@ -64,7 +64,8 @@ None of the options for this command are required. Many of these options can be 
   - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
   - You can provide multiple configuration files to run multiple Workers in one dev session like this: `wrangler dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ Worker, which will be exposed over HTTP. The remaining config files will only be accessible via a service binding from the primary Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](/workers/wrangler/bundling/) for more information.
+  - Skip Wrangler's transpilation, npm package resolution, bundling, minification, and polyfill injection.
+  - Provide the entry module and every application module the Worker can import. Refer to [Bundling](/workers/wrangler/bundling/#disable-bundling).
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
@@ -186,7 +187,8 @@ None of the options for this command are required. Also, many can be set in your
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](/workers/wrangler/bundling/) for more information.
+  - Skip Wrangler's transpilation, npm package resolution, bundling, minification, and polyfill injection.
+  - Provide the entry module and every application module the Worker can import. Refer to [Bundling](/workers/wrangler/bundling/#disable-bundling).
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
     <Render file="vite-environments" product="workers" />

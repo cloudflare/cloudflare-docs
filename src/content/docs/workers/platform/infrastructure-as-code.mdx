@@ -30,6 +30,14 @@ wrangler deploy --dry-run --outdir build
 
 When using Wrangler for building and a different method for uploading, make sure to copy all of your config from `wrangler.json` into your Terraform config or API request. This is especially important with `compatibility_date` or flags your script relies on.
 
+:::caution[Preserve all build outputs]
+
+Bundlers can emit an entrypoint and additional runtime modules or chunks. Upload every output with its generated name and content type. For multipart uploads, preserve each output as a separate part and set `main_module` to the generated entrypoint name. Uploading only the entrypoint can break imports.
+
+Module names are runtime identifiers. For details about URL canonicalization and linking, refer to the [module registry reference](/workers/reference/module-registry/).
+
+:::
+
 ## Terraform
 
 In this example, you need a local file named `my-script.mjs` with script content similar to the below examples. Learn more about the [Cloudflare Terraform Provider](/terraform/), and refer to the [Workers script resource example](https://github.com/cloudflare/terraform-provider-cloudflare/blob/main/examples/resources/cloudflare_workers_script/resource.tf) for all available resource settings.

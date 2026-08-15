@@ -63,7 +63,7 @@ When a Worker receives a `fetch` event, the Worker returns the newly constructed
 
 ## 2. Handle Incoming Request
 
-Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, `npm` packages, and [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing Workers, you can use Workers to [build full applications](/workers/tutorials/build-a-slackbot/) using the same tooling and process as in this tutorial.
+Workers projects can use ES modules, compatible `npm` packages, and [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions. You can also use Workers to [build full applications](/workers/tutorials/build-a-slackbot/) with the same process.
 
 The QR code generator you will build in this tutorial will be a Worker that runs on a single route and receives requests. Each request will contain a text message (a URL, for example), which the function will encode into a QR code. The function will then respond with the QR code in PNG image format.
 
@@ -125,7 +125,9 @@ export default {
 
 ## 3. Build a QR code generator
 
-All projects deployed to Cloudflare Workers support npm packages. This support makes it easy to rapidly build out functionality in your Workers. The ['qrcode-svg'](https://github.com/papnkukn/qrcode-svg) package is a great way to take text and encode it into a QR code. In the command line, install and save 'qrcode-svg' to your project’s 'package.json':
+Workers can use npm packages that rely on [supported runtime APIs](/workers/runtime-apis/). Packages requiring unsupported APIs may not work.
+
+The [`qrcode-svg`](https://github.com/papnkukn/qrcode-svg) package converts text into QR codes. Install `qrcode-svg` and save it to your project's `package.json`:
 
 <PackageManagers pkg="qrcode-svg" />
 

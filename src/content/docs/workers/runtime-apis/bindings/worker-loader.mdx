@@ -9,9 +9,9 @@ products:
 
 import { Type, MetaInfo, WranglerConfig } from "~/components";
 
-:::note[Dynamic Worker Loading is in closed beta]
+:::note
 
-The Worker Loader API is available in local development with Wrangler and workerd. But to run dynamic Workers on Cloudflare, you must [sign up for the closed beta](https://forms.gle/MoeDxE9wNiqdf8ri9).
+For current setup and API guidance, refer to [Dynamic Workers](/dynamic-workers/).
 
 :::
 
@@ -36,7 +36,7 @@ Code Mode makes [AI SDK tools](/agents/tools/codemode/ai-sdk/), tools from an [M
 
 ## Basic usage
 
-A Worker Loader is a binding with just one method, `get()`, which loads an isolate. Example usage:
+A Worker Loader binding provides two loading methods. `load()` creates a fresh Worker without an ID cache. `get()` lets the runtime reuse code or a warm isolate by ID. The following example uses `get()`:
 
 ```js
 let id = "foo";
@@ -105,6 +105,12 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 
 ## API Reference
 
+### `load`
+
+<code>load(code <Type text="WorkerCode" />): <Type text="WorkerStub" /></code>
+
+Loads a fresh Worker from the provided `WorkerCode`. Unlike `get()`, `load()` does not cache by ID.
+
 ### `get`
 
 <code>get(id <Type text="string" />, getCodeCallback <Type text="() => Promise<WorkerCode>" /> ): <Type text="WorkerStub" /></code>
@@ -123,6 +129,10 @@ You could, for example, use IDs of the form `<worker-name>:<version-number>`, wh
 
 It is never guaranteed that two requests will go to the same isolate. Even if you use the same `WorkerStub` to make multiple requests, they could execute in different isolates. The callback passed to `loader.get()` could be called any number of times (although it is unusual for it to be called more than once).
 
+Loader caching and module caching are separate. Each isolate has its own module evaluation cache and evaluates each module instance once.
+
+When local development enables the [new module registry](/workers/reference/module-registry/), compiled JavaScript and WebAssembly artifacts can be reused across isolate replicas. Module-level state remains local to each isolate.
+
 ### `WorkerCode`
 
 This is the structure returned by `getCodeCallback` to represent a worker.
@@ -139,13 +149,21 @@ An optional list of [compatibility flags](/workers/configuration/compatibility-f
 
 If true, then experimental compatibility flags will be permitted in `compatibilityFlags`. In order to set this, the worker calling the loader must itself have the compatibility flag `"experimental"` set. Experimental flags cannot be enabled in production.
 
+The new module registry is experimental. Dynamic Workers therefore cannot use it in production.
+
 #### <code>mainModule <Type text="string" /></code>
 
-The name of the Worker's main module. This must be one of the modules listed in `modules`.
+The runtime identifier for the Worker's main module. This must match one of the keys in `modules`.
 
 #### <code>modules <Type text="Record<string, string | Module>"/></code>
 
-A dictionary object mapping module names to their string contents. If the module content is a plain string, then the module name must have a file extension indicating its type: either `.js` or `.py`.
+A dictionary object mapping runtime module identifiers to their contents. These identifiers name uploaded runtime modules, not original source files.
+
+In local development with the [new module registry](/workers/reference/module-registry/), ordinary JavaScript identifiers are canonicalized under `file:///bundle/`. URL specifiers resolve through the registry and do not fetch network resources.
+
+Use ordinary module names unless the upload API documents support for URL-shaped names. These rules do not describe Python import resolution.
+
+If the module content is a plain string, then the module name must have a file extension indicating its type: either `.js` or `.py`.
 
 A module's content can also be specified as an object, in order to specify its type independent from the name. The allowed objects are:
 

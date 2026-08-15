@@ -14,7 +14,17 @@ There are a few key differences to highlight:
 ## Input and output Worker config files
 
 With the Cloudflare Vite plugin, your [Worker config file](/workers/wrangler/configuration/) (for example, `wrangler.jsonc`) is the input configuration and a separate output configuration is created as part of the build.
-This output file is a snapshot of your configuration at the time of the build and is modified to reference your build artifacts.
+Vite transforms your source modules into JavaScript output chunks. With Vite 8, Rolldown emits these chunks.
+
+The output configuration references the entry chunk and sets `no_bundle` to `true`. It also includes rules that let Wrangler upload the other JavaScript chunks as separate runtime modules.
+
+This generated setting prevents Wrangler from rebuilding Vite's output. Vite already handles transpilation and npm package resolution before deployment.
+
+The plugin also applies configured Node.js compatibility polyfills.
+
+The Workers [module registry](/workers/reference/module-registry/) loads these runtime modules. The registry also works with separate modules produced by other build tools.
+
+The output file is a snapshot of your configuration at build time.
 It is the configuration that is used for preview and deployment.
 Once you have run `vite build`, running `wrangler deploy` or `vite preview` will automatically locate this output configuration file.
 
@@ -39,6 +49,8 @@ The following build-related options are handled by Vite and are not applicable w
 - `find_additional_modules`
 - `base_dir`
 - `preserve_file_names`
+
+The input `no_bundle` option is ignored because the plugin always builds source with Vite. The generated output configuration uses `no_bundle` only to stop Wrangler from processing the resulting chunks again.
 
 ### Not supported
 

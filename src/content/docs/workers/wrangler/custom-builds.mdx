@@ -13,7 +13,7 @@ Custom builds are a way for you to customize how your code is compiled, before b
 
 :::note
 
-Wrangler runs [esbuild](https://esbuild.github.io/) by default as part of the `dev` and `deploy` commands, and bundles your Worker project into a single Worker script. Refer to [Bundling](/workers/wrangler/bundling/).
+Wrangler runs [esbuild](https://esbuild.github.io/) by default with the `dev` and `deploy` commands. It produces one JavaScript entry module by default. Refer to [Bundling](/workers/wrangler/bundling/).
 :::
 
 ## Configure custom builds
@@ -47,6 +47,14 @@ Example:
 ```
 
 </WranglerConfig>
+
+## Deploy build output
+
+Wrangler normally processes your custom build output with `esbuild`. It resolves imports and bundles source modules into the entry module.
+
+Use `no_bundle` only when your custom build produces deployment-ready JavaScript. In this mode, Wrangler does not transpile code, resolve npm packages, or inject polyfills.
+
+Include the entry module and every application module the Worker can import. Configure [module rules](/workers/wrangler/configuration/#bundling) for files that Wrangler must upload separately.
 
 ## `WRANGLER_COMMAND` environment variable
 

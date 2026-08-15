@@ -9,7 +9,11 @@ products:
 
 import { PackageManagers } from "~/components";
 
-By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `npx wrangler deploy --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
+By default, Wrangler uses [`esbuild`](https://esbuild.github.io/) to resolve and bundle your source modules. `esbuild` also attempts to resolve installed [npm](https://www.npmjs.com/) package imports.
+
+Wrangler produces one JavaScript entry module by default. An npm package works only if `esbuild` can resolve it and its built code uses APIs available in Workers.
+
+To inspect the uploaded code, run `npx wrangler deploy --dry-run --outdir dist`. This command writes Wrangler's build output to `dist`.
 
 <details>
 <summary>`esbuild` version</summary>
@@ -25,13 +29,25 @@ You can provide `rules` and set `find_additional_modules` in your configuration 
 Furthermore, we have an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which lets you run your own build before Wrangler's built-in one.
 :::
 
+## Understand module stages
+
+These terms describe different stages of a Worker build:
+
+- **Source module**: A file or package module before the build runs.
+- **Output chunk**: A JavaScript file emitted by a build tool. One chunk can contain many source modules.
+- **Runtime module**: A deployed module that the Workers [module registry](/workers/reference/module-registry/) can load.
+
+Wrangler usually converts many source modules into one entry output chunk. Wrangler then uploads that chunk as the entry runtime module.
+
+You can also upload external modules beside the entry module. Wrangler does not inline those modules into the entry output.
+
 ## Including non-JavaScript modules
 
 {/* Changes to this section should also be applied to /workers/vite-plugin/reference/non-javascript-modules */}
 
-Bundling your Worker code takes multiple modules and bundles them into one file.
+Bundling takes multiple source modules and creates one JavaScript output chunk by default.
 Sometimes, you might have modules that cannot be inlined directly into the bundle.
-For example, instead of bundling a Wasm file into your JavaScript Worker, you would want to upload the Wasm file as a separate module that can be imported at runtime.
+For example, you can upload a WebAssembly (Wasm) file as a separate runtime module.
 Wrangler supports this by default for the following file types:
 
 | Module extension        | Imported type        |
@@ -75,7 +91,7 @@ Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`.
 ## Find additional modules
 
 By setting `find_additional_modules` to `true` in your configuration file, Wrangler will traverse the file tree below `base_dir`.
-Any files that match the `rules` you define will also be included as unbundled, external modules in the deployed Worker.
+Wrangler also includes files that match your `rules` as unbundled, external runtime modules.
 
 This approach is useful for supporting lazy loading of large or dynamically imported JavaScript files:
 
@@ -83,7 +99,9 @@ This approach is useful for supporting lazy loading of large or dynamically impo
   If matching rule is added to `rules`, then this file would only be loaded and executed at runtime when it is actually imported.
 - Previously, variable based dynamic imports (for example, ``await import(`./lang/${language}.mjs`)``) would always fail at runtime because Wrangler had no way of knowing which modules to include in the upload.
   Providing a rule that matches all these files, such as `{ "type": "EsModule", "globs": ["./lang/**/*.mjs"], "fallthrough": true }`, will ensure this module is available at runtime.
-- "Partial bundling" is supported when `find_additional_modules` is `true`, and a source file matches one of the configured `rules`, since Wrangler will then treat it as "external" and not try to bundle it into the entry-point file.
+- "Partial bundling" is supported when `find_additional_modules` is `true`, and a source file matches one of the configured `rules`. Wrangler treats the matching file as external and uploads it as a separate runtime module.
+
+External modules must already contain code that the Workers runtime can execute. Wrangler does not process them as part of the entry module bundle.
 
 ## `NODE_ENV`
 
@@ -124,13 +142,20 @@ Wrangler respects the [conditional `exports` field](https://nodejs.org/api/packa
 Disabling bundling is not recommended in most scenarios. Use this option only when deploying code pre-processed by other tooling.
 :::
 
-If your build tooling already produces build artifacts suitable for direct deployment to Cloudflare, you can opt out of bundling by using the `--no-bundle` command line flag: `npx wrangler deploy --no-bundle`. If you opt out of bundling, Wrangler will not process your code and some features introduced by Wrangler bundling (for example minification, and polyfills injection) will not be available.
+If another build tool produces deployment-ready files, use `npx wrangler deploy --no-bundle`. Wrangler then skips transpilation, npm package resolution, minification, and polyfill injection.
+
+Your output must include the entry module and every application module the Worker can import. Configure [`rules`](/workers/wrangler/configuration/#bundling) so Wrangler includes each module type in the deployment.
 
 Use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use [`wrangler dev`](/workers/wrangler/commands/general/#dev) and [`wrangler deploy`](/workers/wrangler/commands/general/#deploy).
 
 ## Generated Wrangler configuration
 
-Some framework tools, or custom pre-build processes, generate a modified Wrangler configuration to be used to deploy the Worker code.
-It is possible for Wrangler to automatically use this generated configuration rather than the original, user's configuration.
+Some framework tools or custom build processes generate a modified Wrangler configuration. Wrangler can use this generated configuration instead of your original configuration.
 
-See [Generated Wrangler configuration](/workers/wrangler/configuration/#generated-wrangler-configuration) for more information.
+The Cloudflare Vite plugin uses this workflow for every supported Vite version. With Vite 8, Rolldown emits JavaScript output chunks. The plugin generates a `no_bundle` configuration that uploads those chunks as separate runtime modules without rebuilding them.
+
+The generated `no_bundle` setting applies only after Vite processes the source. Vite handles transpilation and package resolution before Wrangler uploads the output.
+
+The plugin also applies configured Node.js compatibility polyfills during the build.
+
+For more information, refer to [Generated Wrangler configuration](/workers/wrangler/configuration/#generated-wrangler-configuration).

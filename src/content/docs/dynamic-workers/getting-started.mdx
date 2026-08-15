@@ -14,10 +14,10 @@ You can create a Worker that spins up other Workers, called Dynamic Workers, at 
 
 Dynamic Workers support two loading modes:
 
-- `load(code)` creates a fresh Dynamic Worker for one-time execution.
-- `get(id, callback)` caches a Dynamic Worker by ID so it can stay warm across requests.
+- `load(code)` creates a fresh Dynamic Worker without an ID cache.
+- `get(id, callback)` lets the runtime reuse code or a warm isolate by ID.
 
-`load()` is best for one-time code execution, for example when using [Code Mode](/agents/tools/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
+Use `load()` for one-time code execution, such as [Code Mode](/agents/tools/codemode/). Use `get()` when subsequent requests can use identical code. Reuse is not guaranteed.
 
 ### Try it out
 
@@ -99,11 +99,13 @@ In this example, `env.LOADER.load()` creates a Dynamic Worker from the code defi
 
 `worker.getEntrypoint().fetch(request)` sends the incoming request to the Dynamic Worker's `fetch()` handler, which processes it and returns a response.
 
+`mainModule` and the `modules` keys are runtime module identifiers. They do not represent original source paths. For import resolution details, refer to the [module registry reference](/workers/reference/module-registry/).
+
 ### Reusing a Dynamic Worker across requests
 
-If you expect to load the exact same Worker more than once, use [`get(id, callback)`](/dynamic-workers/api-reference/#get) instead of `load()`. The `id` should be a unique string identifying the particular code you intend to load. When the runtime sees the same `id` again, it can reuse the existing Worker instead of creating a new one, if it hasn't been evicted yet.
+If you expect to load identical code more than once, use [`get(id, callback)`](/dynamic-workers/api-reference/#get) instead of `load()`. The `id` should identify one exact code and configuration version. The runtime can reuse a warm Worker for that ID, but reuse is not guaranteed.
 
-The callback you provide will only be called if the Worker is not already loaded. This lets you skip loading the code from storage when the Worker is already running.
+The runtime calls your callback when it needs the Worker code. It can call the callback more than once, so return identical content for each ID.
 
 <TypeScriptExample>
 

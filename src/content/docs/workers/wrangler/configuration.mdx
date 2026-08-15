@@ -182,7 +182,8 @@ The `main` key is optional for assets-only Workers.
   - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [Custom builds](#custom-builds).
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 - `no_bundle` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip internal build steps and directly deploy your Worker script. You must have a plain JavaScript Worker with no dependencies.
+  - Skip Wrangler's transpilation, npm package resolution, bundling, minification, and polyfill injection.
+  - Use this option only with deployment-ready JavaScript from another build tool. Include the entry module and every application module the Worker can import.
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 - `find_additional_modules` <Type text="boolean" /> <MetaInfo text="optional" />
   - If true then Wrangler will traverse the file tree below `base_dir`.
@@ -1408,12 +1409,15 @@ Wrangler bundling is not applicable if you're using the [Cloudflare Vite plugin]
 :::
 
 Wrangler can operate in two modes: the default bundling mode and `--no-bundle` mode.
-In bundling mode, Wrangler will traverse all the imports of your code and generate a single JavaScript "entry-point" file.
-Imported source code is "inlined/bundled" into this entry-point file.
+In bundling mode, Wrangler traverses your source module imports. It uses `esbuild` to resolve package imports and generate one JavaScript entry module by default.
+
+In `--no-bundle` mode, Wrangler uploads deployment-ready modules without rebuilding them. Wrangler does not transpile source, resolve npm packages, or inject polyfills in this mode.
 
 It is also possible to include additional modules into your Worker, which are uploaded alongside the entry-point.
 You specify which additional modules should be included into your Worker using the `rules` key, making these modules available to be imported when your Worker is invoked.
 The `rules` key will be an array of the below object.
+
+These uploaded files become runtime modules. The Workers [module registry](/workers/reference/module-registry/) resolves imports between them.
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
   - The type of module. Must be one of: `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
@@ -1460,6 +1464,8 @@ Normally Wrangler will only include additional modules that are statically impor
 By setting `find_additional_modules` to `true` in your configuration file, Wrangler will traverse the file tree below `base_dir`.
 Any files that match `rules` will also be included as unbundled, external modules in the deployed Worker.
 `base_dir` defaults to the directory containing your `main` entrypoint.
+
+External modules must already use syntax and APIs supported by Workers. Wrangler does not process them as part of the entry bundle.
 
 See https://developers.cloudflare.com/workers/wrangler/bundling/ for more details and examples.
 
@@ -1753,6 +1759,10 @@ It is unlikely that an application developer will need to use this feature, but 
 For example, when using the [Cloudflare Vite plugin](/workers/vite-plugin/), an output Worker configuration file is generated as part of the build. This is then used for preview and deployment.
 
 :::
+
+Vite transforms source modules into JavaScript output chunks before generating this configuration. With Vite 8, Rolldown emits these chunks, and the plugin configures Wrangler to upload them as separate runtime modules with `no_bundle` enabled.
+
+The generated setting prevents Wrangler from rebuilding Vite's output. It does not skip Vite's transpilation, npm package resolution, or configured polyfills.
 
 Some framework tools, or custom pre-build processes, generate a modified Wrangler configuration to be used to deploy the Worker code.
 In this case, the tool may also create a special `.wrangler/deploy/config.json` file that redirects Wrangler to use the generated configuration rather than the original, user's configuration.

@@ -31,6 +31,16 @@ If you're using the [Workers Script Upload API](/api/resources/workers/subresour
 }
 ```
 
+## Name modules
+
+Each multipart file part name is a runtime module identifier. The `main_module` value selects one of those identifiers as the entrypoint. Module identifiers name uploaded runtime modules or output chunks, not original source files.
+
+For JavaScript Workers using the [new module registry](/workers/reference/module-registry/), ordinary identifiers are canonicalized under `file:///bundle/`. Imports link against matching uploaded registry entries.
+
+URL specifiers resolve through the registry and do not fetch network resources. Use ordinary module names unless the upload API documents support for URL-shaped names.
+
+If your build emits multiple modules or chunks, upload every output as a separate multipart part. Preserve each generated name and content type so imports continue to resolve.
+
 :::note
 
 See examples of metadata being used with the Workers Script Upload API [here](/workers/platform/infrastructure-as-code#cloudflare-rest-api).

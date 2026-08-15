@@ -6,24 +6,26 @@ _build:
 
 name: "New module registry"
 sort_date: "2026-08-05"
+experimental: true
 enable_flag: "new_module_registry"
 disable_flag: "legacy_module_registry"
 ---
 
-The `new_module_registry` flag replaces the Workers module registry with a new
-implementation that resolves specifiers as URLs instead of filesystem-style paths.
+The experimental `new_module_registry` flag selects a URL-based Workers module registry. Use `legacy_module_registry` to select the legacy registry.
 
 When enabled, the new registry provides:
 
-- `import.meta.url`, `import.meta.main`, and `import.meta.resolve()` support.
-- Specifiers are parsed and resolved as URLs, including query strings and fragments.
-- `node:` built-ins resolve to the same module instance regardless of how they are reached.
-- Import attributes (`with { type: 'json' }`) are correctly validated.
-- `require()` on an ES module follows Node.js `require(esm)` rules.
-- Consistent error classes and messages across all loading paths.
-- Lazy module compilation and shared compiled code across V8 isolate replicas.
-- WebAssembly source phase imports.
+- `import.meta` URL, path, entrypoint, and resolution metadata
+- URL-based specifiers with query and fragment identities
+- Import attribute validation and Node.js `require(esm)` behavior
+- Consistent errors across module loading paths
+- Lazy compilation and reusable compiled artifacts
+- Dynamic WebAssembly source phase imports
 
-This flag does not have a default-on date yet. You must add it explicitly to
-your `compatibility_flags`. For more information, refer to the
-[module registry reference](/workers/reference/module-registry/).
+Static `import source` works with both registries. Dynamic `import.source()` requires the new registry.
+
+This flag has no default date. Add `new_module_registry` explicitly to opt in.
+
+This flag only applies to JavaScript Workers. Python Workers ignore it and use the legacy registry.
+
+For configuration and tooling requirements, refer to the [module registry reference](/workers/reference/module-registry/).

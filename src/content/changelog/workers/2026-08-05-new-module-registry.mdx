@@ -1,25 +1,24 @@
 ---
-title: New module registry with import.meta, lazy compilation, and URL-based resolution
-description: A new module registry implementation is available via the new_module_registry compatibility flag, bringing import.meta support, URL-based specifier resolution, lazy compilation, shared caching, and WebAssembly source phase imports.
+title: Experimental module registry
+description: Opt into URL-based module loading and runtime metadata.
 products:
   - workers
 date: 2026-08-05
 ---
 
-A new module registry implementation is available via the `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry). The new registry resolves module specifiers as URLs rather than filesystem-style paths, and includes several new capabilities and performance improvements.
+The experimental `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry) selects a URL-based module registry. It provides new module APIs and more consistent loading behavior.
 
-## New capabilities
+Key changes include:
 
-- **`import.meta`** -- `import.meta.url`, `import.meta.main`, and `import.meta.resolve()` are now supported.
-- **URL-based specifier resolution** -- relative imports resolve the same way `new URL(specifier, base)` does. Query strings and fragments create distinct module instances, matching browser behavior.
-- **Singleton `node:` built-ins** -- `node:` modules return the same instance whether accessed via static `import`, dynamic `import()`, `require()`, or `process.getBuiltinModule()`.
-- **Import attribute validation** -- import attributes (`with { type: 'json' }`) are correctly validated. Unrecognized attribute keys and type mismatches throw errors instead of being silently ignored.
-- **`require(esm)` support** -- `require()` on an ES module follows Node.js `require(esm)` rules, including the `'module.exports'` named export convention and the top-level `await` restriction.
-- **WebAssembly source phase imports** -- import a compiled `WebAssembly.Module` directly with `import source mod from './module.wasm'` or `await import.source('./module.wasm')`.
+- **Module metadata** — Use `import.meta.url`, `import.meta.main`, and `import.meta.resolve()`.
+- **URL identity** — Queries and fragments identify separate bundle module instances.
+- **Module loading** — Validate import attributes and follow Node.js `require(esm)` behavior.
+- **Consistent errors** — Use the same error classes across loading paths.
+- **Lazy compilation** — Compile modules when they are first imported.
+- **Compiled artifacts** — Reuse cached compilation data when available.
 
-## Performance improvements
+Dynamic WebAssembly source phase imports through `import.source()` require the new registry. Static `import source` works with both registries.
 
-- **Lazy compilation** -- modules are compiled on first import rather than all at startup, reducing cold start time for Workers with modules that are not always used.
-- **Shared compiled code** -- compiled V8 bytecode is produced once and shared across all isolate replicas of a Worker, eliminating redundant compilation.
+Use [Wrangler](/workers/wrangler/) 4.87.0 or later. For Vite projects, use [Cloudflare Vite plugin](/workers/vite-plugin/) 1.35.0 or later.
 
-For the full reference, refer to the [module registry documentation](/workers/reference/module-registry/).
+For configuration, tooling caveats, and API details, refer to the [module registry reference](/workers/reference/module-registry/). For WebAssembly examples, refer to [Wasm in JavaScript](/workers/runtime-apis/webassembly/javascript/#use-source-phase-imports).

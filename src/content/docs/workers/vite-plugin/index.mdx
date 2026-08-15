@@ -8,17 +8,26 @@ products:
   - workers
 ---
 
-The Cloudflare Vite plugin enables a full-featured integration between [Vite](https://vite.dev/) and the [Workers runtime](/workers/runtime-apis/).
-Your Worker code runs inside [workerd](https://github.com/cloudflare/workerd), matching the production behavior as closely as possible and providing confidence as you develop and deploy your applications.
+The Cloudflare Vite plugin integrates [Vite](https://vite.dev/) with the [Workers runtime](/workers/runtime-apis/).
+Your Worker code runs inside [workerd](https://github.com/cloudflare/workerd) during local development.
 
 ## Features
 
 - Uses the Vite [Environment API](https://vite.dev/guide/api-environment) to integrate Vite with the Workers runtime
 - Provides direct access to [Workers runtime APIs](/workers/runtime-apis/) and [bindings](/workers/runtime-apis/bindings/)
+- Handles installed npm package resolution through Vite's build pipeline
 - Builds your front-end assets for deployment to Cloudflare, enabling you to build static sites, SPAs, and full-stack applications
 - Official support for [TanStack Start](https://tanstack.com/start/) and [React Router v8](https://reactrouter.com/) with server-side rendering
 - Leverages Vite's hot module replacement for consistently fast updates
 - Supports `vite preview` for previewing your build output in the Workers runtime prior to deployment
+
+The plugin supports Vite 6.1, 7, and 8. You do not need Vite 8 to use the plugin.
+
+With Vite 8, Rolldown can emit multiple JavaScript output chunks. The plugin deploys these chunks as separate runtime modules through generated `no_bundle` configuration.
+
+The Workers [module registry](/workers/reference/module-registry/) loads deployed runtime modules. Its behavior applies regardless of which supported build tool produced those modules.
+
+Vite package resolution does not guarantee runtime compatibility. A package must use APIs supported by the Workers runtime.
 
 ## Use cases
 

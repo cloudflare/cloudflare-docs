@@ -40,6 +40,10 @@ You could, for example, use IDs of the form `<worker-name>:<version-number>`, wh
 
 It is never guaranteed that two requests will go to the same isolate. Even if you use the same `WorkerStub` to make multiple requests, they could execute in different isolates. The callback passed to `loader.get()` could be called any number of times (although it is unusual for it to be called more than once).
 
+Loader caching and module caching are separate. Each isolate has its own module evaluation cache and evaluates each module instance once.
+
+When local development enables the [new module registry](/workers/reference/module-registry/), compiled JavaScript and WebAssembly artifacts can be shared across isolate replicas. Module-level state remains local to each isolate.
+
 ### `WorkerCode`
 
 This is the structure returned by `getCodeCallback` to represent a worker.
@@ -56,13 +60,21 @@ An optional list of [compatibility flags](/workers/configuration/compatibility-f
 
 If true, then experimental compatibility flags will be permitted in `compatibilityFlags`. In order to set this, the worker calling the loader must itself have the compatibility flag `"experimental"` set. Experimental flags cannot be enabled in production.
 
+The new module registry is experimental. Dynamic Workers therefore cannot use it in production.
+
 #### <code>mainModule <Type text="string" /></code>
 
-The name of the Worker's main module. This must be one of the modules listed in `modules`.
+The runtime identifier for the Worker's main module. This must match one of the keys in `modules`.
 
 #### <code>modules <Type text="Record<string, string | Module>"/></code>
 
-A dictionary object mapping module names to their string contents. If the module content is a plain string, then the module name must have a file extension indicating its type: either `.js` or `.py`.
+A dictionary object mapping runtime module identifiers to their contents. These identifiers name uploaded runtime modules, not original source files.
+
+In local development with the [new module registry](/workers/reference/module-registry/), ordinary JavaScript module identifiers are canonicalized under `file:///bundle/`. Imports resolve against that registry, and URL specifiers do not fetch network resources.
+
+Use ordinary module names unless the upload API documents support for URL-shaped names. These rules do not describe Python import resolution.
+
+If the module content is a plain string, then the module name must have a file extension indicating its type: either `.js` or `.py`.
 
 A module's content can also be specified as an object, in order to specify its type independent from the name. The allowed objects are:
 

@@ -128,6 +128,12 @@ export default defineConfig({
 
 You can find an example in the [Recipes](/workers/testing/vitest-integration/recipes) page.
 
+### New module registry
+
+The Workers Vitest integration does not support the [`new_module_registry`](/workers/reference/module-registry/) compatibility flag.
+
+Run tests with the legacy module registry.
+
 ### Importing modules from global setup file
 
 Although Vitest is set up to resolve packages for the [`workerd`](https://github.com/cloudflare/workerd) runtime, it runs your global setup file in the Node.js environment. This can cause issues when importing packages like [Postgres.js](https://github.com/cloudflare/workers-sdk/issues/6465), which exports a non-Node version for `workerd`.

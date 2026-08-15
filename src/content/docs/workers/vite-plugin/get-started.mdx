@@ -40,6 +40,8 @@ Ensure that you include `"type": "module"` in order to use ES modules by default
 
 <PackageManagers type="add" pkg="vite @cloudflare/vite-plugin wrangler" dev />
 
+The plugin supports Vite 6.1, 7, and 8. Vite 8 is not required.
+
 ## Create your Vite config file and include the Cloudflare plugin
 
 ```ts title="vite.config.ts"
@@ -54,6 +56,8 @@ export default defineConfig({
 The Cloudflare Vite plugin doesn't require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json` or `wrangler.toml` in the root of your application.
 
 Refer to the [API reference](/workers/vite-plugin/reference/api/) for configuration options.
+
+Vite handles installed npm package resolution and processes source modules. A package must resolve successfully and use APIs available in Workers.
 
 ## Create your Worker config file
 
@@ -75,6 +79,12 @@ By default, this is also used as the name of the Worker's Vite Environment (see 
 The `main` field specifies the entry file for your Worker code.
 
 For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
+During `vite build`, Vite transforms source modules into JavaScript output chunks. With Vite 8, Rolldown emits these chunks.
+
+The plugin generates a `no_bundle` Wrangler configuration for the output. Wrangler then uploads the chunks as separate runtime modules without rebuilding them.
+
+The Workers [module registry](/workers/reference/module-registry/) loads these runtime modules. You can use registry features with modules from other supported build tools.
 
 ## Create your Worker entry file
 

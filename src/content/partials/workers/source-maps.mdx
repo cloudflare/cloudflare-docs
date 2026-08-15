@@ -6,4 +6,6 @@
 
 Most JavaScript code is first bundled, often transpiled, and then minified before being deployed to production. This process creates smaller bundles to optimize performance and converts code from TypeScript to Javascript if needed.
 
-Source maps translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
+Stack frames can identify deployed output with URLs such as `file:///bundle/index.js`. These URLs identify uploaded runtime modules, not your original source files. For details, refer to the [module registry reference](/workers/reference/module-registry/).
+
+Source maps translate compiled and minified output back to your original code. Cloudflare combines source maps with runtime stack traces to show original file names and line numbers.

@@ -13,13 +13,9 @@ import { Render } from "~/components";
 You can use [`node:fs`](https://nodejs.org/api/fs.html) to access a virtual file
 system in Workers.
 
-The `node:fs` module is available in Workers runtimes that support Node.js
-compatibility using the `nodejs_compat` compatibility flag. Any Worker
-running with `nodejs_compat` enabled and with a compatibility date of
-`2025-09-01` or later will have access to `node:fs` by default. It is
-also possible to enable `node:fs` on Workers with an earlier compatibility
-date using a combination of the `nodejs_compat` and `enable_nodejs_fs_module`
-flags. To disable `node:fs` you can set the `disable_nodejs_fs_module` flag.
+The `node:fs` module requires Node.js compatibility and a compatibility date of `2025-09-01` or later. For compatibility dates on or after `2026-08-04`, Node.js compatibility is enabled by default.
+
+For compatibility dates from `2025-09-01` through `2026-08-03`, add the `nodejs_compat` flag. For earlier dates, add both `nodejs_compat` and `enable_nodejs_fs_module`. To turn off `node:fs`, add `disable_nodejs_fs_module`.
 
 ```js
 import { readFileSync, writeFileSync } from "node:fs";
@@ -30,8 +26,8 @@ writeFileSync("/tmp/abc.txt", "Hello, world!");
 ```
 
 The Workers Virtual File System (VFS) is a memory-based file system that allows
-you to read modules included in your Worker bundle as read-only files, access a
-directory for writing temporary files, or access common
+you to read uploaded runtime modules as read-only files, access a directory for
+writing temporary files, or access common
 [character devices](https://linux-kernel-labs.github.io/refs/heads/master/labs/device_drivers.html) like
 `/dev/null`, `/dev/random`, `/dev/full`, and `/dev/zero`.
 
@@ -40,7 +36,7 @@ The directory structure initially looks like:
 ```
 
 /bundle
-└── (one file for each module in your Worker bundle)
+└── (one file for each uploaded runtime module or output chunk)
 /tmp
 └── (empty, but you can write files, create directories, symlinks, etc)
 /dev
@@ -51,10 +47,14 @@ The directory structure initially looks like:
 
 ```
 
-The `/bundle` directory contains the files for all modules included in your
-Worker bundle, which you can read using APIs like `readFileSync` or
-`read(...)`, etc. These are always read-only. Reading from the bundle
-can be useful when you need to read a config file or a template.
+The `/bundle` directory contains modules uploaded for runtime execution. These
+can include generated output chunks and separately uploaded modules. They are
+not necessarily your original source files.
+
+Uploaded modules are always read-only. You can read them with APIs such as
+`readFileSync()` or `read()`. With the [new module registry](/workers/reference/module-registry/),
+an ordinary module name such as `config.txt` has the URL
+`file:///bundle/config.txt`.
 
 ```js
 import { readFileSync } from "node:fs";

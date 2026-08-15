@@ -65,6 +65,44 @@ For more information about Vite's configuration options, see [Configuring Vite](
 
 The default behavior of using the Worker name as the environment name is appropriate when you have a standalone Worker, such as an API that is accessed from your front-end application, or an [auxiliary Worker](/workers/vite-plugin/reference/api/#interface-pluginconfig) that is accessed via service bindings.
 
+## Troubleshoot package resolution
+
+With Vite 8, the plugin sets Rolldown's `platform` to `"neutral"` for Worker environments. Keep this default unless a specific package requires Node-targeted transformations.
+
+For that package-specific workaround, add a plugin that overrides both build and dependency optimization settings after the Cloudflare plugin applies its defaults:
+
+```ts title="vite.config.ts"
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [
+		cloudflare(),
+		{
+			name: "worker-node-platform",
+			configEnvironment(name) {
+				if (name !== "my_worker") {
+					return;
+				}
+
+				return {
+					build: {
+						rolldownOptions: { platform: "node" },
+					},
+					optimizeDeps: {
+						rolldownOptions: { platform: "node" },
+					},
+				};
+			},
+		},
+	],
+});
+```
+
+This environment-wide override changes how Rolldown resolves and transforms modules in the selected Worker environment. It does not add Node.js APIs to the Workers runtime.
+
+Use [`nodejs_compat`](/workers/runtime-apis/nodejs/) for supported Node.js APIs and polyfills. The override does not preserve every CommonJS module boundary or guarantee package compatibility.
+
 ## Full-stack frameworks
 
 If you are using the Cloudflare Vite plugin with [TanStack Start](https://tanstack.com/start/) or [React Router v8](https://reactrouter.com/), then your Worker is used for server-side rendering and tightly integrated with the framework.

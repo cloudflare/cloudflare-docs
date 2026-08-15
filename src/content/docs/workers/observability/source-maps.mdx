@@ -80,7 +80,7 @@ Let's see how source maps can simplify debugging an error in the ComplexCalculat
 
 ![Stack Trace without Source Map remapping](~/assets/images/workers-observability/without-source-map.png)
 
-With **no source maps uploaded**: notice how all the Javascript has been minified to one file, so the stack trace is missing information on file name, shows incorrect line numbers, and incorrectly references `js` instead of `ts`.
+With **no source maps uploaded**: the stack trace references generated JavaScript output. Depending on your bundler, this output can contain one module or several chunks. The trace lacks original file names and line numbers.
 
 ![Stack Trace with Source Map remapping](~/assets/images/workers-observability/with-source-map.png)
 

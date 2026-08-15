@@ -222,6 +222,12 @@ This means that you are doing work in the top-level scope of your Worker that ta
 
 This means that you are doing work in the top-level scope of your Worker that allocates more than the [memory limit (128 MB)](/workers/platform/limits/#memory) of memory.
 
+### Module loading errors
+
+With the [new module registry](/workers/reference/module-registry/), errors in the statically reached startup graph appear during upload validation. A separately uploaded lazy module compiles on first import. Its errors can instead appear during the invocation that first imports it.
+
+A missing module throws an `Error`. An invalid specifier or unsupported import attribute throws a `TypeError`. The registry uses consistent resolution errors across static `import`, dynamic `import()`, and `require()`.
+
 ## Runtime errors
 
 Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.

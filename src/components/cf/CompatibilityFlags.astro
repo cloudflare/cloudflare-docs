@@ -17,9 +17,7 @@ const { experimental } = props.parse(Astro.props);
 
 let flags = await getCollection("compatibility-flags");
 
-if (experimental) {
-	flags = flags.filter((x) => x.data.experimental);
-}
+flags = flags.filter((x) => Boolean(x.data.experimental) === experimental);
 
 flags.sort(
 	(a, b) =>

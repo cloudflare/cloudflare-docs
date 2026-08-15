@@ -78,7 +78,9 @@ const response = await worker.getEntrypoint().fetch(request);
 
 </TypeScriptExample>
 
-In the playground, you can see this in action — run the same Dynamic Worker twice and the second request shows a cached result with 0ms cold start, since the build and load phases are skipped entirely.
+In the playground, a cache hit can skip the build and load phases. Reuse is not guaranteed, so a later request can still create a new isolate or call the code callback again.
+
+Loader reuse is separate from module caching. Each isolate retains its own module-level state.
 
 ## Observability with Tail Workers
 

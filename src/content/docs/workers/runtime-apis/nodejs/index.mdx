@@ -9,14 +9,24 @@ products:
 
 import { Render, WranglerConfig } from "~/components";
 
-When you write a Worker, you may need to import packages from [npm](https://www.npmjs.com/). Many npm packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these Node.js APIs are available.
+Using a package from [npm](https://www.npmjs.com/) involves three separate layers:
+
+1. Your build tool resolves the installed package and processes its source modules.
+2. The Workers [module registry](/workers/reference/module-registry/) loads the runtime modules included in your deployment.
+3. The Workers runtime provides the APIs that the package calls.
+
+Wrangler uses [`esbuild`](/workers/wrangler/bundling/) for the first layer. The [Cloudflare Vite plugin](/workers/vite-plugin/) uses Vite instead.
+
+A package works only when all three layers are compatible. The runtime does not install packages or resolve package names from npm.
+
+Many npm packages rely on [Node.js runtime](https://nodejs.org/en/about) APIs. These packages require the corresponding APIs or compatible polyfills.
 
 Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
 1. As built-in APIs provided by the Workers Runtime. Most of these APIs are
    full implementations of the corresponding Node.js APIs, while a few are
    partially supported.
-2. As polyfill shim implementations that [Wrangler](/workers/wrangler/) adds to your Worker's code, allowing it to import the module, but calling API methods will throw errors.
+2. As polyfill shim implementations that Wrangler or the [Cloudflare Vite plugin](/workers/vite-plugin/) adds to your Worker's code. These shims allow imports, but some API methods throw errors.
 
 ## Get Started
 
@@ -89,21 +99,21 @@ If an API you wish to use is missing and you want to suggest that Workers suppor
 
 Some Node.js modules are available as non-functional stubs. A stub can be imported or required, but does not provide a working implementation of the underlying Node.js API. These stubs exist so packages that check for the presence of a module can load in Workers, but they are not suitable for direct use in application code.
 
-The following stubs are enabled automatically only when the `nodejs_compat` compatibility flag is enabled and your Worker's compatibility date is on or after the date shown. To enable one earlier, add the corresponding enable flag. To keep one unavailable after that date, add the corresponding disable flag.
+The following stubs are enabled automatically when Node.js compatibility is active and your Worker's compatibility date is on or after the date shown. To enable one earlier, add the corresponding enable flag. To keep one unavailable after that date, add the corresponding disable flag.
 
 <Render file="nodejs-compat-stub-modules" product="workers" />
 
 ### Node.js API Polyfills
 
-Node.js APIs that are not yet supported in the Workers runtime are polyfilled via [Wrangler](/workers/wrangler/), which uses [unenv](https://github.com/unjs/unenv). If the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/) is enabled, and your Worker's [compatibility date](/workers/configuration/compatibility-dates/) is 2024-09-23 or later, Wrangler will automatically inject polyfills into your Worker's code.
+Node.js APIs that are not yet supported in the Workers runtime are polyfilled with [unenv](https://github.com/unjs/unenv). Wrangler and the Cloudflare Vite plugin can inject these polyfills during the build. This requires the `nodejs_compat` behavior described in [Get started](#get-started).
 
-Adding polyfills maximizes compatibility with existing npm packages by providing modules with mocked methods. Calling these mocked methods will either noop or will throw an error with a message like:
+Adding polyfills can improve compatibility with existing npm packages. Some polyfilled modules contain mocked methods that do nothing or throw an error like:
 
 ```
 [unenv] <method name> is not implemented yet!
 ```
 
-This allows you to import packages that use these Node.js modules, even if certain methods are not supported.
+This can let a package load even when some methods remain unsupported. Node.js compatibility does not guarantee compatibility with every npm package.
 
 ## Enable only AsyncLocalStorage
 
