@@ -15,7 +15,7 @@ tags:
   - GCP
 ---
 
-import { FeatureTable, ProductAvailabilityText, Render } from "~/components";
+import { ProductAvailabilityText, Render } from "~/components";
 
 Cloud Connector <ProductAvailabilityText product="cloud-connector" /> allows you to route matching incoming traffic from your website to a public cloud provider that you define: [Cloudflare R2](/r2/) object storage or an external provider such as AWS, Google Cloud, and Azure. With Cloud Connector, you can manage traffic to cloud-hosted content through the same Cloudflare dashboard you use for the rest of your website, without having to configure additional rules.
 
@@ -57,4 +57,7 @@ Cloud Connector will not apply any of the following configurations:
 
 Cloud Connector is available in beta to all customers. The maximum number of rules depends on your Cloudflare plan:
 
-<FeatureTable id="rules.cloud_connector" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 10 | 25 | 50 | 300 |
