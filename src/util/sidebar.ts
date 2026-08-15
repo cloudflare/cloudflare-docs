@@ -236,6 +236,127 @@ function markInternalRedirects(items: SidebarItem[]): SidebarItem[] {
 export const externalAppLinksTransform: SidebarTransform = ({ tree }) =>
 	markInternalRedirects(markExternalAppLinks(tree));
 
+// --- Style-guide journey grouping -------------------------------------------
+// Regroups the flat style-guide sections into five journey-ordered buckets
+// (Contribute → Plan → Write → Build → How we docs) purely in the nav: no files
+// move, so every URL is unchanged. Whole sections nest under a bucket; the deep
+// cross-section promotions the IA charter also wants (voice-and-tone out of
+// content-strategy, reviews into Contribute) are deferred to the physical-move
+// phase, because virtually lifting a deep page would make its breadcrumb
+// contradict the nav.
+
+const STYLE_GUIDE_SECTION = "style-guide";
+const HOW_WE_DOCS_KEY = "how-we-docs";
+
+// Second path segment of a node's own URL (`/style-guide/<key>/…`), or
+// undefined for nodes that are not a style-guide section (e.g. the section
+// overview leaf or an injected group with no own URL).
+function styleGuideKey(item: SidebarItem): string | undefined {
+	const href =
+		item.type === "group" ? (item.indexHref ?? item._routeKey) : item.href;
+	if (!href) return undefined;
+	const [seg0, seg1] = trimSlashes(href).split("/");
+	return seg0 === STYLE_GUIDE_SECTION ? seg1 : undefined;
+}
+
+interface JourneyBucket {
+	label: string;
+	keys: string[];
+}
+
+// Ordered buckets. `how-we-docs` is intentionally omitted: it maps 1:1 to an
+// existing group, so it is kept as-is (no redundant "How we docs > How we docs")
+// and only reordered to the end.
+const STYLE_GUIDE_BUCKETS: JourneyBucket[] = [
+	{ label: "Contribute", keys: ["contributions"] },
+	{
+		label: "Plan your content",
+		keys: ["documentation-content-strategy", "api-content-strategy"],
+	},
+	{ label: "Style & grammar", keys: ["grammar", "formatting"] },
+	{ label: "Build the page", keys: ["frontmatter", "components"] },
+];
+
+const STYLE_GUIDE_BUCKET_LABELS = new Set(
+	STYLE_GUIDE_BUCKETS.map((b) => b.label),
+);
+
+export const styleGuideGroupingTransform: SidebarTransform = ({
+	tree,
+	sectionSlug,
+}) => {
+	if (sectionSlug !== STYLE_GUIDE_SECTION) return tree;
+
+	// Idempotency guard: if the rail is already bucketed (a synthetic wrapper
+	// group has no landing page), leave it untouched. Cheap insurance against a
+	// future maintainer composing this transform more than once.
+	const alreadyGrouped = tree.some(
+		(item) =>
+			item.type === "group" &&
+			!item.indexHref &&
+			STYLE_GUIDE_BUCKET_LABELS.has(item.label),
+	);
+	if (alreadyGrouped) return tree;
+
+	// One canonical node per section key, preferring the real section group over
+	// a same-key redirect link so a bucket always nests the section, not a stub.
+	const byKey = new Map<string, SidebarItem>();
+	for (const item of tree) {
+		const key = styleGuideKey(item);
+		if (!key) continue;
+		const existing = byKey.get(key);
+		if (!existing || (existing.type !== "group" && item.type === "group")) {
+			byKey.set(key, item);
+		}
+	}
+
+	// Track placement by reference — never by key — so nothing is dropped even
+	// when two nodes resolve to the same section key.
+	const placed = new Set<SidebarItem>();
+	const result: SidebarItem[] = [];
+	let order = 0;
+
+	for (const bucket of STYLE_GUIDE_BUCKETS) {
+		const children = bucket.keys
+			.map((key) => byKey.get(key))
+			.filter((item): item is SidebarItem => item !== undefined);
+		if (children.length === 0) continue;
+		children.forEach((item) => placed.add(item));
+
+		// A 1:1 bucket stays at the top level as its own section — wrapping a lone
+		// entry in a same-named group reads as "Contribute > Contributions". A
+		// wrapper is only earned once a bucket holds two or more sections.
+		if (children.length === 1) {
+			result.push({ ...children[0], order: order++ });
+			continue;
+		}
+		result.push({
+			type: "group",
+			label: bucket.label,
+			order: order++,
+			collapsed: false,
+			children: children.map((item, i) => ({ ...item, order: i })),
+		});
+	}
+
+	// How we docs maps 1:1 to an existing group: keep it, just move to the end.
+	const howWeDocs = byKey.get(HOW_WE_DOCS_KEY);
+	if (howWeDocs) {
+		placed.add(howWeDocs);
+		result.push({ ...howWeDocs, order: order++ });
+	}
+
+	// Append every node not placed into a bucket (the section overview leaf,
+	// same-key stubs, unknown or future sections) verbatim, by reference, so the
+	// transform can only regroup — never lose a page.
+	for (const item of tree) {
+		if (placed.has(item)) continue;
+		result.push({ ...item, order: order++ });
+	}
+
+	return result;
+};
+
 // --- Badges -----------------------------------------------------------------
 
 // Map a default-variant badge's text to its variant; non-default variants and
@@ -316,7 +437,8 @@ function applyBadges(
 // Isolate learning paths + agent resources + external-app re-marking + badges.
 // Runs before nimbus-docs' overview-leaf pass, so group badges still see `indexHref`.
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
-	const tree = isolateLearningPath(ctx.tree, ctx.currentSlug);
+	const isolated = isolateLearningPath(ctx.tree, ctx.currentSlug);
+	const tree = await styleGuideGroupingTransform({ ...ctx, tree: isolated });
 	const withAgentResources = await agentResourcesTransform({ ...ctx, tree });
 	const withExternal = markExternalAppLinks(withAgentResources);
 	const withRedirects = markInternalRedirects(withExternal);

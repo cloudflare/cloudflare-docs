@@ -1,26 +1,58 @@
 ---
 title: Style Guide
 pcx_content_type: overview
-description: Improve your contributions to Cloudflare's documentation. Ensure consistency, professionalism, and clarity in your content across all products.
+description: Write and review Cloudflare content so the whole site reads as if one careful author wrote it. Grammar, formatting, content strategy, components, and team process.
 sidebar:
   order: 1
 products:
   - style-guide
 ---
 
-import { DirectoryListing } from "~/components";
+import { CardGrid, LinkCard } from "~/components";
 
-Use this guide when writing any content for product, including the dashboard and documentation.
+Use this guide whenever you write or review Cloudflare content, whether that content lives in the documentation or in the product dashboard. Following it consistently is what keeps the whole site reading as though a single careful author wrote every page, and that consistency is what makes the content clearer for readers and simpler to translate.
 
-Understanding Cloudflare style is the first step in being able to write, review, and edit documentation. Adhering to Cloudflare style ensures consistency across the company's documentation and promotes the following benefits:
+The cards below are ordered to match the way you actually work. You start by learning how to contribute a change, then decide what kind of page you are writing, then write it in the house style, and finally build it from the available components. The last card covers how the documentation team runs the site.
 
-- A professional and reliable product image
-- A seamless customer experience across Cloudflare products
-- Minimized customer confusion
-- Simplified translation process
-
-To contribute to the documentation, visit the [contributor guide](/style-guide/contributions/).
-
-## Available resources
-
-<DirectoryListing folder="style-guide" maxDepth={4} />
+<CardGrid>
+	<LinkCard
+		title="Contributions"
+		description="Open an issue, make a quick edit, or set up full local development to raise a pull request."
+		href="/style-guide/contributions/"
+	/>
+	<LinkCard
+		title="Product content"
+		description="Choose a content type, structure the page, and place it in the information architecture."
+		href="/style-guide/documentation-content-strategy/"
+	/>
+	<LinkCard
+		title="API content"
+		description="Follow the conventions for documenting endpoints, parameters, and resources."
+		href="/style-guide/api-content-strategy/"
+	/>
+	<LinkCard
+		title="Grammar"
+		description="Apply the rules for parts of speech, punctuation, capitalization, and usage."
+		href="/style-guide/grammar/"
+	/>
+	<LinkCard
+		title="Formatting"
+		description="Format dates, numbers, code, lists, tables, links, and UI elements consistently."
+		href="/style-guide/formatting/"
+	/>
+	<LinkCard
+		title="Frontmatter"
+		description="Declare the required and optional metadata that every page carries."
+		href="/style-guide/frontmatter/"
+	/>
+	<LinkCard
+		title="Components"
+		description="Assemble pages from the MDX components that add buttons, tabs, and more."
+		href="/style-guide/components/"
+	/>
+	<LinkCard
+		title="How we docs"
+		description="See how the team handles the site framework, redirects, metadata, AI, and video."
+		href="/style-guide/how-we-docs/"
+	/>
+</CardGrid>

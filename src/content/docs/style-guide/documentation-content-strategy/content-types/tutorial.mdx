@@ -3,111 +3,65 @@ pcx_content_type: concept
 title: Tutorial
 meta:
   title: Content type - Tutorial
-description: Write step-by-step tutorial documentation.
+description: Write tutorial documentation that teaches by guiding the reader through building one real project from start to finish.
 products:
   - style-guide
 ---
 
-import { GlossaryDefinition, Render } from "~/components";
+import { Render } from "~/components";
 
-<GlossaryDefinition term="tutorial" />
+A tutorial takes a newcomer from nothing to a working project, one visible result at a time, with the author carrying all of the responsibility. The tone is guiding, straightforward, educational, and authoritative.
 
-<Render file="content-type-disambiguation" product="style-guide" />
+## When to use it
 
-If you are unsure which content type to use, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
+Write a tutorial when competence requires assembling several of the product's pieces into one real project, the kind of value that shows only when features work together. It is the most expensive type to build and keep true, so reach for one deliberately. It is not:
 
-## Guidelines
+- **A quickstart.** A quickstart proves the product works in minutes, whereas a tutorial builds competence through a meaningful project in about an hour.
+- **A how-to.** A how-to serves a competent reader who carries themselves; a tutorial's reader knows nothing, so when something breaks it is the tutorial's fault.
+- **A concept course.** A tutorial teaches by doing rather than by explaining; link the concept instead of unfolding it.
 
-**A tutorial is:**
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For a live example, see [Workers tutorials](/workers/tutorials/).
 
-- For users who have already chosen a Cloudflare product to work with
-- User-focused
-- Aligned to a user's goal or job-to-be-done
-- Descriptive and guiding
+## Title & description
 
-**A tutorial can:**
+- **Title**: a short verb phrase in the second-person imperative, named by the outcome, such as "Build an order-notification service". Do not use "Learn ..." or "Tutorial 1".
+- **Description**: state what the reader will build and what they will be able to do afterward, then give an honest time estimate.
 
-- Describe how to integrate with a third party
-- Be delivered in the Cloudflare dashboard
-- Describe how to set up multiple products to complete a single job-to-be-done
+## Scaffold this page
 
-**A tutorial is not:**
+<Render
+	file="scaffold-with-recipe"
+	product="style-guide"
+	params={{ type: "tutorial", recipe: "content-tutorial" }}
+/>
 
-- Product configuration information, how-to (or any of the other content types)
-- How to complete a task in the UI or API
-- A dumping ground for screenshots
-- Content with no end goal or job-to-be-done
+## Component guidance
 
-### Tone
+- [**Steps**](/style-guide/components/steps/) or numbered `##` parts are the spine, and every part ends with the verbatim "You should see" output that proves it worked; never skip one.
+- **Error-recovery prose** at the points readers actually stumble is happy-path content, not an exception callout, because in a tutorial an anticipated error is not an exception.
+- [**GitHubCode**](/style-guide/components/github-code/) and [**PackageManagers**](/style-guide/components/package-managers/) keep sample code and install commands pinned and in sync, and [**ListTutorials**](/style-guide/components/list-tutorials/) surfaces the tutorial in listings.
+- **What does not fit:** Tabs and options of any kind, because the author already chose the one path and per-stack means per-page; long conceptual asides, which link out instead; and anything that hides steps.
 
-Guiding, straightforward, educational, authoritative
-
-### content_type
+## Frontmatter
 
 ```yaml
 pcx_content_type: tutorial
+difficulty: Beginner
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
-For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+Set `difficulty` to Beginner, Intermediate, or Advanced, and stamp `reviewed` with the date you last ran the tutorial end to end. For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-### Components
+## Keeping tutorials current
 
-#### Most used
+A tutorial is the most expensive type to keep true, because it must work for every reader, every time, on a cold machine, and a broken tutorial convinces a newcomer that the product itself is broken. Fewest and freshest wins, so one tested tutorial beats five stale ones. Pin every version the tutorial depends on, re-run it end to end on a clean environment each release, and stamp `reviewed` with that date.
 
 - [`ListTutorials`](/style-guide/components/list-tutorials/)
 
-#### Required
+## Writing for AI and agents
 
-[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
-
-**Context**: An introductory paragraph on the user's goal or job-to-be-done and how they will accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to [Context](/style-guide/documentation-content-strategy/component-attributes/context/) for more information.
-
-**Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
-
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
-
-#### Optional
-
-[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
-
-[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
-
-**Screenshots**
-
-[**Links**](/style-guide/documentation-content-strategy/component-attributes/links/)
-
-**Boundaries**
-
-## Template
-
-```
-
----
-pcx_content_type: tutorial
-title: Second-person imperative verb phrase
-products:
-  - <product>
-description: Build <what the tutorial produces> with <Cloudflare product>. Covers <key technologies or steps involved>.
-difficulty: Beginner
----
-
-# Second-person imperative verb phrase
-
-Context paragraph describing the user's goal and how the tutorial accomplishes it.
-
-## Prerequisites
-
-## 1. First step
-
-## 2. Second step
-
-## Next steps
-```
-
-## Examples
-
-[Workers Tutorials](/workers/tutorials)
+- **Self-contained parts.** Give every part a full-context heading, the full command, and the verbatim result, so a reader or agent landing mid-tutorial knows where they are; never use a positional reference such as "as configured above."
+- **Literal output.** Keep every expected output in a fenced code block with complete, realistic values, because that "You should see" text is what agents and readers match against.
+- **Pinned versions.** Name and pin every version in the prerequisites, so the tutorial does not silently drift off the latest release.

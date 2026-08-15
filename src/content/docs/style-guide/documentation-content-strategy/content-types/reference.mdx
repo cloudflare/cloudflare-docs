@@ -1,88 +1,64 @@
 ---
+pcx_content_type: reference
 title: Reference
 meta:
   title: Content type - Reference
-pcx_content_type: concept
-description: Write reference documentation for APIs and configs.
+description: Write reference documentation that enumerates the settings, values, and options of one surface, completely and in a uniform structure.
 products:
   - style-guide
 ---
 
-## Purpose
+import { Render } from "~/components";
 
-The purpose of reference content is to provide supplemental information for further learning on settings, values, or options. While reference information is helpful for users, reference information should not block or prevent users from completing tasks.
+A reference page enumerates the facts about one nameable surface, such as a file format, a command, or a set of limits, completely and in a uniform structure. The tone is plain and straightforward.
 
-## Tone
+## When to use it
 
-plain, straightforward
+Reach for a reference page when a reader needs to look up exact facts about one surface. Two laws govern the type: completeness, because a missing entry breaks a reference the way a missing word breaks a dictionary, and uniformity, because every entry answers the same questions in the same order. It is not:
 
-## content_type
+- **A how-to.** Reference describes, never instructs; a "to do this, first ..." entry means you extract a how-to and link it.
+- **A concept.** Opinion and rationale live on the concept page, so one orienting sentence with a concept link is the whole prose allowance at the top.
+- **A dumping ground.** "Miscellaneous" is where facts go to become unfindable; keep one surface per page and mirror the product's own structure.
+
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For live examples, see [Common Cf-Polished statuses](/images/polish/cf-polished-statuses/) and [Logpush API configuration](/logs/logpush/logpush-job/api-configuration/).
+
+## Title & description
+
+- **Title**: the surface's name as the reader searches for it, such as "CLI commands", "Event types", or "Limits". Use "Reference" for a single standalone page, use nouns for a section with child pages, and add "reference" to a noun only when the bare name is ambiguous, as in "Retry policy reference".
+- **Description**: name the entry kinds the surface accepts and the fact categories each entry lists.
+
+## Scaffold this page
+
+<Render
+	file="scaffold-with-recipe"
+	product="style-guide"
+	params={{ type: "reference", recipe: "content-reference" }}
+/>
+
+## Component guidance
+
+- [**Tables**](/style-guide/formatting/structure/tables/) are the signature component: a quick-reference table above the entries makes the common lookup zero-scroll. Keep tables simple, because merged cells and meaning-by-layout break both scanning and extraction.
+- **Definition lines** carry the same facts in a fixed order, such as type, default, required, and constraints, bolded or badged consistently across every entry.
+- [**DirectoryListing**](/style-guide/components/directory-listing/) links the child pages when the reference is a section rather than a single page.
+- **What does not fit:** Steps and Cards; callouts, because a fact that needs a warning usually belongs in the entry as a constraint; and tabs or accordions that hide entries, because a collapsed entry is invisible to search-and-grab readers and to extraction.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: reference
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-## Structure
+## Completeness and source of truth
 
-### Required components
+A reference is complete or clearly scoped, with nothing in between, so if a subset lives elsewhere the first line says where. Give every fact exactly one source: generate values that live in code or a schema, and where generation does not yet exist, name the source so maintainers know what to diff against. Hand-maintained fact pages such as limits or quotas carry a visible `reviewed` date. When a surface passes roughly 30 entries, split it along its own seams, such as file layout or command groups, never alphabetically.
 
-[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): For a single Reference page, use "Reference" as the title. For a reference section with child pages, use nouns in the title. For example, [Common Cf-Polished statuses](https://developers.cloudflare.com/images/polish/cf-polished-statuses/).
+## Writing for AI and agents
 
-[**Context**](/style-guide/documentation-content-strategy/component-attributes/context/): Provide an introductory paragraph to explain how and why a user might utilize the information on this page.
-
-### Optional components
-
-**Code snippets**: Examples of API responses or commands to run certain tasks.
-
-[**Dynamic Lists**](/style-guide/documentation-content-strategy/component-attributes/dynamic-lists/): Long lists of fields (more than 20).
-
-[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/): Code samples that reference a specific configuration or API call.
-
-[**Notes/tips/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/): Relevant information that can help or simplify concepts or warn users of potential impacts.
-
-**Screenshots**: Images of a completed configuration for complicated tasks.
-
-**Tables**: Longer lists of features and an associated number value or terms and their definitions.
-
-## Examples
-
-[Cache: Common Cf-Polished statuses](/images/polish/cf-polished-statuses/)
-
-[Logpush: Logpush API configuration](/logs/logpush/logpush-job/api-configuration/)
-
-## Template
-
-Single reference page
-
-```
-
----
-weight: xx
-pcx_content_type: reference
-description: Reference information for <Cloudflare product or feature>, including <key settings, values, or options covered>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# Reference
-
-Write an overview of the reference information on this page. If this section has child pages, add navigation links below using the DirectoryListing snippet to add links for each child page in a bulleted list.
-
-<DirectoryListing path="/reference"/>
-
-## Concise noun title
-
-Brief description of content in this section.
-
-## Concise noun title
-
-Brief description of content in this section.
-```
+- **Self-identifying entries.** Give every entry heading its full name, such as the dotted path `retry.max_attempts` rather than `max_attempts` under a "Retry" heading, so a retrieved chunk carries its own identity.
+- **Machine-checkable values.** State ranges, defaults, and limits as literal values rather than "a reasonable number", and keep examples minimal in fenced blocks with realistic values.
+- **Nothing hidden.** Keep every entry in the open, because a collapsed or tabbed entry is invisible to extraction; the Markdown twin of a reference page is the page.

@@ -3,26 +3,47 @@ pcx_content_type: concept
 title: How to
 meta:
   title: Content type - How to
-description: Write task-oriented how-to documentation.
+description: Write task-oriented how-to documentation that guides a reader through completing a single task in a Cloudflare product.
 products:
   - style-guide
 ---
 
 import { Render } from "~/components";
 
-## Purpose
+A how-to explains how to complete a single task within a product. The tone is instructional and straightforward.
 
-The purpose of a how to is to explain how to complete a task within the product.
+## When to use it
 
-<Render file="content-type-disambiguation" product="style-guide" />
+Use a how-to when the reader has already chosen a product and needs to complete one specific task within it. It is not:
 
-If you are unsure which content type to use, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
+- **A tutorial.** A tutorial teaches by building something and cannot fail the reader; a how-to serves someone mid-task who already knows the goal.
+- **A concept.** If you find yourself explaining why the product works this way for more than a sentence, move it to a concept page and link to it.
+- **A solution guide.** A solution guide starts from a problem rather than a product, then combines several products to solve it.
 
-## Tone
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
 
-instructional, straightforward
+## Title & description
 
-## content_type
+- **Title**: a short verb phrase in the second-person imperative. Do not use gerunds, bare nouns, or a "How to" prefix.
+- **Description**: start with a verb, name the Cloudflare product or feature, and state the task it accomplishes, then add a key detail or prerequisite.
+
+## Scaffold this page
+
+<Render
+	file="scaffold-with-recipe"
+	product="style-guide"
+	params={{ type: "how-to", recipe: "content-how-to" }}
+/>
+
+## Component guidance
+
+- [**Steps**](/style-guide/components/steps/) are the signature structure: the Steps component or a plain ordered list, whichever you use, must read identically in the Markdown twin. If a page has no steps, question whether it is a how-to.
+- [**Tabs and code groups**](/style-guide/components/tabs/) carry variant axes such as language, platform, or CLI versus dashboard inside one canonical page. For alternative methods, pick the recommended one and link the rest; never duplicate the page.
+- **Callouts** warn before a destructive step; a page drowning in exception callouts has the wrong happy path.
+- **End in a fixed order:** verification, then the irreversible closing step if there is one, then optional blocks, then Next steps. Never end on the last numbered step.
+- **Multi-procedure pages** number their section headings (`## 1.`, `## 2.`) so the sequence is unambiguous, and cap each phase at roughly ten steps.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: how-to
@@ -34,143 +55,8 @@ products:
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-## Structure
+## Writing for AI and agents
 
-### Required components
-
-[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases.
-
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
-
-[**Next steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): What users should see as the end result of the steps and/or actionable next steps.
-
-### Optional components
-
-[**Context**](/style-guide/documentation-content-strategy/component-attributes/context/): An introductory paragraph on the following steps and what they will accomplish.
-
-Provide context to the reader that is not in the section heading.
-
-End with a colon or a period. Use a colon if it immediately precedes the steps. Use a period if there is more material (such as a note) between the context and the procedure.
-
-Do not provide context for steps with a partial sentence that is completed by the numbered steps.
-
-[**Prerequisites**](/style-guide/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
-
-[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
-
-[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
-
-**Screenshots**
-
-[**Related links**](/style-guide/documentation-content-strategy/component-attributes/links/): Bulleted list of links to associated resources.
-
-## Template
-
-Single procedure how-to
-
-```
-
----
-weight: xx
-pcx_content_type: how-to
-description: <Verb> <Cloudflare product or feature> to <what the task accomplishes>. <Key detail or prerequisite>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# Second-person imperative verb phrase
-
-Context for procedure (optional)
-
-1. Step one
-1. Step two
-1. Step three
-1. ...
-
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-```
-
-How-to with multiple procedures
-
-```
-
----
-weight: xx
-pcx_content_type: how-to
-description: <Verb> <Cloudflare product or feature> to <what the task accomplishes>. <Key detail or prerequisite>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# Second-person imperative verb phrase
-
-Context for procedures on page (optional)
-
-## Second-person imperative verb phrase
-
-1. Step one
-1. Step two
-1. Step three
-1. ...
-
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-
-## Second-person imperative verb phrase
-
-1. Step one
-1. Step two
-1. Step three
-1. ...
-
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-```
-
-How-to with multiple procedures that must be completed in order
-
-```
-
----
-weight: xx
-pcx_content_type: how-to
-description: <Verb> <Cloudflare product or feature> to <what the task accomplishes>. <Key detail or prerequisite>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# Second-person imperative verb phrase
-
-Context for procedures on page (optional)
-
-## 1. Second-person imperative verb phrase
-
-1. Step one
-1. Step two
-1. Step three
-1. ...
-
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-
-## 2. Second-person imperative verb phrase
-
-1. Step one
-1. Step two
-1. Step three
-1. ...
-
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-
-## 3. Second-person imperative verb phrase
-
-1. Step one
-1. Step two
-1. Step three
-1. ...
-
-Next steps sentence - what users should see as the end result and/or actionable next steps.
-```
+- **Self-contained steps.** Name the product area, the full command, and the exact label the reader selects; never use a positional reference such as "as configured above."
+- **Literal output.** Keep expected output in fenced code blocks with complete, realistic values rather than truncated placeholders, because agents match on the literal text you show.
+- **Twin-safe steps.** When a step's only copy lives inside a tab or other component, make sure it survives as labeled text in the Markdown twin so conversion cannot drop it.
