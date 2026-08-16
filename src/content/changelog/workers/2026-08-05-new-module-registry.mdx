@@ -41,70 +41,9 @@ export default {
 
 </TypeScriptExample>
 
-The registry also validates [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with). You can import an uploaded JSON module and receive an error if the declared type does not match:
-
-```js
-import config from "./config.json" with { type: "json" };
-```
-
-## Load ES modules with `require()`
-
-With [Node.js compatibility](/workers/runtime-apis/nodejs/) enabled, `require()` follows Node.js [`require(esm)`](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) behavior. An ES module can define what `require()` returns by exporting a value named `"module.exports"`:
-
-For this example, add `nodejs_compat` alongside `new_module_registry` in your `compatibility_flags`.
-
-```js title="modules/greeting.mjs"
-const greeting = { message: "Hello from an ES module" };
-
-export { greeting as "module.exports" };
-```
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { createRequire } from "node:module";
-
-const require = createRequire(import.meta.url);
-const greeting = require("../modules/greeting.mjs");
-
-export default {
-	async fetch() {
-		return Response.json(greeting);
-	},
-};
-```
-
-</TypeScriptExample>
-
-Node.js built-ins also resolve to the same module instance through `import`, `require()`, and `process.getBuiltinModule()`.
-
-## Import WebAssembly source
-
-[Source phase imports](https://github.com/tc39/proposal-source-phase-imports) return a compiled `WebAssembly.Module`. You can instantiate the module with the imports your application requires:
-
-```js
-import source wasmModule from "./add.wasm";
-
-const instance = await WebAssembly.instantiate(wasmModule, {});
-```
-
-You can also load a WebAssembly source dynamically:
-
-```js
-const wasmModule = await import.source("./add.wasm");
-```
-
-For more information, refer to [Source phase imports](/workers/runtime-apis/webassembly/javascript/#source-phase-imports).
-
-Other changes let you:
-
-- Use `import.meta.filename` and `import.meta.dirname` for uploaded modules.
-- Resolve module specifiers as URLs, including queries and fragments.
-- Receive consistent error classes across module-loading APIs.
-
 ## Load modules only when needed
 
-Modules compile when they are first imported. This can reduce startup work when you upload separate modules and load them conditionally with a [dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import).
+Modules compile when they are first imported. This can reduce cold-start work when you upload separate modules and load them conditionally with a [dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import).
 
 The dynamically imported module exports the code used by the `/report` route:
 
@@ -155,8 +94,88 @@ Configure Wrangler to upload the dynamically imported module separately:
 
 </WranglerConfig>
 
-Compiled JavaScript and WebAssembly can also be reused across isolate replicas. Subsequent replicas can avoid compiling the same module again.
+The runtime does not compile `report.mjs` during cold starts for routes that do not import it. Compiled JavaScript and WebAssembly can also be reused across isolate replicas, which lets subsequent replicas avoid the same compilation work.
 
 Wrangler bundles most JavaScript into the entrypoint by default. To preserve separate modules for runtime loading, refer to [Find additional modules](/workers/wrangler/bundling/#find-additional-modules).
+
+## Load ES modules with `require()`
+
+With [Node.js compatibility](/workers/runtime-apis/nodejs/) enabled, `require()` follows Node.js [`require(esm)`](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) behavior. An ES module can define what `require()` returns by exporting a value named `"module.exports"`.
+
+For this example, add `nodejs_compat` alongside `new_module_registry` in your `compatibility_flags`.
+
+```js title="modules/greeting.mjs"
+const greeting = { message: "Hello from an ES module" };
+
+export { greeting as "module.exports" };
+```
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const greeting = require("../modules/greeting.mjs");
+
+export default {
+	async fetch() {
+		return Response.json(greeting);
+	},
+};
+```
+
+</TypeScriptExample>
+
+Node.js built-ins also resolve to the same module instance through `import`, `require()`, and `process.getBuiltinModule()`.
+
+## Use URL-based module specifiers
+
+Relative specifiers resolve with the same URL semantics as `new URL(specifier, base)`. Query strings and fragments identify separate module instances, which matches browser module behavior:
+
+```js title="modules/counter.mjs"
+let count = 0;
+
+export function increment() {
+	return ++count;
+}
+```
+
+```js title="modules/index.mjs"
+import { increment as incrementA } from "./counter.mjs?instance=a";
+import { increment as incrementB } from "./counter.mjs?instance=b";
+
+incrementA(); // 1
+incrementA(); // 2
+incrementB(); // 1, from a separate module instance
+```
+
+## Validate import attributes
+
+The registry validates [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with). You can import an uploaded JSON module and receive an error if the declared type does not match:
+
+```js
+import config from "./config.json" with { type: "json" };
+```
+
+## Import WebAssembly source
+
+[Source phase imports](https://github.com/tc39/proposal-source-phase-imports) return a compiled `WebAssembly.Module`. You can instantiate the module with the imports your application requires:
+
+```js
+import source wasmModule from "./add.wasm";
+
+const instance = await WebAssembly.instantiate(wasmModule, {});
+```
+
+You can also load WebAssembly source dynamically:
+
+```js
+const wasmModule = await import.source("./add.wasm");
+```
+
+For more information, refer to [Source phase imports](/workers/runtime-apis/webassembly/javascript/#source-phase-imports).
+
+Resolution failures also use consistent error classes and messages across static `import`, dynamic `import()`, and `require()`.
 
 For supported behavior and migration details, refer to the [module registry reference](/workers/reference/module-registry/).
