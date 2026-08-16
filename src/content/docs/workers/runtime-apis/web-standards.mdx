@@ -9,6 +9,8 @@ products:
   - workers
 ---
 
+import { TypeScriptExample } from "~/components";
+
 ## JavaScript standards
 
 The Cloudflare Workers runtime is [built on top of the V8 JavaScript and WebAssembly engine](/workers/reference/how-workers-works/). The Workers runtime is updated at least once a week, to at least the version of V8 that is currently used by Google Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
@@ -24,6 +26,30 @@ All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/
   - [`WebAssembly.instantiateStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiateStreaming_static)
 - `Date.now()` returns the time of the last I/O; it does not advance during code execution.
 
+### `import.meta`
+
+JavaScript hosts define the properties available through [`import.meta`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta). With the [`new_module_registry` compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry), Workers provides `import.meta.url`, `import.meta.main`, `import.meta.filename`, `import.meta.dirname`, and [`import.meta.resolve()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta/resolve).
+
+Use these properties to inspect the current module or resolve another module without importing it:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch() {
+		return Response.json({
+			currentModule: import.meta.url,
+			isEntrypoint: import.meta.main,
+			dependency: import.meta.resolve("./dependency.js"),
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+For property behavior and module-loading details, refer to the [`import.meta` module registry reference](/workers/reference/module-registry/#importmeta).
+
 ---
 
 ## Web standards and global APIs
@@ -34,7 +60,6 @@ The following methods are available per the [Worker Global Scope](https://develo
 
 - atob()
   - Decodes a string of data which has been encoded using base-64 encoding.
-
 - btoa()
   - Creates a base-64 encoded ASCII string from a string of binary data.
 
@@ -42,16 +67,12 @@ The following methods are available per the [Worker Global Scope](https://develo
 
 - setInterval()
   - Schedules a function to execute every time a given number of milliseconds elapses.
-
 - clearInterval()
   - Cancels the repeated execution set using [`setInterval()`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval).
-
 - setTimeout()
   - Schedules a function to execute in a given amount of time.
-
 - clearTimeout()
   - Cancels the delayed execution set using [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout).
-
 - [`scheduler.wait()`](/workers/runtime-apis/scheduler/)
   - Returns a Promise that resolves after a given number of milliseconds. An `await`-able alternative to `setTimeout()`.
 
@@ -65,7 +86,6 @@ Timers are only available inside of [the Request Context](/workers/runtime-apis/
 
 - performance.timeOrigin
   - Returns the high resolution time origin. Workers uses the UNIX epoch as the time origin, meaning that `performance.timeOrigin` will always return `0`.
-
 - performance.now()
   - Returns a `DOMHighResTimeStamp` representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
 

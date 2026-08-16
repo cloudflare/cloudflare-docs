@@ -1,22 +1,22 @@
 ---
 title: Module registry
 pcx_content_type: reference
-description: Reference for the new Workers module registry, which provides import.meta support, URL-based specifier resolution, lazy compilation, and more.
+description: Configure standards-based module resolution, import.meta, Node.js module loading, lazy compilation, and shared compilation caches in Workers.
 products:
   - workers
 sidebar:
   order: 5
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
-The Workers runtime uses a module registry to resolve import specifiers, compile modules, and hand them to V8 for linking and execution. A new module registry implementation is available behind the `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/).
+The Workers runtime uses a module registry to resolve [JavaScript module specifiers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), compile modules, and provide them to V8. A new implementation is available through the [`new_module_registry` compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry).
 
 The new registry resolves specifiers as URLs rather than filesystem-style paths. This enables `import.meta` support, more predictable resolution behavior, consistent errors, and performance improvements through lazy compilation and shared caching.
 
 :::note
 
-The `new_module_registry` flag does not have a default-on date yet. You must add it explicitly to opt in. Existing Workers continue to use the original registry.
+You must add the `new_module_registry` flag explicitly. Existing Workers continue to use the original registry. Python Workers always use the original registry.
 
 :::
 
@@ -28,6 +28,7 @@ Add the `new_module_registry` compatibility flag to your Wrangler configuration 
 
 ```jsonc
 {
+	"compatibility_date": "$today",
 	"compatibility_flags": ["new_module_registry"]
 }
 ```
@@ -36,7 +37,27 @@ Add the `new_module_registry` compatibility flag to your Wrangler configuration 
 
 ## `import.meta`
 
-The new registry adds support for `import.meta.url`, `import.meta.main`, and `import.meta.resolve()`.
+[`import.meta`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta) exposes metadata about the current JavaScript module. JavaScript hosts define the properties available on this object.
+
+Workers provides `url`, `main`, `filename`, `dirname`, and `resolve()` when the new module registry is enabled:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch() {
+		return Response.json({
+			url: import.meta.url,
+			main: import.meta.main,
+			filename: import.meta.filename,
+			dirname: import.meta.dirname,
+			resolved: import.meta.resolve("./utils.js"),
+		});
+	},
+};
+```
+
+</TypeScriptExample>
 
 ### `import.meta.url`
 
@@ -60,13 +81,30 @@ export default {
 };
 ```
 
+### `import.meta.filename`
+
+Returns the absolute path of the current module without the `file:` protocol. For example, a module with the URL `file:///bundle/index.js` returns `/bundle/index.js`.
+
+This property is only available for `file:` modules. It is `undefined` for modules that use another protocol.
+
+### `import.meta.dirname`
+
+Returns the directory that contains `import.meta.filename`. For example, a module with the URL `file:///bundle/index.js` returns `/bundle`.
+
+This property is only available for `file:` modules. It is `undefined` for modules that use another protocol.
+
 ### `import.meta.resolve()`
 
-Resolves a specifier against the current module without importing it. This is a pure string transform that does not check whether the resolved URL corresponds to a real module.
+[`import.meta.resolve()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta/resolve) resolves a specifier against the current module without importing it. This string transformation does not check whether the resulting URL belongs to an uploaded module.
 
 ```js
 import.meta.resolve("./utils.js"); // "file:///bundle/utils.js"
 import.meta.resolve("./a/../utils.js"); // "file:///bundle/utils.js"
+```
+
+With [Node.js compatibility](/workers/runtime-apis/nodejs/) enabled, the registry also recognizes bare Node.js built-ins:
+
+```js
 import.meta.resolve("fs"); // "node:fs"
 ```
 
@@ -76,13 +114,17 @@ A `TypeError` is thrown for a specifier that cannot be parsed as a URL.
 
 ## Specifiers are URLs
 
-Module specifiers are resolved as URLs using `new URL(specifier, base)`. This applies uniformly to all modules, though it matters most for modules that survive bundling: `node:` imports, Wasm/text/binary modules, and anything running without Wrangler's default bundler.
+Module specifiers are resolved as URLs using `new URL(specifier, base)`. This applies to modules that reach the Workers runtime.
+
+Wrangler bundles most JavaScript dependencies into your entrypoint by default. This removes their original module boundaries before the runtime receives your code. Built-in `node:` imports and separate WebAssembly, text, or binary modules still reach the registry. You can also use [additional modules](/workers/wrangler/bundling/#find-additional-modules) or [turn off bundling](/workers/wrangler/bundling/#disable-bundling) to upload JavaScript modules separately.
 
 Full URLs work as specifiers:
 
 ```js
 import { helper } from "file:///bundle/utils.js";
 ```
+
+The registry only loads modules included with your Worker or provided by the runtime. An `https:` specifier does not fetch a module over the network.
 
 ### Query strings and fragments
 
@@ -109,7 +151,7 @@ Importing the same specifier with the same query string returns the same instanc
 
 ## `node:` imports resolve consistently
 
-All paths to a `node:` built-in return the same module instance: static `import`, dynamic `import()`, `require()`, and `process.getBuiltinModule()`.
+With [Node.js compatibility](/workers/runtime-apis/nodejs/) enabled, all paths to a `node:` built-in return the same per-isolate module instance: static `import`, dynamic `import()`, `require()`, and `process.getBuiltinModule()`.
 
 ```js
 import { default as processA } from "node:process";
@@ -204,12 +246,12 @@ If a required module sets a truthy `__cjsUnwrapDefault` export (a marker used by
 
 All module resolution errors use consistent classes and messages regardless of whether the failure occurs through a static `import`, dynamic `import()`, or `require()`:
 
-| Error                       | Class       | Example message                                |
-| --------------------------- | ----------- | ---------------------------------------------- |
-| Module not found            | `Error`     | `Module not found: file:///bundle/nope.js`     |
-| Invalid specifier           | `TypeError` | `Invalid module specifier: https://`           |
-| Circular dependency         | `Error`     | (V8 circular dependency error)                 |
-| Unsupported import attribute | `TypeError` | `Unsupported import attribute: "cache"`        |
+| Error                        | Class       | Example message                            |
+| ---------------------------- | ----------- | ------------------------------------------ |
+| Module not found             | `Error`     | `Module not found: file:///bundle/nope.js` |
+| Invalid specifier            | `TypeError` | `Invalid module specifier: https://`       |
+| Circular dependency          | `Error`     | (V8 circular dependency error)             |
+| Unsupported import attribute | `TypeError` | `Unsupported import attribute: "cache"`    |
 
 ## Lazy compilation and shared caches
 
@@ -217,11 +259,40 @@ The new registry includes two performance improvements:
 
 ### Lazy compilation
 
-Modules are not compiled until they are first imported. In the original registry, all modules in a Worker's bundle are compiled at startup regardless of whether they are ever used. With the new registry, a WebAssembly module that is only used on a rarely-hit route does not add to cold start time for other routes.
+Modules are not compiled until they are first imported. Statically imported dependencies compile with their module graph. Separately uploaded modules that are reached through a [dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) can defer compilation until the relevant code path runs.
+
+For example, this Worker only imports and compiles `report.mjs` for requests to `/report`:
+
+```js title="modules/report.mjs"
+export function generateReport() {
+	return "Your report is ready";
+}
+```
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request) {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/report") {
+			const { generateReport } = await import("../modules/report.mjs");
+			return new Response(generateReport());
+		}
+
+		return new Response("Hello, world!");
+	},
+};
+```
+
+</TypeScriptExample>
+
+To keep `report.mjs` separate from the entrypoint, configure Wrangler to [find additional modules](/workers/wrangler/bundling/#find-additional-modules).
 
 ### Shared compiled code
 
-Cloudflare runs multiple V8 isolate replicas of a Worker to spread load across CPU cores. The original registry compiles the bundle independently in each replica. The new registry produces compiled V8 bytecode once and shares it across all replicas of that Worker. The first replica to import a given module pays the full compilation cost. Subsequent replicas use the cached result. This applies to both JavaScript and WebAssembly modules.
+Cloudflare can run multiple V8 isolate replicas of a Worker. The original registry compiles the bundle independently in each replica. The new registry can cache compiled JavaScript data and compiled WebAssembly modules for reuse by subsequent replicas.
 
 ## WebAssembly source phase imports
 

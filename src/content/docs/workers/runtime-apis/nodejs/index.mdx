@@ -7,7 +7,7 @@ products:
   - workers
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 When you write a Worker, you may need to import packages from [npm](https://www.npmjs.com/). Many npm packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these Node.js APIs are available.
 
@@ -32,6 +32,46 @@ To enable built-in Node.js APIs and add polyfills, add the `nodejs_compat` compa
 ```
 
 </WranglerConfig>
+
+### Module loading
+
+The `nodejs_compat` flag provides Node.js APIs. The separate [`new_module_registry` compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry) provides Node.js-compatible module-loading behavior.
+
+Enable both flags to use [`createRequire()`](https://nodejs.org/api/module.html#modulecreaterequirefilename) with `import.meta.url`, load ES modules through [`require()`](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require), and receive the same built-in module instance through different loading APIs:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat", "new_module_registry"]
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { createRequire } from "node:module";
+import process from "node:process";
+
+const require = createRequire(import.meta.url);
+const requiredProcess = require("node:process");
+
+export default {
+	async fetch() {
+		return Response.json({
+			sameInstance: requiredProcess === process,
+			resolved: import.meta.resolve("process"),
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+For resolution rules and CommonJS interoperability, refer to the [module registry reference](/workers/reference/module-registry/#requireesm).
 
 ## Supported Node.js APIs
 
@@ -63,7 +103,7 @@ The runtime APIs from Node.js listed in this section with the status "🟢 suppo
 | [Process](/workers/runtime-apis/nodejs/process/)                                 | 🟢 supported                                                                      |
 | [Punycode](https://nodejs.org/docs/latest/api/punycode.html) (deprecated)        | 🟢 supported                                                                      |
 | [Query strings](https://nodejs.org/docs/latest/api/querystring.html)             | 🟢 supported                                                                      |
-| [Stream](/workers/runtime-apis/nodejs/streams/)                                   | 🟢 supported                                                                      |
+| [Stream](/workers/runtime-apis/nodejs/streams/)                                  | 🟢 supported                                                                      |
 | [String decoder](/workers/runtime-apis/nodejs/string-decoder/)                   | 🟢 supported                                                                      |
 | [Test runner](/workers/runtime-apis/nodejs/test/)                                | 🟡 partially supported                                                            |
 | [Timers](/workers/runtime-apis/nodejs/timers/)                                   | 🟢 supported                                                                      |

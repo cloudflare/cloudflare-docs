@@ -1,25 +1,162 @@
 ---
-title: New module registry with import.meta, lazy compilation, and URL-based resolution
-description: A new module registry implementation is available via the new_module_registry compatibility flag, bringing import.meta support, URL-based specifier resolution, lazy compilation, shared caching, and WebAssembly source phase imports.
+title: New module registry improves JavaScript and Node.js compatibility
+description: Opt in to standards-based module resolution, import.meta, Node.js require(esm) behavior, lazy compilation, and shared compilation caches.
 products:
   - workers
 date: 2026-08-05
 ---
 
-A new module registry implementation is available via the `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry). The new registry resolves module specifiers as URLs rather than filesystem-style paths, and includes several new capabilities and performance improvements.
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
-## New capabilities
+A new Workers module registry improves compatibility with [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and Node.js module loading. It also avoids compiling modules until your Worker imports them.
 
-- **`import.meta`** -- `import.meta.url`, `import.meta.main`, and `import.meta.resolve()` are now supported.
-- **URL-based specifier resolution** -- relative imports resolve the same way `new URL(specifier, base)` does. Query strings and fragments create distinct module instances, matching browser behavior.
-- **Singleton `node:` built-ins** -- `node:` modules return the same instance whether accessed via static `import`, dynamic `import()`, `require()`, or `process.getBuiltinModule()`.
-- **Import attribute validation** -- import attributes (`with { type: 'json' }`) are correctly validated. Unrecognized attribute keys and type mismatches throw errors instead of being silently ignored.
-- **`require(esm)` support** -- `require()` on an ES module follows Node.js `require(esm)` rules, including the `'module.exports'` named export convention and the top-level `await` restriction.
-- **WebAssembly source phase imports** -- import a compiled `WebAssembly.Module` directly with `import source mod from './module.wasm'` or `await import.source('./module.wasm')`.
+Turn on the new registry with the `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry):
 
-## Performance improvements
+<WranglerConfig>
 
-- **Lazy compilation** -- modules are compiled on first import rather than all at startup, reducing cold start time for Workers with modules that are not always used.
-- **Shared compiled code** -- compiled V8 bytecode is produced once and shared across all isolate replicas of a Worker, eliminating redundant compilation.
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["new_module_registry"]
+}
+```
 
-For the full reference, refer to the [module registry documentation](/workers/reference/module-registry/).
+</WranglerConfig>
+
+You can then inspect the current module and resolve another module without importing it:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch() {
+		return Response.json({
+			url: import.meta.url,
+			main: import.meta.main,
+			workerPath: import.meta.resolve("./worker.js"),
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+The registry also validates [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with). You can import an uploaded JSON module and receive an error if the declared type does not match:
+
+```js
+import config from "./config.json" with { type: "json" };
+```
+
+## Load ES modules with `require()`
+
+With [Node.js compatibility](/workers/runtime-apis/nodejs/) enabled, `require()` follows Node.js [`require(esm)`](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) behavior. An ES module can define what `require()` returns by exporting a value named `"module.exports"`:
+
+For this example, add `nodejs_compat` alongside `new_module_registry` in your `compatibility_flags`.
+
+```js title="modules/greeting.mjs"
+const greeting = { message: "Hello from an ES module" };
+
+export { greeting as "module.exports" };
+```
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const greeting = require("../modules/greeting.mjs");
+
+export default {
+	async fetch() {
+		return Response.json(greeting);
+	},
+};
+```
+
+</TypeScriptExample>
+
+Node.js built-ins also resolve to the same module instance through `import`, `require()`, and `process.getBuiltinModule()`.
+
+## Import WebAssembly source
+
+[Source phase imports](https://github.com/tc39/proposal-source-phase-imports) return a compiled `WebAssembly.Module`. You can instantiate the module with the imports your application requires:
+
+```js
+import source wasmModule from "./add.wasm";
+
+const instance = await WebAssembly.instantiate(wasmModule, {});
+```
+
+You can also load a WebAssembly source dynamically:
+
+```js
+const wasmModule = await import.source("./add.wasm");
+```
+
+For more information, refer to [Source phase imports](/workers/runtime-apis/webassembly/javascript/#source-phase-imports).
+
+Other changes let you:
+
+- Use `import.meta.filename` and `import.meta.dirname` for uploaded modules.
+- Resolve module specifiers as URLs, including queries and fragments.
+- Receive consistent error classes across module-loading APIs.
+
+## Load modules only when needed
+
+Modules compile when they are first imported. This can reduce startup work when you upload separate modules and load them conditionally with a [dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import).
+
+The dynamically imported module exports the code used by the `/report` route:
+
+```js title="modules/report.mjs"
+export function generateReport() {
+	return "Your report is ready";
+}
+```
+
+For example, this Worker only imports `report.mjs` for requests to `/report`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request) {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/report") {
+			const { generateReport } = await import("../modules/report.mjs");
+			return new Response(generateReport());
+		}
+
+		return new Response("Hello, world!");
+	},
+};
+```
+
+</TypeScriptExample>
+
+Configure Wrangler to upload the dynamically imported module separately:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["new_module_registry"],
+	"find_additional_modules": true,
+	"rules": [
+		{
+			"type": "ESModule",
+			"globs": ["modules/**/*.mjs"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Compiled JavaScript and WebAssembly can also be reused across isolate replicas. Subsequent replicas can avoid compiling the same module again.
+
+Wrangler bundles most JavaScript into the entrypoint by default. To preserve separate modules for runtime loading, refer to [Find additional modules](/workers/wrangler/bundling/#find-additional-modules).
+
+For supported behavior and migration details, refer to the [module registry reference](/workers/reference/module-registry/).

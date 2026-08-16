@@ -10,20 +10,17 @@ enable_flag: "new_module_registry"
 disable_flag: "legacy_module_registry"
 ---
 
-The `new_module_registry` flag replaces the Workers module registry with a new
-implementation that resolves specifiers as URLs instead of filesystem-style paths.
+The `new_module_registry` flag replaces the JavaScript Workers module registry with an implementation that resolves specifiers as URLs instead of filesystem-style paths. Python Workers continue to use the legacy module registry.
 
 When enabled, the new registry provides:
 
-- `import.meta.url`, `import.meta.main`, and `import.meta.resolve()` support.
+- `import.meta.url`, `import.meta.main`, `import.meta.filename`, `import.meta.dirname`, and `import.meta.resolve()` support.
 - Specifiers are parsed and resolved as URLs, including query strings and fragments.
-- `node:` built-ins resolve to the same module instance regardless of how they are reached.
+- With [`nodejs_compat`](/workers/runtime-apis/nodejs/), `node:` built-ins resolve to the same module instance regardless of how they are reached.
 - Import attributes (`with { type: 'json' }`) are correctly validated.
-- `require()` on an ES module follows Node.js `require(esm)` rules.
+- With `nodejs_compat`, `require()` on an ES module follows Node.js [`require(esm)`](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) rules.
 - Consistent error classes and messages across all loading paths.
 - Lazy module compilation and shared compiled code across V8 isolate replicas.
 - WebAssembly source phase imports.
 
-This flag does not have a default-on date yet. You must add it explicitly to
-your `compatibility_flags`. For more information, refer to the
-[module registry reference](/workers/reference/module-registry/).
+You must add this flag explicitly to your `compatibility_flags`. For examples and migration details, refer to the [module registry reference](/workers/reference/module-registry/).
