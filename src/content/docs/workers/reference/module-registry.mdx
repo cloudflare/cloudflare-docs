@@ -44,14 +44,22 @@ Workers provides `url`, `main`, `filename`, `dirname`, and `resolve()` when the 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+const moduleMeta = import.meta as ImportMeta & {
+	readonly url: string;
+	readonly main: boolean;
+	readonly filename?: string;
+	readonly dirname?: string;
+	resolve(specifier: string): string;
+};
+
 export default {
 	async fetch() {
 		return Response.json({
-			url: import.meta.url,
-			main: import.meta.main,
-			filename: import.meta.filename,
-			dirname: import.meta.dirname,
-			resolved: import.meta.resolve("./utils.js"),
+			url: moduleMeta.url,
+			main: moduleMeta.main,
+			filename: moduleMeta.filename,
+			dirname: moduleMeta.dirname,
+			resolved: moduleMeta.resolve("./utils.js"),
 		});
 	},
 };
@@ -263,7 +271,7 @@ Modules are not compiled until they are first imported. Statically imported depe
 
 For example, this Worker only imports and compiles `report.mjs` for requests to `/report`:
 
-```js title="modules/report.mjs"
+```js title="src/modules/report.mjs"
 export function generateReport() {
 	return "Your report is ready";
 }
@@ -277,7 +285,7 @@ export default {
 		const url = new URL(request.url);
 
 		if (url.pathname === "/report") {
-			const { generateReport } = await import("../modules/report.mjs");
+			const { generateReport } = await import("./modules/report.mjs");
 			return new Response(generateReport());
 		}
 

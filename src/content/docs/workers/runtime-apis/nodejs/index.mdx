@@ -56,14 +56,18 @@ Enable both flags to use [`createRequire()`](https://nodejs.org/api/module.html#
 import { createRequire } from "node:module";
 import process from "node:process";
 
-const require = createRequire(import.meta.url);
+const moduleMeta = import.meta as ImportMeta & {
+	readonly url: string;
+	resolve(specifier: string): string;
+};
+const require = createRequire(moduleMeta.url);
 const requiredProcess = require("node:process");
 
 export default {
 	async fetch() {
 		return Response.json({
 			sameInstance: requiredProcess === process,
-			resolved: import.meta.resolve("process"),
+			resolved: moduleMeta.resolve("process"),
 		});
 	},
 };

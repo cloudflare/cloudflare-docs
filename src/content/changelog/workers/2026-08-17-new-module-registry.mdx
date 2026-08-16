@@ -1,0 +1,119 @@
+---
+title: New module registry in Workers improves JavaScript and Node.js compatibility
+description: Opt in to standards-based module resolution, import.meta, Node.js require(esm) behavior, lazy compilation, and shared compilation caches.
+products:
+  - workers
+date: 2026-08-17
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+We've rebuilt the module registry that handles how [ES Modules (ESM)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and [CommonJS modules](https://nodejs.org/api/modules.html#modules-commonjs-modules) are handled in the Workers runtime, increasing compatbility with standards and the ecosystem of NPM packages.
+
+When you enable the [`new_module_registry` compatbility flag](/workers/configuration/compatibility-flags/#new-module-registry) in your Worker:
+
+* The `import.meta.url`, `import.meta.main`, and `import.meta.resolve()` APIs are fully supported
+* Dynamic imports (`await import("/modules/my-module.js");`) are compiled lazily, rather than upfront during your Worker's startup phase
+* Your Worker's cold start time may be faster in production, because compiled code can be shared across V8 isolate replicas
+* Module specifiers are parsed and resolved as real URLs, including query strings and fragments
+* `node:` built-ins resolve to the same module instance no matter how you reach them
+* Import attributes (`with { type: 'json' }`) are correctly validated
+* `require()` on an ES module follows Node.js' [`require(esm)`](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) rules
+* Errors use consistent classes and messages regardless of which loading path triggered them
+* WebAssembly modules support [source phase imports](https://github.com/tc39/proposal-source-phase-imports)
+
+## `import.meta` APIs are now fully supported
+
+You can then inspect the current module and resolve another module without importing it:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch() {
+		return Response.json({
+			url: import.meta.url,
+			main: import.meta.main,
+			workerPath: import.meta.resolve("./worker.js"),
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Dynamic imports are compiled lazily
+
+Modules compile when they are first imported. This can reduce cold-start work when you upload separate modules and load them conditionally with a [dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import).
+
+For example, this Worker will only import `report.mjs` when the [isolate](/workers/reference/how-workers-works/) serves a request to `/report` for the first time:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request) {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/report") {
+			const { generateReport } = await import("../modules/report.mjs");
+			return new Response(generateReport());
+		}
+
+		return new Response("Hello, world!");
+	},
+};
+```
+
+</TypeScriptExample>
+
+Wrangler bundles most JavaScript into the entrypoint by default. To preserve separate modules for runtime loading and take advantage of this new behavior, either use the [Cloudflare Vite Plugin](/workers/vite-plugin/), or configure [Wrangler CLI](/workers/wrangler/) to [upload the dynamically imported module separately](/workers/wrangler/bundling/#find-additional-modules):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["new_module_registry"],
+	"find_additional_modules": true,
+	"rules": [
+		{
+			"type": "ESModule",
+			"globs": ["modules/**/*.mjs"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## Source phase imports are now supported for WebAssembly modules
+
+[Source phase imports](/workers/runtime-apis/webassembly/javascript/#source-phase-imports) return a compiled `WebAssembly.Module`. You can instantiate the module with the imports your application requires:
+
+```js
+import source wasmModule from "./add.wasm";
+
+const instance = await WebAssembly.instantiate(wasmModule, {});
+```
+
+You can also load WebAssembly source dynamically:
+
+```js
+const wasmModule = await import.source("./add.wasm");
+```
+
+## How to enable the `new_module_registry` compatbility flag
+
+Add the following to your Worker's [configuration file](/workers/configuration/):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["new_module_registry"]
+}
+```
+
+</WranglerConfig>

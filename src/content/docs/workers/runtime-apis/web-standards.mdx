@@ -35,12 +35,18 @@ Use these properties to inspect the current module or resolve another module wit
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+const moduleMeta = import.meta as ImportMeta & {
+	readonly url: string;
+	readonly main: boolean;
+	resolve(specifier: string): string;
+};
+
 export default {
 	async fetch() {
 		return Response.json({
-			currentModule: import.meta.url,
-			isEntrypoint: import.meta.main,
-			dependency: import.meta.resolve("./dependency.js"),
+			currentModule: moduleMeta.url,
+			isEntrypoint: moduleMeta.main,
+			dependency: moduleMeta.resolve("./dependency.js"),
 		});
 	},
 };
