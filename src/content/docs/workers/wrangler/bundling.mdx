@@ -41,6 +41,18 @@ Wrangler usually converts many source modules into one entry output chunk. Wrang
 
 You can also upload external modules beside the entry module. Wrangler does not inline those modules into the entry output.
 
+A build can emit CommonJS source as an ES module output chunk. Runtime behavior follows the deployed output, not the source format.
+
+Bundling can remove CommonJS module boundaries. Neither `nodejs_compat` nor `new_module_registry` restores those boundaries or defines `__dirname` and `__filename` in ES module output. Those values exist only in deployed runtime modules that remain CommonJS.
+
+With the new registry, ES modules use [`import.meta.dirname` and `import.meta.filename`](/workers/reference/module-registry/#read-module-metadata). These values identify the current deployed runtime module. After bundling, that is the output chunk rather than the original source or npm package directory.
+
+Replacing `__dirname` with `import.meta.dirname` does not include adjacent files. Import required Wasm, template, or asset files explicitly.
+
+Module rules determine which files Wrangler uploads and their runtime module type. Wrangler hashes statically imported additional-module filenames by default. Set `preserve_file_names` when runtime code requires stable names.
+
+For files that are not statically imported, configure `find_additional_modules`, `base_dir`, and matching rules. Discovered module names remain relative to `base_dir`. Ensure those deployed paths match the paths used by runtime code.
+
 ## Including non-JavaScript modules
 
 {/* Changes to this section should also be applied to /workers/vite-plugin/reference/non-javascript-modules */}
@@ -152,10 +164,10 @@ Use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler
 
 Some framework tools or custom build processes generate a modified Wrangler configuration. Wrangler can use this generated configuration instead of your original configuration.
 
-The Cloudflare Vite plugin uses this workflow for every supported Vite version. With Vite 8, [Rolldown](https://rolldown.rs/) emits JavaScript output chunks. The plugin generates a `no_bundle` configuration that uploads those chunks as separate runtime modules without rebuilding them.
+The Cloudflare Vite plugin uses this workflow for every supported Vite version. With Vite 8, [Rolldown](https://rolldown.rs/) emits JavaScript output chunks. The plugin generates a `no_bundle` configuration that uploads those chunks as separate runtime modules without a second Wrangler build.
 
-The generated `no_bundle` setting applies only after Vite processes the source. Vite handles transpilation and package resolution before Wrangler uploads the output.
+The generated `no_bundle` setting applies only after Vite processes the source. It does not preserve the original module types or boundaries. CommonJS source may already be part of an ES module output chunk.
 
-The plugin also applies configured Node.js compatibility polyfills during the build.
+Vite handles transpilation and package resolution before Wrangler uploads the output. The plugin also applies configured Node.js compatibility polyfills during the build.
 
 For more information, refer to [Generated Wrangler configuration](/workers/wrangler/configuration/#generated-wrangler-configuration).

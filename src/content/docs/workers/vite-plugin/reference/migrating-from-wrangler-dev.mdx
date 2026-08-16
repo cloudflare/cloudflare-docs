@@ -18,7 +18,13 @@ Vite transforms your source modules into JavaScript output chunks. With Vite 8, 
 
 The output configuration references the entry chunk and sets `no_bundle` to `true`. It also includes rules that let Wrangler upload the other JavaScript chunks as separate runtime modules.
 
-This generated setting prevents Wrangler from rebuilding Vite's output. Vite already handles transpilation and npm package resolution before deployment.
+This generated setting prevents a second Wrangler build. It does not preserve the original module types or boundaries.
+
+Vite already handles transpilation and npm package resolution before deployment. It can emit CommonJS source in an ES module output chunk.
+
+Wrangler then uploads that output as an ES module runtime module. [`nodejs_compat`](/workers/runtime-apis/nodejs/) does not define `__dirname` or `__filename` in that module.
+
+With the new registry, use [`import.meta.dirname` and `import.meta.filename`](/workers/reference/module-registry/#read-module-metadata) for deployed module metadata.
 
 The plugin also applies configured Node.js compatibility polyfills.
 
@@ -50,7 +56,7 @@ The following build-related options are handled by Vite and are not applicable w
 - `base_dir`
 - `preserve_file_names`
 
-The input `no_bundle` option is ignored because the plugin always builds source with Vite. The generated output configuration uses `no_bundle` only to stop Wrangler from processing the resulting chunks again.
+The input `no_bundle` option is ignored because the plugin always builds source with Vite. The generated output configuration uses `no_bundle` to stop Wrangler from transpiling or bundling Vite's output again. Wrangler still discovers and uploads the resulting modules according to the generated rules. This does not preserve source module boundaries.
 
 ### Not supported
 

@@ -51,6 +51,20 @@ wat2wasm src/simple.wat -o src/simple.wasm
 
 [Wrangler](/workers/wrangler/) bundles modules ending in `.wasm` or `.wasm?module`. You can change this default with [module rules](/workers/wrangler/configuration/#bundling).
 
+Statically import each `.wasm` file used through Wrangler's module import API. For files loaded dynamically by package-specific code, configure the relevant build plugin or use `find_additional_modules` and module rules as appropriate.
+
+Replacing `__dirname` with `import.meta.dirname` only changes variable access.
+
+It does not copy, preserve, or relocate a binary beside the output chunk.
+
+Bundlers can emit CommonJS package source inside an ES module chunk. [`nodejs_compat`](/workers/runtime-apis/nodejs/) does not restore `__dirname` in that output.
+
+If a package expects an adjacent binary, prefer a browser, Worker, or bundler entrypoint that accepts an explicitly imported `WebAssembly.Module`, `ArrayBuffer`, or byte array. A loader that still constructs a path from `__dirname` does not solve this issue.
+
+You can also use a package initialization hook that accepts the imported module or data. Hook APIs differ between packages.
+
+Workers does not provide a generic loader hook signature.
+
 For more information, refer to [Wrangler bundling](/workers/wrangler/bundling/).
 
 ## Use Wasm from JavaScript

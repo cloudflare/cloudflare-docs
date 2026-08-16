@@ -88,6 +88,22 @@ export default {
 
 `import.meta.filename` and `import.meta.dirname` only exist for `file:` URLs. They are absent from modules with other URL schemes.
 
+### Distinguish runtime module formats
+
+`__dirname` and `__filename` are CommonJS module-scope values. Workers supplies them only to deployed runtime modules that remain CommonJS.
+
+ES modules under the new registry use `import.meta.dirname` and `import.meta.filename`. Neither `nodejs_compat` nor `new_module_registry` defines the CommonJS values in ES modules.
+
+These flags also do not restore CommonJS boundaries removed during bundling.
+
+A build can emit CommonJS source as an ES module output chunk. The runtime uses the deployed chunk format, not the source format.
+
+The metadata identifies the current deployed runtime module. After bundling, that is the output chunk rather than the original source file or npm package directory.
+
+Replacing `__dirname` with `import.meta.dirname` only changes variable access. It does not copy, preserve, or relocate adjacent Wasm, template, or asset files.
+
+Import required files explicitly or configure your build to include them.
+
 `import.meta.resolve()` only transforms the specifier into a URL. It does not check whether the registry contains that URL.
 
 Resolution follows `new URL(specifier, import.meta.url)`. It collapses dot segments but preserves existing percent-encoded bytes.

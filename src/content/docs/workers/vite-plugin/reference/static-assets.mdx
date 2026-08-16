@@ -8,7 +8,7 @@ products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 This guide focuses on the areas of working with static assets that are unique to the Vite plugin.
 For more general documentation, see [Static Assets](/workers/static-assets/).
@@ -46,12 +46,18 @@ The following example configures the `not_found_handling` for a single-page appl
 The Vite plugin ensures that all of Vite's [static asset handling](https://vite.dev/guide/assets) features are supported in your Worker as well as in your frontend.
 These include importing assets as URLs, importing as strings and importing from the `public` directory as well as inlining assets.
 
-Assets [imported as URLs](https://vite.dev/guide/assets#importing-asset-as-url) can be fetched via the [assets binding](/workers/static-assets/binding/#binding).
+Workers Assets served through `env.ASSETS` are stored separately from deployed JavaScript modules. They are not `/bundle`-adjacent files available through `node:fs`.
+
+Use Vite asset imports and the `env.ASSETS` binding instead. Do not build asset paths from `__dirname` or `import.meta.dirname`.
+
+Assets [imported as URLs](https://vite.dev/guide/assets#importing-asset-as-url) and emitted as files can be fetched through the [assets binding](/workers/static-assets/binding/#binding). Raw and inline imports are embedded in the Worker and do not use the assets binding.
 As the binding's `fetch` method requires a full URL, we recommend using the request URL as the `base`.
 This is demonstrated in the following example:
 
+<TypeScriptExample filename="src/index.ts">
+
 ```ts
-import myImage from "./my-image.png";
+import myImage from "./my-image.png?no-inline";
 
 export default {
 	fetch(request, env) {
@@ -59,6 +65,8 @@ export default {
 	},
 };
 ```
+
+</TypeScriptExample>
 
 Assets imported as URLs in your Worker will automatically be moved to the client build output.
 When running `vite build` the paths of any moved assets will be displayed in the console.

@@ -101,7 +101,19 @@ export default defineConfig({
 
 This environment-wide override changes how Rolldown resolves and transforms modules in the selected Worker environment. It does not add Node.js APIs to the Workers runtime.
 
-Use [`nodejs_compat`](/workers/runtime-apis/nodejs/) for supported Node.js APIs and polyfills. The override does not guarantee that CommonJS modules remain separate during bundling. It also does not guarantee package compatibility.
+Setting `platform` to `"node"` does not solve [Rolldown issue 9719](https://github.com/rolldown/rolldown/issues/9719). CommonJS `__dirname` references can remain in ES module output.
+
+Use [`nodejs_compat`](/workers/runtime-apis/nodejs/) for supported Node.js APIs and polyfills. Neither setting defines `__dirname` or `__filename` in ES modules.
+
+They also do not restore CommonJS boundaries removed during bundling.
+
+ES module output can use [`import.meta.dirname` and `import.meta.filename`](/workers/reference/module-registry/#read-module-metadata) with the new module registry. These values identify the deployed output chunk, not the original package directory.
+
+A `define` replacement such as `__dirname: "import.meta.dirname"` can avoid the missing-variable error. However, it replaces every free `__dirname` in that environment with the deployed chunk directory. It does not reproduce each bundled source module's original directory or emit adjacent files.
+
+Use this replacement only after verifying the affected packages and deployed asset paths. Prefer package APIs or build plugins that accept an imported Wasm module or asset URL.
+
+An explicit import only helps when its emitted URL or module value is passed to the package. It does not change package code that still constructs a path from `__dirname`.
 
 ## Full-stack frameworks
 
