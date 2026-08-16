@@ -35,7 +35,7 @@ Each Worker has its own module evaluation cache. This cache contains evaluated m
 
 As Workers are reused between test runs, their evaluation caches are also reused. Vitest invalidates parts of each cache based on changed files.
 
-Compiled artifacts are separate from module evaluation caches. The [new module registry](/workers/reference/module-registry/#reuse-compiled-artifacts) can share compiled artifacts across isolate replicas without sharing evaluated state.
+Compilation data is separate from module evaluation caches. The [new module registry](/workers/reference/module-registry/#reuse-compilation-data) can share compilation data across isolate replicas without sharing evaluated state.
 
 The Workers Vitest pool runs code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js Worker thread](https://nodejs.org/api/worker_threads.html). To support Vitest, the pool ensures that `nodejs_compat_v2` is active.
 

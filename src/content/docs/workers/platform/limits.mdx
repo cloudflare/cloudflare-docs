@@ -288,9 +288,9 @@ To reduce Worker size:
 | ------------ | -------- |
 | Startup time | 1 second |
 
-A Worker must process its startup module graph and execute global scope within 1 second. Larger startup graphs and expensive top-level initialization increase startup time.
+A Worker must process its startup code and execute global scope within 1 second. Larger startup workloads and expensive top-level initialization increase startup time.
 
-With the [new module registry](/workers/reference/module-registry/), this startup graph includes modules reached through static imports. Separately uploaded modules first reached by a later dynamic import compile on that first import. They do not add to initial startup time.
+With the [new module registry](/workers/reference/module-registry/), the startup module graph contains the entrypoint and modules reached through static imports. Separately uploaded modules first reached by a later dynamic import compile on that first import. They do not add to initial startup time.
 
 When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/workers/#startup) for more details.
 

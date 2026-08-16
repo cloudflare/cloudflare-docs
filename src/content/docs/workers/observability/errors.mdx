@@ -224,7 +224,7 @@ This means that you are doing work in the top-level scope of your Worker that al
 
 ### Module loading errors
 
-With the [new module registry](/workers/reference/module-registry/), errors in the statically reached startup graph appear during upload validation. A separately uploaded lazy module compiles on first import. Its errors can instead appear during the invocation that first imports it.
+With the [new module registry](/workers/reference/module-registry/), upload validation checks the entrypoint and modules reached through static imports. A separately uploaded lazy module compiles on first import. Its errors can instead appear during the invocation that first imports it.
 
 A missing module throws an `Error`. An invalid specifier or unsupported import attribute throws a `TypeError`. The registry uses consistent resolution errors across static `import`, dynamic `import()`, and `require()`.
 

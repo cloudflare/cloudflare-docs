@@ -15,7 +15,7 @@ Key changes include:
 - **Module loading** — Validate import attributes and follow Node.js `require(esm)` behavior.
 - **Consistent errors** — Use the same error classes across loading paths.
 - **Lazy compilation** — Compile modules when they are first imported.
-- **Compiled artifacts** — Reuse cached compilation data when available.
+- **Compilation reuse** — Reuse cached compilation data when available.
 
 Dynamic WebAssembly source phase imports through `import.source()` require the new registry. Static `import source` works with both registries.
 

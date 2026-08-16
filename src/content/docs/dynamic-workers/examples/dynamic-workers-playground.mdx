@@ -80,7 +80,7 @@ const response = await worker.getEntrypoint().fetch(request);
 
 In the playground, a cache hit can skip the build and load phases. Reuse is not guaranteed, so a later request can still create a new isolate or call the code callback again.
 
-Loader reuse is separate from module caching. Each isolate retains its own module-level state.
+Reusing a Worker ID does not guarantee reuse of module-level state. Each isolate retains its own state.
 
 ## Observability with Tail Workers
 

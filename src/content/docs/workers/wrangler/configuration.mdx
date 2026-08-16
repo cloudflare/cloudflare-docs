@@ -1760,7 +1760,7 @@ For example, when using the [Cloudflare Vite plugin](/workers/vite-plugin/), an 
 
 :::
 
-Vite transforms source modules into JavaScript output chunks before generating this configuration. With Vite 8, Rolldown emits these chunks, and the plugin configures Wrangler to upload them as separate runtime modules with `no_bundle` enabled.
+Vite transforms source modules into JavaScript output chunks before generating this configuration. With Vite 8, [Rolldown](https://rolldown.rs/) emits these chunks, and the plugin configures Wrangler to upload them as separate runtime modules with `no_bundle` enabled.
 
 The generated setting prevents Wrangler from rebuilding Vite's output. It does not skip Vite's transpilation, npm package resolution, or configured polyfills.
 

@@ -80,7 +80,7 @@ The `main` field specifies the entry file for your Worker code.
 
 For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-During `vite build`, Vite transforms source modules into JavaScript output chunks. With Vite 8, Rolldown emits these chunks.
+During `vite build`, Vite transforms source modules into JavaScript output chunks. With Vite 8, [Rolldown](https://rolldown.rs/) emits these chunks.
 
 The plugin generates a `no_bundle` Wrangler configuration for the output. Wrangler then uploads the chunks as separate runtime modules without rebuilding them.
 

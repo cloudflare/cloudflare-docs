@@ -67,7 +67,7 @@ The default behavior of using the Worker name as the environment name is appropr
 
 ## Troubleshoot package resolution
 
-With Vite 8, the plugin sets Rolldown's `platform` to `"neutral"` for Worker environments. Keep this default unless a specific package requires Node-targeted transformations.
+With Vite 8, the plugin sets [Rolldown's](https://rolldown.rs/) `platform` to `"neutral"` for Worker environments. Keep this default unless a specific package requires Node-targeted transformations.
 
 For that package-specific workaround, add a plugin that overrides both build and dependency optimization settings after the Cloudflare plugin applies its defaults:
 
@@ -101,7 +101,7 @@ export default defineConfig({
 
 This environment-wide override changes how Rolldown resolves and transforms modules in the selected Worker environment. It does not add Node.js APIs to the Workers runtime.
 
-Use [`nodejs_compat`](/workers/runtime-apis/nodejs/) for supported Node.js APIs and polyfills. The override does not preserve every CommonJS module boundary or guarantee package compatibility.
+Use [`nodejs_compat`](/workers/runtime-apis/nodejs/) for supported Node.js APIs and polyfills. The override does not guarantee that CommonJS modules remain separate during bundling. It also does not guarantee package compatibility.
 
 ## Full-stack frameworks
 

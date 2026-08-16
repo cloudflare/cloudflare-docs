@@ -19,7 +19,7 @@ When enabled, the new registry provides:
 - URL-based specifiers with query and fragment identities
 - Import attribute validation and Node.js `require(esm)` behavior
 - Consistent errors across module loading paths
-- Lazy compilation and reusable compiled artifacts
+- Compilation on first import and reuse of compilation data
 - Dynamic WebAssembly source phase imports
 
 Static `import source` works with both registries. Dynamic `import.source()` requires the new registry.

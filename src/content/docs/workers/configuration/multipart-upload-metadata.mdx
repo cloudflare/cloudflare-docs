@@ -35,7 +35,7 @@ If you're using the [Workers Script Upload API](/api/resources/workers/subresour
 
 Each multipart file part name is a runtime module identifier. The `main_module` value selects one of those identifiers as the entrypoint. Module identifiers name uploaded runtime modules or output chunks, not original source files.
 
-For JavaScript Workers using the [new module registry](/workers/reference/module-registry/), ordinary identifiers are canonicalized under `file:///bundle/`. Imports link against matching uploaded registry entries.
+For JavaScript Workers using the [new module registry](/workers/reference/module-registry/), the identifier `main.js` maps to `file:///bundle/main.js`. Imports link against matching uploaded registry entries.
 
 URL specifiers resolve through the registry and do not fetch network resources. Use ordinary module names unless the upload API documents support for URL-shaped names.
 

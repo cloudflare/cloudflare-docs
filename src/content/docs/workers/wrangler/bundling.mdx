@@ -152,7 +152,7 @@ Use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler
 
 Some framework tools or custom build processes generate a modified Wrangler configuration. Wrangler can use this generated configuration instead of your original configuration.
 
-The Cloudflare Vite plugin uses this workflow for every supported Vite version. With Vite 8, Rolldown emits JavaScript output chunks. The plugin generates a `no_bundle` configuration that uploads those chunks as separate runtime modules without rebuilding them.
+The Cloudflare Vite plugin uses this workflow for every supported Vite version. With Vite 8, [Rolldown](https://rolldown.rs/) emits JavaScript output chunks. The plugin generates a `no_bundle` configuration that uploads those chunks as separate runtime modules without rebuilding them.
 
 The generated `no_bundle` setting applies only after Vite processes the source. Vite handles transpilation and package resolution before Wrangler uploads the output.
 

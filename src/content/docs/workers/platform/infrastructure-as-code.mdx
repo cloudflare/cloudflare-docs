@@ -34,7 +34,7 @@ When using Wrangler for building and a different method for uploading, make sure
 
 Bundlers can emit an entrypoint and additional runtime modules or chunks. Upload every output with its generated name and content type. For multipart uploads, preserve each output as a separate part and set `main_module` to the generated entrypoint name. Uploading only the entrypoint can break imports.
 
-Module names are runtime identifiers. For details about URL canonicalization and linking, refer to the [module registry reference](/workers/reference/module-registry/).
+Module names are runtime identifiers. For details about how the registry converts names to URLs and matches imports, refer to the [module registry reference](/workers/reference/module-registry/).
 
 :::
 

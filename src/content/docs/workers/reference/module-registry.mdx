@@ -10,9 +10,9 @@ sidebar:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-The Workers runtime uses a module registry to load modules. An experimental registry is available through a [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry).
+The Workers runtime uses a module registry to load deployed modules referenced by `import` or `require()`. An experimental registry is available through a [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry).
 
-The registry resolves module specifiers as URLs. It also provides module metadata, lazy compilation, and consistent loading behavior.
+The experimental registry resolves module identifiers and specifiers as URLs. It also provides module metadata, compilation on first import, and consistent loading behavior.
 
 ## Configure the registry
 
@@ -44,7 +44,7 @@ Do not set both flags. The new registry has no default date, so you must opt in.
 - Use [Cloudflare Vite plugin](/workers/vite-plugin/) 1.35.0 or later.
 - Vitest Pool Workers does not support the new registry.
 
-These versions support the registry protocol. For local support for `import.meta.filename` and `import.meta.dirname`, use Wrangler 4.122.0 or later, or Cloudflare Vite plugin 1.52.0 or later.
+For local support for `import.meta.filename` and `import.meta.dirname`, use Wrangler 4.122.0 or later, or Cloudflare Vite plugin 1.52.0 or later.
 
 Vite 8 does not currently bundle `import source` or `import.source()` syntax. Use Wrangler for the source phase import examples on this page.
 
@@ -108,7 +108,7 @@ For example, an `https:` specifier in a deployed Worker only loads a matching up
 
 ### Distinguish queries and fragments
 
-Queries and fragments form part of a bundle module identity. Different URLs create different module instances within an isolate.
+Queries and fragments are part of a runtime module's URL identity. URLs with different queries or fragments create separate module instances within an [isolate](/workers/reference/how-workers-works/#isolates).
 
 This module stores state at the module top level:
 
@@ -218,11 +218,11 @@ V8 evaluates each module instance once per isolate. Repeated imports return its 
 
 Queries and fragments can create separate instances. Each of those instances evaluates separately.
 
-### Reuse compiled artifacts
+### Reuse compilation data
 
 Isolate replicas that share a registry can reuse V8 compilation data. WebAssembly modules can also reuse shared compiled artifacts.
 
-Each isolate still creates and evaluates its own module instances. Cache reuse is an optimization and does not guarantee one compilation across all replicas.
+Each isolate still creates and evaluates its own module instances. Compilation-data reuse is an optimization and does not guarantee one compilation across all replicas.
 
 ## Import WebAssembly source
 
