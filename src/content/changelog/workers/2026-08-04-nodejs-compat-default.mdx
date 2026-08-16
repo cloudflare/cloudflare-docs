@@ -16,9 +16,8 @@ dates because the compatibility date enables the same behavior.
 This means all [Node.js built-in APIs](/workers/runtime-apis/nodejs/) supported
 by the Workers runtime are available by default, including `node:crypto`,
 `node:buffer`, `node:stream`, `node:net`, `node:dns`, `node:fs`, `node:http`,
-and more. npm packages can use these APIs without additional runtime
-configuration. Package compatibility still depends on the build tool and any
-other APIs that the package uses.
+and more. npm packages that depend on these APIs will work without additional
+configuration.
 
 Workers using an earlier compatibility date are not affected. They can still
 opt in by adding `nodejs_compat` to `compatibility_flags`.

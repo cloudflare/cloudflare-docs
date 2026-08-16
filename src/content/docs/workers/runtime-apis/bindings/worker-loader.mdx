@@ -131,7 +131,7 @@ It is never guaranteed that two requests will go to the same isolate. Even if yo
 
 Loader caching and module evaluation caching are separate. The loader can reuse code or a warm isolate by ID. Each isolate evaluates and caches its own module instances.
 
-When local development enables the [new module registry](/workers/reference/module-registry/), compiled JavaScript and WebAssembly artifacts can be reused across isolate replicas. Module-level state remains local to each isolate.
+When a Dynamic Worker enables the [new module registry](/workers/reference/module-registry/), compiled JavaScript and WebAssembly artifacts can be reused across isolate replicas. Module-level state remains local to each isolate.
 
 ### `WorkerCode`
 
@@ -149,8 +149,6 @@ An optional list of [compatibility flags](/workers/configuration/compatibility-f
 
 If true, then experimental compatibility flags will be permitted in `compatibilityFlags`. In order to set this, the worker calling the loader must itself have the compatibility flag `"experimental"` set. Experimental flags cannot be enabled in production.
 
-The new module registry is experimental. Dynamic Workers therefore cannot use it in production.
-
 #### <code>mainModule <Type text="string" /></code>
 
 The runtime identifier for the Worker's main module. This must match one of the keys in `modules`.
@@ -159,7 +157,7 @@ The runtime identifier for the Worker's main module. This must match one of the 
 
 A dictionary object mapping runtime module identifiers to their contents. These identifiers name uploaded runtime modules, not original source files.
 
-In local development with the [new module registry](/workers/reference/module-registry/), the identifier `index.js` maps to `file:///bundle/index.js`. URL specifiers resolve through the registry and do not fetch network resources.
+With the [new module registry](/workers/reference/module-registry/), the identifier `index.js` maps to `file:///bundle/index.js`. URL specifiers resolve through the registry and do not fetch network resources.
 
 Use ordinary module names unless the upload API documents support for URL-shaped names. These rules do not describe Python import resolution.
 

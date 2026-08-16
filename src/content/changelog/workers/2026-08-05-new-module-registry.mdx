@@ -1,24 +1,79 @@
 ---
-title: Experimental module registry
-description: Opt into URL-based module loading and runtime metadata.
+title: New module registry
+description: Opt in to URL-based module loading, runtime metadata, and dynamic WebAssembly imports.
 products:
   - workers
 date: 2026-08-05
 ---
 
-The experimental `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry) selects a URL-based module registry. It provides new module APIs and more consistent loading behavior.
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Key changes include:
+Workers can use a URL-based module registry for new module APIs and more consistent loading behavior. Add the `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry) to opt in:
 
-- **Module metadata** — Use `import.meta.url`, `import.meta.main`, and `import.meta.resolve()`.
-- **URL identity** — Queries and fragments identify separate bundle module instances.
-- **Module loading** — Validate import attributes and follow Node.js `require(esm)` behavior.
-- **Consistent errors** — Use the same error classes across loading paths.
-- **Lazy compilation** — Compile modules when they are first imported.
-- **Compilation reuse** — Reuse cached compilation data when available.
+<WranglerConfig>
 
-Dynamic WebAssembly source phase imports through `import.source()` require the new registry. Static `import source` works with both registries.
+```toml
+name = "my-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["new_module_registry"]
+```
 
-Use [Wrangler](/workers/wrangler/) 4.87.0 or later. For Vite projects, use [Cloudflare Vite plugin](/workers/vite-plugin/) 1.35.0 or later.
+</WranglerConfig>
+
+The registry provides URL, entrypoint, and resolution metadata. For TypeScript, install `@types/node` and include `node` in [`compilerOptions.types`](/workers/languages/typescript/#migrating).
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	fetch(): Response {
+		return Response.json({
+			url: import.meta.url,
+			main: import.meta.main,
+			utilityUrl: import.meta.resolve("./utility.js"),
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+Import attributes validate static and dynamic JSON imports:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import config from "./config.json" with { type: "json" };
+
+export default {
+	async fetch(): Promise<Response> {
+		const { default: dynamicConfig } = await import("./config.json", {
+			with: { type: "json" },
+		});
+
+		return Response.json({ config, dynamicConfig });
+	},
+};
+```
+
+</TypeScriptExample>
+
+Dynamic source phase imports load WebAssembly modules at runtime:
+
+```js
+export default {
+	async fetch() {
+		const wasmModule = await import.source("./add.wasm");
+		const instance = await WebAssembly.instantiate(wasmModule, {});
+
+		return new Response(String(instance.exports.add(1, 2)));
+	},
+};
+```
+
+Static `import source` works with both registries. Dynamic `import.source()` requires the new registry. The new registry also follows Node.js `require(esm)` behavior, uses consistent loading errors, and compiles dynamically imported modules on first use.
+
+Use [Wrangler](/workers/wrangler/) 4.87.0 or later. For Vite projects, use [Cloudflare Vite plugin](/workers/vite-plugin/) 1.35.0 or later. Vite 8 does not currently bundle source phase import syntax, so use Wrangler for the WebAssembly example.
 
 For configuration, tooling caveats, and API details, refer to the [module registry reference](/workers/reference/module-registry/). For WebAssembly examples, refer to [Wasm in JavaScript](/workers/runtime-apis/webassembly/javascript/#use-source-phase-imports).

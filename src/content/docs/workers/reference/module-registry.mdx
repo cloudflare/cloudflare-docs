@@ -10,13 +10,13 @@ sidebar:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-The Workers runtime uses a module registry to load deployed modules referenced by `import` or `require()`. An experimental registry is available through a [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry).
+The Workers runtime uses a module registry to load deployed modules referenced by `import` or `require()`. A URL-based registry is available through a [compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry).
 
-The experimental registry resolves module identifiers and specifiers as URLs. It also provides module metadata, compilation on first import, and consistent loading behavior.
+The new registry resolves module identifiers and specifiers as URLs. It also provides module metadata, compilation on first import, and consistent loading behavior.
 
 ## Configure the registry
 
-To use the experimental registry, add its flag to your [Wrangler](/workers/wrangler/) configuration:
+To use the new registry, add its flag to your [Wrangler](/workers/wrangler/) configuration:
 
 <WranglerConfig>
 

@@ -6,12 +6,12 @@ _build:
 
 name: "New module registry"
 sort_date: "2026-08-05"
-experimental: true
+experimental: false
 enable_flag: "new_module_registry"
 disable_flag: "legacy_module_registry"
 ---
 
-The experimental `new_module_registry` flag selects a URL-based Workers module registry. Use `legacy_module_registry` to select the legacy registry.
+The `new_module_registry` flag selects a URL-based Workers module registry. Use `legacy_module_registry` to select the legacy registry.
 
 When enabled, the new registry provides:
 
