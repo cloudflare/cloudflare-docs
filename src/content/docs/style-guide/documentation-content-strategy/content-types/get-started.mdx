@@ -3,83 +3,61 @@ pcx_content_type: concept
 title: Get started
 meta:
   title: Content type - Get started
-description: Write get-started guides for new users.
+description: Write get-started pages that take a new user from nothing to a first working setup by the shortest honest path.
 products:
   - style-guide
 ---
 
-## Purpose
+import { Render } from "~/components";
 
-The purpose of Get started content is to help users go from not using a product to successfully configuring and setting up.
+A get-started page takes a new user from not using a product to a first working setup by the shortest honest path. The tone is instructional and encouraging.
 
-## content_type
+## When to use it
+
+Write a get-started page when a new user needs the shortest path from nothing to one working result, before they explore the product in depth. It is not:
+
+- **A how-to.** A how-to completes one specific task for a reader who already uses the product, whereas a get-started page delivers a new user's first success end to end.
+- **A tutorial.** A tutorial teaches through a longer guided project, whereas a get-started page stops at the first working result and routes the reader onward.
+
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
+
+## Title & description
+
+- **Title**: the page title is Get started.
+- **Description**: name the product, summarize the first setup the reader completes, and note the key prerequisites.
+
+## Scaffold this page
+
+<Render
+	file="scaffold-with-recipe"
+	product="style-guide"
+	params={{ type: "get-started", recipe: "content-quickstart" }}
+/>
+
+## Component guidance
+
+- [**Prerequisites**](/style-guide/documentation-content-strategy/component-attributes/prerequisites/) list what the reader needs before starting, such as an active zone, a subscription or plan, or setup outside Cloudflare.
+- [**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/) lead the reader to product adoption, covering the minimum setup plus the most general use case, and often reuse partials from the how-to pages.
+- [**Links**](/style-guide/documentation-content-strategy/component-attributes/links/) close the page with next steps that point the reader toward deeper configuration once they have a working setup.
+- **What does not fit:** exhaustive configuration or edge cases. Keep those in how-tos and reference pages, and link to them.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: get-started
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-## Structure
+## Examples
 
-### Required components
+- [Waiting Room: Get started](/waiting-room/get-started/)
 
-**Title**: Should be "Get started"
+## Writing for AI and agents
 
-[**Prerequisites**](/style-guide/documentation-content-strategy/component-attributes/prerequisites/): Which may include:
-
-- An active zone
-- Certain subscription / enabled product / plan
-- Other tasks you might need to do to set up other things (your origin) outside of CF
-- Do you need to make certain decisions before you start?
-
-[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Steps that lead someone to whatever would be considered Product Adoption.
-
-- Often, these can be partialized files from your How-to pages.
-- This is usually the bare minimum (a single Bot Management FW rule) + the most general use case for a product.
-- This may at times contradict the flow in the Cloudflare dashboard at times. If it does, consider raising it up to the Product team.
-
-### Optional components
-
-**Next steps**: Point someone towards additional configuration options.
-
-## Template
-
-```
-
----
-weight: xx
-pcx_content_type: get-started
-description: Set up <Cloudflare product> for the first time by <key steps summarized>. Requires <key prerequisites>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# Get started
-
-Description
-
-## Before you begin
-
-All the things you need to do before you start configuring your product, both within Cloudflare and outside.
-
-## 1. Step description
-
-## 2. Steps until you get to activation
-
----
-
-## Next steps
-
-Point to more complex setup options.
-```
-
-## Example
-
-[Waiting Room: Get started](/waiting-room/get-started/)
+- **Shortest honest path.** Include only the steps that reach a first working result, because a get-started page is judged by how quickly a reader or agent reaches success, not by coverage.
+- **Show the result.** State and show the working outcome the steps produce, so a reader or agent can verify success before moving on.
+- **Complete prerequisites.** State exactly what the reader needs before starting, because an agent cannot begin a setup it is not equipped to reach.

@@ -16,11 +16,11 @@ An overview is the landing page a reader reaches first in a product area: it ans
 
 Use an overview as the single landing page for a product or major product area, the page its sidebar section opens on. It is not:
 
-- **A concept page.** Move architecture and tradeoffs to a concept page and link to them; an overview orients, it does not explain.
+- **A concept page.** Move architecture and tradeoffs to a concept page and link to them. An overview orients rather than explains.
 - **A bare table of contents.** A list of links with no orientation only duplicates the sidebar.
 - **A marketing page.** The reader has already clicked into the docs.
 
-For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For a live example, see the [Argo Smart Routing overview](/argo-smart-routing/).
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For a live example, refer to the [Argo Smart Routing overview](/argo-smart-routing/).
 
 ## Title & description
 
@@ -37,9 +37,9 @@ For the full comparison, refer to [How to select a content type](/style-guide/do
 
 ## Component guidance
 
-- [**Cards**](/style-guide/components/cards/) are the signature components: this is the one type where cards are the body content, because routing is the body. Keep card text to a name plus one line; a card that explains is a concept paragraph in a box. In the Markdown twin cards flatten to link-plus-description lists, so write the one-liners so they work in both forms.
+- [**Cards**](/style-guide/components/cards/) are the signature components: this is the one type where cards are the body content, because routing is the body. Keep card text to a name plus one line, because a card that explains is a concept paragraph in a box. In the Markdown twin cards flatten to link-plus-description lists, so write the one-liners so they work in both forms.
 - **Link lists** beat cards when the grid forces padded copy, or when a group genuinely must run past the roughly five-link cap, because prose lists scan better at volume.
-- **What does not fit:** Steps, because nothing is performed here; code blocks, because nothing is looked up, though inline code in the orientation line is fine; and accordions, because an overview with hidden content is hiding its own map.
+- **What does not fit:** Steps (nothing is performed here), code blocks (nothing is looked up, though inline code in the orientation line is fine), and accordions (an overview with hidden content is hiding its own map).
 
 ## Frontmatter
 
@@ -55,7 +55,7 @@ For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-
 
 ## Managing overview pages
 
-Every product or major product area must have an overview, so the answer to a weak one is always to strengthen it, never to remove it. If a page reads like a bare table of contents, add the orientation that says what the area is and where to start; do not delete it and let the sidebar stand in.
+Every product or major product area must have an overview, so the answer to a weak one is always to strengthen it, never to remove it. If a page reads like a bare table of contents, add the orientation that says what the area is and where to start. Do not delete it and let the sidebar stand in.
 
 The only page you hide is a structural group node: a folder that exists purely to group its children in the sidebar and was never a content page. You cannot delete a folder's `index.mdx` without a build error, so hide the placeholder and redirect readers past it by setting `group.hideIndex` to `true`:
 
@@ -70,6 +70,6 @@ sidebar:
 
 ## Writing for AI and agents
 
-- **Self-contained orientation.** Write the opening paragraph so it stays accurate in isolation, because it is what an agent quotes when asked what the product is; do not lean on the title or a later section to complete its meaning.
+- **Self-contained orientation.** Write the opening paragraph so it stays accurate in isolation, because it is what an agent quotes when asked what the product is. Do not lean on the title or a later section to complete its meaning.
 - **Literal availability.** State availability with literal plan, region, or release-stage names rather than a paraphrase.
 - **Load-bearing links.** Use real, current routes, because a stale route here strands a reader at the front door.

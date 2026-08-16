@@ -16,11 +16,11 @@ A reference page enumerates the facts about one nameable surface, such as a file
 
 Reach for a reference page when a reader needs to look up exact facts about one surface. Two laws govern the type: completeness, because a missing entry breaks a reference the way a missing word breaks a dictionary, and uniformity, because every entry answers the same questions in the same order. It is not:
 
-- **A how-to.** Reference describes, never instructs; a "to do this, first ..." entry means you extract a how-to and link it.
+- **A how-to.** Reference describes, never instructs. A "to do this, first ..." entry means you extract a how-to and link it.
 - **A concept.** Opinion and rationale live on the concept page, so one orienting sentence with a concept link is the whole prose allowance at the top.
-- **A dumping ground.** "Miscellaneous" is where facts go to become unfindable; keep one surface per page and mirror the product's own structure.
+- **A dumping ground.** "Miscellaneous" is where facts go to become unfindable. Keep one surface per page and mirror the product's own structure.
 
-For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For live examples, see [Common Cf-Polished statuses](/images/polish/cf-polished-statuses/) and [Logpush API configuration](/logs/logpush/logpush-job/api-configuration/).
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For live examples, refer to [Common Cf-Polished statuses](/images/polish/cf-polished-statuses/) and [Logpush API configuration](/logs/logpush/logpush-job/api-configuration/).
 
 ## Title & description
 
@@ -37,10 +37,10 @@ For the full comparison, refer to [How to select a content type](/style-guide/do
 
 ## Component guidance
 
-- [**Tables**](/style-guide/formatting/structure/tables/) are the signature component: a quick-reference table above the entries makes the common lookup zero-scroll. Keep tables simple, because merged cells and meaning-by-layout break both scanning and extraction.
+- [**Tables**](/style-guide/formatting/structure/tables/) are the signature component: a quick-reference table before the entries makes the common lookup zero-scroll. Keep tables simple, because merged cells and meaning-by-layout break both scanning and extraction.
 - **Definition lines** carry the same facts in a fixed order, such as type, default, required, and constraints, bolded or badged consistently across every entry.
 - [**DirectoryListing**](/style-guide/components/directory-listing/) links the child pages when the reference is a section rather than a single page.
-- **What does not fit:** Steps and Cards; callouts, because a fact that needs a warning usually belongs in the entry as a constraint; and tabs or accordions that hide entries, because a collapsed entry is invisible to search-and-grab readers and to extraction.
+- **What does not fit:** Steps, Cards, and callouts (a fact that needs a warning usually belongs in the entry as a constraint), plus tabs or accordions that hide entries (a collapsed entry is invisible to search-and-grab readers and to extraction).
 
 ## Frontmatter
 
@@ -61,4 +61,4 @@ A reference is complete or clearly scoped, with nothing in between, so if a subs
 
 - **Self-identifying entries.** Give every entry heading its full name, such as the dotted path `retry.max_attempts` rather than `max_attempts` under a "Retry" heading, so a retrieved chunk carries its own identity.
 - **Machine-checkable values.** State ranges, defaults, and limits as literal values rather than "a reasonable number", and keep examples minimal in fenced blocks with realistic values.
-- **Nothing hidden.** Keep every entry in the open, because a collapsed or tabbed entry is invisible to extraction; the Markdown twin of a reference page is the page.
+- **Nothing hidden.** Keep every entry in the open, because a collapsed or tabbed entry is invisible to extraction. The Markdown twin of a reference page is the page.

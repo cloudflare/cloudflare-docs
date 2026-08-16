@@ -3,123 +3,89 @@ pcx_content_type: concept
 title: Reference architecture
 meta:
   title: Content type - Reference architecture
-description: Write reference architecture documentation.
+description: Write reference architecture documentation that shows how Cloudflare products fit a customer's infrastructure and maps use cases to solutions.
 products:
   - style-guide
 ---
 
-import { Render } from "~/components";
+A reference architecture is a high-level design document that shows how Cloudflare products fit into a customer's existing infrastructure and maps their use cases to Cloudflare solutions. The tone is guiding and straightforward.
 
-## Purpose
+This page covers how to write one. For the published architectures themselves, refer to [Reference architectures](/reference-architecture/).
 
-The purpose of a [reference architecture](/reference-architecture/) is to provide a high-level view of how all or part of the Cloudflare platform is built and how Cloudflare products would fit into a customer's existing infrastructure. Reference architectures are designed to show where our platform fits in with a customer's current environment and describe key aspects of a Cloudflare feature/service. Reference architectures should also map customer use cases to Cloudflare solutions.
+## When to use it
 
-Reference architectures are typically very detailed. To describe a single architecture without much written content, use a [Reference architecture diagram](/style-guide/documentation-content-strategy/content-types/reference-architecture-diagram/).
+Write a reference architecture when you need to show, at the design level, how several Cloudflare products combine to fit a customer's environment and use cases. These documents are typically detailed. It is not:
 
-:::note[Disambiguation]
+- **A concept.** A concept explains one idea in depth, whereas a reference architecture shows how multiple products fit together in a real environment.
+- **A how-to.** A reference architecture describes and designs rather than giving procedural steps.
 
-This page describes the content strategy for a reference architecture. For help with Cloudflare products, refer to [Reference architectures](/reference-architecture/).
+For a single architecture that needs little written explanation, use a [reference architecture diagram](#reference-architecture-diagrams) instead. For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For live examples, refer to [Cloudflare Load Balancing Reference Architecture](/reference-architecture/architectures/load-balancing/), [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/), and [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/).
 
-:::
+## Title & description
 
-## Tone
+- **Title**: a noun phrase naming the architecture or solution, such as "Cloudflare Load Balancing Reference Architecture".
+- **Description**: name the solution and the products, say how they fit into existing infrastructure and for which use case, and name the intended audience, such as IT and security professionals.
 
-guiding, straightforward
+## Scaffold this page
 
-## content_type
+Copy this skeleton and adapt it to your architecture:
+
+```
+---
+title: <Noun phrase naming the architecture or solution>
+description: How <products> fit <infrastructure> for <use case>, written for <the intended audience>.
+pcx_content_type: reference-architecture
+sidebar:
+  order: 10
+products:
+  - product-a
+---
+
+Open with two or three paragraphs on the subject matter, then state who the document is for and what they will learn.
+
+## <Architecture area>
+
+Present the reference diagram with numbered callouts, and explain each element in prose so the meaning survives without the image.
+
+## <Use case to solution>
+
+Map the customer use case to the Cloudflare solution, and flag any caveats that affect how the architecture applies.
+
+## Related links
+
+Link the supporting how-tos, concepts, and product documentation with current routes.
+```
+
+## Component guidance
+
+- **Diagrams** are the signature component: a single reference diagram reflects the overall architecture, with captions and numbered callouts explaining each element, and supporting diagrams develop specific parts.
+- **Introduction and intended audience** open the document in prose, with two or three paragraphs on the subject matter followed by who it is for and what they will learn.
+- **Notes and warnings** flag caveats that affect how the architecture applies.
+- [**PublicStats**](/style-guide/components/public-stats/) surfaces Cloudflare network statistics where they strengthen the case for the architecture.
+- **What does not fit:** procedural steps, because a reference architecture designs rather than instructs. Link a how-to for implementation.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: reference-architecture
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-## Examples
+## Reference architecture diagrams
 
-[Cloudflare Load Balancing Reference Architecture](/reference-architecture/architectures/load-balancing/)
+A reference architecture diagram is the lighter variant: a single diagram with numbered callouts and just enough text to explain it, for a solution that does not need a full written architecture. The tone is instructional and straightforward.
 
-[Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/)
+- **When to use it**: reach for it when one diagram carries the solution and needs little written explanation. Choose a full reference architecture when the design needs detailed discussion.
+- **Title**: a noun phrase, as for a full reference architecture.
+- **Structure**: a single reference diagram, numbered callouts that explain each element, a short description of what the diagram relates to, and related links to supporting content.
+- **Frontmatter**: set `pcx_content_type` to `reference-architecture-diagram`.
 
-[Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
+## Writing for AI and agents
 
-## Components
-
-### Most used
-
-- [`PublicStats`](/style-guide/components/public-stats/): <Render file="public-stats-definition" product="style-guide" />
-- [Diagrams](/style-guide/documentation-content-strategy/component-attributes/diagrams/): Particularly helpful for image captions.
-
-### Required
-
-**Title**: Short verb phrase in second-person imperative. Do not use gerund phrases.
-
-[**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the document subject matter.
-
-[**Intended audience**](/style-guide/documentation-content-strategy/component-attributes/intended-audience/): Description of who the document is written for and what they will learn.
-
-[**Reference diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-diagram/): A single diagram that reflects the overall reference architecture.
-
-### Optional
-
-[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
-
-[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
-
-[**Diagrams**](/style-guide/documentation-content-strategy/component-attributes/diagrams/)
-
-**Screenshots**
-
-[**Related links**](/style-guide/documentation-content-strategy/component-attributes/links/): Bulleted list of links to associated resources.
-
-## Template
-
-```
-
----
-title: Cloudflare Reference Architecture
-pcx_content_type: reference-architecture
-description: Reference architecture for <Cloudflare solution>, showing how <products> fit into existing infrastructure for <use case>. Designed for IT and security professionals.
-products:
-  - cloudflare-one
-  - cloudflare-wan
-  - cloudflare-network-firewall
-weight: 1
-meta:
-    title: "Reference Architecture: An example Cloudflare solution"
----
-
-# Cloudflare Reference Architecture
-
-## Introduction
-Cloudflare provides software as a service solutions (SaaS) solutions for performance, security, reliability, and developer services. This reference architecture focuses on the security of the platform and the network these services are built on, as well as the broad security capabilities the services offer for both public facing and internal facing assets.
-
-### Who is this document for?
-This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
-
-## Heading 1
-### Subheading 1
-Start by describing the technology which this architecture refers to. Ideally you open with a diagram that either describes the final architecture, or is a base diagram from which the document will build.
-
-![Example reference architecture diagram](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg "The above is an example reference architecture diagram")
-
-## Heading 2
-### Subheading 2
-Then introduce how Cloudflare fits in
-
-## Heading 3
-### Subheading 4
-Start to dig into the details of the technology
-
-## Heading 5
-### Subheading 5
-End with mapping the architecture to real world use cases. Important to connect the reader to how this architecture is used in their own organization.
-
-## Summary
-End the document by summarizing everything so far and provide a list of further reading
-
-
-```
+- **Text equivalents for every diagram.** Explain each numbered callout in prose and give the diagram a text equivalent, because an agent cannot read the image and the meaning must survive without it.
+- **Literal product and use-case names.** Name the exact Cloudflare products and the use case in text, not only inside the diagram, so the architecture is retrievable on its own.
+- **Load-bearing links.** Link the supporting how-tos, concepts, and product docs with real, current routes, because the architecture points outward to implementation.

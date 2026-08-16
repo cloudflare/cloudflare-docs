@@ -3,97 +3,83 @@ pcx_content_type: concept
 title: Design guide
 meta:
   title: Content type - Design guide
-description: Write design guide documentation.
+description: Write design guides that walk a reader through planning and designing a specific Cloudflare solution and the architecture decisions behind it.
 products:
   - style-guide
 ---
 
-## Purpose
+A design guide helps a reader plan and design a specific solution with Cloudflare, focusing on the architecture decisions behind that solution before any configuration. A design guide is a focused subset of a [reference architecture](/reference-architecture/). The tone is instructional and straightforward.
 
-Help users understand how to plan and design a solution using Cloudflare. Typically [design guides](/reference-architecture/design-guides/) are a subset of a [reference architecture](/reference-architecture/).
+## When to use it
 
-:::note[Disambiguation]
+Write a design guide when a reader needs to plan the architecture of one specific solution, understanding the decisions and trade-offs before they build it. It is not:
 
-This page describes the content strategy for a design guide. For help with Cloudflare products, refer to [Design guides](/reference-architecture/design-guides/).
+- **A reference architecture.** A reference architecture describes a broad, product-spanning architecture, whereas a design guide narrows to planning one specific solution within it.
+- **A how-to.** A how-to gives the steps to configure a product, whereas a design guide reasons through the architecture decisions and trade-offs before any configuration begins.
 
-:::
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
 
-## Tone
+## Title & description
 
-instructional, straightforward
+- **Title**: a short verb phrase in the second-person imperative, not a gerund. Prefer "Securely deliver applications with Cloudflare" over "Securely delivering applications".
+- **Description**: name the solution the reader will plan and design, the Cloudflare products involved, and the architecture decisions covered.
 
-## content_type
+## Scaffold this page
+
+Copy this skeleton and adapt it to your solution:
+
+```
+---
+title: <Verb phrase naming the solution to plan>
+description: Plan and design <solution> with <Cloudflare products>, covering <the architecture decisions>.
+pcx_content_type: design-guide
+sidebar:
+  order: 10
+products:
+  - product-a
+---
+
+Open with two or three paragraphs describing the subject matter and the end state of the solution.
+
+## Intended audience
+
+Summarize who the guide is for and what they will learn.
+
+## <Architecture decision or design area>
+
+Describe the design and the decisions and trade-offs behind it, include a diagram of the architecture, and link out to the how-tos and tutorials that implement it.
+
+## Related links
+
+Point to the reference architecture and product documentation the design draws on.
+```
+
+## Component guidance
+
+- [**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/) opens with two to three paragraphs describing the subject matter and the end state of the solution the guide details.
+- [**Intended audience**](/style-guide/documentation-content-strategy/component-attributes/intended-audience/) summarizes who the guide is for and what they will learn.
+- [**Diagrams**](/style-guide/documentation-content-strategy/component-attributes/diagrams/) show the architecture, which is central to a design guide.
+- [**Notes and warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/) flag caveats and trade-offs that affect how the design applies.
+- [**Related links**](/style-guide/documentation-content-strategy/component-attributes/links/) point to the reference architecture and product documentation the design draws on.
+- **What does not fit:** step-by-step configuration procedures. A design guide plans the solution, so link out to the how-tos and tutorials that implement it.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: design-guide
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
 ## Examples
 
-[Securely deliver applications with Cloudflare](/reference-architecture/design-guides/secure-application-delivery/)
+- [Securely deliver applications with Cloudflare](/reference-architecture/design-guides/secure-application-delivery/)
 
-## Structure
+## Writing for AI and agents
 
-### Required components
-
-**Title**: Short verb phrase in second-person imperative. Do not use gerund phrases.
-
-[**Introduction**](/style-guide/documentation-content-strategy/component-attributes/introduction/): Two to three paragraphs describing the subject matter.
-
-[**Intended audience**](/style-guide/documentation-content-strategy/component-attributes/intended-audience/): Summary of who the content is aimed at and what users will learn.
-
-### Optional components
-
-[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
-
-[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
-
-[**Diagrams**](/style-guide/documentation-content-strategy/component-attributes/diagrams/)
-
-**Screenshots**
-
-[**Related links**](/style-guide/documentation-content-strategy/component-attributes/links/): Bulleted list of links to associated resources.
-
-## Template
-
-```
-
----
-title: "Example design guide"
-pcx_content_type: design-guide
-description: Plan and design <solution> using Cloudflare <products>. Covers architecture decisions, configuration steps, and deployment best practices.
-products:
-  - cloudflare-one
-  - cloudflare-wan
-  - cloudflare-network-firewall
-weight:
-meta:
-  title: "Design guide: An example"
----
-
-# Design guide title
-
-## Introduction
-Provide context to what this guide is going to cover. Ensure you describe the end state of the solution this guide will detail.
-
-### Who is this for?
-This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization’s existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management (EPP, XDR, UEM, MDM), firewalls, routers, and point solutions like packet or content inspection hardware, threat prevention, and data loss prevention technologies.
-
-## Heading 1
-### Subheading 1
-
-## Heading 2
-### Subheading 2
-
-## Heading 3
-### Subheading 4
-
-## Summary
-
-```
+- **Design, not steps.** Describe the architecture and the decisions behind it, linking out to the how-tos and tutorials that implement them, because a design guide is a plan an agent reasons from, not a procedure it runs.
+- **State the end state.** Describe the finished solution the guide produces up front, so a reader or agent knows the target before following the design.
+- **Name the audience and assumptions.** State who the guide is for and the infrastructure it assumes, because a design guide is only actionable for a reader with the right context.

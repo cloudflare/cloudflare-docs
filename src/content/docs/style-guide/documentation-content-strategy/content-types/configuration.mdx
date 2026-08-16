@@ -3,102 +3,77 @@ pcx_content_type: concept
 title: Configuration
 meta:
   title: Content type - Configuration
-description: Write configuration reference documentation.
+description: Write configuration pages that show the settings and values for a configuration-intensive feature so readers can copy the right setup.
 products:
   - style-guide
 ---
 
-## Purpose
+A configuration page shows the specific settings, values, and options for a configuration-intensive feature, so a reader can copy the right setup for their use case rather than follow a procedure. Also known as use cases, configurations are reference pages, not instructions. The tone is plain, descriptive, and straightforward.
 
-The purpose of a configuration is to show examples of specific settings, values, and options.
+## When to use it
 
-## Tone
+Write a configuration when a feature is configuration-intensive, such as rules, and readers mainly need to know which settings and values produce a given outcome. It is not:
 
-plain, descriptive, straightforward
+- **A how-to.** A how-to walks through the steps to complete a task, whereas a configuration only shows the settings and values for a setup, with no procedural steps.
+- **A tutorial.** A tutorial teaches through a guided project, whereas a configuration is a reference the reader consults for the right values, not a lesson.
+- **A reference.** A reference exhaustively documents every parameter, whereas a configuration curates example setups for common use cases.
 
-## content_type
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
+
+## Title & description
+
+- **Title**: noun-based, naming the feature being configured, because a configuration describes ways to set up a feature rather than guiding the reader toward a goal.
+- **Description**: name the product or feature configured, the use case it serves, and the key settings or values covered.
+
+## Scaffold this page
+
+Copy this skeleton and adapt it to your feature:
+
+```
+---
+title: <Feature> configuration
+description: Configure <product or feature> for <use case>, covering <the key settings and values>.
+pcx_content_type: configuration
+sidebar:
+  order: 10
+products:
+  - product-a
+---
+
+Introduce the feature in two or three sentences, frame which configurations the reader will encounter, and link to related documentation.
+
+## <Feature area>
+
+State the outcome this configuration produces, then give the settings and values in a table.
+
+| Setting        | Value                      | Notes            |
+| -------------- | -------------------------- | ---------------- |
+| <setting name> | <value to enter or select> | <when to use it> |
+```
+
+## Component guidance
+
+- [**Tables**](/style-guide/formatting/structure/tables/) are the signature: a reference table with a 1:1 correspondence between each setting the reader can change and the value to enter or select for a given use case.
+- [**Navigation**](/style-guide/documentation-content-strategy/content-types/navigation/) helps readers find the right configuration when a feature has many.
+- **What does not fit:** step-by-step procedures. If you find yourself writing instructions, use a [how-to](/style-guide/documentation-content-strategy/content-types/how-to/), [tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/), or [example](/style-guide/documentation-content-strategy/component-attributes/examples/) instead.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: configuration
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-## When to use
+## Organizing configurations
 
-Configurations are useful for parts of the product that are very configuration-intensive; for example, rules.
+Open each configuration with a short context paragraph after the title that introduces the feature, frames which configurations the reader will encounter, and links to related documentation. Group the body by feature, giving each feature its own settings table so the reader can scan to the setup that matches their use case.
 
-## Structure
+## Writing for AI and agents
 
-### Required components
-
-**Title**: The title should be noun-based, because configurations are not designed to guide users towards achieving a goal – rather, they describe common ways to set up a specific feature depending on the user's needs.
-
-**Context**: The context should be given in a paragraph right after the title. It should introduce the features, contextualize what type of configurations the user will encounter, and link to other relevant documentation.
-
-**Settings and values**: This should be a reference table with a 1:1 correspondence between a setting the user can change, and the value they should input/select in order to reach the goal outlined in the context paragraph.
-
-### Optional components
-
-[**Navigation**](/style-guide/documentation-content-strategy/content-types/navigation/): When we have many configurations to cover, it's useful to include a navigation list to help the user find what they need.
-
-## Template
-
-```
-
----
-weight: xx
-pcx_content_type: configuration
-description: Configure <Cloudflare product or feature> settings for <use case or goal>. Covers <key settings or values>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# Title
-
-Write an overview of the high-level feature here, not more than 2-3 sentences. Outline what users can achieve with it, and if necessary, link to other parts of the docs.
-
-* [Feature 1](/feature-1)
-* [Feature 2](/feature-2)
-* [Feature 3](/feature-3)
-
-## Feature 1
-
-(Feature 1) allows you to (placeholder). For example, the following configuration (placeholder).
-
-| Setting 1 | Setting 2 | Setting 3 |
-
-| - | - | - |
-
-| Value 1 | Value 2 | Value 3 |
-
-## Feature 2
-
-(Feature 2) allows you to (placeholder). For example, the following configuration (placeholder).
-
-| Setting 1 | Setting 2 | Setting 3 |
-
-| - | - | - |
-
-| Value 1 | Value 2 | Value 3 |
-
-## Feature 3
-
-(Feature 3) allows you to (placeholder). For example, the following configuration (placeholder).
-
-| Setting 1 | Setting 2 | Setting 3 |
-
-| - | - | - |
-
-| Value 1 | Value 2 | Value 3 |
-```
-
-## Additional Information
-
-Configurations, also known as use cases, are reference pages with examples of how you might set a product up based on your requirements. If you are creating a configuration and feel yourself wanting to include instructions, consider a [tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/), [how-to](/style-guide/documentation-content-strategy/content-types/how-to/), or [example](/style-guide/documentation-content-strategy/component-attributes/examples/) instead.
+- **Complete setting-value pairs.** Give every table row an explicit setting and the exact value to enter or select, because an agent applies the pair directly with no room to infer.
+- **Use-case framing.** State the outcome each configuration produces in its context, so a reader or agent can match a goal to the right table without reading a procedure.
+- **Instructions point outward.** Link to the how-to, tutorial, or example that carries any steps, because a configuration itself is not executable as a procedure.

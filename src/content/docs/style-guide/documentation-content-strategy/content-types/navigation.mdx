@@ -1,55 +1,74 @@
 ---
-title: Navigation
 pcx_content_type: concept
-description: Create navigation pages with directory listings.
+title: Navigation
+meta:
+  title: Content type - Navigation
+description: Create navigation pages that signpost a docs area with an automatically generated directory listing of their child pages.
 products:
   - style-guide
 ---
 
-import { Render } from "~/components";
+A navigation page is a sub-landing page that points a reader deeper into a specific area of the documentation. It carries almost no prose of its own: a short introduction and an automatically generated listing of the child pages under it. The tone is brief and functional.
 
-## Purpose
+## When to use it
 
-The purpose of a navigation page is to direct users deeper into the doc set and act as a sub-landing page for a specific area of the docs.
+Write a navigation page when an area of the documentation has enough child pages that a reader needs a signposted entry point into them. It is not:
 
-## content_type
+- **An overview.** An overview introduces a product and orients a new reader with prose, whereas a navigation page mainly signposts the child pages under it.
+- **A concept.** A concept explains how something works, whereas a navigation page explains nothing and only routes the reader onward.
+
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/).
+
+## Title & description
+
+- **Title**: name the section or area the page fronts, matching the heading a reader clicked to arrive.
+- **Description**: invite the reader to explore the area, and name the key topics the child pages cover.
+
+## Scaffold this page
+
+Copy this skeleton and adapt it to your area:
+
+```
+---
+title: <Section or area name>
+description: Explore <area>, covering <the key topics the child pages cover>.
+pcx_content_type: navigation
+sidebar:
+  order: 10
+products:
+  - product-a
+---
+
+import { DirectoryListing } from "~/components";
+
+Introduce the area in one or two sentences, then let the listing route the reader to the child pages.
+
+<DirectoryListing />
+```
+
+## Component guidance
+
+- [**DirectoryListing**](/style-guide/components/directory-listing/) carries the body of the page: it displays the child pages of a folder as a list of links, generated automatically so the listing stays current as pages are added or removed.
+- **What does not fit:** substantive explanation or procedures. A navigation page holds no content of its own, so put explanations on the pages it links to.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: navigation
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-## Components
-
-[`DirectoryListing`](/style-guide/components/directory-listing/): <Render file="directory-listing-definition" product="style-guide" />
-
-## Template
-
-```mdx
----
-weight: xx
-pcx_content_type: navigation
-description: Explore <Cloudflare product> guides for <key topic areas covered by child pages>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-import { DirectoryListing } from "~/components";
-
-# Name of section
-
-<DirectoryListing />
-```
-
 ## Examples
 
-[Logs: Enable destinations](/logs/logpush/logpush-job/enable-destinations/)
+- [Logs: Enable destinations](/logs/logpush/logpush-job/enable-destinations/)
+- [Cloudflare Tunnel: Get started](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
 
-[Cloudflare Tunnel: Get Started](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
+## Writing for AI and agents
+
+- **Automatic listing.** Use DirectoryListing rather than a hand-written list, so the routes an agent follows are always the current child pages.
+- **No orphaned content.** Keep explanations and procedures off the navigation page, because an agent that lands here should be routed onward, not asked to read.
+- **Descriptive child titles.** The listing shows each child page's title, so write those titles to stand alone, because they are the only signal a reader or agent has when choosing where to go.

@@ -17,10 +17,10 @@ A tutorial takes a newcomer from nothing to a working project, one visible resul
 Write a tutorial when competence requires assembling several of the product's pieces into one real project, the kind of value that shows only when features work together. It is the most expensive type to build and keep true, so reach for one deliberately. It is not:
 
 - **A quickstart.** A quickstart proves the product works in minutes, whereas a tutorial builds competence through a meaningful project in about an hour.
-- **A how-to.** A how-to serves a competent reader who carries themselves; a tutorial's reader knows nothing, so when something breaks it is the tutorial's fault.
-- **A concept course.** A tutorial teaches by doing rather than by explaining; link the concept instead of unfolding it.
+- **A how-to.** A how-to serves a competent reader who carries themselves, whereas a tutorial's reader knows nothing, so when something breaks it is the tutorial's fault.
+- **A concept course.** A tutorial teaches by doing rather than by explaining. Link the concept instead of unfolding it.
 
-For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For a live example, see [Workers tutorials](/workers/tutorials/).
+For the full comparison, refer to [How to select a content type](/style-guide/documentation-content-strategy/content-types/select-content-type/). For a live example, refer to [Workers tutorials](/workers/tutorials/).
 
 ## Title & description
 
@@ -37,10 +37,10 @@ For the full comparison, refer to [How to select a content type](/style-guide/do
 
 ## Component guidance
 
-- [**Steps**](/style-guide/components/steps/) or numbered `##` parts are the spine, and every part ends with the verbatim "You should see" output that proves it worked; never skip one.
+- [**Steps**](/style-guide/components/steps/) or numbered `##` parts are the spine, and every part ends with the verbatim "You should see" output that proves it worked. Never skip one.
 - **Error-recovery prose** at the points readers actually stumble is happy-path content, not an exception callout, because in a tutorial an anticipated error is not an exception.
 - [**GitHubCode**](/style-guide/components/github-code/) and [**PackageManagers**](/style-guide/components/package-managers/) keep sample code and install commands pinned and in sync, and [**ListTutorials**](/style-guide/components/list-tutorials/) surfaces the tutorial in listings.
-- **What does not fit:** Tabs and options of any kind, because the author already chose the one path and per-stack means per-page; long conceptual asides, which link out instead; and anything that hides steps.
+- **What does not fit:** Tabs and options of any kind (the author already chose the one path, and per-stack means per-page), long conceptual asides (link out instead), and anything that hides steps.
 
 ## Frontmatter
 
@@ -62,6 +62,6 @@ A tutorial is the most expensive type to keep true, because it must work for eve
 
 ## Writing for AI and agents
 
-- **Self-contained parts.** Give every part a full-context heading, the full command, and the verbatim result, so a reader or agent landing mid-tutorial knows where they are; never use a positional reference such as "as configured above."
+- **Self-contained parts.** Give every part a full-context heading, the full command, and the verbatim result, so a reader or agent landing mid-tutorial knows where they are, and never use a positional reference such as "as configured above."
 - **Literal output.** Keep every expected output in a fenced code block with complete, realistic values, because that "You should see" text is what agents and readers match against.
 - **Pinned versions.** Name and pin every version in the prerequisites, so the tutorial does not silently drift off the latest release.
