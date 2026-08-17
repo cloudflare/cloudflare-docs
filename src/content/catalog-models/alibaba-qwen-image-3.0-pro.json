@@ -1,0 +1,125 @@
+{
+	"model_id": "alibaba/qwen-image-3.0-pro",
+	"provider_id": "alibaba",
+	"name": "Qwen Image 3.0 Pro",
+	"description": "Alibaba's Qwen Image 3.0 Pro generates images from text prompts with a focus on complex layout generation, small-text precision, and multilingual font rendering. Supports up to 6 image variants per call, negative prompts, seed control, and optional prompt rewriting.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Negative Prompt",
+		"Text Rendering",
+		"Multi-Image"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image generation",
+			"input": {
+				"prompt": "A golden retriever puppy playing in autumn leaves",
+				"size": "1024x1024"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/simple-generation.png"
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen-image-3.0-pro',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n    size: '1024x1024',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen-image-3.0-pro\",\n  \"input\": {\n    \"prompt\": \"A golden retriever puppy playing in autumn leaves\",\n    \"size\": \"1024x1024\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.alibabacloud.com/en/solutions/generative-ai/qwen",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/qwen-image-3.0-pro.png",
+	"metadata": {
+		"Max Images Per Call": "6",
+		"Negative Prompt": "Yes",
+		"Seed Control": "Yes",
+		"Size Format": "WxH (e.g. 2048x2048)"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-08-11 22:17:49",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string",
+					"pattern": "^\\d+x\\d+$"
+				},
+				"negative_prompt": {
+					"type": "string",
+					"maxLength": 500
+				},
+				"n": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 6
+				},
+				"seed": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 2147483647
+				},
+				"watermark": {
+					"type": "boolean"
+				},
+				"prompt_extend": {
+					"type": "boolean"
+				},
+				"prompt_extend_mode": {
+					"type": "string",
+					"enum": [
+						"direct",
+						"agent"
+					]
+				}
+			},
+			"required": [
+				"prompt",
+				"size"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"images": {
+					"minItems": 1,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				}
+			},
+			"required": [
+				"images"
+			],
+			"additionalProperties": false
+		}
+	}
+}

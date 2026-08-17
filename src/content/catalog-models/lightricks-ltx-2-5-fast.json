@@ -1,0 +1,201 @@
+{
+	"model_id": "lightricks/ltx-2-5-fast",
+	"provider_id": "lightricks",
+	"name": "LTX-2.5 Fast",
+	"description": "Lightricks LTX-2.5 Fast is a fast video generation model for text-to-video and image-to-video workflows, with synchronized audio, configurable duration, resolution, and frame rate.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Audio Generation",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Text-to-Video",
+			"description": "Generate a cinematic video from text",
+			"input": {
+				"prompt": "A cinematic aerial shot of ocean waves at sunset",
+				"duration": 8,
+				"resolution": "1920x1080",
+				"fps": 24,
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/lightricks/ltx-2-5-fast/text-to-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'lightricks/ltx-2-5-fast',\n  {\n    prompt: 'A cinematic aerial shot of ocean waves at sunset',\n    duration: 8,\n    resolution: '1920x1080',\n    fps: 24,\n    generate_audio: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"lightricks/ltx-2-5-fast\",\n  \"input\": {\n    \"prompt\": \"A cinematic aerial shot of ocean waves at sunset\",\n    \"duration\": 8,\n    \"resolution\": \"1920x1080\",\n    \"fps\": 24,\n    \"generate_audio\": true\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.ltx.io/api-documentation/api-reference/video-generation/text-to-video",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/lightricks/ltx-2-5-fast.png",
+	"metadata": {
+		"Image-to-Video": "Yes",
+		"Audio Generation": "Yes",
+		"Max Duration": "20 seconds",
+		"Resolutions": "1280x720, 720x1280, 1920x1080, 1080x1920, 2560x1440, 1440x2560, 3840x2160, 2160x3840"
+	},
+	"request_formats": null,
+	"banner": null,
+	"created_at": "2026-08-11 22:03:47",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video",
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 10000
+				},
+				"image_uri": {
+					"description": "HTTPS URI for the first frame",
+					"type": "string",
+					"format": "uri"
+				},
+				"last_frame_uri": {
+					"description": "HTTPS URI for the last frame",
+					"type": "string",
+					"format": "uri"
+				},
+				"duration": {
+					"description": "Video duration in seconds",
+					"default": 8,
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 2
+						},
+						{
+							"type": "number",
+							"const": 3
+						},
+						{
+							"type": "number",
+							"const": 4
+						},
+						{
+							"type": "number",
+							"const": 5
+						},
+						{
+							"type": "number",
+							"const": 6
+						},
+						{
+							"type": "number",
+							"const": 8
+						},
+						{
+							"type": "number",
+							"const": 10
+						},
+						{
+							"type": "number",
+							"const": 12
+						},
+						{
+							"type": "number",
+							"const": 14
+						},
+						{
+							"type": "number",
+							"const": 16
+						},
+						{
+							"type": "number",
+							"const": 18
+						},
+						{
+							"type": "number",
+							"const": 20
+						}
+					]
+				},
+				"resolution": {
+					"default": "1920x1080",
+					"type": "string",
+					"enum": [
+						"1280x720",
+						"720x1280",
+						"1920x1080",
+						"1080x1920",
+						"2560x1440",
+						"1440x2560",
+						"3840x2160",
+						"2160x3840"
+					]
+				},
+				"fps": {
+					"default": 24,
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 24
+						},
+						{
+							"type": "number",
+							"const": 25
+						},
+						{
+							"type": "number",
+							"const": 48
+						},
+						{
+							"type": "number",
+							"const": 50
+						}
+					]
+				},
+				"generate_audio": {
+					"default": true,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"resolution",
+				"fps",
+				"generate_audio"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}
