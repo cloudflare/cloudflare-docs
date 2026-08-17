@@ -37,9 +37,9 @@ For the full comparison, refer to [Content types](/style-guide/documentation-con
 
 ## Component guidance
 
-- [**Steps**](/style-guide/components/steps/) or numbered `##` parts are the spine, and every part ends with the verbatim "You should see" output that proves it worked. Never skip one.
+- [**Steps**](/style-guide/build-the-page/components/steps/) or numbered `##` parts are the spine, and every part ends with the verbatim "You should see" output that proves it worked. Never skip one.
 - **Error-recovery prose** at the points readers actually stumble is happy-path content, not an exception callout, because in a tutorial an anticipated error is not an exception.
-- [**GitHubCode**](/style-guide/components/github-code/) and [**PackageManagers**](/style-guide/components/package-managers/) keep sample code and install commands pinned and in sync, and [**ListTutorials**](/style-guide/components/list-tutorials/) surfaces the tutorial in listings.
+- [**GitHubCode**](/style-guide/build-the-page/components/github-code/) and [**PackageManagers**](/style-guide/build-the-page/components/package-managers/) keep sample code and install commands pinned and in sync, and [**ListTutorials**](/style-guide/build-the-page/components/list-tutorials/) surfaces the tutorial in listings.
 - **What does not fit:** Tabs and options of any kind (the author already chose the one path, and per-stack means per-page), long conceptual asides (link out instead), and anything that hides steps.
 
 ## Frontmatter
@@ -52,13 +52,13 @@ products:
   - product-b
 ```
 
-Set `difficulty` to Beginner, Intermediate, or Advanced, and stamp `reviewed` with the date you last ran the tutorial end to end. For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+Set `difficulty` to Beginner, Intermediate, or Advanced, and stamp `reviewed` with the date you last ran the tutorial end to end. For more details, refer to [`pcx_content_type`](/style-guide/build-the-page/frontmatter/custom-properties/#pcx_content_type).
 
 ## Keeping tutorials current
 
 A tutorial is the most expensive type to keep true, because it must work for every reader, every time, on a cold machine, and a broken tutorial convinces a newcomer that the product itself is broken. Fewest and freshest wins, so one tested tutorial beats five stale ones. Pin every version the tutorial depends on, re-run it end to end on a clean environment each release, and stamp `reviewed` with that date.
 
-- [`ListTutorials`](/style-guide/components/list-tutorials/)
+- [`ListTutorials`](/style-guide/build-the-page/components/list-tutorials/)
 
 ## Writing for AI and agents
 

@@ -38,7 +38,7 @@ For the full comparison, refer to [Content types](/style-guide/documentation-con
 
 ## Component guidance
 
-- [**ProductChangelog**](/style-guide/components/product-changelog/) renders a product's entries on the changelog page, pulling from the entries folder so the page stays current as entries are added.
+- [**ProductChangelog**](/style-guide/build-the-page/components/product-changelog/) renders a product's entries on the changelog page, pulling from the entries folder so the page stays current as entries are added.
 - **Entries** are the body: each dated MDX file in the changelog collection is one notable change, with its own title, description, and date.
 - **What does not fit:** long-form explanation or promotion. Keep an entry short and factual, and link to the how-to or concept that covers the change in depth.
 
@@ -51,7 +51,7 @@ products:
   - product-b
 ```
 
-For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+For more details, refer to [`pcx_content_type`](/style-guide/build-the-page/frontmatter/custom-properties/#pcx_content_type).
 
 ## Ownership
 
@@ -67,7 +67,7 @@ A changelog needs an MDX page file and a corresponding folder of changelog entri
 
 ### Changelog page
 
-The MDX page needs several special values to pull in the changelog information, highlighted in the sample page. For more information about the ProductChangelog component, refer to [ProductChangelog](/style-guide/components/product-changelog/).
+The MDX page needs several special values to pull in the changelog information, highlighted in the sample page. For more information about the ProductChangelog component, refer to [ProductChangelog](/style-guide/build-the-page/components/product-changelog/).
 
 ```mdx title="/src/content/docs/dns/changelog.mdx"
 ---
