@@ -1,0 +1,24 @@
+---
+title: Configure origin application settings for Cloudflare Tunnel in the dashboard
+description: You can now configure origin parameters such as TLS verification, HTTP Host header, connection timeouts, and more when editing a published application in the Cloudflare dashboard.
+products:
+  - tunnel
+  - cloudflare-tunnel-sase
+date: 2026-08-17
+---
+
+import { DashButton } from "~/components";
+
+You can now configure origin application settings directly in the Cloudflare dashboard when adding or editing a published application route for a [Cloudflare Tunnel](/tunnel/). These settings control how `cloudflared` connects to your origin server and were previously only available in the Cloudflare One dashboard or via local configuration files.
+
+![Configure origin application settings in the Cloudflare dashboard](~/assets/images/changelog/cloudflare-tunnel/tunnel-origin-settings-dashboard.gif)
+
+When editing a published application, expand **Additional application settings** to configure parameters organized into three categories:
+
+- **HTTP** — Set a custom HTTP Host header or disable chunked encoding.
+- **TLS** — Configure origin server name, CA pool, TLS timeout, disable TLS verification, match SNI to host, or enable HTTP/2 to origin.
+- **Connection** — Tune connect timeout, keep-alive timeout, keep-alive connections, TCP keep-alive interval, proxy type, or disable Happy Eyeballs.
+
+<DashButton url="/?to=/:account/tunnels" />
+
+For the full list of origin parameters, refer to [Origin parameters](/tunnel/advanced/origin-parameters/).
