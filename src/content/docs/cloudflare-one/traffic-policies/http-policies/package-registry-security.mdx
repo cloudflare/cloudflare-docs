@@ -180,13 +180,14 @@ To allow downloads of a sensitive internal package only through your corporate r
 | Selector | Operator | Value | Logic | Action |
 | --- | --- | --- | --- | --- |
 | Package Ecosystem | is | `npm` | And | Allow |
-| Package Name | is | `@acme/internal-sdk` | And | |
+| Package Namespace | is | `@acme` | And | |
+| Package Name | is | `internal-sdk` | And | |
 | Host | is | `npm.internal.example.com` | | |
 
 Wirefilter expression:
 
 ```txt
-pkg.ecosystem == "npm" and pkg.name == "@acme/internal-sdk" and http.request.host == "npm.internal.example.com"
+pkg.ecosystem == "npm" and pkg.namespace == "@acme" and pkg.name == "internal-sdk" and http.request.host == "npm.internal.example.com"
 ```
 
 **Policy 2 - Block from all other hosts (lower priority):**
@@ -194,12 +195,13 @@ pkg.ecosystem == "npm" and pkg.name == "@acme/internal-sdk" and http.request.hos
 | Selector | Operator | Value | Logic | Action |
 | --- | --- | --- | --- | --- |
 | Package Ecosystem | is | `npm` | And | Block |
-| Package Name | is | `@acme/internal-sdk` | | |
+| Package Namespace | is | `@acme` | And | |
+| Package Name | is | `internal-sdk` | | |
 
 Wirefilter expression:
 
 ```txt
-pkg.ecosystem == "npm" and pkg.name == "@acme/internal-sdk"
+pkg.ecosystem == "npm" and pkg.namespace == "@acme" and pkg.name == "internal-sdk"
 ```
 
 ## Detection and mirrors

@@ -1,0 +1,416 @@
+<figure
+	class="rtk-architecture not-content"
+	aria-labelledby="rtk-architecture-caption"
+>
+	<div class="rtka-panel">
+		<div class="rtka-legend" aria-hidden="true">
+			<span><i class="rtka-dot rtka-dot--app"></i>Your application</span>
+			<span><i class="rtka-dot rtka-dot--rtk"></i>RealtimeKit</span>
+		</div>
+
+		<div class="rtka-head" aria-hidden="true">
+			<span>Your application</span>
+			<span></span>
+			<span>RealtimeKit managed layer</span>
+		</div>
+
+		<div class="rtka-row">
+			<div class="rtka-node rtka-node--app">
+				<span class="rtka-eyebrow">Your backend</span>
+				<strong>Application backend</strong>
+				<small>Users, scheduling, and business logic</small>
+			</div>
+
+			<div class="rtka-bridge">
+				<span>REST API and webhooks</span>
+				<span class="rtka-line" aria-hidden="true"></span>
+			</div>
+
+			<div class="rtka-node rtka-node--rtk">
+				<span class="rtka-eyebrow">Control plane</span>
+				<strong>Meeting services</strong>
+				<small>Meetings, participants, presets, and recordings</small>
+			</div>
+		</div>
+
+		<div class="rtka-row">
+			<div class="rtka-node rtka-node--app">
+				<span class="rtka-eyebrow">Your frontend</span>
+				<strong>Web or mobile interface</strong>
+				<small>Product workflow, layout, branding, and plugins</small>
+			</div>
+
+			<div class="rtka-bridge">
+				<span>UI Kit or Core SDK</span>
+				<span class="rtka-line" aria-hidden="true"></span>
+			</div>
+
+			<div class="rtka-node rtka-node--rtk">
+				<span class="rtka-eyebrow">Client session layer</span>
+				<strong>Live session services</strong>
+				<small
+					>Authentication, signaling, participant state, and media controls</small
+				>
+			</div>
+		</div>
+
+		<div class="rtka-row">
+			<div class="rtka-node rtka-node--app">
+				<span class="rtka-eyebrow">Participant device</span>
+				<strong>Camera, microphone, and screen</strong>
+				<small>Media captured inside your application</small>
+			</div>
+
+			<div class="rtka-bridge">
+				<span>WebRTC media</span>
+				<span class="rtka-line" aria-hidden="true"></span>
+			</div>
+
+			<div class="rtka-node rtka-node--rtk">
+				<span class="rtka-eyebrow">Media infrastructure</span>
+				<strong>Realtime SFU</strong>
+				<small>Audio and video routing between participants</small>
+			</div>
+		</div>
+
+		<div class="rtka-row">
+			<div class="rtka-node rtka-node--app">
+				<span class="rtka-eyebrow">Your Cloudflare resources</span>
+				<strong>Workers and R2</strong>
+				<small>Backend workflows, recording apps, and storage</small>
+			</div>
+
+			<div class="rtka-bridge">
+				<span>Events and outputs</span>
+				<span class="rtka-line" aria-hidden="true"></span>
+			</div>
+
+			<div class="rtka-node rtka-node--rtk">
+				<span class="rtka-eyebrow">Managed extensions</span>
+				<strong>Recording, transcription, and webhooks</strong>
+				<small>Recordings, transcripts, summaries, and lifecycle events</small>
+			</div>
+		</div>
+
+		<div class="rtka-handoff">
+			<span>Identity handoff</span>
+			<strong>
+				A participant auth token connects your user to a meeting and preset.
+			</strong>
+		</div>
+	</div>
+
+	<figcaption id="rtk-architecture-caption">
+		Your application controls the product experience. RealtimeKit manages
+		meeting coordination and WebRTC media infrastructure.
+	</figcaption>
+</figure>
+
+<style>
+	.rtk-architecture {
+		--rtka-panel: #fafafa;
+		--rtka-grid: rgb(0 0 0 / 7%);
+		--rtka-card: #ffffff;
+		--rtka-border: #e4e4e7;
+		--rtka-line: #71717a;
+		--rtka-text: #18181b;
+		--rtka-muted: #71717a;
+		--rtka-app: #52525b;
+		--rtka-app-soft: rgb(82 82 91 / 8%);
+		--rtka-accent: #9a4a00;
+		--rtka-accent-soft: rgb(246 130 31 / 10%);
+
+		margin: 1.75rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .rtk-architecture {
+		--rtka-panel: #121213;
+		--rtka-grid: rgb(255 255 255 / 8%);
+		--rtka-card: #1c1c1f;
+		--rtka-border: #3f3f46;
+		--rtka-line: #a1a1aa;
+		--rtka-text: #f4f4f5;
+		--rtka-muted: #a1a1aa;
+		--rtka-app: #a1a1aa;
+		--rtka-app-soft: rgb(161 161 170 / 9%);
+		--rtka-accent: #fb923c;
+		--rtka-accent-soft: rgb(251 146 60 / 11%);
+	}
+
+	.rtka-panel {
+		padding: 1.25rem;
+		border: 1px solid var(--rtka-border);
+		border-radius: 0.875rem;
+		background:
+			radial-gradient(circle, var(--rtka-grid) 1px, transparent 1px),
+			var(--rtka-panel);
+		background-size: 16px 16px;
+	}
+
+	.rtka-legend {
+		display: flex;
+		justify-content: flex-end;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		color: var(--rtka-muted);
+	}
+
+	.rtka-legend span {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.rtka-dot {
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 9999px;
+	}
+
+	.rtka-dot--app {
+		background: var(--rtka-app);
+	}
+
+	.rtka-dot--rtk {
+		background: var(--rtka-accent);
+	}
+
+	.rtka-head,
+	.rtka-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.55fr) minmax(0, 1fr);
+		gap: 0.875rem;
+		align-items: center;
+	}
+
+	.rtka-head {
+		margin-bottom: 0.5rem;
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--rtka-muted);
+	}
+
+	.rtka-head span:last-child {
+		color: var(--rtka-accent);
+	}
+
+	.rtka-row + .rtka-row {
+		margin-top: 0.75rem;
+	}
+
+	.rtka-node {
+		position: relative;
+		display: flex;
+		min-height: 6.5rem;
+		flex-direction: column;
+		justify-content: center;
+		padding: 0.9rem 1rem;
+		overflow: hidden;
+		border: 1px solid var(--rtka-border);
+		border-radius: 0.625rem;
+		background: var(--rtka-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+	}
+
+	.rtka-node::before {
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: 3px;
+		content: "";
+	}
+
+	.rtka-node--app::before {
+		background: var(--rtka-app);
+	}
+
+	.rtka-node--rtk {
+		border-color: color-mix(
+			in srgb,
+			var(--rtka-accent) 35%,
+			var(--rtka-border)
+		);
+		background: linear-gradient(
+			135deg,
+			var(--rtka-card),
+			var(--rtka-accent-soft)
+		);
+	}
+
+	.rtka-node--rtk::before {
+		background: var(--rtka-accent);
+	}
+
+	.rtka-eyebrow {
+		margin-bottom: 0.3rem;
+		font-size: 0.625rem;
+		font-weight: 700;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+		color: var(--rtka-muted);
+	}
+
+	.rtka-node strong {
+		font-size: 0.875rem;
+		line-height: 1.3;
+		color: var(--rtka-text);
+	}
+
+	.rtka-node small {
+		margin-top: 0.3rem;
+		font-size: 0.71875rem;
+		line-height: 1.4;
+		color: var(--rtka-muted);
+	}
+
+	.rtka-bridge {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.rtka-bridge span {
+		font-size: 0.625rem;
+		font-weight: 600;
+		line-height: 1.2;
+		text-align: center;
+		color: var(--rtka-muted);
+	}
+
+	.rtka-line {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 1px;
+		background: var(--rtka-line);
+	}
+
+	.rtka-line::before,
+	.rtka-line::after {
+		position: absolute;
+		top: 50%;
+		width: 7px;
+		height: 7px;
+		border: 2px solid var(--rtka-line);
+		border-radius: 9999px;
+		background: var(--rtka-panel);
+		box-sizing: border-box;
+		content: "";
+		transform: translateY(-50%);
+	}
+
+	.rtka-line::before {
+		left: -1px;
+	}
+
+	.rtka-line::after {
+		right: -1px;
+		border-color: var(--rtka-accent);
+	}
+
+	.rtka-handoff {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-top: 1rem;
+		padding: 0.7rem 0.85rem;
+		border: 1px dashed var(--rtka-border);
+		border-radius: 0.5rem;
+		background: color-mix(
+			in srgb,
+			var(--rtka-card) 86%,
+			var(--rtka-accent-soft)
+		);
+	}
+
+	.rtka-handoff span {
+		flex: none;
+		padding: 0.2rem 0.45rem;
+		border-radius: 9999px;
+		background: var(--rtka-accent-soft);
+		font-size: 0.625rem;
+		font-weight: 700;
+		color: var(--rtka-accent);
+	}
+
+	.rtka-handoff strong {
+		font-size: 0.75rem;
+		font-weight: 600;
+		line-height: 1.4;
+		color: var(--rtka-text);
+	}
+
+	figcaption {
+		margin-top: 0.65rem;
+		font-size: 0.75rem;
+		line-height: 1.5;
+		text-align: center;
+		color: var(--rtka-muted);
+	}
+
+	@container (max-width: 40rem) {
+		.rtka-panel {
+			padding: 1rem;
+		}
+
+		.rtka-legend {
+			justify-content: flex-start;
+		}
+
+		.rtka-head {
+			display: none;
+		}
+
+		.rtka-row {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0.5rem;
+		}
+
+		.rtka-row + .rtka-row {
+			margin-top: 1rem;
+			padding-top: 1rem;
+			border-top: 1px dashed var(--rtka-border);
+		}
+
+		.rtka-node {
+			min-height: 0;
+		}
+
+		.rtka-bridge {
+			gap: 0.3rem;
+		}
+
+		.rtka-line {
+			width: 1px;
+			height: 1.5rem;
+		}
+
+		.rtka-line::before,
+		.rtka-line::after {
+			left: 50%;
+			transform: translate(-50%, 0);
+		}
+
+		.rtka-line::before {
+			top: -1px;
+		}
+
+		.rtka-line::after {
+			top: auto;
+			right: auto;
+			bottom: -1px;
+		}
+
+		.rtka-handoff {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.45rem;
+		}
+	}
+</style>
