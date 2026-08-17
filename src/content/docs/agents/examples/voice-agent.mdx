@@ -158,7 +158,7 @@ Key points:
 - `WorkersAITTS` converts the LLM response to audio, sentence by sentence.
 - `onTurn` receives the transcript and returns a stream. The mixin handles chunking the stream into sentences and synthesizing each one.
 - `onCallStart` sends a greeting when the user connects.
-- `context.messages` contains the full conversation history from SQLite.
+- `context.messages` contains completed conversation history before the current transcript.
 - `context.signal` is aborted if the user interrupts or disconnects.
 
 ## 4. Build the client
