@@ -20,7 +20,7 @@ WebSocket turns, sub-agent `chat()` turns, durable `submitMessages()` executions
 
 ## Bounded recovery
 
-A stream-stall watchdog abort (`chatStreamStallTimeoutMs`) uses the same bounded recovery path. The SDK preserves the settled partial and schedules a continuation. A transient hang recovers automatically. A persistently hanging provider exhausts the budget through the same path as a deploy or eviction. The SDK calls `onExhausted`, emits `chat:recovery:exhausted`, and shows the configured `terminalMessage`.
+A stream-stall watchdog abort (`chatStreamStallTimeoutMs`) uses the same bounded recovery path. The SDK preserves the settled partial and schedules a continuation. A transient hang recovers automatically. A persistently hanging provider exhausts the budget through the same path as a deployment or eviction. The SDK calls `onExhausted`, emits `chat:recovery:exhausted`, and shows the configured `terminalMessage`.
 
 Configure bounded recovery by setting `chatRecovery` to an object:
 

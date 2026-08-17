@@ -579,7 +579,7 @@ Use `abortRequest()` when you know the request ID. Use `abortAllRequests()` for 
 
 Automatic stream resumption (the `resume` option on `useAgentChat`) is **client reconnect recovery** — it resumes an active stream when a client disconnects and reconnects. It does not cover Durable Object eviction. If the Worker process or Durable Object is evicted while the model call is in flight, the stream itself is gone. Durable chat recovery handles that case.
 
-When a Durable Object is evicted mid-stream, the LLM connection is severed permanently. Durable recovery wraps every `AIChatAgent` and [`Think`](/agents/harnesses/think/) chat turn in a [`runFiber()`](/agents/runtime/execution/durable-execution/). The fiber provides automatic `keepAlive` during streaming and a recovery hook on restart.
+A mid-stream Durable Object eviction permanently severs the LLM connection. Durable recovery wraps every `AIChatAgent` and [`Think`](/agents/harnesses/think/) chat turn in a [`runFiber()`](/agents/runtime/execution/durable-execution/). The fiber provides automatic `keepAlive` during streaming and a recovery hook on restart.
 
 The fiber row survives in SQLite after an eviction. On the next activation, the framework detects the interrupted fiber. It reconstructs the partial response from buffered stream chunks and calls `onChatRecovery`.
 
