@@ -10,6 +10,8 @@ import { Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/com
 
 Durable Objects are billed for compute duration (wall-clock time) while the Durable Object is actively running or is idle in memory but unable to [hibernate](/durable-objects/concepts/durable-object-lifecycle/). Durable Objects that are idle and eligible for hibernation are not billed for duration, even before the runtime has hibernated them. Requests to a Durable Object keep it active or create the object if it was inactive.
 
+For each metered dimension, billable usage is the amount consumed in excess of the included monthly allocation. This billable usage is rounded up to the next billable unit before the corresponding rate is applied. For example, 500,000 GB-s of billable compute duration is rounded up to 1,000,000 GB-s and billed accordingly.
+
 |                      | Free plan         | Paid plan                                                                                                                               |
 | -------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | Requests             | 100,000 / day     | 1 million / month, + $0.15/million<br/> Includes HTTP requests, RPC sessions<sup>1</sup>, WebSocket messages<sup>2</sup>, and alarm invocations |

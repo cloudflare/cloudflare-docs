@@ -20,10 +20,22 @@ import {
 	scrapeRenderedHeadings,
 } from "../util/rendered-toc";
 
+import type { GetStaticPaths } from "astro";
+
 const NOINDEX_PRODUCTS = ["email-security"];
 
 export const prerender = true;
-export const getStaticPaths = getDocsStaticPaths;
+export const getStaticPaths = (async (...args: Parameters<GetStaticPaths>) => {
+	const paths = await getDocsStaticPaths(...args);
+	// Docs pages whose URLs are owned by a custom route (not the catch-all).
+	// These remain in the docs collection for sidebar metadata but should not
+	// be rendered by [...slug].astro to avoid route conflicts.
+	const blocklist = new Set(["waf/change-log/changelog"]);
+	return paths.filter((p) => {
+		const slug = p.params.slug;
+		return !(typeof slug === "string" && blocklist.has(slug));
+	});
+}) satisfies GetStaticPaths;
 
 const { entry, Content, headings } = await getDocsPageProps(Astro, {
 	partialHeadings: {

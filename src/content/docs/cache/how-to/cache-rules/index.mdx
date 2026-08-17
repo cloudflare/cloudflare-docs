@@ -6,7 +6,7 @@ products:
   - cache
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 Use Cache Rules to customize cache settings on Cloudflare. Cache Rules allows you to make adjustments to what is eligible to cache, how long it should be cached and where, as well as trigger specific interactions with Cloudflare's cache and other Rules products for matching requests.
 
@@ -28,7 +28,10 @@ Rules can be versioned. Refer to the [Version Management](/version-management/) 
 
 The following table describes Cache Rules availability per plan.
 
-<FeatureTable id="cache.cache_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 10 | 25 | 50 | 300 |
 
 ## Cache Rules and cache keys
 
