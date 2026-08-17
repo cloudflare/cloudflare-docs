@@ -16,7 +16,7 @@ There are a few ways to access logs with Workers for Platforms. For most platfor
 
 [Workers Logs](/workers/observability/logs/workers-logs/) automatically stores logs from your user Workers in your Cloudflare account, where you can query them with the [Query Builder](/workers/observability/query-builder/) or the [Workers Observability API](/api/resources/workers/subresources/observability/). Because it is fully managed, you can surface a per-user view of logs in your own dashboard without standing up a database, configuring a Logpush destination, or deploying a Tail Worker.
 
-Enable Workers Logs on a user Worker by including the `observability` setting in the [metadata](/cloudflare-for-platforms/workers-for-platforms/reference/metadata/) when you [upload the script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/subresources/content/methods/update/) to your dispatch namespace:
+Enable Workers Logs on a user Worker by including the `observability` setting in the [metadata](/cloudflare-for-platforms/workers-for-platforms/reference/metadata/) when you [upload the script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to your dispatch namespace:
 
 ```json
 {
@@ -36,10 +36,7 @@ Because you control the upload metadata, you decide whether logging is enabled f
 
 #### Query logs for a single user Worker
 
-Workers Logs are stored in the `cloudflare-workers` dataset. When you query the [Workers Observability API](/api/resources/workers/subresources/observability/) on behalf of an end user, scope every query to the specific user Worker so that one tenant cannot read another tenant's telemetry. Filter on the script name your platform assigned to the user Worker in the dispatch namespace:
-
-- `dataset` — `cloudflare-workers`, the dataset that stores Workers Logs.
-- `$metadata.service` — the user Worker's script name.
+Workers Logs are stored in the `cloudflare-workers` dataset. When you query the [Workers Observability API](/api/resources/workers/subresources/observability/) on behalf of an end user, scope every query to the specific user Worker so that one tenant cannot read another tenant's telemetry. Filter on `dataset` (set to `cloudflare-workers`) and `$metadata.service` (the user Worker's script name).
 
 Apply these filters on the server using the script name you control, rather than accepting a script name, dataset, or raw filter from the browser. This keeps each user's logs isolated even when the query is triggered by end-user input such as a search term or time range.
 
@@ -76,7 +73,7 @@ There are two ways for you to review your Workers for Platforms analytics.
 
 Use Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api) to get metrics relating to your Dispatch Namespaces. Use the `dispatchNamespaceName` dimension in the `workersInvocationsAdaptive` node to query usage by namespace.
 
-To show metrics for a single user Worker, filter `workersInvocationsAdaptive` by the `scriptName` of that user Worker. This returns request counts, error counts, and CPU or wall time quantiles without requiring Workers Logs to be enabled, so you can display per-user metrics even when log collection is turned off.
+To show metrics for a single user Worker, filter `workersInvocationsAdaptive` by the `scriptName` of that user Worker. This returns request counts, error counts, and CPU time quantiles without requiring Workers Logs to be enabled, so you can display per-user metrics even when log collection is turned off.
 
 ```graphql
 query UserWorkerMetrics($accountTag: string!, $scriptName: string!, $start: Time!, $end: Time!) {
@@ -91,7 +88,8 @@ query UserWorkerMetrics($accountTag: string!, $scriptName: string!, $start: Time
           errors
         }
         quantiles {
-          wallTimeP95
+          cpuTimeP50
+          cpuTimeP99
         }
       }
     }
