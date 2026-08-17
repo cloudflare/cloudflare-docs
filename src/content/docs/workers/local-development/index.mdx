@@ -301,7 +301,7 @@ There are two recommended patterns for this:
 
 ### Important Considerations
 
-- **Cloudflare Access**: If your Worker is protected by [Cloudflare Access](/cloudflare-one/), Wrangler must authenticate with Access when connecting to remote bindings. Refer to [Connect to Access-protected Workers](#connect-to-access-protected-workers).
+- [Cloudflare Access](/workers/configuration/cloudflare-access/): If your Worker is protected by Cloudflare Access, Wrangler must authenticate with Access when connecting to remote bindings. Refer to [Connect to Access-protected Workers](#connect-to-access-protected-workers).
 
 - **Data modification**: Operations (writes, deletes, updates) on bindings connected remotely will affect your actual data in the targeted Cloudflare resource (be it preview or production).
 
@@ -311,7 +311,7 @@ There are two recommended patterns for this:
 
 ### Connect to Access-protected Workers
 
-If your Worker is deployed behind a [Cloudflare Access](/cloudflare-one/) application — for example, if the `*.workers.dev` subdomain on your account is protected by Access, or if you have placed an Access policy on the custom route of the Worker — Wrangler must authenticate with Access when connecting to your remote bindings.
+If your Worker is protected by [Cloudflare Access](/workers/configuration/cloudflare-access/), Wrangler must authenticate with Access when connecting to your remote bindings. This applies whether Access protects the Worker itself, all Workers in the account, a `workers.dev` hostname, a Custom Domain, or another hostname or path that routes to the Worker.
 
 There are two ways you can authenticate against Access:
 
@@ -329,12 +329,12 @@ To set up service token authentication:
 
 2. **Add a Service Auth policy to the Access application that protects your Worker.**
 
-   Open the _existing_ Access application that already covers the hostname of the Worker — typically the wildcard application for `*.<account>.workers.dev`, or the application that protects your custom domain — and attach a new policy with:
+   Open the _existing_ Access application that already protects the Worker or the hostname you use for remote bindings, and attach a new policy with:
    - **Action**: Service Auth
    - **Include**: The service token you created, or "Any Access Service Token" if you want to allow any service token to access the Worker.
 
    :::caution
-   Do not create a _separate_ Access application scoped only to the Worker's hostname. Doing so has been observed to block requests even when the existing wildcard application is left in place — refer to [opennextjs-cloudflare#1171](https://github.com/opennextjs/opennextjs-cloudflare/issues/1171). Attach the Service Auth policy to the existing application that already protects the hostname.
+   Do not create a separate Access application for the same Worker or hostname only to add service token authentication. Doing so can conflict with the Access application that already protects the Worker. Attach the Service Auth policy to the existing application instead.
    :::
 
 3. **Expose the credentials to Wrangler.**

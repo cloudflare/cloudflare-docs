@@ -6,7 +6,7 @@ products:
   - cache
 ---
 
-import { DirectoryListing, FeatureTable } from "~/components";
+import { DirectoryListing } from "~/components";
 export const limitsDetails =
 	"If your account includes zones with different Cloudflare plans, the above limits are shared between all the zones with the same plan. For example, all the zones in your account with a Pro plan will share the limits for the Pro plan, and all the zones in your account with a Business plan will share the limits for the Business plan.";
 
@@ -22,13 +22,20 @@ If versioning is active on your zone and multiple environments are configured, y
 
 ## Availability and limits
 
-<FeatureTable id="cache.purge_cache" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Purge options | URL, Hostname, Tag, Prefix, and Purge Everything | URL, Hostname, Tag, Prefix, and Purge Everything | URL, Hostname, Tag, Prefix, and Purge Everything | URL, Hostname, Tag, Prefix, and Purge Everything |
 
 ### Hostname, tag, prefix URL, and purge everything limits
 
 The current purge limits are applied per **account**:
 
-<FeatureTable id="cache.purge_limits" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Requests | 5 requests per minute | 5 requests per second | 10 requests per second | 50 requests per second |
+| Bucket size | 25 | 25 | 50 | 500 |
+| Max operations per request | 100 | 100 | 100 | 100 |
 
 <p>{limitsDetails}</p>
 
@@ -36,7 +43,10 @@ The current purge limits are applied per **account**:
 
 The current purge limits are applied per **account**:
 
-<FeatureTable id="cache.single_file_purge" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| URLs | 800 URLs per second | 1500 URLs per second | 1500 URLs per second | 3000 URLs per second |
+| Max operations per request | 100 | 100 | 100 | 500 |
 
 <p>{limitsDetails}</p>
 

@@ -146,7 +146,7 @@ This will:
 3. Deploy your Worker globally
 
 :::caution[Wait for provisioning]
-After first deployment, wait 2-3 minutes before making requests. The Worker deploys immediately, but the container needs time to provision.
+After the first deployment, wait several minutes before you expect sandbox requests to succeed. The Worker deploys immediately, but the container image still has to provision.
 :::
 
 Check deployment status:
@@ -214,7 +214,8 @@ Now that you have a working sandbox, explore more capabilities:
 - [Code interpreter with Workers AI](/sandbox/tutorials/workers-ai-code-interpreter/) - Build an AI-powered code execution system
 - [Execute commands](/sandbox/guides/execute-commands/) - Run shell commands and stream output
 - [Manage files](/sandbox/guides/manage-files/) - Work with files and directories
+- [Deploy a Sandbox application](/sandbox/guides/deploy/) - Deploy and keep package and image aligned
 - [Expose services](/sandbox/guides/expose-services/) - Get public URLs for services running in your sandbox
 - [Quick tunnels](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for development and `.workers.dev` deployments
-- [Production Deployment](/sandbox/guides/production-deployment/) - Set up custom domains for preview URLs
+- [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/) - Wildcard DNS and TLS for `exposePort()`
 - [API reference](/sandbox/api/) - Complete API documentation

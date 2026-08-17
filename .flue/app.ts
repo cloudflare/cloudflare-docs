@@ -21,6 +21,7 @@ import CodeReviewFile from "./agents/code-review-file";
 import StyleGuideFile from "./agents/style-guide-file";
 import ConventionsReviewer from "./agents/conventions-reviewer";
 import ReconcileReviewer from "./agents/reconcile-reviewer";
+import ReviewValidator from "./agents/review-validator";
 import SpamFilter from "./agents/spam-filter";
 
 const bindings = workerEnv as unknown as {
@@ -153,6 +154,7 @@ const EVAL_AGENTS = [
 	StyleGuideFile,
 	ConventionsReviewer,
 	ReconcileReviewer,
+	ReviewValidator,
 	SpamFilter,
 ] as const;
 
