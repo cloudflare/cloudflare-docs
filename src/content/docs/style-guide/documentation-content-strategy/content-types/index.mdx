@@ -3,186 +3,53 @@ pcx_content_type: concept
 title: Content types
 sidebar:
   order: 2
-description: Choose the right content type for your page.
+description: Browse every documentation content type and choose the right one for the page you are writing.
 products:
   - style-guide
 ---
 
-import { Description } from "~/components";
+Every documentation page has a content type: a defined shape for what it contains, how it is structured, and how it is maintained. Choosing the right one keeps pages predictable for readers and agents. Every new product needs an [overview](/style-guide/documentation-content-strategy/content-types/overview/) and a [get-started](/style-guide/documentation-content-strategy/content-types/get-started/) page, and the other types depend on what a reader needs.
 
-All new [developers.cloudflare.com](https://developers.cloudflare.com/) products should include the required content sections that are listed in the following table. The other sections are available depending on what information users need to successfully use the product.
+This page groups the types by the job they do, so you can tell apart the ones that are easy to confuse. For full guidance on any type, refer to its page in the tables.
 
-<table>
-	<tr>
-		<th style="width:25%">Content section</th>
-		<th>Required?</th>
-		<th>Content description</th>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/overview/">
-				Overview
-			</a>
-		</td>
-		<td>Yes</td>
-		<td>
-			The purpose of a landing page is to welcome users and provide an overview
-			of the product.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/get-started/">
-				Get started
-			</a>
-		</td>
-		<td>Yes</td>
-		<td>
-			The purpose of Get started content is to help users go from not using a
-			product to successfully configuring and setting up.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/how-to/">
-				How to
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of a how to is to explain how to complete a task within the
-			product.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/concept/">
-				Concept
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of a concept is to provide conceptual or descriptive
-			information so users understand the background and context of a particular
-			topic.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/reference/">
-				Reference
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of reference content is to provide supplemental information (a
-			“deep dive”) for further learning on settings, values, or options. While
-			reference information is helpful for users, reference information should
-			not block or prevent users from completing tasks.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/reference-architecture/">
-				Reference architecture
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of a reference architecture is to provide a high-level view of
-			how all or part of the Cloudflare platform is built and how Cloudflare
-			products would fit into a customer's existing infrastructure.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/tutorial/">
-				Tutorial
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of a tutorial is to guide users and connect products to
-			real-world scenarios.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/api-content-strategy/api-content-types/">API</a>
-		</td>
-		<td>No</td>
-		<td>
-			API content lists requirements and tasks users must complete before
-			successfully making their first request.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/troubleshooting/">
-				Troubleshooting
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of Troubleshooting content is to provide guidance for solving
-			common and corner-case problems with the product.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/faq/">
-				FAQ
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of an FAQ is to provide simple answers to common questions.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/3rd-party-integration-guide/">
-				3rd-party integration guide
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of a 3rd-party integration guide is to explain how to use a
-			3rd-party product with Cloudflare.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/changelog/">
-				Changelog
-			</a>
-		</td>
-		<td>No</td>
-		<td>The purpose of a changelog is to log or record notable changes.</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/configuration/">
-				Configuration
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of a configuration is to show examples of specific settings,
-			values, and options.
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href="/style-guide/documentation-content-strategy/content-types/navigation/">
-				Navigation
-			</a>
-		</td>
-		<td>No</td>
-		<td>
-			The purpose of a navigation page is to direct users deeper into the doc
-			set and act as a sub-landing page for a specific area of the docs.
-		</td>
-	</tr>
+## Task and setup content
 
-</table>
+Types where the reader is getting something done.
+
+| Content type | Choose it when |
+| --- | --- |
+| [How to](/style-guide/documentation-content-strategy/content-types/how-to/) | The reader has already chosen a product and needs to complete one specific task within it. |
+| [Tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/) | The reader learns by building a real project end to end, where the journey teaches as much as the result. |
+| [Get started](/style-guide/documentation-content-strategy/content-types/get-started/) | A new user needs the shortest path from nothing to a first working result. |
+| [3rd-party integration guide](/style-guide/documentation-content-strategy/content-types/3rd-party-integration-guide/) | The reader connects one specific external product with Cloudflare, and you commit to maintaining the guide. |
+| [Configuration](/style-guide/documentation-content-strategy/content-types/configuration/) | A feature is configuration-intensive and the reader mainly needs the settings and values rather than steps. |
+
+## Explanatory and lookup content
+
+Types where the reader is trying to understand or find something.
+
+| Content type | Choose it when |
+| --- | --- |
+| [Concept](/style-guide/documentation-content-strategy/content-types/concept/) | The reader needs to understand what something is and why it works the way it does. |
+| [Reference](/style-guide/documentation-content-strategy/content-types/reference/) | The reader needs to look up complete, neutral details such as every parameter, value, or option. |
+| [Overview](/style-guide/documentation-content-strategy/content-types/overview/) | A new reader needs orienting to a product area in a paragraph before being routed onward. |
+| [FAQ](/style-guide/documentation-content-strategy/content-types/faq/) | Common questions each deserve a short, direct answer with a link to the source of truth. |
+| [Troubleshooting](/style-guide/documentation-content-strategy/content-types/troubleshooting/) | The reader has hit a specific error or symptom and needs the cause and the fix. |
+
+## Architecture and planning content
+
+Types that design a solution rather than implement it.
+
+| Content type | Choose it when |
+| --- | --- |
+| [Reference architecture](/style-guide/documentation-content-strategy/content-types/reference-architecture/) | You show, at the design level, how several products fit a customer's environment across use cases. |
+| [Design guide](/style-guide/documentation-content-strategy/content-types/design-guide/) | The reader plans one specific solution and the architecture decisions behind it before building. |
+
+## Signpost and record content
+
+Types that route the reader onward or log what changed.
+
+| Content type | Choose it when |
+| --- | --- |
+| [Navigation](/style-guide/documentation-content-strategy/content-types/navigation/) | An area has enough child pages that a reader needs a signposted entry point into them. |
+| [Changelog](/style-guide/documentation-content-strategy/content-types/changelog/) | You log notable, dated changes to a product. |

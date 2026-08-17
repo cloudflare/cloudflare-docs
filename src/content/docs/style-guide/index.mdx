@@ -1,7 +1,7 @@
 ---
 title: Style Guide
 pcx_content_type: overview
-description: Write and review Cloudflare content so the whole site reads as if one careful author wrote it. Grammar, formatting, content strategy, components, and team process.
+description: Write and review Cloudflare content so the whole site reads as if one careful author wrote it, from contributing through planning, style, and build.
 sidebar:
   order: 1
 products:
@@ -10,18 +10,34 @@ products:
 
 import { CardGrid, LinkCard } from "~/components";
 
-Use this guide whenever you write or review Cloudflare content, whether that content lives in the documentation or in the product dashboard. Following it consistently is what keeps the whole site reading as though a single careful author wrote every page, and that consistency is what makes the content clearer for readers and simpler to translate.
+Use this guide whenever you write or review Cloudflare content, whether it lives in the documentation or in the product dashboard. Following it is what keeps the whole site reading as though one careful author wrote every page, which also makes the content clearer for readers and simpler to translate.
 
-The cards below are ordered to match the way you actually work. You start by learning how to contribute a change, then decide what kind of page you are writing, then write it in the house style, and finally build it from the available components. The last card covers how the documentation team runs the site.
+The guide is organized around the way you actually work, in five stages: contribute a change, plan the content, write it in the Cloudflare style, build the page, and, for the Cloudflare team, run the site.
+
+## Contribute
+
+Start here. Make a change and get it merged.
 
 <CardGrid>
 	<LinkCard
 		title="Contributions"
-		description="Open an issue, make a quick edit, or set up full local development to raise a pull request."
+		description="Open an issue, make a quick edit, or set up local development to raise a pull request."
 		href="/style-guide/contributions/"
 	/>
 	<LinkCard
-		title="Product content"
+		title="Reviews"
+		description="See how your pull request gets reviewed before it merges."
+		href="/style-guide/how-we-docs/reviews/"
+	/>
+</CardGrid>
+
+## Plan your content
+
+Decide what kind of page you are writing and where it lives.
+
+<CardGrid>
+	<LinkCard
+		title="Content strategy"
 		description="Choose a content type, structure the page, and place it in the information architecture."
 		href="/style-guide/documentation-content-strategy/"
 	/>
@@ -30,16 +46,40 @@ The cards below are ordered to match the way you actually work. You start by lea
 		description="Follow the conventions for documenting endpoints, parameters, and resources."
 		href="/style-guide/api-content-strategy/"
 	/>
+</CardGrid>
+
+## Style and grammar
+
+Write the page in the house voice, grammar, and formatting.
+
+<CardGrid>
+	<LinkCard
+		title="Writing guidelines"
+		description="Write in the Cloudflare house voice and tone."
+		href="/style-guide/documentation-content-strategy/writing-guidelines/"
+	/>
+	<LinkCard
+		title="Accessibility"
+		description="Write content that everyone can read and use."
+		href="/style-guide/documentation-content-strategy/accessibility/"
+	/>
 	<LinkCard
 		title="Grammar"
-		description="Apply the rules for parts of speech, punctuation, capitalization, and usage."
+		description="Apply the rules for parts of speech, punctuation, and capitalization."
 		href="/style-guide/grammar/"
 	/>
 	<LinkCard
 		title="Formatting"
-		description="Format dates, numbers, code, lists, tables, links, and UI elements consistently."
+		description="Format dates, numbers, code, lists, tables, and UI elements consistently."
 		href="/style-guide/formatting/"
 	/>
+</CardGrid>
+
+## Build the page
+
+Assemble the page from its metadata and components.
+
+<CardGrid>
 	<LinkCard
 		title="Frontmatter"
 		description="Declare the required and optional metadata that every page carries."
@@ -50,9 +90,16 @@ The cards below are ordered to match the way you actually work. You start by lea
 		description="Assemble pages from the MDX components that add buttons, tabs, and more."
 		href="/style-guide/components/"
 	/>
+</CardGrid>
+
+## How we docs
+
+How the Cloudflare team runs the site. This section is Cloudflare-specific internal process.
+
+<CardGrid>
 	<LinkCard
 		title="How we docs"
-		description="See how the team handles the site framework, redirects, metadata, AI, and video."
+		description="See how the team handles the site framework, redirects, links, metadata, AI, and video."
 		href="/style-guide/how-we-docs/"
 	/>
 </CardGrid>
