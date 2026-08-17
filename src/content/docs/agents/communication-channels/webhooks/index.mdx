@@ -37,7 +37,14 @@ export class WebhookAgent extends Agent<Env> {
 			return new Response("Invalid signature", { status: 401 });
 		}
 
-		await this.processEvent(JSON.parse(rawBody));
+		let payload: unknown;
+		try {
+			payload = JSON.parse(rawBody);
+		} catch {
+			return new Response("Invalid payload", { status: 400 });
+		}
+
+		await this.processEvent(payload);
 		return new Response("OK");
 	}
 
@@ -91,9 +98,13 @@ export default {
 				return new Response("Invalid signature", { status: 401 });
 			}
 
-			const payload = JSON.parse(rawBody) as {
-				repository?: { full_name?: string };
-			};
+			let payload: { repository?: { full_name?: string } };
+			try {
+				payload = JSON.parse(rawBody);
+			} catch {
+				return new Response("Invalid payload", { status: 400 });
+			}
+
 			const repository = payload.repository?.full_name;
 			if (!repository) {
 				return new Response("Missing repository", { status: 400 });
@@ -185,9 +196,13 @@ export default {
 				return new Response("Invalid signature", { status: 401 });
 			}
 
-			const payload = JSON.parse(rawBody) as {
-				repository?: { full_name?: string };
-			};
+			let payload: { repository?: { full_name?: string } };
+			try {
+				payload = JSON.parse(rawBody);
+			} catch {
+				return new Response("Invalid payload", { status: 400 });
+			}
+
 			const repository = payload.repository?.full_name;
 			if (!repository) {
 				return new Response("Missing repository", { status: 400 });
