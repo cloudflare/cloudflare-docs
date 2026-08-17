@@ -22,10 +22,10 @@ The following fields are now available in Cache Rules expressions:
 | `cf.bot_management.verified_bot` | Boolean | Whether the request originates from a verified bot, such as a search engine crawler. |
 | `cf.bot_management.static_resource` | Boolean | Whether the request is for a static resource and therefore exempt from bot detection. |
 | `cf.bot_management.js_detection.passed` | Boolean | Whether the browser passed JavaScript detection when the feature is enabled. |
-| `cf.bot_management.attack_score` | Number | Classifies the request by attack score, from `1` (likely automated) to `99` (likely human). |
-| `cf.bot_management.api_score` | Number | Classifies the request by API score, from `1` (likely automated) to `99` (likely human). |
-| `cf.bot_management.bot_tags["<TAG>"]` | Boolean | Whether the bot traffic matches the specified tag, such as `google` or `bing`. |
+| `cf.bot_management.tags` | Array | Bot tags associated with the request. |
 | `cf.bot_management.corporate_proxy` | Boolean | Whether the request originates from a known corporate proxy. |
+| `cf.bot_management.detection_ids` | Array | Detection IDs for Bot Management heuristic detections on the request. |
+| `cf.bot_management.signed_agent` | Boolean | Whether the request originates from a known agent that self-identifies with Web Bot Auth. |
 | `ip.src.asnum` | Number | The autonomous system number (ASN) of the incoming request's IP address. |
 
 :::note
@@ -42,4 +42,4 @@ or
 (http.request.uri.path contains "/api/" and not ip.src.asnum in {12345 67890})
 ```
 
-To learn more, refer to the [Cache Rules documentation](/cache/how-to/cache-rules/) and the [Fields reference](/ruleset-engine/rules-language/fields/).
+To learn more, refer to the [Cache Rules documentation](/cache/how-to/cache-rules/), [Bot Management variables](/bots/reference/bot-management-variables/), and the [Fields reference](/ruleset-engine/rules-language/fields/).
