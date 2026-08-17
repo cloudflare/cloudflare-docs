@@ -281,9 +281,11 @@ export default {
 ### `ctx.access` limitations
 
 :::note
-`ctx.access` applies only to the Worker invocation authenticated by Access. It does not currently propagate through Worker-to-Worker calls. This includes [Service Binding](/workers/runtime-apis/bindings/service-bindings/) HTTP requests and remote procedure call (RPC) invocations. The downstream Worker does not receive the caller's Access context.
+`ctx.access` applies only to the Worker invocation authenticated by Access. Cloudflare Access does not propagate `ctx.access` through [Service Binding](/workers/runtime-apis/bindings/service-bindings/) HTTP requests or remote procedure call (RPC) invocations. The downstream Worker does not receive the caller's Access context.
 
-Workers with [Static Assets](/workers/static-assets/) execute behind an internal router Worker. Access still protects the application and its assets. However, the router does not currently pass `ctx.access` to the user Worker.
+If the caller instead sends a `fetch()` subrequest to an Access-protected hostname with valid [service token headers](/cloudflare-one/access-controls/service-credentials/service-tokens/) or a valid [`CF_Authorization` cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/), Access evaluates the new request and creates a `ctx.access` object for the downstream Worker. This is a newly authenticated context, not context propagated from the caller.
+
+Workers with [Static Assets](/workers/static-assets/) execute behind an internal router Worker. Access still protects the application and its assets. However, the router does not pass `ctx.access` to the user Worker.
 
 The Cloudflare Vite plugin can add `assets` to the generated deployment configuration when the input Wrangler configuration omits it. Frameworks that use the plugin, including TanStack Start, can therefore be affected even when their source configuration does not declare Static Assets.
 :::
