@@ -9,8 +9,6 @@ sidebar:
 
 ---
 
-import { FeatureTable } from "~/components"
-
 If Cloudflare is providing [authoritative DNS](/dns/zone-setups/full-setup/) for your domain, Cloudflare will issue a backup [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/) for every standard Universal certificate issued.
 
 Backup certificates are wrapped with a different private key and issued from a different Certificate Authority — either Google Trust Services, Let's Encrypt, Sectigo, or SSL.com — than your domain's primary Universal SSL certificate.
@@ -21,4 +19,7 @@ For additional details, refer to the [introductory blog post](https://blog.cloud
 
 ## Availability
 
-<FeatureTable id="ssl.backup_certificates" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Can opt out? | No | No | No | Yes |

@@ -149,8 +149,12 @@ import { Steps } from "~/components";
 import { Steps, Step } from "~/components";
 
 <Steps>
-	<Step title="Install">Run <code>npm install</code>.</Step>
-	<Step title="Configure">Edit <code>config.json</code>.</Step>
+	<Step title="Install">
+		Run <code>npm install</code>.
+	</Step>
+	<Step title="Configure">
+		Edit <code>config.json</code>.
+	</Step>
 </Steps>
 ```
 
@@ -192,10 +196,6 @@ import { Plan } from "~/components";
 <Plan type="ent-add-on" />  <!-- Enterprise add-on -->
 <Plan type="workers-all" /> <!-- All Workers plans -->
 <Plan type="workers-paid" /><!-- Workers paid plans -->
-
-<!-- Pull availability from a product's index.json: -->
-
-<Plan id="web3.ethereum.properties.availability.summary" />
 ```
 
 ---
@@ -362,7 +362,11 @@ import { Card, LinkTitleCard, ListCard } from "~/components";
 
 <!-- Card that links to another page -->
 
-<LinkTitleCard title="Get started" icon="ph:rocket-launch" href="/workers/get-started/">
+<LinkTitleCard
+	title="Get started"
+	icon="ph:rocket-launch"
+	href="/workers/get-started/"
+>
 	Deploy your first Worker in minutes.
 </LinkTitleCard>
 
@@ -578,12 +582,7 @@ Nimbus component. Displays a file and directory tree. Use bold to highlight the 
 ```mdx
 import { FileTree } from "~/components";
 
-<FileTree>
-- src/
-  - index.ts
-  - **worker.ts**
-  - wrangler.toml
-</FileTree>
+<FileTree>- src/ - index.ts - **worker.ts** - wrangler.toml</FileTree>
 ```
 
 ---
@@ -629,34 +628,6 @@ import { RelatedProduct } from "~/components";
 ```
 
 Props: `header` (required, product name), `href` (required), `product` (required, slugified product name for icon lookup). Body text is the product description.
-
----
-
-## FeatureTable
-
-Renders a feature availability table by plan, sourced from `src/content/plans/index.json`. Use `id` in dot notation: `<product>.<feature>`.
-
-```mdx
-import { FeatureTable } from "~/components";
-
-<FeatureTable id="analytics.logpush" />
-```
-
-Props: `id` (required, dot-notation path into `src/content/plans/`).
-
----
-
-## ProductFeatures
-
-Renders a full feature list for a product grouping, sourced from `src/content/plans/index.json`.
-
-```mdx
-import { ProductFeatures } from "~/components";
-
-<ProductFeatures id="dns" />
-```
-
-Props: `id` (required, product key in `src/content/plans/`).
 
 ---
 
