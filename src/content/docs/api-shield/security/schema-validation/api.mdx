@@ -169,18 +169,21 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operation
 }
 ```
 
-You can add schema operations that do not exist in Web Assets. This API call supports up to 20 operations and requires `jq`.
+You can add schema operations that do not exist in Web Assets. This API call supports up to 20 operations and requires `jq`. For schemas with more than 20 new operations, run the command again to add the next batch.
 
 ```bash title="cURL command"
-curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
+response="$(curl --silent --fail-with-body "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=20&operation_status=new" --header "Authorization: Bearer <API_TOKEN>")" || exit 1
+operations="$(printf "%s" "$response" | jq --exit-status ".result")" || exit 1
+
+curl --silent --fail-with-body "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
---data "$(curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=5000&operation_status=new" --header "Authorization: Bearer <API_TOKEN>" | jq ".result")"
+--data "$operations"
 ```
 
 :::note
 
-Running this command again immediately returns an error. All `new_operations` are already `existing_operations`.
+Running this command when there are no new operations returns an error. All `new_operations` are already `existing_operations`.
 :::
 
 ### List all schemas
