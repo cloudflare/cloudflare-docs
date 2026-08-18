@@ -175,7 +175,7 @@ You can add schema operations that do not exist in Web Assets. This API call sup
 response="$(curl --silent --fail-with-body "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=20&operation_status=new" --header "Authorization: Bearer <API_TOKEN>")" || exit 1
 operations="$(printf "%s" "$response" | jq --exit-status ".result")" || exit 1
 
-if [ "$operations" = "[]" ]; then
+if [ "$(printf "%s" "$operations" | jq "length")" -eq 0 ]; then
 	printf "No new operations found.\n"
 else
 	curl --silent --fail-with-body "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
