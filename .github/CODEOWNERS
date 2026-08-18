@@ -163,8 +163,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
 /src/content/docs/notifications/ @cloudflare/product-owners
 /src/content/docs/registrar/ @cloudflare/product-owners
-/src/content/docs/rules/ @cloudflare/appsec-reviewers @elithrar @smarsh-cf @maurizioabba @cloudflare/product-owners
-/src/content/docs/ruleset-engine/ @cloudflare/appsec-reviewers @elithrar @maurizioabba @cloudflare/product-owners
+/src/content/docs/rules/ @cloudflare/appsec-reviewers @elithrar @smarsh-cf @maurizioabba @cloudflare/product-owners @mbullock1986
+/src/content/docs/ruleset-engine/ @cloudflare/appsec-reviewers @elithrar @maurizioabba @cloudflare/product-owners @mbullock1986
 /src/content/docs/log-explorer/ @angelampcosta @sahidya @cloudflare/product-owners
 
 # Developer Platform
@@ -289,31 +289,31 @@ package.json @cloudflare/content-engineering
 # Performance products
 
 /src/content/docs/argo-smart-routing/ @cloudflare/product-owners @ncrouch-cflare
-/src/content/docs/automatic-platform-optimization/ @cloudflare/product-owners @ack-cf
-/src/content/docs/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/partials/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/changelog/cache/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf @zaidoon1
-/src/assets/images/cache/ @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/directory/always-online.yaml @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/directory/cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/directory/cache-reserve.yaml @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/directory/cache-rules.yaml @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/directory/tiered-cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1
+/src/content/docs/automatic-platform-optimization/ @cloudflare/product-owners @ack-cf @mbullock1986
+/src/content/docs/cache/ @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/partials/cache/ @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/changelog/cache/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/assets/images/cache/ @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/directory/always-online.yaml @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/directory/cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/directory/cache-reserve.yaml @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/directory/cache-rules.yaml @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/directory/tiered-cache.yaml @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
 /src/content/docs/health-checks/ @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
 /src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
 /src/content/partials/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
 /src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
-/src/content/docs/smart-shield/configuration/cache-reserve/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
-/src/content/docs/smart-shield/configuration/regional-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
-/src/content/docs/smart-shield/configuration/smart-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1
+/src/content/docs/smart-shield/configuration/cache-reserve/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
+/src/content/docs/smart-shield/configuration/regional-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
+/src/content/docs/smart-shield/configuration/smart-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
 /src/content/docs/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu @steve-cloudflare
 /src/content/partials/spectrum/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @cansu @steve-cloudflare
-/src/content/docs/speed/ @cloudflare/product-owners @ack-cf
-/src/content/docs/speed/optimization/content/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
-/src/content/docs/speed/optimization/protocol/http2-to-origin.mdx @cloudflare/product-owners @ack-cf @zaidoon1
-/src/content/partials/speed/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
-/src/content/changelog/speed/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
-/src/assets/images/speed/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane
+/src/content/docs/speed/ @cloudflare/product-owners @ack-cf @mbullock1986
+/src/content/docs/speed/optimization/content/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane @mbullock1986
+/src/content/docs/speed/optimization/protocol/http2-to-origin.mdx @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
+/src/content/partials/speed/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane @mbullock1986
+/src/content/changelog/speed/ @cloudflare/pm-changelogs @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane @mbullock1986
+/src/assets/images/speed/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane @mbullock1986
 /src/content/docs/web3/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 
 # Privacy
