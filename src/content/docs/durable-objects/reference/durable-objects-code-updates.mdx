@@ -1,6 +1,6 @@
 ---
 title: Delay code updates until hibernation
-description: Configure a deployment grace period so active Durable Objects finish their current work before a code update replaces them.
+description: Configure a Durable Object code update strategy so active Durable Objects finish their current work before a code update replaces them.
 pcx_content_type: concept
 sidebar:
   order: 11
@@ -11,32 +11,36 @@ products:
 import { WranglerConfig, PackageManagers } from "~/components";
 
 {/* TODO: Confirm the compatibility date and launch date before publication.
-    TODO: Confirm the REST API field name with the EWC/API team. The engineering
-    spec still calls this field `durable_objects_hibernation_timeout`; this page
-    uses `durable_objects_deployment_grace_period` to match the renamed Wrangler
-    flag and config field. Update this page once the spec and schema catch up. */}
+    TODO: Confirm the `code_update_strategy` REST API field name and shape with the EWC/API
+    team. The engineering spec still calls this field `durable_objects_hibernation_timeout`
+    and uses a duration string. This page follows Brendan Irvine-Broque's proposal instead
+    (`code_update_strategy` with `mode` and `max_delay`). Update this page once the spec and
+    schema catch up. */}
 
-When you deploy new code, Cloudflare resets every active Durable Object that receives the update. The reset drops in-flight requests, closes WebSocket connections, and interrupts storage operations, because a Durable Object can only run one version of your code at a time.
+When you deploy new code, Cloudflare applies the update to every Durable Object it affects. By default, this happens immediately: Cloudflare resets each active Durable Object right away, which drops in-flight requests, closes WebSocket connections, and interrupts storage operations, because a Durable Object can only run one version of your code at a time.
 
-A deployment grace period lets an active Durable Object keep running its current code until it hibernates, instead of resetting it right away. The update still applies once the object hibernates, or once the grace period ends, whichever comes first.
+Set a Durable Object's code update strategy to `deferred` to let an active object keep running its current code until it hibernates, instead of resetting it right away. Cloudflare still applies the update once the object hibernates, or once the strategy's maximum delay is reached, whichever comes first.
+
+## Choose a code update strategy
+
+| Mode        | Behavior                                                                                                                                          |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `deferred`  | Cloudflare waits for an active Durable Object to hibernate before applying the update. If the object does not hibernate within `max_delay`, Cloudflare resets it and applies the update. |
+| `immediate` | Cloudflare resets an active Durable Object and applies the update right away, without waiting for it to hibernate.                                |
 
 ## How it works
 
-1. You deploy a code change
+1. You deploy a code change.
 2. A client makes a request to an inactive Durable Object, or creates a new Durable Object. This uses the latest version of your code.
-3. Some set of Durable Objects are currently active — they are performing work or holding open connections. Because you have set a grace period, these objects continue running using the existing version of your code. They continue handling requests, events, storage operations, and messages on WebSockets accepted with the [Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api).
-4. If an existing, already active Durable Object hibernates before the grace period ends, Cloudflare will apply the new version the next time that Durable Object "wakes up" in response to an incoming request or WebSocket message. Hibernated WebSocket connections stay connected throughout.
-5. If after the grace period ends, a Durable Object is still active, Cloudflare resets it and applies your code  update.
+3. Some Durable Objects are currently active — they are performing work or holding open connections. If their code update strategy is `deferred`, these objects continue running their existing version of your code. They keep handling requests, events, storage operations, and messages on WebSockets accepted with the [Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api).
+4. If an active Durable Object hibernates before `max_delay` is reached, Cloudflare applies the new version the next time that Durable Object "wakes up" in response to an incoming request or WebSocket message. Hibernated WebSocket connections stay connected throughout.
+5. If a Durable Object is still active when `max_delay` is reached, Cloudflare resets it and applies the update.
 
-Deploying again before an object hibernates does not restart its grace period. The object still applies the latest version once it hibernates or the original grace period ends, and it might skip versions you deployed in between.
+Deploying again before an object hibernates does not restart or extend its `max_delay`. The object applies the latest deployed version once it hibernates or the original `max_delay` is reached, and it might skip versions you deployed in between.
 
-:::note[Best effort, not a guarantee]
-A grace period is best-effort. Cloudflare can still reset an object before the grace period ends because of a crash, a resource limit, or a runtime update unrelated to your deployment.
-:::
+## Configure a code update strategy
 
-## Configure a grace period
-
-Add `deployment_grace_period` alongside `bindings` in the `durable_objects` object of your [Wrangler configuration file](/workers/wrangler/configuration/#durable-objects):
+Add `code_update_strategy` alongside `bindings` in the `durable_objects` object of your [Wrangler configuration file](/workers/wrangler/configuration/#durable-objects):
 
 <WranglerConfig>
 
@@ -49,39 +53,55 @@ Add `deployment_grace_period` alongside `bindings` in the `durable_objects` obje
 				"class_name": "ChatRoom",
 			},
 		],
-		"deployment_grace_period": 30,
+		"code_update_strategy": {
+			"mode": "deferred",
+			"max_delay": 60,
+		},
 	},
 }
 ```
 
 </WranglerConfig>
 
-The value is in seconds. The default is `30`. The maximum is `300` (five minutes). Set `deployment_grace_period` to `0` to reset active objects immediately, the same as every code update before this feature existed.
+`max_delay` is in seconds and only applies when `mode` is `deferred`. The maximum is `300` (five minutes). Omit `max_delay` to use the default for your compatibility date.
+
+## What each configuration does
+
+| `code_update_strategy`                          | Result                                                                                                                       |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| *(omitted)*                                       | Uses the default for your compatibility date: `immediate` before `COMPATIBILITY_DATE`, `deferred` with a 30-second `max_delay` on or after it. |
+| `{ "mode": "immediate" }`                         | Cloudflare applies the update immediately, without waiting for the object to hibernate.                                     |
+| `{ "mode": "immediate", "max_delay": 60 }`        | **Invalid.** Wrangler and the REST API reject this configuration — `max_delay` has no effect when `mode` is `immediate`.     |
+| `{ "mode": "deferred" }`                          | Cloudflare waits up to the default `max_delay` (30 seconds) for the object to hibernate.                                     |
+| `{ "mode": "deferred", "max_delay": 0 }`          | Valid, but Cloudflare waits zero seconds — behaves identically to `immediate`.                                               |
+| `{ "mode": "deferred", "max_delay": 120 }`        | Cloudflare waits up to 120 seconds for the object to hibernate before applying the update.                                   |
 
 ## Default behavior and compatibility dates
 
 This is a breaking change to existing behavior, so Cloudflare rolls out the new default behind a compatibility date:
 
-- Workers with a compatibility date before `COMPATIBILITY_DATE` reset active Durable Objects immediately on every code update, unless you set `deployment_grace_period` yourself.
-- Workers with a compatibility date of `COMPATIBILITY_DATE` or later use a 30-second grace period by default, unless you set a different value.
+- Workers with a compatibility date before `COMPATIBILITY_DATE` default to `immediate`, unless you set `code_update_strategy` yourself.
+- Workers with a compatibility date of `COMPATIBILITY_DATE` or later default to `deferred` with a 30-second `max_delay`, unless you set a different `code_update_strategy`.
 
-An explicit `deployment_grace_period`, whether in your Wrangler configuration, passed as a flag, or sent through the REST API, always overrides the compatibility-date default.
+An explicit `code_update_strategy`, whether in your Wrangler configuration, passed as a flag, or sent through the REST API, always overrides the compatibility-date default.
 
-## Override a grace period for one deployment
+## Override the mode for one deployment
 
-Pass `--durable-objects-deployment-grace-period` to `wrangler versions deploy` or `wrangler versions rollback` (or their `wrangler deploy` and `wrangler rollback` aliases) to override the configured value for a single deployment:
+Use the flag when a single deployment needs different behavior than your checked-in Wrangler configuration — for example, applying an `immediate` update during an incident without editing and re-committing `code_update_strategy`. Pass `--durable-objects-code-update-mode` to `wrangler versions deploy` or `wrangler versions rollback` (or their `wrangler deploy` and `wrangler rollback` aliases) to override the configured mode for a single deployment:
 
-<PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-deployment-grace-period 0" />
+<PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-code-update-mode immediate" />
 
-Wrangler resolves the grace period in this order:
+The flag accepts `deferred` or `immediate` and overrides only `mode`. To use a `max_delay` other than the default, set `code_update_strategy` in your Wrangler configuration or in the REST API request instead — the flag does not accept `max_delay`.
 
-1. The `--durable-objects-deployment-grace-period` flag.
-2. `durable_objects.deployment_grace_period` in your Wrangler configuration.
+Wrangler resolves `mode` in this order:
+
+1. The `--durable-objects-code-update-mode` flag.
+2. `durable_objects.code_update_strategy.mode` in your Wrangler configuration.
 3. The default for your compatibility date.
 
 ## Use the REST API
 
-Add `durable_objects_deployment_grace_period` to a [Create deployment](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) request. This field belongs to the deployment, not the Worker version.
+Add `code_update_strategy` to a [Create deployment](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) request. This field belongs to the deployment, not the Worker version.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/deployments" \
@@ -96,39 +116,74 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/
         "percentage": 100
       }
     ],
-    "durable_objects_deployment_grace_period": 0
+    "code_update_strategy": {
+      "mode": "deferred",
+      "max_delay": 60
+    }
   }'
 ```
 
-Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the grace period Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history. Both endpoints return the grace period Cloudflare applied, including the compatibility-date default when you omit the field.
+Cloudflare returns the effective strategy in create, get, and list deployment responses, including the compatibility-date default when you omit the field:
+
+```json
+{
+	"result": {
+		"id": "184e7530-050e-4a03-8d9f-8f391fb4f204",
+		"code_update_strategy": {
+			"mode": "deferred",
+			"max_delay": 30
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+To apply an update immediately through the REST API, set `"code_update_strategy": { "mode": "immediate" }`.
+
+Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the strategy Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history.
 
 :::note
-The REST API field name above reflects the naming decided for Wrangler and is not yet final. Check back here or in the [API reference](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) before you build automation against it.
+The REST API field name above reflects the proposed naming and is not yet final. Check back here or in the [API reference](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) before you build automation against it.
 :::
 
 ## Gradual deployments
 
-During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/), Cloudflare assigns each Durable Object to one of the versions in the deployment. Increasing a version's traffic percentage assigns more objects to it. Only newly assigned objects start a grace period. Objects that already run that version, and objects still assigned to an earlier version, are not affected.
+During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/), Cloudflare assigns each Durable Object to one of the versions in the deployment. Increasing a version's traffic percentage assigns more objects to that version. Only the newly assigned objects begin waiting under a `deferred` code update strategy — for example, increasing a version's traffic percentage from 20% to 50% starts the wait only for the additional 30% of objects newly assigned to it. Objects that already run that version, and objects still assigned to an earlier version, are not affected.
 
-Different objects can be on different grace-period clocks at the same time. If a later progression sets a shorter grace period, the shorter value applies to the objects that progression reassigns.
+```mermaid
+flowchart LR
+    A["Deployment progression increases<br/>version B's traffic percentage"] --> B{"Was this Durable Object<br/>already running version B?"}
+    B -->|Yes| C["No change — object keeps running version B"]
+    B -->|"No, newly assigned to B"| D{"Is the object<br/>currently active?"}
+    D -->|Inactive| E["Adopts version B on its next request"]
+    D -->|"Active, mode is deferred"| F["Starts its own max_delay timer,<br/>keeps running its previous version"]
+    F --> G{"Hibernates before<br/>max_delay ends?"}
+    G -->|Yes| H["Adopts version B when it wakes up"]
+    G -->|"No, max_delay reached"| I["Cloudflare resets it and<br/>applies version B"]
+```
+
+Different objects can be on different `max_delay` clocks at the same time. If a later progression uses a different code update strategy, that strategy applies only to the objects that progression reassigns.
 
 Keep your Worker and Durable Object code forward and backward compatible for as long as any version might still be running, not just for the length of the deployment. Refer to [Code updates](/durable-objects/platform/known-issues/#code-updates).
 
-## When to set a grace period to zero
+## Apply an update immediately
 
-Set `deployment_grace_period` to `0` when waiting is worse than resetting. Common cases:
+Set `code_update_strategy` to `{ "mode": "immediate" }`, or pass `--durable-objects-code-update-mode immediate` for a single deployment, when waiting is worse than resetting. Common cases:
 
 - You need to ship a correctness or security fix immediately, even if it interrupts active objects.
 - Some of your objects rarely or never hibernate, and you need to force them onto new code, or reduce their duration costs, without waiting.
 
-A `0` grace period behaves exactly like a code update did before this feature existed.
+Cloudflare applies an `immediate` update without waiting for the Durable Object to hibernate.
 
 ## Limitations
 
-- A grace period is best-effort. Cloudflare does not guarantee an object keeps its old code for the full grace period, or that it resets exactly when the grace period ends.
-- A grace period delays code updates that you make to your Durable Objects. Your Durable Objects can will still restart immediately when a Durable Object exceeds memory limits, crashes, or when Cloudflare updates the Workers runtime.
-- An object might skip versions entirely if you deploy more than once while it is waiting to hibernate.
-- A grace period does not make incompatible Worker and Durable Object versions safe to run together. Keep your interfaces compatible across versions.
+- A `deferred` code update strategy is best-effort. Cloudflare does not guarantee that an object keeps running its current code for the entire `max_delay`.
+- A `deferred` code update does not stop an object from accepting new requests, events, or storage operations while it waits to hibernate.
+- An object that is still active when `max_delay` is reached resets the same way an `immediate` update does.
+- A code update strategy does not delay restarts unrelated to code updates, such as process sandbox migrations, resource limits, or Workers runtime updates.
+- A code update strategy does not make incompatible Worker and Durable Object versions safe to run together. Keep your interfaces forward and backward compatible across versions.
 
 ## Related resources
 

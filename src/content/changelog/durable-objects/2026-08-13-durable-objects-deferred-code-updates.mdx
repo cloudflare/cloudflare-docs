@@ -1,0 +1,47 @@
+---
+title: Delay code updates until active Durable Objects hibernate
+description: Set a code update strategy so active Durable Objects finish their current work before a code update replaces them.
+products:
+  - durable-objects
+  - workers
+date: 2026-08-13
+---
+
+import { WranglerConfig, PackageManagers } from "~/components";
+
+{/* TODO: Confirm the launch date and compatibility date before publication. */}
+
+Durable Objects can stay active across requests, allowing you to run long-running [agents](/agents/), maintain [long-lived WebSocket connections](/durable-objects/best-practices/websockets/) and coordinate state across many clients. This is possible because each Durable Object is globally unique, and this means it must run only one version of your code at a time. Previously, when you deployed a change to your Durable Objects code, that change would be applied immediately, which could interrupt in-flight work and terminate open connections.
+
+You can now set a Durable Object's code update strategy to `deferred`, which tells Cloudflare to wait for the Durable Object to hibernate before it applies the update. This lets in-flight work finish before code updates and keeps open WebSocket connections that use the [Hibernation API](/durable-objects/examples/websocket-hibernation-server/) connected.
+
+Add `code_update_strategy` to `durable_objects` in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "CHAT_ROOM",
+				"class_name": "ChatRoom",
+			},
+		],
+		"code_update_strategy": {
+			"mode": "deferred",
+			"max_delay": 60,
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+`max_delay` is in seconds, up to a maximum of `300` (five minutes). Omit it to use the default for your compatibility date. Set `mode` to `immediate` — or pass `--durable-objects-code-update-mode immediate` for a single deployment — to apply an update right away, for example during an incident:
+
+<PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-code-update-mode immediate" />
+
+A `deferred` code update is best-effort, not a guarantee. Cloudflare can still reset an object before `max_delay` is reached.
+
+For more information, including how this interacts with gradual deployments and the REST API, refer to [Delay code updates until hibernation](/durable-objects/reference/durable-objects-code-updates/).

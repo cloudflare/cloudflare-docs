@@ -86,7 +86,7 @@ A Durable Object incurs charges only when it is **actively running in-memory**, 
 
 Durable Objects will occasionally shut down and objects are restarted, which will run your Durable Object class constructor. This can happen for various reasons, including:
 
-- Worker code updates that use a `0` grace period or reach the end of their grace period
+- Worker code updates that use an `immediate` code update strategy, or a `deferred` strategy that reaches its `max_delay`
 - Lack of requests to an object following the state transitions documented above
 - Cloudflare updates to the Workers runtime system
 - Workers runtime decisions on where to host objects
@@ -101,9 +101,11 @@ It is important to ensure that any services using Durable Objects are designed t
 
 ### Code updates
 
-A deployment grace period lets an active Durable Object keep serving requests, storage operations, and Hibernation API WebSockets on its current code until it hibernates, instead of shutting it down immediately. If the object is still active when the grace period ends, Cloudflare shuts it down and applies the update.
+[Deploying a new Worker version](/workers/versions-and-deployments/) is not delayed by a code update strategy — the deployment itself completes immediately. What a code update strategy controls is when each already-active Durable Object adopts that new version.
 
-Refer to [Delay code updates until hibernation](/durable-objects/reference/durable-objects-code-updates/) to configure a grace period and understand how it interacts with gradual deployments.
+A `deferred` code update strategy lets an active Durable Object keep serving requests, storage operations, and Hibernation API WebSockets on its current code until it hibernates, instead of shutting it down immediately. If the object is still active when `max_delay` is reached, Cloudflare shuts it down and applies the update.
+
+Refer to [Delay code updates until hibernation](/durable-objects/reference/durable-objects-code-updates/) to configure a code update strategy and understand how it interacts with gradual deployments.
 
 ### Working without shutdown hooks
 

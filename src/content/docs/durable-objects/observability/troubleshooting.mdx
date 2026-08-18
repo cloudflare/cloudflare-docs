@@ -43,7 +43,7 @@ There is a limit on how quickly you can create new [stubs](/durable-objects/api/
 
 ### Durable Object reset because its code was updated.
 
-This error occurs when a code update is applied before a Durable Object reaches hibernation. This includes a `0` deployment grace period and deployments whose grace period ends before the object hibernates.
+This error occurs when a code update is applied before a Durable Object reaches hibernation. This includes an `immediate` code update strategy and `deferred` deployments whose `max_delay` is reached before the object hibernates.
 
 Reset in error messages refers to in-memory state. Any durable state already persisted with `ctx.storage` is not affected. Make operations retryable and persist important state so a forced update can safely restart the object.
 
