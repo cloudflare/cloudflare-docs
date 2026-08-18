@@ -37,6 +37,25 @@ Jurisdictions can only be set when a namespace is created and cannot be added or
 | fedramp   | FedRAMP-compliant data centers  |
 | us        | The United States of America    |
 
+### Use wrangler
+
+To create a namespace restricted to a jurisdiction, pass the `--jurisdiction` flag with a supported jurisdiction:
+
+```sh
+npx wrangler@latest kv namespace create kv-with-jurisdiction --jurisdiction=eu
+```
+
+### Use REST API
+
+To create a namespace restricted to a jurisdiction, pass the `jurisdiction` field in the request body:
+
+```curl
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/storage/kv/namespaces" \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     --data '{"title": "kv-with-jurisdiction", "jurisdiction": "eu" }'
+```
+
 ### Get access
 
 Workers KV jurisdictions are in private beta. If you are interested in restricting your namespaces to a supported jurisdiction, contact your Cloudflare account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to request access.
