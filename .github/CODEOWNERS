@@ -302,6 +302,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/health-checks/ @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
 /src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
 /src/content/partials/load-balancing/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
+/src/content/changelog/load-balancing/ @cloudflare/pm-changelogs @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
+/src/assets/images/changelog/load-balancing/ @cloudflare/pm-changelogs @cloudflare/product-owners @ncrouch-cflare @cbennett-jpg @emmanuelflores-cf @fabienne-cf @gofish
 /src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare
 /src/content/docs/smart-shield/configuration/cache-reserve/ @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
 /src/content/docs/smart-shield/configuration/regional-tiered-cache.mdx @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
