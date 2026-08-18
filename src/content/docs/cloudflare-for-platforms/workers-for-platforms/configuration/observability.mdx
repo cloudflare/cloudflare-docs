@@ -12,9 +12,9 @@ Workers for Platforms provides you with logs and analytics that can be used to s
 
 There are a few ways to access logs with Workers for Platforms. They differ in how much of the logging stack Cloudflare runs for you:
 
-- [Workers Logs](#workers-logs) — Cloudflare collects, stores, and indexes the logs. Query them with the API. This is the best starting point for most platforms.
-- [Logpush](#workers-trace-events-logpush) — Cloudflare collects the logs and delivers them; you store them.
-- [Tail Workers](#tail-workers) — you receive the logs as they happen and handle storage yourself.
+- [Workers Logs](#workers-logs) — Cloudflare stores and indexes your logs, and you query them through the API. Nothing else to run. This is the best starting point for most platforms.
+- [Logpush](#workers-trace-events-logpush) — Cloudflare delivers your logs to a storage destination that you own and manage.
+- [Tail Workers](#tail-workers) — Cloudflare streams your logs to a Worker in real time, and you decide what to do with them.
 
 ### Workers Logs
 
