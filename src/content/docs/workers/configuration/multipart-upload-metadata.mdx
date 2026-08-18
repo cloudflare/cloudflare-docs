@@ -53,6 +53,9 @@ At a minimum, the `main_module` key is required to upload a Worker.
   - `config` <Type text="object" /> <MetaInfo text="optional" />
     - [html_handling](/workers/static-assets/routing/advanced/html-handling/) determines the redirects and rewrites of requests for HTML content.
     - [not_found_handling](/workers/static-assets/#routing-behavior) determines the response when a request does not match a static asset.
+  - `retention` <Type text="object" /> <MetaInfo text="optional" />
+    - Configures [asset retention](/workers/static-assets/asset-retention/) for the Worker. When enabled, assets from recently deployed versions remain reachable, preventing version skew.
+    - `enabled` <Type text="boolean" /> <MetaInfo text="required" /> - set to `true` to enable asset retention.
   - `jwt` field provides a token authorizing assets to be attached to a Worker.
 
 - `keep_assets` <Type text="boolean" /> <MetaInfo text="optional" />
