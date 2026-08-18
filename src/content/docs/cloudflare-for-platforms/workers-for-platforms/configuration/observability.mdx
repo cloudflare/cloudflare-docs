@@ -10,11 +10,15 @@ Workers for Platforms provides you with logs and analytics that can be used to s
 
 ## Logs
 
-There are a few ways to access logs with Workers for Platforms. For most platforms, [Workers Logs](#workers-logs) is the best starting point: it is a fully managed logging platform, so you get storage, indexing, and a queryable API without building or operating a logging pipeline of your own. Reach for Logpush or Tail Workers when you need to forward logs to your own destination.
+There are a few ways to access logs with Workers for Platforms. They differ in how much of the logging stack Cloudflare runs for you:
+
+- [Workers Logs](#workers-logs) — Cloudflare collects, stores, and indexes the logs. Query them with the API. This is the best starting point for most platforms.
+- [Logpush](#workers-trace-events-logpush) — Cloudflare collects the logs and delivers them; you store them.
+- [Tail Workers](#tail-workers) — you receive the logs as they happen and handle storage yourself.
 
 ### Workers Logs
 
-[Workers Logs](/workers/observability/logs/workers-logs/) automatically stores logs from your user Workers in your Cloudflare account, where you can query them with the [Query Builder](/workers/observability/query-builder/) or the [Workers Observability API](/api/resources/workers/subresources/observability/). Because it is fully managed, you can surface a per-user view of logs in your own dashboard without standing up a database, configuring a Logpush destination, or deploying a Tail Worker.
+[Workers Logs](/workers/observability/logs/workers-logs/) automatically stores logs from your user Workers in your Cloudflare account, where you can query them with the [Query Builder](/workers/observability/query-builder/) or the [Workers Observability API](/api/resources/workers/subresources/observability/). Because it is fully managed, you can surface a per-user view of logs in your own dashboard without standing up a database, setting up Logpush, or deploying a Tail Worker.
 
 Enable Workers Logs on a user Worker by including the `observability` setting in the [metadata](/cloudflare-for-platforms/workers-for-platforms/reference/metadata/) when you [upload the script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to your dispatch namespace:
 
@@ -57,7 +61,7 @@ All logs are forwarded to the Logpush job that you have setup for your account. 
 
 A [Tail Worker](/workers/observability/logs/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
 
-Use [Tail Workers](/workers/observability/logs/tail-workers/) instead of Logpush if you want granular control over formatting before logs are sent to their destination to receive [diagnostics channel events](/workers/runtime-apis/nodejs/diagnostics-channel), or if you want logs delivered in real-time.
+Use [Tail Workers](/workers/observability/logs/tail-workers/) instead of Logpush if you want to format logs before they leave Cloudflare, receive [diagnostics channel events](/workers/runtime-apis/nodejs/diagnostics-channel), or get logs in real time.
 
 To collect logs from a user Worker, add the [Tail Worker configuration](/workers/observability/logs/tail-workers/#configure-tail-workers) directly to that user Worker.
 
