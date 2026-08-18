@@ -6,7 +6,6 @@ products:
   - api-shield
 sidebar:
   order: 4
-
 ---
 
 [Application Profiles](/waf/detections/application-profiles/) provides the shared profile detection, analytics, and mitigation model. Schema Profile is its only current profile type.
@@ -15,13 +14,13 @@ sidebar:
 
 API Shield provides API inventory, schema governance, OpenAPI export, and automation. Cloudflare also offers these API security features:
 
-| Discovery & management | Posture management | Runtime protection |
-| --- | --- | --- |
-| [API Discovery](/api-shield/security/api-discovery/) | [Volumetric Abuse Detection](/api-shield/security/volumetric-abuse-detection/) | [Schema validation](/api-shield/security/schema-validation/) |
-| [Schema learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/) | [Authentication Posture](/api-shield/security/authentication-posture/) | [JWT validation](/api-shield/security/jwt-validation/) |
-| [Sequence Analytics](/api-shield/security/sequence-analytics/) | [BOLA vulnerability detection](/api-shield/security/bola-vulnerability-detection/) | [Sequence mitigation](/api-shield/security/sequence-mitigation/) |
-| | [Risk labels](/api-shield/management-and-monitoring/endpoint-labels/#risk-labels) | [Mutual TLS (mTLS)](/api-shield/security/mtls/) |
-| | [Vulnerability Scanner](/api-shield/security/vulnerability-scanner/) | [GraphQL query protection](/api-shield/security/graphql-protection/) |
+| Discovery & management                                                                        | Posture management                                                                 | Runtime protection                                                   |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [API Discovery](/api-shield/security/api-discovery/)                                          | [Volumetric Abuse Detection](/api-shield/security/volumetric-abuse-detection/)     | [Schema validation](/api-shield/security/schema-validation/)         |
+| [Schema learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/) | [Authentication Posture](/api-shield/security/authentication-posture/)             | [JWT validation](/api-shield/security/jwt-validation/)               |
+| [Sequence Analytics](/api-shield/security/sequence-analytics/)                                | [BOLA vulnerability detection](/api-shield/security/bola-vulnerability-detection/) | [Sequence mitigation](/api-shield/security/sequence-mitigation/)     |
+|                                                                                               | [Risk labels](/api-shield/management-and-monitoring/endpoint-labels/#risk-labels)  | [Mutual TLS (mTLS)](/api-shield/security/mtls/)                      |
+|                                                                                               | [Vulnerability Scanner](/api-shield/security/vulnerability-scanner/)               | [GraphQL query protection](/api-shield/security/graphql-protection/) |
 
 ## Example Cloudflare solutions
 
@@ -29,29 +28,23 @@ Cloudflare API Shield, together with other Cloudflare products, helps protect yo
 
 The following table maps each OWASP vulnerability to the Cloudflare features that address it:
 
-| OWASP issue                                     | Example Cloudflare solution                                                                                                                            |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| OWASP issue                                     | Example Cloudflare solution                                                                                                                                                                                                             |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Broken Object Level Authorization               | [BOLA vulnerability detection](/api-shield/security/bola-vulnerability-detection/), [Sequence mitigation], [Schema validation], [JWT validation], [Rate Limiting], [Vulnerability Scanner](/api-shield/security/vulnerability-scanner/) |
 | Broken Authentication                           | [Authentication Posture](/api-shield/security/authentication-posture/), [mTLS](/api-shield/security/mtls/), [JWT validation], [Exposed Credential Checks](/waf/managed-rules/check-for-exposed-credentials/), [Bot Management](/bots/)  |
-| Broken Object Property Level Authorization      | [Schema validation], [JWT validation]                                                                                                                  |
-| Unrestricted Resource Consumption               | [Rate Limiting], [Sequence mitigation], [Bot Management], [GraphQL Query Protection]                                                                   |
-| Broken Function Level Authorization             | [Schema validation], [JWT validation]                                                                                                                  |
-| Unrestricted Access to Sensitive Business Flows | [Sequence mitigation], [Bot Management], [GraphQL Query Protection]                                                                                    |
-| Server Side Request Forgery                     | [Schema validation], [WAF managed rules], [WAF custom rules](/waf/custom-rules/)                                                                       |
-| Security Misconfiguration                       | [Sequence mitigation], [Schema validation], [WAF managed rules], [GraphQL Query Protection]                                                            |
-| Improper Inventory Management                   | [Discovery](/api-shield/security/api-discovery/), [Schema learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/)       |
-| Unsafe Consumption of APIs                      | [JWT validation], [WAF managed rules]                                                                                                                  |
+| Broken Object Property Level Authorization      | [Schema validation], [JWT validation]                                                                                                                                                                                                   |
+| Unrestricted Resource Consumption               | [Rate Limiting], [Sequence mitigation], [Bot Management], [GraphQL Query Protection]                                                                                                                                                    |
+| Broken Function Level Authorization             | [Schema validation], [JWT validation]                                                                                                                                                                                                   |
+| Unrestricted Access to Sensitive Business Flows | [Sequence mitigation], [Bot Management], [GraphQL Query Protection]                                                                                                                                                                     |
+| Server Side Request Forgery                     | [Schema validation], [WAF managed rules], [WAF custom rules](/waf/custom-rules/)                                                                                                                                                        |
+| Security Misconfiguration                       | [Sequence mitigation], [Schema validation], [WAF managed rules], [GraphQL Query Protection]                                                                                                                                             |
+| Improper Inventory Management                   | [Discovery](/api-shield/security/api-discovery/), [Schema learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/)                                                                                         |
+| Unsafe Consumption of APIs                      | [JWT validation], [WAF managed rules]                                                                                                                                                                                                   |
 
 [Schema validation]: /api-shield/security/schema-validation/
-
 [Sequence mitigation]: /api-shield/security/sequence-mitigation/
-
 [JWT validation]: /api-shield/security/jwt-validation/
-
 [GraphQL Query Protection]: /api-shield/security/graphql-protection/
-
 [Bot management]: /bots/
-
 [Rate limiting]: /waf/rate-limiting-rules/
-
 [WAF managed rules]: /waf/managed-rules/
