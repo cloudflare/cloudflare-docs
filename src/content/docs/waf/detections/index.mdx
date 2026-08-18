@@ -13,7 +13,6 @@ head:
 
 import {
 	DirectoryListing,
-	FeatureTable,
 	Steps,
 	DashButton,
 } from "~/components";
@@ -28,7 +27,15 @@ Cloudflare provides the following detections:
 
 ## Availability
 
-<FeatureTable id="security.waf_b_detections" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Malicious uploads detection | No | No | No | Paid add-on |
+| Leaked credentials detection | Yes | Yes | Yes | Yes |
+| Leaked credentials fields | Password Leaked | Password Leaked, User and Password Leaked | Password Leaked, User and Password Leaked | All leaked credentials fields |
+| Number of custom detection locations | 0 | 0 | 0 | 10 |
+| Attack score | No | No | One field only | Yes |
+| AI Security for Apps | No | No | No | Yes |
 
 For more information on bot score, refer to [Bot scores](/bots/concepts/bot-score/).
 
