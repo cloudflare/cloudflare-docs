@@ -10,8 +10,6 @@ products:
 
 import { DashButton } from "~/components";
 
-{/* VERIFY (before opening the docs PR): the entire page. Sources: SQL Logpush Transformers Handover — Rob Taylor, 2026-07-24; docs/transformers.md in cloudflare/data/logpush@master; logpush !1422 and !1431. */}
-
 :::note[Closed beta]
 Logpush Transformers are in closed beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed. The API surface may change before GA.
 :::
@@ -30,7 +28,7 @@ You write the logic as a single SQL query, attach it to a Logpush job, and Cloud
 
 Before you begin, you need:
 
-- A Logpush job that uses the `ndjson` output format. Transformers are only available for NDJSON jobs.
+- A Logpush job that uses the `ndjson` output format. Transformers are only available for NDJSON jobs, and are supported for both account-scoped and zone-scoped datasets.
 - An API token with the `Logs Write` permission for the account.
 - Familiarity with the [dataset](/logs/logpush/logpush-job/datasets/) whose records you plan to transform. Your SQL references its field names directly.
 
@@ -48,15 +46,11 @@ From Studio you can:
 
 - Create a new transformer by writing a SQL query against a Logpush dataset.
 - Preview a transformer against a canned sample record for the target dataset before saving.
-- Attach a transformer to any eligible Logpush job on the account. Only NDJSON jobs matching the transformer's dataset appear as available attach targets. CSV jobs are not shown.
+- Attach a transformer to any eligible Logpush job on the account or zone. Only NDJSON jobs matching the transformer's dataset appear as available attach targets. CSV jobs are not shown.
 - Detach a transformer from a job.
 - Save a new version each time you edit and save the SQL. Older versions remain available to view.
 - Rename a transformer or update its description.
 - Delete a transformer. A transformer cannot be deleted while any Logpush job references it.
-
-{/* VERIFY: zone-scoped Logpush support — confirmed to exist, exact entry point and attach behavior TBD for closed beta. */}
-
-{/* VERIFY: validation error surfacing in Studio (inline in editor with line/col numbers, panel, toast?) — TBD for closed beta. */}
 
 ### API
 
@@ -75,9 +69,7 @@ Every transformer action is available through the Cloudflare API. To authenticat
 
 To attach or detach a transformer from a job, set `transformer_id` on the Logpush job. Refer to [Logpush job setup](/logs/logpush/logpush-job/) for job endpoints.
 
-For the full API reference, refer to [Logpush Transformers API](TBD).
-
-{/* VERIFY: replace TBD with the real API reference URL once the /accounts/{account_id}/logpush/transformers endpoints are added to the Cloudflare OpenAPI schema. Owner: Rob Taylor + docs infra. */}
+For the full API reference, refer to [Logpush Transformers API](https://developers.cloudflare.com/api/resources/logpush/subresources/transformers/).
 
 ## The SQL transformer contract
 
@@ -184,10 +176,6 @@ FROM audit_logs_v2
 WHERE ActionType = 'update'
 ```
 
-{/* VERIFY: confirm `ActionType` enum values in audit_logs_v2 (expected: create/update/delete). Filter needs updating if v2 uses different tokens. */}
-
-{/* VERIFY: `AccountID` chosen as v2 replacement for v1's `OwnerID`. Confirm this is the intended replacement, or drop the field from the input record if not. */}
-
 Delivered record:
 
 ```json
@@ -236,6 +224,8 @@ Input record from the [`http_requests`](/logs/logpush/logpush-job/datasets/zone/
 }
 ```
 
+This example assumes `EdgeStartTimestamp` is delivered as an RFC3339 string. If your job delivers timestamps as Unix nanoseconds, drop the `to_timestamp()` wrapper and divide by 1e9 instead.
+
 Transformer:
 
 ```sql
@@ -255,8 +245,6 @@ WHERE ClientRequestHost NOT IN ('internal.example.com', 'health.example.com')
   AND ClientRequestPath NOT LIKE '/healthz%'
   AND ClientRequestPath NOT LIKE '/metrics%'
 ```
-
-{/* VERIFY: `EdgeStartTimestamp` field type in http_requests. If it arrives as an integer (unixnano) rather than an RFC3339 string, the to_timestamp wrapping is wrong. */}
 
 Delivered record:
 
