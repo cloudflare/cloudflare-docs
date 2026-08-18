@@ -1,0 +1,37 @@
+---
+title: New `us` jurisdiction for R2
+description: Restrict R2 bucket data storage and processing to the United States.
+products:
+  - r2
+date: 2026-08-17
+---
+
+import { WranglerConfig } from "~/components";
+
+R2 now supports a `us` [jurisdiction](/r2/reference/data-location/#jurisdictional-restrictions), letting you create buckets that store and process data within the United States. Use the `us` jurisdiction to meet United States data residency requirements.
+
+Use the jurisdiction-specific S3 endpoint to create and access buckets in the `us` jurisdiction:
+
+`https://<ACCOUNT_ID>.us.r2.cloudflarestorage.com`
+
+To access a bucket in the `us` jurisdiction from Workers, set `jurisdiction` in your R2 binding:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<YOUR_BUCKET_NAME>",
+			"jurisdiction": "us"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Once an R2 bucket is created, its jurisdiction cannot be changed.
+
+For setup instructions and the full list of supported jurisdictions, refer to [R2 data location](/r2/reference/data-location/#jurisdictional-restrictions).
