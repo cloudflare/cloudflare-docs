@@ -164,8 +164,16 @@ To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/b
 
 ## Frequently asked questions
 
-### Will I be charged for unauthorized requests to my R2 bucket?
+### Will I be charged for failed requests to my R2 bucket?
 
-No. You are not charged for operations when the caller does not have permission to make the request (HTTP 401 `Unauthorized` response status code).
+Requests that fail at the authentication layer are not charged. This includes:
+
+- HTTP 401 (`Unauthorized`) — missing or invalid credentials.
+- HTTP 403 when caused by an authentication failure such as `SignatureDoesNotMatch`, `ExpiredRequest`, or `RequestTimeTooSkewed`.
+
+Requests that pass authentication but fail for other reasons are counted and billed according to the operation's class. For example:
+
+- A `PutObject` returning HTTP 412 (`PreconditionFailed`) due to a conditional header like `If-None-Match` counts as a Class A operation.
+- A `PutObject` returning HTTP 400 (`BadDigest`) due to a mismatched `Content-MD5` counts as a Class A operation.
 
 [^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.
