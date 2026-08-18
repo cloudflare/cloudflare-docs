@@ -2,10 +2,6 @@
     "name": "@cf/deepseek-ai/deepseek-v4-pro-0813",
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
-        },
-        {
             "property_id": "require_workers_paid",
             "value": "true"
         },
@@ -48,7 +44,7 @@
     ],
     "id": "2d50837b-2dc7-4994-a690-a38e25c16d74",
     "source": 1,
-    "description": "deepseek-ai/deepseek-v4-pro-0813",
+    "description": "DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek with a one million token context window, built for long-horizon agentic workflows and complex, multi-step problem-solving",
     "task": {
         "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
         "name": "Text Generation",
