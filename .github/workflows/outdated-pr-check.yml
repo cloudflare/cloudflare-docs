@@ -96,13 +96,24 @@ jobs:
             -f description="$DESCRIPTION" \
             || echo "Failed to post status — skipping"
 
-          # Post the new semantic context (additive — will become required after branch
-          # protection is updated and the legacy context is removed in a follow-up PR).
+          # Post the on-commit semantic context.
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             "/repos/${REPO}/statuses/${PR_SHA}" \
             -f state="$STATE" \
             -f context="Outdated PR Check / On Commit" \
+            -f description="$DESCRIPTION" \
+            || echo "Failed to post status — skipping"
+
+          # Initialize the scheduled semantic context with the same result so the
+          # required check exists immediately. The daily refresh workflow updates
+          # this context as production advances.
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${REPO}/statuses/${PR_SHA}" \
+            -f state="$STATE" \
+            -f context="Outdated PR Check / Scheduled" \
             -f description="$DESCRIPTION" \
             || echo "Failed to post status — skipping"
