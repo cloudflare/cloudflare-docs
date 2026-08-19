@@ -102,7 +102,6 @@ Pass `OutboundInterceptor` as [`globalOutbound`](/dynamic-workers/api-reference/
 ```ts
 const worker = env.LOADER.load({
 	compatibilityDate: "$today",
-	compatibilityFlags: ["nodejs_compat"],
 	mainModule: "src/index.js",
 	modules: { "src/index.js": code },
 	env: {
@@ -132,6 +131,7 @@ export default {
 	async fetch(request, env): Promise<Response> {
 		const client = new Client({
 			connectionString: env.HD_CONNECTION_STRING,
+			ssl: false,
 		});
 
 		await client.connect();
@@ -144,6 +144,12 @@ export default {
 
 </TypeScriptExample>
 
+:::note
+
+Dynamic Workers resolve `import` specifiers against the modules map passed to `load()` or `get()`. To use npm packages like `pg`, bundle them first with [`@cloudflare/worker-bundler`](/dynamic-workers/getting-started/#using-typescript-and-npm-dependencies) or an equivalent tool and include the output in `modules`.
+
+:::
+
 ### 4. Route the connection through Hyperdrive
 
 `OutboundInterceptor` checks whether the outbound connection is meant for Hyperdrive. For an allowed connection, it calls `DYNAMIC_HYPERDRIVE.get()` with the database config, including the real connection string and target region. Any other outbound connection is blocked, which keeps `globalOutbound` restrictive.
@@ -151,7 +157,6 @@ export default {
 <TypeScriptExample filename="outbound-interceptor.ts">
 
 ```ts
-import { Socket } from "cloudflare:sockets";
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class OutboundInterceptor extends WorkerEntrypoint {
@@ -174,6 +179,7 @@ export class OutboundInterceptor extends WorkerEntrypoint {
 		if (localAddress.includes(generatedHost)) {
 			const db = this.env.DYNAMIC_HYPERDRIVE.get({
 				connectionString,
+				dynamicHyperdriveConnectionString: generatedConnectionString,
 				targetRegion: databaseRegion || "aws:us-east-1",
 			});
 
@@ -212,7 +218,6 @@ This example shows the Loader Worker with `OutboundInterceptor` and the Dynamic 
 <TypeScriptExample filename="loader-worker.ts">
 
 ```ts
-import { Socket } from "cloudflare:sockets";
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 // Intercepts outbound TCP sockets from the Dynamic Worker, checks the target
@@ -238,6 +243,7 @@ export class OutboundInterceptor extends WorkerEntrypoint {
 		if (localAddress.includes(generatedHost)) {
 			const db = this.env.DYNAMIC_HYPERDRIVE.get({
 				connectionString,
+				dynamicHyperdriveConnectionString: generatedConnectionString,
 				targetRegion: databaseRegion || "aws:us-east-1",
 			});
 
@@ -283,7 +289,6 @@ export default {
 		// globalOutbound forces all outbound traffic through OutboundInterceptor.
 		const worker = env.LOADER.load({
 			compatibilityDate: "$today",
-			compatibilityFlags: ["nodejs_compat"],
 			mainModule: "src/index.js",
 			modules: {
 				"src/index.js": `
@@ -293,6 +298,7 @@ export default {
 						async fetch(request, env): Promise<Response> {
 							const client = new Client({
 								connectionString: env.HD_CONNECTION_STRING,
+								ssl: false,
 							});
 
 							await client.connect();
