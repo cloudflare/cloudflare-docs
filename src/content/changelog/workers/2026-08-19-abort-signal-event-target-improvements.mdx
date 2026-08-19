@@ -1,6 +1,6 @@
 ---
 title: Create AbortController and AbortSignal outside request handlers
-description: AbortController, AbortSignal, WritableStream, and Request objects can now be created during module initialization in Cloudflare Workers.
+description: AbortController, AbortSignal, WritableStream, and Request.signal can now be created or accessed during module initialization in Cloudflare Workers.
 products:
   - workers
 date: 2026-08-19
@@ -21,11 +21,11 @@ export default {
 };
 ```
 
-This change brings Workers in line with browsers and Node.js. Libraries can now create controllers, requests, and writable streams when you import them without encountering an `IoContext` error.
+This change brings Workers in line with browsers and Node.js. Libraries can now create controllers and writable streams, and access `Request.signal`, when you import them without an active request context.
 
-You can also observe or abort a signal from a different request running in the same isolate. Workerd routes cancellation to the request that owns each pending operation.
+You can also observe or abort a signal from a different request running in the same isolate. The Workers runtime routes cancellation to the request that owns each pending operation.
 
-Do not use isolate-local signals when your application requires durable cancellation. Cloudflare may route requests to another isolate or restart an isolate at any time. Use a Durable Object to coordinate those requests.
+Do not use isolate-local signals when your application requires durable cancellation. Cloudflare may route requests to another isolate or restart an isolate at any time. Use a Durable Object for reliable routing, and store cancellation state when it must survive restarts.
 
 `AbortSignal.timeout()` still requires an active request because it schedules a timer.
 
@@ -33,10 +33,8 @@ Do not use isolate-local signals when your application requires durable cancella
 
 This change also aligns `EventTarget` behavior with the DOM standard:
 
-- One listener throwing an exception no longer prevents later listeners from running.
-- `abort()` no longer throws when an abort listener throws.
-- Workerd reports listener exceptions through the global `error` event and console.
-- Workerd removes listeners registered with `{ signal }` before it runs abort listeners.
+- The Workers runtime removes listeners registered with `{ signal }` before it runs abort listeners.
+- `onabort`, `MessagePort.onmessage`, and `EventSource` handlers now run at their assigned listener position instead of always running first.
 - Events you construct report `isTrusted === false`.
 
 Most applications require no changes.
