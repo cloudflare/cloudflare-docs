@@ -721,7 +721,7 @@ Connections accepted with the WebSocket Hibernation API remain connected when a 
 
 A forced code update disconnects WebSockets attached to the running instance. This happens when a `deferred` code update's `max_delay` is reached before hibernation, or when the code update strategy is set to `immediate`. The Web Standard WebSocket API prevents hibernation, so its connections are disconnected when the code update is applied.
 
-Refer to [Delay code updates until hibernation](/durable-objects/deployments/durable-objects-code-updates/) for more information.
+Refer to [Defer code updates until hibernation](/durable-objects/deployments/durable-objects-code-updates/) for more information.
 
 :::
 
