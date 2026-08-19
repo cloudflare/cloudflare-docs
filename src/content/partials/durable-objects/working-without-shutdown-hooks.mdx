@@ -2,7 +2,7 @@
 {}
 ---
 
-A Durable Object shuts down when it becomes inactive, when a code update reaches it (immediately under an `immediate` code update strategy, or once it hibernates or reaches `max_delay` under a `deferred` strategy), or when Cloudflare deploys a new version of the Workers runtime. This is similar to other compute environments, where compute instances do not live forever and applications must persist state back to a database or storage system. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
+A Durable Object shuts down when it becomes inactive, when a [code update strategy](/durable-objects/deployments/durable-objects-code-updates/) reaches it (immediately under `immediate`, or once it hibernates or reaches `max_delay` under `deferred`), or when Cloudflare deploys a new version of the Workers runtime. This is similar to other compute environments, where compute instances do not live forever and applications must persist state back to a database or storage system. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
 
 Shutdown hooks or lifecycle callbacks that run before shutdown are not provided because Cloudflare cannot guarantee these hooks would execute in all cases, and external software may rely too heavily on these (unreliable) hooks.
 
