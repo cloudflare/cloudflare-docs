@@ -1,0 +1,19 @@
+src/content/docs/workers/runtime-apis/rpc/reserved-methods.mdx
+  s_eaebd3cc440176::t_60e423e106254d 33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7a881a5410136a1c9513eefd306c5258b969d028",
+  "prompts": {},
+  "sessions": {
+    "s_eaebd3cc440176": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fea7534b3ffe8Fr5DWo6Z3Go5c",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Felix Hanau <felix@cloudflare.com>"
+    }
+  }
+}
