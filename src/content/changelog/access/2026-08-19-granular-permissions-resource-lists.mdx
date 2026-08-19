@@ -1,14 +1,16 @@
 ---
-title: Granular permissions now filter Access resource lists
-description: Members with granular Access permissions only see the applications, policies, service tokens, and identity providers assigned to them.
+title: Resource lists now support granular Access permissions
+description: Members with granular Access permissions can view Access resource lists filtered to the resources assigned to them.
 date: 2026-08-19
 products:
   - fundamentals
 ---
 
-Members with granular Access permissions now only see the Access resources assigned to them. You can give different teams access to the applications, policies, service tokens, and identity providers they manage without showing them unrelated resources.
+Access resource list pages and APIs now support granular permissions. Members can open list pages in the Cloudflare dashboard and make list API requests. Results include only the applications, policies, service tokens, and identity providers assigned to them.
 
-For example, you can assign one set of Access applications to an engineering team and another set to a support team. Each team only sees the applications relevant to its work. Members with account-scoped Access permissions continue to see all resources in the account.
+Previously, members whose only Access permissions were granular could not open resource list pages. List API requests returned `403` responses.
+
+You can assign one set of Access applications to an engineering team and another set to a support team. Each team sees only the applications relevant to its work. Members with account-scoped Access permissions continue to see all resources in the account.
 
 The Cloudflare Access App Admin role also includes policies attached directly to the selected application. Reusable policies still require a separate Cloudflare Access Policy Admin role.
 
