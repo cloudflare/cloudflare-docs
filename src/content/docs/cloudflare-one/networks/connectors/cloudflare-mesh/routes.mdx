@@ -22,7 +22,7 @@ By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/n
 
 When you add a route, the Mesh node acts as a gateway: traffic destined for the advertised CIDR or hostname is forwarded to the node, which delivers it to the appropriate host on the local network (or egresses it to the public Internet).
 
-Both IPv4 and IPv6 CIDR routes are supported.
+Both IPv4 and IPv6 CIDR routes are supported. IPv6 routes require that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol); they will not work if the device profile uses WireGuard instead.
 
 ## When to use routes
 
@@ -223,17 +223,19 @@ For a deeper look at the packet flow behind hostname routing, refer to the [anno
 ### Prerequisites
 
 - **Run a supported Mesh node version.** Hostname routing requires the Mesh node to run Linux Cloudflare One Client version `2026.6.822.0` or newer.
+- **Configure the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol).** Hostname routing does not work if the device profile uses WireGuard instead.
 - **Enable the Gateway proxy** with TCP, UDP, and ICMP:
 
   <Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
 
-- **Route all of the following ranges through Cloudflare** in the [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration of **both** the Mesh node's device profile **and** your client device profiles. In Include mode, add each range; in Exclude mode, ensure none of them (or their parent ranges) are excluded.
+- **Route the following IPv4 ranges through Cloudflare** in the [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration of **both** the Mesh node's device profile **and** your client device profiles. In Include mode, add each range. In Exclude mode, ensure none of them (or their parent ranges) are excluded.
 
-  | Purpose                     | IPv4            | IPv6                       |
-  | --------------------------- | --------------- | -------------------------- |
-  | Mesh device IP range        | `100.96.0.0/12` | `2606:4700:cf1:1000::/64`  |
-  | Cloudflare source IP range  | `100.64.0.0/12` | `2606:4700:cf1:5000::/64`  |
-  | Hostname routing (token IPs) | `172.64.128.0/20` | `2606:4700:0cf1:4000::/64` |
+  | Purpose                     | IPv4            |
+  | --------------------------- | --------------- |
+  | Mesh device IP range        | `100.96.0.0/12` |
+  | Cloudflare source IP range  | `100.64.0.0/12` |
+
+  The hostname routing (token IP) range (`172.64.128.0/20`) and all Cloudflare One IPv6 ranges are [automatically routed through Cloudflare](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges) and do not need to be added manually.
 
 - **Remove the hostname's top-level domain from [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/)** on client devices, so the DNS query is sent to Cloudflare Gateway for resolution.
 

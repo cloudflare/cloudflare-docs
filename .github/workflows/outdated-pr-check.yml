@@ -1,6 +1,6 @@
 name: Outdated PR Check
 
-# **What it does**: Posts an Outdated PR Check commit status when a PR is opened or updated.
+# **What it does**: Posts Outdated PR Check commit statuses when a PR is opened or updated.
 #                   Fails if the branch is more than 24 hours out of date with production.
 # **Why we have it**: Gives contributors immediate feedback when their branch has drifted.
 #                     The daily refresh job (outdated-pr-refresh.yml) catches PRs that go
@@ -86,11 +86,23 @@ jobs:
             fi
           fi
 
+          # Post the legacy context (required by current branch protection).
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             "/repos/${REPO}/statuses/${PR_SHA}" \
             -f state="$STATE" \
             -f context="Outdated PR Check" \
+            -f description="$DESCRIPTION" \
+            || echo "Failed to post status — skipping"
+
+          # Post the new semantic context (additive — will become required after branch
+          # protection is updated and the legacy context is removed in a follow-up PR).
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${REPO}/statuses/${PR_SHA}" \
+            -f state="$STATE" \
+            -f context="Outdated PR Check / On Commit" \
             -f description="$DESCRIPTION" \
             || echo "Failed to post status — skipping"

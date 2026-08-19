@@ -1,0 +1,20 @@
+---
+title: Load Balancing health notifications now resolve automatically
+description: Health notifications carry alert state, so the notification sent when a pool or endpoint recovers automatically resolves the incident opened by the earlier unhealthy notification.
+products:
+  - load-balancing
+date: 2026-08-07
+---
+
+[Load Balancing](/load-balancing/) health notifications are now stateful. When a pool or endpoint becomes unhealthy, the notification opens an incident in your alerting tool as before. When that same pool or endpoint recovers, the follow-up notification is matched to the original alert and resolves that incident automatically, so you no longer have to close it by hand.
+
+As part of this change, Load Balancing also sends a notification when a pool or endpoint returns to a healthy state, not only when it becomes unhealthy. Expect to see recovery notifications alongside the failure notifications you already receive.
+
+This applies to your existing Load Balancing health alerts with no configuration change, and it matches the behavior already used by [Health Checks](/health-checks/) notifications.
+
+Two things to keep in mind:
+
+- A recovery notification is matched to the earlier unhealthy notification for the **same pool or endpoint**. Renaming an endpoint while an incident is open prevents the match, so that incident stays open until you close it.
+- If a health change cannot be classified as either healthy or unhealthy, the notification is still delivered, but without the state needed to open or resolve an incident.
+
+Refer to [Integrate with PagerDuty](/load-balancing/additional-options/pagerduty-integration/) to learn more about routing Load Balancing health notifications to an incident management tool.
