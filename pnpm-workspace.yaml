@@ -19,6 +19,9 @@ overrides:
   # pins Vite ~8.1.0, so the override is needed until Astro bumps its Vite
   # range to >=8.2.0 (which resolves rolldown >=1.2.3).
   rolldown: 1.2.3
+  # Force @cloudflare/nimbus-docs to resolve from the public npm registry instead
+  # of the internal registry gateway (which 404s for this package).
+  "@cloudflare/nimbus-docs": "https://registry.npmjs.org/@cloudflare/nimbus-docs/-/nimbus-docs-0.10.0.tgz"
 
 # On Astro 7 the @astrojs/mdx → @astrojs/markdown-satteri peer is satisfied
 # natively (nimbus-docs pulls markdown-satteri 0.3.4, @astrojs/mdx@7 peers
