@@ -86,24 +86,12 @@ jobs:
               fi
             fi
 
-            # Post the legacy context (required by current branch protection).
             gh api \
               --method POST \
               -H "Accept: application/vnd.github+json" \
               "/repos/${REPO}/statuses/${PR_SHA}" \
               -f state="$STATE" \
               -f context="Outdated PR Check" \
-              -f description="$DESCRIPTION" \
-              || { echo "  Failed to post status for PR #${PR_NUMBER} — continuing"; true; }
-
-            # Post the new semantic context (additive — will become required after branch
-            # protection is updated and the legacy context is removed in a follow-up PR).
-            gh api \
-              --method POST \
-              -H "Accept: application/vnd.github+json" \
-              "/repos/${REPO}/statuses/${PR_SHA}" \
-              -f state="$STATE" \
-              -f context="Outdated PR Check / Scheduled" \
               -f description="$DESCRIPTION" \
               || { echo "  Failed to post status for PR #${PR_NUMBER} — continuing"; true; }
 
