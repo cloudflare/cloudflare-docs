@@ -166,6 +166,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/registrar/ @cloudflare/product-owners
 /src/content/docs/rules/ @cloudflare/appsec-reviewers @elithrar @smarsh-cf @maurizioabba @cloudflare/product-owners @mbullock1986
 /src/content/docs/ruleset-engine/ @cloudflare/appsec-reviewers @elithrar @maurizioabba @cloudflare/product-owners @mbullock1986
+/src/content/fields/ @cloudflare/appsec-reviewers @maurizioabba @mbullock1986 @elithrar @danielegm @xmflsct
 /src/content/docs/log-explorer/ @angelampcosta @sahidya @cloudflare/product-owners
 
 # Developer Platform
