@@ -139,3 +139,9 @@ Resource-scoped roles is currently in Beta.
 | Access for Infrastructure Target Admin    | Can edit a specific [Access for Infrastructure target](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) in an account.                                                                                                                           |
 | Individual Cloudflare Tunnel instances    | Scopes permissions to a specific [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) instance. Refer to [Granular permissions for Cloudflare Tunnel](/cloudflare-one/networks/connectors/granular-permissions/) for details.                         |
 | Individual Cloudflare Mesh nodes          | Scopes permissions to a specific [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) node. Refer to [Granular permissions for Cloudflare Tunnel and Cloudflare Mesh](/cloudflare-one/networks/connectors/granular-permissions/) for details. |
+
+### Access resource visibility
+
+For members without account-scoped Access permissions, Access list responses are filtered by resource-scoped roles. These members only see the applications, policies, service tokens, and identity providers that their assigned roles allow them to access.
+
+The Cloudflare Access App Admin role includes policies attached directly to the selected application. Reusable policies require a separate Cloudflare Access Policy Admin role.
