@@ -16,6 +16,8 @@ Use the [Workers binding](/flagship/binding/) inside Cloudflare Workers. The bin
 
 Use the [OpenFeature SDK](/flagship/sdk/) when you run outside Workers or need a vendor-neutral OpenFeature interface. In Workers, you can still pass the binding to the OpenFeature server provider to keep binding performance while using OpenFeature APIs.
 
+For browser or other client-side evaluation, use an [app-scoped API token](/flagship/api-tokens/) with **Flagship App Evaluate**. Do not put an account-wide Flagship token in client-side code.
+
 ## Evaluate once per request
 
 Avoid evaluating the same flag repeatedly in a loop. Evaluate the flag once, store the result in a local variable, and reuse it for the rest of the request.

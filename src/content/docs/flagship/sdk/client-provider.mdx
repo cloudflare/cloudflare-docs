@@ -15,7 +15,7 @@ The `FlagshipClientProvider` implements the OpenFeature web provider interface f
 This makes the provider suitable for client-side rendering where synchronous access to flag values is required.
 
 :::caution
-We do not recommend using the client provider in public-facing apps right now. It requires a Cloudflare API token, which would be exposed in client-side code and visible to anyone who inspects your application. We are working on a safer solution for client-side flag evaluation — in the meantime, use the [Worker binding](/flagship/binding/) or the [TypeScript server SDK](/flagship/sdk/server-provider/).
+The client provider embeds an API token in browser code, where anyone can inspect it. Create an [app-scoped token](/flagship/api-tokens/) with **Flagship App Evaluate** for a single app. A leaked token can only evaluate flags in that app — it cannot read flag configuration, change flags, or access other apps. Do not use an account-wide Flagship token in client-side code.
 :::
 
 ## prefetchFlags
@@ -73,7 +73,7 @@ if (showBanner) {
 | --------------- | ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `appId`         | `string`      | Yes      | The Flagship app ID from the Cloudflare dashboard.                                                                                   |
 | `accountId`     | `string`      | Yes      | Your Cloudflare account ID.                                                                                                          |
-| `authToken`     | `string`      | Yes      | A Cloudflare [API token](/fundamentals/api/get-started/create-token/) with Flagship read permissions.                                |
+| `authToken`     | `string`      | Yes      | A Cloudflare [app-scoped API token](/flagship/api-tokens/) with **Flagship App Evaluate** for this app.                              |
 | `fetchOptions`  | `RequestInit` | No       | Custom fetch options applied to HTTP requests.                                                                                       |
 | `timeout`       | `number`      | No       | Request timeout in milliseconds. Defaults to `5000`.                                                                                 |
 | `retries`       | `number`      | No       | Retry attempts on transient errors. Defaults to `1` and is capped at `10`.                                                           |
