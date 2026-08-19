@@ -1,0 +1,149 @@
+---
+pcx_content_type: how-to
+title: Guardrails
+description: Restrict which hosts a Browser Run session can reach, so a browser visiting pages you do not control cannot reach anything else.
+sidebar:
+  order: 7
+  badge: Beta
+products:
+  - browser-run
+---
+
+import { CURL, Details, Tabs, TabItem } from "~/components";
+
+Guardrails limit which hosts a Browser Run session may reach. Every outbound request, including subresources such as scripts, fonts, and images, is checked against an allowlist. This is useful to ensure agents run in a sandboxed, controlled environment.
+
+Guardrails apply to Browser Sessions ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), and [CDP](/browser-run/cdp/)). They are not available for [Quick Actions](/browser-run/quick-actions/).
+
+Pass a policy when you acquire a session:
+
+<Tabs syncKey="browser-driver"> <TabItem label="Puppeteer">
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+const browser = await puppeteer.launch(env.MYBROWSER, {
+	guardrails: {
+		allowedDomains: ["example.com", "*.example.com"],
+		allowedDomainSets: ["common-cdns"],
+	},
+});
+```
+
+</TabItem> <TabItem label="Playwright">
+
+```ts
+import { launch } from "@cloudflare/playwright";
+
+const browser = await launch(env.MYBROWSER, {
+	guardrails: {
+		allowedDomains: ["example.com", "*.example.com"],
+		allowedDomainSets: ["common-cdns"],
+	},
+});
+```
+
+</TabItem> <TabItem label="REST API">
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser"
+	method="POST"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
+	json={{
+		guardrails: {
+			allowedDomains: ["example.com", "*.example.com"],
+			allowedDomainSets: ["common-cdns"],
+		},
+	}}
+/>
+
+</TabItem> </Tabs>
+
+| Property            | Type       | Description                                                   |
+| ------------------- | ---------- | ------------------------------------------------------------- |
+| `allowedDomains`    | `string[]` | Hostname patterns the browser may reach. Maximum 50 entries.  |
+| `allowedDomainSets` | `string[]` | Preset names or URLs of hostname lists. Maximum four entries. |
+
+Both are optional and are combined into a single allowlist. Omitting both leaves the session unrestricted.
+
+Guardrails are fixed when the session is acquired and cannot be changed or removed afterwards. An invalid policy rejects the request with a `400` response.
+
+:::note
+Guardrails require the latest versions of `@cloudflare/puppeteer` or `@cloudflare/playwright`. They are not supported with [Kitesurf](/browser-run/kitesurf/).
+:::
+
+## Hostname patterns
+
+Each entry in `allowedDomains` is a bare hostname, with no scheme, port, or path. A pattern may contain one `*`, which matches any sequence of characters, including dots:
+
+| Pattern             | Matches                                             | Does not match                        |
+| ------------------- | --------------------------------------------------- | ------------------------------------- |
+| `example.com`       | `example.com`                                       | `www.example.com`, `evil-example.com` |
+| `*.example.com`     | `www.example.com`, `api.v1.example.com`             | `example.com`, `evilexample.com`      |
+| `*example.com`      | `example.com`, `www.example.com`, `evilexample.com` | `example.net`                         |
+| `api.*.example.com` | `api.v1.example.com`, `api.staging.example.com`     | `api.example.com`                     |
+
+:::caution[Prefer subdomain wildcards]
+A prefix wildcard such as `*example.com` also matches lookalike hostnames that an attacker can register, such as `evilexample.com`. Use `*.example.com` instead, and list the apex domain separately if you need it.
+:::
+
+## Domain sets
+
+`allowedDomainSets` adds hostnames from a curated preset or from a list you host yourself, so you do not have to repeat a long allowlist on every request. One preset is available, `common-cdns`, which covers widely used package, script, and font CDNs.
+
+<Details header="Hostnames in common-cdns">
+
+```txt
+cdn.jsdelivr.net
+*.jsdelivr.net
+unpkg.com
+cdnjs.cloudflare.com
+esm.sh
+esm.run
+ajax.googleapis.com
+fonts.googleapis.com
+fonts.gstatic.com
+ajax.aspnetcdn.com
+aspnetcdn.com
+use.typekit.net
+use.fontawesome.com
+kit.fontawesome.com
+stackpath.bootstrapcdn.com
+maxcdn.bootstrapcdn.com
+cdn.tailwindcss.com
+```
+
+Presets are additive. Cloudflare may add hostnames to a preset, but will not remove or narrow existing entries.
+
+</Details>
+
+A hosted list is an HTTPS URL returning `text/plain`, with one hostname pattern per line. Blank lines and lines starting with `#` are ignored, and a single invalid line rejects the whole set. Cloudflare caches each list for one hour.
+
+## Deny all outbound traffic
+
+An explicitly empty `allowedDomains` array, with no domain sets, blocks every outbound request. This is useful when you set page content yourself and the page does not require external assets.
+
+```json
+{
+	"guardrails": {
+		"allowedDomains": []
+	}
+}
+```
+
+## Blocked requests
+
+The browser receives a `403` response for a blocked request, with headers that identify guardrails as the cause:
+
+```txt
+HTTP/1.1 403 Forbidden
+cf-mitigated: guardrails
+cf-brapi-guardrails-reason: not-in-allowlist
+content-type: text/plain; charset=utf-8
+```
+
+## Related resources
+
+- [Share a view-only Live View link](/browser-run/features/live-view/#share-a-view-only-link) — restrict a Live View link so the recipient can watch a session without interacting with it.
