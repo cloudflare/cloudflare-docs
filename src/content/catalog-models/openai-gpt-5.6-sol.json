@@ -282,7 +282,12 @@
 		"responses"
 	],
 	"providers": null,
-	"banner": null,
+	"banner": {
+		"id": "e2dc316b-8765-407f-8405-058ab5d502c8",
+		"text": "GPT-5.6 Sol is 50% off through Sept 18",
+		"severity": "info",
+		"dismissible": true
+	},
 	"created_at": "2026-07-10 02:48:18",
 	"schema": {
 		"input": {
