@@ -51,7 +51,7 @@ jobs:
           path: dist
 
       - name: Deploy to Cloudflare Workers
-        run: pnpm exec wrangler deploy
+        run: pnpm exec cf deploy --prebuilt
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 

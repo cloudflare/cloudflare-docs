@@ -283,6 +283,9 @@ jobs:
           echo "branch_slug=${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
           echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
 
+          # cf exposes Workers for Platforms through `cf dispatch-namespaces`,
+          # but `cf deploy` cannot yet send Build Output to a namespace script.
+          # See README.md#remaining-cf-migration-gaps.
           pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}"
           pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}"
 

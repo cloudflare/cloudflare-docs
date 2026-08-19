@@ -28,6 +28,7 @@ export default [
 	{
 		ignores: [
 			".astro/",
+			".cloudflare/",
 			".wrangler/",
 			".flue/dist/",
 			".flue/.flue-vite/",

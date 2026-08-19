@@ -1,7 +1,8 @@
 // Preview Worker — a self-contained copy of `worker/index.ts` used for
 // PR preview deployments (wrangler.preview.json -> dist).
 //
-// It is deployed via CI with:
+// It is deployed via CI with Wrangler until `cf deploy` can target a dispatch
+// namespace script using the generated Build Output:
 //   pnpm exec wrangler deploy --config wrangler.preview.json ...
 //
 // Anti-indexing measures (preview-only, not in production worker):
