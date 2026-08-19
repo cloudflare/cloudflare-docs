@@ -6,11 +6,13 @@ products:
 date: 2026-08-19
 ---
 
-A new compatibility flag, `spec_compliant_dispatch_exceptions`, aligns the Workers runtime's event dispatch behavior with the [DOM specification](https://dom.spec.whatwg.org/#dispatching-events). This flag becomes the default for all Workers with a compatibility date of `2026-09-01` or later.
+A new compatibility flag, `spec_compliant_dispatch_exceptions`, changes what happens when an event listener throws an exception. The Workers runtime reports the exception but continues running the remaining listeners, as required by the [DOM specification](https://dom.spec.whatwg.org/#dispatching-events). This flag becomes the default for all Workers with a compatibility date of `2026-09-01` or later.
 
-Previously, when an event listener threw an exception during `dispatchEvent()`, the runtime propagated the exception immediately and skipped all remaining listeners for that event. The spec instead requires that listener exceptions are reported (via the global `error` event and the console) without interrupting the dispatch — remaining listeners still run. While dispatch continues through remaining listeners, existing failure reactions still apply: a throwing listener causes a `WebSocket` to error, an `EventSource` to close, or a `MessagePort` to emit `messageerror`.
+Previously, when an event listener threw an exception during `dispatchEvent()`, the runtime propagated it immediately and skipped the remaining listeners. With this flag, the runtime reports listener exceptions through the global `error` event and the console. It continues running the remaining listeners without throwing from `dispatchEvent()` or `AbortController.abort()`.
 
-This change affects the JS-visible `dispatchEvent()`, `AbortSignal` abort dispatch, and runtime-fired events on `WebSocket`, `EventSource`, and `MessagePort`. Top-level event delivery for Worker events (including legacy Service Worker syntax entry points such as `addEventListener("fetch", ...)`, as well as module-style `fetch()` and `scheduled()` handlers) is not affected.
+This change affects `dispatchEvent()` calls, `AbortSignal` abort events, and runtime-fired events on `WebSocket`, `EventSource`, and `MessagePort`. For runtime-fired events, existing failure reactions still apply after the remaining listeners run. A throwing listener then causes a `WebSocket` to error, an `EventSource` to close, or a `MessagePort` to emit `messageerror`.
+
+Top-level Worker event delivery is not affected. This includes module-style `fetch()` and `scheduled()` handlers, and legacy Service Worker syntax entry points such as `addEventListener("fetch", ...)`.
 
 To opt in before the default date, add `spec_compliant_dispatch_exceptions` to your `compatibility_flags`. To preserve the old behavior after the default date, use `no_spec_compliant_dispatch_exceptions`.
 

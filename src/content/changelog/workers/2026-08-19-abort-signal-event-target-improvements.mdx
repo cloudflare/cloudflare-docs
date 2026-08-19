@@ -1,6 +1,6 @@
 ---
 title: Create AbortController and AbortSignal outside request handlers
-description: AbortController, AbortSignal, WritableStream, and Request.signal can now be created or accessed during module initialization in Cloudflare Workers.
+description: You can now create AbortController, AbortSignal, and WritableStream objects and access Request.signal during module initialization.
 products:
   - workers
 date: 2026-08-19
@@ -9,7 +9,6 @@ date: 2026-08-19
 You can now create `AbortController` and `AbortSignal` objects during module initialization in Cloudflare Workers:
 
 ```js
-const controller = new AbortController();
 const alreadyCancelled = AbortSignal.abort("cancelled");
 
 export default {
@@ -21,7 +20,7 @@ export default {
 };
 ```
 
-This change brings Workers in line with browsers and Node.js. Libraries can now create controllers and writable streams, and access `Request.signal`, when you import them without an active request context.
+This change brings Workers in line with browsers and Node.js. Libraries can now create controllers and writable streams, and access `Request.signal`, as soon as you import them. They no longer need an active request context for these operations.
 
 You can also observe or abort a signal from a different request running in the same isolate. The Workers runtime routes cancellation to the request that owns each pending operation.
 
@@ -31,12 +30,12 @@ Do not use isolate-local signals when your application requires durable cancella
 
 ## More consistent event handling
 
-This change also aligns `EventTarget` behavior with the DOM standard:
+This change also includes `EventTarget` updates that do not require a compatibility flag:
 
+- `AbortSignal.onabort`, `MessagePort.onmessage`, and `EventSource` event handlers now run at their assigned listener position instead of always running first.
 - The Workers runtime removes listeners registered with `{ signal }` before it runs abort listeners.
-- `onabort`, `MessagePort.onmessage`, and `EventSource` handlers now run at their assigned listener position instead of always running first.
-- Events you construct report `isTrusted === false`.
+- `CustomEvent`, `MessageEvent`, `ErrorEvent`, and `CloseEvent` objects you construct report `isTrusted === false`.
 
-Most applications require no changes.
+Listener exception handling changes require the [`spec_compliant_dispatch_exceptions` compatibility flag](/changelog/post/2026-08-19-spec-compliant-dispatch-exceptions/), which becomes the default with a compatibility date of `2026-09-01`.
 
 For more details, refer to the [Web standards documentation](/workers/runtime-apis/web-standards/#abortcontroller-and-abortsignal).
