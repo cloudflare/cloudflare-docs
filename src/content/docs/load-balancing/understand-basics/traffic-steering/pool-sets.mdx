@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-description: Pair a location match with its own pool list, steering policy, weights, and fallback pool using pool sets.
+description: Use pool sets to define location-specific pools, steering policies, weights, and fallback behavior through the API.
 products:
   - load-balancing
 title: Pool sets
@@ -11,16 +11,18 @@ head:
     content: Pool sets
 ---
 
-A **pool set** pairs a match condition with the routing behavior to apply when that condition succeeds. Each pool set carries its own pool list, steering policy, pool weights, and fallback pool.
+A **pool set** pairs a match condition with routing behavior. For new API-managed configurations that route traffic by location, use pool sets.
 
-Pool sets address two limits of [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/). Geo steering assigns a list of pools to each location and uses them in failover order only, so you cannot split traffic across pools within one location or pick the lowest-latency pool there. Geo steering also has a single global fallback pool, so when every pool in a location becomes unhealthy, traffic can move to a distant data center.
+Use [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) for simple geographic failover configured in the dashboard. Use pool sets when you need per-location steering policies, weights, fallback pools, or custom rules.
+
+Geo steering assigns pools to each location in failover order. It cannot split traffic across pools within one location. It also cannot select the lowest-latency pool within that location. Geo steering uses one global fallback pool. When every pool for a location is unhealthy, traffic may move to a distant data center.
 
 With pool sets you can:
 
 - Apply any supported steering policy within a single location
 - Set pool weights that apply only to that location
 - Assign a fallback pool for that location instead of the global fallback pool
-- Return a fixed response for a location instead of routing to pools
+- Return a fixed HTTP response for matched proxied traffic
 
 :::note
 Pool sets are available to Enterprise customers who have purchased Traffic Steering, and are configurable through the API only.
@@ -117,7 +119,7 @@ Omitting `steering_policy` leaves the pool set using failover order.
 
 ### Fixed responses
 
-Instead of `overrides.pools`, a pool set can return a `fixed_response`. This is useful when you want a location to receive a specific status code or redirect rather than reach an origin:
+For proxied zone load balancers, a pool set can return a `fixed_response` instead of using `overrides.pools`. Use this option to return an HTTP status or redirect for a matched location:
 
 ```json
 {
@@ -134,6 +136,8 @@ Instead of `overrides.pools`, a pool set can return a `fixed_response`. This is 
 	]
 }
 ```
+
+Do not use `fixed_response` with DNS-only load balancers. DNS responses cannot carry HTTP status, body, or redirect fields. A matching fixed response returns `NOERROR` with no records.
 
 A pool set must specify either `overrides.pools` or `fixed_response`. A pool set with neither is rejected, because it would match traffic and then have nowhere to send it.
 
@@ -159,11 +163,19 @@ Pool sets work on:
 - DNS-only (gray-clouded) zone load balancers
 - Account load balancers
 
-On DNS-only load balancers, two behaviors differ.
+Available steering behavior differs by load balancer type.
 
-Country matching resolves the client location from the EDNS Client Subnet when the request carries one, and from the DNS resolver address otherwise. A request without EDNS Client Subnet therefore matches the location of the resolver rather than the client. To control how this location is chosen, refer to [EDNS Client Subnet (ECS) support](/load-balancing/understand-basics/traffic-steering/steering-policies/#edns-client-subnet-ecs-support).
+### DNS-only load balancers
 
-An `overrides.steering_policy` of `least_outstanding_requests` is supported only in a no-operation form, because all pool outstanding request counts are considered to be zero at the DNS layer. For more information, refer to [Least Outstanding Requests steering](/load-balancing/understand-basics/traffic-steering/steering-policies/least-outstanding-requests/).
+Country matching depends on the top-level steering policy and `location_strategy`. With a configured strategy, Geo and Proximity steering can use EDNS Client Subnet (ECS), the resolver IP address, or the responding Cloudflare data center. Without a configured strategy, Proximity uses ECS when available, while Geo uses the responding data center. Other top-level policies use the responding data center.
+
+A pool set applies `overrides.steering_policy` after evaluating its match. The override therefore cannot change the location used for country matching. For more information, refer to [EDNS Client Subnet (ECS) support](/load-balancing/understand-basics/traffic-steering/steering-policies/#edns-client-subnet-ecs-support).
+
+`least_outstanding_requests` does not provide counter-based selection for DNS-only load balancers. All pool outstanding request counts are treated as zero. Use a different policy when selection must reflect active requests.
+
+### Account load balancers
+
+`least_outstanding_requests` and `least_connections` do not provide counter-based selection for account load balancers. Account lookups do not use live request or connection counters. Use a different policy when you require counter-based routing.
 
 ## Limits
 

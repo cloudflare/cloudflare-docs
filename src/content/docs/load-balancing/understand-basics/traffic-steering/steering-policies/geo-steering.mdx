@@ -20,9 +20,9 @@ import { TabItem, Tabs } from "~/components";
 This option is extremely useful when you want site visitors to access the endpoint closest to them, which improves page-loading performance.
 
 :::note
-Custom load balancing rules are incompatible with Geo steering. As a result, any custom rule applied to Geo-steered Load Balancers will not function as expected.
+Use Geo steering for simple geographic failover configured in the dashboard. For new API-managed location routing, use [pool sets](/load-balancing/understand-basics/traffic-steering/pool-sets/). Pool sets support per-location steering policies, weights, fallback pools, and custom rules.
 
-[Pool sets](/load-balancing/understand-basics/traffic-steering/pool-sets/) do work alongside custom rules. Cloudflare evaluates pool sets first, then applies custom rule overrides on top of the result.
+Custom load balancing rules are incompatible with Geo steering. Cloudflare evaluates pool sets before applying custom rule overrides.
 :::
 
 ## Pool assignment
