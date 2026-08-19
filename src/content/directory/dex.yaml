@@ -6,7 +6,6 @@ entry:
   group: Cloudflare One
   additional_groups: [Analytics]
   url: /cloudflare-one/insights/dex/
-  llms_top_level: true
 
   wrap: true
 

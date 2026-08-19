@@ -5,7 +5,6 @@ entry:
   title: Cloudflare One Client
   group: Cloudflare One
   url: /cloudflare-one/team-and-resources/devices/cloudflare-one-client/
-  llms_top_level: true
   wrap: true
 
 meta:

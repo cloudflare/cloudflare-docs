@@ -4,7 +4,6 @@ name: Cloudflare One Appliance
 entry:
   title: Cloudflare One Appliance
   url: /cloudflare-wan/configuration/appliance/
-  llms_top_level: true
   group: Cloudflare One
   additional_groups: [Network security]
 

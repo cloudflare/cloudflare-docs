@@ -4,7 +4,6 @@ name: Email security
 entry:
   title: Email security
   url: /cloudflare-one/email-security/
-  llms_top_level: true
   group: Cloudflare One
 
 meta:

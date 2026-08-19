@@ -5,7 +5,6 @@ entry:
   title: AI controls
   group: Cloudflare One
   url: /cloudflare-one/access-controls/ai-controls/
-  llms_top_level: true
 
 meta:
   title: Cloudflare One AI controls docs

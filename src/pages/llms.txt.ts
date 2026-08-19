@@ -30,22 +30,12 @@ export const GET: APIRoute = async ({ url }) => {
 		return false;
 	}
 
-	// Products whose docs live under another product's URL are hidden by default,
-	// so feature-level entries (for example Cache Rules under Rules) do not crowd
-	// the index. Some nested entries are top-level products in their own right —
-	// every Cloudflare One product sits under `/cloudflare-one/` — so an entry can
-	// opt back in with `entry.llms_top_level: true`.
-	function isHiddenSubProduct(entry: (typeof allDirectory)[number]): boolean {
-		if (entry.data.entry?.llms_top_level === true) return false;
-		return isSubProduct(entry.data.entry?.url ?? "");
-	}
-
 	const productsWithDocs = new Set(
 		directory
 			.filter((entry) => {
 				const entryUrl = entry.data.entry?.url;
 				if (!entryUrl) return false;
-				if (isHiddenSubProduct(entry)) return false;
+				if (isSubProduct(entryUrl)) return false;
 				if (isDisallowedByRobots(entryUrl)) return false;
 				const prefix = entryUrl.slice(1, -1);
 				return docs.some(
@@ -84,7 +74,7 @@ export const GET: APIRoute = async ({ url }) => {
 			const entryUrl = entry.data.entry?.url;
 			if (entry.data.entry?.group) return false;
 			if (!entryUrl) return false;
-			if (isHiddenSubProduct(entry)) return false;
+			if (isSubProduct(entryUrl)) return false;
 			if (isDisallowedByRobots(entryUrl)) return false;
 			const prefix = entryUrl.slice(1, -1);
 			return docs.some((e) => e.id.startsWith(prefix + "/") || e.id === prefix);
