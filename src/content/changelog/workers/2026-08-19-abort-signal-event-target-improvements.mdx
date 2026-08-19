@@ -1,0 +1,44 @@
+---
+title: Create AbortController and AbortSignal outside request handlers
+description: AbortController, AbortSignal, WritableStream, and Request objects can now be created during module initialization in Cloudflare Workers.
+products:
+  - workers
+date: 2026-08-19
+---
+
+You can now create `AbortController` and `AbortSignal` objects during module initialization in Cloudflare Workers:
+
+```js
+const controller = new AbortController();
+const alreadyCancelled = AbortSignal.abort("cancelled");
+
+export default {
+	async fetch() {
+		return Response.json({
+			cancelled: alreadyCancelled.aborted,
+		});
+	},
+};
+```
+
+This change brings Workers in line with browsers and Node.js. Libraries can now create controllers, requests, and writable streams when you import them without encountering an `IoContext` error.
+
+You can also observe or abort a signal from a different request running in the same isolate. Workerd routes cancellation to the request that owns each pending operation.
+
+Do not use isolate-local signals when your application requires durable cancellation. Cloudflare may route requests to another isolate or restart an isolate at any time. Use a Durable Object to coordinate those requests.
+
+`AbortSignal.timeout()` still requires an active request because it schedules a timer.
+
+## More consistent event handling
+
+This change also aligns `EventTarget` behavior with the DOM standard:
+
+- One listener throwing an exception no longer prevents later listeners from running.
+- `abort()` no longer throws when an abort listener throws.
+- Workerd reports listener exceptions through the global `error` event and console.
+- Workerd removes listeners registered with `{ signal }` before it runs abort listeners.
+- Events you construct report `isTrusted === false`.
+
+Most applications require no changes.
+
+For more details, refer to the [Web standards documentation](/workers/runtime-apis/web-standards/#abortcontroller-and-abortsignal).

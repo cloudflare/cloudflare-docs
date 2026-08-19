@@ -9,7 +9,7 @@ products:
 
 ## Background
 
-A `WritableStream` is the `writable` property of a [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers platform, `WritableStream` cannot be directly created using the `WritableStream` constructor.
+A `WritableStream` is the `writable` property of a [`TransformStream`](/workers/runtime-apis/streams/transformstream/). You can also create a `WritableStream` directly using the [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/WritableStream) constructor.
 
 A typical way to write to a `WritableStream` is to pipe a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to it.
 
