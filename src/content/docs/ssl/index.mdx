@@ -1,78 +1,47 @@
----
-title: Cloudflare SSL/TLS
-pcx_content_type: overview
-products:
-  - ssl
-sidebar:
-  order: 1
-head:
-  - tag: title
-    content: Overview
-description: Manage SSL/TLS certificates for encrypted connections between visitors, Cloudflare, and your origin server.
----
-
-import { Description, Feature, Plan, RelatedProduct } from "~/components";
-
-<Description>
-
-Encrypt your web traffic to prevent data theft and other tampering.
-
-</Description>
-
-<Plan type="all" />
-
-SSL/TLS certificates encrypt traffic between visitors and your website, preventing eavesdropping and data tampering. Because Cloudflare sits between your visitors and your origin server, two certificates can be involved in a single request: an [edge certificate](/ssl/concepts/#edge-certificate) (visitor to Cloudflare) and an [origin certificate](/ssl/concepts/#origin-certificate) (Cloudflare to your server).
-
-Cloudflare automatically issues free certificates through [Universal SSL](/ssl/edge-certificates/universal-ssl/) and offers additional options for custom certificate management. Refer to [Get started](/ssl/get-started/) to set up SSL/TLS for your domain.
-
----
-
-## Features
-
-<Feature
-	header="Total TLS"
-	href="/ssl/edge-certificates/additional-options/total-tls/"
->
-	Universal SSL covers your apex domain and first-level subdomains. Total TLS
-	extends that coverage by automatically issuing certificates for proxied
-	hostnames at any subdomain level.
-</Feature>
-
-<Feature
-	header="Delegated DCV"
-	href="/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/"
->
-	Before issuing a certificate, a certificate authority (CA) must verify you
-	control the domain. If you manage DNS outside of Cloudflare, you can delegate
-	this verification to Cloudflare so certificate renewals happen automatically.
-</Feature>
-
-<Feature
-	header="Custom TLS settings"
-	href="/ssl/edge-certificates/additional-options/minimum-tls/"
->
-	Specify the minimum TLS version that visitors must use to connect to your
-	website or application, and [restrict cipher
-	suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/)
-	to meet compliance or security requirements.
-</Feature>
-
----
-
-## Related products
-
-<RelatedProduct header="Cloudflare DNS" href="/dns/" product="dns">
-	When you use Cloudflare DNS, all DNS queries for your domain are answered by
-	Cloudflare's global anycast network. This network delivers performance and
-	global availability.
-</RelatedProduct>
-
-<RelatedProduct
-	header="Cloudflare for SaaS"
-	href="/cloudflare-for-platforms/cloudflare-for-saas/"
-	product="cloudflare-for-platforms"
->
-	Cloudflare for SaaS allows you to extend the security and performance benefits
-	of Cloudflare's network to your customers via their own custom or vanity
-	domains.
-</RelatedProduct>
+<doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>د. بشار القطامي | الموقع الرسمي</title>
+  <meta name="description" content="الموقع الرسمي للدكتور بشار علي محمد القطامي. نبذة عن الرؤية المهنية، مجالات العمل، وطرق التواصل.">
+  <meta name="author" content="د. بشار علي محمد القطامي">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0c2e2b">
+  <meta property="og:title" content="د. بشار القطامي | الموقع الرسمي">
+  <meta property="og:description" content="رؤية مهنية متكاملة تجمع المعرفة، العناية، والإنصات للإنسان.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://cloudflare-docs.pages.dev/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#132b2a;--green:#0c4a43;--green-2:#176b5e;--gold:#caa35a;--sand:#f6f3ec;--muted:#667574;--line:#e6e3da;--white:#fff;--shadow:0 24px 70px rgba(16,49,45,.11)}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:"IBM Plex Sans Arabic",Cairo,sans-serif;color:var(--ink);background:#fbfaf7;line-height:1.8}a{text-decoration:none;color:inherit}button,input,textarea,select{font:inherit} .container{width:min(1160px,calc(100% - 40px));margin:auto}
+    .topbar{background:var(--ink);color:#dfe9e6;font-size:13px}.topbar .container{display:flex;justify-content:space-between;gap:20px;padding:8px 0}.topbar a{color:#e5c989}
+    header{position:sticky;top:0;z-index:20;background:rgba(251,250,247,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(230,227,218,.8)}.nav{height:82px;display:flex;align-items:center;justify-content:space-between;gap:28px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:46px;height:46px;border-radius:14px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:21px;border:1px solid #d8bc7f}.brand strong{display:block;font-size:18px;line-height:1.2}.brand small{display:block;color:var(--green-2);font-size:11px;margin-top:4px}.links{display:flex;gap:30px;color:#536866;font-size:14px;font-weight:600}.links a:hover{color:var(--gold)}.links.open{display:flex}.nav-cta{background:var(--green);color:#fff;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:700}.menu{display:none;border:0;background:none;font-size:24px;color:var(--green)}
+    .hero{padding:94px 0 110px;overflow:hidden;position:relative}.hero:before{content:"";position:absolute;width:580px;height:580px;border-radius:50%;background:#e8f0eb;top:-220px;left:-170px;z-index:-1}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:80px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--gold);font-size:13px;font-weight:800;letter-spacing:.06em;margin-bottom:18px}.eyebrow:before{content:"";display:block;width:32px;height:1px;background:var(--gold)}h1{font-size:clamp(42px,6vw,76px);line-height:1.18;letter-spacing:-.04em;margin-bottom:24px}h1 span{color:var(--green-2)}.lead{font-size:20px;color:var(--muted);max-width:650px}.hero-actions{display:flex;align-items:center;gap:18px;margin-top:36px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 25px;border-radius:10px;font-weight:700;font-size:15px;border:1px solid transparent;transition:.25s}.btn:hover{transform:translateY(-3px)}.btn-primary{background:var(--green);color:#fff;box-shadow:0 12px 24px rgba(12,74,67,.2)}.btn-outline{border-color:#c9d4d0;color:var(--green);background:transparent}.hero-note{color:#7a8886;font-size:13px}
+    .portrait-wrap{position:relative;max-width:430px;margin:auto}.portrait{height:530px;border-radius:220px 220px 24px 24px;background:linear-gradient(145deg,#d9e5df,#a8c5b8 55%,#356e61);overflow:hidden;position:relative;box-shadow:var(--shadow);border:10px solid #fff}.portrait img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1}.portrait-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:linear-gradient(160deg,#e8f0eb,#2e6b5d);color:white;z-index:0}.portrait-fallback b{font-size:92px;line-height:1;color:#e6c980}.portrait-fallback span{display:block;font-size:15px;margin-top:12px}.seal{position:absolute;bottom:28px;right:-30px;width:126px;height:126px;border-radius:50%;background:#fff;border:1px solid #d6c18c;display:grid;place-items:center;text-align:center;color:var(--green);font-size:12px;font-weight:700;box-shadow:0 14px 35px #123d3520}.seal b{display:block;color:var(--gold);font-size:27px;line-height:1}.dot{position:absolute;top:22px;left:-24px;width:68px;height:68px;border-radius:50%;background:var(--gold)}
+    .trust{background:var(--green);color:#fff}.trust .container{display:grid;grid-template-columns:repeat(3,1fr);padding:25px 0;gap:20px}.trust-item{display:flex;align-items:center;justify-content:center;gap:13px;border-left:1px solid #ffffff25}.trust-item:last-child{border:0}.trust-item b{display:block;color:#efd38f;font-size:17px}.trust-item span{display:block;color:#c8d8d3;font-size:12px}
+    section{padding:105px 0}.section-head{max-width:650px;margin-bottom:45px}.section-head.center{margin-inline:auto;text-align:center}.kicker{color:var(--gold);font-size:13px;font-weight:800;margin-bottom:12px}.section-head h2{font-size:clamp(30px,4vw,48px);line-height:1.3;margin-bottom:14px}.section-head p{color:var(--muted)}.about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:85px;align-items:start}.quote{background:var(--sand);padding:35px;border-right:4px solid var(--gold);font-size:22px;font-weight:600;color:var(--green);border-radius:4px 18px 18px 4px}.copy p{color:var(--muted);margin-top:22px}.signature{margin-top:30px;color:var(--green);font-weight:700}.signature small{display:block;color:var(--gold);font-weight:500}
+    .services{background:var(--sand)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{background:#fff;border:1px solid var(--line);padding:30px;border-radius:18px;min-height:245px;transition:.25s}.card:hover{transform:translateY(-7px);box-shadow:var(--shadow);border-color:#d9bf83}.number{color:var(--gold);font-size:14px;font-weight:800}.card h3{font-size:21px;margin:22px 0 10px}.card p{color:var(--muted);font-size:15px}
+    .contact{background:#fff}.contact-box{background:var(--green);border-radius:24px;overflow:hidden;color:#fff;display:grid;grid-template-columns:.9fr 1.1fr}.contact-copy{padding:54px}.contact-copy h2{font-size:38px;line-height:1.35;margin-bottom:16px}.contact-copy p{color:#cbded9}.contact-details{margin-top:36px;display:grid;gap:18px}.detail{display:flex;gap:15px;align-items:center}.detail-icon{width:42px;height:42px;border:1px solid #d9bc75;border-radius:11px;color:#e4c67e;display:grid;place-items:center}.detail span{display:block;color:#a8c4bd;font-size:12px}.detail strong{font-size:15px}.contact-form{background:#fff;padding:54px;color:var(--ink)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{display:grid;gap:7px;margin-bottom:18px}.field label{font-size:13px;font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#fbfaf7;border-radius:9px;padding:12px 14px;outline:0;transition:.2s}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px #caa35a22}.field textarea{resize:vertical}.form-status{font-size:13px;color:var(--green);margin-top:12px;display:none}
+    footer{background:#102f2d;color:#a8c4bd;padding:35px 0}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:25px}.footer-brand{color:#fff;font-weight:700}.footer-links{display:flex;gap:22px;font-size:13px}.footer-links a:hover{color:#e4c67e}.copyright{font-size:12px;color:#71918a;margin-top:20px;text-align:center}
+    @media(max-width:800px){.links.open{position:absolute;top:82px;right:20px;left:20px;background:#fbfaf7;border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow);flex-direction:column;gap:12px}.topbar .container{justify-content:center}.topbar .container span{display:none}.links,.nav-cta{display:none}.menu{display:block}.hero{padding:65px 0 75px}.hero-grid,.about-grid,.contact-box{grid-template-columns:1fr;gap:45px}.hero-grid{display:flex;flex-direction:column}.hero-copy{order:2}.hero-visual{order:1;width:100%}.portrait{height:420px}.seal{right:8px}.dot{left:6px}.trust .container{grid-template-columns:1fr;padding:18px 0}.trust-item{border-left:0;border-bottom:1px solid #ffffff25;padding:10px}.cards{grid-template-columns:1fr}.contact-copy,.contact-form{padding:32px 25px}.contact-copy h2{font-size:30px}.form-grid{grid-template-columns:1fr}.footer-row{flex-direction:column;text-align:center}.footer-links{flex-wrap:wrap;justify-content:center}section{padding:75px 0}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="topbar"><div class="container"><span>الموقع الرسمي للدكتور بشار علي محمد القطامي</span><a href="mailto:vitaraw2@zohomail.com">vitaraw2@zohomail.com</a></div></div>
+  <header><div class="container nav"><a class="brand" href="#home" aria-label="العودة للرئيسية"><span class="brand-mark">ب</span><span><strong>د. بشار القطامي</strong><small>رؤية مهنية متكاملة</small></span></a><nav class="links" aria-label="التنقل الرئيسي"><a href="#about">عن الدكتور</a><a href="#services">مجالات العمل</a><a href="#contact">تواصل</a></nav><a class="nav-cta" href="#contact">طلب استشارة</a><button class="menu" type="button" aria-label="فتح القائمة" onclick="document.querySelector( .links ).classList.toggle( open )">☰</button></div></header>
+  <main>
+    <section class="hero" id="home"><div class="container hero-grid"><div class="hero-copy"><div class="eyebrow">الموقع الرسمي · صنعاء، اليمن</div><h1>معرفةٌ أعمق،<br><span>وعنايةٌ أصدق.</span></h1><p class="lead">مساحة مهنية للتعريف برؤية الدكتور بشار القطامي ومجالات عمله، بروح تجمع بين الإنصات، البحث، والعناية المتكاملة بالإنسان.</p><div class="hero-actions"><a class="btn btn-primary" href="#contact">تواصل مع الدكتور <span>←</span></a><a class="btn btn-outline" href="#about">اكتشف الرؤية</a><span class="hero-note">استجابة شخصية وموعد منظم</span></div></div><div class="hero-visual"><div class="portrait-wrap"><div class="dot"></div><div class="portrait"><img src="/manus-storage/doctor-bashar_78428a26.png" alt="صورة الدكتور بشار القطامي" onerror="this.style.display= none "><div class="portrait-fallback"><div><b>ب</b><span>د. بشار القطامي</span></div></div></div><div class="seal"><div><b>ب</b>خبرة<br>ورؤية<br>متكاملة</div></div></div></div></div></section>
+    <div class="trust"><div class="container"><div class="trust-item"><div>◈</div><div><b>رؤية متكاملة</b><span>الإنسان أولًا في كل مسار</span></div></div><div class="trust-item"><div>◇</div><div><b>إنصات واهتمام</b><span>تواصل واضح ومحترم</span></div></div><div class="trust-item"><div>✦</div><div><b>معرفة مستمرة</b><span>شغف بالبحث والتطوير</span></div></div></div></div>
+    <section id="about"><div class="container about-grid"><aside><div class="quote">«الرحلة المعرفية الحقيقية تبدأ بسؤال صادق، وتنمو بالبحث، وتثمر عنايةً أكثر إنسانية.»</div><div class="signature">د. بشار علي محمد القطامي<small>الطبيب والباحث</small></div></aside><div class="copy"><div class="section-head"><div class="kicker">عن الدكتور</div><h2>رؤية تتسع للعلم والإنسان</h2><p>تعرّف على المنهج الذي يقف خلف هذه المساحة المهنية.</p></div><p>ينطلق الدكتور بشار القطامي من اهتمام مستمر بترابط المعارف الصحية والإنسانية، وبأهمية فهم احتياجات كل شخص بصورة واضحة ومحترمة. وتقوم رؤيته على الحوار، التقييم المتأني، وتقديم المعلومات بطريقة تساعد على اتخاذ قرارات أكثر وعيًا.</p><p>هذا الموقع هو نافذة تعريفية رسمية، ويهدف إلى تسهيل الوصول إلى المعلومات وفتح قناة تواصل مباشرة ومنظمة مع الدكتور.</p></div></div></section>
+    <section class="services" id="services"><div class="container"><div class="section-head center"><div class="kicker">مجالات العمل</div><h2>مسارات معرفية وعملية</h2><p>مجالات تُعرض بلغة واضحة، مع التأكيد أن أي حالة صحية تستلزم تقييمًا متخصصًا قبل اتخاذ القرار.</p></div><div class="cards"><article class="card"><div class="number">01 / العناية</div><h3>العلاج اليدوي الطبيعي</h3><p>مناقشة مبادئ الحركة والعناية الجسدية والتأهيل بصورة فردية، وبما يراعي الحالة واحتياجاتها الخاصة.</p></article><article class="card"><div class="number">02 / البحث</div><h3>الهندسة الكيمفيزيائية</h3><p>طرح معرفي يهتم بالتفاعل بين الكيمياء والفيزياء الحيوية، مع تبسيط المفاهيم للمهتمين والباحثين.</p></article><article class="card"><div class="number">03 / الوعي</div><h3>تأويل الرؤى</h3><p>حوار هادئ حول الرؤى والدلالات النفسية والروحية، دون الجزم أو استبدال التقييم المتخصص.</p></article></div></div></section>
+    <section class="contact" id="contact"><div class="container"><div class="contact-box"><div class="contact-copy"><div class="kicker">تواصل مباشر</div><h2>لنبدأ حوارًا<br>واضحًا ومحترمًا.</h2><p>أرسل بياناتك وسيتواصل معك الفريق عبر البريد الإلكتروني لتنظيم الطلب والرد على استفسارك.</p><div class="contact-details"><a class="detail" href="mailto:vitaraw2@zohomail.com"><span class="detail-icon">@</span><div><span>البريد الإلكتروني</span><strong>vitaraw2@zohomail.com</strong></div></a><div class="detail"><span class="detail-icon">⌖</span><div><span>الموقع</span><strong>حزيز · صنعاء · اليمن</strong></div></div></div></div><div class="contact-form"><form id="contactForm"><div class="form-grid"><div class="field"><label for="name">الاسم الكامل</label><input id="name" name="name" required autocomplete="name" placeholder="اكتب اسمك"></div><div class="field"><label for="phone">رقم الهاتف</label><input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="00967…"></div></div><div class="field"><label for="topic">موضوع التواصل</label><select id="topic" name="topic"><option>استشارة عامة</option><option>العلاج اليدوي الطبيعي</option><option>الهندسة الكيمفيزيائية</option><option>تأويل الرؤى</option><option>موضوع آخر</option></select></div><div class="field"><label for="message">رسالتك</label><textarea id="message" name="message" rows="4" required placeholder="اكتب رسالتك باختصار"></textarea></div><button class="btn btn-primary" type="submit">فتح رسالة البريد الإلكتروني <span>←</span></button><p class="form-status" id="formStatus">تم تجهيز الرسالة. إذا لم يفتح البريد تلقائيًا، يرجى التواصل مباشرة عبر البريد الظاهر.</p></form></div></div></div></section>
+  </main>
+  <footer><div class="container"><div class="footer-row"><div class="footer-brand">د. بشار القطامي</div><div class="footer-links"><a href="#home">الرئيسية</a><a href="#about">عن الدكتور</a><a href="#services">مجالات العمل</a><a href="#contact">تواصل</a></div></div><p class="copyright">© 2026 د. بشار علي محمد القطامي. جميع الحقوق محفوظة.</p></div></footer>
+  <script>document.getElementById( contactForm ).addEventListener( submit ,function(e){e.preventDefault();const f=new FormData(this);const subject=encodeURIComponent( طلب تواصل من  +f.get( name ));const body=encodeURIComponent( الاسم:  +f.get( name )+ \nالهاتف:  +f.get( phone )+ \nالموضوع:  +f.get( topic )+ \n\nالرسالة:\n +f.get( message ));window.location.href= mailto:vitaraw2@zohomail.com?subject= +subject+ &body= +body;document.getElementById( formStatus ).style.display= block ;});</script>
+</body>
+</html>
