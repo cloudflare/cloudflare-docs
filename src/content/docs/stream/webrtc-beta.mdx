@@ -47,11 +47,13 @@ Create a live input using one of the two options:
 }
 ```
 
-## Step 2: Go live from the browser using WHIP
+## Step 2: Go live using WHIP
+
+### Broadcasting from the browser
 
 Every live input has a unique URL that one creator can be stream to. This URL should _only_ be shared with the creator — anyone with this URL has the ability to stream live video to this live input.
 
-Copy the URL from either:
+Retrieve the WHIP endpoint URL:
 
 - The **Live inputs** page of the Cloudflare dashboard.
 
@@ -78,7 +80,50 @@ Once the creator grants permission to their camera and microphone, live video an
 
 You can use this URL with any client that supports the [WebRTC-HTTP Ingestion Protocol (WHIP)](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
-## Step 3: Play live video in-browser using WHEP
+### Broadcasting from other software (OBS, FFmpeg)
+
+**Using OBS 31.0 or higher:** Recommended settings to broadcast WebRTC/WHIP. In Settings:
+
+- In the **Stream** tab
+  - **Service:** WHIP
+  - **Server:** Paste the entire WebRTC (WHIP) URL from Cloudflare Stream
+    - The broadcast secret is part of this URL, leave "Bearer Token" blank
+- In the **Output** tab
+  - **Audio Encoder:** FFmpeg Opus _(or another Opus encoder, if available)_
+  - **Video Encoder:** x264 _(or a hardware accelerated H.264 encoder like QuickSync or NVENC)_
+  - **Rate Control:** `CBR` or `VBR`
+  - **Bitrate:** between 3000 Kbps and 7000 Kpbs
+  - **Profile:** `main` or `baseline`
+  - **B Frames:** 0
+- In the **Video** tab
+  - **Framerate:** field may be called "Common FPS Values" or "Integer FPS Value", set to 30
+
+**Using FFmpeg 8.1 or higher:** This sample command outputs a clock and a constant tone. Revise the input criteria with your content.
+
+``` bash
+ffmpeg -hide_banner -y \
+  -re -f lavfi -i testsrc=size=1920x1080:rate=30 \
+  -re -f lavfi -i "sine=frequency=200" \
+  -vf "drawtext=fontsize=120:text='%{gmtime}.%{eif\:1M*t-1K*trunc(t\*1K)\:d}':x=0:y=0:fontcolor=WhiteSmoke:box=1:boxcolor=black@0.6" \
+  -c:v libx264 -flags +global_header -maxrate 4000k -bufsize 1500k \
+  -tune zerolatency -g 30 -profile:v baseline -pix_fmt yuv420p \
+  -acodec libopus -b:a 128k -ar 48000 -ac 2 \
+  -ts_buffer_size 16777216 \
+  -f whip https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/71adb6d1676e2aa8d42ddce2271a2aedk5b6efd743b78487c095b2911e08345d8/webRTC/publish
+```
+
+If using Windows/PowerShell:
+
+- Add `:fontfile='C\:/Windows/Fonts/consola.ttf'` to the `vf` string; a font must be specified in Windows environments
+- Use backticks `\`` instead of backslashes `\` to segment a multiline command
+
+FFmpeg's WHIP support currently requires the use of `libx264` at `baseline`. The `ts_buffer_size` is a memory allocation strategy
+
+## Step 3: Play live video using WHEP
+
+**Using the Stream Player:** Stream's built-in player already supports playing WebRTC broadcasts by automatically upgrading to WHEP when available. Refer to "[Use the Stream Player](/stream/viewing-videos/using-the-stream-player/)" for more information. The player embed code can be generated on the live input's settings page in the Dashboard.
+
+**Using the WHEP endpoint in a custom player:**
 
 Copy the URL from either:
 
@@ -87,6 +132,8 @@ Copy the URL from either:
   <DashButton url="/?to=/:account/stream/inputs" />
 
 - The `webRTCPlayback.url` property in the API response (see above)
+
+This URL can be used with any client that supports the [WebRTC-HTTP Egress Protocol (WHEP)](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 
 ::: note
@@ -104,13 +151,7 @@ const videoElement = document.getElementById("output-video");
 const client = new WHEPClient(url, videoElement);
 ```
 
-While the creator is actively streaming, viewers can watch the broadcast in their browsers, with less than 1 second of latency. There are no fixed limits on the number of concurrent viewers.
-
-This URL can be used with any client that supports the [WebRTC-HTTP Egress Protocol (WHEP)](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
-
-## Using WebRTC in native apps
-
-If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
+While the creator is actively streaming, viewers can watch the broadcast in their browsers with less than 500 milliseconds of latency. There are no fixed limits on the number of concurrent viewers.
 
 ## Debugging WebRTC
 
@@ -122,7 +163,7 @@ If you are building a native app, the example code above can run within a [WkWeb
 
 Beyond the example WHIP client and example WHEP client used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
 
-### WHIP
+### WHIP for Broadcasting
 
 - [OBS (Open Broadcaster Software)](https://obsproject.com)
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (TypeScript)
@@ -130,11 +171,15 @@ Beyond the example WHIP client and example WHEP client used in the examples abov
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 - [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
 
-### WHEP
+### WHEP for Playback
 
 - [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (TypeScript)
 - [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (TypeScript)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
+
+## Using WebRTC in native apps
+
+If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
 
 ## Supported codecs
 
