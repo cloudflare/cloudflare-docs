@@ -3,18 +3,21 @@ pcx_content_type: how-to
 title: Transformers
 sidebar:
   order: 3
+  badge: Beta
 description: Advanced filtering, reshaping, redacting, and computing on Logpush records with SQL before they leave Cloudflare.
 products:
   - logpush
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Badge } from "~/components";
+
+<Badge text="Beta" variant="caution" />
 
 :::note[Closed beta]
-Logpush Transformers are in closed beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed. The API surface may change before GA.
+Transformers are in closed beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed. The API surface may change before GA.
 :::
 
-Logpush Transformers let you run a SQL query against each batch of records before Cloudflare delivers them to your destination. Use them to filter records you do not want to store, reshape fields to match a downstream schema, redact sensitive values, compute new fields, or add static metadata.
+Transformers let you run a SQL query against each batch of records before Logpush delivers them to your destination. Use them to filter records you do not want to store, reshape fields to match a downstream schema, redact sensitive values, compute new fields, or add static metadata.
 
 You write the logic as a single SQL query, attach it to a Logpush job, and Cloudflare runs it on every batch. The `FROM` clause names the Logpush dataset (for example, `http_requests` or `audit_logs_v2`) and field names come from that dataset's schema.
 
@@ -23,8 +26,8 @@ You write the logic as a single SQL query, attach it to a Logpush job, and Cloud
 - **SQL-based transforms** - a single-statement SQL query per Logpush job.
 - **Per-record execution** - runs on each NDJSON record before Cloudflare delivers the batch.
 - **Advanced filtering and reshaping** - drop, rename, redact, compute, or tag fields.
-- **Attach and detach without redeploying** - manage from Transformer Studio or the API.
-- **Version history** - every save creates a new version; older versions viewable in Studio.
+- **Attach and detach without redeploying** - manage transformers from the Cloudflare dashboard or the API.
+- **Version history** - every save creates a new version; older versions remain viewable.
 
 Before you begin, you need:
 
@@ -38,7 +41,7 @@ You can create, preview, attach, and manage transformers through the Cloudflare 
 
 ### Transformer Studio (UI)
 
-Transformer Studio is the dashboard for Logpush Transformers. Open it from the Logpush page in the Cloudflare dashboard.
+Transformer Studio is the workspace that includes a SQL editor where you write, preview, and manage Transformers. Open it from the Logpush page in the Cloudflare dashboard.
 
 <DashButton url="/?to=/:account/logs" />
 
@@ -69,7 +72,7 @@ Every transformer action is available through the Cloudflare API. To authenticat
 
 To attach or detach a transformer from a job, set `transformer_id` on the Logpush job. Refer to [Logpush job setup](/logs/logpush/logpush-job/) for job endpoints.
 
-For the full API reference, refer to [Logpush Transformers API](https://developers.cloudflare.com/api/resources/logpush/subresources/transformers/).
+For the full API reference, refer to [Transformers API](https://developers.cloudflare.com/api/resources/logpush/subresources/transformers/).
 
 ## The SQL transformer contract
 
@@ -269,7 +272,7 @@ Delivered record:
 
 | HTTP  | Message                                                       | Cause                                                                                                                            |
 | ----- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `403` | `transformer feature is not available for this account`       | Your account does not have access to Logpush Transformers. Contact your Cloudflare Account Executive.                             |
+| `403` | `transformer feature is not available for this account`       | Your account does not have access to Transformers. Contact your Cloudflare Account Executive.                             |
 | `400` | `missing required field: name`                                | Add a `name` field to the request body.                                                                                          |
 | `400` | `missing required field: code`                                | Add a non-empty `code` field with your SQL query.                                                                                |
 | `400` | Schema validation error (unknown column, invalid syntax)      | The SQL references a field that does not exist, uses unsupported syntax, or has a type mismatch. Fix the query and retry.        |
