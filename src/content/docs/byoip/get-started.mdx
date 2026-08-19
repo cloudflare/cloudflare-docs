@@ -40,6 +40,8 @@ The process described on this page does not support onboarding IP prefixes for u
 
 - You must use [Resource Public Key Infrastructure (RPKI) validation](/byoip/concepts/route-filtering-rpki/) and make sure your ROAs are accurate. You can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/) to double-check your prefixes.
 
+- If your own ASN has a published [Autonomous System Provider Authorization (ASPA)](/byoip/concepts/route-filtering-rpki/), it must authorize AS13335 as a provider. AS13335 can appear with other providers. An unpublished ASPA does not block onboarding.
+
 - If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/). Make sure you have the necessary permissions and that you have your account ID.
 
 ---
@@ -87,17 +89,20 @@ The process described on this page does not support onboarding IP prefixes for u
 
     ```
 
-    When you use your own ASN, `result` also includes its ownership validation state:
+    When you use your own ASN, `result` can also include ASN ownership and ASPA validation states:
 
     ```json title="Customer ASN response excerpt"
     {
       "result": {
-        "asn_ownership_validation_state": "pending"
+        "asn_ownership_validation_state": "pending",
+        "aspa_validation_state": "pending"
       }
     }
     ```
 
-    The field is omitted when ASN ownership validation does not apply, such as when you use AS13335. Its initial state can be `valid` if the account previously verified the ASN.
+    `asn_ownership_validation_state` is omitted when ASN ownership validation does not apply, such as when you use AS13335. Its initial state can be `valid` if the account previously verified the ASN.
+
+    When `aspa_validation_state` is present, its value can be `pending`, `valid`, or `invalid`. If the field is omitted, the response has no ASPA validation result. An unpublished ASPA does not block onboarding.
 
 2. Take note of the `id` assigned to the prefix you added. It will be used in future steps.
 
@@ -157,11 +162,13 @@ The process described on this page leverages automated <GlossaryTooltip term="le
 
    Cloudflare verifies ASN ownership once per Cloudflare account and ASN. If `asn_ownership_validation_state` is `valid`, you do not need to update the `aut-num` object.
 
-3. <Render file="validate-prefix-endpoint" product="byoip" />
+3. If your ASN has a published ASPA, use your RIR's RPKI tooling to confirm its provider list includes AS13335.
+
+4. <Render file="validate-prefix-endpoint" product="byoip" />
 
 After `ownership_validation_state` and, when present, `asn_ownership_validation_state` return `valid`, you can remove the token from the IRR, reverse DNS, and `aut-num` records where you added it.
 
-When all applicable validations pass (RPKI, IRR, prefix ownership, and ASN ownership), the `approved` field in your prefix will return `"V"`. This means you can proceed to create IP address service bindings[^1].
+When all applicable validations pass (RPKI, IRR, prefix ownership, ASN ownership, and ASPA), the `approved` field in your prefix will return `"V"`. This means you can proceed to create IP address service bindings[^1].
 
 If needed, you can use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation. If so, proceed with the necessary changes and make a request to restart validation. Refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/) for details.
 

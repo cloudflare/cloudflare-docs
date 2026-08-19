@@ -29,13 +29,25 @@ import { APIRequest, GlossaryTooltip, Render } from "~/components";
    }
    ```
 
-2. Consider the states returned in the API response (for example, `missing`, `invalid`, `mismatch_asn`) and review your IRR record, <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip>, and ownership validation method accordingly.
+   A failed Autonomous System Provider Authorization (ASPA) check appears as follows:
+
+   ```json title="ASPA response excerpt"
+   {
+     "result": {
+       "aspa_validation_state": "invalid"
+     }
+   }
+   ```
+
+2. Consider the states returned in the API response (for example, `missing`, `invalid`, `mismatch_asn`) and review your IRR record, <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip>, ownership validation method, and ASPA accordingly.
 
     - Information in the IRR and ROA records should meet the [onboarding prerequisites](/byoip/get-started/#before-you-begin).
 
     - [Prefix ownership validation](/byoip/get-started/#validate-prefix-ownership) requires the validation token in the matching `route` or `route6` object, or in each required reverse DNS zone. RPKI validation checks the ROA separately.
 
     - ASN ownership validation requires the same token in the `aut-num` object when `asn_ownership_validation_state` applies.
+
+    - ASPA validation checks that a published ASPA for your ASN authorizes AS13335 as a provider.
 
     Use the following guidance for `asn_ownership_validation_state`:
 
@@ -45,5 +57,15 @@ import { APIRequest, GlossaryTooltip, Render } from "~/components";
     | `valid` | The account has verified ownership of the ASN. | No action is required. Future prefixes in the same account can reuse this verification. |
     | `missing` | Cloudflare could not find an `aut-num` object for the ASN at a supported RIR. | Verify the `aut-num` object exists at AFRINIC, APNIC, ARIN, or RIPE. For a LACNIC-registered ASN, contact your account team. |
     | `invalid` | The `aut-num` object does not contain the expected token. | Add `cf-validation: <OWNERSHIP_VALIDATION_TOKEN>` to any editable field in the `aut-num` object. |
+
+    Use the following guidance for `aspa_validation_state`:
+
+    | State | Meaning | Resolution |
+    | --- | --- | --- |
+    | `pending` | ASPA validation has not completed. | Wait for validation to run, then use the Prefix Details endpoint again. |
+    | `valid` | The published ASPA authorizes AS13335 as a provider. | No action is required. |
+    | `invalid` | The published ASPA does not authorize AS13335 as a provider. | Use your RIR's RPKI tooling to add AS13335 to the ASPA provider list. You can keep other authorized providers. |
+
+    If `aspa_validation_state` is omitted, the response has no ASPA validation result. Do not treat omission as `valid` or `invalid`. An unpublished ASPA does not block onboarding.
 
 3. <Render file="validate-prefix-endpoint" product="byoip" />

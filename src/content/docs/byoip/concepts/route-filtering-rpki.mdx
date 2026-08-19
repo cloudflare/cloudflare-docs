@@ -16,4 +16,6 @@ However, IRR records alone are not cryptographically verified, which means they 
 
 When you register your prefix with one of the five Regional Internet Registries (RIRs)[^1], you can create a Route Origin Authorization (ROA) — a cryptographically signed object that declares which ASN is authorized to originate your prefix. ROAs are publicly verifiable, and you can check your prefixes using [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) or other sources such as [Routinator](https://rpki-validator.ripe.net/ui/).
 
+An [Autonomous System Provider Authorization (ASPA)](https://datatracker.ietf.org/doc/draft-ietf-sidrops-aspa-verification/) is another RPKI object. It declares which ASNs can act as upstream providers for an ASN. When you onboard a prefix with your own ASN, Cloudflare checks any ASPA published for that ASN. If an ASPA exists, it must authorize AS13335 as a provider. It can also authorize other providers. If no ASPA exists, onboarding can continue.
+
 [^1]: AFRINIC, APNIC, ARIN, LACNIC, and RIPE.
