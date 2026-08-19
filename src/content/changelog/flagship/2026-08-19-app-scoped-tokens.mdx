@@ -6,16 +6,10 @@ products:
 date: 2026-08-19
 ---
 
-You can now create **app-scoped API tokens** for [Flagship](/flagship/). These tokens grant access to a single Flagship app instead of every app in the account.
+You can now create **app-scoped API tokens** for [Flagship](/flagship/). These tokens grant access only to the Flagship apps you select, instead of every app in the account.
 
-Use an app-scoped token when you evaluate flags from a browser or other client-side environment. If the token is exposed, it can only act on the app you selected.
+When you create a custom token, open the resource dropdown (it defaults to **Entire Account**) and select **Specified Flagship apps**. Then choose the app and a **Flagship App** permission: Evaluate, Read, or Write. Account-wide Flagship Evaluate, Read, and Write permissions still exist for trusted server-side workflows.
 
-The following app-scoped permissions are available:
+Use an app-scoped token when you evaluate flags from a browser or other client-side environment. If the token is exposed, it can only act on the apps you selected. Do not put an account-wide Flagship token in client-side code.
 
-- **Flagship App Evaluate** — Evaluate flags in one app.
-- **Flagship App Read** — Read and evaluate flags in one app.
-- **Flagship App Write** — Read, update, delete, and evaluate flags in one app.
-
-Account-wide Flagship permissions still exist for server-side automation and dashboard workflows. Do not put those tokens in client-side code.
-
-To create a token, refer to [Create an app-scoped API token](/flagship/api-tokens/). To use one in the browser, refer to the [TypeScript Client SDK](/flagship/sdk/client-provider/).
+To create a token, refer to [API tokens](/flagship/api-tokens/). To use one in the browser, refer to the [TypeScript Client SDK](/flagship/sdk/client-provider/).

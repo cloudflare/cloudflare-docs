@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
-title: Create an app-scoped API token
-description: Create a Cloudflare API token that can access only one Flagship app, for client-side SDKs and least-privilege automation.
+title: API tokens
+description: Create account-wide or app-scoped API tokens for Flagship. App-scoped tokens can access only the Flagship apps you select.
 sidebar:
   order: 4
 products:
@@ -10,11 +10,47 @@ products:
 
 import { DashButton, Render } from "~/components";
 
-An app-scoped API token can access one Flagship app. Use this when you evaluate flags from a browser or any other environment where the token might be visible.
+Flagship supports two kinds of API tokens. Both use the same [Create API token](/fundamentals/api/get-started/create-token/) flow. The difference is the resource the permission policy applies to.
 
-Account-wide Flagship tokens can still list, create, and manage every app in the account. Do not put those tokens in client-side code.
+| Token type   | Resource                    | What it can access                |
+| ------------ | --------------------------- | --------------------------------- |
+| Account-wide | **Entire Account**          | Every Flagship app in the account |
+| App-scoped   | **Specified Flagship apps** | Only the Flagship apps you select |
 
-## Create a token
+Use an account-wide token for Wrangler, CI, and other trusted server-side workflows. Use an app-scoped token when the token might be visible, such as in a browser. If an app-scoped token is leaked, it can only act on the apps you selected.
+
+Both token types support **Read**, **Write**, and **Evaluate**. The names change with the resource:
+
+| Access                  | Account-wide          | App-scoped                |
+| ----------------------- | --------------------- | ------------------------- |
+| Evaluate flags          | **Flagship Evaluate** | **Flagship App Evaluate** |
+| Read flag configuration | **Flagship Read**     | **Flagship App Read**     |
+| Manage flags            | **Flagship Write**    | **Flagship App Write**    |
+
+You must [create a Flagship app](/flagship/get-started/#create-an-app-and-a-flag) before you can create an app-scoped token. The dashboard can only list apps that already exist.
+
+## Create an account-wide token
+
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
+   You can also create a user token from [My Profile](https://dash.cloudflare.com/profile/api-tokens) > **API Tokens**.
+
+2. Select **Create Token**.
+3. Select **Create Custom Token** > **Get started**.
+4. Enter a token name.
+5. Under **Permission policies**, leave the resource dropdown set to **Entire Account**.
+6. Search for Flagship and select **Flagship Evaluate**, **Flagship Read**, or **Flagship Write**.
+7. (Optional) Restrict the token with [IP address filtering or a TTL](/fundamentals/api/how-to/restrict-tokens/).
+8. Select **Review token** > **Create Token**.
+9. Copy the token secret and store it securely.
+
+<Render file="new-token-warning" product="fundamentals" />
+
+Do not put an account-wide Flagship token in client-side code. It can access every Flagship app in the account.
+
+## Create an app-scoped token
 
 1. In the Cloudflare dashboard, go to the **Account API tokens** page.
 
@@ -25,33 +61,23 @@ Account-wide Flagship tokens can still list, create, and manage every app in the
 2. Select **Create Token**.
 3. Select **Create Custom Token** > **Get started**.
 4. Enter a token name that describes where you will use it, such as `marketing-site-client`.
-5. Under **Permissions**, add a Flagship App permission:
+5. Under **Permission policies**, open the resource dropdown (it defaults to **Entire Account**) and select **Specified Flagship apps**.
+6. In **Select Flagship apps**, choose the app or apps this token should access. Do not select every app if the token will run in a browser.
+7. Under **Developer Platform**, select a **Flagship App** permission:
 
-   | Use case                            | Permission                |
-   | ----------------------------------- | ------------------------- |
-   | Client-side or browser SDK          | **Flagship App Evaluate** |
-   | Read flag configuration for one app | **Flagship App Read**     |
-   | Manage flags in one app             | **Flagship App Write**    |
+   | Use case                                      | Permission                |
+   | --------------------------------------------- | ------------------------- |
+   | Client-side or browser SDK                    | **Flagship App Evaluate** |
+   | Read flag configuration for the selected apps | **Flagship App Read**     |
+   | Manage flags in the selected apps             | **Flagship App Write**    |
 
-6. Under **Account Resources**, select the Cloudflare account that owns the Flagship app.
-7. When the token asks you to select a Flagship app, choose the specific app this token should access. Do not grant access to all apps if the token will run in a browser.
 8. (Optional) Restrict the token with [IP address filtering or a TTL](/fundamentals/api/how-to/restrict-tokens/).
-9. Select **Continue to summary** > **Create Token**.
+9. Select **Review token** > **Create Token**.
 10. Copy the token secret and store it securely.
 
 <Render file="new-token-warning" product="fundamentals" />
 
-## Choose a permission
-
-| Permission                | What the token can do                                 | Typical use                                             |
-| ------------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-| **Flagship App Evaluate** | Evaluate flags in one app                             | [TypeScript Client SDK](/flagship/sdk/client-provider/) |
-| **Flagship App Read**     | Read flag configuration and evaluate flags in one app | Server-side reads for one app                           |
-| **Flagship App Write**    | Read, update, delete, and evaluate flags in one app   | CI or tooling that edits one app                        |
-
 For client-side evaluation, use **Flagship App Evaluate** on a single app. That permission cannot change flags or access any other app.
-
-Account-wide **Flagship Evaluate**, **Flagship Read**, and **Flagship Write** permissions still apply to every app in the account. Use them for Wrangler, CI, and other trusted server-side workflows. Refer to [Create API token](/fundamentals/api/get-started/create-token/) for the general token flow.
 
 ## Use the token
 
@@ -71,7 +97,7 @@ await OpenFeature.setProviderAndWait(
 );
 ```
 
-Replace `<APP_ID>` and `<ACCOUNT_ID>` with the app and account the token is scoped to. The token is rejected if you evaluate a different app.
+Replace `<APP_ID>` and `<ACCOUNT_ID>` with the app and account the token is scoped to. An app-scoped token is rejected if you evaluate a different app.
 
 Inside a Cloudflare Worker, prefer the [binding](/flagship/binding/). The binding authenticates automatically and does not need an API token.
 
