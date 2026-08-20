@@ -78,13 +78,6 @@
 		"when": "Patch contains `<FileTree` or imports `FileTree`."
 	},
 	{
-		"id": "component-github-code",
-		"file": "reference/components/github-code.md",
-		"load": "component",
-		"componentNames": ["GitHubCode"],
-		"when": "Patch contains `<GitHubCode` or imports `GitHubCode`."
-	},
-	{
 		"id": "component-markdown",
 		"file": "reference/components/markdown.md",
 		"load": "component",

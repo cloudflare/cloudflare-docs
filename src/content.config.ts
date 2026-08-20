@@ -1,4 +1,5 @@
-import { defineCollection, reference, z } from "astro:content";
+import { defineCollection, reference } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 import { skillsLoader } from "astro-skills";
 import {
@@ -191,39 +192,35 @@ export const collections = {
 	// CF product directory — product metadata + group membership. Id is the
 	// filename (e.g. `queues`). Used by the changelog system to resolve
 	// product names/links and to build the per-product / per-group views.
-	// Schema is permissive (passthrough); only the fields below are read.
+	// Schema is permissive (loose); only the fields below are read.
 	directory: defineCollection({
 		loader: glob({
 			pattern: "**/*.{json,yml,yaml}",
 			base: "./src/content/directory",
 			generateId: ({ entry }) => entry.replace(/\.(json|ya?ml)$/, ""),
 		}),
-		schema: z
-			.object({
-				id: z.string().optional(),
-				// CF's directory collection is schemaless; non-product entries (e.g.
-				// home.yaml) omit `name`/`entry`. Keep these optional to match.
-				name: z.string().optional(),
-				entry: z
-					.object({
-						title: z.string().optional(),
-						url: z.string().optional(),
-						group: z.string().optional(),
-						additional_groups: z.array(z.string()).optional(),
-					})
-					.passthrough()
-					.optional(),
-				// Product page metadata. Read by DirectoryCatalog (`/directory`)
-				// for the per-card description blurb.
-				meta: z
-					.object({
-						title: z.string().optional(),
-						description: z.string().optional(),
-					})
-					.passthrough()
-					.optional(),
-			})
-			.passthrough(),
+		schema: z.looseObject({
+			id: z.string().optional(),
+			// CF's directory collection is schemaless; non-product entries (e.g.
+			// home.yaml) omit `name`/`entry`. Keep these optional to match.
+			name: z.string().optional(),
+			entry: z
+				.looseObject({
+					title: z.string().optional(),
+					url: z.string().optional(),
+					group: z.string().optional(),
+					additional_groups: z.array(z.string()).optional(),
+				})
+				.optional(),
+			// Product page metadata. Read by DirectoryCatalog (`/directory`)
+			// for the per-card description blurb.
+			meta: z
+				.looseObject({
+					title: z.string().optional(),
+					description: z.string().optional(),
+				})
+				.optional(),
+		}),
 	}),
 	// CF learning-paths data — one JSON per path under
 	// `src/content/learning-paths/<module>.json`. Id is the filename (e.g.
@@ -247,12 +244,6 @@ export const collections = {
 				reviewed: z.coerce.date().optional(),
 			})
 			.strict(),
-	}),
-	// CF plans data (single index.json). Read by FeatureTable + ProductFeatures
-	// via getEntry("plans", "index"). Untyped — the shape is a deep nested
-	// object addressed by dot-path id, so the schema is left permissive.
-	plans: defineCollection({
-		loader: glob({ pattern: "*.json", base: "./src/content/plans" }),
 	}),
 	// CF Pages framework presets (single index.yaml). Read by PagesBuildPreset.
 	"pages-framework-presets": defineCollection({
@@ -293,15 +284,13 @@ export const collections = {
 			pattern: "*.yaml",
 			base: "./src/content/pages-build-environment",
 		}),
-		schema: z
-			.object({
-				build_environment: z
-					.object({ operating_system: z.string(), architecture: z.string() })
-					.optional(),
-				languages: z.array(z.any()).default([]),
-				tools: z.array(z.any()).default([]),
-			})
-			.passthrough(),
+		schema: z.looseObject({
+			build_environment: z
+				.object({ operating_system: z.string(), architecture: z.string() })
+				.optional(),
+			languages: z.array(z.any()).default([]),
+			tools: z.array(z.any()).default([]),
+		}),
 	}),
 	// CF Stream video metadata (one <slug>/index.yaml per video). Read by the
 	// Stream component's `file` variant. Id is the directory slug. `products`
@@ -312,20 +301,18 @@ export const collections = {
 			base: "./src/content/stream",
 			generateId: ({ entry }) => entry.replace(/\/index\.(ya?ml)$/, ""),
 		}),
-		schema: z
-			.object({
-				id: z.string(),
-				title: z.string(),
-				url: z.string().optional(),
-				description: z.string().optional(),
-				transcript: z.string().optional(),
-				chapters: z.record(z.string(), z.string()).optional(),
-				thumbnail: z
-					.object({ url: z.string() })
-					.or(z.object({ timestamp: z.string() }))
-					.optional(),
-			})
-			.passthrough(),
+		schema: z.looseObject({
+			id: z.string(),
+			title: z.string(),
+			url: z.string().optional(),
+			description: z.string().optional(),
+			transcript: z.string().optional(),
+			chapters: z.record(z.string(), z.string()).optional(),
+			thumbnail: z
+				.object({ url: z.string() })
+				.or(z.object({ timestamp: z.string() }))
+				.optional(),
+		}),
 	}),
 	// CF WARP client releases — one YAML per release under
 	// `src/content/warp-releases/<os>/<track>/<version>.yaml`. The glob id is the
@@ -373,7 +360,7 @@ export const collections = {
 	),
 	// Workers AI model catalog — one JSON per model. Id is the filename
 	// (e.g. `llama-3.1-8b-instruct-fast`), which is also the per-model URL slug.
-	// Schema is permissive (passthrough) so the files validate as-is; only the
+	// Schema is permissive (loose) so the files validate as-is; only the
 	// fields the catalog/per-model pages read are declared. The big
 	// `schema.input`/`output` JSON-Schema blob is carried through untyped.
 	"workers-ai-models": defineCollection({
@@ -382,39 +369,33 @@ export const collections = {
 			base: "./src/content/workers-ai-models",
 			generateId: ({ entry }) => entry.replace(/\.json$/, ""),
 		}),
-		schema: z
-			.object({
-				id: z.string(),
+		schema: z.looseObject({
+			id: z.string(),
+			name: z.string(),
+			description: z.string(),
+			source: z.number().optional(),
+			task: z.looseObject({
+				id: z.string().optional(),
 				name: z.string(),
-				description: z.string(),
-				source: z.number().optional(),
-				task: z
-					.object({
-						id: z.string().optional(),
-						name: z.string(),
-						description: z.string().optional(),
-					})
-					.passthrough(),
-				tags: z.array(z.string()).default([]),
-				properties: z
-					.array(
-						z
-							.object({
-								property_id: z.string(),
-								value: z.any(),
-							})
-							.passthrough(),
-					)
-					.default([]),
-				schema: z.any().optional(),
-			})
-			.passthrough(),
+				description: z.string().optional(),
+			}),
+			tags: z.array(z.string()).default([]),
+			properties: z
+				.array(
+					z.looseObject({
+						property_id: z.string(),
+						value: z.any(),
+					}),
+				)
+				.default([]),
+			schema: z.any().optional(),
+		}),
 	}),
 	// Unified AI model catalog — one JSON per model. Id is the filename
 	// (e.g. `openai-tts-1`); the per-model URL slug is the `model_id`
 	// (e.g. `openai/tts-1`), NOT the filename. The resolver-read fields are
 	// declared (so JSON validates and reads never go `undefined`) and the object
-	// is `.passthrough()` so heavy/extra fields (full examples, code_snippets,
+	// is `.looseObject()` so heavy/extra fields (full examples, code_snippets,
 	// raw_response, etc.) carry through untyped.
 	"catalog-models": defineCollection({
 		loader: glob({
@@ -422,56 +403,54 @@ export const collections = {
 			base: "./src/content/catalog-models",
 			generateId: ({ entry }) => entry.replace(/\.json$/, ""),
 		}),
-		schema: z
-			.object({
-				// Identification
-				model_id: z.string(),
-				provider_id: z.string().nullable(),
-				name: z.string(),
+		schema: z.looseObject({
+			// Identification
+			model_id: z.string(),
+			provider_id: z.string().nullable(),
+			name: z.string(),
 
-				// Content
-				description: z.string(),
-				task: z.string(),
-				tags: z.string().array(),
+			// Content
+			description: z.string(),
+			task: z.string(),
+			tags: z.string().array(),
 
-				// Capabilities
-				context_length: z.number().nullable(),
-				max_output_tokens: z.number().nullable(),
-				supports_async: z.boolean(),
+			// Capabilities
+			context_length: z.number().nullable(),
+			max_output_tokens: z.number().nullable(),
+			supports_async: z.boolean(),
 
-				// Zero Data Retention (optional — older API rows omit it).
-				zdr: z.boolean().optional(),
-				zdr_comment: z.string().nullable().optional(),
+			// Zero Data Retention (optional — older API rows omit it).
+			zdr: z.boolean().optional(),
+			zdr_comment: z.string().nullable().optional(),
 
-				// In-page notice + request formats (optional/nullable).
-				banner: z.any().nullable().optional(),
-				request_formats: z.string().array().nullable().optional(),
+			// In-page notice + request formats (optional/nullable).
+			banner: z.any().nullable().optional(),
+			request_formats: z.string().array().nullable().optional(),
 
-				// Examples + snippets (required `examples`, optional rest).
-				examples: z.array(z.any()),
-				default_example: z.any().nullable().optional(),
-				code_snippets: z.array(z.any()).optional(),
+			// Examples + snippets (required `examples`, optional rest).
+			examples: z.array(z.any()),
+			default_example: z.any().nullable().optional(),
+			code_snippets: z.array(z.any()).optional(),
 
-				// JSON-Schema blob (input/output), carried through untyped.
-				schema: z
-					.object({
-						input: z.record(z.string(), z.unknown()).optional(),
-						output: z.record(z.string(), z.unknown()).optional(),
-					})
-					.optional(),
+			// JSON-Schema blob (input/output), carried through untyped.
+			schema: z
+				.object({
+					input: z.record(z.string(), z.unknown()).optional(),
+					output: z.record(z.string(), z.unknown()).optional(),
+				})
+				.optional(),
 
-				// Metadata & links
-				metadata: z.record(z.string(), z.unknown()),
-				external_info: z.string().nullable(),
-				terms: z.string().nullable(),
-				cover_image_url: z.string().nullable(),
-				schema_version: z.string().nullable(),
-				private: z.boolean().optional(),
+			// Metadata & links
+			metadata: z.record(z.string(), z.unknown()),
+			external_info: z.string().nullable(),
+			terms: z.string().nullable(),
+			cover_image_url: z.string().nullable(),
+			schema_version: z.string().nullable(),
+			private: z.boolean().optional(),
 
-				// Timestamps
-				created_at: z.string().optional(),
-				updated_at: z.string().optional(),
-			})
-			.passthrough(),
+			// Timestamps
+			created_at: z.string().optional(),
+			updated_at: z.string().optional(),
+		}),
 	}),
 };

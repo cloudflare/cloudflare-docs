@@ -15,25 +15,31 @@ import { Render } from "~/components";
 
 Custom hostname certificates have a 90-day validity period and are available for renewal 30 days before their expiration.
 
-For normal Automated Certificate Management Environment (ACME) renewals, Cloudflare preserves the configured validation method. You can explicitly change the method through the API or with an administrator action. Other certificate authority renewal workflows, such as DigiCert, may differ.
+The validation method selected when you create a custom hostname applies to initial certificate issuance. During an Automated Certificate Management Environment (ACME) renewal, Cloudflare selects a method based on the hostname's current configuration and eligibility.
+
+You can explicitly change the method through the API. DigiCert uses a separate renewal workflow.
 
 ## HTTP validation
 
 Cloudflare can automatically renew a custom hostname certificate through [HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) when all these conditions are true:
 
-- The custom hostname uses `ssl.method: http`.
 - The custom hostname is not a wildcard.
 - The hostname is active.[^1]
 - The hostname points to the SaaS provider.
 - The hostname traffic is proxied through Cloudflare.
+- The hostname does not use [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/).
 
-If the hostname is not eligible for automatic HTTP validation, the domain owner must make the current HTTP DCV token available. As the SaaS provider, you must share this token with the domain owner.
+Cloudflare may use HTTP validation even if you selected TXT for initial issuance.
+
+If automatic HTTP validation is unavailable, retrieve the custom hostname's current `ssl.method` and `ssl.validation_records`. Share the required HTTP or TXT records with the domain owner.
 
 ## TXT validation
 
-Custom hostnames configured with `ssl.method: txt` continue to use [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) for renewal. For manual TXT validation, share each certificate order's current DCV tokens with the domain owner. With [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/), Cloudflare automatically places the TXT DCV tokens.
+Wildcard hostnames cannot use HTTP validation. They must use [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 
-Wildcard hostnames cannot use HTTP validation. They must use TXT validation.
+Non-wildcard hostnames with properly configured [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) also remain TXT-based. Keep the delegation CNAME record in place for future renewals.
+
+For manual TXT validation, use each certificate order's current `ssl.validation_records`. These records can change between certificate orders.
 
 <Render file="txt-validation_preamble" product="cloudflare-for-platforms" />
 

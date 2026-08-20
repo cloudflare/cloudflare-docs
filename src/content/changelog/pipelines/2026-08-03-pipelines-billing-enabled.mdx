@@ -13,7 +13,7 @@ Pipelines charges based on two usage dimensions. Ingress into a Pipeline stream 
 - **SQL transforms**: $0.04 / GB for stateless transforms (filter, reshape, unnest, cast, compute).
 - **Sinks (egress)**: $0.03 / GB for JSON output, $0.06 / GB for Parquet or Iceberg output.
 
-Workers Paid plans include 50 GB / month for both SQL transforms and sinks. Standard [R2 storage and operations](/r2/pricing/) charges apply for data written to R2 buckets, and [R2 Data Catalog](/r2/data-catalog/platform/pricing/) charges apply when writing to Iceberg tables.
+Workers Paid plans include 50 GB / month for both SQL transforms and sinks. Standard [R2 storage and operations](/r2/pricing/) charges apply for data written to R2 buckets, and [R2 Data Catalog](/r2-data-catalog/platform/pricing/) charges apply when writing to Iceberg tables.
 
 For example, a pipeline that ingests 500 GB of event data per month, uses a SQL transform to filter and reshape it, and writes 300 GB to an R2 Data Catalog Iceberg table would be billed as follows:
 

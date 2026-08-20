@@ -26,9 +26,9 @@ Generally, you should use TXT-based DCV when you cannot use [HTTP validation](/c
 
 ### Non-wildcard custom hostnames
 
-Custom hostnames configured with `ssl.method: txt` use TXT validation for issuance and normal ACME renewals. For more information about renewal behavior, refer to [Renew certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/renew-certificates/).
+Selecting `ssl.method: txt` uses TXT validation for initial certificate issuance. During an Automated Certificate Management Environment (ACME) renewal, Cloudflare may use automatic HTTP validation for an eligible non-wildcard hostname.
 
-With manual TXT validation, share each certificate order's current DCV tokens with your customer. [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) automates TXT token placement after the customer creates the required delegation record.
+Hostnames with properly configured [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) remain TXT-based. Keep the delegation CNAME record in place for future renewals. With manual TXT validation, share each certificate order's current DCV tokens with your customer. For more information, refer to [Renew certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/renew-certificates/).
 
 ### Wildcard custom hostnames
 

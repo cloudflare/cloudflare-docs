@@ -1,8 +1,7 @@
 import { getCollection } from "astro:content";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { loadRenderers } from "astro:container";
-import { getContainerRenderer as getMdxRenderer } from "@astrojs/mdx";
-import { getContainerRenderer as getReactRenderer } from "@astrojs/react";
+import reactRenderer from "@astrojs/react/server.js";
+import mdxRenderer from "@astrojs/mdx/server.js";
 import { getHeadingsFromHtml, type Heading } from "@cloudflare/nimbus-docs";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
@@ -71,10 +70,15 @@ export async function scrapeRenderedHeadings(
 	Content: AstroComponentFactory,
 	components: Record<string, unknown>,
 ): Promise<Heading[]> {
-	containerPromise ??= loadRenderers([
-		getMdxRenderer(),
-		getReactRenderer(),
-	]).then((renderers) => AstroContainer.create({ renderers }));
+	containerPromise ??= (async () => {
+		const container = await AstroContainer.create({});
+		container.addServerRenderer({ name: "astro:jsx", renderer: mdxRenderer });
+		container.addServerRenderer({
+			name: "@astrojs/react",
+			renderer: reactRenderer,
+		});
+		return container;
+	})();
 	const html = await (
 		await containerPromise
 	).renderToString(Content, { props: { components } });

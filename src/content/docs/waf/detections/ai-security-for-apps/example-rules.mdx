@@ -58,7 +58,7 @@ A financial services application legitimately handles credit card and bank accou
 - **When incoming requests match**:
 
   Enter the following expression in the editor:<br />
-  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "US_BANK_NUMBER" "IBAN_CODE"}) and ip.src.asnum ne 13335)`
+  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD" "BANK_ACCOUNT"}) and ip.src.asnum ne 13335)`
 
   Replace `13335` with your organization's ASN.
 

@@ -1,6 +1,6 @@
 name: Refresh PR Outdated Checks
 
-# **What it does**: Posts a Outdated PR Check commit status for every open PR once a day
+# **What it does**: Posts Outdated PR Check commit statuses for every open PR once a day
 #                   (~4am CT), including fork PRs. Catches PRs that go stale when production
 #                   advances without any PR activity.
 # **Why we have it**: The per-commit check (outdated-pr-check.yml) only runs when a PR is

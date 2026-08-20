@@ -22,6 +22,9 @@ import { entryToString } from "~/util/container";
 import { marked } from "marked";
 import { sub } from "date-fns";
 
+export const slugifyArea = (value: string) =>
+	value.replaceAll(" ", "-").toLowerCase();
+
 // Synthesize changelog entries from the `warp-releases` collection, attributed
 // to the `cloudflare-one-client` product. Ported from CF's
 // `getWARPReleases()`; logic verbatim (entries carry a precomputed

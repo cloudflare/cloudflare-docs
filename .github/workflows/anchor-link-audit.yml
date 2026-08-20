@@ -29,16 +29,8 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
-
-      - name: Install node_modules (cache miss)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - run: pnpm run build
         env:
@@ -63,13 +55,6 @@ jobs:
         run: |
           ./bin/htmltest -c ./bin/.htmltest.yml 2>&1 | grep -v "#_top" | tee /tmp/htmltest-filtered.txt || true
           if grep -q "hash does not exist" /tmp/htmltest-filtered.txt; then exit 1; fi
-
-      - name: Save node_modules cache
-        if: always()
-        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Create issue on failure
         if: ${{ failure() }}
