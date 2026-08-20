@@ -247,7 +247,7 @@ Key behaviors:
 
 - **Blocking modes cannot nest.** Calling `wait`/`stream`/`continuation` (or the equivalent shortcut) from _inside_ an active turn — for example, from a tool's `execute` — throws, because it would deadlock the turn queue. From inside a turn, use `runTurn({ mode: "submit" })` (durable, runs after the current turn frees the queue) or [`addMessages()`](#add-messages-without-a-turn) (transcript only, no inference).
 - **`submit` is idempotent.** Pass `submissionId` and/or `idempotencyKey`; re-submitting a known key returns the existing record with `accepted: false` instead of starting a second turn. See [Programmatic submissions](/agents/harnesses/think/programmatic-submissions/).
-- **Recovery-safe.** When `chatRecovery` is enabled, the `wait`, `stream`, and drained `submit` paths all run inference inside a recovery fiber, so an interrupted turn resumes after eviction.
+- **Recovery-safe.** The `wait`, `stream`, and drained `submit` paths run inference inside a recovery fiber, so an interrupted turn resumes after eviction.
 
 `runTurn` is exported alongside its option and result types: `RunTurnOptions`, `RunTurnWait`, `RunTurnSubmit`, `RunTurnStream`, `TurnInputMessages`, and `TurnResult`.
 

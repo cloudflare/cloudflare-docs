@@ -20,7 +20,7 @@ The 2.0 design principle is **trusted code drives; the model only reasons.** Con
 
 | Workflow (class)                                                           | Binding               | Role                                                                                                                                      |
 | -------------------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `ReviewOrchestrator` (`cloudflare.ts`)                                     | `REVIEW_ORCHESTRATOR` | The code-review pipeline: guards → gather-context → placeholder → 3 concurrent specialist steps → reconcile → publish → mark-auto-review. |
+| `ReviewOrchestrator` (`cloudflare.ts`)                                     | `REVIEW_ORCHESTRATOR` | The code-review pipeline: guards → gather-context → placeholder → 3 concurrent specialist steps → reconcile → validate-findings → publish → mark-auto-review. |
 | `IngestWorkflow` (`orchestrators/ingest-workflow.ts`)                      | `INGEST`              | Spam/off-topic gate for issues + non-Dependabot PRs; kicks `REVIEW_ORCHESTRATOR` for a clean non-draft PR.                                |
 | `DependabotReviewWorkflow` (`orchestrators/dependabot-review-workflow.ts`) | `DEPENDABOT_REVIEW`   | Separate review path for Dependabot PRs.                                                                                                  |
 | `RebaseWorkflow` (`orchestrators/rebase-workflow.ts`)                      | `REBASE`              | The `/rebase` command: GitHub update-branch, AI-assisted conflict resolution, then re-trigger a full review.                              |
@@ -37,6 +37,7 @@ Each agent is a `"use agent"` module whose default-export function uses hooks (`
 | `style-guide-file.ts`         | style-guide-file         | FlueStyleGuideFileAgent         | run-style-guide.ts        |
 | `conventions-reviewer.ts`     | conventions-reviewer     | FlueConventionsReviewerAgent    | run-conventions-review.ts |
 | `reconcile-reviewer.ts`       | reconcile-reviewer       | FlueReconcileReviewerAgent      | run-reconcile.ts          |
+| `review-validator.ts`      | review-validator          | FlueReviewValidatorAgent        | run-review-validation.ts   |
 | `spam-filter.ts`              | spam-filter              | FlueSpamFilterAgent             | run-spam-filter.ts        |
 | `dependabot-reviewer.ts`      | dependabot-reviewer      | FlueDependabotReviewerAgent     | run-dependabot-review.ts  |
 | `rebase-conflict-resolver.ts` | rebase-conflict-resolver | FlueRebaseConflictResolverAgent | run-rebase-conflict.ts    |
@@ -57,7 +58,8 @@ Every agent returns its result through exactly **one** Valibot-typed `submit_<na
    - **gather-context** — fetch PR + comments; decide the **diff mode** (incremental from the last reviewed head SHA when a prior review exists, else full). `/full-review` wipes prior `review-*.json` so reconcile starts fresh.
    - **placeholder-comment** (comment mode only).
    - three **concurrent specialist steps** (`code-review`, `style-guide`, `conventions`): each self-fetches its diff (`fetchFilesForDiffMode`, incremental→full self-heal), selects files, and drives its agent(s). Any failure degrades to `{ ok: false }` — prior findings are carried forward rather than reconciled, so a degraded stream never falsely resolves findings.
-   - **reconcile** — per stream, current findings against the previous review (from R2; a legacy bare array means style-only) and the human comments posted since. Conventions always reconciles in full-diff mode. Persists `review-<headSha>.json` (`{ code, style, conventions }`).
+   - **reconcile** — per stream, current findings against the previous review (from R2; a legacy bare array means style-only) and the human comments posted since. Conventions always reconciles in full-diff mode. Does NOT persist — persistence moves to the validation step.
+   - **validate-findings** — validates active findings from each stream using a more capable model (GLM-5.2) with repo-read tools (`read_repo_file`, `search_repo`). Suppresses false positives. Fail-open on any error — all findings are kept if validation fails. Degraded streams (specialist failed) skip validation. Persists `review-<headSha>.json` (`{ code, style, conventions }`) after validation, so only validated findings are carried forward.
    - **publish** — head-guard (skip if a newer push owns the comment) + comment-mode idempotency-guard (skip if this head is already finalized unless the comment is pending/failure), render, post or log, swap 👀→👍 on the trigger comment.
    - **mark-auto-review** — consume an auto-review slot when code + style both succeeded on an automatic run.
 4. `DependabotReviewWorkflow`: fetch PR + parse bumped packages → placeholder (comment mode) → drive the dependabot agent (degrade to a failure comment on error) → render + post/log + 👀→👍.
@@ -75,7 +77,7 @@ Code review and style-guide review fan out **one agent instance per changed file
 - **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […], conventions: […] }`; a legacy bare array means style-only), `auto-review-count.json`, `ignore-review-limit.json`, `auto-review-disabled.json`. There is **no rendezvous namespace** in 2.0 — Workflow step durability replaced the R2 finalize lock, and the diff is staged in agent memory / delivered via tools rather than R2.
 - The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
 - `lib/code-review-render.ts` renders the single comment under a `## Review` heading: a status line, a collapsed "Fix in your agent" prompt block (only when there is an active finding), then `### Code Review`, `### Conventions`, `### Style Guide Review`, an "Acknowledged by author" block, and a Commands block. Findings are tables only; there are no inline review comments. It also renders the `/rebase` status line (`renderRebaseStatusUpdate`).
-- **Models**: all model calls (reviews and reconciliation) use `cloudflare/@cf/moonshotai/kimi-k2.7-code`.
+- **Models**: specialist and reconciliation model calls use `cloudflare/@cf/moonshotai/kimi-k2.7-code`. The validation step uses `cloudflare/@cf/zai-org/glm-5.2`.
 - **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
 
 ### Slash commands (codeowner-only, commented on a PR)
@@ -93,7 +95,7 @@ Handled inline in `lib/pipeline-entry.ts`. Authorization is `getInstallationToke
 ### Bindings & migrations (`wrangler.jsonc`)
 
 - Bindings: `AI` (Workers AI), `DOCS_FLUE_BUCKET` (R2), and four `[[workflows]]` (`REVIEW_ORCHESTRATOR`, `INGEST`, `DEPENDABOT_REVIEW`, `REBASE`). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`. `GITHUB_WEBHOOK_SECRET` and `GITHUB_ORG_TOKEN` (read:org, for codeowner checks) are required secrets.
-- DO migrations: v1–v9 are the 0.11 history (kept so already-deployed workers migrate in order). **v10** is the Flue 2.0 reset: it deletes the retired `FlueRegistry` plus all nine 0.11 workflow DO classes and creates the **seven** per-agent SQLite DO classes the 2.0 build binds (`Flue<PascalCase(agentName)>Agent`). Every agent DO binding is created by v10. Validate the whole config with `wrangler deploy --dry-run --config dist/cloudflare_docs_flue/wrangler.json`.
+- DO migrations: v1–v9 are the 0.11 history (kept so already-deployed workers migrate in order). **v10** is the Flue 2.0 reset: it deletes the retired `FlueRegistry` plus all nine 0.11 workflow DO classes and creates the **seven** per-agent SQLite DO classes the 2.0 build binds (`Flue<PascalCase(agentName)>Agent`). **v11** adds the `FlueReviewValidatorAgent` DO class. Every agent DO binding is created by v10/v11. Validate the whole config with `wrangler deploy --dry-run --config dist/cloudflare_docs_flue/wrangler.json`.
 
 ### Roles, build config, and dev/deploy scripts
 
@@ -188,5 +190,6 @@ The `evals` job in `.github/workflows/flue-ci.yml` starts the dev server, runs e
 | `spam-filter`          | `spam-filter.eval.ts` | Spam issue flag, legit typo report pass, support request off-topic flag, sparse PR with real diff pass       |
 | `reconcile-reviewer`   | `reconcile.eval.ts`   | Resolved finding, ignored-by-author, incremental carry-forward, weak comment stays active                    |
 | `code-review-file`     | `code-review.eval.ts` | Unhandled promise flag (asserts rule/severity/path/line), no false-positive on clean error handling          |
+| `review-validator`     | `review-validation.eval.ts` | Valid finding kept (unhandled promise), false positive suppressed (proper error handling), style false positive suppressed (img in code block) |
 
 Not yet covered: `dependabot-reviewer` and `rebase-conflict-resolver` (need GitHub/npm tool fixtures or credentials).

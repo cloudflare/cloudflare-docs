@@ -4,7 +4,7 @@
    applied, so the explicit role is required to preserve list semantics
    for screen reader users. */
 /* eslint-disable astro/jsx-a11y/no-redundant-roles */
-import { Icon as AstroIcon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 ---
 
 <figure
@@ -16,7 +16,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card client-card">
 				<div class="node-header">
 					<span class="node-icon client-icon" aria-hidden="true"
-						><AstroIcon name="warp-client" /></span
+						><Icon name="warp-client" /></span
 					>
 					<a
 						class="node-title"
@@ -39,7 +39,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card gateway-card">
 				<div class="node-header">
 					<span class="node-icon gateway-icon" aria-hidden="true"
-						><AstroIcon name="gateway" /></span
+						><Icon name="gateway" /></span
 					>
 					<a class="node-title" href="/cloudflare-one/traffic-policies/"
 						>Cloudflare Gateway</a
@@ -63,7 +63,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card tunnel-card">
 				<div class="node-header">
 					<span class="node-icon tunnel-icon" aria-hidden="true"
-						><AstroIcon name="tunnel" /></span
+						><Icon name="tunnel" /></span
 					>
 					<a
 						class="node-title"
@@ -86,7 +86,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card host-card">
 				<div class="node-header">
 					<span class="node-icon host-icon" aria-hidden="true"
-						><AstroIcon name="dns" /></span
+						><Icon name="dns" /></span
 					>
 					<span class="node-title">Private host</span>
 				</div>

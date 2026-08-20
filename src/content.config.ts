@@ -245,12 +245,6 @@ export const collections = {
 			})
 			.strict(),
 	}),
-	// CF plans data (single index.json). Read by FeatureTable + ProductFeatures
-	// via getEntry("plans", "index"). Untyped — the shape is a deep nested
-	// object addressed by dot-path id, so the schema is left permissive.
-	plans: defineCollection({
-		loader: glob({ pattern: "*.json", base: "./src/content/plans" }),
-	}),
 	// CF Pages framework presets (single index.yaml). Read by PagesBuildPreset.
 	"pages-framework-presets": defineCollection({
 		loader: glob({

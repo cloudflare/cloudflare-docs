@@ -161,6 +161,13 @@
 				"FlueStyleGuideFileAgent",
 			],
 		},
+		{
+			// v11: Add the review-validator agent DO class. The validation step
+			// runs after reconcile and before publish, using GLM-5.2 to suppress
+			// false-positive findings from the specialist agents.
+			"tag": "v11",
+			"new_sqlite_classes": ["FlueReviewValidatorAgent"],
+		},
 	],
 	// Explicitly empty crons list so wrangler clears any previously registered
 	// cron triggers on deploy (an absent triggers key leaves existing ones intact).

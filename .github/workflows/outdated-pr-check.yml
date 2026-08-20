@@ -1,6 +1,6 @@
 name: Outdated PR Check
 
-# **What it does**: Posts an Outdated PR Check commit status when a PR is opened or updated.
+# **What it does**: Posts Outdated PR Check commit statuses when a PR is opened or updated.
 #                   Fails if the branch is more than 24 hours out of date with production.
 # **Why we have it**: Gives contributors immediate feedback when their branch has drifted.
 #                     The daily refresh job (outdated-pr-refresh.yml) catches PRs that go
