@@ -1,0 +1,31 @@
+package.json
+  s_d161f87b820022::t_db74905eb4e486 46
+astro.config.ts
+  s_4418c5236c257c::t_b7ab26e6b8e339 280
+pnpm-lock.yaml
+  s_4418c5236c257c::t_4f0cf14824e14d 26-28,466-471,546-548,600-602,820-826,4460-4464,6211-6235,6305-6315,6443-6444,6690-6702,10880-10891
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "69ee7c0cf2247aa37a922e178c234c12ca154a77",
+  "prompts": {},
+  "sessions": {
+    "s_4418c5236c257c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb483-bcd4-7c01-a493-49206da8167c",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_d161f87b820022": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faa1d-271a-7160-954d-964de4f79c0f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}
