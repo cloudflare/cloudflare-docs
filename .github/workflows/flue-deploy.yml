@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: github.repository == 'cloudflare/cloudflare-docs'
+    if: github.repository == 'cloudflare/cloudflare-docs' && (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/production')
     name: Deploy
     runs-on: ubuntu-latest
     permissions:
