@@ -133,7 +133,7 @@ If you have a running session and want to connect to it:
 
 ## Generate a Live View URL
 
-Listing targets returns a `devtoolsFrontendUrl` for every tab, using default settings. To pick a viewing mode, extend the expiry, or restrict what the recipient can do, generate a custom Live View URL using either the REST API or CDP.
+Listing targets returns a `devtoolsFrontendUrl` for every tab, using [default settings](#live-view-parameters). To pick a viewing mode, extend the expiry, or restrict what the recipient can do, generate a custom Live View URL using either the REST API or CDP.
 
 ### REST API
 
@@ -151,14 +151,16 @@ Use the `live_view` endpoint to generate a Live View URL:
 	}}
 />
 
-| Parameter    | Type     | Description                                                                                      |
-| ------------ | -------- | ------------------------------------------------------------------------------------------------ |
-| `mode`       | `string` | Viewing mode: `devtools`, `tab`, or `full`. Default is `devtools`.                               |
-| `expiresInMs`| `number` | How long the URL stays valid, in milliseconds. Default is 5 minutes, maximum is 1 hour.          |
-| `targetId`   | `string` | Target (tab) to view. If omitted, the first active target is used.                               |
-| `guardrails` | `object` | Restrictions for the viewer. Set `{ "mode": "readonly" }` for a view-only link.                  |
+#### Live View parameters
 
-All parameters are optional. The response contains a `devtoolsFrontendUrl` to open in a browser or embed in an iframe, and a `webSocketDebuggerUrl` for programmatic CDP access.
+| Parameter    | Type     | Default              | Description                                                            |
+| ------------ | -------- | -------------------- | ---------------------------------------------------------------------- |
+| `mode`       | `string` | `devtools`           | Viewing mode: `devtools`, `tab`, or `full`.                            |
+| `expiresInMs`| `number` | `300000` (5 minutes) | How long the URL stays valid, in milliseconds. Maximum is 1 hour.      |
+| `targetId`   | `string` | First active target  | Target (tab) to view.                                                  |
+| `guardrails` | `object` | None                 | Restrictions for the viewer. Set `{ "mode": "readonly" }` for view-only. |
+
+All parameters are **optional**. The response contains a `devtoolsFrontendUrl` to open in a browser or embed in an iframe, and a `webSocketDebuggerUrl` for programmatic CDP access.
 
 ### Share a view-only link
 

@@ -63,7 +63,7 @@ const browser = await launch(env.MYBROWSER, {
 
 | Property            | Type       | Description                                                   |
 | ------------------- | ---------- | ------------------------------------------------------------- |
-| `allowedDomains`    | `string[]` | Hostname patterns the browser can reach. Maximum 50 entries.  |
+| `allowedDomains`    | `string[]` | Hostname patterns the browser may reach. Maximum 50 entries.  |
 | `allowedDomainSets` | `string[]` | Preset names or URLs of hostname lists. Maximum four entries. |
 
 Both are optional and are combined into a single allowlist. Omitting both leaves the session unrestricted. See [Deny all outbound traffic](#deny-all-outbound-traffic) for the empty-array case.
