@@ -1,7 +1,7 @@
 ---
 title: Custom bindings
-pcx_content_type: concept
-description: Place a Platform Worker in front of R2 or D1 to enforce policy before operations reach the resource.
+pcx_content_type: how-to
+description: Place a Platform Worker in front of D1 to enforce policy before queries reach the database.
 sidebar:
   order: 6
 products:
@@ -10,209 +10,81 @@ tags:
   - Bindings
 ---
 
-import { TypeScriptExample, CustomBindingsDiagram } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	CustomBindingsDiagram,
+	Tabs,
+	TabItem,
+} from "~/components";
 
-A custom binding places a platform-owned Worker in front of a resource such as [R2](/r2/) or [D1](/d1/). The User Worker calls the binding through `env` like any other binding, but the call routes to your Platform Worker instead of the resource directly.
+## Overview
 
-This lets you enforce quota, rate limits, permissions, validation, logging, and other policy controls before operations reach the underlying resource.
+A custom binding places a platform-owned Worker in front of a resource. The [User Worker](/cloudflare-for-platforms/workers-for-platforms/) calls the binding through `env` like any other binding, but the call routes to your Platform Worker instead of the resource directly.
+
+This lets you enforce quota, rate limits, permissions, validation, and logging before an operation reaches the underlying resource. The User Worker's code stays the same.
+
+Custom bindings are a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) feature. This page covers custom bindings for [D1](/d1/).
 
 ## How it works
 
-A custom binding has three parts:
+A custom D1 binding has three parts:
 
-- **Platform Worker** — Your Worker that exports a `WorkerEntrypoint` class. This is where you define the methods (for example, `get`, `put`, `delete`) or hooks (for example, `query`) that the User Worker can call.
-- **User Worker** — Your customer's Worker. It calls the binding through `env` and does not need to know that a Platform Worker sits in between.
-- **Binding configuration** — A [service binding](/workers/runtime-apis/bindings/service-bindings/) in the User Worker's upload metadata that routes the binding name (for example, `SITE_BUCKET` or `DB`) to your Platform Worker. You pass the real resource and policy values through `props`.
+- **Platform Worker** — Your Worker that exports a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) class with a `query()` method. This is where you inspect, log, limit, or reject each database operation.
+- **User Worker** — Your customer's Worker. It uses the standard [D1 API](/d1/worker-api/) and does not need to know that a Platform Worker sits in between.
+- **Binding configuration** — A [service binding](/workers/runtime-apis/bindings/service-bindings/) in the User Worker that routes the `DB` binding to your Platform Worker. You pass the real database and any policy values through [`props`](/workers/runtime-apis/context/#props).
+
+When the User Worker runs a query, the D1 binding serializes it and calls your Platform Worker's `query()` method over [RPC](/workers/runtime-apis/rpc/). Your Platform Worker inspects the query, then either rejects it or forwards it to the real database.
 
 <CustomBindingsDiagram />
 
-The Platform Worker can be a standalone Worker, or you can define the entrypoint in your [dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/).
-
 The `props` passed through the binding configuration are trusted, platform-owned values. The User Worker cannot read or change them.
 
-## R2 custom binding
+The steps below walk through each part in order. The [full code example](#full-code-example) at the end of this page combines them into a project you can deploy and run.
 
-R2 does not provide a configurable per-bucket storage quota that automatically rejects new writes after a threshold while continuing to allow reads and deletes.
+## Get started
 
-Use a custom binding to put a Platform Worker in front of the R2 bucket. The Platform Worker can enforce quota, validate input, and log operations before writes reach the bucket.
+### Prerequisites
 
-### Platform Worker
+- A [Cloudflare account](/fundamentals/account/create-account/).
+- [Wrangler](/workers/wrangler/install-and-update/) installed.
+- A D1 database. If you do not have one, follow the [D1 getting started guide](/d1/get-started/) to create and populate a database. The examples below query the `Customers` table from that guide.
 
-Export a `WorkerEntrypoint` class that wraps R2 operations. This example enforces a byte-level storage quota on `put` while passing `get` and `delete` through directly.
+### 1. Create the Platform Worker
 
-```js title="r2-wrapper-worker.js"
-import { WorkerEntrypoint } from "cloudflare:workers";
+Create a Worker that exports a `WorkerEntrypoint` class with a `query()` method. The D1 binding calls this method for every database operation the User Worker runs.
 
-export class CappedR2Bucket extends WorkerEntrypoint {
-	async get(key) {
-		return this.ctx.props.BUCKET.get(key);
-	}
+Inside `query()`, you can read your trusted `props`, inspect the incoming SQL, and decide what to do. To forward a query to the real database, call `query()` on the D1 binding you passed through `props`.
 
-	async delete(key) {
-		return this.ctx.props.BUCKET.delete(key);
-	}
+This example logs each query, checks a rate limit, and rejects `DELETE` statements before forwarding the rest to D1.
 
-	async put(key, value, options = {}) {
-		const bucket = this.ctx.props.BUCKET;
-		const usage = this.ctx.props.USAGE_COUNTER;
-		const maxBytes = this.ctx.props.MAX_BYTES;
-
-		const newSize = options.size;
-
-		if (typeof newSize !== "number") {
-			throw new Error("MISSING_OBJECT_SIZE");
-		}
-
-		const currentUsage = await usage.get();
-
-		if (currentUsage + newSize > maxBytes) {
-			throw new Error("BUCKET_QUOTA_EXCEEDED");
-		}
-
-		await usage.add(newSize);
-
-		try {
-			return await bucket.put(key, value, options);
-		} catch (err) {
-			await usage.subtract(newSize);
-			throw err;
-		}
-	}
-}
-```
-
-### User Worker
-
-The User Worker calls `env.SITE_BUCKET` like a normal binding. It does not need to know that a Platform Worker handles the call.
-
-```js title="user-worker.js"
-export default {
-	async fetch(request, env) {
-		await env.SITE_BUCKET.put("foo.txt", "hello world", {
-			size: 11,
-		});
-
-		const object = await env.SITE_BUCKET.get("foo.txt");
-
-		return new Response(object.body);
-	},
-};
-```
-
-### Wire the binding
-
-When you upload the User Worker, attach the Platform Worker as a service binding. Use `props` to pass the R2 bucket, the usage counter service, and the storage limit.
-
-```json
-{
-	"bindings": [
-		{
-			"type": "service",
-			"name": "SITE_BUCKET",
-			"service": "r2-wrapper-worker",
-			"entrypoint": "CappedR2Bucket",
-			"props": {
-				"BUCKET": {
-					"$binding": {
-						"type": "r2_bucket",
-						"bucket_name": "<R2_BUCKET_NAME>"
-					}
-				},
-				"USAGE_COUNTER": {
-					"$binding": {
-						"type": "service",
-						"service": "usage-counter-worker",
-						"entrypoint": "UsageCounter"
-					}
-				},
-				"MAX_BYTES": 10737418240
-			}
-		}
-	]
-}
-```
-
-You can use `props` to pass values like:
-
-- The R2 bucket for a specific site
-- The usage counter for a specific site
-- The maximum storage limit
-- The customer ID
-
-## D1 custom binding
-
-D1 does not provide a built-in, real-time mechanism for platform operators to intercept and control database operations before they execute.
-
-A custom D1 binding places a Platform Worker in front of D1. The Platform Worker implements a `query()` hook that inspects, logs, limits, or rejects each database operation. The User Worker's D1 code remains unchanged.
-
-This lets you:
-
-- Track and limit usage per tenant
-- Rate-limit in-flight queries per tenant
-- Enforce inline policies (for example, cap row limits or block destructive statements)
-- Debug and audit live query data
-
-### D1 binding interface
-
-The `QueryParams` and `QueryResult` interfaces used by the `query()` method are shown below. These types live in the D1 worker codebase and will move to the [workerd](https://github.com/cloudflare/workerd) repository alongside the other Workers runtime types.
-
-<TypeScriptExample>
-
-```ts
-export interface QueryParamStatement {
-	sql: string;
-	params?: any[];
-}
-
-export interface QueryParams {
-	statements: QueryParamStatement[];
-}
-
-export interface StatementMeta {
-	rows_read: number;
-	rows_written: number;
-	duration: number;
-}
-
-export interface StatementResult {
-	meta: StatementMeta;
-}
-
-export interface QueryResult {
-	success: boolean;
-	error?: Error;
-	results?: {
-		statementResults: StatementResult[];
-	};
-}
-```
-
-</TypeScriptExample>
-
-### Platform Worker
-
-Export a `WorkerEntrypoint` class with a `query()` method. The D1 binding calls this method for every D1 operation.
-
-This example logs query metadata, checks a rate limit, blocks `DROP` statements, and records row metrics after the query completes.
-
-<TypeScriptExample filename="d1-platform-worker.ts">
+<TypeScriptExample filename="platform-worker/src/index.ts">
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
+import type { QueryRequest, QueryResponse, D1BindingService } from "./binding-types";
 
-export class D1CustomBinding extends WorkerEntrypoint {
-	async query(params: QueryParams): Promise<QueryResult> {
+// The D1 binding you pass through props is a real D1Database that also
+// exposes the query() method used to forward operations.
+interface D1Binding extends D1Database, D1BindingService {}
+
+interface Props {
+	TENANT_ID: string;
+	D1: D1Binding;
+}
+
+export class D1CustomBinding extends WorkerEntrypoint<Env, Props> {
+	async query(params: QueryRequest): Promise<QueryResponse> {
 		const tenantId = this.ctx.props.TENANT_ID;
 
-		// ── Pre-query: log, rate-limit, enforce policy ────────────
-
+		// Pre-query: log the operation.
 		console.log("D1 query intercepted", {
 			tenantId,
-			statementCount: params.statements.length,
-			queries: params.statements.map((s) => s.sql),
+			statementCount: params.queries.length,
+			queries: params.queries.map((q) => q.sql),
 		});
 
-		// Rate limiting
+		// Enforce a rate limit.
 		const allowed = await this.checkRateLimit(tenantId);
 		if (!allowed) {
 			return {
@@ -221,129 +93,235 @@ export class D1CustomBinding extends WorkerEntrypoint {
 			};
 		}
 
-		// Block destructive operations
-		for (const stmt of params.statements) {
-			if (stmt.sql.trim().toUpperCase().startsWith("DROP")) {
+		// Reject destructive statements.
+		for (const stmt of params.queries) {
+			if (stmt.sql.trim().toUpperCase().startsWith("DELETE")) {
 				return {
 					success: false,
-					error: new Error("DROP statements are not permitted"),
+					error: new Error("DELETE statements are not permitted"),
 				};
 			}
 		}
 
-		// ── Forward to real D1 ────────────────────────────────────
-
-		const result = await this.ctx.props.D1.query(params);
-
-		// ── Post-query: record metrics ────────────────────────────
-
-		if (result.success) {
-			const totalRowsRead = result.results.statementResults.reduce(
-				(sum, sr) => sum + sr.meta.rows_read,
-				0,
-			);
-			const totalRowsWritten = result.results.statementResults.reduce(
-				(sum, sr) => sum + sr.meta.rows_written,
-				0,
-			);
-			console.log("D1 query completed", {
-				tenantId,
-				rowsRead: totalRowsRead,
-				rowsWritten: totalRowsWritten,
-				duration: result.results.statementResults[0]?.meta.duration,
-			});
-		}
-
-		return result;
+		// Forward the query to the real database.
+		return this.ctx.props.D1.query(params);
 	}
 
 	private async checkRateLimit(tenantId: string): Promise<boolean> {
-		// Implement with Durable Objects, KV, or external service
+		// Implement with Durable Objects, KV, or an external service.
 		return true;
 	}
 }
-```
 
-</TypeScriptExample>
-
-To avoid adding latency, use `console.log()` for structured output and attach a [Tail Worker](/workers/observability/logs/tail-workers/) to forward logs to an analytics pipeline or [Analytics Engine](/analytics/analytics-engine/) asynchronously.
-
-### User Worker (no changes)
-
-The User Worker uses the standard [D1 API](/d1/worker-api/). It does not need to know that `DB` routes through your Platform Worker. This includes `batch()` operations — they work like any other query.
-
-```js title="user-worker.js"
 export default {
-	async fetch(request, env) {
-		const users = await env.DB.prepare(
-			"SELECT name, email FROM users WHERE org_id = ?",
-		)
-			.bind(42)
-			.all();
-
-		return Response.json(users.results);
+	fetch() {
+		throw new Error("unimplemented");
 	},
 };
 ```
 
-The User Worker must be uploaded with the `d1_binding_jsrpc` compatibility flag. This tells the runtime to route D1 calls through your Platform Worker instead of directly to D1.
+</TypeScriptExample>
 
-```json
+The `query()` method receives a `QueryRequest` and returns a `QueryResponse`. These types define the contract between the D1 binding and your Platform Worker. Add them to your project as `binding-types.ts`.
+
+<TypeScriptExample filename="platform-worker/src/binding-types.ts">
+
+```ts
+// The service the D1 binding calls on your Platform Worker.
+export interface D1BindingService {
+	query(params: QueryRequest): Promise<QueryResponse>;
+}
+
+// A bookmark identifying a point in the database session timeline.
+export type D1Bookmark = "first-primary" | "first-unconstrained" | (string & {});
+
+// The request sent by the D1 binding to execute a batch of queries.
+export type QueryRequest = {
+	queries: QuerySql[];
+	bookmark?: D1Bookmark;
+};
+
+// The response returned for a batch of queries.
+export type QueryResponse = RpcResponse<{
+	queryResults: QuerySqlResult[];
+	bookmark?: D1Bookmark;
+}>;
+
+export type QuerySql = {
+	sql: string;
+	params?: unknown[];
+};
+
+export type QuerySqlResult = {
+	meta: D1Meta;
+	data: QuerySqlResultData;
+};
+
+export type QuerySqlResultData = {
+	kind: "raw";
+	columns: string[];
+	rows: unknown[][];
+};
+
+// A success or failure envelope for binding RPC methods.
+export type RpcResponse<T = unknown> =
+	| { success: true; results: T }
+	| { success: false; error: Error };
+
+export type D1Meta = {
+	duration: number;
+	rows_read: number;
+	rows_written: number;
+	changes: number;
+	last_row_id: number;
+	changed_db: boolean;
+	size_after: number;
+};
+```
+
+</TypeScriptExample>
+
+:::note
+Copy these types into your project for now. They will move to an official package once the D1 JSRPC migration is complete.
+:::
+
+To keep query latency low, use `console.log()` for structured output and attach a [Tail Worker](/workers/observability/logs/tail-workers/) to forward logs to [Analytics Engine](/analytics/analytics-engine/) or another pipeline asynchronously.
+
+Configure the Platform Worker with the `d1_binding_jsrpc` compatibility flag.
+
+<WranglerConfig>
+
+```jsonc
 {
-	"compatibility_flags": ["d1_binding_jsrpc"]
+	"name": "custom-binding-platform-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["d1_binding_jsrpc"],
 }
 ```
 
-### Wire the binding
+</WranglerConfig>
 
-When you upload the User Worker, attach the Platform Worker as a service binding named `DB`. The `entrypoint` must match the class exported by your Platform Worker.
+Deploy the Platform Worker.
 
-```json
+```sh
+npx wrangler deploy
+```
+
+### 2. Keep the User Worker unchanged
+
+The User Worker uses the standard D1 API. It does not need to know that `DB` routes through your Platform Worker. This includes [`batch()`](/d1/worker-api/d1-database/#batch) operations, which work like any other query.
+
+<TypeScriptExample filename="user-worker/src/index.ts">
+
+```ts
+interface Env {
+	DB: D1Database;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const customers = await env.DB.prepare(
+			"SELECT CompanyName, ContactName FROM Customers WHERE CompanyName = ?",
+		)
+			.bind("Bs Beverages")
+			.all();
+
+		return Response.json(customers.results);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### 3. Wire the binding
+
+When you upload the User Worker, attach the Platform Worker as a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `DB`. Use `props` to pass the real D1 database and any policy values, such as the tenant ID.
+
+Two fields make this a custom binding:
+
+- `binding_interface: "d1"` tells the runtime to expose the service binding to the User Worker as a `D1Database`. This is why `env.DB.prepare()` works with no code changes.
+- The `$binding` object inside `props` passes a real D1 database to your Platform Worker, so it can forward queries with `ctx.props.D1.query()`.
+
+The User Worker also needs the `d1_binding_jsrpc` compatibility flag. This tells the runtime to route D1 calls through your Platform Worker instead of directly to D1.
+
+You can wire the binding with Wrangler or through the Workers for Platforms upload API. Both configure the same binding.
+
+<Tabs syncKey="upload-method"> <TabItem label="Wrangler">
+
+Set the binding in the User Worker's Wrangler configuration, then deploy.
+
+<WranglerConfig>
+
+```jsonc
 {
-	"bindings": [
-		{
-			"type": "service",
-			"name": "DB",
-			"service": "d1-platform-worker",
-			"entrypoint": "D1CustomBinding",
-			"props": {
-				"D1": {
-					"$binding": {
-						"type": "d1_database",
-						"id": "<D1_DATABASE_ID>"
-					}
+	"name": "custom-binding-user-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["d1_binding_jsrpc"],
+	// The unsafe block is only needed until Wrangler accepts
+	// binding_interface on standard service bindings.
+	"unsafe": {
+		"bindings": [
+			{
+				"type": "service",
+				"name": "DB",
+				"service": "custom-binding-platform-worker",
+				"entrypoint": "D1CustomBinding",
+				// The User Worker consumes the binding as a D1Database.
+				"binding_interface": "d1",
+				"props": {
+					"TENANT_ID": "tenant-abc-123",
+					// The Platform Worker is handed a real D1 binding in props.
+					"D1": {
+						"$binding": {
+							"type": "d1",
+							"name": "d1",
+							"database_id": "<YOUR_DATABASE_ID>",
+						},
+					},
 				},
-				"TENANT_ID": "tenant-abc-123"
-			}
-		}
-	]
+			},
+		],
+	},
 }
 ```
 
-This `curl` command uploads a User Worker through the [Workers for Platforms dispatch API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/). It includes the compatibility flag and service binding metadata.
+</WranglerConfig>
+
+```sh
+npx wrangler deploy
+```
+
+</TabItem> <TabItem label="Upload API">
+
+Upload the User Worker to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#3-create-a-dispatch-namespace) with the [Workers for Platforms script upload API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/). The `metadata` field carries the compatibility flag and the service binding.
 
 ```bash
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE>/scripts/<SCRIPT_NAME>" \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE/scripts/$SCRIPT_NAME" \
   -H "Content-Type: multipart/form-data" \
   -H "Authorization: Bearer $API_TOKEN" \
   -F 'metadata={
     "main_module": "worker.js",
+    "compatibility_date": "2026-08-15",
     "compatibility_flags": ["d1_binding_jsrpc"],
     "bindings": [
       {
         "type": "service",
         "name": "DB",
-        "service": "d1-platform-worker",
+        "service": "custom-binding-platform-worker",
         "entrypoint": "D1CustomBinding",
+        "binding_interface": "d1",
         "props": {
+          "TENANT_ID": "tenant-abc-123",
           "D1": {
             "$binding": {
-              "type": "d1_database",
-              "id": "<D1_DATABASE_ID>"
+              "type": "d1",
+              "name": "d1",
+              "database_id": "<YOUR_DATABASE_ID>"
             }
-          },
-          "TENANT_ID": "tenant-abc-123"
+          }
         }
       }
     ]
@@ -351,39 +329,235 @@ curl -X PUT \
   -F 'worker.js=@worker.js'
 ```
 
-You can use `props` to pass values like:
+</TabItem> </Tabs>
+
+The `$binding` syntax inside `props` supports D1 bindings. Attach any other bindings your Platform Worker needs, such as [KV](/kv/) or [Analytics Engine](/analytics/analytics-engine/), directly to the Platform Worker in its own Wrangler configuration.
+
+You can pass any trusted policy values through `props`, for example:
 
 - The D1 database for a specific tenant
 - The tenant or customer ID
 - The maximum queries allowed per minute
-- An [Analytics Engine](/analytics/analytics-engine/) dataset for usage tracking
+- The plan tier
 
-```json
-{
-	"props": {
-		"D1": {
-			"$binding": {
-				"type": "d1_database",
-				"id": "<D1_DATABASE_ID>"
-			}
-		},
-		"TENANT_ID": "tenant-abc-123",
-		"MAX_QUERIES_PER_MIN": 1000,
-		"PLAN_TIER": "enterprise",
-		"ANALYTICS": {
-			"$binding": {
-				"type": "analytics_engine",
-				"dataset": "<ANALYTICS_ENGINE_DATASET_NAME>"
+Once both Workers are deployed, requests to the User Worker route their D1 queries through your Platform Worker. A `DELETE` query returns a `D1_ERROR` to the User Worker, while a `SELECT` query is forwarded and returns results.
+
+## Full code example
+
+The following project combines every step above. It contains a Platform Worker that enforces policy and a User Worker that queries D1 through it.
+
+```txt
+.
+├── platform-worker/
+│   ├── src/
+│   │   ├── index.ts          // WorkerEntrypoint with query()
+│   │   └── binding-types.ts  // D1 binding contract types
+│   └── wrangler.jsonc
+└── user-worker/
+    ├── src/
+    │   └── index.ts          // Standard D1 API usage
+    └── wrangler.jsonc
+```
+
+### Platform Worker
+
+<TypeScriptExample filename="platform-worker/src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import type { QueryRequest, QueryResponse, D1BindingService } from "./binding-types";
+
+interface D1Binding extends D1Database, D1BindingService {}
+
+interface Props {
+	TENANT_ID: string;
+	D1: D1Binding;
+}
+
+export class D1CustomBinding extends WorkerEntrypoint<Env, Props> {
+	async query(params: QueryRequest): Promise<QueryResponse> {
+		const tenantId = this.ctx.props.TENANT_ID;
+
+		console.log("D1 query intercepted", {
+			tenantId,
+			statementCount: params.queries.length,
+			queries: params.queries.map((q) => q.sql),
+		});
+
+		const allowed = await this.checkRateLimit(tenantId);
+		if (!allowed) {
+			return {
+				success: false,
+				error: new Error("D1 query rate limit exceeded"),
+			};
+		}
+
+		for (const stmt of params.queries) {
+			if (stmt.sql.trim().toUpperCase().startsWith("DELETE")) {
+				return {
+					success: false,
+					error: new Error("DELETE statements are not permitted"),
+				};
 			}
 		}
+
+		return this.ctx.props.D1.query(params);
 	}
+
+	private async checkRateLimit(tenantId: string): Promise<boolean> {
+		return true;
+	}
+}
+
+export default {
+	fetch() {
+		throw new Error("unimplemented");
+	},
+};
+```
+
+</TypeScriptExample>
+
+<TypeScriptExample filename="platform-worker/src/binding-types.ts">
+
+```ts
+export interface D1BindingService {
+	query(params: QueryRequest): Promise<QueryResponse>;
+}
+
+export type D1Bookmark = "first-primary" | "first-unconstrained" | (string & {});
+
+export type QueryRequest = {
+	queries: QuerySql[];
+	bookmark?: D1Bookmark;
+};
+
+export type QueryResponse = RpcResponse<{
+	queryResults: QuerySqlResult[];
+	bookmark?: D1Bookmark;
+}>;
+
+export type QuerySql = {
+	sql: string;
+	params?: unknown[];
+};
+
+export type QuerySqlResult = {
+	meta: D1Meta;
+	data: QuerySqlResultData;
+};
+
+export type QuerySqlResultData = {
+	kind: "raw";
+	columns: string[];
+	rows: unknown[][];
+};
+
+export type RpcResponse<T = unknown> =
+	| { success: true; results: T }
+	| { success: false; error: Error };
+
+export type D1Meta = {
+	duration: number;
+	rows_read: number;
+	rows_written: number;
+	changes: number;
+	last_row_id: number;
+	changed_db: boolean;
+	size_after: number;
+};
+```
+
+</TypeScriptExample>
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "custom-binding-platform-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["d1_binding_jsrpc"],
 }
 ```
 
-## Related resources
+</WranglerConfig>
 
-- [Bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) — attach KV, R2, D1, and other resources to User Workers
-- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) — Worker-to-Worker communication
-- [Workers RPC](/workers/runtime-apis/rpc/) — call methods on a `WorkerEntrypoint`
-- [Context props](/workers/runtime-apis/context/#props) — pass trusted values through a service binding
-- [Dynamic dispatch](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) — route requests to User Workers
+### User Worker
+
+<TypeScriptExample filename="user-worker/src/index.ts">
+
+```ts
+interface Env {
+	DB: D1Database;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		if (request.method === "GET") {
+			const customers = await env.DB.prepare(
+				"SELECT CompanyName, ContactName FROM Customers WHERE CompanyName = ?",
+			)
+				.bind("Bs Beverages")
+				.all();
+
+			return Response.json(customers.results);
+		}
+
+		if (request.method === "DELETE") {
+			// Rejected by the Platform Worker.
+			await env.DB.prepare("DELETE FROM Customers WHERE CompanyName = ?")
+				.bind("Bs Beverages")
+				.run();
+
+			return new Response("Deleted");
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "custom-binding-user-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["d1_binding_jsrpc"],
+	"unsafe": {
+		"bindings": [
+			{
+				"type": "service",
+				"name": "DB",
+				"service": "custom-binding-platform-worker",
+				"entrypoint": "D1CustomBinding",
+				"binding_interface": "d1",
+				"props": {
+					"TENANT_ID": "tenant-abc-123",
+					"D1": {
+						"$binding": {
+							"type": "d1",
+							"name": "d1",
+							"database_id": "<YOUR_DATABASE_ID>",
+						},
+					},
+				},
+			},
+		],
+	},
+}
+```
+
+</WranglerConfig>
+
+Deploy both Workers, then send a request to the User Worker.
+
+```sh
+curl https://custom-binding-user-worker.<YOUR_SUBDOMAIN>.workers.dev
+```
+
+The `SELECT` query is forwarded to D1 and returns results. A `DELETE` request is rejected by the Platform Worker and returns a `D1_ERROR` to the User Worker.
