@@ -1,16 +1,16 @@
 ---
-title: Resource lists now support granular Access permissions
-description: Members with granular Access permissions can view Access resource lists filtered to the resources assigned to them.
+title: Access resource lists now support resource-scoped roles
+description: Members with resource-scoped Access roles can list only the applications, policies, service tokens, and identity providers they can manage.
 date: 2026-08-19
 products:
   - access
   - fundamentals
 ---
 
-Access resource list pages and APIs now support granular permissions. Members can open list pages in the Cloudflare dashboard and make list API requests. Results include only the applications, policies, service tokens, and identity providers assigned to them.
+Members with only resource-scoped Access roles can now open Access resource list pages in the Cloudflare dashboard and call list endpoints in the API. They no longer need an additional account-scoped read-only role to list resources.
 
-Previously, members whose only Access permissions were granular could not open resource list pages. List API requests returned `403` responses. Administrators can now limit Access resources to specific members or teams. Members can view only the resources assigned to them in the dashboard and API.
+The dashboard and API return only resources included in the member's permission policy scopes. Filtering applies to Access applications, policies, service tokens, and identity providers. This allows administrators to delegate specific Access resources without granting account-wide visibility. Previously, the dashboard blocked these list pages and API list requests returned `403` responses.
 
-The Cloudflare Access App Admin role also includes policies attached directly to the selected application. Reusable policies still require a separate Cloudflare Access Policy Admin role.
+For members with the Cloudflare Access App Admin role, policy lists include policies attached directly to the selected application. Reusable policies appear only when the member has the Cloudflare Access Policy Admin role for those policies.
 
-For more information, refer to [Resource-scoped roles](/fundamentals/manage-members/roles/#resource-scoped-roles).
+For role definitions and assignment details, refer to [Resource-scoped roles](/fundamentals/manage-members/roles/#resource-scoped-roles) and [Role scopes](/fundamentals/manage-members/scope/).
