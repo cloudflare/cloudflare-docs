@@ -11,11 +11,11 @@ products:
 
 import { CURL, Details, Tabs, TabItem } from "~/components";
 
-Guardrails limit which hosts a Browser Run session may reach. Every outbound request, including subresources such as scripts, fonts, and images, is checked against an allowlist. This is useful to ensure agents run in a sandboxed, controlled environment.
+Guardrails limit which hosts a Browser Run session can reach. Every outbound request, including subresources such as scripts, fonts, and images, is checked against an allowlist. This is useful to ensure agents run in a sandboxed, controlled environment.
 
 Guardrails apply to Browser Sessions ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), and [CDP](/browser-run/cdp/)). They are not available for [Quick Actions](/browser-run/quick-actions/).
 
-Pass a policy when you acquire a session:
+Set guardrails when you acquire a session:
 
 <Tabs syncKey="browser-driver"> <TabItem label="Puppeteer">
 
@@ -63,10 +63,10 @@ const browser = await launch(env.MYBROWSER, {
 
 | Property            | Type       | Description                                                   |
 | ------------------- | ---------- | ------------------------------------------------------------- |
-| `allowedDomains`    | `string[]` | Hostname patterns the browser may reach. Maximum 50 entries.  |
+| `allowedDomains`    | `string[]` | Hostname patterns the browser can reach. Maximum 50 entries.  |
 | `allowedDomainSets` | `string[]` | Preset names or URLs of hostname lists. Maximum four entries. |
 
-Both are optional and are combined into a single allowlist. Omitting both leaves the session unrestricted.
+Both are optional and are combined into a single allowlist. Omitting both leaves the session unrestricted. See Deny all outbound traffic (#deny-all-outbound-traffic) for the empty-array case.
 
 Guardrails are fixed when the session is acquired and cannot be changed or removed afterwards. An invalid policy rejects the request with a `400` response.
 
@@ -91,7 +91,7 @@ A prefix wildcard such as `*example.com` also matches lookalike hostnames that a
 
 ## Domain sets
 
-`allowedDomainSets` adds hostnames from a curated preset or from a list you host yourself, so you do not have to repeat a long allowlist on every request. One preset is available, `common-cdns`, which covers widely used package, script, and font CDNs.
+`allowedDomainSets` adds hostnames from a curated preset or from a list you host yourself, so you do not have to repeat a long allowlist on every request. Cloudflare provides one preset today, `common-cdns`, covering widely used package, script, and font CDNs.
 
 <Details header="Hostnames in common-cdns">
 
