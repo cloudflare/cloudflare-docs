@@ -66,11 +66,11 @@ const browser = await launch(env.MYBROWSER, {
 | `allowedDomains`    | `string[]` | Hostname patterns the browser can reach. Maximum 50 entries.  |
 | `allowedDomainSets` | `string[]` | Preset names or URLs of hostname lists. Maximum four entries. |
 
-Both are optional and are combined into a single allowlist. Omitting both leaves the session unrestricted. See Deny all outbound traffic (#deny-all-outbound-traffic) for the empty-array case.
+Both are optional and are combined into a single allowlist. Omitting both leaves the session unrestricted. See [Deny all outbound traffic](#deny-all-outbound-traffic) for the empty-array case.
 
 Guardrails are fixed when the session is acquired and cannot be changed or removed afterwards. An invalid policy rejects the request with a `400` response.
 
-:::note
+:::caution
 Guardrails require the latest versions of `@cloudflare/puppeteer` or `@cloudflare/playwright`. They are not supported with [Kitesurf](/browser-run/kitesurf/).
 :::
 
@@ -81,8 +81,8 @@ Each entry in `allowedDomains` is a bare hostname, with no scheme, port, or path
 | Pattern             | Matches                                             | Does not match                        |
 | ------------------- | --------------------------------------------------- | ------------------------------------- |
 | `example.com`       | `example.com`                                       | `www.example.com`, `evil-example.com` |
-| `*.example.com`     | `www.example.com`, `api.v1.example.com`             | `example.com`, `evilexample.com`      |
-| `*example.com`      | `example.com`, `www.example.com`, `evilexample.com` | `example.net`                         |
+| `*.example.com`     | `www.example.com`, `api.v1.example.com`             | `example.com`                         |
+| `*example.com`      | `example.com`, `www.example.com`                    | `example.net`                         |
 | `api.*.example.com` | `api.v1.example.com`, `api.staging.example.com`     | `api.example.com`                     |
 
 :::caution[Prefer subdomain wildcards]
@@ -125,13 +125,46 @@ A hosted list is an HTTPS URL returning `text/plain`, with one hostname pattern 
 
 An explicitly empty `allowedDomains` array, with no domain sets, blocks every outbound request. This is useful when you set page content yourself and the page does not require external assets.
 
-```json
-{
-	"guardrails": {
-		"allowedDomains": []
-	}
-}
+<Tabs syncKey="browser-driver"> <TabItem label="Puppeteer">
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+const browser = await puppeteer.launch(env.MYBROWSER, {
+	guardrails: {
+		allowedDomains: [],
+	},
+});
 ```
+
+</TabItem> <TabItem label="Playwright">
+
+```ts
+import { launch } from "@cloudflare/playwright";
+
+const browser = await launch(env.MYBROWSER, {
+	guardrails: {
+		allowedDomains: [],
+	},
+});
+```
+
+</TabItem> <TabItem label="REST API">
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser"
+	method="POST"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
+	json={{
+		guardrails: {
+			allowedDomains: [],
+		},
+	}}
+/>
+
+</TabItem> </Tabs>
 
 ## Blocked requests
 

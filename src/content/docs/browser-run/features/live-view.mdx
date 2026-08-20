@@ -151,9 +151,14 @@ Use the `live_view` endpoint to generate a Live View URL:
 	}}
 />
 
-All parameters are optional. Set `mode` to `devtools`, `tab`, or `full`, and `expiresInMs` to anything up to one hour. Add `targetId` to pick a specific tab, otherwise the first active page is used.
+| Parameter    | Type     | Description                                                                                      |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------ |
+| `mode`       | `string` | Viewing mode: `devtools`, `tab`, or `full`. Default is `devtools`.                               |
+| `expiresInMs`| `number` | How long the URL stays valid, in milliseconds. Default is 5 minutes, maximum is 1 hour.          |
+| `targetId`   | `string` | Target (tab) to view. If omitted, the first active target is used.                               |
+| `guardrails` | `object` | Restrictions for the viewer. Set `{ "mode": "readonly" }` for a view-only link.                  |
 
-The response contains a `devtoolsFrontendUrl` to open in a browser or embed in an iframe, and a `webSocketDebuggerUrl` for programmatic CDP access.
+All parameters are optional. The response contains a `devtoolsFrontendUrl` to open in a browser or embed in an iframe, and a `webSocketDebuggerUrl` for programmatic CDP access.
 
 ### Share a view-only link
 
@@ -174,7 +179,7 @@ To let someone watch a session without interacting with it, set `guardrails` to 
 The returned link streams the session and lets the viewer inspect the page, but blocks navigation, input, and JavaScript evaluation. Navigation controls are turned off, and the browser tab title is prefixed with `READ ONLY - ` so the recipient knows the session is not interactive.
 
 :::caution
-A view-only link is for humans watching a session, not for automation. Puppeteer and Playwright cannot drive a read-only connection, because the commands they rely on to open pages and run scripts are blocked.
+A view-only link is for humans, not automation. Puppeteer and Playwright cannot drive a read-only connection, because the commands they rely on to open pages and run scripts are blocked.
 :::
 
 ### CDP
