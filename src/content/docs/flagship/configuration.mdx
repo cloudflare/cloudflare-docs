@@ -93,4 +93,41 @@ Refer to the [binding API reference](/flagship/binding/) for the full list of me
 
 ## Local development
 
-Flagship bindings work with `wrangler dev`. Local Workers use the live Flagship app configured by `app_id`. There is no local flag store. Make sure your local Wrangler configuration points to a valid Flagship app before testing evaluations.
+During [`wrangler dev`](/workers/wrangler/commands/general/#dev), Flagship bindings use a local flag store by default. The store starts empty, so evaluations return the default value you pass at the call site until you add flags.
+
+To copy flags from your remote app into the local store:
+
+```sh
+npx wrangler flagship flags pull <APP_ID>
+```
+
+`pull` also seeds the account tag used for [percentage rollout](/flagship/targeting/percentage-rollouts/) bucketing, so local buckets match the remote app. Flags that exist only in the local store are left untouched.
+
+To create or change flags without affecting the remote app, pass `--local` to the flag commands:
+
+```sh
+npx wrangler flagship flags create <APP_ID> new-checkout --local
+npx wrangler flagship flags list <APP_ID> --local
+```
+
+Flag commands still default to the remote app. You cannot pass `--local` and `--remote` together.
+
+To evaluate against the remote app during local development, set `remote` to `true` on the binding:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"flagship": [
+		{
+			"binding": "FLAGS",
+			"app_id": "<APP_ID>",
+			"remote": true,
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+You can also inspect and edit the local store in [Local Explorer](/workers/local-development/local-explorer/).
