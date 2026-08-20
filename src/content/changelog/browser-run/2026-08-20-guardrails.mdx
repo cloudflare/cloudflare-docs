@@ -6,7 +6,7 @@ products:
 date: 2026-08-20
 ---
 
-[Browser Run](/browser-run/) now supports [guardrails](/browser-run/features/guardrails/), which let you restrict which hosts a browser session can reach. Guardrails are set when the session is acquired and cannot be changed afterwards, so agents and automation scripts stay within the boundaries you define.
+[Browser Run](/browser-run/) now supports [guardrails](/browser-run/features/guardrails/), a per-session allowlist of hosts the browser can reach. Guardrails are set when the session is acquired and cannot be changed afterwards, so agents and automation scripts stay within the boundaries you define.
 
 Every outbound request — including subresources like scripts, images, and fonts — is checked against the allowlist. Requests to hosts not on the list return a `403` response.
 
