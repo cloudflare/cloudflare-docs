@@ -1,20 +1,20 @@
 ---
-title: Contextual 403 responses for the Cloudflare API
-description: Cloudflare API 403 responses now include a documentation_url that points directly to the denied endpoint's API documentation.
+title: Enriched 403 responses for the Cloudflare API
+description: Cloudflare API 403 responses now include a documentation_url that points directly to the denied endpoint's API documentation, where you can review the roles required for access.
 products:
   - fundamentals
 date: 2026-08-20
 ---
 
-Cloudflare API `403 Forbidden` responses now include a `documentation_url` field that links directly to the API documentation for the endpoint that was denied. This gives developers, administrators, and agents an immediate path to the relevant docs instead of forcing them to guess which role or permission they are missing.
+Cloudflare API `403 Forbidden` responses now include a `documentation_url` field that links directly to the API documentation for the endpoint that was denied. This gives developers, administrators, and agents an immediate path to the relevant docs with role information instead of guessing at which role or permission they are missing for that endpoint.
 
 **What's New**
 
-**Contextual 403s**: When a Cloudflare API request is denied, the error response now includes a `documentation_url` field that points to the documentation for that specific endpoint.
+**Enriched 403 error responses**: When a Cloudflare API request is denied, the error response now includes a `documentation_url` field that points to the documentation for that specific endpoint. Contextual 403 responses are now available across nearly all Cloudflare product APIs.
 
-**Faster troubleshooting**: The linked API docs already surface the roles required for each endpoint, making it easier to self-serve access issues or bring precise information to an administrator.
+**Faster troubleshooting**: The linked API docs surface the roles required for each endpoint, making it easier to self-serve access issues.
 
-**Better support for tools and agents**: Programmatic clients can now use the `documentation_url` field to understand what documentation to inspect next when a request is denied.
+**Better support for tools and agents**: Agents can use the \documentation_url\` field to immediately fetch the endpoint's documentation from the 403 error response, identify the accepted permissions for the denied action, and use that context to drive third-party approval workflows.`
 
 Example 403 response:
 
@@ -32,6 +32,7 @@ Example 403 response:
   "result": null
 }
 ```
+
 
 For more info:
 
