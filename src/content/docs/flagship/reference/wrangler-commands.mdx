@@ -16,7 +16,7 @@ Use `wrangler flagship` to manage Flagship apps and feature flags from the comma
 
 ### Authenticate Wrangler
 
-`wrangler flagship` calls the Cloudflare API. Authenticate Wrangler before running commands:
+Commands that target the remote app call the Cloudflare API. Authenticate Wrangler before running them:
 
 ```sh
 wrangler login
@@ -50,6 +50,29 @@ app_id = "<APP_ID>"
 This binding is only used by your Worker's runtime code (`env.FLAGS`). `wrangler flagship` commands always take the app ID as an explicit argument and do not read it from this binding.
 
 </Aside>
+
+## Local flag store
+
+[`wrangler dev`](/workers/wrangler/commands/general/#dev) evaluates Flagship bindings against a local flag store. The store starts empty.
+
+Copy flags from the remote app into that store:
+
+```sh
+wrangler flagship flags pull <APP_ID>
+```
+
+`pull` requires authentication because it reads the remote app. Matching keys are overwritten. Flags that exist only locally are reported, not deleted.
+
+`create`, `get`, `list`, `update`, `delete`, `enable`, `disable`, `set`, `rollout`, `split`, `evaluate`, and the `rules` commands accept `--local` to read and write the local store. They still default to the remote app.
+
+```sh
+wrangler flagship flags list <APP_ID> --local
+wrangler flagship flags create <APP_ID> new-checkout --local
+```
+
+You cannot pass `--local` and `--remote` together. `--persist-to` requires `--local`.
+
+For binding configuration, including `remote: true`, refer to [Local development](/flagship/configuration/#local-development).
 
 ## Quick start
 
