@@ -1,0 +1,31 @@
+src/content/changelog/durable-objects/2026-08-13-durable-objects-code-updates-grace-period.mdx
+  s_4a9554089b5e88::t_4f0eaa6ee4d9ac 2-3,7,12,14,16,18,20,22,24
+src/content/docs/durable-objects/best-practices/access-durable-objects-storage.mdx
+  s_4a9554089b5e88::t_6b0d39be906e90 22
+src/content/docs/durable-objects/best-practices/websockets.mdx
+  s_4a9554089b5e88::t_401070490502b5 722,724
+src/content/docs/durable-objects/concepts/durable-object-lifecycle.mdx
+  s_4a9554089b5e88::t_55871bf510ae27 11,89,104,106
+src/content/docs/durable-objects/observability/troubleshooting.mdx
+  s_4a9554089b5e88::t_5e3d5dfab7ade3 46,50
+src/content/docs/durable-objects/platform/known-issues.mdx
+  s_4a9554089b5e88::t_7a09fef22e6357 27
+src/content/docs/durable-objects/reference/durable-objects-code-updates.mdx
+  s_4a9554089b5e88::t_aa5c75d06f32e5 1-138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d1f155aec155542a3398a97345b7ae50fee7f72a",
+  "prompts": {},
+  "sessions": {
+    "s_4a9554089b5e88": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_07a6f7905ffecF7eZyZnBWJ90x",
+        "model": "gpt-5.6"
+      },
+      "human_author": "iglesiasbrandon <5313116+iglesiasbrandon@users.noreply.github.com>"
+    }
+  }
+}
