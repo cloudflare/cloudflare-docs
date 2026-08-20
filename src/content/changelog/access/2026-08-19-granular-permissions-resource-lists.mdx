@@ -3,13 +3,13 @@ title: Resource lists now support granular Access permissions
 description: Members with granular Access permissions can view Access resource lists filtered to the resources assigned to them.
 date: 2026-08-19
 products:
+  - access
   - fundamentals
 ---
 
 Access resource list pages and APIs now support granular permissions. Members can open list pages in the Cloudflare dashboard and make list API requests. Results include only the applications, policies, service tokens, and identity providers assigned to them.
 
-Previously, members whose only Access permissions were granular could not open resource list pages. List API requests returned `403` responses. Administrators can now limit Access resources to specific members or teams, with each member only being able to view the resources they've been granted to via the Dashboard & API.
-Administrators can now limit Access resources to specific members or teams.
+Previously, members whose only Access permissions were granular could not open resource list pages. List API requests returned `403` responses. Administrators can now limit Access resources to specific members or teams. Members can view only the resources assigned to them in the dashboard and API.
 
 The Cloudflare Access App Admin role also includes policies attached directly to the selected application. Reusable policies still require a separate Cloudflare Access Policy Admin role.
 
