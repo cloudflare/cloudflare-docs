@@ -341,6 +341,10 @@ body {
 	color: var(--nb-foreground);
 }
 
+[data-mode="dark"] ::selection {
+	background: color-mix(in oklch, var(--nb-primary) 40%, transparent);
+}
+
 /* ---- Focus indicators ---- */
 @layer base {
 	:focus-visible {
