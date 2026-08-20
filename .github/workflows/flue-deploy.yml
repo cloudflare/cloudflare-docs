@@ -38,9 +38,6 @@ jobs:
         run: pnpm install --frozen-lockfile
         working-directory: .flue
 
-      - name: Build
-        run: pnpm run flue:build
-
       - name: Deploy
         run: pnpm run flue:deploy
         env:
@@ -57,6 +54,6 @@ jobs:
           MESSAGE="❌ *Flue Deploy* workflow failed.\nActor: $ACTOR\n<https://github.com/$REPO/actions/runs/$RUN_ID|View run>"
           JSON_PAYLOAD=$(jq -n --arg text "$MESSAGE" '{text: $text}')
 
-          curl -X POST "$WEBHOOK_URL" \
+          curl --fail --max-time 30 --silent --show-error -X POST "$WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d "$JSON_PAYLOAD"
