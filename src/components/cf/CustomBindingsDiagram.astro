@@ -4,7 +4,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 
 <figure
 	class="custom-bindings-diagram not-content"
-	aria-label="Custom binding request flow: User Worker calls a binding like env.SITE_BUCKET or env.DB, which routes to a Platform Worker entrypoint that enforces policy, then forwards to the underlying resource such as R2 or D1"
+	aria-label="D1 custom binding query interception flow: the User Worker calls env.DB, the D1 binding routes the query to the Platform Worker query() hook, which inspects the query and either rejects it or forwards it to the real D1 database, then returns the result back to the User Worker"
 >
 	<ol class="flow">
 		<li class="flow-step">
@@ -16,14 +16,13 @@ import { Icon as AstroIcon } from "astro-icon/components";
 					<span class="node-title">User Worker</span>
 				</div>
 				<p class="node-caption">
-					Calls <code>env.SITE_BUCKET</code> or <code>env.DB</code> like a normal
-					binding
+					Calls <code>env.DB.prepare().all()</code> like a normal D1 binding
 				</p>
 			</div>
 		</li>
 
 		<li class="flow-connector">
-			<span class="connector-label">service binding</span>
+			<span class="connector-label">query() over RPC</span>
 			<span class="connector-arrow" aria-hidden="true">↓</span>
 		</li>
 
@@ -36,38 +35,47 @@ import { Icon as AstroIcon } from "astro-icon/components";
 					<span class="node-title">Platform Worker</span>
 				</div>
 				<p class="node-caption">
-					Enforces quota, rate limits, logging, and policy before forwarding
+					The <code>query()</code> hook inspects each operation
 				</p>
 				<div class="pill-row">
-					<span class="props-pill"><code>ctx.props</code></span>
+					<span class="policy-pill">log</span>
+					<span class="policy-pill">rate-limit</span>
+					<span class="policy-pill">reject</span>
+					<span class="policy-pill">forward</span>
 				</div>
 			</div>
 		</li>
 
-		<li class="flow-connector">
-			<span class="connector-label">forward</span>
-			<span class="connector-arrow" aria-hidden="true">↓</span>
+		<li class="flow-branch">
+			<div class="branch-arm branch-reject">
+				<span class="connector-arrow" aria-hidden="true">↩</span>
+				<span class="connector-label">reject</span>
+				<p class="branch-caption">
+					Returns a failed <code>QueryResponse</code>. The User Worker sees a
+					<code>D1_ERROR</code>.
+				</p>
+			</div>
+			<div class="branch-arm branch-forward">
+				<span class="connector-arrow" aria-hidden="true">↓</span>
+				<span class="connector-label">forward</span>
+				<span class="branch-sub" aria-hidden="true"
+					><code>ctx.props.D1.query()</code></span
+				>
+			</div>
 		</li>
 
 		<li class="flow-step">
 			<div class="node-card resource-card">
-				<div class="node-header resource-header">
-					<div class="resource-item">
-						<span class="node-icon r2-icon" aria-hidden="true"
-							><AstroIcon name="r2" /></span
-						>
-						<span class="node-title">R2 bucket</span>
-					</div>
-					<span class="resource-divider" aria-hidden="true">/</span>
-					<div class="resource-item">
-						<span class="node-icon d1-icon" aria-hidden="true"
-							><AstroIcon name="d1" /></span
-						>
-						<span class="node-title">D1 database</span>
-					</div>
+				<div class="node-header">
+					<span class="node-icon d1-icon" aria-hidden="true"
+						><AstroIcon name="d1" /></span
+					>
+					<span class="node-title">D1 database</span>
 				</div>
 				<p class="node-caption">
-					The real resource, passed through <code>props</code>
+					The real database, passed to the Platform Worker through <code
+						>props</code
+					>
 				</p>
 			</div>
 		</li>
@@ -85,8 +93,8 @@ import { Icon as AstroIcon } from "astro-icon/components";
 		--map-caption: light-dark(#737373, #a3a3a3);
 		--map-brand: #f6821f;
 		--map-platform: light-dark(#7c3aed, #a78bfa);
-		--map-r2: light-dark(#0ea5e9, #38bdf8);
 		--map-d1: light-dark(#10b981, #34d399);
+		--map-reject: light-dark(#dc2626, #f87171);
 
 		display: flex;
 		flex-direction: column;
@@ -123,7 +131,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 	.flow-step {
 		display: block;
 		width: 100%;
-		max-width: 360px;
+		max-width: 380px;
 	}
 
 	.node-card {
@@ -143,22 +151,6 @@ import { Icon as AstroIcon } from "astro-icon/components";
 		align-items: center;
 		justify-content: center;
 		gap: 10px;
-	}
-
-	.resource-header {
-		gap: 14px;
-	}
-
-	.resource-item {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-	}
-
-	.resource-divider {
-		color: var(--map-strong);
-		font-size: 14px;
-		font-weight: 300;
 	}
 
 	.node-title {
@@ -195,11 +187,6 @@ import { Icon as AstroIcon } from "astro-icon/components";
 	.platform-icon {
 		background: color-mix(in srgb, var(--map-platform) 14%, transparent);
 		color: var(--map-platform);
-	}
-
-	.r2-icon {
-		background: color-mix(in srgb, var(--map-r2) 14%, transparent);
-		color: var(--map-r2);
 	}
 
 	.d1-icon {
@@ -262,7 +249,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 		gap: 6px;
 	}
 
-	.props-pill {
+	.policy-pill {
 		display: inline-flex;
 		align-items: center;
 		padding: 4px 10px;
@@ -270,17 +257,80 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			color-mix(in srgb, var(--map-platform) 35%, var(--map-line));
 		border-radius: 6px;
 		background: color-mix(in srgb, var(--map-platform) 6%, var(--map-card));
-	}
-
-	.props-pill code {
-		padding: 0;
-		border: 0;
-		background: transparent;
 		color: var(--map-platform);
 		font-family:
 			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 			monospace;
 		font-size: 11px;
 		white-space: nowrap;
+	}
+
+	.flow-branch {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 12px;
+		width: 100%;
+		max-width: 380px;
+	}
+
+	.branch-arm {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		padding: 10px 8px;
+		border: 1px dashed var(--map-line);
+		border-radius: 8px;
+	}
+
+	.branch-reject {
+		border-color: color-mix(in srgb, var(--map-reject) 40%, var(--map-line));
+	}
+
+	.branch-reject .connector-label,
+	.branch-reject .connector-arrow {
+		color: var(--map-reject);
+	}
+
+	.branch-caption {
+		margin: 0;
+		color: var(--map-caption);
+		font-size: 11px;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.branch-caption code {
+		padding: 1px 5px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 10px;
+		white-space: nowrap;
+	}
+
+	.branch-sub {
+		color: var(--map-caption);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 10px;
+	}
+
+	.branch-sub code {
+		border: 0;
+		background: transparent;
+		color: var(--map-d1);
+		font-size: 10px;
+	}
+
+	@media (max-width: 480px) {
+		.flow-branch {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
