@@ -10,12 +10,7 @@ tags:
   - Bindings
 ---
 
-import {
-	TypeScriptExample,
-	WranglerConfig,
-	CustomBindingsDiagram,
-	Details,
-} from "~/components";
+import { TypeScriptExample, CustomBindingsDiagram } from "~/components";
 
 A custom binding routes [D1](/d1/) operations through a platform-owned Worker before they reach the database. Use this pattern when you deploy [User Workers](/cloudflare-for-platforms/workers-for-platforms/) and need to enforce query policy, log operations, or limit usage per tenant.
 
@@ -25,15 +20,29 @@ Custom bindings are a [Workers for Platforms](/cloudflare-for-platforms/workers-
 
 The User Worker keeps using the standard [D1 API](/d1/worker-api/). Instead of binding `env.DB` directly to D1, you bind it to a Platform Worker. The Platform Worker receives each query through `query()`, can inspect or reject it, and then forwards allowed queries to the real D1 database.
 
+Set up a custom D1 binding in three steps:
+
+1. **Deploy the Platform Worker** — Export a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) with a `query()` method and deploy it.
+2. **Deploy the User Worker** — Write a Worker that uses the standard D1 API and deploy it with the `d1_custom_binding` compatibility flag.
+3. **Connect them with the binding** — Bind `DB` to the Platform Worker instead of directly to D1. Pass the real D1 database through [`props`](/workers/runtime-apis/context/#props) using the `$binding` syntax.
+
 <CustomBindingsDiagram />
 
-The [`props`](/workers/runtime-apis/context/#props) passed through the binding configuration are trusted, platform-owned values. The User Worker cannot read or change them.
+The `props` passed through the binding configuration are trusted, platform-owned values. The User Worker cannot read or change them.
 
-## Example
+## Getting started
 
-This example blocks all write operations (INSERT, UPDATE, DELETE) and allows reads.
+Before you start:
 
-### Platform Worker
+- A [Cloudflare account](/fundamentals/account/create-account/).
+- [Wrangler](/workers/wrangler/install-and-update/) installed.
+- A D1 database. If you do not have one, follow the [D1 getting started guide](/d1/get-started/) to create and populate a database. The examples below query the `Customers` table from that guide.
+
+### 1. Create a Platform Worker
+
+Export a `WorkerEntrypoint` with a `query()` method. The D1 binding calls this method for every database operation the User Worker runs.
+
+Inside `query()`, inspect the incoming SQL and decide what to do. To forward a query to the real database, call `query()` on the D1 binding passed through `props`.
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -56,9 +65,9 @@ export class D1CustomBinding extends WorkerEntrypoint {
 }
 ```
 
-### User Worker
+### 2. Keep the User Worker on the standard D1 API
 
-The User Worker uses the standard D1 API. It does not need to know that `env.DB` routes through the Platform Worker.
+The User Worker calls `env.DB.prepare().bind().all()` as usual. It does not need to know that `env.DB` routes through the Platform Worker.
 
 <TypeScriptExample filename="user-worker/src/index.ts">
 
@@ -82,55 +91,13 @@ export default {
 
 </TypeScriptExample>
 
-### Binding configuration
+### 3. Connect the User Worker to the Platform Worker
 
-The binding routes `env.DB` through the Platform Worker. The `d1_custom_binding` compatibility flag tells the runtime to use this path.
+Configure `env.DB` as a [service binding](/workers/runtime-apis/bindings/service-bindings/) to the Platform Worker. Pass the real D1 database and any tenant-specific values through `props`.
 
-```jsonc
-{
-	"compatibility_flags": ["d1_custom_binding"],
-	"bindings": [
-		{
-			"type": "service",
-			"name": "DB",
-			"service": "custom-binding-platform-worker",
-			"entrypoint": "D1CustomBinding",
-			"props": {
-				"D1": {
-					"$binding": {
-						"type": "d1",
-						"database_id": "<YOUR_DATABASE_ID>",
-					},
-				},
-			},
-		},
-	],
-}
-```
+The `$binding` object inside `props` hands a real D1 database to the Platform Worker, so it can forward queries with `this.ctx.props.D1.query()`.
 
-## Deploy
-
-Set up a custom D1 binding in three steps:
-
-1. **Deploy the Platform Worker** — Export a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) with a `query()` method and deploy it.
-2. **Deploy the User Worker** — Write a Worker that uses the standard D1 API and deploy it with the `d1_custom_binding` compatibility flag.
-3. **Connect them with the binding** — Bind `DB` to the Platform Worker instead of directly to D1. Pass the real D1 database through `props` using the `$binding` syntax.
-
-After both Workers are deployed, D1 operations from the User Worker route through the Platform Worker automatically.
-
-:::note
-Existing User Workers need redeploying to pick up the new binding path. The custom binding takes effect only after the User Worker is redeployed with the updated binding configuration.
-:::
-
-## Prerequisites
-
-- A [Cloudflare account](/fundamentals/account/create-account/).
-- [Wrangler](/workers/wrangler/install-and-update/) installed.
-- A D1 database. If you do not have one, follow the [D1 getting started guide](/d1/get-started/) to create and populate a database.
-
-## Upload with the API
-
-You can also upload the User Worker through the [Workers for Platforms script upload API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/). The `metadata` field carries the compatibility flag and the service binding.
+Wire the binding with the [Workers for Platforms script upload API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/). The `metadata` field carries the compatibility flag and the service binding.
 
 ```bash
 curl -X PUT \
@@ -161,15 +128,102 @@ curl -X PUT \
   -F 'worker.js=@worker.js'
 ```
 
-<Details header="Pass policy values and additional bindings through props">
-
-The `$binding` syntax inside `props` supports D1 bindings. Attach any other bindings your Platform Worker needs, such as [KV](/kv/) or [Analytics Engine](/analytics/analytics-engine/), directly to the Platform Worker in its own Wrangler configuration.
-
-You can pass any trusted policy values through `props`, for example:
+You can pass any trusted policy values through `props`. These values are visible to the Platform Worker but not to the User Worker. For example:
 
 - The D1 database for a specific tenant.
 - The tenant or customer ID.
 - The maximum queries allowed per minute.
 - The plan tier.
 
-</Details>
+The `$binding` syntax inside `props` supports D1 bindings. Attach any other bindings your Platform Worker needs, such as [KV](/kv/) or [Analytics Engine](/analytics/analytics-engine/), directly to the Platform Worker in its own Wrangler configuration.
+
+### 4. Add the compatibility flag
+
+Add the `d1_custom_binding` compatibility flag to the User Worker. This flag tells the runtime to route D1 calls through the Platform Worker instead of directly to D1.
+
+The compatibility flag is included in the `metadata` of the upload API request shown in the previous step. If you upload through Wrangler, add it to the User Worker's `compatibility_flags` array.
+
+:::note
+Existing User Workers need redeploying to pick up the new binding path. The custom binding takes effect only after the User Worker is redeployed with the updated binding configuration.
+:::
+
+### Full example
+
+This example shows a Platform Worker that blocks writes, a User Worker that queries D1, and the binding configuration that connects them.
+
+**Platform Worker**
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class D1CustomBinding extends WorkerEntrypoint {
+	async query(params, _ctx) {
+		for (const stmt of params.statements) {
+			const sql = stmt.sql.trim().toUpperCase();
+			if (
+				sql.startsWith("DELETE") ||
+				sql.startsWith("INSERT") ||
+				sql.startsWith("UPDATE")
+			) {
+				return { success: false, error: new Error("Writes are not allowed") };
+			}
+		}
+
+		return this.ctx.props.D1.query(params);
+	}
+}
+```
+
+**User Worker**
+
+<TypeScriptExample filename="user-worker/src/index.ts">
+
+```ts
+interface Env {
+	DB: D1Database;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const result = await env.DB.prepare(
+			"SELECT ContactName FROM Customers WHERE CompanyName = ?",
+		)
+			.bind("Bs Beverages")
+			.all();
+
+		return Response.json(result.results);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+**Binding configuration**
+
+```jsonc
+{
+	"compatibility_flags": ["d1_custom_binding"],
+	"bindings": [
+		{
+			"type": "service",
+			"name": "DB",
+			"service": "custom-binding-platform-worker",
+			"entrypoint": "D1CustomBinding",
+			"props": {
+				"D1": {
+					"$binding": {
+						"type": "d1",
+						"database_id": "<YOUR_DATABASE_ID>",
+					},
+				},
+			},
+		},
+	],
+}
+```
+
+**What this shows:**
+
+- The User Worker keeps the normal D1 API.
+- The Platform Worker can block writes.
+- The binding routes `env.DB` through the Platform Worker first.
