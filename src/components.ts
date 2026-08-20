@@ -79,3 +79,4 @@ export { default as SubtractIPCalculator } from "./components/react/SubtractIPCa
 export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
 export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";
+export { default as HostSelectorEgressDiagram } from "./components/cf/HostSelectorEgressDiagram.astro";
