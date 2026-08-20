@@ -1,0 +1,337 @@
+<figure
+	class="realtimekit-concepts-diagram not-content"
+	aria-label="An App contains an App-level Preset and a reusable Meeting. The Preset is applied to a Participant in the Meeting. When the first Participant joins, a live Session of that Meeting begins."
+>
+	<div class="rtcd-stage">
+		<section class="rtcd-app">
+			<span class="rtcd-boundary-label">App</span>
+
+			<div class="rtcd-card rtcd-preset">
+				<div class="rtcd-card-head">App-level configuration</div>
+				<div class="rtcd-card-title">
+					<span class="rtcd-icon" aria-hidden="true">
+						<svg viewBox="0 0 20 20" fill="none">
+							<path d="M4 5h7M15 5h1M4 10h2M10 10h6M4 15h8M16 15h0"></path>
+							<circle cx="13" cy="5" r="2"></circle>
+							<circle cx="8" cy="10" r="2"></circle>
+							<circle cx="14" cy="15" r="2"></circle>
+						</svg>
+					</span>
+					<span>
+						<strong>Preset</strong>
+						<small>Reusable participant configuration</small>
+					</span>
+				</div>
+				<div class="rtcd-preset-facts">
+					<span>Permissions and controls</span>
+				</div>
+			</div>
+
+			<section class="rtcd-meeting">
+				<span class="rtcd-boundary-label">Meeting · reusable virtual room</span>
+
+				<div class="rtcd-meeting-flow">
+					<div class="rtcd-card rtcd-participant">
+						<div class="rtcd-card-head">participant record</div>
+						<div class="rtcd-card-title">
+							<span class="rtcd-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<circle cx="10" cy="7" r="3"></circle>
+									<path d="M4.5 17c.5-3 2.3-4.5 5.5-4.5s5 1.5 5.5 4.5"></path>
+								</svg>
+							</span>
+							<span>
+								<strong>Participant</strong>
+								<small>Uses the assigned Preset</small>
+							</span>
+						</div>
+					</div>
+
+					<div class="rtcd-joins" aria-hidden="true">
+						<span>first Participant joins</span>
+						<svg class="rtcd-arrow-wide" viewBox="0 0 56 16" fill="none">
+							<path d="M1 8h52M47 2l6 6-6 6"></path>
+						</svg>
+						<svg class="rtcd-arrow-narrow" viewBox="0 0 16 40" fill="none">
+							<path d="M8 1v36M2 31l6 6 6-6"></path>
+						</svg>
+					</div>
+
+					<div class="rtcd-card rtcd-session">
+						<div class="rtcd-card-head">active session</div>
+						<div class="rtcd-card-title">
+							<span class="rtcd-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<circle cx="10" cy="10" r="6.5"></circle>
+									<path d="m8.5 7 4.5 3-4.5 3Z"></path>
+								</svg>
+							</span>
+							<span>
+								<strong>Session</strong>
+								<small>Live instance of the Meeting</small>
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+	</div>
+</figure>
+
+<style>
+	.realtimekit-concepts-diagram {
+		--rtcd-panel: #fbfbfb;
+		--rtcd-dot: rgb(0 0 0 / 8%);
+		--rtcd-card: #ffffff;
+		--rtcd-head: #f4f4f5;
+		--rtcd-border: #e3e3e6;
+		--rtcd-line: #c1c1c8;
+		--rtcd-text: #1a1a1c;
+		--rtcd-muted: #8a8a90;
+		--rtcd-accent: #f6821f;
+		--rtcd-accent-soft: rgb(246 130 31 / 14%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .realtimekit-concepts-diagram {
+		--rtcd-panel: #121213;
+		--rtcd-dot: rgb(255 255 255 / 9%);
+		--rtcd-card: #1b1b1d;
+		--rtcd-head: #242427;
+		--rtcd-border: #38383c;
+		--rtcd-line: #4d4d54;
+		--rtcd-text: #f3f3f5;
+		--rtcd-muted: #9a9aa2;
+	}
+
+	.rtcd-stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem;
+		border: 1px solid var(--rtcd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--rtcd-dot) 1px, transparent 1px),
+			var(--rtcd-panel);
+		background-size: 16px 16px;
+	}
+
+	.rtcd-app,
+	.rtcd-meeting {
+		position: relative;
+		box-sizing: border-box;
+		border: 1px dashed var(--rtcd-border);
+		border-radius: 0.75rem;
+	}
+
+	.rtcd-app {
+		max-width: 680px;
+		margin: 0 auto;
+		padding: 1.4rem 0.8rem 0.8rem;
+	}
+
+	.rtcd-meeting {
+		margin-top: 1.8rem;
+		padding: 1.4rem 0.7rem 0.7rem;
+		border-color: var(--rtcd-accent);
+		background: var(--rtcd-accent-soft);
+	}
+
+	.rtcd-boundary-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		max-width: calc(100% - 1.5rem);
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--rtcd-border);
+		border-radius: 9999px;
+		background: var(--rtcd-panel);
+		color: var(--rtcd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+		line-height: 1.3;
+		white-space: nowrap;
+	}
+
+	.rtcd-meeting > .rtcd-boundary-label {
+		border-color: var(--rtcd-accent);
+		color: var(--rtcd-accent);
+	}
+
+	.rtcd-card {
+		display: flex;
+		box-sizing: border-box;
+		min-width: 0;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid var(--rtcd-border);
+		border-radius: 0.625rem;
+		background: var(--rtcd-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+	}
+
+	.rtcd-card-head {
+		overflow: hidden;
+		padding: 0.25rem 0.625rem;
+		border-bottom: 1px solid var(--rtcd-border);
+		background: var(--rtcd-head);
+		color: var(--rtcd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.rtcd-card-title {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.75rem;
+	}
+
+	.rtcd-card-title > span:last-child {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.rtcd-card-title strong {
+		color: var(--rtcd-text);
+		font-size: 0.875rem;
+		font-weight: 600;
+		line-height: 1.2;
+	}
+
+	.rtcd-card-title small {
+		color: var(--rtcd-muted);
+		font-size: 0.6875rem;
+		line-height: 1.3;
+	}
+
+	.rtcd-icon {
+		display: grid;
+		width: 1.5rem;
+		height: 1.5rem;
+		flex: none;
+		place-items: center;
+		color: var(--rtcd-accent);
+	}
+
+	.rtcd-icon svg {
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtcd-preset {
+		width: 100%;
+	}
+
+	.rtcd-preset-facts {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		border-top: 1px solid var(--rtcd-border);
+	}
+
+	.rtcd-preset-facts span {
+		padding: 0.5rem 0.75rem;
+		color: var(--rtcd-muted);
+		font-size: 0.625rem;
+		line-height: 1.3;
+		text-align: center;
+	}
+
+	.rtcd-joins span {
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5rem;
+		line-height: 1.2;
+		text-align: center;
+	}
+
+	.rtcd-meeting-flow {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 5.5rem minmax(0, 1fr);
+		align-items: stretch;
+	}
+
+	.rtcd-participant,
+	.rtcd-session {
+		position: relative;
+		z-index: 1;
+	}
+
+	.rtcd-session {
+		border-color: color-mix(
+			in srgb,
+			var(--rtcd-accent) 55%,
+			var(--rtcd-border)
+		);
+	}
+
+	.rtcd-joins {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.25rem;
+		color: var(--rtcd-muted);
+	}
+
+	.rtcd-joins svg {
+		display: block;
+		width: 100%;
+		height: 1rem;
+		stroke: var(--rtcd-line);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtcd-arrow-narrow {
+		display: none !important;
+	}
+
+	@container (max-width: 640px) {
+		.rtcd-app {
+			max-width: 360px;
+		}
+
+		.rtcd-meeting {
+			padding-inline: 0.5rem;
+		}
+
+		.rtcd-meeting-flow {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.rtcd-joins {
+			height: 3.5rem;
+			flex-direction: row;
+			justify-content: center;
+		}
+
+		.rtcd-arrow-wide {
+			display: none !important;
+		}
+
+		.rtcd-arrow-narrow {
+			display: block !important;
+			width: 1rem !important;
+			height: 2.5rem !important;
+			transform: none;
+		}
+	}
+</style>
