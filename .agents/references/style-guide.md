@@ -31,20 +31,20 @@ Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `desig
 
 ### Optional fields
 
-| Field                  | Type    | Description                                                                           |
-| ---------------------- | ------- | ------------------------------------------------------------------------------------- |
-| `sidebar.order`        | number  | Sort order in the left nav. Lower = higher.                                           |
-| `sidebar.label`        | string  | Override the nav label (defaults to `title`).                                         |
-| `sidebar.hidden`       | boolean | Hide from nav but keep the page accessible.                                           |
-| `products`             | array   | Related directory entries by filename from `src/content/directory/`.                  |
-| `difficulty`           | string  | For tutorials: `Beginner`, `Intermediate`, or `Advanced`. Shown in tutorial listings. |
-| `reviewed`             | string  | `YYYY-MM-DD` of last explicit end-to-end review.                                      |
-| `summary`              | string  | Short description rendered below the page title on the page itself.                   |
-| `noindex`              | boolean | Adds `noindex` to the page — use for deprecated/legacy content.                       |
-| `chatbot_deprioritize` | boolean | De-prioritizes the page in Support AI responses. Companion to `noindex`.              |
-| `canonical`            | string  | Override the `<link rel="canonical">` URL.                                            |
+| Field                  | Type    | Description                                                                                                                    |
+| ---------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `sidebar.order`        | number  | Sort order in the left nav. Lower = higher.                                                                                    |
+| `sidebar.label`        | string  | Override the nav label (defaults to `title`).                                                                                  |
+| `sidebar.hidden`       | boolean | Hide from nav but keep the page accessible.                                                                                    |
+| `products`             | array   | Related directory entries by filename from `src/content/directory/`.                                                           |
+| `difficulty`           | string  | For tutorials: `Beginner`, `Intermediate`, or `Advanced`. Shown in tutorial listings.                                          |
+| `reviewed`             | string  | `YYYY-MM-DD` of last explicit end-to-end review.                                                                               |
+| `summary`              | string  | Short description rendered below the page title on the page itself.                                                            |
+| `noindex`              | boolean | Adds `noindex` to the page — use for deprecated/legacy content.                                                                |
+| `chatbot_deprioritize` | boolean | De-prioritizes the page in Support AI responses. Companion to `noindex`.                                                       |
+| `canonical`            | string  | Override the `<link rel="canonical">` URL.                                                                                     |
 | `hideChildren`         | boolean | Collapses this nav group to a single link to the index page (legacy passthrough; Nimbus also reads `sidebar.group.hideIndex`). |
-| `feedback`             | boolean | Show/hide the feedback prompt. Defaults to `true`.                                    |
+| `feedback`             | boolean | Show/hide the feedback prompt. Defaults to `true`.                                                                             |
 
 Example:
 
@@ -277,7 +277,7 @@ Package install commands must use `PackageManagers`.
 
 ## Components
 
-All components are imported from `~/components`. Imports must appear after the frontmatter block.
+Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`. Page-specific wrapper components or one-off components may use deep paths (e.g. `~/components/BaseSchemaProperties.astro`) instead of adding to the barrel. Imports must appear after the frontmatter block.
 
 **Mandatory component usage** — do not use bare fences for these:
 
@@ -287,51 +287,49 @@ All components are imported from `~/components`. Imports must appear after the f
 - Multi-step procedures → `Steps`
 - Dashboard navigation steps → `DashButton` (not bare links)
 
-| Component                             | Purpose                                                                             |
-| ------------------------------------- | ----------------------------------------------------------------------------------- |
-| `Render`                              | Embed a reusable partial from `src/content/partials/{product}/{file}.mdx`           |
-| `TypeScriptExample`                   | Workers TS example with auto-generated JS tab                                       |
-| `WranglerConfig`                      | Wrangler config in synced TOML + JSON tabs                                          |
-| `PackageManagers`                     | Package install/exec command across npm, yarn, pnpm, bun                            |
-| `WranglerCommand`                     | Auto-generated full Wrangler command reference                                      |
-| `WranglerNamespace`                   | Auto-generated Wrangler namespace command listing                                   |
-| `Tabs` / `TabItem`                    | Switchable tabs (`syncKey="dashPlusAPI"` or `"workersExamples"`)                    |
-| `Steps`                               | Visual numbered procedure wrapper                                                   |
-| `Details`                             | Collapsible section for supplementary content                                       |
-| `FileTree`                            | File and directory tree display                                                     |
-| `Width`                               | Constrain content to `"large"` (75%), `"medium"` (50%), or `"small"` (25%) width    |
+| Component                             | Purpose                                                                                             |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `Render`                              | Embed a reusable partial from `src/content/partials/{product}/{file}.mdx`                           |
+| `TypeScriptExample`                   | Workers TS example with auto-generated JS tab                                                       |
+| `WranglerConfig`                      | Wrangler config in synced TOML + JSON tabs                                                          |
+| `PackageManagers`                     | Package install/exec command across npm, yarn, pnpm, bun                                            |
+| `WranglerCommand`                     | Auto-generated full Wrangler command reference                                                      |
+| `WranglerNamespace`                   | Auto-generated Wrangler namespace command listing                                                   |
+| `Tabs` / `TabItem`                    | Switchable tabs (`syncKey="dashPlusAPI"` or `"workersExamples"`)                                    |
+| `Steps`                               | Visual numbered procedure wrapper                                                                   |
+| `Details`                             | Collapsible section for supplementary content                                                       |
+| `FileTree`                            | File and directory tree display                                                                     |
+| `Width`                               | Constrain content to `"large"` (75%), `"medium"` (50%), or `"small"` (25%) width                    |
 | `Plan`                                | Plan availability badge (`type="all"`, `"paid"`, `"pro"`, `"business"`, `"enterprise"`, `"add-on"`) |
-| `FeatureTable`                        | Feature availability by plan from `src/content/plans/` (dot-notation `id`)          |
-| `ProductFeatures`                     | Full feature list for a product from `src/content/plans/`                           |
-| `ProductChangelog`                    | Inline changelog entries for a product or area                                      |
-| `ProductAvailabilityText`             | Inline lifecycle status (Beta, Alpha) — renders nothing for GA                      |
-| `Feature`                             | Feature card for product overview pages                                             |
-| `RelatedProduct`                      | Related product card with icon for overview pages                                   |
-| `GlossaryTooltip`                     | Hover tooltip from `src/content/glossary/`                                          |
-| `GlossaryDefinition`                  | Inline glossary definition                                                          |
-| `Glossary`                            | Full product glossary table                                                         |
-| `InlineBadge`                         | Inline status badge — **avoid**, prefer `Badge` in headings or sidebar frontmatter  |
-| `Badge`                               | Coloured status badge (`Beta`, `New`, `Deprecated`) for headings and sidebar        |
-| `LinkButton`                          | Styled link button (`variant="primary"`, `"secondary"`, `"minimal"`)                |
-| `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages                            |
-| `LinkCard` / `CardGrid`               | Nimbus link cards, optionally in a grid                                          |
-| `DashButton`                          | Button linking to a validated dashboard deeplink                                    |
-| `GitHubCode`                          | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash)       |
-| `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                            |
-| `ListTutorials`                       | Auto-generated tutorial table for the current product                               |
-| `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type`, tags, or products                   |
-| `PublicStats`                         | Inline live statistic (data centers, bandwidth, etc.)                               |
-| `YouTube`                             | Embed a YouTube video by ID                                                         |
-| `Stream`                              | Embed a Cloudflare Stream video by ID or collection file                            |
-| `APIRequest`                          | Generate a `curl` command from the Cloudflare OpenAPI schema                        |
-| `CURL`                                | Generate a `curl` command for arbitrary URLs                                        |
-| `PagesBuildPreset`                    | Pages framework build preset details                                                |
-| `RuleID`                              | Copyable rule ID (WAF / security rules)                                             |
-| `SubtractIPCalculator`                | Interactive IP range subtraction calculator                                         |
-| `AvailableNotifications`              | List available notification types for a product                                     |
-| `AnchorHeading`                       | Heading with custom anchor ID — for use inside components/non-MDX files             |
-| `Description`                         | Description block rendered below the page title                                     |
-| `Markdown`                            | Render a Markdown string inside JSX — primarily for formatted partial variables     |
+| `FeatureTable`                        | Feature availability by plan from `src/content/plans/` (dot-notation `id`)                          |
+| `ProductChangelog`                    | Inline changelog entries for a product or area                                                      |
+| `ProductAvailabilityText`             | Inline lifecycle status (Beta, Alpha) — renders nothing for GA                                      |
+| `Feature`                             | Feature card for product overview pages                                                             |
+| `RelatedProduct`                      | Related product card with icon for overview pages                                                   |
+| `GlossaryTooltip`                     | Hover tooltip from `src/content/glossary/`                                                          |
+| `GlossaryDefinition`                  | Inline glossary definition                                                                          |
+| `Glossary`                            | Full product glossary table                                                                         |
+| `InlineBadge`                         | Inline status badge — **avoid**, prefer `Badge` in headings or sidebar frontmatter                  |
+| `Badge`                               | Coloured status badge (`Beta`, `New`, `Deprecated`) for headings and sidebar                        |
+| `LinkButton`                          | Styled link button (`variant="primary"`, `"secondary"`, `"minimal"`)                                |
+| `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages                                            |
+| `LinkCard` / `CardGrid`               | Nimbus link cards, optionally in a grid                                                             |
+| `DashButton`                          | Button linking to a validated dashboard deeplink                                                    |
+| `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                                            |
+| `ListTutorials`                       | Auto-generated tutorial table for the current product                                               |
+| `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type`, tags, or products                                   |
+| `PublicStats`                         | Inline live statistic (data centers, bandwidth, etc.)                                               |
+| `YouTube`                             | Embed a YouTube video by ID                                                                         |
+| `Stream`                              | Embed a Cloudflare Stream video by ID or collection file                                            |
+| `APIRequest`                          | Generate a `curl` command from the Cloudflare OpenAPI schema                                        |
+| `CURL`                                | Generate a `curl` command for arbitrary URLs                                                        |
+| `PagesBuildPreset`                    | Pages framework build preset details                                                                |
+| `RuleID`                              | Copyable rule ID (WAF / security rules)                                                             |
+| `SubtractIPCalculator`                | Interactive IP range subtraction calculator                                                         |
+| `AvailableNotifications`              | List available notification types for a product                                                     |
+| `AnchorHeading`                       | Heading with custom anchor ID — for use inside components/non-MDX files                             |
+| `Description`                         | Description block rendered below the page title                                                     |
+| `Markdown`                            | Render a Markdown string inside JSX — primarily for formatted partial variables                     |
 
 For full props, examples, and edge cases, see `.agents/references/components.md`.
 

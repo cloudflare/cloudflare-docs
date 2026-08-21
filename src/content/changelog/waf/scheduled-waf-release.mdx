@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-08-10
-description: WAF managed ruleset changes scheduled for 2026-8-10
-date: 2026-08-04
+title: WAF Release - Scheduled changes for 2026-08-24
+description: WAF managed ruleset changes scheduled for 2026-08-24
+date: 2026-08-17
 publish_future_dated_entry: true
 ---
 
@@ -19,45 +19,71 @@ import { RuleID } from "~/components";
 			<th>Comments</th>
 		</tr>
 	</thead>
-	<tbody>	
+	<tbody>
 		<tr>
-			<td>2026-08-04</td>
-			<td>2026-08-10</td>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="1b0775f0f092483387cfb23f94f3006b" />
+				<RuleID id="a80f214f0947435dabb2ba2d1489d892" />
 			</td>
-			<td>vBulletin - Remote Code Execution - CVE:CVE-2026-61511</td>
+			<td>HTTP/2 Request Smuggling - Request Body Anomaly</td>
 			<td>
 				This is a new detection.
 			</td>
 		</tr>
 		<tr>
-			<td>2026-08-04</td>
-			<td>2026-08-10</td>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="784d3824b6cf419db6af0b64098b749e" />
+				<RuleID id="58a184412d2b4113bca6379b20646260" />
 			</td>
-			<td>Version Control - Information Disclosure - Beta</td>
+			<td>XSS - JavaScript Event Handler Coercion - Headers</td>
 			<td>
-				This is a beta detection and will replace the action on original detection "Version Control - Information Disclosure" (ID: <RuleID id="23548ee2b36547a1be09bb2c0550c529" />)
+				This is a new detection.
 			</td>
 		</tr>
 		<tr>
-			<td>2026-08-04</td>
-			<td>2026-08-10</td>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="a561c9138b46470ca6db96edd56225d8" />
+				<RuleID id="e79cb939d6aa41db984e6db3d706d517" />
 			</td>
-			<td>vBulletin - Code Injection - Invalid image format - CVE:CVE-2019-17132 - Beta</td>
+			<td>XSS - JavaScript Event Handler Coercion - Body</td>
 			<td>
-				This is a beta detection and will replace the action on original detection "vBulletin - Code Injection - Invalid image format - CVE:CVE-2019-17132" (ID: <RuleID id="5137834eb8634842852273a08fe9f1c7" />)
+				This is a new detection.
 			</td>
-		</tr>		
+		</tr>
+		<tr>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="7e3249c7a5d8469697478746660886c8" />
+			</td>
+			<td>XSS - JavaScript Event Handler Coercion - URI</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="d34bc5db8cbc4e18a44ed115c293b926" />
+			</td>
+			<td>XSS, HTML Injection - Script Tag - Beta</td>
+			<td>
+				This rule will be merged into the original rule "XSS, HTML Injection - Script Tag" (ID:{" "}<RuleID id="9c8dda9708cc4452ac76e7be7b58420b" />).
+			</td>
+		</tr>
 	</tbody>
 </table>

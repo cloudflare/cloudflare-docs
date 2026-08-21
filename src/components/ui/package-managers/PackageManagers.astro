@@ -4,7 +4,7 @@
  * pnpm, yarn, bun). Selection syncs across instances via sessionStorage;
  * an inline custom element restores the saved tab before paint.
  */
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { getTabs } from "~/util/package-managers";
 import type { CommandType, CommandOptions } from "~/util/package-managers";
 import { LayerCard, LayerCardHeader } from "@/components/ui/layer-card";

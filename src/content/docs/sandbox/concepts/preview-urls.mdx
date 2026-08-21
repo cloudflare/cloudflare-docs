@@ -38,8 +38,8 @@ See the [tunnels API reference](/sandbox/api/tunnels/) for the full API and feat
 
 For production use we recommend using the `exposePort()` API and routing traffic through your worker.
 
-:::note[Production requires custom domain]
-Preview URLs work in local development without configuration. For production, you need a custom domain with wildcard DNS routing. See [Production Deployment](/sandbox/guides/production-deployment/).
+:::note[Custom domain for exposePort production URLs]
+Local development does not need a custom domain or wildcard DNS for `exposePort()` preview URLs. For production, you need a custom domain with wildcard DNS routing. Refer to [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
 :::
 
 Preview URLs provide public HTTPS access to services running inside sandboxes. When you expose a port, you get a unique URL that proxies requests to your service.
@@ -226,7 +226,7 @@ Preview URLs are publicly accessible by default, but require a valid access toke
 **Built-in security**:
 
 - **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token456.yourdomain.com`)
-- **HTTPS in production** - All traffic is encrypted with TLS. Certificates are provisioned automatically for first-level wildcards (`*.yourdomain.com`). If your worker runs on a subdomain, see the [TLS note in Production Deployment](/sandbox/guides/production-deployment/).
+- **HTTPS in production** - All traffic is encrypted with TLS. Certificates are provisioned automatically for first-level wildcards (`*.yourdomain.com`). If your Worker runs on a subdomain, refer to the [TLS note for custom domains](/sandbox/guides/preview-urls-custom-domain/#subdomain-depth-matters-for-tls).
 - **Unpredictable URLs** - Auto-generated tokens are randomly generated and difficult to guess
 - **Token collision prevention** - Custom tokens are validated to ensure uniqueness within each sandbox
 
@@ -273,7 +273,7 @@ app.run((host = "127.0.0.1"), (port = 3000));
 
 ### Production Errors
 
-For custom domain issues, see [Production Deployment troubleshooting](/sandbox/guides/production-deployment/#troubleshooting).
+For custom domain issues, refer to [preview URL custom domain troubleshooting](/sandbox/guides/preview-urls-custom-domain/#troubleshooting).
 
 ### Local Development
 
@@ -295,7 +295,8 @@ This is **only required for local development**. In production, all container po
 
 ## Related Resources
 
-- [Production Deployment](/sandbox/guides/production-deployment/) - Set up custom domains for production
+- [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/) - Wildcard DNS and TLS for `exposePort()`
+- [Deploy a Sandbox application](/sandbox/guides/deploy/) - Worker and container image deploys
 - [Expose Services](/sandbox/guides/expose-services/) - Practical patterns for exposing ports
 - [Ports API](/sandbox/api/ports/) - Complete API reference
 - [Tunnels API](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs as an alternative for development

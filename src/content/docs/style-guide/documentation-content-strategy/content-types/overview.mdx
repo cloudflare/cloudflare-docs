@@ -1,22 +1,49 @@
 ---
 pcx_content_type: concept
 title: Overview
-description: Write product overview pages.
+meta:
+  title: Content type - Overview
+description: Write product overview pages that orient the reader in a product area and route them to the tasks and reference they need.
+sidebar:
+  order: 1
 products:
   - style-guide
 ---
 
 import { Render } from "~/components";
 
-## Purpose
+An overview is the landing page a reader reaches first in a product area: it answers "what is this, and where do I start?" in one paragraph, then routes onward. The tone is accessible, welcoming, conversational, and outspoken.
 
-The purpose of a landing page is to welcome users and provide an overview of the product.
+## When to use it
 
-## Tone
+Use an overview as the single landing page for a product or major product area, the page its sidebar section opens on. It is not:
 
-Accessible, welcoming, conversational, outspoken
+- **A concept page.** Move architecture and tradeoffs to a concept page and link to them. An overview orients rather than explains.
+- **A bare table of contents.** A list of links with no orientation only duplicates the sidebar.
+- **A marketing page.** The reader has already clicked into the docs.
 
-## content_type
+For the full comparison, refer to [Content types](/style-guide/documentation-content-strategy/content-types/). For a live example, refer to the [Argo Smart Routing overview](/argo-smart-routing/).
+
+## Title & description
+
+- **Title**: the name of the product, product group, or content area, as a noun. Do not append "documentation", use a gerund phrase, or use "Introduction".
+- **Description**: name the Cloudflare product and what it does for whom in one sentence, then state the plans it is available on.
+
+## Scaffold this page
+
+<Render
+	file="scaffold-with-recipe"
+	product="style-guide"
+	params={{ type: "overview", recipe: "content-overview" }}
+/>
+
+## Component guidance
+
+- [**Cards**](/style-guide/build-the-page/components/cards/) are the signature components: this is the one type where cards are the body content, because routing is the body. Keep card text to a name plus one line, because a card that explains is a concept paragraph in a box. In the Markdown twin cards flatten to link-plus-description lists, so write the one-liners so they work in both forms.
+- **Link lists** beat cards when the grid forces padded copy, or when a group genuinely must run past the roughly five-link cap, because prose lists scan better at volume.
+- **What does not fit:** Steps (nothing is performed here), code blocks (nothing is looked up, though inline code in the orientation line is fine), and accordions (an overview with hidden content is hiding its own map).
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: overview
@@ -26,113 +53,15 @@ products:
   - product-c
 ```
 
-For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+For more details, refer to [`pcx_content_type`](/style-guide/build-the-page/frontmatter/custom-properties/#pcx_content_type).
 
-## Structure
+## Managing overview pages
 
-### Most used components
+Every product or major product area must have an overview, so the answer to a weak one is always to strengthen it, never to remove it. If a page reads like a bare table of contents, add the orientation that says what the area is and where to start. Do not delete it and let the sidebar stand in.
 
-- [`PublicStats`](/style-guide/components/public-stats/): <Render file="public-stats-definition" product="style-guide" />
+The only page you hide is a structural group node: a folder that exists purely to group its children in the sidebar and was never a content page. You cannot delete a folder's `index.mdx` without a build error, so hide the placeholder and redirect readers past it by setting `group.hideIndex` to `true`:
 
-### Required components
-
-**Metadata title**: Overview
-
-**Title**: Name of the product, group of products, or conceptual content area. H1. Usually a noun. Do not add "documentation" to the title. Do not use gerund phrases.
-
-**Intro/overview**: Brief welcoming introductory content. May be combined with product description.
-
-**Product description**: What does this product do? Why would you use it?
-
-**Product availability**: What plan(s) is this available to? Review [available plan types](https://github.com/cloudflare/cloudflare-docs/blob/production/src/components/Plan.astro).
-
-**Product attributes**: What is included with this product? (Specific actions, protections, etc.)
-
-### Optional components
-
-**Features**: A few main features specific to product. Includes a link to relevant documentation on feature.
-
-**Related products**: Links to documentation for products used or configured together with current product. For product icons, refer to this [icon library](https://cfdata.lol/icons/).
-
-**More resources**: External links to related resources, such as plans, pricing. Do not duplicate the information from the footer. Also, if the product is free to use or there are not any useful links, feel free to skip this section. Review [available icons](/style-guide/components/icons/).
-
-**Visual**: Graphic or image that enhances the landing page. It should be something relatively static that will not require much (if any) updating in the future.
-
-**Integration information**
-
-## Template
-
-```
-
----
-title: Overview
-weight: xx
-layout: overview
-pcx_content_type: overview
-description: <Cloudflare product> <what it does in one sentence>. Available on <plan types>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# Cloudflare <product name> (or {{</*beta*/>}}Cloudflare <product name>{{</*/beta*/>}} for products in beta)
-
-{{</*description*/>}}
-Product description - What does this product do? Why would you use it? Short overview of product capability (~10-15 words).
-{{</*/description*/>}}
-
-{{</*plan type="<type>"*/>}}
-
-Summary - Brief welcoming introductory content. A few sentences describing the product’s benefits to the customer. Focus on customer benefit but can also include general product information.
-
-Learn how to [get started](/<product>/get-started/).
-
----
-
-## Features
-
-{{</*feature header="Name of feature" href="/link/to/feature/" cta="Optional message that's different from the name of the feature"*/>}}
-Description highlighting capabilities of product feature. This section accepts Markdown lists for multiple attributes.
-{{</*/feature*/>}}
-
----
-
-## Related products
-
-{{</*related header="<Name of product>" href="</link/to/product>" product="<slugified-product-name>"*/>}}
-Description of product used together or connected configuration with current product.
-{{</*/related*/>}}
-
----
-
-## More resources
-
-{{</*resource-group*/>}}
-
-{{</*resource header="<Resource name>" href="https://www.cloudflare.com/link-to-resource/" icon="icon-name"*/>}}
-Description of external resource related to current product.
-{{</*/resource*/>}}
-
-{{</*/resource-group*/>}}
-
-```
-
-## Additional Information
-
-Overview pages are the default "first" page in any nested navigation. In some cases, to ensure good information architecture and navigability, you may need to rename or remove overview pages.
-
-### When to consider removing an verview page
-
-If the overview acts as a table of contents that provides no additional information or context, consider removing it altogether.
-
-### How to remove an overview page
-
-Deleting the `index.mdx` file in a nested folder is not possible and will result in a build error. To remove the page from the docs, the `index.mdx` file must be hidden using sidebar styling changes. Also, to ensure that users do not accidentally access the overview page, add a redirect.
-
-To hide an overview page, set the `group.hideIndex` property to `true` in the page's frontmatter.
-
-```
+```yaml
 ---
 title: Placeholder
 sidebar:
@@ -141,20 +70,8 @@ sidebar:
 ---
 ```
 
-## Examples
+## Writing for AI and agents
 
-[Argo Smart Routing documentation](/argo-smart-routing/)
-
-### Many availabilities
-
-[Images](/images/) is an example of a product whose availability is complex, and is not easy to just use one type of plan. To create components for each plan type, insert `{{</*plan type="<PLAN_TYPE>"*/>}}` below each of the feature component, like so:
-
-```
-{{</*feature header="<CLOUDFLARE_PRODUCT>" href="/path/to/product"*/>}}
-
-{{</*plan type="PLAN_TYPE"*/>}}
-
-Description of content in this section.
-
-{{</*/feature*/>}}
-```
+- **Self-contained orientation.** Write the opening paragraph so it stays accurate in isolation, because it is what an agent quotes when asked what the product is. Do not lean on the title or a later section to complete its meaning.
+- **Literal availability.** State availability with literal plan, region, or release-stage names rather than a paraphrase.
+- **Load-bearing links.** Use real, current routes, because a stale route here strands a reader at the front door.
