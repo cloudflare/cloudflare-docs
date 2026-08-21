@@ -17,7 +17,9 @@ Flagship supports two kinds of API tokens. Both use the same [Create API token](
 | Account-wide | **Entire Account**          | Every Flagship app in the account |
 | App-scoped   | **Specified Flagship apps** | Only the Flagship apps you select |
 
-Use an account-wide token for Wrangler, CI, and other trusted server-side workflows. Use an app-scoped token when the token might be visible, such as in a browser. If an app-scoped token is leaked, it can only act on the apps you selected.
+Use an account-wide token when a trusted server-side workflow needs access to every Flagship app. Use an app-scoped token when that workflow should only touch the apps you select — for example, CI or a backend service for one product.
+
+API tokens are secrets. Do not put them in client-side or public-facing code.
 
 Both token types support **Read**, **Write**, and **Evaluate**. The names change with the resource:
 
@@ -52,8 +54,6 @@ To create the token yourself:
 
 <Render file="new-token-warning" product="fundamentals" />
 
-Do not put an account-wide Flagship token in client-side code. It can access every Flagship app in the account.
-
 ## Create an app-scoped token
 
 [Create an app-scoped Flagship token](https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=[{%22key%22:%22flagship_app%22,%22type%22:%22evaluate%22}]&scope=specified_flagship_app) to open the token form with **Specified Flagship apps** and **Flagship App Evaluate** already selected. Then choose the app and create the token.
@@ -68,14 +68,14 @@ To create the token yourself:
 
 2. Select **Create Token**.
 3. Select **Create Custom Token** > **Get started**.
-4. Enter a token name that describes where you will use it, such as `marketing-site-client`.
+4. Enter a token name that describes where you will use it, such as `checkout-service-ci`.
 5. Under **Permission policies**, open the resource dropdown (it defaults to **Entire Account**) and select **Specified Flagship apps**.
-6. In **Select Flagship apps**, choose the app or apps this token should access. Do not select every app if the token will run in a browser.
+6. In **Select Flagship apps**, choose the app or apps this token should access.
 7. Under **Developer Platform**, select a **Flagship App** permission:
 
    | Use case                                      | Permission                |
    | --------------------------------------------- | ------------------------- |
-   | Client-side or browser SDK                    | **Flagship App Evaluate** |
+   | Evaluate flags in the selected apps           | **Flagship App Evaluate** |
    | Read flag configuration for the selected apps | **Flagship App Read**     |
    | Manage flags in the selected apps             | **Flagship App Write**    |
 
@@ -85,22 +85,19 @@ To create the token yourself:
 
 <Render file="new-token-warning" product="fundamentals" />
 
-For client-side evaluation, use **Flagship App Evaluate** on a single app. That permission cannot change flags or access any other app.
-
 ## Use the token
 
 Pass the token to an OpenFeature SDK as `authToken` (TypeScript) or the equivalent option in [Python](/flagship/sdk/python/) and [Go](/flagship/sdk/go/).
 
 ```ts
-import { OpenFeature } from "@openfeature/web-sdk";
-import { FlagshipClientProvider } from "@cloudflare/flagship/web";
+import { OpenFeature } from "@openfeature/server-sdk";
+import { FlagshipServerProvider } from "@cloudflare/flagship/server";
 
 await OpenFeature.setProviderAndWait(
-	new FlagshipClientProvider({
+	new FlagshipServerProvider({
 		appId: "<APP_ID>",
 		accountId: "<ACCOUNT_ID>",
 		authToken: "<APP_SCOPED_API_TOKEN>",
-		prefetchFlags: ["promo-banner", "dark-mode"],
 	}),
 );
 ```
@@ -111,6 +108,5 @@ Inside a Cloudflare Worker, prefer the [binding](/flagship/binding/). The bindin
 
 ## Next steps
 
-- Set up the [TypeScript Client SDK](/flagship/sdk/client-provider/).
 - Set up the [TypeScript Server SDK](/flagship/sdk/server-provider/) outside of Workers.
 - Restrict token use with [IP filtering or a TTL](/fundamentals/api/how-to/restrict-tokens/).

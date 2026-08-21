@@ -1,6 +1,6 @@
 ---
 title: Create app-scoped API tokens for Flagship
-description: Scope a Cloudflare API token to a single Flagship app so client-side SDKs can evaluate flags without account-wide access.
+description: Scope a Cloudflare API token to selected Flagship apps instead of every app in the account.
 products:
   - flagship
 date: 2026-08-20
@@ -8,8 +8,8 @@ date: 2026-08-20
 
 You can now create **app-scoped API tokens** for [Flagship](/flagship/). These tokens grant access only to the Flagship apps you select, instead of every app in the account.
 
-When you create a custom token, open the resource dropdown (it defaults to **Entire Account**) and select **Specified Flagship apps**. Then choose the app and a **Flagship App** permission: Evaluate, Read, or Write. Account-wide Flagship Evaluate, Read, and Write permissions still exist for trusted server-side workflows.
+When you create a custom token, open the resource dropdown (it defaults to **Entire Account**) and select **Specified Flagship apps**. Then choose the app and a **Flagship App** permission: Evaluate, Read, or Write. Account-wide Flagship Evaluate, Read, and Write permissions still exist when you need access to every app.
 
-Use an app-scoped token when you evaluate flags from a browser or other client-side environment. If the token is exposed, it can only act on the apps you selected. Do not put an account-wide Flagship token in client-side code.
+Use app-scoped tokens in trusted server-side environments, such as Wrangler, CI, or a backend service that should only touch one app. API tokens remain secrets — do not put them in client-side or public-facing code.
 
-To create a token, refer to [API tokens](/flagship/api-tokens/) or [open the app-scoped token form](https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=[{%22key%22:%22flagship_app%22,%22type%22:%22evaluate%22}]&scope=specified_flagship_app) in the dashboard. To use one in the browser, refer to the [TypeScript Client SDK](/flagship/sdk/client-provider/).
+To create a token, refer to [API tokens](/flagship/api-tokens/) or [open the app-scoped token form](https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=[{%22key%22:%22flagship_app%22,%22type%22:%22evaluate%22}]&scope=specified_flagship_app) in the dashboard.
