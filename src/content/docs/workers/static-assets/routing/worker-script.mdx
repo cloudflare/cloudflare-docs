@@ -16,6 +16,12 @@ If an appropriate static asset if not found, Cloudflare will invoke your Worker 
 
 This allows you to easily combine together these two features to create powerful applications (e.g. a [full-stack application](/workers/static-assets/routing/full-stack-application/), or a [Single Page Application (SPA)](/workers/static-assets/routing/single-page-application/) or [Static Site Generation (SSG) application](/workers/static-assets/routing/static-site-generation/) with an API).
 
+## Cloudflare Access context
+
+:::note
+When a Worker has Static Assets, the internal assets router does not pass `ctx.access` to the user Worker. Access still protects the Worker and its assets, but `ctx.access` is unavailable to the user Worker. For more information, refer to [`ctx.access` limitations](/workers/configuration/cloudflare-access/#ctxaccess-limitations).
+:::
+
 ## Run your Worker script first
 
 You can configure the [`assets.run_worker_first` setting](/workers/static-assets/binding/#run_worker_first) to control when your Worker script runs relative to static asset serving. This gives you more control over exactly how and when those assets are served and can be used to implement "middleware" for requests.

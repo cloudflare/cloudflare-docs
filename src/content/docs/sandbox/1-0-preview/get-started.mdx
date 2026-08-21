@@ -1,0 +1,104 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 1
+description: Install @cloudflare/sandbox@next and run your first process handle in a sandbox.
+products:
+  - sandbox
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page uses `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. Prefer this path for new projects. For today's stable package, refer to [Getting started](/sandbox/get-started/).
+:::
+
+## 1. Install the preview package
+
+In a Workers project that already uses Sandbox, or a new project from the Sandbox template:
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+Build and deploy the Worker **and** the sandbox container image from the same preview line.
+
+## 2. Export your Sandbox class
+
+<TypeScriptExample>
+```ts
+import { Sandbox } from "@cloudflare/sandbox";
+
+export { Sandbox };
+```
+</TypeScriptExample>
+
+Keep your `wrangler` Durable Object binding and container configuration. Preview-specific transport variables are not required.
+
+## 3. Run a process
+
+`exec()` starts a program from **argv** — an array of the executable path or name, then its arguments. It waits until the sandbox can start the process, then returns a **process handle**. It does **not** wait for the process to exit.
+
+Collect results with handle methods such as `output()`, or stream with `logs()`.
+
+<TypeScriptExample>
+```ts
+import { getSandbox, proxyToSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+type Env = {
+	Sandbox: DurableObjectNamespace<import("@cloudflare/sandbox").Sandbox>;
+};
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const proxy = await proxyToSandbox(request, env);
+		if (proxy) return proxy;
+
+		const sandbox = getSandbox(env.Sandbox, "preview-demo");
+		const process = await sandbox.exec(["python3", "-c", "print(2 + 2)"]);
+		const output = await process.output({ encoding: "utf8" });
+
+		return Response.json({
+			id: process.id,
+			pid: process.pid,
+			stdout: output.stdout,
+			exitCode: output.exitCode,
+		});
+	},
+};
+```
+</TypeScriptExample>
+
+Each argv entry is one argument to the process. The SDK does **not** run a shell and does **not** shell-escape argv. Spaces and special characters in an entry stay inside that argument.
+
+Shell syntax (`&&`, pipes, redirects, globs) needs an explicit shell, with the script as its own argument:
+
+<TypeScriptExample>
+```ts
+const process = await sandbox.exec([
+	"/bin/bash",
+	"-lc",
+	"echo hello && uname -a",
+]);
+const { stdout } = await process.output({ encoding: "utf8" });
+```
+</TypeScriptExample>
+
+## 4. How this differs from the stable package
+
+- `await sandbox.exec(...)` creates a process. It does **not** wait for exit. Use `output()`, `waitForExit()`, or other handle methods for completion.
+- Each `exec()` is independent. A `cd` or `export` in one call is not remembered in the next.
+- Pass `cwd` and `env` on each `exec()` when you need them, or use `setEnvVars` for sandbox-wide values. Refer to [Environment variables](/sandbox/1-0-preview/environment/).
+- A process runs only in the **current container** for that sandbox. After the container stops or is replaced, start a new process. Model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+- Before production traffic, learn which failures are safe to retry: [Errors and recovery](/sandbox/1-0-preview/errors/).
+
+## Next
+
+- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) — sandbox ID, container, stop, and replace
+- [Process execution](/sandbox/1-0-preview/processes/) — `exec()`, handles, and continuing work across requests
+- [Errors and recovery](/sandbox/1-0-preview/errors/) — retries, interrupted calls, and stale handles
+- [Migrate](/sandbox/1-0-preview/migrate/) — update an existing stable app
+- [API reference](/sandbox/1-0-preview/api/) — processes, terminals, and errors
+- [Terminals](/sandbox/1-0-preview/terminals/) — interactive PTY and browser connections
+- [Extensions](/sandbox/1-0-preview/extensions/)

@@ -10052,6 +10052,7 @@
 		"responses",
 		"chat-completions"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-22 17:53:42",
 	"schema": {

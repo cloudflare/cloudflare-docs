@@ -12,7 +12,10 @@ interface Props extends HTMLAttributes<"span"> {
 		| "tip"
 		| "warning"
 		| "caution"
-		| "danger";
+		| "danger"
+		| "cyan"
+		| "orange"
+		| "steel";
 	size?: "small" | "medium" | "large";
 }
 
@@ -34,6 +37,10 @@ const variantClass: Record<string, string> = {
 	warning: "bg-warning-muted text-warning",
 	caution: "bg-warning-muted text-warning",
 	danger: "bg-danger-muted text-danger",
+	// Extended tones (see --nb-* tokens in globals.css)
+	cyan: "bg-[var(--nb-cyan-muted)] text-[var(--nb-cyan)]",
+	orange: "bg-[var(--nb-orange-muted)] text-[var(--nb-orange)]",
+	steel: "bg-[var(--nb-steel-muted)] text-[var(--nb-steel)]",
 };
 
 const sizeClass: Record<string, string> = {

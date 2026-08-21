@@ -33,6 +33,19 @@ To view BotBase, go to **Security Analytics** > **Bot analysis** > **BotBase**. 
 - Filter your own traffic to a specific bot to investigate its activity on your zone.
 - Copy a bot's detection ID to target it in [Security rules](/security/rules/).
 
+## Requests
+
+The **Requests** column summarizes requests associated with each bot over the previous 24 hours and shows an hourly sparkline.
+
+| Metric           | Definition                                                              |
+| ---------------- | ----------------------------------------------------------------------- |
+| **Successful**   | Requests with an edge HTTP response status in the `2xx` or `3xx` range. |
+| **Unsuccessful** | Requests with any other edge HTTP response status.                      |
+
+These metrics describe HTTP response outcomes, not the mitigation that a website owner configured for a request. Unsuccessful requests can include errors returned by the origin, such as `404` and `5xx` responses.
+
+To investigate a bot's traffic, select its row to open Security Analytics in a new tab filtered to that bot's detection ID. Expand a request in the request log to review the **Mitigation**, **Edge status code**, and **Origin status code** fields.
+
 ## Classification
 
 BotBase classifies each tracked bot by its behavior — what the bot may do on your site. A single bot can have one or more behaviors. To read more, see [Verified bot classifications](/bots/concepts/bot/verified-bots/).

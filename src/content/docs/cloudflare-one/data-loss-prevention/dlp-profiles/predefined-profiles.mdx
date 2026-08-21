@@ -64,7 +64,7 @@ In the table below, entries use one of three validation methods. [Luhn's algorit
 | American Express Card Number     | Validated using [Luhn's algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm). |
 | American Express Text            | Text matching `amex` or `american express`.                                       |
 | Diners Club Card Number          | Validated using Luhn's algorithm.                                                 |
-| Generic CVV Card Number          | Validated with regex.                                                             |
+| CVV Card Number (labeled)        | Validated with regex.                                                             |
 | Mastercard Card Number           | Validated using Luhn's algorithm.                                                 |
 | Mastercard Text                  | Text matching `mastercard`.                                                       |
 | Union Pay Card Number            | Validated using Luhn's algorithm.                                                 |
@@ -101,7 +101,7 @@ This behavior helps reduce false positives from isolated matches.
 
 The profile includes the following detection entries:
 
-- AU Passport Number
+- Australia Passport Number
 - American Express Card Number
 - Diners Club Card Number
 - US Driver's License Number

@@ -9,13 +9,11 @@ sidebar:
 description: Learn how to get started with Cloudflare's client-side security.
 ---
 
-import { Tabs, TabItem, Render, Steps, DashButton } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 ## 1. Activate client-side resource monitoring
 
 To enable client-side resource monitoring:
-
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -28,19 +26,6 @@ To enable client-side resource monitoring:
 
 </Steps>
 
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Client-side security**.
-3. Go to the **Settings** tab.
-4. Next to **Continuous monitoring and alerting**, select **Enable**.
-
-</Steps>
-
-</TabItem> </Tabs>
-
 If you do not have access to client-side security settings in the Cloudflare dashboard, check if your user has one of the [necessary roles](/client-side-security/reference/roles-and-permissions/).
 
 ## 2. Review detected resources
@@ -50,22 +35,12 @@ When you enable client-side resource monitoring, it may take a while to get the 
 To review the scripts detected by Cloudflare:
 
 <Steps>
-	1. Go to the client-side resources page:
+	1. In the Cloudflare dashboard, go to the **Web assets** page.
 
-		<Tabs syncKey="dashNewNav">
-			<TabItem label="New dashboard" icon="rocket">
-				1. In the Cloudflare dashboard, go to the **Web assets** page.
+		<DashButton url="/?to=/:account/:zone/security/web-assets" />
 
-					<DashButton url="/?to=/:account/:zone/security/web-assets" />
-				2. Select the **Client-side resources** tab.
-			</TabItem>
-			<TabItem label="Old dashboard">
-				1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-				2. Go to **Security** > **Client-side security**.
-			</TabItem>
-		</Tabs>
-
-	2. Review the list of detected scripts, checking for any unknown or unexpected scripts. [Depending on your plan and subscriptions](/client-side-security/#availability), Cloudflare will also:
+	2. Select the **Client-side resources** tab.
+	3. Review the list of detected scripts, checking for any unknown or unexpected scripts. [Depending on your plan and subscriptions](/client-side-security/#availability), Cloudflare will also:
 		- Inform you if a script is [considered malicious](/client-side-security/how-it-works/malicious-script-detection/).
 		- [Show the details](/client-side-security/detection/monitor-connections-scripts/#view-details) about each detected script.
 </Steps>
