@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-07-27
-description: WAF managed ruleset changes scheduled for 2026-07-27
-date: 2026-07-21
+title: WAF Release - Scheduled changes for 2026-08-24
+description: WAF managed ruleset changes scheduled for 2026-08-24
+date: 2026-08-17
 publish_future_dated_entry: true
 ---
 
@@ -21,43 +21,69 @@ import { RuleID } from "~/components";
 	</thead>
 	<tbody>
 		<tr>
-			<td>2026-07-21</td>
-			<td>2026-07-27</td>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="54e1733b10da4a599e06c6fbc2e84e2d" />
+				<RuleID id="a80f214f0947435dabb2ba2d1489d892" />
 			</td>
-			<td>SSRF - Cloud - Beta</td>
+			<td>HTTP/2 Request Smuggling - Request Body Anomaly</td>
 			<td>
-				This is an improved detection.
+				This is a new detection.
 			</td>
 		</tr>
 		<tr>
-			<td>2026-07-21</td>
-			<td>2026-07-27</td>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="95a84ab1645a49c685648c17761e7a4c" />
+				<RuleID id="58a184412d2b4113bca6379b20646260" />
 			</td>
-			<td>Command Injection - Obfuscation</td>
+			<td>XSS - JavaScript Event Handler Coercion - Headers</td>
 			<td>
 				This is a new detection.
 			</td>
-		</tr>	
+		</tr>
 		<tr>
-			<td>2026-07-23</td>
-			<td>2026-07-27</td>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="58df9693db4d454a8764fcda7347c892" />
+				<RuleID id="e79cb939d6aa41db984e6db3d706d517" />
 			</td>
-			<td>Alibaba Fastjson JSONType Remote Code Execution - Body</td>
+			<td>XSS - JavaScript Event Handler Coercion - Body</td>
 			<td>
 				This is a new detection.
 			</td>
-		</tr>		
+		</tr>
+		<tr>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="7e3249c7a5d8469697478746660886c8" />
+			</td>
+			<td>XSS - JavaScript Event Handler Coercion - URI</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>2026-08-17</td>
+			<td>2026-08-24</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="d34bc5db8cbc4e18a44ed115c293b926" />
+			</td>
+			<td>XSS, HTML Injection - Script Tag - Beta</td>
+			<td>
+				This rule will be merged into the original rule "XSS, HTML Injection - Script Tag" (ID:{" "}<RuleID id="9c8dda9708cc4452ac76e7be7b58420b" />).
+			</td>
+		</tr>
 	</tbody>
 </table>

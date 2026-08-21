@@ -44,6 +44,12 @@ Take into consideration that only [Generic Global Tiered Cache](/cache/how-to/ti
 
 :::
 
+### Egress to origin
+
+Regional Services controls where user traffic is decrypted and processed within Cloudflare's network. It does not by itself guarantee the geolocation of the egress IPs used by the Cloudflare CDN when connecting to your origin server. Egress IPs to your origin are site-local IPs from the in-region data center where the request was processed.
+
+If you need guaranteed egress IP geolocation — for example, to allowlist Cloudflare IPs on your origin from a specific country — use [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) in combination with Regional Services.
+
 ## Customer Metadata Boundary
 
 [Cache Analytics](/cache/performance-review/cache-analytics/), Generic Global Tiered Cache and Custom Tiered Cache are compatible with Customer Metadata Boundary. With Customer Metadata Boundary set to EU, the **Caching** > **Tiered Cache** tab in the zone dashboard will not be populated.

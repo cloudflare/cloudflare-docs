@@ -6,7 +6,7 @@ products:
   - cache
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 Use Cache Rules to customize cache settings on Cloudflare. Cache Rules allows you to make adjustments to what is eligible to cache, how long it should be cached and where, as well as trigger specific interactions with Cloudflare's cache and other Rules products for matching requests.
 
@@ -28,7 +28,28 @@ Rules can be versioned. Refer to the [Version Management](/version-management/) 
 
 The following table describes Cache Rules availability per plan.
 
-<FeatureTable id="cache.cache_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 10 | 25 | 50 | 300 |
+
+## Cache Rules and cache keys
+
+When a Cache Rule sets a [custom cache key](/cache/how-to/cache-keys/), the resulting cache entry is indexed by that key rather than the request URL alone. Depending on what the custom cache key includes, this may affect [single-file purge](/cache/how-to/purge-cache/purge-by-single-file/):
+
+- **Custom cache keys that only change how the query string is handled** (for example, ignoring the query string) generally work with dashboard single-file purge.
+- **Custom cache keys that include headers, cookies, or other request properties** will prevent dashboard single-file purge from working, because the dashboard cannot send those values in a purge request.
+- **Even without Cache Rules**, Cloudflare's default cache key includes certain request headers. Dashboard single-file purge may not work for resources cached with those headers present.
+
+To purge resources that cannot be cleared via dashboard single-file purge, you have the following options:
+
+- Use the API to [purge by URL](/api/resources/cache/methods/purge/#purge-cached-content-by-url), including all headers, cookies, and query strings that are part of your custom cache key. If any header or cookie is missing from the purge request, it is treated as an empty value in the cache key.
+- [Purge by host](/cache/how-to/purge-cache/purge-by-hostname/), which clears all resources for a hostname and is not affected by custom cache keys.
+- [Purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), which purges all resources under a URL path and is not affected by custom cache keys.
+- [Purge by tag](/cache/how-to/purge-cache/purge-by-tags/), which is not affected by custom cache keys.
+- [Purge everything](/cache/how-to/purge-cache/purge-everything/), which clears all cached resources for the zone.
+
+For more information, refer to [Cache keys](/cache/how-to/cache-keys/) and [Purge cache key resources](/cache/how-to/purge-cache/purge-cache-key/).
 
 <Render
 	file="troubleshoot-rules-with-trace"

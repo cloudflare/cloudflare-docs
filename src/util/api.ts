@@ -4,8 +4,8 @@
  * CF source: cloudflare-docs/src/util/api.ts — 1:1 port.
  *
  * Fetches the Cloudflare API OpenAPI document from the gh-code worker at a
- * PINNED commit (same reproducibility model as cf/GitHubCode.astro) and
- * dereferences all `$ref`s. Memoized at module scope so the fetch + deref run
+ * PINNED commit and dereferences all `$ref`s. Memoized at module scope so the
+ * fetch + deref run
  * once per build, not per component instance.
  *
  * Reproducibility (migration WS9): the COMMIT below MUST match upstream's pin

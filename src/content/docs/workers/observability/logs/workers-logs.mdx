@@ -24,7 +24,7 @@ Logs include [invocation logs](/workers/observability/logs/workers-logs/#invocat
 
 ![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/wobs_workers_events_122.png)
 
-To send logs to a third party, use [Workers Logpush](/workers/observability/logs/logpush/) or [Tail Workers](/workers/observability/logs/tail-workers/).
+To send logs to a third party, use [OpenTelemetry export](/workers/observability/exporting-opentelemetry-data/) (recommended), [Workers Logpush](/workers/observability/logs/logpush/), or [Tail Workers](/workers/observability/logs/tail-workers/).
 
 ## Enable Workers Logs
 
@@ -225,10 +225,6 @@ KB](/workers/platform/limits/#log-size). Logs exceeding that size will be
 truncated and the log's `$cloudflare.truncated` field will be set to true.
 
 ## Pricing
-
-:::note[Billing start date]
-Workers Logs billing will begin on April 21, 2025.
-:::
 
 <Render file="workers_logs_pricing" product="workers" />
 
