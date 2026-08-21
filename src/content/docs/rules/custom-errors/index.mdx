@@ -11,7 +11,7 @@ head:
     content: Custom Errors
 ---
 
-import { FeatureTable, Render, Steps } from "~/components";
+import { Render, Steps } from "~/components";
 
 Use Custom Errors to replace default Cloudflare error pages with your own custom content. Custom error content is shown to visitors when an HTTP error occurs, whether the error comes from your origin server, a Cloudflare product (including [Cloudflare Workers](/workers/)), or a [security challenge](/cloudflare-challenges/).
 
@@ -47,7 +47,13 @@ To customize a challenge page or the default Cloudflare WAF block page, use an E
 
 Custom Errors are available to all paid plans. The exact features depend on your Cloudflare plan.
 
-<FeatureTable id="rules.custom_errors" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | Yes | Yes | Yes |
+| Number of rules | 0 | 25 | 50 | 300 |
+| Number of assets | 0 | 25 | 50 | 300 |
+| Error Pages | No | Yes | Yes | Yes |
+| Origin Error Pages | No | No | No | Yes |
 
 ---
 
