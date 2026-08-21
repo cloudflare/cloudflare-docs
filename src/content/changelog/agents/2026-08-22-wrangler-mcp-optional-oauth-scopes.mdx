@@ -1,0 +1,16 @@
+---
+title: Choose OAuth scopes for Wrangler and the Cloudflare API MCP server
+description: Wrangler and the Cloudflare API MCP server now let users choose which optional OAuth scopes to grant during authorization.
+products:
+  - agents
+  - workers
+date: 2026-08-22
+---
+
+Wrangler and the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/) now use optional OAuth scopes. During authorization, you can choose which optional scopes to grant instead of approving every scope requested by each client.
+
+Required scopes remain selected. Choosing fewer optional scopes limits each tool's access to the permissions needed for your workflow.
+
+If a command or tool call needs a scope that you declined, reauthorize the client and grant that scope. Automatic scope expansion is not currently supported.
+
+For more information, refer to [`wrangler login`](/workers/wrangler/commands/general/#login) and [Edit optional permissions](/fundamentals/oauth/authorizing-an-application/#edit-optional-permissions).
