@@ -280,7 +280,7 @@ pre.mermaid[data-processed] svg {
 	max-width: 100%;
 	height: auto;
 	display: block;
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
 	vertical-align: top;
 }

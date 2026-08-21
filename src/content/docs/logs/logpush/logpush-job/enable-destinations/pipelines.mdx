@@ -11,9 +11,9 @@ products:
 
 import { Steps, DashButton } from "~/components";
 
-[Cloudflare Pipelines](/pipelines/) ingests events, transforms them with [SQL](/pipelines/sql-reference/), and delivers them to [R2](/r2/) as [Iceberg](/r2/data-catalog/) tables or as Parquet and JSON files. Logpush can write data to Pipelines as a native destination.
+[Cloudflare Pipelines](/pipelines/) ingests events, transforms them with [SQL](/pipelines/sql-reference/), and delivers them to [R2](/r2/) as [Iceberg](/r2-data-catalog/) tables or as Parquet and JSON files. Logpush can write data to Pipelines as a native destination.
 
-Instead of sending raw logs directly to a storage bucket as JSON, Logpush can route them to a Pipeline to filter, enrich, and transform your data into Parquet or Apache Iceberg tables managed by [R2 Data Catalog](/r2/data-catalog/). This allows the data to be much more compact and optimized for analytics such as querying with [R2 SQL](/r2-sql/).
+Instead of sending raw logs directly to a storage bucket as JSON, Logpush can route them to a Pipeline to filter, enrich, and transform your data into Parquet or Apache Iceberg tables managed by [R2 Data Catalog](/r2-data-catalog/). This allows the data to be much more compact and optimized for analytics such as querying with [R2 SQL](/r2-sql/).
 
 The Pipelines destination supports the following Logpush datasets:
 
@@ -36,7 +36,7 @@ For a full list of fields available in each dataset, refer to [Datasets](/logs/l
    - A Pipeline name is auto-generated, but you can edit it.
 5. In the **Destination** step, configure the destination:
    - Select an existing R2 bucket or type a new name to create one during setup.
-   - Choose the storage format: Parquet, JSON, or [R2 Data Catalog (Apache Iceberg)](/r2/data-catalog/).
+   - Choose the storage format: Parquet, JSON, or [R2 Data Catalog (Apache Iceberg)](/r2-data-catalog/).
    - If you select R2 Data Catalog, enter a catalog namespace and table name.
    - Optionally, expand **Delivery settings** to configure roll size, roll interval, and other destination-specific settings. For more information about these settings, refer to the [Pipelines Sinks documentation](/pipelines/sinks/).
 6. In the **Transform** step, choose how to process logs before they are written to the Sink:

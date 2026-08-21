@@ -6,19 +6,23 @@ products:
 date: 2026-06-09
 ---
 
+:::note[Sandbox SDK 1.0 preview]
+A preview of **Sandbox SDK 1.0** is available on `@cloudflare/sandbox@next`. For new projects, or to move past these deprecations in one migration, refer to the [Sandbox SDK 1.0 preview](/sandbox/1-0-preview/) and [Migrate](/sandbox/1-0-preview/migrate/).
+:::
+
 Today we are announcing the deprecation of several features from the Sandbox SDK. The SDK has grown and matured substantially since it first launched. As agent workflows have developed, we have shipped many new features and experiments so developers can easily integrate secure, isolated code execution into their workflows.
 
-We want the SDK to continue providing a stable foundation for agentic workflows while we iterate quickly on the codebase. These deprecated features have either been superseded by newer capabilities or seen low adoption. They will remain in the codebase until July 9, 2026, after which they will no longer be present in future Sandbox SDK versions.
+We want the SDK to continue providing a stable foundation for agentic workflows while we iterate quickly on the codebase. These deprecated features have either been superseded by newer capabilities or seen low adoption. Do not build new work on them. Migrate using the [2026 deprecation migration guide](/sandbox/guides/2026-deprecation/), or move to the [Sandbox SDK 1.0 preview](/sandbox/1-0-preview/) when you can.
 
 ## HTTP and WebSocket transports
 
-In April 2026, we released the new RPC transport and deprecated the WebSocket transport. This setting governs how the sandbox container talks to the Workers ecosystem. The RPC transport removes the limitations of both the HTTP and WebSocket transports. As of June 9, 2026, it is the recommended default. HTTP and WebSocket transports will no longer be present in Sandbox SDK versions released after July 9, 2026.
+In April 2026, we released the new RPC transport and deprecated the WebSocket transport. This setting governs how the sandbox container talks to the Workers ecosystem. The RPC transport removes the limitations of both the HTTP and WebSocket transports. As of this announcement, RPC is the recommended default. HTTP and WebSocket transports are deprecated and will not ship in future Sandbox SDK majors.
 
-To migrate before July 9, 2026, update the `SANDBOX_TRANSPORT` variable to `rpc` or set the `transport` option when calling `getSandbox()`. For more information, refer to the [transport configuration documentation](/sandbox/configuration/transport/).
+To migrate, update the `SANDBOX_TRANSPORT` variable to `rpc` or set the `transport` option when calling `getSandbox()`. For more information, refer to the [transport configuration documentation](/sandbox/configuration/transport/).
 
 ## Desktop
 
-The desktop feature landed as a technical demonstration of what can be done with the Sandbox SDK — controlling a full browser environment from within a sandbox. With [Cloudflare Browser Run](/browser-run/) now available, this feature saw very little use. We have removed it in `0.10.2`.
+The desktop feature ran a full Linux desktop inside the sandbox (display server, desktop environment, and VNC/noVNC) so agents and apps could drive a GUI with screenshots, mouse, and keyboard — the same *computer-use* shape other sandbox products expose for UI automation. Adoption stayed low, and we removed it in `0.10.2`. If you need that capability again, you can build it on top of the sandbox with [extensions](/sandbox/1-0-preview/extensions/) rather than a built-in `sandbox.desktop` API.
 
 ## Expose ports
 
@@ -38,6 +42,8 @@ We are exploring moving non-core features like the [code interpreter](/sandbox/g
 
 ## Next steps
 
-If you use any of these features, refer to the [2026 deprecation migration guide](/sandbox/guides/2026-deprecation/). We also provide an [agent skill](/sandbox/guides/2026-deprecation/SKILL.md) to help with the migration.
+If you use any of these features on the **current stable** package, refer to the [2026 deprecation migration guide](/sandbox/guides/2026-deprecation/). Coding agents can use the **`sandbox-stable`** skill for stable-package work and that guide for cleanup ([Agent setup](/agent-setup/) · [Cloudflare Skills](https://github.com/cloudflare/skills)).
+
+If you are moving to **Sandbox SDK 1.0** (`@next`), use the [1.0 preview](/sandbox/1-0-preview/) and [Migrate](/sandbox/1-0-preview/migrate/) guides instead — or the **`sandbox-migrate-to-next`** skill after installing Cloudflare Skills. New projects should prefer **`sandbox-next`** on `@next`.
 
 For any questions, ask in the [Cloudflare Developers Discord](https://discord.gg/cloudflaredev).

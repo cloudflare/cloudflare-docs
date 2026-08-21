@@ -5,12 +5,7 @@ const STORAGE_KEY = "ai-gateway-code-selector";
 const AIG_EVENT = "ai-gateway-selector-change";
 
 export type Provider =
-	| "openai"
-	| "anthropic"
-	| "google"
-	| "grok"
-	| "dynamic"
-	| "workers-ai";
+	"openai" | "anthropic" | "google" | "grok" | "dynamic" | "workers-ai";
 export type KeyType = "byok" | "in-request" | "unified";
 export type ClientType = "openai-js" | "curl" | "aisdk";
 export type APIType = "native" | "unified";

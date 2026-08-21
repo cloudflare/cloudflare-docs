@@ -3,9 +3,7 @@ params:
   - rulesetName?
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
-
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+import { Render } from "~/components";
 
 <Render
 	file="managed-rules-browse-zone-new-nav"
@@ -22,23 +20,3 @@ import { Render, Tabs, TabItem } from "~/components";
 		rulesetName: props.rulesetName,
 	}}
 />
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Render
-	file="managed-rules-browse-zone"
-	product="waf"
-	params={{
-		rulesetName: props.rulesetName,
-	}}
-/>
-
-<Render
-	file="managed-ruleset-configure-rules-by-tag"
-	product="waf"
-	params={{
-		rulesetName: props.rulesetName,
-	}}
-/>
-
-</TabItem> </Tabs>

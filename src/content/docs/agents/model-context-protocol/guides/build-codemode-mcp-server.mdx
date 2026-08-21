@@ -30,6 +30,8 @@ Code Mode is experimental and may have breaking changes. Use caution in producti
 
 You need a Cloudflare Workers project and an existing `McpServer`.
 
+`codeMcpServer()` currently returns an SDK v1 server. Serve it through the explicit legacy `createLegacyMcpHandler` API.
+
 ## Wrap the server
 
 <Steps>
@@ -62,7 +64,7 @@ You need a Cloudflare Workers project and an existing `McpServer`.
    import { DynamicWorkerExecutor } from "@cloudflare/codemode";
    import { codeMcpServer } from "@cloudflare/codemode/mcp";
    import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-   import { createMcpHandler } from "agents/mcp";
+   import { createLegacyMcpHandler } from "agents/mcp";
    import { z } from "zod";
 
    function createOrderServer() {
@@ -105,7 +107,7 @@ You need a Cloudflare Workers project and an existing `McpServer`.
    			executor,
    		});
 
-   		return createMcpHandler(server, { route: "/mcp" })(
+   		return createLegacyMcpHandler(server, { route: "/mcp" })(
    			request,
    			env,
    			ctx,

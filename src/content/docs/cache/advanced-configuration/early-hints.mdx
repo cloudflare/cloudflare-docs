@@ -7,7 +7,7 @@ products:
 
 ---
 
-import { FeatureTable, DashButton } from "~/components"
+import { DashButton } from "~/components"
 
 When a browser requests a page, the origin server takes time to prepare the full response. Early Hints uses this wait time to send the browser a preliminary `103` response containing `Link` headers that tell the browser which assets it will need. The browser can start loading those assets before the full response arrives, which speeds up page loads.
 
@@ -25,7 +25,9 @@ For more information about Early Hints, refer to the [Cloudflare](https://blog.c
 
 ## Availability
 
-<FeatureTable id="speed.early_hints" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
 
 ## Enable Early Hints
 
