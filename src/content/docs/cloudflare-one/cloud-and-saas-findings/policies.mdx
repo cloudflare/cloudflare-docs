@@ -3,15 +3,17 @@ pcx_content_type: how-to
 description: Automatically remediate findings or send webhooks with CASB policies in Cloudflare One.
 products:
   - cloudflare-one
-title: Policies
+title: Remediation Policies
 sidebar:
   order: 2
 tags:
   - Compliance
 ---
 
+import { Details } from "~/components";
+
 :::note[Availability]
-Requires a paid Cloudflare CASB plan. The CASB Policies feature is not available for free CASB integrations.
+Requires a paid Cloudflare CASB plan. Remediation Policies are not available for free CASB integrations.
 :::
 
 Use CASB policies to automatically remediate a finding or send a webhook as soon as CASB detects it. A policy defines the vendor, the finding type match, and the action Cloudflare should take.
@@ -54,9 +56,39 @@ Remediation actions perform a first-party fix directly against the integration's
 
 CASB currently supports remediation actions for Microsoft 365 and Google Workspace file and folder finding types. If a finding type does not support remediation, **Run Remediation** displays **No automated remediation available for this finding type** and cannot be enabled.
 
+<Details header="Supported findings for remediation">
+
+**Google Workspace:**
+
+- File publicly accessible with edit access
+- File publicly accessible with view access
+- File shared outside company with edit access
+- File shared outside company with view access
+- File shared company-wide with edit access
+- File shared company-wide with view access
+- File publicly accessible with edit access with DLP Profile match
+- File publicly accessible with view access with DLP Profile match
+- File shared outside company with edit access with DLP Profile match
+- File shared outside company with view access with DLP Profile match
+- File shared company-wide with edit access with DLP Profile match
+- File shared company-wide with view access with DLP Profile match
+
+**Microsoft 365:**
+
+- File publicly accessible with edit access
+- File publicly accessible with view access
+- File shared company-wide with edit access
+- File shared company-wide with view access
+- File publicly accessible with edit access with DLP Profile match
+- File publicly accessible with view access with DLP Profile match
+- File shared company-wide with edit access with DLP Profile match
+- File shared company-wide with view access with DLP Profile match
+
+</Details>
+
 Remediation requires [Read-Write permissions](/cloudflare-one/cloud-and-saas-findings/manage-findings/#configure-remediation-permissions) on the integration. If the integration only has Read permissions, upgrade the integration before the policy can remediate matching findings.
 
-To learn more about monitoring and managing instance remediations, refer to [Manage remediated findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/#manage-remediated-findings).
+For more information, refer to [Manage remediated findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/#manage-remediated-findings).
 
 ### Send webhooks
 
@@ -84,7 +116,7 @@ Every policy produces two categories of logs, available under **Insights** in Cl
 
 For compliance reporting, the Cloud & SaaS Security policies log ties a specific finding to a specific automated action and timestamp.
 
-For more information on logs in Cloudflare One, refer to [Cloudflare One Logs](/cloudflare-one/insights/logs/).
+For more information, refer to [Cloudflare One Logs](/cloudflare-one/insights/logs/).
 
 ## Limitations
 
