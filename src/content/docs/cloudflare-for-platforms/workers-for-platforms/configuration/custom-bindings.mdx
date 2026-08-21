@@ -14,7 +14,9 @@ import { TypeScriptExample, WranglerConfig, CustomBindingsDiagram } from "~/comp
 
 Custom bindings are a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) feature that routes resource ([R2](/r2/) or [D1](/d1/)) operations through a platform-owned Worker before they reach the resource itself. Use this pattern when you deploy [User Workers](/cloudflare-for-platforms/workers-for-platforms/) and need to enforce query policy, log operations, or limit usage per tenant.
 
+:::note
 Only D1 custom bindings are supported today. R2 support is planned, and other `$binding` or `binding_interface` types return a `400`.
+:::
 
 ## How it works
 
