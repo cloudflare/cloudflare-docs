@@ -15,7 +15,7 @@ Durable Object namespaces now have a **Deployments** tab in the Cloudflare dashb
 
 <DashButton url="/?to=/:account/workers/durable-objects" />
 
-A Durable Object namespace is backed by a Worker script, so its deployments are the same as that Worker's deployments. Previously, checking on a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) in progress for a Durable Object meant navigating to the backing Worker. The new tab surfaces that information directly on the namespace, alongside the metrics that matter for it: requests, error rate, and wall time per version, rather than the CPU time shown on the Worker's own Deployments tab. Wall time better reflects Durable Object performance, since it includes time spent waiting on I/O.
+A Durable Object namespace is backed by a Worker script, so its deployments are the same as that Worker's deployments. Previously, checking on a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) in progress for a Durable Object meant navigating to the backing Worker. The new tab surfaces that information directly on the namespace, alongside the metrics that matter for it: requests, error rate, and wall time per version.
 
 The tab is read-only — promoting, rolling back, or splitting traffic on a deployment is still managed from the backing Worker's Deployments tab.
 
