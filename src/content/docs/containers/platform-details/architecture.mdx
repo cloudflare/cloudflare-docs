@@ -15,8 +15,7 @@ After you deploy an application with a Container, your image is uploaded to
 Cloudflare will pre-schedule instances and pre-fetch images across the globe to ensure quick start
 times when scaling up the number of concurrent container instances.
 
-Unlike Workers, which are updated immediately on deploy, container instances are updated using a rolling deploy strategy.
-This allows you to gracefully shut down any running instances during a rollout. Refer to [rollouts](/containers/platform-details/rollouts/) for more details.
+Worker code goes live on deploy. Container instances update with a [rollout](/containers/platform-details/rollouts/). Refer to [Deploy Containers](/containers/deploy/).
 
 ## Lifecycle of a Request
 
@@ -92,26 +91,25 @@ should be built for the `linux/amd64` architecture, and should stay within
 
 ### Container shutdown
 
-If you do not set [`sleepAfter`](/containers/container-class/#sleepafter)
-on your Container class, or stop the instance manually, the container will shut down soon after the container stops receiving requests.
-By setting `sleepAfter`, the container will stay alive for approximately the specified duration.
+The Container class sets [`sleepAfter`](/containers/container-class/#sleepafter) to 10 minutes by default. Its default [`onActivityExpired()`](/containers/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook.
 
-You can manually shut down a container instance by calling [`stop()`](/containers/container-class/#stop) or [`destroy()`](/containers/container-class/#destroy) on it.
+You can stop a container instance yourself with [`stop()`](/containers/container-class/#stop) or [`destroy()`](/containers/container-class/#destroy).
 
-When a container instance is going to be shut down, it is sent a `SIGTERM` signal,
-and then a `SIGKILL` signal after 15 minutes. You should perform any necessary
-cleanup to ensure a graceful shutdown in this time.
+When the platform is about to stop a container instance, it:
+
+1. Sends `SIGTERM` to the main process in the container.
+2. Waits up to 15 minutes for that process to exit.
+3. Sends `SIGKILL` if the process is still running.
+
+Handle `SIGTERM` in your image if you need cleanup before exit. The same sequence runs when a [rollout](/containers/platform-details/rollouts/) replaces a container instance with a new image.
 
 ### Lifecycle hooks
 
 The [`Container` class](/containers/container-class/) provides hooks that run Worker code when the container changes state:
 
 - [`onStart()`](/containers/container-class/#onstart) — Runs after the container has started.
-
 - [`onStop()`](/containers/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
-
 - [`onActivityExpired()`](/containers/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
-
 - [`onError()`](/containers/container-class/#onerror) — Runs when the container exits with an error.
 
 Refer to the [status hooks example](/containers/examples/status-hooks/) for a full implementation.

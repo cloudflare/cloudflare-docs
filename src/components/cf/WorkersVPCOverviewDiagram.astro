@@ -1,5 +1,5 @@
 ---
-import { Icon as AstroIcon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 const policies = [
 	{ label: "DNS", href: "/cloudflare-one/traffic-policies/dns-policies/" },
@@ -22,7 +22,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 			<div class="node-card worker-card">
 				<div class="node-header">
 					<span class="node-icon worker-icon" aria-hidden="true"
-						><AstroIcon name="workers" /></span
+						><Icon name="workers" /></span
 					>
 					<a class="node-title" href="/workers/">Worker</a>
 				</div>
@@ -46,7 +46,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 			<div class="node-card tunnel-card">
 				<div class="node-header">
 					<span class="node-icon tunnel-icon" aria-hidden="true"
-						><AstroIcon name="tunnel" /></span
+						><Icon name="tunnel" /></span
 					>
 					<a class="node-title" href="/tunnel/">Cloudflare Tunnel</a>
 				</div>
@@ -59,7 +59,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 			<div class="node-card mesh-card">
 				<div class="node-header">
 					<span class="node-icon mesh-icon" aria-hidden="true"
-						><AstroIcon name="cloudflare-mesh" /></span
+						><Icon name="cloudflare-mesh" /></span
 					>
 					<a
 						class="node-title"
@@ -75,7 +75,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 			<div class="node-card wan-card">
 				<div class="node-header">
 					<span class="node-icon wan-icon" aria-hidden="true"
-						><AstroIcon name="cloudflare-wan" /></span
+						><Icon name="cloudflare-wan" /></span
 					>
 					<a class="node-title" href="/cloudflare-wan/">Cloudflare WAN</a>
 				</div>
@@ -89,7 +89,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 			<div class="node-card gateway-card">
 				<div class="node-header">
 					<span class="node-icon gateway-icon" aria-hidden="true"
-						><AstroIcon name="gateway" /></span
+						><Icon name="gateway" /></span
 					>
 					<a class="node-title" href="/cloudflare-one/traffic-policies/"
 						>Cloudflare Gateway</a

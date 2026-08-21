@@ -82,7 +82,7 @@ reviewed: 2025-01-15 # YYYY-MM-DD of last content review
 ---
 ```
 
-Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
+Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `troubleshooting`, `tutorial`, `video`.
 
 ### Writing and style rules
 
@@ -182,7 +182,7 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 
 ## Content collections
 
-The site defines 20 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
+The site defines 19 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
 | Collection          | Location                         | Description                              |
 | ------------------- | -------------------------------- | ---------------------------------------- |
@@ -190,7 +190,6 @@ The site defines 20 content collections in `src/content.config.ts` with schemas 
 | `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)          |
 | `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                 |
 | `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                    |
-| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                 |
 | `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)              |
 | `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
 | `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML)  |

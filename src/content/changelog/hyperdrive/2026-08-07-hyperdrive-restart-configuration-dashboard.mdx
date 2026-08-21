@@ -1,0 +1,21 @@
+---
+title: Restart a Hyperdrive configuration from the dashboard
+description: Restart a Hyperdrive configuration to drain its connection pool and establish new connections to your database.
+products:
+  - hyperdrive
+date: 2026-08-07
+---
+
+You can now restart a Hyperdrive configuration from the Cloudflare dashboard. Restarting drains the connection pool and forces Hyperdrive to establish new connections to your origin database.
+
+Restarting is a break-glass action. Hyperdrive automatically detects and recovers from most database failovers. Use a manual restart only when you need to force the pool to drain immediately.
+
+To restart, select your Hyperdrive configuration in the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Settings** tab, and select **Restart** under **Danger zone**. Restarting requires the [**Hyperdrive Admin** role](/fundamentals/manage-members/roles/). After a restart, the **Settings** tab shows when the configuration was last manually restarted.
+
+![The Danger zone section of the Hyperdrive Settings tab, showing the Restart and Delete actions.](~/assets/images/hyperdrive/dashboard-restart-danger-zone.png)
+
+:::caution
+Restarting drops all active connections in the pool and forces them to be re-established. In-flight queries may see brief errors while the pool rebuilds.
+:::
+
+For more information, refer to [Connection pooling](/hyperdrive/concepts/connection-pooling/).

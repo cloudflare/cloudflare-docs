@@ -288,7 +288,11 @@ const hasRssAlternate = headExtras.some(
 	)
 }
 
-{!noindex && jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+{
+	!noindex && jsonLd && (
+		<script type="application/ld+json" set:html={jsonLd} is:inline />
+	)
+}
 
 {
 	headExtras.map(({ tag: Tag, attrs = {}, content }) =>

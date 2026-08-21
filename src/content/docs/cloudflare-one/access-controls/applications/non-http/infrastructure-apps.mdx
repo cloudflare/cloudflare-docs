@@ -63,7 +63,9 @@ Access for Infrastructure currently supports [SSH](/cloudflare-one/networks/conn
 
 ## 4. (Optional) Require independent MFA
 
-You can require users to authenticate with a [YubiKey PIV key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps) before connecting with SSH to targets. You can configure MFA at the application level or at the policy level, allowing you to enforce stricter requirements for sensitive usernames.
+You can require independent MFA before users connect with SSH. The application configuration selects the supported infrastructure authenticators: PIV key (`piv_key`), FIDO2 key (`ssh_fido2_key`), or both.
+
+Application-level settings define the default authenticators and session duration. A policy can define custom settings for specific users or usernames.
 
 For setup instructions, refer to [Enforce MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).
 
@@ -72,6 +74,8 @@ For setup instructions, refer to [Enforce MFA for infrastructure applications](/
 Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
 
 - [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
+
+For SSH, this includes trusting the Cloudflare SSH CA and, if your server restricts certificate principals, [authorizing the SSH usernames](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#confirm-the-account-authorizes-the-certificate-principal) you configured on the target.
 
 ## 6. Connect as a user
 

@@ -316,8 +316,11 @@ function applyBadges(
 // Isolate learning paths + agent resources + external-app re-marking + badges.
 // Runs before nimbus-docs' overview-leaf pass, so group badges still see `indexHref`.
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
-	const tree = isolateLearningPath(ctx.tree, ctx.currentSlug);
-	const withAgentResources = await agentResourcesTransform({ ...ctx, tree });
+	const isolated = isolateLearningPath(ctx.tree, ctx.currentSlug);
+	const withAgentResources = await agentResourcesTransform({
+		...ctx,
+		tree: isolated,
+	});
 	const withExternal = markExternalAppLinks(withAgentResources);
 	const withRedirects = markInternalRedirects(withExternal);
 	const betaUrls = await getBetaBadgeUrls();
