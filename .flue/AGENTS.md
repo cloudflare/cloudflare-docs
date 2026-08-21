@@ -168,10 +168,6 @@ FLUE_BASE_URL=https://preview.example.com pnpm --dir .flue run evals
 
 Both the server and the eval runner need `DOCS_FLUE_INTERNAL_TOKEN` set to the same value.
 
-### CI
-
-Evals are **not** run in CI. They are nondeterministic (live model calls) and were causing flaky PR failures. Run them locally before merging changes to agent behavior.
-
 ### Adding a new eval case
 
 1. Create or edit a `.eval.ts` file in `.flue/evals/`.
