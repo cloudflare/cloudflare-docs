@@ -168,10 +168,6 @@ FLUE_BASE_URL=https://preview.example.com pnpm --dir .flue run evals
 
 Both the server and the eval runner need `DOCS_FLUE_INTERNAL_TOKEN` set to the same value.
 
-### CI
-
-The `evals` job in `.github/workflows/flue-ci.yml` starts the dev server, runs evals, and uploads `vitest-results.json` as an artifact. The job is skipped for fork PRs because it needs `DOCS_FLUE_INTERNAL_TOKEN` and Workers AI access.
-
 ### Adding a new eval case
 
 1. Create or edit a `.eval.ts` file in `.flue/evals/`.
