@@ -22,10 +22,10 @@ import {
 
 ## 1. Turn on AI Security for Apps
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="Dashboard" icon="rocket">
 
 :::note
-AI Security for Apps (formerly Firewall for AI) is only available in the new [application security dashboard](/security/).
+AI Security for Apps (formerly Firewall for AI) is only available in the [application security dashboard](/security/).
 :::
 
 <Steps>
@@ -52,63 +52,33 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ai-security/settings" 
 
 </TabItem> </Tabs>
 
-## 2. Save or add an LLM-related endpoint
+## 2. Review or add an LLM-related operation
 
 Once you have [onboarded your domain](/fundamentals/manage-domains/add-site/) to Cloudflare and some API traffic has already been [proxied by Cloudflare](/dns/proxy-status/), the Cloudflare dashboard will start showing [discovered endpoints](/api-shield/security/api-discovery/).
 
-Save the relevant endpoint receiving LLM-related traffic to [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/) once it has been discovered, or add the endpoint manually.
-
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+In [Web Assets](/security/web-assets/manage-operations/), save the relevant discovered operation receiving LLM-related traffic to move it into the `full` state. If Cloudflare did not discover the operation, add it manually.
 
 <Steps>
 
-1. In the Cloudflare dashboard, go to the **Web assets** page.
+1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
    <DashButton url="/?to=/:account/:zone/security/web-assets" />
 
 2. Go to the **Discovery** tab.
-3. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
+3. Find the candidate operation receiving requests with LLM prompts and select **Save** to move it into the `full` state.
 
 </Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Security** > **API Shield**.
-3. Go to the **Discovery** tab.
-4. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
-
-</Steps>
-
-</TabItem> </Tabs>
 
 If you did not find the endpoint in the **Discovery** tab, you can add it manually:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
-1. Go to the **Endpoints** tab.
-2. Select **Add endpoints** > **Manually add**.
-3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
-4. Select **Add endpoints**.
+1. Go to the **Operations** tab.
+2. Select **Add operation** > **Manually add**.
+3. Choose the method and add the hostname pattern and path pattern for the operation.
+4. Select **Add operation**.
 
 </Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Go to the **Endpoint Management** tab.
-2. Select **Add endpoints** > **Manually add**.
-3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
-4. Select **Add endpoints**.
-
-</Steps>
-
-</TabItem> </Tabs>
 
 In the context of this guide, consider an example endpoint with the following properties:
 
@@ -122,8 +92,6 @@ You must [label endpoints](/api-shield/management-and-monitoring/endpoint-labels
 
 Add the `cf-llm` label to the endpoint you added:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
 <Render
@@ -133,20 +101,6 @@ Add the `cf-llm` label to the endpoint you added:
 />
 
 </Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-<Render
-	file="labels-add-old-nav"
-	product="api-shield"
-	params={{ labelName: "cf-llm" }}
-/>
-
-</Steps>
-
-</TabItem> </Tabs>
 
 Once you add a label to the endpoint, Cloudflare will start labeling incoming traffic for the endpoint with the label you selected.
 
@@ -166,7 +120,7 @@ The PII category for this request would be `EMAIL_ADDRESS`.
 
 ## 5. Review labeled traffic and detection behavior
 
-Use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that Cloudflare is correctly labeling traffic for the endpoint.
+Use [Security Analytics](/waf/analytics/security-analytics/) to validate that Cloudflare is correctly labeling traffic for the endpoint.
 
 <Steps>
 

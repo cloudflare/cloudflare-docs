@@ -40,6 +40,8 @@ date: <YYYY-MM-DD>
 ---
 ```
 
+The `products` field is optional — the changelog folder name is automatically added as a product reference. Add `products` only when the entry should appear under additional product changelogs beyond the folder product.
+
 ## Writing style
 
 Follow the rules in `.agents/references/style-guide.md`. Changelog-specific additions:

@@ -96,6 +96,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("AI Gateway", "/ai-gateway/"),
 					link("Agents", "/agents/"),
 					link("Agent Memory", "/agent-memory/"),
+					link("Wallets", "/wallets/"),
 					link("Sandbox SDK", "/sandbox/"),
 					link("Vectorize", "/vectorize/"),
 					link("AI Search", "/ai-search/"),
@@ -109,7 +110,7 @@ export const sidebarSections: SidebarSection[] = [
 				collapsed: true,
 				nodes: [
 					link("R2", "/r2/"),
-					link("R2 Data Catalog", "/r2/data-catalog/"),
+					link("R2 Data Catalog", "/r2-data-catalog/"),
 					link("R2 SQL", "/r2-sql/"),
 					link("Pipelines", "/pipelines/"),
 					link("D1", "/d1/"),

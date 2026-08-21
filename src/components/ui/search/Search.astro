@@ -1,0 +1,286 @@
+---
+const aiSearchApiUrl =
+	"https://ai-search.developers.cloudflare.com/api/ai-search";
+---
+
+<cfdocs-search id="search" transition:persist="search">
+	<button
+		type="button"
+		class="search-button"
+		aria-label="Search"
+		data-search-trigger
+	>
+		<svg
+			width="20"
+			height="20"
+			class="search-icon"
+			viewBox="0 0 20 20"
+			aria-hidden="true"
+		>
+			<path
+				d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+				stroke="currentColor"
+				fill="none"
+				fill-rule="evenodd"
+				stroke-linecap="round"
+				stroke-linejoin="round"></path>
+		</svg>
+		<span class="search-placeholder">Search</span>
+		<span class="search-keys">
+			<kbd class="search-key" data-search-shortcut-modifier>Ctrl</kbd>
+			<kbd class="search-key">K</kbd>
+		</span>
+	</button>
+	<search-modal-snippet
+		api-url={aiSearchApiUrl}
+		placeholder="Search documentation..."
+		max-results="50"
+		max-render-results="10"
+		group-by="product"
+		hide-thumbnails="true"
+		show-url="false"></search-modal-snippet>
+</cfdocs-search>
+
+<style is:global>
+	#search {
+		display: inline-flex;
+	}
+
+	#search .search-button {
+		margin: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		height: 2.25rem;
+		width: 2.25rem;
+		padding: 0;
+		border: 1px solid transparent;
+		border-radius: 0.5rem;
+		background-color: transparent;
+		color: var(--nb-muted-foreground);
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition:
+			color 150ms,
+			background-color 150ms,
+			border-color 150ms;
+	}
+
+	#search .search-button:hover {
+		color: var(--nb-foreground);
+		background-color: var(--nb-muted);
+		box-shadow: none;
+	}
+
+	#search .search-button:focus-visible {
+		outline: 2px solid var(--nb-primary);
+		outline-offset: 2px;
+	}
+
+	#search .search-icon {
+		width: 1rem;
+		height: 1rem;
+		color: currentColor;
+		stroke-width: 1.6;
+	}
+
+	#search .search-placeholder {
+		display: none;
+		padding: 0;
+		font-size: 0.875rem;
+	}
+
+	#search .search-keys {
+		display: none;
+		align-items: center;
+		gap: 0.125rem;
+		min-width: auto;
+		margin-inline-start: 0.5rem;
+	}
+
+	#search .search-key {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: 1.25rem;
+		min-width: 1.25rem;
+		padding: 0 0.25rem;
+		margin: 0;
+		border: 1px solid var(--nb-border);
+		border-radius: 0.25rem;
+		background: var(--nb-muted);
+		box-shadow: none;
+		color: var(--nb-muted-foreground);
+		font-size: 0.6875rem;
+		font-weight: 600;
+	}
+
+	#search search-modal-snippet {
+		display: contents;
+		--search-snippet-font-family: var(--nb-font-sans);
+		--search-snippet-background: var(--nb-background);
+		--search-snippet-surface: var(--nb-card);
+		--search-snippet-hover-background: var(--nb-accent);
+		--search-snippet-border-color: var(--nb-border);
+		--search-snippet-text-color: var(--nb-foreground);
+		--search-snippet-text-secondary: var(--nb-muted-foreground);
+		--search-snippet-text-description: var(--nb-muted-foreground);
+		--search-snippet-primary-color: var(--nb-primary);
+		--search-snippet-primary-hover: var(--nb-primary-hover);
+		--search-snippet-focus-ring: color-mix(
+			in oklch,
+			var(--nb-primary) 20%,
+			transparent
+		);
+		--search-snippet-result-icon-size: 20px;
+		--search-snippet-result-icon-color: var(--nb-muted-foreground);
+		--search-snippet-result-icon-active-color: var(--nb-primary);
+	}
+
+	#search search-modal-snippet::part(result-icon-page),
+	#search search-modal-snippet::part(result-icon-section),
+	#search search-modal-snippet::part(result-icon-changelog) {
+		display: block;
+		background-color: currentColor;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+
+	#search search-modal-snippet::part(result-icon-page) {
+		-webkit-mask-image: url("@phosphor-icons/core/regular/file.svg");
+		mask-image: url("@phosphor-icons/core/regular/file.svg");
+	}
+
+	#search search-modal-snippet::part(result-icon-section) {
+		-webkit-mask-image: url("@phosphor-icons/core/regular/hash.svg");
+		mask-image: url("@phosphor-icons/core/regular/hash.svg");
+	}
+
+	#search search-modal-snippet::part(result-icon-changelog) {
+		-webkit-mask-image: url("@phosphor-icons/core/regular/megaphone.svg");
+		mask-image: url("@phosphor-icons/core/regular/megaphone.svg");
+	}
+
+	@media (min-width: 768px) {
+		#search .search-button {
+			width: auto;
+			padding: 0 0.625rem 0 0.75rem;
+			border-color: var(--nb-border);
+			background-color: var(--nb-card);
+		}
+
+		#search .search-button:hover {
+			border-color: var(--nb-border-strong);
+			background-color: var(--nb-card);
+		}
+
+		#search .search-placeholder {
+			display: inline;
+		}
+
+		#search .search-keys {
+			display: flex;
+		}
+	}
+</style>
+
+<script>
+	import "@cloudflare/ai-search-snippet/search";
+	import type { SearchModalSnippet } from "@cloudflare/ai-search-snippet/search";
+
+	class SearchElement extends HTMLElement {
+		private trigger: HTMLButtonElement | null = null;
+		private modal: SearchModalSnippet | null = null;
+		private previouslyFocused: HTMLElement | null = null;
+
+		private open = async () => {
+			await customElements.whenDefined("search-modal-snippet");
+			this.modal?.open();
+		};
+
+		private prepareModal = () => {
+			const dialog =
+				this.modal?.shadowRoot?.querySelector<HTMLElement>('[role="dialog"]');
+			dialog?.removeAttribute("aria-labelledby");
+			dialog?.setAttribute("aria-label", "Search");
+		};
+
+		private handleModalOpen = () => {
+			this.previouslyFocused =
+				document.activeElement instanceof HTMLElement
+					? document.activeElement
+					: null;
+			document.dispatchEvent(new Event("docs-search-open"));
+		};
+
+		private handleModalClose = () => {
+			if (this.previouslyFocused?.isConnected) this.previouslyFocused.focus();
+			this.previouslyFocused = null;
+		};
+
+		private handleModalKeydown = (event: KeyboardEvent) => {
+			if (!this.modal?.isModalOpen()) return;
+			if (event.key === "Escape") {
+				event.preventDefault();
+				this.modal.close();
+				return;
+			}
+			if (event.key !== "Tab") return;
+
+			const focusable = Array.from(
+				this.modal.shadowRoot?.querySelectorAll<HTMLElement>(
+					'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+				) ?? [],
+			).filter((element) => getComputedStyle(element).visibility !== "hidden");
+			if (focusable.length === 0) return;
+
+			const active = this.modal.shadowRoot?.activeElement;
+			const first = focusable[0];
+			const last = focusable.at(-1);
+			if (event.shiftKey && active === first) {
+				event.preventDefault();
+				last?.focus();
+			} else if (!event.shiftKey && active === last) {
+				event.preventDefault();
+				first?.focus();
+			}
+		};
+
+		connectedCallback() {
+			this.trigger = this.querySelector("[data-search-trigger]");
+			this.modal = this.querySelector("search-modal-snippet");
+			this.trigger?.addEventListener("click", this.open);
+			this.modal?.addEventListener("ready", this.prepareModal);
+			this.modal?.addEventListener("open", this.handleModalOpen);
+			this.modal?.addEventListener("close", this.handleModalClose);
+			document.addEventListener("keydown", this.handleModalKeydown, {
+				capture: true,
+			});
+			this.prepareModal();
+
+			const modifier = this.querySelector("[data-search-shortcut-modifier]");
+			if (modifier && /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)) {
+				modifier.textContent = "⌘";
+			}
+		}
+
+		disconnectedCallback() {
+			this.trigger?.removeEventListener("click", this.open);
+			this.modal?.removeEventListener("ready", this.prepareModal);
+			this.modal?.removeEventListener("open", this.handleModalOpen);
+			this.modal?.removeEventListener("close", this.handleModalClose);
+			document.removeEventListener("keydown", this.handleModalKeydown, {
+				capture: true,
+			});
+		}
+	}
+
+	if (!customElements.get("cfdocs-search")) {
+		customElements.define("cfdocs-search", SearchElement);
+	}
+</script>

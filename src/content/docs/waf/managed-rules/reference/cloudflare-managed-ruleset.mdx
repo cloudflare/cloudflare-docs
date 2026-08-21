@@ -53,9 +53,7 @@ When you create several overrides at different levels, more specific configurati
 You can configure (or override) the following Cloudflare Managed Ruleset settings in the Cloudflare dashboard:
 
 - **Scope**: When you define a custom filter expression for the scope, the Cloudflare Managed Ruleset applies only to a subset of the incoming requests. By default, a managed ruleset deployed in the dashboard applies to all incoming traffic.
-
 - **Ruleset action**: When you define an action for the ruleset, you override the default action defined for each rule. <Markdown text={availableActions} /> To remove the action override at the ruleset level, set the ruleset action to _Default_.
-
 - **Ruleset status**: Enables or disables all the rules in the ruleset.
 
   :::note
@@ -79,7 +77,6 @@ Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard
 You can configure (or override) the following Cloudflare Managed Ruleset settings in the dashboard for rules tagged with at least one of the selected tags:
 
 - **Rule action**: Sets the rule action for all the rules with the selected tags. <Markdown text={availableActions} />
-
 - **Rule status**: Sets the rule status for all the rules with the selected tags.
 
 :::note
@@ -101,12 +98,9 @@ Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard
 You can configure (or override) the following Cloudflare Managed Ruleset settings in the dashboard for the selected rules:
 
 - **Rule action**: Sets the action of a single rule or, if you select multiple rules, for the selected rules. <Markdown text={availableActions} /> Once you have changed the configuration of a rule, you have the option to reset the configuration back to the default one as defined in the Cloudflare Managed Ruleset.
-
 - **Rule status**: Sets the status (enabled or disabled) of a single rule or, if you select multiple rules, for the selected rules.
 
 Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
-
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Render
 	file="managed-rules-browse-zone-new-nav"
@@ -123,26 +117,6 @@ Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard
 		rulesetName: "Cloudflare Managed Ruleset",
 	}}
 />
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Render
-	file="managed-rules-browse-zone"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare Managed Ruleset",
-	}}
-/>
-
-<Render
-	file="managed-ruleset-configure-individual-rules"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare Managed Ruleset",
-	}}
-/>
-
-</TabItem> </Tabs>
 
 ## Configure via API
 

@@ -42,8 +42,7 @@ function isFlatSchema(schemaObj: Record<string, unknown>): boolean {
 	if (schemaObj.properties) return false;
 	// Has oneOf/anyOf with properties inside = not flat
 	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
-		| Record<string, unknown>[]
-		| undefined;
+		Record<string, unknown>[] | undefined;
 	if (variants?.some((v) => v.properties)) return false;
 	// Has type and some other attributes but no nested structure
 	return !!(schemaObj.type || schemaObj.contentType || schemaObj.format);
@@ -77,8 +76,15 @@ function flatSchemaToRows(schemaObj: Record<string, unknown>): SchemaRowData[] {
 	}));
 }
 
-// Generate unique ID for sessionStorage keys
-const schemaId = `schema-${title.toLowerCase()}-${Date.now()}`;
+// Generate a stable ID for sessionStorage keys based on schema content.
+// Using a simple hash of the JSON so the key is consistent across builds —
+// Date.now() was non-deterministic and silently lost user state on every deploy.
+const schemaJson = JSON.stringify(schema);
+let schemaHash = 0;
+for (let i = 0; i < schemaJson.length; i++) {
+	schemaHash = (schemaHash * 31 + schemaJson.charCodeAt(i)) >>> 0;
+}
+const schemaId = `schema-${title.toLowerCase()}-${schemaHash.toString(36)}`;
 
 type ReferenceInfo = {
 	source: string | null;
@@ -176,8 +182,7 @@ function collectRows(
 				const nonNullChild = reg.children[nonNullIndex] as RegularNode;
 				nullableType = childTypes[nonNullIndex];
 				nullableChildDescription = nonNullChild.annotations?.description as
-					| string
-					| undefined;
+					string | undefined;
 				isNullable = true;
 			}
 		}
@@ -298,8 +303,7 @@ function collectRows(
 			const title =
 				reg.title ??
 				((reg.annotations as Record<string, unknown>)?.title as
-					| string
-					| undefined) ??
+					string | undefined) ??
 				(fragment?.title as string | undefined);
 
 			if (title) {
@@ -307,8 +311,7 @@ function collectRows(
 			} else {
 				// Try to infer from role property's enum (for message types)
 				const properties = fragment?.properties as
-					| Record<string, Record<string, unknown>>
-					| undefined;
+					Record<string, Record<string, unknown>> | undefined;
 				const roleEnum = properties?.role?.enum as string[] | undefined;
 				if (roleEnum && roleEnum.length === 1) {
 					// Single role value - use it as the name (e.g., "user", "assistant", "tool")
@@ -316,8 +319,7 @@ function collectRows(
 				} else {
 					// Try other heuristics
 					const nestedOneOf = fragment?.oneOf as
-						| Record<string, unknown>[]
-						| undefined;
+						Record<string, unknown>[] | undefined;
 					if (nestedOneOf && nestedOneOf.length > 0 && nestedOneOf[0]?.title) {
 						displayName = `${nestedOneOf[0].title as string} format`;
 					} else if (properties) {

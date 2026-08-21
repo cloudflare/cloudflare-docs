@@ -45,7 +45,7 @@ Refer to the query below to learn how to get average utilization and maximum uti
 
 You can also select the button at the bottom to use this query for your account via the [Cloudflare GraphQL API Explorer](https://graphql.cloudflare.com/explorer). Make sure to provide your account ID and timestamps, and replace the placeholders for `popName`, `egressIp`, and `origin` as needed.
 
-```graphql graphql-api-explorer "popName: "<CLOUDFLARE_POP>"" "egressIp: "<YOUR_EGRESS_IP>"" "origin: "<ORIGIN_IP_AND_PORT>""
+```graphql graphql-api-explorer 'popName: "<CLOUDFLARE_POP>"' 'egressIp: "<YOUR_EGRESS_IP>"' 'origin: "<ORIGIN_IP_AND_PORT>"'
 query AegisIpUtilizationQuery(
   $accountTag: string
   $datetimeStart: string

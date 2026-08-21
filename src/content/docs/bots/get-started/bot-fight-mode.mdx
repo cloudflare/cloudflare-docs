@@ -11,14 +11,7 @@ head:
     content: Get started with Bot Fight Mode
 ---
 
-import {
-	Tabs,
-	TabItem,
-	Steps,
-	Render,
-	DashButton,
-	GlossaryTooltip,
-} from "~/components";
+import { Steps, Render, DashButton, GlossaryTooltip } from "~/components";
 
 Bot Fight Mode is a simple, free product that helps detect and mitigate bot traffic on your domain. When enabled, the product:
 
@@ -56,25 +49,14 @@ If you find that **Bot Fight Mode** is causing problems with your application tr
 
 To disable Bot Fight Mode:
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
-          <DashButton url="/?to=/:account/:zone/security/settings" />
-      2. Filter by **Bot traffic**.
-      3. Go to **Bot Fight Mode**.
-      4. Turn **Bot Fight Mode** off.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Bots**.
-      3. For **Bot Fight Mode**, select **Off**.
-    </Steps>
-  </TabItem>
-</Tabs>
+      <DashButton url="/?to=/:account/:zone/security/settings" />
+  2. Filter by **Bot traffic**.
+  3. Go to **Bot Fight Mode**.
+  4. Turn **Bot Fight Mode** off.
+</Steps>
 
 ---
 
@@ -91,7 +73,7 @@ You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/secu
 
 ## Visibility
 
-You can see bot-related actions by going to **Security** > **Events**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
+You can see bot-related actions by going to **Security** > **Analytics** and selecting the **Events** tab. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
 
 ---
 

@@ -15,6 +15,11 @@ products:
 
 import { Details } from "~/components";
 
+:::note[Sandbox SDK 1.0 preview]
+This tutorial uses the supported stable bridge template and HTTP API. The 1.0 preview covers the Worker SDK on `@next`; bridge deployments stay on the [stable bridge](/sandbox/bridge/).
+:::
+
+
 The [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) is a lightweight Python framework for building multi-agent workflows. A Cloudflare Sandbox integration is provided out of the box and ensures that the SDK includes a first-class Cloudflare backend that gives your agents isolated containers for running code, installing packages, and managing files.
 
 In this tutorial, you will deploy a sandbox bridge Worker and build a Python agent that accepts a coding task, executes it inside a Cloudflare Sandbox, and copies the output files to your local machine.
