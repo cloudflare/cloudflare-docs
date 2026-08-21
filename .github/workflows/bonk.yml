@@ -64,16 +64,8 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
-
-      - name: Install node_modules (cache miss)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Run Lil Bonk
         uses: ask-bonk/ask-bonk/github@main

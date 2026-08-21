@@ -15,6 +15,12 @@ Sessions are bash shell execution contexts within a sandbox. Think of them as te
 
 Sessions are useful for organizing work inside one sandbox. They are not a security boundary between users because sessions share the same filesystem and process space.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents session behavior on today's stable `@cloudflare/sandbox` package.
+
+**Sandbox SDK 1.0** (preview on `@next`) removes core session execution APIs. Pass `cwd` and `env` on each `exec`, or use one explicit shell argv script. Refer to [Process execution](/sandbox/1-0-preview/processes/) or [migrate](/sandbox/1-0-preview/migrate/#drop-session-apis).
+:::
+
 ## Default session
 
 By default, every sandbox has a default session that maintains shell state between commands while the container is active:

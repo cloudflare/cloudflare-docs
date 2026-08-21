@@ -1,0 +1,60 @@
+---
+title: Product changelog
+styleGuide:
+  component: ProductChangelog
+description: Display product changelog entries.
+products:
+  - style-guide
+---
+
+This component can be used to display entries from the [changelog](/changelog/) for a given product or product area.
+
+## Import
+
+```mdx
+import { ProductChangelog } from "~/components";
+```
+
+## Usage
+
+```mdx
+import { ProductChangelog } from "~/components";
+
+<ProductChangelog product="workers" />
+```
+
+## `<ProductChangelog>` Props
+
+The `product` and `area` props cannot be used at the same time.
+
+### `product`
+
+**type:** `string`
+
+The name of the product.
+
+### `area`
+
+**type:** `string`
+
+The name of the product area.
+
+### `hideEntry`
+
+**type:** `string`
+
+The id of a specific entry to hide.
+
+### `publish_future_dated_entry`
+
+**type:** `boolean`
+
+**default:** `false`
+
+Set to `true` to show future-dated entries (used for WAF scheduled changelogs).
+
+### `numberOfEntries`
+
+**type:** `number`
+
+Limits the number of entries shown.

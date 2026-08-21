@@ -22,7 +22,7 @@ The primary proposal in this space is [`llms.txt`](https://llmstxt.org/), offeri
 
 HTML is easily parsed - after all, the browser has to parse it to decide how to render the page you're reading now - it tends to not be very _portable_. This limitation is especially painful in an AI context, because all the extra presentation information consumes additional tokens.
 
-For example, given our [`Tabs`](/style-guide/components/tabs/), the panels are hidden until the tab itself is clicked:
+For example, given our [`Tabs`](/style-guide/build-the-page/components/tabs/), the panels are hidden until the tab itself is clicked:
 
 <Tabs>
 	<TabItem label="One">One Content</TabItem>
@@ -98,7 +98,7 @@ For more details, refer to [Google's AI guidance](https://developers.google.com/
 
 ### `noindex` directives
 
-The only _special_ work we have done is adding a [`noindex` directives](https://developers.google.com/search/docs/crawling-indexing/block-indexing) to specific types of content (via a [frontmatter tag](/style-guide/frontmatter/custom-properties/#noindex)).
+The only _special_ work we have done is adding a [`noindex` directives](https://developers.google.com/search/docs/crawling-indexing/block-indexing) to specific types of content (via a [frontmatter tag](/style-guide/build-the-page/frontmatter/custom-properties/#noindex)).
 
 {/* prettier-ignore */}
 ```html title="noindex meta tag"

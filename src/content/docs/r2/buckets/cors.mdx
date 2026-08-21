@@ -40,6 +40,8 @@ Next, [add a CORS policy](#add-cors-policies-from-the-dashboard) to your bucket 
 
 When a browser makes a request to a presigned URL on a different origin, the browser enforces CORS. Without a CORS policy, browser-based uploads and downloads using presigned URLs will fail, even though the presigned URL itself is valid.
 
+Expired presigned URLs return a `403` `ExpiredRequest` response. R2 does not include CORS response headers on expired presigned URL responses, so browser JavaScript cannot read the error body. Refresh presigned URLs before they expire, or route requests through your application server if the browser needs to handle expiration errors directly.
+
 To enable browser-based access with presigned URLs:
 
 1. [Add a CORS policy](#add-cors-policies-from-the-dashboard) to your bucket that allows requests from your application's origin.

@@ -93,19 +93,11 @@ The resulting alias would be associated with this version, and immediately avail
 
 ## Manage access to Preview URLs
 
-When enabled, all preview URLs are available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
+When enabled, Preview URLs are available publicly. To require visitors to sign in before they can access Preview URLs, use [Cloudflare Access](/workers/configuration/cloudflare-access/).
 
-To limit your preview URLs to authorized emails only:
+Access can protect previews for one Worker or every Worker in an account. You can also protect both production and preview deployments.
 
-1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
-
-   <DashButton url="/?to=/:account/workers-and-pages" />
-
-2. In **Overview**, select your Worker.
-3. Go to **Settings** > **Domains & Routes**.
-4. For Preview URLs, click **Enable Cloudflare Access**.
-5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/access-controls/policies/#selectors) to learn about configuring alternate rules.
-6. [Validate the Access JWT](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker script using the audience (`aud`) tag and JWKs URL provided.
+To use details about the signed-in user in your Worker, read the [user's identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) from the validated JWT or the `/cdn-cgi/access/get-identity` endpoint.
 
 ## Toggle Preview URLs (Enable or Disable)
 
@@ -168,7 +160,7 @@ If you enable or disable Preview URLs in the Cloudflare dashboard, but do not up
 
 ## Limitations
 
-- Preview URLs are not generated for Workers that implement a [Durable Object](/durable-objects/).
+- Preview URLs are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. For Containers testing options, refer to [Deploy Containers](/containers/deploy/#before-production).
 - Preview URLs are not currently generated for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers). This is a temporary limitation, we are working to remove it.
 - You cannot currently configure Preview URLs to run on a subdomain other than [`workers.dev`](/workers/configuration/routing/workers-dev/).
 - You cannot view logs for Preview URLs today, this includes Workers Logs, Wrangler tail and Logpush.

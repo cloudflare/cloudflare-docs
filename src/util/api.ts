@@ -4,8 +4,8 @@
  * CF source: cloudflare-docs/src/util/api.ts — 1:1 port.
  *
  * Fetches the Cloudflare API OpenAPI document from the gh-code worker at a
- * PINNED commit (same reproducibility model as cf/GitHubCode.astro) and
- * dereferences all `$ref`s. Memoized at module scope so the fetch + deref run
+ * PINNED commit and dereferences all `$ref`s. Memoized at module scope so the
+ * fetch + deref run
  * once per build, not per component instance.
  *
  * Reproducibility (migration WS9): the COMMIT below MUST match upstream's pin
@@ -15,7 +15,7 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPI } from "openapi-types";
 
-const COMMIT = "082fe875c1438a5874233eef548ff16f8331982b";
+const COMMIT = "2ac8369e9b63dccacee1a2284e95bb819f05b307";
 let schema: OpenAPI.Document | undefined;
 
 export const getSchema = async () => {

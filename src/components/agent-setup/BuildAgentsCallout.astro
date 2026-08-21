@@ -2,55 +2,66 @@
 // Footer callout: points users toward building agents ON Cloudflare
 // (Agents SDK, Workers AI, Code Mode SDK, Worker Loader), distinguishing
 // Cloudflare from a pure deploy target.
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import CornerMarks from "~/components/CornerMarks.astro";
+
+const cards = [
+	{
+		title: "Agents SDK",
+		href: "/agents/",
+		desc: "Stateful AI agents with state, scheduling, RPC, email, streaming chat — and the Code Mode SDK for token-efficient tool use.",
+	},
+	{
+		title: "Build an MCP server",
+		href: "/agents/model-context-protocol/",
+		desc: "Ship a remote MCP server on Workers with OAuth, durable state, and streamable HTTP transport.",
+	},
+	{
+		title: "Workers AI",
+		href: "/workers-ai/",
+		desc: "Run open-source LLMs, embedding models, and image models at the edge. Use it as your agent's model provider.",
+	},
+	{
+		title: "Worker Loader",
+		href: "/workers/runtime-apis/bindings/worker-loader/",
+		desc: "Load user-generated code into isolated Workers on demand. The secure sandbox behind Code Mode.",
+	},
+];
 ---
 
-<section class="agent-build-callout">
-	<div class="agent-build-callout-header">
-		<span class="agent-build-callout-eyebrow">Also worth knowing</span>
-		<p class="agent-build-callout-lede">
+<div class="not-content">
+	<div class="mb-5">
+		<p class="text-foreground m-0 max-w-[60ch] text-base leading-relaxed">
 			Cloudflare is not just a deploy target for agents, it is a full stack for
 			building your own.
 		</p>
 	</div>
 
-	<div class="agent-build-callout-grid">
-		<a href="/agents/" class="agent-build-callout-card">
-			<div class="agent-build-callout-card-title">Agents SDK</div>
-			<p>
-				Stateful AI agents with state, scheduling, RPC, email, streaming chat —
-				and the Code Mode SDK for token-efficient tool use.
-			</p>
-			<span class="agent-build-callout-card-link">Learn more →</span>
-		</a>
-
-		<a href="/agents/model-context-protocol/" class="agent-build-callout-card">
-			<div class="agent-build-callout-card-title">Build an MCP server</div>
-			<p>
-				Ship a remote MCP server on Workers with OAuth, durable state, and
-				streamable HTTP transport.
-			</p>
-			<span class="agent-build-callout-card-link">Learn more →</span>
-		</a>
-
-		<a href="/workers-ai/" class="agent-build-callout-card">
-			<div class="agent-build-callout-card-title">Workers AI</div>
-			<p>
-				Run open-source LLMs, embedding models, and image models at the edge.
-				Use it as your agent's model provider.
-			</p>
-			<span class="agent-build-callout-card-link">Learn more →</span>
-		</a>
-
-		<a
-			href="/workers/runtime-apis/bindings/worker-loader/"
-			class="agent-build-callout-card"
-		>
-			<div class="agent-build-callout-card-title">Worker Loader</div>
-			<p>
-				Load user-generated code into isolated Workers on demand. The secure
-				sandbox behind Code Mode.
-			</p>
-			<span class="agent-build-callout-card-link">Learn more →</span>
-		</a>
+	<div class="border-border relative border-t border-l">
+		<CornerMarks />
+		<div class="grid grid-cols-1 sm:grid-cols-2">
+			{
+				cards.map((card) => (
+					<a
+						href={card.href}
+						class="group/build-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
+					>
+						<div class="text-foreground mb-2 text-base font-medium">
+							{card.title}
+						</div>
+						<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed">
+							{card.desc}
+						</p>
+						<span class="text-muted-foreground mt-auto inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/build-card:underline">
+							Learn more
+							<Icon
+								name="ph:arrow-right"
+								class="h-3.5 w-3.5 transition-transform group-hover/build-card:translate-x-0.5"
+							/>
+						</span>
+					</a>
+				))
+			}
+		</div>
 	</div>
-</section>
+</div>
