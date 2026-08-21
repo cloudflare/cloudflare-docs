@@ -7,6 +7,7 @@ on:
     paths-ignore:
       - ".flue/**"
       - ".github/workflows/flue-ci.yml"
+      - ".github/workflows/flue-deploy.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -63,16 +64,8 @@ jobs:
             exit 1
           fi
 
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
-
-      - name: Install node_modules (cache miss)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Post codeowners comment
         run: pnpm exec tsx bin/post-codeowners-comment/index.ts
@@ -135,22 +128,14 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
-
-      - name: Install node_modules (cache miss)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Restore Astro assets from cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
-            .astro-cache/assets
+            node_modules/.astro/assets
           key: astro-assets-${{ hashFiles('src/assets/**') }}
           restore-keys: |
             astro-assets-
@@ -204,16 +189,8 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
-
-      - name: Install node_modules (cache miss)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Download artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
@@ -250,16 +227,8 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
-
-      - name: Install node_modules (cache miss)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Post PR CI failure comment
         continue-on-error: true
@@ -293,16 +262,8 @@ jobs:
           node-version: 24.x
           cache: pnpm
 
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
-
-      - name: Install node_modules (cache miss)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Download artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8

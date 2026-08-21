@@ -19,7 +19,7 @@ export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 	const docs = await getCollection("docs");
 
-	return directory
+	const mapped = directory
 		.map((entry) => {
 			const productUrl = entry.data.entry?.url;
 			if (!productUrl || productUrl === "/" || productUrl.includes("#")) {
@@ -49,6 +49,26 @@ export const getStaticPaths = (async () => {
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);
+
+	// Multiple directory entries can share the same entry.url (e.g. sdk,
+	// go-sdk, typescript-sdk, python-sdk all point at
+	// /fundamentals/api/reference/sdks/). Pick the most generic entry
+	// (shortest name) as the canonical representative for each URL.
+	const byProduct = new Map<string, (typeof mapped)[number]>();
+	for (const p of mapped) {
+		const existing = byProduct.get(p.params.product);
+		const nameLen = (name: string | undefined) =>
+			name === undefined ? Infinity : name.length;
+
+		if (
+			!existing ||
+			nameLen(p.props.entry.data.name) < nameLen(existing.props.entry.data.name)
+		) {
+			byProduct.set(p.params.product, p);
+		}
+	}
+
+	return [...byProduct.values()];
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;

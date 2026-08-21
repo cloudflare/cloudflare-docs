@@ -12,6 +12,26 @@ import { defineTool, type ToolDefinition } from "@flue/runtime";
 import type { TokenProvider } from "../../lib/token-provider";
 import * as v from "valibot";
 
+/** Shared fixture: file with an <img> tag inside a fenced HTML code block. */
+const FENCED_IMG_FIXTURE = {
+	"src/content/docs/workers/example.mdx": [
+		"---",
+		"title: Example",
+		"---",
+		"",
+		"Here is an example of embedding an image in HTML:",
+		"",
+		"```html",
+		'<div class="gallery">',
+		'  <img src="/static/logo.png" alt="Company Logo" />',
+		'  <img src="/static/banner.png" alt="Banner" />',
+		"</div>",
+		"```",
+		"",
+		"That's it.",
+	].join("\n"),
+};
+
 /** Fixtures keyed by ref (eval headSha) → path → file content. */
 const FIXTURES: Record<string, Record<string, string>> = {
 	// Style-guide eval: raw <img> tag not inside a code block.
@@ -38,21 +58,7 @@ const FIXTURES: Record<string, Record<string, string>> = {
 	},
 
 	// Style-guide eval: <img> inside a fenced code block.
-	"eval-style-fenced-img": {
-		"src/content/docs/workers/example.mdx": [
-			"---",
-			"title: Example",
-			"---",
-			"",
-			"Here is an example:",
-			"",
-			"```html",
-			'<img src="/static/logo.png" alt="Logo" />',
-			"```",
-			"",
-			"That's it.",
-		].join("\n"),
-	},
+	"eval-style-fenced-img": FENCED_IMG_FIXTURE,
 
 	// Style-guide eval: Markdown image with /images/ path.
 	"eval-style-images-path": {
@@ -75,6 +81,22 @@ const FIXTURES: Record<string, Record<string, string>> = {
 			"![Precursor mode selector](~/assets/images/cloudflare-challenges/precursor-rules.png)",
 		].join("\n"),
 	},
+
+	// Review-validator eval: file with an unhandled promise rejection.
+	"eval-val-unhandled-promise": {
+		"src/handler.ts": [
+			"export default {",
+			"  async fetch(request, env) {",
+			"    const url = 'https://api.example.com/data';",
+			"    fetch(url).then((r) => r.json()).then((d) => new Response(d));",
+			"    return new Response('ok');",
+			"  },",
+			"};",
+		].join("\n"),
+	},
+
+	// Review-validator eval: style-guide false positive (img inside code block).
+	"eval-val-fenced-img": FENCED_IMG_FIXTURE,
 };
 
 /** Mock `read_repo_file` — drop-in replacement for the real tool in evals. */
@@ -107,6 +129,22 @@ export function makeReadRepoFileTool(
 				return refFixtures[path];
 			}
 			return `File not found: ${path}`;
+		},
+	});
+}
+
+/** Mock `search_repo` — returns no results in evals. */
+export function makeSearchRepoTool(_getToken: TokenProvider): ToolDefinition {
+	return defineTool({
+		name: "search_repo",
+		description:
+			"Search the cloudflare/cloudflare-docs repo for a string or pattern. Returns matching file paths and line snippets.",
+		input: v.object({
+			query: v.pipe(v.string(), v.description("Search term.")),
+			path: v.optional(v.string()),
+		}),
+		run() {
+			return "No results found.";
 		},
 	});
 }

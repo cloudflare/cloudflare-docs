@@ -9,7 +9,7 @@
  * catalog controller (vanilla JS script) reads to filter, sort, and re-flow
  * the corner marks. `index`/`cols` seed the build-time corner marks.
  */
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { Badge } from "~/components/ui/badge";
 import ModelBadges from "./ModelBadges.astro";
 import { authorData } from "~/components/models/data";
@@ -48,6 +48,10 @@ const authorLogo = authorData[model.author]?.logo;
 <div
 	data-models-cell
 	data-name={model.name.toLowerCase()}
+	data-search={[model.name, model.shortName, model.description]
+		.filter(Boolean)
+		.join(" ")
+		.toLowerCase()}
 	data-facet-tasks={facetValues(model, "tasks").join("|")}
 	data-facet-capabilities={facetValues(model, "capabilities").join("|")}
 	data-facet-providers={facetValues(model, "providers").join("|")}

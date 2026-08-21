@@ -31,7 +31,7 @@ Before you begin, ensure that:
   - Your network must be defined as a single CIDR with a prefix length of `/12`.
   - Cloudflare One subnets in the same account cannot overlap. Default allocations include:
     - Cloudflare Source IPs (`100.64.0.0/12`)
-    - Hostname Route Token IPs (`100.80.0.0/16`)
+    - Hostname Route Token IPs (`172.64.128.0/20` by default; configurable)
     - Cloudflare One Clients (`100.96.0.0/12`)
     - Private Load Balancers (`100.112.0.0/16`)
   - The source subnet cannot match or contain any existing route in your Cloudflare One routing table. The source subnet can be within a supernet route.

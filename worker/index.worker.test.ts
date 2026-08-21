@@ -53,7 +53,7 @@ describe("Cloudflare Docs", () => {
 			expect(urlFlag.experimental).toBe(false);
 
 			expect(nodeJsFlag).toBeDefined();
-			expect(nodeJsFlag.enable_date).toBe(null);
+			expect(nodeJsFlag.enable_date).toBe("2026-08-04");
 		});
 
 		it("pages framework configurations", async () => {
