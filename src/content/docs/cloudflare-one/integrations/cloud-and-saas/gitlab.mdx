@@ -1,0 +1,151 @@
+---
+pcx_content_type: reference
+description: Reference information for GitLab in Zero Trust integrations.
+products:
+  - cloudflare-one
+title: GitLab
+tags:
+  - GitLab
+rss: file
+head:
+  - tag: title
+    content: GitLab - CASB
+sidebar:
+  order: 12
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "GitLab",
+		integrationAccountType: "GitLab account",
+	}}
+/>
+
+<!--
+TODO(content review): The following items still need sign-off before publishing:
+- FindingTypeID values below were pulled from the production `finding_types` API
+  (confirmed against production, not staging, per engineering guidance) on 2026-08-21.
+  Re-verify before publishing in case any finding types are added, removed, or
+  re-seeded before GA.
+- The OAuth scope list below is the full scope set requested by the standard OAuth 2.0 flow
+  (source: sherlock/access/vendor_config/gitlab.py, _OAUTH2_STANDARD.scopes), confirmed
+  directly from code, not inferred. It is broader than the "least privilege" framing used on
+  sibling integration pages: it includes `api` (full API access), `write_repository`, `sudo`,
+  and `admin_mode`, in addition to the read-only scopes the ETL crawlers actually use
+  (`read_api`, `read_user`, `read_repository`). Confirm with the CASB/Integrations team whether
+  this is intentional final behavior or a WIP scope list that will be trimmed before GA, since
+  every finding-generating crawler in findings/gitlab.go and the sherlock ETL crawlers only
+  reads data (no write/sudo/admin usage was found). This affects what a customer sees on the
+  GitLab OAuth consent screen and should be confirmed before this page goes public.
+-->
+
+## Integration prerequisites
+
+- A GitLab.com account. GitLab Self-Managed is not currently supported.
+- Owner permissions on the GitLab groups you want CASB to scan.
+- To surface audit event findings and instance-level settings findings (password policy, two-factor enforcement, public sign-up), the connecting account must also be a GitLab instance administrator.
+
+## Integration permissions
+
+For the GitLab integration to function, Cloudflare CASB requests the following GitLab OAuth 2.0 scopes:
+
+| Scope              | Description                   |
+| ------------------ | ----------------------------- |
+| `api`              | Full API access               |
+| `read_user`        | Read user information         |
+| `read_api`         | Read-only API access          |
+| `read_repository`  | Read repository content       |
+| `write_repository` | Write repository content      |
+| `read_registry`    | Read container registry       |
+| `write_registry`   | Write container registry      |
+| `sudo`             | Sudo access                   |
+| `admin_mode`       | Admin mode access             |
+| `openid`           | OpenID Connect authentication |
+| `profile`          | User profile information      |
+| `email`            | User email address            |
+
+To learn more about each permission scope, refer to the [GitLab OAuth 2.0 scopes documentation](https://docs.gitlab.com/ee/integration/oauth_provider.html).
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{ integrationName: "GitLab", slugRelativePath: "gitlab" }}
+/>
+
+To automatically send a webhook when CASB detects a GitLab finding, refer to [Remediation Policies](/cloudflare-one/cloud-and-saas-findings/policies/). Automated remediation actions through Remediation Policies are not currently available for GitLab findings.
+
+### Project and group visibility
+
+| Finding type                        | FindingTypeID                          | Severity |
+| ----------------------------------- | -------------------------------------- | -------- |
+| GitLab: Project is publicly visible | `019f194f-0729-71a2-945f-2b9be5a63bd1` | High     |
+| GitLab: Group is publicly visible   | `019f194f-0742-733e-abe9-6a24c7d054cc` | High     |
+
+### Branch protection
+
+| Finding type                                                 | FindingTypeID                          | Severity |
+| ------------------------------------------------------------ | -------------------------------------- | -------- |
+| GitLab: Default branch allows direct developer push or merge | `019f194f-0733-7ea7-a011-dc6eaf285c8b` | High     |
+| GitLab: Default branch is not protected                      | `019f194f-0731-75b5-a167-287c468b785b` | High     |
+
+### CI/CD variables
+
+| Finding type                                    | FindingTypeID                          | Severity |
+| ----------------------------------------------- | -------------------------------------- | -------- |
+| GitLab: Project CI/CD variable is not hidden    | `019f80e3-1a6c-74b5-8b7d-891d02c9dab1` | High     |
+| GitLab: Project CI/CD variable is not masked    | `019f80e3-1a6a-79f8-a3ff-7aa58090c5f9` | High     |
+| GitLab: Project CI/CD variable is not protected | `019f80e3-1a69-719d-ba49-b720bea7460a` | High     |
+| GitLab: Group CI/CD variable is not hidden      | `019f80e3-1a65-71dd-83c5-dc0de30c15a8` | High     |
+| GitLab: Group CI/CD variable is not masked      | `019f80e3-1a63-798b-898f-17f2b9539d0f` | High     |
+| GitLab: Group CI/CD variable is not protected   | `019f80e3-1a62-72ac-8f80-c40f273bdc92` | High     |
+
+### Access tokens and keys
+
+| Finding type                                                | FindingTypeID                          | Severity |
+| ----------------------------------------------------------- | -------------------------------------- | -------- |
+| GitLab: Project access token never expires                  | `019f80e3-1a5e-7e22-a80f-005e75821608` | High     |
+| GitLab: Group access token never expires                    | `019f80e3-1a5a-7268-a337-05683b692d24` | High     |
+| GitLab: Personal access token never expires                 | `019f80e3-1a54-7a48-815f-23435c2dde44` | High     |
+| GitLab: Write-enabled deploy key present                    | `019f194f-073d-7776-8514-87e2a85240f1` | High     |
+| GitLab: Active project access token is stale or never used  | `019f80e3-1a60-78b1-9fcc-f777d63f486d` | Medium   |
+| GitLab: Active group access token is stale or never used    | `019f80e3-1a5b-7c35-a9e9-41cba339a113` | Medium   |
+| GitLab: Active personal access token is stale or never used | `019f80e3-1a58-749c-b63f-e79ee9db6811` | Medium   |
+| GitLab: Deploy token never expires                          | `019f80e3-1a5d-7408-a5cb-07a4b1a16c22` | Medium   |
+| GitLab: Deploy key never expires                            | `019f80e3-1a67-736e-a05a-7636c0e77af9` | Medium   |
+
+### Webhooks
+
+| Finding type                                      | FindingTypeID                          | Severity |
+| ------------------------------------------------- | -------------------------------------- | -------- |
+| GitLab: Webhook SSL verification disabled         | `019f194f-072b-7e35-b7b4-04ad5540e312` | High     |
+| GitLab: Webhook emits sensitive events externally | `019f194f-072e-7d32-a0f3-24189e2ba2bb` | Medium   |
+
+### Authentication and access control
+
+| Finding type                                                       | FindingTypeID                          | Severity |
+| ------------------------------------------------------------------ | -------------------------------------- | -------- |
+| GitLab: Public sign-up enabled without restrictive domain controls | `019f194f-073a-7e82-876e-9e5d5f686bff` | High     |
+| GitLab: Instance 2FA not enforced                                  | `019f194f-0736-7310-aeb1-0c9378d6fd7c` | High     |
+| GitLab: Custom role grants administrative permissions              | `019f194f-0744-7cbf-9a09-e096457b8b1d` | High     |
+| GitLab: Password authentication enabled with weak password policy  | `019f194f-0738-784e-ba3a-9b865bd028c3` | Medium   |
+
+### Data Loss Prevention (optional)
+
+<Render file="casb/data-loss-prevention" product="cloudflare-one" />
+
+| Finding type                                                                     | Severity |
+| -------------------------------------------------------------------------------- | -------- |
+| GitLab: Project is publicly visible with DLP Profile match                       | High     |
+| GitLab: Group is publicly visible with DLP Profile match                         | High     |
+| GitLab: Project CI/CD variable is not hidden with DLP Profile match              | High     |
+| GitLab: Group CI/CD variable is not hidden with DLP Profile match                | High     |
+| GitLab: Repository file content has sensitive information with DLP Profile match | High     |
+| GitLab: Merge request title has sensitive information with DLP Profile match     | Medium   |
+
+For more information, refer to [Manage findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/). If you run into issues with this integration, refer to [CASB troubleshooting](/cloudflare-one/integrations/cloud-and-saas/troubleshooting/casb/).
