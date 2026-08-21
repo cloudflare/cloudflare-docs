@@ -1,0 +1,39 @@
+---
+title: Log in to Wrangler without a local callback server
+description: wrangler login --device authenticates using the OAuth 2.0 Device Authorization Grant, for environments where localhost:8976 is unreachable.
+products:
+  - workers
+date: 2026-08-04
+---
+
+`wrangler login` now supports the [OAuth 2.0 Device Authorization Grant](https://www.rfc-editor.org/rfc/rfc8628). Pass `--device` to authenticate without starting a temporary callback server on `localhost:8976`:
+
+```sh
+npx wrangler login --device
+```
+
+Wrangler prints a verification URL and a short user code, opens the URL in your default browser with the code already filled in, and polls Cloudflare for an access token while you approve the request:
+
+```sh output
+ ⛅️ wrangler 4.119.0
+────────────────────
+Attempting to login via OAuth Device Authorization Grant...
+To authorize Wrangler, please visit:
+
+  https://dash.cloudflare.com/oauth2/device
+
+and enter the code:
+
+  WDJB-MJHT
+
+You have 5 minutes to approve this request.
+
+Opening a link in your default browser: https://dash.cloudflare.com/oauth2/device?user_code=WDJB-MJHT
+Successfully logged in.
+```
+
+The default login flow needs your browser to reach `localhost:8976`, which is not always possible from containers, remote SSH sessions, or GitHub Codespaces. Previously these environments required forwarding ports or fetching the callback URL with `curl` from a second terminal session. Because `--device` has no callback server, those workarounds are no longer necessary.
+
+Since the plain verification URL and user code are both printed to the terminal, you can also approve the request from a phone or another machine. Pass `--browser=false` to stop Wrangler from opening a browser at all.
+
+Available in Wrangler version 4.119.0 or later. For more information, refer to [`wrangler login`](/workers/wrangler/commands/general/#login).

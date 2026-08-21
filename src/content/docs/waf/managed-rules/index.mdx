@@ -13,7 +13,7 @@ head:
     content: Managed Rules
 ---
 
-import { FeatureTable, Render, RuleID } from "~/components";
+import { Render, RuleID } from "~/components";
 
 <Render file="waf-managed-rules-intro" product="waf" />
 
@@ -35,7 +35,14 @@ The following managed rulesets run in a response phase:
 
 The managed rulesets you can deploy depend on your Cloudflare plan.
 
-<FeatureTable id="security.waf_a_managed_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Free Managed Ruleset | Yes | Yes | Yes | Yes |
+| Cloudflare Managed Ruleset | No | Yes | Yes | Yes |
+| Cloudflare OWASP Core Ruleset | No | Yes | Yes | Yes |
+| Cloudflare Exposed Credentials Check (deprecated) | No | Yes | Yes | Yes |
+| Cloudflare Sensitive Data Detection | No | No | No | Yes |
 
 <Render
 	file="managed-ruleset-config-options"

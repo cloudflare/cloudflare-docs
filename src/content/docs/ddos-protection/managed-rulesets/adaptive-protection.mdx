@@ -8,7 +8,7 @@ sidebar:
   order: 5
 ---
 
-import { Tabs, TabItem, Steps, DashButton } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 Adaptive DDoS Protection learns your unique traffic patterns and adapts to them to provide better protection against sophisticated DDoS attacks on layer 7 and layers 3/4, depending on your subscribed Cloudflare services.
 
@@ -56,46 +56,23 @@ HTTP Adaptive DDoS Protection rules calculate the traffic profile at the zone-le
 
 To view traffic flagged by HTTP Adaptive DDoS Protection rules:
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Analytics** page.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Security Analytics** page.
 
-          <DashButton url="/?to=/:account/:zone/security/analytics" />
-      2. Go to **Events**.
-      3. Filter by `Service equals HTTP DDoS` and by rule ID.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **Events**.
-      3. Filter by `Service equals HTTP DDoS` and by rule ID.
-    </Steps>
-  </TabItem>
-</Tabs>
+      <DashButton url="/?to=/:account/:zone/security/analytics" />
+  2. Go to **Events**.
+  3. Filter by `Service equals HTTP DDoS` and by rule ID.
+</Steps>
 
 To view traffic flagged by L3/4 Adaptive DDoS Protection rules:
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Analytics** page.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Security Analytics** page.
 
-          <DashButton url="/?to=/:account/:zone/security/analytics" />
-      2. Go to **Events**.
-      3. Filter by rule ID.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Network analytics** page.
-
-          <DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics" />
-      2. Filter by rule ID.
-    </Steps>
-  </TabItem>
-</Tabs>
+      <DashButton url="/?to=/:account/:zone/security/analytics" />
+  2. Go to **Events**.
+  3. Filter by rule ID.
+</Steps>
 
 You may also obtain information about flagged traffic through [Logpush](/logs/logpush/) or the [GraphQL API](/analytics/graphql-api/).
 

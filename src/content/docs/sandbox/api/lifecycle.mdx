@@ -12,6 +12,12 @@ import { TypeScriptExample } from "~/components";
 
 Create and manage sandbox containers. Get sandbox instances, configure options, and clean up resources.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents lifecycle helpers on today's stable `@cloudflare/sandbox` package.
+
+In the **1.0 preview** (`@next`), remove transport options on `getSandbox()` and do not rely on `enableDefaultSession`. Keep `sleepAfter`, `keepAlive`, `containerTimeouts`, `normalizeId`, and `destroy` when you need them. Process and terminal handles are container-local after stop or replace. Refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/) and [Migrate](/sandbox/1-0-preview/migrate/).
+:::
+
 ## Methods
 
 ### `getSandbox()`

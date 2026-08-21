@@ -92,7 +92,9 @@ Once you have generated the key pair, upload the public key to your AI Gateway s
 
 ## 3. Set up Logpush
 
-To set up Logpush, refer to [Logpush](/logs/logpush/) documentation.
+Uploading your public key enables Workers Logpush for the gateway, but logs will not be exported until you also create and enable a Logpush job that specifies where to send them. Both steps are required.
+
+To create the Logpush job, choose your destination and follow the steps in the [Enable destinations](/logs/logpush/logpush-job/enable-destinations/) documentation. For example, to export logs to Cloudflare R2, refer to [Enable Cloudflare R2](/logs/logpush/logpush-job/enable-destinations/r2/). When configuring the job, select the AI Gateway dataset.
 
 ## 4. Receive encrypted logs
 

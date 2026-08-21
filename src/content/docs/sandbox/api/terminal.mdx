@@ -12,6 +12,12 @@ import { TypeScriptExample } from "~/components";
 
 Connect browser-based terminal UIs to sandbox shells via WebSocket. The server-side `terminal()` method proxies WebSocket connections to the container, and the client-side `SandboxAddon` integrates with xterm.js for terminal rendering.
 
+:::note[Sandbox SDK 1.0 preview]
+This page documents terminal helpers on today's stable `@cloudflare/sandbox` package.
+
+On **`@cloudflare/sandbox@next`**, terminals use `createTerminal`, `getTerminal`, and `terminal.connect`, with xterm `terminalId`. Refer to [Terminals](/sandbox/1-0-preview/terminals/) and [Terminals API](/sandbox/1-0-preview/api/terminals/).
+:::
+
 ## Server-side methods
 
 ### `terminal()`

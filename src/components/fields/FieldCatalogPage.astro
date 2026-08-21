@@ -1,0 +1,10 @@
+---
+import { getEntry } from "astro:content";
+import FieldCatalog from "~/components/FieldCatalog.tsx";
+
+const entry = await getEntry("fields", "index");
+if (!entry) throw new Error("Failed to load fields data");
+const fields = entry.data.entries;
+---
+
+<FieldCatalog fields={fields} client:load />
