@@ -642,7 +642,7 @@
 # Containers IA rework: platform-details/ dissolved into core sections
 /containers/platform-details/architecture/ /containers/concepts/architecture/ 301
 /containers/platform-details/placement/ /containers/concepts/placement/ 301
-/containers/platform-details/outbound-traffic/ /containers/concepts/outbound-traffic/ 301
+/containers/platform-details/outbound-traffic/ /containers/guides/outbound-traffic/ 301
 /containers/platform-details/workers-connections/ /containers/concepts/workers-connections/ 301
 /containers/platform-details/environment-variables/ /containers/reference/environment-variables/ 301
 /containers/platform-details/rollouts/ /containers/reference/rollouts/ 301
