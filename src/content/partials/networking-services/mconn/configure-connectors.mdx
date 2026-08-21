@@ -46,7 +46,7 @@ import {
 {/* Virtual Appliance */}
 { props.magicWord === "virtual" && (
 	<>
-		<p>{props.productNameVirtual} is a virtual device alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
+		<p>{props.productNameVirtual} is a virtual device alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMware ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
 	</>
 	)
 }
@@ -183,15 +183,15 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Configure a virtual machine" depth={2} />
-		<p>Select the appropriate tab to configure {props.productNameVirtual} on VMWare ESXi or Proxmox Virtual Environment.</p>
+		<p>Select the appropriate tab to configure {props.productNameVirtual} on VMware ESXi or Proxmox Virtual Environment.</p>
 
-		<Tabs> <TabItem label="VMWare ESXi">
+		<Tabs> <TabItem label="VMware ESXi">
 
 		<Markdown
 		text={`
-		**1. Obtain the VMWare image**
+		**1. Obtain the VMware image**
 
-		Download the ${props.productNameVirtual} OVA image from [https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova](https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova). You can also download it from the dashboard when you register a virtual appliance, in the **Add an appliance** > **Virtual appliance** step. The OVA image includes the files required to install and configure the virtual machine (VM) for ${props.productNameVirtual} with the appropriate settings. For details, refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html).
+		Download the ${props.productNameVirtual} OVA image from [https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova](https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova). You can also download it from the dashboard when you register a virtual appliance, in the **Add an appliance** > **Virtual appliance** step. The OVA image includes the files required to install and configure the virtual machine (VM) for ${props.productNameVirtual} with the appropriate settings. For details, refer to [VMware VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html).
 
 		This image can be deployed multiple times to create several instances of a ${props.productNameVirtual}, in different locations or on the same ESXi host.
 
