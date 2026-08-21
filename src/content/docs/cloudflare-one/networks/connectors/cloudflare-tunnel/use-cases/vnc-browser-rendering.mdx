@@ -12,7 +12,7 @@ tags:
   - Linux
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 A Virtual Network Computer (VNC) server provides users with remote access to a computer's desktop environment. Cloudflare can render a VNC terminal in the browser without any client-side software or configuration.
 
@@ -190,9 +190,11 @@ For demonstration purposes, we will create a TightVNC server on an Ubuntu virtua
 
 1. Create a Cloudflare Tunnel by following the [dashboard setup guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
 
-2. Go to **Networks** > **Connectors**. Select your tunnel and select **Edit**.
+2. Go to **Networking** > **Tunnels**, then select your tunnel.
 
-3. Select the **Published application routes** tab, then select **Add a published application route**.
+   <DashButton url="/?to=/:account/tunnels" />
+
+3. On the **Routes** tab, select **Add route**, then select **Published application**.
 
 4. Choose a domain from the drop-down menu and specify any subdomain (for example, `vnc.example.com`).
 

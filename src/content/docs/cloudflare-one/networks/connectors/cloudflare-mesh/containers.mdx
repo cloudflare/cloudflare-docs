@@ -1,0 +1,435 @@
+---
+pcx_content_type: how-to
+description: Run a Cloudflare Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD environments.
+title: Run Mesh in Docker / Kubernetes
+products:
+  - mesh
+tags:
+  - Private networks
+  - Containers
+  - Docker
+  - Kubernetes
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Run Cloudflare Mesh in containers
+---
+
+import { DashButton, Details, Tabs, TabItem, Render } from "~/components";
+
+The [`cloudflare/mesh`](https://hub.docker.com/r/cloudflare/mesh) Docker image packages a Cloudflare Mesh node for Linux containers. It runs the Cloudflare One Client's `warp-svc` daemon headlessly in a minimal [Wolfi](https://wolfi.dev/)-based runtime.
+
+Use the container image to add Mesh nodes to Docker Compose stacks, Kubernetes clusters, and CI/CD pipelines — without installing packages on the host.
+
+## Supported architectures
+
+The `latest` tag is a multi-platform manifest. Docker automatically selects the appropriate image for the host architecture.
+
+| Architecture | Tag             |
+| ------------ | --------------- |
+| Multi-arch   | `latest`        |
+| x86-64       | `latest-amd64`  |
+| ARM64        | `latest-arm64`  |
+
+## Prerequisites
+
+Before starting the container, create a Mesh node and copy its token.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Select **Add a node**.
+3. Enter a name for your node (for example, `k8s-gateway` or `docker-agent`).
+4. Select **Create node**.
+5. Copy the token shown in the dashboard. You will pass it to the container as `MESH_NODE_TOKEN`.
+
+</TabItem> <TabItem label="API">
+
+Create a node via the [Cloudflare API](/api/resources/zero_trust/subresources/tunnels/subresources/warp_connector/methods/create/):
+
+```sh
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/warp_connector" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "k8s-gateway"}'
+```
+
+Then retrieve the token:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/warp_connector/{node_id}/token" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+The response contains the token string. Pass it to the container as `MESH_NODE_TOKEN`.
+
+:::note
+Mesh nodes can also be managed with Terraform using the [`cloudflare_zero_trust_tunnel_warp_connector`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_warp_connector) resource. To manage node configuration, use [`cloudflare_zero_trust_tunnel_warp_connector_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_warp_connector_config).
+:::
+
+</TabItem> </Tabs>
+
+If this is your first Mesh node, the dashboard runs a [setup wizard](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/#what-the-wizard-configures) that configures your account for Mesh networking.
+
+:::caution
+Do not commit Mesh node tokens to source control. Use environment variables, `.env` files excluded from version control, or a secrets manager.
+:::
+
+## Deploy with Docker Compose
+
+Docker Compose is the recommended way to run a Mesh node alongside your application services. Add a `cloudflare-mesh` service to your `compose.yaml`:
+
+```yaml
+services:
+  cloudflare-mesh:
+    image: cloudflare/mesh:latest
+    container_name: cloudflare-mesh
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      MESH_NODE_TOKEN: ${MESH_NODE_TOKEN}
+      SRCNAT_ENABLED: "true"
+    sysctls:
+      net.ipv4.ip_forward: "1"
+      net.ipv6.conf.all.forwarding: "1"
+      net.ipv6.conf.default.forwarding: "1"
+    volumes:
+      - mesh_data:/var/lib/cloudflare-warp
+    restart: unless-stopped
+
+volumes:
+  mesh_data:
+```
+
+Start the stack:
+
+```sh
+MESH_NODE_TOKEN="<YOUR-TOKEN>" docker compose up -d
+```
+
+Verify the node is connected:
+
+```sh
+docker exec cloudflare-mesh warp-cli status
+```
+
+## Deploy with Docker CLI
+
+For a standalone container without Compose:
+
+```sh
+docker run -d \
+  --name cloudflare-mesh \
+  --cap-add NET_ADMIN \
+  --cap-add NET_RAW \
+  --device /dev/net/tun \
+  --sysctl net.ipv4.ip_forward=1 \
+  --sysctl net.ipv6.conf.all.forwarding=1 \
+  --sysctl net.ipv6.conf.default.forwarding=1 \
+  -e MESH_NODE_TOKEN="$MESH_NODE_TOKEN" \
+  -e SRCNAT_ENABLED=true \
+  -v mesh_data:/var/lib/cloudflare-warp \
+  --restart unless-stopped \
+  cloudflare/mesh:latest
+```
+
+## Deploy on Kubernetes
+
+This example creates a one-replica `StatefulSet` with persistent registration state. It requires a Kubernetes cluster that permits `NET_ADMIN`, `NET_RAW`, and `/dev/net/tun` host access (for example, GKE Standard).
+
+### 1. Create the token Secret
+
+```sh
+kubectl create secret generic cloudflare-mesh \
+  --from-literal=MESH_NODE_TOKEN="$MESH_NODE_TOKEN"
+```
+
+### 2. Apply the manifest
+
+Save the following as `cloudflare-mesh.yaml`:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflare-mesh
+spec:
+  clusterIP: None
+  selector:
+    app: cloudflare-mesh
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cloudflare-mesh
+spec:
+  serviceName: cloudflare-mesh
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-mesh
+  template:
+    metadata:
+      labels:
+        app: cloudflare-mesh
+    spec:
+      containers:
+        - name: mesh
+          image: cloudflare/mesh:latest
+          env:
+            - name: MESH_NODE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-mesh
+                  key: MESH_NODE_TOKEN
+            - name: SRCNAT_ENABLED
+              value: "true"
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - NET_RAW
+          volumeMounts:
+            - name: warp-data
+              mountPath: /var/lib/cloudflare-warp
+            - name: dev-net-tun
+              mountPath: /dev/net/tun
+      volumes:
+        - name: dev-net-tun
+          hostPath:
+            path: /dev/net/tun
+            type: CharDevice
+  volumeClaimTemplates:
+    - metadata:
+        name: warp-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+```
+
+### 3. Verify the node
+
+```sh
+kubectl apply -f cloudflare-mesh.yaml
+kubectl rollout status statefulset/cloudflare-mesh
+kubectl exec cloudflare-mesh-0 -- warp-cli status
+```
+
+The `PersistentVolumeClaim` preserves the Mesh registration across Pod restarts.
+
+:::note
+GKE Autopilot is not supported because it blocks the required `/dev/net/tun` `hostPath`.
+:::
+
+## Kubernetes sidecar
+
+To connect an application container to Mesh, add the Mesh image as a sidecar in the same Pod. Containers in a Pod share the network namespace, so the Mesh sidecar connects the application to Cloudflare without any application changes.
+
+### 1. Create the token Secret
+
+Create a separate Mesh node and Kubernetes Secret for the sidecar:
+
+```sh
+kubectl create secret generic cloudflare-mesh-sidecar \
+  --from-literal=MESH_NODE_TOKEN="$MESH_NODE_TOKEN"
+```
+
+### 2. Apply the manifest
+
+Save the following as `cloudflare-mesh-sidecar.yaml`:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflare-mesh-sidecar-headless
+spec:
+  clusterIP: None
+  selector:
+    app: cloudflare-mesh-sidecar
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cloudflare-mesh-sidecar
+spec:
+  serviceName: cloudflare-mesh-sidecar-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-mesh-sidecar
+  template:
+    metadata:
+      labels:
+        app: cloudflare-mesh-sidecar
+    spec:
+      containers:
+        - name: application
+          image: busybox:1.37.0
+          command:
+            - sh
+            - -c
+            - |
+              echo "Hello from the Kubernetes sidecar example" > /tmp/index.html
+              httpd -f -p 8080 -h /tmp
+          ports:
+            - name: http
+              containerPort: 8080
+        - name: mesh
+          image: cloudflare/mesh:latest
+          env:
+            - name: MESH_NODE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-mesh-sidecar
+                  key: MESH_NODE_TOKEN
+            - name: SRCNAT_ENABLED
+              value: "true"
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - NET_RAW
+          volumeMounts:
+            - name: warp-data
+              mountPath: /var/lib/cloudflare-warp
+            - name: dev-net-tun
+              mountPath: /dev/net/tun
+      volumes:
+        - name: dev-net-tun
+          hostPath:
+            path: /dev/net/tun
+            type: CharDevice
+  volumeClaimTemplates:
+    - metadata:
+        name: warp-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflare-mesh-sidecar
+spec:
+  selector:
+    app: cloudflare-mesh-sidecar
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+```
+
+### 3. Verify the sidecar
+
+```sh
+kubectl apply -f cloudflare-mesh-sidecar.yaml
+kubectl rollout status statefulset/cloudflare-mesh-sidecar
+kubectl exec cloudflare-mesh-sidecar-0 -c mesh -- warp-cli status
+```
+
+## Runtime configuration
+
+| Parameter | Description |
+| --- | --- |
+| `MESH_NODE_TOKEN` | **Required** for initial registration. Create the token under **Networking** > **Mesh** in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh), or via the [API](/api/resources/zero_trust/subresources/tunnels/subresources/warp_connector/methods/create/). |
+| `SRCNAT_ENABLED` | Controls [source NAT](#source-nat). Defaults to `true`. Accepts `true`, `false`, `1`, or `0`. |
+| `/var/lib/cloudflare-warp` | Stores registration state. Persist this path with a volume to maintain a stable Mesh identity across container recreation. |
+
+<Details header="Required capabilities and devices">
+
+| Capability / device | Why it is needed |
+| --- | --- |
+| `NET_ADMIN` | Creates and configures the tunnel interface, routing, and nftables rules. |
+| `NET_RAW` | Enables raw-socket operations such as ICMP. Docker normally grants this capability by default, but it is declared explicitly here. |
+| `/dev/net/tun` | Creates the WARP TUN interface. |
+| IP-forwarding sysctls | Required when the node forwards traffic for routed subnets. |
+
+</Details>
+
+## Source NAT
+
+Source NAT (masquerading) is enabled by default (`SRCNAT_ENABLED=true`). When a Mesh node receives traffic from the Cloudflare edge and forwards it to a destination on the local network, it translates the source IP from the Mesh CGNAT address (`100.96.x.x`) to the node's own local interface IP. This ensures return traffic routes correctly without requiring static routes in your VPC or on-premise network.
+
+Set `SRCNAT_ENABLED=false` only if the attached networks already have return routes to the Mesh IP range (`100.96.0.0/12`). For more details on return traffic routing, refer to [Routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#return-traffic-routing).
+
+## High availability on Kubernetes
+
+<Render file="mesh/masque-required" product="cloudflare-one" />
+
+For [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) with CIDR routes:
+
+1. Use the same Mesh node token across multiple replicas.
+2. Give each Pod its own `PersistentVolumeClaim`.
+
+Cloudflare operates replicas in active-passive mode. If the active replica goes offline, traffic fails over to a standby automatically. A single replica provides no redundancy.
+
+## Hostname routes
+
+Containers support [hostname routing](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes). To resolve Kubernetes Services through a hostname route, make sure the hostname matches the cluster's actual DNS suffix. The default is `cluster.local`, producing Service names like `service.namespace.svc.cluster.local`.
+
+<Render file="mesh/masque-required" product="cloudflare-one" />
+
+## Site-to-site networking
+
+Deploy a separate Mesh node container at each site with a separate node token for each node identity. Each node should advertise its locally reachable subnet as a [CIDR route](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/). Configure each site's router or workloads to send traffic for the remote subnet through the local Mesh node.
+
+With `SRCNAT_ENABLED=true`, destinations see the Mesh node's local address. With source NAT disabled, the attached networks require return routes through their Mesh nodes.
+
+## Troubleshooting
+
+### Node registers as a regular Cloudflare One Client device
+
+Confirm that the correct Mesh node token is set in `MESH_NODE_TOKEN`. Existing registration state in the persistent volume takes precedence — remove the volume only when you intentionally want to discard that registration and create a new identity.
+
+### `warp-cli status` remains Connecting
+
+Check the token, device profile, Gateway proxy, Split Tunnel configuration, outbound firewall connectivity, and container logs:
+
+```sh
+docker logs cloudflare-mesh
+```
+
+### A Kubernetes Service cannot be resolved
+
+Confirm that the [hostname route](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes) matches the cluster's actual DNS suffix. The usual default is `cluster.local`, producing Service names such as `service.namespace.svc.cluster.local`.
+
+### A hostname request arrives but no response returns
+
+Check source NAT and return routing first. Verify `SRCNAT_ENABLED` is set to `true` or that your network has return routes to the Mesh IP range.
+
+### Check node status
+
+<Tabs syncKey="containerRuntime"> <TabItem label="Docker">
+
+```sh
+docker exec -it cloudflare-mesh warp-cli status
+```
+
+</TabItem> <TabItem label="Kubernetes">
+
+```sh
+kubectl exec cloudflare-mesh-0 -- warp-cli status
+```
+
+</TabItem> </Tabs>
+
+## Next steps
+
+- [**Add routes**](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) — Make subnets behind the containerized node reachable from any device on your Mesh.
+- [**Enable high availability**](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) — Run multiple replicas for production resilience.
+- [**Connect from Workers**](/workers-vpc/examples/connect-to-cloudflare-mesh/) — Use VPC Network bindings to reach private services from Cloudflare Workers.
+- [**Tips and best practices**](/cloudflare-one/networks/connectors/cloudflare-mesh/tips/) — Cloud VPC configuration, MTU tuning, and running alongside Cloudflare Tunnel.

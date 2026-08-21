@@ -3,7 +3,7 @@ pcx_content_type: navigation
 title: Configuration
 description: Customize how your AI Search instance indexes data, retrieves results, and generates responses.
 sidebar:
-  order: 6
+  order: 7
 products:
   - ai-search
 ---
@@ -28,21 +28,25 @@ You can customize how your AI Search instance indexes your data, retrieves resul
 | [Syncing](/ai-search/configuration/indexing/syncing/)                     | yes                     | Sync jobs and indexing controls                                 |
 | [Keyword search](/ai-search/configuration/indexing/keyword-search/)       | yes                     | Enable keyword (BM25) search for exact term matching            |
 | [Hybrid search](/ai-search/configuration/indexing/hybrid-search/)         | yes                     | Combine vector and keyword search with configurable fusion      |
-| [Metadata](/ai-search/configuration/indexing/metadata/)                   | yes                     | Custom metadata fields for filtering                            |
+| [Metadata attributes](/ai-search/configuration/indexing/metadata/)        | yes                     | Define built-in and custom metadata fields                      |
 | [Service API token](/ai-search/configuration/indexing/service-api-token/) | yes                     | API token that grants AI Search permission to access R2 buckets |
 
 ## Retrieval
 
-| Configuration                                                            | Editable after creation | Description                                                   |
-| ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------------------- |
-| [Result filtering](/ai-search/configuration/retrieval/result-filtering/) | yes                     | Match threshold and maximum number of results                 |
-| [Relevance boosting](/ai-search/configuration/retrieval/boosting/)       | yes                     | Bias results by metadata characteristics                      |
-| [Reranking](/ai-search/configuration/retrieval/reranking/)               | yes                     | Reorder results by semantic relevance using a reranking model |
-| [Query rewriting](/ai-search/configuration/retrieval/query-rewriting/)   | yes                     | Rewrite follow-up queries using conversation context          |
-| [System prompt](/ai-search/configuration/retrieval/system-prompt/)       | yes                     | Guide query rewriting and response generation behavior        |
-| [Similarity caching](/ai-search/configuration/retrieval/cache/)          | yes                     | Cache responses for similar prompts                           |
-| [Public endpoint](/ai-search/configuration/retrieval/public-endpoint/)   | yes                     | Enable public access to search, chat, and MCP endpoints       |
-| [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/) | yes                     | Embed pre-built search and chat components in your website    |
+| Configuration                                                                               | Editable after creation | Description                                                   |
+| ------------------------------------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------- |
+| [Result controls](/ai-search/configuration/retrieval/result-controls/)                      | yes                     | Match threshold and maximum number of results                 |
+| [Filtering](/ai-search/configuration/retrieval/filtering/)                                  | yes                     | Filter results by metadata attributes                         |
+| [Relevance boosting](/ai-search/configuration/retrieval/boosting/)                          | yes                     | Bias results by metadata characteristics                      |
+| [Reranking](/ai-search/configuration/retrieval/reranking/)                                  | yes                     | Reorder results by semantic relevance using a reranking model |
+| [Query rewriting](/ai-search/configuration/retrieval/query-rewriting/)                      | yes                     | Rewrite follow-up queries using conversation context          |
+| [System prompt](/ai-search/configuration/retrieval/system-prompt/)                          | yes                     | Guide query rewriting and response generation behavior        |
+| [Similarity caching](/ai-search/configuration/retrieval/cache/)                             | yes                     | Cache responses for similar prompts                           |
+| [Public endpoint](/ai-search/configuration/retrieval/public-endpoint/)                      | yes                     | Enable public access to search, chat, and MCP endpoints       |
+| [Custom domains](/ai-search/configuration/retrieval/public-endpoint/custom-domains/)        | yes                     | Serve a public endpoint from a hostname that you own          |
+| [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/)  | yes                     | Require callers to authenticate before they can search        |
+| [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/) | yes                     | Search across several instances from a single public endpoint |
+| [UI snippets](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/)    | yes                     | Embed pre-built search and chat components in your website    |
 
 ## Models
 
@@ -52,3 +56,4 @@ You can customize how your AI Search instance indexes your data, retrieves resul
 | [Generation model](/ai-search/configuration/models/)      | yes                     | Model used to generate the final response           |
 | [Query rewriting model](/ai-search/configuration/models/) | yes                     | Model used for query rewriting                      |
 | [Reranking model](/ai-search/configuration/models/)       | yes                     | Model used to reorder results by semantic relevance |
+| [AI Gateway](/ai-search/configuration/models/ai-gateway/) | yes                     | Observe and control the model calls AI Search makes |

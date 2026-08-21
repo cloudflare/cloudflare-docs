@@ -1,0 +1,132 @@
+---
+{}
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+## Common integration patterns
+
+### Agents behind authentication
+
+Check auth before routing to agents:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env) {
+		// Check auth for agent routes
+		if (request.url.includes("/agents/")) {
+			const authResult = await checkAuth(request, env);
+			if (!authResult.valid) {
+				return new Response("Unauthorized", { status: 401 });
+			}
+		}
+
+		const agentResponse = await routeAgentRequest(request, env);
+		if (agentResponse) return agentResponse;
+
+		// ... rest of routing
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Custom agent path prefix
+
+By default, agents are routed at `/agents/{agent-name}/{instance-name}`. You can customize this:
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest } from "agents";
+
+const agentResponse = await routeAgentRequest(request, env, {
+	prefix: "/api/agents", // Now routes at /api/agents/{agent-name}/{instance-name}
+});
+```
+
+</TypeScriptExample>
+
+Refer to [Routing](/agents/runtime/communication/routing/) for more options including CORS, custom instance naming, and location hints.
+
+### Accessing agents from server code
+
+You can interact with agents directly from your Worker code:
+
+<TypeScriptExample>
+
+```ts
+import { getAgentByName } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env) {
+		if (request.url.endsWith("/api/increment")) {
+			// Get a specific agent instance
+			const counter = await getAgentByName(env.CounterAgent, "shared-counter");
+			const newCount = await counter.increment();
+			return Response.json({ count: newCount });
+		}
+		// ...
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Adding multiple agents
+
+Add more agents by extending the configuration:
+
+<TypeScriptExample>
+
+```ts
+// src/agents/chat.ts
+export class Chat extends Agent {
+	// ...
+}
+
+// src/agents/scheduler.ts
+export class Scheduler extends Agent {
+	// ...
+}
+```
+
+</TypeScriptExample>
+
+Update the Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+[[durable_objects.bindings]]
+name = "CounterAgent"
+class_name = "CounterAgent"
+
+[[durable_objects.bindings]]
+name = "Chat"
+class_name = "Chat"
+
+[[durable_objects.bindings]]
+name = "Scheduler"
+class_name = "Scheduler"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["CounterAgent", "Chat", "Scheduler"]
+```
+
+</WranglerConfig>
+
+Export all agents from your entry point:
+
+<TypeScriptExample>
+
+```ts
+export { CounterAgent } from "./agents/counter";
+export { Chat } from "./agents/chat";
+export { Scheduler } from "./agents/scheduler";
+```
+
+</TypeScriptExample>

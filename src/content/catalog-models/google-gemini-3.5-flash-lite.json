@@ -1,0 +1,682 @@
+{
+	"model_id": "google/gemini-3.5-flash-lite",
+	"provider_id": "google",
+	"name": "Gemini 3.5 Flash-Lite",
+	"description": "Gemini 3.5 Flash-Lite is a low-latency, cost-effective multimodal model optimized for high-throughput, low-cost execution for subagent tasks and document parsing.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Fast",
+		"Cost-Efficient",
+		"Multimodal",
+		"Agentic"
+	],
+	"context_length": 1048576,
+	"max_output_tokens": 65536,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic generateContent request",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "What are the three laws of thermodynamics?"
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The three laws of thermodynamics are fundamental physical principles that describe how energy behaves in the universe\u2014specifically regarding heat, work, entropy, and the limits of energy transfer. \n\nHere is a summary of the three laws, along with a \"zeroth law\" that was established later but is equally fundamental.\n\n---\n\n### The Zeroth Law of Thermodynamics\n*(Establishes temperature as a measurable property and defines thermal equilibrium.)*\n* **The Law:** If two systems are each in thermal equilibrium with a third system, they are also in thermal equilibrium with each other.\n* **Plain English:** If System A is the same temperature as System C, and System B is also the same temperature as System C, then System A and System B are the same temperature. \n* **Why it matters:** This law forms the scientific basis for thermometers.\n\n---\n\n### The First Law of Thermodynamics\n*(The Law of Conservation of Energy)*\n* **The Law:** Energy cannot be created or destroyed in an isolated system; it can only be changed from one form to another.\n* **Plain English:** You can\u2019t get something for nothing. The total amount of energy in the universe remains constant. If a system gains energy, it must come from somewhere else; if it loses energy, it must go somewhere else.\n* **Example:** When you drive a car, chemical energy stored in the gasoline is converted into thermal energy (heat) and kinetic energy (motion). No energy is lost, just transformed.\n\n---\n\n### The Second Law of Thermodynamics\n*(The Law of Entropy)*\n* **The Law:** The total entropy (disorder or randomness) of an isolated system always increases over time. Heat naturally flows from a hotter object to a cooler object, never the reverse spontaneously.\n* **Plain English:** Things naturally fall apart, cool down, or become disorganized unless you put work into maintaining them. You cannot convert heat energy into work with 100% efficiency; some energy is always \"lost\" as unusable waste heat.\n* **Example:** A cup of hot coffee left on a table will eventually cool down to room temperature. The reverse\u2014a room-temperature cup of coffee spontaneously absorbing heat from the room to become boiling hot\u2014never happens naturally. \n* **Why it matters:** This law explains why perpetual motion machines are impossible and gives our universe a \"direction of time\" (often called the \"arrow of time\").\n\n---\n\n### The Third Law of Thermodynamics\n*(The Behavior at Absolute Zero)*\n* **The Law:** As the temperature of a system approaches absolute zero ($0\\text{ Kelvin}$ or $-273.15^\\circ\\text{C}$), the entropy of a pure, perfect crystalline substance approaches a minimum value (typically zero).\n* **Plain English:** You cannot reach absolute zero. As atoms get colder and colder, they slow down and lose thermal motion, but you can never completely stop molecular motion entirely.\n* **Why it matters:** It sets a fundamental lower limit on temperature and helps scientists calculate the absolute entropy of substances."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "The three laws of thermodynamics are fundamental physical principles that describe how energy behaves in the universe\u2014specifically regarding heat, work, entropy, and the limits of energy transfer. \n\nHere is a summary of the three laws, along with a \"zeroth law\" that was established later but is equally fundamental.\n\n---\n\n### The Zeroth Law of Thermodynamics\n*(Establishes temperature as a measurable property and defines thermal equilibrium.)*\n* **The Law:** If two systems are each in thermal equilibrium with a third system, they are also in thermal equilibrium with each other.\n* **Plain English:** If System A is the same temperature as System C, and System B is also the same temperature as System C, then System A and System B are the same temperature. \n* **Why it matters:** This law forms the scientific basis for thermometers.\n\n---\n\n### The First Law of Thermodynamics\n*(The Law of Conservation of Energy)*\n* **The Law:** Energy cannot be created or destroyed in an isolated system; it can only be changed from one form to another.\n* **Plain English:** You can\u2019t get something for nothing. The total amount of energy in the universe remains constant. If a system gains energy, it must come from somewhere else; if it loses energy, it must go somewhere else.\n* **Example:** When you drive a car, chemical energy stored in the gasoline is converted into thermal energy (heat) and kinetic energy (motion). No energy is lost, just transformed.\n\n---\n\n### The Second Law of Thermodynamics\n*(The Law of Entropy)*\n* **The Law:** The total entropy (disorder or randomness) of an isolated system always increases over time. Heat naturally flows from a hotter object to a cooler object, never the reverse spontaneously.\n* **Plain English:** Things naturally fall apart, cool down, or become disorganized unless you put work into maintaining them. You cannot convert heat energy into work with 100% efficiency; some energy is always \"lost\" as unusable waste heat.\n* **Example:** A cup of hot coffee left on a table will eventually cool down to room temperature. The reverse\u2014a room-temperature cup of coffee spontaneously absorbing heat from the room to become boiling hot\u2014never happens naturally. \n* **Why it matters:** This law explains why perpetual motion machines are impossible and gives our universe a \"direction of time\" (often called the \"arrow of time\").\n\n---\n\n### The Third Law of Thermodynamics\n*(The Behavior at Absolute Zero)*\n* **The Law:** As the temperature of a system approaches absolute zero ($0\\text{ Kelvin}$ or $-273.15^\\circ\\text{C}$), the entropy of a pure, perfect crystalline substance approaches a minimum value (typically zero).\n* **Plain English:** You cannot reach absolute zero. As atoms get colder and colder, they slow down and lose thermal motion, but you can never completely stop molecular motion entirely.\n* **Why it matters:** It sets a fundamental lower limit on temperature and helps scientists calculate the absolute entropy of substances.",
+									"thoughtSignature": "AY89a1/ol32QPrMVbKQjdSf9juhARUkac2Z+KPcq5oo84TKrgbEj7WuE+4yuNhidBd0="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 8,
+					"candidatesTokenCount": 634,
+					"totalTokenCount": 642,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 8
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 634
+						}
+					]
+				},
+				"modelVersion": "gemini-3.5-flash-lite",
+				"createTime": "2026-07-21T16:21:55.338444Z",
+				"responseId": "o5xfaozUFK2o8sYPiYHy-Ag"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash-lite',\n  { contents: [{ parts: [{ text: 'What are the three laws of thermodynamics?' }], role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the three laws of thermodynamics?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Data Extraction",
+			"description": "Structured data extraction from unstructured text, a common subagent task",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "Extract the name, email, and phone number from this text as JSON: 'Hi, I'm Jordan Blake, reach me at jordan.blake@example.com or 555-2938.'"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"temperature": 0
+				},
+				"systemInstruction": {
+					"parts": [
+						{
+							"text": "You are a data extraction assistant. Respond with only valid JSON, no extra commentary."
+						}
+					]
+				}
+			},
+			"output": {
+				"text": "{\n  \"name\": \"Jordan Blake\",\n  \"email\": \"jordan.blake@example.com\",\n  \"phone\": \"555-2938\"\n}"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "{\n  \"name\": \"Jordan Blake\",\n  \"email\": \"jordan.blake@example.com\",\n  \"phone\": \"555-2938\"\n}",
+									"thoughtSignature": "AY89a1+AejOv/9okEuBeoArPDSAKd5ZcT4tlNk6itaskjb7ezx7K9fEu5NLFUx4iUig="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 63,
+					"candidatesTokenCount": 43,
+					"totalTokenCount": 106,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 63
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 43
+						}
+					]
+				},
+				"modelVersion": "gemini-3.5-flash-lite",
+				"createTime": "2026-07-21T16:21:57.867550Z",
+				"responseId": "pZxfat75NIvG8sYP3dfakAo"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash-lite',\n  {\n    contents: [\n      {\n        parts: [\n          {\n            text: \"Extract the name, email, and phone number from this text as JSON: 'Hi, I'm Jordan Blake, reach me at jordan.blake@example.com or 555-2938.'\",\n          },\n        ],\n        role: 'user',\n      },\n    ],\n    generationConfig: { temperature: 0 },\n    systemInstruction: {\n      parts: [\n        {\n          text: 'You are a data extraction assistant. Respond with only valid JSON, no extra commentary.',\n        },\n      ],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Extract the name, email, and phone number from this text as JSON: '\\''Hi, I'\\''m Jordan Blake, reach me at jordan.blake@example.com or 555-2938.'\\''\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0\n    },\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are a data extraction assistant. Respond with only valid JSON, no extra commentary.\"\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a short conversation with low-latency, high-throughput responses",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "Summarize this in one sentence: The meeting covered Q3 budget overruns, a proposed hiring freeze, and a plan to renegotiate vendor contracts."
+							}
+						],
+						"role": "user"
+					},
+					{
+						"parts": [
+							{
+								"text": "The meeting addressed Q3 budget overruns by proposing a hiring freeze and vendor contract renegotiations."
+							}
+						],
+						"role": "model"
+					},
+					{
+						"parts": [
+							{
+								"text": "Now make it even shorter, under 10 words."
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"maxOutputTokens": 512
+				}
+			},
+			"output": {
+				"text": "Addressing Q3 budget overruns, hiring freezes, and vendor contracts."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "Addressing Q3 budget overruns, hiring freezes, and vendor contracts.",
+									"thoughtSignature": "AY89a1/dUv1ajorDdpZkOzaeL0fb5CjoZL4SoKtpQeX8AK5jF5vNa/v4F6r7OqdabWs="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 61,
+					"candidatesTokenCount": 14,
+					"totalTokenCount": 75,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 61
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 14
+						}
+					]
+				},
+				"modelVersion": "gemini-3.5-flash-lite",
+				"createTime": "2026-07-21T16:21:58.695703Z",
+				"responseId": "ppxfape7KqSn8sYPpMq_gQ8"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.5-flash-lite',\n  {\n    contents: [\n      {\n        parts: [\n          {\n            text: 'Summarize this in one sentence: The meeting covered Q3 budget overruns, a proposed hiring freeze, and a plan to renegotiate vendor contracts.',\n          },\n        ],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: 'The meeting addressed Q3 budget overruns by proposing a hiring freeze and vendor contract renegotiations.',\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Now make it even shorter, under 10 words.' }], role: 'user' },\n    ],\n    generationConfig: { maxOutputTokens: 512 },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3.5-flash-lite\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Summarize this in one sentence: The meeting covered Q3 budget overruns, a proposed hiring freeze, and a plan to renegotiate vendor contracts.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"The meeting addressed Q3 budget overruns by proposing a hiring freeze and vendor contract renegotiations.\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Now make it even shorter, under 10 words.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 512\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://deepmind.google/technologies/gemini/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-3.5-flash-lite.png",
+	"metadata": {
+		"Architecture": "Transformer (multimodal)"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-07-21 21:43:11",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"contents": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"model"
+										]
+									},
+									"parts": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												}
+											},
+											"additionalProperties": {}
+										}
+									}
+								},
+								"required": [
+									"parts"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"systemInstruction": {
+							"type": "object",
+							"properties": {
+								"parts": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"text": {
+												"type": "string"
+											}
+										},
+										"additionalProperties": {}
+									}
+								}
+							},
+							"required": [
+								"parts"
+							],
+							"additionalProperties": {}
+						},
+						"generationConfig": {
+							"type": "object",
+							"properties": {
+								"temperature": {
+									"type": "number"
+								},
+								"topP": {
+									"type": "number"
+								},
+								"topK": {
+									"type": "number"
+								},
+								"maxOutputTokens": {
+									"type": "number"
+								},
+								"candidateCount": {
+									"type": "number"
+								},
+								"stopSequences": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"responseMimeType": {
+									"type": "string"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"safetySettings": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"category": {
+										"type": "string"
+									},
+									"threshold": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"category",
+									"threshold"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"toolConfig": {}
+					},
+					"required": [
+						"contents"
+					],
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"candidates": {
+							"type": "array",
+							"items": {}
+						},
+						"usageMetadata": {
+							"type": "object",
+							"properties": {
+								"promptTokenCount": {
+									"type": "number"
+								},
+								"candidatesTokenCount": {
+									"type": "number"
+								},
+								"totalTokenCount": {
+									"type": "number"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"modelVersion": {
+							"type": "string"
+						}
+					},
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"anyOf": [
+													{
+														"type": "string"
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		}
+	}
+}

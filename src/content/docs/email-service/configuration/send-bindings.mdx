@@ -1,0 +1,61 @@
+---
+title: Configure send bindings
+description: Restrict which senders and recipients a Workers send_email binding can use with Email Service.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+products:
+  - email-service
+---
+
+import { WranglerConfig } from "~/components";
+
+When you add a `send_email` binding to a Worker, you can restrict which addresses it may send from and to. Configure these restrictions in your Wrangler configuration file. For the binding API itself, refer to the [Workers API](/email-service/api/send-emails/workers-api/).
+
+## Binding types
+
+Each entry in `send_email` can be configured to restrict what the binding can do. The sender address must always belong to a domain you have onboarded to Email Service.
+
+- **No restriction attribute**: The binding can send to any verified destination address in your account.
+- **`destination_address`**: The binding can only send to the single destination address configured here. If you call `send()` with `to` set to `null` or `undefined`, the configured address is used.
+- **`allowed_destination_addresses`**: The binding can only send to addresses listed in this allowlist.
+- **`allowed_sender_addresses`**: The binding can only send from the addresses listed in this allowlist.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"send_email": [
+		// Send to any verified destination
+		{ "name": "EMAIL" },
+		// Send only to a single fixed destination
+		{
+			"name": "NOTIFY_OPS",
+			"destination_address": "ops@yourdomain.com",
+		},
+		// Send only to addresses on an allowlist
+		{
+			"name": "EMAIL_TEAM",
+			"allowed_destination_addresses": [
+				"alice@yourdomain.com",
+				"bob@yourdomain.com",
+			],
+		},
+		// Send only from addresses on an allowlist
+		{
+			"name": "RESTRICTED_EMAIL",
+			"allowed_sender_addresses": [
+				"noreply@yourdomain.com",
+				"support@yourdomain.com",
+			],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+## Next steps
+
+- [Workers API](/email-service/api/send-emails/workers-api/) — send emails from a Worker using the binding.
+- [Domain configuration](/email-service/configuration/domains/) — onboard the domains you send from.

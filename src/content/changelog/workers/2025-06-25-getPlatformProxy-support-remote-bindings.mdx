@@ -8,7 +8,7 @@ date: 2025-06-30
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-We [recently announced](https://github.com/cloudflare/workers-sdk/discussions/9660) our public beta for [remote bindings](/workers/development-testing/#remote-bindings), which allow you to connect to deployed resources running on your Cloudflare account (like [R2 buckets](/r2) or [D1 databases](/d1)) while running a local development session.
+We [recently announced](https://github.com/cloudflare/workers-sdk/discussions/9660) our public beta for [remote bindings](/workers/local-development/#remote-bindings), which allow you to connect to deployed resources running on your Cloudflare account (like [R2 buckets](/r2) or [D1 databases](/d1)) while running a local development session.
 
 Now, you can use remote bindings with your Next.js applications through the [`@opennextjs/cloudflare` adaptor](https://opennext.js.org/cloudflare/bindings#remote-bindings) by enabling the experimental feature in your `next.config.ts`:
 
@@ -37,7 +37,7 @@ Then, all you have to do is specify which bindings you want connected to the dep
 
 </WranglerConfig>
 
-You can then run `next dev` to start a local development session (or start a preview with `opennextjs-cloudflare preview`), and all requests to `env.MY_BUCKET` will be proxied to the remote `testing-bucket` — rather than the [default local binding simulations](/workers/development-testing/#bindings-during-local-development).
+You can then run `next dev` to start a local development session (or start a preview with `opennextjs-cloudflare preview`), and all requests to `env.MY_BUCKET` will be proxied to the remote `testing-bucket` — rather than the [default local binding simulations](/workers/local-development/#bindings-during-local-development).
 
 ## Remote bindings & ISR
 

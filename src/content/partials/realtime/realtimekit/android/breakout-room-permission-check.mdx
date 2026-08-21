@@ -1,0 +1,22 @@
+---
+{}
+
+---
+```kotlin
+val connectedMeetings = meeting.connectedMeetings
+
+// Check if breakout rooms are active
+val areBreakoutRoomsActive = connectedMeetings.isActive
+
+// Check permissions on the local participant
+val permissions = meeting.self.permissions.connectedMeetings
+
+// Check if the current participant has permission to create/alter breakout rooms
+val hasPermissionToAlterBreakoutRooms = permissions.canAlterConnectedMeetings
+
+// Check if the current participant has permission to switch between breakout rooms
+val hasPermissionToSwitchConnectedMeetings = permissions.canSwitchConnectedMeetings
+
+// Check if the current participant has permission to switch back to the parent meeting
+val hasPermissionToSwitchToParentMeeting = permissions.canSwitchToParentMeeting
+```

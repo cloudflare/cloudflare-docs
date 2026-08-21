@@ -10,7 +10,7 @@ sidebar:
 description: Learn how Speed Brain enhances web performance by prefetching likely next pages, improving metrics like LCP and TTFB.
 ---
 
-import { FeatureTable, TabItem, Tabs, APIRequest, DashButton } from "~/components";
+import { TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 Speed Brain is a tool for improving web page performance by prefetching the most likely next navigation.
 
@@ -18,7 +18,9 @@ Speed Brain is a tool for improving web page performance by prefetching the most
 
 ## Availability
 
-<FeatureTable id="speed.speed_brain" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Enabled by default | Yes | Yes | Yes |
 
 ---
 
@@ -41,7 +43,7 @@ By prefetching pages that the browser considers likely to be navigated to, Speed
 
 ## How Speed Brain works
 
-When Cloudflare's Speed Brain feature is enabled, an HTTP header called `Speculation-Rules` is added to web page responses. The value for this header is an URL that hosts an opinionated Speculation-Rules configuration. This configuration instructs the browser to consider prefetching any future navigations with a `conservative` [eagerness](https://developer.chrome.com/docs/web-platform/prerender-pages#eagerness).
+When Cloudflare's Speed Brain feature is enabled, an HTTP header called `Speculation-Rules` is added to web page responses. The value for this header is a URL that hosts an opinionated Speculation-Rules configuration. This configuration instructs the browser to consider prefetching any future navigations with a `conservative` [eagerness](https://developer.chrome.com/docs/web-platform/prerender-pages#eagerness).
 
 The configuration looks like this:
 

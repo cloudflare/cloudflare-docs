@@ -3,6 +3,22 @@ link: "/browser-run/changelog/"
 productName: Browser Run
 productLink: "/browser-run/"
 entries:
+  - publish_date: "2026-07-28"
+    title: "Structured handoff for Human in the Loop"
+    description: |-
+      * [Human in the Loop](/browser-run/features/human-in-the-loop/) now supports structured handoff using Cloudflare-specific CDP commands. Your script calls `Cloudflare.handoff` with instructions for the human operator and waits for a `Cloudflare.handoffComplete` event, replacing the need to manually poll for completion. Refer to the [Human in the Loop documentation](/browser-run/features/human-in-the-loop/) for examples and best practices.
+  - publish_date: "2026-07-07"
+    title: "New endpoint: /accessibilityTree"
+    description: |-
+      * Added the [`/accessibilityTree` endpoint](/browser-run/quick-actions/accessibility-tree-endpoint/) to capture the accessibility tree from a rendered webpage. The accessibility tree includes roles, names, values, states, and hierarchy, giving AI agents and automation workflows a structured view of page elements without parsing raw HTML or interpreting screenshots. You can capture the full page tree, return only semantically meaningful nodes with `interestingOnly`, or capture a subtree with `root`.
+  - publish_date: "2026-06-12"
+    title: "New tutorial: Pre-render pages for crawlers"
+    description: |-
+      * Added a new tutorial on how to [pre-render JavaScript-heavy pages](/browser-run/how-to/pre-render-pages/) using Browser Run and a Worker. The tutorial covers building a pre-rendering endpoint that calls the [`/content` Quick Action](/browser-run/quick-actions/content-endpoint/) to render pages in managed headless Chrome and return crawler-ready HTML for search crawlers, social preview bots, AI indexing jobs, or partner integrations.
+  - publish_date: "2026-06-11"
+    title: "New formats parameter for /snapshot"
+    description: |-
+      * The [`/snapshot` endpoint](/browser-run/quick-actions/snapshot/) now supports a `formats` parameter that lets you return multiple page formats in a single API call. Previously, `/snapshot` returned only HTML content and a screenshot. You can now also include Markdown and the accessibility tree in the same response. Refer to the [`/snapshot` documentation](/browser-run/quick-actions/snapshot/) for usage examples and accepted values.
   - publish_date: "2026-05-28"
     title: "Use Quick Actions directly from Workers"
     description: |-

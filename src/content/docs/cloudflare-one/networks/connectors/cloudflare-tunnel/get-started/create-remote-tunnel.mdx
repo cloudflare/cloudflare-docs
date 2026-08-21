@@ -10,9 +10,9 @@ tags:
   - Private networks
 ---
 
-import { Render, Stream } from "~/components";
+import { Render, Stream, DashButton } from "~/components";
 
-Follow this step-by-step guide to create your first [remotely-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#remotely-managed-tunnel) using Cloudflare One.
+Follow this step-by-step guide to create your first [remotely-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#remotely-managed-tunnel).
 
 <Render file="tunnel/connectivity-prechecks-note" product="cloudflare-one" />
 
@@ -38,11 +38,16 @@ Anyone on the Internet can now access the application at the specified hostname.
 
 ## 2b. Connect a network
 
-To connect a private network through your tunnel:
+To connect a private network through your tunnel, add a CIDR route:
 
-1. Go to the **CIDR** tab.
-2. In **CIDR**, enter the private IP address or CIDR range of your service (for example, `10.0.0.1` or `10.0.0.0/24`).
-3. Select **Complete setup**.
+1. Go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. Select **Create route**, then choose **Tunnel CIDR**.
+3. Select the tunnel you just created.
+4. In **Network**, enter the private IP address or CIDR range of your service (for example, `10.0.0.1` or `10.0.0.0/24`).
+5. Select **Create route**.
 
 `cloudflared` can now route traffic to these destination IPs. To configure Zero Trust policies and connect as a user, refer to [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/).
 
@@ -52,4 +57,4 @@ If you would like to route to a private application using its hostname instead o
 
 ## 3. View your tunnel
 
-After saving the tunnel, you will be redirected to the **Networks** > **Connectors** page. Your tunnel should be listed with a `Healthy` status. If your tunnel status is `Inactive`, `Down`, or `Degraded`, refer to the [troubleshooting documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#tunnel-status) for recommended next steps.
+After saving the tunnel, you will be redirected to the **Networking** > **Tunnels** page. Your tunnel should be listed with a `Healthy` status. If your tunnel status is `Inactive`, `Down`, or `Degraded`, refer to the [troubleshooting documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#tunnel-status) for recommended next steps.

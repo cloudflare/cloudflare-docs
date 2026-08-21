@@ -1,0 +1,181 @@
+---
+summary: Synchronize application recipient records with Email Sending lifecycle events.
+pcx_content_type: example
+title: Sync recipient records
+description: Remove recipients after hard bounces and spam complaints.
+sidebar:
+  order: 10
+products:
+  - email-service
+---
+
+import {
+	DashButton,
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Use [Email Sending event subscriptions](/email-service/platform/event-subscriptions/) to update application records after delivery problems. This example uses [Cloudflare Queues](/queues/) and [Workers KV](/kv/) to remove recipients from transactional notifications.
+
+:::note[Suppression lists]
+Email Sending automatically [suppresses](/email-service/concepts/suppressions/) hard bounces and spam complaints. This example also prevents your application from selecting those recipients.
+
+Workers KV is eventually consistent. Deletions can take 60 seconds or longer to appear in other locations.
+:::
+
+## Prepare the resources
+
+Before you begin:
+
+- Enable an [Email Sending domain](/email-service/configuration/domains/).
+- Create a [Worker project](/workers/get-started/guide/).
+- Create a [Workers KV namespace](/kv/get-started/#2-create-a-kv-namespace).
+
+Store each eligible recipient address as a key in KV. The value can contain notification preferences or related metadata.
+
+## Review the event flow
+
+1. Email Sending publishes bounce and complaint events.
+2. A queue delivers those events to a Worker.
+3. The Worker removes ineligible recipient records from KV.
+
+## Choose removal events
+
+Remove records for every `message.complained` event. These events indicate that a recipient reported the message as spam.
+
+Remove bounced records only when `payload.bounce.type` is `"hard"`. Temporary failures produce `message.deferred` events while retries remain. Exhausted temporary retries can produce `message.bounced` events with a `"soft"` bounce type.
+
+For payload details, refer to [Available Email Sending events](/email-service/platform/event-subscriptions/#available-email-sending-events).
+
+## Create the queue and subscription
+
+Create a queue and subscribe it to your sending domain:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Queues** page. Create a queue named `email-events`.
+
+	 <DashButton url="/?to=/:account/workers/queues" />
+
+2. Select `email-events`, then select **Subscriptions** > **Subscribe to events**.
+3. Enter a subscription name and select **Email Sending** as the source.
+4. Select your sending domain and the `message.bounced` and `message.complained` events.
+5. Select **Subscribe**.
+</Steps>
+
+## Configure the Worker
+
+Bind the KV namespace and register the Worker as the queue consumer:
+
+<WranglerConfig>
+
+```toml
+name = "recipient-record-sync"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[kv_namespaces]]
+binding = "RECIPIENTS"
+id = "<RECIPIENTS_KV_NAMESPACE_ID>"
+
+[[queues.consumers]]
+queue = "email-events"
+max_batch_size = 10
+max_retries = 3
+dead_letter_queue = "email-events-dlq"
+```
+
+</WranglerConfig>
+
+The configuration creates `email-events-dlq` during deployment. Queues moves events there after three retries.
+
+## Add the queue consumer
+
+The [`queue()` handler](/queues/configuration/javascript-apis/#consumer) processes each event independently. It deletes applicable recipient records and retries failed KV operations.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	RECIPIENTS: KVNamespace;
+}
+
+interface EmailSendingEvent {
+	type:
+		| "cf.email.sending.message.bounced"
+		| "cf.email.sending.message.complained";
+	payload: {
+		eventId: string;
+		recipient: string;
+		bounce?: {
+			type: "hard" | "soft";
+		};
+	};
+}
+
+export default {
+	async queue(batch, env): Promise<void> {
+		for (const message of batch.messages) {
+			try {
+				const event = message.body;
+
+				if (shouldRemove(event)) {
+					await removeRecipient(env, event);
+				}
+
+				message.ack();
+			} catch (error) {
+				console.error("Failed to process Email Sending event", {
+					eventId: message.body.payload.eventId,
+					error,
+				});
+				message.retry();
+			}
+		}
+	},
+} satisfies ExportedHandler<Env, EmailSendingEvent>;
+
+function shouldRemove(event: EmailSendingEvent): boolean {
+	if (event.type === "cf.email.sending.message.complained") {
+		return true;
+	}
+
+	return (
+		event.type === "cf.email.sending.message.bounced" &&
+		event.payload.bounce?.type === "hard"
+	);
+}
+
+async function removeRecipient(
+	env: Env,
+	event: EmailSendingEvent,
+): Promise<void> {
+	await env.RECIPIENTS.delete(event.payload.recipient);
+	console.log("Removed recipient record", {
+		eventId: event.payload.eventId,
+		reason: event.type,
+	});
+}
+```
+
+</TypeScriptExample>
+
+Deleting a missing KV key succeeds. This makes repeated event delivery safe.
+
+The handler acknowledges each successful message. Failed operations move to the [dead letter queue](/queues/configuration/dead-letter-queues/) after three retries.
+
+## Deploy the Worker
+
+Deploy the Worker and its queue consumer configuration:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Monitor the dead letter queue for failed events. Reprocess them after fixing the underlying error.
+
+## Explore related resources
+
+- [Event subscriptions](/email-service/platform/event-subscriptions/) — review event schemas.
+- [Suppression lists](/email-service/concepts/suppressions/) — understand automatic suppressions.
+- [Queues retries](/queues/configuration/batching-retries/) — control message retries.
+- [Workers KV consistency](/kv/concepts/how-kv-works/#consistency) — account for propagation delays.

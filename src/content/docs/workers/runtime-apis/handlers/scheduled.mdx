@@ -54,11 +54,13 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import WorkerEntrypoint, Response, fetch
+from workers import WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
     async def scheduled(self, controller, env, ctx):
-        await doSomeTaskOnASchedule()
+        # controller.cron contains the cron pattern that triggered this event
+        # controller.scheduledTime contains the scheduled time in ms since epoch
+        print(f"Cron triggered: {controller.cron}")
 ```
 
 </TabItem></Tabs>
@@ -132,6 +134,20 @@ export default {
 		}
 	},
 } satisfies ExportedHandler<Env>;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, fetch
+from datetime import datetime, timezone
+
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+        if controller.cron == "*/5 * * * *":
+            await fetch("https://example.com/api/sync")
+        elif controller.cron == "0 0 * * *":
+            await env.MY_KV.put("last-cleanup", datetime.now(timezone.utc).isoformat())
 ```
 
 </TabItem> </Tabs>

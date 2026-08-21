@@ -40,7 +40,7 @@ Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quan
 - The Cloudflare API and dashboard.
 - [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) self-hosted applications (browser-to-edge leg).
 
-This section only covers the inbound TLS connection from the end-user client to Cloudflare's edge. When a Worker fetches data from a backend storage service ([D1](/d1/), [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), [Workers AI](/workers-ai/), [Hyperdrive](/hyperdrive/), and similar), that connection is governed by the [Cloudflare internal network](#cloudflare-internal-network) section. When a Worker calls out to a third-party origin via `fetch()`, it is governed by the [Cloudflare to origin](#cloudflare-to-origin) section. The [Agentless via proxy endpoints](#agentless-via-proxy-endpoints) on-ramp to Cloudflare Gateway terminates inbound TLS in its own edge stack and is covered separately below.
+This section only covers the inbound TLS connection from the end-user client to Cloudflare's edge. When a Worker fetches data from a backend storage service ([D1](/d1/), [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), [Workers AI](/workers-ai/), [Hyperdrive](/hyperdrive/), and similar), that connection is governed by the [Cloudflare internal network](#cloudflare-internal-network) section. When a Worker calls out to a third-party origin via `fetch()`, it is governed by the [Cloudflare to origin](#cloudflare-to-origin) section.
 
 ## Cloudflare internal network
 
@@ -59,10 +59,10 @@ Most internal connections have been migrated to X25519MLKEM768. A long tail of s
 
 Outbound TLS 1.3 connections from Cloudflare's edge to customer origin servers.
 
-| Protection    | Status            |
-| ------------- | ----------------- |
-| Key agreement | ✅ X25519MLKEM768 |
-| Signatures    | Not yet           |
+| Protection    | Status                                                                                                                                                                                 |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Key agreement | ✅ X25519MLKEM768                                                                                                                                                                      |
+| Signatures    | ✅ ML-DSA via [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) and [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) |
 
 Reference: [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/).
 
@@ -114,33 +114,22 @@ Mesh inherits its post-quantum protection from the [Cloudflare One Client](#clou
 
 - The [Cloudflare One Client](#cloudflare-one-client).
 - A [Cloudflare IPsec](#cloudflare-ipsec) tunnel.
-- The [Agentless via proxy endpoints](#agentless-via-proxy-endpoints) on-ramp.
 
 The egress leg from Gateway to third-party origin servers is covered by [Cloudflare to origin](#cloudflare-to-origin) and is independent of the on-ramp.
 
 Reference: [PQC and Cloudflare One: Secure Web Gateway](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#secure-web-gateway).
 
-### Agentless via proxy endpoints
-
-Cloudflare Gateway [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) let browsers route their egress HTTPS traffic through Cloudflare Gateway for inspection and filtering, without an agent installed on the device. Browsers are configured via a Proxy Auto-Configuration (PAC) file or system proxy settings to forward traffic to a Cloudflare-hosted proxy endpoint, which terminates TLS at Cloudflare's edge.
-
-| Protection    | Status            |
-| ------------- | ----------------- |
-| Key agreement | ✅ X25519MLKEM768 |
-| Signatures    | Not yet           |
-
-Reference: [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/), [PQC and Cloudflare One: Secure Web Gateway](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#secure-web-gateway).
-
 ### Cloudflare IPsec
 
 IKEv2 key exchange for IPsec tunnels between third-party branch connectors and Cloudflare's global network.
 
-| Protection    | Status                                            |
-| ------------- | ------------------------------------------------- |
-| Key agreement | ✅ ML-KEM-768/1024 + DH Group 20 (P-384) in IKEv2 |
-| Signatures    | Not yet                                           |
+| Protection           | Status                                            |
+| -------------------- | ------------------------------------------------- |
+| Key agreement        | ✅ ML-KEM-768/1024 + DH Group 20 (P-384) in IKEv2 |
+| Downgrade protection | 🚧 [`IKE_SA_INIT_FULL_TRANSCRIPT_AUTH`](/cloudflare-wan/reference/gre-ipsec-tunnels/#downgrade-protection) |
+| Signatures           | Not yet                                           |
 
-Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [GRE and IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability), [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/).
+Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [GRE and IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability), [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/), [draft-ietf-ipsecme-ikev2-downgrade-prevention](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/).
 
 The IPsec ESP dataplane can alternatively be keyed using the [Cloudflare One Appliance](#cloudflare-one-appliance) control plane instead of IKEv2.
 

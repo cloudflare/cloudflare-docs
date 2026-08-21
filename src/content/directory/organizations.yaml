@@ -1,0 +1,13 @@
+id: 9NidcW
+name: Organizations
+
+entry:
+  title: Organizations
+  group: Core platform
+  url: /fundamentals/organizations/
+  show: false
+
+meta:
+  title: Cloudflare Organizations docs
+  description: Centrally manage multiple Cloudflare accounts, members, analytics, and shared policies from a single Organization.
+  author: "@cloudflare"

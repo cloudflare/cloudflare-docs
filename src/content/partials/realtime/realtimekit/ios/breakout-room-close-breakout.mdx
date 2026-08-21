@@ -1,0 +1,32 @@
+---
+{}
+
+---
+```swift
+meeting.connectedMeetings.deleteMeetings(meetingIds: ["MEETING_ID_TO_CLOSE_1", "MEETING_ID_TO_CLOSE_2"]) { error in
+    if let error = error {
+        print("Failed to close breakout rooms: \(error)")
+    } else {
+        print("Breakout rooms closed successfully")
+    }
+}
+```
+
+This will also trigger the `onStateUpdate` event, updating the list of breakout rooms and participants.
+
+```swift
+class MyListener: RtkConnectedMeetingsEventListener {
+    func onStateUpdate(meetings: [RtkConnectedMeeting], parentMeeting: RtkConnectedMeeting?) {
+        print("State updated. Meetings: \(meetings), Parent: \(String(describing: parentMeeting))")
+
+        // Alternatively, access state directly from the connectedMeetings object
+        print("Meetings List: \(meeting.connectedMeetings.meetings)")
+        print("Parent Meeting: \(String(describing: meeting.connectedMeetings.parentMeeting))")
+    }
+
+    func onChangingMeeting(meetingId: String) {}
+    func onMeetingChanged(error: MeetingError?) {}
+}
+
+meeting.addConnectedMeetingsEventListener(MyListener())
+```

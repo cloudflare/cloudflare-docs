@@ -48,30 +48,18 @@ Detection tags are available in Security Analytics, but not in the Security Even
 
 ## Create or edit an expression
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Analytics** page.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Security Analytics** page.
 
-          <DashButton url="/?to=/:account/:zone/security/analytics" />
-      2. Apply filters and select **Create custom security rule** to create a custom rule based on your filters.
+      <DashButton url="/?to=/:account/:zone/security/analytics" />
+  2. Apply filters and select **Create custom security rule** to create a custom rule based on your filters.
 
-          Alternatively, if you have already created a custom rule, you can go to the existing rule in **Security rules** and edit the expression based on your filters.
+      Alternatively, if you have already created a custom rule, you can go to the existing rule in **Security rules** and edit the expression based on your filters.
 
-          <DashButton url="/?to=/:account/:zone/security/security-rules" />
-      3. Use the `cf.bot_management.detection_ids` field in the rule expression.
-      4. Select **Deploy**.
-      </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters. Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
-      3. Use the `cf.bot_management.detection_ids` field in the rule expression.
-      4. Select **Save**.
-    </Steps>
-  </TabItem>
-</Tabs>
+      <DashButton url="/?to=/:account/:zone/security/security-rules" />
+  3. Use the `cf.bot_management.detection_ids` field in the rule expression.
+  4. Select **Deploy**.
+</Steps>
 
 ---
 

@@ -13,18 +13,20 @@ tags:
 
 import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
-Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. These ranges are drawn from the CGNAT address space (`100.64.0.0/10`). To avoid routing conflicts, your Cloudflare Tunnel, Cloudflare Mesh, or WAN routes should not include subsets of these reserved ranges. Broader routes that contain a reserved range, such as `0.0.0.0/0`, are unaffected because longest-prefix match ensures the reserved ranges still take priority.
+Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. Most of these ranges are drawn from the CGNAT address space (`100.64.0.0/10`). [Gateway initial resolved IPs](#gateway-initial-resolved-ips) are the exception, using a public Cloudflare-owned range by default. To avoid routing conflicts, your Cloudflare Tunnel, Cloudflare Mesh, or WAN routes should not include subsets of these reserved ranges. Broader routes that contain a reserved range, such as `0.0.0.0/0`, are unaffected because longest-prefix match ensures the reserved ranges still take priority.
 
 When planning your private network addressing and configuring [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) entries, use the tables below to identify which IP ranges Cloudflare has reserved and whether they can be reconfigured.
 
 ## IPv4 ranges
 
-| Name                                                          | Default CIDR     | Configurable |
-| ------------------------------------------------------------- | ---------------- | ------------ |
-| [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`  | Yes          |
-| [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `100.80.0.0/16`  | No           |
+| Name                                                          | Default CIDR       | Configurable |
+| ------------------------------------------------------------- | ------------------- | ------------ |
+| [Cloudflare source IPs](#cloudflare-source-ips)               | `100.64.0.0/12`     | Yes          |
+| [Gateway initial resolved IPs](#gateway-initial-resolved-ips) | `172.64.128.0/20`   | Yes          |
 | [Device IPs](#device-ips)                           | `100.96.0.0/12`  | Yes          |
 | [Private Load Balancer IPs](#private-load-balancer-ips)       | `100.112.0.0/16` | Yes          |
+
+Unlike the other IPv4 ranges, Gateway initial resolved IPs are drawn from public Cloudflare address space rather than CGNAT (`100.64.0.0/10`) by default. If your account was created before this default changed, or if you configured a custom range, it may still fall within CGNAT space — refer to [Gateway initial resolved IPs](#gateway-initial-resolved-ips).
 
 ## IPv6 ranges
 
@@ -46,7 +48,7 @@ The default IPv4 range is `100.64.0.0/12`. You can change this to a different `/
 
 ## Gateway initial resolved IPs
 
-Gateway initial resolved IPs are ephemeral addresses used to map hostnames to destination IPs at the network layer, where hostname information is not usually available.
+Gateway initial resolved IPs (also called token IPs) are ephemeral addresses used to map hostnames to destination IPs at the network layer, where hostname information is not usually available.
 
 The following features use this range:
 
@@ -55,7 +57,9 @@ The following features use this range:
 - [Egress policy host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) — evaluates Gateway egress policies using hostname-based selectors.
 - [Access private applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) — manage access to private applications using their private hostnames.
 
-Initial resolved IPs are assigned from the `100.80.0.0/16` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range. This range is not configurable.
+Cloudflare assigns initial resolved IPs from the `172.64.128.0/20` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range by default. Unlike earlier CGNAT-based defaults, the IPv4 range is public Cloudflare address space, so it is not affected by [Google Chrome's Local Network Access restrictions](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#google-chrome-restricts-access-to-private-hostnames).
+
+You can configure a custom IPv4 range if the default conflicts with your existing network or private routes. The IPv6 range is not configurable. For instructions, refer to [Configure initial resolved IPs](/cloudflare-one/networks/routes/configure-initial-resolved-ips/).
 
 ## Device IPs
 
@@ -76,20 +80,22 @@ For deployments that use the [Cloudflare One Client](/cloudflare-one/team-and-re
 
 ### Exclude mode (default)
 
-In **Exclude IPs and domains** mode, the CGNAT range (`100.64.0.0/10`) is excluded from the Cloudflare One Client routing by default. You must delete the [reserved IP ranges](#ipv4-ranges) from your Split Tunnels exclude list, or the associated features will stop working.
+In **Exclude IPs and domains** mode, the Cloudflare One Client excludes the CGNAT range (`100.64.0.0/10`) from its routing by default. You must delete the reserved IP ranges that fall within CGNAT space from your Split Tunnels exclude list, or the associated features will stop working.
+
+[Gateway initial resolved IPs](#gateway-initial-resolved-ips) are the exception: the default range (`172.64.128.0/20`) is public Cloudflare address space, not CGNAT, so it is **not** excluded by default in Exclude mode. The Cloudflare One Client also automatically removes this range, along with the entire `2606:4700:0cf1::/48` IPv6 range (which also covers [device IPs](#device-ips) and [Cloudflare source IPs](#cloudflare-source-ips) on IPv6), from any exclusions you configure — refer to [Automatically managed ranges](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges). No Split Tunnel changes are required for these ranges. This only applies to the default IPv4 range: if you configured a custom initial resolved IP range within CGNAT space, treat it the same as the other CGNAT-based ranges below.
 
 Cloudflare recommends adding back the IPs that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use CGNAT address space.
 
-You can use the calculator below to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Gateway initial resolved IPs](#gateway-initial-resolved-ips) (`100.80.0.0/16`) and [device IPs](#device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.64.0.0/12`, `100.81.0.0/16`, `100.82.0.0/15`, `100.84.0.0/14`, `100.88.0.0/13`, and `100.112.0.0/12`.
+Use the following calculator to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Cloudflare source IPs](#cloudflare-source-ips) (`100.64.0.0/12`) and [device IPs](#device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.80.0.0/12` and `100.112.0.0/12`.
 
 <SubtractIPCalculator
 	client:load
 	defaults={{
 		base: "100.64.0.0/10",
-		subtract: ["100.80.0.0/16", "100.96.0.0/12"],
+		subtract: ["100.64.0.0/12", "100.96.0.0/12"],
 	}}
 />
 
 ### Include mode
 
-In **Include IPs and domains** mode, only traffic for the included routes is sent to Cloudflare. You must explicitly add the reserved IP ranges that your deployment depends on. For example, if you use [hostname routing or egress policy host selectors](#gateway-initial-resolved-ips), add `100.80.0.0/16` to your Split Tunnels include list.
+In **Include IPs and domains** mode, the Cloudflare One Client sends only traffic for the included routes to Cloudflare. You must explicitly add the reserved IP ranges that your deployment depends on, except the default [Gateway initial resolved IP range](#gateway-initial-resolved-ips) (`172.64.128.0/20`) and the entire `2606:4700:0cf1::/48` IPv6 range (which also covers [device IPs](#device-ips) and [Cloudflare source IPs](#cloudflare-source-ips) on IPv6) — the Cloudflare One Client automatically includes these. Refer to [Automatically managed ranges](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges) for details. If you use [hostname routing or egress policy host selectors](#gateway-initial-resolved-ips) with a custom IPv4 initial resolved IP range, add that custom range to your Split Tunnels include list.

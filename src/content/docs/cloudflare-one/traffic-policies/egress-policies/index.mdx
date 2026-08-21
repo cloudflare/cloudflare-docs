@@ -166,7 +166,7 @@ Selectors are the criteria that Gateway uses to match egress traffic against a p
 	product="cloudflare-one"
 />
 
-### Host <Badge text="Beta" variant="caution"/>
+### Host
 
 <Render
 	file="gateway/selectors/host-http"
@@ -250,3 +250,5 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 ### Selector prerequisites
 
 The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors require additional setup before they work in egress policies. Before deploying policies with these selectors, refer to [Host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors).
+
+These selectors also resolve the destination IP address when Gateway processes the DNS query, not when the egress policy is applied. If the resolved destination IP and your egress IP are in different regions, connections to destinations that enforce geo-restriction or IP-allowlisting may fail. Refer to [DNS resolution location](/cloudflare-one/traffic-policies/egress-policies/host-selectors/#dns-resolution-location) for details.

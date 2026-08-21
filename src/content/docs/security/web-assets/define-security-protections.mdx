@@ -1,0 +1,80 @@
+---
+title: Define security protections
+pcx_content_type: how-to
+sidebar:
+  order: 4
+description: Use Web Assets operations and labels with Cloudflare detections, then create rules to act on risky traffic.
+products:
+  - security
+---
+
+import { DashButton, Steps } from "~/components";
+
+Web Assets provides application context to security detections. This helps detections inspect the right traffic and lets you create rules focusing on targeted protections.
+
+Use this guide to connect a Web Assets operation to a security detection and create a rule that logs, challenges, blocks, or rate limits risky traffic.
+
+## Protection workflow
+
+Most protections that use Web Assets follow the same workflow:
+
+<Steps>
+
+1. Turn on the security detection that protects the use case, if applicable.
+2. In Web Assets, confirm that the relevant operation exists.
+
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+3. Apply the required managed label if not already exists.
+4. In Security Analytics, review matched traffic and detection results.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+5. Create a custom rule, or rate limiting rule to act on risky traffic.
+
+</Steps>
+
+## Example: Protect AI-powered operations
+
+[AI Security for Apps](/waf/detections/ai-security-for-apps/) runs targeted scans on requests to AI-powered operations. Use it to detect prompt injection, personally identifiable information (PII) in prompts, unsafe topics, and other Large Language Model (LLM)-specific signals.
+
+To define protection for an LLM-powered operation:
+
+<Steps>
+
+1. Turn on AI Security for Apps.
+2. Confirm that the operation receiving LLM prompts exists in Web Assets.
+3. Apply the `cf-llm` managed label if not already exists.
+4. In Security Analytics, filter by the `cf-llm` managed label.
+5. Review AI Security for Apps fields on matched traffic.
+6. Create a custom rule or rate limiting rule that acts on the AI detection fields.
+
+</Steps>
+
+For the full setup workflow, refer to [Get started with AI Security for Apps](/waf/detections/ai-security-for-apps/get-started/).
+
+## Validate detection behavior
+
+Use Security Analytics to confirm that the expected requests carry the right operation and label context before you create a blocking rule.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Filter by the relevant managed label.
+3. Review **Sampled logs**.
+4. Check detection-specific fields, such as LLM prompt fields or leaked credential fields.
+
+</Steps>
+
+You can also export operation and label data with Logpush or query it with the GraphQL Analytics API. For more information, refer to [Use labels in analytics and logs](/security/web-assets/label-operations/#use-labels-in-analytics-and-logs/).
+
+## Mitigate matched traffic
+
+After you validate detection behavior, create rules that act on relevant detection fields.
+
+For example, a rule can match requests addressed to an operation labeled `cf-llm` that also carry personally identifiable information in an LLM prompt.
+
+You can use [custom rules](/waf/custom-rules/create-dashboard/) to log, challenge, block, or skip traffic. You can use [rate limiting rules](/waf/rate-limiting-rules/) to limit high-volume activity.

@@ -11,7 +11,7 @@ sidebar:
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
+import { Tabs, TabItem, Render, APIRequest, DashButton } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. Like the [self-managed SSH keys](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/) method, it uses the Cloudflare One Client on user devices and Cloudflare Tunnel on the server to create a secure, private connection through Cloudflare's network. Access for Infrastructure adds application-level policies with per-target and per-username controls, as well as SSH command logging.
 
@@ -107,9 +107,22 @@ chmod 600 /etc/ssh/ca.pub
 
 <Render file="ssh/restart-server" product="cloudflare-one" />
 
-## 8. Connect as a user
+## 8. (Optional) Require independent MFA for SSH
 
-Users can use any SSH client to connect to the target, as long as they are logged into the Cloudflare One Client on their device. If the target is located within a particular virtual network, ensure that the Cloudflare One Client is [connected to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
+You can require users to authenticate with a PIV key or FIDO2 key before connecting to SSH servers. When configuring custom MFA, select **PIV key**, **FIDO2 key**, or both.
+
+To configure independent MFA for SSH, refer to [Enforce MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).
+
+Before users can connect with MFA turned on, they must enroll their key and configure their SSH client.
+
+- For PIV keys, [enroll the key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps) and [configure the SSH client](/cloudflare-one/access-controls/access-settings/independent-mfa/#configure-your-ssh-client).
+- For FIDO2 keys, [enroll the key](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-fido2-key-for-infrastructure-apps) and [configure the SSH client](/cloudflare-one/access-controls/access-settings/independent-mfa/#configure-your-ssh-client-for-a-fido2-key).
+
+When the user runs `ssh <username>@<target IP>`, the SSH proxy checks if MFA is required for the matching policy. If required, the user authenticates with their hardware key. Whether the key prompts for a touch, a PIN, or both depends on the PIV key policies you configured or on the FIDO2 key's own configuration. The proxy then completes the connection.
+
+## 9. Connect as a user
+
+Users can use any SSH client while logged in to the Cloudflare One Client. If the target uses a virtual network, [connect to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) first.
 
 ```sh
 ssh <username>@<target IP>
@@ -272,14 +285,17 @@ If the end user cannot connect to the target, the tunnel you set up in [step 1: 
 
 To check the status of your tunnel:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes**.
-2. Search your IP to find the tunnel associated with the IP.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. Search your IP to find the route and its associated tunnel.
 
    This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.
 
-3. Copy the tunnel name.
-4. Go to **Networks** > **Connectors** > **Cloudflare Tunnels** and search by your tunnel name.
-5. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
+3. Select the tunnel name in the **Connector** column to open the tunnel detail page.
+
+4. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />
 
@@ -445,6 +461,22 @@ Subsystem    sftp    /usr/lib/openssh/sftp-server
 ```
 
 </details>
+
+#### Confirm the account authorizes the certificate principal
+
+If your `sshd` logs show that the certificate was accepted as CA-signed but the connection still fails, the account may not authorize the certificate's principal. `sshd` reports this as:
+
+```txt
+Certificate invalid: name is not a listed principal
+```
+
+Check the effective configuration for the account you are connecting as, because these directives are often set within a `Match` block:
+
+```sh
+sudo sshd -T -C user=<USERNAME> | grep -i principals
+```
+
+If `authorizedprincipalsfile` or `authorizedprincipalscommand` is set to any value other than `none`, confirm that the SSH username appears in that file or in the command's output. If it is missing, add it, validate your configuration with `sudo sshd -t`, then [reload](#reload-your-ssh-server) your SSH server.
 
 #### Replace and test with example configuration
 

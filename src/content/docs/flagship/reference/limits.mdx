@@ -12,12 +12,17 @@ Flagship enforces the following limits.
 
 ## Platform limits
 
-| Feature                         | Limit    |
-| ------------------------------- | -------- |
-| Apps per account                | 10,000   |
-| Flags per app                   | 5,000    |
-| Condition nesting depth         | 6 levels |
-| Flag configuration size per app | 25 MB    |
+| Feature                         | Limit     |
+| ------------------------------- | --------- |
+| Apps per account                | 10,000    |
+| Flags per app                   | 5,000     |
+| Flag, app, and variant keys     | 64 chars  |
+| Condition attribute names       | 64 chars  |
+| Condition string values         | 256 chars |
+| Variant value size              | 10 KB     |
+| Condition nesting depth         | 5 levels  |
+| Flag description                | 512 chars |
+| Flag configuration size per app | 25 MB     |
 
 :::note
 The apps-per-account and flags-per-app limits are soft limits. If your use case requires higher limits, contact Cloudflare support.
@@ -26,4 +31,6 @@ The apps-per-account and flags-per-app limits are soft limits. If your use case 
 ## Notes
 
 - Condition nesting depth counts from the top-level condition group. A flat list of conditions (no nesting) has a depth of 1.
-- Flag configuration size refers to the total serialized size of all flags within a single app, including their variations and rules.
+- Flag keys, app names, condition set names, and variant keys can contain letters, numbers, hyphens, and underscores.
+- All variants on a flag must use the same value type: boolean, string, number, or JSON.
+- Flag configuration size refers to the total serialized size of all flags within a single app, including their variants and rules.

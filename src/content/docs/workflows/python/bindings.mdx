@@ -65,9 +65,6 @@ class DemoWorkflowClass(WorkflowEntrypoint):
 The `Workflow` binding gives you access to the [Workflow](/workflows/build/workers-api/#workflow) class. All its methods are available
 on the binding.
 
-Under the hood, the `Workflow` binding is a Javascript object that is exposed to the Python script via [JsProxy](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy).
-This means that the values returned by its methods are also `JsProxy` objects, and need to be converted back into Python objects using `python_from_rpc`.
-
 ### `create`
 
 Create (trigger) a new instance of a given Workflow.
@@ -78,24 +75,15 @@ Create (trigger) a new instance of a given Workflow.
   type.
 
 ```python
-from js import Object
-from pyodide.ffi import to_js
 from workers import WorkerEntrypoint, Response
 
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
         event = {"foo": "bar"}
-        options = to_js({"params": event}, dict_converter=Object.fromEntries)
-        await self.env.MY_WORKFLOW.create(options)
+        await self.env.MY_WORKFLOW.create(params=event)
         return Response.json({"status": "success"})
 ```
-
-:::note
-
-Values returned from steps need to be converted into Javascript objects using `to_js`. This is why we explicitly construct the payload using `Object.fromEntries`.
-
-:::
 
 The `create` method returns a [`WorkflowInstance`](/workflows/build/workers-api/#workflowinstance) object, which can be used to query the status of the workflow instance. Note that this is a Javascript object, and not a Python object.
 
@@ -108,19 +96,17 @@ Create (trigger) a batch of new workflow instances, up to 100 instances at a tim
 Each element of the `batch` list is expected to include both `id` and `params` properties:
 
 ```python
-from pyodide.ffi import to_js
-from js import Object
 from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        # Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
-        listOfInstances = [
-            to_js({ "id": "id-abc123", "params": { "hello": "world-0" } }, dict_converter=Object.fromEntries),
-            to_js({ "id": "id-def456", "params": { "hello": "world-1" } }, dict_converter=Object.fromEntries),
-            to_js({ "id": "id-ghi789", "params": { "hello": "world-2" } }, dict_converter=Object.fromEntries)
+			# Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
+        instances = [
+            {"id": "id-abc123", "params": {"hello": "world-0"}},
+            {"id": "id-def456", "params": {"hello": "world-1"}},
+            {"id": "id-ghi789", "params": {"hello": "world-2"}},
         ]
-        await self.env.MY_WORKFLOW.create_batch(listOfInstances)
+        await self.env.MY_WORKFLOW.create_batch(instances)
         return Response.json({"status": "success"})
 ```
 
@@ -152,25 +138,17 @@ class Default(WorkerEntrypoint):
 
 Send an event to a workflow instance.
 
-- <code>send_event(options)</code>* `type` - the type of event to send to the
+- <code>send_event(type, payload)</code>* `type` - the type of event to send to the
   workflow instance. * `payload` - the payload to send to the workflow instance.
 
 ```python
-from pyodide.ffi import to_js
-from js import Object
 from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        await self.env.MY_WORKFLOW.send_event(to_js({ "type": "my-event-type", "payload": { "foo": "bar" } }, dict_converter=Object.fromEntries))
+        await self.env.MY_WORKFLOW.send_event(type="my-event-type", payload={"foo": "bar"})
         return Response.json({"status": "success"})
 ```
-
-:::note
-
-Values passed to `send_event` require explicit type translation into JS objects.
-
-:::
 
 ## REST API (HTTP)
 

@@ -149,6 +149,8 @@ If your website is slow, the issue may be at your origin server. Use Origin Anal
 In the Cloudflare dashboard:
 
 1. Go to **Speed** > **Origin Analytics**.
+
+   <DashButton url="/?to=/:account/:zone/speed/origin-analytics" />
 2. Review the **Origin Response Time** metrics.
 3. Look for patterns in slow responses (specific paths, times of day, or geographic regions).
 
@@ -156,6 +158,8 @@ High origin response times indicate your origin server is struggling. Consider:
 - Upgrading your hosting plan
 - Optimizing database queries
 - Implementing server-side caching
+
+For a full guide on available metrics, diagnostic flows, and how to interpret origin status codes, refer to [Origin Analytics](/speed/origin-analytics/).
 
 ### Check for slow Workers
 

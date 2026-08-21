@@ -4,9 +4,9 @@
 
 ## Local development
 
-**Local simulations**: During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/general/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+**Local simulations**: During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/local-development/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/general/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-**Remote binding connections:**: Allows you to connect to remote resources on a [per-binding basis](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/general/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+**Remote binding connections:**: Allows you to connect to remote resources on a [per-binding basis](/workers/local-development/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/general/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 | Binding                                 | Local simulations | Remote binding connections |
 | --------------------------------------- | :---------------: | :------------------------: |
@@ -30,7 +30,7 @@
 | **Vectorize**                           |        ❌         |             ✅             |
 | **Workflows**                           |        ✅         |             ❌             |
 
-[^1]: Refer to [Using remote resources with Durable Objects and Workflows](/workers/development-testing/#using-remote-resources-with-durable-objects-and-workflows) for recommended workarounds.
+[^1]: Refer to [Using remote resources with Durable Objects and Workflows](/workers/local-development/#using-remote-resources-with-durable-objects-and-workflows) for recommended workarounds.
 
 ## Remote development
 

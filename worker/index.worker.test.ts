@@ -53,7 +53,7 @@ describe("Cloudflare Docs", () => {
 			expect(urlFlag.experimental).toBe(false);
 
 			expect(nodeJsFlag).toBeDefined();
-			expect(nodeJsFlag.enable_date).toBe(null);
+			expect(nodeJsFlag.enable_date).toBe("2026-08-04");
 		});
 
 		it("pages framework configurations", async () => {
@@ -133,6 +133,16 @@ describe("Cloudflare Docs", () => {
 			expect(text).toContain("# Cloudflare Developer Documentation");
 		});
 
+		it("agent setup prompt declares utf-8 charset", async () => {
+			const request = new Request("http://fakehost/agent-setup/prompt.md");
+			const response = await SELF.fetch(request);
+
+			expect(response.status).toBe(200);
+			expect(response.headers.get("Content-Type")).toBe(
+				"text/markdown; charset=utf-8",
+			);
+		});
+
 		it("index.md requests preserve markdown through redirects", async () => {
 			// /learning-paths/ redirects to /resources/ — an index.md request
 			// should redirect to /resources/index.md, not the HTML page.
@@ -190,9 +200,7 @@ describe("Cloudflare Docs", () => {
 				const image = dom.querySelector("meta[property='og:image']")?.attributes
 					.content;
 
-				expect(image).toBe(
-					"https://developers.cloudflare.com/dev-products-preview.png",
-				);
+				expect(image).toBe("https://developers.cloudflare.com/og-docs.png");
 			});
 		});
 

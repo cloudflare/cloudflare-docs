@@ -10,7 +10,7 @@ const { showBundled = false } = Astro.props;
 
 const CODE_MODE_URL = "https://mcp.cloudflare.com/mcp";
 
-const allServers = await getCollection("cloudflare-mcps-manifest");
+const allServers = await getCollection("mcp-servers");
 
 // Code Mode first, then the rest in manifest order
 const servers = [
@@ -29,30 +29,37 @@ const BUNDLED = new Set([
 	"https://builds.mcp.cloudflare.com/mcp",
 	"https://observability.mcp.cloudflare.com/mcp",
 ]);
+
+const tagBase =
+	"inline-flex items-center rounded-full border px-1.5 py-0.5 text-[0.625rem] font-medium uppercase tracking-wide";
 ---
 
-<ul class="agent-simple-list">
+<ul class="not-content m-0 flex list-none flex-col gap-3 p-0">
 	{
 		servers.map((s) => (
-			<li class="agent-simple-item">
-				<span class="agent-simple-name">
+			<li class="flex flex-col gap-0.5">
+				<span class="text-foreground flex flex-wrap items-center gap-2 text-sm font-medium">
 					{s.data.name}
 					{s.data.url === CODE_MODE_URL && (
-						<span class="agent-simple-tag agent-simple-tag--codemode">
+						<span class={`${tagBase} border-primary/30 text-primary`}>
 							code mode
 						</span>
 					)}
 					{showBundled && BUNDLED.has(s.data.url) && (
 						<span
-							class="agent-simple-tag"
+							class={`${tagBase} border-border bg-muted text-muted-foreground`}
 							title="Included in the cloudflare/skills plugin"
 						>
 							bundled
 						</span>
 					)}
 				</span>
-				<span class="agent-simple-desc">{s.data.description}</span>
-				<span class="agent-simple-url">{s.data.url}</span>
+				<span class="text-muted-foreground text-sm leading-relaxed">
+					{s.data.description}
+				</span>
+				<span class="text-muted-foreground/70 font-mono text-xs break-all">
+					{s.data.url}
+				</span>
 			</li>
 		))
 	}

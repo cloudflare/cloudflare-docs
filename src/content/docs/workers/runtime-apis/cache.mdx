@@ -12,6 +12,10 @@ products:
 
 The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from the [Cloudflare global network](https://www.cloudflare.com/network/) cache.
 
+:::note
+The Cache API is a programmatic interface for reading from and writing to Cloudflare's cache from inside a Worker. To cache responses from your Worker so that Cloudflare returns them without executing your Worker, use [Workers Caching](/workers/cache/) instead. The two mechanisms are independent.
+:::
+
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
 :::caution[Tiered caching]
@@ -22,7 +26,7 @@ The `cache.put` method is not compatible with tiered caching. Refer to [Cache AP
 
 Workers deployed to custom domains have access to functional `cache` operations. So do [Pages functions](/pages/functions/), whether attached to custom domains or `*.pages.dev` domains.
 
-However, any Cache API operations in the Cloudflare Workers dashboard editor and [Playground](/workers/playground/) previews will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available.
+However, any Cache API operations in the Cloudflare Workers dashboard editor and [Playground](/workers/playground/) previews will have no impact. For Workers fronted by [Cloudflare Access](/workers/configuration/cloudflare-access/), the Cache API is not currently available.
 
 :::note
 

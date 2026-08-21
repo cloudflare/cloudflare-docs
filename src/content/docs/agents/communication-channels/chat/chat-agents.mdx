@@ -8,7 +8,11 @@ products:
   - agents
 ---
 
-import { TypeScriptExample, LinkCard } from "~/components";
+import {
+	TypeScriptExample,
+	LinkCard,
+	PackageManagers,
+} from "~/components";
 
 Build AI-powered chat interfaces with `AIChatAgent` and `useAgentChat`. Messages are automatically persisted to SQLite, streams resume on disconnect, and tool calls work across server and client.
 
@@ -36,9 +40,7 @@ Built on the [AI SDK](https://ai-sdk.dev) and Cloudflare Durable Objects, you ge
 
 ### Install
 
-```sh
-npm install @cloudflare/ai-chat agents ai workers-ai-provider
-```
+<PackageManagers pkg="@cloudflare/ai-chat agents ai @ai-sdk/react workers-ai-provider" />
 
 ### Server
 
@@ -397,7 +399,7 @@ if (result.status === "aborted") {
 
 </TypeScriptExample>
 
-`continueLastTurn()` accepts the same `options.signal` argument. `AbortSignal` objects cannot cross Durable Object RPC boundaries, so construct the controller inside the Durable Object that calls `saveMessages()` or `continueLastTurn()`. The signal is in memory only; if the Durable Object hibernates mid-turn and `chatRecovery` is enabled, the recovered turn runs without the original signal.
+`continueLastTurn()` accepts the same `options.signal` argument. `AbortSignal` objects cannot cross Durable Object RPC boundaries, so construct the controller inside the Durable Object that calls `saveMessages()` or `continueLastTurn()`. The signal is in memory only. If the Durable Object hibernates mid-turn, the recovered turn runs without the original signal. Persist cancellation intent when cancellation must survive a restart.
 
 ### `onChatResponse`
 
@@ -575,41 +577,91 @@ Use `abortRequest()` when you know the request ID. Use `abortAllRequests()` for 
 
 ### Stream recovery
 
-Automatic stream resumption (the `resume` option on `useAgentChat`) is **client reconnect recovery** — it resumes an active stream when a client disconnects and reconnects. It does not cover Durable Object eviction: if the Worker process or Durable Object is evicted while the model call is in flight, the stream itself is gone. `chatRecovery` handles that case.
+Automatic stream resumption (the `resume` option on `useAgentChat`) is **client reconnect recovery** — it resumes an active stream when a client disconnects and reconnects. It does not cover Durable Object eviction. If the Worker process or Durable Object is evicted while the model call is in flight, the stream itself is gone. Durable chat recovery handles that case.
 
-When a Durable Object is evicted mid-stream (code update, inactivity timeout, resource limit), the LLM connection is severed permanently and the in-memory streaming state is lost. `chatRecovery` wraps each chat turn in a [`runFiber()`](/agents/runtime/execution/durable-execution/), providing automatic `keepAlive` during streaming and a recovery hook on restart.
-<TypeScriptExample>
+A mid-stream Durable Object eviction permanently severs the LLM connection. Durable recovery wraps every `AIChatAgent` and [`Think`](/agents/harnesses/think/) chat turn in a [`runFiber()`](/agents/runtime/execution/durable-execution/). The fiber provides automatic `keepAlive` during streaming and a recovery hook on restart.
 
-```ts
-export class ChatAgent extends AIChatAgent {
-	override chatRecovery = true;
-}
-```
+The fiber row survives in SQLite after an eviction. On the next activation, the framework detects the interrupted fiber. It reconstructs the partial response from buffered stream chunks and calls `onChatRecovery`.
 
-</TypeScriptExample>
-
-`AIChatAgent` defaults `chatRecovery` to `false`, so existing chat agents only get client reconnect and resumable-stream behavior unless they opt in. [`Think`](/agents/harnesses/think/) defaults it to `true`.
-
-When enabled, every `onChatMessage` call runs inside a fiber. If the agent is evicted mid-stream, the fiber row survives in SQLite. On the next activation, the framework detects the interrupted fiber, reconstructs the partial response from buffered stream chunks, and calls `onChatRecovery`.
-
-`chatRecovery` can also be set to a configuration object to bound recovery and customize the terminal experience when recovery cannot succeed:
+Durable recovery is always on. Use `chatRecovery` only to tune recovery budgets and terminal behavior:
 
 <TypeScriptExample>
 
 ```ts
 export class ChatAgent extends AIChatAgent {
 	override chatRecovery = {
-		maxAttempts: 6,
+		maxAttempts: 10,
 		stableTimeoutMs: 10_000,
 		terminalMessage: "The assistant was interrupted and could not recover.",
+		// Primary stuck-turn bound. Resets on every progress-bearing attempt, so a
+		// turn that keeps producing content survives unbounded interruption.
+		noProgressTimeoutMs: 5 * 60 * 1000,
+		// Runaway-loop guard. Defaults to 1,000. Set a higher value for a long
+		// agentic turn, or Infinity to remove the cap.
+		maxRecoveryWork: 200,
+		// Caller policy consulted from the second recovery attempt onward. Return
+		// false to stop recovery. This is where you enforce a token/cost budget.
+		// Note: this is called as `config.shouldKeepRecovering(ctx)`, so it is not
+		// bound to the agent instance — track spend in your own store keyed by the
+		// incident.
+		async shouldKeepRecovering(ctx) {
+			return (await getSpendForTurn(ctx.recoveryRootRequestId)) < MAX_SPEND;
+		},
 		async onExhausted(ctx) {
-			console.warn("Chat recovery exhausted", ctx.incidentId);
+			console.warn("Chat recovery exhausted", ctx.incidentId, ctx.reason);
 		},
 	};
 }
 ```
 
 </TypeScriptExample>
+
+The `chatRecovery` object accepts the following configuration options:
+
+| Field                  | Default           | Description                                                                                                                                                                                                                                       |
+| ---------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `maxAttempts`          | `10`              | Attempt cap before terminal exhaustion. Resets on forward progress, so it catches a tight no-progress alarm loop, not a healthy long turn.                                                                                                        |
+| `stableTimeoutMs`      | `10_000`          | How long a recovery attempt waits for the isolate to reach stable state before rescheduling.                                                                                                                                                      |
+| `terminalMessage`      | generic message   | The message shown to the user when recovery is given up on.                                                                                                                                                                                       |
+| `noProgressTimeoutMs`  | `300_000` (5 min) | Primary stuck-turn bound: how long an incident may go without forward progress before it is sealed (`no_progress_timeout`). **Resets on every progress-bearing attempt**, so a turn that keeps producing content survives unbounded interruption. |
+| `maxRecoveryWork`      | `1,000`           | Runaway-loop guard. Maximum produced content/tool units since the incident began before a still-progressing turn is sealed. Set a higher value or `Infinity` for a long agentic turn.                                                              |
+| `maxOomRetries`        | `3`               | Retry budget for Durable Object memory-limit resets. Set `0` to stop after the first memory-limit reset.                                                                                                                                           |
+| `shouldKeepRecovering` | —                 | Caller policy consulted from the second recovery attempt onward. Return `false` to stop recovery. Use it to enforce a token or cost budget. `ctx.work` is a coarse segment count, not tokens, so track real spend yourself.                       |
+| `onExhausted`          | —                 | Called once when recovery is given up on, before the terminal message is delivered. Inspect `ctx.reason` for why.                                                                                                                                 |
+
+`ChatRecoveryProgressContext` (the `ctx` passed to `shouldKeepRecovering`) contains the following fields:
+
+| Field                   | Type                    | Description                                                                                       |
+| ----------------------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
+| `incidentId`            | `string`                | Stable ID for this recovery incident.                                                             |
+| `requestId`             | `string`                | Request ID for the current continuation (changes per chained continuation).                       |
+| `recoveryRootRequestId` | `string`                | Stable ID for the whole continuation chain — the right key for per-incident budget tracking.      |
+| `attempt`               | `number`                | Attempt number for this incident (2 or greater when this hook runs).                              |
+| `maxAttempts`           | `number`                | Configured attempt cap.                                                                           |
+| `recoveryKind`          | `"retry" \| "continue"` | Whether recovery retries an unanswered user turn or continues a partial assistant turn.           |
+| `work`                  | `number`                | Coarse, monotonic count of content/tool segments produced since the incident opened (not tokens). |
+| `ageMs`                 | `number`                | Wall-clock ms since the incident's first interruption.                                            |
+
+A progressing turn survives repeated interruptions as long as it stays within the `maxRecoveryWork` limit. Recovery is sealed by one of these `ctx.reason` values:
+
+- `no_progress_timeout` — no forward progress within the no-progress window (a stuck turn).
+- `max_attempts_exceeded` — the attempt cap was spent on a tight no-progress alarm loop.
+- `work_budget_exceeded` — the turn kept producing content but exceeded `maxRecoveryWork` (a runaway loop).
+- `recovery_aborted` — your `shouldKeepRecovering` hook returned `false`.
+- `out_of_memory` — recovery exceeded the memory-limit retry budget.
+- `stable_timeout` — recovery attempts kept timing out waiting for stable state until the budget drained (extreme churn).
+
+:::tip
+The `maxRecoveryWork` default prevents a progressing turn from running forever. Increase it for long agentic turns. Use `shouldKeepRecovering` with durable token or cost data for a precise budget.
+:::
+
+#### Turns waiting on a human are not sealed
+
+A turn can pause on a client interaction it cannot resolve on its own: a client-side tool call (a tool with no server `execute`, whose result the client replays), or an `approval-requested` part. Such a turn is waiting on the human, not stuck.
+
+While the interaction is pending, the turn is exempt from every recovery budget. The no-progress window, attempt cap, `maxRecoveryWork`, and `shouldKeepRecovering` are all suspended. A user who takes minutes to answer a prompt that was interrupted by a deploy never trips a seal. Recovery parks the turn instead of failing it, and the user's eventual approval or tool result resumes it through the normal continuation path.
+
+This exemption is client-only. A server tool whose `execute()` was killed mid-flight is a genuine orphan, so it is not exempt and recovers through transcript repair instead.
 
 Monitor terminal exhaustion through observability:
 
@@ -640,8 +692,6 @@ import type {
 } from "@cloudflare/ai-chat";
 
 export class ChatAgent extends AIChatAgent {
-	override chatRecovery = true;
-
 	override async onChatRecovery(
 		ctx: ChatRecoveryContext,
 	): Promise<ChatRecoveryOptions> {
@@ -703,6 +753,15 @@ override async onChatRecovery(
 }
 ```
 
+#### Control automatic continuation
+
+Durable bookkeeping remains active when automatic continuation is not appropriate.
+
+- Return `{ continue: false }` when another model call is unsafe.
+- Persist cancellation intent and read it in `onChatRecovery()`.
+- Record idempotency keys before external side effects.
+- Use recovery budgets with durable spend data to limit cost.
+
 #### `continueLastTurn`
 
 Appends to the last assistant message by re-calling `onChatMessage` with the saved request body. The response is streamed as a continuation — appended to the existing assistant message, not a new one. No synthetic user message is created.
@@ -724,8 +783,6 @@ Use `this.stash()` inside `onChatMessage` to persist provider-specific data for 
 
 ```ts
 export class ChatAgent extends AIChatAgent {
-	override chatRecovery = true;
-
 	async onChatMessage(_onFinish, options) {
 		const result = streamText({
 			model: openai("gpt-5.4"),
@@ -772,6 +829,7 @@ While a turn is being recovered, the agent broadcasts a `cf_agent_chat_recoverin
 Transcript repairs — healing orphaned tool calls (preserved as errored results rather than deleted, so the record survives and the model does not silently re-run the tool) and normalizing malformed or missing tool inputs before a provider call — are emitted on the `transcript` observability channel.
 
 For how chat recovery fits into the broader long-running agents story, refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/agentic-patterns/long-running-agents/#recovering-interrupted-llm-streams). For the underlying fiber API, refer to [Durable Execution](/agents/runtime/execution/durable-execution/).
+
 ## Client API
 
 ### `useAgentChat`
@@ -808,32 +866,33 @@ function Chat() {
 
 ### Options
 
-| Option                        | Type                                          | Default  | Description                                                                                                              |
-| ----------------------------- | --------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `agent`                       | `ReturnType<typeof useAgent>`                 | Required | Agent connection from `useAgent`                                                                                         |
-| `onToolCall`                  | `({ toolCall, addToolOutput }) => void`       | —        | Handle client-side tool execution                                                                                        |
-| `tools`                       | `Record<string, AITool>`                      | —        | Advanced: dynamically register client-executed tools from the browser                                                    |
-| `autoContinueAfterToolResult` | `boolean`                                     | `true`   | Auto-continue conversation after client tool results and approvals                                                       |
-| `resume`                      | `boolean`                                     | `true`   | Enable automatic stream resumption on reconnect                                                                          |
-| `cancelOnClientAbort`         | `boolean`                                     | `false`  | Cancel the server turn when generic client stream abort or cleanup occurs                                                |
-| `body`                        | `object \| () => object`                      | —        | Custom data sent with every request                                                                                      |
-| `prepareSendMessagesRequest`  | `(options) => { body?, headers? }`            | —        | Advanced per-request customization                                                                                       |
-| `getInitialMessages`          | `(options) => Promise<UIMessage[]>` or `null` | —        | Custom initial message loader. Set to `null` to skip the HTTP fetch entirely (useful when providing `messages` directly) |
+| Option                        | Type                                          | Default  | Description                                                                                                                                                                        |
+| ----------------------------- | --------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `agent`                       | `ReturnType<typeof useAgent>`                 | Required | Agent connection from `useAgent`                                                                                                                                                   |
+| `onToolCall`                  | `({ toolCall, addToolOutput }) => void`       | —        | Handle client-side tool execution                                                                                                                                                  |
+| `tools`                       | `Record<string, AITool>`                      | —        | Advanced: dynamically register client-executed tools from the browser                                                                                                              |
+| `autoContinueAfterToolResult` | `boolean`                                     | `true`   | Auto-continue conversation after client tool results and approvals                                                                                                                 |
+| `resume`                      | `boolean`                                     | `true`   | Enable automatic stream resumption on reconnect                                                                                                                                    |
+| `cancelOnClientAbort`         | `boolean`                                     | `false`  | Cancel the server turn when generic client stream abort or cleanup occurs                                                                                                          |
+| `body`                        | `object \| () => object`                      | —        | Custom data sent with every request                                                                                                                                                |
+| `prepareSendMessagesRequest`  | `(options) => { body?, headers? }`            | —        | Advanced per-request customization                                                                                                                                                 |
+| `getInitialMessages`          | `(options) => Promise<UIMessage[]>` or `null` | —        | Custom initial message loader. Set to `null` to skip the HTTP fetch entirely (useful when providing `messages` directly)                                                           |
+| `syncMessagesToServer`        | `boolean`                                     | `true`   | When `true`, `setMessages` pushes the transcript to the server. Set to `false` for hosts with server-authoritative transcript storage so `setMessages` updates the local view only |
 
 ### Return values
 
-| Property                  | Type                               | Description                                                                       |
-| ------------------------- | ---------------------------------- | --------------------------------------------------------------------------------- |
-| `messages`                | `UIMessage[]`                      | Current conversation messages                                                     |
-| `sendMessage`             | `(message) => void`                | Send a message                                                                    |
-| `clearHistory`            | `() => void`                       | Clear conversation (client and server)                                            |
-| `addToolOutput`           | `({ toolCallId, output }) => void` | Provide output for a client-side tool                                             |
-| `addToolApprovalResponse` | `({ id, approved }) => void`       | Approve or reject a tool requiring approval                                       |
-| `setMessages`             | `(messages \| updater) => void`    | Set messages directly (syncs to server)                                           |
-| `status`                  | `string`                           | `"ready"`, `"submitted"`, `"streaming"`, or `"error"`                             |
-| `isStreaming`             | `boolean`                          | `true` while the agent is streaming or waiting on an active client tool           |
-| `isServerStreaming`       | `boolean`                          | `true` while a server-initiated stream or active client-tool phase is in progress |
-| `isToolContinuation`      | `boolean`                          | `true` while an automatic continuation after a tool result or approval is running |
+| Property                  | Type                               | Description                                                                                                                                                                                                                                   |
+| ------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `messages`                | `UIMessage[]`                      | Current conversation messages                                                                                                                                                                                                                 |
+| `sendMessage`             | `(message) => void`                | Send a message                                                                                                                                                                                                                                |
+| `clearHistory`            | `() => void`                       | Clear conversation (client and server)                                                                                                                                                                                                        |
+| `addToolOutput`           | `({ toolCallId, output }) => void` | Provide output for a client-side tool                                                                                                                                                                                                         |
+| `addToolApprovalResponse` | `({ id, approved }) => void`       | Approve or reject a tool requiring approval                                                                                                                                                                                                   |
+| `setMessages`             | `(messages \| updater) => void`    | Set messages directly (syncs to server)                                                                                                                                                                                                       |
+| `status`                  | `string`                           | `"ready"`, `"submitted"`, `"streaming"`, or `"error"`                                                                                                                                                                                         |
+| `isStreaming`             | `boolean`                          | `true` while the agent is streaming or waiting on an active client tool                                                                                                                                                                       |
+| `isServerStreaming`       | `boolean`                          | `true` while a server-initiated stream or active client-tool phase is in progress                                                                                                                                                             |
+| `isToolContinuation`      | `boolean`                          | `true` while an automatic continuation after a tool result or approval is running                                                                                                                                                             |
 | `isRecovering`            | `boolean`                          | `true` while a durable turn is being recovered (interrupted and resuming). Distinct from `isStreaming` — a recovering turn is not producing tokens yet. Render a "recovering…" hint; most UIs treat `isStreaming \|\| isRecovering` as "busy" |
 
 Use `isToolContinuation` when your UI should distinguish a fresh user submit from a continuation after a tool result. For example, show a typing indicator only for `status === "submitted" && !isToolContinuation`, while keeping loading controls disabled whenever `isStreaming` is true.
@@ -942,7 +1001,7 @@ tools: {
 	processPayment: tool({
 		description: "Process a payment",
 		inputSchema: z.object({
-			amount: z.number(),
+			amount: z.coerce.number(),
 			recipient: z.string(),
 		}),
 		needsApproval: async ({ amount }) => amount > 100,
@@ -1521,7 +1580,7 @@ export class ChatAgent extends AIChatAgent {
 
 :::note
 
-This section covers **in-process** subagents using the AI SDK's `ToolLoopAgent`. For **Durable Object sub-agents** with their own isolated storage and typed RPC, refer to [Sub-agents](/agents/runtime/execution/sub-agents/). To run Think or `AIChatAgent` sub-agents as retained, streaming tools, refer to [Agent tools](/agents/runtime/execution/agent-tools/).
+This section covers **in-process** subagents using the AI SDK's `ToolLoopAgent`. For **Durable Object sub-agents** with their own isolated storage and typed RPC, refer to [Sub-agents](/agents/runtime/execution/sub-agents/). To run Think or `AIChatAgent` sub-agents as retained, streaming tools, refer to [Agents as tools](/agents/runtime/execution/agent-tools/).
 
 :::
 
@@ -1638,12 +1697,12 @@ The originating client receives the streaming response. All other clients receiv
 
 ### Exports
 
-| Import path                 | Exports                                                                                                                                           |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Import path                 | Exports                                                                                                                                                                                                              |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@cloudflare/ai-chat`       | `AIChatAgent`, `createToolsFromClientSchemas`, `ClientToolSchema`, `ChatRecoveryContext`, `ChatRecoveryOptions`, `ChatRecoveryConfig`, `ChatRecoveryExhaustedContext`, `ResolvedChatRecoveryConfig`, lifecycle types |
-| `@cloudflare/ai-chat/react` | `useAgentChat`, `extractClientToolSchemas`, `getToolPartState`, `getToolCallId`, `getToolInput`, `getToolOutput`, `getToolApproval`               |
-| `@cloudflare/ai-chat/types` | `MessageType`, `OutgoingMessage`, `IncomingMessage`                                                                                               |
-| `agents/chat`               | Shared advanced chat primitives such as `SaveMessagesResult`, `SaveMessagesOptions`, `CHAT_MESSAGE_TYPES`, `ROW_MAX_BYTES`, and `isReplayChunk()` |
+| `@cloudflare/ai-chat/react` | `useAgentChat`, `extractClientToolSchemas`, `getToolPartState`, `getToolCallId`, `getToolInput`, `getToolOutput`, `getToolApproval`                                                                                  |
+| `@cloudflare/ai-chat/types` | `MessageType`, `OutgoingMessage`, `IncomingMessage`                                                                                                                                                                  |
+| `agents/chat`               | Shared advanced chat primitives such as `SaveMessagesResult`, `SaveMessagesOptions`, `CHAT_MESSAGE_TYPES`, `ROW_MAX_BYTES`, and `isReplayChunk()`                                                                    |
 
 ### WebSocket protocol
 

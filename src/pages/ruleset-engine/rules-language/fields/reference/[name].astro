@@ -1,12 +1,20 @@
 ---
+/**
+ * /ruleset-engine/rules-language/fields/reference/<name>/ — one page per
+ * rules-language field. CF source: the same path's `[name].astro`
+ * (StarlightPage `hideTitle` → DocsLayout with an empty `page-title` slot so
+ * the body's custom `<h1>` stands in). Body unchanged.
+ */
 import type { GetStaticPaths } from "astro";
 import { marked } from "marked";
 import { getEntry } from "astro:content";
-import StarlightPage, {
-	type StarlightPageProps,
-} from "@astrojs/starlight/components/StarlightPage.astro";
+import { getSidebar } from "@cloudflare/nimbus-docs";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { externalAppLinksTransform, getCfBreadcrumbs } from "~/util/sidebar";
 import { Code, Aside, Type } from "~/components";
 import FieldBadges from "~/components/fields/FieldBadges.tsx";
+
+export const prerender = true;
 
 export const getStaticPaths = (async () => {
 	const fields = await getEntry("fields", "index");
@@ -29,28 +37,37 @@ const { name } = Astro.params;
 const { field } = Astro.props;
 
 // disable conversion of relative links to absolute links
-// set in /src/pages/changelog/index/index.xml.ts
 marked.use({ walkTokens: null });
 
 const description = field.description;
 
-// Strong type coercion needed due to Starlight's component override for hideTitle
-const starlightPageProps = {
-	frontmatter: {
-		title: field.name,
-		description: field.summary,
-		editUrl: "https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml",
-	},
-	hideTitle: true,
-} as StarlightPageProps;
+const sectionSlug = `/ruleset-engine/rules-language/fields/reference/${field.name}/`;
+const sidebar = await getSidebar(sectionSlug, {
+	collection: "docs",
+	transform: externalAppLinksTransform,
+});
+const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
+const editUrl =
+	"https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml";
 ---
 
-<StarlightPage {...starlightPageProps}>
-	<div class="align-center flex">
-		<div>
+<DocsLayout
+	title={field.name}
+	description={field.summary}
+	sidebar={sidebar}
+	headings={false}
+	breadcrumbs={breadcrumbs}
+	prevNext={{}}
+	collection="docs"
+	editUrl={editUrl}
+>
+	<Fragment slot="page-title"></Fragment>
+	<Fragment slot="pagination"></Fragment>
+	<div class="flex min-w-0">
+		<div class="min-w-0">
 			<h1
 				id="_top"
-				class="-mt-4! mb-2! flex items-center text-2xl! leading-none! font-bold!"
+				class="mt-6! mb-2! text-2xl! leading-tight! font-bold! break-words"
 			>
 				{name}
 			</h1>
@@ -92,10 +109,13 @@ const starlightPageProps = {
 		field.name.startsWith("http.request.body") &&
 			!(field.name === "http.request.body.size") && (
 				<Aside type="caution">
-					<!-- prettier-ignore-start -->
 					<p>
-						All <code>http.request.body.*</code> fields (except <a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/"> <code>http.request.body.size</code></a>)
-						handle a given maximum body size, which varies per plan. For
+						All <code>http.request.body.*</code> fields (except{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							{" "}
+							<code>http.request.body.size</code>
+						</a>
+						) handle a given maximum body size, which varies per plan. For
 						Enterprise customers, the maximum body size is 128 KB. For other
 						paid plans, the limit is lower by default — reach out to your
 						account team or to Cloudflare Support to increase the limit. For
@@ -104,14 +124,21 @@ const starlightPageProps = {
 					<p>
 						You cannot define expressions that rely on request body data beyond
 						the maximum size set for your plan. If the request body is larger,
-						the body fields will contain a truncated value and the <a href="/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/"><code>http.request.body.truncated</code></a> field will be set to <code>true</code>. The <a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/"><code>http.request.body.size</code></a> field will contain the
-						full size of the request without any truncation.
+						the body fields will contain a truncated value and the{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/">
+							<code>http.request.body.truncated</code>
+						</a>{" "}
+						field will be set to <code>true</code>. The{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							<code>http.request.body.size</code>
+						</a>{" "}
+						field will contain the full size of the request without any
+						truncation.
 					</p>
 					<p>
 						The maximum body size applies only to the values of HTTP body fields
 						— the origin server will still receive the complete request body.
 					</p>
-					<!-- prettier-ignore-end -->
 				</Aside>
 			)
 	}
@@ -121,4 +148,4 @@ const starlightPageProps = {
 			>Categories: <FieldBadges badges={field.categories as string[]} /></span
 		>
 	</div>
-</StarlightPage>
+</DocsLayout>

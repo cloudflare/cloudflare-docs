@@ -21,10 +21,22 @@ entries:
     general_definition: |-
       Static rules that are used to detect predictable bot behavior with no overlap with human traffic.
 
+  - term: direct
+    general_definition: |-
+      A label applied to a verified bot or agent operated by a single, narrow operator, usually on the operator's own infrastructure. Replaces the standalone "verified bot" classification used before July 1, 2026.
+
+  - term: intermediary
+    general_definition: |-
+      A label applied to a verified agent that a wide range of end users can operate, such as a browser-use or agentic service. Replaces the "signed agent" classification used before July 1, 2026.
+
   - term: JA3 fingerprint
     general_definition: |-
       JA3 and JA4 fingerprints profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
 
+  - term: signed agent
+    general_definition: |-
+      A deprecated classification (retired July 1, 2026) for end-user-controlled agents that self-identify with Web Bot Auth. These agents are now verified bots labeled as intermediary.
+
   - term: verified bot
     general_definition: |-
-      Bots that are transparent about who they are and what they do.
+      A bot or agent that Cloudflare has confirmed is transparent about who it is and what it does: it represents itself honestly and does not abuse the access that honesty earns.

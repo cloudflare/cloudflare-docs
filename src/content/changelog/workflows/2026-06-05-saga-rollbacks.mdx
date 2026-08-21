@@ -1,0 +1,41 @@
+---
+title: "Rollback support now available in Workflows"
+description: Workflows now lets you attach rollback handlers to step.do(), inspect rollback outcomes, and query rollback events in analytics.
+products:
+  - workflows
+date: 2026-06-05 15:00:00 UTC
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Workflows](/workflows/) now supports saga-style rollbacks,  allowing you to add compensating logic to each `step.do()` in case of downstream failures. If the instance fails, the rollback handlers will execute in reverse `step-start` order.
+
+This is useful for multi-step operations that touch external systems, such as inventory reservations, payment authorization, ticket creation, or infrastructure provisioning. Instead of writing all cleanup logic in a top-level `catch`, you can keep each compensating action next to the step it undoes.
+
+Rollback handlers support their own retry and timeout configuration, and Workflows now exposes rollback outcomes in instance status responses. Workflows analytics also emits rollback lifecycle events, making it easier to distinguish a forward execution failure from a rollback failure when debugging production workflows.
+
+<TypeScriptExample>
+
+```ts
+await step.do(
+	"provision resource",
+	async () => {
+		const resource = await provisionResource();
+		return { resourceId: resource.id };
+	},
+	{
+		rollback: async ({ output }) => {
+			const { resourceId } = output as { resourceId: string };
+			await deleteResource(resourceId);
+		},
+		rollbackConfig: {
+			retries: { limit: 3, delay: "15 seconds", backoff: "linear" },
+			timeout: "2 minutes",
+		},
+	},
+);
+```
+
+</TypeScriptExample>
+
+Refer to [rollback options](/workflows/build/workers-api/#rollback-options) to learn more.

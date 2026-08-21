@@ -8,6 +8,8 @@ products:
   - ai-search
 ---
 
+import { AiSearchIndexingDiagram, AiSearchQueryingDiagram } from "~/components";
+
 AI Search is a managed search service. Connect a website, an R2 bucket, or upload your own documents, and AI Search indexes your content for natural language queries.
 
 AI Search consists of two core processes:
@@ -19,12 +21,12 @@ AI Search consists of two core processes:
 
 Indexing begins automatically when you connect a data source or upload files through the [Items API](/ai-search/api/items/workers-binding/).
 
-![Indexing](~/assets/images/ai-search/indexing.png)
+<AiSearchIndexingDiagram />
 
 Here is what happens during indexing:
 
 1. **Data ingestion:** AI Search reads from your connected data source or receives files uploaded through the [Items API](/ai-search/api/items/workers-binding/).
-2. **Markdown conversion:** AI Search uses [Workers AI's Markdown Conversion](/workers-ai/features/markdown-conversion/) to convert [supported data types](/ai-search/configuration/data-source/) into structured Markdown. This ensures consistency across diverse file types. For images, Workers AI is used to perform object detection followed by vision-to-language transformation to convert images into Markdown text.
+2. **Markdown conversion:** AI Search uses [Workers AI's Markdown Conversion](/workers-ai/features/markdown-conversion/) to convert [supported data types](/ai-search/configuration/data-source/) into structured Markdown. This ensures consistency across diverse file types. For images, Workers AI is used to perform object detection followed by vision-to-language transformation to convert images into Markdown text. Refer to [how images are converted](/workers-ai/features/markdown-conversion/how-it-works/#images) for details.
 3. **Chunking:** The extracted text is [chunked](/ai-search/configuration/indexing/chunking/) into smaller pieces to improve retrieval granularity.
 4. **Embedding:** Each chunk is embedded using Workers AI's embedding model to transform the content into vectors.
 5. **Keyword indexing:** When keyword search is enabled, each chunk is also indexed for BM25 keyword matching.
@@ -36,7 +38,7 @@ For instances with a connected data source, AI Search regularly checks for updat
 
 Once indexing is complete, AI Search is ready to respond to end-user queries in real time.
 
-![Querying](~/assets/images/ai-search/querying.png)
+<AiSearchQueryingDiagram />
 
 Here is how the querying pipeline works:
 
@@ -49,3 +51,17 @@ Here is how the querying pipeline works:
 7. **Reranking (optional):** A cross-encoder model re-scores results by evaluating the query and document together. Refer to [Reranking](/ai-search/configuration/retrieval/reranking/) for details.
 8. **Content retrieval:** The most relevant chunks and their source content are returned. If you are using the Search endpoint, the content is returned at this point.
 9. **Response generation:** If you are using the Chat Completions endpoint, a text-generation model generates a response using the retrieved content. Refer to [System prompt](/ai-search/configuration/retrieval/system-prompt/) for details.
+
+## When to use AI Search vs. Vectorize
+
+AI Search is built on [Vectorize](/vectorize/) and adds the rest of the search pipeline around it. Use Vectorize when you want to manage vectors yourself, and AI Search when you want managed search over your content.
+
+| Capability              | AI Search                                                  | Vectorize                                        |
+| ----------------------- | ---------------------------------------------------------- | ------------------------------------------------ |
+| What it is              | Managed, end-to-end search over your content               | A vector database you build on                   |
+| You give it             | Files, or a connected data source                          | Vectors you generate yourself                    |
+| Chunking and embeddings | Handled for you                                            | You generate and insert them                     |
+| Indexing                | Automatic, with continuous sync                            | You upsert and manage vectors                    |
+| Retrieval               | Vector and keyword (hybrid), reranking, metadata filtering | Vector similarity search with metadata filtering |
+| Generated answers       | Optional, built in                                         | Not included                                     |
+| Best when               | You want to add search or RAG quickly                      | You need full control of the retrieval pipeline  |

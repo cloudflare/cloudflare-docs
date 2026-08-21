@@ -1,0 +1,33 @@
+---
+title: Workers tracing now supports custom spans
+description: Create custom trace spans in your Workers code to instrument application-specific logic alongside automatic platform instrumentation.
+products:
+  - workers
+date: 2026-06-16
+---
+
+You can now create custom trace spans in your Workers code using `tracing.enterSpan()`. Custom spans appear alongside the automatic platform instrumentation (fetch calls, KV reads, D1 queries, and other platform operations) in your traces and OpenTelemetry exports, with correct parent-child nesting.
+
+The API is available via `import { tracing } from "cloudflare:workers"` or through the handler context as `ctx.tracing`:
+
+```ts
+import { tracing } from "cloudflare:workers";
+
+export default {
+  async fetch(request, env, ctx) {
+    return tracing.enterSpan("handleRequest", async (span) => {
+      span.setAttribute("url.path", new URL(request.url).pathname);
+      const data = await env.MY_KV.get("key");
+      return new Response(data);
+    });
+  },
+};
+```
+
+Spans nest automatically based on the JavaScript async context, and are auto-ended when the callback returns or its returned promise settles. The `Span` object provides `setAttribute(key, value)` for attaching metadata and an `isTraced` property to check whether the current request is being sampled.
+
+![Trace waterfall showing custom spans nested alongside automatic KV and fetch instrumentation](~/assets/images/workers-observability/wobs_custom_spans_screenshot.png)
+
+[Tracing must be enabled](/workers/observability/traces/#how-to-enable-tracing) in your Wrangler configuration for spans to be recorded.
+
+For full API details and examples, refer to [Custom spans](/workers/observability/traces/custom-spans/).

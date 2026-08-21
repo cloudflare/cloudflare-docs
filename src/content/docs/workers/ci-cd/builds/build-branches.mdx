@@ -8,7 +8,11 @@ products:
   - workers
 ---
 
-When you connect a git repository to Workers, commits made on the production git branch will produce a Workers Build. If you want to take advantage of [preview URLs](/workers/configuration/previews/) and [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment), you can additionally enable "non-production branch builds" in order to trigger a build on all branches of your repository.
+When you connect a git repository to Workers, commits made on the production git branch will produce a Workers Build. If you want to take advantage of [preview URLs](/workers/versions-and-deployments/preview-urls/) and [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment), you can additionally enable "non-production branch builds" in order to trigger a build on all branches of your repository.
+
+:::note
+[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. Refer to [Deploy Containers](/containers/deploy/#before-production) if your Worker uses containers.
+:::
 
 ## Change production branch
 

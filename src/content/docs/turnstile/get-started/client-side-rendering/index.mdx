@@ -117,8 +117,8 @@ Turnstile is often used to protect forms on websites such as login forms or cont
 </head>
 <body>
     <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
+        <input type="text" name="username" placeholder="Username" autocomplete="username" required />
+        <input type="password" name="password" placeholder="Password" autocomplete="current-password" required />
 
         <!-- Turnstile widget with basic configuration -->
         <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
@@ -340,8 +340,18 @@ This will not call any callback and will remove all related DOM elements.
 	</head>
 	<body>
 		<form id="login-form">
-			<input type="text" name="username" placeholder="Username" />
-			<input type="password" name="password" placeholder="Password" />
+			<input
+				type="text"
+				name="username"
+				placeholder="Username"
+				autocomplete="username"
+			/>
+			<input
+				type="password"
+				name="password"
+				placeholder="Password"
+				autocomplete="current-password"
+			/>
 			<div id="turnstile-widget"></div>
 			<button type="submit">Login</button>
 		</form>

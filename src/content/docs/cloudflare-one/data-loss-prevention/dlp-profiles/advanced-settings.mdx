@@ -10,7 +10,9 @@ tags:
   - Compliance
 ---
 
-This page lists the profile settings available when configuring a [predefined](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) or [custom](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile) DLP profile. You can configure profile settings when you create a custom profile or [edit profile settings](#edit-profile-settings) for an existing predefined or custom profile.
+Profile settings control detection behavior for an individual DLP profile. You configure these settings when you [build a custom profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile) or edit an existing [predefined](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) or custom profile.
+
+Profile settings are distinct from [DLP settings](/cloudflare-one/data-loss-prevention/dlp-settings/), which are account-level settings that apply across all profiles and policies.
 
 ## Edit profile settings
 
@@ -27,7 +29,9 @@ The following advanced detection settings are available for predefined and custo
 
 ### Match count
 
-Match count sets a minimum threshold for detections. DLP does not trigger an action (such as blocking or logging) until the number of detections exceeds the match count. For example, if you set a match count of 10, the scanned file or HTTP body must contain 11 or more matching strings before the action triggers. Detections do not have to be unique.
+Match count sets a minimum threshold for the number of detections required to trigger an action. DLP does not block or log content until the detection count reaches this threshold.
+
+For example, if you set a match count of `10`, DLP takes action when it finds 10 or more matches in a single file or HTTP body. Matches do not have to be unique — the same credit card number appearing 10 times counts as 10 matches.
 
 ### Optical Character Recognition (OCR)
 
@@ -35,7 +39,7 @@ Match count sets a minimum threshold for detections. DLP does not trigger an act
 Profile-level OCR settings will be deprecated in a future release. We recommend configuring OCR in [DLP settings](/cloudflare-one/data-loss-prevention/dlp-settings/#optical-character-recognition-ocr) instead.
 :::
 
-Optical Character Recognition (OCR) analyzes and interprets text within image files. When used with DLP profiles, OCR can detect sensitive data within images your users upload.
+Optical Character Recognition (OCR) extracts and analyzes text within image files. When enabled, DLP can detect sensitive data within images that users upload or download.
 
 OCR supports scanning `.jpg`/`.jpeg` and `.png` files between 4 KB and 1 MB in size. Text is encoded in UTF-8 format, including support for non-Latin characters.
 
@@ -51,7 +55,9 @@ Profile-level AI context analysis settings will be deprecated in a future releas
 AI context analysis only supports Gateway HTTP and HTTPS traffic.
 :::
 
-AI context analysis uses a pretrained model to analyze surrounding context and adjust the confidence level of a detection. For example, a number that matches a credit card pattern may receive a lower confidence score if it appears in a context where credit card numbers are unlikely. DLP will log any matches that are above your confidence threshold.
+AI context analysis uses a machine learning model to evaluate the surrounding context of a detection and adjust its confidence level. The model examines nearby text to determine whether a pattern match is likely to be genuine sensitive data or a false positive.
+
+For example, a 16-digit number that matches a credit card pattern may receive a lower confidence score if it appears in a context where credit card numbers are unlikely (such as a product SKU list). Conversely, the same number appearing near terms like "payment" or "billing" would receive a higher confidence score. DLP logs matches that meet or exceed your configured [confidence threshold](#confidence-thresholds).
 
 For full documentation on AI context analysis, refer to [DLP settings](/cloudflare-one/data-loss-prevention/dlp-settings/#ai-context-analysis).
 
@@ -63,9 +69,9 @@ When you set a confidence threshold on a profile, DLP only triggers on detection
 
 - **Low** (default) — Based on regular expressions with few proximity keywords. This is the most inclusive setting, with high tolerance for false positives
 - **Medium** — Applies additional validations, to filter out low confidence detections. This setting has a medium tolerance for false positives.
-- **High** — Applies rigorous contextual validation for minimal false positives (has a higher likelihood of accuracy).
+- **Medium** — Applies additional validations to filter out low confidence detections. This setting has a medium tolerance for false positives.
 
-Confidence threshold is set on the DLP profile. When you select a confidence threshold in the Cloudflare dashboard, you will see which DLP entries will be affected by the confidence threshold. Entries that do not reflect a confidence threshold in the dashboard are not yet supported or are not applicable.
+Confidence threshold is set on the DLP profile. Not all detection entries support confidence thresholds — when you select a threshold in the dashboard, entries that support confidence scoring display their current level. Entries without a displayed confidence level either do not support this feature or use detection methods (such as exact match) where confidence scoring does not apply.
 
 To change the confidence threshold of a DLP profile:
 
@@ -74,14 +80,23 @@ To change the confidence threshold of a DLP profile:
 3. In **Settings** > **Confidence threshold**, choose a new confidence threshold from the dropdown menu.
 4. Select **Save profile**.
 
-#### Gateway detections
+## Gateway detections
 
-For inline detections in Gateway, to display Low and Medium confidence detections but block High confidence detections, Cloudflare recommends creating two HTTP policies. The first policy should use a Low confidence DLP profile with an Allow action. The second policy should use a High confidence DLP profile with a Block action. For example:
+For inline detections in Gateway, you can log lower-confidence matches while blocking only high-confidence detections. This approach requires two HTTP policies with different DLP profiles:
 
-| Selector    | Operator | Value                       | Action |
-| ----------- | -------- | --------------------------- | ------ |
-| DLP Profile | in       | _Low Confidence Detections_ | Allow  |
+1. A Low or Medium confidence profile with an Allow action — logs the detection without blocking.
+2. A High confidence profile with a Block action — blocks the request.
 
-| Selector    | Operator | Value                        | Action |
-| ----------- | -------- | ---------------------------- | ------ |
-| DLP Profile | in       | _High Confidence Detections_ | Block  |
+For example:
+
+| Selector    | Operator | Value                          | Action |
+| ----------- | -------- | ------------------------------ | ------ |
+| DLP Profile | in       | _Low Confidence Detections_    | Allow  |
+
+| Selector    | Operator | Value                          | Action |
+| ----------- | -------- | ------------------------------ | ------ |
+| DLP Profile | in       | _Medium Confidence Detections_ | Allow  |
+
+| Selector    | Operator | Value                          | Action |
+| ----------- | -------- | ------------------------------ | ------ |
+| DLP Profile | in       | _High Confidence Detections_   | Block  |

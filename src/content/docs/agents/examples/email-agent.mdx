@@ -6,15 +6,20 @@ sidebar:
   order: 4
 ---
 
-import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+	PackageManagers,
+} from "~/components";
 
-Agents can send and receive email with Cloudflare [Email Service](/email-routing/email-workers/). This guide shows how to send outbound email with the Workers binding, route inbound mail into Agents, and handle follow-up replies securely.
+Agents can send and receive email with Cloudflare [Email Service](/email-service/api/route-emails/email-handler/). This guide shows how to send outbound email with the Workers binding, route inbound mail into Agents, and handle follow-up replies securely.
 
 ## Prerequisites
 
 Before using email with Agents, you need:
 
-1. A domain onboarded to [Cloudflare Email Service](/email-routing/).
+1. A domain onboarded to [Cloudflare Email Service](/email-service/).
 2. A `send_email` binding in `wrangler.jsonc` for outbound email.
 3. An Email Service routing rule that sends inbound mail to your Worker.
 4. Optional: an `EMAIL_SECRET` secret if you want secure reply routing.
@@ -486,22 +491,9 @@ When your agent sends emails and expects replies, use secure reply routing to pr
 
 ### Setup
 
-1. Add a secret to your Worker:
+1. Store the signing key as a Wrangler secret. Do not put it in `vars` or commit it to source control:
 
-   <WranglerConfig>
-
-   ```toml
-   [vars]
-   EMAIL_SECRET = "change-me-in-production"
-   ```
-
-   </WranglerConfig>
-
-   For production, use Wrangler secrets instead:
-
-   ```sh
-   npx wrangler secret put EMAIL_SECRET
-   ```
+   <PackageManagers type="exec" pkg="wrangler" args="secret put EMAIL_SECRET" />
 
 2. Use the combined resolver pattern:
 

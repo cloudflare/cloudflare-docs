@@ -13,7 +13,7 @@ tags:
   - Private networks
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Using Cloudflare Tunnel's private networks, users can connect to arbitrary non-browser based TCP/UDP applications, like databases. You can set up network policies that implement zero trust controls to define who and what can access those applications using the Cloudflare One Client.
 
@@ -34,12 +34,13 @@ Install `cloudflared` on a server in your private network. This server should ha
 
 ## Add private network routes
 
-1. In the **CIDR** tab, add the following IP addresses:
+1. In the Cloudflare dashboard, go to **Networking** > **Routes**.
 
-- Private IP/CIDR of your MySQL server (for example, `10.128.0.175/32`)
-- (Optional) Private IP/CIDR of your internal DNS server
+   <DashButton url="/?to=/:account/magic-networks/routes" />
 
-2. Select **Save tunnel**.
+2. Select **Create route** > **Tunnel CIDR**. Select the tunnel you just created, enter the private IP/CIDR of your MySQL server (for example, `10.128.0.175/32`), and select **Create route**.
+
+3. (Optional) Repeat to create a second route for the private IP/CIDR of your internal DNS server.
 
 The application and (optional) DNS server are now connected to Cloudflare.
 

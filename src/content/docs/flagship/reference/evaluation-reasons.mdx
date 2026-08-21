@@ -14,22 +14,26 @@ When you evaluate a flag using the binding's `*Details` methods or the OpenFeatu
 
 ## Evaluation reasons
 
-| Reason            | Description                                                                                                                        |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `TARGETING_MATCH` | A targeting rule's conditions matched the evaluation context, and the rule's variation was returned.                               |
-| `SPLIT`           | A targeting rule with a percentage rollout matched. The user fell within the rollout percentage and received the rule's variation. |
-| `DEFAULT`         | No targeting rule matched the evaluation context. The flag's default variation was returned.                                       |
-| `DISABLED`        | The flag is disabled. The default variation was returned regardless of targeting rules.                                            |
+| Reason            | Description                                                                                                                      |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `TARGETING_MATCH` | A targeting rule's conditions matched the evaluation context, and the rule's variant was returned.                               |
+| `SPLIT`           | A targeting rule with a percentage rollout matched. The user fell within the rollout percentage and received the rule's variant. |
+| `DEFAULT`         | No targeting rule matched the evaluation context. The flag's default variant was returned.                                       |
+| `DISABLED`        | The flag is disabled. The default variant was returned regardless of targeting rules.                                            |
+| `CACHED`          | The SDK returned a cached evaluation result.                                                                                     |
+| `ERROR`           | Evaluation failed and the default value was returned.                                                                            |
 
 ## Error codes
 
 When an evaluation error occurs, the method returns the default value you provided. The `*Details` methods include additional metadata about the error.
 
-| Error code       | Description                                                                                                                                                               |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TYPE_MISMATCH`  | The flag's variation type does not match the requested type. For example, calling `getBooleanValue` on a flag whose variation is a string. The default value is returned. |
-| `GENERAL`        | An unexpected error occurred during evaluation (for example, a network failure). The default value is returned.                                                           |
-| `FLAG_NOT_FOUND` | The specified flag key does not exist in the app. The default value is returned.                                                                                          |
+| Error code        | Description                                                                                                                                                           |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TYPE_MISMATCH`   | The flag's variant type does not match the requested type. For example, calling `getBooleanValue` on a flag whose variant is a string. The default value is returned. |
+| `FLAG_NOT_FOUND`  | The specified flag key does not exist in the app. The default value is returned.                                                                                      |
+| `INVALID_CONTEXT` | The evaluation context contains unsupported values, such as objects or arrays in HTTP evaluation. The default value is returned.                                      |
+| `PARSE_ERROR`     | The SDK received an invalid evaluation response. The default value is returned.                                                                                       |
+| `GENERAL`         | An unexpected error occurred during evaluation, such as a timeout or network failure. The default value is returned.                                                  |
 
 ## Example
 
@@ -50,7 +54,7 @@ switch (details.reason) {
 		console.log(`Included in rollout, variant: ${details.variant}`);
 		break;
 	case "DEFAULT":
-		console.log("No rule matched, using default variation");
+		console.log("No rule matched, using default variant");
 		break;
 	case "DISABLED":
 		console.log("Flag is disabled");
@@ -58,9 +62,7 @@ switch (details.reason) {
 }
 
 if (details.errorCode) {
-	console.error(
-		`Evaluation error: ${details.errorCode} - ${details.errorMessage}`,
-	);
+	console.error(`Evaluation error: ${details.errorCode}`);
 }
 ```
 

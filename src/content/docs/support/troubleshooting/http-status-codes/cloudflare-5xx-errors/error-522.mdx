@@ -15,8 +15,8 @@ Error `522` occurs when Cloudflare times out contacting the origin web server.
 
 Two different timeouts cause HTTP error `522` depending on when they occur between Cloudflare and the origin web server:
 
-- Before a connection is established, the origin web server does not return a SYN+ACK to Cloudflare within 19 seconds of Cloudflare sending a SYN (the SYN retry backoff scheme is 1,1,1,1,1,2,4,8).
-- After a connection is established, the origin web server does not acknowledge (ACK) Cloudflare's resource request within 90 seconds.
+- Before a TCP connection is established, Cloudflare does not receive a SYN+ACK within 19 seconds after sending a SYN. The SYN retry backoff intervals are 1, 1, 1, 1, 1, 2, 4, and 8 seconds.
+- After the TCP connection is established, Cloudflare does not receive an acknowledgment (ACK) of its resource request within 90 seconds.
 
 ### Resolution
 
@@ -38,3 +38,7 @@ Two different timeouts cause HTTP error `522` depending on when they occur betwe
 
   - An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP recorded in the origin web server logs.
   - Details from the hosting provider's investigation, such as pertinent logs or conversations with the hosting provider.
+
+### Diagnose with Origin Analytics
+
+Use [Origin Analytics](/speed/origin-analytics/) to check for TCP connection failures to your origin. If the **Top endpoints** table shows a high TCP failure rate for specific paths, the issue may be path-specific rather than a general origin problem. Origin Analytics can also help confirm whether your origin is reachable from Cloudflare's edge.

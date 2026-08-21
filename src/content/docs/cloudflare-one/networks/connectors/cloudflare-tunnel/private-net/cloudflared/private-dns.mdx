@@ -10,7 +10,7 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 By default, all DNS requests on the user device are resolved by Cloudflare's [public DNS resolver](/1.1.1.1/) except for common top level domains used for local resolution (such as `localhost`). You can connect an internal DNS resolver to Cloudflare and use it to resolve non-publicly routed domains.
 
@@ -20,7 +20,9 @@ To resolve private DNS queries:
 
 1. [Connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/) with Cloudflare Tunnel.
 
-2. Under **Networks** > **Routes**, verify that the IP address of your internal DNS resolver is included in the tunnel.
+2. Under **Networking** > **Routes**, verify that the IP address of your internal DNS resolver is included in the tunnel.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
 
 		:::note
 
@@ -59,7 +61,7 @@ Both `dig` commands will fail if the Cloudflare One Client is disabled on your e
 
 Use the following troubleshooting strategies if you are running into issues while configuring private DNS with Cloudflare Tunnel.
 
-- Ensure that `cloudflared` is connected to Cloudflare by visiting **Networks** > **Connectors** > **Cloudflare Tunnels** in Cloudflare One.
+- Ensure that `cloudflared` is connected to Cloudflare by visiting **Networking** > **Tunnels** in the Cloudflare dashboard.
 
 - Ensure that `cloudflared` is running with the `quic` protocol (search for `Initial protocol quic` in its logs).
 

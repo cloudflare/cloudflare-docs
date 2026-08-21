@@ -11,7 +11,7 @@ head:
     content: Custom Errors
 ---
 
-import { FeatureTable, Render, Steps } from "~/components";
+import { Render, Steps } from "~/components";
 
 Use Custom Errors to replace default Cloudflare error pages with your own custom content. Custom error content is shown to visitors when an HTTP error occurs, whether the error comes from your origin server, a Cloudflare product (including [Cloudflare Workers](/workers/)), or a [security challenge](/cloudflare-challenges/).
 
@@ -40,14 +40,20 @@ When an error of a [specific type](/rules/custom-errors/reference/error-page-typ
 </Steps>
 
 :::note
-To customize a challenge page or a block page, use an Error Page, since Custom Error Rules will not be applied to security actions originating from Cloudflare products. Keep in mind that [custom WAF response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) takes precedence over an Error Page and custom error rules.
+To customize a challenge page or the default Cloudflare WAF block page, use an Error Page. Custom Error Rules do not apply to security actions originating from Cloudflare products (such as the default WAF block page) — they only override error responses from your origin server or [custom WAF responses](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests). A custom WAF response configured directly in a WAF rule action takes precedence over both an Error Page and a custom error rule.
 :::
 
 ## Availability
 
 Custom Errors are available to all paid plans. The exact features depend on your Cloudflare plan.
 
-<FeatureTable id="rules.custom_errors" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | Yes | Yes | Yes |
+| Number of rules | 0 | 25 | 50 | 300 |
+| Number of assets | 0 | 25 | 50 | 300 |
+| Error Pages | No | Yes | Yes | Yes |
+| Origin Error Pages | No | No | No | Yes |
 
 ---
 
@@ -88,3 +94,9 @@ A custom error asset corresponds to a web resource such as an HTML web page (inc
 Once the custom error asset is stored in Cloudflare's global network, the URL you initially provided no longer needs to be available. You can update an existing custom error asset by fetching it again. The metadata associated with each custom error asset includes the timestamp when the last fetch occurred, and this information is displayed in the dashboard.
 
 You can use a custom error asset in one or more [custom error rules](#custom-error-rules) in the same scope where you defined the asset (zone or account).
+
+### Size limits
+
+When you provide a URL for a custom error asset, Cloudflare fetches the page and inlines all referenced resources into the HTML. Images and other binary resources (including those referenced from CSS via `url(...)`) are inlined as base64-encoded data URLs. CSS and JavaScript files are inlined as plain text inside `<style>` and `<script>` tags. The processed page must not exceed approximately 1.5 MB.
+
+If your custom error asset exceeds this size, reduce the number or size of referenced resources. You can also host large resources externally, as long as they remain accessible from Cloudflare's network when the asset is fetched.

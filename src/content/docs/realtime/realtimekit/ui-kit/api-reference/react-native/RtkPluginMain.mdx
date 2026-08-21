@@ -6,7 +6,7 @@ products:
   - realtime
 ---
 
-Renders an active plugin in a WebView with fullscreen toggle and close button. Handles plugin iframe communication.
+Renders an active plugin by loading `plugin.component.src` in a `WebView`. Includes a header bar with the plugin name, a fullscreen toggle, and an optional close button (shown when `plugin.permissions.canDeactivate` is `true`). Pressing close calls `plugin.deactivate()`.
 
 ## Properties
 

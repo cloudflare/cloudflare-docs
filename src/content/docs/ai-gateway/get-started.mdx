@@ -32,6 +32,8 @@ Before making requests, you need two things:
 Run the following command to make your first request through AI Gateway. This example calls a Workers AI model, which requires the `@cf/` model prefix and the `cf-aig-gateway-id` header.
 
 ```bash
+# Run `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN,
+# and `wrangler whoami` to replace $CLOUDFLARE_ACCOUNT_ID.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "cf-aig-gateway-id: default" \
@@ -46,6 +48,8 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
     ]
   }'
 ```
+
+The `cf-aig-gateway-id: default` header routes this Workers AI request through your account's default gateway. If the gateway does not exist, AI Gateway creates it on the first authenticated request. Routing through the gateway provides unified logging, analytics, caching, rate limiting, and security controls. The auto-created gateway uses **Standard billing** by default. To pay with prepaid AI Gateway credits, [set its Workers AI billing setting to **Unified billing**](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing).
 
 :::note
 For third-party models, you do not need to specify a gateway — AI Gateway uses `default` as the gateway ID and automatically creates it on the first authenticated request. Workers AI requests always require the `cf-aig-gateway-id` header. For more details, refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway).
@@ -63,7 +67,7 @@ You can also create gateways manually with a custom name and configuration throu
 
 Authenticate with your upstream AI provider using one of the following options:
 
-- **Unified Billing:** Use the AI Gateway billing to pay for and authenticate your inference requests. Refer to [Unified Billing](/ai-gateway/features/unified-billing/).
+- **Unified Billing:** Use prepaid AI Gateway credits for Workers AI and supported third-party model providers. Refer to [Unified Billing](/ai-gateway/features/unified-billing/).
 - **BYOK (Store Keys):** Store your own provider API Keys with Cloudflare, and AI Gateway will include them at runtime. Refer to [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
 - **Request headers:** Include your provider API Key in the request headers as you normally would (for example, `Authorization: Bearer <OPENAI_API_KEY>`).
 
@@ -74,6 +78,8 @@ Authenticate with your upstream AI provider using one of the following options:
 Call any model — whether hosted on Cloudflare or by a third-party provider — through the same Cloudflare API. No provider SDKs or API keys needed — authentication and billing are handled through your Cloudflare account. Three endpoints are available: `/ai/run` for all modalities, `/ai/v1/chat/completions` for OpenAI SDK compatibility, and `/ai/v1/responses` for agentic workflows.
 
 ```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

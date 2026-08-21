@@ -69,3 +69,6 @@ Do not conclude your origin returned a 5xx error solely because `OriginResponseS
 
 :::
 
+## Diagnose with Origin Analytics
+
+Use [Origin Analytics](/speed/origin-analytics/) to compare what your origin returned (`originResponseStatus`) with what Cloudflare served to the end user (`edgeResponseStatus`). If your origin returned a `200` but Cloudflare served a `520`, the response was likely malformed — for example, oversized headers or an early connection close. The **Top endpoints** table can help you identify which paths are producing `520` errors.

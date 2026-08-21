@@ -68,7 +68,7 @@ The `binding = "MY_WORKFLOW"` line defines the JavaScript variable that our Work
 
 ### Schedule a Workflow directly
 
-If you want to create Workflow instances on a recurring interval, add a `schedules` array to the Workflow binding in your Wrangler configuration:
+If you want to create Workflow instances on a recurring interval, add a `schedules` array (up to 100 cron expressions per account) to the Workflow binding in your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -174,7 +174,18 @@ The possible values of status are as follows:
     message: string
   };
 	output?: unknown;
+	rollback:
+		| {
+				outcome: "complete" | "failed";
+				error: {
+					name: string,
+					message: string,
+				} | null,
+		  }
+		| null;
 ```
+
+If your Workflow registers rollback handlers on `step.do()`, inspect `rollback` after the instance finishes to see whether the compensating steps completed successfully. While rollback is actively running, the Workers API continues to return `status: "running"`.
 
 ### Explicitly pause a Workflow
 
@@ -207,6 +218,21 @@ You can stop/terminate a Workflow instance by calling `terminate` against a spec
 ```ts
 let instance = await env.MY_WORKFLOW.get("abc-123");
 await instance.terminate(); // Returns Promise<void>
+```
+
+To run registered rollback handlers before terminating, pass `rollback: true`:
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+await instance.terminate({ rollback: true }); // Returns Promise<void>
+```
+
+You can also run rollback handlers from Wrangler:
+
+```sh
+npx wrangler workflows instances terminate <WORKFLOW_NAME> <INSTANCE_ID> --rollback
+# For a local Workflows instance during wrangler dev:
+npx wrangler workflows instances terminate <WORKFLOW_NAME> <INSTANCE_ID> --local --rollback
 ```
 
 Once stopped/terminated, the Workflow instance _cannot_ be resumed.

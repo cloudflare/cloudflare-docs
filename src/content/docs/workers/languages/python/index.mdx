@@ -17,14 +17,14 @@ import { WranglerConfig } from "~/components";
 
 Cloudflare Workers provides a first-class Python experience, including support for:
 
-- Easy to install and fast-booting [Packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [httpx](https://www.python-httpx.org/), [Pydantic](https://docs.pydantic.dev/latest/) and more.
+- Easy to install and fast-booting [Packages](/workers/languages/python/packages), including [FastAPI](https://fastapi.tiangolo.com/), [Langchain](https://pypi.org/project/langchain/), [Pydantic](https://docs.pydantic.dev/latest/) and more.
 - A robust [foreign function interface (FFI)](/workers/languages/python/ffi) that lets you use JavaScript objects and functions directly from Python — including all [Runtime APIs](/workers/runtime-apis/)
 - An ecosystem of services on the Workers Platform accessible via [bindings](/workers/runtime-apis/bindings/), including:
   - State storage and databases like [KV](/kv), [D1](/d1), [Durable Objects](/durable-objects/)
   - Access to [Environment Variables](/workers/configuration/environment-variables/), [Secrets](/workers/configuration/secrets/), and other Workers using [Service Bindings](/workers/runtime-apis/bindings/service-bindings/)
   - AI capabilities with [Workers AI](/workers-ai/), [Vectorize](/vectorize)
   - File storage with [R2](/r2)
-  - [Durable Workflows](/workflows/), [Queues](/queues/), and [ more](/workers/runtime-apis/bindings/)
+  - [Durable Workflows](/workflows/), [Queues](/queues/), and [more](/workers/runtime-apis/bindings/)
 
 ## Introduction
 
@@ -45,7 +45,7 @@ In a Python Worker, this handler is placed in a `Default` class that extends the
 
 :::caution[Python Workers are in beta.]
 
-You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta. Packages are supported using the [pywrangler](/workers/languages/python/packages) tool.
+You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta.
 
 We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
 :::

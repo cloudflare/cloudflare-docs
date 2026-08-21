@@ -1,0 +1,84 @@
+---
+pcx_content_type: concept
+title: Best practices
+description: Best practices for using Flagship in applications, including evaluation paths, rollout workflows, and safe flag cleanup.
+sidebar:
+  order: 5
+products:
+  - flagship
+---
+
+Use these patterns to keep Flagship evaluations predictable, fast, and easy to maintain.
+
+## Choose the right evaluation path
+
+Use the [Workers binding](/flagship/binding/) inside Cloudflare Workers. The binding handles authentication automatically and avoids application-managed API tokens.
+
+Use the [OpenFeature SDK](/flagship/sdk/) when you run outside Workers or need a vendor-neutral OpenFeature interface. In Workers, you can still pass the binding to the OpenFeature server provider to keep binding performance while using OpenFeature APIs.
+
+## Evaluate once per request
+
+Avoid evaluating the same flag repeatedly in a loop. Evaluate the flag once, store the result in a local variable, and reuse it for the rest of the request.
+
+```ts
+const enabled = await env.FLAGS.getBooleanValue("show-related-items", false, {
+	userId,
+});
+
+for (const item of items) {
+	if (enabled) {
+		item.related = await loadRelatedItems(item.id);
+	}
+}
+```
+
+## Pass context consistently
+
+Targeting and percentage rollouts depend on the evaluation context you pass from your application. Use stable identifiers and the same attribute names everywhere.
+
+```ts
+const context = {
+	userId: session.user.id,
+	plan: session.user.plan,
+	country: request.cf?.country ?? "unknown",
+};
+
+const enabled = await env.FLAGS.getBooleanValue("new-checkout", false, context);
+```
+
+For OpenFeature SDKs, use `targetingKey` as the stable identifier. For the Workers binding, use the attribute configured for your rollout, such as `userId`.
+
+## Choose safe defaults
+
+Every evaluation method requires a default value. Choose a default that keeps your application safe if the flag does not exist, cannot be evaluated, or has a type mismatch.
+
+For release flags, this is usually the existing experience. For configuration flags, choose conservative limits or behavior that your application can handle without extra dependencies.
+
+## Use details for debugging and observability
+
+Use `*Details` methods when you need to understand why a value was returned. Details include the resolved value, variant, reason, and error metadata.
+
+```ts
+const details = await env.FLAGS.getBooleanDetails("new-checkout", false, {
+	userId: "user-42",
+});
+
+console.log(details.value);
+console.log(details.variant);
+console.log(details.reason);
+console.log(details.errorCode);
+```
+
+## Roll out progressively
+
+Start with a small percentage rollout, monitor application metrics, then increase the percentage over time.
+
+1. Create the flag with a small rollout, such as 5%.
+2. Monitor errors, latency, business metrics, and user feedback.
+3. Increase to 25%, then 50%, then 100% as confidence grows.
+4. After the rollout reaches 100%, make the winning variant the default and remove temporary targeting rules.
+5. After the feature is fully shipped, remove the old code path and delete the flag.
+
+## Clean up stale flags
+
+Flags that are disabled or fully rolled out still add maintenance cost. Before deleting a flag, disable it first, monitor for unexpected behavior, remove the evaluation code, deploy the code change, then delete the flag from Flagship.

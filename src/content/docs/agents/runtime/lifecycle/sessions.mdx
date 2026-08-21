@@ -108,15 +108,15 @@ const session = new Session(new AgentSessionProvider(this), {
 
 All builder methods return `this` for chaining. Order does not matter — providers are resolved lazily on first use.
 
-| Method                          | Description                                                                                                |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `Session.create(agent)`         | Static factory. `agent` is any object with a `sql` tagged template method (your Agent or Durable Object).  |
-| `.forSession(sessionId)`        | Namespace this session by ID. Required for multi-session isolation when not using `SessionManager`.        |
-| `.withContext(label, options?)` | Add a context block. Refer to [Context blocks](#context-blocks).                                           |
-| `.withCachedPrompt(provider?)`  | Enable system prompt persistence. The prompt is frozen on first use and survives hibernation and eviction. |
-| `.onCompaction(fn)`             | Register a compaction function. Refer to [Compaction](#compaction).                                        |
+| Method                                    | Description                                                                                                                                                  |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Session.create(agent)`                   | Static factory. `agent` is any object with a `sql` tagged template method (your Agent or Durable Object).                                                    |
+| `.forSession(sessionId)`                  | Namespace this session by ID. Required for multi-session isolation when not using `SessionManager`.                                                          |
+| `.withContext(label, options?)`           | Add a context block. Refer to [Context blocks](#context-blocks).                                                                                             |
+| `.withCachedPrompt(provider?)`            | Enable system prompt persistence. The prompt is frozen on first use and survives hibernation and eviction.                                                   |
+| `.onCompaction(fn)`                       | Register a compaction function. Refer to [Compaction](#compaction).                                                                                          |
 | `.compactAfter(tokenThreshold, options?)` | Auto-compact when estimated token count exceeds the threshold. Requires `.onCompaction()`. Pass `{ tokenCounter }` to control how the threshold is measured. |
-| `.onCompactionError(handler)`   | Handle errors from automatic compaction. Handler failures are swallowed so message writes remain non-fatal. |
+| `.onCompactionError(handler)`             | Handle errors from automatic compaction. Handler failures are swallowed so message writes remain non-fatal.                                                  |
 
 ## Messages
 
@@ -391,8 +391,7 @@ const session = Session.create(this)
 			protectHead: 3,
 			tailTokenBudget: 20000,
 			minTailMessages: 2,
-			tokenCounter: async (messages) =>
-				estimateWithYourTokenizer({ messages }),
+			tokenCounter: async (messages) => estimateWithYourTokenizer({ messages }),
 		}),
 	)
 	.compactAfter(100_000);
@@ -428,6 +427,10 @@ const overlays = await session.getCompactions();
 ### Auto-compaction
 
 When `.compactAfter(threshold)` is set, `appendMessage()` checks the estimated token count after each write. If it exceeds the threshold, `compact()` is called automatically. Auto-compaction failure is non-fatal — the message is already saved.
+
+:::note
+Auto-compaction is checked **between turns** (on each `appendMessage()`), not within a turn. A single long, tool-heavy turn can grow past the model context window mid-flight, before the next check. `@cloudflare/think` adds opt-in mid-turn recovery on top of this — refer to [Context-window overflow recovery](/agents/harnesses/think/recovery/#context-window-overflow-recovery).
+:::
 
 By default, the estimate includes stored message parts plus the Session-managed frozen system prompt, so context blocks and cached prompts managed by `Session` contribute to the threshold. It does not include framework-specific prompt additions or tool schema serialization that happen outside `Session`.
 
@@ -497,15 +500,15 @@ Context blocks, prompt caching, and compaction settings are propagated to all se
 
 ### Builder methods
 
-| Method                          | Description                                                                                             |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `SessionManager.create(agent)`  | Static factory.                                                                                         |
-| `.withContext(label, options?)` | Add context block template for all sessions.                                                            |
-| `.withCachedPrompt(provider?)`  | Enable prompt persistence for all sessions.                                                             |
-| `.onCompaction(fn)`             | Register compaction function for all sessions.                                                          |
-| `.compactAfter(tokenThreshold, options?)` | Auto-compact threshold for all sessions. Supports the same `tokenCounter` option as `Session`.    |
-| `.onCompactionError(handler)`   | Handle automatic compaction errors for managed sessions.                                                |
-| `.withSearchableHistory(label)` | Add a cross-session searchable history block. The model can search past conversations from any session. |
+| Method                                    | Description                                                                                             |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `SessionManager.create(agent)`            | Static factory.                                                                                         |
+| `.withContext(label, options?)`           | Add context block template for all sessions.                                                            |
+| `.withCachedPrompt(provider?)`            | Enable prompt persistence for all sessions.                                                             |
+| `.onCompaction(fn)`                       | Register compaction function for all sessions.                                                          |
+| `.compactAfter(tokenThreshold, options?)` | Auto-compact threshold for all sessions. Supports the same `tokenCounter` option as `Session`.          |
+| `.onCompactionError(handler)`             | Handle automatic compaction errors for managed sessions.                                                |
+| `.withSearchableHistory(label)`           | Add a cross-session searchable history block. The model can search past conversations from any session. |
 
 ### Session lifecycle
 

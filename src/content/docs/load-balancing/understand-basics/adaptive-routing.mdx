@@ -7,6 +7,7 @@ title: Adaptive routing
 sidebar:
   order: 18
 
+
 ---
 
 import { Render, DashButton } from "~/components"
@@ -17,6 +18,12 @@ Adaptive routing controls features that modify the routing of requests to pools 
 
 When there are no healthy endpoints in the same pool, failover across pools extend the zero-downtime failover of requests to healthy endpoints in alternate pools according to the failover order defined by traffic and endpoint steering.
 
+:::caution[Geo-steering limitation]
+When using [geo-steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/), failover across pools only considers pools within the same geographic grouping. If your NA pool becomes unhealthy, traffic will **not** automatically fail over to your EU pool — it will go to the global fallback pool instead.
+
+To enable cross-region failover, include the desired fallback pool as an additional pool within each region's pool list.
+:::
+
 ### Enable failover across pools
 
 1. In the Cloudflare dashboard, go to the **Load Balancing** page.
@@ -25,3 +32,8 @@ When there are no healthy endpoints in the same pool, failover across pools exte
 
 2. Navigate to your Load Balancers and select **Edit**.
 3. From **Adaptive Routing**, enable **Failover across pools**.
+
+
+## HTTP/2 GOAWAY handling
+
+When an origin sends a GOAWAY frame, Cloudflare stops sending new requests on that connection but does not mark the endpoint as unhealthy. Safe-to-retry requests (typically GET) are automatically retried on a new connection. Non-idempotent requests (such as POST or PUT) may not be retried unless the request was not yet sent on the closing connection.

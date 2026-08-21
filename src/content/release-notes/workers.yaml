@@ -3,6 +3,18 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-08-18"
+    description: |-
+      - Updated v8 to version 15.2.
+  - publish_date: "2026-07-16"
+    description: |-
+      - Updated v8 to version 15.1.
+  - publish_date: "2026-06-04"
+    description: |-
+      - Updated v8 to version 15.0.
+  - publish_date: "2026-05-13"
+    description: |-
+      - Fixed a regression where passing an array for to/cc/bcc on the SendEmail builder produced "Invalid email address" errors.
   - publish_date: "2026-04-27"
     description: |-
       - Updated v8 to version 14.8.
@@ -155,7 +167,7 @@ entries:
       - The `internal_writable_stream_abort_clears_queue` compatibility flag will ensure that certain `WritableStream` `abort()` operations are handled immediately rather than lazily, ensuring that the stream is appropriately aborted when the consumer of the stream is no longer active.
   - publish_date: "2024-07-19"
     description: |-
-      - Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+      - Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/versions-and-deployments/gradual-deployments/).
   - publish_date: "2024-07-18"
     description: |-
       - Added a new `truncated` flag to [Tail Worker](/workers/observability/logs/tail-workers/) events to indicate when the event buffer is full and events are being dropped.
@@ -169,7 +181,7 @@ entries:
       - Fixed a bug where when writing to an HTTP Response body would sometimes hang when the client disconnected (and sometimes throw an exception). It will now always throw an exception.
   - publish_date: "2024-07-01"
     description: |-
-      - When using [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) to send a request to a specific version of your Worker.
+      - When using [Gradual Deployments](/workers/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/versions-and-deployments/version-overrides/) to send a request to a specific version of your Worker.
   - publish_date: "2024-06-28"
     description: |-
       - Fixed a bug which caused `Date.now()` to return skewed results if called before the first I/O of the first request after a Worker first started up. The value returned would be offset backwards by the amount of CPU time spent starting the Worker (compiling and running global scope), making it seem like the first I/O (e.g. first fetch()) was slower than it really was. This skew had nothing to do with Spectre mitigations; it was simply a longstanding bug.
@@ -188,7 +200,7 @@ entries:
       - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
   - publish_date: "2024-06-03"
     description: |-
-      - Workers with [Smart Placement](/workers/configuration/placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+      - Workers with [Smart Placement](/workers/configuration/placement/) enabled now support [Gradual Deployments](/workers/versions-and-deployments/gradual-deployments/).
   - publish_date: "2024-05-17"
     description: |-
       - Updated v8 to version 12.6.

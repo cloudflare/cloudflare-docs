@@ -1,0 +1,29 @@
+---
+title: New DNS Firewall UX with more dashboard settings
+description: A refreshed DNS Firewall page in the Cloudflare dashboard, bringing cluster settings that were previously API-only into the UI, a redesigned cluster table, and a new create and edit experience.
+date: 2026-07-09
+---
+
+import { DashButton } from "~/components";
+
+The DNS Firewall page in the Cloudflare dashboard has been refreshed, bringing several settings that were previously API-only into the UI and modernizing how you view and manage your DNS Firewall clusters.
+
+![New DNS Firewall UX](~/assets/images/changelog/dns/dnsfw-new-ux.png)
+
+## What is new
+
+- **More settings in the dashboard**: cluster options that were previously only configurable through the API — such as attack mitigation, rate limiting, negative TTL, and resolver subnet — are now available directly in the dashboard.
+- **Better table experience**: the DNS Firewall cluster table has been revised to surface cluster details at a glance, with resizable columns and the option to show or hide columns to tailor the view to your workflow.
+- **New create and edit UX**: adding and editing clusters now uses a modernized form that groups related settings together, making configuration faster and clearer.
+
+## Availability
+
+Available to all DNS Firewall customers as part of their existing subscription.
+
+## Where to find it
+
+In the Cloudflare dashboard, go to the **DNS Firewall** page.
+
+<DashButton url="/?to=/:account/dns-firewall/clusters" />
+
+For more information, refer to [DNS Firewall](/dns/dns-firewall/).

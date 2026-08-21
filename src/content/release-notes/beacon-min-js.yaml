@@ -3,9 +3,18 @@ link: "/web-analytics/changelog/"
 productName: beacon.min.js
 productLink: "/web-analytics/"
 entries:
+  - publish_date: "2026-08-20"
+    description: Updated Google's web-vitals library to version 6.1.0. In order to improve the accuracy of tracking soft navigations (i.e. those used by Single Page Applications), we've introduced support for [Google's new Soft Navigations API](https://developer.chrome.com/docs/web-platform/soft-navigations) available in Chromium-based browsers (e.g. Chrome, Edge, Opera) and added an improved fallback for non-Chromium browsers (e.g. Safari and Firefox) using [the Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API). For more information, see [Web Analytics for SPAs](/web-analytics/get-started/web-analytics-spa/).
+
+  - publish_date: "2026-07-13"
+    description: The beacon script is now injected with `type="module"` to intentionally exclude long EOL'd (End-of-Life'd) browsers like Internet Explorer from loading the script, given they don't support it anyway. [See FAQ entry for more information](/web-analytics/faq/#why-am-i-seeing-syntax-errors-from-the-beacon-script-in-internet-explorer).
+
+  - publish_date: "2026-06-16"
+    description: Updated Google's web-vitals library to version 5.3.0 and updated the JavaScript build output target to ES2015.
+
   - publish_date: "2026-05-15"
     description: Updated Google's web-vitals library to version 4.2.4 and captured Interaction to Next Paint (INP) sub-part metrics (Input Delay, Processing Duration, Presentation Delay)
-  
+
   - publish_date: "2024-06-11"
     description: Enhanced to include reporting of Server-Timing headers.
 

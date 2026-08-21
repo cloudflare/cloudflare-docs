@@ -1,0 +1,110 @@
+---
+pcx_content_type: reference
+title: Flagship
+description: Wrangler commands for managing Flagship apps, feature flags, targeting rules, rollouts, evaluations, and changelog history.
+products:
+  - workers
+---
+
+import { WranglerNamespace } from "~/components";
+
+Use `wrangler flagship` to manage [Flagship](/flagship/) apps and feature flags from the command line.
+
+`wrangler flagship` is available in Wrangler v4.107.0 and later.
+
+## Authentication
+
+Run `wrangler login`, or set [`CLOUDFLARE_API_TOKEN`](/workers/wrangler/system-environment-variables/) to an API token with Flagship permissions.
+
+| Permission       | Required for                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------- |
+| `flagship:read`  | Listing apps, inspecting flags, evaluating flags, and reading changelogs.                    |
+| `flagship:write` | Creating, updating, deleting, enabling, disabling, rolling out, and splitting apps or flags. |
+
+Most write workflows also read the current flag before writing the updated definition, so grant both permissions for operational use.
+
+## App IDs
+
+`wrangler flagship flags` commands always take the app ID as the first argument. Most subcommands then take a flag key; list-style commands, such as `flags list`, take only the app ID:
+
+```sh
+wrangler flagship flags get <APP_ID> new-checkout
+wrangler flagship flags disable <APP_ID> new-checkout
+wrangler flagship flags list <APP_ID>
+```
+
+Create an app first if you do not already have one:
+
+```sh
+wrangler flagship apps create checkout-service
+```
+
+Pass `--binding <NAME>` when creating an app to add it to your `wrangler.json` or `wrangler.jsonc` file as a Worker binding.
+
+## Common workflows
+
+Create a boolean flag. With no variations, Wrangler creates `on=true`, `off=false`, and serves `off` by default:
+
+```sh
+wrangler flagship flags create <APP_ID> new-checkout
+```
+
+Add targeting rules with the compact rule syntax:
+
+```sh
+wrangler flagship flags create <APP_ID> premium-banner \
+	-V on=true \
+	-V off=false \
+	--default off \
+	--rule "serve=on; when=plan equals enterprise AND country in [US,CA]; rollout=25%@user_id"
+```
+
+Use uppercase `AND` and `OR` outside quoted values to combine conditions. Quote values that contain reserved words or separators:
+
+```sh
+wrangler flagship flags create <APP_ID> banner-copy \
+	-V shown=true \
+	-V hidden=false \
+	--default hidden \
+	--rule 'serve=shown; when=title equals "WAR AND PEACE" OR country in ["US","CA"]'
+```
+
+For deeply nested condition groups, use `--rule-json`. Wrangler validates both compact rules and JSON rules before sending requests.
+
+Change one existing rule without rewriting the full rule set:
+
+```sh
+wrangler flagship flags rules update <APP_ID> premium-banner \
+	--priority 1 \
+	--rollout 50%@user_id
+```
+
+Evaluate a flag for a user:
+
+```sh
+wrangler flagship flags evaluate <APP_ID> premium-banner \
+	--context plan=enterprise \
+	--context country=US \
+	--targeting-key user-42
+```
+
+Use `disable` as an immediate kill switch:
+
+```sh
+wrangler flagship flags disable <APP_ID> premium-banner
+```
+
+Enable, disable, or delete multiple flags by passing the app ID followed by multiple keys:
+
+```sh
+wrangler flagship flags disable <APP_ID> new-checkout dark-mode premium-banner
+wrangler flagship flags delete <APP_ID> coming-soon old-banner --force
+```
+
+Delete commands require `--force` when used with `--json` so prompts cannot corrupt JSON output. `rollout` and `split` require the same when they would replace existing targeting rules that have conditions.
+
+Refer to the [Flagship Wrangler commands reference](/flagship/reference/wrangler-commands/) for a complete workflow guide covering targeting rules, rollouts, traffic splits, changelogs, and scripting with `--json`.
+
+## Commands
+
+<WranglerNamespace namespace="flagship" />

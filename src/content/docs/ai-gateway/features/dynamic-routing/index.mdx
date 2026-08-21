@@ -4,7 +4,7 @@ description: Route AI Gateway requests based on conditions, quotas, and fallback
 pcx_content_type: navigation
 order: 1
 sidebar:
-  order: 4
+  order: 5
   group:
     badge: Beta
 products:
@@ -60,4 +60,10 @@ Ensure your gateway has [authentication](/ai-gateway/configuration/authenticatio
    - Click **Save** to save the state. You can always roll back to earlier versions from **Versions**.
    - Deploy the version to make it live.
 5. Call the route from your code.
-   - Use the [OpenAI compatible](/ai-gateway/usage/chat-completion/) endpoint, and use the route name in place of the model, for example, `dynamic/support`.
+   - Use the [OpenAI compatible](/ai-gateway/usage/chat-completion/) endpoint (`/compat/chat/completions`), and use the route name in place of the model, for example, `dynamic/support`. See [Using a dynamic route](/ai-gateway/features/dynamic-routing/usage/) for examples.
+
+:::note
+
+The OpenAI-compatible endpoint is marked **Deprecated** for standard single-model chat completions, but it remains the required way to call dynamic routes. Dynamic routing is not currently available on the [REST API](/ai-gateway/usage/rest-api/).
+
+:::

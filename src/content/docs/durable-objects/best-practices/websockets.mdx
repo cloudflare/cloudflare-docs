@@ -314,6 +314,8 @@ For high-frequency data like sensor readings or game state updates, use time-bas
 
 Hibernation is only supported when a Durable Object acts as a WebSocket server. Outgoing WebSockets do not hibernate.
 
+However, an active outbound WebSocket connection keeps the Durable Object alive and prevents eviction for up to 15 minutes per connection. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+
 Events such as [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks prevent hibernation. This includes `setTimeout` and `setInterval` usage. Read more about [when a Durable Object incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 :::

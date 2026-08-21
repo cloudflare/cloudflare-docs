@@ -43,7 +43,7 @@ Refer to the [API documentation](/api/resources/diagnostics/subresources/endpoin
 <Render file="account-id-api-key" product="networking-services" />
 
 <CURL
-  url="https://api.cloudflare.com/client/v4/accounts/account_id/diagnostics/endpoint-healthcheck"
+  url="https://api.cloudflare.com/client/v4/accounts/account_id/diagnostics/endpoint-healthchecks"
   method="POST"
   json={{
     "check_type": "icmp",
@@ -77,7 +77,7 @@ You can set up alerts to be notified when the state of your endpoint's health is
 1. Make a `GET` request to get a list of IDs for all of the endpoint health checks configured:
 
 <CURL
-  url="https://api.cloudflare.com/client/v4/accounts/account_id/diagnostics/endpoint-healthcheck"
+  url="https://api.cloudflare.com/client/v4/accounts/account_id/diagnostics/endpoint-healthchecks"
   method="GET"
 />
 

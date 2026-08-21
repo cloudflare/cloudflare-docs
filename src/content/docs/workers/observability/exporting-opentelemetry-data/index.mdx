@@ -33,7 +33,7 @@ Below are common OTLP endpoint formats for popular observability providers. Refe
 | [**Axiom**](/workers/observability/exporting-opentelemetry-data/axiom/)                 | `https://api.axiom.co/v1/traces`                             | `https://api.axiom.co/v1/logs`                               |
 | [**Sentry**](/workers/observability/exporting-opentelemetry-data/sentry/)               | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/traces` | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/logs`   |
 | [**PostHog**](/workers/observability/exporting-opentelemetry-data/posthog/)             | Not supported                                                | `https://{REGION}.i.posthog.com/i/v1/logs`                   |
-| [**Datadog**](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/)              | Coming soon, pending release from Datadog                    | `https://otlp.{SITE}.datadoghq.com/v1/logs`                  |
+| [**Datadog**](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/)              | `https://otlp.{SITE}.datadoghq.com/v1/traces`                    | `https://otlp.{SITE}.datadoghq.com/v1/logs`                  |
 | [**New Relic**](https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/) | `https://otlp.nr-data.net/v1/traces` | `https://otlp.nr-data.net/v1/logs` |
 | [**Splunk Observability**](https://dev.splunk.com/observability/reference/api/ingest_data/latest) | `https://ingest.{REALM}.signalfx.com/v2/trace/otlp` | N/A |
 | [**Splunk Platform**](https://github.com/splunk/splunk-connect-for-otlp) | `http://splunk.internal:4318/v1/traces` | `http://splunk.internal:4318/v1/logs` |
@@ -47,6 +47,9 @@ Most providers require authentication headers. Refer to your provider's document
 To start sending data to your destination, you'll need to create a destination in the Cloudflare dashboard.
 
 ### Creating a destination
+:::note[Protocol]
+Cloudflare does not support the [Binary format](https://opentelemetry.io/docs/specs/otlp/#binary-protobuf-encoding) for OTLP ingest.
+:::
 
 ![Observability Destinations dashboard showing configured destinations for Grafana and Honeycomb with their respective endpoints and status](~/assets/images/workers-observability/destinations.png)
 
@@ -117,7 +120,7 @@ After creating a destination, you can monitor its health and delivery status in 
 
 ## Limits and pricing
 
-Exporting OTel data is currently **free** to those currently on a Workers Paid subscription or higher during the early beta period. However, starting on **`March 1, 2026`**, tracing will be billed as part of your usage on the Workers Paid plan or contract.
+Exporting OTel data is currently **free** to those currently on a Workers Paid subscription or higher during the early beta period. However, starting on **`October 1, 2026`**, tracing will be billed as part of your usage on the Workers Paid plan or contract.
 
 This includes the following limits and pricing:
 

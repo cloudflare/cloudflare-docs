@@ -330,7 +330,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://www.minimax.io/blog/minimax-m3",
 	"terms": "https://www.minimaxi.com/terms",
@@ -339,316 +339,112 @@
 		"Architecture": "Transformer"
 	},
 	"request_formats": [
-		"chat-completions"
+		"chat-completions",
+		"anthropic-messages"
 	],
+	"providers": null,
+	"banner": null,
 	"created_at": "2026-06-01 20:11:36",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
-			"properties": {
-				"mask_sensitive_info": {
-					"type": "boolean"
-				},
-				"max_completion_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"max_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"messages": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"content": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"items": {
-											"anyOf": [
-												{
-													"additionalProperties": false,
-													"properties": {
-														"text": {
-															"type": "string"
-														},
-														"type": {
-															"const": "text",
-															"type": "string"
-														}
-													},
-													"required": [
-														"type",
-														"text"
-													],
-													"type": "object"
-												},
-												{
-													"additionalProperties": false,
-													"properties": {
-														"image_url": {
-															"additionalProperties": false,
-															"properties": {
-																"url": {
-																	"type": "string"
-																}
-															},
-															"required": [
-																"url"
-															],
-															"type": "object"
-														},
-														"type": {
-															"const": "image_url",
-															"type": "string"
-														}
-													},
-													"required": [
-														"type",
-														"image_url"
-													],
-													"type": "object"
-												}
-											]
-										},
-										"type": "array"
-									}
-								]
-							},
-							"name": {
-								"type": "string"
-							},
-							"role": {
-								"enum": [
-									"system",
-									"user",
-									"assistant",
-									"tool"
-								],
-								"type": "string"
-							},
-							"tool_calls": {
-								"items": {
-									"additionalProperties": false,
-									"properties": {
-										"function": {
-											"additionalProperties": false,
-											"properties": {
-												"arguments": {
-													"type": "string"
-												},
-												"name": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"name",
-												"arguments"
-											],
-											"type": "object"
-										},
-										"id": {
-											"type": "string"
-										},
-										"type": {
-											"const": "function",
-											"type": "string"
-										}
-									},
-									"required": [
-										"id",
-										"type",
-										"function"
-									],
-									"type": "object"
-								},
-								"type": "array"
-							}
-						},
-						"required": [
-							"role",
-							"content"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"response_format": {
-					"additionalProperties": false,
+			"oneOf": [
+				{
+					"type": "object",
 					"properties": {
-						"json_schema": {
-							"additionalProperties": false,
-							"properties": {
-								"description": {
-									"type": "string"
-								},
-								"name": {
-									"maxLength": 64,
-									"type": "string"
-								},
-								"schema": {
-									"additionalProperties": false,
-									"properties": {
-										"properties": {},
-										"type": {
-											"const": "object",
-											"type": "string"
-										}
-									},
-									"required": [
-										"type",
-										"properties"
-									],
-									"type": "object"
-								}
-							},
-							"required": [
-								"name",
-								"schema"
-							],
-							"type": "object"
-						},
-						"type": {
-							"const": "json_schema",
-							"type": "string"
-						}
-					},
-					"required": [
-						"type",
-						"json_schema"
-					],
-					"type": "object"
-				},
-				"stream": {
-					"type": "boolean"
-				},
-				"stream_options": {
-					"additionalProperties": false,
-					"properties": {
-						"include_usage": {
-							"type": "boolean"
-						}
-					},
-					"type": "object"
-				},
-				"temperature": {
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
-				},
-				"tool_choice": {
-					"enum": [
-						"none",
-						"auto"
-					],
-					"type": "string"
-				},
-				"tools": {
-					"items": {
-						"additionalProperties": false,
-						"properties": {
-							"function": {
-								"additionalProperties": false,
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
 								"properties": {
-									"description": {
-										"type": "string"
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"user",
+											"assistant",
+											"tool"
+										]
 									},
 									"name": {
 										"type": "string"
 									},
-									"parameters": {}
-								},
-								"required": [
-									"name",
-									"description",
-									"parameters"
-								],
-								"type": "object"
-							},
-							"type": {
-								"const": "function",
-								"type": "string"
-							}
-						},
-						"required": [
-							"type",
-							"function"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"top_p": {
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
-				}
-			},
-			"required": [
-				"messages"
-			],
-			"type": "object"
-		},
-		"output": {
-			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
-			"properties": {
-				"base_resp": {
-					"additionalProperties": false,
-					"properties": {
-						"status_code": {
-							"type": "number"
-						},
-						"status_msg": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"status_code",
-						"status_msg"
-					],
-					"type": "object"
-				},
-				"choices": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"finish_reason": {
-								"enum": [
-									"stop",
-									"length",
-									"tool_calls"
-								],
-								"type": "string"
-							},
-							"index": {
-								"type": "number"
-							},
-							"message": {
-								"additionalProperties": {},
-								"properties": {
 									"content": {
-										"type": "string"
-									},
-									"role": {
-										"const": "assistant",
-										"type": "string"
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "array",
+												"items": {
+													"anyOf": [
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "text"
+																},
+																"text": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"type",
+																"text"
+															],
+															"additionalProperties": false
+														},
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "image_url"
+																},
+																"image_url": {
+																	"type": "object",
+																	"properties": {
+																		"url": {
+																			"type": "string"
+																		}
+																	},
+																	"required": [
+																		"url"
+																	],
+																	"additionalProperties": false
+																}
+															},
+															"required": [
+																"type",
+																"image_url"
+															],
+															"additionalProperties": false
+														}
+													]
+												}
+											}
+										]
 									},
 									"tool_calls": {
+										"type": "array",
 										"items": {
-											"additionalProperties": false,
+											"type": "object",
 											"properties": {
+												"id": {
+													"type": "string"
+												},
+												"type": {
+													"type": "string",
+													"const": "function"
+												},
 												"function": {
-													"additionalProperties": false,
+													"type": "object",
 													"properties": {
-														"arguments": {
+														"name": {
 															"type": "string"
 														},
-														"name": {
+														"arguments": {
 															"type": "string"
 														}
 													},
@@ -656,14 +452,7 @@
 														"name",
 														"arguments"
 													],
-													"type": "object"
-												},
-												"id": {
-													"type": "string"
-												},
-												"type": {
-													"const": "function",
-													"type": "string"
+													"additionalProperties": false
 												}
 											},
 											"required": [
@@ -671,78 +460,484 @@
 												"type",
 												"function"
 											],
-											"type": "object"
-										},
-										"type": "array"
+											"additionalProperties": false
+										}
 									}
 								},
 								"required": [
 									"role",
 									"content"
 								],
-								"type": "object"
+								"additionalProperties": {}
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"created": {
-					"type": "number"
-				},
-				"id": {
-					"type": "string"
-				},
-				"input_sensitive": {
-					"type": "boolean"
-				},
-				"model": {
-					"type": "string"
-				},
-				"object": {
-					"enum": [
-						"chat.completion",
-						"chat.completion.chunk"
-					],
-					"type": "string"
-				},
-				"output_sensitive": {
-					"type": "boolean"
-				},
-				"usage": {
-					"additionalProperties": {},
-					"properties": {
-						"completion_tokens": {
-							"type": "number"
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
 						},
-						"prompt_tokens": {
-							"type": "number"
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
 						},
-						"total_tokens": {
-							"type": "number"
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "function"
+									},
+									"function": {
+										"type": "object",
+										"properties": {
+											"name": {
+												"type": "string"
+											},
+											"description": {
+												"type": "string"
+											},
+											"parameters": {}
+										},
+										"required": [
+											"name",
+											"description",
+											"parameters"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"function"
+								],
+								"additionalProperties": false
+							}
+						},
+						"tool_choice": {
+							"type": "string",
+							"enum": [
+								"none",
+								"auto"
+							]
+						},
+						"response_format": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "json_schema"
+								},
+								"json_schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"maxLength": 64
+										},
+										"description": {
+											"type": "string"
+										},
+										"schema": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string",
+													"const": "object"
+												},
+												"properties": {}
+											},
+											"required": [
+												"type",
+												"properties"
+											],
+											"additionalProperties": false
+										}
+									},
+									"required": [
+										"name",
+										"schema"
+									],
+									"additionalProperties": false
+								}
+							},
+							"required": [
+								"type",
+								"json_schema"
+							],
+							"additionalProperties": false
+						},
+						"mask_sensitive_info": {
+							"type": "boolean"
 						}
 					},
 					"required": [
-						"total_tokens",
-						"prompt_tokens",
-						"completion_tokens"
+						"messages"
 					],
-					"type": "object"
+					"additionalProperties": false,
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"assistant"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"text": {
+															"type": "string"
+														},
+														"source": {},
+														"cache_control": {
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "ephemeral"
+																},
+																"ttl": {
+																	"type": "string",
+																	"enum": [
+																		"5m",
+																		"1h"
+																	]
+																}
+															},
+															"required": [
+																"type"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": {}
+												}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							}
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"system": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_k": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"metadata": {
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"messages",
+						"max_tokens"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
 				}
-			},
-			"required": [
-				"id",
-				"choices",
-				"created",
-				"model",
-				"object"
-			],
-			"type": "object"
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string",
+												"const": "assistant"
+											},
+											"content": {
+												"type": "string"
+											},
+											"tool_calls": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string"
+														},
+														"type": {
+															"type": "string",
+															"const": "function"
+														},
+														"function": {
+															"type": "object",
+															"properties": {
+																"name": {
+																	"type": "string"
+																},
+																"arguments": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"name",
+																"arguments"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"id",
+														"type",
+														"function"
+													],
+													"additionalProperties": false
+												}
+											}
+										},
+										"required": [
+											"role",
+											"content"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": "string",
+										"enum": [
+											"stop",
+											"length",
+											"tool_calls"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"enum": [
+								"chat.completion",
+								"chat.completion.chunk"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"total_tokens": {
+									"type": "number"
+								},
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"total_tokens",
+								"prompt_tokens",
+								"completion_tokens"
+							],
+							"additionalProperties": {}
+						},
+						"input_sensitive": {
+							"type": "boolean"
+						},
+						"output_sensitive": {
+							"type": "boolean"
+						},
+						"base_resp": {
+							"type": "object",
+							"properties": {
+								"status_code": {
+									"type": "number"
+								},
+								"status_msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"status_code",
+								"status_msg"
+							],
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"id",
+						"choices",
+						"created",
+						"model",
+						"object"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"type": {
+							"type": "string",
+							"const": "message"
+						},
+						"role": {
+							"type": "string",
+							"const": "assistant"
+						},
+						"content": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string"
+									},
+									"text": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"type"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"model": {
+							"type": "string"
+						},
+						"stop_reason": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens"
+							],
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"id",
+						"type",
+						"role",
+						"content",
+						"model",
+						"stop_reason",
+						"usage"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
+				}
+			]
 		}
 	}
 }

@@ -1,14 +1,9 @@
 ---
 /**
- * SchemaDisplay - Unified schema display component for model parameters
- *
- * Features:
- * - Table layout with Name, Type, Default, Description columns
- * - Tree-line indentation for nested objects/arrays
- * - Collapsible nested sections with lazy rendering
- * - Search/filter with auto-expand on match
- * - Essential params shown first (Input only), Advanced collapsed
- * - Tabs for top-level anyOf/oneOf variants
+ * SchemaDisplay — schema display for model parameters. Walks the JSON Schema at
+ * build time (allOf merge, nullable collapse, $ref resolve, flat-schema rows)
+ * into `SchemaRowData`, then hands off to the interactive `SchemaTree` /
+ * `SchemaVariantSelector` islands. Handles top-level anyOf/oneOf variants.
  */
 import {
 	SchemaTree,
@@ -22,13 +17,22 @@ import { resolveInlineRef } from "@stoplight/json";
 import SchemaTreeView from "./SchemaTree.tsx";
 import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
 import type { SchemaRowData } from "./types";
+import { getTopLevelVariants } from "~/util/models";
 
 interface Props {
 	schema: Record<string, unknown>;
 	title: "Input" | "Output";
+	/**
+	 * When set, render only the variant whose `title` matches (no embedded
+	 * selector). If the schema has no matching variant (e.g. the other side of
+	 * a unified selector doesn't define this branch), the full schema renders
+	 * unchanged. Used by ModelDetailPage to drive both Input and Output panels
+	 * from a single top-level variant selector.
+	 */
+	variantTitle?: string;
 }
 
-const { schema, title } = Astro.props;
+const { schema, title, variantTitle } = Astro.props;
 const hideRequired = title === "Output";
 
 // Check if schema is a flat/simple schema (no properties, no oneOf/anyOf with properties)
@@ -38,8 +42,7 @@ function isFlatSchema(schemaObj: Record<string, unknown>): boolean {
 	if (schemaObj.properties) return false;
 	// Has oneOf/anyOf with properties inside = not flat
 	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
-		| Record<string, unknown>[]
-		| undefined;
+		Record<string, unknown>[] | undefined;
 	if (variants?.some((v) => v.properties)) return false;
 	// Has type and some other attributes but no nested structure
 	return !!(schemaObj.type || schemaObj.contentType || schemaObj.format);
@@ -73,8 +76,15 @@ function flatSchemaToRows(schemaObj: Record<string, unknown>): SchemaRowData[] {
 	}));
 }
 
-// Generate unique ID for sessionStorage keys
-const schemaId = `schema-${title.toLowerCase()}-${Date.now()}`;
+// Generate a stable ID for sessionStorage keys based on schema content.
+// Using a simple hash of the JSON so the key is consistent across builds —
+// Date.now() was non-deterministic and silently lost user state on every deploy.
+const schemaJson = JSON.stringify(schema);
+let schemaHash = 0;
+for (let i = 0; i < schemaJson.length; i++) {
+	schemaHash = (schemaHash * 31 + schemaJson.charCodeAt(i)) >>> 0;
+}
+const schemaId = `schema-${title.toLowerCase()}-${schemaHash.toString(36)}`;
 
 type ReferenceInfo = {
 	source: string | null;
@@ -172,8 +182,7 @@ function collectRows(
 				const nonNullChild = reg.children[nonNullIndex] as RegularNode;
 				nullableType = childTypes[nonNullIndex];
 				nullableChildDescription = nonNullChild.annotations?.description as
-					| string
-					| undefined;
+					string | undefined;
 				isNullable = true;
 			}
 		}
@@ -196,11 +205,10 @@ function collectRows(
 			(reg.annotations?.description as string | undefined) ??
 			nullableChildDescription;
 		// Check both validations and fragment for enum (different schema parsers put it in different places)
-		const enumValues =
-			((reg.validations?.enum as unknown[]) ??
-				((reg.fragment as Record<string, unknown>)?.enum as unknown[]))?.map(
-				String,
-			);
+		const enumValues = (
+			(reg.validations?.enum as unknown[]) ??
+			((reg.fragment as Record<string, unknown>)?.enum as unknown[])
+		)?.map(String);
 
 		// Collect all metadata from fragment and validations
 		const metadata: Record<string, string | number | boolean> = {};
@@ -295,8 +303,7 @@ function collectRows(
 			const title =
 				reg.title ??
 				((reg.annotations as Record<string, unknown>)?.title as
-					| string
-					| undefined) ??
+					string | undefined) ??
 				(fragment?.title as string | undefined);
 
 			if (title) {
@@ -304,8 +311,7 @@ function collectRows(
 			} else {
 				// Try to infer from role property's enum (for message types)
 				const properties = fragment?.properties as
-					| Record<string, Record<string, unknown>>
-					| undefined;
+					Record<string, Record<string, unknown>> | undefined;
 				const roleEnum = properties?.role?.enum as string[] | undefined;
 				if (roleEnum && roleEnum.length === 1) {
 					// Single role value - use it as the name (e.g., "user", "assistant", "tool")
@@ -313,8 +319,7 @@ function collectRows(
 				} else {
 					// Try other heuristics
 					const nestedOneOf = fragment?.oneOf as
-						| Record<string, unknown>[]
-						| undefined;
+						Record<string, unknown>[] | undefined;
 					if (nestedOneOf && nestedOneOf.length > 0 && nestedOneOf[0]?.title) {
 						displayName = `${nestedOneOf[0].title as string} format`;
 					} else if (properties) {
@@ -356,33 +361,21 @@ function collectRows(
 	return rows;
 }
 
-// Check if schema has top-level oneOf/anyOf with titled variants
-// If so, we'll render them as tabs instead of nested tree
-type SchemaVariant = {
-	title: string;
-	schema: Record<string, unknown>;
-};
+const allVariants = getTopLevelVariants(schema);
 
-function getTopLevelVariants(
-	schemaObj: Record<string, unknown>,
-): SchemaVariant[] | null {
-	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
-		| Record<string, unknown>[]
-		| undefined;
-	if (!variants || variants.length < 2) return null;
+// When the parent drives variant selection (variantTitle is set), pick that
+// branch's schema if it exists. If the schema has no matching variant for the
+// requested title, fall back to rendering the full schema so this side stays
+// readable. This is the "only one side has titled variants" case.
+const matchedVariant = variantTitle
+	? allVariants?.find((v) => v.title === variantTitle)
+	: undefined;
 
-	// Check if all variants have titles
-	const titled = variants.map((v, i) => ({
-		title: (v.title as string) || `Option ${i + 1}`,
-		schema: v,
-	}));
+// Only show the inline variant selector when the parent isn't driving
+// selection. If variantTitle is set, we never render the inline selector.
+const topLevelVariants = variantTitle ? null : allVariants;
 
-	// Only use tabs if at least one variant has a real title
-	const hasRealTitle = variants.some((v) => v.title);
-	return hasRealTitle ? titled : null;
-}
-
-const topLevelVariants = getTopLevelVariants(schema);
+const schemaForRendering = matchedVariant?.schema ?? schema;
 
 // Process variants or full schema
 function processSchema(schemaToProcess: Record<string, unknown>) {
@@ -400,12 +393,12 @@ function processSchema(schemaToProcess: Record<string, unknown>) {
 
 // For flat schemas, convert keys to rows directly
 // For non-variant schemas, process with tree parser
-// For variant schemas, defer to variantRows
+// For variant schemas (inline selector), defer to variantRows
 const rows = isFlat
-	? flatSchemaToRows(schema)
+	? flatSchemaToRows(schemaForRendering)
 	: topLevelVariants
 		? []
-		: processSchema(schema);
+		: processSchema(schemaForRendering);
 
 // For variant schemas, process each variant
 const variantRows =
@@ -425,11 +418,14 @@ const variantRows =
 				client:visible
 			/>
 		) : rows.length === 0 ? (
-			<p class="text-sm text-gray-500 dark:text-gray-400">
-				No parameters defined.
-			</p>
+			<p class="text-muted-foreground text-sm">No parameters defined.</p>
 		) : (
-			<SchemaTreeView rows={rows} schemaId={schemaId} hideRequired={hideRequired} client:visible />
+			<SchemaTreeView
+				rows={rows}
+				schemaId={schemaId}
+				hideRequired={hideRequired}
+				client:visible
+			/>
 		)
 	}
 </div>

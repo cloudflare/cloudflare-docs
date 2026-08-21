@@ -81,6 +81,43 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-fast\",\n  \"input\": {\n    \"prompt\": \"A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Virtual Avatar Reference",
+			"description": "Use a virtual character avatar from the trusted asset library",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "The scene gently animates with subtle motion",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p",
+				"use_virtual_avatar": true,
+				"generate_audio": false
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-fast/virtual-avatar-reference.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-fast/virtual-avatar-reference.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0-fast',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt: 'The scene gently animates with subtle motion',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n    use_virtual_avatar: true,\n    generate_audio: false,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-fast\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"The scene gently animates with subtle motion\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\",\n    \"use_virtual_avatar\": true,\n    \"generate_audio\": false\n  }\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -98,15 +135,59 @@
 		"Resolutions": "480p, 720p"
 	},
 	"request_formats": null,
+	"providers": null,
+	"banner": null,
 	"created_at": "2026-05-22 17:53:04",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string",
+					"maxLength": 2000
+				},
+				"image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
+					"type": "string"
+				},
+				"reference_video": {
+					"description": "Reference video (HTTP(S) URL or base64 data URI) for style/motion guidance",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
+					"type": "string"
+				},
+				"reference_images": {
+					"description": "Reference images (1-4, HTTP(S) URLs or base64 data URIs) to guide video generation for characters, avatars, clothing, or environments. Cannot be used with first/last frame images.",
+					"maxItems": 4,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"duration": {
+					"description": "Video duration in seconds",
+					"default": 5,
+					"type": "integer",
+					"minimum": 4,
+					"maximum": 12
+				},
+				"resolution": {
+					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p"
+					]
+				},
 				"aspect_ratio": {
-					"default": "16:9",
 					"description": "Video aspect ratio. Ignored if an image is used.",
+					"default": "16:9",
+					"type": "string",
 					"enum": [
 						"16:9",
 						"4:3",
@@ -115,74 +196,37 @@
 						"9:16",
 						"21:9",
 						"9:21"
-					],
-					"type": "string"
-				},
-				"camera_fixed": {
-					"default": false,
-					"description": "Whether to fix camera position",
-					"type": "boolean"
-				},
-				"duration": {
-					"default": 5,
-					"description": "Video duration in seconds",
-					"maximum": 12,
-					"minimum": 4,
-					"type": "integer"
+					]
 				},
 				"fps": {
-					"const": 24,
-					"default": 24,
 					"description": "Frame rate (frames per second)",
-					"type": "number"
+					"default": 24,
+					"type": "number",
+					"const": 24
+				},
+				"camera_fixed": {
+					"description": "Whether to fix camera position",
+					"default": false,
+					"type": "boolean"
 				},
 				"generate_audio": {
 					"description": "Whether to generate audio with the video",
 					"type": "boolean"
 				},
-				"image": {
-					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
-					"type": "string"
-				},
-				"last_frame_image": {
-					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
-					"type": "string"
-				},
-				"prompt": {
-					"description": "Text prompt describing the video to generate",
-					"maxLength": 2000,
-					"type": "string"
-				},
-				"reference_images": {
-					"description": "Reference images (1-4, HTTP(S) URLs or base64 data URIs) to guide video generation for characters, avatars, clothing, or environments. Cannot be used with 1080p resolution or first/last frame images.",
-					"items": {
-						"type": "string"
-					},
-					"maxItems": 4,
-					"type": "array"
-				},
-				"reference_video": {
-					"description": "Reference video (HTTP(S) URL or base64 data URI) for style/motion guidance",
-					"type": "string"
-				},
-				"resolution": {
-					"default": "720p",
-					"description": "Video resolution",
-					"enum": [
-						"480p",
-						"720p"
-					],
-					"type": "string"
+				"watermark": {
+					"description": "Whether to add a watermark to the output video",
+					"default": false,
+					"type": "boolean"
 				},
 				"seed": {
 					"description": "Random seed for reproducible generation",
-					"maximum": 9007199254740991,
+					"type": "integer",
 					"minimum": -9007199254740991,
-					"type": "integer"
+					"maximum": 9007199254740991
 				},
-				"watermark": {
+				"use_virtual_avatar": {
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
 					"default": false,
-					"description": "Whether to add a watermark to the output video",
 					"type": "boolean"
 				}
 			},
@@ -193,24 +237,25 @@
 				"aspect_ratio",
 				"fps",
 				"camera_fixed",
-				"watermark"
+				"watermark",
+				"use_virtual_avatar"
 			],
-			"type": "object"
+			"additionalProperties": false
 		},
 		"output": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": false,
+			"type": "object",
 			"properties": {
 				"video": {
 					"description": "URL to the generated video",
-					"format": "uri",
-					"type": "string"
+					"type": "string",
+					"format": "uri"
 				}
 			},
 			"required": [
 				"video"
 			],
-			"type": "object"
+			"additionalProperties": false
 		}
 	}
 }

@@ -140,7 +140,11 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    };
    ```
 
-   For a full definition of helper functions and structures, refer to [Supported BPF helper functions and structures](/ddos-protection/advanced-ddos-systems/overview#supported-bpf-helper-functions-and-structures).
+   For a full definition of helper functions and structures, refer to [BPF helper functions and structures](#bpf-helper-functions-and-structures).
+
+   :::note
+   The UDP header size is fixed at 8 bytes, but the IP header size varies: IPv4 headers range from 20 to 60 bytes depending on options, and IPv6 headers are 40 bytes. Use the `parse_packet_data` function to retrieve UDP payload contents instead of calculating fixed-length offsets. The parsed `udp` pointer in `cf_ebpf_parsed_headers` points directly to the UDP header regardless of IP version or options.
+   :::
 
 6. Write your custom logic.
 
@@ -740,6 +744,11 @@ Use the following helper functions to interact with this table:
 - `get_src_ip_data` — Retrieve the user data for the current packet's source IP.
 - `set_src_ip_data` — Store user data for the current packet's source IP.
 
+An entry is created in the source IP state table under the following conditions:
+1. the program calls `set_src_ip_status` to mark a source IP as Challenged, Verified, or Blocklisted.
+2. the program calls `set_src_ip_data` to store custom u64 data for a source IP.
+3. the program calls `set_challenge` for a new source IP that does not have an existing entry in the table.
+
 ### Flow state table
 
 The flow state table stores state keyed by the 4-tuple: source IP, source port, destination IP, and destination port. Each entry contains a `u64` value you can set for any purpose.
@@ -750,56 +759,560 @@ Use the following helper functions to interact with this table:
 - `get_flow_data` — Retrieve the user data for the current flow.
 - `set_flow_data` — Store user data for the current flow.
 
+An entry is created in the flow state table under the following conditions:
+1. the program calls `set_flow_data` to store custom u64 data for a flow.
+
 ### Cache behavior
 
 Both state tables are LRU (least recently used) caches. If a table reaches its maximum capacity, the oldest entry is evicted to make room for new entries. Entries are also garbage collected if they have not been accessed in one hour.
 
 ---
 
-## Helper functions
+## BPF helper functions and structures
 
 A helper function is a function provided by the Cloudflare runtime that a customer program calls.
 
 Helper functions are crucial because the BPF Instruction Set Architecture (ISA) only supports certain system calls. For safety purposes, Cloudflare will only compile a BPF object file with a predetermined list of known libraries that a program developer cannot modify.
 
+Helper function definitions and verifier wrapper sources are available on [GitHub](https://github.com/cloudflare/pfp-tools/tree/main/pfp-headers/include).
+
 :::note
-Helper functions may be removed or changed. New helper functions may be introduced in the future as well.
+Helper functions may be removed or changed. New helper functions may be introduced in the future.
 :::
 
-The table below provides a list of currently supported helper functions:
+### Helper functions
 
-| Function name       | Function signature                                                               | Description                                                                                                                                                                                                                             |
-| ------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `rand`      | `uint64_t rand(void)`                                                                           | Generates a random unsigned integer.                                                                                                                                                                                                    |
-| `timestamp` | `uint64_t timestamp(void)` | Returns the current timestamp. |
-| `hash_md5` | `int hash_md5(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes MD5 hash of the source buffer and stores result in destination buffer. |
-| `hash_sha256` | `int hash_sha256(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes SHA-256 hash of the source buffer and stores result in destination buffer. |
-| `hash_sha512` | `int hash_sha512(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes SHA-512 hash of the source buffer and stores result in destination buffer. |
-| `hash_crc32` | `int hash_crc32(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes CRC32 hash of the source buffer and stores result in destination buffer. |
-| `hmac_sha256` | `int hmac_sha256(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst)` | Computes HMAC-SHA256 of the message using the provided key and stores result in destination buffer. |
-| `hmac_sha512` | `int hmac_sha512(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst)` | Computes HMAC-SHA512 of the message using the provided key and stores result in destination buffer. |
-| `hash_blake2b512` | `int hash_blake2b512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len)` | Computes BLAKE2B-512 hash of the source and stores result in destination buffer. |
-| `hmac_blake2b512` | `int hmac_blake2b512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len)` | Computes BLAKE2B-512 HMAC of the message and stores result in the destination buffer. |
-| `set_challenge` | `int set_challenge(uint8_t *src, size_t src_len)` | Sets challenge data for the current packet. If src_len is 0, challenge buffer is reset. |
-| `get_src_ip_status` | `uint64_t get_src_ip_status(void)` | Retrieves the status value associated with the source IP address from the state table. |
-| `set_src_ip_status` | `int set_src_ip_status(uint64_t status)` | Sets the status value associated with the source IP address in the state table. |
-| `get_src_ip_data` | `int get_src_ip_data(uint64_t *data)` | Retrieves custom data associated with the source IP address from the state table. |
-| `set_src_ip_data` | `int set_src_ip_data(uint64_t data)` | Stores custom data associated with the source IP address in the state table. |
-| `get_flow_data` | `int get_flow_data(uint64_t *data)` | Retrieves custom data associated with the current flow from the state table. |
-| `set_flow_data` | `int set_flow_data(uint64_t data)` | Stores custom data associated with the current flow in the state table. |
-| `entropy` | `double entropy(uint8_t *src, size_t src_len)` | Calculates the entropy of the source buffer. |
-| `set_network_analytics_tag` | `int set_network_analytics_tag(Tag value)` | Sets a custom tag for network analytics reporting. Defaults to `0` if not set. |
-| `ntohs` | `uint16_t ntohs(uint16_t netshort)` | Converts a 16-bit integer from network byte order to host byte order. |
-| `htons` | `uint16_t htons(uint16_t hostshort)` | Converts a 16-bit integer from host byte order to network byte order. |
-| `ntohl` | `uint32_t ntohl(uint32_t netlong)` | Converts a 32-bit integer from network byte order to host byte order. |
-| `htonl` | `uint32_t htonl(uint32_t hostlong)` | Converts a 32-bit integer from host byte order to network byte order. |
-| `ntohll` | `uint64_t ntohll(uint64_t netlonglong)` | Converts a 64-bit integer from network byte order to host byte order. |
-| `htonll` | `uint64_t htonll(uint64_t hostlonglong)` | Converts a 64-bit integer from host byte order to network byte order. |
-| `parse_packet_data` | `int parse_packet_data(cf_ebpf_generic_ctx, cf_ebpf_packet_data, cf_ebpf_parsed_headers)` | Use input `cf_ebpf_generic_ctx` and `cf_ebpf_packet_data` to generate valid `cf_ebpf_parsed_headers`.<br />Upon success, `cf_ebpf_parsed_headers` will contain valid IP and UDP headers.<br />Returns `0` on success or `1` on failure. |
+#### `parse_packet_data`
 
----
+Constructs `cf_ebpf_parsed_headers` from `cf_ebpf_generic_ctx` and `cf_ebpf_packet_data`. Performs required memory checks to pass the verifier.
 
-With the exception of `rand`, `timestamp`, `ntohs`, `htons`, `ntohl`, `htonl`, `ntohll`, and `htonll`, all helper functions return a `0` on success and non-zero value on failure.
+```c
+static inline int parse_packet_data(
+   struct cf_ebpf_generic_ctx *ctx,
+   struct cf_ebpf_packet_data **out_p,
+   struct cf_ebpf_parsed_headers *out_headers
+);
+```
+
+**Arguments:**
+- `ctx` — Pointer to the generic context passed into the BPF program.
+- `out_p` — Pointer to receive the packet data structure.
+- `out_headers` — Pointer to receive the parsed headers structure.
+
+**Returns:** `0` on success, `1` on failure (for example, packet too short or invalid length). On success, `out_headers` contains valid IP and UDP header pointers.
+
+#### `rand`
+
+Generates a random unsigned integer.
+
+```c
+uint64_t rand(void);
+```
+
+**Returns:** A random `uint64_t` value.
+
+#### `timestamp`
+
+Returns the current UNIX timestamp (number of non-leap seconds since January 1, 1970 0:00:00 UTC).
+
+```c
+int64_t timestamp(void);
+```
+
+**Returns:** The current timestamp as an `int64_t`.
+
+#### `hash_md5`
+
+Computes MD5 hash of the source buffer and stores the result in the destination buffer.
+
+```c
+int hash_md5(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to the destination buffer (must be at least 16 bytes).
+- `dest_len` — Length of the destination buffer in bytes.
+
+**Returns:**
+- Positive value (number of bytes written) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null or too small.
+
+#### `hash_sha256`
+
+Computes SHA-256 hash of the source buffer and stores the result in the destination buffer.
+
+```c
+int hash_sha256(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to the destination buffer (must be at least 32 bytes).
+- `dest_len` — Length of the destination buffer in bytes.
+
+**Returns:**
+- Positive value (number of bytes written) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null or too small.
+
+#### `hash_sha512`
+
+Computes SHA-512 hash of the source buffer and stores the result in the destination buffer.
+
+```c
+int hash_sha512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to the destination buffer (must be at least 64 bytes).
+- `dest_len` — Length of the destination buffer in bytes.
+
+**Returns:**
+- Positive value (number of bytes written) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null or too small.
+
+#### `hash_crc32`
+
+Computes CRC32 hash of the source buffer and stores the result as a 64-bit integer. This is a convenience wrapper that handles the byte-to-integer conversion internally.
+
+```c
+int hash_crc32(uint8_t *src, size_t src_len, uint64_t *dest);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to a `uint64_t` to receive the CRC32 result.
+
+**Returns:**
+- Positive value (number of bytes written internally, always 8) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null.
+
+#### `hash_blake2b512`
+
+Computes BLAKE2B-512 hash of the source buffer and stores the result in the destination buffer.
+
+```c
+int hash_blake2b512(const uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to the destination buffer (must be at least 64 bytes).
+- `dest_len` — Length of the destination buffer in bytes.
+
+**Returns:**
+- Positive value (number of bytes written) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null or too small.
+
+#### `hmac_sha256`
+
+Computes HMAC-SHA256 of the source buffer and stores the result in the destination buffer. The private key is configured at the platform level and is not exposed directly to the BPF program. The key is unique per server and per customer.
+
+```c
+int hmac_sha256(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to the destination buffer (must be at least 32 bytes).
+- `dest_len` — Length of the destination buffer in bytes.
+
+**Returns:**
+- Positive value (number of bytes written) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null or too small.
+
+#### `hmac_sha512`
+
+Computes HMAC-SHA512 of the source buffer and stores the result in the destination buffer. The private key is configured at the platform level and is not exposed directly to the BPF program. The key is unique per server and per customer.
+
+```c
+int hmac_sha512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to the destination buffer (must be at least 64 bytes).
+- `dest_len` — Length of the destination buffer in bytes.
+
+**Returns:**
+- Positive value (number of bytes written) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null or too small.
+
+#### `hmac_blake2b512`
+
+Computes BLAKE2B-512 HMAC of the source buffer and stores the result in the destination buffer. The private key is configured at the platform level and is not exposed directly to the BPF program. The key is unique per server and per customer.
+
+```c
+int hmac_blake2b512(const uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+- `dest` — Pointer to the destination buffer (must be at least 64 bytes).
+- `dest_len` — Length of the destination buffer in bytes.
+
+**Returns:**
+- Positive value (number of bytes written) on success.
+- `-1` if the source buffer is invalid.
+- `-2` if the destination buffer is null or too small.
+
+#### `set_challenge`
+
+Sets challenge data for the current packet. Use this to send a challenge packet back to the client.
+
+```c
+int set_challenge(uint8_t *src, size_t src_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the challenge data buffer.
+- `src_len` — Length of the challenge data in bytes. If `0`, the challenge buffer is reset.
+
+**Returns:**
+- `0` on success.
+- `-4` if the source buffer is invalid or exceeds the maximum allowed size.
+- `-5` if challenges are not enabled.
+- `-6` if a challenge was sent too recently to this source IP or the global rate limit is exceeded.
+
+#### `get_src_ip_status`
+
+Retrieves the status value associated with the source IP address from the state table.
+
+```c
+int get_src_ip_status(uint8_t *status, uint64_t *expiry);
+```
+
+**Arguments:**
+- `status` — Pointer to receive the status value (`CF_EBPF_SRC_IP_STATUS_CHALLENGED`, `CF_EBPF_SRC_IP_STATUS_VERIFIED`, or `CF_EBPF_SRC_IP_STATUS_BLOCKLISTED`). Can be null if only expiry is needed.
+- `expiry` — Pointer to receive the expiry timestamp. Can be null if only status is needed.
+
+**Returns:**
+- `0` on success.
+- `-1` if no entry exists for the source IP.
+- `-2` if no source IP context is set for the current packet.
+- `-3` if the provided buffer is too small.
+- `-4` if both `status` and `expiry` are null.
+- `-5` if the source IP state table is not enabled.
+
+#### `set_src_ip_status`
+
+Sets the status value associated with the source IP address in the state table.
+
+```c
+int set_src_ip_status(uint8_t status, uint64_t expiry_secs);
+```
+
+**Arguments:**
+- `status` — The status value to set (`CF_EBPF_SRC_IP_STATUS_CHALLENGED`, `CF_EBPF_SRC_IP_STATUS_VERIFIED`, or `CF_EBPF_SRC_IP_STATUS_BLOCKLISTED`).
+- `expiry_secs` — Number of seconds until the status expires. If `0`, the status never expires.
+
+**Returns:**
+- `0` on success.
+- `-2` if no source IP context is set for the current packet.
+- `-5` if the source IP state table is not enabled.
+
+#### `get_src_ip_data`
+
+Retrieves custom data associated with the source IP address from the state table.
+
+```c
+int get_src_ip_data(uint64_t *data);
+```
+
+**Arguments:**
+- `data` — Pointer to receive the stored data value.
+
+**Returns:**
+- `0` on success.
+- `-1` if no entry exists for the source IP.
+- `-2` if no source IP context is set for the current packet.
+- `-3` if the provided buffer is too small.
+- `-4` if `data` is null.
+- `-5` if the source IP state table is not enabled.
+
+#### `set_src_ip_data`
+
+Stores custom data associated with the source IP address in the state table.
+
+```c
+int set_src_ip_data(uint64_t data);
+```
+
+**Arguments:**
+- `data` — The data value to store.
+
+**Returns:**
+- `0` on success.
+- `-2` if no source IP context is set for the current packet.
+- `-5` if the source IP state table is not enabled.
+
+#### `get_flow_data`
+
+Retrieves custom data associated with the current flow from the state table.
+
+```c
+int get_flow_data(uint64_t *data);
+```
+
+**Arguments:**
+- `data` — Pointer to receive the stored data value.
+
+**Returns:**
+- `0` on success.
+- `-1` if no entry exists for the flow.
+- `-2` if no flow context is set for the current packet.
+- `-3` if the provided buffer is too small.
+- `-4` if `data` is null or unaligned.
+- `-5` if the flow state table is not enabled.
+
+#### `set_flow_data`
+
+Stores custom data associated with the current flow in the state table.
+
+```c
+int set_flow_data(uint64_t data);
+```
+
+**Arguments:**
+- `data` — The data value to store.
+
+**Returns:**
+- `0` on success.
+- `-2` if no flow context is set for the current packet.
+- `-5` if the flow state table is not enabled.
+
+#### `entropy`
+
+Calculates the Shannon entropy of the source buffer. The result is returned in millibits, ranging from `0` (all identical bytes) to `8000` (all 256 byte values equally distributed).
+
+```c
+int64_t entropy(uint8_t *src, size_t src_len);
+```
+
+**Arguments:**
+- `src` — Pointer to the source buffer.
+- `src_len` — Length of the source buffer in bytes.
+
+**Returns:**
+- Entropy value in millibits (0-8000) on success.
+- `-1` if the source buffer is invalid.
+
+#### `set_network_analytics_tag`
+
+Sets a custom tag for network analytics reporting. The tag appears along with the packet sample in the Network Analytics dashboard. By default, packets are sampled at 1/10,000 rate.
+Only one tag is set per program execution. If program execution calls `set_network_analytics_tag` multiple times, the last tag value applies to the packet sample.
+
+```c
+int set_network_analytics_tag(uint64_t tag);
+```
+
+**Arguments:**
+- `tag` — The tag value to set. Defaults to `0` if not set.
+
+**Returns:** `0` on success.
+
+#### `ntohs`
+
+Converts a 16-bit integer from network byte order to host byte order.
+
+```c
+uint16_t ntohs(uint16_t netshort);
+```
+
+**Arguments:**
+- `netshort` — The 16-bit value in network byte order.
+
+**Returns:** The value in host byte order.
+
+#### `htons`
+
+Converts a 16-bit integer from host byte order to network byte order.
+
+```c
+uint16_t htons(uint16_t hostshort);
+```
+
+**Arguments:**
+- `hostshort` — The 16-bit value in host byte order.
+
+**Returns:** The value in network byte order.
+
+#### `ntohl`
+
+Converts a 32-bit integer from network byte order to host byte order.
+
+```c
+uint32_t ntohl(uint32_t netlong);
+```
+
+**Arguments:**
+- `netlong` — The 32-bit value in network byte order.
+
+**Returns:** The value in host byte order.
+
+#### `htonl`
+
+Converts a 32-bit integer from host byte order to network byte order.
+
+```c
+uint32_t htonl(uint32_t hostlong);
+```
+
+**Arguments:**
+- `hostlong` — The 32-bit value in host byte order.
+
+**Returns:** The value in network byte order.
+
+#### `ntohll`
+
+Converts a 64-bit integer from network byte order to host byte order.
+
+```c
+uint64_t ntohll(uint64_t netlonglong);
+```
+
+**Arguments:**
+- `netlonglong` — The 64-bit value in network byte order.
+
+**Returns:** The value in host byte order.
+
+#### `htonll`
+
+Converts a 64-bit integer from host byte order to network byte order.
+
+```c
+uint64_t htonll(uint64_t hostlonglong);
+```
+
+**Arguments:**
+- `hostlonglong` — The 64-bit value in host byte order.
+
+**Returns:** The value in network byte order.
+
+### Structures
+
+#### `cf_ebpf_generic_ctx`
+
+The generic context structure passed into the BPF program.
+
+```c
+struct cf_ebpf_generic_ctx {
+   /* Pointer to the beginning of the context data. */
+   uint64_t data;
+   /* Pointer to the end of the context data. */
+   uint64_t data_end;
+   /* Space for the program to store metadata. */
+   uint64_t meta_data;
+};
+```
+
+#### `cf_ebpf_packet_data`
+
+Contains the raw packet data passed into the BPF program.
+
+```c
+struct cf_ebpf_packet_data {
+   /* Total length of the packet. */
+   size_t   total_packet_length;
+   /* Size of the IP header. Supports IPv4 (including options) and IPv6. */
+   size_t   ip_header_length;
+   /* Bytes of the packet, starting with the IP header. */
+   uint8_t  packet_buffer[1500];
+};
+```
+
+#### `cf_ebpf_parsed_headers`
+
+Contains pointers to parsed IP and UDP headers. Populated by calling `parse_packet_data`.
+
+```c
+struct cf_ebpf_parsed_headers {
+   /* Pointer to the parsed IPv4 header, if present (otherwise null). */
+   struct iphdr   *ipv4;
+   /* Pointer to the parsed IPv6 header, if present (otherwise null). */
+   struct ipv6hdr *ipv6;
+   /* Pointer to the parsed UDP header. */
+   struct udphdr  *udp;
+   /* Raw pointer to the last valid byte of the packet context data. */
+   uint8_t        *data_end;
+};
+```
+
+#### `iphdr`
+
+IPv4 header structure. Source: [Linux kernel](https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ip.h#L87).
+
+```c
+struct iphdr {
+#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    uint8_t  version:4,
+             ihl:4;
+#else
+    uint8_t  ihl:4,
+             version:4;
+#endif
+    uint8_t  tos;
+    uint16_t tot_len;
+    uint16_t id;
+    uint16_t frag_off;
+    uint8_t  ttl;
+    uint8_t  protocol;
+    uint16_t check;
+    uint32_t saddr;
+    uint32_t daddr;
+};
+```
+
+#### `ipv6hdr`
+
+IPv6 header structure. Source: [Linux kernel](https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ipv6.h#L118).
+
+```c
+struct ipv6hdr {
+#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    uint8_t  version:4,
+             priority:4;
+#else
+    uint8_t  priority:4,
+             version:4;
+#endif
+    uint8_t  flow_lbl[3];
+    uint16_t payload_len;
+    uint8_t  nexthdr;
+    uint8_t  hop_limit;
+    uint8_t  saddr[16];
+    uint8_t  daddr[16];
+};
+```
+
+#### `udphdr`
+
+UDP header structure. Source: [Linux kernel](https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/udp.h#L23).
+
+```c
+struct udphdr {
+    uint16_t source;
+    uint16_t dest;
+    uint16_t len;
+    uint16_t check;
+};
+```
 
 ## Program endpoints
 
@@ -873,14 +1386,15 @@ To delete an existing rule, navigate to the Rules section. Click the three dots 
 This API endpoint debugs a program by intaking:
 
 - A local path to the input PCAP file provided as requested data in binary format. The input PCAP file has a maximum size limit of 5 MB and will be rejected if it is too large.
-- An IP offset value provided as a query parameter. This is the number of bytes that the IP header is offset by in each packet of the input PCAP file.  
-  For example, if the PCAP file captures Ethernet packets, the IP offset value would be 14\. This endpoint assumes that all packets in a PCAP have the same IP offset value and will otherwise parse packets incorrectly.
 - The program ID provided in the request path.
+- An optional query parameter `ip_offset=<value>` to specify IP offset. This is the number of bytes that the IP header is offset by in each packet of the input PCAP file. 
+  If the ip offset query parameter is omitted, the API will make an educated guess on the correct offset value.
+  For example, if the PCAP file captures Ethernet packets, the detected IP offset value would be 14\. This endpoint assumes that all packets in a PCAP have the same IP offset value and will otherwise parse packets incorrectly.
 
 This endpoint runs the referenced BPF program against the input PCAP and outputs a new annotated PCAP file. The output PCAP file will contain the exact same packets as the input PCAP file, and will also include the program verdict annotated in the **Packet Comment** section of each packet.
 
 ```bash wrap title="Request"
-curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap' \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/vnd.tcpdump.pcap" \
 --data-binary "@<PATH_TO_INPUT_PCAP_FILE>" \
@@ -892,7 +1406,9 @@ The Packet Comment annotation may contain:
 - Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`  
 - `Ignored`: if the incoming packet is not UDP
 - `Analytics tag`: the custom network analytics tag set by the program on this packet, if any
-- `Challenge packet`: the challenge packet emitted from the program back to the client, if any
+
+The output PCAP file may also contain:
+- `Challenge packet`: a challenge packet emitted from the program back to the client, if any
 ---
 
 ## Safe program and rule deployment best practices
@@ -911,195 +1427,6 @@ Using the `Expression` field to limit programs to a subset of IPs or prefixes an
 
 Traffic flowing through Programmable Flow Protection can be found in the [Network Analytics](/analytics/network-analytics/) dashboard.
 
-In the Network Analytics dashboard, select the **Programmable Flow Protection** tab to filter traffic based on this feature. You can filter traffic by program ID, custom network analytics tags, actions, IPs, and ports.
-
----
-
-## Supported BPF helper functions and structures
-
-Our helper function definitions and verifier wrapper sources are available on [GitHub](https://github.com/cloudflare/pfp-tools/tree/main/pfp-headers/include).
-
-The section below contains function signatures for every helper function your program may call.
-
-```c
-/*
-* cf_ebpf_generic_ctx is passed into the BPF program
-*/
-struct cf_ebpf_generic_ctx
-{
-   /* Pointer to the beginning of the context data. */
-   uint64_t data;
-   /* Pointer to the end of the context data. */
-   uint64_t data_end;
-   /* Space for the program to store metadata. */
-   uint64_t meta_data;
-};
-
-/*
-* cf_ebpf_packet_data_v1 is passed into the BPF program
-*/
-struct cf_ebpf_packet_data {
-    /* Total length of the packet. */
-   size_t   total_packet_length;
-   /* Size of the IP header. Supports IPv4 (including options) and IPv6. */
-   size_t   ip_header_length;
-   /* Bytes of the packet, starting with the IP header. */
-   uint8_t  packet_buffer[1500];
-};
-
-/*
-* cf_ebpf_parsed_headers can be populated from cf_ebpf_generic_ctx and
-* cf_ebpf_packet_data in the BPF program
-*/
-struct cf_ebpf_parsed_headers {
-   /* Pointer to the parsed IPv4 header, if present (otherwise null). */
-   struct iphdr   *ipv4;
-   /* Pointer to the parsed IPv6 header, if present (otherwise null). */
-   struct ipv6hdr *ipv6;
-   /* Pointer to the parsed UDP header. */
-   struct udphdr  *udp;
-   /* Raw pointer to the last valid byte of the packet context data. */
-   uint8_t        *data_end;
-};
-
-/* 
-* IPv4 header, used as field of cf_ebpf_parsed_headers */
-* source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ip.h#L87
-*/
-struct iphdr {
-#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-    uint8_t  version:4,
-             ihl:4;
-#else
-    uint8_t  ihl:4,
-             version:4;
-#endif
-    uint8_t  tos;
-    uint16_t tot_len;
-    uint16_t id;
-    uint16_t frag_off;
-    uint8_t  ttl;
-    uint8_t  protocol;
-    uint16_t check;
-    uint32_t saddr;
-    uint32_t daddr;
-};
-
-/* 
-* IPv6 header, used as field of cf_ebpf_parsed_headers
-* source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ipv6.h#L118
-*/ 
-struct ipv6hdr {
-#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-    uint8_t  version:4,
-             priority:4;
-#else
-    uint8_t  priority:4,
-             version:4;
-#endif
-    uint8_t  flow_lbl[3];
-    uint16_t payload_len;
-    uint8_t  nexthdr;
-    uint8_t  hop_limit;
-    uint8_t  saddr[16];
-    uint8_t  daddr[16];
-};
-
-/* 
-* UDP header, used as field of cf_ebpf_parsed_headers
-* source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/udp.h#L23
-*/
-struct udphdr {
-    uint16_t source;
-    uint16_t dest;
-    uint16_t len;
-    uint16_t check;
-};
+In the Network Analytics dashboard, select the **Programmable Flow Protection** tab to filter traffic based on this feature. You can filter traffic by program ID, custom network analytics tags, actions, IPs, and ports. By default, packets are sampled at a rate of 1/10,000. 
 
 
-/* Function to construct cf_ebpf_parsed_headers from cf_ebpf_generic_ctx and
-* cf_ebpf_packet_data_v1. Performs required memory checks to pass verifier.
-* Returns 0 on success and 1 on failure (e.g., packet too short, invalid length).
-* cf_ebpf_packet_data_v1 is filled with IP and UDP header data on success.
-*/
-static inline int parse_packet_data(
-   struct cf_ebpf_generic_ctx *ctx,
-   struct cf_ebpf_packet_data **out_p,
-   struct cf_ebpf_parsed_headers *out_headers
-);
-
-/* Returns a random unsigned integer value. */
-uint64_t rand(void);
-
-/* Returns the current timestamp. */
-uint64_t timestamp(void);
-
-/* Computes MD5 hash of the source buffer and stores result in destination buffer. */
-int hash_md5(uint8_t *src, size_t src_len, uint8_t *dst);
-
-/* Computes SHA-256 hash of the source buffer and stores result in destination buffer. */
-int hash_sha256(uint8_t *src, size_t src_len, uint8_t *dst);
-
-/* Computes SHA-512 hash of the source buffer and stores result in destination buffer. */
-int hash_sha512(uint8_t *src, size_t src_len, uint8_t *dst);
-
-/* Computes CRC32 hash of the source buffer and stores result in destination buffer. */
-int hash_crc32(uint8_t *src, size_t src_len, uint8_t *dst);
-
-/* Computes HMAC-SHA256 of the message using the provided key and stores result in destination buffer. */
-int hmac_sha256(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst);
-
-/* Computes HMAC-SHA512 of the message using the provided key and stores result in destination buffer. */
-int hmac_sha512(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst);
-
-/* Computes BLAKE2B-512 hash of the source and stores result in destination buffer. */
-int hash_blake2b512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
-
-/* Computes BLAKE2B-512 HMAC of the message and stores result in the destination buffer. */
-int hmac_blake2b512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
-
-/* Sets challenge data for the current packet. If src_len is 0, challenge buffer is reset. */
-int set_challenge(uint8_t *src, size_t src_len);
-
-/* Retrieves the status value associated with the source IP address from the state table. */
-uint64_t get_src_ip_status(void);
-
-/* Sets the status value associated with the source IP address in the state table. */
-int set_src_ip_status(uint64_t status);
-
-/* Retrieves custom data associated with the source IP address from the state table. */
-int get_src_ip_data(uint64_t *data);
-
-/* Stores custom data associated with the source IP address in the state table. */
-int set_src_ip_data(uint64_t data);
-
-/* Retrieves custom data associated with the current flow from the state table. */
-int get_flow_data(uint64_t *data);
-
-/* Stores custom data associated with the current flow in the state table. */
-int set_flow_data(uint64_t data);
-
-/* Calculates the entropy of the source buffer. */
-double entropy(uint8_t *src, size_t src_len);
-
-/* Sets a custom tag for network analytics reporting. */
-int set_network_analytics_tag(uint64_t tag);
-
-/* Converts a 16-bit integer from network byte order to host byte order. */
-uint16_t ntohs(uint16_t netshort);
-
-/* Converts a 16-bit integer from host byte order to network byte order. */
-uint16_t htons(uint16_t hostshort);
-
-/* Converts a 32-bit integer from network byte order to host byte order. */
-uint32_t ntohl(uint32_t netlong);
-
-/* Converts a 32-bit integer from host byte order to network byte order. */
-uint32_t htonl(uint32_t hostlong);
-
-/* Converts a 64-bit integer from network byte order to host byte order. */
-uint64_t ntohll(uint64_t netlonglong);
-
-/* Converts a 64-bit integer from host byte order to network byte order. */
-uint64_t htonll(uint64_t hostlonglong);
-```

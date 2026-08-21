@@ -1,0 +1,26 @@
+---
+title: Track memory usage for Workers and Durable Objects in the dashboard
+description: The Metrics tabs for Workers and Durable Objects now include a Memory Usage chart that shows V8 isolate memory consumption across percentiles, helping you track memory trends and detect regressions.
+products:
+  - workers
+  - durable-objects
+date: 2026-06-30
+---
+
+You can now monitor how much memory your [Workers](/workers/) and [Durable Objects](/durable-objects/) consume across invocations with the new **Memory Usage** chart in the Workers Metrics tab, broken down by P50, P90, P99, and P999 percentiles.
+
+![Memory usage chart showing P50, P90, P99, and P999 percentiles with deployment markers](~/assets/images/changelog/workers/observability/2026-06-26-memory-usage.png)
+
+Memory usage measures the V8 [isolate](/workers/reference/how-workers-works/#isolates) memory at the time of each invocation, subject to the [128 MB per-isolate limit](/workers/platform/limits/#memory) — a single isolate can handle many concurrent requests and shares memory across them.
+
+Use the Memory Usage chart to:
+
+- **Track memory trends** — Spot gradual increases that may indicate a memory leak before they cause `Exceeded Memory` errors.
+- **Correlate with deployments** — Deployment markers on the chart help you identify whether a new version introduced a memory regression.
+- **Right-size your Worker** — Understand your baseline memory footprint and how much headroom you have before hitting the 128 MB limit.
+
+For Durable Objects, memory usage reflects the in-memory state an object holds (class properties, caches, active WebSocket connections), which persists across invocations until the object is [hibernated or evicted](/durable-objects/concepts/durable-object-lifecycle/). This state is not preserved across eviction, hibernation, or a crash, so persist anything important to [storage](/durable-objects/best-practices/access-durable-objects-storage/).
+
+To view memory usage, open the **Metrics** tab for your [Worker](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/metrics) or [Durable Object namespace](https://dash.cloudflare.com/?to=/:account/workers/durable-objects). For Durable Objects, you can filter by DO ID or name to drill down into memory usage for a specific object. You can also query memory usage programmatically via the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-workers-metrics/) using the `workersInvocationsAdaptive` dataset — the `quantiles.memoryUsageBytesP50` through `quantiles.memoryUsageBytesP999` fields return percentile values in bytes.
+
+For local memory debugging, you can also [profile memory with DevTools](/workers/observability/dev-tools/memory-usage/) to take heap snapshots and identify specific objects causing high memory usage.

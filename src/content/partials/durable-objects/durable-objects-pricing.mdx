@@ -10,6 +10,8 @@ import { Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/com
 
 Durable Objects are billed for compute duration (wall-clock time) while the Durable Object is actively running or is idle in memory but unable to [hibernate](/durable-objects/concepts/durable-object-lifecycle/). Durable Objects that are idle and eligible for hibernation are not billed for duration, even before the runtime has hibernated them. Requests to a Durable Object keep it active or create the object if it was inactive.
 
+For each metered dimension, billable usage is the amount consumed in excess of the included monthly allocation. This billable usage is rounded up to the next billable unit before the corresponding rate is applied. For example, 500,000 GB-s of billable compute duration is rounded up to 1,000,000 GB-s and billed accordingly.
+
 |                      | Free plan         | Paid plan                                                                                                                               |
 | -------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | Requests             | 100,000 / day     | 1 million / month, + $0.15/million<br/> Includes HTTP requests, RPC sessions<sup>1</sup>, WebSocket messages<sup>2</sup>, and alarm invocations |
@@ -44,7 +46,7 @@ await durableObjectStub.cat(); // billed as a request
 The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
 
 - **SQLite-backed Durable Objects (recommended)**: [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) is recommended for all new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
-- **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
+- **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/reference/durable-object-class-migrations-legacy/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
 
 { props.product === "durable-objects" && <><AnchorHeading title="SQLite storage backend" depth={3}/></> }
 { props.product === "workers" && <><AnchorHeading title="SQLite storage backend" depth={4}/></> }

@@ -8,6 +8,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "tuesday"
+    cooldown:
+      default-days: 1
     assignees:
       - "kodster28"
       - "mvvmm"

@@ -9,7 +9,7 @@ tags:
   - Logging
 ---
 
-import { Details, FeatureTable, APIRequest, Render, DashButton } from "~/components";
+import { Details, APIRequest, Render, DashButton } from "~/components";
 
 Tiered Cache uses the size of the Cloudflare network to reduce requests to customer origins by dramatically increasing cache hit ratios. With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare edge data centers must contact the origin server to receive the cacheable content.
 
@@ -43,11 +43,17 @@ This can help improve performance for **Smart** and **Custom Tiered Cache** topo
 
 ### Custom Tiered Cache
 
-Custom Tiered cache allows Enterprise customers to work with their account team to set a custom topology that fits your specific needs, for instance you have close upper tiers or you have an unique traffic pattern. If you want a custom topology, please engage your account team.
+Custom Tiered cache allows Enterprise customers to work with their account team to set a custom topology that fits your specific needs, for instance you have close upper tiers or you have a unique traffic pattern. If you want a custom topology, please engage your account team.
 
 ## Availability
 
-<FeatureTable id="cache.tiered_cache" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Tiered Cache | Yes | Yes | Yes | Yes |
+| Smart Topology | Yes | Yes | Yes | Yes |
+| Generic Global Topology | No | No | No | Yes |
+| Regional Tiered Cache | No | No | No | Yes |
+| Custom Topology | No | No | No | Yes |
 
 ## Bandwidth Alliance
 

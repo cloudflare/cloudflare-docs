@@ -35,18 +35,17 @@ You can allow users to log in to Access applications using their device client s
 
 To configure device client sessions for Access applications:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Management**.
-2. In **Device enrollment permissions**, select **Manage**.
-3. Go to **Authentication** and enable **Authenticate with Cloudflare One Client**.
-4. Under **Session duration**, choose a session timeout value. This timeout will apply to all Access applications that have **Authenticate with Cloudflare One Client** enabled.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+2. Enable **Authenticate with Cloudflare One Client**.
+3. Under **Session duration**, choose a session timeout value. This timeout will apply to all Access applications that have **Authenticate with Cloudflare One Client** enabled.
 
 :::note
 
 This timeout value does not apply to [device client session checks in Gateway policies](#configure-warp-sessions-in-gateway).
 :::
 
-5. (Optional) To enable **Authenticate with Cloudflare One Client** by default for all existing and new applications, select **Apply to all Access applications**. You can override this default setting on a per-application basis when you [create](/cloudflare-one/access-controls/applications/http-apps/) or modify an Access application.
-6. Select **Save**.
+4. (Optional) To enable **Authenticate with Cloudflare One Client** by default for all existing and new applications, select **Apply to all Access applications**. You can override this default setting on a per-application basis when you [create](/cloudflare-one/access-controls/applications/http-apps/) or modify an Access application.
+5. Select **Save**.
 
 Users can now authenticate once with the Cloudflare One Client and have access to your Access applications for the configured period of time. The session timer resets when the user re-authenticates with the IdP used to enroll in the Cloudflare One Client.
 

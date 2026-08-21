@@ -12,7 +12,7 @@ import {
 	PackageManagers,
 	TypeScriptExample,
 	WranglerConfig,
-	LinkCard,
+	Render,
 } from "~/components";
 
 This guide shows how to add agents to an existing Cloudflare Workers project. If you are starting fresh, refer to [Building a chat agent](/agents/examples/chat-agent/) instead.
@@ -304,6 +304,12 @@ function CounterWidget() {
 
 </TypeScriptExample>
 
+Key points:
+
+- `useAgent` connects to your agent via WebSocket
+- `onStateUpdate` fires whenever the agent's state changes
+- `agent.stub.methodName()` calls methods marked with `@callable()` on your agent
+
 ### Vanilla JavaScript
 
 <TypeScriptExample>
@@ -325,207 +331,18 @@ document.getElementById("increment").onclick = () => agent.call("increment");
 
 </TypeScriptExample>
 
-## Adding multiple agents
+<Render file="what-just-happened" product="agents" />
 
-Add more agents by extending the configuration:
+## Deploy to Cloudflare
 
-<TypeScriptExample>
-
-```ts
-// src/agents/chat.ts
-export class Chat extends Agent {
-	// ...
-}
-
-// src/agents/scheduler.ts
-export class Scheduler extends Agent {
-	// ...
-}
+```sh
+npm run deploy
 ```
 
-</TypeScriptExample>
+Your agent is now live on Cloudflare's global network, running close to your users.
 
-Update the Wrangler configuration file:
+<Render file="common-integration-patterns" product="agents" />
 
-<WranglerConfig>
+<Render file="troubleshooting" product="agents" />
 
-```jsonc
-{
-	"durable_objects": {
-		"bindings": [
-			{ "name": "CounterAgent", "class_name": "CounterAgent" },
-			{ "name": "Chat", "class_name": "Chat" },
-			{ "name": "Scheduler", "class_name": "Scheduler" },
-		],
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["CounterAgent", "Chat", "Scheduler"],
-		},
-	],
-}
-```
-
-</WranglerConfig>
-
-Export all agents from your entry point:
-
-<TypeScriptExample>
-
-```ts
-export { CounterAgent } from "./agents/counter";
-export { Chat } from "./agents/chat";
-export { Scheduler } from "./agents/scheduler";
-```
-
-</TypeScriptExample>
-
-## Common integration patterns
-
-### Agents behind authentication
-
-Check auth before routing to agents:
-
-<TypeScriptExample>
-
-```ts
-export default {
-	async fetch(request: Request, env: Env) {
-		// Check auth for agent routes
-		if (request.url.includes("/agents/")) {
-			const authResult = await checkAuth(request, env);
-			if (!authResult.valid) {
-				return new Response("Unauthorized", { status: 401 });
-			}
-		}
-
-		const agentResponse = await routeAgentRequest(request, env);
-		if (agentResponse) return agentResponse;
-
-		// ... rest of routing
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
-
-### Custom agent path prefix
-
-By default, agents are routed at `/agents/{agent-name}/{instance-name}`. You can customize this:
-
-<TypeScriptExample>
-
-```ts
-import { routeAgentRequest } from "agents";
-
-const agentResponse = await routeAgentRequest(request, env, {
-	prefix: "/api/agents", // Now routes at /api/agents/{agent-name}/{instance-name}
-});
-```
-
-</TypeScriptExample>
-
-Refer to [Routing](/agents/runtime/communication/routing/) for more options including CORS, custom instance naming, and location hints.
-
-### Accessing agents from server code
-
-You can interact with agents directly from your Worker code:
-
-<TypeScriptExample>
-
-```ts
-import { getAgentByName } from "agents";
-
-export default {
-	async fetch(request: Request, env: Env) {
-		if (request.url.endsWith("/api/increment")) {
-			// Get a specific agent instance
-			const counter = await getAgentByName(env.CounterAgent, "shared-counter");
-			const newCount = await counter.increment();
-			return Response.json({ count: newCount });
-		}
-		// ...
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
-
-## Troubleshooting
-
-### Agent not found, or 404 errors
-
-1. **Check the export** - Agent class must be exported from your main entry point.
-2. **Check the binding** - `class_name` in the Wrangler configuration file must exactly match the exported class name.
-3. **Check the route** - Default route is `/agents/{agent-name}/{instance-name}`.
-
-### No such Durable Object class error
-
-Add the migration to the Wrangler configuration file:
-
-<WranglerConfig>
-
-```jsonc
-{
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["YourAgentClass"],
-		},
-	],
-}
-```
-
-</WranglerConfig>
-
-### WebSocket connection fails
-
-Ensure your routing passes the response unchanged:
-
-<TypeScriptExample>
-
-```ts
-// Correct - return the response directly
-const agentResponse = await routeAgentRequest(request, env);
-if (agentResponse) return agentResponse;
-
-// Wrong - this breaks WebSocket connections
-if (agentResponse) return new Response(agentResponse.body);
-```
-
-</TypeScriptExample>
-
-### State not persisting
-
-Check that:
-
-1. You are using `this.setState()`, not mutating `this.state` directly.
-2. The agent class is in `new_sqlite_classes` in migrations.
-3. You are connecting to the same agent instance name.
-
-## Next steps
-
-<LinkCard
-	title="State management"
-	href="/agents/runtime/lifecycle/state/"
-	description="Manage and synchronize agent state."
-/>
-
-<LinkCard
-	title="Schedule tasks"
-	href="/agents/runtime/execution/schedule-tasks/"
-	description="Background tasks and cron jobs."
-/>
-
-<LinkCard
-	title="Agent class internals"
-	href="/agents/runtime/lifecycle/agent-class/"
-	description="Full lifecycle and methods reference."
-/>
-
-<LinkCard
-	title="Agents API"
-	href="/agents/runtime/agents-api/"
-	description="Complete API reference for the Agents SDK."
-/>
+<Render file="next-steps" product="agents" />

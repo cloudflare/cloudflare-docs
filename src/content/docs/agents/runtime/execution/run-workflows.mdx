@@ -150,12 +150,12 @@ Base class for Workflows that integrate with Agents.
 
 ### Properties
 
-| Property       | Type   | Description                          |
-| -------------- | ------ | ------------------------------------ |
-| `agent`        | Stub   | Typed stub for calling Agent methods |
-| `instanceId`   | string | The workflow instance ID             |
-| `workflowName` | string | The workflow binding name            |
-| `env`          | Env    | Environment bindings                 |
+| Property       | Type   | Description                                                                                                                                                                                         |
+| -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `agent`        | Stub   | Typed stub for calling Agent methods. For workflows started from a sub-agent, this is an RPC-only stub back to the originating facet; use sub-agent routing for HTTP or WebSocket `fetch()` traffic |
+| `instanceId`   | string | The workflow instance ID                                                                                                                                                                            |
+| `workflowName` | string | The workflow binding name                                                                                                                                                                           |
+| `env`          | Env    | Environment bindings                                                                                                                                                                                |
 
 ### Instance methods (non-durable)
 
@@ -238,13 +238,13 @@ Start a workflow instance and track it in the Agent database.
 
 **Parameters:**
 
-| Parameter              | Type   | Description                                           |
-| ---------------------- | ------ | ----------------------------------------------------- |
-| `workflowName`         | string | Workflow binding name from `env`                      |
-| `params`               | object | Parameters to pass to the workflow                    |
-| `options.id`           | string | Custom workflow ID (auto-generated if not provided)   |
-| `options.metadata`     | object | Metadata stored for querying (not passed to workflow) |
-| `options.agentBinding` | string | Agent binding name (auto-detected if not provided)    |
+| Parameter              | Type   | Description                                                                                                           |
+| ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
+| `workflowName`         | string | Workflow binding name from `env`                                                                                      |
+| `params`               | object | Parameters to pass to the workflow                                                                                    |
+| `options.id`           | string | Custom workflow ID (auto-generated if not provided)                                                                   |
+| `options.metadata`     | object | Metadata stored for querying (not passed to workflow)                                                                 |
+| `options.agentBinding` | string | Agent binding name (auto-detected if not provided). When called from a sub-agent, this is the root Agent binding name |
 
 **Returns:** `Promise<string>` - Workflow instance ID
 
@@ -261,6 +261,54 @@ const instanceId = await this.runWorkflow(
 ```
 
 </TypeScriptExample>
+
+#### Starting workflows from sub-agents
+
+Sub-agents can call `this.runWorkflow()` directly. The workflow is tracked in the originating sub-agent's SQLite database, and `this.agent` inside `AgentWorkflow` routes back to that same sub-agent for RPC calls, callbacks, state updates, and broadcasts.
+
+Parent agents do not automatically list or control workflows that a sub-agent starts. `SubAgentStub<T>` only exposes user-defined methods, not inherited `Agent` methods such as `approveWorkflow()` or `getWorkflow()`. To control a child-started workflow from the parent, define small wrapper methods on the child and call those wrappers through the sub-agent stub.
+
+<TypeScriptExample>
+
+```ts
+export class ParentAgent extends Agent {
+	async startChildWorkflow(childName: string, task: string) {
+		const child = await this.subAgent(ChildAgent, childName);
+		return child.startWorkflow(task);
+	}
+
+	async approveChildWorkflow(childName: string, workflowId: string) {
+		const child = await this.subAgent(ChildAgent, childName);
+		return child.approveChildWorkflow(workflowId);
+	}
+}
+
+export class ChildAgent extends Agent {
+	async startWorkflow(task: string) {
+		return this.runWorkflow("CHILD_WORKFLOW", { task });
+	}
+
+	async approveChildWorkflow(workflowId: string) {
+		return this.approveWorkflow(workflowId);
+	}
+
+	async getChildWorkflow(workflowId: string) {
+		return this.getWorkflow(workflowId);
+	}
+}
+```
+
+</TypeScriptExample>
+
+For sub-agent origins, `AgentWorkflow.agent` is an RPC-only stub. Use it to call Agent methods, but use `routeSubAgentRequest()` or the `/agents/{parent}/{name}/sub/{child}/{name}` URL shape for external HTTP or WebSocket routing instead of `this.agent.fetch()`.
+
+#### Routing constraints
+
+Because the originating identity is persisted durably in the workflow params and replayed on every callback, a few constraints apply to all workflows (sub-agent and top-level alike):
+
+- **Callbacks resolve the Agent by name.** The runtime re-resolves the originating Agent with `getAgentByName(...)`. If you addressed the Agent by a raw Durable Object ID (`idFromString` / `get(id)`) instead of by name, callbacks land on a different instance. Start workflows from name-addressed Agents.
+- **Class names must survive bundling.** The originating path is keyed by `constructor.name`. Configure your bundler to preserve class names (esbuild `keepNames: true`) so progress, completion, and `this.agent` RPC can be routed back to the right facet.
+- **`agentBinding` is the root binding.** When you pass `options.agentBinding` from a sub-agent, use the **root** Agent's Durable Object binding name, not a child binding.
 
 ### sendWorkflowEvent(workflowName, instanceId, event)
 
@@ -542,7 +590,13 @@ class MyAgent extends Agent {
 
 ## Workflow tracking
 
-Workflows started with `runWorkflow()` are automatically tracked in the Agent's internal database. You can query, filter, and manage workflows using the methods described above (`getWorkflow()`, `getWorkflows()`, `deleteWorkflow()`, etc.).
+Workflows started with `runWorkflow()` are automatically tracked in the originating Agent's internal database. You can query, filter, and manage workflows using the methods described above (`getWorkflow()`, `getWorkflows()`, `deleteWorkflow()`, etc.).
+
+:::note[Sub-agent scoping]
+
+`getWorkflows()` and `getWorkflowById()` only see workflows tracked in **this** Agent's storage. If a sub-agent starts the workflow, the row lives in that sub-agent's own `cf_agents_workflows` table, not in the parent's. To build a combined view, expose a wrapper method on each child (for example, `listMyWorkflows()`) and aggregate the results across your sub-agents yourself.
+
+:::
 
 ### Status values
 

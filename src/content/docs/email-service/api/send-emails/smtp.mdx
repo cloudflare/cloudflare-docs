@@ -1,0 +1,170 @@
+---
+title: SMTP
+description: Send emails from any SMTP-capable application or mail client using authenticated SMTP submission on smtp.mx.cloudflare.net.
+pcx_content_type: concept
+sidebar:
+  order: 3
+products:
+  - email-service
+---
+
+import { Render } from "~/components";
+
+Cloudflare Email Service exposes an authenticated SMTP submission endpoint so you can send emails from any application, framework, or off-the-shelf mail client that speaks SMTP. Use SMTP when the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) are not a good fit — for example, when integrating an existing application that already speaks SMTP, or a language-native SMTP library (Nodemailer, `smtplib`, PHPMailer, JavaMail).
+
+Emails submitted over SMTP enter the same delivery pipeline as the REST API and the Workers binding: they are subject to the same [limits](/email-service/platform/limits/), receive the same DKIM and ARC signing, and produce the same delivery logs.
+
+## Endpoint
+
+```txt
+smtp.mx.cloudflare.net:465
+```
+
+| Setting     | Value                              |
+| ----------- | ---------------------------------- |
+| Host        | `smtp.mx.cloudflare.net`           |
+| Port        | `465`                              |
+| Security    | Implicit TLS (also called SMTPS)   |
+| SMTP `AUTH` | `PLAIN` or `LOGIN`                 |
+| Username    | The literal string `api_token`     |
+| Password    | A Cloudflare API token (see below) |
+
+Cloudflare only offers SMTP submission on port `465` with implicit TLS. Plaintext SMTP, opportunistic `STARTTLS` on port `587`, and unauthenticated relay on port `25` are not supported for outbound submission. Port `25` is reserved for inbound mail to [Email Routing](/email-service/api/route-emails/).
+
+## Prerequisites
+
+Before you can send emails over SMTP, you need:
+
+1. An account with [Email Sending](/email-service/) enabled.
+2. At least one [domain onboarded](/email-service/configuration/domains/) under **Email Service > Email Sending** in the Cloudflare dashboard.
+3. A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with the **Email Sending: Edit** permission. Both account-owned (recommended) and user-owned tokens are accepted; the token is used as the SMTP password.
+
+Treat this token as a credential. Anyone with it can send email from any onboarded domain on the matching account.
+
+## Quickstart
+
+<Render file="smtp-quickstart" product="email-service" />
+
+## Authentication
+
+Cloudflare's SMTP endpoint supports two SASL mechanisms, both defined by [RFC 4954](https://datatracker.ietf.org/doc/html/rfc4954):
+
+- `AUTH PLAIN` — preferred. Single round trip, [RFC 4616](https://datatracker.ietf.org/doc/html/rfc4616).
+- `AUTH LOGIN` — legacy [draft-murchison-sasl-login](https://datatracker.ietf.org/doc/html/draft-murchison-sasl-login-00). Supported for compatibility with older clients.
+
+In both cases, the username is the literal string `api_token` and the password is your Cloudflare API token.
+
+### Construct an `AUTH PLAIN` payload
+
+`AUTH PLAIN` sends `\0api_token\0<API_TOKEN>` encoded as base64:
+
+```sh
+printf '\0api_token\0%s' "<API_TOKEN>" | base64
+```
+
+### Raw SMTP transcript
+
+The following transcript shows a complete authenticated submission using `openssl s_client`. Lines beginning with `>` are sent by the client.
+
+```txt
+$ openssl s_client -quiet -connect smtp.mx.cloudflare.net:465 -crlf
+220 mx.cloudflare.net Cloudflare Email ESMTP Service ready
+> EHLO client.example.com
+250-mx.cloudflare.net greets client.example.com
+250-AUTH PLAIN LOGIN
+250-SIZE 5242880
+250-8BITMIME
+250 ENHANCEDSTATUSCODES
+> AUTH PLAIN AGFwaV90b2tlbgBpd0RQLi5oZWw=
+235 2.7.0 Authentication successful
+> MAIL FROM:<welcome@yourdomain.com>
+250 2.1.0 Ok
+> RCPT TO:<recipient@example.com>
+250 2.1.5 Ok
+> DATA
+354 Start mail input; end with <CR><LF>.<CR><LF>
+From: welcome@yourdomain.com
+To: recipient@example.com
+Subject: Welcome
+
+Thanks for signing up.
+.
+250 2.0.0 Ok <jZTWt0pQO4p2LG7ByfkeSYUvT62k85Q12nCA@yourdomain.com>
+> QUIT
+221 mx.cloudflare.net Cloudflare Email ESMTP Service closing transmission channel
+```
+
+The `250 2.0.0 Ok` response after the message body includes the assigned Message-ID. Use it to correlate the submission with delivery logs in the dashboard.
+
+## Examples
+
+For language-specific examples — curl, Nodemailer, Python `smtplib`, and PHPMailer — see [Send email over SMTP](/email-service/examples/email-sending/smtp/).
+
+## Limits
+
+The following per-session limits apply to SMTP submission:
+
+| Limit                       | Value          |
+| --------------------------- | -------------- |
+| `RCPT TO` recipients        | 50 per session |
+| `SIZE` advertised in `EHLO` | 5 MiB          |
+| `AUTH` command timeout      | 30 seconds     |
+| `DATA` command timeout      | 300 seconds    |
+
+Account-wide quotas (daily sending limits, content limits, header limits) are shared with the REST API and the Workers binding. See [Limits](/email-service/platform/limits/) for the full list.
+
+## Response codes
+
+Cloudflare's SMTP server returns standard [RFC 5321](https://datatracker.ietf.org/doc/html/rfc5321) reply codes alongside [RFC 3463](https://datatracker.ietf.org/doc/html/rfc3463) enhanced status codes.
+
+| Code          | Meaning                                                                   |
+| ------------- | ------------------------------------------------------------------------- |
+| `220`         | Service ready (greeting after the TLS handshake).                         |
+| `235 2.7.0`   | Authentication succeeded.                                                 |
+| `250`         | `EHLO`, `MAIL FROM`, `RCPT TO`, or `DATA` completed successfully.         |
+| `354`         | Ready to receive the message body — terminate with `<CR><LF>.<CR><LF>`.   |
+| `421`         | Service temporarily unavailable. Retry later.                             |
+| `451 4.3.0`   | Local error — the message was accepted but deferred. Retry later.         |
+| `452 4.5.3`   | Too many recipients in this session. Open a new session for the rest.     |
+| `500` / `501` | Syntax error in command or arguments.                                     |
+| `503`         | Bad sequence of commands (for example, `MAIL FROM` before `AUTH`).        |
+| `530 5.7.0`   | Authentication required.                                                  |
+| `535 5.7.8`   | Authentication failed. See [Troubleshooting](#troubleshooting).           |
+| `550 5.7.1`   | Sender or relay denied — usually the `MAIL FROM` domain is not onboarded. |
+| `552 5.3.4`   | Message exceeds the 5 MiB `SIZE` limit.                                   |
+| `554`         | Transaction failed — content rejected by policy.                          |
+
+## Troubleshooting
+
+### `535 5.7.8 Authentication failed`
+
+Possible causes:
+
+- The username is not the literal string `api_token`. The API token goes in the **password** field.
+- The token does not have the **Email Sending: Edit** permission.
+- The token has been revoked or has expired.
+- For a user-owned token, the domain in `MAIL FROM` does not belong to an account the token can act on.
+
+### `550 5.7.1 Sender denied`
+
+The address in `MAIL FROM` is on a domain that is not onboarded for Email Sending under the account that owns the API token. Onboard the domain under **Email Service > Email Sending** in the dashboard, or change the sender address.
+
+### `552 5.3.4 Message too big`
+
+The message body (including attachments after MIME encoding) is larger than 5 MiB. Reduce the attachment size or split the message.
+
+### TLS handshake failures
+
+Cloudflare's SMTP endpoint requires TLS from connect (implicit TLS). Make sure your client is configured for SSL/TLS on port `465`, not `STARTTLS` on port `587` (which is not supported).
+
+For authentication problems related to SPF, DKIM, or DMARC on the recipient side, see [Troubleshoot SPF, DKIM and DMARC](/email-service/reference/troubleshooting/).
+
+## Related resources
+
+- [Send email over SMTP](/email-service/examples/email-sending/smtp/) — examples for curl, Nodemailer, Python, and PHP.
+- [REST API](/email-service/api/send-emails/rest-api/) — send emails over HTTPS.
+- [Workers API](/email-service/api/send-emails/workers-api/) — send emails from a Cloudflare Worker using bindings.
+- [Domain configuration](/email-service/configuration/domains/) — onboard a domain for Email Sending.
+- [MTA-STS](/email-service/configuration/mta-sts/) — enforce TLS for incoming mail.
+- [Email headers](/email-service/reference/headers/) — supported headers and threading hints.
+- [Limits](/email-service/platform/limits/) — account, message, and session limits.

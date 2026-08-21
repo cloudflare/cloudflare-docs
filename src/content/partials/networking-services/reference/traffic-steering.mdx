@@ -275,7 +275,7 @@ The following limitations apply to accounts using Unified Routing mode. This lis
 | Performance | Typically around 150 Mbps for each onramp |
 | Basic packet captures | Captures exclude Automatic Return Routing or BGP-over-tunnels traffic |
 | Full packet captures | Not yet supported |
-| Cloudflare Advanced Network Firewall features: IP Lists, ASN Lists, Threat Intel Lists, IDS, Rate Limiting, SIP, Managed Rulesets | Not yet supported |
+| Cloudflare Advanced Network Firewall features: ASN Lists, Threat Intel Lists, Rate Limiting, Managed Rulesets | Not yet supported |
 | Gateway filtering rules | Not supported on traffic where both the onramp and offramp is IPsec/GRE/CNI |
 | Load Balancer | Public-to-private use case is supported to IPsec/GRE/CNI destinations. Private-to-private use case does not yet support Cloudflare Source IPs |
 | IPv6 Support | IPv6 is supported for IPsec and GRE. Basic Network Firewall support for IPv6 is limited to src/dst IP filtering |
@@ -620,7 +620,7 @@ The following table outlines the current availability and recommended use cases 
 | Feature | Release stage | Recommended use | Prerequisites |
 | --- | --- | --- | --- |
 | **BGP over CNI** | Closed Beta | Not available to new customers — contact your account team | Cloudflare Network Interconnect (CNI) v2 |
-| **BGP over Anycast IPsec/GRE** | Closed Beta | Lab / Testing only | [Unified Routing (beta)](#unified-routing-mode-beta) - contact your account team to enroll |
+| **BGP over Anycast IPsec/GRE** | Open Beta | Non-production workloads | [Unified Routing (beta)](#unified-routing-mode-beta) - contact your account team to enroll |
 
 ### BGP architecture
 

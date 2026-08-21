@@ -93,7 +93,7 @@ Refer to the [Terraform installation guide](https://developer.hashicorp.com/terr
 
 <Render file="terraform/deploy-terraform" product="cloudflare-one" />
 
-It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Networks** > **Connectors**, and your Access application and policy under **Zero Trust** > **Access controls** > **Applications**. The new DNS records are available on the [**DNS Records** page](/dns/manage-dns-records/how-to/create-dns-records/).
+It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Networking** > **Tunnels**, and your Access application and policy under **Zero Trust** > **Access controls** > **Applications**. The new DNS records are available on the [**DNS Records** page](/dns/manage-dns-records/how-to/create-dns-records/).
 
 :::note[Remove Terraform resources]
 
@@ -102,7 +102,7 @@ If you need to roll back the configuration, run `terraform destroy` to delete ev
 
 ## 7. Test the connection
 
-1. In **Networks** > **Connectors** > **Cloudflare Tunnels**, verify that your tunnel is active.
+1. In **Networking** > **Tunnels**, verify that your tunnel is active.
 
 2. In **Access controls** > **Applications**, verify that your Cloudflare email is allowed by the Access policy.
 

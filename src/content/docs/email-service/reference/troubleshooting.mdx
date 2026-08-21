@@ -1,12 +1,9 @@
 ---
-title: Troubleshoot SPF, DKIM and DMARC
-description: Diagnose and fix SPF, DKIM, and DMARC authentication issues for Email Service delivery.
+title: Troubleshooting
+description: Diagnose and fix delivery, authentication, and local development issues for Email Service.
 pcx_content_type: troubleshooting
 sidebar:
-  order: 2
-head:
-  - tag: title
-    content: Troubleshooting email authentication (SPF, DKIM, DMARC)
+  order: 3
 products:
   - email-service
 ---
@@ -30,6 +27,11 @@ Having multiple SPF records on your domain is not allowed and will prevent Email
 4. Ensure you have the correct SPF records:
    - For **Email Routing** (root domain): `v=spf1 include:_spf.mx.cloudflare.net ~all`
    - For **Email Sending** (`cf-bounce` subdomain): `v=spf1 include:_spf.mx.cloudflare.net ~all`
+
+If you are unsure which SPF record is the correct one to keep, you can remove all of them and let Cloudflare regenerate the required records:
+
+1. In **DNS** > **Records**, delete every TXT record starting with `v=spf1` on the affected name.
+2. Go to **Compute** > **Email Service** and re-onboard or re-enable the affected service. Cloudflare adds the correct SPF record back automatically.
 
 ### Missing SPF record
 

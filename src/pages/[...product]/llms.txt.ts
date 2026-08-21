@@ -1,55 +1,34 @@
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
-import { isExternalRedirect, resolveRedirect } from "~/util/redirects";
-import { isDisallowedByRobots } from "~/util/robots";
+import { isExternalRedirect, resolveRedirect } from "../../util/redirects";
+import { isDisallowedByRobots } from "../../util/robots";
 
-/**
- * Maximum number of prose characters allowed alongside a DirectoryListing
- * component before a page is considered to have real standalone content.
- * Pages at or below this threshold are treated as pure navigation containers
- * and excluded from llms.txt — their child pages are already listed individually.
- */
 const DIRECTORY_PROSE_THRESHOLD = 250;
 
-/**
- * Returns true if the page body consists of a DirectoryListing component with
- * DIRECTORY_PROSE_THRESHOLD characters or fewer of surrounding prose. These
- * pages are pure section index/navigation containers with no standalone content
- * worth including in llms.txt — the child pages are already listed individually.
- */
 function isDirectoryOnlyPage(body: string): boolean {
 	if (!body.includes("DirectoryListing")) return false;
-	// Strip import lines
 	let prose = body.replace(/^import\s+.*?from\s+['"].*?['"];?\s*\n?/gm, "");
-	// Strip self-closing component tags e.g. <DirectoryListing />
 	prose = prose.replace(/<[A-Z][^>]*\/>/g, "");
-	// Strip paired component tags and their children e.g. <Description>...</Description>
 	prose = prose.replace(/<[A-Z][^>]*>[\s\S]*?<\/[A-Z][^>]*>/g, "");
-	// Strip JSX comments
 	prose = prose.replace(/\{\/\*[\s\S]*?\*\/\}/g, "");
 	return prose.trim().length <= DIRECTORY_PROSE_THRESHOLD;
 }
 
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
-
 	const docs = await getCollection("docs");
 
-	return directory
+	const mapped = directory
 		.map((entry) => {
-			const productUrl = entry.data.entry.url;
-			// Derive route segments from the product's canonical URL.
-			// e.g. /cloudflare-for-platforms/cloudflare-for-saas/ → ["cloudflare-for-platforms", "cloudflare-for-saas"]
-			// e.g. /workers/ → ["workers"]
-			// Skip the root URL "/" (home entry) and fragment-only anchors (e.g. /path/#anchor)
-			if (!productUrl || productUrl === "/" || productUrl.includes("#"))
+			const productUrl = entry.data.entry?.url;
+			if (!productUrl || productUrl === "/" || productUrl.includes("#")) {
 				return null;
+			}
 
-			// Skip products whose top-level URL is disallowed by robots.txt
 			if (isDisallowedByRobots(productUrl)) return null;
 
-			const urlPath = productUrl.slice(1, -1); // strip leading/trailing slashes
+			const urlPath = productUrl.slice(1, -1);
 			if (!urlPath) return null;
 
 			const prefix = urlPath;
@@ -70,10 +49,29 @@ export const getStaticPaths = (async () => {
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);
+
+	// Multiple directory entries can share the same entry.url (e.g. sdk,
+	// go-sdk, typescript-sdk, python-sdk all point at
+	// /fundamentals/api/reference/sdks/). Pick the most generic entry
+	// (shortest name) as the canonical representative for each URL.
+	const byProduct = new Map<string, (typeof mapped)[number]>();
+	for (const p of mapped) {
+		const existing = byProduct.get(p.params.product);
+		const nameLen = (name: string | undefined) =>
+			name === undefined ? Infinity : name.length;
+
+		if (
+			!existing ||
+			nameLen(p.props.entry.data.name) < nameLen(existing.props.entry.data.name)
+		) {
+			byProduct.set(p.params.product, p);
+		}
+	}
+
+	return [...byProduct.values()];
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
-
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
 
 function formatPage(base: string, e: Page) {
@@ -91,16 +89,18 @@ interface Section {
 	children: Page[];
 }
 
+function getSidebarOrder(page: Page): number | undefined {
+	return page.data.sidebar && typeof page.data.sidebar === "object"
+		? page.data.sidebar.order
+		: undefined;
+}
+
 function buildSections(prefix: string, pages: Page[]): Section[] | null {
 	const childPages = pages.filter((e) => e.id !== prefix);
-
-	// Find section index pages: pages that are exactly one directory level
-	// below the prefix and have children under them.
-	// e.g., for prefix "workers", find "workers/get-started", "workers/configuration", etc.
 	const sectionMap = new Map<string, Section>();
 
 	for (const page of childPages) {
-		const relative = page.id.slice(prefix.length + 1); // e.g., "get-started" or "get-started/guide"
+		const relative = page.id.slice(prefix.length + 1);
 		const firstSegment = relative.split("/")[0];
 		const sectionId = `${prefix}/${firstSegment}`;
 
@@ -116,22 +116,18 @@ function buildSections(prefix: string, pages: Page[]): Section[] | null {
 		const section = sectionMap.get(sectionId)!;
 
 		if (page.id === sectionId) {
-			// This is the section index page
 			section.indexPage = page;
 			section.label = page.data.title;
-			section.order = page.data.sidebar?.order;
+			section.order = getSidebarOrder(page);
 		} else {
 			section.children.push(page);
 		}
 	}
 
 	const sections = [...sectionMap.values()];
-
-	// Check if any sections have explicit sidebar ordering
 	const hasOrdering = sections.some((s) => s.order !== undefined);
 	if (!hasOrdering) return null;
 
-	// Sort sections: those with order first (by order), then those without (alphabetically by label)
 	sections.sort((a, b) => {
 		if (a.order !== undefined && b.order !== undefined)
 			return a.order - b.order;
@@ -146,7 +142,8 @@ function buildSections(prefix: string, pages: Page[]): Section[] | null {
 export const GET: APIRoute<Props> = async ({ props, url }) => {
 	const base = url.origin;
 	const { entry, pages } = props;
-	const { title, url: productUrl } = entry.data.entry;
+	const title = entry.data.entry?.title ?? entry.data.name ?? entry.id;
+	const productUrl = entry.data.entry?.url ?? `/${entry.id}/`;
 	const description = entry.data.meta?.description;
 
 	const prefix = productUrl.slice(1, -1);
@@ -161,7 +158,6 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 	let pageContent: string;
 
 	if (sections) {
-		// Grouped output with section headers
 		pageContent = sections
 			.map((section) => {
 				const heading = `## ${section.label}`;
@@ -176,7 +172,6 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 			})
 			.join("\n\n");
 	} else {
-		// Flat fallback
 		const childPages = pages.filter((e) => e.id !== prefix);
 		pageContent = childPages.map((e) => formatPage(base, e)).join("\n");
 	}

@@ -39,9 +39,9 @@ Your connection to the Internet and your DNS queries are now protected.
 
 ## Configure 1.1.1.1 manually
 
-### Android 11 or later
+### Android 9 and later
 
-Android 11 and later support encrypted DNS through a feature called Private DNS, which uses DNS over TLS (DoT). When you configure Private DNS, your device uses that DNS resolver on all networks — including cellular — without needing per-network configuration.
+Android 9 and later support encrypted DNS through a feature called Private DNS, which uses DNS-over-TLS (DoT), or DNS-over-HTTP/3. When you configure Private DNS, your device uses that DNS resolver on all networks — including cellular.
 
 1. Go to **Settings** > **Network & internet**.
 2. Select **Advanced** > **Private DNS**.
@@ -58,37 +58,6 @@ Or the corresponding IP address if your device requires it:
     * **IPv6**: `2606:4700:4700::1111` or `2606:4700:4700::1001`
 
   </Details>
-
-  <Details header="Block malware with 1.1.1.1 for Families">
-
-- `security.cloudflare-dns.com`
-
-Or the corresponding IP address if your device requires it:
-
-    * **IPv4**: `1.1.1.2` or `1.0.0.2`
-    * **IPv6**: `2606:4700:4700::1112` or `2606:4700:4700::1002`
-
-  </Details>
-
-  <Details header="Block malware and adult content with 1.1.1.1 for Families">
-
-- `family.cloudflare-dns.com`
-
-Or the corresponding IP address if your device requires it:
-
-    * **IPv4**: `1.1.1.3` or `1.0.0.3`
-    * **IPv6**: `2606:4700:4700::1113` or `2606:4700:4700::1003`
-
-  </Details>
-
-### Android 9 or 10
-
-Android 9 and 10 support DNS over TLS through a feature called Private DNS. When you configure Private DNS, your device encrypts DNS queries and uses the configured resolver on all networks, including cellular.
-
-1. Go to **Settings** > **Network & internet**.
-2. Select **Advanced** > **Private DNS**.
-3. Select the **Private DNS provider hostname** option.
-4. Enter `one.one.one.one` and select **Save**. Or use one of the following hostnames if you want to use 1.1.1.1 for Families.
 
   <Details header="Block malware with 1.1.1.1 for Families">
 

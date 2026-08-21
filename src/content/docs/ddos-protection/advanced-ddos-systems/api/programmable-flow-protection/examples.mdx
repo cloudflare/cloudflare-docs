@@ -43,10 +43,13 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 
 This example uploads a new eBPF program written in C. The program source code is sent as the request body with `Content-Type: text/plain`.
 
+Include the optional `X-Program-Name` header to specify a human-readable program name. If omitted, the API generates a UUID as the program name.
+
 ```bash title="Request"
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/programs" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: text/plain" \
+--header "X-Program-Name: my-rate-limiter" \
 --data-binary "@/path/to/program.c"
 ```
 
@@ -54,7 +57,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
 {
   "result": {
     "id": "<PROGRAM_ID>",
-    "name": "program",
+    "name": "my-rate-limiter",
     "status": "success",
     "created_on": "<TIMESTAMP>",
     "modified_on": "<TIMESTAMP>"

@@ -1,0 +1,43 @@
+---
+title: "WAF Release - 2026-06-23"
+description: Cloudflare WAF managed rulesets 2026-06-23
+date: 2026-06-23
+---
+
+import { RuleID } from "~/components";
+
+This week's release introduces new managed protection to address a critical pre-authentication OS command injection vulnerability in Ivanti Sentry (CVE-2026-10520). 
+
+**Key Findings**
+
+- CVE-2026-10520: An OS command injection vulnerability in Ivanti Sentry allows remote, unauthenticated attackers to execute arbitrary system commands with root privileges. The flaw stems from improper sanitization of input strings parsed during internal configuration handling.
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="500a90789f874345b60b0de7242fdf83" />
+			</td>
+			<td>N/A</td>
+			<td>Ivanti Sentry - Command Injection - CVE:CVE-2026-10520</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>		
+	</tbody>
+</table>

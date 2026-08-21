@@ -1,7 +1,19 @@
-import { getCollection } from "astro:content";
+/**
+ * getReleaseNotes — load the `release-notes` collection and reshape it into
+ * the date-grouped, newest-first structure that ProductReleaseNotes renders.
+ *
+ * CF source: cloudflare-docs/src/util/release-notes.ts
+ *
+ * Faithful port — the only adaptation is `import("astro:content")` typing.
+ * `api-deprecations` is special-cased exactly as upstream (it has no entry
+ * here today, but the contract is preserved so dropping in the upstream YAML
+ * "just works"). `individual_page: entry.individual_page && entry.link`
+ * carries the link string through so the renderer can resolve the page.
+ */
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export async function getReleaseNotes(opts?: {
-	filter?: Parameters<typeof getCollection<"release-notes">>[1];
+	filter?: (entry: CollectionEntry<"release-notes">) => boolean;
 	deprecationsOnly?: boolean;
 }) {
 	let releaseNotes;

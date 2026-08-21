@@ -19,6 +19,22 @@ The Data Localization Suite allows you to restrict where your data is processed 
 - **Regional Services** — restricts which Cloudflare data centers can decrypt and inspect your HTTPS traffic.
 - **Customer Metadata Boundary (CMB)** — restricts where your logs and analytics data are stored.
 
+## Region types
+
+Regional Services regions come in two types:
+
+- **Managed regions** — predefined regions that Cloudflare maintains, identified by a region key (for example, `eu` or `us`). These are the regions listed in the tables below. They are available to all accounts, though some may require specific entitlements. Most customers use a managed region.
+- **Custom regions** — regions tailored to your account that restrict processing to a specific set of data centers, for when the managed regions do not meet your compliance requirements. Custom regions are set up through your account team. They are available for [Regionalized Spectrum Applications](/data-localization/regional-services/spectrum-applications/) and [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/), but not for [Regional Hostnames](/data-localization/regional-services/regional-hostnames/).
+
+Managed and custom regions apply to **Regional Services**. The other Data Localization Suite features use their own region settings:
+
+- **Customer Metadata Boundary** can be set to the **United States** or the **European Union**. By default no boundary is applied. FedRAMP customers set it to the United States.
+- **Geo Key Manager** controls where TLS private keys are stored using its own set of locations.
+
+The tables below show which managed regions each product supports.
+
+## Available regions
+
 Some regions are defined by geography (for example, "Germany"), while others are defined by compliance frameworks:
 
 - **FedRAMP Moderate** — the US Federal Risk and Authorization Management Program, a government security certification standard. "Domestic" means only US-based certified data centers. "International" includes certified data centers outside the US.
@@ -28,7 +44,11 @@ Some regions are defined by geography (for example, "Germany"), while others are
 
 "Exclusive of" regions work in reverse — they exclude specific countries rather than restricting to them. For example, "Exclusive of Russia and Belarus" means Cloudflare will use any data center worldwide except those in Russia and Belarus.
 
-Support by product and region is summarized in the following table:
+Support by product and region is summarized in the following table. In the **Customer Metadata Boundary** column:
+
+- ✅ — the region corresponds to a metadata boundary you can select. CMB supports the **United States** and the **European Union** only; FedRAMP regions use the United States boundary.
+- "Can use EU metadata boundary." — the country is within the European Union, so the EU boundary applies.
+- ✘ — Customer Metadata Boundary is not available for this region.
 
 | Region                                                                                 | Geo Key Manager | Regional Services | Customer Metadata Boundary    |
 | -------------------------------------------------------------------------------------- | --------------- | ----------------- | ----------------------------- |

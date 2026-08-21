@@ -28,7 +28,7 @@ For example, a portion of a sequence made during a bank funds transfer could loo
 | 3     | `GET`  | `/api/v1/accounts/{account_id}/balance` | `account_id` is a different account belonging to the user.                                                                                     |
 | 4     | `POST` | `/api/v1/transferFunds`                 | This contains a request body detailing an account to transfer funds from, an account to transfer funds to, and an amount of money to transfer. |
 
-API Shield uses your configured <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> and your saved endpoints to build a set of ordered API operations (HTTP host, method, and path) requested per session. API Shield may surface sequences in various lengths depending on how it scores the sequences.
+API Shield uses your configured <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> and operations in the `full` or `candidate` state to build a set of ordered API operations (HTTP host, method, and path) requested per session. API Shield may surface sequences in various lengths depending on how it scores the sequences.
 
 ### Sequence scoring
 
@@ -56,6 +56,6 @@ Sequence Analytics is available for all API Shield customers. Pro, Business, and
 
 ## Limitations
 
-Sequence Analytics currently requires a session identifier and saved endpoints in order to build and track sequences made by an API consumer. Ensure that you have [set up your session identifier(s)](/api-shield/get-started/#session-identifiers) and [saved your endpoints](/api-shield/management-and-monitoring/endpoint-management/).
+Sequence Analytics currently requires a session identifier and operations that API Shield can match at the edge. Ensure that you have [set up your session identifier(s)](/api-shield/get-started/#session-identifiers) and reviewed your operations in the `full` and `candidate` states in [Web Assets](/security/web-assets/manage-operations/#operation-states).
 
 Sequences are currently limited to nine operations in length.

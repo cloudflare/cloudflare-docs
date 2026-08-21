@@ -8,12 +8,13 @@ products:
 pcx_content_type: video
 thumbnail:
   timestamp: 26s
-chapters: {
-  "Introduction to Load Balancing": "0s",
-  "Step 1 - Select Hostname and Basic Settings": "44s",
-  "Step 2 - Add or Attach an Origin Pool": "01m22s",
-  "Step 3 - Attach a Health Monitor": "01m45s",
-  "Step 4 - Configure Traffic Steering": "02m03s",
-  "Step 5 - Add Custom Rules (Optional)": "02m24s",
-  "Review and deploy": "02m39s"
-}
+chapters:
+  {
+    "Introduction to Load Balancing": "0s",
+    "Step 1 - Select Hostname and Basic Settings": "44s",
+    "Step 2 - Add or Attach an Origin Pool": "01m22s",
+    "Step 3 - Attach a Health Monitor": "01m45s",
+    "Step 4 - Configure Traffic Steering": "02m03s",
+    "Step 5 - Add Custom Rules (Optional)": "02m24s",
+    "Review and deploy": "02m39s",
+  }

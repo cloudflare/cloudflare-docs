@@ -3,6 +3,209 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-07-27"
+    title: "Zone Settings Batch API"
+    description: |-
+      Deprecation date: April 23, 2025
+
+      End of life date: March 31, 2027
+
+      **Update:** This deprecation's end of life date has been extended to March 31, 2027 (previously September 15, 2026).
+
+      The Zone Settings Batch API endpoints, which read and edit multiple zone settings in a single request, are deprecated and will reach their end of life on March 31, 2027. Use the per-setting endpoints to read and edit individual zone settings instead.
+
+      Deprecated APIs:
+
+      - `GET /zones/{zone_id}/settings`
+      - `PATCH /zones/{zone_id}/settings`
+
+      Replacements:
+
+      - [Get zone setting](/api/resources/zones/subresources/settings/methods/get/) — `GET /zones/{zone_id}/settings/{setting_id}`
+      - [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) — `PATCH /zones/{zone_id}/settings/{setting_id}`
+
+      Integrations that read or edit multiple settings in a single call must migrate to per-setting requests before March 31, 2027 to ensure uninterrupted service. After this date, the batch endpoints will no longer be available.
+
+  - publish_date: "2026-07-22"
+    title: "Account name 65-character limit"
+    description: |-
+      Enforcement date: September 27, 2026
+
+      Account names will be limited to a maximum of 65 characters across all account creation and update APIs. This limit applies to all accounts, including organization accounts. Currently, the account update API (`PUT /accounts/{account_id}`) already enforces this limit, while the account create API (`POST /accounts`) silently truncates names up to 120 bytes. This mismatch can result in accounts that are created successfully but cannot later be renamed. After September 27, 2026, the create API will reject names longer than 65 characters with an HTTP `400` error.
+
+      Affected APIs:
+
+      - `POST /accounts` — Create account
+      - `PUT /accounts/{account_id}` — Update account (already enforced)
+
+      After the enforcement date, integrations that create accounts with names longer than 65 characters must truncate or shorten the name before sending the request to ensure uninterrupted service.
+  - publish_date: "2026-07-27"
+    title: "Foundation DNS boolean setting"
+    description: |-
+      Deprecation date: July 27, 2026
+
+      End of life date: November 23, 2026
+
+      The `foundation_dns` boolean is deprecated in the [DNS settings endpoints](/api/resources/dns/subresources/settings/) for zone settings and account defaults. Use `nameservers.type: "cloudflare.advanced"` to configure Advanced Nameservers instead.
+
+      Affected endpoints:
+
+      - [`/zones/{zone_id}/dns_settings`](/api/resources/dns/subresources/settings/subresources/zone/)
+      - [`/accounts/{account_id}/dns_settings`](/api/resources/dns/subresources/settings/subresources/account/)
+
+      Beginning October 26, 2026, the DNS settings API will gradually represent Advanced Nameservers with `nameservers.type: "cloudflare.advanced"`. This rollout is expected to take seven days. Before the rollout reaches an account, the API will continue to return `nameservers.type: "cloudflare.standard"` for Advanced Nameservers. The API will accept `nameservers.type: "cloudflare.advanced"` in `PATCH` requests for entitled accounts throughout the rollout.
+
+      The `foundation_dns` boolean remains available as a compatibility alias during this transition. You can continue to read and write it. If a `PATCH` request includes both values, they must match. The API will reject conflicting values.
+
+      Beginning November 23, 2026, the DNS settings API will no longer return or accept `foundation_dns`. This rollout is expected to take seven days. `PATCH` requests that include `foundation_dns` will be rejected. Update clients that treat `nameservers.type` as a closed enum to recognize the `"cloudflare.advanced"` value, and update clients that read or write `foundation_dns` before the end-of-life date. This API change does not change your Foundation DNS subscription or whether Advanced Nameservers are enabled on your zones. It does not require a zone migration.
+
+  - publish_date: "2026-07-21"
+    title: "Account Roles API"
+    description: |-
+      Deprecation date: July 21, 2026
+
+      The [Account Roles API](/api/resources/accounts/subresources/roles/) only returns account-level roles today, and is deprecated in favor of the [Permission Groups API](/api/resources/iam/subresources/permission_groups/). The Permission Groups API is the supported way to enumerate account, zone, and resource-level roles that can be granted to account members.
+
+      Deprecated APIs:
+
+      - `GET /accounts/{account_id}/roles` — List roles
+      - `GET /accounts/{account_id}/roles/{role_id}` — Role details
+
+      Replacements:
+
+      - `GET /accounts/{account_id}/iam/permission_groups` — List account permission groups
+      - `GET /accounts/{account_id}/iam/permission_groups/{permission_group_id}` — Permission group details
+
+      The response schema differs from the legacy Roles response:
+
+      - The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with edit/read flags.
+      - The `PermissionGroup` response replaces those with a `meta` object containing `label` and `scopes`. Individual permissions are not returned as part of the permission group.
+
+      Additional notes:
+
+      - Integrations migrating to the Permission Groups API must obtain Permission Group IDs from that API and use them in the Account Members API policies request shape. Integrations that persist legacy Role IDs will need to remap their assignments.
+      - Both endpoints use the standard Cloudflare response envelope, so pagination and error-handling do not change.
+      - The new API supports the [API Token](/fundamentals/api/get-started/create-token/) authorization scheme. The legacy Email + API Key authorization scheme is provided for backwards compatibility.
+      - The affected terraform resource is the `cloudflare_account_role` data source. You will need to migrate to the `cloudflare_account_permission_group` data source.
+
+  - publish_date: "2026-07-15"
+    title: "Workers KV: Legacy Namespace Routes"
+    description: |-
+      Deprecation date: July 15, 2026
+
+      End of life date: October 15, 2026
+
+      The legacy Workers KV API routes under `/accounts/{account_id}/workers/namespaces/*` are deprecated in favor of the [Workers KV API](/api/resources/kv/) routes under `/accounts/{account_id}/storage/kv/namespaces/*`.
+
+      The legacy and replacement routes are interchangeable. They accept the same request parameters and return the same response payloads. To migrate, update the URL path from `/workers/namespaces/` to `/storage/kv/namespaces/`.
+
+      Deprecated APIs:
+
+      - `GET` and `POST /accounts/{account_id}/workers/namespaces` (list and create namespaces)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}` (get, rename, and remove a namespace)
+      - `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/keys` (list keys)
+      - `GET /accounts/{account_id}/workers/namespaces/{namespace_id}/metadata/{key_name}` (read key metadata)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/workers/namespaces/{namespace_id}/values/{key_name}` (read, write, and delete key-value pairs)
+
+      Replacements:
+
+      Update the URL path from `/workers/namespaces/` to `/storage/kv/namespaces/` in each endpoint.
+
+      - `GET` and `POST /accounts/{account_id}/storage/kv/namespaces` (list and create namespaces)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}` (get, rename, and remove a namespace)
+      - `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/keys` (list keys)
+      - `GET /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/metadata/{key_name}` (read key metadata)
+      - `GET`, `PUT`, and `DELETE /accounts/{account_id}/storage/kv/namespaces/{namespace_id}/values/{key_name}` (read, write, and delete key-value pairs)
+
+      After October 15, 2026, requests to the legacy `/accounts/{account_id}/workers/namespaces/*` routes will no longer be supported. Update integrations to use the documented Workers KV API endpoints before that date to ensure uninterrupted service.
+
+  - publish_date: "2026-07-09"
+    title: "Zero Trust Networks Route Endpoints and Cloudflare Tunnel Connections Field"
+    description: |-
+      Deprecation date: July 9, 2026
+
+      End of life date: October 5, 2026
+
+      Two related changes to the [Zero Trust Networks API](/api/resources/zero_trust/subresources/networks/) and [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/) take effect on October 5, 2026.
+
+      **Route endpoints**
+
+      The CIDR-encoded route endpoints are deprecated in favor of the standard, `route_id`-based endpoints that already exist today.
+
+      Deprecated APIs:
+
+      - `POST /accounts/{account_id}/teamnet/routes/network/{ip_network_encoded}`
+      - `PATCH /accounts/{account_id}/teamnet/routes/network/{ip_network_encoded}`
+      - `DELETE /accounts/{account_id}/teamnet/routes/network/{ip_network_encoded}`
+
+      Replacements:
+
+      - `POST /accounts/{account_id}/teamnet/routes`
+      - `PATCH /accounts/{account_id}/teamnet/routes/{route_id}`
+      - `DELETE /accounts/{account_id}/teamnet/routes/{route_id}`
+
+      **Cloudflare Tunnel and Cloudflare Mesh connections**
+
+      The `connections` array is removed from list and get responses for Cloudflare Tunnel and Cloudflare Mesh nodes (the `cfd_tunnel` and `warp_connector` API resources). Query the dedicated connections endpoint instead of reading the field off the tunnel or node object.
+
+      Affected APIs:
+
+      - `GET /accounts/{account_id}/cfd_tunnel`
+      - `GET /accounts/{account_id}/cfd_tunnel/{tunnel_id}`
+      - `GET /accounts/{account_id}/warp_connector`
+      - `GET /accounts/{account_id}/warp_connector/{tunnel_id}`
+
+      Replacements:
+
+      - `GET /accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections`
+      - `GET /accounts/{account_id}/warp_connector/{tunnel_id}/connections`
+
+      For full migration guidance, including `curl` examples and `cloudflared` and Terraform notes, refer to the [Cloudflare Tunnel changelog](/changelog/2026-07-09-tunnel-routes-and-connections-api-changes/).
+
+  - publish_date: "2026-07-08"
+    title: "AMP/SXG API and Rules"
+    description: |-
+      Deprecation date: September 18, 2025
+
+      End of life date: June 23, 2026
+
+      The AMP/SXG features have reached end of life. There will be no replacement functionality. The zone settings API endpoints and sxg [Configuration Rule setting](https://developers.cloudflare.com/rules/configuration-rules/settings/) should no longer be used.
+
+      Deprecated APIs:
+
+      - `GET /zones/{zone_id}/amp/sxg`
+      - `PUT /zones/{zone_id}/amp/sxg`
+
+      Deprecated Configuration Rule setting:
+
+      - `sxg`
+
+      The Dashboard UI will no longer show references to AMP or the sxg setting. Users can remove the sxg parameter from their rulesets by using the [rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule/). Terraform deprecation will follow later, and users should remove references to the `sxg` parameter from their [terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset#sxg-1).
+
+  - publish_date: "2026-06-29"
+    title: "Legacy Registrar Domain Management API"
+    description: |-
+      Deprecation date: April 10, 2026
+
+      End of life date: September 27, 2026
+
+      The legacy Registrar domain management endpoints are deprecated and will reach their end of life on September 27, 2026. These endpoints have been replaced by the new [Registrar API](/api/resources/registrar/), which provides domain search, availability checking, and registration capabilities.
+
+      Deprecated APIs:
+
+      - `GET /accounts/{account_id}/registrar/domains` — List domains
+      - `GET /accounts/{account_id}/registrar/domains/{domain_name}` — Get domain
+      - `PUT /accounts/{account_id}/registrar/domains/{domain_name}` — Update domain
+
+      Replacement: [Registrar API](/api/resources/registrar/)
+
+      - [Search for available domains](/api/resources/registrar/methods/search/) — `GET /accounts/{account_id}/registrar/domain-search`
+      - [Check domain availability](/api/resources/registrar/methods/check/) — `POST /accounts/{account_id}/registrar/domain-check`
+      - [List registrations](/api/resources/registrar/subresources/registrations/methods/list/) — `GET /accounts/{account_id}/registrar/registrations`
+      - [Create registration](/api/resources/registrar/subresources/registrations/methods/create/) — `POST /accounts/{account_id}/registrar/registrations`
+
+      Customers and integrations using the legacy domain management endpoints must migrate to the new Registrar API before September 27, 2026 to ensure uninterrupted service. After this date, the legacy endpoints will no longer be available.
+
   - publish_date: "2026-05-13"
     title: "Gateway Audit SSH rules"
     description: |-

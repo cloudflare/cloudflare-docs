@@ -16,7 +16,7 @@ Spawn child agents as co-located Durable Objects with their own isolated SQLite 
 
 Use sub-agents when a single user or entity owns an open-ended set of long-lived agents, such as chats, documents, sessions, shards, or projects. Each sub-agent runs in parallel with its own state while the parent coordinates discovery, access control, and lifecycle.
 
-If you want a parent chat agent to dispatch another chat-capable agent during a single turn and render that child's progress inline, use [Agent tools](/agents/runtime/execution/agent-tools/). Agent tools are built on sub-agents, but add a parent-side run registry, streaming `agent-tool-event` frames, replay, cancellation, and cleanup.
+If you want a parent chat agent to dispatch another chat-capable agent during a single turn and render that child's progress inline, use [Agents as tools](/agents/runtime/execution/agent-tools/). Agents as tools are built on sub-agents, but add a parent-side run registry, streaming `agent-tool-event` frames, replay, cancellation, and cleanup.
 
 ## Quick start
 
@@ -125,7 +125,7 @@ class MyChild extends Agent {
 
 ### Notes for testing
 
-Tests that use `@cloudflare/vitest-pool-workers` may need to list facet classes as test-only Durable Object bindings so `ctx.exports` provides a facet-compatible class value. Keep those facet classes out of `new_sqlite_classes`; the extra binding belongs only in test `wrangler.jsonc` files and is not a production Worker requirement.
+Tests that use `@cloudflare/vitest-plugin` may need to list facet classes as test-only Durable Object bindings so `ctx.exports` provides a facet-compatible class value. Keep those facet classes out of `new_sqlite_classes`; the extra binding belongs only in test `wrangler.jsonc` files and is not a production Worker requirement.
 
 ## abortSubAgent
 
@@ -506,6 +506,14 @@ The older synchronous `getSchedule()` and `getSchedules()` APIs throw inside sub
 
 Calling `this.destroy()` inside a sub-agent delegates cleanup to the parent. The parent cancels that sub-agent's schedules, removes recovery metadata for the sub-agent and its descendants, removes the registry entry, and asks the runtime to wipe the child storage. Treat `this.destroy()` as fire-and-forget because deleting the sub-agent can abort its isolate before the method returns cleanly.
 
+### Workflows from sub-agents
+
+Sub-agents can also start [Workflows](/agents/runtime/execution/run-workflows/) with `this.runWorkflow()`. Workflow tracking is local to the sub-agent's SQLite database, and `AgentWorkflow.agent` routes RPC, callbacks, state updates, and broadcasts back to the originating sub-agent. Parent agents do not automatically list or control child-started workflows.
+
+Because `SubAgentStub<T>` only exposes user-defined child methods, add child wrapper methods for controls such as `getWorkflow()`, `approveWorkflow()`, or `terminateWorkflow()`, then call those wrappers through `await this.subAgent(Child, name)`. If you pass `runWorkflow(..., { agentBinding })` from a sub-agent, use the root Agent binding name, not a child binding name.
+
+For sub-agent workflow origins, `AgentWorkflow.agent` is RPC-only. Use it to call Agent methods, but use `routeSubAgentRequest()` or the nested `/agents/{parent}/{name}/sub/{child}/{name}` URL shape for external HTTP or WebSocket routing instead of `this.agent.fetch()`.
+
 ## Example
 
 <LinkCard
@@ -519,5 +527,5 @@ Calling `this.destroy()` inside a sub-agent delegates cleanup to the parent. The
 - [Think](/agents/harnesses/think/) — `chat()` method for streaming AI turns through sub-agents
 - [Long-running agents](/agents/concepts/agentic-patterns/long-running-agents/) — sub-agent delegation in the context of multi-week agent lifetimes
 - [Callable methods](/agents/runtime/lifecycle/callable-methods/) — RPC via `@callable` and service bindings
-- [Agent tools](/agents/runtime/execution/agent-tools/) — run Think or `AIChatAgent` sub-agents as retained, streaming tools
+- [Agents as tools](/agents/runtime/execution/agent-tools/) — run Think or `AIChatAgent` sub-agents as retained, streaming tools
 - [Schedule tasks](/agents/runtime/execution/schedule-tasks/) — scheduling primitives for top-level agents and sub-agents

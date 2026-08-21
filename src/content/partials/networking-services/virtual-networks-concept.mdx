@@ -25,6 +25,7 @@ Cloudflare Tunnel and the Cloudflare One Client support multiple virtual network
 - **Partner isolation** — Connect multiple partners to your Cloudflare account without allowing them to reach each other. Each partner gets its own virtual network.
 - **Overlapping IP space** — When different networks use the same IP ranges (common with RFC 1918 addresses), virtual networks let you route to the correct destination based on context, not just IP address.
 - **Private application connectivity** — Connect Cloudflare Workers or CDN to backends in your private network. The virtual network tells Cloudflare where to route traffic for private IP addresses.
+- **Public TCP/UDP to private origins** — Expose a private backend to the Internet for TCP or UDP traffic through a [Spectrum application](/spectrum/get-started/#create-a-spectrum-application-using-a-virtual-network-origin), without requiring a Load Balancer. The virtual network determines which tunnel or WAN connection carries the traffic to your origin.
 
 ## How virtual networks work
 

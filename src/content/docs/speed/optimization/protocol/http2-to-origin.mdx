@@ -9,7 +9,6 @@ tags:
 ---
 
 import {
-	FeatureTable,
 	Details,
 	Render,
 	APIRequest,
@@ -22,7 +21,9 @@ HTTP is a well established protocol that has several versions, and each version 
 
 ## Availability
 
-<FeatureTable id="speed.http2_to_origin" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
 
 ## Disable HTTP/2 to Origin
 
@@ -138,7 +139,7 @@ During the HTTP/2 handshake, our edge reads the SETTINGS_MAX_CONCURRENT_STREAMS 
 
 | Condition               | Default / Range                        | Error code | Description                                           |
 |-------------------------|----------------------------------------|------------|-------------------------------------------------------|
-| Proxy Read Timeout      | 100s (up to 6000s for Enterprise)      | `524`        | Origin took too long to respond.                     |
+| Proxy Read Timeout      | 125s (up to 6000s for Enterprise)      | `524`        | Origin took too long to respond.                     |
 | Proxy Idle Timeout      | 900s (fixed)                            | `520`        | Connection closed due to idleness.                   |
 | TCP Keep-Alive Interval | 30s initial, 15s between probes        | `520`        | After two missed probes, Cloudflare resets the connection. |
 | TCP Handshake Timeout   | 19s                                     | `522`        | Origin did not complete the SYN handshake.           |
@@ -152,7 +153,7 @@ When traffic shifts suddenly (for example, during origin failover), Cloudflare r
 
 **Long-Lived or idle requests**
 
-	- If your requests exceed 100 seconds (for example, streaming), increase the Proxy Read Timeout (Enterprise only).
+	- If your requests exceed 125 seconds (for example, streaming), increase the Proxy Read Timeout (Enterprise only).
 	- Origins that close connections faster than 900 seconds may experience connection churn, but Cloudflare automatically reestablishes new connections as needed.
 
 **Potential 5xx errors**

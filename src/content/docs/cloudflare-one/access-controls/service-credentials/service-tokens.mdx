@@ -16,6 +16,8 @@ import {
 	Render,
 	APIRequest,
 	DashButton,
+	Tabs,
+	TabItem,
 } from "~/components";
 
 You can provide automated systems with service tokens to authenticate against your Cloudflare One policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
@@ -30,7 +32,7 @@ You can now configure your Access applications and [device enrollment permission
 
 ## Connect your service to Access
 
-### Initial request
+### Request
 
 To authenticate to an Access application using your service token, add the following to the headers of any HTTP request:
 
@@ -43,8 +45,6 @@ For example,
 ```sh
 curl -H "CF-Access-Client-Id: <CLIENT_ID>" -H "CF-Access-Client-Secret: <CLIENT_SECRET>" https://app.example.com
 ```
-
-If the service token is valid, Access generates a JWT scoped to the application in the form of a [`CF_Authorization` cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/). You can use this cookie to authenticate [subsequent requests](#subsequent-requests) to the application.
 
 #### Authenticate with a single header
 
@@ -77,32 +77,11 @@ To authenticate using a single header:
    curl -H "Authorization: {\"cf-access-client-id\": \"<CLIENT_ID>\", \"cf-access-client-secret\": \"<CLIENT_SECRET>\"}" https://app.example.com
    ```
 
-### Subsequent requests
-
-After you have [authenticated to the application](#initial-request) using the service token, add the resulting `CF_Authorization` cookie to the headers of all subsequent requests:
-
-```sh
-curl -H "cookie: CF_Authorization=<CF_AUTHORIZATION_COOKIE>" https://app.example.com
-```
-
-If you prefer to use a raw header, send the value as `cf-access-token`:
-
-```sh
-curl -H "cf-access-token: <CF_AUTHORIZATION_COOKIE>" https://app.example.com
-```
-
-All requests with this cookie will succeed until the JWT expires.
-
-:::note
-
-If your Access application only has Service Auth policies, you must send the service token on every subsequent request. You can only use the JWT if the application has at least one Allow policy.
-:::
-
 ## Renew service tokens
 
 Service tokens expire according to the token duration you selected when you created the token.
 
-To renew the service token:
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
 2. Locate the token you want to renew.
@@ -112,14 +91,70 @@ To renew the service token:
    2. Choose a new **Service Token Duration**.
    3. Select **Save**. The expiration date will be extended by the selected amount of time.
 
+</TabItem> <TabItem label="API">
+
+To extend the token's lifetime by one year, make a `POST` request to the [Refresh a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/refresh/) endpoint:
+
+<APIRequest
+	path="/accounts/{account_id}/access/service_tokens/{service_token_id}/refresh"
+	method="POST"
+/>
+
+To extend the token's lifetime by a custom duration, make a `PUT` request to the [Update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/) endpoint with the new `duration`:
+
+<APIRequest
+	path="/accounts/{account_id}/access/service_tokens/{service_token_id}"
+	method="PUT"
+	json={{
+		duration: "17520h",
+	}}
+/>
+
+</TabItem> <TabItem label="Terraform (v5)">
+
+To renew the service token, update the `duration` attribute on the [`cloudflare_zero_trust_access_service_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_service_token) resource and apply the change. Cloudflare resets the expiration relative to the time of the update.
+
+```tf
+resource "cloudflare_zero_trust_access_service_token" "example_service_token" {
+	account_id = var.cloudflare_account_id
+	name       = "Example service token"
+	duration   = "17520h"
+
+	lifecycle {
+		create_before_destroy = true
+	}
+}
+```
+
+</TabItem> </Tabs>
+
 ## Revoke service tokens
 
-If you need to revoke access before the token expires, simply delete the token.
+If you need to revoke access before the token expires, delete the token. Services that rely on a deleted service token can no longer reach your application.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
 2. **Delete** the token you need to revoke.
 
-Services that rely on a deleted service token can no longer reach your application.
+</TabItem> <TabItem label="API">
+
+Make a `DELETE` request to the [Delete a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/delete/) endpoint:
+
+<APIRequest
+	path="/accounts/{account_id}/access/service_tokens/{service_token_id}"
+	method="DELETE"
+/>
+
+</TabItem> <TabItem label="Terraform (v5)">
+
+To revoke the service token, remove the [`cloudflare_zero_trust_access_service_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_service_token) resource from your configuration and run `terraform apply`, or target the resource for destruction:
+
+```sh
+terraform destroy -target=cloudflare_zero_trust_access_service_token.example_service_token
+```
+
+</TabItem> </Tabs>
 
 :::note
 

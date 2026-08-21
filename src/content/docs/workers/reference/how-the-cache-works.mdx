@@ -12,6 +12,12 @@ By allowing developers to write to the cache, Workers provide a way to customize
 
 Cloudflare Workers run before the cache but can also be utilized to modify assets once they are returned from the cache. Modifying assets returned from cache allows for the ability to sign or personalize responses while also reducing load on an origin and reducing latency to the end user by serving assets from a nearby location.
 
+:::note
+This page describes how Workers interact with a **zone's** Cloudflare Cache — for example, when a Worker runs on a zone with Cache Rules configured, or when a Worker uses the [Cache API](/workers/runtime-apis/cache/) or `fetch()` to store and retrieve responses.
+
+To cache responses from a Worker itself — so that Cloudflare returns the cached response without executing the Worker — refer to [Cache](/workers/cache/).
+:::
+
 ## Interact with the Cloudflare Cache
 
 Conceptually, there are two ways to interact with Cloudflare’s Cache using a Worker:
