@@ -145,7 +145,7 @@
 		"valibot": "1.4.2",
 		"vite": "^8.0.0",
 		"vitest": "4.1.10",
-		"wrangler": "4.114.0",
+		"wrangler": "4.125.0",
 		"zod": "4.4.3"
 	},
 	"lint-staged": {
