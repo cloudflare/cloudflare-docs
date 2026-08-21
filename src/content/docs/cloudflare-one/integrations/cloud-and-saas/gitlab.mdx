@@ -25,23 +25,6 @@ import { Render } from "~/components";
 	}}
 />
 
-<!--
-TODO(content review): The following items still need sign-off before publishing:
-- FindingTypeID values below were pulled from the production `finding_types` API
-  (confirmed against production, not staging, per engineering guidance) on 2026-08-21.
-  Re-verify before publishing in case any finding types are added, removed, or
-  re-seeded before GA.
-- The OAuth scope list below is the full scope set requested by the standard OAuth 2.0 flow
-  (source: sherlock/access/vendor_config/gitlab.py, _OAUTH2_STANDARD.scopes), confirmed
-  directly from code, not inferred. It is broader than the "least privilege" framing used on
-  sibling integration pages: it includes `api` (full API access), `write_repository`, `sudo`,
-  and `admin_mode`, in addition to the read-only scopes the ETL crawlers actually use
-  (`read_api`, `read_user`, `read_repository`). Confirm with the CASB/Integrations team whether
-  this is intentional final behavior or a WIP scope list that will be trimmed before GA, since
-  every finding-generating crawler in findings/gitlab.go and the sherlock ETL crawlers only
-  reads data (no write/sudo/admin usage was found). This affects what a customer sees on the
-  GitLab OAuth consent screen and should be confirmed before this page goes public.
--->
 
 ## Integration prerequisites
 
