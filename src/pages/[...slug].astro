@@ -1,6 +1,6 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
-import { getEntries, getEntry } from "astro:content";
+import { getEntries } from "astro:content";
 import {
 	getDocsStaticPaths,
 	getDocsPageProps,
@@ -14,13 +14,37 @@ import { config } from "virtual:nimbus/config";
 import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
 import { getOgImage } from "~/util/og";
+import { getDirectoryEntryBySection } from "~/util/directory";
+import {
+	pageHasRuntimeHeadings,
+	scrapeRenderedHeadings,
+} from "../util/rendered-toc";
+
+import type { GetStaticPaths } from "astro";
 
 const NOINDEX_PRODUCTS = ["email-security"];
 
 export const prerender = true;
-export const getStaticPaths = getDocsStaticPaths;
+export const getStaticPaths = (async (...args: Parameters<GetStaticPaths>) => {
+	const paths = await getDocsStaticPaths(...args);
+	// Docs pages whose URLs are owned by a custom route (not the catch-all).
+	// These remain in the docs collection for sidebar metadata but should not
+	// be rendered by [...slug].astro to avoid route conflicts.
+	const blocklist = new Set(["waf/change-log/changelog"]);
+	return paths.filter((p) => {
+		const slug = p.params.slug;
+		return !(typeof slug === "string" && blocklist.has(slug));
+	});
+}) satisfies GetStaticPaths;
 
-const { entry, Content, headings } = await getDocsPageProps(Astro);
+const { entry, Content, headings } = await getDocsPageProps(Astro, {
+	partialHeadings: {
+		resolvePartialId: ({ file, product }) => {
+			if (!file) return undefined;
+			return product ? `${product}/${file}` : file;
+		},
+	},
+});
 
 const currentSlug = Astro.url.pathname.replace(/\/$/, "") || "/";
 const sectionSegment = currentSlug.split("/").filter(Boolean)[0];
@@ -66,7 +90,20 @@ const editUrl = await getEditUrl(entry);
 // Frontmatter wins; git is the fallback.
 const lastUpdated = entry.data.lastUpdated ?? (await getLastUpdated(entry));
 const tocConfig = entry.data.tableOfContents;
-const tocHeadings = headings.filter((h) => h.slug !== "footnote-label");
+// Runtime (set:html) headings are missing from compile-time `headings`.
+let tocSource = headings;
+if (
+	tocOn &&
+	tocConfig !== false &&
+	(await pageHasRuntimeHeadings(entry.body ?? ""))
+) {
+	try {
+		tocSource = await scrapeRenderedHeadings(Content, components);
+	} catch (err) {
+		console.error(`[toc] rendered-heading scrape failed for ${entry.id}:`, err);
+	}
+}
+const tocHeadings = tocSource.filter((h) => h.slug !== "footnote-label");
 const toc =
 	tocOn && tocConfig !== false ? getTOC(tocHeadings, tocConfig) : false;
 const markdownPath = `/${entry.id}/index.md`;
@@ -81,9 +118,7 @@ const socialImage = entry.data.socialImage ?? (await getOgImage(entry));
 // emits the direct-hit meta refresh and noindex metadata.
 const externalLink = entry.data.external_link;
 const head = entry.data.head ?? [];
-const sectionProduct = sectionSegment
-	? await getEntry("directory", sectionSegment.replaceAll(".", ""))
-	: undefined;
+const sectionProduct = await getDirectoryEntryBySection(sectionSegment);
 const productRefs = (entry.data.products ?? []).map((product) =>
 	typeof product === "string"
 		? ({ collection: "directory", id: product } as const)

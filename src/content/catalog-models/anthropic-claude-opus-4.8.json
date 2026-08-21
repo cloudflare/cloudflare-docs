@@ -832,6 +832,7 @@
 	"request_formats": [
 		"anthropic-messages"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-28 17:14:04",
 	"schema": {

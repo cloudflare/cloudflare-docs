@@ -1,6 +1,6 @@
 ---
 title: FileTree
-description: Rules for the FileTree Starlight component.
+description: Rules for the FileTree Nimbus component.
 ---
 
 ## Rules

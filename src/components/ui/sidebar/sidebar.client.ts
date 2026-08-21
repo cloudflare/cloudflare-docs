@@ -238,8 +238,7 @@ function initPersistence(root: HTMLElement): (() => void) | null {
 			inputs.find((el) => el.getClientRects().length > 0) ?? inputs[0];
 		if (!target) return;
 		e.preventDefault();
-		// Reaches document before window (bubble), so this preempts DocSearch's
-		// window-level "/" handler and keeps "/" scoped to the filter.
+		// Keep "/" scoped to the sidebar filter instead of other global shortcuts.
 		e.stopPropagation();
 		target.focus();
 	});
