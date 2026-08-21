@@ -19,8 +19,6 @@ Flagship supports two kinds of API tokens. Both use the same [Create API token](
 
 Use an account-wide token when a trusted server-side workflow needs access to every Flagship app. Use an app-scoped token when that workflow should only touch the apps you select — for example, CI or a backend service for one product.
 
-API tokens are secrets. Do not put them in client-side or public-facing code.
-
 Both token types support **Read**, **Write**, and **Evaluate**. The names change with the resource:
 
 | Access                  | Account-wide          | App-scoped                |
