@@ -9,7 +9,7 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 <figure
 	class="host-selector-egress-diagram not-content"
-	aria-label="How egress policy host selectors work: a client requests a public hostname, Cloudflare Gateway assigns a temporary initial resolved IP from its default public range, matches the connection to a Host, Domain, Application, or Content Categories policy, then rewrites the destination and egresses the traffic to the real public IP"
+	aria-label="How egress policy host selectors work: a client requests a public hostname, Cloudflare Gateway assigns a temporary initial resolved IP from its default public range, matches the connection to a Host egress policy, then rewrites the destination and egresses the traffic to the real public IP"
 >
 	<ol class="flow" role="list">
 		<li class="flow-step">
