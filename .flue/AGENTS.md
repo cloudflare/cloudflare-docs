@@ -170,7 +170,7 @@ Both the server and the eval runner need `DOCS_FLUE_INTERNAL_TOKEN` set to the s
 
 ### CI
 
-The `evals` job in `.github/workflows/flue-ci.yml` starts the dev server, runs evals, and uploads `vitest-results.json` as an artifact. The job is skipped for fork PRs because it needs `DOCS_FLUE_INTERNAL_TOKEN` and Workers AI access.
+Evals are **not** run in CI. They are nondeterministic (live model calls) and were causing flaky PR failures. Run them locally before merging changes to agent behavior.
 
 ### Adding a new eval case
 
