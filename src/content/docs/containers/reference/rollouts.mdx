@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Rollouts
 description: How container instances update after a deploy, including step percentages, grace periods, and rollout modes.
 sidebar:
-  order: 2
+  order: 5
 products:
   - containers
 ---
@@ -12,7 +12,7 @@ import { WranglerConfig, PackageManagers } from "~/components";
 
 ## How rollouts work
 
-A **rollout** applies a target container application configuration after you [deploy](/containers/deploy/) a Worker that uses Containers. The target can change the image, instance type, limits, placement, or other container settings.
+A **rollout** applies a target container application configuration after you [deploy](/containers/guides/deploy/) a Worker that uses Containers. The target can change the image, instance type, limits, placement, or other container settings.
 
 A **container instance** is one running copy of your container image on Cloudflare's network. It runs the process your image starts (`ENTRYPOINT`/`CMD` in the Dockerfile, or the base image default). When the target changes the image, the rollout replaces container instances with copies that run the target image. Rollouts do not change Durable Object storage.
 
@@ -53,14 +53,14 @@ When the rollout selects a container instance to update:
 2. **Signal stop.** The platform sends `SIGTERM` to the main process in the container so it can stop accepting new work and finish in-flight work. Handle `SIGTERM` in your image if that process needs cleanup before exit.
 3. **Drain.** The process has up to 15 minutes to exit after `SIGTERM`.
 4. **Force stop if needed.** If the process is still running after 15 minutes, the platform sends `SIGKILL`.
-5. **After exit.** The Container class [`onStop`](/containers/container-class/#onstop) hook can run in the Worker once the container process has exited.
+5. **After exit.** The Container class [`onStop`](/containers/reference/container-class/#onstop) hook can run in the Worker once the container process has exited.
 6. **Start a new container instance** with the target image. Disk is [ephemeral](/containers/faq/#is-disk-persistent-what-happens-to-my-disk-when-my-container-sleeps) unless you store data outside the container filesystem.
 
 Each selected container instance follows this sequence on its own schedule. The fleet does not restart in a single moment.
 
 ### Requests while a container instance starts
 
-The new container instance must start its process. Startup often takes on the order of seconds, depending on image size and what runs at start. Refer to [cold starts](/containers/platform-details/architecture/#starting-a-container).
+The new container instance must start its process. Startup often takes on the order of seconds, depending on image size and what runs at start. Refer to [cold starts](/containers/concepts/architecture/#starting-a-container).
 
 A request that needs that container instance may wait until the container is ready, or fail if a client or Worker timeout is shorter than startup. Keep startup work fast, use port readiness checks if you configure them, and set timeouts with startup in mind.
 
@@ -68,7 +68,7 @@ A request that needs that container instance may wait until the container is rea
 
 `rollout_active_grace_period` applies only during a rollout, when the platform chooses which container instances to replace.
 
-Containers are [backed by Durable Objects](/containers/platform-details/architecture/#worker-to-durable-object). Each running container instance is associated with a Durable Object instance that starts it and sends it traffic. The grace period is how long that connection must already have been up before a rollout may shut the container down. It is not measured from deploy completion.
+Containers are [backed by Durable Objects](/containers/concepts/architecture/#worker-to-durable-object). Each running container instance is associated with a Durable Object instance that starts it and sends it traffic. The grace period is how long that connection must already have been up before a rollout may shut the container down. It is not measured from deploy completion.
 
 | Value                                | Effect                                                                                                                           |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -157,7 +157,7 @@ Use none when the deploy should not publish a new image or start a container ins
 
 ## Related
 
-- [Deploy Containers](/containers/deploy/)
-- [Lifecycle of a Container](/containers/platform-details/architecture/)
-- [Image management](/containers/platform-details/image-management/)
+- [Deploy Containers](/containers/guides/deploy/)
+- [Lifecycle of a Container](/containers/concepts/architecture/)
+- [Image management](/containers/guides/image-management/)
 - [Containers configuration](/workers/wrangler/configuration/#containers)

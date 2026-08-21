@@ -1,6 +1,6 @@
 ---
 pcx_content_type: get-started
-title: Getting started
+title: Get started
 description: Deploy your first Container on Cloudflare by building an image, configuring a Worker, and routing requests to container instances.
 sidebar:
   order: 2
@@ -118,7 +118,7 @@ Your container image must be able to run on the `linux/amd64` architecture, but 
 
 In the example you just deployed, it is a simple Golang server that responds to requests on port 8080 using
 the `MESSAGE` environment variable that will be set in the Worker and an [auto-generated
-environment variable](/containers/platform-details/#environment-variables) `CLOUDFLARE_DEPLOYMENT_ID.`
+environment variable](/containers/reference/environment-variables/) `CLOUDFLARE_DEPLOYMENT_ID.`
 
 ```go
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -171,7 +171,7 @@ This defines basic configuration for the container:
 
 The `Container` class itself extends [`DurableObject`](/durable-objects/), so your subclass has access to the full Durable Object API. The Durable Object handles routing, lifecycle, and persistent state, while the container process runs your image inside a Linux VM. This means you can use [`this.ctx.storage`](/durable-objects/api/sqlite-storage-api/) to persist data that survives container restarts and resides close to the container itself.
 
-Refer to the [Container class reference](/containers/container-class/) and the [low-level Durable Object container API](/durable-objects/api/container/) for more details.
+Refer to the [Container class reference](/containers/reference/container-class/) and the [low-level Durable Object container API](/durable-objects/api/container/) for more details.
 
 #### Routing to Containers
 
@@ -235,6 +235,6 @@ After launching your Worker, go to the Containers Dashboard by selecting
 To do more:
 
 - Modify the image by changing the Dockerfile and running `wrangler deploy`
-- Refer to [Deploy Containers](/containers/deploy/) for Workers Builds and rollout behavior
+- Refer to [Deploy Containers](/containers/guides/deploy/) for Workers Builds and rollout behavior
 - Browse [examples](/containers/examples/) for more patterns
 - Check the [Frequently Asked Questions](/containers/faq/) for platform behavior and limitations

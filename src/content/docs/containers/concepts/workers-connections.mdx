@@ -2,13 +2,13 @@
 title: Connect to Workers and Bindings
 pcx_content_type: concept
 sidebar:
-  order: 51
+  order: 4
 description: Access KV, R2, Durable Objects, and other bindings from a container.
 products:
   - containers
 ---
 
-Containers can access [Workers bindings](/workers/runtime-apis/bindings/) — KV, R2, D1, Durable Objects, and others — through [outbound handlers](/containers/platform-details/outbound-traffic/#define-outbound-handlers). An outbound handler intercepts HTTP requests from the container and runs inside the Workers runtime, where all of your configured bindings are available.
+Containers can access [Workers bindings](/workers/runtime-apis/bindings/) — KV, R2, D1, Durable Objects, and others — through [outbound handlers](/containers/concepts/outbound-traffic/#define-outbound-handlers). An outbound handler intercepts HTTP requests from the container and runs inside the Workers runtime, where all of your configured bindings are available.
 
 The container makes a plain HTTP request to a virtual hostname (for example, `http://my.kv/some-key`), and the outbound handler resolves it using the bound resource. No SDK or client library is required inside the container.
 
@@ -57,6 +57,6 @@ The `ctx` argument exposes `containerId`, which lets you interact with the conta
 
 ## Related resources
 
-- [Handle outbound traffic](/containers/platform-details/outbound-traffic/) — Block, allow, and intercept all outbound HTTP from a container
-- [Environment variables and secrets](/containers/platform-details/environment-variables/) — Configure secrets and environment variables
+- [Handle outbound traffic](/containers/concepts/outbound-traffic/) — Block, allow, and intercept all outbound HTTP from a container
+- [Environment variables and secrets](/containers/reference/environment-variables/) — Configure secrets and environment variables
 - [Durable Object interface](/durable-objects/api/container/) — Full `ctx.container` API reference

@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Container Interface
 sidebar:
-  order: 2.5
+  order: 1
 description: API reference for the Container interface and utility functions
 products:
   - containers
@@ -67,7 +67,7 @@ export class MyContainer extends Container {
 
 ## Execute commands
 
-Use `this.ctx.container.exec()` to start another process inside a running Container. Refer to [Execute commands](/containers/execute-commands/) for startup, streaming, output, and process-control examples.
+Use `this.ctx.container.exec()` to start another process inside a running Container. Refer to [Execute commands](/containers/guides/execute-commands/) for startup, streaming, output, and process-control examples.
 
 ## Properties
 
@@ -102,7 +102,7 @@ Configure these as class fields on your subclass. They apply to every instance o
   `true`) — controls whether the container can make outbound HTTP requests. Set
   to `false` for sandboxed environments where you want to intercept or block all
   outbound traffic. For more information, refer to [Handle outbound
-  traffic](/containers/platform-details/outbound-traffic/).
+  traffic](/containers/concepts/outbound-traffic/).
 
 - <span id="pingendpoint"></span>**`pingEndpoint`** (`string`, default:
   `"ping"`) — the host and path the class uses to health-check the container
@@ -719,7 +719,7 @@ export default {
 ```
 </TypeScriptExample>
 
-For more information, refer to [Handle outbound traffic](/containers/platform-details/outbound-traffic/).
+For more information, refer to [Handle outbound traffic](/containers/concepts/outbound-traffic/).
 
 ## Utility functions
 

@@ -11,7 +11,7 @@ products:
 
 import { PackageManagers } from "~/components";
 
-Sandbox runs on [Containers](/containers/). For deploy commands, Workers Builds, and rollout flags, refer to [Deploy Containers](/containers/deploy/) and [Rollouts](/containers/platform-details/rollouts/).
+Sandbox runs on [Containers](/containers/). For deploy commands, Workers Builds, and rollout flags, refer to [Deploy Containers](/containers/guides/deploy/) and [Rollouts](/containers/reference/rollouts/).
 
 To put `exposePort()` on a custom domain, refer to [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
 
@@ -33,7 +33,7 @@ When you bump the npm package:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy --containers-rollout=immediate" />
 
-   Use this for stable to `@next` cutovers and other breaking package/image pairs. Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/platform-details/rollouts/).
+   Use this for stable to `@next` cutovers and other breaking package/image pairs. Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/reference/rollouts/).
 
 Do not mix a stable package with a `@next` image, or the reverse.
 
@@ -54,11 +54,11 @@ For production, use `wrangler deploy` so the package and image can update togeth
 
 Non-production Workers Builds defaults to `wrangler versions upload`, which does not publish a new image. [Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for these Workers (they implement Durable Objects). Test with `wrangler dev`, or with a staging Worker or [environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) that runs `wrangler deploy`.
 
-More detail: [Before production](/containers/deploy/#before-production).
+More detail: [Before production](/containers/guides/deploy/#before-production).
 
 ## Related
 
-- [Deploy Containers](/containers/deploy/)
-- [Rollouts](/containers/platform-details/rollouts/)
+- [Deploy Containers](/containers/guides/deploy/)
+- [Rollouts](/containers/reference/rollouts/)
 - [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/)
 - [Migrate to Sandbox SDK 1.0 preview](/sandbox/1-0-preview/migrate/)

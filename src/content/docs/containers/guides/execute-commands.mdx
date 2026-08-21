@@ -3,7 +3,7 @@ title: Execute commands
 description: Run additional processes inside an active Container.
 pcx_content_type: how-to
 sidebar:
-  order: 2.6
+  order: 2
 products:
   - containers
 reviewed: 2026-06-18
@@ -11,7 +11,7 @@ reviewed: 2026-06-18
 
 import { TypeScriptExample } from "~/components";
 
-Use `exec()` to start another process inside a running [Container](/containers/container-class/). The examples call `this.ctx.container.exec()` inside a class extending `Container` from `@cloudflare/containers`.
+Use `exec()` to start another process inside a running [Container](/containers/reference/container-class/). The examples call `this.ctx.container.exec()` inside a class extending `Container` from `@cloudflare/containers`.
 
 `exec()` does not start a stopped Container. In remote procedure call (RPC) methods, check `this.ctx.container.running` and call `await this.start()` when needed. You can also use the `onStart()` hook to run any series of commands whenever the Container starts.
 
