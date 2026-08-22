@@ -17,7 +17,9 @@ export function requestsMarkdown(request: Request): boolean {
 	if (new URL(request.url).pathname.endsWith("/index.md")) return true;
 	return (request.headers.get("Accept") ?? "")
 		.split(",")
-		.some((type) => type.trim().toLowerCase() === "text/markdown");
+		.some(
+			(type) => type.split(";")[0].trim().toLowerCase() === "text/markdown",
+		);
 }
 
 export function markdownNotFound(): Response {

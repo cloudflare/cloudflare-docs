@@ -43,6 +43,18 @@ describe("Cloudflare Docs", () => {
 			expect(body).toContain("/llms.txt");
 		});
 
+		it("responds with markdown 404 for parameterized Accept media types", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: { Accept: "text/markdown; charset=utf-8, text/html;q=1.0" },
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+			const body = await response.text();
+			expect(body).toContain("# Page not found");
+			expect(body).toContain("/llms.txt");
+		});
+
 		it("returns html 404 for unrelated Accept media types", async () => {
 			const request = new Request("http://fakehost/non-existent", {
 				headers: {
