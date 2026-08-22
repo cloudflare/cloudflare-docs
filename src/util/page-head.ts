@@ -145,6 +145,23 @@ export function buildStructuredData({
 			"@type": "Organization",
 			name: "Cloudflare",
 			url: "https://www.cloudflare.com/",
+			sameAs: [
+				"https://twitter.com/cloudflare",
+				"https://www.linkedin.com/company/cloudflare",
+				"https://github.com/cloudflare",
+			],
+			logo: {
+				"@type": "ImageObject",
+				url: "https://developers.cloudflare.com/logo.svg",
+			},
+			address: {
+				"@type": "PostalAddress",
+				streetAddress: "101 Townsend St",
+				addressLocality: "San Francisco",
+				addressRegion: "CA",
+				postalCode: "94107",
+				addressCountry: "US",
+			},
 		},
 		isPartOf: {
 			"@type": "WebSite",
