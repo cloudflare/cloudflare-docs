@@ -167,13 +167,15 @@ export function buildStructuredData({
 			contactPoint: [
 				{
 					"@type": "ContactPoint",
-					contactType: "customer support",
+					contactType: "Customer Support",
 					url: "https://support.cloudflare.com/",
+					availableLanguage: ["English"],
 				},
 				{
 					"@type": "ContactPoint",
-					contactType: "sales",
+					contactType: "Sales",
 					url: "https://www.cloudflare.com/contact/",
+					availableLanguage: ["English"],
 				},
 			],
 		},
