@@ -145,7 +145,7 @@ export function buildStructuredData({
 			"@type": "Organization",
 			name: "Cloudflare",
 			description:
-				"Cloudflare provides connectivity, security, and performance services.",
+				"One platform for your apps, agents, and workforce. Build, secure, and scale without managing infrastructure",
 			url: "https://www.cloudflare.com/",
 			logo: {
 				"@type": "ImageObject",
