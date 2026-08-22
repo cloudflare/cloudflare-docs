@@ -9,6 +9,14 @@ date: 2026-08-22
 
 Wrangler and the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/) now use optional OAuth scopes. During authorization, you can choose which optional scopes to grant instead of approving every scope requested by each client.
 
+The consent dialog now includes the option to edit the permissions you grant to Wrangler or the Cloudflare API MCP server:
+
+![OAuth consent dialog with an Edit Permissions button](~/assets/images/agents/oauth-optional-scopes-review.png)
+
+You can then choose which specific permissions to grant:
+
+![OAuth permission editor with controls for individual scopes](~/assets/images/agents/oauth-optional-scopes-edit.png)
+
 Required scopes remain selected. Choosing fewer optional scopes limits each tool's access to the permissions needed for your workflow.
 
 If a command or tool call needs a scope that you declined, reauthorize the client and grant that scope.
