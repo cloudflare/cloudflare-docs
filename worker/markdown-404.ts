@@ -3,7 +3,7 @@
 // gets a short Markdown body with recovery links instead of the HTML splash
 // page. Status stays a real 404.
 
-const MARKDOWN_404 = `# Page not found
+const MARKDOWN_404 = `# 404 Page not found
 
 The page you requested does not exist or has moved.
 

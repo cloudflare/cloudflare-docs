@@ -26,7 +26,7 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(404);
 			expect(response.headers.get("Content-Type")).toContain("text/markdown");
 			const body = await response.text();
-			expect(body).toContain("# Page not found");
+			expect(body).toContain("# 404 Page not found");
 			expect(body).toContain("/llms.txt");
 			expect(body).toContain("ai-search.developers.cloudflare.com");
 		});
@@ -39,7 +39,7 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(404);
 			expect(response.headers.get("Content-Type")).toContain("text/markdown");
 			const body = await response.text();
-			expect(body).toContain("# Page not found");
+			expect(body).toContain("# 404 Page not found");
 			expect(body).toContain("/llms.txt");
 		});
 
@@ -51,7 +51,7 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(404);
 			expect(response.headers.get("Content-Type")).toContain("text/markdown");
 			const body = await response.text();
-			expect(body).toContain("# Page not found");
+			expect(body).toContain("# 404 Page not found");
 			expect(body).toContain("/llms.txt");
 		});
 
