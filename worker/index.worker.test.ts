@@ -17,7 +17,9 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(404);
 			expect(await response.text()).toContain("Check the URL,");
 		});
+	});
 
+	describe("markdown 404 handling", () => {
 		it("responds with markdown 404 for /index.md requests", async () => {
 			const request = new Request("http://fakehost/non-existent/index.md");
 			const response = await SELF.fetch(request);
@@ -39,6 +41,18 @@ describe("Cloudflare Docs", () => {
 			const body = await response.text();
 			expect(body).toContain("# Page not found");
 			expect(body).toContain("/llms.txt");
+		});
+
+		it("returns html 404 for unrelated Accept media types", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: {
+					Accept: "text/markdown-extra, application/not-text-markdown",
+				},
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/html");
+			expect(await response.text()).toContain("Check the URL,");
 		});
 	});
 

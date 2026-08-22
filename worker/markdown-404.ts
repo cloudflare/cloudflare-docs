@@ -15,7 +15,9 @@ Search the documentation via the [AI Search API](https://ai-search.developers.cl
 /** True when the client asked for Markdown, via /index.md or Accept header. */
 export function requestsMarkdown(request: Request): boolean {
 	if (new URL(request.url).pathname.endsWith("/index.md")) return true;
-	return (request.headers.get("Accept") ?? "").includes("text/markdown");
+	return (request.headers.get("Accept") ?? "")
+		.split(",")
+		.some((type) => type.trim().toLowerCase() === "text/markdown");
 }
 
 export function markdownNotFound(): Response {
