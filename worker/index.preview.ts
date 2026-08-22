@@ -36,10 +36,8 @@ const API_CATALOG = JSON.stringify({
 				},
 			],
 			"service-doc": [
-				{
-					href: "https://developers.cloudflare.com/api/index.md",
-					type: "text/markdown",
-				},
+				// TODO: Add a Markdown `service-doc` URL once /api/* supports a real
+				// Markdown representation (e.g. content negotiation or /index.md).
 				{
 					href: "https://developers.cloudflare.com/api/",
 					type: "text/html",
