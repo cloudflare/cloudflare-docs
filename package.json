@@ -24,6 +24,7 @@
 		"postinstall": "patch-package",
 		"preview": "astro preview",
 		"script:optimize-svgs": "tsx scripts/optimize-svgs.ts",
+		"script:fetch-github-contributors": "tsx bin/fetch-github-contributors.ts",
 		"start": "astro dev",
 		"sync": "astro sync",
 		"test": "vitest",
