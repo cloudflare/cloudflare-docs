@@ -73,6 +73,7 @@ export { default as PreviewsConfigDiagram } from "./components/PreviewsConfigDia
 export { default as PreviewsDOCarouselDiagram } from "./components/PreviewsDOCarouselDiagram.astro";
 export { default as PreviewsResourcesDiagram } from "./components/PreviewsResourcesDiagram.astro";
 export { default as WorkerPreviewsDiagram } from "./components/WorkerPreviewsDiagram.astro";
+export { default as WorkerPreviewsAgentPrompt } from "./components/WorkerPreviewsAgentPrompt.astro";
 export { default as AnimatedWorkflowDiagram } from "./components/cf/AnimatedWorkflowDiagram.astro";
 export { default as AgentsPlatformDiagram } from "./components/cf/AgentsPlatformDiagram.astro";
 export { default as R2LocalUploadsDiagram } from "./components/cf/R2LocalUploadsDiagram.astro";
