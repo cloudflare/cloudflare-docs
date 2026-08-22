@@ -26,6 +26,7 @@ describe("Cloudflare Docs", () => {
 			const body = await response.text();
 			expect(body).toContain("# Page not found");
 			expect(body).toContain("/llms.txt");
+			expect(body).toContain("ai-search.developers.cloudflare.com");
 		});
 
 		it("responds with markdown 404 for Accept: text/markdown requests", async () => {
