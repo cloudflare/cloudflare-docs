@@ -147,10 +147,35 @@ export function buildStructuredData({
 			description:
 				"One platform for your apps, agents, and workforce. Build, secure, and scale without managing infrastructure",
 			url: "https://www.cloudflare.com/",
+			sameAs: [
+				"https://github.com/cloudflare",
+				"https://www.linkedin.com/company/cloudflare",
+				"https://x.com/cloudflare",
+			],
 			logo: {
 				"@type": "ImageObject",
 				url: "https://developers.cloudflare.com/logo.svg",
 			},
+			address: {
+				"@type": "PostalAddress",
+				streetAddress: "101 Townsend St",
+				addressLocality: "San Francisco",
+				addressRegion: "CA",
+				postalCode: "94107",
+				addressCountry: "US",
+			},
+			contactPoint: [
+				{
+					"@type": "ContactPoint",
+					contactType: "customer support",
+					url: "https://support.cloudflare.com/",
+				},
+				{
+					"@type": "ContactPoint",
+					contactType: "sales",
+					url: "https://www.cloudflare.com/contact/",
+				},
+			],
 		},
 		isPartOf: {
 			"@type": "WebSite",
