@@ -1,0 +1,174 @@
+---
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
+
+export const prerender = true;
+---
+
+<SplashLayout
+	title="Contact"
+	description="How to get help with Cloudflare Developer Docs, product support, community, and sales."
+>
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader
+				title="Contact"
+				tagline="Choose the right path for docs feedback, product support, community questions, or sales."
+			/>
+
+			<section class="mt-12 pt-10" aria-label="Contact options">
+				<div class="space-y-10">
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Feedback on Developer Docs
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							The docs are maintained in a public GitHub repository. If you spot
+							a bug, a missing step, or a broken example, file an issue so it
+							can be triaged and tracked.
+						</p>
+						<ul class="text-muted-foreground list-disc pl-6 leading-relaxed">
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+									target="_blank"
+									rel="noopener"
+								>
+									Report an issue (GitHub)
+								</a>
+							</li>
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://github.com/cloudflare/cloudflare-docs"
+									target="_blank"
+									rel="noopener"
+								>
+									cloudflare/cloudflare-docs
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Product support
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							If you need help troubleshooting a Cloudflare product or your
+							account, use Cloudflare support channels.
+						</p>
+						<ul class="text-muted-foreground list-disc pl-6 leading-relaxed">
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://support.cloudflare.com/"
+									target="_blank"
+									rel="noopener"
+								>
+									Cloudflare Support
+								</a>
+							</li>
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://www.cloudflarestatus.com/"
+									target="_blank"
+									rel="noopener"
+								>
+									Cloudflare status
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Community
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							For general “how do I…” questions and peer help, community
+							channels are often the fastest route.
+						</p>
+						<ul class="text-muted-foreground list-disc pl-6 leading-relaxed">
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://community.cloudflare.com/"
+									target="_blank"
+									rel="noopener"
+								>
+									Community forum
+								</a>
+							</li>
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://discord.cloudflare.com/"
+									target="_blank"
+									rel="noopener"
+								>
+									Developers Discord
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Sales
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							For enterprise plans, trials, or procurement questions, use the
+							canonical Cloudflare sales contact page:
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<a
+								class="underline underline-offset-4"
+								href="https://www.cloudflare.com/contact/"
+								target="_blank"
+								rel="noopener"
+							>
+								Contact Cloudflare sales
+							</a>
+						</p>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Security issues
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							To report a security vulnerability in a Cloudflare product, follow
+							Cloudflare’s security disclosure process:
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<a
+								class="underline underline-offset-4"
+								href="https://www.cloudflare.com/disclosure/"
+								target="_blank"
+								rel="noopener"
+							>
+								Report security issues
+							</a>
+						</p>
+					</div>
+				</div>
+			</section>
+		</PageShell>
+	</div>
+</SplashLayout>

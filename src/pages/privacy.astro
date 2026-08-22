@@ -1,0 +1,108 @@
+---
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
+import OneTrust from "~/components/OneTrust.astro";
+
+export const prerender = true;
+---
+
+<SplashLayout
+	title="Privacy"
+	description="Privacy information for Cloudflare Developer Docs, with links to Cloudflare's canonical policies."
+>
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader
+				title="Privacy"
+				tagline="Cloudflare Developer Docs is operated by Cloudflare. For Cloudflare-wide privacy terms, use the canonical policy links below."
+			/>
+
+			<section class="mt-12 pt-10" aria-label="Privacy information">
+				<div class="space-y-10">
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Cloudflare privacy policy
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							Cloudflare’s official privacy policy is published on
+							cloudflare.com. That page is the source of truth for
+							Cloudflare-wide privacy practices and contact information.
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<a
+								class="underline underline-offset-4"
+								href="https://www.cloudflare.com/privacypolicy/"
+								target="_blank"
+								rel="noopener"
+							>
+								Cloudflare Privacy Policy
+							</a>
+						</p>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Cookie settings
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							Use the button below to review and update cookie preferences for
+							this site.
+						</p>
+						<div class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<OneTrust label="Cookie settings" />
+						</div>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							For policy details, refer to the canonical Cloudflare cookie
+							policy.
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<a
+								class="underline underline-offset-4"
+								href="https://www.cloudflare.com/cookie-policy/"
+								target="_blank"
+								rel="noopener"
+							>
+								Cloudflare Cookie Policy
+							</a>
+						</p>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Developer Docs scope
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							This page exists to provide a stable privacy entry point on
+							developers.cloudflare.com for humans and automated crawlers. For
+							the authoritative policy text, always refer to the canonical
+							Cloudflare Privacy Policy.
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							If you have a question specific to Developer Docs content, use the
+							public issue tracker:
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<a
+								class="underline underline-offset-4"
+								href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+								target="_blank"
+								rel="noopener"
+							>
+								Report an issue (GitHub)
+							</a>
+						</p>
+					</div>
+				</div>
+			</section>
+		</PageShell>
+	</div>
+</SplashLayout>

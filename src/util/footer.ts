@@ -135,6 +135,9 @@ export const defaultFooterConfig: FooterConfig = {
 			title: "Developers",
 			links: [
 				{ text: "Documentation", href: "https://developers.cloudflare.com/" },
+				{ text: "About", href: "/about/" },
+				{ text: "Contact", href: "/contact/" },
+				{ text: "Privacy", href: "/privacy/" },
 				{
 					text: "Learning center",
 					href: "https://www.cloudflare.com/learning/",

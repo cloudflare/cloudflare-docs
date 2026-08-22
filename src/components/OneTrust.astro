@@ -1,6 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import PrivacyChoicesImage from "~/assets/privacyoptions.svg";
+import PrivacyChoicesImage from "~/assets/privacyoptions.svg?url";
 
 interface Props {
 	label?: string;
@@ -28,7 +27,13 @@ const uuid = isProductionDeployment
 </script>
 <!-- OneTrust Cookies Settings button start -->
 <div class="inline-flex items-center gap-2">
-	<Image src={PrivacyChoicesImage} alt="privacy options" height="12" />
+	<img
+		src={PrivacyChoicesImage}
+		alt=""
+		width="26"
+		height="12"
+		aria-hidden="true"
+	/>
 	<button id="ot-sdk-btn" class="ot-sdk-show-settings">{label}</button>
 </div>
 <!-- OneTrust Cookies Settings button end -->
