@@ -22,32 +22,6 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
-// Short Markdown 404 for agent clients. Status stays a real 404; the body
-// gives agents recovery links instead of the HTML splash page.
-const MARKDOWN_404 = `# Page not found
-
-The page you requested does not exist or has moved.
-
-Browse the documentation via [llms.txt](/llms.txt).
-
-Search the documentation via the [AI Search API](https://ai-search.developers.cloudflare.com/api/ai-search/search) (POST \`{"messages":[{"role":"user","content":"your query"}]}\`).
-`;
-
-/** True when the client asked for Markdown, via /index.md or Accept header. */
-function requestsMarkdown(request: Request): boolean {
-	if (new URL(request.url).pathname.endsWith("/index.md")) return true;
-	return (request.headers.get("Accept") ?? "").includes("text/markdown");
-}
-
-function markdownNotFound(): Response {
-	return new Response(MARKDOWN_404, {
-		status: 404,
-		headers: {
-			"Content-Type": "text/markdown; charset=utf-8",
-		},
-	});
-}
-
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
 // from dot-prefixed directories, so this must be handled directly in the worker.
