@@ -145,11 +145,6 @@ export function buildStructuredData({
 			"@type": "Organization",
 			name: "Cloudflare",
 			url: "https://www.cloudflare.com/",
-			sameAs: [
-				"https://twitter.com/cloudflare",
-				"https://www.linkedin.com/company/cloudflare",
-				"https://github.com/cloudflare",
-			],
 			logo: {
 				"@type": "ImageObject",
 				url: "https://developers.cloudflare.com/logo.svg",
