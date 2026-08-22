@@ -1,59 +1,86 @@
 ---
 pcx_content_type: get-started
 title: Get started
-description: Create Previews with Wrangler, Workers Builds, external CI, or the API.
+description: Set up Worker Previews in two steps — configure Preview settings, then deploy from any workflow.
 sidebar:
   order: 1
 products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { DashButton, Steps, TabItem, Tabs, WorkerPreviewsAgentPrompt } from "~/components";
 
-If your Worker uses bindings, environment variables, or secrets, [configure Preview settings](/workers/previews/configuration/) first. Previews do not inherit from production.
+Previews give each branch its own isolated environment with a live URL. Production stays untouched.
 
-To help configure your Preview, refer to the following:
+Setup has two parts: **configure** your Preview settings, then **deploy** a Preview.
 
-| I want to...                                       | Do this                                                        |
-| -------------------------------------------------- | -------------------------------------------------------------- |
-| Configure variables, secrets, or bindings          | [Configure Preview settings](/workers/previews/configuration/) |
-| Isolate Durable Object storage per branch          | [Resources and isolation](/workers/previews/resources/)        |
-| Use `preview.example.com` instead of `workers.dev` | [Enable custom domains](/workers/previews/custom-domains/)     |
-| Make Preview URLs private with sign-in             | [Use Cloudflare Access](/workers/previews/#access-control)     |
+<WorkerPreviewsAgentPrompt />
 
-## Workers Builds
+## Step 1: Configure Preview settings
 
-Use [Workers Builds](/workers/ci-cd/builds/) when you want Cloudflare to automatically build and deploy a Preview on every commit and comment the Preview URL back on the pull request.
+Previews do not use your production variables, secrets, or bindings. You need to define what each Preview starts with.
 
-1. [Connect your Worker to a GitHub or GitLab repository](/workers/ci-cd/builds/#get-started)
-2. Enable [Preview Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds)
-3. Push a branch or open a pull request
+Pick where you want to manage that configuration:
 
-Preview builds run `npx wrangler preview` by default. Workers Builds triggers a build, deploys the Preview, and [comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment) the Preview URL and Deployment URL on the pull request. You can customize the Preview command in **Settings > Build**.
+<Tabs syncKey="workerPreviewsSetup">
+<TabItem label="Dashboard">
 
-## Wrangler CLI
+<Steps>
+1. In the Cloudflare dashboard, go to **Workers & Pages**.
 
-If you deploy from the command line, one command creates a Preview:
+   <DashButton url="/?to=/:account/workers-and-pages" />
 
-```sh
-npx wrangler preview
+2. Select your Worker.
+3. Go to **Settings** and switch from **Production** to **Previews**.
+4. Add variables, secrets, and bindings for Previews. You can import names from Production.
+</Steps>
+
+</TabItem>
+<TabItem label="Wrangler">
+
+Add a `previews` block to your Wrangler configuration file. Top-level settings are production. The `previews` block overrides them for Previews.
+
+```txt title="wrangler.jsonc"
+{
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+  "previews": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    }
+  }
+}
 ```
 
-Use `--name` to set the Preview name explicitly instead of deriving it from the branch:
+</TabItem>
+</Tabs>
 
-```sh
-npx wrangler preview --name staging
-```
+For the full list of what inherits from production and what you need to restate, refer to [Configuration](/workers/previews/configuration/).
 
-For machine-parseable output in scripts:
+## Step 2: Deploy a Preview
 
-```sh
-npx wrangler preview --json
-```
+All three options use `npx wrangler preview` under the hood. Pick the one that fits your workflow:
 
-## External CI
+<Tabs syncKey="workerPreviewsDeploy">
+<TabItem label="Workers Builds (Git push)">
 
-If GitHub Actions, GitLab CI, or another provider runs your deployments, add `npx wrangler preview` to your workflow.
+Best when your Worker is connected to GitHub or GitLab and you want automatic Previews on every push.
+
+<Steps>
+1. [Connect your repo to Workers Builds](/workers/ci-cd/builds/#get-started).
+2. Enable [Preview Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds).
+3. Push a branch or open a pull request.
+</Steps>
+
+Workers Builds runs `npx wrangler preview`, deploys the Preview, and [comments the Preview URL](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment) on your PR.
+
+</TabItem>
+<TabItem label="External CI">
+
+Best when you already use GitHub Actions, GitLab CI, Buildkite, or another provider.
+
+Add `wrangler preview` to your CI workflow. You do not need Workers Builds.
 
 ```yaml title=".github/workflows/preview.yml"
 name: Preview
@@ -73,34 +100,37 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
 
-Each push to the PR branch creates a new deployment under the same Preview. The Preview URL stays stable across commits.
+The Preview URL stays stable across commits to the same PR.
 
-For more CI examples, refer to [How-to](/workers/previews/recipes/).
+For more CI examples, refer to [GitHub Actions and CI](/workers/previews/ci-cd/).
 
-## API
+</TabItem>
+<TabItem label="Local (Wrangler CLI)">
 
-You can create Previews and deployments directly through the API.
+Best for testing a branch on your machine before pushing.
 
-{/* TODO: Link to Preview-specific API endpoints once published */}
-
-```bash title="Create a Preview"
-curl --request POST \
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/workers/{worker_id}/previews" \
-  --header "Authorization: Bearer {api_token}" \
-  --header "Content-Type: application/json" \
-  --data '{ "name": "my-feature" }'
+```sh
+npx wrangler preview
 ```
 
-```bash title="Create a deployment on a Preview"
-curl --request POST \
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/workers/{worker_id}/previews/my-feature/deployments" \
-  --header "Authorization: Bearer {api_token}" \
-  --header "Content-Type: multipart/form-data" \
-  --form "main_module=@index.js" \
-  --form 'metadata={"main_module":"index.js"}'
+The Preview name defaults to your current git branch. Set it explicitly with `--name`:
+
+```sh
+npx wrangler preview --name staging
 ```
+
+</TabItem>
+</Tabs>
+
+## What to know about resources
+
+Durable Objects and Containers get separate state per Preview automatically. For KV, D1, R2, and other resources, isolation depends on what you bind the Preview to — point it at a staging resource to keep data separate.
+
+Full details in [Resources and isolation](/workers/previews/resources/).
 
 ## Next steps
 
-- Follow a step-by-step how-to for your use case in [How-to](/workers/previews/recipes/)
-- Learn the full set of [Wrangler commands](/workers/wrangler/commands/workers/#preview)
+- [Configuration](/workers/previews/configuration/) — full reference for variables, secrets, bindings, and base configuration
+- [Resources and isolation](/workers/previews/resources/) — which resources are isolated and which are shared
+- [GitHub Actions and CI](/workers/previews/ci-cd/) — more CI examples and cleanup workflows
+- [Wrangler `preview` commands](/workers/wrangler/commands/workers/#preview) — all CLI flags and options
