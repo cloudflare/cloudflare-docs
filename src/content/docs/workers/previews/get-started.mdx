@@ -10,17 +10,15 @@ products:
 
 import { DashButton, Steps, TabItem, Tabs, WorkerPreviewsAgentPrompt } from "~/components";
 
-Previews give each branch its own isolated environment with a live URL. Production stays untouched.
+To avoid any risk of accidentally using production resources, Previews are fully isolated from production and do not inherit any production configuration.
 
-Setup has two parts: **configure** your Preview settings, then **deploy** a Preview.
+Configure your Previews [base configuration](/workers/previews/configuration/#base-configuration) first to deploy a running Preview from any branch.
 
 <WorkerPreviewsAgentPrompt />
 
-## Step 1: Configure Preview settings
+## Step 1: Configure Previews base settings
 
-Previews do not use your production variables, secrets, or bindings. You need to define what each Preview starts with.
-
-Pick where you want to manage that configuration:
+You can configure Previews in the dashboard or your Wrangler configuration file, just as you would for production.
 
 <Tabs syncKey="workerPreviewsSetup">
 <TabItem label="Dashboard">
@@ -31,14 +29,19 @@ Pick where you want to manage that configuration:
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your Worker.
-3. Go to **Settings** and switch from **Production** to **Previews**.
-4. Add variables, secrets, and bindings for Previews. You can import names from Production.
+3. Go to **Settings**. The **Variables and secrets**, **Bindings**, **Observability**, and **Runtime** sections each have inline toggles for **Production** and **Previews Base**.
+
+   ![Settings tab showing Production and Previews Base toggles for variables, secrets, and bindings](~/assets/images/workers/previews/settings-base-configuration.png)
+
+4. Select **Previews Base** in each section to configure your Preview settings. To get started quicker, you can import names and values from production and then edit them — but secrets must be manually re-entered.
+
+   ![Import dialog showing variables and secrets imported from production to Previews](~/assets/images/workers/previews/import_from_prod.png)
 </Steps>
 
 </TabItem>
 <TabItem label="Wrangler">
 
-Add a `previews` block to your Wrangler configuration file. Top-level settings are production. The `previews` block overrides them for Previews.
+Add a `previews` block to your Wrangler configuration file. Top-level settings are production. The `previews` block contains the configuration for the Preview you deploy to.
 
 ```txt title="wrangler.jsonc"
 {
@@ -56,20 +59,23 @@ Add a `previews` block to your Wrangler configuration file. Top-level settings a
 </TabItem>
 </Tabs>
 
-For the full list of what inherits from production and what you need to restate, refer to [Configuration](/workers/previews/configuration/).
+To understand how resources work with your base configuration — including how to configure [separate namespaces for Durable Objects and Containers](/workers/previews/resources/#durable-objects-and-containers) — refer to [Resources and isolation](/workers/previews/resources/).
 
 ## Step 2: Deploy a Preview
 
-All three options use `npx wrangler preview` under the hood. Pick the one that fits your workflow:
+Deploy a Preview by running `npx wrangler preview`. The Preview name defaults to your current Git branch, or you can set it explicitly with `--name`. You can run it locally, automate it through [Workers Builds](/workers/ci-cd/builds/) if your repo is connected to Git, or add it to your external CI workflow.
 
 <Tabs syncKey="workerPreviewsDeploy">
-<TabItem label="Workers Builds (Git push)">
+<TabItem label="Workers Builds">
 
 Best when your Worker is connected to GitHub or GitLab and you want automatic Previews on every push.
 
 <Steps>
 1. [Connect your repo to Workers Builds](/workers/ci-cd/builds/#get-started).
-2. Enable [Preview Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds).
+2. Enable [Preview Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds), if not already enabled. If your Worker is already connected to Builds, you need to update your preview command. Select **Enable Worker Previews** in the dashboard to switch from your old version command to `npx wrangler preview`.
+
+   **TODO: input screenshot of command change dialog**
+
 3. Push a branch or open a pull request.
 </Steps>
 
@@ -105,28 +111,17 @@ The Preview URL stays stable across commits to the same PR.
 For more CI examples, refer to [GitHub Actions and CI](/workers/previews/ci-cd/).
 
 </TabItem>
-<TabItem label="Local (Wrangler CLI)">
-
-Best for testing a branch on your machine before pushing.
-
-```sh
-npx wrangler preview
-```
-
-The Preview name defaults to your current git branch. Set it explicitly with `--name`:
-
-```sh
-npx wrangler preview --name staging
-```
-
-</TabItem>
 </Tabs>
 
-## What to know about resources
+## Override settings for a specific Preview
 
-Durable Objects and Containers get separate state per Preview automatically. For KV, D1, R2, and other resources, isolation depends on what you bind the Preview to — point it at a staging resource to keep data separate.
+Once a Preview is deployed, you can access it through the breadcrumb dropdown in the dashboard, which lets you switch between Production and any of your Previews.
 
-Full details in [Resources and isolation](/workers/previews/resources/).
+![Breadcrumb dropdown showing Production and individual Previews](~/assets/images/workers/previews/breadcrumb.png)
+
+Each Preview has its own Metrics, Deployments, Observability, and Settings tabs. If you go to **Settings**, you can override any value copied over from Previews Base — meaning each Preview effectively has its own independent settings.
+
+![Per-Preview settings page with its own variables and bindings](~/assets/images/workers/previews/scoped_settings.png)
 
 ## Next steps
 
