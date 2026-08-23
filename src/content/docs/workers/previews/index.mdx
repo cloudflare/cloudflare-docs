@@ -29,8 +29,8 @@ Running `npx wrangler preview` creates or updates a Preview from your current br
 
 Each Preview gets two types of URLs. You can serve them on `workers.dev`, a [custom domain](/workers/previews/custom-domains/), or both.
 
-- **Preview URL** — always serves the latest deployment. Share this with your team so they always see the most up-to-date version of your branch.
-- **Deployment URL** — points to one specific deploy and never changes. Use this to reference or compare exact versions, like linking a specific deploy in a PR review.
+- **Preview URL**: always serves the latest deployment. Share this with your team so they always see the most up-to-date version of your branch.
+- **Deployment URL**: points to one specific deploy and never changes. Use this to reference or compare exact versions, like linking a specific deploy in a PR review.
 
 | Host type     | Preview URL                                            | Deployment URL                                          |
 | ------------- | ------------------------------------------------------ | ------------------------------------------------------- |
@@ -43,20 +43,22 @@ Previews do not inherit production values. Configure each Preview independently,
 
 Durable Objects and Containers get separate state per Preview automatically. KV, D1, R2, and other resources are isolated when you bind the Preview to a separate resource. For the full matrix, refer to [Resources and isolation](/workers/previews/resources/).
 
+Service bindings, routes, Cron Triggers, and queue consumers currently target production. Preview support for these is coming.
+
 ### Access control
 
 Preview URLs are public by default. Use [Cloudflare Access](/workers/configuration/cloudflare-access/) to require sign-in. You can protect all Previews on an account, one Worker's Previews, or specific hostnames. Details in [Custom domains and access](/workers/previews/custom-domains/).
 
 ### Limits
 
-| Limit                      | Free plan | Paid plans |
-| -------------------------- | --------- | ---------- |
-| Previews per Worker | 100       | 500        |
-| Deployments per Preview    | 100       | 100        |
+| Limit                   | Free plan | Paid plans |
+| ----------------------- | --------- | ---------- |
+| Previews per Worker     | 100       | 500        |
+| Deployments per Preview | 100       | 100        |
 
 When a limit is reached, Cloudflare automatically deletes the oldest to make room:
 
-- **Preview limit** — the Preview that was deployed to least recently is deleted.
-- **Deployment limit** — the oldest deployment in that Preview is deleted.
+- **Preview limit**: the Preview that was deployed to least recently is deleted.
+- **Deployment limit**: the oldest deployment in that Preview is deleted.
 
 You can also delete Previews yourself with `npx wrangler preview delete --name <preview-name>`.

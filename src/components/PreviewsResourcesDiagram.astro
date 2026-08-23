@@ -192,17 +192,18 @@
 
 <style>
 	/* Reset */
-	.pres,
-	.pres * {
-		margin: 0;
-		padding: 0;
-		border: none;
-		background: none;
-		box-shadow: none;
+	.pres *,
+	.pres *::before,
+	.pres *::after {
 		font-size: inherit;
 		line-height: inherit;
 		color: inherit;
 		box-sizing: border-box;
+	}
+
+	.pres p,
+	.pres figure {
+		margin: 0;
 	}
 
 	.pres code {
@@ -210,8 +211,7 @@
 		padding: 0 !important;
 		border: none !important;
 		border-radius: 0 !important;
-		font-size: inherit !important;
-		line-height: inherit !important;
+		box-shadow: none !important;
 	}
 
 	.pres {
@@ -232,7 +232,7 @@
 		--p-amber-soft: light-dark(#fffbeb, #451a03);
 		margin: 1.25rem 0 1.75rem;
 		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-		font-size: 0.8125rem;
+		font-size: 0.75rem;
 		line-height: 1.45;
 		letter-spacing: -0.01em;
 		color: var(--p-text);
@@ -343,8 +343,9 @@
 	/* ── Grid ── */
 	.pres-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: 16px;
+		grid-template-columns: minmax(0, 420px) minmax(0, 420px);
+		justify-content: center;
+		gap: 24px;
 		width: 100%;
 		align-items: start;
 	}
@@ -395,6 +396,8 @@
 		width: 100%;
 		max-width: 100%;
 		padding: 0 22px 0 0;
+		border: 0;
+		box-shadow: none;
 		background:
 			linear-gradient(45deg, transparent 50%, var(--p-muted) 50%) right 8px
 				center / 6px 6px no-repeat,

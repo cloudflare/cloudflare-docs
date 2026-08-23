@@ -156,16 +156,12 @@ const paths = [
 								</select>
 							</label>
 							<ul class="file-list" aria-label="Repository files">
-								<li>wrangler.jsonc</li>
 								<li>src/index.ts</li>
 								<li>package.json</li>
 							</ul>
 						</section>
 
-						<a
-							class="app-card unified-app-card"
-							href="/workers/configuration/routing/custom-domains/"
-						>
+						<div class="app-card unified-app-card">
 							<p class="eyebrow" data-unified-eyebrow>
 								Live app
 							</p>
@@ -173,30 +169,21 @@ const paths = [
 							<span data-unified-detail>
 								Production variables, secrets, bindings, and custom domain.
 							</span>
-						</a>
+						</div>
 
 						<div class="repo-summary unified-summary">
-							<a
-								data-unified-command-link
-								href="/workers/wrangler/commands/workers/#deploy"
-							>
+							<div>
 								<strong>Command:</strong>{" "}
 								<span data-unified-command>npx wrangler deploy</span>
-							</a>
-							<a
-								data-unified-url-link
-								href="/workers/configuration/routing/custom-domains/"
-							>
+							</div>
+							<div>
 								<strong>URL:</strong>{" "}
 								<span data-unified-url>app.example.com</span>
-							</a>
-							<a
-								data-unified-traffic-link
-								href="/workers/configuration/versions-and-deployments/"
-							>
+							</div>
+							<div>
 								<strong data-unified-traffic-label>Traffic:</strong>{" "}
 								<span data-unified-traffic-text>where live requests go</span>
-							</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -262,7 +249,7 @@ const paths = [
 
 	.repo-window {
 		display: grid;
-		grid-template-rows: auto auto 1fr;
+		grid-template-rows: auto auto auto 1fr;
 		min-height: 258px;
 		overflow: hidden;
 	}
@@ -382,6 +369,7 @@ const paths = [
 		display: grid;
 		align-content: center;
 		gap: 12px;
+		min-width: 0;
 		min-height: 258px;
 		padding: 18px;
 		background: linear-gradient(
@@ -415,6 +403,7 @@ const paths = [
 
 	.app-card > strong {
 		font-size: 1.15rem;
+		overflow-wrap: anywhere;
 	}
 
 	.app-card span,
@@ -501,14 +490,17 @@ const paths = [
 		overflow: hidden;
 	}
 
-	.repo-summary a {
+	.repo-summary div {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0 0.35em;
 		padding: 11px 12px;
+		color: var(--preview-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
 	}
 
-	.repo-summary a + a {
+	.repo-summary div + div {
 		border-left: 1px solid var(--preview-border);
 	}
 
@@ -799,6 +791,24 @@ const paths = [
 			padding: 12px;
 		}
 
+		.repo-stage {
+			grid-template-columns: 1fr;
+		}
+
+		.repo-window,
+		.app-card {
+			min-height: 0;
+		}
+
+		.repo-summary {
+			grid-template-columns: 1fr;
+		}
+
+		.repo-summary div + div {
+			border-left: 0;
+			border-top: 1px solid var(--preview-border);
+		}
+
 		.flow-map {
 			gap: 12px;
 		}
@@ -848,26 +858,15 @@ const paths = [
 		".worker-previews-overview",
 	)) {
 		const select = diagram.querySelector(".unified-branch-select");
-		const appCard = diagram.querySelector(
-			".unified-app-card",
-		) as HTMLAnchorElement | null;
+		const appCard = diagram.querySelector(".unified-app-card");
 		const branchSelector = diagram.querySelector(".unified-branch-selector");
 		const eyebrow = diagram.querySelector("[data-unified-eyebrow]");
 		const title = diagram.querySelector("[data-unified-title]");
 		const detail = diagram.querySelector("[data-unified-detail]");
 		const commandSpan = diagram.querySelector("[data-unified-command]");
-		const commandLink = diagram.querySelector(
-			"[data-unified-command-link]",
-		) as HTMLAnchorElement | null;
 		const urlSpan = diagram.querySelector("[data-unified-url]");
-		const urlLink = diagram.querySelector(
-			"[data-unified-url-link]",
-		) as HTMLAnchorElement | null;
 		const trafficLabel = diagram.querySelector("[data-unified-traffic-label]");
 		const trafficText = diagram.querySelector("[data-unified-traffic-text]");
-		const trafficLink = diagram.querySelector(
-			"[data-unified-traffic-link]",
-		) as HTMLAnchorElement | null;
 
 		if (!(select instanceof HTMLSelectElement)) continue;
 
@@ -881,8 +880,6 @@ const paths = [
 				branchSelector.classList.toggle("preview-branch-selector", isPreview);
 			}
 			if (appCard) {
-				appCard.href =
-					option.dataset.href || "/workers/previews/configuration/";
 				appCard.classList.toggle("production-app", !isPreview);
 				appCard.classList.toggle("preview-app", isPreview);
 			}
@@ -892,26 +889,14 @@ const paths = [
 			if (commandSpan)
 				commandSpan.textContent =
 					option.dataset.command || "npx wrangler deploy";
-			if (commandLink)
-				commandLink.href =
-					option.dataset.commandHref ||
-					"/workers/wrangler/commands/workers/#deploy";
 			if (urlSpan)
 				urlSpan.textContent = option.dataset.url || "app.example.com";
-			if (urlLink)
-				urlLink.href =
-					option.dataset.urlHref ||
-					"/workers/configuration/routing/custom-domains/";
 			if (trafficLabel)
 				trafficLabel.textContent =
 					(option.dataset.trafficLabel || "Traffic") + ":";
 			if (trafficText)
 				trafficText.textContent =
 					option.dataset.trafficText || "where live requests go";
-			if (trafficLink)
-				trafficLink.href =
-					option.dataset.trafficHref ||
-					"/workers/configuration/versions-and-deployments/";
 		};
 
 		select.addEventListener("change", updateDiagram);
