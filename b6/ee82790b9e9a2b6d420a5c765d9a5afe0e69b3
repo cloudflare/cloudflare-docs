@@ -1,0 +1,32 @@
+src/content/docs/pages/index.mdx
+  s_80effd9682baf2::t_4c90740ac3cd92 101-102
+src/content/docs/workers/framework-guides/web-apps/opennext.mdx
+  s_80effd9682baf2::t_6dc43e0f7b0eed 19
+src/content/docs/workers/framework-guides/web-apps/nextjs.mdx
+  s_80effd9682baf2::t_30a279728539bd 21
+  s_80effd9682baf2::t_9c9f698d516ca6 41-42
+  s_80effd9682baf2::t_4478462c7d3b38 205-206
+  s_80effd9682baf2::t_02c94c04973862 207
+  s_80effd9682baf2::t_0270b61706cacb 19
+  s_80effd9682baf2::t_da43b915d5c1e4 43-45
+src/content/docs/pages/framework-guides/nextjs/index.mdx
+  s_80effd9682baf2::t_4c90740ac3cd92 14
+src/content/docs/workers/framework-guides/automatic-configuration.mdx
+  s_80effd9682baf2::t_4c90740ac3cd92 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b6ee82790b9e9a2b6d420a5c765d9a5afe0e69b3",
+  "prompts": {},
+  "sessions": {
+    "s_80effd9682baf2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05bb45deaffewtDlY70jw9oUz8",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
