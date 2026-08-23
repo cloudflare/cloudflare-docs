@@ -7,7 +7,7 @@ products:
   - network
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 Cloudflare offers support for gRPC to protect your APIs on any [proxied gRPC endpoints](/dns/proxy-status/). The gRPC protocol helps build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.
 
@@ -17,7 +17,9 @@ When gRPC is not enabled on a zone, Cloudflare will respond to gRPC requests wit
 
 ## Availability
 
-<FeatureTable id="network.grpc" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
 
 Charges may occur for gRPC traffic over add-on products such as [Argo Smart Routing](/argo-smart-routing/), [WAF](/waf/), and [Bot Management](/bots/).
 

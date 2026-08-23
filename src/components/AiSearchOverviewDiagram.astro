@@ -1,5 +1,5 @@
 ---
-import { Icon as AstroIcon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 interface Props {
 	autoPlay?: boolean;
@@ -52,19 +52,19 @@ const { autoPlay = true, loop = true } = Astro.props;
 						href="/ai-search/configuration/data-source/built-in-storage/"
 					>
 						<span class="asod-node-icon" aria-hidden="true">
-							<AstroIcon name="r2" />
+							<Icon name="r2" />
 						</span>
 						<span class="asod-node-title">Storage</span>
 					</a>
 					<a class="asod-node" href="/ai-search/configuration/models/">
 						<span class="asod-node-icon" aria-hidden="true">
-							<AstroIcon name="workers-ai" />
+							<Icon name="workers-ai" />
 						</span>
 						<span class="asod-node-title">AI models</span>
 					</a>
 					<a class="asod-node" href="/ai-search/configuration/indexing/">
 						<span class="asod-node-icon" aria-hidden="true">
-							<AstroIcon name="vectorize" />
+							<Icon name="vectorize" />
 						</span>
 						<span class="asod-node-title">Index</span>
 					</a>

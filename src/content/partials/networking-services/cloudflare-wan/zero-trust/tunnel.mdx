@@ -34,7 +34,7 @@ Cloudflare reserves the following IP ranges for Zero Trust services:
 | --- | --- |
 | `100.64.0.0/12` | [Cloudflare Source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) |
 | `100.96.0.0/12` | [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) |
-| `100.80.0.0/16` | [Initial resolved IPs](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) |
+| `172.64.128.0/20` | [Initial resolved IPs](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) |
 | `100.112.0.0/16` | [Private Load Balancers](/load-balancing/private-network/) |
 
 Do not configure routes that overlap with these reserved ranges.
@@ -67,7 +67,7 @@ ARR requires Unified Routing mode. For more information, refer to <a href={props
 
 When Hostname Routes are enabled:
 
-1. Gateway DNS resolves the hostname to an Initial resolved IP (from `100.80.0.0/16`).
+1. Gateway DNS resolves the hostname to an Initial resolved IP (from `172.64.128.0/20` by default).
 2. The client sends traffic to the Initial resolved IP.
 3. Cloudflare looks up the Initial resolved IP to determine the real destination IP and the assigned next hop (specific tunnel or interconnect).
 4. Traffic is forwarded to the assigned next hop, bypassing route evaluation for next-hop selection.

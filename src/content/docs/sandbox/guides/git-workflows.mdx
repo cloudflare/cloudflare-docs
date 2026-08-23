@@ -12,6 +12,12 @@ import { TypeScriptExample } from "~/components";
 
 This guide shows you how to clone repositories, manage branches, and automate Git operations in the sandbox.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents `sandbox.gitCheckout()` on today's stable `@cloudflare/sandbox` package.
+
+On the **1.0 preview** (`@next`), `gitCheckout` is removed. Run `git` with argv `exec` — for example `sandbox.exec(['git', 'clone', url, dir])` then `await process.output()`. See the [Processes API](/sandbox/1-0-preview/api/processes/) and [Migrate](/sandbox/1-0-preview/migrate/).
+:::
+
 ## Clone repositories
 
 <TypeScriptExample>

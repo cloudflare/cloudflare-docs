@@ -1,0 +1,14 @@
+id: 7AtrC6
+name: Cloudflare Wallets
+
+entry:
+  title: Cloudflare Wallets
+  url: /wallets/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Cloudflare Wallets docs
+  description: Reserve a wallet handle and give your account and its agents a stable, human-readable identity for agentic payments
+  author: "@cloudflare"

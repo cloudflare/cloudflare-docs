@@ -4,6 +4,12 @@
 # ============================================================================
 
 
+# ProductFeatures component removed
+/dns/reference/all-features/ /dns/ 301
+/ssl/reference/all-features/ /ssl/ 301
+/cache/plans/ /cache/ 301
+/style-guide/components/product-features/ /style-guide/build-the-page/components/ 301
+
 # Sandbox (claude-managed-agents moved to tutorials)
 /sandbox/claude-managed-agents/ /sandbox/tutorials/claude-managed-agents/ 301
 
@@ -630,6 +636,7 @@
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
+/sandbox/guides/production-deployment/ /sandbox/guides/preview-urls-custom-domain/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
@@ -1371,6 +1378,8 @@
 /cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
 # CF1 MSP page moved under tiered-policies
 /cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-policies/tiered-policies/tenant-api/ 301
+# CF1 package protection renamed to package registry security
+/cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-policies/http-policies/package-registry-security/ 301
 # CF1 packet filtering overview rename
 /cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
 # cross-product magic-firewall slug renames
@@ -1777,15 +1786,31 @@
 /docs-guide/manage-content/redirects/process/ /style-guide/how-we-docs/redirects/ 301
 /docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
 /docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
-/style-guide/components/asides/ /style-guide/formatting/notes-and-other-notation-types/ 301
-/style-guide/components/checkbox/ /style-guide/formatting/structure/lists/ 301
-/style-guide/components/code/ /style-guide/formatting/code-block-guidelines/ 301
-/style-guide/components/compatibility-flag/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/asides/ /style-guide/style-and-grammar/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/checkbox/ /style-guide/style-and-grammar/formatting/structure/lists/ 301
+/style-guide/components/code/ /style-guide/style-and-grammar/formatting/code-block-guidelines/ 301
+/style-guide/components/compatibility-flag/ /style-guide/style-and-grammar/formatting/notes-and-other-notation-types/ 301
 /style-guide/components/flex/ /style-guide/how-we-docs/image-maintenance/ 301
-/style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
-/style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
-/style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
-/style-guide/components/workers-templates/ /style-guide/components/index/ 301
+/style-guide/components/footnotes/ /style-guide/style-and-grammar/formatting/footnotes/ 301
+/style-guide/components/github-code/ /style-guide/build-the-page/components/ 301
+/style-guide/components/last-reviewed/ /style-guide/build-the-page/frontmatter/custom-properties/#reviewed 301
+/style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/#mermaid-diagrams 301
+/style-guide/components/workers-templates/ /style-guide/build-the-page/components/ 301
+/style-guide/documentation-content-strategy/content-types/reference-architecture-diagram/ /style-guide/documentation-content-strategy/content-types/reference-architecture/#reference-architecture-diagrams 301
+/style-guide/documentation-content-strategy/content-types/solution-guide/ /style-guide/documentation-content-strategy/content-types/how-to/ 301
+/style-guide/documentation-content-strategy/content-types/implementation-guide/ /style-guide/documentation-content-strategy/content-types/how-to/ 301
+/style-guide/documentation-content-strategy/content-types/select-content-type/ /style-guide/documentation-content-strategy/content-types/ 301
+/style-guide/documentation-content-strategy/component-attributes/context/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/introduction/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/intended-audience/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/screenshots/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/diagrams/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/reference-diagram/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/tables/ /style-guide/style-and-grammar/formatting/structure/tables/ 301
+/style-guide/documentation-content-strategy/component-attributes/links/ /style-guide/style-and-grammar/formatting/structure/links/ 301
+/style-guide/documentation-content-strategy/writing-guidelines/ /style-guide/style-and-grammar/voice-and-tone/ 301
+/style-guide/documentation-content-strategy/accessibility/ /style-guide/style-and-grammar/accessibility/ 301
+/style-guide/how-we-docs/reviews/ /style-guide/contributions/#content-reviews 301
 /style-guide/ai-tooling/ /docs-for-agents/ 301
 
 # support
@@ -3001,3 +3026,10 @@
 
 # Bots: signed agents deprecated -> verified bots
 /bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
+
+# R2 Data Catalog promoted to a top-level product (was nested under R2)
+/r2/data-catalog/* /r2-data-catalog/:splat 301
+/style-guide/formatting/* /style-guide/style-and-grammar/formatting/:splat 301
+/style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
+/style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
+/style-guide/components/* /style-guide/build-the-page/components/:splat 301

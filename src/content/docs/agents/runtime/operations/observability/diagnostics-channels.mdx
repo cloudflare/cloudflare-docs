@@ -203,7 +203,7 @@ These events track chat message lifecycle, client-side tool interactions, and Th
 | `chat:recovery:skipped`   | `{ incidentId, requestId, attempt, maxAttempts, recoveryKind, reason? }` | Recovery was skipped because the conversation changed or was no longer recoverable                                                               |
 | `chat:recovery:failed`    | `{ incidentId, requestId, attempt, maxAttempts, recoveryKind, reason? }` | Recovery ran but failed                                                                                                                          |
 | `chat:recovery:exhausted` | `{ incidentId, requestId, attempt, maxAttempts, recoveryKind, reason }`  | Recovery exceeded its configured attempt budget                                                                                                  |
-| `chat:stream:stalled`     | `{ requestId, timeoutMs }`                                               | The inactivity watchdog fired — no stream chunk arrived within `chatStreamStallTimeoutMs`. With `chatRecovery` on, the turn routes into recovery |
+| `chat:stream:stalled`     | `{ requestId, timeoutMs }`                                               | The inactivity watchdog fired because no stream chunk arrived within `chatStreamStallTimeoutMs`. The turn routes into durable recovery           |
 
 `recoveryKind` is `"retry"` when recovery replays an unanswered user turn and `"continue"` when it continues a partial assistant turn.
 

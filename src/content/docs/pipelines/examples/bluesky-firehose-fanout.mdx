@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-In this example, you will consume the public [Bluesky Jetstream](https://github.com/bluesky-social/jetstream) firehose, a live WebSocket stream of every post, like, repost, follow, and block on the network, and land it in [R2 Data Catalog](/r2/data-catalog/) as queryable Apache Iceberg tables.
+In this example, you will consume the public [Bluesky Jetstream](https://github.com/bluesky-social/jetstream) firehose, a live WebSocket stream of every post, like, repost, follow, and block on the network, and land it in [R2 Data Catalog](/r2-data-catalog/) as queryable Apache Iceberg tables.
 
 You will learn a core Pipelines pattern: send every event to one stream, then use a single pipeline with multiple SQL statements to route ("fan out") that stream into several destination tables, one per event type, without running a separate pipeline for each.
 
@@ -98,7 +98,7 @@ Create a `schema.json` file in the root of your project:
 
 ## 3. Create an R2 bucket and enable R2 Data Catalog
 
-Your sinks write to Iceberg tables in [R2 Data Catalog](/r2/data-catalog/), so you need a bucket with the catalog enabled.
+Your sinks write to Iceberg tables in [R2 Data Catalog](/r2-data-catalog/), so you need a bucket with the catalog enabled.
 
 Create an R2 bucket named `bluesky-pipeline`:
 

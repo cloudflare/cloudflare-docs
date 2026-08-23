@@ -20,18 +20,24 @@ Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
 ## Get Started
 
-To enable built-in Node.js APIs and add polyfills, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/), and ensure that your Worker's [compatibility date](/workers/configuration/compatibility-dates/) is 2024-09-23 or later. [Learn more about the Node.js compatibility flag and v2](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
+For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. Built-in Node.js APIs and polyfills are available without additional configuration.
+
+For these compatibility dates, `nodejs_compat` and `nodejs_compat_v2` are not used because the compatibility date enables the same behavior. Existing projects do not need to remove these flags when updating their compatibility date. Omit them from new configurations.
+
+For compatibility dates from `2024-09-23` through `2026-08-03`, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/) to opt in:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"compatibility_flags": ["nodejs_compat"],
-	"compatibility_date": "$today",
+	"compatibility_date": "2026-08-03",
+	"compatibility_flags": ["nodejs_compat"]
 }
 ```
 
 </WranglerConfig>
+
+To turn off Node.js compatibility completely with a compatibility date of `2026-08-04` or later, remove the positive flags if present. Then add both `no_nodejs_compat` and `no_nodejs_compat_v2`. For configuration examples, refer to the [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
 ## Supported Node.js APIs
 
@@ -63,7 +69,7 @@ The runtime APIs from Node.js listed in this section with the status "🟢 suppo
 | [Process](/workers/runtime-apis/nodejs/process/)                                 | 🟢 supported                                                                      |
 | [Punycode](https://nodejs.org/docs/latest/api/punycode.html) (deprecated)        | 🟢 supported                                                                      |
 | [Query strings](https://nodejs.org/docs/latest/api/querystring.html)             | 🟢 supported                                                                      |
-| [Stream](/workers/runtime-apis/nodejs/streams/)                                   | 🟢 supported                                                                      |
+| [Stream](/workers/runtime-apis/nodejs/streams/)                                  | 🟢 supported                                                                      |
 | [String decoder](/workers/runtime-apis/nodejs/string-decoder/)                   | 🟢 supported                                                                      |
 | [Test runner](/workers/runtime-apis/nodejs/test/)                                | 🟡 partially supported                                                            |
 | [Timers](/workers/runtime-apis/nodejs/timers/)                                   | 🟢 supported                                                                      |
