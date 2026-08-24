@@ -5,8 +5,8 @@ _build:
   list: never
 
 name: "Spec-compliant `dispatchEvent()` exception handling"
-sort_date: "2026-09-01"
-enable_date: "2026-09-01"
+sort_date: "2026-09-05"
+enable_date: "2026-09-05"
 enable_flag: "spec_compliant_dispatch_exceptions"
 disable_flag: "no_spec_compliant_dispatch_exceptions"
 ---

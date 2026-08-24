@@ -6,7 +6,7 @@ products:
 date: 2026-08-19
 ---
 
-A new compatibility flag, `spec_compliant_dispatch_exceptions`, aligns the Workers runtime's event dispatch behavior with the [DOM specification](https://dom.spec.whatwg.org/#dispatching-events). This flag becomes the default for all Workers with a compatibility date of `2026-09-01` or later.
+A new compatibility flag, `spec_compliant_dispatch_exceptions`, aligns the Workers runtime's event dispatch behavior with the [DOM specification](https://dom.spec.whatwg.org/#dispatching-events). This flag becomes the default for all Workers with a compatibility date of `2026-09-15` or later.
 
 Previously, when an event listener threw an exception during `dispatchEvent()`, the runtime propagated the exception immediately and skipped all remaining listeners for that event. The spec instead requires that listener exceptions are reported (via the global `error` event and the console) without interrupting the dispatch — remaining listeners still run.
 
