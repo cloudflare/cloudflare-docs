@@ -48,10 +48,12 @@ These codes also appear in the `guardrails` property of the AI Gateway REST API,
 
 Guardrails evaluation depends on whether the request uses streaming:
 
-| Mode | Prompt evaluation | Response evaluation |
-| ---- | ----------------- | ------------------- |
-| `stream: false` | Runs | Runs |
-| `stream: true` | Runs | Skipped |
+| Mode            | Prompt evaluation | Response evaluation |
+| --------------- | ----------------- | ------------------- |
+| `stream: false` | Runs              | Runs                |
+| `stream: true`  | Runs              | Skipped             |
+
+Response evaluation applies to text generation models. Embedding and unknown model types bypass response evaluation regardless of streaming mode — see [Supported model types](/ai-gateway/features/guardrails/supported-model-types/) for details.
 
 When `stream: true`, the client still receives a real streaming response — Guardrails skips only the response-side evaluation. Response-side evaluation for streaming requests is on our roadmap.
 
