@@ -77,7 +77,7 @@ Code review and style-guide review fan out **one agent instance per changed file
 - **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […], conventions: […] }`; a legacy bare array means style-only), `auto-review-count.json`, `ignore-review-limit.json`, `auto-review-disabled.json`. There is **no rendezvous namespace** in 2.0 — Workflow step durability replaced the R2 finalize lock, and the diff is staged in agent memory / delivered via tools rather than R2.
 - The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
 - `lib/code-review-render.ts` renders the single comment under a `## Review` heading: a status line, a collapsed "Fix in your agent" prompt block (only when there is an active finding), then `### Code Review`, `### Conventions`, `### Style Guide Review`, an "Acknowledged by author" block, and a Commands block. Findings are tables only; there are no inline review comments. It also renders the `/rebase` status line (`renderRebaseStatusUpdate`).
-- **Models**: specialist and reconciliation model calls use `cloudflare/@cf/moonshotai/kimi-k2.7-code`. The validation step uses `cloudflare/@cf/zai-org/glm-5.2`.
+- **Models**: specialist and reconciliation model calls use `cloudflare/@cf/moonshotai/kimi-k2.7-code`, except the conventions reviewer which uses `cloudflare/@cf/deepseek-ai/deepseek-v4-flash-0731` (a lighter model sufficient for PR-metadata checks). The validation step uses `cloudflare/@cf/zai-org/glm-5.2`.
 - **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
 
 ### Slash commands (codeowner-only, commented on a PR)
@@ -167,10 +167,6 @@ FLUE_BASE_URL=https://preview.example.com pnpm --dir .flue run evals
 ```
 
 Both the server and the eval runner need `DOCS_FLUE_INTERNAL_TOKEN` set to the same value.
-
-### CI
-
-The `evals` job in `.github/workflows/flue-ci.yml` starts the dev server, runs evals, and uploads `vitest-results.json` as an artifact. The job is skipped for fork PRs because it needs `DOCS_FLUE_INTERNAL_TOKEN` and Workers AI access.
 
 ### Adding a new eval case
 

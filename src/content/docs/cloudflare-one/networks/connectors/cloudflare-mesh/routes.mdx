@@ -228,13 +228,14 @@ For a deeper look at the packet flow behind hostname routing, refer to the [anno
 
   <Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
 
-- **Route all of the following ranges through Cloudflare** in the [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration of **both** the Mesh node's device profile **and** your client device profiles. In Include mode, add each range; in Exclude mode, ensure none of them (or their parent ranges) are excluded.
+- **Route the following IPv4 ranges through Cloudflare** in the [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration of **both** the Mesh node's device profile **and** your client device profiles. In Include mode, add each range. In Exclude mode, ensure none of them (or their parent ranges) are excluded.
 
-  | Purpose                     | IPv4            | IPv6                       |
-  | --------------------------- | --------------- | -------------------------- |
-  | Mesh device IP range        | `100.96.0.0/12` | `2606:4700:cf1:1000::/64`  |
-  | Cloudflare source IP range  | `100.64.0.0/12` | `2606:4700:cf1:5000::/64`  |
-  | Hostname routing (token IPs) | `172.64.128.0/20` | `2606:4700:0cf1:4000::/64` |
+  | Purpose                     | IPv4            |
+  | --------------------------- | --------------- |
+  | Mesh device IP range        | `100.96.0.0/12` |
+  | Cloudflare source IP range  | `100.64.0.0/12` |
+
+  The hostname routing (token IP) range (`172.64.128.0/20`) and all Cloudflare One IPv6 ranges are [automatically routed through Cloudflare](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges) and do not need to be added manually.
 
 - **Remove the hostname's top-level domain from [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/)** on client devices, so the DNS query is sent to Cloudflare Gateway for resolution.
 
