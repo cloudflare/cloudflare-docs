@@ -1,33 +1,50 @@
 ---
-const CONTAINERS = [1400, 1280, 720, 400];
+/**
+ * FullPageLines — right-side dashed gutter for the landing page.
+ *
+ * Two 1px vertical dashed rules bracket a dot-grid column on the RIGHT side of
+ * the content. The inner rule sits on the cards' right edge (the content
+ * column's edge); the outer rule sits at the container boundary, with the dot
+ * grid filling the padding gutter between the two rules. Desktop-only, purely
+ * decorative.
+ *
+ * Shares the blueprint treatment with /directory (BackgroundLines) and
+ * /changelog (ChangelogLayout): dashed rules use --nb-border; dots use
+ * --nb-grid-line.
+ */
+import Dots from "../decorative/Dots.astro";
 
-const MIN_MARGINS = [0, 48, 120, 200];
-function rw(w: number): string {
-	const i = CONTAINERS.indexOf(w);
-	const margin = i >= 0 ? MIN_MARGINS[i] : 0;
-	if (margin === 0) return `min(${w}px, 100%)`;
-	return `min(${w}px, calc(100% - ${margin}px))`;
-}
+// 1px vertical dashed rule: 16px dash + 16px gap (32px period).
+const dashed =
+	"background-image:linear-gradient(to bottom,var(--nb-border) 50%,transparent 50%);background-size:1px 32px;background-repeat:repeat-y";
 
-const lineBase = "absolute top-0 left-1/2 -translate-x-1/2";
+// Matches the content container's horizontal padding in index.astro, so the
+// gutter tracks the cards' right edge responsively.
+const pad = "max(2rem, 4vw)";
 ---
 
 <div
-	class="pointer-events-none absolute inset-x-0 top-0 z-0 hidden lg:block"
-	style="height: calc(100% + 25rem)"
+	class="pointer-events-none absolute inset-0 z-0 hidden lg:block"
 	aria-hidden="true"
 >
+	{/* Centered box matching the content container (max-w-[1280px]). */}
 	<div
-		class="absolute top-0 left-1/2 h-full w-0 border-l border-dotted border-black/[0.03] dark:border-white/[0.02]"
+		class="absolute inset-y-0 left-1/2 w-full max-w-[1280px] -translate-x-1/2"
 	>
-	</div>
+		{/* Dot-grid gutter — fills the right padding, between the two rules. */}
+		<div class="absolute inset-y-0 right-0" style={`width:${pad}`}>
+			<Dots />
+		</div>
 
-	{
-		CONTAINERS.map((w) => (
-			<div
-				class={`${lineBase} h-full border-r border-black/[0.03] dark:border-white/[0.02]`}
-				style={`width:${rw(w)}`}
-			/>
-		))
-	}
+		{/* Inner dashed rule — sits on the cards' right edge. */}
+		<div
+			class="absolute inset-y-0 w-px translate-x-1/2"
+			style={`right:${pad};${dashed}`}
+		>
+		</div>
+
+		{/* Outer dashed rule — at the container boundary. */}
+		<div class="absolute inset-y-0 right-0 w-px translate-x-1/2" style={dashed}>
+		</div>
+	</div>
 </div>

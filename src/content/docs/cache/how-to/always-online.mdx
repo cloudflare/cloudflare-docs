@@ -7,7 +7,7 @@ products:
 
 ---
 
-import { FeatureTable, DashButton } from "~/components"
+import { DashButton } from "~/components"
 
 Cloudflare’s Always Online feature is now integrated with the [Internet Archive](https://archive.org/) so that visitors can access a portion of your website even when your origin server is unreachable and a Cloudflare-cached version is unavailable. When your origin is unreachable, Always Online checks Cloudflare’s cache for a stale or expired version of your website. If a version does not exist, Cloudflare goes to the Internet Archive to fetch and serve static portions of your website.
 
@@ -19,7 +19,10 @@ When the Internet Archive integration is enabled, Cloudflare tells the Internet 
 
 ## Availability
 
-<FeatureTable id="cache.always_online" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Crawl interval | Every 30 days | Every 15 days | Every 5 days | Every 5 days |
 
 ## Visitor Experience
 

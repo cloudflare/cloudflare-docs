@@ -31,11 +31,7 @@ Enable Precursor for your zone:
 3. Locate **Precursor**.
 4. Turn on Precursor.
 
-<img
-	src="/images/precursor/precursor-settings.png"
-	alt="Security Settings page in the Cloudflare dashboard, showing the Precursor card with the on/off toggle"
-	style="border:1px solid #e5e7eb;border-radius:6px;display:block;margin:2px 0;"
-/>
+   ![Security Settings page in the Cloudflare dashboard, showing the Precursor card with the on/off toggle](~/assets/images/cloudflare-challenges/precursor-settings.png)
 
 5. **Choose a mode:** To fully verify a user session, visitors may need to complete a lightweight Challenge to establish a valid session. Precursor provides two modes depending on whether you want to prioritize user experience or strict verification:
 
@@ -44,35 +40,69 @@ Enable Precursor for your zone:
      This provides a smoother user experience, but cannot guarantee that every session is fully verified.
 
    - **Maximize Security (recommended)**
-     Shows a lightweight interstitial Challenge to establish a valid session if one does not already exist.
-     This ensures every session is verified before a user can proceed, but may introduce additional friction.
+      Shows a lightweight interstitial Challenge to establish a valid session if one does not already exist.
+      This ensures every session is verified before a user can proceed, but may introduce additional friction.
 
-<img
-	src="/images/precursor/precursor-rules.png"
-	alt="Precursor mode selector showing Minimize Friction and Maximize Security options"
-	style="border:1px solid #e5e7eb;border-radius:6px;display:block;margin-top:-32px;"
-/>
+   ![Precursor mode selector showing Minimize Friction and Maximize Security options](~/assets/images/cloudflare-challenges/precursor-rules.png)
 
 For most customers, selecting a mode is the only configuration required.
 
-### Precursor rules (optional)
+### Precursor Rules (optional)
 
-Precursor runs across your zone by default. Rules do not enable or disable Precursor — they determine which mode applies to each request.
+Precursor runs across your zone by default. Precursor Rules do not enable or disable Precursor — they determine which mode applies to each request.
 
 For example:
 
 - Run **Minimize Friction** across your site, but run **Maximize Security** to enforce a valid session on `/checkout`.
 - Run **Maximize Security** on all pages, except your homepage.
 
+### Use Precursor with APIs
+
+If your zone serves both browser pages and API endpoints, use Precursor Rules to scope where strict enforcement applies.
+
+When Precursor is set to **Maximize Security**, requests must present a valid `cf_clearance` cookie. This can affect:
+
+- API endpoints called by non-browser clients (for example, `curl`, mobile backends, server-to-server jobs)
+- Browser API calls that do not send cookies
+
+For mixed HTML/API traffic, use one of these patterns:
+
+- Start with **Minimize Friction** globally, then apply **Maximize Security** only to sensitive pages or paths with Precursor Rules.
+- Start with **Maximize Security** globally, then add **Minimize Friction** Precursor Rules for API hostnames or API paths.
+
+For browser XHR/fetch requests that must access endpoints under **Maximize Security**, ensure cookies are included:
+
+```js
+fetch("/api/search", {
+  credentials: "include",
+});
+```
+
+```js
+axios.get("/api/search", {
+  withCredentials: true,
+});
+```
+
+Use **Minimize Friction** on endpoints that should not require challenge-style session enforcement. Precursor still evaluates session behavior and can continue contributing detection signals and bot score context.
+
 ## Relationship to JavaScript Detections
 
-Precursor supersedes JavaScript Detections (JSD):
+Precursor supersedes JavaScript Detections (JSD). JSD and Precursor both collect client-side signals, but Precursor evaluates them continuously across a session instead of as a one-time check.
 
-- moves from one-time execution to continuous verification
-- introduces session-based state
-- enables dynamic runtime control
+- Precursor moves from one-time execution to continuous verification
+- Precursor introduces session-based state
+- Precursor enables dynamic runtime control
 
-If you enable Precursor, you should disable JavaScript Detections (JSD).
+When either JSD or Precursor contributes to bot score, Cloudflare exposes the source as **JavaScript Fingerprinting**.
+
+#### If you already use JSD
+
+ Cloudflare will disable JSD when you enable Precursor to avoid running both features on the same traffic. Precursor includes all detections previously covered by JSD, and any JSD-driven Security Rules will still apply.
+
+#### If you do not use JSD
+
+If you enable Precursor without previously using JSD, you may see more traffic with bot score below 30.
 
 ## Relationship to Challenge Pages
 
@@ -97,6 +127,6 @@ Precursor is tightly integrated with [`cf_clearance`](/cloudflare-challenges/con
 
 ## Visibility in Security Analytics
 
-Once Precursor runs on a zone, its detections appear in the zone's Analytics view. To open it, select your zone in the Cloudflare dashboard, then go to **Security** > **Analytics** > **Traffic** > **Bot analysis**. The bot score distribution and WAF rule-match counts now include Precursor's behavioral and biometric detections.
+Once Precursor runs on a zone, its detections appear in the zone's Analytics view. To open it, select your zone in the Cloudflare dashboard, then go to **Security** > **Analytics** > **Traffic** > **Bot analysis**. The bot score distribution and WAF rule-match counts now include Precursor's detections.
 
 For more information, refer to [Security Analytics](/waf/analytics/security-analytics/).

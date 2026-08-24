@@ -1,0 +1,134 @@
+---
+title: Interpreter
+pcx_content_type: reference
+sidebar:
+  order: 4
+description: Reference for the code interpreter extension on @cloudflare/sandbox@next.
+products:
+  - sandbox
+---
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents `@cloudflare/sandbox/interpreter` on `@cloudflare/sandbox@next`. For the current stable package, refer to [Interpreter API](/sandbox/api/interpreter/).
+:::
+
+Methods live on `sandbox.interpreter` after you attach `withInterpreter` on your `Sandbox` subclass. Method names match the stable interpreter; `runCode` returns plain serializable data. Attach and first run: [Code interpreter](/sandbox/1-0-preview/interpreter/).
+
+## `createCodeContext()`
+
+```ts
+createCodeContext(options?: CreateContextOptions): Promise<CodeContext>
+```
+
+### `CreateContextOptions`
+
+`createCodeContext` accepts the following options:
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `language` | `"python" \| "javascript" \| "typescript"` | Interpreter language. Default: `python`. |
+| `cwd` | `string` | Working directory. Default: `/workspace`. |
+
+### `CodeContext`
+
+A created context has the following fields:
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `id` | `string` | Context id in the current container |
+| `language` | `string` | Language of the context |
+| `cwd` | `string` | Working directory |
+| `createdAt` | `Date` | Created time |
+| `lastUsed` | `Date` | Last used time |
+
+## `runCode()`
+
+```ts
+runCode(code: string, options?: RunCodeOptions): Promise<ExecutionResult>
+```
+
+### `RunCodeOptions`
+
+`runCode` accepts the following options. The callback fields apply to `runCode` only.
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `context` | `CodeContext` | Context to use. If omitted, a default context for `language` is used. |
+| `language` | `"python" \| "javascript" \| "typescript"` | Used when creating or selecting a default context. Default: `python`. |
+| `onStdout` | `(output: OutputMessage) => void \| Promise<void>` | Called for stdout chunks while running |
+| `onStderr` | `(output: OutputMessage) => void \| Promise<void>` | Called for stderr chunks while running |
+| `onResult` | `(result: ResultData) => void \| Promise<void>` | Called for rich results (plain data) |
+| `onError` | `(error: ExecutionError) => void \| Promise<void>` | Called when the run reports an execution error |
+
+### `OutputMessage`
+
+```ts
+interface OutputMessage {
+	text: string;
+	timestamp: number;
+}
+```
+
+### `ExecutionResult`
+
+```ts
+interface ExecutionResult {
+	code: string;
+	logs: {
+		stdout: string[];
+		stderr: string[];
+	};
+	error?: ExecutionError;
+	executionCount?: number;
+	results: ResultData[];
+}
+```
+
+`ResultData` may include plain fields such as `text`, `html`, `png`, `jpeg`, `svg`, `latex`, `markdown`, `json`, and `chart` when the runtime produces them.
+
+### `ExecutionError`
+
+```ts
+interface ExecutionError {
+	name: string;
+	message: string;
+	traceback: string[];
+	lineNumber?: number;
+}
+```
+
+## `runCodeStream()`
+
+```ts
+runCodeStream(
+	code: string,
+	options?: RunCodeOptions,
+): Promise<ReadableStream<Uint8Array>>
+```
+
+Returns an SSE byte stream of execution events. The TypeScript type reuses `RunCodeOptions` for `context` and `language`, but the stream path does **not** invoke `onStdout`, `onStderr`, `onResult`, or `onError` — consume the SSE body instead. Canceling the stream may interrupt the in-flight run.
+
+## `listCodeContexts()`
+
+```ts
+listCodeContexts(): Promise<CodeContext[]>
+```
+
+## `deleteCodeContext()`
+
+```ts
+deleteCodeContext(contextId: string): Promise<void>
+```
+
+## Errors
+
+Interpreter failures may surface as `InterpreterNotReadyError`, `ContextNotFoundError`, or `CodeExecutionError`. Refer to [Errors API](/sandbox/1-0-preview/api/errors/) and [Errors and recovery](/sandbox/1-0-preview/errors/).
+
+Python requires the **`-python`** container image variant. Deploy the Worker package and container image from the same preview line.
+
+## Related
+
+- [Code interpreter](/sandbox/1-0-preview/interpreter/)
+- [Extensions](/sandbox/1-0-preview/extensions/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
+- Stable: [Interpreter API](/sandbox/api/interpreter/)

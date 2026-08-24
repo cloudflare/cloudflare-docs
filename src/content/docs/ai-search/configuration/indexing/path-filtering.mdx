@@ -85,6 +85,9 @@ You can view these in the Jobs tab of your AI Search instance to verify your fil
 | Exclude temp and backup files   | Exclude: `**/*.tmp`, `**/*.bak`                 | `/docs/guide.md`                       | `/data/cache.tmp`, `/old.bak`         |
 | Exclude temp and backup folders | Exclude: `/temp/**`, `/backup/**`               | `/docs/guide.md`                       | `/temp/file.txt`, `/backup/data.json` |
 | Index docs but exclude drafts   | Include: `/docs/**`, Exclude: `/docs/drafts/**` | `/docs/guide.md`                       | `/docs/drafts/wip.md`                 |
+| Scope an instance to one tenant | Include: `/customers/acme/**`                   | `/customers/acme/report.pdf`           | `/customers/globex/report.pdf`        |
+
+To give each tenant an isolated instance backed by a single shared bucket, refer to [Multitenancy](/ai-search/how-to/per-tenant-search/#r2).
 
 ### Website data source
 

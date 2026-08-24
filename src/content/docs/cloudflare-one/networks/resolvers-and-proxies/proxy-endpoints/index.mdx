@@ -314,7 +314,7 @@ Each account has a maximum number of proxy endpoints:
 
 ### 3a. Install Cloudflare certificate
 
-To use Gateway HTTP policies with proxy endpoints, you must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. This allows Gateway to inspect HTTPS traffic and apply policies such as blocking specific domains or displaying the Gateway block page.
+You must [install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices. Authorization endpoints use the certificate to inspect TLS traffic and read the authorization cookie. Source IP endpoints use the certificate to apply Gateway HTTP policies such as blocking specific domains or displaying the Gateway block page.
 
 ### 3b. Configure browser to use PAC file
 
@@ -336,7 +336,9 @@ Firefox uses its own proxy settings and does not inherit the operating system pr
 
 <Details header="Safari">
 
-Safari relies on your operating system's proxy server settings. Configure the PAC file URL in your [macOS proxy settings](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/#configure-system-proxy-settings).
+:::caution
+Safari does not support the HTTPS proxy type required by Cloudflare proxy endpoints. Apple has confirmed that Safari (on both macOS and iOS/iPadOS) does not support HTTPS proxies. Use a [Chromium-based browser](#chromium-based-browsers) or [Firefox](#mozilla-firefox) instead.
+:::
 
 </Details>
 
@@ -498,6 +500,10 @@ Each user who authenticates through an authorization proxy endpoint occupies a [
 
 When using [authorization endpoints](#authorization-endpoint), be aware of the following limitations. For configuration guidance on apps with certificate pinning, refer to [PAC file best practices](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/#apps-with-certificate-pinning).
 
+#### TLS inspection required
+
+Authorization endpoints require [TLS inspection](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) on all proxied traffic. Gateway must decrypt HTTPS requests to read the authorization cookie that identifies each user session. Gateway always performs TLS decryption for traffic routed through an authorization endpoint, even if you turn off TLS decryption at the account level. You cannot selectively bypass TLS inspection for specific destinations when using an authorization endpoint.
+
 #### Plaintext HTTP traffic
 
 Authorization endpoints do not support plaintext HTTP traffic unless the traffic is configured through an [Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) or bypassed with the PAC file.
@@ -518,6 +524,10 @@ To filter this traffic, you have two options:
 
 - Set up an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to block or allow all traffic matching the `auth-proxy-non-identity@<your-team-name>.cloudflareaccess.com` email address.
 - To restrict non-identity traffic to specific source IPs, create a [network policy](/cloudflare-one/traffic-policies/network-policies/) that matches both the source IP and the proxy endpoint.
+
+### Safari and iOS not supported
+
+Safari (on macOS) and all browsers on iOS/iPadOS do not support the HTTPS proxy type that Cloudflare proxy endpoints require. This is a platform-level limitation confirmed by Apple. On macOS, use a Chromium-based browser or Firefox instead. On iOS/iPadOS, proxy endpoints cannot be used.
 
 ### Traffic limitations
 

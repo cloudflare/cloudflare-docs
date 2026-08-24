@@ -25,7 +25,9 @@ Bindings can be configured in the Cloudflare dashboard for your Worker or in the
 
 :::note[Billing]
 
-Every call to the Images binding counts as one unique transformation. Refer to [Images pricing](/images/pricing/) for more information about billing.
+Calls to the Images binding are billed as [unique transformations](/images/pricing/#images-transformed): each unique combination of source image and parameters is billed only once per calendar month, and repeat requests within the same month do not incur additional usage. Calls to [`.info()`](#infostream) are free.
+
+Refer to [Images pricing](/images/pricing/) for more information about billing.
 
 :::
 
@@ -53,9 +55,44 @@ Within your Worker code, use `env.IMAGES.input()` to build an object that can ma
 
 ## Methods
 
-:::note
+:::caution[Enable caching]
 
-Responses from the Images binding are not automatically cached. Workers lets you interact directly with the [Cache API](/workers/runtime-apis/cache/) to customize cache behavior. You can implement logic in your script to store transformations in Cloudflare's cache.
+Responses from the Images binding are not automatically cached. Every uncached call performs a full decode and re-encode of the source image, which adds unnecessary latency to every request.
+
+We strongly recommend enabling [Workers Cache](/workers/cache/) so that repeat requests are served from cache without re-running your Worker or re-transforming the image. Add the following to your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"cache": {
+		"enabled": true,
+	},
+}
+```
+
+</WranglerConfig>
+
+Then set `Cache-Control` headers on your response to control how long transformed images are cached:
+
+<TypeScriptExample>
+
+```ts
+const response = (
+	await env.IMAGES.input(stream)
+		.transform({ width: 800 })
+		.output({ format: "image/webp" })
+).response();
+
+return new Response(response.body, {
+	headers: {
+		...Object.fromEntries(response.headers),
+		"Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+	},
+});
+```
+
+</TypeScriptExample>
 
 :::
 

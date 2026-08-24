@@ -152,7 +152,7 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 
 - <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
-  - `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+  - `duration` - the duration to sleep for, as a `number` in milliseconds or as a `WorkflowDuration`-compatible string.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
@@ -197,10 +197,19 @@ Review the documentation on [events and parameters](/workflows/build/events-and-
 ## WorkflowStepConfig
 
 ```ts
+export type WorkflowDynamicDelayContext = {
+	ctx: WorkflowStepContext;
+	error: Error;
+};
+
+export type WorkflowDelayFunction = (
+	input: WorkflowDynamicDelayContext,
+) => string | number | Promise<string | number>;
+
 export type WorkflowStepConfig = {
 	retries?: {
 		limit: number;
-		delay: string | number;
+		delay: string | number | WorkflowDelayFunction;
 		backoff?: WorkflowBackoff;
 	};
 	timeout?: string | number;
@@ -208,6 +217,7 @@ export type WorkflowStepConfig = {
 ```
 
 - A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
+- Set `retries.delay` to a fixed duration, or pass a `WorkflowDelayFunction` to calculate the next retry delay from the current step context and thrown error.
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
@@ -591,7 +601,7 @@ declare abstract class WorkflowInstance {
 	/**
 	 * Terminate the instance. If it is errored, terminated or complete, an error will be thrown.
 	 */
-	public terminate(): Promise<void>;
+	public terminate(options?: WorkflowInstanceTerminateOptions): Promise<void>;
 	/**
 	 * Restart the instance from the beginning, or from a specific step.
 	 */
@@ -684,7 +694,31 @@ The `from` object identifies the step to restart from. Only `name` is required; 
 
 Terminate a Workflow instance.
 
-- <code>terminate(): Promise&lt;void&gt;</code>
+- <code>terminate(options?: WorkflowInstanceTerminateOptions): Promise&lt;void&gt;</code>
+  - `options` - optional properties that control how the instance is terminated.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+
+// Terminate without running rollback handlers.
+await instance.terminate();
+
+// Run registered rollback handlers before terminating.
+await instance.terminate({ rollback: true });
+```
+
+If `rollback` is `true`, Workflows runs the rollback handlers registered by completed or eligible steps before the instance reaches the `terminated` state. Steps without rollback handlers are skipped.
+
+#### WorkflowInstanceTerminateOptions
+
+```ts
+interface WorkflowInstanceTerminateOptions {
+	/**
+	 * If true, run registered rollback handlers before terminating the instance.
+	 */
+	rollback?: boolean;
+}
+```
 
 ### sendEvent
 

@@ -1,21 +1,18 @@
-// TEMPORARY — Nimbus preview Worker (Starlight -> Nimbus migration).
+// Preview Worker — a self-contained copy of `worker/index.ts` used for
+// PR preview deployments (wrangler.preview.json -> dist).
 //
-// This is a deliberate, self-contained COPY of `worker/index.ts`. It exists so
-// the Nimbus preview (wrangler.preview.json -> dist-nimbus) can run the exact
-// same request-handling logic as production WITHOUT touching or refactoring the
-// production Worker. The only difference from index.ts is the redirects import
-// path (`../dist-nimbus/__redirects` instead of `../dist/__redirects`).
+// It is deployed via CI with:
+//   pnpm exec wrangler deploy --config wrangler.preview.json ...
 //
-// It is deployed manually/locally with:
-//   BUILD_TARGET=nimbus pnpm run build
-//   pnpm exec wrangler preview --config wrangler.preview.json --name nimbus
-//
-// Do NOT invest in deduplicating this against index.ts. At cutover (Epic H1)
-// delete this file and wrangler.preview.json. Production is unaffected by
-// anything here.
+// Anti-indexing measures (preview-only, not in production worker):
+//   - /robots.txt returns Disallow: / with no AI content signals
+//   - X-Robots-Tag header on every response
+//   - <meta name="robots"> injected into HTML responses via HTMLRewriter
+//   - Sitemap endpoints return 404
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
-import redirectsFileContents from "../dist-nimbus/__redirects";
+import redirectsFileContents from "../dist/__redirects";
+import { markdownNotFound, requestsMarkdown } from "./markdown-404";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -58,6 +55,46 @@ const API_CATALOG = JSON.stringify({
 	],
 });
 
+// --- Preview anti-indexing ---
+
+const ROBOTS_POLICY = "noindex, nofollow, noarchive, nosnippet, noimageindex";
+
+const PREVIEW_ROBOTS_TXT = [
+	"User-agent: *",
+	"Disallow: /",
+	"Content-Signal: ai-train=no, search=no, ai-input=no",
+].join("\n");
+
+function withRobotsHeaders(response: Response): Response {
+	const headers = new Headers(response.headers);
+	headers.set("X-Robots-Tag", ROBOTS_POLICY);
+	return new Response(response.body, {
+		status: response.status,
+		statusText: response.statusText,
+		headers,
+	});
+}
+
+function injectRobotsMeta(response: Response): Response {
+	const contentType = response.headers.get("Content-Type") ?? "";
+	if (!contentType.includes("text/html")) return response;
+	return new HTMLRewriter()
+		.on("head", {
+			element(element) {
+				element.append(`<meta name="robots" content="${ROBOTS_POLICY}" />`, {
+					html: true,
+				});
+			},
+		})
+		.transform(response);
+}
+
+function hardenResponse(response: Response): Response {
+	return injectRobotsMeta(withRobotsHeaders(response));
+}
+
+// --- End preview anti-indexing ---
+
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
@@ -96,8 +133,43 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
+		const response = await this.handleRequest(request);
+		return hardenResponse(response);
+	}
+
+	private async handleRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 		const { pathname } = url;
+
+		// Image Resizing makes a subrequest to fetch the source image. Scope the
+		// bypass to /_astro/ so only asset paths skip the Worker, not arbitrary
+		// client requests with a spoofed Via header.
+		if (
+			pathname.startsWith("/_astro/") &&
+			/image-resizing/.test(request.headers.get("via") ?? "")
+		) {
+			return this.env.ASSETS.fetch(request);
+		}
+
+		// Preview-only robots.txt — disallows all crawling and AI content signals
+		if (pathname === "/robots.txt") {
+			return new Response(PREVIEW_ROBOTS_TXT, {
+				headers: {
+					"Content-Type": "text/plain; charset=utf-8",
+					"Cache-Control": "no-store",
+				},
+			});
+		}
+
+		// Block sitemap endpoints on previews
+		if (/^\/sitemap.*\.xml$/.test(pathname)) {
+			return new Response("Not found", {
+				status: 404,
+				headers: {
+					"Content-Type": "text/plain; charset=utf-8",
+				},
+			});
+		}
 
 		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
@@ -207,6 +279,10 @@ export default class extends WorkerEntrypoint<Env> {
 		const response = await this.env.ASSETS.fetch(request);
 
 		if (response.status === 404) {
+			if (requestsMarkdown(request)) {
+				return markdownNotFound();
+			}
+
 			const section = new URL(response.url).pathname.split("/").at(1);
 
 			if (!section) return response;

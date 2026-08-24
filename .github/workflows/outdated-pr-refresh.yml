@@ -1,12 +1,14 @@
 name: Refresh PR Outdated Checks
 
-# **What it does**: Dispatches the outdated check workflow for any open PR that has gone
-#                   stale since its last push (~4am CT daily).
-# **Why we have it**: Catches PRs that become outdated when production advances without
-#                     any PR activity. Because this runs once daily, the effective enforcement
-#                     window is 24–48 hours depending on when the PR was last rebased
-#                     relative to the job's schedule.
-# **Who does it impact**: All contributors with open PRs against production.
+# **What it does**: Posts Outdated PR Check commit statuses for every open PR once a day
+#                   (~4am CT), including fork PRs. Catches PRs that go stale when production
+#                   advances without any PR activity.
+# **Why we have it**: The per-commit check (outdated-pr-check.yml) only runs when a PR is
+#                     updated. This job handles the case where production moves forward and
+#                     a PR becomes stale without the contributor pushing anything.
+#                     Because this runs once daily, the effective enforcement window is
+#                     72–96 hours depending on when the PR was last rebased vs. the schedule.
+# **Who does it impact**: All contributors with open PRs against production, including forks.
 
 on:
   schedule:
@@ -15,40 +17,34 @@ on:
 
 jobs:
   refresh-outdated:
-    name: Refresh outdated check for stale PRs
+    name: Refresh outdated check for all open PRs
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
-      actions: write
+      # statuses: write is required to post commit statuses to PR head SHAs.
+      # Fork PR commits are reachable in the base repo via refs/pull/{n}/head,
+      # so this works for both internal and fork PRs.
+      statuses: write
     steps:
-      - name: Dispatch outdated check for stale PRs
+      - name: Post outdated status for all open PRs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           REPO="${{ github.repository }}"
 
-          # Get all open PRs targeting production
+          # Get all open PRs targeting production (including forks)
           PRS=$(gh pr list \
+            --repo "$REPO" \
             --base production \
             --state open \
             --limit 500 \
-            --json number,headRefOid,headRefName,isCrossRepository)
+            --json number,headRefOid)
 
           echo "$PRS" | jq -c '.[]' | while read -r PR; do
             PR_NUMBER=$(echo "$PR" | jq -r '.number')
             PR_SHA=$(echo "$PR" | jq -r '.headRefOid')
-            PR_REF=$(echo "$PR" | jq -r '.headRefName')
-            IS_FORK=$(echo "$PR" | jq -r '.isCrossRepository')
-
-            # Fork PRs have their head branch in a different repo — workflow_dispatch
-            # can only target refs in the base repo. Skip them here; they are covered
-            # by the per-commit pull_request check when contributors push.
-            if [ "$IS_FORK" = "true" ]; then
-              echo "  Fork PR — skipping (covered by per-commit check)"
-              continue
-            fi
 
             echo "Checking PR #${PR_NUMBER} (${PR_SHA:0:7})"
 
@@ -60,26 +56,38 @@ jobs:
             BEHIND_BY=$(echo "$COMPARE" | jq -r '.behind_by')
 
             if [ "$BEHIND_BY" = "0" ]; then
-              echo "  Up to date — skipping"
-              continue
-            fi
-
-            MERGE_BASE_DATE=$(echo "$COMPARE" | jq -r '.merge_base_commit.commit.committer.date')
-
-            if [ -z "$MERGE_BASE_DATE" ] || [ "$MERGE_BASE_DATE" = "null" ]; then
-              echo "  Skipping PR #${PR_NUMBER}: missing merge base date"
-              continue
-            fi
-
-            MERGE_BASE_TS=$(date -d "$MERGE_BASE_DATE" +%s)
-            NOW=$(date +%s)
-            AGE=$((NOW - MERGE_BASE_TS))
-
-            if [ "$AGE" -gt 86400 ]; then
-              echo "  Stale — dispatching outdated check"
-              gh workflow run outdated-pr-check.yml --ref "$PR_REF" \
-                || echo "  Failed to dispatch for PR #${PR_NUMBER} — continuing"
+              STATE="success"
+              DESCRIPTION="Branch is up to date with production"
             else
-              echo "  Behind but within grace period — skipping"
+              MERGE_BASE_DATE=$(echo "$COMPARE" | jq -r '.merge_base_commit.commit.committer.date')
+
+              if [ -z "$MERGE_BASE_DATE" ] || [ "$MERGE_BASE_DATE" = "null" ]; then
+                echo "  Skipping PR #${PR_NUMBER}: missing merge base date"
+                continue
+              fi
+
+              MERGE_BASE_TS=$(date -d "$MERGE_BASE_DATE" +%s)
+              NOW=$(date +%s)
+              AGE=$((NOW - MERGE_BASE_TS))
+
+              if [ "$AGE" -gt 259200 ]; then
+                DAYS=$((AGE / 86400))
+                STATE="failure"
+                DESCRIPTION="Branch is ${DAYS} days out of date with production. Please rebase or merge. Codeowners can comment /rebase on the PR to fix."
+              else
+                STATE="success"
+                DESCRIPTION="Branch is behind production but within the 72-hour grace period"
+              fi
             fi
+
+            gh api \
+              --method POST \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/${REPO}/statuses/${PR_SHA}" \
+              -f state="$STATE" \
+              -f context="Outdated PR Check" \
+              -f description="$DESCRIPTION" \
+              || { echo "  Failed to post status for PR #${PR_NUMBER} — continuing"; true; }
+
+            echo "  Posted: $STATE — $DESCRIPTION"
           done

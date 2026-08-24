@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export interface Tab {
 	id: string;
@@ -37,11 +37,11 @@ const variantStyles: Record<TabBarVariant, VariantStyles> = {
 	pill: {
 		tablist: [
 			"pointer-events-auto relative z-20 inline-flex items-center gap-1",
-			"border-border-100 bg-background shrink-0 overflow-x-auto rounded-full border p-1",
+			"border-border bg-background shrink-0 overflow-x-auto rounded-full border p-1",
 			"scrollbar-hide max-w-full md:max-w-none md:overflow-x-visible",
 		].join(" "),
 		indicator: [
-			"bg-accent-100 pointer-events-none absolute top-1",
+			"bg-primary pointer-events-none absolute top-1",
 			"h-[calc(100%-8px)] rounded-full",
 			"shadow-[0_1px_2px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.08)]",
 			"opacity-0",
@@ -51,33 +51,33 @@ const variantStyles: Record<TabBarVariant, VariantStyles> = {
 				"relative z-10 flex h-10 cursor-pointer items-center gap-2",
 				"rounded-full px-3.5 py-2.5 font-medium -tracking-[0.01em]",
 				"whitespace-nowrap transition-colors duration-300 ease-out",
-				"focus-visible:outline-accent-100 focus-visible:outline-2 focus-visible:outline-offset-2",
+				"focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2",
 			].join(" "),
-			active: "text-light-foreground",
+			active: "text-primary-foreground",
 			inactive:
-				"text-foreground-muted hover:bg-foreground/5 hover:text-foreground",
+				"text-muted-foreground hover:bg-foreground/5 hover:text-foreground",
 		},
 	},
 	underline: {
 		tablist: [
-			"border-border-100 bg-background-muted relative flex border-b",
+			"border-border relative flex border-b bg-muted/50",
 			"scrollbar-hide overflow-x-auto md:overflow-x-visible",
 		].join(" "),
 		indicator: [
-			"bg-accent-100 pointer-events-none absolute bottom-[-1px] h-px",
+			"bg-primary pointer-events-none absolute bottom-0 z-20 h-0.5",
 			"opacity-0",
 		].join(" "),
 		tab: {
 			base: [
 				"relative z-10 flex shrink-0 cursor-pointer items-center gap-2",
 				"px-5 py-3 text-sm font-medium -tracking-[0.01em] whitespace-nowrap",
-				"border-r border-border-100 last:border-r-0",
+				"border-r border-border last:border-r-0",
 				"transition-colors duration-200 ease-out",
-				"focus-visible:outline-accent-100 focus-visible:outline-2 focus-visible:-outline-offset-2",
+				"focus-visible:outline-primary focus-visible:outline-2 focus-visible:-outline-offset-2",
 			].join(" "),
-			active: "text-foreground bg-background",
+			active: "text-foreground bg-card",
 			inactive:
-				"text-foreground-muted hover:bg-background hover:text-foreground",
+				"text-muted-foreground bg-muted/50 hover:bg-muted hover:text-foreground",
 		},
 	},
 };
@@ -149,18 +149,19 @@ const v = variantStyles[variant];
 
 		const activeClasses =
 			variant === "pill"
-				? ["text-light-foreground"]
-				: ["text-foreground", "bg-background"];
+				? ["text-primary-foreground"]
+				: ["text-foreground", "bg-card"];
 		const inactiveClasses =
 			variant === "pill"
 				? [
-						"text-foreground-muted",
+						"text-muted-foreground",
 						"hover:bg-foreground/5",
 						"hover:text-foreground",
 					]
 				: [
-						"text-foreground-muted",
-						"hover:bg-background",
+						"text-muted-foreground",
+						"bg-muted/50",
+						"hover:bg-muted",
 						"hover:text-foreground",
 					];
 

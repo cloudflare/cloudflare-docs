@@ -3,6 +3,10 @@ link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
 entries:
+  - publish_date: "2026-06-30"
+    title: Declarative class lifecycle with `exports`
+    description: |-
+      A new declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field in your Wrangler configuration file replaces the imperative `migrations` array for creating, deleting, renaming, and transferring Durable Object classes. Each `wrangler deploy` now prints a structured reconciliation report. Existing Workers on `migrations` continue to work unchanged.
   - publish_date: "2026-01-07"
     title: Billing for SQLite Storage
     description: |-

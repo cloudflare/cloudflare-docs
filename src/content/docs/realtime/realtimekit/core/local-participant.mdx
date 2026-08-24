@@ -98,19 +98,6 @@ const picture = useRealtimeKitSelector((m) => m.self.picture);
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Participant identifiers
-meeting.localUser.id // Peer ID (unique per session)
-meeting.localUser.userId // User ID (persistent across sessions)
-meeting.localUser.customParticipantId // Custom identifier set by developer
-meeting.localUser.name // Display name
-meeting.localUser.picture // Display picture URL
-```
-
-</RTKCodeSnippet>
-
 ### Media Properties
 
 Access the local user's media tracks and states:
@@ -205,21 +192,6 @@ const mediaPermissions = useRealtimeKitSelector((m) => m.self.mediaPermissions);
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Media state flags
-meeting.localUser.audioEnabled // Boolean: Is audio enabled?
-meeting.localUser.videoEnabled // Boolean: Is video enabled?
-meeting.localUser.screenShareEnabled // Boolean: Is screen share active?
-
-// Permissions granted by user
-meeting.localUser.isCameraPermissionGranted // Camera permission status
-meeting.localUser.isMicrophonePermissionGranted // Microphone permission status
-```
-
-</RTKCodeSnippet>
-
 ### State Properties
 
 Access room state and participant status:
@@ -357,20 +329,6 @@ return (
 - `'disconnected'` - Disconnected from meeting
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Room state
-meeting.localUser.isHost // Boolean: Is the local user a host?
-meeting.localUser.isPinned // Boolean: Is the local user pinned?
-meeting.localUser.stageStatus // Stage status of the local user
-
-// Permissions and flags
-meeting.localUser.flags // ParticipantFlags (recorder, hidden)
-```
-
-</RTKCodeSnippet>
-
 ## Media Controls
 
 ### Audio control
@@ -473,25 +431,6 @@ function AudioControls() {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Enable audio (unmute)
-meeting.localUser.enableAudio(onResult: (e) {
-  // handle error if any
-});
-
-// Disable audio (mute)
-meeting.localUser.disableAudio(onResult: (e) {
-  // handle error if any
-});
-
-// Check current status
-final isAudioEnabled = meeting.localUser.audioEnabled;
-```
-
-</RTKCodeSnippet>
-
 ### Video control
 
 Enable and disable the camera:
@@ -586,25 +525,6 @@ function VideoControls() {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Enable video
-meeting.localUser.enableVideo(onResult: (e) {
-  // handle error if any
-});
-
-// Disable video
-meeting.localUser.disableVideo(onResult: (e) {
-  // handle error if any
-});
-
-// Check current status
-final isVideoEnabled = meeting.localUser.videoEnabled;
-```
-
-</RTKCodeSnippet>
-
 ### Screen share control
 
 Start and stop screen sharing:
@@ -712,28 +632,6 @@ function ScreenShareControls() {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Enable screen share
-meeting.localUser.enableScreenShare();
-
-// Disable screen share
-meeting.localUser.disableScreenShare();
-```
-
-:::note[Platform-specific setup]
-**Android:** Declare the following permission in your app's AndroidManifest.xml to use screenshare on Android devices running Android API 14 and above:
-
-```xml
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
-```
-
-**iOS:** Refer to the [Screen Share Setup (iOS)](#screen-share-setup-ios) section for additional configuration.
-:::
-
-</RTKCodeSnippet>
-
 ### Change display name
 
 Update the display name before joining the meeting:
@@ -793,20 +691,6 @@ Name changes only reflect across all participants if done before joining the mee
 :::
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-if (meeting.permissions.miscellaneous.canEditDisplayName) {
-  meeting.localUser.setDisplayName("New Name");
-}
-```
-
-:::note
-Name changes only reflect across all participants if done before joining the meeting and the local user has preset permission to change the name.
-:::
-
-</RTKCodeSnippet>
-
 ## Manage media devices
 
 ### Get available devices
@@ -979,24 +863,6 @@ const currentDevices = meeting.self.getCurrentDevices();
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Get all audio devices
-final audioDevices = await meeting.localUser.getAudioDevices();
-
-// Get all video devices
-final videoDevices = await meeting.localUser.getVideoDevices();
-
-// Get currently selected audio device
-final selectedAudioDevice = meeting.localUser.getSelectedAudioDevice();
-
-// Get currently selected video device
-final selectedVideoDevice = meeting.localUser.getSelectedVideoDevice();
-```
-
-</RTKCodeSnippet>
-
 ### Change device
 
 Switch to a different media device:
@@ -1062,27 +928,6 @@ const handleDeviceChange = async (device) => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Get all available audio devices
-final audioDevices = await meeting.localUser.getAudioDevices();
-
-// Switch audio device
-await meeting.localUser.setAudioDevice(audioDevices[1]);
-
-// Get all available video devices
-final videoDevices = await meeting.localUser.getVideoDevices();
-
-// Switch video device
-await meeting.localUser.setVideoDevice(videoDevices[1]);
-
-// Switch between available camera sources
-meeting.localUser.switchCamera();
-```
-
-</RTKCodeSnippet>
-
 ## Display local video
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
@@ -1337,79 +1182,6 @@ export default function VideoView() {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-### VideoView widget
-
-Display video streams with the `VideoView` widget:
-
-```dart
-import 'package:realtimekit_core/realtimekit_core.dart';
-import 'package:flutter/material.dart';
-
-class LocalVideoView extends StatelessWidget {
-  final RtkMeetingParticipant localUser;
-
-  const LocalVideoView({Key? key, required this.localUser}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return VideoView(
-      meetingParticipant: localUser,
-      isSelfParticipant: true,
-    );
-  }
-}
-```
-
-### VideoView parameters
-
-The `VideoView` widget accepts the following parameters:
-
-- `meetingParticipant` (required): The `RtkMeetingParticipant` whose video should be displayed
-- `isSelfParticipant` (optional): Set to `true` for the local participant's self-preview, defaults to `false`
-- `key` (optional): Widget key for Flutter's widget tree management
-
-### Example
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:realtimekit_core/realtimekit_core.dart';
-
-class MeetingScreen extends StatelessWidget {
-  final RtkMeeting meeting;
-
-  const MeetingScreen({Key? key, required this.meeting}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Video Preview')),
-      body: Container(
-        child: VideoView(
-          meetingParticipant: meeting.localUser,
-          isSelfParticipant: true,
-        ),
-      ),
-    );
-  }
-}
-```
-
-For displaying other participants' video:
-
-```dart
-// Display remote participant video
-VideoView(
-  meetingParticipant: remoteParticipant,
-  isSelfParticipant: false,
-)
-```
-
-The `VideoView` widget automatically handles video rendering and resource cleanup based on Flutter's widget lifecycle.
-
-</RTKCodeSnippet>
-
 ## Screen share setup (iOS)
 
 <RTKCodeSnippet id="mobile-ios">
@@ -1468,66 +1240,6 @@ meeting.localUser.disableScreenShare()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-### Add broadcast upload extension
-
-In Xcode, add a Broadcast Upload Extension through `File` → `New` → `Target`. Choose `iOS` → `Broadcast Upload Extension` and fill out the required information.
-
-### Configure app groups
-
-Add your extension to an app group:
-
-1. Go to your extension's target in the project
-2. In the Signings & Capabilities tab, click the + button in the top left
-3. Add App Groups
-4. Add App Groups to your main app as well, ensuring the App Group identifier is the same for both
-
-### Configure SampleHandler
-
-1. Place the `RtkSampleHandler.swift` file from [GitHub](https://github.com/dyte-io/iOS-ScreenShare/blob/main/RtkSampleHandler.swift) in the `ios/<screenshare-folder>/` folder
-2. Create or replace `SampleHandler.swift`:
-
-```swift
-import ReplayKit
-
-class SampleHandler: RtkSampleHandler {
-}
-```
-
-### Update Info.plist
-
-Ensure **both** App and Extension Info.plist files contain these keys:
-
-```xml
-<key>RTKRTCAppGroupIdentifier</key>
-<string>(name of the group you have created)</string>
-```
-
-Add this key inside the Info.plist of the main App:
-
-```xml
-<key>RTKRTCScreenSharingExtension</key>
-<string>(Bundle Identifier of the Broadcast upload extension)</string>
-```
-
-### Enable screen share
-
-Launch the broadcast extension and enable screen share:
-
-```dart
-meeting.localUser.enableScreenShare()
-```
-
-To stop the screen share:
-
-```dart
-meeting.localUser.disableScreenShare()
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ### Add broadcast upload extension
@@ -1538,56 +1250,74 @@ In Xcode, add a Broadcast Upload Extension through `File` → `New` → `Target`
 
 Add your extension to an app group:
 
-1. Go to your extension's target in the project
-2. In the Signings & Capabilities tab, click the + button in the top left
-3. Add App Groups
-4. Add App Groups to your main app as well, ensuring the App Group identifier is the same for both
+1. Go to your extension's target in the project.
+2. In the **Signing & Capabilities** tab, click **+** and add **App Groups**.
+3. Add the same App Group to your main app target, using the same identifier for both.
 
+### Add screenshare sources via Podfile
 
-### Add RealtimeKitCore Pod to Broadcast Extension
-
-You need to add the `RealtimeKitCore` pod to your Broadcast Upload Extension target in your `Podfile` so the extension can access the screen share handler. Add the following to your `Podfile`:
+The SDK ships a Ruby helper script that adds the required screenshare Swift source files directly to your Broadcast Upload Extension target. Add the following to your `Podfile`:
 
 ```ruby
-target '<YourScreenShareExtensionTarget>' do
-  config = use_native_modules!
+# Add this line at the top
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "@cloudflare/realtimekit-react-native/ios/scripts/screenshare_sources.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
 
-  use_react_native!(
-    :path => config[:reactNativePath],
-    :hermes_enabled => true,
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
-  )
-  # Add this line to include the RealtimeKitCore pod in Broadcast Extension
-  pod 'RealtimeKitCore', :path => '../node_modules/@cloudflare/realtimekit-react-native'
+target 'YourApp' do
+  ...
+  post_install do |installer|
+    ...
+	  # Add this line here
+    add_screenshare_sources(
+      installer,
+      project_name: 'YourApp',              # your Xcode project name (without .xcodeproj)
+      extension_target_name: 'YourAppScreenshare' # your Broadcast Upload Extension target name
+    )
+	  ...
+  end
+end
+
+target 'YourAppScreenshare' do
+# Remove the old steps added if any
 end
 ```
 
-Replace `<YourScreenShareExtensionTarget>` with the name of the Broadcast Upload Extension target you created in Xcode.
+Then run:
+
+```bash
+pod install
+```
 
 ### Configure SampleHandler
 
-Edit your SampleHandler class:
+In your Broadcast Upload Extension, edit `SampleHandler.swift`:
 
 ```swift
-import RealtimeKitCore
-
 class SampleHandler: RTKScreenshareHandler {
-	override init() {
-   		super.init(appGroupIdentifier: "<YOUR_APP_GROUP_IDENTIFIER>", bundleIdentifier: "<YOUR_APP_BUNDLE_IDENTIFIER>")
- 	}
+  override init() {
+    super.init(
+      appGroupIdentifier: "<YOUR_APP_GROUP_IDENTIFIER>",
+      bundleIdentifier: "<YOUR_APP_BUNDLE_IDENTIFIER>"
+    )
+  }
 }
 ```
 
+Replace `<YOUR_APP_GROUP_IDENTIFIER>` with the App Group you created (for example, `group.com.yourcompany.yourapp`) and `<YOUR_APP_BUNDLE_IDENTIFIER>` with your main app's bundle identifier.
+
 ### Update Info.plist
 
-Ensure **both** App and Extension Info.plist files contain these keys:
+Add the following key to **both** your main app and extension `Info.plist` files:
 
 ```xml
 <key>RTCAppGroupIdentifier</key>
 <string>(YOUR_APP_GROUP_IDENTIFIER)</string>
 ```
 
-Add this key inside the Info.plist of the main App:
+Add this key to the main app `Info.plist` only:
 
 ```xml
 <key>RTCAppScreenSharingExtension</key>
@@ -1595,8 +1325,6 @@ Add this key inside the Info.plist of the main App:
 ```
 
 ### Enable screen share
-
-Launch the broadcast extension and enable screen share:
 
 ```js
 meeting.self.enableScreenShare();
@@ -1697,12 +1425,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK uses a different event model. Monitor `roomJoined` property changes or use listeners for state changes.
-
-</RTKCodeSnippet>
-
 ### Room left
 
 Fires when the local user leaves the meeting:
@@ -1797,23 +1519,6 @@ meeting.self.on("roomLeft", ({ state }) => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class MeetingSelfListener extends RtkSelfEventListener {
-  @override
-  void onRemovedFromMeeting() {
-    // User was removed from the meeting (kicked or meeting ended)
-    // Display alert or navigate to exit screen
-  }
-}
-
-// Add the listener
-meeting.addSelfEventListener(MeetingSelfListener());
-```
-
-</RTKCodeSnippet>
-
 ### Video update
 
 Fires when video is enabled or disabled:
@@ -1896,12 +1601,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK uses a different event model. Monitor `videoEnabled` property changes.
-
-</RTKCodeSnippet>
-
 ### Audio update
 
 Fires when audio is enabled or disabled:
@@ -1980,12 +1679,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK uses a different event model. Monitor `audioEnabled` property changes.
-
-</RTKCodeSnippet>
-
 ### Screen share update
 
 Fires when screen sharing starts or stops:
@@ -2096,12 +1789,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK uses a different event model. Monitor `screenShareEnabled` property changes.
-
-</RTKCodeSnippet>
-
 ### Device update
 
 Fires when the active device changes:
@@ -2203,29 +1890,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class DeviceChangeListener extends RtkSelfEventListener {
-  @override
-  void onAudioDeviceChanged(AudioDevice audioDevice) {
-    // Handle audio device change
-    print('Audio device changed: ${audioDevice.label}');
-  }
-
-  @override
-  void onVideoDeviceChanged(VideoDevice videoDevice) {
-    // Handle video device change
-    print('Video device changed: ${videoDevice.label}');
-  }
-}
-
-// Add the listener
-meeting.addSelfEventListener(DeviceChangeListener());
-```
-
-</RTKCodeSnippet>
-
 ### Device List Update
 
 Triggered when the list of available devices changes (device plugged in or out):
@@ -2312,33 +1976,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class DeviceListListener extends RtkSelfEventListener {
-  final RealtimekitClient meeting;
-
-  DeviceListListener(this.meeting);
-
-  @override
-  void onAudioDevicesUpdated(List<AudioDevice> devices) {
-    // Triggered when audio devices are added or removed
-    // Update UI with new audio device list
-  }
-
-  @override
-  void onVideoDeviceChanged(VideoDevice videoDevice) {
-    // Handle video device change
-    print('Video device changed to: ${videoDevice.label}');
-  }
-}
-
-// Add the listener
-meeting.addSelfEventListener(DeviceListListener(meeting));
-```
-
-</RTKCodeSnippet>
-
 ### Network Quality Score
 
 Monitor your own network quality:
@@ -2483,12 +2120,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK does not currently expose network quality scores.
-
-</RTKCodeSnippet>
-
 ### Permission Updates
 
 Triggered when permissions are updated dynamically:
@@ -2553,12 +2184,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK uses a different permissions model. Refer to the Flutter-specific documentation.
-
-</RTKCodeSnippet>
-
 ### Media Permission Errors
 
 Triggered when media permissions are denied or media capture fails:
@@ -2671,34 +2296,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class PermissionListener extends RtkSelfEventListener {
-  @override
-  void onMeetingRoomJoinedWithoutCameraPermission() {
-    // Meeting joined without camera permission
-  }
-
-  @override
-  void onMeetingRoomJoinedWithoutMicPermission() {
-    // Meeting joined without microphone permission
-  }
-}
-
-// Add the listener
-meeting.addSelfEventListener(PermissionListener());
-```
-
-You can also check permission status using properties:
-
-```dart
-final hasCameraPermission = meeting.localUser.isCameraPermissionGranted;
-final hasMicPermission = meeting.localUser.isMicrophonePermissionGranted;
-```
-
-</RTKCodeSnippet>
-
 ### Waitlist Status
 
 For meetings with waiting room enabled:
@@ -2764,12 +2361,6 @@ useEffect(() => {
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK uses a different event model. Monitor `stageStatus` or relevant properties for waitlist status.
-
-</RTKCodeSnippet>
-
 ### iOS-Specific Events
 
 The iOS SDK provides additional platform-specific events:
@@ -2866,12 +2457,6 @@ const isPinned = meeting.self.isPinned;
 ```
 
 </RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK does not currently support pinning the local participant.
-
-</RTKCodeSnippet>
-
 ## Update Media Constraints
 
 Update video or screenshare resolution at runtime:
@@ -2919,10 +2504,5 @@ meeting.self.updateScreenshareConstraints({
 	height: { ideal: 1080 },
 });
 ```
-
-</RTKCodeSnippet>
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK does not currently expose runtime constraint updates.
 
 </RTKCodeSnippet>

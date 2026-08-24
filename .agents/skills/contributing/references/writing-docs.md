@@ -42,12 +42,12 @@ Read `choosing-components.md`. It starts with a reverse-lookup table (the data y
 Mandatory mappings (do not use bare fences for these):
 
 - Workers JS/TS → `TypeScriptExample`
-- Wrangler config → `WranglerConfig` (TOML input, `$today` for `compatibility_date`)
+- Wrangler config → `WranglerConfig` (TOML or JSON input, `$today` for `compatibility_date`)
 - Package install/exec → `PackageManagers`
 - Multi-step procedure → `Steps`
 - Dashboard navigation step → `DashButton`
 
-Remember to import every component you use from `~/components`, after the frontmatter block. Remove unused imports.
+Remember to add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`, after the frontmatter block. Page-specific wrapper components or one-off components may use deep paths instead of adding to the barrel. Remove unused imports.
 
 ## 6. Handle assets and related artifacts
 

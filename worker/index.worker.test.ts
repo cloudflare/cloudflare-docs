@@ -19,6 +19,55 @@ describe("Cloudflare Docs", () => {
 		});
 	});
 
+	describe("markdown 404 handling", () => {
+		it("responds with markdown 404 for /index.md requests", async () => {
+			const request = new Request("http://fakehost/non-existent/index.md");
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+			const body = await response.text();
+			expect(body).toContain("# 404 Page not found");
+			expect(body).toContain("/llms.txt");
+			expect(body).toContain("ai-search.developers.cloudflare.com");
+		});
+
+		it("responds with markdown 404 for Accept: text/markdown requests", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: { Accept: "text/markdown" },
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+			const body = await response.text();
+			expect(body).toContain("# 404 Page not found");
+			expect(body).toContain("/llms.txt");
+		});
+
+		it("responds with markdown 404 for parameterized Accept media types", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: { Accept: "text/markdown; charset=utf-8, text/html;q=1.0" },
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+			const body = await response.text();
+			expect(body).toContain("# 404 Page not found");
+			expect(body).toContain("/llms.txt");
+		});
+
+		it("returns html 404 for unrelated Accept media types", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: {
+					Accept: "text/markdown-extra, application/not-text-markdown",
+				},
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/html");
+			expect(await response.text()).toContain("Check the URL,");
+		});
+	});
+
 	describe("redirects", () => {
 		it("redirects requests with a trailing slash", async () => {
 			const request = new Request("http://fakehost/docs/");
@@ -53,7 +102,7 @@ describe("Cloudflare Docs", () => {
 			expect(urlFlag.experimental).toBe(false);
 
 			expect(nodeJsFlag).toBeDefined();
-			expect(nodeJsFlag.enable_date).toBe(null);
+			expect(nodeJsFlag.enable_date).toBe("2026-08-04");
 		});
 
 		it("pages framework configurations", async () => {
@@ -200,9 +249,7 @@ describe("Cloudflare Docs", () => {
 				const image = dom.querySelector("meta[property='og:image']")?.attributes
 					.content;
 
-				expect(image).toBe(
-					"https://developers.cloudflare.com/dev-products-preview.png",
-				);
+				expect(image).toBe("https://developers.cloudflare.com/og-docs.png");
 			});
 		});
 

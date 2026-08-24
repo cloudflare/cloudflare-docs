@@ -3,6 +3,21 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-08-20"
+    description: |-
+      - Increased the Durable Object Dynamic Worker concurrency limit from 4 to 10.
+  - publish_date: "2026-08-18"
+    description: |-
+      - Updated v8 to version 15.2.
+  - publish_date: "2026-07-16"
+    description: |-
+      - Updated v8 to version 15.1.
+  - publish_date: "2026-06-04"
+    description: |-
+      - Updated v8 to version 15.0.
+  - publish_date: "2026-05-13"
+    description: |-
+      - Fixed a regression where passing an array for to/cc/bcc on the SendEmail builder produced "Invalid email address" errors.
   - publish_date: "2026-04-27"
     description: |-
       - Updated v8 to version 14.8.

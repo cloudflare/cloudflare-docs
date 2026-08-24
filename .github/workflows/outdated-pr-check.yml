@@ -1,86 +1,90 @@
-name: CI
+name: Outdated PR Check
 
-# **What it does**: Fails if a PR's branch is more than 24 hours out of date with production.
-# **Why we have it**: Prevents merging PRs whose base has drifted from production for too long.
-#                     The daily refresh job (outdated-pr-refresh.yml) dispatches this workflow
-#                     for any PR that has gone stale since its last push, so the check stays
-#                     current even when production advances without any PR activity.
-# **Who does it impact**: All contributors opening PRs against production.
+# **What it does**: Posts Outdated PR Check commit statuses when a PR is opened or updated.
+#                   Fails if the branch is more than 72 hours out of date with production.
+# **Why we have it**: Gives contributors immediate feedback when their branch has drifted.
+#                     The daily refresh job (outdated-pr-refresh.yml) catches PRs that go
+#                     stale when production advances without any PR activity.
+# **Who does it impact**: All contributors opening PRs against production, including forks.
 
+# NOTE: pull_request_target is used instead of pull_request so that fork PRs receive a
+# commit status. pull_request gives forks a read-only token; pull_request_target runs with
+# base-repo permissions. This is safe here because the workflow never checks out or executes
+# any code from the PR — it only calls gh api. The danger with pull_request_target arises
+# when you add `actions/checkout` with `ref: github.event.pull_request.head.sha`, which
+# would run untrusted PR code with elevated permissions. Do not add a checkout step here.
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - production
     types:
       - opened
       - synchronize
       - reopened
-  workflow_dispatch:
 
 concurrency:
   # Use a hardcoded prefix rather than github.workflow to avoid colliding with
   # the main CI workflow, which also uses name: CI.
-  group: outdated-pr-check-${{ github.event.pull_request.number || github.ref }}
+  group: outdated-pr-check-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
   check-outdated:
-    name: Outdated Check
+    name: Check
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      statuses: write
     steps:
-      - name: Check if PR base is within 24 hours of production
+      - name: Check if PR base is within 72 hours of production
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # For pull_request events use the PR head SHA; for workflow_dispatch
-          # github.sha is the SHA of the ref that was dispatched.
-          PR_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
-          # Fork PRs have commits that live in a separate repo — the base repo's
-          # compare API cannot resolve them. The nightly refresh also skips fork PRs
-          # for the same reason. This is a known gap; fork contributors are expected
-          # to keep their branches current as a matter of course.
-          IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
           REPO="${{ github.repository }}"
 
-          if [ "$IS_FORK" = "true" ]; then
-            echo "Fork PR — outdated check does not apply"
-            exit 0
-          fi
-
           COMPARE=$(gh api "/repos/${REPO}/compare/production...${PR_SHA}") || {
-            echo "Compare API failed — skipping check"
+            echo "Compare API failed — skipping status post"
             exit 0
           }
           BEHIND_BY=$(echo "$COMPARE" | jq -r '.behind_by')
 
           if [ -z "$BEHIND_BY" ] || [ "$BEHIND_BY" = "null" ]; then
-            echo "Unexpected API response — skipping check"
+            echo "Unexpected API response — skipping status post"
             exit 0
           fi
 
           if [ "$BEHIND_BY" = "0" ]; then
-            echo "Branch is up to date with production"
-            exit 0
+            STATE="success"
+            DESCRIPTION="Branch is up to date with production"
+          else
+            MERGE_BASE_DATE=$(echo "$COMPARE" | jq -r '.merge_base_commit.commit.committer.date')
+
+            if [ -z "$MERGE_BASE_DATE" ] || [ "$MERGE_BASE_DATE" = "null" ]; then
+              echo "Could not determine merge base date — skipping status post"
+              exit 0
+            fi
+
+            MERGE_BASE_TS=$(date -d "$MERGE_BASE_DATE" +%s)
+            NOW=$(date +%s)
+            AGE=$((NOW - MERGE_BASE_TS))
+
+            if [ "$AGE" -gt 259200 ]; then
+              DAYS=$((AGE / 86400))
+              STATE="failure"
+              DESCRIPTION="Branch is ${DAYS} days out of date with production. Please rebase or merge. Codeowners can comment /rebase on the PR to fix."
+            else
+              STATE="success"
+              DESCRIPTION="Branch is behind production but within the 72-hour grace period"
+            fi
           fi
 
-          MERGE_BASE_DATE=$(echo "$COMPARE" | jq -r '.merge_base_commit.commit.committer.date')
-
-          if [ -z "$MERGE_BASE_DATE" ] || [ "$MERGE_BASE_DATE" = "null" ]; then
-            echo "Could not determine merge base date — skipping check"
-            exit 0
-          fi
-
-          MERGE_BASE_TS=$(date -d "$MERGE_BASE_DATE" +%s)
-          NOW=$(date +%s)
-          AGE=$((NOW - MERGE_BASE_TS))
-
-          if [ "$AGE" -gt 86400 ]; then
-            HOURS=$((AGE / 3600))
-            echo "Branch is ${HOURS}h out of date with production. Please rebase or merge."
-            exit 1
-          fi
-
-          echo "Branch is behind production but within the 24-hour grace period"
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${REPO}/statuses/${PR_SHA}" \
+            -f state="$STATE" \
+            -f context="Outdated PR Check" \
+            -f description="$DESCRIPTION" \
+            || echo "Failed to post status — skipping"

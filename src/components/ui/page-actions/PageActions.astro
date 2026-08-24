@@ -1,0 +1,103 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import { cn } from "@/lib/cn";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+	lastUpdated?: Date;
+}
+
+const { lastUpdated, class: className, ...attrs } = Astro.props;
+
+const baseBtn =
+	"inline-flex cursor-pointer items-center gap-1.5 rounded-md bg-transparent px-2 py-1 text-muted-foreground no-underline transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2";
+
+const sepClass = "select-none text-muted-foreground/40";
+
+const formattedDate = lastUpdated
+	? new Intl.DateTimeFormat(undefined, {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		}).format(lastUpdated)
+	: null;
+
+// Matches production PageActions: Copy / View as Markdown always render and link
+// to the page's `index.md` twin *relatively* (resolved against the current URL),
+// so no per-page prop is required. Pages that lack a markdown twin will 404 on
+// click — the intended state until nimbus serves Markdown-for-Agents at the edge.
+---
+
+<div
+	data-nb-page-actions
+	class={cn(
+		"not-prose -ml-2 flex flex-wrap items-center gap-y-1 text-[0.8125rem]",
+		className,
+	)}
+	{...attrs}
+>
+	{
+		lastUpdated && (
+			<>
+				<span
+					data-nb-page-actions-updated
+					class="text-muted-foreground inline-flex items-center gap-1.5 px-2 py-1 max-[900px]:hidden"
+				>
+					<Icon name="ph:clock-counter-clockwise" class="h-3.5 w-3.5" />
+					Last updated{" "}
+					<time datetime={lastUpdated.toISOString()}>{formattedDate}</time>
+				</span>
+				<span aria-hidden="true" class={cn(sepClass, "max-[900px]:hidden")}>
+					|
+				</span>
+			</>
+		)
+	}
+
+	<button
+		type="button"
+		data-nb-page-actions-copy
+		class={baseBtn}
+		aria-label="Copy Page as Markdown"
+	>
+		<Icon name="ph:copy" class="h-3.5 w-3.5" data-nb-page-actions-copy-icon />
+		<Icon
+			name="ph:check-circle"
+			class="text-success hidden h-3.5 w-3.5"
+			data-nb-page-actions-check-icon
+		/>
+		<span data-nb-page-actions-label aria-live="polite">Copy as Markdown</span>
+	</button>
+
+	<span aria-hidden="true" class={sepClass}>|</span>
+
+	<a
+		href="index.md"
+		target="_blank"
+		rel="noopener noreferrer"
+		class={baseBtn}
+		data-nb-page-actions-view
+		aria-label="View Page as Markdown"
+	>
+		<Icon name="ph:markdown-logo" class="h-3.5 w-3.5" />
+		View as Markdown
+	</a>
+
+	<span aria-hidden="true" class={cn(sepClass, "max-[700px]:hidden")}>|</span>
+
+	<a
+		href="/agent-setup/"
+		target="_blank"
+		rel="noopener noreferrer"
+		class={cn(baseBtn, "max-[700px]:hidden")}
+		data-nb-page-actions-agent
+		aria-label="Setup your agent to build on Cloudflare"
+	>
+		<Icon name="ph:robot" class="h-3.5 w-3.5" />
+		Agent setup
+	</a>
+</div>
+
+<script>
+	import "./page-actions.client";
+</script>

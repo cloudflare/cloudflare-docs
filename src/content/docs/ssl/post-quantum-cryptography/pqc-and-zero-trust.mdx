@@ -18,7 +18,6 @@ Organizations can obtain end-to-end post-quantum encryption of their private net
 Post-quantum encryption is offered in all major Cloudflare One network configurations, including the following on-ramps:
 
 - Agentless [browser access to Cloudflare-proxied applications](#agentless-cloudflare-access) (including self-hosted apps behind Cloudflare Access)
-- Agentless [browser on-ramp to Cloudflare Gateway](#secure-web-gateway) via [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/)
 - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (on the end-user device)
 - [Cloudflare IPsec](/cloudflare-wan/reference/gre-ipsec-tunnels/) on-ramp
 
@@ -105,21 +104,19 @@ Traffic leaves the Cloudflare network over a post-quantum Cloudflare IPsec link 
 
 The hybrid key agreement is negotiated using ML-KEM as an additional Key Exchange to classical Diffie-Hellman during the IKEv2 handshake, as defined in [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/) and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/). For the list of validated third-party platforms and their supported parameters, refer to [Tested third-party vendor interoperability](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability).
 
+Cloudflare also supports downgrade protection for IPsec tunnels via the [`IKE_SA_INIT_FULL_TRANSCRIPT_AUTH`](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/) extension. Both the initiator and Cloudflare (responder) must support the extension for protection to be effective. Refer to [Downgrade protection](/cloudflare-wan/reference/gre-ipsec-tunnels/#improved-downgrade-protection-beta).
+
 ## Secure Web Gateway
 
 A [secure web gateway (SWG)](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) is used to secure access to third-party websites on the public Internet by intercepting and inspecting TLS traffic.
 
 [Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/) [supports post-quantum cryptography for HTTPS traffic](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support). As long as the third-party website that is being inspected supports post-quantum key agreement, Cloudflare's SWG also supports post-quantum key agreement.
 
-![Diagram of how post-quantum cryptography works with Cloudflare's Secure Web Gateway](~/assets/images/ssl/pqc-secure-web-gateway.png).
-
-Cloudflare Gateway's HTTPS filtering feature involves two post-quantum TLS connections, as follows:
+Cloudflare Gateway's HTTPS filtering feature involves two post-quantum connections, as follows:
 
 **1. Connection from the client to Gateway**
 
-A [modern web browser that supports post-quantum key agreement](/ssl/post-quantum-cryptography/pqc-support/#browsers) connects to Gateway via the [Agentless via proxy endpoints](/ssl/post-quantum-cryptography/pqc-cloudflare-products/#agentless-via-proxy-endpoints) on-ramp. The connection is secured by TLS 1.3 with post-quantum key agreement.
-
-The [Cloudflare One Client](#cloudflare-one-client) and [Cloudflare IPsec](#cloudflare-ipsec) on-ramps described in the sections above can also route traffic to Gateway with post-quantum protection.
+The client reaches Gateway through one of the post-quantum on-ramps: the [Cloudflare One Client](#cloudflare-one-client) or a [Cloudflare IPsec](#cloudflare-ipsec) tunnel. These on-ramps carry the client's traffic to Gateway with post-quantum key agreement.
 
 **2. Connection from Gateway to the origin server**
 

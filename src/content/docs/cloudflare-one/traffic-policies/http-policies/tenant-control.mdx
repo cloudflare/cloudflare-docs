@@ -1,32 +1,124 @@
 ---
 pcx_content_type: how-to
-description: Tenant control in Gateway.
+description: Add, overwrite, and remove HTTP request headers in Gateway HTTP policies using static or dynamic values.
 products:
   - cloudflare-one
-title: Tenant control
+title: Modify HTTP request headers in Gateway
 sidebar:
   order: 7
 tags:
   - Headers
 ---
 
-Tenant control allows your users to access corporate SaaS applications while blocking access to personal accounts on the same service. For example, you can allow access to your company's Google Workspace while blocking personal Gmail logins.
+import { Details, Render } from "~/components";
 
-Gateway implements tenant control by injecting custom HTTP headers into matching requests. These headers tell the SaaS application which tenant (organization) is authorized. If the user attempts to authenticate with a personal account, the SaaS application reads the header and rejects the request.
+Gateway HTTP policies with Allow actions can modify the headers of matching requests before they reach their destination. You can add dynamic values to set headers to forward information like user identity, source IP, and other inputs to upstream services, enforce SaaS tenant control, strip internal headers, override header content.
 
-## Add custom headers for a SaaS application
+Header manipulation requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), because HTTP headers are only visible on traffic which Gateway can decrypt.
 
-To create an HTTP policy with custom headers:
+## Header operations
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies** > **HTTP**.
+Gateway supports three header operations on HTTP policies. When a request matches an Allow policy with header operations configured, Gateway applies them in the following order:
+
+1. **Delete** - Remove headers from the request.
+2. **Overwrite** - Overwrite headers on the request. Headers with matched names will have their values overwritten. If the header does not exist, it is created.
+3. **Add** - Append headers to the request. If the header already exists, the added value is appended to the existing value.
+
+You can configure up to 20 header operations per policy. Header names are limited to 256 bytes, and header values are limited to 4 KB.
+
+### Add headers
+
+Adding a header appends a value to the request. If the header already exists, the value is added alongside the existing value rather than replacing it.
+
+### Overwrite headers
+
+Overwriting a header overwrites any existing value. If the header does not already exist on the request, it is created. Use this operation when you need to guarantee a specific header value regardless of what the client sent.
+
+### Delete headers
+
+Deleting a header removes it from the request entirely. If the header does not exist, the operation has no effect.
+
+## Dynamic header values
+
+Header values can include dynamic variables that Gateway resolves at request time using identity, device, and network context from the current session. Dynamic variables use the `@{...}` syntax and can be mixed with static text in the same value.
+
+For example, a header value of `user-@{identity.email}` resolves to `user-jdoe@example.com` at request time.
+
+The following dynamic variables are available:
+
+| Variable              | Description                                                |
+| --------------------- | ---------------------------------------------------------- |
+| `@{identity.email}`   | User's email address from the identity provider.           |
+| `@{identity.name}`    | User's display name from the identity provider.            |
+| `@{identity.id}`      | User's Cloudflare identity UUID.                           |
+| `@{identity.groups}`  | User's identity provider group memberships.                |
+| `@{identity.SAML}`    | User's SAML attributes from the identity provider if configured.         |
+| `@{identity.OIDC}`    | User's OIDC claims from the identity provider if configured.             |
+| `@{source.ip}`        | Source IP address of the user's connection as seen in Gateway.                 |
+| `@{destination.ip}`   | Destination IP address of the request.                     |
+| `@{device.id}`        | Cloudflare One Client device UUID.                                          |
+| `@{device.posture}`   | Device posture check results (serialized as a JSON string).|
+
+Dynamic variables require an active identity session. If Gateway cannot resolve a variable (for example, the user is not authenticated), the variable is replaced with a warning string such as `cf-unresolved` or `cf-invalid`, and a warning is added to the HTTP log.
+
+## Configure header operations
+
+### Dashboard
+
+To create an HTTP policy with header operations:
+
+1. In the [Cloudflare One dashboard](https://dash.cloudflare.com/one), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
-3. Build an expression to match the SaaS traffic you want to control.
-4. In **Action**, select _Allow_. In **Untrusted certificate action**, select _Block_.
-5. Under **Add headers to matched requests**, select **Add a header**.
-6. Add any custom header names and values corresponding to your [SaaS application](#common-policy-configurations).
-7. Select **Create policy**.
+3. Build an expression to match the traffic you want to modify.
+4. In **Action**, select _Allow_.
+5. Under **Modify request headers**, select **Add** or **Overwrite** to add or overwrite headers, or select **Remove** to delete a header.
+6. For Add and Overwrite operations, enter the header name and value. To use a dynamic variable, enter the `@{...}` syntax in the value field, or select the `{}` button to see the list of available values. For Remove operations, enter only the header name.
+7. Save your policy.
 
-Your policy is now displayed in your list of HTTP policies. When your users attempt to authenticate your configured SaaS application with a personal account, authentication will fail.
+### API
+
+To create an HTTP policy with header operations via the API, include `add_headers`, `set_headers`, and `delete_headers` in the `rule_settings` object.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Forward identity headers",
+  "action": "allow",
+  "enabled": true,
+  "filters": ["http"],
+  "traffic": "any(http.request.domains[*] in {\"app.example.com\"})",
+  "rule_settings": {
+    "add_headers": {
+      "X-User-Email": ["@{identity.email}"],
+      "X-User-Groups": ["@{identity.groups}"]
+    },
+    "set_headers": {
+      "X-Forwarded-User": ["@{identity.email}"]
+    },
+    "delete_headers": ["X-Debug-Token", "X-Internal-Only"]
+  }
+}'
+```
+
+The `rule_settings` fields for header manipulation are:
+
+| Field            | Type                         | Description                                                           |
+| ---------------- | ---------------------------- | --------------------------------------------------------------------- |
+| `add_headers`    | `map<string, array<string>>` | Headers to append. Each key is a header name, each value is a list of values to add.      |
+| `set_headers`    | `map<string, array<string>>` | Headers to overwrite. Each key is a header name, each value is a list of values to set.    |
+| `delete_headers` | `array<string>`              | Header names to remove from the request.                              |
+
+A single header value can contain a mix of static text and dynamic variables. For example:
+
+```json
+{
+  "add_headers": {
+    "X-Request-Context": ["user=@{identity.email}, device=@{device.id}, src=@{source.ip}"]
+  }
+}
+```
 
 ### Verify custom headers
 
@@ -44,11 +136,15 @@ To verify Gateway is applying a custom header:
 2. On your device, go to [`httpbin.org/anything`](https://httpbin.org/anything). Your custom header will appear in the list of headers.
 3. (Optional) Remove the HTTPBin expression from your policy.
 
-## Common policy configurations
+## Use cases
 
-Depending on which SaaS application your organization needs access to, different tenant control policies are required.
+### SaaS tenant control
 
-### Microsoft 365
+Tenant control allows your users to access corporate SaaS applications while blocking access to personal accounts on the same service. For example, you can allow access to your company's Google Workspace while blocking personal Gmail logins.
+
+Gateway implements tenant control by injecting custom HTTP headers into matching requests. These headers tell the SaaS application which tenant (organization) is authorized. If the user attempts to authenticate with a personal account, the SaaS application reads the header and rejects the request.
+
+<Details header="Microsoft 365">
 
 Microsoft 365 tenant control requires two policies. When you order your policies, make sure they follow [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence).
 
@@ -70,7 +166,9 @@ Microsoft 365 tenant control requires two policies. When you order your policies
 
 For more information, refer to the [Microsoft Entra ID documentation](https://learn.microsoft.com/entra/identity/enterprise-apps/tenant-restrictions).
 
-### Google Workspace
+</Details>
+
+<Details header="Google Workspace">
 
 | Selector    | Operator | Value              | Action | Untrusted certificate action |
 | ----------- | -------- | ------------------ | ------ | ---------------------------- |
@@ -82,7 +180,9 @@ For more information, refer to the [Microsoft Entra ID documentation](https://le
 
 For more information, refer to the [Google Workspace documentation](https://support.google.com/a/answer/1668854).
 
-### Slack
+</Details>
+
+<Details header="Slack">
 
 | Selector    | Operator | Value   | Action | Untrusted certificate action |
 | ----------- | -------- | ------- | ------ | ---------------------------- |
@@ -94,7 +194,9 @@ For more information, refer to the [Google Workspace documentation](https://supp
 
 For more information, refer to the [Slack documentation](https://slack.com/help/articles/360024821873-Approve-Slack-workspaces-for-your-network).
 
-### Dropbox
+</Details>
+
+<Details header="Dropbox">
 
 | Selector    | Operator | Value     | Action | Untrusted certificate action |
 | ----------- | -------- | --------- | ------ | ---------------------------- |
@@ -106,7 +208,9 @@ For more information, refer to the [Slack documentation](https://slack.com/help/
 
 For more information, refer to the [Dropbox documentation](https://help.dropbox.com/security/network-control).
 
-### ChatGPT
+</Details>
+
+<Details header="ChatGPT">
 
 | Selector    | Operator | Value     | Action | Untrusted certificate action |
 | ----------- | -------- | --------- | ------ | ---------------------------- |
@@ -118,7 +222,63 @@ For more information, refer to the [Dropbox documentation](https://help.dropbox.
 
 For more information, refer to the [OpenAI documentation](https://help.openai.com/articles/8798594-what-is-a-workspace-how-do-i-access-my-chatgpt-business-workspace).
 
-## Exempt users in Cloudflare WAF
+</Details>
+
+<Details header="Claude">
+
+| Selector    | Operator | Value    | Action | Untrusted certificate action |
+| ----------- | -------- | -------- | ------ | ---------------------------- |
+| Application | in       | _Claude_ | Allow  | Block                        |
+
+| Custom header name          | Custom header value      |
+| --------------------------- | ------------------------ |
+| `anthropic-allowed-org-ids` | Your organization's UUID |
+
+To allow access from multiple organizations, enter a comma-separated list of UUIDs with no spaces (for example, `<org-uuid-1>,<org-uuid-2>`).
+
+You can find your organization UUID in **Settings** > **Account** > **Organization ID** on [claude.ai](https://claude.ai/settings/account).
+
+For more information, refer to the [Claude documentation](https://support.claude.com/en/articles/13198485-enforce-network-level-access-control-with-tenant-restrictions).
+
+</Details>
+
+### Forward user identity to upstream services
+
+You can use dynamic header values to forward user identity information to your upstream applications without requiring those applications to integrate with Cloudflare Access directly.
+
+| Header name        | Header value          |
+| ------------------ | --------------------- |
+| `X-User-Email`     | `@{identity.email}`  |
+| `X-User-Name`      | `@{identity.name}`   |
+| `X-User-Groups`    | `@{identity.groups}` |
+| `X-Source-IP`       | `@{source.ip}`       |
+
+Your upstream application can read these headers to identify the user, enforce authorization logic, or populate audit logs.
+
+### Strip internal headers
+
+To prevent clients from spoofing internal headers, use the delete operation to remove headers before forwarding the request, then use the add or set operation to re-inject them with verified values.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+--header "Authorization: Bearer {api_token}" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Replace internal headers",
+  "action": "allow",
+  "enabled": true,
+  "filters": ["http"],
+  "traffic": "any(http.request.domains[*] in {\"internal.example.com\"})",
+  "rule_settings": {
+    "delete_headers": ["X-Internal-User"],
+    "set_headers": {
+      "X-Internal-User": ["@{identity.email}"]
+    }
+  }
+}'
+```
+
+### Exempt users in Cloudflare WAF
 
 You can include custom headers in an HTTP policy to allow your users through [Cloudflare WAF](/waf/). This is useful for allowing only Cloudflare One Client users through your WAF.
 
@@ -134,7 +294,7 @@ You can include custom headers in an HTTP policy to allow your users through [Cl
 
 2. In Cloudflare WAF, [create a custom rule](/waf/custom-rules/) to [require the same HTTP header](/waf/custom-rules/use-cases/require-specific-headers/#example-2-require-http-header-with-a-specific-value).
 
-## Use tenant control with Browser Isolation
+### Use custom headers with Browser Isolation
 
 You can configure [Browser Isolation](/cloudflare-one/remote-browser-isolation/) to send custom headers. This is useful for implementing tenant control for isolated SaaS applications or sending arbitrary custom request headers to isolated websites.
 

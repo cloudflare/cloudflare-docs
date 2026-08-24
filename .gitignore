@@ -1,15 +1,10 @@
 # build output
 dist/
-dist-nimbus/
 distmd/
 distllms/
 
 # generated types
 .astro/
-
-# Astro build cache
-.astro-cache/
-.astro-cache-nimbus/
 
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
@@ -66,6 +61,8 @@ tools/relevant_changed_files.txt
 .flue/.flue-vite/
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
+.flue/vitest-results.json
 
-# nimbus-docs generated lint report (.nimbus/routes.json is a committed manifest)
+# nimbus-docs generated files
 .nimbus/lint.json
+.nimbus/routes.json

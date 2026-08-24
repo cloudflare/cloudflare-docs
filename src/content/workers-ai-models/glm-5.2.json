@@ -2,6 +2,10 @@
     "name": "@cf/zai-org/glm-5.2",
     "properties": [
         {
+            "property_id": "require_workers_paid",
+            "value": "true"
+        },
+        {
             "property_id": "context_window",
             "value": "262144"
         },

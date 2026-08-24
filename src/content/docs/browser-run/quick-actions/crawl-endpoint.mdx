@@ -13,7 +13,7 @@ import { Render } from "~/components";
 
 The `/crawl` endpoint scrapes content from a starting URL and follows links across the site, up to a configurable depth or page limit. Responses can be returned as HTML, Markdown, or JSON.
 
-<Render file="rest-api-token-permissions" product="browser-run" />
+The `/crawl` endpoint is available via the REST API. [Create a custom API Token](/fundamentals/api/get-started/create-token/) with the `Browser Rendering - Edit` permission.
 
 ## Endpoint
 
@@ -228,12 +228,14 @@ When `render` is `true` (the default), crawl jobs also support all standard Brow
 
 ### Viewing skipped URLs
 
-To view URLs that were discovered but skipped, query the crawl job results with `status=skipped`. URLs can be skipped due to `includeExternalLinks`, `includeSubdomains`, `includePatterns`/`excludePatterns`, or the `modifiedSince` parameter. Skipped URLs will also be visible in the dashboard in a future release.
+The `skipped` status applies to URLs that the crawler discovered and evaluated individually, but then chose not to fetch because they were excluded by your crawl configuration, such as `includeExternalLinks`, `includeSubdomains`, or `includePatterns`/`excludePatterns`. To view these URLs, query the crawl job results with `status=skipped`.
 
 ```bash
 curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/{job_id}?status=skipped' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
+
+Because `skipped` only tracks URLs that were evaluated one by one, it applies mainly to crawls that use `source: links` (or `source: all`), where the crawler follows links scraped from pages and checks each one against your configuration. When crawling from a sitemap (`source: sitemaps`), URLs that fall outside your configuration are filtered out in bulk before they are evaluated individually, so they are omitted from the job entirely rather than recorded as `skipped`. As a result, the set of `skipped` URLs is not an exhaustive list of every URL that was left out of the crawl.
 
 ### `render` parameter
 

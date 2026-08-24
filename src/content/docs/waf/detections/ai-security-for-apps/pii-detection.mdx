@@ -27,7 +27,7 @@ When AI Security for Apps is enabled and a request arrives at a `cf-llm` labeled
 [1]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/
 [2]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/
 
-The detection is based on [Presidio](https://microsoft.github.io/presidio/supported_entities/), a data protection and de-identification SDK. Refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) for the full list of recognized categories.
+The detection is powered by an AI-based Named Entity Recognition (NER) model. Refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) for the full list of recognized categories.
 
 :::note[Detecting PII in responses]
 AI Security for Apps PII detection runs on incoming requests (prompts) only. If you also need to detect PII in LLM responses, you can use [Sensitive Data Detection](/waf/managed-rules/reference/sensitive-data-detection/) to scan response bodies for patterns like credit card numbers, Social Security numbers, and API keys. Sensitive Data Detection logs matches, but does not block responses. Use it alongside request-side rules for layered visibility.
@@ -35,47 +35,21 @@ AI Security for Apps PII detection runs on incoming requests (prompts) only. If 
 
 <Details header="Supported PII categories">
 
-| Category                    | Description                                                                   |
-| --------------------------- | ----------------------------------------------------------------------------- |
-| `CREDIT_CARD`               | Credit card number                                                            |
-| `CRYPTO`                    | Cryptocurrency wallet address                                                 |
-| `DATE_TIME`                 | Date or time expression                                                       |
-| `EMAIL_ADDRESS`             | Email address                                                                 |
-| `IBAN_CODE`                 | International bank account number                                             |
-| `IP_ADDRESS`                | IP address                                                                    |
-| `NRP`                       | Nationality, religious, or political group                                    |
-| `LOCATION`                  | Physical location or address                                                  |
-| `PERSON`                    | Person name                                                                   |
-| `PHONE_NUMBER`              | Phone number                                                                  |
-| `MEDICAL_LICENSE`           | Medical license number                                                        |
-| `URL`                       | URL                                                                           |
-| `US_BANK_NUMBER`            | US bank account number                                                        |
-| `US_DRIVER_LICENSE`         | US driver license number                                                      |
-| `US_ITIN`                   | US Individual Taxpayer Identification Number                                  |
-| `US_PASSPORT`               | US passport number                                                            |
-| `US_SSN`                    | US Social Security Number                                                     |
-| `UK_NHS`                    | UK National Health Service number                                             |
-| `UK_NINO`                   | UK National Insurance Number                                                  |
-| `ES_NIF`                    | Spanish tax identification number                                             |
-| `ES_NIE`                    | Spanish foreigner identification number                                       |
-| `IT_FISCAL_CODE`            | Italian fiscal code                                                           |
-| `IT_DRIVER_LICENSE`         | Italian driver license                                                        |
-| `IT_VAT_CODE`               | Italian VAT code                                                              |
-| `IT_PASSPORT`               | Italian passport number                                                       |
-| `IT_IDENTITY_CARD`          | Italian identity card                                                         |
-| `PL_PESEL`                  | Polish national identification number                                         |
-| `SG_NRIC_FIN`               | Singapore National Registration Identity Card / Foreign Identification Number |
-| `SG_UEN`                    | Singapore Unique Entity Number                                                |
-| `AU_ABN`                    | Australian Business Number                                                    |
-| `AU_ACN`                    | Australian Company Number                                                     |
-| `AU_TFN`                    | Australian Tax File Number                                                    |
-| `AU_MEDICARE`               | Australian Medicare number                                                    |
-| `IN_PAN`                    | Indian Permanent Account Number                                               |
-| `IN_AADHAAR`                | Indian Aadhaar number                                                         |
-| `IN_VEHICLE_REGISTRATION`   | Indian vehicle registration number                                            |
-| `IN_VOTER`                  | Indian voter ID                                                               |
-| `IN_PASSPORT`               | Indian passport number                                                        |
-| `FI_PERSONAL_IDENTITY_CODE` | Finnish personal identity code                                                |
+| Category        | Description             |
+| --------------- | ----------------------- |
+| `BANK_ACCOUNT`  | Bank account number    |
+| `CREDIT_CARD`   | Credit card number      |
+| `DATE_TIME`     | Date or time expression |
+| `DRIVER_LICENSE`| Driver license number   |
+| `EMAIL_ADDRESS` | Email address           |
+| `IP_ADDRESS`    | IPv4 address            |
+| `LOCATION`      | Physical location or address |
+| `PASSPORT`      | Passport number         |
+| `PERSON`        | Full or partial name of an individual |
+| `PHONE_NUMBER`  | Phone number            |
+| `TAX_ID`        | Tax identification number |
+| `US_SSN`        | US Social Security Number |
+| `URL`           | URL                     |
 
 </Details>
 

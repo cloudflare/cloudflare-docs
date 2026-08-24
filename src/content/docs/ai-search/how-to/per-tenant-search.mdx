@@ -1,20 +1,77 @@
 ---
 pcx_content_type: how-to
-title: Build per-tenant search
-description: Isolate search results per tenant in AI Search using separate instances or metadata filtering.
+title: Multitenancy
+description: Keep each tenant's data isolated in AI Search using a separate instance per tenant or a shared instance with metadata filtering.
+difficulty: Intermediate
 sidebar:
-  order: 5
+  order: 1
+  label: Multitenancy
 products:
   - ai-search
 ---
 
-import { FileTree, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	FileTree,
+	LinkCard,
+	AiSearchNamespacesDiagram,
+} from "~/components";
 
-AI Search supports per-tenant search isolation. You can either create a separate instance for each tenant or use a shared instance with metadata filtering.
+In a multi-tenant application, each tenant must only ever see their own data. AI Search supports two ways to isolate search per tenant: give each tenant its own instance, or share one instance and filter by tenant at query time.
 
-## Instance per tenant
+## Choose an approach
 
-Create isolated AI Search instances for each tenant at runtime using the [namespace binding](/ai-search/concepts/namespaces/). Each tenant gets its own instance with separate storage and a search index.
+| Approach                                                                                         | How it isolates                                                      | Choose it when                                                         |
+| ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [Instance per tenant](#option-1-one-instance-per-tenant) (recommended)                           | Each tenant gets a separate instance with its own storage and index  | You need strong isolation, or you create and delete tenants at runtime |
+| [Shared instance with filtering](#option-2-shared-instance-with-metadata-filtering-on-retrieval) | One instance holds every tenant; a metadata filter scopes each query | You have many small tenants and want the simplest setup                |
+
+## Prerequisites
+
+Both approaches use a Cloudflare Worker. Create the project first, then follow the option you chose.
+
+<Render file="prereqs" product="workers" />
+
+## Create a Worker project
+
+Create a new Worker project using the `create-cloudflare` CLI (C3). [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+
+Create a new project named `tenant-search` by running:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"tenant-search"} />
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+Go to your application directory:
+
+```sh
+cd tenant-search
+```
+
+## Option 1: One instance per tenant
+
+This is the **recommended** approach. Each tenant gets a separate instance with its own storage and search index, so one tenant can never retrieve another tenant's documents.
+
+Create an isolated AI Search instance for each tenant at runtime using the [namespace binding](/ai-search/concepts/namespaces/).
+
+<AiSearchNamespacesDiagram />
+
+:::note
+AI Search limits the number of [instances per account](/ai-search/platform/limits-pricing/#limits). If you have more tenants than that limit, or run into any other AI Search limit, reach out through the [Limit Increase Request Form](https://forms.gle/wnizxrEUW33Y15CT8) and we can help.
+:::
+
+Add the namespace binding to your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -22,11 +79,20 @@ Create isolated AI Search instances for each tenant at runtime using the [namesp
 [[ai_search_namespaces]]
 binding = "TENANTS"
 namespace = "default"
+remote = true
 ```
 
 </WranglerConfig>
 
-<TypeScriptExample>
+The `remote` option lets `wrangler dev` proxy requests to your deployed instances, since AI Search does not run locally.
+
+### Built-in storage
+
+Each tenant's instance holds documents that you upload directly to it, with no external data source.
+
+Update `src/index.ts`. This Worker identifies the tenant from a request header, then creates, populates, searches, and deletes that tenant's instance.
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 export type Env = {
@@ -37,14 +103,14 @@ export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
 
-		// Identify the tenant from the request header
+		// Identify the tenant from the request header.
 		const tenantId = request.headers.get("x-tenant-id");
 
 		if (!tenantId) {
 			return new Response("Missing x-tenant-id header", { status: 400 });
 		}
 
-		// Create a new instance for the tenant
+		// Create a new instance for the tenant.
 		if (url.pathname === "/onboard" && request.method === "POST") {
 			const instance = await env.TENANTS.create({
 				id: `tenant-${tenantId}`,
@@ -52,12 +118,11 @@ export default {
 			return Response.json({ success: true, instance: await instance.info() });
 		}
 
-		// Upload a document to the tenant's instance
+		// Upload a document to the tenant's instance.
 		if (url.pathname === "/upload" && request.method === "POST") {
 			const formData = await request.formData();
 			const file = formData.get("file") as File;
 
-			// Upload the file to the tenant's built-in storage
 			const item = await env.TENANTS.get(`tenant-${tenantId}`).items.upload(
 				file.name,
 				await file.arrayBuffer(),
@@ -65,18 +130,17 @@ export default {
 			return Response.json({ success: true, item });
 		}
 
-		// Search the tenant's instance
+		// Search the tenant's instance. Search is isolated to their instance.
 		if (url.pathname === "/search") {
 			const query = url.searchParams.get("q") || "";
 
-			// Each tenant's search is isolated to their own instance
 			const results = await env.TENANTS.get(`tenant-${tenantId}`).search({
 				messages: [{ role: "user", content: query }],
 			});
 			return Response.json(results);
 		}
 
-		// Delete the tenant's instance and all its data
+		// Delete the tenant's instance and all its data.
 		if (url.pathname === "/offboard" && request.method === "DELETE") {
 			await env.TENANTS.delete(`tenant-${tenantId}`);
 			return Response.json({ success: true });
@@ -89,9 +153,83 @@ export default {
 
 </TypeScriptExample>
 
-## Shared instance with metadata filtering
+Start a local development server:
 
-Use a single AI Search instance and organize content by tenant using folder paths. This approach works with both [R2 buckets](/ai-search/configuration/data-source/r2/) and [built-in storage](/ai-search/configuration/data-source/built-in-storage/). Apply [metadata filters](/ai-search/configuration/retrieval/filtering/) at query time to ensure each tenant only retrieves their own documents.
+```sh
+npx wrangler dev
+```
+
+Then onboard a tenant, upload a document to their instance, search it, and offboard. The `x-tenant-id` header scopes every request to that tenant's instance:
+
+```sh
+# Create an isolated instance for tenant "acme"
+curl -X POST http://localhost:8787/onboard -H "x-tenant-id: acme"
+
+# Upload a document to acme's instance
+curl -X POST http://localhost:8787/upload -H "x-tenant-id: acme" -F "file=@./handbook.pdf"
+
+# Search acme's instance
+curl "http://localhost:8787/search?q=vacation+policy" -H "x-tenant-id: acme"
+
+# Delete acme's instance and all of its data
+curl -X DELETE http://localhost:8787/offboard -H "x-tenant-id: acme"
+```
+
+AI Search indexes uploads asynchronously, so wait a moment after uploading before you search.
+
+### R2
+
+If your tenants' data already lives in [R2](/ai-search/configuration/data-source/r2/), back each tenant's instance with R2 instead of uploading documents to built-in storage. Change the `/onboard` route from the [built-in storage](#built-in-storage) example to create an R2-backed instance. How you configure it depends on how the data is organized.
+
+:::note
+Creating an `r2`-backed instance from a binding requires a [service API token](/ai-search/configuration/indexing/service-api-token/). Cloudflare registers one for your account automatically the first time you create an R2-backed instance through the [dashboard](/ai-search/get-started/dashboard/) or [Wrangler](/ai-search/get-started/wrangler/), and reuses it afterward.
+:::
+
+**A bucket per tenant:** if each tenant's data is already in its own bucket, point the instance at that whole bucket:
+
+```ts
+const instance = await env.TENANTS.create({
+	id: `tenant-${tenantId}`,
+	type: "r2",
+	source: `tenant-${tenantId}-bucket`,
+});
+```
+
+**A shared bucket:** if every tenant's data lives in one bucket, organized by folder:
+
+<FileTree>
+
+- my-bucket
+  - customers/
+    - acme/
+    - globex/
+
+</FileTree>
+
+Scope each instance to that tenant's folder with [path filtering](/ai-search/configuration/indexing/path-filtering/), so it only ever indexes and searches that tenant's objects:
+
+```ts
+const instance = await env.TENANTS.create({
+	id: `tenant-${tenantId}`,
+	type: "r2",
+	source: "my-bucket",
+	source_params: {
+		include_items: [`/customers/${tenantId}/**`],
+	},
+});
+```
+
+With either layout, AI Search indexes each tenant's objects on the next [sync](/ai-search/configuration/indexing/syncing/). Add documents by writing them to R2 rather than uploading through the Worker, and keep the search and offboard routes from the built-in storage example: each instance only ever returns its own tenant's results, and deleting an instance removes its search index while leaving the R2 objects untouched.
+
+To try it, run `npx wrangler dev` and use the same `onboard`, `search`, and `offboard` requests as [built-in storage](#built-in-storage). Skip the upload step, since AI Search indexes each tenant's objects directly from R2.
+
+## Option 2: Shared instance with metadata filtering on retrieval
+
+Use a single AI Search instance and organize content by tenant using folder paths. This approach works with both [R2 buckets](/ai-search/configuration/data-source/r2/) and [built-in storage](/ai-search/configuration/data-source/built-in-storage/). Apply [metadata filters](/ai-search/configuration/retrieval/filtering/) at query time so each tenant only retrieves their own documents.
+
+This option searches an existing instance, so create one named `shared-instance` and add your content first. Refer to [Get started](/ai-search/get-started/).
+
+Add the instance binding to your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -99,6 +237,7 @@ Use a single AI Search instance and organize content by tenant using folder path
 [[ai_search]]
 binding = "SHARED_INSTANCE"
 instance_name = "shared-instance"
+remote = true
 ```
 
 </WranglerConfig>
@@ -115,20 +254,76 @@ Organize your content by tenant using unique folder paths:
 
 </FileTree>
 
-When searching, filter by the tenant's folder to restrict results:
+Update `src/index.ts` to filter by the tenant's folder at query time:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-// Filter results to only return documents from this tenant's folder
-const results = await env.SHARED_INSTANCE.search({
-	messages: [{ role: "user", content: "When did I sign my agreement?" }],
-	ai_search_options: {
-		retrieval: {
-			filters: {
-				folder: { $gte: "customer-a/", $lt: "customer-a0" },
+export type Env = {
+	SHARED_INSTANCE: AiSearchInstance;
+};
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const tenantId = request.headers.get("x-tenant-id");
+
+		if (!tenantId) {
+			return new Response("Missing x-tenant-id header", { status: 400 });
+		}
+
+		// Filter results to only return documents from this tenant's folder.
+		const results = await env.SHARED_INSTANCE.search({
+			messages: [{ role: "user", content: "When did I sign my agreement?" }],
+			ai_search_options: {
+				retrieval: {
+					filters: {
+						folder: { $gte: `${tenantId}/`, $lt: `${tenantId}0` },
+					},
+				},
 			},
-		},
+		});
+
+		return Response.json(results);
 	},
-});
+} satisfies ExportedHandler<Env>;
 ```
 
-This example uses a ["starts with" filter](/ai-search/configuration/retrieval/filtering/#starts-with-filter-for-folders) to match all files under `customer-a/` including subfolders.
+</TypeScriptExample>
+
+This example uses a ["starts with" filter](/ai-search/configuration/retrieval/filtering/#starts-with-filter-for-folders) to match all files under the tenant's folder, including subfolders.
+
+Start a local development server:
+
+```sh
+npx wrangler dev
+```
+
+Send a request as each tenant. The Worker scopes the search to that tenant's folder, so the results never overlap:
+
+```sh
+curl http://localhost:8787/ -H "x-tenant-id: customer-a"
+curl http://localhost:8787/ -H "x-tenant-id: customer-b"
+```
+
+## Deploy
+
+Log in with your Cloudflare account, then deploy your Worker to make it accessible on the Internet:
+
+```sh
+npx wrangler login
+npx wrangler deploy
+```
+
+## Next steps
+
+<LinkCard
+	title="Namespaces"
+	href="/ai-search/concepts/namespaces/"
+	description="Group instances and manage them dynamically from a binding."
+/>
+
+<LinkCard
+	title="Filtering"
+	href="/ai-search/configuration/retrieval/filtering/"
+	description="Filter search results by metadata attributes at query time."
+/>

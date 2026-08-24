@@ -61,6 +61,18 @@ For sent emails, see delivery details:
 - Bounce reason codes and categories.
 - Final delivery status.
 
+### Message preview
+
+For sent emails, expand the email in the Activity log to open the **Preview** section and inspect the message as it was sent. The preview provides the following tabs:
+
+- **HTML**: The rendered HTML body.
+- **Text**: The plain text body.
+- **Headers**: The message headers.
+- **Attachments**: Files included with the message.
+- **Raw**: The full raw [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) message source.
+
+To make sent messages previewable, turn on [**Email preview**](/email-service/configuration/domains/#email-preview) for the sending domain. Previews cover messages sent while the setting is turned on and are retained for about seven days. New sending domains have **Email preview** turned on automatically.
+
 ## Best practices for log monitoring
 
 ### Regular review

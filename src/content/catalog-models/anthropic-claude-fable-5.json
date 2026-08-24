@@ -502,17 +502,8 @@
 	"request_formats": [
 		"anthropic-messages"
 	],
-	"banner": {
-		"id": "ce697a66-79d5-459b-83f4-e18437546c91",
-		"title": "NOTE",
-		"text": "Anthropic is limiting access to Claude Fable 5 due to a directive from the US Government. During that time, the model will return errors. ",
-		"severity": "warning",
-		"dismissible": true,
-		"link": {
-			"url": "https://www.anthropic.com/news/fable-mythos-access",
-			"label": "More info"
-		}
-	},
+	"providers": null,
+	"banner": null,
 	"created_at": "2026-06-09 22:24:20",
 	"schema": {
 		"input": {
