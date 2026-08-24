@@ -21,35 +21,35 @@ When you deploy new code, Cloudflare applies the update to every Durable Object 
 
 Set a Durable Object's code update strategy to `deferred` to let an active object keep running its current code until it hibernates, instead of resetting it right away. Cloudflare still applies the update once the object hibernates, or once the strategy's maximum delay is reached, whichever comes first.
 
-## Choose a code update strategy
+## Code update strategy
 
 | Mode        | Default `max_delay` | Behavior                                                                                                                                          |
 | ----------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `deferred`  | 30 seconds            | Cloudflare waits for an active Durable Object to hibernate before applying the update. If the object does not hibernate within `max_delay`, Cloudflare resets it and applies the update. |
 | `immediate` | Not applicable        | Cloudflare resets an active Durable Object and applies the update right away, without waiting for it to hibernate.                                |
 
-This is a breaking change to existing behavior, so Cloudflare rolls out `deferred` as the new default behind a compatibility date. If you don't set `code_update_strategy` yourself:
+Durable Objects code update strategy depends on your Workers compatibility date:
 
 - Workers with a compatibility date **before** `COMPATIBILITY_DATE` default to `immediate`.
 - Workers with a compatibility date **on or after** `COMPATIBILITY_DATE` default to `deferred` with a 30-second `max_delay`.
 
-An explicit `code_update_strategy` — whether in your Wrangler configuration, passed as a flag, or sent through the REST API — always overrides the compatibility-date default.
+An explicit `code_update_strategy` — whether in your Wrangler configuration, passed as a CLI flag, or sent through the REST API — always overrides the compatibility-date default.
 
 ## How it works
 
 1. You deploy a code change.
-2. A client makes a request to an inactive Durable Object, or creates a new Durable Object. This uses the latest version of your code.
+2. A client makes a request to a Durable Object that is not running, either an inactive object or a new object. This uses the latest version of your code.
 3. Some Durable Objects are currently active — they are performing work or holding open connections. If their code update strategy is `deferred`, these objects continue running their existing version of your code. They keep handling requests, events, storage operations, and messages on WebSockets accepted with the [Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api).
 4. If an active Durable Object hibernates before `max_delay` is reached, Cloudflare applies the new version the next time that Durable Object "wakes up" in response to an incoming request or WebSocket message. Hibernated WebSocket connections stay connected throughout.
 5. If a Durable Object is still active when `max_delay` is reached, Cloudflare resets it and applies the update.
 
 ```mermaid
 flowchart LR
-    A["You deploy a code change"] --> B{"Is the Durable Object<br/>currently active?"}
+    A["You deploy a code change"] --> B{"Is the Durable Object<br/>currently running?"}
     B -->|Inactive| C["Adopts the new version<br/>on its next request"]
     B -->|"Active, mode is deferred"| D["Starts its max_delay timer,<br/>keeps running its current version"]
     D --> E{"Hibernates before<br/>max_delay ends?"}
-    E -->|Yes| F["Adopts the new version<br/>when it wakes up"]
+    E -->|Yes| F["Adopts the new version<br/>on next request"]
     E -->|"No, max_delay reached"| G["Cloudflare resets it and<br/>applies the update"]
 ```
 
