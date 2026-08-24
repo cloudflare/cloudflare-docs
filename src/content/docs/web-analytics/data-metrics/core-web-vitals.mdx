@@ -11,15 +11,7 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-[Core Web Vitals](https://www.cloudflare.com/learning/performance/what-are-core-web-vitals/) are high-level metrics designed by Google to capture the user experience. Three core Web Vitals metrics are measured: Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. Each of these metrics is automatically assigned a rating of Good, Needs Improvement, or Poor based on the industry standard methodology and testing designed by Google. Page load time statistics are supplemented by First Paint and First Contentful Paint.
-
-:::note
-
-
-Core Web Vitals is currently only supported in Chromium browsers, with Safari and Firefox coming soon.
-
-
-:::
+[Core Web Vitals](https://www.cloudflare.com/learning/performance/what-are-core-web-vitals/) are high-level metrics designed by Google to capture the user experience. Three core Web Vitals metrics are measured: Largest Contentful Paint, Interaction to Next Paint, and Cumulative Layout Shift. Each of these metrics is automatically assigned a rating of Good, Needs Improvement, or Poor based on the industry standard methodology and testing designed by Google. Page load time statistics are supplemented by First Paint and First Contentful Paint.
 
 ## Access Core Web Vitals
 
@@ -39,6 +31,14 @@ Core Web Vitals is divided into three main sections, each one with information a
 - [Largest Contentful Paint (LCP)](https://web.dev/optimize-lcp/): Measures perceived load speed by the user. It returns how long the main content of the page takes to be loaded.
 - [Interaction to Next Paint (INP)](https://web.dev/inp/): Measures user interface responsiveness – how quickly a website responds to user interactions like clicks or key presses.
 - [Cumulative Layout Shift (CLS)](https://web.dev/optimize-cls/): Measures visual stability, that is, if there are shifts in the page layout as the various elements are being loaded into view.
+
+:::note
+
+
+Cumulative Layout Shift is currently only supported in Chromium browsers, Firefox and Safari have not yet implemented [support for the Layout Instability API](https://caniuse.com/wf-layout-instability).
+
+
+:::
 
 Each of these metrics represents an impact to the user experience, which is quantified and graded by Web Analytics.
 
