@@ -1,0 +1,56 @@
+---
+interface Props {
+	name: string;
+	profileUrl: string;
+	contributionsUrl: string;
+	contributions: number;
+	avatarUrl: string;
+}
+
+const { name, profileUrl, contributionsUrl, contributions, avatarUrl } =
+	Astro.props;
+---
+
+<div
+	class="border-border bg-card hover:bg-accent flex flex-col gap-3 rounded-md border p-3 transition-colors"
+	data-contributor-card
+>
+	<a
+		href={profileUrl}
+		target="_blank"
+		rel="noopener"
+		class="bg-muted block w-full overflow-hidden rounded-md"
+		title={`Open profile for ${name}`}
+		data-contributor-profile-link
+	>
+		<img
+			src={avatarUrl}
+			alt=""
+			loading="lazy"
+			decoding="async"
+			class="aspect-square h-auto w-full object-cover"
+			data-contributor-avatar
+		/>
+	</a>
+	<a
+		href={contributionsUrl}
+		target="_blank"
+		rel="noopener"
+		class="min-w-0 no-underline"
+		title={`View issues and PRs by ${name}`}
+		data-contributor-contributions-link
+	>
+		<div
+			class="text-foreground text-sm leading-snug font-medium break-words"
+			data-contributor-name
+		>
+			{name}
+		</div>
+		<div
+			class="text-muted-foreground mt-1 text-xs tabular-nums"
+			data-contributor-count
+		>
+			{contributions} contributions
+		</div>
+	</a>
+</div>

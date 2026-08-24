@@ -3,6 +3,7 @@ import SplashLayout from "~/layouts/SplashLayout.astro";
 import BackgroundLines from "~/components/BackgroundLines.astro";
 import PageHeader from "~/components/PageHeader.astro";
 import PageShell from "~/components/PageShell.astro";
+import ContributorCard from "~/components/contributors/ContributorCard.astro";
 import contributorsSnapshot from "~/data/github-contributors.json";
 
 export const prerender = true;
@@ -32,6 +33,11 @@ const initialContributors = visibleContributors.slice(
 	0,
 	initialContributorCount,
 );
+
+function resolveAvatarUrl(c: unknown): string {
+	const urls = (c as { avatar_urls?: Record<string, string> })?.avatar_urls;
+	return urls?.["160"] ?? urls?.["240"] ?? urls?.["80"] ?? "";
+}
 ---
 
 <SplashLayout
@@ -107,44 +113,24 @@ const initialContributors = visibleContributors.slice(
 						aria-live="polite"
 						data-initial-count={initialContributors.length}
 					>
+						<template id="contributor-card-template">
+							<ContributorCard
+								name=""
+								profileUrl=""
+								contributionsUrl=""
+								contributions={0}
+								avatarUrl=""
+							/>
+						</template>
 						{
 							initialContributors.map((c) => (
-								<div class="border-border bg-card hover:bg-accent flex flex-col gap-3 rounded-md border p-3 transition-colors">
-									<a
-										href={c.profile_url}
-										target="_blank"
-										rel="noopener"
-										class="bg-muted block w-full overflow-hidden rounded-md"
-										title={`Open profile for ${c.name}`}
-									>
-										<img
-											src={
-												c.avatar_urls?.["160"] ??
-												c.avatar_urls?.["240"] ??
-												c.avatar_urls?.["80"] ??
-												""
-											}
-											alt=""
-											loading="lazy"
-											decoding="async"
-											class="aspect-square h-auto w-full object-cover"
-										/>
-									</a>
-									<a
-										href={c.contributions_url}
-										target="_blank"
-										rel="noopener"
-										class="min-w-0 no-underline"
-										title={`View issues and PRs by ${c.name}`}
-									>
-										<div class="text-foreground text-sm leading-snug font-medium break-words">
-											{c.name}
-										</div>
-										<div class="text-muted-foreground mt-1 text-xs tabular-nums">
-											{c.contributions} contributions
-										</div>
-									</a>
-								</div>
+								<ContributorCard
+									name={c.name}
+									profileUrl={c.profile_url}
+									contributionsUrl={c.contributions_url}
+									contributions={c.contributions}
+									avatarUrl={resolveAvatarUrl(c)}
+								/>
 							))
 						}
 					</div>
@@ -165,9 +151,13 @@ const initialContributors = visibleContributors.slice(
 					const GRID = document.getElementById("contributors-grid");
 					const SENTINEL = document.getElementById("contributors-sentinel");
 					const COUNT = document.getElementById("contributors-visible-count");
+					const TEMPLATE = document.getElementById("contributor-card-template");
 
 					if (!(GRID && SENTINEL)) {
 						// If the page structure changes, silently skip the enhancement.
+						return;
+					}
+					if (!(TEMPLATE instanceof HTMLTemplateElement)) {
 						return;
 					}
 
@@ -185,50 +175,43 @@ const initialContributors = visibleContributors.slice(
 					let idx = startingCount;
 
 					function buildCell(c) {
-						const cell = document.createElement("div");
-						cell.className =
-							"border-border bg-card hover:bg-accent flex flex-col gap-3 rounded-md border p-3 transition-colors";
+						const node = TEMPLATE.content.firstElementChild?.cloneNode(true);
+						if (!(node instanceof HTMLElement)) return null;
 
-						const avatarLink = document.createElement("a");
-						avatarLink.href = c.profile_url;
-						avatarLink.target = "_blank";
-						avatarLink.rel = "noopener";
-						avatarLink.className =
-							"bg-muted block w-full overflow-hidden rounded-md";
-						avatarLink.title = `Open profile for ${c.name}`;
+						const profileLink = node.querySelector(
+							"[data-contributor-profile-link]",
+						);
+						if (profileLink instanceof HTMLAnchorElement) {
+							profileLink.href = c.profile_url;
+							profileLink.title = `Open profile for ${c.name}`;
+						}
 
-						const avatarUrl =
-							c.avatar_urls?.["160"] ||
-							c.avatar_urls?.["240"] ||
-							c.avatar_urls?.["80"] ||
-							"";
+						const contributionsLink = node.querySelector(
+							"[data-contributor-contributions-link]",
+						);
+						if (contributionsLink instanceof HTMLAnchorElement) {
+							contributionsLink.href = c.contributions_url;
+							contributionsLink.title = `View issues and PRs by ${c.name}`;
+						}
 
-						const avatar = document.createElement("img");
-						avatar.src = avatarUrl;
-						avatar.alt = "";
-						avatar.loading = "lazy";
-						avatar.decoding = "async";
-						avatar.className = "aspect-square h-auto w-full object-cover";
-						avatarLink.append(avatar);
+						const avatar = node.querySelector("[data-contributor-avatar]");
+						if (avatar instanceof HTMLImageElement) {
+							avatar.src =
+								c.avatar_urls?.["160"] ||
+								c.avatar_urls?.["240"] ||
+								c.avatar_urls?.["80"] ||
+								"";
+						}
 
-						const detailsLink = document.createElement("a");
-						detailsLink.href = c.contributions_url;
-						detailsLink.target = "_blank";
-						detailsLink.rel = "noopener";
-						detailsLink.className = "min-w-0 no-underline";
-						detailsLink.title = `View issues and PRs by ${c.name}`;
+						const name = node.querySelector("[data-contributor-name]");
+						if (name instanceof HTMLElement) name.textContent = c.name;
 
-						const name = document.createElement("div");
-						name.className =
-							"text-foreground break-words text-sm leading-snug font-medium";
-						name.textContent = c.name;
+						const count = node.querySelector("[data-contributor-count]");
+						if (count instanceof HTMLElement) {
+							count.textContent = `${c.contributions} contributions`;
+						}
 
-						const count = document.createElement("div");
-						count.className = "text-muted-foreground mt-1 text-xs tabular-nums";
-						count.textContent = `${c.contributions} contributions`;
-						detailsLink.append(name, count);
-						cell.append(avatarLink, detailsLink);
-						return cell;
+						return node;
 					}
 
 					function appendBatch() {
@@ -240,7 +223,8 @@ const initialContributors = visibleContributors.slice(
 							const c = contributors[idx];
 							if (!c?.name || !c?.profile_url || !c?.contributions_url)
 								continue;
-							frag.append(buildCell(c));
+							const cell = buildCell(c);
+							if (cell) frag.append(cell);
 						}
 						GRID.append(frag);
 						updateVisibleCount();
