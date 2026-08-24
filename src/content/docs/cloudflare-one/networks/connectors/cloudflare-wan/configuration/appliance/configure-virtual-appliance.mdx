@@ -3,16 +3,23 @@ pcx_content_type: how-to
 products:
   - cloudflare-one
 title: Configure Virtual Appliance
-description: Learn how to configure Virtual Appliance on VMWare ESXi or Proxmox Virtual Environment
+description: Learn how to configure Virtual Appliance on VMware ESXi or Proxmox Virtual Environment
 sidebar:
   order: 4
 ---
 
-import { Aside, Tabs, TabItem, Card, Code, GlossaryTooltip } from "~/components";
+import {
+	Aside,
+	Tabs,
+	TabItem,
+	Card,
+	Code,
+	GlossaryTooltip,
+} from "~/components";
 
 Virtual Appliance is a virtual device alternative to the hardware based Cloudflare One Appliance. These two versions of Cloudflare One Appliance are identical otherwise.
 
-Currently, you can set up Virtual Appliance on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.
+Currently, you can set up Virtual Appliance on VMware ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.
 
 In this page you will find instructions on how to configure Cloudflare One Appliance. This guide provides a step-by-step guide for Cloudflare One Appliance initial setup. You can either return here after setting up your Cloudflare One Appliance, or refer to the [Maintenance](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/) section where you will find instructions on how to update your settings.
 
@@ -51,7 +58,6 @@ You must decide the type of configuration you want for your site from the beginn
 - If you need a high availability configuration for your premises, refer to
   [About high availability configurations](#about-high-availability-configurations) for details
   and learn how to configure your Virtual Appliance device in this mode.
-
 - If you do not need a high availability configuration for you premises, check if you need a [DHCP or a static IP setup](#decide-on-dhcp-vs-static-ip-connections) before proceeding to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
 
 </Card>
@@ -72,17 +78,17 @@ Virtual Appliance uses a DHCP connection at first boot to download your settings
 
 ## Configure a virtual machine
 
-Select the appropriate tab to configure Virtual Appliance on VMWare ESXi or Proxmox Virtual Environment.
+Select the appropriate tab to configure Virtual Appliance on VMware ESXi or Proxmox Virtual Environment.
 
-<Tabs> <TabItem label="VMWare ESXi">
+<Tabs> <TabItem label="VMware ESXi">
 
-**1. Obtain the VMWare image**
+**1. Obtain the VMware image**
 
-Contact your account team at Cloudflare to obtain the Virtual Appliance OVA package and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Appliance with the appropriate settings. For details, refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html).
+Download the Virtual Appliance OVA image from [https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova](https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova). You can also download it from the dashboard when you register a virtual appliance, in the **Add an appliance** > **Virtual appliance** step. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Appliance with the appropriate settings. For details, refer to [VMware VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html).
 
 This image can be deployed multiple times to create several instances of a Virtual Appliance, in different locations or on the same ESXi host.
 
-You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Appliances you should request 10 license keys, and your account team will create 10 Virtual Appliance instances in your Cloudflare dashboard.
+You consume one license key for each instance created. Generate a license key for each instance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key). For example, to deploy 10 Virtual Appliances, generate 10 license keys.
 
 **2. Deploy the Virtual Appliance on VMware**
 
@@ -106,9 +112,9 @@ You can also configure subinterfaces on the Virtual Appliance by associating the
 Refer to [VMware's documentation](https://kb.vmware.com/s/article/1003825) for more information.
 :::
 
-2. Extract the files in the OVA image provided by your Cloudflare account team. For example:
+2. Extract the files in the OVA image you downloaded. For example:
 
-<Code lang="sh" code="tar -xvf mconn-2024-1-3.ova" />
+<Code lang="sh" code="tar -xvf mconn.ova" />
 
 Take note of the folder where you are extracting the files to, as you will need to refer to that folder when creating the VM.
 
@@ -131,7 +137,7 @@ Take note of the folder where you are extracting the files to, as you will need 
 
 10. Before completing the deployment wizard, disable **Power on automatically**. This is important so that you can configure the license key prior to boot.
 
-11. Configure the virtual machine with the license key your account team provided you:
+11. Configure the virtual machine with the license key you generated:
 	1. Select the Virtual Appliance's VM > **Settings**.
 	2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
 	3. Select **Add parameter** to add your license key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
@@ -139,7 +145,7 @@ Take note of the folder where you are extracting the files to, as you will need 
 		- **Value** `<YOUR_LICENSE_KEY>`
 
 :::note
-You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Appliance.
+You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. Generate a new key for every new Virtual Appliance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key).
 :::
 
 12. Select **Save** to finish configuring your Virtual Appliance.
@@ -149,26 +155,32 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 
 **1. Obtain the Virtual Appliance script**
 
-Contact your account team at Cloudflare to obtain your license keys and the Virtual Appliance script for Proxmox. The script will set up and configure a Proxmox virtual machine with the appropriate settings for Virtual Appliance. For details on system requirements, refer to [Prerequisites](#prerequisites).
+Download the Virtual Appliance helper script for Proxmox to your Proxmox server. The script sets up and configures a Proxmox virtual machine with the appropriate settings for Virtual Appliance. For details on system requirements, refer to [Prerequisites](#prerequisites).
 
-The script can be deployed multiple times to create several instances of a Virtual Appliance, in different locations or on the same Proxmox host. You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Appliances you should request 10 license keys, and your account team will create 10 Virtual Appliance instances in your Cloudflare dashboard.
+The script can be deployed multiple times to create several instances of a Virtual Appliance, in different locations or on the same Proxmox host. You consume one license key for each instance created. Generate a license key for each instance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key). For example, to deploy 10 Virtual Appliances, generate 10 license keys.
+
+<Code lang="sh" code="curl -OL https://assets.magic-wan-connector.cloudflare.com/stable/proxmox_mconn_vm.sh" />
 
 **2. Deploy the Virtual Appliance on Proxmox**
 
 The following instructions assume you already have Proxmox Virtual Environment installed with sufficient resources. For details, refer to [Prerequisites](#prerequisites).
 
-1. In the terminal prompt of your Proxmox server, load the script provided by your account team. For example: `bash YOUR_SCRIPT`. You need elevated privileges to run the script.
+1. In the terminal prompt of your Proxmox server, run the script with elevated privileges:
+
+<Code lang="sh" code="bash ./proxmox_mconn_vm.sh" />
+
 2. You will be prompted to create a new Virtual Appliance. Select **yes** to proceed.
-3. Set up your Virtual Appliance name.
-4. Enter your license key.
+3. Enter your license key.
 
 :::note
-You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Appliance.
+You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. Generate a new key for every new Virtual Appliance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key).
 :::
 
-5. Select the network interface card (NIC) you want to use with Virtual Appliance.
-6. Select the network bridge that corresponds to the physical network interface card (NIC) on your host machine. This bridge allows the network adapter in the virtual machine to communicate through the NIC in the host, as if it were directly connected to the physical network.
-7. (Optional) Configure your VLAN setting if needed.
+The script applies default settings and configures the virtual machine for Virtual Appliance. After the script finishes, adjust the VM for your environment. The new VM has all network interface cards (NICs) on the same bridge, and only the first NIC has an active link.
+
+4. In the **Hardware settings** for the new VM, select the NIC you want to use with Virtual Appliance.
+5. Select the network bridge that corresponds to the physical NIC on your host machine. This bridge allows the network adapter in the virtual machine to communicate through the NIC in the host, as if it were directly connected to the physical network.
+6. (Optional) Configure your VLAN setting if needed.
 
 :::note[VLAN tagging]
 Virtual Appliance supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
@@ -183,10 +195,42 @@ You can also configure subinterfaces on the Virtual Appliance by associating the
 Refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information.
 :::
 
-8. Finish your configuration.
-9. The script will apply your settings and configure the virtual machine template for Virtual Appliance.
-10. In the **Hardware settings** for the new VM, make sure the hardware settings match the minimum requirements for running Virtual Appliance. Make changes to the RAM and CPU if needed.
-11. Continue setup in your [Cloudflare dashboard](#set-up-cloudflare-dashboard).
+7. Make sure the hardware settings match the minimum requirements for running Virtual Appliance. Make changes to the RAM and CPU if needed.
+8. Continue setup in your [Cloudflare dashboard](#set-up-cloudflare-dashboard).
+
+</TabItem> <TabItem label="libvirt/KVM (beta)">
+
+**1. Obtain the Virtual Appliance script**
+
+Download the Virtual Appliance helper script for libvirt/KVM to your host. The script deploys the virtual machine with the appropriate settings for Virtual Appliance. For details on system requirements, refer to [Prerequisites](#prerequisites).
+
+The deployment assumes the use of libvirt. The virtual machine manager graphical interface is not required. The VM uses the `OVMF_CODE.fd` file from the `ovmf` package on Debian or Ubuntu.
+
+The script can be deployed multiple times to create several instances of a Virtual Appliance, in different locations or on the same host. You consume one license key for each instance created. Generate a license key for each instance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key). For example, to deploy 10 Virtual Appliances, generate 10 license keys.
+
+<Code lang="sh" code="curl -OL https://assets.magic-wan-connector.cloudflare.com/stable/libvirt_mconn_vm.sh" />
+
+**2. Deploy the Virtual Appliance on libvirt/KVM**
+
+The following instructions assume you already have libvirt installed with sufficient resources. For details, refer to [Prerequisites](#prerequisites).
+
+1. In the terminal prompt of your host, run the script with elevated privileges. The script takes one optional argument, the name of the VM. If you do not provide a name, the VM defaults to `vmconn`:
+
+<Code lang="sh" code="sudo bash ./libvirt_mconn_vm.sh" />
+
+2. When prompted, enter a name for the VM. This name is used for the VM definition, the disk name, and the nvram file name. If the name already exists, the script exits with an error and you must use a different name.
+3. Select the storage pool for the VM disk.
+4. Choose whether to enable the graphics console in addition to the serial console.
+5. Enter your license key.
+
+:::note
+You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. Generate a new key for every new Virtual Appliance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key).
+:::
+
+The script deploys the virtual machine with the appropriate settings. NICs are named based on the defined PCI path of each NIC. Changing the PCI path of a NIC breaks functionality. NICs are configured in an inactive state with the `default` network source.
+
+6. Configure the NICs for your environment. Configure the WAN-associated NICs as macvtap devices to avoid potential connectivity issues.
+7. Continue setup in your [Cloudflare dashboard](#set-up-cloudflare-dashboard).
 
 </TabItem> </Tabs>
 
@@ -205,7 +249,7 @@ To create a profile:
 3. In **Name**, enter a descriptive name for your Virtual Appliance. Optionally, you can also add a description for it.
 4. You need to decide if you want to turn on high availability for the Virtual Appliance. For details, refer to [About high availability configurations](#about-high-availability-configurations).
 5. Select **Create and continue**.
-6. Select **Add Appliance**. This will display a list of devices associated with your account. For a Virtual Appliance to show up you need to: <br /><ul><li><strong>VMWare:</strong> Have already obtained your OVA package and license keys if you are installing on VMWare.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul> For more information, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.
+6. Select **Add Appliance**. This will display a list of devices associated with your account. For a Virtual Appliance to show up you need to: <br /><ul><li><strong>VMware:</strong> Have already obtained your OVA package and license keys if you are installing on VMware.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul> For more information, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.
 7. If you have more than one Virtual Appliance, choose the one that corresponds to the on-ramp you are creating. Virtual Appliance devices are identified by a serial number, also known as a service tag. Use this information to choose the right Virtual Appliance. <br /> Select **Add Appliance** when you are ready to proceed.
 8. Virtual Appliance will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the Virtual Appliance software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/) for more details on how to define when the Virtual Appliance can update its systems.
 9. Select **Continue** to proceed to creating your WAN and LAN networks.
@@ -328,7 +372,11 @@ Virtual Appliance is deactivated after you install it, and will only establish a
 
 When the Virtual Appliance is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Virtual Appliance can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.
 
-<Aside type="caution">Remember to connect Virtual Appliance through a route that supports DHCP for its first connection to the Internet. Otherwise, Virtual Appliance will not work.</Aside>
+<Aside type="caution">
+	Remember to connect Virtual Appliance through a route that supports DHCP for
+	its first connection to the Internet. Otherwise, Virtual Appliance will not
+	work.
+</Aside>
 
 When you are ready to connect your Virtual Appliance to the Cloudflare network:
 
@@ -353,7 +401,10 @@ For example, if your license key is <code>mconn-abcdefghijklmnopqrstuvwxyz</code
 
 After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your Virtual Appliance on a network configuration with a static IP, follow these steps:
 
-<Aside type="caution">Make sure you complete the setup workflow and activate your Virtual Appliance before changing the WAN settings to a static IP.</Aside>
+<Aside type="caution">
+	Make sure you complete the setup workflow and activate your Virtual Appliance
+	before changing the WAN settings to a static IP.
+</Aside>
 
 1. Connect the machine where you installed the VM with Virtual Appliance to a DHCP port with access to the Internet.
 2. [Create a new profile](#create-a-new-profile) in the dashboard.
