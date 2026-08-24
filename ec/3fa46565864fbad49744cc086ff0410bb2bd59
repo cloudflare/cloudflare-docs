@@ -1,0 +1,19 @@
+src/content/docs/workers/framework-guides/web-apps/astro.mdx
+  s_a4658507fa19ca::t_957c5abbb92f63 255
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ec3fa46565864fbad49744cc086ff0410bb2bd59",
+  "prompts": {},
+  "sessions": {
+    "s_a4658507fa19ca": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff1b5-8e7f-7ee3-baa4-f42c4ae39b54",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

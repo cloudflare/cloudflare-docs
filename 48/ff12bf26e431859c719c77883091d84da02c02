@@ -1,0 +1,85 @@
+src/components/agent-setup/WorkflowSelector.astro
+  s_8045362b510a8c::t_6ee7e57fb8e347 1-47
+src/content/docs/agent-setup/bionic.mdx
+  s_8045362b510a8c::t_3d702c482ac274 66,75,91-94,107
+  s_8045362b510a8c::t_609af25cf56ae0 108
+src/content/docs/agent-setup/windsurf.mdx
+  s_8045362b510a8c::t_9139b8ccfad4dd 38,40,45,69,86,106
+  s_8045362b510a8c::t_d4fb2f269b8745 3,107
+src/content/docs/agent-setup/codex.mdx
+  s_8045362b510a8c::t_7012650509445b 12-13,29-30,34,36-47,49
+  s_8045362b510a8c::t_0f4f93ce850f79 10,74-75,77,79,81-83,85-93,95-99,101-102,116,127,150
+  s_8045362b510a8c::t_03a420828a9bb0 3,51,53-57,60,62,64-65,151
+src/components/agent-setup/WorkflowOption.astro
+  s_8045362b510a8c::t_de2139a4c2b65b 1-17
+src/components/agent-setup/AgentHeader.astro
+  s_8045362b510a8c::t_d088a99b4bf158 31
+src/components/agent-setup/AgentPrimer.astro
+  s_8045362b510a8c::t_6bb91424ca52d7 14-16,24
+src/content/docs/agent-setup/cursor.mdx
+  s_8045362b510a8c::t_8f728b9acb4346 10,34,59,69,95
+  s_8045362b510a8c::t_1faee4fb808559 3,96,102-103
+src/components/agent-setup/PlatformAccessSection.astro
+  s_8045362b510a8c::t_7d0559f961e50d 41-43
+  s_8045362b510a8c::t_4069c4d451dff1 37-39
+src/content/docs/agent-setup/visual-studio-code/detailed-walkthrough.mdx
+  s_8045362b510a8c::t_64fed5160f959b 13,15,199
+src/components/agent-setup/definitions.ts
+  s_8045362b510a8c::t_e4c277e157ad27 6-7,35,37
+src/components/agent-setup/CloudflareToolsBanner.astro
+  s_8045362b510a8c::t_90f7c5252223d9 26-27,31
+src/content/docs/agent-setup/claude-code.mdx
+  s_8045362b510a8c::t_60c4976becd1c9 12-13
+  s_8045362b510a8c::t_1313cf355ec4c1 29-32,34-45,47,49,51,53-56,58,60,62-64,66,68,70-98,114,126,141-144,162
+  s_8045362b510a8c::t_82194d5dfcef6f 3,10,163
+src/components/agent-setup/CatalogWithFilter.astro
+  s_8045362b510a8c::t_b1b96b65700f3e 15,17,55,66-68,176-181
+  s_8045362b510a8c::t_9837b37279d1c2 156-160,214
+src/components/agent-setup/McpServerList.astro
+  s_8045362b510a8c::t_e0477d577dcc0b 7-8,14-55,57-58,60-68
+src/components/agent-setup/types.ts
+  s_8045362b510a8c::t_2cc3b074f2901b 4,23
+  s_8045362b510a8c::t_1d16bee0f351b6 14
+src/pages/agent-setup/index.astro
+  s_8045362b510a8c::t_ac7c9d7d634e30 30
+src/content/docs/agent-setup/visual-studio-code/index.mdx
+  s_8045362b510a8c::t_61ad66dd0b3622 10-11,33,35-38,40-42
+  s_8045362b510a8c::t_5497fc30643b44 66
+  s_8045362b510a8c::t_8de5add95954af 44
+src/components/agent-setup/workflow-selector.client.ts
+  s_8045362b510a8c::t_3281e20f744046 1-118
+src/content/docs/agent-setup/opencode.mdx
+  s_8045362b510a8c::t_d7c0c1e42359d1 3,12-13,29-32,34,36-38,40,42-44,46,48,50-57,59,61,63-65,67,69,71-112,126,152-160,172
+  s_8045362b510a8c::t_a13114d7512851 149,168
+  s_8045362b510a8c::t_dfadc924063d67 138
+src/content/docs/agents/model-context-protocol/cloudflare/servers-for-cloudflare/index.mdx
+  s_8045362b510a8c::t_18be58fb60c6b5 13
+  s_8045362b510a8c::t_6d6f5ce0ab27ac 55
+src/components/agent-setup/AgentComparison.astro
+  s_8045362b510a8c::t_e74754427c4f91 22-23,36,69,212
+src/content/agent-setup/prompt.md
+  s_8045362b510a8c::t_cad2f0f94eb079 105
+  s_8045362b510a8c::t_b37c3a79a92c2a 3,5,9,20-31,35,37,45,47,52,61,66,71,73,76,88,99
+src/content/docs/agent-setup/github-copilot.mdx
+  s_8045362b510a8c::t_803cdbdfdc0f6b 12-13
+  s_8045362b510a8c::t_94e2b23faecf60 29-32,34,36,38-40,42,44,46-55,57,59,61-66,68-143,157,167-168,176,188-189,197-200,209
+  s_8045362b510a8c::t_7d6626a165a6dc 3,10,210
+src/components/agent-setup/agents.ts
+  s_8045362b510a8c::t_5a47d2c4806b4d 10,13,27-29,43,46,60-62,76,78-79,106,109,115,118,123-126,140,143,145,157-159,173,176,203,205-206,208,212-213,215,236
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "48ff12bf26e431859c719c77883091d84da02c02",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}
