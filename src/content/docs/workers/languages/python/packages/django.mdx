@@ -1,0 +1,282 @@
+---
+pcx_content_type: reference
+title: Django
+description: Run Django on Python Workers
+head:
+  - tag: title
+    content: Django
+products:
+  - workers
+---
+
+import { Steps, WranglerConfig } from "~/components";
+
+[Django](https://www.djangoproject.com/) is supported in Python Workers.
+
+Django applications use protocols called the [Web Server Gateway Interface (WSGI)](https://peps.python.org/pep-3333/)
+or [Asynchronous Server Gateway Interface (ASGI)](https://asgi.readthedocs.io/en/latest/).
+
+This means that Django never reads from or writes to a socket itself. A WSGI/ASGI application expects to be hooked up to a
+WSGI/ASGI server, such as [uvicorn](https://uvicorn.dev/).
+The WSGI/ASGI server handles all of the raw sockets on the application’s behalf.
+
+Python Workers provide adaptors for both WSGI and ASGI,
+so you can choose any based on whether your Django application deploys to WSGI or ASGI.
+
+## Quick start
+
+To get started with Django in Python Workers, follow these steps:
+
+<Steps>
+
+1. Create a Django project using `pywrangler init`:
+
+   ```bash
+   uv run pywrangler init django-worker --template https://github.com/cloudflare/python-workers-examples/tree/main/18-django
+   cd django-worker
+   ```
+
+2. Run your worker locally:
+
+   ```bash
+   uv run pywrangler dev
+   ```
+
+</Steps>
+
+## Choose between ASGI and WSGI
+
+Your Django application needs to be served using either ASGI or WSGI.
+
+If you are not sure which adapter to use, start with ASGI since it fits better with the asynchronous nature of Workers.
+If you are porting an existing Django application, you may need to use WSGI for compatibility.
+
+### Serve a WSGI application
+
+Build the application object with `get_wsgi_application()` and pass it to `workers.wsgi.fetch`:
+
+```python title="src/index.py"
+import os
+
+from django.core.wsgi import get_wsgi_application
+from workers import WorkerEntrypoint, wsgi
+
+# your Django settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
+
+application = get_wsgi_application()
+
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return await wsgi.fetch(application, request, self.env)
+```
+
+`wsgi.fetch` takes the application object, the incoming request, and the environment.
+It exposes your bindings to the application through `scope["env"]`.
+
+### Serve an ASGI application
+
+Build the application object with `get_asgi_application()` and pass it to `workers.asgi.fetch`:
+
+```python title="src/index.py"
+import os
+
+from django.core.asgi import get_asgi_application
+from workers import WorkerEntrypoint, asgi
+
+# your Django settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
+
+application = get_asgi_application()
+
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return await asgi.fetch(application, request, self.env)
+```
+
+`asgi.fetch` takes the application object, the incoming request, and the environment.
+It exposes your bindings to the application through `scope["env"]`.
+
+## Configure Django settings
+
+### Pass secrets
+
+If you need a secret (like `SECRET_KEY`) in your Django settings, you can read it from a [Worker secret](/workers/configuration/secrets/):
+
+```python title="src/app/settings.py"
+from workers import env
+
+SECRET_KEY = env.DJANGO_SECRET_KEY
+```
+
+Create the secret with `uv run pywrangler secret put DJANGO_SECRET_KEY`.
+
+## Use Cloudflare storage as Django backends
+
+You can use Cloudflare [D1](/d1/) and [Durable Objects](/durable-objects/) as Django database backends.
+To use them, you need to install the [`django-cf`](https://github.com/cloudflare/workers-py/tree/main/packages/django-cf) package.
+
+Add `django-cf` to your dependencies:
+
+```toml
+[project]
+dependencies = [
+    "django",
+    "django-cf",
+]
+```
+
+### Database backends
+
+`django-cf` provides two SQLite-compatible backends using Cloudflare's D1 and Durable Objects.
+Both drive the synchronous Django ORM, so serve your application through the WSGI path when you use them.
+
+:::caution[Transaction support]
+
+The D1 and Durable Object backends do not support transactions.
+
+```python
+from django.db import transaction
+
+# This will be a no-op, and rollback will not work
+@transaction.atomic
+def my_view():
+    # ...
+```
+
+:::
+
+#### D1 backend
+
+To use D1 as a database backend, first setup your D1 database in Wrangler:
+
+```jsonc title="wrangler.jsonc"
+{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-database",
+      "database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    }
+  ]
+}
+```
+
+Then, configure the backend in your Django settings:
+
+```python title="src/app/settings.py"
+DATABASES = {
+    "default": {
+        "ENGINE": "django_cf.db.backends.d1",
+        # should match the binding name in your wrangler.jsonc
+        "CLOUDFLARE_BINDING": "DB",
+    }
+}
+```
+
+You are all set. Your Django application now uses D1 as its database backend.
+
+```python title="src/index.py"
+import os
+
+from django.core.wsgi import get_wsgi_application
+from workers import WorkerEntrypoint, wsgi
+
+# your Django settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
+
+# If you are using wsgi, you need to set this to allow database operations.
+os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "1")
+
+application = get_wsgi_application()
+
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return await wsgi.fetch(application, request, self.env)
+```
+
+:::note[DJANGO_ALLOW_ASYNC_UNSAFE]
+
+When you are accessing any database backend in Django, you must set this environment variable
+to allow database operations to work in Python Workers.
+
+By default, Django does not allow running database operations inside the event loop,
+to prevent multiple event loops from accessing the same database connection simultaneously,
+which can lead to data corruption.
+
+Cloudflare database backends (D1, Durable Objects) are designed to work with event loops,
+so this environment variable is required to enable database operations.
+
+:::
+
+#### Durable Objects backend
+
+To use Durable Objects as a database backend, first setup your Durable Objects binding in Wrangler:
+
+```jsonc title="wrangler.jsonc"
+{
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "DO_STORAGE",
+        "class_name": "DjangoDurableObject"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["DjangoDurableObject"]
+    }
+  ]
+}
+```
+
+Then, configure the backend in your Django settings:
+
+```python title="src/app/settings.py"
+DATABASES = {
+    "default": {
+        "ENGINE": "django_cf.db.backends.do",
+    }
+}
+```
+
+Then, update your Python worker as follows:
+
+```python title="src/index.py"
+import os
+
+from django.core.wsgi import get_wsgi_application
+from django_cf.db.backends.do.storage import set_storage
+from workers import WorkerEntrypoint, wsgi
+
+# your Django settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
+
+# If you are using wsgi, you need to set this to allow database operations.
+os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "1")
+
+application = get_wsgi_application()
+
+
+class Default(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+
+        # Tell Django to use the Durable Object storage
+        set_storage(self.ctx.storage.sql)
+
+    async def fetch(self, request):
+        return await wsgi.fetch(application, request, self.env)
+```
+
+## More examples
+
+Clone the `cloudflare/python-workers-examples` repository and run Django examples:
+
+- [django](https://github.com/cloudflare/python-workers-examples/tree/main/django)
+- [django with D1 backend](https://github.com/cloudflare/python-workers-examples/tree/main/django-todo-d1)
