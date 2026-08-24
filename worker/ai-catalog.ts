@@ -1,4 +1,4 @@
-type AiCatalogEntry = {
+export type AiCatalogEntry = {
 	identifier: string;
 	displayName: string;
 	type: string;
@@ -8,7 +8,7 @@ type AiCatalogEntry = {
 	representativeQueries?: [string, string, ...string[]];
 };
 
-type AiCatalogManifest = {
+export type AiCatalogManifest = {
 	specVersion: "1.0";
 	host: {
 		displayName: string;
