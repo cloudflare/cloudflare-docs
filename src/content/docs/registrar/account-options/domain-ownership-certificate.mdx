@@ -1,0 +1,53 @@
+---
+pcx_content_type: how-to
+title: Domain ownership certificate
+sidebar:
+  order: 5
+products:
+  - registrar
+description: Generate a domain ownership certificate (WHOIS ownership letter) for a domain registered with Cloudflare Registrar.
+---
+
+import { Steps, DashButton } from "~/components";
+
+A domain ownership certificate is a PDF letter that certifies Cloudflare is the registrar of record for your domain and lists the domain's current registration data. You can use it as proof of ownership when a third party (such as a bank, marketplace, or legal entity) requires written confirmation that you control the domain.
+
+The certificate is generated on demand and is automatically populated with your domain's current WHOIS information and the date it was generated. It includes:
+
+- A certification statement confirming that Cloudflare, an ICANN-accredited registrar, is the registrar for the domain.
+- **Exhibit A**, containing the domain's registration data:
+  - Creation date and registry expiry date.
+  - Registrant, administrative, technical, and billing contacts.
+  - Name servers.
+
+The contact details shown on the certificate reflect the authoritative contact information Cloudflare has on file, not the redacted values published in public WHOIS. To review or update this information, refer to [Registrant contact updates](/registrar/account-options/domain-contact-updates/).
+
+## Generate a certificate
+
+To download a domain ownership certificate:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Registrations** page.
+
+   <DashButton url="/?to=/:account/domains/registrations" />
+
+2. Find the domain you want a certificate for, and select **Manage**.
+3. Select the **Contacts** tab.
+4. Select **Download ownership certificate**.
+</Steps>
+
+Your browser downloads a PDF named `<domain>_ownership_letter.pdf`.
+
+## Prerequisites and restrictions
+
+You can only generate a certificate when:
+
+- The domain is registered with (sponsored by) Cloudflare Registrar.
+- You have permission to view the domain's contact information.
+- The domain has registrant contact information on file.
+
+If any of these conditions are not met, the certificate cannot be generated.
+
+:::note
+Domains that are pending transfer or have not yet completed registration with Cloudflare Registrar are not eligible until the registration is finalized.
+:::

@@ -9,6 +9,10 @@ weight: 0
 
 Spectrum is a global TCP and UDP proxy running on Cloudflare's edge nodes. It does not terminate the connection in the application-layer sense. However, at Layer 4, Spectrum does terminate the TCP and UDP sockets in both directions. The L4 payloads of TCP segments and UDP datagrams are passed back and forth as-is, without modifications.
 
+This means Spectrum does not inspect, modify, or upgrade application-layer protocols. For example, Spectrum cannot convert an HTTP connection to HTTPS, add HTTP headers, or apply WAF rules to TCP traffic. To add Layer 7 functionality such as CDN, Workers, or Bot Management, set the [application type](#application-type) to **HTTP/HTTPS**.
+
+For common issues and troubleshooting guidance, refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/).
+
 :::note
 Some of these features require an Enterprise plan. If you would like to upgrade, contact your account team.
 :::
@@ -94,7 +98,32 @@ Network analytics data for Spectrum does not reflect the outcomes of IP Access r
 
 Once Argo Smart Routing is enabled for your application, traffic will automatically be routed through the fastest and most reliable network path available. Argo Smart Routing is available for TCP and UDP (beta) applications.
 
+## Virtual network origin
+
+Spectrum applications can route `origin_direct` traffic to a private origin through a Cloudflare Tunnel [virtual network](/cloudflare-one/networks/virtual-networks/). Set `virtual_network_id` on the application to the ID of the virtual network that the origin IP is routable within. Traffic to the application is delivered through the connector associated with that virtual network — typically a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or a [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) connection.
+
+To create the virtual network and attach a route covering your origin IP, refer to [Manage virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) and [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
+
+The following restrictions apply when `virtual_network_id` is set:
+
+- Application type must be TCP or UDP. HTTP/HTTPS applications do not support virtual network origins.
+- The origin must be specified with `origin_direct`. Hostname origins (`origin_dns`) are not supported.
+- `origin_direct` must contain exactly one address. Multiple addresses are not supported.
+- The origin port must be a single port. Port ranges are not supported.
+- The origin IP must be routable within the specified virtual network. The virtual network must already have a route covering the IP.
+- [Proxy Protocol](/spectrum/how-to/enable-proxy-protocol/) is not supported. `proxy_protocol` must be set to `off`.
+
+For the validation error codes returned when these constraints are violated, refer to [Error codes](/spectrum/reference/error-codes/).
+
+Spectrum virtual network origins are for TCP and UDP traffic only. For HTTP/HTTPS traffic to private origins, use [Application Services for Private Origins](/dns/private-origins/), which provides WAF, CDN caching, and the full Cloudflare proxy stack.
+
 ## Edge TLS Termination
+
+:::caution[Spectrum does not perform protocol upgrade]
+Spectrum operates at Layer 4 and forwards TCP payloads as-is. If Edge TLS Termination is set to **off** (Passthrough), Spectrum will **not** upgrade an HTTP connection to HTTPS, even if your origin listens on port 443. To encrypt traffic between Cloudflare and your origin, enable Edge TLS Termination and set it to **Full** or **Full (Strict)**.
+
+For example, if a client connects to your Spectrum application on port 8012 using HTTP, and your origin is configured on port 443, the connection to origin will use HTTP on port 443 — not HTTPS — unless Edge TLS Termination is set to **Full** or **Full (Strict)**.
+:::
 
 If you enable **Edge TLS Termination** for a Spectrum application, Cloudflare will encrypt traffic for the application at the Edge. The Edge TLS Termination toggle applies only to TCP applications.
 
@@ -111,6 +140,12 @@ You can manage this through the Spectrum app at the Cloudflare dashboard, or usi
 :::note
 
 If you have the TLS termination setting configured to **off**, this means that Spectrum will then proxy connections to the origin without decrypting. The certificate that is presented in this case will be the certificate installed at your origin server, instead of the Edge Certificate from Cloudflare.
+
+:::
+
+:::caution
+
+Do not configure a TCP-type Spectrum application's origin to point to another Cloudflare-proxied hostname (for example, `origin.example.com.cdn.cloudflare.net`). This creates an unsupported double-proxy path that may result in TLS handshake failures at the origin. For TCP applications, a failed TLS handshake to the origin is reported as an origin connection failure (`521` or `522`), not error `525` — `525` applies to HTTP/HTTPS applications. Use a direct origin IP address or a DNS hostname that resolves to your origin server without passing through Cloudflare's proxy. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#tls-handshake-failures-error-525) for details.
 
 :::
 
@@ -166,4 +201,4 @@ The cipher suites below are ordered based on how they appear in the ClientHello,
 | AES128-SHA                        | ✅      | ✅      | ❌      |
 | AES256-SHA                        | ✅      | ✅      | ❌      |
 
-[^1]: Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently, only specifying the symmetric ciphers, and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 ([RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html)). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3. Refer to [TLS 1.3 cipher suites](/ssl/origin-configuration/cipher-suites/#tls-13-cipher-suites) for details.
+[^1]: Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently, only specifying the symmetric ciphers, and cannot be used with TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 ([RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html)). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3. Refer to [TLS 1.3 cipher suites](/ssl/origin-configuration/cipher-suites/#tls-13-cipher-suites) for details.

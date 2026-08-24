@@ -8,8 +8,11 @@ products:
   - kv
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 To get the value for a given key, call the `get()` method of the [KV binding](/kv/concepts/kv-bindings/) on any [KV namespace](/kv/concepts/kv-namespaces/) you have bound to your Worker code:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 // Read individual key
 env.NAMESPACE.get(key);
@@ -17,6 +20,15 @@ env.NAMESPACE.get(key);
 // Read multiple keys
 env.NAMESPACE.get(keys);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+# Read individual key
+self.env.NAMESPACE.get(key)
+
+# Read multiple keys
+self.env.NAMESPACE.get(keys)
+```
+</TabItem> </Tabs>
 
 The `get()` method returns a promise you can `await` on to get the value.
 
@@ -25,6 +37,7 @@ If you request a single key as a string, you will get a single response in the p
 You can also request an array of keys. The return value with be a `Map` of the key-value pairs found,
 with keys not found having `null` values.
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 export default {
 	async fetch(request, env, ctx) {
@@ -53,6 +66,35 @@ export default {
 	},
 };
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        try:
+            # Read single key, returns value or None
+            value = await self.env.NAMESPACE.get("first-key")
+
+            # Read multiple keys, returns dict of values
+            values = await self.env.NAMESPACE.get(["first-key", "second-key"])
+
+            # Read single key with metadata
+            value_with_metadata = await self.env.NAMESPACE.getWithMetadata("first-key")
+
+            # Read multiple keys with metadata
+            values_with_metadata = await self.env.NAMESPACE.getWithMetadata(["first-key", "second-key"])
+
+            return Response.json({
+                "value": value,
+                "values": values,
+                "valueWithMetadata": value_with_metadata,
+                "valuesWithMetadata": values_with_metadata,
+            })
+        except Exception as e:
+            return Response(str(e), status=500)
+```
+</TabItem> </Tabs>
 
 :::note
 
@@ -79,11 +121,19 @@ Use the `get()` method to get a single value, or multiple values if given multip
 
 To get the value for a single key, call the `get()` method on any KV namespace you have bound to your Worker code with:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 env.NAMESPACE.get(key, type?);
 // OR
 env.NAMESPACE.get(key, options?);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+self.env.NAMESPACE.get(key, type)
+# OR
+self.env.NAMESPACE.get(key, options)
+```
+</TabItem> </Tabs>
 
 ##### Parameters
 
@@ -110,11 +160,19 @@ env.NAMESPACE.get(key, options?);
 
 To get the values for multiple keys, call the `get()` method on any KV namespace you have bound to your Worker code with:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 env.NAMESPACE.get(keys, type?);
 // OR
 env.NAMESPACE.get(keys, options?);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+self.env.NAMESPACE.get(keys, type)
+# OR
+self.env.NAMESPACE.get(keys, options)
+```
+</TabItem> </Tabs>
 
 ##### Parameters
 
@@ -154,11 +212,19 @@ Use the `getWithMetadata()` method to get a single value along with its metadata
 
 To get the value for a given key along with its metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 env.NAMESPACE.getWithMetadata(key, type?);
 // OR
 env.NAMESPACE.getWithMetadata(key, options?);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+self.env.NAMESPACE.getWithMetadata(key, type)
+# OR
+self.env.NAMESPACE.getWithMetadata(key, options)
+```
+</TabItem> </Tabs>
 
 Metadata is a serializable value you append to each KV entry.
 
@@ -193,11 +259,19 @@ If there is no metadata associated with the requested key-value pair, `null` wil
 
 To get the values for a given set of keys along with their metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code with:
 
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 env.NAMESPACE.getWithMetadata(keys, type?);
 // OR
 env.NAMESPACE.getWithMetadata(keys, options?);
 ```
+</TabItem> <TabItem label="Python" icon="seti:python">
+```py
+self.env.NAMESPACE.getWithMetadata(keys, type)
+# OR
+self.env.NAMESPACE.getWithMetadata(keys, options)
+```
+</TabItem> </Tabs>
 
 ##### Parameters
 

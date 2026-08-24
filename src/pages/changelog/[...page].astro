@@ -1,43 +1,47 @@
 ---
-import StarlightPage, {
-	type StarlightPageProps,
-} from "@astrojs/starlight/components/StarlightPage.astro";
-import type { GetStaticPaths } from "astro";
+/**
+ * /changelog/ — paginated index of all (non-hidden) changelog entries.
+ * CF source: cloudflare-docs/src/pages/changelog/[...page].astro
+ * Design: Nimbus changelog feature (timeline feed); product model + server
+ * pagination kept.
+ */
+import type { GetStaticPaths, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
 
+import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
 import Header from "~/components/changelog/Header.astro";
 import Pagination from "~/components/changelog/Pagination.astro";
-import ChangelogEntryList from "~/components/changelog/ChangelogEntryList.astro";
+import ChangelogFeed from "~/components/changelog/ChangelogFeed.astro";
 
 import { getChangelogs } from "~/util/changelog";
+
+export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const visibleNotes = await getChangelogs({
 		filter: (entry) => !entry.data.hidden,
 	});
 
-	return paginate(visibleNotes, { pageSize: 25 });
+	const pages = paginate(visibleNotes, { pageSize: 25 });
+	return pages.map((p) => {
+		const pageDigest = (p.props.page.data as typeof visibleNotes)
+			.map((n) => n.digest ?? n.id)
+			.join(",");
+		return { ...p, cacheKey: `${p.params.page ?? 1}:${pageDigest}` };
+	});
 }) satisfies GetStaticPaths;
 
-const { page } = Astro.props;
+type Props = { page: Page<CollectionEntry<"changelog">> };
 
-const props = {
-	frontmatter: {
-		title: "Changelogs",
-		tableOfContents: false,
-		template: "splash",
-		chatbot_deprioritize: true,
-	},
-	hideTitle: true,
-	hideBreadcrumbs: true,
-} as StarlightPageProps;
+const { page } = Astro.props as Props;
 ---
 
-<StarlightPage {...props}>
-	<Header />
-	<ChangelogEntryList entries={page.data} />
+<ChangelogLayout title="Changelogs">
+	<Header rssHref="/changelog/rss/index.xml" />
+	<ChangelogFeed entries={page.data} />
 	<Pagination
 		currentPage={page.currentPage}
 		lastPage={page.lastPage}
 		baseUrl="/changelog/"
 	/>
-</StarlightPage>
+</ChangelogLayout>

@@ -31,7 +31,7 @@ To configure Regional Services for both hostnames [proxied](/dns/proxy-status/) 
 
 1. Set the [fallback record](/api/resources/custom_hostnames/subresources/fallback_origin/methods/update/).
 2. Create a [Custom Hostname](/api/resources/custom_hostnames/methods/create/).
-3. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the Custom Hostname to create a `regional_hostnames` with a specific region.
+3. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the Custom Hostname to create a `regional_hostnames` with a specific region.
 
 </TabItem> </Tabs>
 
@@ -60,11 +60,11 @@ Below you can find a breakdown of the different ways that you might configure Cl
 | 3    | `regionalservices-custom.example.com`    | `fallback.saasprovider.com` | `us.saasprovider.com` (custom) | `LHR`    |
 | 4    | `regionalservices-custom2.example.com`   | `us.saasprovider.com`       | `us.saasprovider.com` (custom) | `EWR`    |
 
-- In order to set a processing region for the fallback record to any of the available regions for Regional Services, create a new regional hostname entry for the fallback via a [POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) request.
+- In order to set a processing region for the fallback record to any of the available regions for Regional Services, create a new regional hostname entry for the fallback via a [POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) request.
 
-- To update the existing region (for example, from `EU` to `US`), make a [PATCH](/data-localization/regional-services/get-started/#configure-regional-services-via-api) request for the fallback to update the processing region accordingly.
+- To update the existing region (for example, from `EU` to `US`), make a [PATCH](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) request for the fallback to update the processing region accordingly.
 
-- To remove the regional services processing region and set it back to `Earth`, make a [DELETE](/data-localization/regional-services/get-started/#configure-regional-services-via-api) request to delete the region configuration.
+- To remove the regional services processing region and set it back to `Earth`, make a [DELETE](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) request to delete the region configuration.
 
 ## Customer Metadata Boundary
 

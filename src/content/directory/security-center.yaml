@@ -9,6 +9,5 @@ entry:
 
 meta:
   title: Cloudflare Security Center docs
-  description:
-    Enhance your security posture with a range of security products and one-click solutions
+  description: Enhance your security posture with a range of security products and one-click solutions
   author: "@cloudflare"

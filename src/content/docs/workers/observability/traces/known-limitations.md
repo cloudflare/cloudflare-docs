@@ -31,10 +31,6 @@ We are planning to add more detailed attributes on each span. You can find a com
 Your feedback on any missing information will help us prioritize additions and changes. Please comment on the [Workers tracing GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/11062)
 if specific attributes would be helpful to use tracing effectively.
 
-### Support for custom spans and attributes
-
-Automatic instrumentation covers many platform interactions, but we know you need visibility into your own application logic too. We're working to support the [OpenTelemetry API](https://www.npmjs.com/package/@opentelemetry/api) to make it easier for you to instrument custom spans within your application.
-
 ### Span and attribute names subject to change
 
 As Workers tracing is currently in beta, span names and attribute names are not yet finalized. We may refine these names during the beta period to improve clarity and align with OpenTelemetry semantic conventions. We recommend reviewing the [spans and attributes documentation](/workers/observability/traces/spans-and-attributes) periodically for updates.

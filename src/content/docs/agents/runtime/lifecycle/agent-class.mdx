@@ -240,7 +240,7 @@ class MyAgent extends Agent {
 
 ### RPC and Callable Methods
 
-`agents` takes Durable Objects RPC one step further by implementing RPC through WebSockets, so clients can call methods on the Agent directly. To make a method callable through WebSocket, use the `@callable()` decorator. Methods can return a serializable value or a stream (when using `@callable({ stream: true })`).
+`agents` takes Durable Objects RPC one step further by implementing RPC through WebSockets, so clients can call methods on the Agent directly. To make a method callable through WebSocket, use the `@callable()` decorator. Methods can return a serializable value or a stream (when using `@callable({ streaming: true })`).
 
 ```ts
 class MyAgent extends Agent {
@@ -346,7 +346,7 @@ class MyAgent extends Agent {
 
 ### Email Handling
 
-Agents can receive and reply to emails using Cloudflare's [Email Routing](/email-routing/email-workers/).
+Agents can receive and reply to emails using Cloudflare's [Email Routing](/email-service/api/route-emails/email-handler/).
 
 ```ts
 class MyAgent extends Agent {

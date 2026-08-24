@@ -34,6 +34,8 @@ export default [
 			".flue/.wrangler/",
 			"dist/",
 			".github/",
+			// Generated at prebuild/predev by bin/fetch-skills.ts (gitignored).
+			"skills/",
 		],
 	},
 	{

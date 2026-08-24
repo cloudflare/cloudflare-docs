@@ -61,7 +61,8 @@ Note that it is also possible to specify a jurisdiction by creating an individua
 | Parameter | Location                       |
 | --------- | ------------------------------ |
 | eu        | The European Union             |
-| fedramp   | FedRAMP-compliant data centers |
+| us        | The United States              |
+| fedramp   | FedRAMP-Moderate data centers  |
 
 ### Read the jurisdiction from inside a Durable Object
 
@@ -94,17 +95,19 @@ Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable 
 
 ### Supported locations
 
-| Parameter | Location                   |
-| --------- | -------------------------- |
-| wnam      | Western North America      |
-| enam      | Eastern North America      |
-| sam       | South America <sup>2</sup> |
-| weur      | Western Europe             |
-| eeur      | Eastern Europe             |
-| apac      | Asia-Pacific               |
-| oc        | Oceania                    |
-| afr       | Africa <sup>2</sup>        |
-| me        | Middle East <sup>2</sup>   |
+| Parameter | Location                            |
+| --------- | ----------------------------------- |
+| wnam      | Western North America               |
+| enam      | Eastern North America               |
+| sam       | South America <sup>2</sup>          |
+| weur      | Western Europe                      |
+| eeur      | Eastern Europe                      |
+| apac      | Asia-Pacific                        |
+| apac-ne   | Northeast Asia-Pacific <sup>3</sup> |
+| apac-se   | Southeast Asia-Pacific <sup>3</sup> |
+| oc        | Oceania                             |
+| afr       | Africa <sup>2</sup>                 |
+| me        | Middle East <sup>2</sup>            |
 
 <sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the
 future.
@@ -113,6 +116,12 @@ future.
 the Durable Object will spawn in a nearby location which does support Durable
 Objects. For example, Durable Objects hinted to South America spawn in Eastern
 North America instead.
+
+<sup>3</sup> `apac-ne` (Northeast Asia-Pacific) and `apac-se` (Southeast
+Asia-Pacific) are narrower sub-regions within `apac` (Asia-Pacific). Prefer
+`apac` for general Asia-Pacific placement. Choose `apac-ne` or `apac-se` only
+when your users are concentrated in the northeast or southeast of the region and
+you want to minimize latency for them.
 
 ## Additional resources
 

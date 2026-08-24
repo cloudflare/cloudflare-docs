@@ -41,17 +41,15 @@ interface FlagshipEvaluationDetails<T> {
 	variant?: string;
 	reason?: string;
 	errorCode?: string;
-	errorMessage?: string;
 }
 ```
 
-| Property       | Type     | Description                                                                            |
-| -------------- | -------- | -------------------------------------------------------------------------------------- |
-| `flagKey`      | `string` | The key of the evaluated flag.                                                         |
-| `value`        | `T`      | The resolved flag value.                                                               |
-| `variant`      | `string` | The name of the matched variation, if any.                                             |
-| `reason`       | `string` | Why the flag resolved to this value (for example, `"TARGETING_MATCH"` or `"DEFAULT"`). |
-| `errorCode`    | `string` | An error code if evaluation failed (for example, `"TYPE_MISMATCH"` or `"GENERAL"`).    |
-| `errorMessage` | `string` | A human-readable description of the error.                                             |
+| Property    | Type     | Description                                                                            |
+| ----------- | -------- | -------------------------------------------------------------------------------------- |
+| `flagKey`   | `string` | The key of the evaluated flag.                                                         |
+| `value`     | `T`      | The resolved flag value.                                                               |
+| `variant`   | `string` | The name of the matched variant, if any.                                               |
+| `reason`    | `string` | Why the flag resolved to this value (for example, `"TARGETING_MATCH"` or `"DEFAULT"`). |
+| `errorCode` | `string` | An error code if evaluation failed (for example, `"TYPE_MISMATCH"` or `"GENERAL"`).    |
 
 Refer to [evaluation reasons and error codes](/flagship/reference/evaluation-reasons/) for the full list of possible values.

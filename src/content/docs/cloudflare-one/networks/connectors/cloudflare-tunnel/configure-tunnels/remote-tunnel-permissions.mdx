@@ -12,7 +12,7 @@ tags:
   - Terraform
 ---
 
-import { TabItem, Tabs, Render, APIRequest } from "~/components";
+import { TabItem, Tabs, Render, APIRequest, DashButton } from "~/components";
 
 A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel.
 
@@ -22,9 +22,12 @@ To get the token for a remotely-managed tunnel:
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
-2. Select a `cloudflared` tunnel and select **Edit**.
-3. Copy the `cloudflared` installation command into a text editor (do not run the command). The token is the `eyJ...` string.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select a tunnel to open its detail page.
+3. On the **Overview** tab, select **Add a replica** to reveal the installation command. Copy the command into a text editor (do not run the command). The token is the `eyJ...` string.
 
 </TabItem>
 <TabItem label="API">
@@ -67,9 +70,12 @@ To rotate a tunnel token:
 
 	<Tabs syncKey="dashPlusAPI">
 	<TabItem label="Dashboard">
-	1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
-	2. Select a `cloudflared` tunnel and select **Edit**.
-	3. Select **Refresh token**.
+	1. In the Cloudflare dashboard, go to **Networking** > **Tunnels**.
+
+	   <DashButton url="/?to=/:account/tunnels" />
+
+	2. Select a tunnel to open its detail page.
+	3. On the **Overview** tab, select **Refresh token**.
 	4. Copy the `cloudflared` installation command for your operating system. This command contains the new token.
 
 	</TabItem>

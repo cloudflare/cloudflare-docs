@@ -24,7 +24,7 @@ export async function downloadToDotTempIfNotPresent(
 	url: string,
 	dotTmpDestination: string,
 ) {
-	const source = z.string().url().parse(url);
+	const source = z.url().parse(url);
 	const relativeDestination = z
 		.string()
 		.refine((val) => !val.includes("\\"), {

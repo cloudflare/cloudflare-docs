@@ -3,6 +3,83 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-08-24"
+    title: RealtimeKit Web UI Kit 2.0.2
+    description: |-
+      **Fixes**
+
+      - Restored Safari 16.x compatibility by incorporating an [upstream Stencil fix](https://github.com/stenciljs/core/pull/6236).
+      - Fixed `rtk-idle-screen` incorrectly displaying non-fatal `preJoinError` events, such as declining to share media, as fatal errors.
+      - Starting a recording while one is already in progress now displays a specific message instead of a generic internal error.
+
+      **New localization keys**
+
+      - `recording.error.already_recording` — "A recording is already in progress."
+
+  - publish_date: "2026-07-17"
+    title: RealtimeKit Web UI Kit 2.0.1
+    description: |-
+      **Fixes**
+
+      - The `joinError` state has been superseded by `preJoinError` to cover all errors that occur before or during joining the meeting. Refer to [State management](/realtime/realtimekit/ui-kit/state-management/) for details on UI Kit states.
+      - The `rtk-idle-screen` now displays user-friendly error messages instead of just an infinite loader, helping customers identify issues and retry.
+      - Fixed errors thrown by the Core SDK not being captured and shown properly by the UI Kit.
+
+      **New localization keys**
+
+      - `init.auth_error` — "We couldn't verify your access to this meeting. The meeting may have ended, or you may not have permission to join."
+      - `init.network_error` — "We couldn't connect to the meeting. Please try again, and if the problem continues, check your internet connection."
+      - `init.browser_error` — "Your browser is not supported. Please try a different or updated browser."
+      - `init.default_error` — "Something went wrong while connecting to the meeting. Please try again."
+      - `join.network_error` — "We couldn't connect to the meeting. Please check your internet connection and try again."
+      - `join.media_error` — "We're having trouble connecting to the meeting. Please try again, and if the problem continues, try using a different network."
+      - `join.media_firewall_error` — "Your network may be blocking this connection. Try using a different network, or contact your network administrator for help."
+      - `join.default_error` — "Something went wrong while joining the meeting. Please try again."
+      - `join.error_code` — "Error code"
+
+  - publish_date: "2026-06-18"
+    title: RealtimeKit Web UI Kit 2.0.0
+    description: |-
+      **Compatibility:** Requires RealtimeKit Web Core 2.0.0 or later.
+
+      This is a major breaking release to align with the Core SDK v2.0.0 plugin redesign and removal of deprecated APIs.
+
+      **Plugin components — redesigned**
+
+      The `rtk-plugin-main` and `rtk-plugins` components have been updated for the new plugin model.
+
+      Key changes:
+      - `rtk-plugin-main` no longer renders an `<iframe>`. Instead, it uses a `<slot>` to project the `plugin.component` (any `HTMLElement`) you provide in the plugin config.
+      - Plugin permission checks now use `plugin.permissions.canActivate` and `plugin.permissions.canDeactivate` instead of the old `meeting.self.permissions.plugins.canStart` / `canClose`.
+      - Plugin list (`rtk-plugins`) now shows `plugin.icon` instead of `plugin.picture`.
+      - Added an empty state message ("No plugins available") when no plugins are registered.
+      - Removed iframe interaction checks (`canInteractWithPlugin`, `viewModeEnabled`) and the `block-inputs` overlay. These are no longer applicable without iframes.
+
+      **Removed deprecated API usages**
+
+      - `meeting.leaveRoom()` — use `meeting.leave()`.
+      - `meeting.connectedMeetings.supportsConnectedMeetings` — removed. Breakout room checks use `meeting.connectedMeetings.isActive` and permission checks directly.
+      - `participant.clientSpecificId` — use `participant.customParticipantId`.
+
+      **Enhancements**
+
+      - AI Transcriptions UI: Rewrote the search UI for transcriptions. Search now covers both participant names and transcript content. Added dedicated search placeholder and "no results" states.
+      - AI Transcriptions header: Fixed typo "MeetingAI" to "Meeting AI".
+      - Chat message spacing: Reduced line height in `rtk-message-view` for better vertical spacing.
+      - Audio track handling: `RTKAudio.addTrack()` now removes any existing track with the same ID before adding, preventing stale tracks from accumulating (fixes double audio on reconnect).
+
+      **New localization keys**
+
+      - `plugins.empty` — "No plugins available"
+      - `ai.transcriptions.search_placeholder` — "Search by participant name or transcript"
+      - `ai.transcriptions.no_transcripts_found` — "No transcripts found. Try searching for a different participant or transcript."
+      - `ai.transcriptions.no_transcripts_yet` — "No transcripts yet."
+
+      **Fixes**
+
+      - Fixed abrupt disconnection screen appearing incorrectly during media reconnection.
+      - Fixed missing audio after reconnection due to stale tracks not being replaced.
+
   - publish_date: "2026-05-28"
     title: RealtimeKit Web UI Kit 1.2.0
     description: |-
@@ -99,6 +176,18 @@ entries:
 
       - `rtk-chat-composer-ui` is deprecated due to scalability limitations and lack of pagination support.
 
+      **Removed localization keys**
+
+      - `ai.chat.summarise`
+      - `ai.chat.agenda`
+      - `chat.new_channel`
+      - `chat.channel_name`
+      - `chat.channel_members`
+
+      **Renamed localization keys**
+
+      - `chat.empty_channel` → `chat.empty_chat`
+
       **Known limitations**
 
       - Total message count for public and private chats is not currently displayed.
@@ -129,6 +218,10 @@ entries:
       - Prevented large notifications from overflowing their container.
       - Fixed a memory leak in the `mediaConnectionUpdate` event listener.
       - Corrected `rtk-ui-provider` prop passing to children during consecutive meetings on the same page.
+
+      **New localization keys**
+
+      - `network.troubleshoot` — "Troubleshoot your connection"
 
   - publish_date: "2025-08-14"
     title: RealtimeKit Web UI Kit 1.0.5

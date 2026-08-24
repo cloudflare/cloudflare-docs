@@ -1,7 +1,6 @@
 ---
 title: RTKStore
 sidebar_position: 18
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -14,46 +13,30 @@ The store can be accessed from the `meeting.stores` module.
 **Returns**: An instance of RTKStore.  
 **Example**  
 ```js
-const handRaiseRTKStore = meeting.stores.stores.get('handRaise');
+const handRaiseStore = meeting.stores.stores.get('handRaise');
 ```
 
 * [RTKStore](#module_RTKStore) ⇒
-    * [module.exports](#exp_module_RTKStore--module.exports) ⏏
-        * [new module.exports(args)](#new_module_RTKStore--module.exports_new)
-        * [.set(key, value, [sync], [emit])](#module_RTKStore--module.exports+set) ⇒ <code>Promise.&lt;void&gt;</code>
-        * [.bulkSet(data)](#module_RTKStore--module.exports+bulkSet) ⇒ <code>Promise.&lt;void&gt;</code>
-        * [.update(key, value, [sync])](#module_RTKStore--module.exports+update) ⇒ <code>Promise.&lt;void&gt;</code>
-        * [.delete(key, [sync], [emit])](#module_RTKStore--module.exports+delete) ⇒ <code>Promise.&lt;void&gt;</code>
-        * [.bulkDelete(data)](#module_RTKStore--module.exports+bulkDelete) ⇒ <code>Promise.&lt;void&gt;</code>
-        * [.get(key)](#module_RTKStore--module.exports+get) ⇒ <code>any</code>
-        * [.getAll()](#module_RTKStore--module.exports+getAll) ⇒ <code>RTKStoreData</code>
-        * [.updateRateLimits(num, period)](#module_RTKStore--module.exports+updateRateLimits)
-        * [.updateBulkRateLimits(num, period)](#module_RTKStore--module.exports+updateBulkRateLimits)
-        * [.subscribe(key, cb)](#module_RTKStore--module.exports+subscribe) ⇒ <code>void</code>
-        * [.unsubscribe(key, [cb])](#module_RTKStore--module.exports+unsubscribe) ⇒ <code>void</code>
-        * [.populate(data)](#module_RTKStore--module.exports+populate)
+    * [.set(key, value, [sync], [emit])](#module_RTKStore+set) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.bulkSet(data)](#module_RTKStore+bulkSet) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.update(key, value, [sync])](#module_RTKStore+update) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.delete(key, [sync], [emit])](#module_RTKStore+delete) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.bulkDelete(data)](#module_RTKStore+bulkDelete) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.get(key)](#module_RTKStore+get) ⇒ <code>any</code>
+    * [.getAll()](#module_RTKStore+getAll) ⇒ <code>RTKStoreData</code>
+    * [.clear()](#module_RTKStore+clear)
+    * [.updateRateLimits(num, period)](#module_RTKStore+updateRateLimits)
+    * [.updateBulkRateLimits(num, period)](#module_RTKStore+updateBulkRateLimits)
+    * [.subscribe(key, cb)](#module_RTKStore+subscribe) ⇒ <code>void</code>
+    * [.unsubscribe(key, [cb])](#module_RTKStore+unsubscribe) ⇒ <code>void</code>
+    * [.populate(data)](#module_RTKStore+populate)
 
-<a name="exp_module_RTKStore--module.exports"></a>
+<a name="module_RTKStore+set"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKStore--module.exports_new"></a>
-
-#### new module.exports(args)
-
-| Param | Type |
-| --- | --- |
-| args | <code>Object</code> | 
-| args.name | <code>string</code> | 
-| args.socketHandler | <code>PluginSocketHandler</code> | 
-| args.meetingId | <code>string</code> | 
-
-<a name="module_RTKStore--module.exports+set"></a>
-
-#### module.exports.set(key, value, [sync], [emit]) ⇒ <code>Promise.&lt;void&gt;</code>
+### store.set(key, value, [sync], [emit]) ⇒ <code>Promise.&lt;void&gt;</code>
 Sets a value in the store.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - A promise.  
 
 | Param | Type | Default | Description |
@@ -63,27 +46,27 @@ Sets a value in the store.
 | [sync] | <code>boolean</code> | <code>true</code> | Whether to sync change to remote store. |
 | [emit] | <code>boolean</code> | <code>false</code> | Whether to emit to local subscribers. |
 
-<a name="module_RTKStore--module.exports+bulkSet"></a>
+<a name="module_RTKStore+bulkSet"></a>
 
-#### module.exports.bulkSet(data) ⇒ <code>Promise.&lt;void&gt;</code>
+### store.bulkSet(data) ⇒ <code>Promise.&lt;void&gt;</code>
 Sets multiple values in the store.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - A promise.  
 
 | Param | Type |
 | --- | --- |
 | data | <code>Array.&lt;{key: string, payload: any}&gt;</code> | 
 
-<a name="module_RTKStore--module.exports+update"></a>
+<a name="module_RTKStore+update"></a>
 
-#### module.exports.update(key, value, [sync]) ⇒ <code>Promise.&lt;void&gt;</code>
+### store.update(key, value, [sync]) ⇒ <code>Promise.&lt;void&gt;</code>
 Updates an already existing value in the store.
 If the value stored is `['a', 'b']`, the operation
 `store.update(key, ['c'])` will modify
 the value to `['a','b','c']`.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - A promise.  
 
 | Param | Type | Default | Description |
@@ -92,12 +75,12 @@ the value to `['a','b','c']`.
 | value | <code>any</code> |  | Data to be updated. |
 | [sync] | <code>boolean</code> | <code>true</code> | Whether to sync change to remote store. |
 
-<a name="module_RTKStore--module.exports+delete"></a>
+<a name="module_RTKStore+delete"></a>
 
-#### module.exports.delete(key, [sync], [emit]) ⇒ <code>Promise.&lt;void&gt;</code>
+### store.delete(key, [sync], [emit]) ⇒ <code>Promise.&lt;void&gt;</code>
 Deletes a key value pair form the store.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - A promise.  
 
 | Param | Type | Default | Description |
@@ -106,63 +89,69 @@ Deletes a key value pair form the store.
 | [sync] | <code>boolean</code> | <code>true</code> | Whether to sync change to remote store. |
 | [emit] | <code>boolean</code> | <code>false</code> | Whether to emit to local subscribers. |
 
-<a name="module_RTKStore--module.exports+bulkDelete"></a>
+<a name="module_RTKStore+bulkDelete"></a>
 
-#### module.exports.bulkDelete(data) ⇒ <code>Promise.&lt;void&gt;</code>
+### store.bulkDelete(data) ⇒ <code>Promise.&lt;void&gt;</code>
 Deletes multiple values from the store.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>Promise.&lt;void&gt;</code> - A promise.  
 
 | Param | Type |
 | --- | --- |
 | data | <code>Array.&lt;{key: string}&gt;</code> | 
 
-<a name="module_RTKStore--module.exports+get"></a>
+<a name="module_RTKStore+get"></a>
 
-#### module.exports.get(key) ⇒ <code>any</code>
+### store.get(key) ⇒ <code>any</code>
 Returns value for the given key.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>any</code> - Value for the given key.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>string</code> | Unique identifier used to store value. |
 
-<a name="module_RTKStore--module.exports+getAll"></a>
+<a name="module_RTKStore+getAll"></a>
 
-#### module.exports.getAll() ⇒ <code>RTKStoreData</code>
+### store.getAll() ⇒ <code>RTKStoreData</code>
 Returns the entire store.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>RTKStoreData</code> - An instance of RTKStoreData.  
-<a name="module_RTKStore--module.exports+updateRateLimits"></a>
+<a name="module_RTKStore+clear"></a>
 
-#### module.exports.updateRateLimits(num, period)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+### store.clear()
+Clears all data in the store.
 
-| Param | Type |
-| --- | --- |
-| num | <code>number</code> | 
-| period | <code>number</code> | 
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
+<a name="module_RTKStore+updateRateLimits"></a>
 
-<a name="module_RTKStore--module.exports+updateBulkRateLimits"></a>
-
-#### module.exports.updateBulkRateLimits(num, period)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+### store.updateRateLimits(num, period)
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 
 | Param | Type |
 | --- | --- |
 | num | <code>number</code> | 
 | period | <code>number</code> | 
 
-<a name="module_RTKStore--module.exports+subscribe"></a>
+<a name="module_RTKStore+updateBulkRateLimits"></a>
 
-#### module.exports.subscribe(key, cb) ⇒ <code>void</code>
+### store.updateBulkRateLimits(num, period)
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
+
+| Param | Type |
+| --- | --- |
+| num | <code>number</code> | 
+| period | <code>number</code> | 
+
+<a name="module_RTKStore+subscribe"></a>
+
+### store.subscribe(key, cb) ⇒ <code>void</code>
 Listens for data change on a store key.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>void</code> - void  
 
 | Param | Type | Description |
@@ -170,12 +159,12 @@ Listens for data change on a store key.
 | key | <code>string</code> | Unique identifier used to store value. |
 | cb | <code>function</code> | The callback function that gets executed when data is modified. |
 
-<a name="module_RTKStore--module.exports+unsubscribe"></a>
+<a name="module_RTKStore+unsubscribe"></a>
 
-#### module.exports.unsubscribe(key, [cb]) ⇒ <code>void</code>
+### store.unsubscribe(key, [cb]) ⇒ <code>void</code>
 Removes all listeners for a key on the store.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 **Returns**: <code>void</code> - void  
 
 | Param | Type | Description |
@@ -183,10 +172,10 @@ Removes all listeners for a key on the store.
 | key | <code>string</code> | Unique identifier used to store value. |
 | [cb] | <code>function</code> | Callback to be removed. |
 
-<a name="module_RTKStore--module.exports+populate"></a>
+<a name="module_RTKStore+populate"></a>
 
-#### module.exports.populate(data)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStore--module.exports)  
+### store.populate(data)
+**Kind**: instance method of [<code>RTKStore</code>](#module_RTKStore)  
 
 | Param | Type |
 | --- | --- |

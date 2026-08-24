@@ -11,37 +11,56 @@ products:
 
 import { Render } from "~/components";
 
-Cloudflare Email Service has the following limits to ensure optimal performance and prevent abuse. These limits apply to emails sent via both the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) unless noted otherwise.
+Cloudflare Email Service has the following limits to ensure optimal performance and prevent abuse. These limits apply to emails sent via the [REST API](/email-service/api/send-emails/rest-api/), the [Workers binding](/email-service/api/send-emails/workers-api/), and [SMTP](/email-service/api/send-emails/smtp/) unless noted otherwise.
 
 ## Daily sending limits
 
-Your account may have daily sending limits based on Cloudflare's assessment of your account standing. These limits are applied on a per-account basis, may vary, and may be adjusted over time based on your sending behavior. If you need higher sending limits, see "Need a higher limit?" at the bottom of this page to request an increase.
+New accounts start with a conservative daily quota and scale up over time based on your sending behavior, deliverability rates, and account standing. Limits are applied per account and may be adjusted automatically as your reputation improves.
 
-## Verified emails
+If you need higher sending limits sooner than automatic adjustment provides, refer to "Need a higher limit?" at the bottom of this page to request an increase.
 
-When you first start using Email Service, you can send emails to [verified email addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. This allows you to test and develop your application before sending to arbitrary recipients.
+## Verified destination addresses
 
-Accounts on a paid plan can send emails to any recipient, subject to daily sending limits.
+Before you onboard a sending domain, you can send emails only to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. After you onboard a sending domain, you can send to any recipient immediately.
+
+Sends to verified destination addresses are always free: they do not count toward your monthly [quota](/email-service/platform/pricing/) or your daily sending limits, on any plan, including when only Email Routing is configured. You can only send from your routing domains.
 
 ## Email content limits
 
-| Component                    | Limit          | Notes                                                                                |
-| ---------------------------- | -------------- | ------------------------------------------------------------------------------------ |
-| **Recipients (to, cc, bcc)** | 50 per email   | Combined across all recipient fields                                                 |
-| **Subject line**             | 998 characters | RFC 5322 compliant                                                                   |
-| **Total message size**       | 5 MiB          | Including attachments                                                                |
-| **Total message size**       | 25 MiB         | For [verified addresses](/email-service/configuration/email-routing-addresses/) only |
-| **Header size**              | 16 KB          | All custom headers combined                                                          |
+| Component                    | Limit          | Notes                                                                                                                  |
+| ---------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Recipients (to, cc, bcc)** | 50 per email   | Combined across all recipient fields                                                                                   |
+| **Subject line**             | 998 characters | RFC 5322 compliant                                                                                                     |
+| **Total message size**       | 5 MiB          | Including attachments                                                                                                  |
+| **Total message size**       | 25 MiB         | For [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) only |
+| **Header size**              | 16 KB          | All custom headers combined                                                                                            |
 
-## Workers binding limits
+## Zone limits
 
-The following limits apply only when sending emails via the [Workers binding](/email-service/api/send-emails/workers-api/). They do not apply to the REST API.
+| Limit                | Value | Notes                                                                                                        |
+| -------------------- | ----- | ------------------------------------------------------------------------------------------------------------ |
+| **Domains per zone** | 30    | Combined total of domains configured for Email Routing or Email Sending in a zone, including the apex domain |
 
-| Limit           | Value            | Notes                          |
-| --------------- | ---------------- | ------------------------------ |
-| **CPU time**    | 50ms per request | Standard Workers CPU limit     |
-| **Subrequests** | 50 per request   | Includes email send operations |
-| **Memory**      | 128MB            | Standard Workers memory limit  |
+## Email Routing limits
+
+The following limits apply to inbound email handled by Email Routing.
+
+| Limit                                 | Value  | Notes                                                                                                        |
+| ------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------ |
+| **Routing rules per domain**          | 200    | Each rule maps an email pattern to a destination                                                             |
+| **Destination addresses per account** | 200    | Verified destination addresses are shared across all domains in the account                                  |
+| **Inbound message size**              | 25 MiB | Messages larger than this are rejected                                                                       |
+| **Reply `References` entries**        | 100    | If the incoming email has more than 100 `References` entries, `message.reply()` throws. Reduces reply loops. |
+
+Each routing rule maps one email pattern to one destination address or one Worker. To forward a single email pattern to multiple destinations, use a Worker that calls `forward()` once per destination. All destinations must be verified beforehand.
+
+### Routing to Workers on the Workers Free plan
+
+Workers that handle incoming emails count toward the standard Workers CPU and memory limits. On the Workers Free plan, complex handlers may exceed these limits and fail to process a message. Failed invocations appear in [Workers logs](/workers/observability/logs/) with the `EXCEEDED_CPU` error. Upgrade to the [Workers Paid plan](/workers/platform/pricing/) for higher CPU and memory limits.
+
+### Emails sent from Workers
+
+Emails sent from a Worker using the `send_email` binding appear in the Email Routing summary as **dropped**, even when they were delivered successfully. To track outbound send success, use [Email sending metrics and logs](/email-service/observability/) instead.
 
 ## Compliance
 

@@ -13,9 +13,9 @@ entries:
     keywords: [request, uri, url, domain, client, visitor]
     summary: The hostname used in the full request URI.
     description: |-
-      The `http.host` field contains the `Host` header from the original request.
+      The `http.host` field contains the `Host` header from the original client request.
 
-      If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, they will not be reflected in the `http.host` field value.
+      If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, this change is not reflected in the `http.host` value seen by other rule phases (such as custom rules, cache rules, or transform rules) or [Cloudflare Workers](/workers/). All rule phases and Workers evaluate against the original, unmodified host.
     example_value: |-
       "www.example.org"
 
@@ -515,6 +515,18 @@ entries:
     keywords: [request, api shield, client, visitor]
     summary: Indicates whether the request [violated the schema](/api-shield/security/schema-validation/) assigned to the respective saved endpoint.
 
+  - name: cf.schema_validation.learned.violated
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, schema validation, learned profile]
+    summary: Returns `true` when an evaluated request [violates the learned profile](/waf/detections/application-profiles/fields/).
+
+  - name: cf.schema_validation.uploaded.violated
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema]
+    summary: Returns `true` when an evaluated request [violates the supplied schema](/waf/detections/application-profiles/fields/).
+
   - name: cf.api_gateway.fallthrough_detected
     data_type: Boolean
     categories: [Request]
@@ -538,7 +550,7 @@ entries:
     keywords: [request, bots, client, visitor]
     summary: Provides the type and purpose of a verified bot.
     description: |-
-      For more details, refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#categories).
+      For more details, refer to [Verified bot categories](/bots/concepts/bot/verified-bots/#legacy-categories).
 
   - name: cf.bot_management.score
     data_type: Number
@@ -635,7 +647,7 @@ entries:
     categories: [Request, Bots]
     keywords: [request, bots, client, visitor, agent, web bot auth]
     plan_info_label: Enterprise add-on
-    summary: Indicates whether or not the request originated from a known [signed agent](/bots/concepts/bot/signed-agents/).
+    summary: Indicates whether or not the request originated from a known agent that self-identifies with Web Bot Auth, now classified as a [verified bot or agent](/bots/concepts/bot/verified-bots/) labeled as intermediary.
     description: |-
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -1418,54 +1430,28 @@ entries:
     description: |-
       The possible values are the following:
 
-      Category                    | Description
-      ----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------
-      `CREDIT_CARD`               | Credit card number
-      `CRYPTO`                    | Crypto wallet number (currently only Bitcoin address)
-      `DATE_TIME`                 | Absolute or relative dates or periods or times smaller than a day
-      `EMAIL_ADDRESS`             | Email address
-      `IBAN_CODE`                 | International Bank Account Number (IBAN)
-      `IP_ADDRESS`                | Internet Protocol (IP) address
-      `NRP`                       | A person's nationality, religious or political group
-      `LOCATION`                  | Name of politically or geographically defined location (cities, provinces, countries, international regions, bodies of water, mountains)
-      `PERSON`                    | Full person name
-      `PHONE_NUMBER`              | Telephone number
-      `MEDICAL_LICENSE`           | Common medical license numbers
-      `URL`                       | Uniform Resource Locator (URL), used to locate a resource on the Internet
-      `US_BANK_NUMBER`            | US bank account number
-      `US_DRIVER_LICENSE`         | US driver license
-      `US_ITIN`                   | US Individual Taxpayer Identification Number (ITIN)
-      `US_PASSPORT`               | US passport number
-      `US_SSN`                    | US Social Security Number (SSN)
-      `UK_NHS`                    | UK NHS number
-      `UK_NINO`                   | UK National Insurance Number
-      `ES_NIF`                    | Spanish NIF number (personal tax ID)
-      `ES_NIE`                    | Spanish NIE number (foreigners ID card)
-      `IT_FISCAL_CODE`            | Italian personal tax ID code
-      `IT_DRIVER_LICENSE`         | Italian driver license number
-      `IT_VAT_CODE`               | Italian VAT code number
-      `IT_PASSPORT`               | Italian passport number
-      `IT_IDENTITY_CARD`          | Italian identity card number
-      `PL_PESEL`                  | Polish PESEL number
-      `SG_NRIC_FIN`               | National Registration Identification Card (Singapore)
-      `SG_UEN`                    | Unique Entity Number (for entities registered in Singapore)
-      `AU_ABN`                    | Australian Business Number (ABN)
-      `AU_ACN`                    | Australian Company Number (ACN)
-      `AU_TFN`                    | Australian tax file number (TFN)
-      `AU_MEDICARE`               | Medicare number (issued by Australian government)
-      `IN_PAN`                    | Indian Permanent Account Number (PAN)
-      `IN_AADHAAR`                | Individual identity number (issued by Indian government)
-      `IN_VEHICLE_REGISTRATION`   | Vehicle registration number (issued by Indian government)
-      `IN_VOTER`                  | Numeric voter ID (issued by Indian Election Commission)
-      `IN_PASSPORT`               | Indian Passport Number
-      `FI_PERSONAL_IDENTITY_CODE` | Finnish Personal Identity Code
+      Category         | Description
+      -----------------|------------------------------------------
+      `BANK_ACCOUNT`   | Bank account number
+      `CREDIT_CARD`    | Credit card number
+      `DATE_TIME`      | Date or time expression
+      `DRIVER_LICENSE` | Driver license number
+      `EMAIL_ADDRESS`  | Email address
+      `IP_ADDRESS`     | Internet Protocol (IPv4) address
+      `LOCATION`       | Physical location or address
+      `PASSPORT`       | Passport number
+      `PERSON`         | Full or partial name of an individual
+      `PHONE_NUMBER`   | Telephone number
+      `TAX_ID`         | Tax identification number
+      `US_SSN`         | US Social Security Number (SSN)
+      `URL`            | Uniform Resource Locator (URL), used to locate a resource on the Internet
 
-      The categories list is based on the [list of PII entities supported by Presidio](https://microsoft.github.io/presidio/supported_entities/). Presidio is the data protection and de-identification SDK used in AI Security for Apps.
+      The categories are detected by an AI-based Named Entity Recognition (NER) model.
 
       Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-
-      # Matches requests where PII categorized as "EMAIL_ADDRESS" or "IBAN_CODE" was detected:
-      (cf.llm.prompt.pii_detected and any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS" "IBAN_CODE"}))
+      # Matches requests where PII categorized as "EMAIL_ADDRESS" or "BANK_ACCOUNT" was detected:
+      (cf.llm.prompt.pii_detected and any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS" "BANK_ACCOUNT"}))
 
   - name: cf.llm.prompt.unsafe_topic_detected
     data_type: Boolean

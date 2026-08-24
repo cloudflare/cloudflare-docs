@@ -1,0 +1,32 @@
+---
+title: Cloudflare Drop
+description: Deploy a static site by dragging a folder or ZIP file to Cloudflare, preview it for one hour, then claim it to keep the deployment.
+products:
+  - workers
+date: 2026-07-08
+---
+
+[Cloudflare Drop](https://cloudflare.com/drop) lets you deploy a static site to Cloudflare without requiring a Cloudflare account to get started.
+
+![Cloudflare Drag and Drop upload screen for browsing folders or ZIP files](~/assets/images/workers/changelog/cloudflare-drag-and-drop-upload.png)
+
+Upload a folder or zip file of static assets (static HTML, CSS, JavaScript, images, and fonts) and get a temporary live preview that stays live for 1 hour. During that window, you can test the site, share the preview URL, or [claim the deployment](/workers/platform/claim-deployments/) to keep it.
+
+![Cloudflare Drag and Drop temporary live preview screen with claim and copy claim link actions](~/assets/images/workers/changelog/cloudflare-drag-and-drop-preview.png)
+
+When you are ready to make the deployment permanent, click **Claim** to sign in or create a Cloudflare account. You can claim the site into an existing Cloudflare account or create a new account for the deployment.
+
+:::note
+If you are creating a new account, you will need to verify your email address before continuing.
+:::
+
+![Cloudflare Drag and Drop claim account screen with a countdown before the claim link expires](~/assets/images/workers/changelog/cloudflare-drag-and-drop-claim.png)
+
+After claiming the site, you can:
+
+- **Add a domain**: [Connect](/workers/configuration/routing/custom-domains/) an existing domain or purchase a new one for your site. 
+- **Enable [observability](/workers/observability/)**: Monitor your site's performance and usage. 
+- **Enable [Markdown for Agents](/fundamentals/reference/markdown-for-agents/)**: Allow AI agents to access your site's content in Markdown. 
+- **Control access**: Make your site [private](/cloudflare-one/access-controls/policies/) and choose who can view it. 
+
+![Claimed Cloudflare Drag and Drop site setup screen showing options to add a domain, control access, enable observability, and enable Markdown for agents](~/assets/images/workers/changelog/cloudflare-drag-and-drop-post-claim.png)

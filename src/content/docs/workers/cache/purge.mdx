@@ -1,0 +1,371 @@
+---
+title: Purging the cache
+pcx_content_type: how-to
+description: Invalidate cached responses using ctx.cache.purge() — purge by tag, by path prefix, or purge everything.
+sidebar:
+  order: 3
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Your Worker can invalidate its own cached responses at any time using the purge API. Purging is useful when data changes and the new value is more important than the performance benefit of continuing to serve the cached response — for example, after a content update, a user action, or a webhook from an upstream system.
+
+Because Workers Caching is **your Worker's cache**, purging is scoped to the Worker that owns the cache. Within a Worker, purges are further scoped to the [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) that called `purge()`. A Worker cannot reach into another Worker's cache, an entrypoint cannot reach into another entrypoint's cache, and no zone-level purge (via the dashboard, [API](/cache/how-to/purge-cache/), or Terraform) affects Workers Caching content.
+
+## Two ways to call purge
+
+There are two equivalent ways to trigger a purge from inside your Worker:
+
+- **`ctx.cache.purge(...)`** — available on the execution context passed to every handler. Use this when you already have `ctx` in scope.
+- **`cache.purge(...)`** — imported from `cloudflare:workers`. Use this when you want to call purge from code that does not receive `ctx` — for example, a utility module shared across multiple handlers, or a framework adapter that does not thread the execution context through its internals.
+
+Both forms call into the same API and behave identically. Pick whichever reads more cleanly for your code.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { cache } from "cloudflare:workers";
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Using the module import — no need to thread ctx through helper functions.
+		await cache.purge({ tags: ["blog-posts"] });
+
+		// Equivalent, using ctx directly:
+		// await ctx.cache.purge({ tags: ["blog-posts"] });
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+The rest of this page uses `ctx.cache.purge(...)` in most examples because those examples already have `ctx` in scope. If you prefer the import form, substitute `cache.purge(...)` — nothing else changes.
+
+## Purge modes
+
+`purge()` accepts either `purgeEverything: true` on its own, or one or both of `tags` and `pathPrefixes`:
+
+| Field             | Purges                                                                          | Scope          |
+| ----------------- | ------------------------------------------------------------------------------- | -------------- |
+| `tags`            | Every cached response tagged with one of the given values via `Cache-Tag`.      | Per entrypoint |
+| `pathPrefixes`    | Every cached response whose request path starts with one of the given prefixes. | Per entrypoint |
+| `purgeEverything` | Every cached response for the entrypoint that called `purge()`.                 | Per entrypoint |
+
+`purgeEverything` is exclusive — combine `tags` and `pathPrefixes` in a single call if you want, but do not pass either alongside `purgeEverything`.
+
+All three modes are scoped to the [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) that called `purge()`. A purge from `PublicAPI` does not affect cached responses stored by `AdminAPI`, even if they share tag names or path prefixes. To invalidate across every entrypoint of a Worker, call `purge()` from each entrypoint.
+
+The returned promise resolves to a result object you can inspect to confirm success or handle failures — see [Return value](#return-value).
+
+Purge after a write by calling `ctx.cache.purge()` at the end of any handler that mutates data:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		if (request.method === "POST") {
+			const body = await request.json<{ postId: string }>();
+
+			// Mutate your data source (D1, KV, an origin, and so on), then invalidate
+			// every cached response tagged for this post.
+			await ctx.cache.purge({
+				tags: [`post-${body.postId}`, "post-list"],
+			});
+
+			return new Response("Updated", { status: 200 });
+		}
+
+		// Handle cacheable reads here.
+		return new Response("Hello", {
+			headers: { "Cache-Control": "public, max-age=3600" },
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+You can combine fields in a single call. For example, `purge({ tags: ["blog-posts"], pathPrefixes: ["/blog/"] })` purges everything that matches **either** tag or path-prefix — the fields are unioned, not intersected. Use this when one logical invalidation affects responses tagged by multiple schemes.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Combined call: invalidates everything tagged "blog-posts" AND
+		// everything under /blog/ in a single round-trip.
+		await ctx.cache.purge({
+			tags: ["blog-posts"],
+			pathPrefixes: ["/blog/"],
+		});
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+## Purge by tag
+
+Tags are attached to responses via the `Cache-Tag` response header, and purged later by name. This is the most flexible and commonly used purge method.
+
+### Attach tags on write
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		const url = new URL(request.url);
+		const postId = url.pathname.split("/").pop() ?? "unknown";
+		const body = { id: postId, title: `Post ${postId}` };
+
+		return new Response(JSON.stringify(body), {
+			headers: {
+				"Content-Type": "application/json",
+				"Cache-Control": "public, max-age=3600",
+				"Cache-Tag": `post,post-${postId},blog`,
+			},
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+The `Cache-Tag` header value is a comma-separated list of tags. Cloudflare strips this header before returning the response to clients.
+
+Tag values must be **printable ASCII** (no spaces, no Unicode), each tag is at most **1024 characters** long, and a response can carry up to **1000 tags**. Tag matching at purge time is **case-insensitive**, so `Foo` and `foo` purge the same set of responses. Invalid tags are silently dropped at storage time — the response is still cached with the remaining valid tags. Refer to [Cache tag limits](/cache/how-to/purge-cache/purge-by-tags/#a-few-things-to-remember) for the full list.
+
+### Trigger the purge
+
+<TypeScriptExample filename="src/admin.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const postId = new URL(request.url).searchParams.get("id");
+		if (!postId) return new Response("Missing id", { status: 400 });
+
+		await ctx.cache.purge({ tags: [`post-${postId}`] });
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+### Tag scope across entrypoints
+
+Tags are scoped to the entrypoint that called `purge()`. A tag named `user-42` applied to responses in two different entrypoints is **not** invalidated by a single `purge({ tags: ["user-42"] })` call — it only affects the entrypoint the call originated from. If you need to invalidate the same tag across several entrypoints, call `purge()` from each entrypoint, or centralize purge calls in a shared entrypoint that caches every response you later need to invalidate.
+
+### Use hierarchical tags
+
+To invalidate groups of related responses in one call, tag each response with multiple tags representing every level of hierarchy it belongs to — sometimes called "soft tags":
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		const path = new URL(request.url).pathname;
+
+		// Build a list of hierarchical tags for the current path.
+		// A response at /blog/2025/02/hello gets tags for:
+		//   _path:/blog/, _path:/blog/2025/, _path:/blog/2025/02/, _path:/blog/2025/02/hello
+		const segments = path.split("/").filter(Boolean);
+		const tags = segments.map(
+			(_, i) => `_path:/${segments.slice(0, i + 1).join("/")}/`,
+		);
+
+		const body = `<!doctype html><title>${path}</title>`;
+
+		return new Response(body, {
+			headers: {
+				"Content-Type": "text/html",
+				"Cache-Control": "public, max-age=3600",
+				"Cache-Tag": tags.join(","),
+			},
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Purging the tag `_path:/blog/2025/` then invalidates every cached response whose URL starts with `/blog/2025/`.
+
+For limits on the number, length, and character set of tags, refer to [Cache tag limits](/cache/how-to/purge-cache/purge-by-tags/#a-few-things-to-remember).
+
+### Version-specific purging
+
+By default, Workers Caching [partitions the cache by Worker version](/workers/cache/cache-keys/#invalidating-cache-across-deployments), so each deployment already starts from a cold cache and version-specific purging is unnecessary. This section applies only when you have enabled [`cache.cross_version_cache`](/workers/cache/configuration/#cross-version-caching) to share cached responses across versions. In that case, a response written by version A may still be served after version B is deployed, and you may want to purge the entries a specific version wrote — for example, after a rollback. To do that, tag each response with the version that produced it and purge that tag later.
+
+Add the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": { "enabled": true, "cross_version_cache": true },
+	"version_metadata": { "binding": "CF_VERSION_METADATA" },
+}
+```
+
+</WranglerConfig>
+
+Then prepend the version ID to your tags:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	CF_VERSION_METADATA: WorkerVersionMetadata;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const { id: versionId } = env.CF_VERSION_METADATA;
+		const postId = new URL(request.url).pathname.split("/").pop() ?? "unknown";
+
+		return new Response(JSON.stringify({ id: postId }), {
+			headers: {
+				"Content-Type": "application/json",
+				"Cache-Control": "public, max-age=3600",
+				// Include the version ID as a tag so you can purge by version later.
+				"Cache-Tag": `post,post-${postId},v:${versionId}`,
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+When you want to invalidate everything a specific version wrote — for example, after a rollback — purge the version tag:
+
+<TypeScriptExample filename="src/admin.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const versionId = new URL(request.url).searchParams.get("version");
+		if (!versionId) return new Response("Missing version", { status: 400 });
+
+		await ctx.cache.purge({ tags: [`v:${versionId}`] });
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+## Purge by path prefix
+
+`pathPrefixes` invalidates every cached response whose **request path** begins with one of the given prefixes:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Invalidate everything under /blog/2025/ for the current entrypoint.
+		await ctx.cache.purge({
+			pathPrefixes: ["/blog/2025/"],
+		});
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Entries in `pathPrefixes` are **paths**, not full URLs. A prefix must not include a scheme, host, query string, or fragment — passing something like `https://example.com/blog/` is invalid input, not a prefix that simply fails to match. A leading slash is optional (`/images` and `images` are treated the same) but recommended for clarity.
+
+`pathPrefixes` is scoped to the entrypoint that makes the purge call. A `purge({ pathPrefixes: ["/blog/"] })` from `PublicAPI` will not affect cached responses stored by `AdminAPI`, even when their paths also start with `/blog/`.
+
+### Purge a single URL
+
+There is no dedicated "purge by URL" mode. To invalidate a single cached URL, pass its path as a single-element `pathPrefixes` array:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Invalidate the cached response for exactly /blog/2026/hello-world.
+		await ctx.cache.purge({
+			pathPrefixes: ["/blog/2026/hello-world"],
+		});
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Because `pathPrefixes` matches on the start of the request path, passing the full path matches only that path — plus any paths that happen to extend it (for example, `/blog/2026/hello-world-2`). If you need exact-match semantics with no risk of over-purge, use a [tag](#purge-by-tag) instead.
+
+## Purge everything
+
+Invalidate every cached response stored by the calling entrypoint:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		await ctx.cache.purge({ purgeEverything: true });
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Use this sparingly. Purging everything causes all subsequent requests to miss the cache until they can be re-filled, which temporarily increases load on your Worker and any upstream services it calls.
+
+## Purge propagation
+
+Purges triggered by `ctx.cache.purge()` use Cloudflare's [Instant Purge](/cache/how-to/purge-cache/) infrastructure and propagate globally with the same guarantees as zone-level purges.
+
+## Return value
+
+`purge()` resolves to a result object. Check `success` to confirm the purge was accepted, and inspect `errors` if it was not:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const result = await ctx.cache.purge({ tags: ["blog-posts"] });
+
+		if (!result.success) {
+			console.error("Cache purge failed", result.errors);
+			return new Response("Purge failed", { status: 500 });
+		}
+
+		return new Response("Purged", { status: 200 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+On failure, each error in `errors` carries a numeric `code` and a human-readable `message` you can log or surface to the caller.
+
+## Rate limits
+
+`purge()` uses the same rate-limiting system as Cloudflare's zone purge API. However, because Workers Caching is associated with the Worker rather than the zone, Workers Cache always uses the **Free tier limits** described in [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits), regardless of your account or zone plan. When the purge is rate-limited, `success` is `false` and `errors` contains an entry describing the rejection.

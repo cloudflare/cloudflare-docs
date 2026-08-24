@@ -10,7 +10,6 @@ sidebar:
 
 import {
 	DirectoryListing,
-	FeatureTable,
 	GlossaryTooltip,
 	Render,
 } from "~/components";
@@ -25,7 +24,7 @@ To order advanced certificates, you must purchase the Advanced Certificate Manag
 Advanced Certificate Manager allows you to:
 
 - Order advanced certificates that can:
-  - Include the zone apex and up to 50 hosts as covered hostnames.
+  - Include up to 50 hosts as covered hostnames (the zone apex must be one of these 50).
   - Cover more than one level of subdomain.
   - Be issued by the certificate authority (CA) you choose.
   - Use your preferred validation method.
@@ -36,14 +35,19 @@ Advanced Certificate Manager allows you to:
 - Control [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
 
 :::note
-
 Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 <GlossaryTooltip term="edge certificate">edge certificates</GlossaryTooltip> per zone.
+:::
 
+:::note
+On Partial zones, Universal SSL is provisioned per proxied hostname regardless of subdomain depth. 
+If your only reason for considering an advanced certificate is to cover subdomains beyond the first level, Universal SSL may already be sufficient — though you'll need to proxy and validate each new hostname individually as it is added.
 :::
 
 ## Availability
 
-<FeatureTable id="ssl.advanced_certificates" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Paid add-on | Paid add-on | Paid add-on | Paid add-on |
 
 <Render
 	file="non-contract-enablement-with-eligibility"
@@ -63,6 +67,37 @@ Advanced certificates cover hostnames within a single domain. If you need a cert
 <Render file="hpkp-not-supported" product="ssl" />
 
 :::
+
+## Multi-level subdomain support
+
+Advanced Certificate Manager supports deep, multi-level subdomains (for example, `api.staging.example.com`). There is no arbitrary limit on the number of subdomain levels, but you must consider the following constraints.
+
+:::note
+If you want to automatically issue certificates for all proxied hostnames without manually specifying each one, enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/).
+:::
+
+### Domain name length limits
+
+These limits are defined by internet standards ([RFC 1035](https://www.rfc-editor.org/rfc/rfc1035) and [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280)) and apply to all certificates, regardless of the certificate authority:
+
+- **Total domain length**: The entire domain name cannot exceed 253 characters.
+- **Label length**: Each individual level (the text between dots) cannot exceed 63 characters.
+- **Common Name (CN) length**: The Common Name field of a certificate cannot exceed 64 characters. If a hostname on your certificate exceeds 64 characters, you must order the certificate via the [API](/api/resources/ssl/subresources/certificate_packs/methods/create/) and set the `cloudflare_branding` option to `true`. This places `sni.cloudflaressl.com` in the CN field and your long hostname in the SAN field. The dashboard does not support ordering certificates with hostnames longer than 64 characters.
+
+### Wildcard coverage
+
+Wildcard certificates only cover **one subdomain level**:
+
+- A certificate for `*.example.com` covers `www.example.com` and `api.example.com` but **not** `api.staging.example.com`.
+- To cover multiple levels, you must explicitly add a wildcard for each level to your certificate (for example, `*.example.com`, `*.staging.example.com`).
+
+### Hostnames per certificate
+
+A single advanced certificate can include up to **50 hosts** (SANs) total. The zone apex must be one of these 50, leaving room for up to 49 additional hostnames or wildcards.
+
+### Consistency across certificate authorities
+
+The character-length limits above (253-character total, 63-character label, 64-character CN) are defined by IETF standards ([RFC 1035](https://www.rfc-editor.org/rfc/rfc1035), [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280)) and apply uniformly across all CAs. Other constraints, such as the per-certificate SAN count and supported validity periods, are Cloudflare advanced certificates limits or vary by CA. Refer to [Certificate authorities](/ssl/reference/certificate-authorities/) for CA-specific details.
 
 ## Related resources
 

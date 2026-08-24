@@ -11,16 +11,21 @@ products:
   - ai-gateway
 ---
 
-import { DashButton, TabItem, Tabs } from "~/components";
+import { DashButton, Render, TabItem, Tabs } from "~/components";
 
-Unified Billing allows users to connect to various AI providers (such as OpenAI, Anthropic, and Google AI Studio) and receive a single Cloudflare bill. To use Unified Billing, you must purchase and load credits into your Cloudflare account in the Cloudflare dashboard, which you can then spend with AI Gateway.
+Unified Billing allows users to call Workers AI and connect to various AI providers (such as OpenAI, Anthropic, and Google AI Studio) and receive a single Cloudflare bill. To use Unified Billing, you must purchase and load credits into your Cloudflare account in the Cloudflare dashboard, which you can then spend with AI Gateway.
 
 A 5% fee is applied to all credits purchased through Unified Billing. For example, a $100 credit purchase will result in a $105 charge. Inference pricing from providers is passed through with no markup — you pay the same per-token rates as you would directly with the provider.
+
+:::caution
+In rare instances, your credit balance may go negative. If this happens, Cloudflare will charge the payment method on file for the outstanding amount. Charges occur at the beginning of each month for the previous month.
+:::
 
 ## Pre-requisites
 
 - Ensure your Cloudflare account has [sufficient credits loaded](#load-credits).
 - Ensure you have [authenticated](/ai-gateway/configuration/authentication/) your AI Gateway.
+- To use credits for Workers AI, set your gateway's **Workers AI Billing** setting to **Unified billing**.
 
 ## Load credits
 
@@ -51,13 +56,25 @@ You can configure AI Gateway to automatically replenish your credits when they f
 
 When your balance falls below the set threshold, AI Gateway will automatically apply the auto top-up amount to your account.
 
+## Credential precedence
+
+When a request reaches AI Gateway, credentials are resolved in this order:
+
+1. **Provider key on the request** — if the request carries provider authentication (for example, an `Authorization` header), AI Gateway forwards it to the provider unchanged. BYOK and Unified Billing are not consulted.
+2. **BYOK (stored key)** — if no provider key is on the request and the gateway has a [stored key](/ai-gateway/configuration/bring-your-own-keys/) for the provider under the `default` alias, that key is used.
+3. **Unified Billing** — if neither of the above applies, the request is served with Cloudflare-managed credentials and billed against your Cloudflare credit balance.
+
+:::note
+On requests routed through Unified Billing endpoints (for example, `env.AI.run()` or `/ai/v1/chat/completions`), only the BYOK key stored under the `default` alias prevents fall-through to Unified Billing. Keys stored under other aliases are not consulted on this path — a request will fall through to Unified Billing even if you have a key stored under, for example, `production` or `testing`.
+
+The `cf-aig-byok-alias` header selects a non-default alias only on [direct provider-passthrough](/ai-gateway/usage/providers/) requests.
+:::
+
 ## Use Unified Billing
 
 Unified Billing works in two ways: through the AI binding or through the HTTP API. Both deduct credits from your account automatically without requiring provider API keys.
 
-:::note
-Workers AI models (models prefixed with `@cf/`) routed through AI Gateway are not charged via Unified Billing. These models are billed through [Workers AI pricing](/workers-ai/platform/pricing/) instead. Unified Billing only applies to third-party provider models (such as OpenAI, Anthropic, and Google AI Studio).
-:::
+To use credits for Workers AI, [configure the gateway's Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) as **Unified billing**. Workers AI requests routed through that gateway deduct from your prepaid credit balance in real time. In the AI binding, include the gateway ID in the third argument to `env.AI.run()`. For REST API requests, include the `cf-aig-gateway-id` header. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#frontier-models).
 
 ### AI binding
 
@@ -75,7 +92,7 @@ const resp = await env.AI.run(
 );
 ```
 
-Refer to the [binding reference](/ai-gateway/integrations/worker-binding-methods/) for the full API surface.
+Refer to the [binding reference](/ai-gateway/usage/worker-binding-methods/) for the full API surface.
 
 ### HTTP API
 
@@ -86,6 +103,8 @@ Call a supported provider through the AI Gateway REST API without passing a prov
 Use the Cloudflare API to call third-party models. Pass your Cloudflare API token in the `Authorization` header:
 
 ```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -112,12 +131,7 @@ The HTTP API supports the following providers:
 
 ### Spend limits
 
-You can set spend limits at two levels:
-
-- **Account-level** — Set a spend limit on your loaded credits on this page to cap total Unified Billing spend across all gateways.
-- **Per-gateway** — Set [granular spend limit rules](/ai-gateway/features/spend-limits/) on individual gateways, scoped by model, provider, or custom metadata dimensions like user or team.
-
-Both limits are enforced independently. Whichever one is reached first will block requests.
+Set [spend limit rules](/ai-gateway/features/spend-limits/) on individual gateways to cap spend, scoped by model, provider, or custom metadata dimensions like user or team.
 
 ### Zero Data Retention (ZDR)
 
@@ -160,6 +174,8 @@ To set ZDR as the default for Unified Billing using the API:
 Use the `cf-aig-zdr` header to override the gateway default for a single Unified Billing request. Set it to `true` to force ZDR, or `false` to disable ZDR for the request.
 
 ```bash title="Unified Billing request with ZDR"
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

@@ -1,0 +1,90 @@
+name: Outdated PR Check
+
+# **What it does**: Posts Outdated PR Check commit statuses when a PR is opened or updated.
+#                   Fails if the branch is more than 72 hours out of date with production.
+# **Why we have it**: Gives contributors immediate feedback when their branch has drifted.
+#                     The daily refresh job (outdated-pr-refresh.yml) catches PRs that go
+#                     stale when production advances without any PR activity.
+# **Who does it impact**: All contributors opening PRs against production, including forks.
+
+# NOTE: pull_request_target is used instead of pull_request so that fork PRs receive a
+# commit status. pull_request gives forks a read-only token; pull_request_target runs with
+# base-repo permissions. This is safe here because the workflow never checks out or executes
+# any code from the PR — it only calls gh api. The danger with pull_request_target arises
+# when you add `actions/checkout` with `ref: github.event.pull_request.head.sha`, which
+# would run untrusted PR code with elevated permissions. Do not add a checkout step here.
+on:
+  pull_request_target:
+    branches:
+      - production
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+concurrency:
+  # Use a hardcoded prefix rather than github.workflow to avoid colliding with
+  # the main CI workflow, which also uses name: CI.
+  group: outdated-pr-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check-outdated:
+    name: Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      statuses: write
+    steps:
+      - name: Check if PR base is within 72 hours of production
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+
+          COMPARE=$(gh api "/repos/${REPO}/compare/production...${PR_SHA}") || {
+            echo "Compare API failed — skipping status post"
+            exit 0
+          }
+          BEHIND_BY=$(echo "$COMPARE" | jq -r '.behind_by')
+
+          if [ -z "$BEHIND_BY" ] || [ "$BEHIND_BY" = "null" ]; then
+            echo "Unexpected API response — skipping status post"
+            exit 0
+          fi
+
+          if [ "$BEHIND_BY" = "0" ]; then
+            STATE="success"
+            DESCRIPTION="Branch is up to date with production"
+          else
+            MERGE_BASE_DATE=$(echo "$COMPARE" | jq -r '.merge_base_commit.commit.committer.date')
+
+            if [ -z "$MERGE_BASE_DATE" ] || [ "$MERGE_BASE_DATE" = "null" ]; then
+              echo "Could not determine merge base date — skipping status post"
+              exit 0
+            fi
+
+            MERGE_BASE_TS=$(date -d "$MERGE_BASE_DATE" +%s)
+            NOW=$(date +%s)
+            AGE=$((NOW - MERGE_BASE_TS))
+
+            if [ "$AGE" -gt 259200 ]; then
+              DAYS=$((AGE / 86400))
+              STATE="failure"
+              DESCRIPTION="Branch is ${DAYS} days out of date with production. Please rebase or merge. Codeowners can comment /rebase on the PR to fix."
+            else
+              STATE="success"
+              DESCRIPTION="Branch is behind production but within the 72-hour grace period"
+            fi
+          fi
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${REPO}/statuses/${PR_SHA}" \
+            -f state="$STATE" \
+            -f context="Outdated PR Check" \
+            -f description="$DESCRIPTION" \
+            || echo "Failed to post status — skipping"

@@ -1,11 +1,18 @@
 ---
+/**
+ * Pagination — page-number strip for the paginated changelog views.
+ * CF source: cloudflare-docs/src/components/changelog/Pagination.astro
+ * Restyled with Nimbus theme tokens (neutral active state) so it auto-flips
+ * in dark mode — no bespoke CSS.
+ */
+import { cn } from "@/lib/cn";
+
 interface Props {
 	currentPage: number;
 	lastPage: number;
-	/** Base URL for this paginated route, e.g. "/changelog/" or "/changelog/product/workers/".
-	 *  Must end with a trailing slash.
-	 *  Page 1 = baseUrl, page N = baseUrl + N + "/".
-	 */
+	/** Base URL for this paginated route, e.g. "/changelog/" or
+	 *  "/changelog/product/workflows/". Must end with a trailing slash.
+	 *  Page 1 = baseUrl, page N = baseUrl + N + "/". */
 	baseUrl: string;
 }
 
@@ -16,12 +23,8 @@ function pageUrl(n: number): string {
 }
 
 /**
- * Build the list of items to render in the page number strip.
  * Always shows: first, last, current, one before current, one after current.
- * Gaps between non-adjacent numbers are represented as null (rendered as "...").
- *
- * Example for currentPage=5, lastPage=12:
- *   [1, null, 4, 5, 6, null, 12]
+ * Gaps between non-adjacent numbers become null (rendered as "…").
  */
 function buildPageItems(current: number, last: number): (number | null)[] {
 	if (last <= 1) return [];
@@ -48,31 +51,40 @@ function buildPageItems(current: number, last: number): (number | null)[] {
 const items = buildPageItems(currentPage, lastPage);
 const prevUrl = currentPage > 1 ? pageUrl(currentPage - 1) : null;
 const nextUrl = currentPage < lastPage ? pageUrl(currentPage + 1) : null;
+
+const btn =
+	"flex h-9 min-w-9 items-center justify-center rounded px-3 text-sm font-medium";
+const link = cn(btn, "no-underline hover:bg-accent");
+const disabled = cn(btn, "opacity-40");
+const active = cn(btn, "bg-foreground font-bold text-background");
 ---
 
 {
 	lastPage > 1 && (
-		<nav class="pagination mt-8 flex flex-wrap items-center justify-between gap-y-2" aria-label="Pagination">
+		<nav
+			class="mt-8 flex flex-wrap items-center justify-between gap-y-2"
+			aria-label="Pagination"
+		>
 			{prevUrl ? (
-				<a href={prevUrl} class="pagination-btn no-underline">
+				<a href={prevUrl} class={link}>
 					← Prev
 				</a>
 			) : (
-				<span class="pagination-btn disabled">← Prev</span>
+				<span class={disabled}>← Prev</span>
 			)}
 
-			<div class="pagination-pages flex items-center gap-1">
+			<div class="flex items-center gap-1 max-sm:order-first max-sm:w-full max-sm:justify-center">
 				{items.map((item) =>
 					item === null ? (
-						<span class="flex h-9 items-center justify-center px-2 text-sm text-sl-color-gray-3">
+						<span class="text-muted-foreground flex h-9 items-center justify-center px-2 text-sm">
 							…
 						</span>
 					) : item === currentPage ? (
-						<span class="pagination-btn active" aria-current="page">
+						<span class={active} aria-current="page">
 							{item}
 						</span>
 					) : (
-						<a href={pageUrl(item)} class="pagination-btn no-underline">
+						<a href={pageUrl(item)} class={link}>
 							{item}
 						</a>
 					),
@@ -80,60 +92,12 @@ const nextUrl = currentPage < lastPage ? pageUrl(currentPage + 1) : null;
 			</div>
 
 			{nextUrl ? (
-				<a href={nextUrl} class="pagination-btn no-underline">
+				<a href={nextUrl} class={link}>
 					Next →
 				</a>
 			) : (
-				<span class="pagination-btn disabled">Next →</span>
+				<span class={disabled}>Next →</span>
 			)}
 		</nav>
 	)
 }
-
-<style>
-	:root {
-		--pagination-active-bg: rgb(46 105 255);
-		--pagination-active-color: white;
-		--pagination-hover-bg: rgb(46 105 255 / 0.15);
-	}
-
-	:root[data-theme="dark"] {
-		--pagination-active-bg: rgb(246 130 31);
-		--pagination-active-color: black;
-		--pagination-hover-bg: rgb(246 130 31 / 0.15);
-	}
-
-	.pagination-btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 2.25rem;
-		min-width: 2.25rem;
-		padding-inline: 0.75rem;
-		border-radius: 0.25rem;
-		font-size: 0.875rem;
-		font-weight: 500;
-	}
-
-	.pagination-btn:not(.active):not(.disabled):hover {
-		background-color: var(--pagination-hover-bg);
-	}
-
-	.pagination-btn.active {
-		background-color: var(--pagination-active-bg);
-		color: var(--pagination-active-color);
-		font-weight: 700;
-	}
-
-	.pagination-btn.disabled {
-		opacity: 0.35;
-	}
-
-	@media (max-width: 640px) {
-		.pagination-pages {
-			order: -1;
-			width: 100%;
-			justify-content: center;
-		}
-	}
-</style>

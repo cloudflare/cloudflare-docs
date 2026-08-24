@@ -36,7 +36,7 @@ The tables in the following sections summarize the available operations.
 | Operation | Method and endpoint / Description |
 | --- | --- |
 | List programs | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Fetches all Programmable Flow Protection programs in the account. |
-| Upload a program | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Uploads a new program to the account. |
+| Upload a program | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Uploads a new program to the account. Include the optional `X-Program-Name` header to specify a human-readable program name. If omitted, the API generates a UUID as the program name. |
 | Get a program | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Fetches the details of an existing program. |
 | Update a program | <p>`PATCH accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Updates an existing program. |
 | Delete a program | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Deletes an existing program from the account. |

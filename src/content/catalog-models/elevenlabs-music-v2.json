@@ -1,0 +1,272 @@
+{
+	"model_id": "elevenlabs/music-v2",
+	"provider_id": "elevenlabs",
+	"name": "ElevenLabs Music v2",
+	"description": "ElevenLabs Music v2 composes songs and instrumental tracks from a prompt or detailed composition plan.",
+	"task": "Music Generation",
+	"tags": [
+		"Music",
+		"Audio Generation",
+		"Instrumental",
+		"Vocals"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Cinematic Instrumental",
+			"description": "Generate an instrumental music track from a short prompt",
+			"input": {
+				"prompt": "A warm cinematic ambient track with soft piano, subtle strings, and a hopeful mood",
+				"music_length_ms": 30000,
+				"force_instrumental": true,
+				"output_format": "mp3_48000_192"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/elevenlabs/music-v2/cinematic-instrumental.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/elevenlabs/music-v2/cinematic-instrumental.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'elevenlabs/music-v2',\n  {\n    prompt: 'A warm cinematic ambient track with soft piano, subtle strings, and a hopeful mood',\n    music_length_ms: 30000,\n    force_instrumental: true,\n    output_format: 'mp3_48000_192',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"elevenlabs/music-v2\",\n  \"input\": {\n    \"prompt\": \"A warm cinematic ambient track with soft piano, subtle strings, and a hopeful mood\",\n    \"music_length_ms\": 30000,\n    \"force_instrumental\": true,\n    \"output_format\": \"mp3_48000_192\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://elevenlabs.io/docs/api-reference/music/compose",
+	"terms": "https://elevenlabs.io/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Controls": "Prompt, duration, seed, instrumental mode",
+		"Max Duration": "Up to 10 minutes",
+		"Output Formats": "MP3, PCM, Opus, u-law, A-law"
+	},
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-07-24 20:04:42",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1
+				},
+				"composition_plan": {
+					"type": "object",
+					"properties": {
+						"chunks": {
+							"minItems": 1,
+							"type": "array",
+							"items": {
+								"anyOf": [
+									{
+										"type": "object",
+										"properties": {
+											"text": {
+												"type": "string",
+												"minLength": 1
+											},
+											"duration_ms": {
+												"type": "integer",
+												"minimum": 3000,
+												"maximum": 120000
+											},
+											"positive_styles": {
+												"minItems": 1,
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"negative_styles": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"context_adherence": {
+												"type": "string",
+												"enum": [
+													"low",
+													"medium",
+													"high"
+												]
+											},
+											"conditioning_ref": {
+												"type": "object",
+												"properties": {
+													"song_id": {
+														"type": "string",
+														"minLength": 1
+													},
+													"range": {
+														"type": "object",
+														"properties": {
+															"start_ms": {
+																"type": "integer",
+																"minimum": 0,
+																"maximum": 9007199254740991
+															},
+															"end_ms": {
+																"type": "integer",
+																"minimum": 1,
+																"maximum": 9007199254740991
+															}
+														},
+														"required": [
+															"start_ms",
+															"end_ms"
+														],
+														"additionalProperties": false
+													}
+												},
+												"required": [
+													"song_id",
+													"range"
+												],
+												"additionalProperties": false
+											},
+											"condition_strength": {
+												"type": "string",
+												"enum": [
+													"low",
+													"medium",
+													"high",
+													"xhigh"
+												]
+											}
+										},
+										"required": [
+											"text",
+											"duration_ms",
+											"positive_styles"
+										],
+										"additionalProperties": false
+									},
+									{
+										"type": "object",
+										"properties": {
+											"song_id": {
+												"type": "string",
+												"minLength": 1
+											},
+											"range": {
+												"type": "object",
+												"properties": {
+													"start_ms": {
+														"type": "integer",
+														"minimum": 0,
+														"maximum": 9007199254740991
+													},
+													"end_ms": {
+														"type": "integer",
+														"minimum": 1,
+														"maximum": 9007199254740991
+													}
+												},
+												"required": [
+													"start_ms",
+													"end_ms"
+												],
+												"additionalProperties": false
+											}
+										},
+										"required": [
+											"song_id",
+											"range"
+										],
+										"additionalProperties": false
+									}
+								]
+							}
+						}
+					},
+					"required": [
+						"chunks"
+					],
+					"additionalProperties": false
+				},
+				"music_length_ms": {
+					"type": "integer",
+					"minimum": 3000,
+					"maximum": 600000
+				},
+				"output_format": {
+					"type": "string",
+					"enum": [
+						"auto",
+						"mp3_48000_128",
+						"mp3_48000_192",
+						"mp3_48000_240",
+						"mp3_48000_320",
+						"mp3_22050_32",
+						"mp3_24000_48",
+						"mp3_44100_32",
+						"mp3_44100_64",
+						"mp3_44100_96",
+						"mp3_44100_128",
+						"mp3_44100_192",
+						"opus_48000_32",
+						"opus_48000_64",
+						"opus_48000_96",
+						"opus_48000_128",
+						"opus_48000_192"
+					]
+				},
+				"seed": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 4294967295
+				},
+				"force_instrumental": {
+					"type": "boolean"
+				},
+				"store_for_inpainting": {
+					"type": "boolean"
+				},
+				"sign_with_c2pa": {
+					"type": "boolean"
+				}
+			},
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"description": "Base64-encoded data URI for the generated music file.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -1,0 +1,19 @@
+---
+{}
+
+---
+```tsx
+const [meeting] = useRealtimeKitClient();
+
+// Check if any breakout rooms are currently active
+const areBreakoutRoomsActive = meeting?.connectedMeetings.isActive;
+
+// Check whether the local participant can create, rename, or delete rooms and move any participant
+const canAlterBreakoutRooms = meeting?.self.permissions.connectedMeetings.canAlterConnectedMeetings;
+
+// Check whether the local participant can move themselves to any breakout room
+const canSwitchRooms = meeting?.self.permissions.connectedMeetings.canSwitchConnectedMeetings;
+
+// Check whether the local participant can return to the parent meeting
+const canReturnToParent = meeting?.self.permissions.connectedMeetings.canSwitchToParentMeeting;
+```

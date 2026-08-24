@@ -61,6 +61,12 @@ B --> C
 C --> D
 ```
 
+## Detect O2O traffic
+
+When traffic flows through an O2O configuration, Cloudflare sets the HTTP header `cf-connecting-o2o: 1` on requests entering the SaaS provider's zone. There is no API field or zone setting that indicates whether O2O is active — it is a per-request routing behavior determined by the customer's DNS configuration.
+
+You can check for this header in your origin server or in a [Cloudflare Worker](/workers/) to identify O2O traffic and apply specific logic.
+
 ## Without O2O
 
 If you do not have your own Cloudflare zone and have only onboarded one or more of your hostnames to a SaaS Provider, then O2O will not be enabled.

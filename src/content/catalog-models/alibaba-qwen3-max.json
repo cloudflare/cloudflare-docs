@@ -1744,12 +1744,70 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting Qwen use DashScope's built-in web search via enable_search",
+			"input": {
+				"enable_search": true,
+				"max_tokens": 4096,
+				"messages": [
+					{
+						"content": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "As of the week ending June 23, 2026, the top Cloudflare news stories include:\n\n- **Acquisition of VoidZero**: On June 4, 2026, Cloudflare announced it acquired VoidZero to accelerate development of the AI-native web, enhancing its platform for next-generation agentic applications.\n\n- **Secure Sandboxes for Claude Managed Agents**: On May 19, 2026, Cloudflare introduced secure, scalable sandboxes integrated with Anthropic\u2019s Claude Managed Agents, strengthening runtime security for AI agents\u2014a key update still resonating in early June coverage.\n\n- **Industry Recognition and Strategic Momentum**: Throughout June, Cloudflare continued to be highlighted as a Leader in Edge Development Platforms (per an independent research firm report on May 5, widely cited in June) and maintained media visibility through its ongoing \u201cAgents Week 2026\u201d initiatives, reinforcing its position at the forefront of agentic AI infrastructure."
+			},
+			"raw_response": {
+				"id": "chatcmpl-5860fcba-c7bc-9e5e-afd8-d32376b5a423",
+				"object": "chat.completion",
+				"created": 1782161284,
+				"model": "qwen3-max",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "As of the week ending June 23, 2026, the top Cloudflare news stories include:\n\n- **Acquisition of VoidZero**: On June 4, 2026, Cloudflare announced it acquired VoidZero to accelerate development of the AI-native web, enhancing its platform for next-generation agentic applications.\n\n- **Secure Sandboxes for Claude Managed Agents**: On May 19, 2026, Cloudflare introduced secure, scalable sandboxes integrated with Anthropic\u2019s Claude Managed Agents, strengthening runtime security for AI agents\u2014a key update still resonating in early June coverage.\n\n- **Industry Recognition and Strategic Momentum**: Throughout June, Cloudflare continued to be highlighted as a Leader in Edge Development Platforms (per an independent research firm report on May 5, widely cited in June) and maintained media visibility through its ongoing \u201cAgents Week 2026\u201d initiatives, reinforcing its position at the forefront of agentic AI infrastructure."
+						},
+						"finish_reason": "stop",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 3589,
+					"completion_tokens": 196,
+					"total_tokens": 3785,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					}
+				},
+				"system_fingerprint": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/qwen3-max',\n  {\n    enable_search: true,\n    max_tokens: 4096,\n    messages: [\n      {\n        content:\n          'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/qwen3-max\",\n  \"enable_search\": true,\n  \"max_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://www.alibabacloud.com/en/solutions/generative-ai/qwen",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
@@ -1758,183 +1816,33 @@
 		"Architecture": "Transformer"
 	},
 	"request_formats": [
-		"chat-completions"
+		"chat-completions",
+		"responses"
 	],
+	"providers": null,
+	"banner": null,
 	"created_at": "2026-05-22 17:52:51",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
-			"properties": {
-				"audio": {
-					"additionalProperties": false,
+			"oneOf": [
+				{
+					"type": "object",
 					"properties": {
-						"format": {
-							"enum": [
-								"wav",
-								"mp3",
-								"flac",
-								"opus",
-								"pcm16"
-							],
-							"type": "string"
-						},
-						"voice": {
-							"enum": [
-								"alloy",
-								"ash",
-								"ballad",
-								"coral",
-								"echo",
-								"sage",
-								"shimmer",
-								"verse"
-							],
-							"type": "string"
-						}
-					},
-					"type": "object"
-				},
-				"frequency_penalty": {
-					"maximum": 2,
-					"minimum": -2,
-					"type": "number"
-				},
-				"max_completion_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"max_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"messages": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"content": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									},
-									{
-										"items": {},
-										"type": "array"
-									}
-								]
-							},
-							"role": {
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								],
-								"type": "string"
-							}
-						},
-						"required": [
-							"role",
-							"content"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"modalities": {
-					"items": {
-						"enum": [
-							"text",
-							"audio"
-						],
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"presence_penalty": {
-					"maximum": 2,
-					"minimum": -2,
-					"type": "number"
-				},
-				"response_format": {},
-				"stream": {
-					"type": "boolean"
-				},
-				"stream_options": {
-					"additionalProperties": false,
-					"properties": {
-						"include_usage": {
-							"type": "boolean"
-						}
-					},
-					"type": "object"
-				},
-				"temperature": {
-					"maximum": 2,
-					"minimum": 0,
-					"type": "number"
-				},
-				"tool_choice": {},
-				"tools": {
-					"items": {},
-					"type": "array"
-				},
-				"top_p": {
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
-				}
-			},
-			"required": [
-				"messages"
-			],
-			"type": "object"
-		},
-		"output": {
-			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
-			"properties": {
-				"choices": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"finish_reason": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									}
-								]
-							},
-							"index": {
-								"type": "number"
-							},
-							"message": {
-								"additionalProperties": {},
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
 								"properties": {
-									"audio": {
-										"additionalProperties": {},
-										"properties": {
-											"data": {
-												"type": "string"
-											},
-											"expires_at": {
-												"type": "number"
-											},
-											"id": {
-												"type": "string"
-											},
-											"transcript": {
-												"type": "string"
-											}
-										},
-										"type": "object"
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
 									},
 									"content": {
 										"anyOf": [
@@ -1943,17 +1851,264 @@
 											},
 											{
 												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
 											}
 										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
 									},
-									"role": {
-										"type": "string"
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"anyOf": [
+													{
+														"type": "string"
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
 									},
-									"tool_calls": {
+									"finish_reason": {
 										"anyOf": [
 											{
-												"items": {},
-												"type": "array"
+												"type": "string"
 											},
 											{
 												"type": "null"
@@ -1962,61 +2117,108 @@
 									}
 								},
 								"required": [
-									"role"
+									"index",
+									"message",
+									"finish_reason"
 								],
-								"type": "object"
+								"additionalProperties": {}
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"created": {
-					"type": "number"
-				},
-				"id": {
-					"type": "string"
-				},
-				"model": {
-					"type": "string"
-				},
-				"object": {
-					"type": "string"
-				},
-				"usage": {
-					"additionalProperties": {},
-					"properties": {
-						"completion_tokens": {
-							"type": "number"
-						},
-						"prompt_tokens": {
-							"type": "number"
-						},
-						"total_tokens": {
-							"type": "number"
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
 						}
 					},
 					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
 					],
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
 				}
-			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
-			"type": "object"
+			]
 		}
 	}
 }

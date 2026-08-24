@@ -6,12 +6,11 @@ distllms/
 # generated types
 .astro/
 
-# Astro build cache
-.astro-cache/
-
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
 !.agents/skills/
+!.agents/commands/
+!.agents/agents/
 !.flue/.agents/
 !.flue/.agents/**
 
@@ -51,15 +50,6 @@ pnpm-debug.log*
 
 tools/relevant_changed_files.txt
 
-# Configuration of AI tools we don't directly support in this repo (generated via rulesync)
-.rulesync/
-.claude/
-CLAUDE.md
-.cursor/
-.github/prompts/
-.github/agents/
-/agents/
-
 # certain versions of opencode mistakenly commit package-lock.json
 .opencode/package-lock.json
 
@@ -71,4 +61,8 @@ CLAUDE.md
 .flue/.flue-vite/
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
-.flue/pnpm-lock.yaml
+.flue/vitest-results.json
+
+# nimbus-docs generated files
+.nimbus/lint.json
+.nimbus/routes.json

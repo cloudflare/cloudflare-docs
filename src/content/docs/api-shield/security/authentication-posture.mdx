@@ -10,14 +10,7 @@ tags:
   - Authentication
 ---
 
-import {
-	GlossaryTooltip,
-	Render,
-	Steps,
-	Tabs,
-	TabItem,
-	DashButton,
-} from "~/components";
+import { GlossaryTooltip, Render, Steps, DashButton } from "~/components";
 
 Authentication Posture detects API endpoints with missing or inconsistent authentication and alerts you to potential misconfigurations.
 
@@ -33,28 +26,15 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
 
 ### Examine an endpoint's authentication details
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+<Steps>
+1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
-          <DashButton url="/?to=/:account/:zone/security/web-assets" />
-      2. Go to the **Endpoints** tab.
-      3. Filter your endpoints by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
-      4. Select an endpoint to see its authentication posture details on the endpoint details page.
-      5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **API Shield** > **Endpoint Management**.
-      3. Filter Endpoint Management by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
-      4. Select an endpoint to see its authentication posture details on the endpoint details page.
-      5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
-    </Steps>
-  </TabItem>
-</Tabs>
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+2. Go to the **Endpoints** tab.
+3. Filter your endpoints by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
+4. Select an endpoint to see its authentication posture details on the endpoint details page.
+5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
+</Steps>
 
 The main authentication widget displays how many successful requests over the last seven days had session identifiers included with them, and which identifiers were included with the traffic.
 

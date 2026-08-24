@@ -1,0 +1,72 @@
+---
+title: "New formats parameter for the Browser Run /snapshot endpoint"
+description: Browser Run's /snapshot endpoint now accepts a formats parameter to return Markdown and the accessibility tree alongside HTML and screenshots.
+products:
+  - browser-run
+date: 2026-06-11
+---
+
+import { Tabs, TabItem } from "~/components";
+
+[Browser Run](/browser-run/)'s [`/snapshot` endpoint](/browser-run/quick-actions/snapshot/) now supports a `formats` parameter that lets you return multiple page formats in a single API call. Previously, `/snapshot` returned only HTML content and a screenshot. You can now also include Markdown and the accessibility tree in the same response.
+
+These formats are particularly useful for AI agent workflows:
+
+- Markdown provides a token-efficient representation of page content that LLMs can process directly, without parsing HTML markup.
+- The accessibility tree provides a structured representation of a page's elements, including roles, labels, and hierarchy, helping LLMs understand page structure and navigate its contents.
+
+The following example returns a screenshot, Markdown, and the accessibility tree in one call:
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "formats": ["screenshot", "markdown", "accessibilityTree"]
+  }'
+```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
+});
+
+const snapshot = await client.browserRendering.snapshot.create({
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://example.com/",
+	formats: ["screenshot", "markdown", "accessibilityTree"],
+});
+
+console.log(snapshot.markdown);
+console.log(snapshot.accessibilityTree);
+```
+
+</TabItem> <TabItem label="Workers Bindings">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("snapshot", {
+			url: "https://example.com/",
+			formats: ["screenshot", "markdown", "accessibilityTree"],
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+You must request at least two formats. If you only need one, use the respective single-format endpoint such as [`/screenshot`](/browser-run/quick-actions/screenshot-endpoint/) or [`/markdown`](/browser-run/quick-actions/markdown-endpoint/).
+
+Refer to the [`/snapshot` documentation](/browser-run/quick-actions/snapshot/) for the full list of accepted values.

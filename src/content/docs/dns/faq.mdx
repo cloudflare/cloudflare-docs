@@ -63,6 +63,8 @@ dig kate.ns.cloudflare.com
 kate.ns.cloudflare.com.    68675    IN    A    173.245.58.124.
 ```
 
+To verify that your domain's parent zone is publishing the Cloudflare nameservers assigned to you (for example, when your zone is stuck in **Pending Nameserver Update** status), refer to [Zone stuck in Pending Nameserver Update](/dns/zone-setups/troubleshooting/pending-nameservers/).
+
 ### Where do I change my nameservers to point to Cloudflare?
 
 Make the change at your registrar, which is where you registered your domain. This may or may not be your hosting provider - refer to [Update nameservers](/dns/nameservers/update-nameservers/) for further context.
@@ -96,18 +98,7 @@ This is important because, if a domain is in a **Moved** state for a [long enoug
 
 ### Does Cloudflare limit the number of DNS records a domain can have?
 
-Yes. All customers have a limit on the number of DNS records they can create.
-
-- Free: 200
-- Pro: 3,500
-- Business: 3,500
-- Enterprise: 3,500
-
-Free zones created before 2024-09-01 00:00:00 UTC have an increased limit of 1,000.
-
-:::note[For more DNS records]
-If you are an Enterprise customer and require more DNS records, contact your account team. Cloudflare can support millions of DNS records on a single zone.
-:::
+Yes. Refer to [DNS records quota](/dns/manage-dns-records/#dns-records-quota) for current limits per plan and details on how quotas are enforced.
 
 ### How long does it take for a DNS change I made to push out?
 
@@ -124,7 +115,6 @@ If changes to records with large TTLs are anticipated, it may make sense to redu
 Because of Cloudflare's many advanced DNS features like CNAME flattening, it can be complex and even impossible to give correct answers to `ANY` queries. For example, when DNS records dynamically come and go or are stored remotely, it can be taxing or even impossible to get all the results at the same time.
 
 Refer to [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) for details. The decision to block `ANY` does not affect DNS Firewall customers.
-
 
 ### How do I add ANAME records on Cloudflare?
 

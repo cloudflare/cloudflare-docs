@@ -2,4 +2,10 @@
 {}
 ---
 
-3. In the **CIDR** tab for the tunnel, enter the IP or CIDR address of your server. Typically this would be a private IP, but public IPs are also allowed.
+import { DashButton } from "~/components";
+
+3. In the Cloudflare dashboard, go to **Networking** > **Routes**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+4. Select **Create route** > **Tunnel CIDR**. Select the tunnel you just created, enter the IP or CIDR address of your server (typically a private IP, but public IPs are also allowed), and select **Create route**.

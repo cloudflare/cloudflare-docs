@@ -24,7 +24,7 @@ This is helpful when:
 
 ### How to use remote dispatch namespaces
 
-In the dynamic dispatch Worker's Wrangler file, configure the [dispatch namespace binding](/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms) to connect to the remote namespace by setting [`remote = true`](/workers/development-testing/#remote-bindings):
+In the dynamic dispatch Worker's Wrangler file, configure the [dispatch namespace binding](/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms) to connect to the remote namespace by setting [`remote = true`](/workers/local-development/#remote-bindings):
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -42,4 +42,4 @@ In the dynamic dispatch Worker's Wrangler file, configure the [dispatch namespac
 
 This tells your dispatch Worker that's running locally to connect to the remote `production` namespace. When you run `wrangler dev`, your Dispatch Worker will route requests to the User Workers deployed in that namespace.
 
-For more information about remote bindings during local development, refer to [remote bindings documentation](/workers/development-testing/#remote-bindings).
+For more information about remote bindings during local development, refer to [remote bindings documentation](/workers/local-development/#remote-bindings).

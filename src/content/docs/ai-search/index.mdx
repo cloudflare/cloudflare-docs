@@ -15,6 +15,7 @@ products:
 ---
 
 import {
+	AiSearchOverviewDiagram,
 	CardGrid,
 	Description,
 	LinkTitleCard,
@@ -32,11 +33,13 @@ import {
 
 AI Search lets you add search to any application or agent without having to build an entire retrieval infrastructure. Create an instance, give it your data, and search it with natural language.
 
+<AiSearchOverviewDiagram />
+
 You can use AI Search for:
 
 - Documentation and knowledge base search
-- AI agent tool use and memory
-- Per-tenant or per-agent file search
+- AI agents that perform research over your internal knowledge
+- Let each tenant or agent upload and search their own files
 
 <div>
 	<LinkButton href="/ai-search/get-started/">Get started</LinkButton>
@@ -50,10 +53,6 @@ You can use AI Search for:
 	</LinkButton>
 </div>
 
-:::note[Latest update]
-New AI Search instances created after April 16, 2026 include [managed storage](/ai-search/configuration/data-source/built-in-storage/), vector index, and web crawling. [View limits and pricing](/ai-search/platform/limits-pricing/).
-:::
-
 ---
 
 ## Features
@@ -64,7 +63,7 @@ Automatically and continuously index your data source, keeping your content fres
 
 </Feature>
 
-<Feature header="Metadata filtering" href="/ai-search/configuration/indexing/metadata/" cta="Add filters">
+<Feature header="Metadata filtering" href="/ai-search/configuration/retrieval/filtering/" cta="Add filters">
 
 Define custom metadata fields and filter search results by category, version, language, or any attribute you define.
 

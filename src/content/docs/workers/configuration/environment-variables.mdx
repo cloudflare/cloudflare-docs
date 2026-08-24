@@ -47,6 +47,17 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Environment variables are accessed via attribute access on self.env
+        return Response(f"API host: {self.env.API_HOST}")
+```
+
 </TabItem> </Tabs>
 
 ### Import `env` for global access
@@ -172,8 +183,8 @@ JavaScript string `"abc"`.
 The value of `process.env.BAZ` will be the JSON-encoded string `"{ \"a\": 123 }"`.
 
 :::note
-Note also that because secrets are a form of environment variable within the runtime,
-secrets are also exposed via `process.env`.
+Note also that because secrets are a form of environment variable within the runtime, secrets are also exposed via `process.env`.
+:::
 
 ## Related resources
 

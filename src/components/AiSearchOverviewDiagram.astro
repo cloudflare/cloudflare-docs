@@ -1,0 +1,478 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+interface Props {
+	autoPlay?: boolean;
+	loop?: boolean;
+}
+
+const { autoPlay = true, loop = true } = Astro.props;
+---
+
+<figure
+	class="ai-search-overview-diagram not-content"
+	aria-label="AI Search is a managed search primitive: you upload or connect your content into an AI Search instance, which holds its storage and index, and then you search it."
+>
+	<cfdocs-ai-search-overview-diagram
+		data-autoplay={String(autoPlay)}
+		data-loop={String(loop)}
+	>
+		<div class="asod-system">
+			<!-- Input: your content enters the instance -->
+			<a
+				class="asod-cap"
+				data-step="0"
+				href="/ai-search/configuration/data-source/"
+			>
+				<span class="asod-cap-icon" aria-hidden="true">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<path d="M12 16V4"></path>
+						<path d="M8 8l4-4 4 4"></path>
+						<path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path>
+					</svg>
+				</span>
+				<span>Upload or connect</span>
+			</a>
+
+			<div class="asod-connector" data-step="1"></div>
+
+			<!-- The AI Search instance: a managed store + index -->
+			<div class="asod-group" data-step="2">
+				<span class="asod-group-label">AI Search</span>
+				<div class="asod-inner">
+					<a
+						class="asod-node"
+						href="/ai-search/configuration/data-source/built-in-storage/"
+					>
+						<span class="asod-node-icon" aria-hidden="true">
+							<Icon name="r2" />
+						</span>
+						<span class="asod-node-title">Storage</span>
+					</a>
+					<a class="asod-node" href="/ai-search/configuration/models/">
+						<span class="asod-node-icon" aria-hidden="true">
+							<Icon name="workers-ai" />
+						</span>
+						<span class="asod-node-title">AI models</span>
+					</a>
+					<a class="asod-node" href="/ai-search/configuration/indexing/">
+						<span class="asod-node-icon" aria-hidden="true">
+							<Icon name="vectorize" />
+						</span>
+						<span class="asod-node-title">Index</span>
+					</a>
+				</div>
+			</div>
+
+			<div class="asod-connector" data-step="3"></div>
+
+			<!-- Output: query the instance -->
+			<a
+				class="asod-cap"
+				data-step="4"
+				href="/ai-search/concepts/search-modes/"
+			>
+				<span class="asod-cap-icon" aria-hidden="true">
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="11" cy="11" r="7"></circle>
+						<path d="M21 21l-4.35-4.35"></path>
+					</svg>
+				</span>
+				<span>Search</span>
+			</a>
+		</div>
+	</cfdocs-ai-search-overview-diagram>
+</figure>
+
+<style>
+	.ai-search-overview-diagram {
+		/* Neutral, Kumo-style monochrome palette */
+		--asod-panel: #fbfbfb;
+		--asod-dot: rgb(0 0 0 / 8%);
+		--asod-card: #ffffff;
+		--asod-head: #f4f4f5;
+		--asod-border: #e3e3e6;
+		--asod-line: #c1c1c8;
+		--asod-joint: #ffffff;
+		--asod-text: #1a1a1c;
+		--asod-muted: #8a8a90;
+		--asod-accent: #f6821f;
+		--asod-accent-soft: rgb(246 130 31 / 14%);
+
+		margin: 1.5rem 0;
+		/* Respond to the diagram's own available width, not the viewport. */
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .ai-search-overview-diagram {
+		--asod-panel: #121213;
+		--asod-dot: rgb(255 255 255 / 9%);
+		--asod-card: #1b1b1d;
+		--asod-head: #242427;
+		--asod-border: #38383c;
+		--asod-line: #4d4d54;
+		--asod-joint: #1b1b1d;
+		--asod-text: #f3f3f5;
+		--asod-muted: #9a9aa2;
+	}
+
+	cfdocs-ai-search-overview-diagram {
+		display: block;
+		width: 100%;
+		padding: 1.75rem 1rem;
+		border: 1px solid var(--asod-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--asod-dot) 1px, transparent 1px),
+			var(--asod-panel);
+		background-size: 16px 16px;
+	}
+
+	.asod-system {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	/* --- Entry / exit caps (pills) --- */
+	.asod-cap {
+		flex: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.45rem 0.85rem;
+		border-radius: 9999px;
+		background: var(--asod-card);
+		border: 1px solid var(--asod-border);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--asod-text);
+		text-decoration: none;
+		white-space: nowrap;
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	.asod-cap:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asod-accent) 55%,
+			var(--asod-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+	}
+
+	.asod-cap:focus-visible {
+		outline: 2px solid var(--asod-accent);
+		outline-offset: 2px;
+	}
+
+	.asod-cap-icon {
+		flex: none;
+		width: 1.05rem;
+		height: 1.05rem;
+		color: var(--asod-muted);
+		transition: color 0.25s ease;
+	}
+
+	.asod-cap-icon svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* --- Connectors (wires into and out of the instance) --- */
+	.asod-connector {
+		position: relative;
+		flex: none;
+		width: 2.25rem;
+		height: 2px;
+		background: var(--asod-line);
+		transition: background-color 0.25s ease;
+	}
+
+	/* Joint nodes at each end of the wire, matching the other diagrams. */
+	.asod-connector::before,
+	.asod-connector::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--asod-joint);
+		border: 2px solid var(--asod-line);
+		box-sizing: border-box;
+		transform: translateY(-50%);
+		transition: border-color 0.25s ease;
+		z-index: 2;
+	}
+
+	.asod-connector::before {
+		left: -4px;
+	}
+
+	.asod-connector::after {
+		right: -4px;
+	}
+
+	.asod-connector.current::before,
+	.asod-connector.current::after {
+		border-color: var(--asod-accent);
+	}
+
+	/* --- The AI Search instance: a dashed scope holding its store + index --- */
+	.asod-group {
+		position: relative;
+		flex: 1 1 auto;
+		min-width: 0;
+		max-width: 340px;
+		padding: 1.15rem 0.9rem 0.9rem;
+		border: 1px dashed var(--asod-border);
+		border-radius: 0.75rem;
+		transition: border-color 0.25s ease;
+	}
+
+	.asod-group-label {
+		position: absolute;
+		top: -0.62rem;
+		left: 0.9rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.08rem 0.5rem;
+		background: var(--asod-panel);
+		border: 1px solid var(--asod-border);
+		border-radius: 9999px;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: var(--asod-muted);
+		transition:
+			color 0.25s ease,
+			border-color 0.25s ease;
+	}
+
+	.asod-inner {
+		display: flex;
+		gap: 0.6rem;
+	}
+
+	.asod-node {
+		flex: 1 1 0;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.7rem 0.5rem;
+		background: var(--asod-card);
+		border: 1px solid var(--asod-border);
+		border-radius: 0.5rem;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		color: inherit;
+		text-decoration: none;
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	.asod-node:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asod-accent) 55%,
+			var(--asod-border)
+		);
+	}
+
+	.asod-node:focus-visible {
+		outline: 2px solid var(--asod-accent);
+		outline-offset: 2px;
+	}
+
+	.asod-node-icon {
+		width: 1.35rem;
+		height: 1.35rem;
+		color: var(--asod-muted);
+		transition: color 0.25s ease;
+	}
+
+	.asod-node-icon :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.asod-node-icon :global(svg path) {
+		fill: currentColor;
+	}
+
+	.asod-node-title {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--asod-text);
+	}
+
+	/* --- Active state: trace the flow (upload, instance, search) --- */
+	.asod-cap.current {
+		border-color: var(--asod-accent);
+		box-shadow: 0 0 0 2px var(--asod-accent-soft);
+	}
+
+	.asod-cap.current .asod-cap-icon {
+		color: var(--asod-accent);
+	}
+
+	.asod-connector.current {
+		background: var(--asod-accent);
+	}
+
+	.asod-group.current {
+		border-color: var(--asod-accent);
+	}
+
+	.asod-group.current .asod-group-label {
+		color: var(--asod-accent);
+		border-color: var(--asod-accent);
+	}
+
+	.asod-group.current .asod-node {
+		border-color: var(--asod-accent);
+	}
+
+	.asod-group.current .asod-node-icon {
+		color: var(--asod-accent);
+	}
+
+	/* --- Responsive: stack the flow vertically so the instance stays readable
+	   on narrow screens; the store + index sit side by side inside it. --- */
+	@container (max-width: 540px) {
+		.asod-system {
+			flex-direction: column;
+			max-width: 300px;
+		}
+
+		.asod-connector {
+			width: 2px;
+			height: 1.4rem;
+		}
+
+		.asod-connector::before {
+			left: 50%;
+			right: auto;
+			top: -4px;
+			transform: translateX(-50%);
+		}
+
+		.asod-connector::after {
+			left: 50%;
+			right: auto;
+			top: auto;
+			bottom: -4px;
+			transform: translateX(-50%);
+		}
+
+		.asod-group {
+			width: 100%;
+			max-width: none;
+			flex: none;
+		}
+	}
+
+	/* --- Reduced motion: rest in the complete, neutral state --- */
+	@media (prefers-reduced-motion: reduce) {
+		.asod-cap,
+		.asod-cap-icon,
+		.asod-connector,
+		.asod-group,
+		.asod-group-label,
+		.asod-node,
+		.asod-node-icon {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	class AiSearchOverviewDiagramElement extends HTMLElement {
+		private loop = false;
+		private timer: number | null = null;
+		private steps: Element[][] = [];
+
+		connectedCallback() {
+			this.loop = this.dataset.loop === "true";
+			this.groupSteps();
+
+			const reduced = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+
+			if (!reduced && this.dataset.autoplay === "true" && this.steps.length) {
+				this.timer = window.setTimeout(() => this.cycle(0), 500);
+			}
+		}
+
+		disconnectedCallback() {
+			if (this.timer !== null) window.clearTimeout(this.timer);
+		}
+
+		/** Group every [data-step] element by its step number, in order. */
+		private groupSteps() {
+			const byStep = new Map<number, Element[]>();
+			this.querySelectorAll<HTMLElement>("[data-step]").forEach((el) => {
+				const step = Number(el.dataset.step);
+				if (Number.isNaN(step)) return;
+				const group = byStep.get(step) ?? [];
+				group.push(el);
+				byStep.set(step, group);
+			});
+			this.steps = [...byStep.keys()]
+				.sort((a, b) => a - b)
+				.map((key) => byStep.get(key)!);
+		}
+
+		private clearCurrent() {
+			this.querySelectorAll(".current").forEach((el) =>
+				el.classList.remove("current"),
+			);
+		}
+
+		/** Fill the flow in order (upload, the instance, search) so the whole
+		 *  search primitive reads as one path, then loop. */
+		private cycle(index: number) {
+			if (index === 0) this.clearCurrent();
+
+			if (index >= this.steps.length) {
+				if (this.loop) {
+					this.timer = window.setTimeout(() => this.cycle(0), 1600);
+				}
+				return;
+			}
+
+			this.steps[index].forEach((el) => el.classList.add("current"));
+			this.timer = window.setTimeout(() => this.cycle(index + 1), 900);
+		}
+	}
+
+	customElements.define(
+		"cfdocs-ai-search-overview-diagram",
+		AiSearchOverviewDiagramElement,
+	);
+</script>

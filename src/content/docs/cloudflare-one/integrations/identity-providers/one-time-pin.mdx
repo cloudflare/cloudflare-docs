@@ -14,6 +14,8 @@ import { Tabs, TabItem, Render, APIRequest } from "~/components";
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
 
+New Zero Trust organizations use the [Cloudflare identity provider](/cloudflare-one/integrations/identity-providers/cloudflare/) as their default login method. OTP is no longer added automatically, but you can set it up at any time using the following steps.
+
 For example, if your team uses Okta but you are collaborating with someone outside your organization, you can use OTP to grant access to guests.
 
 <Render file="access/one-time-pin-warning" product="cloudflare-one" />

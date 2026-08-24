@@ -9629,12 +9629,165 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-4.1\",\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true,\n  \"stream_options\": {\n    \"include_usage\": true\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting the model use OpenAI's built-in web search tool to answer with current information",
+			"input": {
+				"input": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+				"max_output_tokens": 4096,
+				"tools": [
+					{
+						"type": "web_search_preview"
+					}
+				]
+			},
+			"output": {
+				"text": "Here are the top news stories about Cloudflare this week:\n\n- **Launch of New Partner Initiative for AI and SASE Adoption**: Cloudflare introduced the Cloudflare One Design Partner designation and an AI-powered toolkit to accelerate the adoption of artificial intelligence (AI) and secure access service edge (SASE) architectures. This initiative aims to help organizations modernize legacy security infrastructures and overcome challenges like configuration risks and lengthy deployment times. ([itpro.com](https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption?utm_source=openai))\n\n- **Completion of Agent Infrastructure Stack with Browser Run Rebuild**: Cloudflare completed its agent infrastructure stack by rebuilding Browser Run on its own Containers platform. This upgrade delivers higher concurrency, faster response times, and support for WebGL and WebMCP, enhancing the performance and scalability of AI agents. ([infoq.com](https://www.infoq.com/news/2026/05/cloudflare-agent-platform-stack/?utm_source=openai))\n\n- **Workforce Reduction Amid AI Adoption**: Cloudflare announced plans to reduce its global workforce by about 20%, cutting more than 1,100 jobs. This restructuring is part of the company's shift towards an AI-first operating model, reflecting the rapid adoption of AI tools and the resulting changes in operational processes. ([business-standard.com](https://www.business-standard.com/technology/tech-news/cloudflare-to-cut-about-20-workforce-as-ai-adoption-reshapes-operations-126050800117_1.html?utm_source=openai)) "
+			},
+			"raw_response": {
+				"id": "resp_0fdf05943aa0606d016a398f3d52b48198b359c259da57fcf2",
+				"object": "response",
+				"created_at": 1782157117,
+				"model": "gpt-4.1-2025-04-14",
+				"output": [
+					{
+						"id": "ws_0fdf05943aa0606d016a398f3db07c8198a82f9fb39e0ca765",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"Cloudflare top news stories this week"
+							],
+							"query": "Cloudflare top news stories this week"
+						}
+					},
+					{
+						"id": "msg_0fdf05943aa0606d016a398f3f38808198be80ca5b78103aaf",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"end_index": 658,
+										"start_index": 494,
+										"title": "Cloudflare launches new partner initiative to support AI and SASE adoption",
+										"url": "https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1098,
+										"start_index": 998,
+										"title": "Cloudflare Completes Its Agent Infrastructure Stack with Browser Run Rebuild and Six-Layer Platform - InfoQ",
+										"url": "https://www.infoq.com/news/2026/05/cloudflare-agent-platform-stack/?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1618,
+										"start_index": 1427,
+										"title": "Cloudflare to cut about 20% workforce as AI adoption reshapes operations | Tech News - Business Standard",
+										"url": "https://www.business-standard.com/technology/tech-news/cloudflare-to-cut-about-20-workforce-as-ai-adoption-reshapes-operations-126050800117_1.html?utm_source=openai"
+									}
+								],
+								"logprobs": [],
+								"text": "Here are the top news stories about Cloudflare this week:\n\n- **Launch of New Partner Initiative for AI and SASE Adoption**: Cloudflare introduced the Cloudflare One Design Partner designation and an AI-powered toolkit to accelerate the adoption of artificial intelligence (AI) and secure access service edge (SASE) architectures. This initiative aims to help organizations modernize legacy security infrastructures and overcome challenges like configuration risks and lengthy deployment times. ([itpro.com](https://www.itpro.com/technology/artificial-intelligence/cloudflare-launches-new-partner-initiative-to-support-ai-and-sase-adoption?utm_source=openai))\n\n- **Completion of Agent Infrastructure Stack with Browser Run Rebuild**: Cloudflare completed its agent infrastructure stack by rebuilding Browser Run on its own Containers platform. This upgrade delivers higher concurrency, faster response times, and support for WebGL and WebMCP, enhancing the performance and scalability of AI agents. ([infoq.com](https://www.infoq.com/news/2026/05/cloudflare-agent-platform-stack/?utm_source=openai))\n\n- **Workforce Reduction Amid AI Adoption**: Cloudflare announced plans to reduce its global workforce by about 20%, cutting more than 1,100 jobs. This restructuring is part of the company's shift towards an AI-first operating model, reflecting the rapid adoption of AI tools and the resulting changes in operational processes. ([business-standard.com](https://www.business-standard.com/technology/tech-news/cloudflare-to-cut-about-20-workforce-as-ai-adoption-reshapes-operations-126050800117_1.html?utm_source=openai)) "
+							}
+						],
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 320,
+					"output_tokens": 343,
+					"total_tokens": 663,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1782157123,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 4096,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"context": null,
+					"effort": null,
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [
+					{
+						"type": "web_search_preview",
+						"search_content_types": [
+							"text"
+						],
+						"search_context_size": "medium",
+						"user_location": {
+							"type": "approximate",
+							"city": null,
+							"country": "US",
+							"region": null,
+							"timezone": null
+						}
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1',\n  {\n    input: 'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n    max_output_tokens: 4096,\n    tools: [{ type: 'web_search_preview' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-4.1\",\n  \"input\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n  \"max_output_tokens\": 4096,\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\"\n    }\n  ]\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://openai.com/index/gpt-4-1/",
 	"terms": "https://openai.com/policies/",
@@ -9646,181 +9799,98 @@
 		"responses",
 		"chat-completions"
 	],
+	"providers": null,
+	"banner": null,
 	"created_at": "2026-05-22 17:53:24",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
-			"properties": {
-				"audio": {
-					"additionalProperties": false,
+			"oneOf": [
+				{
+					"type": "object",
 					"properties": {
-						"format": {
-							"enum": [
-								"wav",
-								"mp3",
-								"flac",
-								"opus",
-								"pcm16"
-							],
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
 							"type": "string"
 						},
-						"voice": {
-							"enum": [
-								"alloy",
-								"ash",
-								"ballad",
-								"coral",
-								"echo",
-								"sage",
-								"shimmer",
-								"verse"
-							],
-							"type": "string"
-						}
-					},
-					"type": "object"
-				},
-				"frequency_penalty": {
-					"maximum": 2,
-					"minimum": -2,
-					"type": "number"
-				},
-				"max_completion_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"max_tokens": {
-					"exclusiveMinimum": 0,
-					"type": "number"
-				},
-				"messages": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"content": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									},
-									{
-										"items": {},
-										"type": "array"
-									}
-								]
-							},
-							"role": {
-								"enum": [
-									"system",
-									"developer",
-									"user",
-									"assistant",
-									"tool"
-								],
-								"type": "string"
-							}
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
 						},
-						"required": [
-							"role",
-							"content"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"modalities": {
-					"items": {
-						"enum": [
-							"text",
-							"audio"
-						],
-						"type": "string"
-					},
-					"type": "array"
-				},
-				"presence_penalty": {
-					"maximum": 2,
-					"minimum": -2,
-					"type": "number"
-				},
-				"response_format": {},
-				"stream": {
-					"type": "boolean"
-				},
-				"stream_options": {
-					"additionalProperties": false,
-					"properties": {
-						"include_usage": {
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
 							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high"
+									]
+								}
+							},
+							"additionalProperties": {}
 						}
 					},
-					"type": "object"
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
 				},
-				"temperature": {
-					"maximum": 2,
-					"minimum": 0,
-					"type": "number"
-				},
-				"tool_choice": {},
-				"tools": {
-					"items": {},
-					"type": "array"
-				},
-				"top_p": {
-					"maximum": 1,
-					"minimum": 0,
-					"type": "number"
-				}
-			},
-			"required": [
-				"messages"
-			],
-			"type": "object"
-		},
-		"output": {
-			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"additionalProperties": {},
-			"properties": {
-				"choices": {
-					"items": {
-						"additionalProperties": {},
-						"properties": {
-							"finish_reason": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									}
-								]
-							},
-							"index": {
-								"type": "number"
-							},
-							"message": {
-								"additionalProperties": {},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
 								"properties": {
-									"audio": {
-										"additionalProperties": {},
-										"properties": {
-											"data": {
-												"type": "string"
-											},
-											"expires_at": {
-												"type": "number"
-											},
-											"id": {
-												"type": "string"
-											},
-											"transcript": {
-												"type": "string"
-											}
-										},
-										"type": "object"
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
 									},
 									"content": {
 										"anyOf": [
@@ -9829,17 +9899,259 @@
 											},
 											{
 												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
 											}
 										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
 									},
-									"role": {
-										"type": "string"
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"anyOf": [
+													{
+														"type": "string"
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
 									},
-									"tool_calls": {
+									"finish_reason": {
 										"anyOf": [
 											{
-												"items": {},
-												"type": "array"
+												"type": "string"
 											},
 											{
 												"type": "null"
@@ -9848,61 +10160,45 @@
 									}
 								},
 								"required": [
-									"role"
+									"index",
+									"message",
+									"finish_reason"
 								],
-								"type": "object"
+								"additionalProperties": {}
 							}
 						},
-						"required": [
-							"index",
-							"message",
-							"finish_reason"
-						],
-						"type": "object"
-					},
-					"type": "array"
-				},
-				"created": {
-					"type": "number"
-				},
-				"id": {
-					"type": "string"
-				},
-				"model": {
-					"type": "string"
-				},
-				"object": {
-					"type": "string"
-				},
-				"usage": {
-					"additionalProperties": {},
-					"properties": {
-						"completion_tokens": {
-							"type": "number"
-						},
-						"prompt_tokens": {
-							"type": "number"
-						},
-						"total_tokens": {
-							"type": "number"
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
 						}
 					},
 					"required": [
-						"prompt_tokens",
-						"completion_tokens",
-						"total_tokens"
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
 					],
-					"type": "object"
+					"additionalProperties": {},
+					"title": "Chat Completions"
 				}
-			},
-			"required": [
-				"id",
-				"object",
-				"created",
-				"model",
-				"choices"
-			],
-			"type": "object"
+			]
 		}
 	}
 }

@@ -18,12 +18,43 @@ For example, you can configure hourly, every-15-minute, or weekday schedules on 
 			"name": "my-scheduled-workflow",
 			"binding": "MY_WORKFLOW",
 			"class_name": "MyScheduledWorkflow",
-			"schedules": ["0 * * * *", "*/15 * * * *", "0 9 * * MON-FRI"]
-		}
-	]
+			"schedules": ["0 * * * *", "*/15 * * * *", "0 9 * * MON-FRI"],
+		},
+	],
 }
 ```
 
-This makes it easier to build recurring jobs such as database backups, invoice generation, report aggregation, and cleanup tasks without wiring up a separate Cron Trigger entrypoint.
+Cron workloads get all the same benefits of Workflows with built-in retries, multi-step durable execution, and configurable timeouts of Workflows.
+
+```ts
+import {
+	WorkflowEntrypoint,
+	WorkflowEvent,
+	WorkflowStep,
+} from "cloudflare:workers";
+
+// Runs automatically on each cron schedule defined for the MY_WORKFLOW binding in wrangler.jsonc.
+export class MyScheduledWorkflow extends WorkflowEntrypoint<Env> {
+	async run(event: WorkflowEvent, step: WorkflowStep) {
+		const data = await step.do("fetch source data", async () => {
+			return await fetchSourceData();
+		});
+
+		// If this step fails, only this step is retried with the custom logic below
+		await step.do(
+			"process and store results",
+			{
+				retries: { limit: 5, delay: "30 seconds", backoff: "exponential" },
+				timeout: "10 minutes",
+			},
+			async () => {
+				await processAndStore(data);
+			},
+		);
+	}
+}
+```
+
+This makes it easier to build recurring, scheduled jobs such as database backups, invoice generation, report aggregation, and cleanup tasks without wiring up a separate Cron Trigger entrypoint.
 
 For more information, refer to [Trigger Workflows](/workflows/build/trigger-workflows/).

@@ -1,0 +1,7 @@
+# This directory contains only symlinks into .agents/.
+# Do not add files here directly — add them to .agents/ instead.
+*
+!.gitignore
+!CLAUDE.md
+!agents
+!skills

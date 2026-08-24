@@ -1,0 +1,26 @@
+---
+title: Data localization support for Artifacts
+description: Ensure Artifacts stores and processes repo data only within a selected jurisdiction.
+products:
+  - artifacts
+date: 2026-08-13
+---
+
+Artifacts now supports jurisdictions, allowing you to select the European Union or the United States as the only location where repo data is stored and processed.
+
+Select a jurisdiction when you create a namespace. Every repo in that namespace automatically uses the selected jurisdiction.
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "namespace": "my-eu-namespace",
+    "jurisdiction": "eu"
+  }'
+```
+
+Jurisdictions cannot be changed after namespace creation. If you omit the jurisdiction, Artifacts creates an unrestricted namespace.
+
+For supported jurisdictions and usage details, refer to [Data localization](/artifacts/guides/data-localization/).

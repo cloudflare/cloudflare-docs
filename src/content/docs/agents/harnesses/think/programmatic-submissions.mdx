@@ -115,6 +115,8 @@ Use `cancelSubmission(submissionId)` for durable cancellation across Worker and 
 
 Think stores accepted submissions in a submission ledger first. It appends submitted messages to the conversation Session only when the submission starts executing. Later accepted submissions are not visible to the model until their own turn starts, which preserves first-in, first-out turn semantics.
 
+If you cancel a submission before its messages have been applied, including one that has been claimed but is still waiting for its turn, those messages are not persisted to the conversation.
+
 If the chat is cleared or turn state is reset before a pending submission runs, the submission is marked `skipped`.
 
 ## Compared with Workflows

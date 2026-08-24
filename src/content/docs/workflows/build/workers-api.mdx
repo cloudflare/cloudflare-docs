@@ -90,18 +90,18 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 
 {/* prettier-ignore */}
 - <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable): Promise&lt;T&gt;</code>
-- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable, options?: RollbackOptions): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
 	RpcSerializable): Promise&lt;T&gt;</code>
 	- `name` - the name of the step, up to 256 characters.
 	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
 	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
-	RpcSerializable, options?: RollbackOptions): Promise&lt;T&gt;</code>
+	RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
 	- `name` - the name of the step, up to 256 characters.
 	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
 	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
-	- `options` (optional) - register rollback logic for the step. If the Workflow later fails, registered rollbacks run in reverse completion order.
+	- `rollbackOptions` (optional) - register rollback logic for the step. If the Workflow later fails, registered rollbacks run in reverse step-start order.
 
 :::note[Returning state]
 
@@ -152,7 +152,7 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 
 - <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
-  - `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+  - `duration` - the duration to sleep for, as a `number` in milliseconds or as a `WorkflowDuration`-compatible string.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
@@ -197,10 +197,19 @@ Review the documentation on [events and parameters](/workflows/build/events-and-
 ## WorkflowStepConfig
 
 ```ts
+export type WorkflowDynamicDelayContext = {
+	ctx: WorkflowStepContext;
+	error: Error;
+};
+
+export type WorkflowDelayFunction = (
+	input: WorkflowDynamicDelayContext,
+) => string | number | Promise<string | number>;
+
 export type WorkflowStepConfig = {
 	retries?: {
 		limit: number;
-		delay: string | number;
+		delay: string | number | WorkflowDelayFunction;
 		backoff?: WorkflowBackoff;
 	};
 	timeout?: string | number;
@@ -208,28 +217,36 @@ export type WorkflowStepConfig = {
 ```
 
 - A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
+- Set `retries.delay` to a fixed duration, or pass a `WorkflowDelayFunction` to calculate the next retry delay from the current step context and thrown error.
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 ## Rollback options
 
 ```ts
-type RollbackContext = {
+type WorkflowRollbackContext<T = unknown> = {
+	ctx: WorkflowStepContext;
 	error: Error;
-	output: unknown | undefined ;
-	stepName: string;
+	output: T | undefined;
 };
 
-type RollbackFn = (ctx: RollbackContext) => Promise<void>;
+type WorkflowRollbackHandler<T = unknown> = (
+	ctx: WorkflowRollbackContext<T>,
+) => Promise<void>;
 
-type RollbackOptions = {
-	rollback: RollbackFn;
-	rollbackConfig?: WorkflowStepConfig;
+type WorkflowStepRollbackConfig = Pick<
+	WorkflowStepConfig,
+	"retries" | "timeout"
+>;
+
+type WorkflowStepRollbackOptions<T = unknown> = {
+	rollback: WorkflowRollbackHandler<T>;
+	rollbackConfig?: WorkflowStepRollbackConfig;
 };
 ```
 
-- Pass this `RollbackOptions` object as the final argument to `step.do()` to register a compensating action for a successful step.
-- `rollback` receives the error that caused the Workflow to fail, the step output returned by the forward step, and the fully-qualified step name.
+- Pass this `WorkflowStepRollbackOptions` object as the final argument to `step.do()` to register a compensating action for a successful step.
+- `rollback` receives the original step context, the error that caused the Workflow to fail, and the step output returned by the forward step.
 - `rollbackConfig` applies retry and timeout settings to the rollback handler itself.
 
 <TypeScriptExample>
@@ -244,9 +261,11 @@ export class BillingWorkflow extends WorkflowEntrypoint<Env> {
 				return { chargeId: charge.id };
 			},
 			{
-				rollback: async ({ output, error }) => {
+				rollback: async ({ ctx, output, error }) => {
 					const { chargeId } = output as { chargeId: string };
-					await refundCharge(chargeId, { reason: error.message });
+					await refundCharge(chargeId, {
+						reason: `${ctx.step.name}: ${error.message}`,
+					});
 				},
 				rollbackConfig: {
 					retries: {
@@ -582,7 +601,7 @@ declare abstract class WorkflowInstance {
 	/**
 	 * Terminate the instance. If it is errored, terminated or complete, an error will be thrown.
 	 */
-	public terminate(): Promise<void>;
+	public terminate(options?: WorkflowInstanceTerminateOptions): Promise<void>;
 	/**
 	 * Restart the instance from the beginning, or from a specific step.
 	 */
@@ -675,7 +694,31 @@ The `from` object identifies the step to restart from. Only `name` is required; 
 
 Terminate a Workflow instance.
 
-- <code>terminate(): Promise&lt;void&gt;</code>
+- <code>terminate(options?: WorkflowInstanceTerminateOptions): Promise&lt;void&gt;</code>
+  - `options` - optional properties that control how the instance is terminated.
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+
+// Terminate without running rollback handlers.
+await instance.terminate();
+
+// Run registered rollback handlers before terminating.
+await instance.terminate({ rollback: true });
+```
+
+If `rollback` is `true`, Workflows runs the rollback handlers registered by completed or eligible steps before the instance reaches the `terminated` state. Steps without rollback handlers are skipped.
+
+#### WorkflowInstanceTerminateOptions
+
+```ts
+interface WorkflowInstanceTerminateOptions {
+	/**
+	 * If true, run registered rollback handlers before terminating the instance.
+	 */
+	rollback?: boolean;
+}
+```
 
 ### sendEvent
 

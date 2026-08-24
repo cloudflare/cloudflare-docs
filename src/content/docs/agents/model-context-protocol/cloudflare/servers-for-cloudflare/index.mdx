@@ -12,13 +12,15 @@ products:
 
 Cloudflare runs a catalog of managed remote MCP servers which you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), our own [AI Playground](https://playground.ai.cloudflare.com/) or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
 
-These MCP servers allow your MCP client to read configurations from your account, process information, make suggestions based on data, and even make those suggested changes for you. All of these actions can happen across Cloudflare's many services including application development, security and performance. They support both the `streamable-http` transport via `/mcp` and the `sse` transport (deprecated) via `/sse`.
+These MCP servers allow your MCP client to read configurations from your account, process information, make suggestions based on data, and even make those suggested changes for you. All of these actions can happen across Cloudflare's many services including application development, security and performance.
+
+Use the Streamable HTTP endpoint at `/mcp` for new connections. The servers support the new MCP 2026-07-28 Specification and stateless requests from 2025 Streamable HTTP clients. Historical `/sse` URLs remain available as aliases for the same Streamable HTTP handler, but they do not serve the deprecated HTTP+SSE transport. Clients configured to force SSE transport must switch to Streamable HTTP or automatic transport detection.
 
 ## Cloudflare API MCP server
 
 The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product — through just two tools: `search()` and `execute()`.
 
-It uses [Codemode](/agents/model-context-protocol/protocol/codemode/), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) sandbox.
+It uses [the search-and-execute Code Mode pattern](/agents/model-context-protocol/codemode/#search-and-execute), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) sandbox.
 
 This approach uses approximately 1,000 tokens regardless of how many API endpoints exist. An equivalent MCP server that exposed every endpoint as a native tool would consume over 1 million tokens — more than the entire context window of most foundation models.
 
@@ -26,7 +28,7 @@ This approach uses approximately 1,000 tokens regardless of how many API endpoin
 | --------------------------------- | ----- | ---------- |
 | Native MCP (full schemas)         | 2,594 | ~1,170,000 |
 | Native MCP (required params only) | 2,594 | ~244,000   |
-| Codemode                          | 2     | ~1,000     |
+| Code Mode                         | 2     | ~1,000     |
 
 ### Connect to the Cloudflare API MCP server
 
@@ -90,7 +92,7 @@ In addition to the Cloudflare API MCP server, Cloudflare provides product-specif
 
 | Server Name                                                                                                             | Description                                                                                     | Server URL                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| [Documentation server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize)               | Get up to date reference information on Cloudflare                                              | `https://docs.mcp.cloudflare.com/mcp`          |
+| [Documentation server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-ai-search)               | Get up to date reference information on Cloudflare                                              | `https://docs.mcp.cloudflare.com/mcp`          |
 | [Workers Bindings server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-bindings)          | Build Workers applications with storage, AI, and compute primitives                             | `https://bindings.mcp.cloudflare.com/mcp`      |
 | [Workers Builds server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-builds)              | Get insights and manage your Cloudflare Workers Builds                                          | `https://builds.mcp.cloudflare.com/mcp`        |
 | [Observability server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-observability)        | Debug and get insight into your application's logs and analytics                                | `https://observability.mcp.cloudflare.com/mcp` |

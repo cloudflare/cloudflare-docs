@@ -1,0 +1,17 @@
+---
+{}
+
+---
+```swift
+meeting.connectedMeetings.createMeetings(titles: ["Breakout Room 1", "Breakout Room 2", "Breakout Room 3"]) { result in
+    switch result {
+    case .success(let breakoutRooms):
+        let roomInfo = breakoutRooms.map { "Id:: \($0.id) --- Title:: \($0.title)" }.joined(separator: "\n")
+        print("Created Breakout Rooms: \(roomInfo)")
+    case .failure(let error):
+        print("Failed to create breakout rooms: \(error.value.message)")
+    }
+}
+```
+
+`breakoutRooms` is an array of basic meeting information such as `id` and `title`. You can use the `id` of these objects to move participants to the breakout room.

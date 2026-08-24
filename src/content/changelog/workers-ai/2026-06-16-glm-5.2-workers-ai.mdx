@@ -1,0 +1,23 @@
+---
+title: Introducing GLM-5.2 on Workers AI
+description: Z.ai's flagship agentic coding model is now available on Workers AI
+products:
+  - workers
+  - agents
+date: 2026-06-16
+---
+
+We are excited to announce **GLM-5.2** on Workers AI, Z.ai's flagship agentic coding model.
+
+[`@cf/zai-org/glm-5.2`](/workers-ai/models/glm-5.2/) is a text generation model built for agentic coding workflows. With function calling and reasoning support, it can handle long codebases, multi-step planning, and tool-augmented agents.
+
+**Key features and use cases:**
+
+- **Agentic coding**: Designed for autonomous coding tasks, long-horizon planning, and complex software engineering workflows
+- **Large context window**: GLM-5.2 supports up to a 1,048,576 token context window. Workers AI is launching the model with a 262,144 token context window and plans to increase this in the future
+- **Function calling**: Build agents that invoke tools and APIs across multiple conversation turns
+- **Reasoning**: Tackles complex problem-solving and step-by-step reasoning tasks
+
+Use GLM-5.2 through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`), the REST API at `/run` or `/v1/chat/completions`, or [AI Gateway](/ai-gateway/).
+
+Pricing is available on the [model page](/workers-ai/models/glm-5.2/) or [pricing page](/workers-ai/platform/pricing/).

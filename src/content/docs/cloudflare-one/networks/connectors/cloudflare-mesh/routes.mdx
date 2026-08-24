@@ -13,13 +13,16 @@ head:
     content: Configure routes for Cloudflare Mesh
 ---
 
-import { DashButton, Tabs, TabItem, APIRequest } from "~/components";
+import { DashButton, Tabs, TabItem, APIRequest, GlossaryTooltip, Render, MeshHostnameRoutingDiagram } from "~/components";
 
-By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips). To make other devices on the subnet behind the node reachable — servers, databases, printers, IoT devices that cannot run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) — add **CIDR routes**.
+By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips). To make other devices on the subnet behind the node reachable — servers, databases, printers, IoT devices that cannot run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) — add a route to the node. A Mesh node supports two types of routes:
 
-When you add a route, the Mesh node acts as a gateway: traffic destined for the advertised CIDR is forwarded to the node, which delivers it to the appropriate host on the local network.
+- **CIDR routes** — forward traffic for an IP range — private (for example, `10.0.0.0/24`) or public — through the node.
+- **Hostname routes** — attract traffic for a hostname to the node instead of an IP. This works for a **private** hostname (for example, `wiki.internal.local`), which is useful when the application has an unknown or ephemeral IP, as well as a **public** hostname (for example, `www.example.com`), which routes that hostname's traffic through the node and egresses via the node's public IP.
 
-Both IPv4 and IPv6 CIDR routes are supported.
+When you add a route, the Mesh node acts as a gateway: traffic destined for the advertised CIDR or hostname is forwarded to the node, which delivers it to the appropriate host on the local network (or egresses it to the public Internet).
+
+Both IPv4 and IPv6 CIDR routes are supported. IPv6 routes require that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol); they will not work if the device profile uses WireGuard instead.
 
 ## When to use routes
 
@@ -37,7 +40,7 @@ flowchart LR
   node --> db
   node --> printer
 ```
-## Manage routes
+## Manage CIDR routes
 
 Use CIDR routes to forward traffic from your mesh node to devices on your local network.
 
@@ -200,6 +203,110 @@ To filter DNS queries from the subnet using [Cloudflare Gateway](/cloudflare-one
 
 3. **Configure Split Tunnels**: Ensure the following IPs route through the Mesh node in your [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration:
    - The subnet's internal DNS resolver IP
-   - Gateway initial resolved IP range: `100.80.0.0/16` (IPv4) and `2606:4700:0cf1:4000::/64` (IPv6)
+   - Gateway initial resolved IP range: `172.64.128.0/20` (IPv4) and `2606:4700:0cf1:4000::/64` (IPv6)
 
 Gateway logs DNS queries with the private source IP of the originating device. You can use this to create [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) for internal DNS records.
+
+## Hostname routes
+
+Instead of advertising an IP range, you can attract traffic for a specific hostname to a Mesh node. When a user requests the hostname, Cloudflare Gateway assigns an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> and routes the traffic through the node.
+
+- **Private hostname** (for example, `wiki.internal.local`) — the node delivers the traffic to the application's private IP on the local network. Useful when the application has an unknown or ephemeral IP.
+- **Public hostname** (for example, `www.example.com`) — the node egresses the traffic to the public Internet using its own public IP. This lets you use a Mesh node as a dedicated egress for that hostname.
+
+Hostname routes replace [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) as the way to reach resources: because a hostname is globally unique, **overlapping hostnames are not supported** and a hostname can only be routed to one node or tunnel at a time.
+
+<MeshHostnameRoutingDiagram />
+
+For a deeper look at the packet flow behind hostname routing, refer to the [announcement blog post](https://blog.cloudflare.com/tunnel-hostname-routing/).
+
+### Prerequisites
+
+- **Run a supported Mesh node version.** Hostname routing requires the Mesh node to run Linux Cloudflare One Client version `2026.6.822.0` or newer.
+- **Configure the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol).** Hostname routing does not work if the device profile uses WireGuard instead.
+- **Enable the Gateway proxy** with TCP, UDP, and ICMP:
+
+  <Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
+
+- **Route the following IPv4 ranges through Cloudflare** in the [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration of **both** the Mesh node's device profile **and** your client device profiles. In Include mode, add each range. In Exclude mode, ensure none of them (or their parent ranges) are excluded.
+
+  | Purpose                     | IPv4            |
+  | --------------------------- | --------------- |
+  | Mesh device IP range        | `100.96.0.0/12` |
+  | Cloudflare source IP range  | `100.64.0.0/12` |
+
+  The hostname routing (token IP) range (`172.64.128.0/20`) and all Cloudflare One IPv6 ranges are [automatically routed through Cloudflare](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges) and do not need to be added manually.
+
+- **Remove the hostname's top-level domain from [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/)** on client devices, so the DNS query is sent to Cloudflare Gateway for resolution.
+
+### Add a hostname route
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Select your Mesh node.
+3. Go to the **Routes** tab.
+4. Select **Add route**, then select **Private hostname**.
+5. Enter the fully qualified domain name (FQDN) you want to route through this node (for example, `wiki.internal.local`).
+
+   <Render file="tunnel/hostname-format-restrictions" product="cloudflare-one" />
+
+6. (Optionally) add a description for the route.
+7. Select **Add hostname**.
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+  path="/accounts/{account_id}/zerotrust/routes/hostname"
+  method="POST"
+  json={{
+    hostname: "wiki.internal.local",
+    tunnel_id: "{mesh_node_id}",
+    comment: "Internal wiki",
+  }}
+/>
+
+</TabItem> </Tabs>
+
+### Configure DNS resolution
+
+For a **private** hostname, Gateway must be able to resolve the hostname to its private IP. How you configure this depends on whether DNS resolution and application traffic use the **same** connector or **different** connectors.
+
+#### The node resolves the hostname (default)
+
+By default, the Mesh node resolves the hostname using the DNS resolver configured on its host machine (for example, in `/etc/resolv.conf` on Linux) — the same way `cloudflared` does. If the node can already resolve the hostname to its private IP through that resolver, no further configuration is required.
+
+If the node cannot resolve the hostname on its own, the simplest option is to add an entry to the node's hosts file (for example, `/etc/hosts` on Linux) mapping the hostname to its private IP. Unlike a Cloudflare Tunnel, a Mesh node does **not** require you to run a dedicated DNS server:
+
+```txt title="/etc/hosts"
+10.0.0.50 wiki.internal.local
+```
+
+#### Split DNS: DNS and application traffic use different connectors
+
+You only need a Gateway [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) when the DNS query must be sent to a **different** connector than the application traffic — for example, the internal DNS server sits behind one Mesh node or Cloudflare Tunnel, while the application is reached through another. In that case:
+
+1. Add a [CIDR route](#add-a-route) for the DNS server's IP so Gateway can reach it through the connector where the DNS server lives (a Mesh node or a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)).
+2. Create a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/) that sends DNS queries for the hostname (or its domain) to that internal DNS server.
+
+:::note[Where to run the DNS server]
+
+If the DNS server is reached through a Mesh node, you cannot run it on the **same machine** as that node — the node's DNS interface binds port `53`. Host the DNS server on a separate machine in the same private network. In that case, configure return routes on the subnet so the DNS server's responses can reach the client:
+
+- **Mesh device IP range**: `100.96.0.0/12` → next hop is the Mesh node's local IP
+- **Initial resolved IP range**: `172.64.128.0/20` → next hop is the Mesh node's local IP
+
+:::
+
+For a **public** hostname, the Mesh node handles resolution: Gateway sends the DNS query to the node, the node resolves it through its upstream DNS provider, and then routes the packet to the destination and egresses using its own public IP. No internal DNS server or resolver policy is required.
+
+### Secure hostname traffic
+
+After adding a hostname route, secure it with either an [Access self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) or [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/). For details and examples, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#3-recommended-filter-network-traffic-with-gateway).
+
+### Limitations
+
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one" />

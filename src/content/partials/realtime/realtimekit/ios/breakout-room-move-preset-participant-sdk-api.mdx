@@ -1,0 +1,20 @@
+---
+{}
+
+---
+```swift
+meeting.connectedMeetings.moveParticipantsWithCustomPreset(
+    sourceMeetingId: "SOURCE_MEETING_ID",
+    destinationMeetingId: "TARGET_MEETING_ID",
+    participants: [
+        MoveParticipantPayload(id: "PARTICIPANT_ID_1", presetId: "PRESET_ID_1"),
+        MoveParticipantPayload(id: "PARTICIPANT_ID_2", presetId: "PRESET_ID_2")
+    ]
+) { error in
+    if let error = error {
+        print("Failed to move participants: \(error)")
+    } else {
+        print("Participants moved with custom preset successfully")
+    }
+}
+```

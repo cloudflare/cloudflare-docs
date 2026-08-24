@@ -1,0 +1,38 @@
+---
+{}
+
+---
+```swift
+meeting.connectedMeetings.getConnectedMeetings { result in
+    switch result {
+    case .success(let breakoutRoomsInfo):
+        print("Parent Meeting: \(String(describing: breakoutRoomsInfo.parentMeeting))")
+        print("Breakout Rooms: \(breakoutRoomsInfo.meetings)")
+    case .failure(let error):
+        print("Failed to fetch breakout rooms: \(error.value.message)")
+    }
+}
+```
+
+`breakoutRoomsInfo` is an object containing the list of breakout rooms and their participants, along with details of the parent meeting.
+
+This data can be used to display the list of breakout rooms and participants in the UI. This API refetches the list of breakout rooms and participants, and can therefore be considered the source of truth. It is advised to call this API to get the latest state if a lot of changes are in progress.
+
+You can also listen to the `onStateUpdate` event to receive real-time updates to the list of breakout rooms and participants.
+
+```swift
+class MyListener: RtkConnectedMeetingsEventListener {
+    func onStateUpdate(meetings: [RtkConnectedMeeting], parentMeeting: RtkConnectedMeeting?) {
+        print("State updated. Meetings: \(meetings), Parent: \(String(describing: parentMeeting))")
+
+        // Alternatively, access state directly from the connectedMeetings object
+        print("Meetings List: \(meeting.connectedMeetings.meetings)")
+        print("Parent Meeting: \(String(describing: meeting.connectedMeetings.parentMeeting))")
+    }
+
+    func onChangingMeeting(meetingId: String) {}
+    func onMeetingChanged(error: MeetingError?) {}
+}
+
+meeting.addConnectedMeetingsEventListener(MyListener())
+```

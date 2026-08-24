@@ -1,0 +1,78 @@
+---
+pcx_content_type: concept
+title: Privacy Pass Protocol
+description: The Privacy Pass roles, the issuance and redemption flow.
+products:
+  - privacy-pass
+sidebar:
+  order: 1
+---
+
+Privacy Pass splits responsibility across four roles so that no single party knows everything about user's identity and activity. This page explains the information flow of the protocol. For who operates each role and the privacy properties this design provides, refer to [Deployment Models](/privacy-pass/concepts/deployment-models/).
+
+---
+
+## Roles overview
+
+|   Role   | Responsibility |
+| -------- | -------------- |
+| Client   | Requests access, conducts issuance and redemption protocols. |
+| Origin   | Issues token challenges and verifies redeemed tokens. |
+| Attester | Runs a deployment-specific attestation process to verify the client. |
+| Issuer   | Signs blinded token requests for attested clients. Cloudflare's issuers use publicly verifiable Blind RSA (token type `2`). |
+
+---
+
+## Protocol interaction
+
+As defined in RFC 9576, the flow runs across two protocols: **issuance** (obtaining a token) and **redemption** (using it for access).
+
+```txt
+   ┌────────┐            ┌────────┐         ┌──────────┐         ┌────────┐
+   │ Origin │            │ Client │         │ Attester │         │ Issuer │
+   └────────┘            └────────┘         └──────────┘         └────────┘
+       │                     │                   │                   │
+       │<───── Request ──────│                   │                   │
+       │                     │                   │                   │
+       │── TokenChallenge ──>│                   │                   │
+       │                     │                   │                   │
+       │                     │<== Attestation ==>│                   │
+       │                     │                                       │
+       │                     │─── TokenRequest+Attestation Proof ───>│
+       │                     │                                       │[Verifies Attestation]
+       │                     │<──────────── TokenResponse ───────────│
+       │                     │[Finalises Token]
+       │<── Request+Token ───│
+       │                     │
+       │────── 200 OK ──────>│
+```
+
+**Initial Request**
+
+1. The Client sends a request to the Origin.
+2. The Origin responds with a **token challenge**. If the Client has no token to redeem, it begins the **issuance protocol** with an Issuer the Origin trusts.
+
+**Issuance Protocol**
+
+1. The issuance protocol begins with the Client completing a deployment-specific **attestation process**. This step is intentionally open-ended so different use cases can define their own attestation. 
+2. Once the Attester verifies the Client, the Client sends a **blinded token request**–a request to sign a masked version of the token, preventing the finalized version from being linked to the original request–to the Issuer, along with proof of attestation.
+3. The Issuer checks the verification, signs the blinded token, and returns it. The Client **finalises** it to recover the Privacy Pass token, completing the issuance protocol.
+
+**Redemption Protocol**
+
+1. The interaction finishes with the **redemption protocol**, where the Client sends the token along with its original request back to the Origin.
+2. The Origin verifies the signature and responds with `200 OK`, granting access.
+
+---
+
+## See it in code
+
+To run the complete issuance and redemption flow on your own machine — no Cloudflare setup required — see the local example in [Getting started](/privacy-pass/getting-started/).
+
+---
+
+## Related resources
+
+- [RFC 9576: Privacy Pass Architecture](https://datatracker.ietf.org/doc/rfc9576/)
+- [RFC 9577: The Privacy Pass HTTP Authentication Scheme](https://datatracker.ietf.org/doc/rfc9577/)
+- [RFC 9578: Privacy Pass Issuance Protocols](https://datatracker.ietf.org/doc/rfc9578/)

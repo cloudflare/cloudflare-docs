@@ -6,6 +6,8 @@ products:
   - workers
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 ## Background
 
 The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/logs/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
@@ -15,6 +17,8 @@ The `tail()` handler is called once each time the connected producer Worker is i
 To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/logs/tail-workers/).
 
 ## Syntax
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
 export default {
@@ -26,6 +30,19 @@ export default {
   }
 }
 ```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, fetch
+import json
+
+class Default(WorkerEntrypoint):
+    async def tail(self, events, env, ctx):
+        await fetch("<YOUR_ENDPOINT>", method="POST", body=json.dumps(events))
+```
+
+</TabItem> </Tabs>
 
 ### Parameters
 

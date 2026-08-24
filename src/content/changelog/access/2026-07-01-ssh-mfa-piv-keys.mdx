@@ -1,0 +1,19 @@
+---
+title: Independent MFA for infrastructure applications
+description: Add hardware-backed multi-factor authentication to SSH connections through Access for Infrastructure.
+date: 2026-07-01
+products:
+  - access
+---
+
+[Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) now supports independent multi-factor authentication (MFA) for SSH connections using YubiKey PIV keys. This adds a hardware-backed second factor to SSH access, ensuring that a compromised device session alone is not sufficient to reach your servers.
+
+With per-application and per-policy configuration, you can enforce PIV key authentication for sensitive usernames (for example, `root`) while applying different requirements for other usernames. You can also set an MFA session duration to control how often users must re-authenticate.
+
+## Enrollment
+
+Users enroll their YubiKey PIV key through the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). For enrollment instructions and SSH client setup, refer to [Enroll a PIV key for infrastructure apps](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-piv-key-for-infrastructure-apps).
+
+## Configuration
+
+For setup instructions, refer to [Enforce MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).

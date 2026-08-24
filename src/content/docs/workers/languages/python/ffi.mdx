@@ -56,8 +56,6 @@ class Default(WorkerEntrypoint):
         return Response(bar) # returns "baz"
 ```
 
-Under the hood, `env` is actually a JavaScript object. When you call `.FOO`, you are accessing this property via a [`JsProxy`](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy) — special proxy object that makes a JavaScript object behave like a Python object.
-
 ### Converting Python to JavaScript
 
 Occasionally, to interoperate with JavaScript APIs, you may need to convert a Python object to JavaScript. Pyodide provides a `to_js` function to facilitate this conversion.
@@ -77,7 +75,10 @@ For more details, see out the [documentation on `pyodide.ffi.to_js`](https://pyo
 
 ## Using JavaScript globals from Python Workers
 
-When writing Workers in Python, you can access JavaScript globals by importing them from the `js` module. For example, note how `Response` is imported from `js` in the example below:
+We recommend using the `workers` module, which is provided by our `workers-runtime-sdk` package, to access JavaScript globals in a more Pythonic way.
+However, if you need to access JavaScript globals directly for any reason, you can import them from the `js` module.
+
+For example, note how `Response` is imported from `js` in the example below:
 
 ```python
 from workers import WorkerEntrypoint

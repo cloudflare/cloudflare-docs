@@ -185,6 +185,103 @@ To prevent issues with DNS resolution for a Spectrum application, do not use the
 
 </Details>
 
+## Create a Spectrum application using a virtual network origin
+
+To proxy TCP or UDP traffic to an origin on your private network, attach a Cloudflare Tunnel [virtual network](/cloudflare-one/networks/virtual-networks/) to a Spectrum application. Spectrum routes traffic through the connector (Cloudflare Tunnel or Cloudflare WAN connection) associated with that virtual network. This provides an alternative to the previous pattern of putting a load balancer in front of a private origin.
+
+Virtual network origins are only supported for TCP and UDP applications. The origin must be a single private IP routable within the specified virtual network. Port ranges, hostname origins (`origin_dns`), and multiple addresses in `origin_direct` are not supported. [Proxy Protocol](/spectrum/how-to/enable-proxy-protocol/) is not currently supported, so `proxy_protocol` must be set to `off`. For details on validation errors, refer to [Error codes](/spectrum/reference/error-codes/).
+
+For a primer on virtual networks, refer to [Virtual networks](/cloudflare-one/networks/virtual-networks/).
+
+### Before you begin
+
+Set up the virtual network and a route covering your origin IP before creating the Spectrum application:
+
+- Create a virtual network and a Cloudflare Tunnel that carries it by following [Manage virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/).
+- Attach a route covering your origin's private IP to the tunnel by following [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
+
+For Cloudflare WAN (formerly Magic WAN) as the connector, refer to [Get started with Cloudflare WAN](/cloudflare-wan/get-started/) for setting up tunnel endpoints and routes.
+
+<Details header="Add your application via Dashboard">
+
+1. In the Cloudflare dashboard, go to the **Spectrum** page.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Select **Create an Application**.
+3. Under **Application Type**, select **TCP** or **UDP**.
+4. Under **Domain**, enter the domain that will use Spectrum.
+5. Under **Edge Port**, enter the port Cloudflare should use for your application.
+6. Under **Origin**, select **Virtual Network**.
+7. Under **Virtual Network**, select the virtual network that contains your origin.
+8. Under **IP**, enter the private IP address of your origin.
+9. Under **Port**, enter a single port (port ranges are not supported).
+10. Select **Add**.
+
+</Details>
+
+<Details header="Add your application via API">
+
+Below is a curl example and the associated data being posted to the API.
+
+**API example:**
+
+<APIRequest
+	path="/zones/{zone_id}/spectrum/apps"
+	method="POST"
+	json={{
+		protocol: "tcp/22",
+		dns: {
+			type: "CNAME",
+			name: "ssh.example.com",
+		},
+		origin_direct: ["tcp://10.0.0.5:22"],
+		virtual_network_id: "f70ff985-a4ef-4643-bbbc-4a0ed4fc8415",
+		proxy_protocol: "off",
+		ip_firewall: true,
+		tls: "off",
+		edge_ips: {
+			type: "dynamic",
+			connectivity: "all",
+		},
+		traffic_type: "direct",
+	}}
+/>
+
+Set `origin_direct` to the private IP of your origin and `virtual_network_id` to the ID of the virtual network that the IP is routable within. You can list virtual networks for your account with the [List virtual networks](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/list/) endpoint.
+
+**Example data:**
+
+```json
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": "ea95132c15732412d22c1476fa83f27a",
+		"protocol": "tcp/22",
+		"dns": {
+			"type": "CNAME",
+			"name": "ssh.example.com"
+		},
+		"origin_direct": ["tcp://10.0.0.5:22"],
+		"virtual_network_id": "f70ff985-a4ef-4643-bbbc-4a0ed4fc8415",
+		"proxy_protocol": "off",
+		"ip_firewall": true,
+		"tls": "off",
+		"edge_ips": {
+			"type": "dynamic",
+			"connectivity": "all"
+		},
+		"traffic_type": "direct",
+		"created_on": "2014-01-02T02:20:00Z",
+		"modified_on": "2014-01-02T02:20:00Z"
+	}
+}
+```
+
+</Details>
+
 ## View traffic
 
 You can now proxy traffic through Cloudflare without additional configuration. As you run traffic through Cloudflare, you will see the last minute of traffic from **Spectrum** in the dashboard.

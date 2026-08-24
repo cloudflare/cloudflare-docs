@@ -1,0 +1,33 @@
+---
+title: Flagship API reference now available
+description: Manage Flagship apps and feature flags programmatically with the Cloudflare API.
+products:
+  - flagship
+date: 2026-06-10
+---
+
+The **[Flagship API reference](/api/resources/flagship/)** is now available. You can use the Cloudflare API to create and update apps, and to create, update, delete, and list feature flags without using the dashboard.
+
+For example, create a new boolean flag with the API:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/flagship/apps/$APP_ID/flags \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -d '{
+    "key": "new-checkout",
+    "enabled": true,
+    "default_variation": "off",
+    "variations": {
+      "off": false,
+      "on": true
+    },
+    "rules": []
+  }'
+```
+
+To create an API token, go to [Account API Tokens](https://dash.cloudflare.com/?to=/:account/api-tokens) in the Cloudflare dashboard and search for Flagship.
+
+The API reference includes endpoints for Flagship apps, flags, changelog entries, and flag evaluation. Agents can also use the [Flagship reference in the Cloudflare skill](https://github.com/cloudflare/skills/tree/main/skills/cloudflare/references/flagship) to create and manage Flagship resources.
+
+Refer to the [Flagship documentation](/flagship/) to learn more about evaluating feature flags from your applications.

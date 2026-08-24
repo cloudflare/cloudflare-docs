@@ -1,0 +1,20 @@
+---
+title: Service token support for MCP server portals
+description: You can now use an Access service token to connect autonomous agents and bots to an MCP server portal with full access to upstream MCP servers.
+date: 2026-06-26
+products:
+  - cloudflare-one
+  - access
+---
+
+You can now connect autonomous agents and bots to an [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/) using an [Access service token](/cloudflare-one/access-controls/service-credentials/service-tokens/). Service token sessions can reach upstream MCP servers through the portal without a browser-based OAuth flow.
+
+To set this up:
+
+- Add a [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth) that matches your service token to the portal's Access application.
+- Add a Service Auth policy that matches the same token to each linked MCP server's Access application.
+- Turn **Require user auth** off (`on_behalf: false`) for each linked server so the portal uses the admin credential instead of a per-user OAuth grant.
+
+The bot connects with `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers and sees the tools from every linked server it is authorized for. Servers that still require per-user OAuth are excluded from service token sessions because a service token cannot complete a per-user OAuth grant.
+
+For step-by-step setup, refer to [Connect with a service token](/cloudflare-one/access-controls/ai-controls/mcp-portals/#connect-with-a-service-token).

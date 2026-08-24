@@ -1,0 +1,244 @@
+---
+pcx_content_type: how-to
+title: Organizations for MSSP and Distributors
+description: Set up and manage an MSSP or Distributor Organization to manage customer accounts and partner sub-organizations.
+sidebar:
+  order: 3
+products:
+  - fundamentals
+---
+
+:::note
+
+Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
+
+:::
+
+Organizations provides a multi-tier structure for MSSP (Managed Security Service Provider) and Distributor partners to manage customer accounts and create child partner Organizations.
+
+## Who is this for?
+
+Organizations for MSSP and Distributors is designed for:
+- **Distributors** managing multiple MSSP partner Organizations
+- **MSSPs** managing multiple end-customer accounts
+- **Channel partners** providing managed Cloudflare services
+
+Looking for Enterprise documentation? Refer to [Organizations for Enterprise](/fundamentals/organizations/for-enterprise/).
+
+## Hierarchy structure
+
+MSSP/Distributor Organizations use a **multi-tier structure**:
+
+```
+Distributor Organization
+├── MSSP Organization A
+│   ├── Sub-Organization A1
+│   │   ├── Customer Account 1
+│   │   │   ├── Zone A
+│   │   │   └── Zone B
+│   │   └── Customer Account 2
+│   │       └── Zone C
+│   └── Customer Account 3
+│       └── Zone D
+├── MSSP Organization B
+│   ├── Customer Account 4
+│   │   └── Zone E
+│   └── Customer Account 5
+│       └── Zone F
+└── MSSP Organization C
+    └── Sub-Organization C1
+        └── Customer Account 6
+            └── Zone G
+```
+
+**Key characteristics:**
+- Distributors create and manage child MSSP Organizations
+- MSSP Organizations can create up to 5 levels of nested sub-organizations
+- Each MSSP Organization manages its own customer accounts
+- MSSP Organization members have [implicit access](#implicit-access) to their customer accounts
+- Accounts can be moved between MSSP Organizations
+- Maximum: **500 accounts** and **5,000 zones** per Organization
+
+## Example: Distributor A
+
+**Distributor A** is a Cloudflare channel partner with 15 MSSP partners:
+- Each MSSP partner manages 5-50 end-customer accounts
+- Total: 15 MSSP Organizations, 300+ customer accounts
+
+**Distributor A's structure:**
+```
+Distributor A Organization
+├── Security MSSP
+│   ├── Retail Customer 1 (10 zones)
+│   ├── Healthcare Customer 2 (25 zones)
+│   └── Finance Customer 3 (40 zones)
+├── Web Performance MSSP
+│   ├── E-commerce Customer 4 (15 zones)
+│   └── Media Customer 5 (30 zones)
+└── [13 more MSSP Organizations...]
+```
+
+**What Distributor A can do:**
+- Create new MSSP Organizations for new partners
+- Create customer accounts within each MSSP Organization
+- Move customer accounts between MSSP Organizations if ownership changes
+- View aggregate analytics across all MSSP Organizations
+- Share security policies across MSSP Organizations
+
+**What each MSSP can do:**
+- Manage their own customer accounts
+- Create new customer accounts for new clients
+- Invite MSSP team members with implicit access to all customer accounts
+- Share WAF and Gateway policies across their customer accounts
+- View aggregate analytics across their customer accounts
+
+## Set up your Organization
+
+MSSP/Distributor Organizations cannot be self-serve created by customers. To get started:
+
+1. Contact your **Cloudflare account team** to request an MSSP or Distributor Organization.
+2. Cloudflare will create your Organization and assign the initial Organization Super Administrator.
+3. The initial Organization Super Administrator must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on their Cloudflare user account.
+4. Once created, the Organization Super Administrator can begin managing the Organization from the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+:::note
+Organization type (Enterprise vs MSSP/Distributor) is set at creation and cannot be changed. If you need a different type, a new Organization must be created.
+:::
+
+### Create child MSSP Organizations
+
+Distributors can create child MSSP partner Organizations. Each MSSP Organization operates independently and manages its own customer accounts.
+
+### Create new accounts
+
+MSSP Organizations can self-serve create new customer accounts within their Organization. This is a key difference from [Enterprise Organizations](/fundamentals/organizations/for-enterprise/), which cannot self-serve create accounts.
+
+### Move accounts between Organizations
+
+Move customer accounts from one MSSP Organization to another when ownership changes or customers switch providers.
+
+## Manage members
+
+Distributor and MSSP Organization Super Administrators can add and manage Organization members directly from the Cloudflare dashboard. No support ticket is required.
+
+### Organization Super Administrator
+
+When your Organization is created, the initial user becomes the Organization Super Administrator. This role provides [implicit access](#implicit-access) to all accounts in your Organization and allows you to manage memberships at the Organization level.
+
+:::note
+Organization Super Administrator is the only Organization-level role available today. All Organization members have the same level of access. Additional roles (read-only, billing, audit log) will be available in a future release.
+:::
+
+:::note
+Any Organization Super Administrator can add or remove other Organization Super Administrators at any time.
+:::
+
+### Implicit access
+
+Organization members receive **implicit access** to all accounts in the Organization. Implicit access means:
+
+- You do not need explicit membership on each individual account.
+- When you go to any account within your Organization, you automatically have Super Administrator permissions on that account.
+- Implicit access is granted at the Organization level — you cannot grant implicit access to a subset of accounts.
+- Implicit access is equivalent to Super Administrator. There is no read-only implicit access today.
+- For Distributor Organizations, implicit access applies within each tier — Distributor admins access all child MSSP Organizations and their accounts.
+
+Implicit access is separate from any existing per-account membership. If a user was already an explicit member of an account before it was added to the Organization, that existing membership is unaffected.
+
+### Invite members
+
+You can invite additional members to your Organization. Invited members receive implicit Super Administrator access to all accounts in the Organization.
+
+1. From the Organization overview, select **Members**.
+2. Select **Invite member**.
+3. Enter the email address.
+4. Select **Send invitation**.
+
+The user receives an email invitation. After accepting, they have implicit access to all accounts in the Organization.
+
+### Member authentication requirements
+
+All users who will be Organization members must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on their Cloudflare user account **before** they can accept an Organization invitation. This is a per-user requirement, not an account-level setting.
+
+- If a user does not have 2FA or SSO enabled, they will not be able to accept the invitation.
+- Ask the user to enable 2FA or SSO first, then resend the invitation.
+- For instructions on enabling 2FA, refer to [Set up 2FA](/fundamentals/user-profiles/2fa/).
+- For SSO configuration, refer to [Dashboard SSO](/fundamentals/manage-members/dashboard-sso/).
+
+## Share policies
+
+Organizations allows you to share WAF custom rulesets and Zero Trust Gateway policies (DNS, Network, HTTP, Resolver) across accounts in your Organization. Shared policies are read-only in receiving accounts and automatically stay in sync when updated in the source account.
+
+For Distributor Organizations, policies can be shared across MSSP Organization boundaries within the same Distributor Organization.
+
+Organizations also supports [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/), which lets you configure a single identity provider (such as Okta or Entra ID) in one account and share it across all accounts in your Organization. Shared IdP connections are read-only in recipient accounts and are automatically provisioned or removed as accounts join or leave the Organization.
+
+For detailed instructions, refer to [Policy sharing](/fundamentals/organizations/policy-sharing/).
+
+:::note
+Policy sharing requires the appropriate entitlements. Organizations does not grant access to WAF or Gateway features — your accounts must already have the required Enterprise WAF or Zero Trust Gateway SKUs.
+:::
+
+## View aggregate analytics
+
+You can view, filter, and download aggregate HTTP analytics across all accounts in your Organization:
+
+1. From the Organization overview, select **Analytics & Logs**.
+2. Use filters to narrow results by date range, account, domain, or other criteria.
+3. To export data, select **Download**.
+
+The data includes traffic for proxied hostnames and may be based on a sample. This data does not reflect billable usage.
+
+## Manage your Organization
+
+### Rename your Organization
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Next to **Organization name**, select **Rename**.
+3. Enter the new name.
+4. Select **Rename**.
+
+### Edit customer identification data
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Next to **Customer identification data**, select **Edit**.
+3. Update the information.
+4. Select **Save**.
+
+### View audit logs
+
+Organization audit logs capture user-initiated actions performed by Organization Super Administrators through Organization-level APIs and the dashboard. These logs are separate from account-level audit logs — actions performed within a specific account continue to appear in that account's audit logs.
+
+To view Organization audit logs in the dashboard:
+
+1. Go to **Organizations** > **Manage Organization**.
+2. Select **Audit Logs**.
+
+You can also retrieve Organization audit logs via the API:
+
+```bash
+GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit
+```
+
+If you are viewing account-level audit logs and the account belongs to an Organization where you are an Organization Super Administrator, you can select **View Organization Audit Logs** to go to the parent Organization's audit logs.
+
+For more details on audit log structure, filtering, and retention, refer to [Audit Logs — Organization Activity Logs](/fundamentals/account/account-security/audit-logs/#organization-activity-logs).
+
+### API
+
+You can manage Organizations programmatically using the [Cloudflare Organizations API](/api/resources/organizations/). The API supports creating, updating, deleting Organizations, managing members, and assigning accounts.
+
+### Terraform
+
+You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
+
+:::note
+The Terraform provider currently requires **API Keys** for authentication with Organization resources. API Token support is not yet fully available for all Organization operations.
+:::
+
+If you encounter errors during setup or management, refer to [Troubleshooting](/fundamentals/organizations/limitations/#troubleshooting).
+
+## What you cannot do (today)
+
+### Assign existing accounts
+MSSP/Distributor Organizations cannot assign existing accounts. Use account creation to add new accounts to your Organization.

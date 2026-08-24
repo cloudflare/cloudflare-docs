@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: McpAgent
-description: Build stateful MCP servers on Cloudflare by extending the McpAgent class with persistent storage and agent capabilities.
+description: Reference the deprecated, feature-frozen McpAgent class while migrating existing stateful MCP servers to stateless handlers.
 tags:
   - MCP
 sidebar:
@@ -12,7 +12,19 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-When you build MCP Servers on Cloudflare, you extend the [`McpAgent` class](https://github.com/cloudflare/agents/blob/main/packages/agents/src/mcp.ts), from the Agents SDK:
+`McpAgent` creates a stateful legacy MCP server backed by a Durable Object.
+
+:::caution[Deprecated]
+
+`McpAgent` remains available only for existing legacy servers while they migrate. It is deprecated and feature-frozen. Migrate to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) at your earliest convenience.
+
+A server that depends on MCP session state, RPC, pushed server-to-client requests, standalone streams, or replay needs a staged migration. Design stateless equivalents, add a stateless route, and serve both lanes until clients migrate and existing sessions drain.
+
+Keep importing the legacy server `McpServer` from `@modelcontextprotocol/sdk`. An SDK v2 server from `@modelcontextprotocol/server` cannot run inside `McpAgent`.
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the feature mapping and dual-era rollout.
+
+:::
 
 <TypeScriptExample>
 
@@ -40,7 +52,7 @@ export class MyMCP extends McpAgent {
 
 This means that each instance of your MCP server has its own durable state, backed by a [Durable Object](/durable-objects/), with its own [SQL database](/agents/runtime/lifecycle/state/).
 
-Your MCP server doesn't necessarily have to be an Agent. You can build MCP servers that are stateless, and just add [tools](/agents/model-context-protocol/protocol/tools/) to your MCP server using the `@modelcontextprotocol/sdk` package.
+A stateless server can define [tools](/agents/model-context-protocol/protocol/tools/) with `@modelcontextprotocol/server` and serve them through `createMcpHandler`.
 
 But if you want your MCP server to:
 
@@ -257,171 +269,124 @@ export class MyMCP extends McpAgent<Env, State, {}> {
 
 </TypeScriptExample>
 
-## Elicitation (human-in-the-loop)
+## Elicitation on legacy servers
 
-MCP servers can request additional user input during tool execution using **elicitation**. The MCP client (like Claude Desktop) renders a form based on your JSON Schema and returns the user's response.
+[MCP elicitation](https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation) lets a server request user input while handling another request, such as a tool call. The legacy path defines two modes:
 
-### When to use elicitation
+- **Form mode** collects structured, non-sensitive data through the client.
+- **URL mode** sends the user to an out-of-band interaction, such as third-party authorization or payment.
 
-- Request structured input that was not part of the original tool call
-- Confirm high-stakes operations before proceeding
-- Gather additional context or preferences mid-execution
+The client must advertise support for a mode before the server sends it.
 
-### `elicitInput(options, context)`
+### Form mode
 
-Request structured input from the user during tool execution.
-
-**Parameters:**
-
-| Parameter                  | Type        | Description                                  |
-| -------------------------- | ----------- | -------------------------------------------- |
-| `options.message`          | string      | Message explaining what input is needed      |
-| `options.requestedSchema`  | JSON Schema | Schema defining the expected input structure |
-| `context.relatedRequestId` | string      | The `extra.requestId` from the tool handler  |
-
-**Returns:** `Promise<{ action: "accept" | "decline", content?: object }>`
-
-<TypeScriptExample>
-
-```ts
-import { McpAgent } from "agents/mcp";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
-
-type State = { counter: number };
-
-export class CounterMCP extends McpAgent<Env, State, {}> {
-	server = new McpServer({
-		name: "counter-server",
-		version: "1.0.0",
-	});
-
-	initialState: State = { counter: 0 };
-
-	async init() {
-		this.server.tool(
-			"increase-counter",
-			"Increase the counter by a user-specified amount",
-			{ confirm: z.boolean().describe("Do you want to increase the counter?") },
-			async ({ confirm }, extra) => {
-				if (!confirm) {
-					return { content: [{ type: "text", text: "Cancelled." }] };
-				}
-
-				// Request additional input from the user
-				const userInput = await this.server.server.elicitInput(
-					{
-						message: "By how much do you want to increase the counter?",
-						requestedSchema: {
-							type: "object",
-							properties: {
-								amount: {
-									type: "number",
-									title: "Amount",
-									description: "The amount to increase the counter by",
-								},
-							},
-							required: ["amount"],
-						},
-					},
-					{ relatedRequestId: extra.requestId },
-				);
-
-				// Check if user accepted or cancelled
-				if (userInput.action !== "accept" || !userInput.content) {
-					return { content: [{ type: "text", text: "Cancelled." }] };
-				}
-
-				// Use the input
-				const amount = Number(userInput.content.amount);
-				this.setState({
-					...this.state,
-					counter: this.state.counter + amount,
-				});
-
-				return {
-					content: [
-						{
-							type: "text",
-							text: `Counter increased by ${amount}, now at ${this.state.counter}`,
-						},
-					],
-				};
-			},
-		);
-	}
-}
-```
-
-</TypeScriptExample>
-
-### JSON Schema for forms
-
-The `requestedSchema` defines the form structure shown to the user:
-
-```ts
-const schema = {
-	type: "object",
-	properties: {
-		// Text input
-		name: {
-			type: "string",
-			title: "Name",
-			description: "Enter your name",
-		},
-		// Number input
-		amount: {
-			type: "number",
-			title: "Amount",
-			minimum: 1,
-			maximum: 100,
-		},
-		// Boolean (checkbox)
-		confirm: {
-			type: "boolean",
-			title: "I confirm this action",
-		},
-		// Enum (dropdown)
-		priority: {
-			type: "string",
-			enum: ["low", "medium", "high"],
-			title: "Priority",
-		},
-	},
-	required: ["name", "amount"],
-};
-```
-
-### Handling responses
+Call `this.server.server.elicitInput()` in a tool handler. Pass `extra.requestId` as `relatedRequestId` so the response returns on the stream for the originating tool call:
 
 <TypeScriptExample>
 
 ```ts
 const result = await this.server.server.elicitInput(
-	{ message: "Confirm action", requestedSchema: schema },
+	{
+		mode: "form",
+		message: "By how much do you want to increase the counter?",
+		requestedSchema: {
+			type: "object",
+			properties: {
+				amount: {
+					type: "number",
+					title: "Amount",
+					minimum: 1,
+					maximum: 100,
+				},
+			},
+			required: ["amount"],
+		},
+	},
 	{ relatedRequestId: extra.requestId },
 );
 
+if (result.action !== "accept" || !result.content) {
+	return { content: [{ type: "text", text: "Counter unchanged." }] };
+}
+
+const amount = Number(result.content.amount);
+```
+
+</TypeScriptExample>
+
+For backwards compatibility, form requests may omit `mode: "form"`. The schema supports flat objects with primitive fields. Do not use form mode to request passwords, API keys, access tokens, payment credentials, or other secrets.
+
+### URL mode
+
+Use URL mode for interactions that must happen outside the MCP client. The request includes a message, the URL, and a unique `elicitationId`:
+
+<TypeScriptExample>
+
+```ts
+const elicitationId = crypto.randomUUID();
+const result = await this.server.server.elicitInput(
+	{
+		mode: "url",
+		message: "Connect your account to continue.",
+		url: `https://example.com/connect?elicitationId=${elicitationId}`,
+		elicitationId,
+	},
+	{ relatedRequestId: extra.requestId },
+);
+
+if (result.action !== "accept") {
+	return { content: [{ type: "text", text: "Connection cancelled." }] };
+}
+
+return {
+	content: [
+		{
+			type: "text",
+			text: "Connection page opened. Complete it in your browser.",
+		},
+	],
+};
+```
+
+</TypeScriptExample>
+
+For URL mode, `accept` means the user consented to open the URL. It does not mean the external interaction finished. The server may later send `notifications/elicitation/complete` with the same `elicitationId`.
+
+Do not put secrets, personal information, or a pre-authenticated protected-resource URL in `url`. Production servers should use HTTPS. Bind each request to the authenticated user, and verify that the same user completes the external flow.
+
+### Handle responses
+
+Both modes return one of three actions:
+
+| Action    | Meaning                                                           |
+| --------- | ----------------------------------------------------------------- |
+| `accept`  | The user submitted the form or consented to open the URL.         |
+| `decline` | The user explicitly rejected the request.                         |
+| `cancel`  | The user dismissed the request without making an explicit choice. |
+
+Accepted form responses include `content` that matches `requestedSchema`. URL responses omit `content`. Decline and cancel responses typically omit it.
+
+<TypeScriptExample>
+
+```ts
 switch (result.action) {
 	case "accept":
-		// User submitted the form
-		const { name, amount } = result.content as { name: string; amount: number };
-		// Process the input...
+		// For form mode, validate and process result.content.
 		break;
-
 	case "decline":
-		// User cancelled
-		return { content: [{ type: "text", text: "Operation cancelled." }] };
+		return { content: [{ type: "text", text: "Request declined." }] };
+	case "cancel":
+		return { content: [{ type: "text", text: "Request dismissed." }] };
 }
 ```
 
 </TypeScriptExample>
 
 :::note[MCP client support]
-Elicitation requires MCP client support. Not all MCP clients implement the elicitation capability. Check the client documentation for compatibility.
+Not all MCP clients implement legacy elicitation. Check the client before depending on it and provide a fallback when appropriate. Agents acting as MCP clients can handle both modes through [MCP client elicitation handlers](/agents/model-context-protocol/apis/client-api/#elicitation).
 :::
 
-For more human-in-the-loop patterns including workflow-based approval, refer to [Human-in-the-loop patterns](/agents/concepts/agentic-patterns/human-in-the-loop/).
+For more human-in-the-loop patterns, refer to [Human-in-the-loop patterns](/agents/concepts/agentic-patterns/human-in-the-loop/).
 
 ## Next steps
 

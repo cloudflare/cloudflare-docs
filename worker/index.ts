@@ -1,6 +1,7 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
+import { markdownNotFound, requestsMarkdown } from "./markdown-404";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -24,10 +25,8 @@ const API_CATALOG = JSON.stringify({
 				},
 			],
 			"service-doc": [
-				{
-					href: "https://developers.cloudflare.com/api/index.md",
-					type: "text/markdown",
-				},
+				// TODO: Add a Markdown `service-doc` URL once /api/* supports a real
+				// Markdown representation (e.g. content negotiation or /index.md).
 				{
 					href: "https://developers.cloudflare.com/api/",
 					type: "text/html",
@@ -83,6 +82,16 @@ export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		const url = new URL(request.url);
 		const { pathname } = url;
+
+		// Image Resizing makes a subrequest to fetch the source image. Scope the
+		// bypass to /_astro/ so only asset paths skip the Worker, not arbitrary
+		// client requests with a spoofed Via header.
+		if (
+			pathname.startsWith("/_astro/") &&
+			/image-resizing/.test(request.headers.get("via") ?? "")
+		) {
+			return this.env.ASSETS.fetch(request);
+		}
 
 		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
@@ -192,6 +201,10 @@ export default class extends WorkerEntrypoint<Env> {
 		const response = await this.env.ASSETS.fetch(request);
 
 		if (response.status === 404) {
+			if (requestsMarkdown(request)) {
+				return markdownNotFound();
+			}
+
 			const section = new URL(response.url).pathname.split("/").at(1);
 
 			if (!section) return response;

@@ -11,7 +11,7 @@ tags:
   - AI
 ---
 
-import { Tabs, TabItem, Steps, DashButton } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 AI companies use crawlers to collect website content for training language models, generating search answers, and other purposes. A `robots.txt` file at the root of your domain tells these crawlers which content they should or should not access. When you turn on the managed `robots.txt` setting, Cloudflare generates and maintains a `robots.txt` file that instructs known AI crawlers to stay away from your content.
 
@@ -71,7 +71,7 @@ With the managed `robots.txt` enabled, Cloudflare will prepend our managed conte
 # BEGIN Cloudflare Managed content
 
 User-Agent: *
-Content-signal: search=yes, ai-train=no
+Content-signal: search=yes, ai-train=no, use=reference
 Allow: /
 
 User-agent: Amazonbot
@@ -115,26 +115,14 @@ If your website does not have a `robots.txt` file, Cloudflare creates a new file
 
 To implement a `robots.txt` file on your domain:
 
-<Tabs syncKey="dashNewNav">
-  <TabItem label="New dashboard" icon="rocket">
-    <Steps>
-      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
-         <DashButton url="/?to=/:account/:zone/security/settings" />
-      2. Filter by **Bot traffic**.
-      3. Go to **Instruct AI bot traffic with robots.txt**.
-      4. Turn on **Instruct AI bot traffic with robots.txt**.
-    </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **Bots**.
-      3. Select **Configure Bot Fight Mode**.
-      4. Turn on **Instruct bot traffic with robots.txt**.
-    </Steps>
-  </TabItem>
-</Tabs>
+     <DashButton url="/?to=/:account/:zone/security/settings" />
+  2. Filter by **Bot traffic**.
+  3. Go to **Set your preference to block training in robots.txt**.
+  4. Turn on **Set your preference to block training in robots.txt**.
+</Steps>
 
 ## Content Signals Policy
 
@@ -182,6 +170,24 @@ Alternatively, you can use [Security Settings](#implementation).
 :::caution
 Google Search Console may occasionally report `Syntax not understood` for Content Signals and newer directives in the `robots.txt` standard. However, we have observed no impact on crawling rates or SEO as a result of these reports.
 :::
+
+## Content use signal
+
+Cloudflare is testing `content-use`, an optional extension to [Content Signals](https://contentsignals.org/) that lives in your `robots.txt`. It adds a fourth field alongside the existing `search`, `ai-input`, and `ai-train` signals to describe what a crawler may keep and reuse after accessing your content. The field takes one of three values, from least to most permissive:
+
+| Value           | Meaning                                |
+| --------------- | -------------------------------------- |
+| `use=immediate` | Interact, but store and reuse nothing. |
+| `use=reference` | Index, excerpt, and link back.         |
+| `use=full`      | Summarize and reproduce.               |
+
+For customers who have turned on the managed `robots.txt` setting, Cloudflare adds `use=reference` to the managed content, in line with the existing default of `search=yes,ai-train=no`:
+
+```txt title="Managed robots.txt with the content-use signal"
+User-Agent: *
+Content-signal: search=yes, ai-train=no, use=reference
+Allow: /
+```
 
 ## Availability
 

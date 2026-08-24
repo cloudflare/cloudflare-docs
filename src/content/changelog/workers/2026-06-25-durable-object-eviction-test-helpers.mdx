@@ -1,0 +1,35 @@
+---
+title: Test Durable Object eviction with new cloudflare:test helpers
+description: evictDurableObject and evictAllDurableObjects let you test how Durable Objects behave across evictions in your Vitest tests.
+products:
+  - durable-objects
+  - workers
+date: 2026-06-25
+---
+
+The `@cloudflare/vitest-pool-workers` package now includes `evictDurableObject` and `evictAllDurableObjects` test helpers, exported from `cloudflare:test`.
+
+These helpers let you test how a Durable Object behaves across evictions, simulating the production lifecycle where an idle Durable Object can be evicted from memory.
+
+For more context, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
+
+```ts
+import { evictDurableObject, evictAllDurableObjects } from "cloudflare:test";
+import { env } from "cloudflare:workers";
+
+const id = env.COUNTER.idFromName("my-counter");
+const stub = env.COUNTER.get(id);
+
+// Evict the Durable Object instance pointed to by a specific stub
+await evictDurableObject(stub);
+
+// Close WebSockets instead of hibernating them
+await evictDurableObject(stub, { webSockets: "close" });
+
+// Evict all currently-running Durable Objects in evictable namespaces
+await evictAllDurableObjects();
+```
+
+These helpers are available in `@cloudflare/vitest-pool-workers@0.16.20` and later.
+
+Learn more in the [Test APIs reference](/workers/testing/vitest-integration/test-apis/#durable-objects) and the [Testing Durable Objects guide](/durable-objects/examples/testing-with-durable-objects/#testing-eviction).

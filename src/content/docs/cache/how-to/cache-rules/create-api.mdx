@@ -139,6 +139,46 @@ These examples are setting all the Cache Rules of a zone to a single rule, since
 </Details>
 
 
+<Details header="Example: Cache expected Vary responses">
+
+<APIRequest
+  path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+  method="PUT"
+  parameters={{ ruleset_phase: "http_request_cache_settings" }}
+  json={{
+    rules: [
+      {
+        expression: '(http.host eq "example.com")',
+        description: "cache expected vary responses",
+        action: "set_cache_settings",
+        action_parameters: {
+          cache: true,
+          vary: {
+            default: {
+              action: "bypass"
+            },
+            headers: {
+              accept: {
+                action: "normalize",
+                media_types: ["text/html", "application/json"]
+              },
+              "accept-language": {
+                action: "normalize",
+                languages: ["en", "fr", "de"]
+              }
+            }
+          }
+        }
+      }
+    ]
+  }}
+  roles={false}
+/>
+
+
+</Details>
+
+
 <Details header="Example: Update the position of an existing rule">
 
 <APIRequest

@@ -50,7 +50,7 @@ Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 | Response header size | 128 KB (total)    |
 | Response body size   | No enforced limit |
 
-Request body size limits depend on your Cloudflare account plan, not your Workers plan. Requests exceeding these limits return a `413 Request entity too large` error.
+Request body size limits depend on your Cloudflare account plan, not your Workers plan. Requests exceeding these limits return a [`413 Request entity too large`](/support/troubleshooting/http-status-codes/4xx-client-error/error-413/#cloudflare-specific-information) error.
 
 | Cloudflare Plan | Maximum request body size |
 | --------------- | ------------------------- |
@@ -290,7 +290,7 @@ To reduce Worker size:
 
 A Worker must parse and execute its global scope (top-level code outside of handlers) within 1 second. Larger bundles and expensive initialization code in global scope increase startup time.
 
-When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/general/#startup) for more details.
+When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/workers/#startup) for more details.
 
 To measure startup time, run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload`. Wrangler reports `startup_time_ms` in the output.
 
@@ -321,7 +321,7 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 
 ### Routes with `wrangler dev --remote` {/* routes-remote-dev */}
 
-When you run a [remote development](/workers/development-testing/#remote-bindings) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
+When you run a [remote development](/workers/local-development/#remote-bindings) session using the `--remote` flag, Cloudflare enforces a limit of 50 routes per zone. The Quick Editor in the Cloudflare dashboard also uses `wrangler dev --remote`, so the same limit applies.
 
 If your zone has more than 50 routes, you cannot run a remote session until you remove routes to get under the limit.
 

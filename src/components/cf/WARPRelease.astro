@@ -1,0 +1,146 @@
+---
+// CF source: src/components/WARPRelease.astro. Select + Download restyled for nimbus.
+import Details from "./Details.astro";
+import { marked } from "marked";
+import { z } from "astro/zod";
+import prettyBytes from "pretty-bytes";
+import { warpReleasesSchema } from "~/schemas";
+import platforms from "~/util/warp-platforms.json";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import { LinkButton } from "@/components/ui/link-button";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	header: z.string(),
+	open: z.boolean().optional(),
+	release: warpReleasesSchema,
+});
+
+const { header, open, release } = props.parse(Astro.props);
+
+const getPrettyLinuxName = (platform: string) => {
+	const platformInfo = platforms.find((p) => p.platform === platform);
+
+	if (platformInfo) {
+		return platformInfo.display_name;
+	}
+
+	return platform;
+};
+
+const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
+	(a, b) => {
+		return getPrettyLinuxName(a[0]).localeCompare(getPrettyLinuxName(b[0]));
+	},
+);
+---
+
+<Details header={header} open={open}>
+	<warp-download
+		data-version={release.version}
+		data-platforms={JSON.stringify(sortedPlatforms)}
+	>
+		<p>
+			<div class="flex gap-2">
+				<span>
+					<strong>Version: </strong>
+					{release.platformName}
+					{" "}
+					{release.version}
+				</span>
+				<span>
+					<strong>Date: </strong>
+					{release.releaseDate.toISOString().split("T")[0]}
+				</span>
+				{
+					release.packageSize && (
+						<span>
+							<strong>Size: </strong>
+							<span data-size>{prettyBytes(release.packageSize)}</span>
+						</span>
+					)
+				}
+			</div>
+		</p>
+		<div class="my-3 flex flex-wrap items-center gap-3">
+			{
+				sortedPlatforms.length > 0 ? (
+					<>
+						<div class="relative inline-flex">
+							<select
+								aria-label="Select Linux distribution"
+								class="border-border bg-background text-foreground hover:border-foreground/20 focus-visible:ring-primary/50 h-9 appearance-none rounded-md border pr-9 pl-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
+							>
+								{sortedPlatforms.map(([platform]) => (
+									<option value={platform}>
+										{getPrettyLinuxName(platform)}
+									</option>
+								))}
+							</select>
+							<Icon
+								name="ph:caret-down"
+								aria-hidden="true"
+								class="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2"
+							/>
+						</div>
+						<LinkButton
+							variant="primary"
+							size="base"
+							data-linux-download
+							href={`https://downloads.cloudflareclient.com/v1/download/${sortedPlatforms[0][0]}/version/${release.version}`}
+						>
+							Download
+						</LinkButton>
+					</>
+				) : (
+					<LinkButton variant="primary" size="base" href={release.packageURL}>
+						Download
+					</LinkButton>
+				)
+			}
+		</div>
+		<p>
+			<span>
+				<h4>Release notes</h4>
+			</span>
+			<Fragment set:html={marked.parse(release.releaseNotes)} />
+		</p>
+	</warp-download>
+</Details>
+
+<script>
+	import prettyBytes from "pretty-bytes";
+
+	class WarpDownload extends HTMLElement {
+		connectedCallback() {
+			const platforms = JSON.parse(this.dataset.platforms as string);
+
+			const dropdown = this.querySelector<HTMLSelectElement>("select");
+
+			dropdown?.addEventListener("change", () => {
+				const platform = dropdown?.value;
+
+				const download = this.querySelector<HTMLAnchorElement>(
+					"a[data-linux-download]",
+				);
+				const size = this.querySelector<HTMLSpanElement>("span[data-size]");
+
+				download?.setAttribute(
+					"href",
+					`https://downloads.cloudflareclient.com/v1/download/${platform}/version/${this.dataset.version}`,
+				);
+
+				if (size) {
+					const platformInfo = platforms.find(
+						([p]: [string, number]) => p === platform,
+					);
+
+					size.textContent = prettyBytes(Number(platformInfo?.[1] ?? 0));
+				}
+			});
+		}
+	}
+
+	customElements.define("warp-download", WarpDownload);
+</script>

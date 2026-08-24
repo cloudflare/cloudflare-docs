@@ -103,10 +103,10 @@ HTTP endpoints follow this format:
 https://{stream-id}.ingest.cloudflare.com
 ```
 
-Find your stream's endpoint URL in the Cloudflare dashboard under **Pipelines** > **Streams** or using the Wrangler CLI:
+Find your stream's endpoint URL in the Cloudflare dashboard under **Pipelines** > **Streams** or using the Wrangler CLI with either the stream ID or stream name:
 
 ```bash
-npx wrangler pipelines streams get <STREAM_ID>
+npx wrangler pipelines streams get <STREAM_NAME_OR_ID>
 ```
 
 ### Making requests

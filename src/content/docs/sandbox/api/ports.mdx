@@ -10,12 +10,18 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-:::note[Production requires custom domain]
-Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/).
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents ports and preview URLs on today's stable `@cloudflare/sandbox` package.
+
+Examples that use `startProcess` are stable-only. On **`@next`**, start services with `exec(argv)` then `waitForPort` / expose or tunnels — [Process execution](/sandbox/1-0-preview/processes/) and [Migrate](/sandbox/1-0-preview/migrate/).
 :::
 
-:::note[Alternative: quick tunnels]
-For quick development or `.workers.dev` deployments, consider [`sandbox.tunnels`](/sandbox/api/tunnels/), which returns `*.trycloudflare.com` URLs without DNS setup. `exposePort()` remains the recommended option for production.
+:::note[Production requires custom domain]
+Preview URLs require a custom domain with wildcard DNS routing in production. See [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
+:::
+
+:::note[Prefer `sandbox.tunnels` for public URLs]
+For most public-URL use cases — development, `.workers.dev` deployments, and production traffic — [`sandbox.tunnels`](/sandbox/api/tunnels/) is the recommended option. Use named tunnels for stable hostnames on a zone you control, or quick tunnels for zero-config `*.trycloudflare.com` URLs. `exposePort()` is appropriate when you want the Worker itself to front the request (for example, to inject authentication, rewrite responses, or call sandbox-only RPC methods on the same hostname).
 :::
 
 Expose services running in your sandbox via public preview URLs. See [Preview URLs concept](/sandbox/concepts/preview-urls/) for details.

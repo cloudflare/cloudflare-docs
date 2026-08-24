@@ -33,6 +33,10 @@ import { Example, Render } from "~/components";
 
 <Render file="get-started-fallback-origin" product="cloudflare-for-platforms" />
 
+:::note
+Changing the fallback origin hostname is non-disruptive. Existing custom hostname traffic continues to flow while the fallback origin is updated, and the change propagates across Cloudflare's edge within seconds.
+:::
+
 ### 2. (Optional) Create CNAME target
 
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#3-have-customer-create-cname-record). You may want to use a subdomain such as `customers.<SAAS_PROVIDER>.com`.

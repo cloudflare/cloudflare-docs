@@ -1,0 +1,241 @@
+{
+    "name": "@cf/moondream/moondream3.1-9B-A2B",
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.3,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 1,
+                    "currency": "USD"
+                }
+            ]
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
+        }
+    ],
+    "id": "1161560b-87f9-4795-afb3-a905cf21bcf8",
+    "source": 1,
+    "description": "Moondream 3 is a fast, efficient 9B mixture-of-experts vision language model (2B active parameters) that delivers frontier-level visual reasoning for tasks like object detection, pointing, OCR, and structured output.",
+    "task": {
+        "id": "882a91d1-c331-4eec-bdad-834c919942a8",
+        "name": "Image-to-Text",
+        "description": "Image to text models output a text from a given image. Image captioning or optical character recognition can be considered as the most common applications of image to text."
+    },
+    "created_at": "2026-07-07 14:39:02.726",
+    "tags": [],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "task": {
+                    "type": "string",
+                    "enum": [
+                        "query",
+                        "caption",
+                        "point",
+                        "detect"
+                    ],
+                    "default": "query",
+                    "description": "Which Moondream skill to run."
+                },
+                "image": {
+                    "type": "string",
+                    "description": "Input image as a public HTTPS URL or base64 data URI. Optional for `query`; required for `caption`, `point`, and `detect`."
+                },
+                "question": {
+                    "type": "string",
+                    "default": "What's in this image?",
+                    "description": "Question for the `query` task."
+                },
+                "caption_length": {
+                    "type": "string",
+                    "enum": [
+                        "short",
+                        "normal",
+                        "long"
+                    ],
+                    "default": "normal",
+                    "description": "Caption length for the `caption` task."
+                },
+                "target": {
+                    "type": "string",
+                    "default": "person",
+                    "description": "Object phrase to locate for `point` and `detect` tasks (e.g. 'person wearing a red shirt')."
+                },
+                "reasoning": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable reasoning trace for the `query` task."
+                },
+                "temperature": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2,
+                    "default": 0.2,
+                    "description": "Sampling temperature."
+                },
+                "top_p": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "default": 0.9,
+                    "description": "Top-p (nucleus) sampling."
+                },
+                "max_tokens": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 28672,
+                    "default": 8192,
+                    "description": "Max tokens to generate for `query` and `caption`."
+                },
+                "max_objects": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 500,
+                    "default": 150,
+                    "description": "Max objects to return for `point` and `detect`."
+                },
+                "stream": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Return incremental tokens for `query` and `caption`. `point` and `detect` do not support streaming."
+                }
+            }
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "properties": {
+                "finish_reason": {
+                    "type": "string",
+                    "description": "Reason the generation finished."
+                },
+                "metrics": {
+                    "type": "object",
+                    "properties": {
+                        "input_tokens": {
+                            "type": "integer",
+                            "description": "Number of input tokens consumed."
+                        },
+                        "output_tokens": {
+                            "type": "integer",
+                            "description": "Number of output tokens generated."
+                        },
+                        "prefill_time_ms": {
+                            "type": "number",
+                            "description": "Prefill time in milliseconds."
+                        },
+                        "decode_time_ms": {
+                            "type": "number",
+                            "description": "Decode time in milliseconds."
+                        },
+                        "ttft_ms": {
+                            "type": "number",
+                            "description": "Time to first token in milliseconds."
+                        }
+                    },
+                    "required": [
+                        "input_tokens",
+                        "output_tokens",
+                        "prefill_time_ms",
+                        "decode_time_ms",
+                        "ttft_ms"
+                    ]
+                },
+                "answer": {
+                    "type": "string",
+                    "description": "Answer text for the `query` task. Null for other tasks."
+                },
+                "caption": {
+                    "type": "string",
+                    "description": "Caption text for the `caption` task. Null for other tasks."
+                },
+                "points": {
+                    "type": "array",
+                    "description": "Located points for the `point` task. Null for other tasks.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "x": {
+                                "type": "number",
+                                "description": "X coordinate."
+                            },
+                            "y": {
+                                "type": "number",
+                                "description": "Y coordinate."
+                            }
+                        },
+                        "required": [
+                            "x",
+                            "y"
+                        ]
+                    }
+                },
+                "objects": {
+                    "type": "array",
+                    "description": "Detected bounding boxes for the `detect` task. Null for other tasks.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "x_min": {
+                                "type": "number",
+                                "description": "Minimum X coordinate."
+                            },
+                            "y_min": {
+                                "type": "number",
+                                "description": "Minimum Y coordinate."
+                            },
+                            "x_max": {
+                                "type": "number",
+                                "description": "Maximum X coordinate."
+                            },
+                            "y_max": {
+                                "type": "number",
+                                "description": "Maximum Y coordinate."
+                            }
+                        },
+                        "required": [
+                            "x_min",
+                            "y_min",
+                            "x_max",
+                            "y_max"
+                        ]
+                    }
+                },
+                "reasoning": {
+                    "type": "object",
+                    "description": "Reasoning trace for the `query` task when reasoning=true. Null otherwise.",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "Reasoning text."
+                        },
+                        "grounding": {
+                            "type": "array",
+                            "description": "Grounding information.",
+                            "items": {
+                                "type": "object"
+                            }
+                        }
+                    },
+                    "required": [
+                        "text"
+                    ]
+                }
+            },
+            "required": [
+                "finish_reason",
+                "metrics"
+            ]
+        }
+    },
+    "deprecated": false
+}

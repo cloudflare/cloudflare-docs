@@ -11,7 +11,7 @@ products:
   - browser-run
 ---
 
-import { GlossaryTooltip, Render, DashButton, Steps } from "~/components";
+import { GlossaryTooltip, Render, DashButton, Steps, Tabs, TabItem } from "~/components";
 
 Below you will find answers to our most commonly asked questions about Browser Run (formerly Browser Rendering).
 
@@ -80,6 +80,16 @@ For a complete reference, see [Quick Actions timeouts](/browser-run/reference/ti
 ---
 
 ## Getting started & Development
+
+### Why run browsers in the cloud instead of locally?
+
+Running a browser locally works for development and small-scale tasks, but has practical limits for production workloads.
+
+With Browser Run, browser sessions run on Cloudflare's infrastructure, so your automation runs without a local machine. There is no Chrome installation to maintain, no VM to keep running, and sessions launch on demand and shut down when done.
+
+You can also use [Cloudflare Queues](/queues/tutorials/web-crawler-with-browser-run/) to process batches of URLs asynchronously, allowing you to crawl at scale without managing queue infrastructure yourself.
+
+Browser sessions open on Cloudflare's global network, close to the incoming request. Browser Run is a [Workers binding](/browser-run/reference/wrangler/#bindings), so it integrates directly with [Durable Objects](/browser-run/how-to/browser-run-with-do/), Queues, and the rest of the Cloudflare developer platform.
 
 ### Does local development support all Browser Run features?
 
@@ -181,13 +191,59 @@ Yes. If your webpage or PDF requires a font that is not pre-installed, you can l
 
 ---
 
+## Session management
+
+### Should I open a new browser for every task, or reuse a session and open tabs
+
+For most workloads, reuse an existing browser session and open a new tab instead of launching a fresh browser for each task. Browser Run counts browser instances against your [concurrent browsers](/browser-run/limits/#workers-paid) and [new browser instance rate](/browser-run/limits/#workers-paid) limits, but tabs inside an existing session do not count against either limit. Reusing a session also avoids the cold-start cost of launching a new browser.
+
+A single browser can run many tabs, but all tabs share the same browser process and memory. Heavy pages (for example, pages with large JavaScript bundles, media, or complex DOMs) consume more memory per tab, so opening too many tabs in the same browser can cause it to crash. Test your workload to find a safe number of tabs per browser. For lightweight pages, tens of tabs may be fine. For heavy pages, only a few.
+
+If you reuse a session but still need isolation between tasks, use an incognito browser context. Incognito contexts isolate cookies, local storage, and cache from each other and from the default context, so you can run separate tasks in tabs within the same browser without data leaking between them.
+
+<Tabs syncKey="workersExamples">
+<TabItem label="Puppeteer">
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+const browser = await puppeteer.connect(env.MYBROWSER, sessionId);
+// or await puppeteer.launch(env.MYBROWSER);
+
+const context = await browser.createBrowserContext();
+const page = await context.newPage();
+```
+
+</TabItem>
+<TabItem label="Playwright">
+
+```ts
+import { connect } from "@cloudflare/playwright";
+
+const browser = await connect(env.BROWSER, sessionId);
+// or use the browser returned by acquire()
+
+const context = await browser.newContext();
+const page = await context.newPage();
+```
+
+</TabItem>
+</Tabs>
+
+Open a fresh browser only when you need full process-level isolation, a different browser configuration, or after a browser has become unstable. For automated screenshot, scrape, and crawl workloads, reusing sessions and tabs is usually the right choice. [Quick Actions](/browser-run/quick-actions/) manage sessions and tabs automatically, so you do not need to handle reuse yourself.
+
+---
+
 ## Security & Data Handling
 
 ### Does Cloudflare store or retain the HTML content I submit for rendering?
 
 For [Quick Actions](/browser-run/quick-actions/) (except the [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/)), [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), and [CDP](/browser-run/cdp/), Cloudflare processes content ephemerally and does not retain customer-submitted HTML or generated output (such as PDFs or screenshots) beyond what is required to perform the rendering operation. Once the response is returned, the content is immediately discarded from the rendering environment.
 
-The [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/) is an exception. Because crawl jobs run asynchronously, job results (including crawled page content in HTML, Markdown, or JSON format) are stored for 14 days after the job completes, after which the data is deleted. Crawl jobs have a maximum run time of seven days.
+There are two exceptions where data is retained beyond the session:
+
+- **Crawl endpoint**: The [`/crawl` Quick Actions endpoint](/browser-run/quick-actions/crawl-endpoint/) runs jobs asynchronously, so job results (including crawled page content in HTML, Markdown, or JSON format) are stored for 14 days after the job completes, after which the data is deleted. Crawl jobs have a maximum run time of seven days.
+- **Session recording**: Puppeteer, Playwright, and CDP sessions support an opt-in [session recording](/browser-run/features/session-recording/) feature. When enabled, DOM changes, mouse and keyboard events, and page navigation are captured as structured JSON events and retained for 30 days. Input field content is masked by default. Recordings are accessible through the [dashboard](/browser-run/features/session-recording/#view-recordings) and [API](/browser-run/features/session-recording/#retrieve-a-recording-via-api), and are automatically deleted after the retention period.
 
 ### Is there any temporary caching of submitted content?
 
