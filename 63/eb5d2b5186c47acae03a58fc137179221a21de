@@ -1,0 +1,39 @@
+src/content/changelog/agents/2026-07-20-agents-sdk-v0.18.0-mcp-sdk-v2.mdx
+  s_e0b9f423686126::t_b5e21dc98cd432 1-74
+src/content/docs/agents/model-context-protocol/apis/agent-api.mdx
+  s_e0b9f423686126::t_97b5dbb1f63924 15-25,53
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_e0b9f423686126::t_ef0c20368df700 15-17,688,707,722
+src/content/docs/agents/model-context-protocol/apis/handler-api.mdx
+  s_e0b9f423686126::t_db5deba03131bb 3-4,13,15,17-20,22,24,26,28,30,32,34,36,38,40,42,44,47-52,54-58,60,62-63,65,68-72,75,77,82,88,92,94-96,98-100,106,111,113,115,117-129,131,133,135,137,139,141,143,145,147,152-155,157,162,164,166,168,170,172,174-179,181,183,185,188,190-191,193,195-199,202,204,206,209-215,217-220,223,227,229,232,236-237,244,246,248,250,252-256,258,260-267,269,271,273,275,288-291,298-302,306-307,312,314,316,318,321-323,327-329,333-335
+src/content/docs/agents/model-context-protocol/guides/build-codemode-mcp-server.mdx
+  s_e0b9f423686126::t_f9f2c0eb658fbe 65,108
+src/content/docs/agents/model-context-protocol/guides/build-codemode-openapi-mcp-server.mdx
+  s_e0b9f423686126::t_c3080a5f2604fc 67,142
+src/content/docs/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2.mdx
+  s_e0b9f423686126::t_738ab110b5d689 1-383
+src/content/docs/agents/model-context-protocol/guides/remote-mcp-server.mdx
+  s_e0b9f423686126::t_088a9fdd354a7a 15,24-29,31
+src/content/docs/agents/model-context-protocol/protocol/authorization.mdx
+  s_e0b9f423686126::t_5504c174c83568 207,211,216-231,235-236,239-240
+src/content/docs/agents/model-context-protocol/protocol/tools.mdx
+  s_e0b9f423686126::t_a78cdca2fc02ed 15,17,33,38,44,46-49,70,72-75,112,115-128,149,155-161,166
+src/content/docs/agents/model-context-protocol/protocol/transport.mdx
+  s_e0b9f423686126::t_1fcdb5a027fb59 44,69,83,90,92,94,96,194-195,200-202,264,309-311,313-315,317,319,321
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "63eb5d2b5186c47acae03a58fc137179221a21de",
+  "prompts": {},
+  "sessions": {
+    "s_e0b9f423686126": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8033-abc7-749a-a944-8cf7bb5b97d6",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

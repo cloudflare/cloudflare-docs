@@ -1,0 +1,77 @@
+src/content/docs/agents/getting-started/testing-your-agent.mdx
+  s_cf5a65d2d6d59e::t_1ad8225bab7b77 21,28,34
+src/content/docs/agents/runtime/execution/sub-agents.mdx
+  s_cf5a65d2d6d59e::t_89748c1bd7abd2 128
+src/content/docs/durable-objects/best-practices/rules-of-durable-objects.mdx
+  s_cf5a65d2d6d59e::t_4fb0f1a736c773 1500,1549
+src/content/docs/durable-objects/examples/testing-with-durable-objects.mdx
+  s_b9899b497ba452::t_62f7483bfaa241 15,24,29,34,127,168,646-647
+src/content/docs/workers/best-practices/workers-best-practices.mdx
+  s_cf5a65d2d6d59e::t_b91ed27c34299d 919,921,923
+src/content/docs/workers/configuration/compatibility-flags.mdx
+  s_cf5a65d2d6d59e::t_c911e52d909fe4 62
+src/content/docs/workers/local-development/index.mdx
+  s_cf5a65d2d6d59e::t_73734c546c408d 77
+src/content/docs/workers/testing/vitest-integration/test-apis.mdx
+  s_b9899b497ba452::t_e41a7636bd81dc 13,328,346
+src/content/changelog/workers/2025-12-16-vitest-ctx-exports-support.mdx
+  s_939909fb9d9872::t_0c3ad20bb9cd98 36
+src/content/changelog/workers/2026-08-19-vitest-plugin.mdx
+  s_939909fb9d9872::t_fdc205f04086a2 1-25
+src/content/docs/workers/testing/vitest-integration/configuration.mdx
+  s_939909fb9d9872::t_a3b7fbd95ab1c4 19,41,50,64,68,90,94,143,166
+src/content/docs/workers/testing/vitest-integration/debugging.mdx
+  s_939909fb9d9872::t_f9ead742aa07f7 12,33
+src/content/docs/workers/testing/vitest-integration/index.mdx
+  s_939909fb9d9872::t_e032a658c43674 13,27-28
+src/content/docs/workers/testing/vitest-integration/isolation-and-concurrency.mdx
+  s_939909fb9d9872::t_d3037d631bc992 38,42
+src/content/docs/workers/testing/vitest-integration/known-issues.mdx
+  s_939909fb9d9872::t_80275dfa4695c7 12,48,85,107,162
+src/content/docs/workers/testing/vitest-integration/migration-guides/migrate-from-miniflare-2.mdx
+  s_939909fb9d9872::t_91da188d6b9a29 5,15,31,36,44,74,124
+src/content/docs/workers/testing/vitest-integration/migration-guides/migrate-from-unstable-dev.mdx
+  s_939909fb9d9872::t_de44f2548f49ad 5,18,65
+src/content/docs/workers/testing/vitest-integration/migration-guides/migrate-from-vitest-3-to-vitest-4.mdx
+  s_939909fb9d9872::t_af9af65f3ac9b2 5,17-22
+src/content/docs/workers/testing/vitest-integration/migration-guides/migrate-to-vitest-plugin.mdx
+  s_939909fb9d9872::t_f0a45fdaa1dcbb 1-48
+src/content/docs/workers/testing/vitest-integration/mock-outbound-requests.mdx
+  s_939909fb9d9872::t_3a5d095bb943f8 1-100
+src/content/docs/workers/testing/vitest-integration/recipes.mdx
+  s_939909fb9d9872::t_cc4861e3d59f42 13,15-33
+src/content/docs/workers/testing/vitest-integration/write-your-first-test.mdx
+  s_939909fb9d9872::t_4b21655d49568d 20,28,31,37,48,87,97,185,189
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f50afb278d5fe44ac33893193938a751b810855f",
+  "prompts": {},
+  "sessions": {
+    "s_939909fb9d9872": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a019a7-b8de-7522-a89a-59396710dfd5",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    },
+    "s_b9899b497ba452": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a015f4-f434-7862-8d78-f1983bd6ac10",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    },
+    "s_cf5a65d2d6d59e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a015ee-3e90-7030-abd4-8dc825a75847",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

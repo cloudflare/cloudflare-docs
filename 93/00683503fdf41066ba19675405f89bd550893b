@@ -1,0 +1,21 @@
+patches/astro-icon@1.1.5.patch
+  s_d950b151a507d8::t_f67abe328701e0 1-15
+pnpm-lock.yaml
+  s_d950b151a507d8::t_c416c91241c74a 10-14,153,7970
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9300683503fdf41066ba19675405f89bd550893b",
+  "prompts": {},
+  "sessions": {
+    "s_d950b151a507d8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd831-75d8-7ab3-921f-1a840fec0cb0",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

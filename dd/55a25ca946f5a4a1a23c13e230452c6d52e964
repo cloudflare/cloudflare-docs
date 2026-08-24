@@ -1,0 +1,19 @@
+src/content/docs/fundamentals/api/get-started/account-owned-tokens.mdx
+  s_6db1ff63dada0c::t_1c60e577a566ea 62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dd55a25ca946f5a4a1a23c13e230452c6d52e964",
+  "prompts": {},
+  "sessions": {
+    "s_6db1ff63dada0c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6b05-ccb7-7a40-a058-d5f551c12147",
+        "model": "unknown"
+      },
+      "human_author": "Eric Falcao <efalcao@cloudflare.com>"
+    }
+  }
+}

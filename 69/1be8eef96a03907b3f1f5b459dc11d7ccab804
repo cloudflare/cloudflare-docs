@@ -1,0 +1,21 @@
+astro.config.ts
+  s_4418c5236c257c::t_5a7d23cfbd5fbe 265
+pnpm-workspace.yaml
+  s_4418c5236c257c::t_2650d4cb326b5f 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "691be8eef96a03907b3f1f5b459dc11d7ccab804",
+  "prompts": {},
+  "sessions": {
+    "s_4418c5236c257c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb483-bcd4-7c01-a493-49206da8167c",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}
