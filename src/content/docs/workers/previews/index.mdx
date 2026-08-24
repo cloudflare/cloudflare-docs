@@ -39,7 +39,7 @@ Each Preview gets two types of URLs. You can serve them on `workers.dev`, a [cus
 
 ### Settings and isolation
 
-Previews do not inherit production values. Configure each Preview independently, or set a [base configuration](/workers/previews/configuration/#base-configuration-and-wrangler-files) that new Previews start from. Full details in [Configuration](/workers/previews/configuration/).
+Previews do not inherit production values. Configure each Preview independently, or set a [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration) that new Previews start from. Full details in [Configuration](/workers/previews/configuration/).
 
 Durable Objects and Containers get separate state per Preview automatically. KV, D1, R2, and other resources are isolated when you bind the Preview to a separate resource. For the full matrix, refer to [Resources and isolation](/workers/previews/resources/).
 

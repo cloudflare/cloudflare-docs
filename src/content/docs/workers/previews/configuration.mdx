@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Configuration
-description: Configure variables, secrets, and bindings for Previews — as a base configuration for new Previews or scoped to one branch.
+description: Configure variables, secrets, and bindings for Previews — as a Base configuration for new Previews or scoped to one branch.
 sidebar:
   order: 2
 products:
@@ -10,27 +10,17 @@ products:
 
 import { WranglerConfig, PreviewsConfigDiagram } from "~/components";
 
-When you create a branch, Git gives you a copy of your code. Previews work the same way — each Preview gets its own copy of your code **and** its configuration (variables, secrets, bindings). Production is never affected.
+When you create a branch, Git gives you a copy of your code. Previews work the same way — when you run `npx wrangler preview`, you get a running deployment with your branch's code and a copy of your [Base configuration](#setting-your-previews-base-configuration).
 
-Your production settings do not carry over to Previews. If your code reads a binding from `env`, you need to declare it for Previews too — otherwise it will not exist at runtime.
+Each Preview owns its copy, so you can add, remove, or update any setting — variables, secrets, bindings, observability, and runtime — without affecting other Previews.
 
 ![Diagram showing main branch with code and production config branching into two feature Previews, each with their own copy of code and preview config](~/assets/images/workers/previews/preview-branching.svg)
 
-## Base configuration
+## Setting your Previews Base configuration
 
-Every new Preview needs variables, secrets, and bindings. Instead of setting these up from scratch each time, you can define a base configuration that new Previews start from. After a Preview is created, it owns its copy — you can change one Preview without affecting others.
+You can set your Base configuration in the dashboard or your Wrangler configuration file — whichever you use for production, use for Previews. For a step-by-step setup walkthrough, refer to [Get started](/workers/previews/get-started/#step-1-configure-previews-base-settings).
 
 <PreviewsConfigDiagram />
-
-How you set the base configuration depends on your workflow:
-
-| How you create Previews  | Source of truth                     | How to update it                                  |
-| ------------------------ | ----------------------------------- | ------------------------------------------------- |
-| `wrangler preview` or CI | The `previews` block in your branch | Edit the Wrangler file and run `wrangler preview` |
-| Dashboard                | The dashboard base configuration    | Edit Preview settings in the dashboard            |
-| API                      | The API base configuration          | Use the Preview API                               |
-
-The dashboard base configuration and the Wrangler `previews` block are independent — they do not sync with each other. Pick one.
 
 ## Wrangler configuration file
 
@@ -65,20 +55,20 @@ Your Wrangler file has production settings and a `previews` block. Production se
 
 </WranglerConfig>
 
-The `previews` block in your branch is the source of truth for that Preview. When you run `wrangler preview`, Wrangler reads this block and applies it. There is no command to push it to the dashboard — to set defaults for future branches, update the `previews` block on your main branch and let Git carry it forward.
+Set your `previews` block on your production branch (or wherever you branch from), so when you create a new branch it carries that configuration over. When you run `wrangler preview`, the `previews` block on that branch is always the source of truth.
 
-### What you need to restate and what is shared
+Your Wrangler configuration does not sync to the Previews Base section in the dashboard — if you see it empty there, that is expected. You will still see each individual Preview's settings in the dashboard once it has been deployed.
 
-Most settings need to be restated in the `previews` block. A few are shared automatically.
+### What goes in the `previews` block
+
+Most settings need to be redefined in the `previews` block. A few are shared automatically.
 
 | Configuration                                                      | Shared with production? | What to do                                                                                          |
 | ------------------------------------------------------------------ | ----------------------- | --------------------------------------------------------------------------------------------------- |
 | `vars`                                                             | No                      | Add to `previews.vars`                                                                              |
 | Secrets                                                            | No                      | Use `wrangler preview secret put`                                                                   |
 | KV, D1, R2, Hyperdrive, Vectorize, Queues, service bindings        | No                      | Restate each binding in `previews`, pointed at a staging resource                                   |
-| Durable Object `env` bindings                                      | No                      | Restate in `previews.durable_objects.bindings`. Missing bindings cause 1101 errors                  |
-| Durable Object classes and migrations                              | Yes                     | Keep with your production config                                                                    |
-| Containers                                                         | Yes                     | Keep with your production config. Add the DO binding in `previews` if your code reads it from `env` |
+| Durable Objects and Containers                                     | Partial                 | Classes and migrations are shared. Bindings must be restated. Refer to [Resources — Durable Objects and Containers](/workers/previews/resources/#durable-objects-and-containers) for setup. |
 | `compatibility_date`, `compatibility_flags`, `assets`, `placement` | Yes                     | Keep with your production config                                                                    |
 | `limits`, `observability`, `logpush`, `tail_consumers`, `define`   | No                      | Add to `previews` if you want Preview-specific values                                               |
 | Cron Triggers, routes, queue consumers                             | Not applicable          | These do not target Previews yet                                                                    |
@@ -89,7 +79,7 @@ Secrets cannot be stored in Wrangler configuration files. Use these commands to 
 
 | I want to                                  | Command                                                          |
 | ------------------------------------------ | ---------------------------------------------------------------- |
-| Add a secret to the **base configuration** | `npx wrangler preview base-config secret put SECRET_NAME`        |
+| Add a secret to the **Base configuration** | `npx wrangler preview base-config secret put SECRET_NAME`        |
 | Add a secret to **one Preview**            | `npx wrangler preview secret put SECRET_NAME --name <preview>`   |
 | List secrets for **one Preview**           | `npx wrangler preview secret list --name <preview>`              |
 | Remove a secret                            | Replace `put` with `delete` in the commands above                |
@@ -99,31 +89,48 @@ The `--name` flag defaults to the current git branch if omitted. For `bulk`, set
 
 ### Wrangler environments
 
-You can keep long-lived Wrangler environments like `production` and `staging` and still use Previews for pull requests.
+If your team already models separate environments (like staging and production) as [Wrangler environments](/workers/wrangler/environments/), you can create Previews under each one. Each environment Worker gets its own Previews with its own configuration.
 
 | Command                              | Result                                               |
 | ------------------------------------ | ---------------------------------------------------- |
 | `npx wrangler preview`               | Creates a Preview for the main Worker                |
 | `npx wrangler preview --env staging` | Creates a Preview for the staging environment Worker |
 
-Environment blocks and Preview settings are separate. If the Preview needs a binding, declare it in the `previews` block. For a comparison, refer to [Previews, Version URLs, and Wrangler environments](/workers/configuration/compare-preview-workflows/).
+Each environment's `previews` block configures that environment's Previews independently — different variables, bindings, and secrets per environment.
 
-## Dashboard
+:::caution
+Without `--env`, all `wrangler preview` commands target your production Worker — including `wrangler preview delete`. Always pass `--env` when working with environment-scoped Previews to make sure you are targeting the right Worker.
+:::
 
-In the dashboard, go to your Worker's **Settings**. When you add or edit a variable, secret, or binding, use the **Environments** dropdown to choose where it applies — **Production**, **Preview**, or both.
+<WranglerConfig>
 
-<span className="font-semibold text-red-600">
-	&lt;input screenshot of Worker Settings with the environment picker showing
-	Production and Preview options&gt;
-</span>
+```jsonc
+{
+  "name": "my-worker",
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+  "previews": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    }
+  },
+  "env": {
+    "staging": {
+      "name": "my-worker-staging",
+      "vars": {
+        "ENVIRONMENT": "staging"
+      },
+      "previews": {
+        "vars": {
+          "ENVIRONMENT": "staging-preview"
+        }
+      }
+    }
+  }
+}
+```
 
-Selecting **Preview** updates the base configuration. Every future Preview starts with the new value.
+</WranglerConfig>
 
-### One Preview
-
-To change settings for a single branch, select that Preview from the breadcrumb at the top of your Worker, then go to **Settings**. Changes here apply to that Preview only.
-
-<span className="font-semibold text-red-600">
-	&lt;input screenshot of one branch Preview selected in the Worker breadcrumb
-	with its Settings page open&gt;
-</span>
+For a working example, refer to the [Previews with Wrangler environments demo](https://github.com/yomna-shousha/workers-previews-envs-demo). For a comparison of Previews, Version URLs, and Wrangler environments, refer to [Compare preview workflows](/workers/configuration/compare-preview-workflows/).

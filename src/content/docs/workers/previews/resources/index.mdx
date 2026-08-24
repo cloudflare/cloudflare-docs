@@ -33,7 +33,7 @@ Preview coverage is expanding. For same-Worker calls, use [`ctx.exports`](/worke
 
 <PreviewsResourcesDiagram />
 
-When you set a [base configuration](/workers/previews/configuration/#base-configuration-and-wrangler-files), new dashboard/API-created Previews start from those settings. If the base configuration binds `UPLOADS` to `preview-uploads`, each new Preview points to that same bucket. Cloudflare does not create a separate bucket for each Preview.
+When you set a [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration), new dashboard/API-created Previews start from those settings. If the Base configuration binds `UPLOADS` to `preview-uploads`, each new Preview points to that same bucket. Cloudflare does not create a separate bucket for each Preview.
 
 After a Preview exists, it owns its settings. You can change `feature-login` to bind `UPLOADS` to `login-test-uploads` without affecting `redesign`, future Previews, or production.
 
@@ -113,7 +113,7 @@ If your code uses `env.COUNTER`, declare the binding in the `previews` block so 
 </WranglerConfig>
 
 :::caution
-If you use `env.COUNTER` without declaring the binding in your `previews` block or in the base configuration, the binding will not exist in the Preview and your Worker can return a **1101 error**.
+If you use `env.COUNTER` without declaring the binding in your `previews` block or in the Base configuration, the binding will not exist in the Preview and your Worker can return a **1101 error**.
 :::
 
 ### Sharing a Durable Object intentionally
@@ -188,7 +188,7 @@ Container support in Previews is partial. Preview container process startup may 
 
 ## Binding behavior reference
 
-Any binding you want available inside a Preview must be declared in the `previews` block (or the base configuration). Omit a binding and your Preview will not have it at runtime. For variables and secrets, refer to [Configuration](/workers/previews/configuration/#wrangler-configuration-file).
+Any binding you want available inside a Preview must be declared in the `previews` block (or the Base configuration). Omit a binding and your Preview will not have it at runtime. For variables and secrets, refer to [Configuration](/workers/previews/configuration/#wrangler-configuration-file).
 
 ### Resource-ID bindings
 

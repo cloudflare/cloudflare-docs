@@ -10,15 +10,19 @@ products:
 
 import { DashButton, Steps, TabItem, Tabs, WorkerPreviewsAgentPrompt } from "~/components";
 
+You need Wrangler version **TODO: version** or later. Update with `npm install wrangler@latest`.
+
 To avoid any risk of accidentally using production resources, Previews are fully isolated from production and do not inherit any production configuration.
 
-Configure your Previews [base configuration](/workers/previews/configuration/#base-configuration) first to deploy a running Preview from any branch.
+Configure your Previews [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration) first to deploy a running Preview from any branch.
 
 <WorkerPreviewsAgentPrompt />
 
-## Step 1: Configure Previews base settings
+## Step 1: Configure Previews Base settings
 
 You can configure Previews in the dashboard or your Wrangler configuration file, just as you would for production.
+
+To understand how resources work with your [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration) — including how to configure [separate namespaces for Durable Objects and Containers](/workers/previews/resources/#durable-objects-and-containers) — refer to [Resources and isolation](/workers/previews/resources/).
 
 <Tabs syncKey="workerPreviewsSetup">
 <TabItem label="Dashboard">
@@ -29,11 +33,11 @@ You can configure Previews in the dashboard or your Wrangler configuration file,
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your Worker.
-3. Go to **Settings**. The **Variables and secrets**, **Bindings**, **Observability**, and **Runtime** sections each have inline toggles for **Production** and **Previews Base**.
+3. Go to **Settings**. The **Variables and secrets**, **Bindings**, **Observability**, and **Runtime** sections each have inline toggles for **Production** and **[Previews Base](/workers/previews/configuration/#setting-your-previews-base-configuration)**.
 
    ![Settings tab showing Production and Previews Base toggles for variables, secrets, and bindings](~/assets/images/workers/previews/settings-base-configuration.png)
 
-4. Select **Previews Base** in each section to configure your Preview settings. To get started quicker, you can import names and values from production and then edit them — but secrets must be manually re-entered.
+4. Select **[Previews Base](/workers/previews/configuration/#setting-your-previews-base-configuration)** in each section to configure your Preview settings. To get started quicker, you can import names and values from production and then edit them — but secrets must be manually re-entered.
 
    ![Import dialog showing variables and secrets imported from production to Previews](~/assets/images/workers/previews/import_from_prod.png)
 </Steps>
@@ -56,14 +60,14 @@ Add a `previews` block to your Wrangler configuration file. Top-level settings a
 }
 ```
 
+For details on what to include in your `previews` block based on your production settings, refer to [Wrangler configuration file](/workers/previews/configuration/#wrangler-configuration-file).
+
 </TabItem>
 </Tabs>
 
-To understand how resources work with your base configuration — including how to configure [separate namespaces for Durable Objects and Containers](/workers/previews/resources/#durable-objects-and-containers) — refer to [Resources and isolation](/workers/previews/resources/).
-
 ## Step 2: Deploy a Preview
 
-Deploy a Preview by running `npx wrangler preview`. The Preview name defaults to your current Git branch, or you can set it explicitly with `--name`. You can run it locally, automate it through [Workers Builds](/workers/ci-cd/builds/) if your repo is connected to Git, or add it to your external CI workflow.
+Deploy a Preview by running `npx wrangler preview`. The Preview name defaults to your current Git branch, or you can set it explicitly with `--name`.
 
 <Tabs syncKey="workerPreviewsDeploy">
 <TabItem label="Workers Builds">
@@ -119,13 +123,13 @@ Once a Preview is deployed, you can access it through the breadcrumb dropdown in
 
 ![Breadcrumb dropdown showing Production and individual Previews](~/assets/images/workers/previews/breadcrumb.png)
 
-Each Preview has its own Metrics, Deployments, Observability, and Settings tabs. If you go to **Settings**, you can override any value copied over from Previews Base — meaning each Preview effectively has its own independent settings.
+Each Preview has its own Metrics, Deployments, Observability, and Settings tabs. If you go to **Settings**, you can override any value copied over from [Previews Base](/workers/previews/configuration/#setting-your-previews-base-configuration) — meaning each Preview effectively has its own independent settings.
 
 ![Per-Preview settings page with its own variables and bindings](~/assets/images/workers/previews/scoped_settings.png)
 
 ## Next steps
 
-- [Configuration](/workers/previews/configuration/) — full reference for variables, secrets, bindings, and base configuration
+- [Configuration](/workers/previews/configuration/) — full reference for variables, secrets, bindings, and Base configuration
 - [Resources and isolation](/workers/previews/resources/) — which resources are isolated and which are shared
 - [GitHub Actions and CI](/workers/previews/ci-cd/) — more CI examples and cleanup workflows
 - [Wrangler `preview` commands](/workers/wrangler/commands/workers/#preview) — all CLI flags and options
