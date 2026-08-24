@@ -3,6 +3,21 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-08-24"
+    title: RealtimeKit Web Core 2.0.2
+    description: |-
+      **Enhancements**
+
+      - Generated API documentation now identifies class names correctly, providing more accurate type suggestions for TypeScript users.
+      - Starting a recording that is already in progress now returns error code `1005` instead of the generic error code `1000`. If your [`onError` callback](/realtime/realtimekit/core/#advanced-options) handles error code `1000` for this case, update it to handle `1005`.
+
+      **Fixes**
+
+      - Invalid authentication tokens are now detected and logged correctly when participant details are requested.
+      - Fixed a Babel transpilation error that could occur when consuming ES2015 builds containing `RequestError`.
+      - Fixed session recovery after SFU timeouts. Participants can now continue hearing and seeing others after a transient SFU API timeout.
+      - Fixed bulk media consumer creation batching to support participant grids with up to 100 participants per page, increased from 24 per page.
+
   - publish_date: "2026-07-17"
     title: RealtimeKit Web Core 2.0.1
     description: |-
