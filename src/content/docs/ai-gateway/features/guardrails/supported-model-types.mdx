@@ -12,10 +12,10 @@ AI Gateway's Guardrails detects the type of AI model being used and applies safe
 
 - **Text generation models**: Both prompts and responses are evaluated.
 - **Embedding models**: Only the prompt is evaluated, as the response consists of numerical embeddings, which are not meaningful for moderation.
-- **Unknown models**: If the model type cannot be determined, only the prompt is evaluated, while the response bypass Guardrails.
+- **Unknown models**: If the model type cannot be determined, only the prompt is evaluated, while the response bypasses Guardrails.
 
-:::note[Note]
+:::note
 
-Guardrails does not yet support streaming responses. Support for streaming is planned for a future update.
+When `stream: true`, prompt evaluations run normally. Guardrails skips response evaluations for streaming requests — the client still receives a real streaming response. To enable response-side evaluation, set `stream: false`. Response-side evaluation for streaming requests is on our roadmap.
 
 :::
