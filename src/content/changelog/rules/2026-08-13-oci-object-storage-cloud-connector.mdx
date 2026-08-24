@@ -1,0 +1,31 @@
+---
+title: Oracle Cloud Infrastructure Object Storage support in Cloud Connector
+description: Route matching traffic to public Oracle Cloud Object Storage buckets using path-style or virtual-hosted S3-compatible endpoints.
+date: 2026-08-13
+---
+
+Cloud Connector now supports public Oracle Cloud Infrastructure (OCI) Object Storage buckets. You can route matching requests to OCI without managing a separate origin-routing configuration.
+
+OCI support uses the Amazon S3 Compatibility API. Both path-style and virtual-hosted endpoint formats are supported, including traditional `oraclecloud.com` and dedicated `customer-oci.com` path-style endpoints.
+
+:::caution[Public buckets only]
+Cloud Connector does not sign requests or provide OCI credentials. Your bucket must allow anonymous object reads. Private buckets and pre-authenticated request URLs are not supported.
+:::
+
+### API example
+
+Set `provider` to `oci_storage` and provide a supported OCI hostname. The following rule uses a virtual-hosted endpoint:
+
+```json
+{
+	"expression": "http.request.uri.path wildcard \"/assets/*\"",
+	"provider": "oci_storage",
+	"description": "Route assets to OCI Object Storage",
+	"enabled": true,
+	"parameters": {
+		"host": "<BUCKET_NAME>.vhcompat.objectstorage.<REGION>.oci.customer-oci.com"
+	}
+}
+```
+
+For endpoint formats and bucket requirements, refer to [Supported cloud providers in Cloud Connector](/rules/cloud-connector/providers/#oracle-cloud-infrastructure-object-storage).

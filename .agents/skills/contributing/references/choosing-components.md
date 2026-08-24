@@ -1,8 +1,8 @@
 # Choosing Components by Intent
 
-Start from the content you have and pick the component that presents it correctly. This file is about _when_ and _why_ to reach for each component. For props, syntax, and full examples, read `.agents/references/components.md`. The authoritative live list with rendered examples is at https://developers.cloudflare.com/style-guide/components/.
+Start from the content you have and pick the component that presents it correctly. This file is about _when_ and _why_ to reach for each component. For props, syntax, and full examples, read `.agents/references/components.md`. The authoritative live list with rendered examples is at https://developers.cloudflare.com/style-guide/build-the-page/components/.
 
-This covers the components in the synced catalog (`.agents/references/components.md`). Diagram, homepage, and layout-internal exports from `~/components` are omitted as non-authoring tools. A few utility components documented only in the live style guide (for example, the icon components and `RSSButton`) sit outside this list — check https://developers.cloudflare.com/style-guide/components/ if you need one that is not here.
+This covers the components in the synced catalog (`.agents/references/components.md`). Diagram, homepage, and layout-internal exports from `~/components` are omitted as non-authoring tools. A few utility components documented only in the live style guide (for example, the icon components and `RSSButton`) sit outside this list — check https://developers.cloudflare.com/style-guide/build-the-page/components/ if you need one that is not here.
 
 Two rules first:
 
