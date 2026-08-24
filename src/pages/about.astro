@@ -1,0 +1,193 @@
+---
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
+
+export const prerender = true;
+---
+
+<SplashLayout
+	title="About Cloudflare Developer Docs"
+	description="Learn what developers.cloudflare.com is, what it covers, and where to find Cloudflare company information."
+>
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader
+				title="About Cloudflare Developer Docs"
+				tagline="developers.cloudflare.com is the public documentation site for building, securing, and operating on Cloudflare."
+			/>
+
+			<section class="mt-12 pt-10" aria-label="About this site">
+				<div class="space-y-10">
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Site pages
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							These pages provide stable entry points for common site-level
+							questions.
+						</p>
+						<ul class="text-muted-foreground list-disc pl-6 leading-relaxed">
+							<li>
+								<a class="underline underline-offset-4" href="/contact/">
+									Contact
+								</a>
+							</li>
+							<li>
+								<a class="underline underline-offset-4" href="/privacy/">
+									Privacy
+								</a>
+							</li>
+							<li>
+								<a class="underline underline-offset-4" href="/contributors/">
+									Contributors
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							What this site is
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							Cloudflare Developer Docs are the reference and how-to guides for
+							Cloudflare products. This site is meant for people building and
+							operating applications, APIs, and networks on Cloudflare.
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							Most pages are written as practical docs: concepts, configuration,
+							examples, and troubleshooting. When you need Cloudflare-wide
+							company information (mission, leadership, careers, legal), we link
+							to the canonical pages on cloudflare.com.
+						</p>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							What you can do here
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							Use this site to find product docs, API references, and
+							getting-started guides. Common starting points:
+						</p>
+						<ul class="text-muted-foreground list-disc pl-6 leading-relaxed">
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="/fundamentals/get-started/"
+								>
+									Get started
+								</a>
+							</li>
+							<li>
+								<a class="underline underline-offset-4" href="/workers/">
+									Workers
+								</a>
+								{" "}and{" "}
+								<a class="underline underline-offset-4" href="/pages/">Pages</a>
+							</li>
+							<li>
+								<a class="underline underline-offset-4" href="/api/">API</a>
+								{" "}and{" "}
+								<a
+									class="underline underline-offset-4"
+									href="/fundamentals/api/reference/sdks/"
+								>
+									SDKs
+								</a>
+							</li>
+							<li>
+								<a class="underline underline-offset-4" href="/changelog/">
+									Changelog
+								</a>
+								for documentation-visible updates
+							</li>
+						</ul>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Open source
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							Cloudflare Developer Docs are maintained in a public GitHub
+							repository. You can propose edits or report issues here:
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<a
+								class="underline underline-offset-4"
+								href="https://github.com/cloudflare/cloudflare-docs"
+								target="_blank"
+								rel="noopener"
+							>
+								github.com/cloudflare/cloudflare-docs
+							</a>
+						</p>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Contributors
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							Cloudflare Developer Docs is open source, and we are grateful to
+							everyone who contributes.
+						</p>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							<a class="underline underline-offset-4" href="/contributors/">
+								View contributors
+							</a>
+						</p>
+					</div>
+
+					<div class="space-y-3">
+						<h2
+							class="text-foreground text-xl leading-snug font-medium md:text-2xl"
+						>
+							Cloudflare company information
+						</h2>
+						<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+							For Cloudflare corporate information, see the canonical pages on
+							cloudflare.com:
+						</p>
+						<ul class="text-muted-foreground list-disc pl-6 leading-relaxed">
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://www.cloudflare.com/about/"
+									target="_blank"
+									rel="noopener"
+								>
+									About Cloudflare
+								</a>
+							</li>
+							<li>
+								<a
+									class="underline underline-offset-4"
+									href="https://www.cloudflare.com/developer-platform/"
+									target="_blank"
+									rel="noopener"
+								>
+									Developer platform overview
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</PageShell>
+	</div>
+</SplashLayout>
