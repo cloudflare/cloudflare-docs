@@ -35,6 +35,7 @@ describe("ai-catalog", () => {
 			expect(typeof entry.url).toBe("string");
 			expect(entry.url.length).toBeGreaterThan(0);
 			expect(() => new URL(entry.url)).not.toThrow();
+			expect(new URL(entry.url).protocol).toMatch(/^https?:$/);
 
 			// The catalog intentionally never embeds inline data — all entries
 			// are URL references that consumers dereference separately.
