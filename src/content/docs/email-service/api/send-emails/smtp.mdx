@@ -94,7 +94,7 @@ Thanks for signing up.
 221 mx.cloudflare.net Cloudflare Email ESMTP Service closing transmission channel
 ```
 
-The `250 2.0.0 Ok` response after the message body includes the assigned Message-ID. Use it to correlate the submission with delivery logs in the dashboard.
+A normal `250 2.0.0 Ok` response after the message body includes the assigned Message-ID. Use it to correlate the submission with delivery logs in the dashboard. A response without a Message-ID can mean every recipient was suppressed. Refer to [Suppressed recipients](#suppressed-recipients).
 
 ## Examples
 
@@ -133,6 +133,14 @@ Cloudflare's SMTP server returns standard [RFC 5321](https://datatracker.ietf.or
 | `550 5.7.1`   | Sender or relay denied — usually the `MAIL FROM` domain is not onboarded. |
 | `552 5.3.4`   | Message exceeds the 5 MiB `SIZE` limit.                                   |
 | `554`         | Transaction failed — content rejected by policy.                          |
+
+### Suppressed recipients
+
+SMTP accepts a syntactically valid recipient with `250 2.1.5 Ok` during `RCPT TO`. Email Service checks the account's [suppression list](/email-service/concepts/suppressions/) after receiving the message body.
+
+When some recipients are suppressed, Email Service removes them and continues processing the remaining recipients. When every recipient is suppressed, the server returns `250 2.0.0 Ok` but does not deliver the message.
+
+Use [Email sending logs](/email-service/observability/logs/) to confirm delivery. Suppressed recipients appear with a **Rejected** result.
 
 ## Troubleshooting
 

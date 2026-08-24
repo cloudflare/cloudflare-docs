@@ -42,7 +42,7 @@ flowchart LR
 
    These authentication mechanisms work together to establish sender legitimacy and protect against email fraud. Senders with low reputation scores may experience throttling or delayed processing.
 
-4. **Suppression list check:** The system checks the recipient against your account's suppression list, which includes bounces, complaints, and unsubscribes. Recipients found on this list are blocked from receiving the email.
+4. **Suppression list check:** The system checks each recipient against the Email Sending [suppression list](/email-service/concepts/suppressions/) for your account. Suppressed recipients do not reach the delivery stage or count toward your quota. The response depends on whether you use the REST API, Workers binding, or SMTP. Email Service does not process unsubscribe links, so add unsubscribed recipients manually.
 
 5. **Delivery attempt:** The system connects to the recipient's mail server and attempts message delivery via SMTP. When delivery fails, the system applies different retry logic based on the failure type:
    - **Soft bounces (4xx responses)**: The system retries delivery using exponential backoff timing

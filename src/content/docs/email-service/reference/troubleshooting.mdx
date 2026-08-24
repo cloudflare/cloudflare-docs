@@ -8,7 +8,7 @@ products:
   - email-service
 ---
 
-import { DashButton } from "~/components";
+import { APIRequest, DashButton } from "~/components";
 
 Email authentication is critical for successful email delivery. This guide helps you troubleshoot common SPF, DKIM, and DMARC issues with Email Service.
 
@@ -201,6 +201,38 @@ To reduce bounce rates:
 2. Maintain clean lists: Remove hard bounces immediately
 3. Monitor feedback loops: Subscribe to ISP feedback loops
 4. Gradual warm-up: For new domains, start with small volumes
+
+### A recipient is suppressed
+
+The Workers binding throws `E_RECIPIENT_SUPPRESSED` when a recipient is on the account's [suppression list](/email-service/concepts/suppressions/). The REST API returns `400` for the same condition. Both interfaces reject the entire multi-recipient request.
+
+SMTP processes suppressions after accepting the message data. It can return `250 2.0.0 Ok` even when Email Service removes one or all suppressed recipients. Check [Email sending logs](/email-service/observability/logs/) for the **Rejected** result.
+
+To find an account suppression, query the exact recipient:
+
+<APIRequest
+	path="/accounts/{account_id}/email/sending/suppressions"
+	method="GET"
+	parameters={{ email: "recipient@example.com" }}
+/>
+
+Use the entry's `reason`, `expires_at`, and `read_only` fields to choose an action. For the complete decision table, refer to [Suppression rules](/email-service/concepts/suppressions/#suppression-rules).
+
+An empty `result` array means the account has no active entry for that address. Confirm that you queried the correct account, then check the sending logs. If the logs still report a suppression, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### A recipient remains blocked after deletion
+
+Confirm that the entry no longer appears in the account list.
+
+Suppression updates propagate asynchronously. Retry later. If the recipient remains blocked, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### An address keeps bouncing even though it is suppressed
+
+Bounce suppressions are created through background delivery processing. Messages already in progress can bounce before a new suppression takes effect. Refer to [Suppression timing](/email-service/concepts/suppressions/#suppression-timing).
+
+### An address was never suppressed after bouncing
+
+Not every failure results in a suppression. Email Service creates automatic entries only for eligible recipient-side failures. Sender authentication, sender reputation, and unrelated infrastructure failures do not suppress the recipient. Check [Email sending logs](/email-service/observability/logs/) for the specific failure.
 
 ### ISP-specific issues
 
