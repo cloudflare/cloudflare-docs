@@ -1,0 +1,27 @@
+---
+title: Serve Workers Static Assets from a URL path prefix
+description: Workers Static Assets can now serve an asset directory from a URL path prefix with the `assets.base_path` configuration option.
+products:
+  - workers
+date: 2026-08-25
+---
+
+import { WranglerConfig } from "~/components";
+
+Workers Static Assets now supports the `assets.base_path` configuration option. Set it to expose the root of `assets.directory` beneath a URL path prefix.
+
+For example, this configuration serves the contents of `./dist` from `/blog/`:
+
+<WranglerConfig>
+
+```toml
+[assets]
+directory = "./dist"
+base_path = "/blog"
+```
+
+</WranglerConfig>
+
+The Cloudflare Vite plugin uses a root-relative Vite [`base`](https://vite.dev/config/shared-options.html#base) value when `assets.base_path` is not set. An explicit `assets.base_path` overrides the Vite value.
+
+To configure the option, refer to [Serving a subdirectory](/workers/static-assets/routing/advanced/serving-a-subdirectory/).
