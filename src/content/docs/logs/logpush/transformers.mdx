@@ -3,19 +3,12 @@ pcx_content_type: how-to
 title: Transformers
 sidebar:
   order: 3
-  badge: Beta
 description: Advanced filtering, reshaping, redacting, and computing on Logpush records with SQL before they leave Cloudflare.
 products:
   - logpush
 ---
 
-import { DashButton, Badge } from "~/components";
-
-<Badge text="Beta" variant="caution" />
-
-:::note[Closed beta]
-Transformers are in closed beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed. The API surface may change before GA.
-:::
+import { DashButton } from "~/components";
 
 Transformers let you run a SQL query against each batch of records before Logpush delivers them to your destination. Use them to filter records you do not want to store, reshape fields to match a downstream schema, redact sensitive values, compute new fields, or add static metadata.
 
