@@ -41,7 +41,7 @@ The following limits apply to the Email Sending [suppression list](/email-servic
 
 | Limit                          | Value             | Notes                                                                         |
 | ------------------------------ | ----------------- | ----------------------------------------------------------------------------- |
-| **Active entries per address** | 1 per account     | Repeated create requests return the existing entry                            |
+| **Active entries**             | 1 per address     | Enforced independently for each account                                       |
 | **Results per page**           | 1,000             | Maximum `per_page` value with a default of 100                                |
 | **Items per bulk import**      | 1,000             | Split larger imports across several requests                                  |
 | **Bulk import requests**       | 10 per minute     | Applies per account and returns `429` when exceeded                           |

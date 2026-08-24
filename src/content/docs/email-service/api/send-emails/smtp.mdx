@@ -134,7 +134,7 @@ Cloudflare's SMTP server returns standard [RFC 5321](https://datatracker.ietf.or
 | `552 5.3.4`   | Message exceeds the 5 MiB `SIZE` limit.                                   |
 | `554`         | Transaction failed — content rejected by policy.                          |
 
-### Suppressed recipients
+## Suppressed recipients
 
 SMTP accepts a syntactically valid recipient with `250 2.1.5 Ok` during `RCPT TO`. Email Service checks the [suppression list](/email-service/concepts/suppressions/) for the account after receiving the message body.
 
