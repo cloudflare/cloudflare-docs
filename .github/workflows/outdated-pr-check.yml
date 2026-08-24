@@ -1,7 +1,7 @@
 name: Outdated PR Check
 
 # **What it does**: Posts Outdated PR Check commit statuses when a PR is opened or updated.
-#                   Fails if the branch is more than 24 hours out of date with production.
+#                   Fails if the branch is more than 72 hours out of date with production.
 # **Why we have it**: Gives contributors immediate feedback when their branch has drifted.
 #                     The daily refresh job (outdated-pr-refresh.yml) catches PRs that go
 #                     stale when production advances without any PR activity.
@@ -36,7 +36,7 @@ jobs:
       contents: read
       statuses: write
     steps:
-      - name: Check if PR base is within 24 hours of production
+      - name: Check if PR base is within 72 hours of production
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_SHA: ${{ github.event.pull_request.head.sha }}
@@ -70,39 +70,21 @@ jobs:
             NOW=$(date +%s)
             AGE=$((NOW - MERGE_BASE_TS))
 
-            if [ "$AGE" -gt 86400 ]; then
-              HOURS=$((AGE / 3600))
+            if [ "$AGE" -gt 259200 ]; then
+              DAYS=$((AGE / 86400))
               STATE="failure"
-              if [ "$HOURS" -gt 36 ]; then
-                DAYS=$((AGE / 86400))
-                UNIT=$( [ "$DAYS" -eq 1 ] && echo "day" || echo "days" )
-                DESCRIPTION="Branch is ${DAYS} ${UNIT} out of date with production. Please rebase or merge. Codeowners can comment /rebase on the PR to fix."
-              else
-                DESCRIPTION="Branch is ${HOURS}h out of date with production. Please rebase or merge. Codeowners can comment /rebase on the PR to fix."
-              fi
+              DESCRIPTION="Branch is ${DAYS} days out of date with production. Please rebase or merge. Codeowners can comment /rebase on the PR to fix."
             else
               STATE="success"
-              DESCRIPTION="Branch is behind production but within the 24-hour grace period"
+              DESCRIPTION="Branch is behind production but within the 72-hour grace period"
             fi
           fi
 
-          # Post the legacy context (required by current branch protection).
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             "/repos/${REPO}/statuses/${PR_SHA}" \
             -f state="$STATE" \
             -f context="Outdated PR Check" \
-            -f description="$DESCRIPTION" \
-            || echo "Failed to post status — skipping"
-
-          # Post the new semantic context (additive — will become required after branch
-          # protection is updated and the legacy context is removed in a follow-up PR).
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            "/repos/${REPO}/statuses/${PR_SHA}" \
-            -f state="$STATE" \
-            -f context="Outdated PR Check / On Commit" \
             -f description="$DESCRIPTION" \
             || echo "Failed to post status — skipping"

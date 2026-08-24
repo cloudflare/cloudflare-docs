@@ -3,71 +3,60 @@ pcx_content_type: concept
 title: Concept
 meta:
   title: Content type - Concept
-description: Write conceptual explanation documentation.
+description: Write conceptual documentation that explains what something is, how it works, and where its boundaries lie.
+sidebar:
+  order: 3
 products:
   - style-guide
 ---
 
-## Purpose
+import { Render } from "~/components";
 
-The purpose of a concept is to provide conceptual or descriptive information so users understand the background and context of a particular topic.
+A concept page builds the reader's mental model of a topic: what a thing is, why it works the way it does, and where its boundaries lie. It serves anyone getting oriented or already operating the product and filling in the why. The tone is instructional, descriptive, approachable, and supportive.
 
-## Tone
+## When to use it
 
-instructional, descriptive, approachable, supportive
+Write a concept page when readers keep needing the same explanation in the middle of other pages, because that recurring detour is the signal the model deserves its own home. It is not:
 
-## content_type
+- **A how-to.** A concept carries no procedural steps or configuration walkthroughs. Code that shows the idea is welcome, code the reader follows along with is not.
+- **A reference.** Reference is complete and neutral, whereas a concept is selective and opinionated, so "we recommend" belongs here.
+- **An overview.** An overview routes the reader onward, whereas a concept explains. Keep one concept per page.
+
+For the full comparison, refer to [Content types](/style-guide/documentation-content-strategy/content-types/).
+
+## Title & description
+
+- **Title**: a concise noun phrase naming the concept. Use "About" for a high-level product concept page. Otherwise use a feature name, functionality, or Internet concept such as Health checks or CDN. Do not use "Overview", "Introduction", or "How it works", because they name the genre rather than the subject. As a self-check, a good title still reads naturally with "About" in front of it.
+- **Description**: state what the concept is and what it means for the reader's code or choices.
+
+## Scaffold this page
+
+<Render
+	file="scaffold-with-recipe"
+	product="style-guide"
+	params={{ type: "concept", recipe: "content-concept" }}
+/>
+
+## Component guidance
+
+- **Prose is the primary component.** Short paragraphs, one idea per section: this is the type where writing quality carries the page.
+- **Diagrams and illustrative code** fit when they show the model, and a diagram always ships with a text equivalent.
+- [**Comparison tables**](/style-guide/style-and-grammar/formatting/structure/tables/) fit where there is a genuine either/or, alongside the boundaries the concept is confused with.
+- **What does not fit:** Steps (a concept has no procedural steps or walkthroughs), Tabs (a concept does not vary by platform, and if it does it is two concepts), and Cards.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: concept
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
-For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+For more details, refer to [`pcx_content_type`](/style-guide/build-the-page/frontmatter/custom-properties/#pcx_content_type).
 
-## Structure
+## Writing for AI and agents
 
-### Required components
-
-[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Use "About" for concept pages that describe the functionality of your product. Otherwise, use a short noun phrase (feature name, functionality, Internet concept - Health checks, Status resource protection, CDN)
-
-[**Context**](/style-guide/documentation-content-strategy/component-attributes/context/): Provide a brief description of why users should care about this information.
-
-**Explanation**: Explain the page topic. Keep paragraphs short and concise to avoid large blocks of text. Feel free to use bulleted lists, notes, and headings for visual breaks.
-
-## Template
-
-```
-
----
-title: About (for high-level product concept page only - otherwise omit this line)
-weight: xx
-pcx_content_type: concept
-description: <Product or feature> <what it does and why it matters>. <Key detail or scope>.
-products:
-  - product-a
-  - product-b
-  - product-c
----
-
-# About <product> or noun phrase
-
-Provide a brief description of why users should care about this information.
-
-Explain the page topic. Keep paragraphs short and concise to avoid large blocks of text. Feel free to use bulleted lists, notes, and headings for visual breaks.
-```
-
-## Additional information
-
-Do not recreate information that's already available online. Instead, consider why a topic needs to be explained, what Cloudflare's perspective is on that topic, and what users need to understand about the topic in order to successfully use our products.
-
-## Examples
-
-[Load Balancing](/load-balancing/)
-
-[WAF](/waf/)
-
-[Magic Transit](/magic-transit/about/)
+- **Self-contained definition.** Lead with the contract in checkable terms such as "at least once" or "not ordered" rather than reassuring adjectives, because the definition paragraphs are what an agent retrieves and quotes, so they must stand on their own.
+- **Literal payloads.** Keep illustrative code and payloads in fenced blocks with complete, realistic values rather than paraphrase.
+- **Declarative boundaries.** Write the boundaries as flat declarative bullets stating what the concept is not, so an agent can lift them without reconstructing the prose.

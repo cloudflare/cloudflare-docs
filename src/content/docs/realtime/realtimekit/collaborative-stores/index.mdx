@@ -14,7 +14,7 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 
 The RealtimeKit Stores API allows you to create multiple key-value pair realtime stores. Users can subscribe to changes in a store and receive real-time updates. Data is stored until a [session](/realtime/realtimekit/concepts/meeting/#session) is active.
 
-<RTKSDKSelector disabledPlatforms={["mobile-flutter"]} />
+<RTKSDKSelector />
 
 ### Create a Store
 
@@ -64,13 +64,6 @@ let store = meeting.stores.create(name: "myStore")
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-This feature is not currently supported in the Flutter SDK
-
-</RTKCodeSnippet>
-
 :::note
 This method must be executed for every user.
 :::

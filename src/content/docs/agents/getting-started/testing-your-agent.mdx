@@ -18,20 +18,20 @@ Because Agents run on Cloudflare Workers and Durable Objects, they can be tested
 
 :::note
 
-The `agents-starter` template and new Cloudflare Workers projects already include the relevant `vitest` and `@cloudflare/vitest-pool-workers` packages, as well as a valid `vitest.config.js` file.
+The `agents-starter` template and new Cloudflare Workers projects already include the relevant `vitest` and `@cloudflare/vitest-plugin` packages, as well as a valid `vitest.config.js` file.
 
 :::
 
 Before you write your first test, install the necessary packages:
 
 ```sh
-npm install vitest@^4.1.0 @cloudflare/vitest-pool-workers --save-dev
+npm install vitest@^4.1.0 @cloudflare/vitest-plugin --save-dev
 ```
 
 Ensure that your `vitest.config.js` has the `cloudflareTest` plugin configured:
 
 ```js
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
