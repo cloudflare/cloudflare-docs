@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 
 const CONTRIBUTORS_URL =
 	"https://middlecache.ced.cloudflare.com/v1/cloudflare-docs-github-contributors/contributors.json";
@@ -21,6 +21,8 @@ type Manifest = {
 	total_contributors_all: number;
 	total_contributions: number;
 };
+
+const FETCH_TIMEOUT_MS = 30_000;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null;
@@ -62,6 +64,7 @@ function normalizeContributor(value: unknown): Contributor | null {
 
 const manifestRes = await fetch(MANIFEST_URL, {
 	headers: { Accept: "application/json" },
+	signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
 });
 
 if (!manifestRes.ok) {
@@ -90,6 +93,7 @@ const manifest: Manifest = {
 
 const res = await fetch(CONTRIBUTORS_URL, {
 	headers: { Accept: "application/json" },
+	signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
 });
 
 if (!res.ok) {
@@ -117,6 +121,8 @@ contributors.sort((a, b) => {
 });
 
 const outUrl = new URL("../src/data/github-contributors.json", import.meta.url);
+const outDir = new URL("../src/data/", import.meta.url);
+await mkdir(outDir, { recursive: true });
 const out = {
 	fetchedAt: manifest.fetched_at,
 	contributorCount: manifest.contributor_count,
@@ -127,7 +133,6 @@ const out = {
 
 await writeFile(outUrl, `${JSON.stringify(out, null, 2)}\n`, "utf8");
 
-// eslint-disable-next-line no-console
 console.log(
 	`Wrote ${contributors.length} contributors to ${outUrl.pathname} (manifest count: ${manifest.contributor_count})`,
 );

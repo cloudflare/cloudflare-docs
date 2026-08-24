@@ -17,6 +17,8 @@ const visibleContributors = contributors.filter((c) => {
 	return name && !name.endsWith("[bot]");
 });
 
+const totalVisibleContributors = visibleContributors.length;
+
 const totalContributorsAll =
 	typeof contributorsSnapshot?.totalContributorsAll === "number"
 		? contributorsSnapshot.totalContributorsAll
@@ -71,8 +73,22 @@ const initialContributors = visibleContributors.slice(
 
 					<div id="contributors-status" class="text-muted-foreground text-sm">
 						<span>
-							Showing {visibleContributors.length}
-							{totalContributorsAll > 0 ? ` of ${totalContributorsAll}` : ""} contributors
+							Showing{" "}
+							<span id="contributors-visible-count">
+								{initialContributors.length}
+							</span>
+							{
+								totalVisibleContributors > 0 && (
+									<Fragment> of {totalVisibleContributors}</Fragment>
+								)
+							}
+							{
+								totalContributorsAll > 0 &&
+									totalContributorsAll !== totalVisibleContributors && (
+										<Fragment> ({totalContributorsAll} total)</Fragment>
+									)
+							}{" "}
+							contributors
 						</span>
 						<button
 							type="button"
@@ -87,7 +103,7 @@ const initialContributors = visibleContributors.slice(
 
 					<div
 						id="contributors-grid"
-						class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-4"
+						class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
 						aria-live="polite"
 						data-initial-count={initialContributors.length}
 					>
@@ -148,10 +164,16 @@ const initialContributors = visibleContributors.slice(
 				(() => {
 					const GRID = document.getElementById("contributors-grid");
 					const SENTINEL = document.getElementById("contributors-sentinel");
+					const COUNT = document.getElementById("contributors-visible-count");
 
 					if (!(GRID && SENTINEL)) {
 						// If the page structure changes, silently skip the enhancement.
 						return;
+					}
+
+					function updateVisibleCount() {
+						if (!COUNT) return;
+						COUNT.textContent = String(GRID.children.length);
 					}
 
 					const total = Array.isArray(contributors) ? contributors.length : 0;
@@ -221,6 +243,7 @@ const initialContributors = visibleContributors.slice(
 							frag.append(buildCell(c));
 						}
 						GRID.append(frag);
+						updateVisibleCount();
 					}
 
 					function fillViewport() {
@@ -234,6 +257,8 @@ const initialContributors = visibleContributors.slice(
 							appendBatch();
 						}
 					}
+
+					updateVisibleCount();
 
 					if ("IntersectionObserver" in window) {
 						const io = new IntersectionObserver(
