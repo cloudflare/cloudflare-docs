@@ -1,0 +1,23 @@
+.agents/references/components.md
+  s_60689e0b45602c::t_0339edf25855be 152-157,365-369,585
+.agents/references/style-guide.md
+  s_60689e0b45602c::t_383d07fd3abc51 34-45,47,290-302,304-332
+src/content/docs/style-guide/components/index.mdx
+  s_60689e0b45602c::t_05cb19e865c09c 91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "04aaafaef5ccdcb7c44e8ab760e7a91a4f89ddc9",
+  "prompts": {},
+  "sessions": {
+    "s_60689e0b45602c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ffec44dcfffeb9b0fJYw8gleyR",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}
