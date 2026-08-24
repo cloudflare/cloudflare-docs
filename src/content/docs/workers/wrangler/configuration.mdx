@@ -1212,6 +1212,8 @@ The following options are available under the `assets` key.
   - Not required if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), which will automatically point to the client build output.
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
+- `base_path` <Type text="string" /> <MetaInfo text={'optional, defaults to "/"'} />
+  - The URL path prefix where static assets are available. For example, set this to `/docs` to serve the root of `assets.directory` from `/docs/`. Refer to [Serving a subdirectory](/workers/static-assets/routing/advanced/serving-a-subdirectory/).
 - `run_worker_first` <Type text="boolean | string[]" /> <MetaInfo text="optional, defaults to false" />
   - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
@@ -1228,6 +1230,7 @@ Example:
 	"assets": {
 		"directory": "./public",
 		"binding": "ASSETS",
+		"base_path": "/docs",
 		"html_handling": "force-trailing-slash",
 		"not_found_handling": "404-page",
 	},
