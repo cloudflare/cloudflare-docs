@@ -44,6 +44,14 @@ out old container images (using `docker image prune` or similar) to reduce disk 
 
 :::
 
+## FUSE support
+
+Miniflare automatically grants local containers the Docker privileges required for Filesystem in Userspace (FUSE). This applies to `wrangler dev`, the Cloudflare Vite plugin, and direct Miniflare use.
+
+Miniflare grants these privileges when the local Docker daemon runs inside a virtual machine (VM). This includes Docker engines on macOS and through Windows Subsystem for Linux (WSL). On Linux, Miniflare grants the privileges for local rootless Docker when `/dev/fuse` is available.
+
+Rootful Docker on Linux does not support FUSE by default during local development. Miniflare does not grant FUSE privileges when the Docker daemon does not meet these conditions or cannot be inspected.
+
 ## Iterating on Container code
 
 When you develop with Wrangler or Vite, your Worker's code is automatically reloaded each time you save a change,
