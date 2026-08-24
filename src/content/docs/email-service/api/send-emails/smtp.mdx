@@ -136,7 +136,7 @@ Cloudflare's SMTP server returns standard [RFC 5321](https://datatracker.ietf.or
 
 ### Suppressed recipients
 
-SMTP accepts a syntactically valid recipient with `250 2.1.5 Ok` during `RCPT TO`. Email Service checks the account's [suppression list](/email-service/concepts/suppressions/) after receiving the message body.
+SMTP accepts a syntactically valid recipient with `250 2.1.5 Ok` during `RCPT TO`. Email Service checks the [suppression list](/email-service/concepts/suppressions/) for the account after receiving the message body.
 
 When some recipients are suppressed, Email Service removes them and continues processing the remaining recipients. When every recipient is suppressed, the server returns `250 2.0.0 Ok` but does not deliver the message.
 

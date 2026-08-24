@@ -18,7 +18,7 @@ To add or remove entries, refer to [Manage suppressions](/email-service/configur
 
 ## Suppression scope
 
-The Email Sending dashboard and plural management API are account-scoped. New entries created through these interfaces apply to every sending domain and subdomain in the account.
+The Email Sending dashboard and suppression management API are account-scoped. New entries created through these interfaces apply to every sending domain and subdomain in the account.
 
 These interfaces do not let you create zone-scoped or domain-scoped entries. Each recipient can have only one active Email Sending suppression per account.
 
@@ -26,14 +26,14 @@ These interfaces do not let you create zone-scoped or domain-scoped entries. Eac
 
 The following table describes automatic and manual creation rules, expiration, and public policy metadata:
 
-| Source                      | API reason    | Created when                                                                                    | Expiration                                     | Customer action                                                       |
-| --------------------------- | ------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
-| Manual                      | `manual`      | You add the recipient through the dashboard or API                                               | The time you choose, or no expiration          | Change the expiration or delete the entry                             |
-| Spam complaint              | `complaint`   | Cloudflare receives and validates a complaint from the recipient's email provider                | Created without an expiration                  | Delete only after the recipient provides new consent                  |
-| Hard bounce                 | `hard_bounce` | The receiving system permanently rejects an eligible recipient                                  | 7 days by default                              | Wait for expiration, or delete only after verifying the address       |
-| Confirmed invalid recipient | `hard_bounce` | All observed failures confirm an invalid recipient, or qualifying availability failures persist without a successful delivery | No expiration                                  | Delete only after independently verifying the address                 |
-| Soft bounce                 | `soft_bounce` | An eligible recipient-side temporary failure occurs, such as a full mailbox or rate limit        | 24 hours by default                            | Wait for expiration, or delete after confirming the issue is resolved |
-| Cloudflare-managed metadata | `policy`      | The API returns a policy entry with `read_only: true`                                            | The displayed expiration, or no expiration     | Request help from [Cloudflare Support](/support/contacting-cloudflare-support/) because the entry cannot be modified or deleted |
+| Reason                                      | Created when                                                                                                            | Expiration                                     | Customer action                                                       |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
+| Manual (`manual`)                           | You add the recipient through the dashboard or API                                                                      | The time you choose, or no expiration          | Change the expiration or delete the entry                             |
+| Spam complaint (`complaint`)                | Cloudflare receives and validates a complaint from the recipient's email provider                                       | Created without an expiration                  | Delete only after the recipient provides new consent                  |
+| Hard bounce (`hard_bounce`)                 | The receiving system permanently rejects an eligible recipient                                                         | 7 days by default                              | Wait for expiration, or delete only after verifying the address       |
+| Confirmed invalid recipient (`hard_bounce`) | All observed failures confirm an invalid recipient, or qualifying availability failures persist without a successful delivery | No expiration                                  | Delete only after independently verifying the address                 |
+| Soft bounce (`soft_bounce`)                 | An eligible recipient-side temporary failure occurs, such as a full mailbox or rate limit                               | 24 hours by default                            | Wait for expiration, or delete after confirming the issue is resolved |
+| Cloudflare-managed metadata (`policy`)      | The API returns a policy entry with `read_only: true`                                                                   | The displayed expiration, or no expiration     | Contact [Cloudflare Support](/support/contacting-cloudflare-support/)  |
 
 The API returns `read_only: true` when you cannot modify an entry. Treat `read_only` as authoritative instead of inferring access from the `reason` value. Policy suppressions are read-only.
 
@@ -111,8 +111,8 @@ For an implementation pattern, refer to [Sync recipient records](/email-service/
 
 ## Related resources
 
-- [Manage suppressions](/email-service/configuration/suppressions/) — manage entries through the dashboard or API.
-- [Email deliverability](/email-service/concepts/deliverability/) — understand bounce and complaint effects.
-- [Email lifecycle](/email-service/concepts/email-lifecycle/) — locate suppression checks in the sending flow.
-- [Suppression list limits](/email-service/platform/limits/#suppression-list-limits) — review API limits.
-- [Email sending logs](/email-service/observability/logs/) — investigate rejected sends.
+- Use [Manage suppressions](/email-service/configuration/suppressions/) to manage entries through the dashboard or API.
+- Review [Email deliverability](/email-service/concepts/deliverability/) to understand bounce and complaint effects.
+- Follow [Email lifecycle](/email-service/concepts/email-lifecycle/) to locate suppression checks in the sending flow.
+- Review [Suppression list limits](/email-service/platform/limits/#suppression-list-limits) for API limits.
+- Use [Email sending logs](/email-service/observability/logs/) to investigate rejected sends.

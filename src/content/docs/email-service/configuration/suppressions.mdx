@@ -14,7 +14,7 @@ Manage recipients that Email Service must not contact. For suppression triggers 
 
 This dashboard and API are account-scoped. New entries apply to every sending domain and subdomain in the account. You cannot select a zone or domain scope.
 
-## View suppressions in the dashboard
+## 1. View suppressions in the dashboard
 
 <Steps>
 1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Sending**.
@@ -28,7 +28,7 @@ The table displays the recipient, reason, creation time, and expiration. An expi
 
 Search with a complete address or a username. A username search checks that username across every domain. For example, `alex` matches `alex@example.com` and `alex@example.org`.
 
-## Add a suppression in the dashboard
+## 2. Add a suppression in the dashboard
 
 <Steps>
 1. In **Suppressions**, enter the recipient email address.
@@ -38,13 +38,13 @@ Search with a complete address or a username. A username search checks that user
 
 Entries created in the dashboard have the `manual` reason. They apply to every sending domain in the account.
 
-## Remove a suppression in the dashboard
+## 3. Remove a suppression in the dashboard
 
 To remove a mutable entry, select **Delete** for that recipient. Read-only entries do not provide a delete action.
 
 Deleting an entry permits future delivery attempts. Verify that the recipient should receive mail before deleting an automatic suppression.
 
-## Manage suppressions with the API
+## 4. Manage suppressions with the API
 
 The following examples require an [API token](/fundamentals/api/get-started/create-token/) with the **Email Sending: Edit** permission.
 
@@ -170,7 +170,7 @@ The list uses cursor pagination. Read `result_info.next_cursor` and pass it as `
 <APIRequest
 	path="/accounts/{account_id}/email/sending/suppressions"
 	method="GET"
-	parameters={{ per_page: 50, cursor: "<NEXT_CURSOR>" }}
+	parameters={{ per_page: 50, cursor: "$NEXT_CURSOR" }}
 />
 
 Continue until `next_cursor` is `null`. Large, filtered lists can return a short or empty intermediate page with another cursor. Do not treat an empty page as the end while a cursor remains.
@@ -211,12 +211,18 @@ The API returns `403` for read-only suppressions. Updates and deletions propagat
 Deleting a hard-bounce or complaint suppression permits delivery attempts to an address that already failed or reported your mail as spam. Verify the recipient before deleting the entry.
 :::
 
-## Limits
+## 5. Verify suppression changes
+
+Refresh the suppression list after creating or updating an entry. Confirm that the recipient, reason, and expiration match the intended values.
+
+After deleting an entry, confirm that it no longer appears. Delivery enforcement can briefly lag behind the management list.
+
+## 6. Limits
 
 For page size, bulk import, and rate limits, refer to [Suppression list limits](/email-service/platform/limits/#suppression-list-limits).
 
-## Related resources
+## Next steps
 
-- [Suppression lists](/email-service/concepts/suppressions/) — review creation and expiration rules.
-- [Email Sending API reference](/api/resources/email_sending/) — view the complete API schema.
-- [Sync recipient records](/email-service/examples/email-sending/sync-recipient-records/) — maintain recipient status in your application.
+- Review [Suppression lists](/email-service/concepts/suppressions/) for creation and expiration rules.
+- Use the [Email Sending API reference](/api/resources/email_sending/) to view the complete API schema.
+- Follow [Sync recipient records](/email-service/examples/email-sending/sync-recipient-records/) to maintain recipient status in your application.

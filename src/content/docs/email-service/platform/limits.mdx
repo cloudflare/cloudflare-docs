@@ -37,14 +37,14 @@ Sends to verified destination addresses are always free: they do not count towar
 
 ## Suppression list limits
 
-The following limits apply to the Email Sending [suppression list](/email-service/concepts/suppressions/) API.
+The following limits apply to the Email Sending [suppression list](/email-service/concepts/suppressions/) API:
 
 | Limit                          | Value             | Notes                                                                         |
 | ------------------------------ | ----------------- | ----------------------------------------------------------------------------- |
 | **Active entries per address** | 1 per account     | Repeated create requests return the existing entry                            |
-| **Results per page**           | 1,000             | `per_page` on the list endpoint; defaults to 100                              |
+| **Results per page**           | 1,000             | Maximum `per_page` value with a default of 100                                |
 | **Items per bulk import**      | 1,000             | Split larger imports across several requests                                  |
-| **Bulk import requests**       | 10 per minute     | Per account, on the `/suppressions/bulk` endpoint; exceeding it returns `429` |
+| **Bulk import requests**       | 10 per minute     | Applies per account and returns `429` when exceeded                           |
 | **Note length**                | 1,000 characters  | The optional `note` field on an entry                                         |
 
 The suppression list has no total-count field. Refer to [Paginate results](/email-service/configuration/suppressions/#paginate-results).

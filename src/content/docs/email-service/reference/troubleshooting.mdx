@@ -8,7 +8,7 @@ products:
   - email-service
 ---
 
-import { APIRequest, DashButton } from "~/components";
+import { APIRequest, DashButton, Steps } from "~/components";
 
 Email authentication is critical for successful email delivery. This guide helps you troubleshoot common SPF, DKIM, and DMARC issues with Email Service.
 
@@ -202,35 +202,39 @@ To reduce bounce rates:
 3. Monitor feedback loops: Subscribe to ISP feedback loops
 4. Gradual warm-up: For new domains, start with small volumes
 
-### A recipient is suppressed
+### Suppressed recipient
 
-The Workers binding throws `E_RECIPIENT_SUPPRESSED` when a recipient is on the account's [suppression list](/email-service/concepts/suppressions/). The REST API returns `400` for the same condition. Both interfaces reject the entire multi-recipient request.
+The Workers binding throws `E_RECIPIENT_SUPPRESSED` when a recipient is on the [suppression list](/email-service/concepts/suppressions/) for the account. The REST API returns `400` for the same condition. Both interfaces reject the entire multi-recipient request.
 
 SMTP processes suppressions after accepting the message data. It can return `250 2.0.0 Ok` even when Email Service removes one or all suppressed recipients. Check [Email sending logs](/email-service/observability/logs/) for the **Rejected** result.
 
-To find an account suppression, query the exact recipient:
+To investigate a suppressed recipient:
 
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions"
-	method="GET"
-	parameters={{ email: "recipient@example.com" }}
-/>
+<Steps>
+1. Query the exact recipient:
 
-Use the entry's `reason`, `expires_at`, and `read_only` fields to choose an action. For the complete decision table, refer to [Suppression rules](/email-service/concepts/suppressions/#suppression-rules).
+   <APIRequest path="/accounts/{account_id}/email/sending/suppressions" method="GET" parameters={{ email: "recipient@example.com" }} />
 
-An empty `result` array means the account has no active entry for that address. Confirm that you queried the correct account, then check the sending logs. If the logs still report a suppression, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+2. Use the `reason`, `expires_at`, and `read_only` fields to choose an action. For the complete decision table, refer to [Suppression rules](/email-service/concepts/suppressions/#suppression-rules).
+3. If `result` is empty, confirm that you queried the correct account. Then check the sending logs.
+4. If the logs still report a suppression, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+</Steps>
 
-### A recipient remains blocked after deletion
+### Recipient blocked after deletion
 
-Confirm that the entry no longer appears in the account list.
+To investigate enforcement after deletion:
 
-Suppression updates propagate asynchronously. Retry later. If the recipient remains blocked, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+<Steps>
+1. Confirm that the entry no longer appears in the account list.
+2. Retry later because suppression updates propagate asynchronously.
+3. If the recipient remains blocked, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+</Steps>
 
-### An address keeps bouncing even though it is suppressed
+### Bounces before suppression enforcement
 
 Bounce suppressions are created through background delivery processing. Messages already in progress can bounce before a new suppression takes effect. Refer to [Suppression timing](/email-service/concepts/suppressions/#suppression-timing).
 
-### An address was never suppressed after bouncing
+### Missing suppression after a bounce
 
 Not every failure results in a suppression. Email Service creates automatic entries only for eligible recipient-side failures. Sender authentication, sender reputation, and unrelated infrastructure failures do not suppress the recipient. Check [Email sending logs](/email-service/observability/logs/) for the specific failure.
 
