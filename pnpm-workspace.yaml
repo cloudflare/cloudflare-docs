@@ -13,6 +13,7 @@ minimumReleaseAgeExclude:
   - miniflare
   - workerd
   - "@cloudflare/workers-types"
+
 overrides:
   # rolldown 1.1.x has a memory leak (rolldown/rolldown#10554) that causes
   # Workers Builds to OOM. Vite 8.2.0+ depends on rolldown ~1.2.0, but Astro
