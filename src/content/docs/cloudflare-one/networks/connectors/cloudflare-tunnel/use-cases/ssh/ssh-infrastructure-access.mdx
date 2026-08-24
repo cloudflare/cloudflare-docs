@@ -159,7 +159,7 @@ To turn off SSH command logging, delete your uploaded public key:
 2. Select **Remove**.
 3. Select **Remove key** to confirm.
 
-Cloudflare will stop logging SSH commands to your targets, as well as any commands subject to [Gateway Audit SSH](/cloudflare-one/traffic-policies/network-policies/ssh-logging/) policies.
+Cloudflare will stop logging SSH commands to your targets.
 
 </TabItem>
 <TabItem label="API">
@@ -207,6 +207,7 @@ To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insigh
 The following SSH features are not supported:
 
 - Local and remote port forwarding
+- `ProxyJump`
 - SSH agent forwarding
 - X11 forwarding
 
