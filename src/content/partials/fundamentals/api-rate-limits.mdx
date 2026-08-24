@@ -9,13 +9,13 @@ import { AnchorHeading } from "~/components";
 	<AnchorHeading title="API token limits" depth={2} />
 )}
 
-| Type                    | Limit                               |
-| ----------------------- | ----------------------------------- |
-| Client API per user/account token     | 1200/5 minutes        |
-| Client API per IP       | 200/second                          |
-| GraphQL                 | Varies by query cost. Max 320/5 min |
-| User API token quota    | 50                                  |
-| Account API token quota | 500                                 |
+| Type                              | Limit                               |
+| --------------------------------- | ----------------------------------- |
+| Client API per user/account token | 1200/5 minutes                      |
+| Client API per IP                 | 200/second                          |
+| GraphQL                           | Varies by query cost. Max 320/5 min |
+| User API tokens per user          | 50                                  |
+| Account API tokens per account    | 500                                 |
 
 :::note
 The global rate limit for the Cloudflare API is 1,200 requests per five minute period per user, and applies cumulatively regardless of whether the request is made via the dashboard, API key, or API token.
