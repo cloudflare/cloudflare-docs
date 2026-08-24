@@ -65,7 +65,7 @@ accDescr: Shows how DNS queries from Cloudflare WAN and Cloudflare Mesh flow thr
     ResolverPolicies -- Retain and use</br>Source Internal IP --> InternalDNS
     CloudflareGatewayDNSResolver -- <br> --> ResolverPolicies
     WarpConnector["Cloudflare Mesh"] -- DHCP/DNS resolver --> IPSecTunnel["IPsec tunnel"]
-    CloudflareWAN[$Cloudflare WAN] -- DHCP/DNS resolver --> IPSecTunnel
+    CloudflareWAN[Cloudflare WAN] -- DHCP/DNS resolver --> IPSecTunnel
     IPSecTunnel -- Shared IP endpoints --> CloudflareGatewayDNSResolver
     ResolverPolicies@{ shape: proc}
     WarpConnector@{ shape: in-out}
