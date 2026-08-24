@@ -100,22 +100,7 @@ function resolveAvatarUrl(c: unknown): string {
 
 					<div id="contributors-status" class="text-muted-foreground text-sm">
 						<span>
-							Showing{" "}
-							<span id="contributors-visible-count">
-								{initialContributors.length}
-							</span>
-							{
-								totalVisibleContributors > 0 && (
-									<Fragment> of {totalVisibleContributors}</Fragment>
-								)
-							}
-							{
-								totalContributorsAll > 0 &&
-									totalContributorsAll !== totalVisibleContributors && (
-										<Fragment> ({totalContributorsAll} total)</Fragment>
-									)
-							}{" "}
-							contributors
+							Showing {totalVisibleContributors} of {totalContributorsAll} total contributors
 						</span>
 						<button
 							type="button"
@@ -171,7 +156,6 @@ function resolveAvatarUrl(c: unknown): string {
 				(() => {
 					const GRID = document.getElementById("contributors-grid");
 					const SENTINEL = document.getElementById("contributors-sentinel");
-					const COUNT = document.getElementById("contributors-visible-count");
 					const TEMPLATE = document.getElementById("contributor-card-template");
 
 					if (!(GRID && SENTINEL)) {
@@ -182,13 +166,6 @@ function resolveAvatarUrl(c: unknown): string {
 					GRID.dataset.infiniteScrollReady = "true";
 					if (!(TEMPLATE instanceof HTMLTemplateElement)) {
 						return;
-					}
-
-					function updateVisibleCount() {
-						if (!COUNT) return;
-						COUNT.textContent = String(
-							GRID.querySelectorAll(":scope > [data-contributor-card]").length,
-						);
 					}
 
 					const total = Array.isArray(contributors) ? contributors.length : 0;
@@ -254,7 +231,6 @@ function resolveAvatarUrl(c: unknown): string {
 							if (cell) frag.append(cell);
 						}
 						GRID.append(frag);
-						updateVisibleCount();
 					}
 
 					function fillViewport() {
@@ -268,8 +244,6 @@ function resolveAvatarUrl(c: unknown): string {
 							appendBatch();
 						}
 					}
-
-					updateVisibleCount();
 
 					let io;
 					let onScroll;
