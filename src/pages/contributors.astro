@@ -18,7 +18,28 @@ const visibleContributors = contributors.filter((c) => {
 	return name && !name.endsWith("[bot]");
 });
 
-const totalVisibleContributors = visibleContributors.length;
+function isRenderableContributor(value: unknown): value is {
+	name: string;
+	profile_url: string;
+	contributions_url: string;
+	contributions: number;
+	avatar_urls?: Record<string, string>;
+} {
+	if (!value || typeof value !== "object") return false;
+	const v = value as Record<string, unknown>;
+	return (
+		typeof v.name === "string" &&
+		typeof v.profile_url === "string" &&
+		typeof v.contributions_url === "string" &&
+		typeof v.contributions === "number" &&
+		Number.isFinite(v.contributions)
+	);
+}
+
+const renderableContributors = visibleContributors.filter(
+	isRenderableContributor,
+);
+const totalVisibleContributors = renderableContributors.length;
 
 const totalContributorsAll =
 	typeof contributorsSnapshot?.totalContributorsAll === "number"
@@ -29,7 +50,7 @@ const tooltipContent =
 	"GitHub only links the first 500 unique author email addresses in a repository to accounts; the rest appear anonymous. This page only shows GitHub accounts (no anonymous entries) and hides bots.";
 
 const initialContributorCount = 60;
-const initialContributors = visibleContributors.slice(
+const initialContributors = renderableContributors.slice(
 	0,
 	initialContributorCount,
 );
@@ -143,7 +164,7 @@ function resolveAvatarUrl(c: unknown): string {
 				is:inline
 				type="module"
 				define:vars={{
-					contributors: visibleContributors,
+					contributors: renderableContributors,
 					initialCount: initialContributorCount,
 				}}
 			>
@@ -157,13 +178,17 @@ function resolveAvatarUrl(c: unknown): string {
 						// If the page structure changes, silently skip the enhancement.
 						return;
 					}
+					if (GRID.dataset.infiniteScrollReady === "true") return;
+					GRID.dataset.infiniteScrollReady = "true";
 					if (!(TEMPLATE instanceof HTMLTemplateElement)) {
 						return;
 					}
 
 					function updateVisibleCount() {
 						if (!COUNT) return;
-						COUNT.textContent = String(GRID.children.length);
+						COUNT.textContent = String(
+							GRID.querySelectorAll(":scope > [data-contributor-card]").length,
+						);
 					}
 
 					const total = Array.isArray(contributors) ? contributors.length : 0;
@@ -208,7 +233,9 @@ function resolveAvatarUrl(c: unknown): string {
 
 						const count = node.querySelector("[data-contributor-count]");
 						if (count instanceof HTMLElement) {
-							count.textContent = `${c.contributions} contributions`;
+							const label =
+								c.contributions === 1 ? "contribution" : "contributions";
+							count.textContent = `${c.contributions} ${label}`;
 						}
 
 						return node;
@@ -244,31 +271,41 @@ function resolveAvatarUrl(c: unknown): string {
 
 					updateVisibleCount();
 
+					let io;
+					let onScroll;
+					function cleanup() {
+						if (io) io.disconnect();
+						if (onScroll) window.removeEventListener("scroll", onScroll);
+					}
+					document.addEventListener("astro:before-swap", cleanup, {
+						once: true,
+					});
+					document.addEventListener("astro:before-preparation", cleanup, {
+						once: true,
+					});
+
 					if ("IntersectionObserver" in window) {
-						const io = new IntersectionObserver(
+						io = new IntersectionObserver(
 							(entries) => {
 								if (!entries.some((e) => e.isIntersecting)) return;
 								appendBatch();
 								fillViewport();
-								if (idx >= total) io.disconnect();
+								if (idx >= total) cleanup();
 							},
 							{ rootMargin: "800px" },
 						);
 						io.observe(SENTINEL);
 					} else {
 						let ticking = false;
-						window.addEventListener(
-							"scroll",
-							() => {
-								if (ticking) return;
-								ticking = true;
-								requestAnimationFrame(() => {
-									ticking = false;
-									fillViewport();
-								});
-							},
-							{ passive: true },
-						);
+						onScroll = () => {
+							if (ticking) return;
+							ticking = true;
+							requestAnimationFrame(() => {
+								ticking = false;
+								fillViewport();
+							});
+						};
+						window.addEventListener("scroll", onScroll, { passive: true });
 					}
 
 					fillViewport();

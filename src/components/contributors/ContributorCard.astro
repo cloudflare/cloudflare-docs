@@ -9,6 +9,9 @@ interface Props {
 
 const { name, profileUrl, contributionsUrl, contributions, avatarUrl } =
 	Astro.props;
+
+const contributionsLabel =
+	contributions === 1 ? "contribution" : "contributions";
 ---
 
 <div
@@ -19,6 +22,7 @@ const { name, profileUrl, contributionsUrl, contributions, avatarUrl } =
 		href={profileUrl}
 		target="_blank"
 		rel="noopener"
+		aria-label={`Open profile for ${name}`}
 		class="bg-muted block w-full overflow-hidden rounded-md"
 		title={`Open profile for ${name}`}
 		data-contributor-profile-link
@@ -50,7 +54,8 @@ const { name, profileUrl, contributionsUrl, contributions, avatarUrl } =
 			class="text-muted-foreground mt-1 text-xs tabular-nums"
 			data-contributor-count
 		>
-			{contributions} contributions
+			{contributions}
+			{contributionsLabel}
 		</div>
 	</a>
 </div>
