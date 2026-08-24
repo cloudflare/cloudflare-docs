@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-participants-audio
 description: API reference for rtk-participants-audio component (Angular Library)
-products:
-  - realtime
 ---
 A component which plays all the audio from participants and screenshares.
 
@@ -11,10 +9,7 @@ A component which plays all the audio from participants and screenshares.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `preloadedAudioElem` | `HTMLAudioElement` | ✅ | - | Pass existing audio element |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -30,8 +25,7 @@ A component which plays all the audio from participants and screenshares.
 ```html
 <!-- component.html -->
 <rtk-participants-audio
- [meeting]="meeting"
- [preloadedAudioElem]="htmlaudioelement">
+ [meeting]="meeting">
 </rtk-participants-audio>
 ```
 

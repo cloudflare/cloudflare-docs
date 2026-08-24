@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkBreakoutRoomParticipants
 description: API reference for RtkBreakoutRoomParticipants component (React Library)
-products:
-  - realtime
 ---
 A component which lists all participants, with ability to
  run privileged actions on each participant according to your permissions.
@@ -12,11 +10,7 @@ A component which lists all participants, with ability to
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `participantIds` | `string[]` | ✅ | - | Participant ids |
-| `selectedParticipantIds` | `string[]` | ✅ | - | selected participants |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -39,8 +33,6 @@ function MyComponent() {
   return (
     <RtkBreakoutRoomParticipants
       meeting={meeting}
-      participantIds="example"
-      selectedParticipantIds="example"
     />
   );
 }

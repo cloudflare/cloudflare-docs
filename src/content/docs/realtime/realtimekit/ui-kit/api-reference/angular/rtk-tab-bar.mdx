@@ -1,23 +1,16 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-tab-bar
 description: API reference for rtk-tab-bar component (Angular Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `activeTab` | `Tab` | ✅ | - | Active tab |
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
-| `layout` | `GridLayout1` | ✅ | - | Grid Layout |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `tabs` | `Tab[]` | ✅ | - | Tabs |
 
 ## Usage Examples
 
@@ -34,8 +27,8 @@ products:
 <!-- component.html -->
 <rtk-tab-bar
  [activeTab]="tab"
- [layout]="gridlayout1"
- [meeting]="meeting">
+ [meeting]="meeting"
+ size="md">
 </rtk-tab-bar>
 ```
 

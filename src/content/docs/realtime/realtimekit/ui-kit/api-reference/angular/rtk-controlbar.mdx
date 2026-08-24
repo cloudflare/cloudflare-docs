@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-controlbar
 description: API reference for rtk-controlbar component (Angular Library)
-products:
-  - realtime
 ---
 Controlbar component provides you with various designs as variants.
 
@@ -11,14 +9,9 @@ Controlbar component provides you with various designs as variants.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
-| `disableRender` | `boolean` | ✅ | - | Whether to render the default UI |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon Pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'solid' \| 'boxed'` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -34,7 +27,6 @@ Controlbar component provides you with various designs as variants.
 ```html
 <!-- component.html -->
 <rtk-controlbar
- [disableRender]="true"
  [meeting]="meeting"
  size="md">
 </rtk-controlbar>

@@ -1,21 +1,16 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkAudioGrid
 description: API reference for RtkAudioGrid component (React Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `config` | `UIConfig1` | ✅ | - | Config |
-| `hideSelf` | `boolean` | ✅ | - | Whether to hide self in the grid |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon Pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting |
 | `size` | `Size1` | ✅ | - | Size |
 | `states` | `States1` | ✅ | - | States |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -38,8 +33,8 @@ function MyComponent() {
   return (
     <RtkAudioGrid
       config={defaultUiConfig}
-      hideSelf={true}
       meeting={meeting}
+      size="md"
     />
   );
 }

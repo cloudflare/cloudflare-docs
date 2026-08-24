@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkSidebar
 description: API reference for RtkSidebar component (React Library)
-products:
-  - realtime
 ---
 A component which handles the sidebar and
  you can customize which sections you want, and which section you want as the default.
@@ -12,15 +10,9 @@ A component which handles the sidebar and
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `defaultSection` | `RtkSidebarSection` | ✅ | - | Default section |
-| `enabledSections` | `RtkSidebarTab[]` | ✅ | - | Enabled sections in sidebar |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `view` | `RtkSidebarView` | ✅ | - | View type |
 
 ## Usage Examples
 
@@ -42,9 +34,8 @@ import { RtkSidebar } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkSidebar
-      defaultSection={rtksidebarsection}
-      enabledSections={[]}
       meeting={meeting}
+      size="md"
     />
   );
 }

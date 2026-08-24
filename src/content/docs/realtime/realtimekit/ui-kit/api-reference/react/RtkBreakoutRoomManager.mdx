@@ -1,24 +1,17 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkBreakoutRoomManager
 description: API reference for RtkBreakoutRoomManager component (React Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `allowDelete` | `boolean` | ✅ | - | allow room delete |
 | `assigningParticipants` | `boolean` | ✅ | - | Enable updating participants |
-| `defaultExpanded` | `boolean` | ✅ | - | display expanded card by default |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `isDragMode` | `boolean` | ✅ | - | Drag mode |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `mode` | `'edit' \| 'create'` | ✅ | - | Mode in which selector is used |
 | `room` | `DraftMeeting` | ✅ | - | Connected Room Config Object |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -40,9 +33,9 @@ import { RtkBreakoutRoomManager } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkBreakoutRoomManager
-      allowDelete={true}
       assigningParticipants={true}
-      defaultExpanded={true}
+      meeting={meeting}
+      mode={'edit' | 'create'}
     />
   );
 }

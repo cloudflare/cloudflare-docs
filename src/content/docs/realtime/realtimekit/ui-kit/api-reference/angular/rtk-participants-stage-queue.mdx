@@ -1,20 +1,18 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-participants-stage-queue
 description: API reference for rtk-participants-stage-queue component (Angular Library)
-products:
-  - realtime
 ---
+A component that displays participants waiting in the stage queue.
+ Shows users who are waiting to be promoted to the stage in meetings
+ with stage functionality enabled.
+
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
-| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
 
 ## Usage Examples
 
@@ -31,8 +29,7 @@ products:
 <!-- component.html -->
 <rtk-participants-stage-queue
  [meeting]="meeting"
- size="md"
- [view]="participantsviewmode">
+ size="md">
 </rtk-participants-stage-queue>
 ```
 

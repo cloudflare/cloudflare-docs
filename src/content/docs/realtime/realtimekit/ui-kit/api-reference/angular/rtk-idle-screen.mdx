@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-idle-screen
 description: API reference for rtk-idle-screen component (Angular Library)
-products:
-  - realtime
 ---
 A screen that handles the idle state,
  i.e; when you are waiting for data about the meeting, specifically the `meeting` object.
@@ -12,10 +10,8 @@ A screen that handles the idle state,
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `states` | `States` | ✅ | - | States object |
 
 ## Usage Examples
 

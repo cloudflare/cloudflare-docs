@@ -1,23 +1,15 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-participant-setup
 description: API reference for rtk-participant-setup component (Angular Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `isPreview` | `boolean` | ✅ | - | Whether tile is used for preview |
-| `nameTagPosition` | `\| 'bottom-left'     \| 'bottom-right'     \| 'bottom-center'     \| 'top-left'     \| 'top-right'     \| 'top-center'` | ✅ | - | Position of name tag |
 | `participant` | `Peer` | ✅ | - | Participant object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'solid' \| 'gradient'` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -33,14 +25,8 @@ products:
 ```html
 <!-- component.html -->
 <rtk-participant-setup
- [isPreview]="true"
- [nameTagPosition]="| 'bottom-left'
-    | 'bottom-right'
-    | 'bottom-center'
-    | 'top-left'
-    | 'top-right'
-    | 'top-center'"
- [participant]="participant">
+ [participant]="participant"
+ size="md">
 </rtk-participant-setup>
 ```
 

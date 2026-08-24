@@ -1,19 +1,13 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkDraftAttachmentView
 description: API reference for RtkDraftAttachmentView component (React Library)
-products:
-  - realtime
 ---
 A component which renders the draft attachment to send
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `attachment` | `{     type: 'image' \| 'file';     file: File;   }` | ✅ | - | Attachment to display |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+*No properties available.*
 
 ## Usage Examples
 
@@ -24,20 +18,6 @@ import { RtkDraftAttachmentView } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return <RtkDraftAttachmentView />;
-}
-```
-
-### With Properties
-
-```tsx
-import { RtkDraftAttachmentView } from '@cloudflare/realtimekit-react-ui';
-
-function MyComponent() {
-  return (
-    <RtkDraftAttachmentView
-      attachment={{}}
-    />
-  );
 }
 ```
 

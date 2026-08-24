@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkNameTag
 description: API reference for RtkNameTag component (React Library)
-products:
-  - realtime
 ---
 A component which shows a participant's name.
 
@@ -11,13 +9,9 @@ A component which shows a participant's name.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `isScreenShare` | `boolean` | ✅ | - | Whether it is used in a screen share view |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `participant` | `Peer` | ✅ | - | Participant object |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `RtkNameTagVariant` | ✅ | - | Name tag variant |
 
 ## Usage Examples
 
@@ -39,9 +33,9 @@ import { RtkNameTag } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkNameTag
-      isScreenShare={true}
       meeting={meeting}
       participant={participant}
+      size="md"
     />
   );
 }

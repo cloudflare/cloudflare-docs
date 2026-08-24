@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-chat-messages-ui
 description: API reference for rtk-chat-messages-ui component (Angular Library)
-products:
-  - realtime
 ---
 @deprecated Use `rtk-chat-messages-ui-paginated` instead.
 
@@ -11,13 +9,9 @@ products:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `canPinMessages` | `boolean` | ✅ | - | Can current user pin/unpin messages |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `messages` | `Chat[]` | ✅ | - | Chat Messages |
 | `selectedGroup` | `string` | ✅ | - | Selected group key |
 | `selfUserId` | `string` | ✅ | - | User ID of self user |
 | `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -33,9 +27,9 @@ products:
 ```html
 <!-- component.html -->
 <rtk-chat-messages-ui
- [canPinMessages]="true"
- [messages]="[]"
- selectedGroup="example">
+ selectedGroup="example"
+ selfUserId="example"
+ size="md">
 </rtk-chat-messages-ui>
 ```
 

@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-plugins-toggle
 description: API reference for rtk-plugins-toggle component (Angular Library)
-products:
-  - realtime
 ---
 A button which toggles visibility of plugins.
  When clicked it emits a `rtkStateUpdate` event with the data:
@@ -15,12 +13,9 @@ A button which toggles visibility of plugins.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -37,8 +32,7 @@ A button which toggles visibility of plugins.
 <!-- component.html -->
 <rtk-plugins-toggle
  [meeting]="meeting"
- size="md"
- variant="button">
+ size="md">
 </rtk-plugins-toggle>
 ```
 

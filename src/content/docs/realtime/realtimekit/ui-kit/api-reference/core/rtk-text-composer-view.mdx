@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-text-composer-view
 description: API reference for rtk-text-composer-view component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A component which renders a text composer
 
@@ -11,14 +9,9 @@ A component which renders a text composer
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `disabled` | `boolean` | ✅ | - | Disable the text input (default = false) |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `keyDownHandler` | `(e: KeyboardEvent)` | ✅ | - | Keydown event handler function |
 | `maxLength` | `number` | ✅ | - | Max length for text input |
 | `placeholder` | `string` | ✅ | - | Placeholder text |
-| `rateLimitBreached` | `boolean` | ✅ | - | Boolean to indicate if rate limit is breached |
 | `setText` | `(text: string, focus?: boolean)` | ❌ | - | Sets value of the text input |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 | `value` | `string` | ✅ | - | Default value for text input |
 
 ## Usage Examples
@@ -32,7 +25,9 @@ A component which renders a text composer
 ### With Properties
 
 ```html
-<rtk-text-composer-view>
+<rtk-text-composer-view
+ placeholder="example"
+ value="example">
 </rtk-text-composer-view>
 ```
 
@@ -41,7 +36,6 @@ A component which renders a text composer
 <script>
   const el = document.querySelector("rtk-text-composer-view");
 
-  el.disabled= true;
   el.maxLength= 42;
 </script>
 ```

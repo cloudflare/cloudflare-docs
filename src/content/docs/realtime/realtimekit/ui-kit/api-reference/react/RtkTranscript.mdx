@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkTranscript
 description: API reference for RtkTranscript component (React Library)
-products:
-  - realtime
 ---
 A component which shows a transcript.
  You need to remove the element after you receive the
@@ -13,7 +11,6 @@ A component which shows a transcript.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 | `transcript` | `Transcript & { renderedId?: string }` | ❌ | - | Message |
 
 ## Usage Examples
@@ -36,7 +33,6 @@ import { RtkTranscript } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkTranscript
-      t={rtki18n}
       transcript="example"
     />
   );

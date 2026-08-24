@@ -1,19 +1,18 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-livestream-toggle
 description: API reference for rtk-livestream-toggle component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
+A toggle button for starting/stopping livestream broadcasting.
+ Only visible to users with livestream permissions. Allows hosts to
+ broadcast the meeting to external streaming platforms.
+
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -27,8 +26,7 @@ products:
 
 ```html
 <rtk-livestream-toggle
- size="md"
- variant"button">
+ size="md">
 </rtk-livestream-toggle>
 ```
 

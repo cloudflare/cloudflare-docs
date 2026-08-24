@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-menu
 description: API reference for rtk-menu component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A menu component.
 
@@ -11,11 +9,7 @@ A menu component.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `offset` | `number` | ✅ | - | Offset in px |
-| `placement` | `Placement` | ✅ | - | Placement of menu |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -38,6 +32,5 @@ A menu component.
 <script>
   const el = document.querySelector("rtk-menu");
 
-  el.offset= 42;
 </script>
 ```

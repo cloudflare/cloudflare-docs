@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-grid
 description: API reference for rtk-grid component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 The main grid component which abstracts all the grid handling logic and renders it for you.
 
@@ -11,17 +9,9 @@ The main grid component which abstracts all the grid handling logic and renders 
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `aspectRatio` | `string` | ✅ | - | The aspect ratio of each participant |
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
-| `gap` | `number` | ✅ | - | Gap between participants |
-| `gridSize` | `GridSize` | ✅ | - | Grid size |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `layout` | `GridLayout` | ✅ | - | Grid Layout |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `overrides` | `any` | ✅ | - | @deprecated |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -35,8 +25,7 @@ The main grid component which abstracts all the grid handling logic and renders 
 
 ```html
 <rtk-grid
- aspectRatio="example"
- gridSize="md">
+ size="md">
 </rtk-grid>
 ```
 
@@ -45,6 +34,6 @@ The main grid component which abstracts all the grid handling logic and renders 
 <script>
   const el = document.querySelector("rtk-grid");
 
-  el.gap= 42;
+  el.meeting= meeting
 </script>
 ```

@@ -1,20 +1,15 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkAiToggle
 description: API reference for RtkAiToggle component (React Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -38,7 +33,6 @@ function MyComponent() {
     <RtkAiToggle
       meeting={meeting}
       size="md"
-      variant="button"
     />
   );
 }

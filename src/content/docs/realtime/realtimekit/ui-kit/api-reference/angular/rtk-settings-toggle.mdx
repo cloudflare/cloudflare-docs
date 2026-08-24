@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-settings-toggle
 description: API reference for rtk-settings-toggle component (Angular Library)
-products:
-  - realtime
 ---
 A button which toggles visibility of settings module.
  When clicked it emits a `rtkStateUpdate` event with the data:
@@ -15,11 +13,8 @@ A button which toggles visibility of settings module.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -35,8 +30,7 @@ A button which toggles visibility of settings module.
 ```html
 <!-- component.html -->
 <rtk-settings-toggle
- size="md"
- variant="button">
+ size="md">
 </rtk-settings-toggle>
 ```
 

@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-tooltip
 description: API reference for rtk-tooltip component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 Tooltip component which follows RTK Design System.
 
@@ -11,14 +9,7 @@ Tooltip component which follows RTK Design System.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `delay` | `number` | ✅ | - | Delay before showing the tooltip |
-| `disabled` | `boolean` | ✅ | - | Disabled |
-| `kind` | `TooltipKind` | ✅ | - | Tooltip kind |
-| `label` | `string` | ✅ | - | Tooltip label |
-| `open` | `boolean` | ✅ | - | Open |
-| `placement` | `Placement` | ✅ | - | Placement of menu |
 | `size` | `Size` | ✅ | - | Size |
-| `variant` | `TooltipVariant` | ✅ | - | Tooltip variant |
 
 ## Usage Examples
 
@@ -31,7 +22,8 @@ Tooltip component which follows RTK Design System.
 ### With Properties
 
 ```html
-<rtk-tooltip>
+<rtk-tooltip
+ size="md">
 </rtk-tooltip>
 ```
 
@@ -40,7 +32,5 @@ Tooltip component which follows RTK Design System.
 <script>
   const el = document.querySelector("rtk-tooltip");
 
-  el.delay= 42;
-  el.disabled= true;
 </script>
 ```

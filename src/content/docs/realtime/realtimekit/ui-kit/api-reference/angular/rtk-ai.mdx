@@ -1,21 +1,19 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-ai
 description: API reference for rtk-ai component (Angular Library)
-products:
-  - realtime
 ---
+An AI assistant component for meeting interactions.
+ Provides AI-powered features like transcription, summarization, and
+ intelligent meeting assistance. Rendered inside rtk-sidebar as the 'ai' section.
+
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `view` | `AIView` | ✅ | - | View type |
 
 ## Usage Examples
 
@@ -32,8 +30,7 @@ products:
 <!-- component.html -->
 <rtk-ai
  [meeting]="meeting"
- size="md"
- [view]="aiview">
+ size="md">
 </rtk-ai>
 ```
 

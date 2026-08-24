@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-controlbar-button
 description: API reference for rtk-controlbar-button component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A skeleton component used for composing custom controlbar buttons.
 
@@ -11,15 +9,10 @@ A skeleton component used for composing custom controlbar buttons.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `brandIcon` | `boolean` | ✅ | - | Whether icon requires brand color |
-| `disabled` | `boolean` | ✅ | - | Whether button is disabled |
 | `icon` | `string` | ✅ | - | Icon |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `isLoading` | `boolean` | ✅ | - | Loading state Ignores current icon and shows a spinner if true |
 | `label` | `string` | ✅ | - | Label of button |
-| `showWarning` | `boolean` | ✅ | - | Whether to show warning icon |
 | `size` | `Size` | ✅ | - | Size |
-| `variant` | `ControlBarVariant1` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -33,7 +26,8 @@ A skeleton component used for composing custom controlbar buttons.
 
 ```html
 <rtk-controlbar-button
- icon="example">
+ icon="example"
+ label="example">
 </rtk-controlbar-button>
 ```
 
@@ -42,7 +36,6 @@ A skeleton component used for composing custom controlbar buttons.
 <script>
   const el = document.querySelector("rtk-controlbar-button");
 
-  el.brandIcon= true;
-  el.disabled= true;
+  el.isLoading= true;
 </script>
 ```

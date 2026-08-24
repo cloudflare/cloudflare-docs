@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-dialog
 description: API reference for rtk-dialog component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A dialog component.
 
@@ -11,15 +9,9 @@ A dialog component.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
-| `disableEscapeKey` | `boolean` | ✅ | - | Whether Escape key can close the modal |
-| `hideCloseButton` | `boolean` | ✅ | - | Whether to show the close button |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `open` | `boolean` | ✅ | - | Whether a dialog is open or not |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -32,7 +24,8 @@ A dialog component.
 ### With Properties
 
 ```html
-<rtk-dialog>
+<rtk-dialog
+ size="md">
 </rtk-dialog>
 ```
 
@@ -41,8 +34,6 @@ A dialog component.
 <script>
   const el = document.querySelector("rtk-dialog");
 
-  el.disableEscapeKey= true;
-  el.hideCloseButton= true;
   el.meeting= meeting
 </script>
 ```

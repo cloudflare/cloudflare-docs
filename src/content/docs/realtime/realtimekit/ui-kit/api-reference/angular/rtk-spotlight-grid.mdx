@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-spotlight-grid
 description: API reference for rtk-spotlight-grid component (Angular Library)
-products:
-  - realtime
 ---
 A grid component that renders two lists of participants: `pinnedParticipants` and `participants`.
  You can customize the layout to a `column` view, by default is is `row`.
@@ -14,18 +12,9 @@ A grid component that renders two lists of participants: `pinnedParticipants` an
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
-| `gap` | `number` | ✅ | - | Gap between participant tiles |
-| `gridSize` | `GridSize1` | ✅ | - | Grid size |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
-| `layout` | `GridLayout1` | ✅ | - | Grid Layout |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `participants` | `Peer[]` | ✅ | - | Participants |
-| `pinnedParticipants` | `Peer[]` | ✅ | - | Pinned Participants |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -41,9 +30,8 @@ A grid component that renders two lists of participants: `pinnedParticipants` an
 ```html
 <!-- component.html -->
 <rtk-spotlight-grid
- aspectRatio="example"
- gap="42"
- gridSize="md">
+ [meeting]="meeting"
+ size="md">
 </rtk-spotlight-grid>
 ```
 

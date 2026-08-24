@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-camera-selector
 description: API reference for rtk-camera-selector component (Angular Library)
-products:
-  - realtime
 ---
 A component which lets to manage your audio devices and audio preferences.
  Emits `rtkStateUpdate` event with data for muting notification sounds:
@@ -19,11 +17,8 @@ A component which lets to manage your audio devices and audio preferences.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'full' \| 'inline'` | ✅ | - | variant |
 
 ## Usage Examples
 
@@ -40,8 +35,7 @@ A component which lets to manage your audio devices and audio preferences.
 <!-- component.html -->
 <rtk-camera-selector
  [meeting]="meeting"
- size="md"
- [variant]="'full' | 'inline'">
+ size="md">
 </rtk-camera-selector>
 ```
 

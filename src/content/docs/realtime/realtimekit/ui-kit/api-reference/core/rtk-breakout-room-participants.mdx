@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-breakout-room-participants
 description: API reference for rtk-breakout-room-participants component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A component which lists all participants, with ability to
  run privileged actions on each participant according to your permissions.
@@ -12,11 +10,7 @@ A component which lists all participants, with ability to
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `participantIds` | `string[]` | ✅ | - | Participant ids |
-| `selectedParticipantIds` | `string[]` | ✅ | - | selected participants |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -29,9 +23,7 @@ A component which lists all participants, with ability to
 ### With Properties
 
 ```html
-<rtk-breakout-room-participants
- participantIds="example"
- selectedParticipantIds="example">
+<rtk-breakout-room-participants>
 </rtk-breakout-room-participants>
 ```
 
@@ -41,7 +33,5 @@ A component which lists all participants, with ability to
   const el = document.querySelector("rtk-breakout-room-participants");
 
   el.meeting= meeting
-  el.participantIds= [];
-  el.selectedParticipantIds= [];
 </script>
 ```

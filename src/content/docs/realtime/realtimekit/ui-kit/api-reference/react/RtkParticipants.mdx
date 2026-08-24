@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkParticipants
 description: API reference for RtkParticipants component (React Library)
-products:
-  - realtime
 ---
 A component which lists all participants, with ability to
  run privileged actions on each participant according to your permissions.
@@ -12,13 +10,9 @@ A component which lists all participants, with ability to
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `defaultParticipantsTabId` | `ParticipantsTabId` | ✅ | - | Default section |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -40,7 +34,6 @@ import { RtkParticipants } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkParticipants
-      defaultParticipantsTabId={participantstabid}
       meeting={meeting}
       size="md"
     />

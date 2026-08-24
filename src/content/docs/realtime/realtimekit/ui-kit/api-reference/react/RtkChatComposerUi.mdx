@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkChatComposerUi
 description: API reference for RtkChatComposerUi component (React Library)
-products:
-  - realtime
 ---
 @deprecated . This component is deprecated, please use rtk-chat-composer-view instead.
 
@@ -11,12 +9,7 @@ products:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `canSendFiles` | `boolean` | ✅ | - | Whether user can send file messages |
-| `canSendTextMessage` | `boolean` | ✅ | - | Whether user can send text messages |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `prefill` | `{     suggestedReplies?: string[];     editMessage?: TextMessage;     replyMessage?: TextMessage;   }` | ❌ | - | prefill the composer |
 | `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -38,8 +31,6 @@ import { RtkChatComposerUi } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkChatComposerUi
-      canSendFiles={true}
-      canSendTextMessage={true}
       size="md"
     />
   );

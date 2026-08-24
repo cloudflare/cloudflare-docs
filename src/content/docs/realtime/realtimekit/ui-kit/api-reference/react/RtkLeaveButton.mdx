@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkLeaveButton
 description: API reference for RtkLeaveButton component (React Library)
-products:
-  - realtime
 ---
 A button which toggles visilibility of the leave confirmation dialog.
 
@@ -11,10 +9,7 @@ A button which toggles visilibility of the leave confirmation dialog.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -37,7 +32,6 @@ function MyComponent() {
   return (
     <RtkLeaveButton
       size="md"
-      variant="button"
     />
   );
 }

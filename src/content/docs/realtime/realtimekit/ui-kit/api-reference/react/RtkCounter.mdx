@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkCounter
 description: API reference for RtkCounter component (React Library)
-products:
-  - realtime
 ---
 A number picker with increment and decrement buttons.
 
@@ -11,10 +9,7 @@ A number picker with increment and decrement buttons.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `minValue` | `number` | ✅ | - | Minimum value |
 | `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 | `value` | `number` | ✅ | - | Initial value |
 
 ## Usage Examples
@@ -37,7 +32,6 @@ import { RtkCounter } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkCounter
-      minValue={42}
       size="md"
       value={42}
     />

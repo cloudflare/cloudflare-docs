@@ -1,21 +1,16 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-audio-grid
 description: API reference for rtk-audio-grid component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `config` | `UIConfig1` | ✅ | - | Config |
-| `hideSelf` | `boolean` | ✅ | - | Whether to hide self in the grid |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon Pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting |
 | `size` | `Size1` | ✅ | - | Size |
 | `states` | `States1` | ✅ | - | States |
-| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -28,7 +23,8 @@ products:
 ### With Properties
 
 ```html
-<rtk-audio-grid>
+<rtk-audio-grid
+ size="md">
 </rtk-audio-grid>
 ```
 
@@ -38,7 +34,6 @@ products:
   const el = document.querySelector("rtk-audio-grid");
 
   el.config= defaultUiConfig
-  el.hideSelf= true;
   el.meeting= meeting
 </script>
 ```

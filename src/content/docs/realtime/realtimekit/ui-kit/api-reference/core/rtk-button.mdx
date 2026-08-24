@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-button
 description: API reference for rtk-button component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A button that follows RTK Design System.
 
@@ -11,12 +9,7 @@ A button that follows RTK Design System.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `disabled` | `boolean` | ✅ | - | Where the button is disabled or not |
-| `kind` | `ButtonKind` | ✅ | - | Button type |
-| `reverse` | `boolean` | ✅ | - | Whether to reverse order of children |
 | `size` | `Size` | ✅ | - | Size |
-| `type` | `HTMLButtonElement['type']` | ✅ | - | Button type |
-| `variant` | `ButtonVariant` | ✅ | - | Button variant |
 
 ## Usage Examples
 
@@ -29,7 +22,8 @@ A button that follows RTK Design System.
 ### With Properties
 
 ```html
-<rtk-button>
+<rtk-button
+ size="md">
 </rtk-button>
 ```
 
@@ -38,7 +32,5 @@ A button that follows RTK Design System.
 <script>
   const el = document.querySelector("rtk-button");
 
-  el.disabled= true;
-  el.reverse= true;
 </script>
 ```

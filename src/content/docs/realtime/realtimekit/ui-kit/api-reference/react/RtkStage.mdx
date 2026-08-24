@@ -1,19 +1,14 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkStage
 description: API reference for RtkStage component (React Library)
-products:
-  - realtime
 ---
 A component used as a stage that commonly houses
  the `grid` and `sidebar` components.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+*No properties available.*
 
 ## Usage Examples
 
@@ -24,21 +19,6 @@ import { RtkStage } from '@cloudflare/realtimekit-react-ui';
 
 function MyComponent() {
   return <RtkStage />;
-}
-```
-
-### With Properties
-
-```tsx
-import { RtkStage } from '@cloudflare/realtimekit-react-ui';
-
-function MyComponent() {
-  return (
-    <RtkStage
-      iconPack={defaultIconPack}
-      t={rtki18n}
-    />
-  );
 }
 ```
 

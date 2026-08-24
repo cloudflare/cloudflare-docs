@@ -1,20 +1,14 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-chat-selector-ui
 description: API reference for rtk-chat-selector-ui component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `groups` | `ChatGroup[]` | ✅ | - | Participants |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
 | `selectedGroupId` | `string` | ✅ | - | Selected participant |
 | `selfUserId` | `string` | ✅ | - | Self User ID |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `unreadCounts` | `Record<string, number>` | ✅ | - | Unread counts |
 
 ## Usage Examples
 
@@ -38,6 +32,5 @@ products:
 <script>
   const el = document.querySelector("rtk-chat-selector-ui");
 
-  el.groups= [];
 </script>
 ```

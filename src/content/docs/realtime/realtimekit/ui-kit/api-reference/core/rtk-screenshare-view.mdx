@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-screenshare-view
 description: API reference for rtk-screenshare-view component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A component which plays a participant's screenshared video.
  It also allows for placement of other components similar to `rtk-participant-tile`.
@@ -13,14 +11,9 @@ A component which plays a participant's screenshared video.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `hideFullScreenButton` | `boolean` | ✅ | - | Hide full screen button |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `nameTagPosition` | `\| 'bottom-left'     \| 'bottom-right'     \| 'bottom-center'     \| 'top-left'     \| 'top-right'     \| 'top-center'` | ✅ | - | Position of name tag |
 | `participant` | `Peer` | ✅ | - | Participant object |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'solid' \| 'gradient'` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -33,7 +26,8 @@ A component which plays a participant's screenshared video.
 ### With Properties
 
 ```html
-<rtk-screenshare-view>
+<rtk-screenshare-view
+ size="md">
 </rtk-screenshare-view>
 ```
 
@@ -42,7 +36,7 @@ A component which plays a participant's screenshared video.
 <script>
   const el = document.querySelector("rtk-screenshare-view");
 
-  el.hideFullScreenButton= true;
   el.meeting= meeting
+  el.participant= participant
 </script>
 ```

@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkPaginatedList
 description: API reference for RtkPaginatedList component (React Library)
-products:
-  - realtime
 ---
 ## Properties
 
@@ -11,14 +9,11 @@ products:
 |----------|------|----------|---------|-------------|
 | `autoScroll` | `boolean` | ✅ | - | auto scroll list to bottom |
 | `createNodes` | `(data: unknown[])` | ✅ | - | Create nodes |
-| `emptyListLabel` | `string` | ✅ | - | label to show when empty |
 | `fetchData` | `(timestamp: number, size: number, reversed: boolean)` | ✅ | - | Fetch the data |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `pageSize` | `number` | ✅ | - | Page Size |
 | `pagesAllowed` | `number` | ✅ | - | Number of pages allowed to be shown |
 | `rerenderList` | `()` | ✅ | - | Rerender paginated list |
 | `reset` | `(timestamp?: number)` | ❌ | - | Resets the paginated list to a given timestamp |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -42,7 +37,7 @@ function MyComponent() {
     <RtkPaginatedList
       autoScroll={true}
       createNodes={[]}
-      emptyListLabel="example"
+      fetchData={true}
     />
   );
 }

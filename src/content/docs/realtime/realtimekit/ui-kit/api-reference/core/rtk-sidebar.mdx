@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-sidebar
 description: API reference for rtk-sidebar component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A component which handles the sidebar and
  you can customize which sections you want, and which section you want as the default.
@@ -12,15 +10,9 @@ A component which handles the sidebar and
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `defaultSection` | `RtkSidebarSection` | ✅ | - | Default section |
-| `enabledSections` | `RtkSidebarTab[]` | ✅ | - | Enabled sections in sidebar |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `view` | `RtkSidebarView` | ✅ | - | View type |
 
 ## Usage Examples
 
@@ -33,7 +25,8 @@ A component which handles the sidebar and
 ### With Properties
 
 ```html
-<rtk-sidebar>
+<rtk-sidebar
+ size="md">
 </rtk-sidebar>
 ```
 
@@ -42,7 +35,6 @@ A component which handles the sidebar and
 <script>
   const el = document.querySelector("rtk-sidebar");
 
-  el.enabledSections= [];
   el.meeting= meeting
 </script>
 ```

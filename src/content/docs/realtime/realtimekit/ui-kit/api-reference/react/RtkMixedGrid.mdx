@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkMixedGrid
 description: API reference for RtkMixedGrid component (React Library)
-products:
-  - realtime
 ---
 A grid component which handles screenshares, plugins and participants.
 
@@ -11,20 +9,9 @@ A grid component which handles screenshares, plugins and participants.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
-| `gap` | `number` | ✅ | - | Gap between participant tiles |
-| `gridSize` | `GridSize1` | ✅ | - | Grid size |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
-| `layout` | `GridLayout1` | ✅ | - | Grid Layout |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `participants` | `Peer[]` | ✅ | - | Participants |
-| `pinnedParticipants` | `Peer[]` | ✅ | - | Pinned Participants |
-| `plugins` | `RTKPlugin[]` | ✅ | - | Active Plugins |
-| `screenShareParticipants` | `Peer[]` | ✅ | - | Screenshare Participants |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -46,9 +33,8 @@ import { RtkMixedGrid } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkMixedGrid
-      aspectRatio="example"
-      gap={42}
-      gridSize="md"
+      meeting={meeting}
+      size="md"
     />
   );
 }

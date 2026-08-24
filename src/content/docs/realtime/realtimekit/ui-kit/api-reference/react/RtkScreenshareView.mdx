@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkScreenshareView
 description: API reference for RtkScreenshareView component (React Library)
-products:
-  - realtime
 ---
 A component which plays a participant's screenshared video.
  It also allows for placement of other components similar to `rtk-participant-tile`.
@@ -13,14 +11,9 @@ A component which plays a participant's screenshared video.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `hideFullScreenButton` | `boolean` | ✅ | - | Hide full screen button |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `nameTagPosition` | `\| 'bottom-left'     \| 'bottom-right'     \| 'bottom-center'     \| 'top-left'     \| 'top-right'     \| 'top-center'` | ✅ | - | Position of name tag |
 | `participant` | `Peer` | ✅ | - | Participant object |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `'solid' \| 'gradient'` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -42,14 +35,9 @@ import { RtkScreenshareView } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkScreenshareView
-      hideFullScreenButton={true}
       meeting={meeting}
-      nameTagPosition={| 'bottom-left'
-    | 'bottom-right'
-    | 'bottom-center'
-    | 'top-left'
-    | 'top-right'
-    | 'top-center'}
+      participant={participant}
+      size="md"
     />
   );
 }

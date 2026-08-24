@@ -1,20 +1,15 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-debugger-toggle
 description: API reference for rtk-debugger-toggle component (Angular Library)
-products:
-  - realtime
 ---
 ## Properties
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -31,8 +26,7 @@ products:
 <!-- component.html -->
 <rtk-debugger-toggle
  [meeting]="meeting"
- size="md"
- variant="button">
+ size="md">
 </rtk-debugger-toggle>
 ```
 

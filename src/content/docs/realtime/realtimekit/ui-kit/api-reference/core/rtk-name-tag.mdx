@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-name-tag
 description: API reference for rtk-name-tag component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A component which shows a participant's name.
 
@@ -11,13 +9,9 @@ A component which shows a participant's name.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `isScreenShare` | `boolean` | ✅ | - | Whether it is used in a screen share view |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `participant` | `Peer` | ✅ | - | Participant object |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `RtkNameTagVariant` | ✅ | - | Name tag variant |
 
 ## Usage Examples
 
@@ -30,7 +24,8 @@ A component which shows a participant's name.
 ### With Properties
 
 ```html
-<rtk-name-tag>
+<rtk-name-tag
+ size="md">
 </rtk-name-tag>
 ```
 
@@ -39,7 +34,6 @@ A component which shows a participant's name.
 <script>
   const el = document.querySelector("rtk-name-tag");
 
-  el.isScreenShare= true;
   el.meeting= meeting
   el.participant= participant
 </script>

@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkParticipantsAudio
 description: API reference for RtkParticipantsAudio component (React Library)
-products:
-  - realtime
 ---
 A component which plays all the audio from participants and screenshares.
 
@@ -11,10 +9,7 @@ A component which plays all the audio from participants and screenshares.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `preloadedAudioElem` | `HTMLAudioElement` | ✅ | - | Pass existing audio element |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -37,7 +32,6 @@ function MyComponent() {
   return (
     <RtkParticipantsAudio
       meeting={meeting}
-      preloadedAudioElem={htmlaudioelement}
     />
   );
 }

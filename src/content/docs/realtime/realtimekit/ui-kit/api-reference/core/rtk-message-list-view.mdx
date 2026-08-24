@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-message-list-view
 description: API reference for rtk-message-list-view component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A component which renders list of messages.
 
@@ -11,12 +9,9 @@ A component which renders list of messages.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `estimateItemSize` | `number` | ✅ | - | Estimated height of an item |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `loadMore` | `(lastMessage: Message)` | ✅ | - | Function to load more messages. Messages returned from this will be prepended |
+| `loadMore` | `(lastMessage: Message)` | ✅ | - | Function to load more messages. Messages returned from this will be preprended |
 | `messages` | `Message[]` | ✅ | - | Messages to render |
 | `renderer` | `(message: Message, index: number)` | ✅ | - | Render function of the message |
-| `visibleItemsCount` | `number` | ✅ | - | Maximum visible messages |
 
 ## Usage Examples
 
@@ -38,7 +33,7 @@ A component which renders list of messages.
 <script>
   const el = document.querySelector("rtk-message-list-view");
 
-  el.estimateItemSize= 42;
   el.messages= [];
+  el.renderer= 42;
 </script>
 ```

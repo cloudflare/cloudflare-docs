@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-screen-share-toggle
 description: API reference for rtk-screen-share-toggle component (Web Components (HTML) Library)
-products:
-  - realtime
 ---
 A button which toggles your screenshare.
 
@@ -11,12 +9,9 @@ A button which toggles your screenshare.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -30,8 +25,7 @@ A button which toggles your screenshare.
 
 ```html
 <rtk-screen-share-toggle
- size="md"
- variant"button">
+ size="md">
 </rtk-screen-share-toggle>
 ```
 

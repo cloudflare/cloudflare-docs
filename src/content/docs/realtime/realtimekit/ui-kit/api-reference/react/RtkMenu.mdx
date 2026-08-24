@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkMenu
 description: API reference for RtkMenu component (React Library)
-products:
-  - realtime
 ---
 A menu component.
 
@@ -11,11 +9,7 @@ A menu component.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `offset` | `number` | ✅ | - | Offset in px |
-| `placement` | `Placement` | ✅ | - | Placement of menu |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
 
@@ -37,8 +31,6 @@ import { RtkMenu } from '@cloudflare/realtimekit-react-ui';
 function MyComponent() {
   return (
     <RtkMenu
-      offset={42}
-      placement={placement}
       size="md"
     />
   );

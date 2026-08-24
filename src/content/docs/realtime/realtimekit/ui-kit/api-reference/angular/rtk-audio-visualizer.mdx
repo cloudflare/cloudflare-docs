@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: rtk-audio-visualizer
 description: API reference for rtk-audio-visualizer component (Angular Library)
-products:
-  - realtime
 ---
 An audio visualizer component which visualizes a participants audio.
  Commonly used inside `rtk-name-tag`.
@@ -12,13 +10,8 @@ An audio visualizer component which visualizes a participants audio.
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `hideMuted` | `boolean` | ✅ | - | Hide the visualizer if audio is muted |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `isScreenShare` | `boolean` | ✅ | - | Audio visualizer for screensharing, it will use screenShareTracks.audio instead of audioTrack |
 | `participant` | `Peer` | ✅ | - | Participant object |
 | `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `AudioVisualizerVariant` | ✅ | - | Variant |
 
 ## Usage Examples
 
@@ -34,9 +27,8 @@ An audio visualizer component which visualizes a participants audio.
 ```html
 <!-- component.html -->
 <rtk-audio-visualizer
- [hideMuted]="true"
- [isScreenShare]="true"
- [participant]="participant">
+ [participant]="participant"
+ size="md">
 </rtk-audio-visualizer>
 ```
 

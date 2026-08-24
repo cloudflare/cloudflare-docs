@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: reference
 title: RtkIcon
 description: API reference for RtkIcon component (React Library)
-products:
-  - realtime
 ---
 An icon component which accepts an svg string and renders it.
 
@@ -12,8 +10,6 @@ An icon component which accepts an svg string and renders it.
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `icon` | `string` | ✅ | - | Icon |
-| `size` | `Size1` | ✅ | - | Size |
-| `variant` | `IconVariant` | ✅ | - | Icon variant |
 
 ## Usage Examples
 
@@ -36,8 +32,6 @@ function MyComponent() {
   return (
     <RtkIcon
       icon="example"
-      size="md"
-      variant="primary"
     />
   );
 }
