@@ -13,7 +13,6 @@ entries:
 
       **Fixes**
 
-      - Invalid authentication tokens are now detected and logged correctly when participant details are requested.
       - Fixed a Babel transpilation error that could occur when consuming ES2015 builds containing `RequestError`.
       - Fixed session recovery after SFU timeouts. Participants can now continue hearing and seeing others after a transient SFU API timeout.
       - Fixed bulk media consumer creation batching to support participant grids with up to 100 participants per page, increased from 24 per page.
