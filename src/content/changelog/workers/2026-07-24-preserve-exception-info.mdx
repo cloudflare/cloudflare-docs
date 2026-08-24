@@ -1,0 +1,48 @@
+---
+title: Preserve exception details in console logs
+description: Log events now preserve the name, message, and stack of exceptions passed to console methods.
+products:
+  - workers
+date: 2026-07-24
+---
+
+import { TypeScriptExample } from "~/components";
+
+Console methods now preserve exception details in logs for your Worker. When your Worker logs an exception, the corresponding log entry includes the exception name, message, and stack.
+
+For example, your Worker can catch and log an exception:
+
+<TypeScriptExample>
+
+```ts
+try {
+	throw new RangeError("Value out of range");
+} catch (error) {
+	console.error("Request failed:", error);
+}
+```
+
+</TypeScriptExample>
+
+As a result, the [Tail Worker](/workers/observability/logs/tail-workers/) receives a log entry with an `errorInfo` array:
+
+```json
+{
+	"message": ["Request failed:", "RangeError: Value out of range"],
+	"errorInfo": [
+		null,
+		{
+			"name": "RangeError",
+			"message": "Value out of range",
+			"stack": "RangeError: Value out of range\n    at ..."
+		}
+	],
+	"level": "error",
+	"timestamp": 1784851200000
+}
+```
+
+Each `errorInfo` item corresponds to the console argument at the same index in `message`. Arguments that are not exceptions have a `null` entry.
+
+If you are using [Workers Observability](/workers/observability/), there are no changes you need to make.
+Workers Observability logs automatically enrich your exception logs with this structured information.
