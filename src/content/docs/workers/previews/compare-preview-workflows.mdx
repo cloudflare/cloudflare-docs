@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Previews, Version URLs, and Wrangler environments
 description: Understand the difference between Previews, Version URLs, and Wrangler environments.
 sidebar:
-  order: 5
+  order: 6
   label: Previews, Version URLs, and Wrangler environments
 products:
   - workers
@@ -94,17 +94,12 @@ If your CI currently posts Version URLs to pull requests, use [External CI](/wor
 
 ## Wrangler environments
 
-Wrangler environments create separately named Workers, such as `my-worker-staging`, deployed with `wrangler deploy --env staging`. They are not created automatically for branches or pull requests.
+Wrangler environments create separately named Workers, such as `my-worker-staging`, deployed with `wrangler deploy --env staging`. They are not created automatically for branches or pull requests, and each environment's configuration must be managed manually — you are responsible for keeping routes, custom domains, bindings, variables, secrets, deploys, access control, and cleanup in sync yourself.
 
-If you are using Wrangler environments for branch or pull request testing, switch to Previews. Previews handle branch isolation automatically and do not require manually maintaining separate environment blocks with duplicated bindings.
+If you are using Wrangler environments for branch or pull request testing, switch to [Previews](/workers/previews/). Previews handle branch isolation and configuration automatically without requiring you to maintain separate environment blocks.
 
-If your CI currently deploys a staging Wrangler environment just to post a URL to a pull request, use [External CI](/workers/previews/get-started/#external-ci) to create Preview URLs instead.
+Wrangler environments can still be useful for long-lived persistent environments that must always be running (for example, a staging Worker that external partners hit continuously).
 
-Wrangler environments are separate Workers that you operate over time. You are responsible for that Worker's routes, custom domains, bindings, deploys, access control, and cleanup.
-
-Wrangler environments are still useful for:
-
-- Long-lived persistent environments that must always be running (for example, a staging Worker that external partners hit continuously).
-- Environment-specific routes or custom domains that need to stay up permanently.
+You can also [use Previews alongside Wrangler environments](/workers/previews/configuration/#wrangler-environments) if you need both.
 
 For most teams, Previews replace the need for a `[env.staging]` or `[env.dev]` block. You do not need to create a Wrangler environment to use Previews.
