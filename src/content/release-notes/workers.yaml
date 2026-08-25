@@ -3,6 +3,9 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-08-20"
+    description: |-
+      - Increased the Durable Object Dynamic Worker concurrency limit from 4 to 10.
   - publish_date: "2026-08-18"
     description: |-
       - Updated v8 to version 15.2.

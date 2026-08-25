@@ -60,6 +60,18 @@ If your server is correctly locked down, you will see:
 [ip-address] 443 (https): Connection refused
 ```
 
+## Large-file and streaming traffic through Tunnel
+
+It depends on how you route the traffic.
+
+Public hostname routes make applications available on the Internet through Cloudflare's reverse proxy. On Free, Pro, and Business plans, the [service-specific terms](https://www.cloudflare.com/service-specific-terms-application-services/#content-delivery-network-free-pro-or-business) require you to use a specific paid service to serve video and other large files.
+
+Refer to [Delivering videos with Cloudflare](/fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/) for available options, such as [Stream](/stream/).
+
+Private network routes do not publish applications to the Internet, and this restriction does not apply. Users and networks can reach these routes through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/).
+
+For more information, refer to [Private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
+
 ## What records are created for routing to a Named Tunnel's hostname?
 
 Named Tunnels can be routed via DNS records, in which case we use CNAME records to point to the `<UUID>.cfargotunnel.com`; Or as Load Balancing endpoints, which also point to `<UUID>.cfargotunnel.com`.
