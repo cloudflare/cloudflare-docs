@@ -78,14 +78,17 @@ These headers can be set via the `headers` field. Any header not listed here and
 | `Keywords`         | [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) | Message keywords (comma-separated for multiple values)    |
 | `Comments`         | [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) | Additional comments (comma-separated for multiple values) |
 | `Importance`       | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Values: `high`, `normal`, `low`                           |
+| `Priority`         | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Values: `normal`, `non-urgent`, `urgent`                  |
 | `Sensitivity`      | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Values: `personal`, `private`, `company-confidential`     |
 | `Organization`     | [RFC 4021](https://datatracker.ietf.org/doc/html/rfc4021) | Sender's organization name                                |
 
 ### Delivery and notification
 
-| Header                          | RFC                                                       | Notes                    |
-| ------------------------------- | --------------------------------------------------------- | ------------------------ |
-| `Require-Recipient-Valid-Since` | [RFC 7293](https://datatracker.ietf.org/doc/html/rfc7293) | Address reuse protection |
+| Header                          | RFC                                                       | Notes                                                    |
+| ------------------------------- | --------------------------------------------------------- | -------------------------------------------------------- |
+| `Require-Recipient-Valid-Since` | [RFC 7293](https://datatracker.ietf.org/doc/html/rfc7293) | Address reuse protection                                 |
+| `Expires`                       | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Date and time after which the message is no longer valid |
+| `Reply-By`                      | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Date and time by which a reply is requested              |
 
 ### Modern standards
 
