@@ -1,6 +1,7 @@
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 import dedent from "dedent";
+import { formatPage, normalizeForIndexMd } from "../../util/llms-txt";
 import { isExternalRedirect, resolveRedirect } from "../../util/redirects";
 import { isDisallowedByRobots } from "../../util/robots";
 
@@ -75,14 +76,6 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
 
-function formatPage(base: string, e: Page) {
-	const path = e.data.external_link?.startsWith("/")
-		? resolveRedirect(e.data.external_link)
-		: resolveRedirect(`/${e.id}/`);
-	const line = `- [${e.data.title}](${base}${path}index.md)`;
-	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
-}
-
 interface Section {
 	label: string;
 	order: number | undefined;
@@ -150,9 +143,11 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 	const prefix = productUrl.slice(1, -1);
 	const rootPage = pages.find((e) => e.id === prefix);
 	const resolvedProductUrl = resolveRedirect(productUrl);
+	const { path: rootPath, fragment: rootFragment } =
+		normalizeForIndexMd(resolvedProductUrl);
 	const rootLink = rootPage
 		? formatPage(base, rootPage)
-		: `- [${title}](${base}${resolvedProductUrl}index.md)`;
+		: `- [${title}](${base}${rootPath}index.md${rootFragment})`;
 
 	const sections = buildSections(prefix, pages);
 
