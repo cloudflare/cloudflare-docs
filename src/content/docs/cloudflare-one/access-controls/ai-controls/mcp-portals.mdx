@@ -647,6 +647,10 @@ Each portal has a Code Mode policy. The default policy is _Opt-in_.
 
 Use _Opt-in_ or _On by default_ if some clients run their own Code Mode implementation. These policies let clients avoid nested code execution.
 
+### Upstream servers with Code Mode turned on
+
+MCP portals do not support upstream MCP servers that have their own Code Mode turned on. When adding a server to your portal, connect to a version of the server that returns its full tool list. If the upstream server runs its own Code Mode, use the server's opt-out mechanism if available. Alternatively, consider turning off Code Mode on your MCP portal.
+
 ### Configure a Code Mode policy
 
 <Steps>

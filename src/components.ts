@@ -8,7 +8,7 @@ export { Badge } from "./components/ui/badge";
 export { Code } from "./components/ui/code";
 export { FileTree } from "./components/ui/file-tree";
 export { default as LinkButton } from "./components/ui/link-button/LinkButton.astro";
-export { Icon, Icon as AstroIcon } from "astro-icon/components";
+export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
@@ -45,8 +45,6 @@ export { default as RSSButton } from "./components/cf/RSSButton.astro";
 export { default as GlossaryDefinition } from "./components/cf/GlossaryDefinition.astro";
 export { default as WranglerCommand } from "./components/cf/WranglerCommand.astro";
 export { default as AnchorHeading } from "./components/cf/AnchorHeading.astro";
-export { default as FeatureTable } from "./components/cf/FeatureTable.astro";
-export { default as ProductFeatures } from "./components/cf/ProductFeatures.astro";
 export { default as PagesBuildPreset } from "./components/cf/PagesBuildPreset.astro";
 export { default as PagesBuildPresetsTable } from "./components/cf/PagesBuildPresetsTable.astro";
 export { default as ComponentsUsage } from "./components/cf/ComponentsUsage.astro";
@@ -80,3 +78,4 @@ export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelec
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
 export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
+export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";
