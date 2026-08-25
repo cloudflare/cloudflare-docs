@@ -1,0 +1,19 @@
+src/content/docs/flagship/api-tokens.mdx
+  s_033aa2fc8e53a7::t_f264faf8f9fe7f 3-4,13,15-18,20-53,64-66,68-72,75,100
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "30f7b6fdf663eac96ed2c479e60da9c4e61cc45b",
+  "prompts": {},
+  "sessions": {
+    "s_033aa2fc8e53a7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0067ec847ffe4CwhmE6fOuDHzj",
+        "model": "grok-4.6"
+      },
+      "human_author": "Rohan Mukherjee <rmukherjee@cloudflare.com>"
+    }
+  }
+}
