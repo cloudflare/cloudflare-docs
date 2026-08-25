@@ -186,10 +186,12 @@ package.json @cloudflare/content-engineering
 /src/content/partials/hyperdrive/ @rita3ko @irvinebroque @vy-ton @ivoryibu @thomasgauvin @sejoker @knickish @cloudflare/product-owners
 /src/content/docs/images/ @cloudflare/product-owners @renandincer @third774 @deannalam @dochne
 /src/content/partials/images/ @cloudflare/product-owners @renandincer @third774 @deannalam @dochne
-/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/product-owners @MattieTK
-/src/content/partials/pages/ @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK
-/src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
-/src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
+/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/partials/pages/ @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/directory/pages.yaml @cloudflare/product-owners @scottbuscemi
+/src/content/pages-framework-presets/ @cloudflare/product-owners @scottbuscemi
 /src/content/docs/kv/ @thomasgauvin @irvinebroque @rts-rob @vy-ton @cloudflare/product-owners
 /src/content/release-notes/kv.yaml @thomasgauvin @cloudflare/product-owners
 /src/content/partials/kv/ @thomasgauvin @cloudflare/product-owners
@@ -225,9 +227,15 @@ package.json @cloudflare/content-engineering
 /src/content/docs/zaraz/ @kathayl @jonnyparris @simonabadoiu @cloudflare/product-owners
 /src/content/release-notes/zaraz.yaml @jonnyparris @simonabadoiu @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @ericclemmons @cloudflare/product-owners @yomna-shousha @MattieTK @vy-ton
+/src/content/docs/workers/ci-cd/builds/ @irvinebroque @aninibread @GregBrimble @ericclemmons @cloudflare/product-owners @yomna-shousha @MattieTK @vy-ton @scottbuscemi
+/src/assets/images/workers/ci-cd/builds/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/directory/workers-builds.yaml @cloudflare/product-owners @scottbuscemi
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/product-owners @MattieTK
 /src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @cloudflare/product-owners @MattieTK @vy-ton
-/src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/product-owners @MattieTK
+/src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/docs/workers/framework-guides/web-apps/nextjs.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/docs/workers/framework-guides/web-apps/opennext.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/docs/workers/framework-guides/automatic-configuration.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @nevikashah @WalshyDev @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/product-owners
