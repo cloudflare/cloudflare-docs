@@ -132,3 +132,7 @@ export default class extends WorkerEntrypoint<Env> {
 ```
 
 </TypeScriptExample>
+
+:::note
+When providing `run_worker_first` as an array, you can specify at most 100 entries. This limit counts raw entries, not distinct patterns — duplicate entries count toward the limit. If you are approaching the limit, check whether an existing wildcard pattern already covers the path before adding a new rule.
+:::
