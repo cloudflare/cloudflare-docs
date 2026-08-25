@@ -1213,7 +1213,7 @@ The following options are available under the `assets` key.
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
 - `run_worker_first` <Type text="boolean | string[]" /> <MetaInfo text="optional, defaults to false" />
-  - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. An array supports at most 100 entries (duplicates count toward the limit). Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
   - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/advanced/html-handling/).
 - `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
@@ -1254,10 +1254,6 @@ You can also configure `run_worker_first` with an array of route patterns:
 ```
 
 </WranglerConfig>
-
-:::note
-When providing `run_worker_first` as an array, you can specify at most 100 entries. This limit counts raw entries, not distinct patterns — duplicate entries count toward the limit. If you are approaching the limit, check whether an existing wildcard pattern already covers the path before adding a new rule.
-:::
 
 ## Containers
 
