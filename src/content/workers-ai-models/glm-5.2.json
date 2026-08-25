@@ -36,6 +36,10 @@
         {
             "property_id": "reasoning",
             "value": "true"
+        },
+        {
+            "property_id": "reasoning_options",
+            "value": "Off, High, Max"
         }
     ],
     "id": "4edc7dfe-de78-4156-890c-85b79227694e",
@@ -297,7 +301,8 @@
                                             "enum": [
                                                 "low",
                                                 "medium",
-                                                "high"
+                                                "high",
+                                                "max"
                                             ]
                                         },
                                         {
@@ -1563,7 +1568,8 @@
                                             "enum": [
                                                 "low",
                                                 "medium",
-                                                "high"
+                                                "high",
+                                                "max"
                                             ]
                                         },
                                         {
@@ -2399,7 +2405,8 @@
                                                         "enum": [
                                                             "low",
                                                             "medium",
-                                                            "high"
+                                                            "high",
+                                                            "max"
                                                         ]
                                                     },
                                                     {
@@ -3665,7 +3672,8 @@
                                                         "enum": [
                                                             "low",
                                                             "medium",
-                                                            "high"
+                                                            "high",
+                                                            "max"
                                                         ]
                                                     },
                                                     {

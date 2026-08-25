@@ -138,7 +138,7 @@ const price = Array.isArray(properties.price)
 				{properties.reasoning && (
 					<tr>
 						<td>Reasoning</td>
-						<td>Yes</td>
+						<td>{properties.reasoning_options ?? "Yes"}</td>
 					</tr>
 				)}
 				{properties.vision && (
