@@ -42,7 +42,13 @@ When Chrome DevTools is open, Chrome sends `Cache-Control: no-cache` by default.
 
 ## When I check `cf-cache-status` via cURL, `MISS` and `DYNAMIC` are always returned. In my browser, I see `HIT` but other tools return `DYNAMIC`. Is this expected behavior?
 
-Yes, this is expected behavior because the requests must contain `accept: "text/html"`.
+APO decides whether a request is eligible for HTML caching based on the request's `Accept` header and its URL path:
+
+- If the `Accept` header includes `text/html` (with a quality value greater than zero), the request is treated as an HTML request and is eligible for caching.
+- If the `Accept` header explicitly refuses HTML (`Accept: text/html; q=0`), the request is not cached as HTML.
+- If the `Accept` header does not mention `text/html` — including `Accept: */*` or a missing `Accept` header — APO evaluates the URL path instead. Requests for non-static paths (such as a page or post) remain eligible for HTML caching, while requests for static file extensions do not.
+
+Many testing tools send no `Accept` header, which is why they can return `MISS` or `DYNAMIC`. To reliably reproduce a browser-like HTML request, include `-H 'accept: text/html'` in your cURL command.
 
 ## Are Google Fonts optimized when APO is activated?
 
