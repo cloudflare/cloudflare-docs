@@ -86,7 +86,7 @@
 		"@typescript-eslint/parser": "8.67.0",
 		"astro": "7.2.4",
 		"astro-skills": "0.1.1",
-		"cidr-tools": "12.1.2",
+		"cidr-tools": "13.0.1",
 		"clsx": "2.1.1",
 		"codeowners-utils": "1.0.2",
 		"date-fns": "4.4.0",
