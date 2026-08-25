@@ -16,7 +16,12 @@ Log Explorer enables you to store and explore your Cloudflare logs directly with
 
 <Render file="log-explorer-use-cases" product="rules" />
 
-<Render file="trace-use-cases" product="rules" params={{ addLink: true }} />
+Use [Trace](/rules/trace-request/) when you need to test what would happen with a simulated request:
+
+- Understanding why a rule did not trigger as expected
+- Testing how your rules handle different request scenarios
+- Seeing the evaluation order of your rules
+- Simulating requests from different geolocations or conditions
 
 The key difference is that Log Explorer shows actual traffic, while Trace shows simulated "what-if" scenarios.
 
