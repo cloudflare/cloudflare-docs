@@ -1,0 +1,13 @@
+---
+title: APO caches more crawler and bot traffic again
+description: APO once again caches HTML page requests that omit the Accept header or send a wildcard Accept value.
+products:
+  - automatic-platform-optimization
+date: 2026-08-27
+---
+
+We fixed a regression where Automatic Platform Optimization (APO) stopped caching some HTML requests that did not send an explicit `Accept: text/html` header — commonly crawlers, bots, and uptime monitors. These requests were being served from your origin (`cf-cache-status: DYNAMIC`) instead of the cache.
+
+APO now caches these requests again. No action is needed. If you added a Transform Rule to set `Accept: text/html` as a workaround, you can remove it.
+
+For details on how APO decides what to cache, see [About APO](/automatic-platform-optimization/about/).
