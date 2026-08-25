@@ -152,7 +152,9 @@ def my_view():
 
 To use D1 as a database backend, first setup your D1 database in Wrangler:
 
-```jsonc title="wrangler.jsonc"
+<WranglerConfig>
+
+```jsonc
 {
   "d1_databases": [
     {
@@ -163,6 +165,10 @@ To use D1 as a database backend, first setup your D1 database in Wrangler:
   ]
 }
 ```
+
+</WranglerConfig>
+
+
 
 Then, configure the backend in your Django settings:
 
@@ -216,7 +222,9 @@ so this environment variable is required to enable database operations.
 
 To use Durable Objects as a database backend, first setup your Durable Objects binding in Wrangler:
 
-```jsonc title="wrangler.jsonc"
+<WranglerConfig>
+
+```jsonc
 {
   "durable_objects": {
     "bindings": [
@@ -235,6 +243,8 @@ To use Durable Objects as a database backend, first setup your Durable Objects b
 }
 ```
 
+</WranglerConfig>
+
 Then, configure the backend in your Django settings:
 
 ```python title="src/app/settings.py"
@@ -252,7 +262,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 from django_cf.db.backends.do.storage import set_storage
-from workers import WorkerEntrypoint, wsgi
+from workers import WorkerEntrypoint, DurableObject, wsgi
 
 # your Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
@@ -263,7 +273,7 @@ os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "1")
 application = get_wsgi_application()
 
 
-class Default(DurableObject):
+class DjangoDurableObject(DurableObject):
     def __init__(self, ctx, env):
         super().__init__(ctx, env)
 
@@ -272,6 +282,13 @@ class Default(DurableObject):
 
     async def fetch(self, request):
         return await wsgi.fetch(application, request, self.env)
+
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        id = self.env.DO_STORAGE.idFromName("my-do-backend")
+        stub = self.env.DO_STORAGE.get(id)
+        return await stub.fetch(request)
 ```
 
 ## More examples
