@@ -299,8 +299,7 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
+                                                "none",
                                                 "high",
                                                 "max"
                                             ]
@@ -1566,8 +1565,7 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
+                                                "none",
                                                 "high",
                                                 "max"
                                             ]
@@ -2403,8 +2401,7 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
+                                                            "none",
                                                             "high",
                                                             "max"
                                                         ]
@@ -3670,8 +3667,7 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
+                                                            "none",
                                                             "high",
                                                             "max"
                                                         ]
