@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-description: Configure custom DHCP options on the Cloudflare One Appliance DHCP server, including options for PXE / iPXE boot.
+description: Configure custom DHCP options on the Cloudflare One Appliance DHCP server, including options for PXE, PXELINUX, and iPXE boot.
 products:
   - cloudflare-wan
 title: DHCP server options
@@ -8,7 +8,7 @@ title: DHCP server options
 
 When the Cloudflare One Appliance is configured as the DHCP server for a LAN, you can attach **custom DHCP options** to the leases it issues. This is commonly used for:
 
-- **PXE / iPXE boot** of workstations or kiosks (options 66, 67, 60, 43, 175, 209–211).
+- **Network boot** of workstations or kiosks with PXE, PXELINUX, or iPXE (options 43, 60, 66, 67, 175, 209, and 210).
 - **VoIP phone provisioning** (option 66 — TFTP server).
 - **Vendor-specific client configuration** (option 43 with vendor sub-options).
 
@@ -35,20 +35,19 @@ Each option is defined by three fields:
 | `text`    | A UTF-8 string.                                             | `boot/x64/pxelinux.0`         |
 | `hex`     | A colon-separated sequence of bytes, used for sub-options.  | `01:04:aa:bb:cc`              |
 
-## Common PXE / iPXE options
+## Common network boot options
 
-The most frequently used options for PXE / iPXE boot are:
+The most frequently used network boot options are:
 
-| Option | Type    | Purpose                                                                              |
-| ------ | ------- | ------------------------------------------------------------------------------------ |
-| 60     | `text`  | Vendor class identifier (typically `PXEClient`).                                     |
-| 66     | `ip` or `text` | TFTP server name or IP address (boot server).                                |
-| 67     | `text`  | Bootfile name to load (for example `ipxe.pxe` or `undionly.kpxe`).                   |
-| 43     | `hex`   | Vendor-specific information; sub-option layout is vendor-defined.                    |
-| 175    | `hex`   | iPXE-specific encapsulated options (HTTP/HTTPS boot, iSCSI, DNS, and more).          |
-| 209    | `text`  | iPXE configuration file URI.                                                         |
-| 210    | `text`  | iPXE configuration file path prefix.                                                 |
-| 211    | `text`  | iPXE configuration file path.                                                        |
+| Option | Type   | Purpose                                                                                                                                       |
+| ------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| 43     | `hex`  | Vendor-specific information. The vendor defines the sub-option layout.                                                                         |
+| 60     | `text` | Vendor class identifier, typically `PXEClient`.                                                                                                |
+| 66     | `text` | TFTP server name.                                                                                                                              |
+| 67     | `text` | Boot file name, for example `ipxe.pxe` or `undionly.kpxe`. iPXE also accepts a URI, such as an HTTP URL for an iPXE script.                    |
+| 175    | `hex`  | Client-specific encapsulated options used by Etherboot and iPXE. IANA lists this option as tentatively assigned and does not define its payload. |
+| 209    | `text` | PXELINUX configuration filename or path, loaded through TFTP.                                                                                  |
+| 210    | `text` | PXELINUX TFTP path prefix, prepended to option 209.                                                                                             |
 
 For a complete list of standard DHCP option codes, refer to the [IANA BOOTP/DHCP parameters registry](https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml).
 
