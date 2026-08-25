@@ -39,6 +39,10 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": "Off, On"
+        },
+        {
             "property_id": "terms",
             "value": "https://ai.google.dev/gemma/docs/gemma_4_license"
         },
@@ -298,24 +302,29 @@
                                         {
                                             "type": "string",
                                             "enum": [
+                                                "none",
+                                                "minimal",
                                                 "low",
                                                 "medium",
-                                                "high"
+                                                "high",
+                                                "xhigh",
+                                                "max",
+                                                "auto"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Controls whether reasoning is on. none and minimal turn reasoning off; other listed values turn it on. Gemma 4 does not vary reasoning intensity by effort."
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "default": false,
+                                            "description": "Whether to turn reasoning on. Reasoning is off by default."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1559,24 +1568,29 @@
                                         {
                                             "type": "string",
                                             "enum": [
+                                                "none",
+                                                "minimal",
                                                 "low",
                                                 "medium",
-                                                "high"
+                                                "high",
+                                                "xhigh",
+                                                "max",
+                                                "auto"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Controls whether reasoning is on. none and minimal turn reasoning off; other listed values turn it on. Gemma 4 does not vary reasoning intensity by effort."
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "default": false,
+                                            "description": "Whether to turn reasoning on. Reasoning is off by default."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -2403,24 +2417,29 @@
                                                             {
                                                                 "type": "string",
                                                                 "enum": [
+                                                                    "none",
+                                                                    "minimal",
                                                                     "low",
                                                                     "medium",
-                                                                    "high"
+                                                                    "high",
+                                                                    "xhigh",
+                                                                    "max",
+                                                                    "auto"
                                                                 ]
                                                             },
                                                             {
                                                                 "type": "null"
                                                             }
                                                         ],
-                                                        "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                        "description": "Controls whether reasoning is on. none and minimal turn reasoning off; other listed values turn it on. Gemma 4 does not vary reasoning intensity by effort."
                                                     },
                                                     "chat_template_kwargs": {
                                                         "type": "object",
                                                         "properties": {
                                                             "enable_thinking": {
                                                                 "type": "boolean",
-                                                                "default": true,
-                                                                "description": "Whether to enable reasoning, enabled by default."
+                                                                "default": false,
+                                                                "description": "Whether to turn reasoning on. Reasoning is off by default."
                                                             },
                                                             "clear_thinking": {
                                                                 "type": "boolean",
@@ -3666,24 +3685,29 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
+                                                            "none",
+                                                            "minimal",
                                                             "low",
                                                             "medium",
-                                                            "high"
+                                                            "high",
+                                                            "xhigh",
+                                                            "max",
+                                                            "auto"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Controls whether reasoning is on. none and minimal turn reasoning off; other listed values turn it on. Gemma 4 does not vary reasoning intensity by effort."
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "default": false,
+                                                        "description": "Whether to turn reasoning on. Reasoning is off by default."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",

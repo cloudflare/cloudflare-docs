@@ -18,6 +18,10 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": "Off, Low, High, Max"
+        },
+        {
             "property_id": "vision",
             "value": "false"
         },
@@ -299,24 +303,29 @@
                                         {
                                             "type": "string",
                                             "enum": [
+                                                "none",
+                                                "minimal",
                                                 "low",
                                                 "medium",
-                                                "high"
+                                                "high",
+                                                "xhigh",
+                                                "max",
+                                                "auto"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "default": false,
+                                            "description": "Whether to turn reasoning on. Reasoning is off by default."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1565,24 +1574,29 @@
                                         {
                                             "type": "string",
                                             "enum": [
+                                                "none",
+                                                "minimal",
                                                 "low",
                                                 "medium",
-                                                "high"
+                                                "high",
+                                                "xhigh",
+                                                "max",
+                                                "auto"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "default": false,
+                                            "description": "Whether to turn reasoning on. Reasoning is off by default."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -2401,24 +2415,29 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
+                                                            "none",
+                                                            "minimal",
                                                             "low",
                                                             "medium",
-                                                            "high"
+                                                            "high",
+                                                            "xhigh",
+                                                            "max",
+                                                            "auto"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "default": false,
+                                                        "description": "Whether to turn reasoning on. Reasoning is off by default."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -3667,24 +3686,29 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
+                                                            "none",
+                                                            "minimal",
                                                             "low",
                                                             "medium",
-                                                            "high"
+                                                            "high",
+                                                            "xhigh",
+                                                            "max",
+                                                            "auto"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "default": false,
+                                                        "description": "Whether to turn reasoning on. Reasoning is off by default."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
