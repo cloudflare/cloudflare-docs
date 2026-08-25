@@ -2,6 +2,7 @@ name: Upload R2 snapshot
 
 # **What it does**: Uploads our site output directly to an R2 bucket consumed by the AI search instance that runs on Dev Docs.
 # **Why we have it**: At the moment, AI Search doesn't support native indexing by anchor headings via a [webcrawler](https://developers.cloudflare.com/ai-search/configuration/data-source/website/) (which was something Algolia did support). This is a workaround that will hopefully be removed in the future.
+# **What to do if it fails**: In most cases, this is fine -- individual failures are usually due to a newer version of the upload starting. So there's a slight delay in updating the bucket, but that delay ensures we're getting the most up to date content there.
 
 on:
   workflow_run:
