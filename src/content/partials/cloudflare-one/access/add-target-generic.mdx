@@ -1,18 +1,12 @@
 ---
-params:
-  - protocol
+{}
 ---
 
 import { Tabs, TabItem, Render, Details, APIRequest, GlossaryTooltip } from "~/components";
 
 A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare.
 
-{
-  props.protocol === "rdp" ? (
-		<p> Create a target for each Windows machine that requires RDP access.
-To create a new target:</p>) :
-	(<p>Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server. To create a new target: </p>)
-}
+<p>Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server. To create a new target: </p>
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
