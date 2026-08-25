@@ -120,7 +120,7 @@ This procedure assumes that you already have a Workers for Platforms dispatch na
 
 Export a `WorkerEntrypoint` with a `query()` method. The custom D1 binding calls this method for every database operation the User Worker runs.
 
-Inside `query()`, write your policy. To forward an allowed query, call `query()` on the D1 database passed through `props`. To reject a query, return an error — the message you provide surfaces to the User Worker as a `D1_ERROR`.
+Inside `query()`, write your policy. This example logs every query, then forwards it to the real D1 database.
 
 :::caution
 The `query()` parameter uses `params.queries` (an array of statements, each with a `.sql` field). A single `env.DB.prepare(...).all()` call arrives as one entry in `params.queries`.
@@ -135,23 +135,16 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class D1CustomBinding extends WorkerEntrypoint {
 	async query(params) {
-		// Inspect every statement in the batch.
+		// Log every query for metering.
 		for (const stmt of params.queries) {
-			const sql = stmt.sql.trimStart();
-			if (!/^select\b/i.test(sql)) {
-				return {
-					success: false,
-					error: new Error("Only read-only queries are allowed"),
-				};
-			}
+			console.log(`Query: ${stmt.sql}`);
 		}
 
-		// Forward the allowed query to the real D1 database.
+		// Forward the query to the real D1 database.
 		return this.ctx.props.D1.query(params);
 	}
 }
 
-// Required default export — never invoked over HTTP.
 export default {
 	fetch() {
 		throw new Error("unimplemented");
@@ -178,25 +171,16 @@ export class D1CustomBinding
 	implements D1BindingService
 {
 	async query(params: QueryRequest): Promise<QueryResponse> {
-		// Allowlist: only permit read-only SELECT queries.
-		// Do not block writes by keyword — leading comments or
-		// stacked statements can bypass keyword checks.
+		// Log every query for metering.
 		for (const stmt of params.queries) {
-			const sql = stmt.sql.trimStart();
-			if (!/^select\b/i.test(sql)) {
-				return {
-					success: false,
-					error: new Error("Only read-only queries are allowed"),
-				};
-			}
+			console.log(`Query: ${stmt.sql}`);
 		}
 
-		// Forward the allowed query to the real D1 database.
+		// Forward the query to the real D1 database.
 		return this.ctx.props.D1.query(params);
 	}
 }
 
-// Required default export — never invoked over HTTP.
 export default {
 	fetch() {
 		throw new Error("unimplemented");
@@ -235,17 +219,6 @@ The User Worker calls `env.DB.prepare().bind().all()` as usual. Save this file a
 ```js title="worker.js"
 export default {
 	async fetch(request, env) {
-		if (request.method === "DELETE") {
-			// Rejected by the Platform Worker policy — surfaces as a D1_ERROR.
-			const result = await env.DB.prepare(
-				"DELETE FROM Customers WHERE CompanyName = ?",
-			)
-				.bind("Bs Beverages")
-				.all();
-			return Response.json(result.results);
-		}
-
-		// Allowed: forwarded to the real D1 database.
 		const result = await env.DB.prepare(
 			"SELECT ContactName FROM Customers WHERE CompanyName = ?",
 		)
@@ -266,17 +239,6 @@ interface Env {
 
 export default {
 	async fetch(request, env): Promise<Response> {
-		if (request.method === "DELETE") {
-			// Rejected by the Platform Worker policy — surfaces as a D1_ERROR.
-			const result = await env.DB.prepare(
-				"DELETE FROM Customers WHERE CompanyName = ?",
-			)
-				.bind("Bs Beverages")
-				.all();
-			return Response.json(result.results);
-		}
-
-		// Allowed: forwarded to the real D1 database.
 		const result = await env.DB.prepare(
 			"SELECT ContactName FROM Customers WHERE CompanyName = ?",
 		)
@@ -340,7 +302,7 @@ Only `type: "d1"` is accepted inside `$binding`. Any other binding type returns 
 
 #### 4. Test the binding
 
-Send requests through your dynamic dispatch Worker. To watch interception in real time, tail the Platform Worker in another terminal:
+Send requests to the User Worker through your dispatch URL. To watch interception in real time, tail the Platform Worker in another terminal:
 
 ```sh
 wrangler tail custom-binding-platform-worker
