@@ -1,0 +1,19 @@
+src/content/changelog/hyperdrive/2026-08-07-hyperdrive-mysql-ga.mdx
+  s_a4daf5b28c9bf0::t_dcebae0f9cfaf7 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cffbd251b2bf2f293469afd81dff9b7e1e25a4ed",
+  "prompts": {},
+  "sessions": {
+    "s_a4daf5b28c9bf0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_022b28e36ffenshcfzdUmP64pu",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}
