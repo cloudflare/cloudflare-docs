@@ -582,6 +582,8 @@
 /realtime/agents/getting-started/ /realtime/ 301
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
 /realtime/static/calls-api-2024-05-21.yaml /realtime/static/realtime-api-2024-05-21.yaml 301
+/realtime/realtimekit/release-notes/flutter-core/ /realtime/realtimekit/release-notes/ 301
+/realtime/realtimekit/release-notes/flutter-ui-kit/ /realtime/realtimekit/release-notes/ 301
 
 # Cloudflare Challenges
 /cloudflare-challenges/frequently-asked-questions/ /cloudflare-challenges/ 301

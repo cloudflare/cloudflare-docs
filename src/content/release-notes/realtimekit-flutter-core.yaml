@@ -1,9 +1,0 @@
----
-link: "/realtime/realtimekit/release-notes/flutter-core/"
-productName: RealtimeKit Flutter Core
-productLink: "/realtime/realtimekit/"
-entries:
-  - publish_date: "2026-08-07"
-    title: RealtimeKit Flutter Core discontinued
-    description: |-
-      The RealtimeKit Flutter SDKs have been discontinued
