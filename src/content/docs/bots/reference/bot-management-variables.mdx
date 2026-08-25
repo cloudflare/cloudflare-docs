@@ -41,6 +41,12 @@ These variables are also available as part of the [request.cf](/workers/runtime-
 - `request.cf.botManagement.signedAgent`
 - `request.cf.verifiedBotCategory`
 
+## O2O and subrequests
+
+For Orange-to-Orange (O2O) traffic and any related subrequests where Bot Management is in effect, Bot Management fields (including bot score, verified bot, and JA3/JA4) represent the eyeball (end-user) connection to your platform.
+
+Eyeball signals are preserved through the O2O chain, so the fields must be present regardless of which O2O request path you reach.
+
 ## Corporate Proxy
 
 The Bot Management Corporate Proxy field contains identified cloud-based corporate proxies and secure web gateways that are Enterprise-only, and provide outbound security services to their clients.

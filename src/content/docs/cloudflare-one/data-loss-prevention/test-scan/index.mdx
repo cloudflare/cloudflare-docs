@@ -1,0 +1,126 @@
+---
+pcx_content_type: how-to
+description: Test sample content against DLP profiles and inspect match details without sending traffic through Cloudflare Gateway.
+products:
+  - cloudflare-one
+  - dlp
+title: Test scan
+sidebar:
+  order: 9.5
+tags:
+  - Compliance
+  - Debugging
+---
+
+import { Steps } from "~/components";
+
+:::note[Availability]
+Available as an add-on to Zero Trust Enterprise plans.
+
+Users on Zero Trust Free and Pay-as-you-go plans can run test scans against the [Financial Information](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information) and [Social Security, Insurance, Tax, and Identifier Numbers](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#social-security-insurance-tax-and-identifier-numbers) predefined profiles.
+:::
+
+Use Test scan to check how Cloudflare Data Loss Prevention (DLP) evaluates sample content before you apply a profile to production traffic. You can paste text, upload a file, or upload an HTTP Archive (HAR) file, then review which profiles and detection entries match.
+
+Antivirus scans run as if the content were live traffic. When the scanner detects an image, Optical Character Recognition (OCR) runs even if no profile has OCR turned on, and the extracted text appears in the results.
+
+**Content is scanned in real time and never stored.**
+
+Content goes directly to the DLP scanner. Gateway policies are not evaluated, no traffic passes through Gateway, and no Gateway activity logs are created.
+
+## When to use Test scan
+
+Use this tool to:
+
+- Check whether a new or updated [detection entry](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/) matches the content you expect.
+- Compare sample content against one or more [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) before using them in production.
+- Investigate false positives and missed detections by reviewing confidence levels, match context, and proximity keywords.
+- Confirm how DLP identifies a file and review its antivirus and OCR results.
+
+## Run a test scan
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **Test scan**.
+
+2. Under **Input method**, select the type of content you want to test:
+
+   - **Text**: Enter or paste content into **Content to scan**.
+   - **File**: Select or drag a file into the upload area. Files can be up to 10 MB. To test several files at once, upload a `.zip` archive. Each file inside the archive is scanned and reported separately.
+   - **HAR**: Select or drag a `.har` file into the upload area. Up to 50 bodies are scanned per file. Request and response bodies count toward the same limit.
+
+3. Choose which profiles to test. Turn on **Scan against all profiles**, or select one or more profiles from the list.
+
+4. Select **Scan**.
+</Steps>
+
+## Review scan results
+
+Depending on the input and scan result, the results can include the following sections:
+
+| Section               | What it shows                                                                                                                                        |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Summary**           | The number of profiles matched and files scanned, and the overall antivirus status.                                                                  |
+| **File metadata**     | The detected file name, size, MIME type, extension, and file categories.                                                                             |
+| **Antivirus results** | Whether each file is clean, suspicious, infected, or was not scanned, along with its SHA-256 hash. Infected files include available malware details. |
+| **OCR results**       | The text that OCR extracted from each image.                                                                                                         |
+| **Profile matches**   | The profiles, detection entries, data classes, data tags, and sensitivity levels that matched.                                                       |
+| **Match contexts**    | The matched content, confidence level, and proximity keywords that increased or decreased confidence.                                                |
+| **JSON**              | The complete scanner response, which you can download for further analysis.                                                                          |
+
+To save the complete response as `dlp-scan-results.json`, open **JSON** and select **Download**. The file can contain sample payloads and match context. Store and share it as sensitive data.
+
+## Example
+
+A Gateway policy that uses a custom profile is not blocking a spreadsheet that contains credit card numbers. Use a test scan to find out whether the profile or the policy is responsible.
+
+<Steps>
+1. Run a test scan with the same file and select only the custom profile. This tests the profile on its own, with Gateway removed from the path.
+
+2. If the scan returns matches, the profile detects this sample under Test scan settings. This does not confirm that Gateway inspects the traffic the same way, so check the Gateway policy conditions, the traffic path, and TLS decryption.
+
+3. If the scan returns no matches, work through the profile itself. A profile matches when its [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) match, and each entry defines a single pattern or dataset, such as a credit card number pattern, a custom regular expression, or an exact match dataset. Confirm that the profile contains the entry you expect and that the entry is turned on.
+
+4. Compare the entry against the values in the file. Some entries apply [additional validation](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) beyond pattern matching. A test value that has the expected format may still fail validation. Use a valid test value for the entry.
+
+5. Check the profile's [match count](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#match-count). If it requires more matches than your sample contains, the profile does not trigger. Add more sample data or lower the match count.
+
+6. Check the profile's [confidence threshold](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#confidence-thresholds). Test scan does not show detections below the threshold in **Match contexts**. To check whether the threshold prevented a match, temporarily lower it and run the scan again. If a match appears, review the match context. For example, adding relevant proximity keywords such as "payment" or "billing" may increase confidence. You can also lower the profile's confidence threshold if appropriate.
+</Steps>
+
+## Troubleshoot scan results
+
+### Expected content does not match
+
+Confirm that you selected the intended profile and that the profile contains the expected detection entries. A detection may not appear when the content does not meet the entry's matching requirements, when the profile [match count](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#match-count) is greater than the number of matches in the sample, or when the detection is below the profile's [confidence threshold](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#confidence-thresholds).
+
+### Test scan matches content that should not match
+
+Raise the profile's [confidence threshold](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#confidence-thresholds) so that DLP only triggers on higher confidence detections, or increase the [match count](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#match-count) so that a single incidental value does not trigger the profile. For custom entries, narrow the regular expression or dataset.
+
+[AI context analysis](/cloudflare-one/data-loss-prevention/dlp-settings/#ai-context-analysis) can also reduce false positives in production, but it only supports Gateway HTTP and HTTPS traffic.
+
+If a profile behaves correctly here but blocks legitimate traffic in production, the policy is likely too broad. Refer to [Troubleshoot DLP](/cloudflare-one/data-loss-prevention/troubleshoot-dlp/).
+
+### OCR extracted text but no entries matched
+
+OCR runs on images, but DLP only matches the extracted text against profiles that have OCR turned on. If **OCR results** shows the text you expect and no entry triggered, OCR is turned off for the profile you selected.
+
+To apply OCR to every profile, turn on [OCR in DLP settings](/cloudflare-one/data-loss-prevention/dlp-settings/#optical-character-recognition-ocr). You can also turn on OCR for an [individual profile](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#optical-character-recognition-ocr), though profile-level OCR is deprecated.
+
+### Test scan matches but Gateway does not
+
+If the scan detects the content but your Gateway policy does not, the selected profile can detect the sample under Test scan settings. This does not confirm that Gateway can decrypt or inspect the traffic in the same way. Check the Gateway policy, traffic path, TLS decryption, and supported file types. For more information, refer to [Troubleshoot DLP](/cloudflare-one/data-loss-prevention/troubleshoot-dlp/).
+
+### A scan returns an error
+
+For file uploads, confirm that the file is 10 MB or smaller. For HAR files, confirm that the file contains valid HAR data. If the scanner is temporarily unavailable, wait and run the scan again.
+
+## Limitations
+
+- **AI prompt profiles are not supported.**
+- Changes to your DLP configuration can take up to two minutes to take effect in a test scan. After you update a profile, detection entry, or data class, wait before testing.
+- Profile detection is validated, but Gateway policy conditions and actions are not. To verify that a complete policy allows, blocks, or logs traffic as expected, [test the DLP policy with Gateway traffic](/cloudflare-one/data-loss-prevention/dlp-policies/#3-test-dlp-policy).
+
+:::note
+Fair use rate limits apply. This tool is intended for validating configuration, not for bulk or automated scanning.
+:::
