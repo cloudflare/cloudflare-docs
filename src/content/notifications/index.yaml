@@ -615,8 +615,8 @@ entries:
     otherFilters: None.
 
   - name: Connection Maintenance Alert
-    audience: Customers with eligible CNI v1 circuits used with Cloudflare Virtual Network.
-    availability: Cloudflare Network Interconnect v1 with Cloudflare Virtual Network.
+    audience: "[Classic CNI](/network-interconnect/classic-cni/) customers who want to be alerted to maintenance events that might affect Classic CNI."
+    availability: Purchase of Cloudflare Network Interconnect (CNI).
     associatedProducts: Network Interconnect
-    nextSteps: To configure this notification, refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts/).
+    nextSteps: No action is needed.
     otherFilters: None.
