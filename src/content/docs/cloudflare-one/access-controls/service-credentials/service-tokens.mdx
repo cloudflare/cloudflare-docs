@@ -31,6 +31,12 @@ This section covers how to create, rotate, renew, disable, and revoke a service 
 
 You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/access-controls/policies/#service-auth); otherwise, Access will prompt for an identity provider login.
 
+### Client Secret format
+
+New service token Client Secrets use the format `cfast_[40 alphanumeric characters][8-character checksum]`. The prefix and checksum make the secrets easier for credential scanning tools to identify.
+
+Existing Client Secrets use a 64-character hexadecimal format. These secrets continue to work and do not require rotation. The Client ID and authentication headers are unchanged for both formats.
+
 ## Connect your service to Access
 
 ### Request
