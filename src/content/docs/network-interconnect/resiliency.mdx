@@ -1,0 +1,29 @@
+---
+pcx_content_type: concept
+products:
+  - network-interconnect
+title: Resiliency
+description: Design a resilient Cloudflare Network Interconnect deployment.
+sidebar:
+  order: 8
+---
+
+Cloudflare Network Interconnect (CNI) resiliency depends on your connection topology, routing configuration, and backup connectivity. Design your deployment so traffic can continue when an individual CNI connection is unavailable.
+
+## Use device diversity
+
+For workloads that require high availability, use locations that support device-level diversity and terminate connections on separate devices. The diversity available varies by location. Confirm the available diversity when planning your deployment.
+
+## Configure automatic failover
+
+Your CNI deployment must tolerate an unplanned outage on any single circuit. Configure traffic failover between redundant circuits to occur automatically. If rerouting traffic requires manual intervention, review your configuration.
+
+To increase bandwidth and add link resiliency, CNI v1 supports [Link Aggregation Control Protocol (LACP)](https://www.ieee802.org/1/pages/802.1ax.html) for multiple physical ports in one logical channel. CNI v2 does not support LACP. Use Equal-Cost Multi-Path (ECMP) routing for CNI v2 connections.
+
+## Maintain backup connectivity
+
+Maintain alternative Internet connectivity as a backup for all CNI deployments. Size your available paths for the topology and link capacity you use.
+
+## Validate and monitor your deployment
+
+The Cloudflare dashboard shows the status of your CNI interconnect, but it does not validate end-to-end traffic failover. Validate your routing and failover behavior as part of your deployment. To monitor interconnect status and configure maintenance notifications, refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts/).
