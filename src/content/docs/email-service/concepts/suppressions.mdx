@@ -1,45 +1,46 @@
 ---
 title: Suppression lists
-description: Learn why Email Service suppresses recipients, how long each suppression lasts, and which suppressions you can manage.
+description: Understand suppression scope, triggers, expiration, and enforcement.
 pcx_content_type: concept
 summary: |
-  Suppression lists prevent Email Service from sending to recipients who should not receive mail. Cloudflare adds entries after eligible bounces and spam complaints. You can also add entries manually and review Cloudflare-managed policy metadata.
+  Suppression lists prevent Email Service from sending to recipients who should not receive mail. Cloudflare adds entries after eligible bounces and spam complaints. You can also add entries manually.
 sidebar:
   order: 4
 products:
   - email-service
 ---
 
-An Email Sending suppression list contains recipients that Email Service does not contact. Suppressions protect your sender reputation and help prevent unwanted mail.
+An Email Sending suppression list contains recipients that Email Service does not contact. Suppressions protect your sender reputation and help prevent sending unwanted mail.
 
-Cloudflare creates suppressions after eligible delivery failures and spam complaints. You can create manual suppressions for recipients who should not receive your mail. The management API can also return Cloudflare-managed policy entries.
+Cloudflare creates suppressions after eligible delivery failures and spam complaints. You can also add entries for recipients who should not receive mail.
 
-To add or remove entries, refer to [Manage suppressions](/email-service/configuration/suppressions/).
+To add or remove entries, refer to [Manage suppressions](/email-service/configuration/suppressions/). Suppressions only apply to Email Sending.
 
 ## Suppression scope
 
-The Email Sending dashboard and suppression management API are account-scoped. New entries created through these interfaces apply to every sending domain and subdomain in the account.
+Suppressions are account-scoped. Once an email address is on the suppression list, Email Service suppresses sends to that address from every domain in your account.
 
-These interfaces do not let you create zone-scoped or domain-scoped entries. Each recipient can have only one active Email Sending suppression per account.
+If you need separate suppression lists for different use cases, consider using separate Cloudflare accounts.
 
 ## Suppression rules
 
-The following table describes automatic and manual creation rules, expiration, and public policy metadata:
+The following table describes automatic and manual creation rules and expiration:
 
-| Reason                                      | Created when                                                                                                            | Expiration                                     | Customer action                                                       |
-| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
-| Manual (`manual`)                           | You add the recipient through the dashboard or API                                                                      | The time you choose, or no expiration          | Change the expiration or delete the entry                             |
-| Spam complaint (`complaint`)                | Cloudflare receives and validates a complaint from the recipient's email provider                                       | Created without an expiration                  | Delete only after the recipient provides new consent                  |
-| Hard bounce (`hard_bounce`)                 | The receiving system permanently rejects an eligible recipient                                                         | 7 days by default                              | Wait for expiration, or delete only after verifying the address       |
-| Confirmed invalid recipient (`hard_bounce`) | All observed failures confirm an invalid recipient, or qualifying availability failures persist without a successful delivery | No expiration                                  | Delete only after independently verifying the address                 |
-| Soft bounce (`soft_bounce`)                 | An eligible recipient-side temporary failure occurs, such as a full mailbox or rate limit                               | 24 hours by default                            | Wait for expiration, or delete after confirming the issue is resolved |
-| Cloudflare-managed metadata (`policy`)      | The API returns a policy entry with `read_only: true`                                                                   | The displayed expiration, or no expiration     | Contact [Cloudflare Support](/support/contacting-cloudflare-support/)  |
+| Reason                       | Created when                                                                                                         | Expiration                            |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Manual (`manual`)            | You add the recipient through the dashboard or API                                                                   | The time you choose, or no expiration |
+| Spam complaint (`complaint`) | Cloudflare receives and validates a complaint from the recipient's email provider                                    | No expiration                         |
+| Hard bounce (`hard_bounce`)  | Any other eligible recipient-side permanent rejection occurs                                                         | 7 days                                |
+| Hard bounce (`hard_bounce`)  | The recipient mailbox or domain does not exist, or a recipient-side issue persists across repeated delivery attempts | No expiration                         |
+| Soft bounce (`soft_bounce`)  | An eligible recipient-side temporary failure occurs, such as a full mailbox or rate limit                            | 24 hours by default                   |
 
-The API returns `read_only: true` when you cannot modify an entry. Treat `read_only` as authoritative instead of inferring access from the `reason` value. Policy suppressions are read-only.
+The [account Email Sending suppression management REST API](/api/resources/email_sending/subresources/suppressions/) can return Cloudflare-managed entries with a `policy` reason. Clients must use `read_only` to determine mutability, not infer it from `reason`.
+
+You cannot update or delete an entry when `read_only` is `true`. To investigate one, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ### Manual suppressions
 
-Manual suppressions support application-level decisions that Email Service cannot observe. For example, add a manual suppression when a recipient unsubscribes.
+Manual suppressions allow you to add application-level decisions that Email Service cannot observe. For example, if a user manually unsubscribes from emails in your app, you can add their email to your Email Service suppression list.
 
 You select the expiration when creating the entry. An entry without an expiration remains active until you delete it.
 
@@ -47,17 +48,17 @@ You select the expiration when creating the entry. An entry without an expiratio
 
 Email providers send feedback reports when recipients mark messages as spam. Cloudflare validates these reports before creating complaint suppressions.
 
-Complaint suppressions are created without an expiration. Delete or shorten one only after the recipient provides new consent, such as a fresh opt-in.
+Complaint suppressions are created without an expiration. You can change or delete one when `read_only` is `false`.
+
+We recommend changing or deleting one only after the recipient opts in again through your application.
 
 ### Hard bounces
 
-A hard bounce is a permanent rejection of one delivery attempt. However, some addresses can become valid again after their owner fixes the mailbox or domain. The default suppression for a qualifying hard bounce is seven days.
+A hard bounce is a permanent rejection of one delivery attempt. Some addresses become valid again after their owner fixes the mailbox or domain.
 
-Email Service creates a suppression without an expiration when evidence confirms that the recipient remains invalid. This includes the following conditions:
+Email Service creates a suppression without an expiration when the mailbox or domain does not exist. It also does this when a recipient-side issue persists across repeated delivery attempts without a successful delivery.
 
-- All observed failures show that the recipient domain does not exist.
-- All observed failures show that the mailbox does not exist.
-- Qualifying recipient-availability failures persist without a successful delivery.
+Other eligible hard-bounce suppressions last seven days.
 
 ### Soft bounces
 
@@ -67,44 +68,22 @@ Eligible soft-bounce suppressions last 24 hours by default. Email Service resume
 
 Not every temporary delivery failure creates a suppression. For example, Email Service does not suppress a recipient for a sender-side authentication or reputation problem.
 
-### Policy suppressions
-
-The management API can return Cloudflare-managed entries with the `policy` reason. Their expiration appears in the `expires_at` field. A `null` value means the entry has no scheduled expiration.
-
-The public API does not expose additional policy-rule details. Policy suppressions are read-only, so you cannot update, delete, or replace them through a bulk import. To investigate an entry, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
-
 ## Enforcement by sending method
 
-When Email Service enforces an active suppression, it checks the recipient before attempting delivery. The observable result depends on the sending method:
+Each sending domain has a [**Drop suppressed recipients** setting](/email-service/configuration/domains/#drop-suppressed-recipients). The setting is off by default.
 
-| Sending method                                                | Result when a recipient is suppressed                                                                                                                                |
-| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [REST API](/email-service/api/send-emails/rest-api/)           | Returns `400`. If any recipient is suppressed, Email Service rejects the entire request.                                                                              |
-| [Workers binding](/email-service/api/send-emails/workers-api/) | Throws `E_RECIPIENT_SUPPRESSED`. If any recipient is suppressed, Email Service rejects the entire `send()` call.                                                       |
-| [SMTP](/email-service/api/send-emails/smtp/)                   | Removes suppressed recipients during message processing. Other recipients can still receive the message. If all recipients are suppressed, SMTP returns `250 2.0.0 Ok` without delivering the message. |
+| Sending method                                                 | Setting off                                                                                     | Setting on                                                                                                                                                      |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [REST API](/email-service/api/send-emails/rest-api/)           | Returns `400` and rejects the request when any recipient is suppressed.                         | Removes suppressed recipients and processes the remaining recipients.                                                                                           |
+| [Workers binding](/email-service/api/send-emails/workers-api/) | Throws `E_RECIPIENT_SUPPRESSED` and rejects the `send()` call when any recipient is suppressed. | Removes suppressed recipients and processes the remaining recipients.                                                                                           |
+| [SMTP](/email-service/api/send-emails/smtp/)                   | Rejects the message when any recipient is suppressed.                                           | Removes suppressed recipients and processes the remaining recipients. If none remain, SMTP may return `250 2.0.0 Ok` without a Message-ID and delivers nothing. |
 
-Suppression rejections do not count toward your [monthly quota](/email-service/platform/pricing/) or daily sending limits. They appear as **Rejected** in [Email sending logs](/email-service/observability/logs/).
-
-## Suppression timing
-
-Bounce suppressions rely on background delivery processing and are not immediate. Messages already being delivered can fail before the suppression takes effect.
-
-Complaint suppressions appear after Cloudflare receives and validates the provider report. The provider determines when that report arrives.
-
-Expired entries stop appearing in the public list when their `expires_at` timestamp passes. Delivery enforcement can take additional time to expire. Updates and deletions also propagate asynchronously, so the management list and delivery enforcement can briefly differ.
-
-## Application suppression lists
-
-You do not need a separate list to receive Email Service suppression protection. However, storing recipient status in your application can prevent unnecessary send requests and improve your own metrics.
-
-Over the REST API and Workers binding, one suppressed recipient rejects the entire request. Filter known suppressed recipients before combining several recipients in one send.
-
-For an implementation pattern, refer to [Sync recipient records](/email-service/examples/email-sending/sync-recipient-records/).
+Suppressed recipients do not count toward your [monthly quota](/email-service/platform/pricing/) or daily sending limits. They appear as **Rejected** in [Email sending logs](/email-service/observability/logs/).
 
 ## Best practices
 
 - Add manual suppressions for unsubscribes.
-- Require new consent after complaints.
+- Require recipients to opt in again through your application.
 - Verify addresses before deleting suppressions.
 - Investigate patterns across repeated bounces.
 - Let temporary suppressions expire automatically.

@@ -39,15 +39,15 @@ Sends to verified destination addresses are always free: they do not count towar
 
 The following limits apply to the Email Sending [suppression list](/email-service/concepts/suppressions/) API:
 
-| Limit                          | Value             | Notes                                                                         |
-| ------------------------------ | ----------------- | ----------------------------------------------------------------------------- |
-| **Active entries**             | 1 per address     | Enforced independently for each account                                       |
-| **Results per page**           | 1,000             | Maximum `per_page` value with a default of 100                                |
-| **Items per bulk import**      | 1,000             | Split larger imports across several requests                                  |
-| **Bulk import requests**       | 10 per minute     | Applies per account and returns `429` when exceeded                           |
-| **Note length**                | 1,000 characters  | The optional `note` field on an entry                                         |
+| Limit                     | Value            | Notes                                               |
+| ------------------------- | ---------------- | --------------------------------------------------- |
+| **Active entries**        | 1 per address    | Enforced independently for each account             |
+| **Results per page**      | 1,000            | Maximum `per_page` value with a default of 100      |
+| **Items per bulk import** | 1,000            | Split larger imports across several requests        |
+| **Bulk import requests**  | 10 per minute    | Applies per account and returns `429` when exceeded |
+| **Note length**           | 1,000 characters | The optional `note` field on an entry               |
 
-The suppression list has no total-count field. Refer to [Paginate results](/email-service/configuration/suppressions/#paginate-results).
+The suppression list has no total-count field. Refer to the [list suppressions API reference](/api/resources/email_sending/subresources/suppressions/methods/list/) for pagination details.
 
 ## Zone limits
 

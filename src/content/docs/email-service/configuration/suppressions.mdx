@@ -1,6 +1,6 @@
 ---
 title: Manage suppressions
-description: View, add, and remove account-wide Email Sending suppressions in the dashboard, or manage them with the REST API.
+description: Manage account-wide Email Sending suppression entries.
 pcx_content_type: how-to
 sidebar:
   order: 6
@@ -8,13 +8,13 @@ products:
   - email-service
 ---
 
-import { APIRequest, DashButton, Steps } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 Manage recipients that Email Service must not contact. For suppression triggers and expiration rules, refer to [Suppression lists](/email-service/concepts/suppressions/).
 
-This dashboard and API are account-scoped. New entries apply to every sending domain and subdomain in the account. You cannot select a zone or domain scope.
+The dashboard and API are account-scoped. Entries apply to every sending domain and subdomain in the account.
 
-## 1. View suppressions in the dashboard
+## View suppressions
 
 <Steps>
 1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Sending**.
@@ -24,11 +24,9 @@ This dashboard and API are account-scoped. New entries apply to every sending do
 2. Select **Suppressions**.
 </Steps>
 
-The table displays the recipient, reason, creation time, and expiration. An expiration of **Never** means the entry has no scheduled expiration.
+The table displays each recipient, reason, creation time, and expiration. **Never** means the entry has no scheduled expiration.
 
-Search with a complete address or a username. A username search checks that username across every domain. For example, `alex` matches `alex@example.com` and `alex@example.org`.
-
-## 2. Add a suppression in the dashboard
+## Add a suppression
 
 <Steps>
 1. In **Suppressions**, enter the recipient email address.
@@ -38,191 +36,36 @@ Search with a complete address or a username. A username search checks that user
 
 Entries created in the dashboard have the `manual` reason. They apply to every sending domain in the account.
 
-## 3. Remove a suppression in the dashboard
+## Import suppressions
+
+You can paste addresses or upload `.csv`, `.json`, or `.txt` files. Supported file contents are:
+
+- `.csv` or `.txt`: Put one entry on each line as `<EMAIL_ADDRESS>` or `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>`. Use an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp and omit the header row.
+- `.json`: Use an array of address strings or objects. Each object requires `email` and can include an RFC 3339 `expires_at` timestamp.
+
+<Steps>
+1. In **Suppressions**, select **Import**.
+2. Upload a supported file or paste the addresses.
+3. Choose a default expiration for entries that omit one.
+4. Select **Import**. Larger imports run in batches, so keep the dialog open until every batch finishes.
+</Steps>
+
+## Remove a suppression
 
 To remove a mutable entry, select **Delete** for that recipient. Read-only entries do not provide a delete action.
 
 Deleting an entry permits future delivery attempts. Verify that the recipient should receive mail before deleting an automatic suppression.
 
-## 4. Manage suppressions with the API
+## Use the API
 
-The following examples require an [API token](/fundamentals/api/get-started/create-token/) with the **Email Sending: Edit** permission.
+The [account Email Sending suppression management REST API](/api/resources/email_sending/subresources/suppressions/) supports listing, adding, importing, updating, and deleting entries. Requests require an [API token](/fundamentals/api/get-started/create-token/) with the **Email Sending: Edit** permission.
 
-### Add a suppression
-
-Create a permanent manual suppression:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions"
-	method="POST"
-	json={{
-		email: "recipient@example.com",
-		expires_at: null,
-		note: "Unsubscribed through our preference center",
-	}}
-/>
-
-To create a temporary suppression, set `expires_at` to a future ISO 8601 timestamp. Omitting `expires_at` or setting it to `null` creates a permanent entry.
-
-Creating a suppression for an address with an active mutable entry is idempotent. The API returns the existing entry ID without changing its reason or expiration. A conflicting read-only entry can return `403`. Use `PATCH` to change mutable fields.
-
-### Add suppressions in bulk
-
-Import up to 1,000 recipients in one request:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions/bulk"
-	method="POST"
-	json={{
-		items: [
-			{ email: "first@example.com" },
-			{
-				email: "second@example.com",
-				note: "Imported from another provider",
-			},
-		],
-	}}
-/>
-
-The response reports a status for each unique address:
-
-- `processed` — the entry was created or processed successfully.
-- `invalid` — the address is invalid.
-- `error` — the entry failed because of another error.
-- `skipped` — the existing entry is not customer-managed.
-
-Duplicate addresses in one request are counted in `deduplicated`. Bulk import does not replace active automatic or policy suppressions.
-
-### List suppressions
-
-List active suppressions for the account:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions"
-	method="GET"
-	parameters={{ per_page: 50 }}
-/>
-
-Each entry contains the following fields:
-
-| Field        | Description                                                                 |
-| ------------ | --------------------------------------------------------------------------- |
-| `id`         | Unique suppression identifier                                               |
-| `email`      | Suppressed recipient                                                        |
-| `reason`     | `manual`, `complaint`, `hard_bounce`, `soft_bounce`, or `policy`            |
-| `created_at` | Creation timestamp                                                          |
-| `expires_at` | Expiration timestamp, or `null` when the entry has no expiration            |
-| `read_only`  | Whether the server prevents customers from updating or deleting the entry   |
-
-The account list includes active Email Sending suppressions owned by the account. The API does not return zone or domain scope. New entries created through this API apply account-wide.
-
-### Get one suppression
-
-Retrieve one suppression by ID:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions/{suppression_id}"
-	method="GET"
-/>
-
-The item response also includes its optional `note` field.
-
-### Find an exact address
-
-Use the `email` parameter to check one complete address:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions"
-	method="GET"
-	parameters={{ email: "recipient@example.com" }}
-/>
-
-An empty `result` array means the account has no active entry for that address.
-
-### Search by username
-
-The `search` parameter accepts a complete address or a username ending in `@`. A username search matches that username across every domain:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions"
-	method="GET"
-	parameters={{ search: "alex@" }}
-/>
-
-Search is case-insensitive. Values such as `alex` or `@example.com` are invalid API searches. The dashboard automatically adds the trailing `@` for username searches.
-
-### Filter by reason
-
-Use the `reason` parameter to filter API results:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions"
-	method="GET"
-	parameters={{ reason: "complaint" }}
-/>
-
-Valid values are `manual`, `complaint`, `hard_bounce`, `soft_bounce`, and `policy`.
-
-### Paginate results
-
-The list uses cursor pagination. Read `result_info.next_cursor` and pass it as `cursor`:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions"
-	method="GET"
-	parameters={{ per_page: 50, cursor: "$NEXT_CURSOR" }}
-/>
-
-Continue until `next_cursor` is `null`. Large, filtered lists can return a short or empty intermediate page with another cursor. Do not treat an empty page as the end while a cursor remains.
-
-The cursor contains the search and reason filters. Keep those filters unchanged while paginating. To change a filter, start again without a cursor.
-
-The response does not include a total count.
-
-### Update a suppression
-
-Use `PATCH` to update the expiration or note:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions/{suppression_id}"
-	method="PATCH"
-	json={{
-		expires_at: null,
-		note: "Recipient requested a permanent opt-out",
-	}}
-/>
-
-Set `expires_at` to a future ISO 8601 timestamp for a temporary entry. Set it to `null` for no expiration. Omitting a field leaves its current value unchanged, and an empty string clears the note.
-
-The API returns `403` when `read_only` is `true`. Extending an automatic suppression can provide additional protection. Shorten or remove one only after verifying the recipient.
-
-### Remove a suppression
-
-Delete a mutable suppression by ID:
-
-<APIRequest
-	path="/accounts/{account_id}/email/sending/suppressions/{suppression_id}"
-	method="DELETE"
-/>
-
-The API returns `403` for read-only suppressions. Updates and deletions propagate asynchronously, so the management list and delivery enforcement can briefly differ.
+API clients must use `read_only` to determine whether an entry is mutable. Do not infer mutability from the `reason` value.
 
 :::caution
 Deleting a hard-bounce or complaint suppression permits delivery attempts to an address that already failed or reported your mail as spam. Verify the recipient before deleting the entry.
 :::
 
-## 5. Verify suppression changes
+## Limits
 
-Refresh the suppression list after creating or updating an entry. Confirm that the recipient, reason, and expiration match the intended values.
-
-After deleting an entry, confirm that it no longer appears. Delivery enforcement can briefly lag behind the management list.
-
-## 6. Limits
-
-For page size, bulk import, and rate limits, refer to [Suppression list limits](/email-service/platform/limits/#suppression-list-limits).
-
-## Next steps
-
-- Review [Suppression lists](/email-service/concepts/suppressions/) for creation and expiration rules.
-- Use the [Email Sending API reference](/api/resources/email_sending/) to view the complete API schema.
-- Follow [Sync recipient records](/email-service/examples/email-sending/sync-recipient-records/) to maintain recipient status in your application.
+Each account can have one active entry per address. For page size, import, and rate limits, refer to [Suppression list limits](/email-service/platform/limits/#suppression-list-limits).

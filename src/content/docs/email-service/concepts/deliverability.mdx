@@ -27,7 +27,9 @@ Hard bounces are permanent delivery failures that occur when:
 
 **Hard bounces are never retried** because the failure is permanent. Emails that hard bounce will generate a bounce notification to the sender address and can be monitored through [analytics](/email-service/observability/metrics-analytics/).
 
-Email Service adds eligible recipient-side hard bounces to your [suppression list](/email-service/concepts/suppressions/). The default expiration is seven days. Confirmed invalid recipients have no expiration. For the complete rules, refer to [Hard bounces](/email-service/concepts/suppressions/#hard-bounces).
+Email Service adds eligible recipient-side hard bounces to your [suppression list](/email-service/concepts/suppressions/). Suppressions have no expiration when the mailbox or domain does not exist.
+
+They also have no expiration when the recipient remains unavailable across repeated delivery attempts. Other eligible hard-bounce suppressions last seven days.
 
 ### Soft bounces
 
@@ -37,7 +39,7 @@ Soft bounces are temporary failures that may succeed if retried:
 - Email server temporarily down
 - Rate limiting or greylisting
 
-Cloudflare automatically retries soft bounces with exponential backoff. Eligible recipient-side failures create a 24-hour suppression by default. For the complete rules, refer to [Soft bounces](/email-service/concepts/suppressions/#soft-bounces).
+Cloudflare automatically retries soft bounces with exponential backoff. Eligible recipient-side failures create a 24-hour suppression.
 
 ## Reputation management
 
