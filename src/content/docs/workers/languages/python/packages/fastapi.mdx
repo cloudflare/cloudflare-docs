@@ -35,12 +35,8 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
-import asgi
-from workers import WorkerEntrypoint
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        return await asgi.fetch(app, request, self.env)
+from workers import asgi
+Default = asgi.entrypoint(app)
 ```
 
 3. Create a `wrangler.jsonc` file to configure your Worker:
@@ -127,16 +123,13 @@ dev = [
 Then write your worker:
 
 ```python title="src/worker.py"
-from workers import WorkerEntrypoint
 from fastapi import FastAPI, Request
 from fastapi.responses import Response
-import asgi
+from workers import asgi
 
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        return await asgi.fetch(app, request, self.env)
 
 app = FastAPI()
+Default = asgi.entrypoint(app)
 
 @app.get("/api/hello")
 async def api_hello():
@@ -166,6 +159,6 @@ Clone the `cloudflare/python-workers-examples` repository and run the FastAPI ex
 
 ```bash
 git clone https://github.com/cloudflare/python-workers-examples
-cd python-workers-examples/03-fastapi
+cd python-workers-examples/fastapi
 uv run pywrangler dev
 ```
