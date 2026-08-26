@@ -264,8 +264,6 @@ describe("buildStructuredData", () => {
 			datePublished: "2025-01-01",
 			tags: ["t1"],
 		});
-		expect(out).toBe(
-			'{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://developers.cloudflare.com/changelog/x/#page","headline":"X · Changelog","description":"desc","url":"https://developers.cloudflare.com/changelog/x/","inLanguage":"en","image":"https://developers.cloudflare.com/og.png","dateModified":"2025-02-02","datePublished":"2025-01-01","publisher":{"@type":"Organization","name":"Cloudflare","url":"https://www.cloudflare.com/"},"isPartOf":{"@type":"WebSite","@id":"https://developers.cloudflare.com/#website","name":"Cloudflare Docs","url":"https://developers.cloudflare.com/"},"keywords":["t1"]}',
-		);
+		expect(out).toMatchSnapshot();
 	});
 });
