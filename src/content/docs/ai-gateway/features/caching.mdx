@@ -11,7 +11,7 @@ products:
 
 import { Render, TabItem, Tabs } from "~/components";
 
-AI Gateway can cache responses from your AI model providers, serving them directly from Cloudflare's cache for identical requests.
+When caching is enabled, AI Gateway can cache responses from your AI model providers, serving them directly from Cloudflare's cache for identical requests.
 
 ## Benefits of Using Caching
 
@@ -28,6 +28,8 @@ We plan on adding semantic search for caching in the future to improve cache hit
 :::
 
 ## Default configuration
+
+Caching is disabled by default. To enable caching globally, set the default caching configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -53,7 +55,7 @@ To set the default caching configuration using the API:
 
 </TabItem> </Tabs>
 
-This caching behavior will be uniformly applied to all requests that support caching. If you need to modify the cache settings for specific requests, you have the flexibility to override this setting on a per-request basis.
+When caching is enabled globally, the default caching behavior applies to all requests that support caching. You can also opt individual requests into caching or override their cache settings with per-request headers.
 
 To check whether a response comes from cache or not, **cf-aig-cache-status** will be designated as `HIT` or `MISS`.
 
@@ -127,6 +129,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
+  --header "cf-aig-cache-key: responseWithCustomTtl" \
   --header "cf-aig-cache-ttl: 3600" \
   --data '{
     "model": "openai/gpt-4.1-mini",
@@ -141,9 +144,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 ### Custom cache key (cf-aig-cache-key)
 
-Custom cache keys let you override the default cache key in order to precisely set the cacheability setting for any resource. To override the default cache key, you can use the header **cf-aig-cache-key**.
+The `cf-aig-cache-key` header lets you override the default cache key and opts the request into caching.
 
-When you use the **cf-aig-cache-key** header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If the **cf-aig-cache-ttl** header is used, responses will be cached according to the specified Cache Time To Live. Otherwise, responses will be cached according to the cache settings in the dashboard. If caching is not enabled for the gateway, responses will be cached for 5 minutes by default.
+When you use the `cf-aig-cache-key` header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If you include `cf-aig-cache-ttl`, the request uses that value for its cache TTL. Otherwise, the request uses the default cache TTL configured for the gateway. For requests that include `cf-aig-cache-key`, the cache TTL is 5 minutes when neither `cf-aig-cache-ttl` nor a default gateway cache TTL is configured.
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
