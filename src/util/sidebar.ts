@@ -269,6 +269,9 @@ function getExternalBadge(href: string): SidebarBadge | undefined {
 
 // URL → "Beta" badge, from directory entries whose product-availability is
 // "beta". Built once per build (the collections don't change mid-build).
+// Realtime is an umbrella for features with independent availability stages.
+const AUTO_BETA_BADGE_EXCLUSIONS = new Set(["/realtime/"]);
+
 let betaBadgeUrlsPromise: Promise<Map<string, SidebarBadge>> | undefined;
 function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
 	betaBadgeUrlsPromise ??= (async () => {
@@ -279,11 +282,13 @@ function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
 		const map = new Map<string, SidebarBadge>();
 		for (const dirEntry of directory) {
 			const avail = productAvailability.find((e) => e.id === dirEntry.data.id);
+			const url = dirEntry.data.entry?.url;
 			if (
 				avail?.data.availability?.toLowerCase() === "beta" &&
-				dirEntry.data.entry?.url
+				url &&
+				!AUTO_BETA_BADGE_EXCLUSIONS.has(url)
 			) {
-				map.set(dirEntry.data.entry.url, { text: "Beta", variant: "caution" });
+				map.set(url, { text: "Beta", variant: "caution" });
 			}
 		}
 		return map;

@@ -23,6 +23,51 @@ Get the best of both products, build for Workers global distribution and optimiz
 
 <DashButton url="/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1" />
 
+## Create a database from the command line
+
+:::note
+
+The `wrangler hyperdrive planetscale signature` command is experimental, and its interface may change.
+
+:::
+
+You can also create a Cloudflare-billed PlanetScale database from the command line with the [PlanetScale CLI](https://planetscale.com/docs/reference/planetscale-cli) (`pscale`), using [Wrangler](/workers/wrangler/) to authorize the Cloudflare billing side of the request. This requires `pscale` v0.313.0 or newer.
+
+Generate the billing authorization:
+
+```sh
+npx wrangler hyperdrive planetscale signature
+```
+
+This prints a JSON payload:
+
+```json
+{
+	"account_id": "<ACCOUNT_ID>",
+	"timestamp": "<TIMESTAMP>",
+	"signature": "<SIGNATURE>"
+}
+```
+
+`pscale database create` accepts this payload through its `--cloudflare-billing` flag. Passing `@-` makes the PlanetScale CLI read it from standard input, which we recommend over passing the signature as a command line argument:
+
+```sh
+npx wrangler hyperdrive planetscale signature | \
+  pscale database create <DATABASE_NAME> \
+    --org <PLANETSCALE_ORG> \
+    --engine postgresql \
+    --cloudflare-billing @- \
+    --format json
+```
+
+`pscale database create` defaults to Vitess, so pass `--engine postgresql` for a Postgres database, and `--format json` is recommended when the output is consumed by an agent.
+
+Your PlanetScale credentials stay between you and `pscale`. Wrangler authorizes the Cloudflare billing side only.
+
+The signature is a cryptographically signed token that authorizes creating a database billed to your Cloudflare account. Treat it as a credential and do not share it.
+
+Refer to [PlanetScale's documentation](https://planetscale.com/docs/reference/database#create-a-database) for the options `pscale database create` supports.
+
 ## Workers + PlanetScale
 
 With Workers, build your application to deploy anywhere across Cloudflare’s global network spanning 330+ cities. You can deploy with a single step, and users in new locations can reach your application without deploying regional infrastructure.

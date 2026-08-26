@@ -325,7 +325,14 @@ Use the following example to get a list of audit logs for a Cloudflare account.
 
 ### Actor
 
-The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action, such as API or dashboard (`dash`).
+The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action:
+
+- `api`: The action was performed through the API. The specific credential type was not recorded.
+- `api_key`: The action was authenticated with a Cloudflare Global API Key.
+- `api_token`: The action was authenticated with an API token.
+- `dash`: The action was performed through the Cloudflare dashboard.
+- `oauth`: The action was authenticated with an OAuth token.
+- `origin_ca_key`: The action was authenticated with an Origin CA key.
 
 ### Action
 

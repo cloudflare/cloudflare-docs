@@ -82,6 +82,19 @@ const FIXTURES: Record<string, Record<string, string>> = {
 		].join("\n"),
 	},
 
+	// Style-guide eval: reference-style image link (unresolved ~/ alias).
+	"eval-style-ref-img": {
+		"src/content/docs/cloudflare-challenges/precursor.mdx": [
+			"---",
+			"title: Precursor",
+			"---",
+			"",
+			"![Precursor mode selector][1]",
+			"",
+			"[1]: ~/assets/images/cloudflare-challenges/precursor-rules.png",
+		].join("\n"),
+	},
+
 	// Review-validator eval: file with an unhandled promise rejection.
 	"eval-val-unhandled-promise": {
 		"src/handler.ts": [
