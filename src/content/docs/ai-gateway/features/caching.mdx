@@ -147,7 +147,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 The `cf-aig-cache-key` header lets you override the default cache key and opts the request into caching.
 
-Choose a custom key that groups only requests with equivalent responses. Requests with the same custom key share a cached response. When you use the `cf-aig-cache-key` header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If you include `cf-aig-cache-ttl`, the request uses that value for its cache TTL. Otherwise, the request uses the default cache TTL configured for the gateway. For requests that include `cf-aig-cache-key`, the cache TTL is 5 minutes when neither `cf-aig-cache-ttl` nor a default gateway cache TTL is configured.
+Choose a custom key that groups only requests with equivalent responses. Requests with the same custom key share a cached response. When you use the `cf-aig-cache-key` header for the first time, you will receive a response from the provider. Subsequent requests with the same custom key value will return the cached response. If you include `cf-aig-cache-ttl`, the request uses that value for its cache TTL. Otherwise, the request uses the default cache TTL configured for the gateway. For requests that include `cf-aig-cache-key`, the cache TTL is 5 minutes when neither `cf-aig-cache-ttl` nor a default gateway cache TTL is configured.
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
