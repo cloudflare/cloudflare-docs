@@ -117,7 +117,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 ### Cache TTL (cf-aig-cache-ttl)
 
-Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and is refreshed from the original source. You can use **cf-aig-cache-ttl** to set the desired caching duration in seconds. The minimum TTL is 60 seconds and the maximum TTL is one month.
+Cache TTL, or Time To Live, is the duration a cached request remains valid before it expires and is refreshed from the original source. Use `cf-aig-cache-ttl` to set the caching duration for a request that already uses caching. To opt an individual request into caching, include `cf-aig-cache-key`. The minimum TTL is 60 seconds and the maximum TTL is one month.
 
 For example, if you set a TTL of one hour, it means that a request is kept in the cache for an hour. Within that hour, an identical request will be served from the cache instead of the original API. After an hour, the cache expires and the request will go to the original API for a fresh response, and that response will repopulate the cache for the next hour.
 
@@ -126,6 +126,7 @@ As an example, when submitting a request to OpenAI, include the header in the fo
 ```bash title="Request to be cached for an hour"
 # Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
 # and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
+# Use a key shared only by requests with equivalent responses.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -146,7 +147,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 
 The `cf-aig-cache-key` header lets you override the default cache key and opts the request into caching.
 
-When you use the `cf-aig-cache-key` header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If you include `cf-aig-cache-ttl`, the request uses that value for its cache TTL. Otherwise, the request uses the default cache TTL configured for the gateway. For requests that include `cf-aig-cache-key`, the cache TTL is 5 minutes when neither `cf-aig-cache-ttl` nor a default gateway cache TTL is configured.
+Choose a custom key that groups only requests with equivalent responses. Requests with the same custom key share a cached response. When you use the `cf-aig-cache-key` header for the first time, you will receive a response from the provider. Subsequent requests with the same header will return the cached response. If you include `cf-aig-cache-ttl`, the request uses that value for its cache TTL. Otherwise, the request uses the default cache TTL configured for the gateway. For requests that include `cf-aig-cache-key`, the cache TTL is 5 minutes when neither `cf-aig-cache-ttl` nor a default gateway cache TTL is configured.
 
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
