@@ -29,13 +29,12 @@ import {
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
 | [Worker size](#worker-size)                                                      | 3 MB         | 10 MB          |
 | [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
-| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500            |
+| [Number of Workers](#number-of-workers)                                         | 100          | 500[^1]        |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
 | Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000        |
 | Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB         |
 
-<sup>1</sup> If you reach this limit, consider using [Workers for
-Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+[^1]: If you need a higher Worker limit, use [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 <Render file="limits_increase" product="workers" />
 
@@ -304,9 +303,7 @@ To reduce startup time, avoid expensive work in global scope. Move initializatio
 
 | Limit               | Workers Free | Workers Paid |
 | ------------------- | ------------ | ------------ |
-| Workers per account | 100          | 500          |
-
-If you need more than 500 Workers, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+| Workers per account | 100          | 500[^1]      |
 
 ---
 
