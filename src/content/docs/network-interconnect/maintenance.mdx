@@ -1,0 +1,31 @@
+---
+pcx_content_type: concept
+products:
+  - network-interconnect
+title: Maintenance
+description: Understand how Cloudflare coordinates maintenance across resilient CNI deployments.
+sidebar:
+  order: 6
+---
+
+Cloudflare coordinates routine CNI-disruptive maintenance across resilient Cloudflare Network Interconnect (CNI) deployments, including across CNI locations.
+
+## Planned maintenance
+
+Routine CNI-disruptive maintenance is planned work that can interrupt traffic on an affected CNI connection. Cloudflare schedules this work to preserve the remaining connections in your resilient deployment.
+
+| CNI deployment                                                                                                   | During routine CNI-disruptive maintenance |
+| ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| One CNI connection at one location                                                                               | The connection can be interrupted.        |
+| Two CNI connections on separate devices at one location                                                          | One connection remains in service.        |
+| Four CNI connections across two coordinated locations, with two connections on separate devices at each location | Three connections remain in service.      |
+
+## Emergency and non-routine maintenance
+
+Non-routine maintenance, such as maintenance that affects an entire PoP, can affect all CNI connections at the affected location. Cloudflare avoids performing non-routine maintenance at multiple coordinated locations at the same time.
+
+Emergency maintenance can require shorter notice. Cloudflare coordinates emergency maintenance across locations where feasible.
+
+## Receive maintenance notifications
+
+To configure circuit-specific or point-of-presence (PoP) maintenance notifications, refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts/).

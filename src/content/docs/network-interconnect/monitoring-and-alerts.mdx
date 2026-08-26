@@ -22,18 +22,18 @@ The Status column displays three statuses:
 - **Unhealthy**: The link operational state at interconnect port is down. This might mean the CCR does not see light, cannot negotiate an Ethernet signal, or the light levels are below -20 dBm. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.
 - **Pending**: The link is not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The **Pending** status will disappear after the customer completes the cross-connect and status moves to **Active**.
 
+## Maintenance notifications
 
-## Alerts (v1 dataplane only)
+You can configure notifications for upcoming CNI maintenance events using the Notifications feature in the Cloudflare dashboard.
 
-You can configure notifications for upcoming CNI maintenance events using the Notifications feature in the Cloudflare dashboard. It is recommended to subscribe to two types of notifications to stay fully informed.
+For information about planned maintenance coordination, refer to [Maintenance](/network-interconnect/maintenance/).
 
-**CNI Connection Maintenance Alert:** This alert informs you about maintenance events (scheduled, updated, or canceled) that directly impact your CNI circuits used with the Cloudflare Virtual Network only.
-- You will receive warnings up to two weeks in advance for maintenance impacting your Magic Transit/WAN CNI connections.
-- You will be notified if the details of a scheduled maintenance change or if it is canceled.
-- For recently added maintenance, notifications are sent after a six-hour delay to prevent alerting fatigue from minor adjustments.
+**CNI Connection Maintenance Alert:** This alert is available for CNI v1 circuits used with Cloudflare Virtual Network. It identifies scheduled, changed, or canceled disruptive maintenance that directly affects your CNI circuit.
 
-**Cloudflare Status Maintenance Notification:** This alert informs you about maintenance for an entire Cloudflare Point of Presence (PoP). While not specific to your CNI, this maintenance will impact all CNI services in that location. This includes connections used only for peering without Cloudflare Virtual Network.
-- You will be warned about potentially disruptive maintenance at the PoP level.
+- This alert is not available for CNI v2 connections.
+
+**Cloudflare Status Maintenance Notification:** This alert warns about potentially disruptive maintenance at a Cloudflare Point of Presence (PoP). It is not specific to individual CNI circuits, and it may be relevant to CNI used for peering or Cloudflare Virtual Network.
+
 - By default, you are notified for all event types (Scheduled, Changed, Canceled), but you can filter these.
 - By default, you are notified for all Cloudflare PoPs, but you can filter for only the specific locations where you have CNI circuits.
 
