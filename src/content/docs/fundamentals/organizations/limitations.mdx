@@ -22,7 +22,7 @@ Each Organization supports a maximum of **500 accounts** and **5,000 zones**. Th
 
 ## API authentication
 
-User API Tokens support some Organization operations. They cannot complete the full Terraform resource lifecycle. To manage Organization resources with Terraform, configure the Cloudflare provider with a Global API key and the registered account email.
+User API Tokens support some Organization operations. They cannot complete the full Terraform resource lifecycle. Full user API Token support for Organization operations is planned. To manage Organization resources with Terraform, configure the Cloudflare provider with a Global API key and the registered account email.
 
 A user API Token may create an Organization. A later Terraform refresh or `terraform plan` may fail when reading the Organization. If the request returns HTTP `403` with error code `10000`, use a Global API key and the account email instead.
 
