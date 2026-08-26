@@ -92,6 +92,24 @@ This is important because, if a domain is in a **Moved** state for a [long enoug
 
 <Render file="recover-deleted-domain" product="dns" />
 
+### Why does my new zone have different nameservers than my other zones?
+
+Nameserver assignments happen at zone creation and [cannot be changed](/dns/nameservers/nameserver-options/#assignment-method) afterwards, even by Cloudflare Support.
+
+A newly added zone can be assigned a different pair from your other zones for a few reasons:
+
+- The same domain is (or was recently) active on another Cloudflare account.
+- The zone was previously deleted from Cloudflare and re-added.
+- A parent or child zone in the same account already uses the preferred nameserver pair.
+- The account uses [Foundation DNS advanced nameservers](/dns/foundation-dns/advanced-nameservers/), which use different sets (`blue`, `gold`, `orange`) and rotate to keep [directly descending zones](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment) on different nameservers.
+
+To make future zones share the same nameservers, use one of the following options depending on your plan:
+
+- [Account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/) — available on Enterprise (self-serve), or on Business after [contacting Cloudflare Support](/support/contacting-cloudflare-support/) to enable them.
+- [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) with advanced nameservers or account custom nameservers — available on Enterprise.
+
+Deleting and re-adding the zone does not force a specific nameserver assignment and can produce yet another different pair.
+
 ---
 
 ## DNS records

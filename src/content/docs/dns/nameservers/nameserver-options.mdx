@@ -25,7 +25,9 @@ The default assignment method is to use [standard nameservers](/dns/nameservers/
 To prevent domain hijacking, you can no longer preset Cloudflare nameservers at your registrar before creating the respective zone in Cloudflare. If you preset your nameservers and then add the domain, your domain will be assigned a new pair of nameservers.
 :::
 
-These nameserver assignments cannot be changed. However, depending on your subscription, you may have different options for better nameserver consistency.
+:::note[Assigned nameservers are permanent]
+Once a zone is created, its assigned nameservers cannot be changed — not even by Cloudflare Support. If your new zone was assigned a different set from your other zones, refer to [Why does my new zone have different nameservers than my other zones?](/dns/faq/#why-does-my-new-zone-have-different-nameservers-than-my-other-zones) in the DNS FAQ. To keep new zones on the same nameservers going forward, see [Nameserver consistency](#nameserver-consistency) below.
+:::
 
 ### Nameserver consistency
 

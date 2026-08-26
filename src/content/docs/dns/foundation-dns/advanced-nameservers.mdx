@@ -74,6 +74,16 @@ Consider the domain `example.com`, and subdomains `abc.example.com` and `123.exa
 
 </Details>
 
+### Consistent assignment across new zones
+
+Advanced nameservers try to keep the same nameserver set (`blue`, `gold`, or `orange`) for new zones added to the same account, but a new zone can still be assigned a different set when:
+
+- The same name is (or was recently) active on another Cloudflare account.
+- A directly descending zone in the same or another account already uses the same set.
+- The zone was previously deleted from Cloudflare and re-added.
+
+[Assigned nameservers cannot be changed](/dns/nameservers/nameserver-options/#assignment-method) after a zone is created. If your zones must share the same nameservers, [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/) provide a single set that every zone in the account can use, and can be configured as the account's [DNS zone default](/dns/additional-options/dns-zone-defaults/) so new zones automatically receive them.
+
 ## Custom Nameserver compatibility
 
 Advanced Nameserver features — such as multiple anycast network groups or dedicated release process — are currently available for Cloudflare-branded nameservers. Support of these features for [Custom Nameservers](/dns/nameservers/custom-nameservers/) is on the roadmap. Contact your account team for the latest availability.
