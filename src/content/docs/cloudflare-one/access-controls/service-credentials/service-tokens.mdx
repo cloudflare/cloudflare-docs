@@ -33,7 +33,7 @@ You can now configure your Access applications and [device enrollment permission
 
 ### Client Secret format
 
-New service token Client Secrets use the format `cfast_[40 alphanumeric characters][8-character checksum]`. The prefix and checksum make the secrets easier for credential scanning tools to identify.
+As of August 26, 2026, new service token Client Secrets use the format `cfast_[40 alphanumeric characters][8-character checksum]`. The prefix and checksum make the secrets easier for credential scanning tools to identify.
 
 Existing Client Secrets use a 64-character hexadecimal format. These secrets continue to work and do not require rotation. The Client ID and authentication headers are unchanged for both formats.
 
