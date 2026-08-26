@@ -85,15 +85,7 @@ You can direct any feedback about your API Discovery results to your account tea
 
 ## Requirements
 
-API Discovery requires an active API Shield subscription at both the account and zone level. If your subscription is active at the account level but not assigned to the zone, Discovery will not run for that zone.
-
-For an endpoint to appear in Discovery results, every request must meet the following conditions:
-
-- The request must return a `2xx` response code from the Cloudflare edge.
-- The request must not originate directly from a Cloudflare Worker. Traffic sent through the Cloudflare traffic simulator or other Worker-based test harnesses will not be counted toward Discovery thresholds.
-- The endpoint must receive at least 500 requests within a continuous 10-day period.
-
-For more information, refer to [Discovery requirements](/security/web-assets/manage-operations/#discovery-requirements/).
+API endpoints are discovered based on machine learning or session identifiers. Machine learning based API discovery has traffic requirements. For more information, refer to [Discovery requirements](/security/web-assets/manage-operations/#discovery-requirements/).
 
 ## Availability
 
