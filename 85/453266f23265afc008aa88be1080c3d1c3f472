@@ -1,0 +1,19 @@
+src/content/changelog/radar/2026-08-26-radar-researcher-improvements.mdx
+  s_66219b02acec47::t_c40f4afdbba083 12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "85453266f23265afc008aa88be1080c3d1c3f472",
+  "prompts": {},
+  "sessions": {
+    "s_66219b02acec47": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc284f98dffekqr5324E56yjsD",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "André Jesus <ajesus@cloudflare.com>"
+    }
+  }
+}

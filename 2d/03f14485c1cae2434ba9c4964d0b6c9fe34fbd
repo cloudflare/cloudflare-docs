@@ -1,0 +1,19 @@
+src/components/HyperdriveDynamicWorkersDiagram.astro
+  s_517176ebbebd59::t_c2bb78efb61f0c 2-9,12-133,135-136,139-186,189-252,254-260,263-264,266-363,366-367,369,371-376,379-380,383-455,458-466,471-474,477-478,480-487,489-493,495-503,505-525,527-538,541-547,551-554
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2d03f14485c1cae2434ba9c4964d0b6c9fe34fbd",
+  "prompts": {},
+  "sessions": {
+    "s_517176ebbebd59": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fffaab8dbffeAx1O26AFdDS2D2",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}
