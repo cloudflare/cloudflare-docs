@@ -109,23 +109,35 @@ different types.
 
 **Cause:** The Data Collection Rule (DCR) schema is out of sync with the Cloudflare Logpush schema being delivered. Two variants are common:
 
-- **Datatype mismatch:** A field is declared with the wrong Sentinel datatype in the DCR `streamDeclarations` — for example, a numeric field declared as `string`. The record is ingested, but the mismatched column is populated with `null`.
+- **Datatype mismatch:** A field is declared with the wrong Sentinel datatype in the DCR `streamDeclarations` — for example, a numeric field declared as `string`, or a variable-shape field such as `BotDetectionIDs` declared as anything other than `dynamic`. The record is ingested, but the mismatched column is populated with `null`.
 - **Reserved column name conflict:** A Cloudflare field name collides with a [Microsoft Sentinel reserved column name](https://learn.microsoft.com/azure/azure-monitor/logs/create-custom-table?tabs=azure-portal-1%2Cazure-portal-2%2Cazure-portal-3#add-or-delete-a-custom-column). For example, the Cloudflare Network Error Logging (NEL) dataset contains a `Type` field, but `Type` is reserved in Sentinel. Fields with reserved names cannot be stored under their original name.
 
 **Fix:**
 
-- **For datatype mismatches:** Update the field's datatype in both the DCR `streamDeclarations` and the `CloudflareV2_CL` table definition to match the Cloudflare Logpush schema (for example, `real` for floating-point values such as `EdgeResponseCompressionRatio`).
-- **For reserved name conflicts:** Rename the field in the DCR `transformKql` transformation and add the renamed column to the `CloudflareV2_CL` table definition. For example, to preserve the NEL `Type` value:
+1. Upgrade the Cloudflare CCF solution to the latest version from the [Microsoft Sentinel Content Hub](https://learn.microsoft.com/azure/sentinel/sentinel-solutions-catalog). New releases progressively correct field datatypes shipped by the connector and add support for new Cloudflare Logpush fields.
+2. If missing fields persist after upgrading — for example, because the DCR has been customized — apply a manual fix:
+   - **For datatype mismatches:** Update the field's datatype in both the DCR `streamDeclarations` and the `CloudflareV2_CL` table definition to match the Cloudflare Logpush schema (for example, `real` for floating-point values such as `EdgeResponseCompressionRatio`, or `dynamic` for `BotDetectionIDs`).
+   - **For reserved name conflicts:** Rename the field in the DCR `transformKql` transformation and add the renamed column to the `CloudflareV2_CL` table definition. For example, to preserve the NEL `Type` value:
 
-  ```kql
-  source
-  | extend NELType = Type
-  | project-away Type
-  ```
+     ```kql
+     source
+     | extend NELType = Type
+     | project-away Type
+     ```
 
-  Add a `NELType` column to `CloudflareV2_CL` with datatype `string`.
+     Add a `NELType` column to `CloudflareV2_CL` with datatype `string`.
 
 **Verify:** Send a fresh Logpush batch and query `CloudflareV2_CL` for the affected fields. Values should now be populated and no longer `null`.
+
+## The Cloudflare CCF solution workbook does not populate
+
+The Cloudflare workbook shipped with the CCF solution loads but shows no data, or its queries fail with an error indicating that the referenced table or connector does not exist.
+
+**Cause:** In earlier releases, the workbook shipped with the Cloudflare CCF solution referenced the legacy `Cloudflare_CL` table and the legacy `CloudflareDataConnector`. The CCF connector ingests into `CloudflareV2_CL` through a parser, so workbook queries against the legacy table return no results even when logs are ingesting correctly.
+
+**Fix:** Upgrade the Cloudflare CCF solution to a version whose workbook references the CCF connector's parser and the `CloudflareV2_CL` table. The latest solution release is available from the [Microsoft Sentinel Content Hub](https://learn.microsoft.com/azure/sentinel/sentinel-solutions-catalog).
+
+**Verify:** Reopen the workbook. Panels should populate with recent Cloudflare log data.
 
 ## Still not resolved?
 
