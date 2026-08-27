@@ -295,7 +295,7 @@ Country code of the source IP of the request (for example, 'US').
 
 Type: `string`
 
-Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp.
+Internal IP of the device. For WARP client traffic, this is the WARP CGNAT address, typically in the `100.96.0.0/12` range. For GRE/IPsec tunnel [on-ramps](/cloudflare-one/networks/connectivity-options/), this may represent the local/private source IP behind the tunnel.
 
 ## SourcePort
 
