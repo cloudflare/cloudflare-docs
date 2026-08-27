@@ -46,16 +46,16 @@ These codes also appear in the `guardrails` property of the AI Gateway REST API,
 
 ### Streaming behavior
 
-Guardrails handles streaming (`stream: true`) requests differently depending on the API surface:
+Guardrails does not support streaming (`stream: true`) requests. Prompts are still evaluated and enforced, but response behavior depends on the API surface:
 
-- **REST API (`/ai/*`)**: Guardrails runs against the response and logs the evaluation, but does not enforce the result — the client receives the full streaming response regardless of what Guardrails would have flagged.
-- **Legacy gateway endpoints (`gateway.ai.cloudflare.com/v1/*`)**: Guardrails buffers the response, evaluates it, and returns a single non-streamed payload — streaming does not apply when Guardrails is enabled on this surface.
+- **REST API (`/ai/*`)**: Guardrails evaluates the response and logs the result, but does not enforce it — the client receives the full streaming response regardless of what Guardrails would have flagged.
+- **Legacy gateway endpoints (`gateway.ai.cloudflare.com/v1/*`)**: Guardrails buffers the full response, evaluates it, and returns a single non-streamed payload — the request no longer streams.
 
-Guardrails evaluates prompts on both surfaces regardless of streaming mode. For non-streaming (`stream: false`) requests, Guardrails evaluates and enforces responses on both surfaces.
+For non-streaming (`stream: false`) requests, both prompts and responses are evaluated and enforced.
 
 Response evaluation applies to text generation models. Embedding and unknown model types bypass response evaluation regardless of streaming mode — see [Supported model types](/ai-gateway/features/guardrails/supported-model-types/) for details.
 
-Full response-side enforcement on streaming REST API requests is on our roadmap.
+Full Guardrails support for streaming requests is on our roadmap.
 
 :::note
 
