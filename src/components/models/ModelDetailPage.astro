@@ -144,6 +144,7 @@ const authorName = model.authorName;
 const requiresWorkersPaid =
 	model.properties.require_workers_paid === true ||
 	model.properties.require_workers_paid === "true";
+const hasReasoningEffortGuidance = model.name === "@cf/zai-org/glm-5.2";
 
 // `hasSchema`: input must have at least one key.
 const hasSchema = Object.keys(model.schema.input).length > 0;
@@ -214,6 +215,11 @@ const pageTitle = `${displayName} (${authorName})`;
 const headTitle = `${pageTitle} · Cloudflare AI docs`;
 
 const headings: MarkdownHeading[] = [
+	hasReasoningEffortGuidance && {
+		depth: 2,
+		slug: "reasoning-effort",
+		text: "Reasoning effort",
+	},
 	hasPlayground && { depth: 2, slug: "playground", text: "Playground" },
 	hasCodeExamples && { depth: 2, slug: "usage", text: "Usage" },
 	hasRemainingExamples && { depth: 2, slug: "examples", text: "Examples" },
@@ -342,6 +348,42 @@ const headings: MarkdownHeading[] = [
 	}
 
 	<ModelFeatures model={model} />
+
+	{
+		hasReasoningEffortGuidance && (
+			<Fragment>
+				<AnchorHeading
+					depth={2}
+					title="Reasoning effort"
+					slug="reasoning-effort"
+				/>
+				<p>
+					GLM-5.2 supports <code>high</code> and <code>max</code> reasoning
+					effort, or you can turn reasoning off. For compatibility with Chat
+					Completions and other protocols in the ecosystem, other reasoning
+					efforts will be mapped to these modes:
+				</p>
+				<ul>
+					<li>
+						<code>none</code> and <code>minimal</code> turn reasoning off.
+					</li>
+					<li>
+						<code>low</code> and <code>medium</code> map to <code>high</code>.
+					</li>
+					<li>
+						<code>xhigh</code> maps to <code>max</code>.
+					</li>
+				</ul>
+				<p>
+					This is the same mapping used by Z.ai's API, and{" "}
+					<a href="https://docs.z.ai/api-reference/llm/chat-completion#body-one-of-0-reasoning-effort">
+						in their <code>reasoning_effort</code> documentation
+					</a>
+					.
+				</p>
+			</Fragment>
+		)
+	}
 
 	{
 		/* Defensive dead branch (model not in slice): nova-3 transport pricing. */
