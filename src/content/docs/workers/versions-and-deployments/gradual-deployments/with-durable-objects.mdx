@@ -45,7 +45,7 @@ You should ensure that API changes between your Durable Object and its Worker ar
 
 Versions of Worker bundles that change Durable Object class lifecycle cannot be uploaded. This applies to both the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field and the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array. This is because Durable Object lifecycle changes are atomic operations. Once a lifecycle change is deployed, rollbacks cannot take place to any version prior to the one that included the change.
 
-Durable Object lifecycle changes can be deployed with the following command:
+A `wrangler versions upload` that includes a Durable Object class lifecycle change is rejected with error 10211. Apply the migration with a non-versioned deploy:
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
