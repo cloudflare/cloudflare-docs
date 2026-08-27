@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/index.mdx
+  s_b783ceea3c242b::t_aa041372e64f3e 3,17-24,27-31,34,36-38,40-41,44,47,51,53-61,63-96,98,100-150,152,154,156,158,160,162,164,166
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f253603fbeedbacb88ef3ac3c085890f28004fc6",
+  "prompts": {},
+  "sessions": {
+    "s_b783ceea3c242b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_002f4da48ffetzPiNfOllnexRV",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}
