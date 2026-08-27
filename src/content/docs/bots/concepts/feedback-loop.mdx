@@ -211,6 +211,21 @@ If you are not certain if some traffic received an incorrect score, keep this tr
 
 We appreciate any comments you wish to leave in the description field that might help our team better understand these requests in the context of typical traffic to your domain.
 
+## Handling False Positive Abuse Reports
+
+If your legitimate website is flagged as phishing, it can cause issues with user access and trust. To handle false positive abuse reports, follow these steps:
+
+1. **Submit a false positive report**: Use the Bot Feedback Loop to submit a report for the incorrectly flagged traffic. Provide as much detail as possible about the traffic, including the URL, user agent, and IP address.
+2. **Create a WAF custom rule**: To allow traffic from the legitimate source, create a WAF custom rule with a **Skip the remaining custom rules** action that matches the characteristics of your false positive report. Make sure to narrow the scope of the rule to prevent potential abuse.
+3. **Narrow the scope of skip rules**: When creating a skip rule, use the most narrow possible scope, including restricting the request methods and URIs that the expected traffic has access to. This will help prevent potential abuse.
+
+Best practices for handling false positive abuse reports include:
+
+* Regularly monitoring your website's traffic and analytics to detect any potential issues
+* Keeping your WAF rules up to date and ensuring they are not too broad
+* Using the Bot Feedback Loop to submit reports and help improve bot detection accuracy
+* Implementing additional security measures, such as rate limiting and IP blocking, to prevent abuse
+
 ## Recommendations after submitting a false positive
 
 :::note
