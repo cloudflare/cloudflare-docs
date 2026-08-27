@@ -54,15 +54,15 @@ IP geolocation is an estimate, not an exact science. There is nothing that inher
 
 :::caution
 
-For use cases where location must be highly precise or compliance-critical, such as state-based access restrictions, IP geolocation should not be used as the sole signal. Combine it with device GPS or other first-party signals, with appropriate user consent and compliance with applicable privacy laws.
+For use cases where location must be highly precise or compliance-critical, such as state-based access restrictions, do not use IP geolocation as the sole signal. Combine it with device GPS or other first-party signals, with appropriate user consent and compliance with applicable privacy laws.
 
 :::
 
 Here is what you can expect regarding data accuracy and updates:
 
 - **Update frequency**: Cloudflare automatically updates its IP geolocation database multiple times per week.
-- **Processing time**: If a correction is submitted or a change is detected, requests generally take a few business days to be processed.
-- **Accuracy**: Due to the dynamic nature of IP address allocation, Cloudflare cannot guarantee that its IP geolocation will align with other providers. No SLAs are provided on IP geolocation accuracy or the timing of updates.
+- **Processing time**: If a correction is submitted or a change is detected, Cloudflare generally processes the request within a few business days.
+- **Accuracy**: Due to the dynamic nature of IP address allocation, Cloudflare cannot guarantee that its IP geolocation will align with other providers. Cloudflare does not provide SLAs for IP geolocation accuracy or the timing of updates.
 
 ---
 
@@ -70,6 +70,6 @@ Here is what you can expect regarding data accuracy and updates:
 
 If you find an IP address with a location that you believe is incorrect, fill in the [data correction form](https://www.cloudflare.com/lp/ip-corrections/) with the relevant IP address range(s) along with the correct information as applicable (country, state/province, city name, and ZIP code).
 
-If the data is confirmed, Cloudflare will make the necessary changes. Corrections generally take a few business days to be processed.
+If the data is confirmed, Cloudflare will make the necessary changes, generally within a few business days.
 
-If an end user's IP address rotates frequently, for example on mobile or CGNAT networks, the address may change again before a correction is processed.
+If an end user's IP address rotates frequently, for example on mobile or CGNAT networks, the address may change again before the correction completes.
