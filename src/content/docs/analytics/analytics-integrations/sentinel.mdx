@@ -17,8 +17,8 @@ Cloudflare has integrations with Microsoft Sentinel to make analyzing your Cloud
 
 **[Sentinel Function Based Connector](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_sentinel?tab=Overview)**: The Cloudflare connector for Microsoft Sentinel uses [Azure Functions](https://azure.microsoft.com/en-us/products/functions) to process security logs from Cloudflare's Logpush service and ingest them directly into the SIEM platform.
 
-:::note[Legacy connector deprecated]
-The Azure Function-based Cloudflare solution has been deprecated and is no longer listed in the Microsoft Sentinel Content Hub. New deployments should use the CCF connector documented below. Existing Function-based deployments continue to operate, but Cloudflare recommends migrating to the CCF connector to benefit from ongoing schema updates and the Sentinel Data Lake integration.
+:::caution[Legacy connector deprecation — action required by 2026-09-14]
+Microsoft is deprecating the Azure Monitor HTTP Data Collector API on 2026-09-14. As a result, Cloudflare will no longer maintain the Azure Functions-based Microsoft Sentinel connector after that date. Cloudflare Enterprise customers using the Function-based connector must migrate to the CCF connector documented below by 2026-09-14. Refer to the [deprecation changelog entry](/changelog/2026-08-26-sentinel-functions-connector-deprecation/) for details.
 :::
 
 This guide provides clear, step-by-step instructions for integrating Cloudflare logs with the CCF connector for Microsoft Sentinel using Azure Blob Storage. By following these steps, you will be able to securely collect, store, and analyze your Cloudflare logs within Microsoft Sentinel, enhancing your organization's security monitoring and incident response capabilities.
