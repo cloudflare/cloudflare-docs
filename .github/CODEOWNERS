@@ -161,6 +161,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
+/src/content/docs/network/ip-geolocation.mdx @cloudflare/product-owners @mbullock1986
 /src/content/docs/notifications/ @cloudflare/product-owners
 /src/content/docs/registrar/ @cloudflare/product-owners
 /src/content/docs/rules/ @cloudflare/appsec-reviewers @smarsh-cf @maurizioabba @cloudflare/product-owners @mbullock1986
