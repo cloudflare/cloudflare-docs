@@ -3,14 +3,14 @@ pcx_content_type: reference
 title: Manage datasets
 sidebar:
   order: 4
-description: Enable or disable Log Explorer datasets.
+description: Enable, disable, or delete Log Explorer datasets.
 products:
   - log-explorer
 ---
 
 import { TabItem, Tabs, Render, DashButton } from "~/components";
 
-Log Explorer allows you to enable or disable which datasets are available to query in Log Search.
+Log Explorer allows you to enable, disable, or delete datasets available to query in Log Search.
 
 :::note
 Canceling a Log Explorer subscription stops renewal, but it does not automatically stop log ingestion during the current billing cycle. To completely turn off Log Explorer, refer to [How do I turn off Log Explorer?](/log-explorer/faq/#how-do-i-turn-off-log-explorer).
@@ -85,7 +85,8 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets
 		"created_at": "2025-06-03T14:33:16Z",
 		"updated_at": "2025-06-03T14:33:16Z",
 		"dataset_id": "01973635f7e273a1964a02f4d4502499",
-		"enabled": true
+		"enabled": true,
+		"deletion_protection": true
 	},
 	"success": true,
 	"errors": [],
@@ -102,3 +103,31 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/da
   "dataset": "access_requests"
 }'
 ```
+
+## Delete a dataset
+
+Deleting a dataset permanently removes the dataset and its stored data. Deletion runs asynchronously. You cannot recreate the same dataset for the account or zone while deletion is in progress.
+
+:::caution
+Dataset deletion is irreversible. Deleted data cannot be recovered.
+:::
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to **Log Explorer** > **Manage datasets**.
+
+   <DashButton url="/?to=/:account/log-explorer/manage-sources" />
+
+2. Find the dataset and select **Actions** > **Delete**.
+3. If deletion protection is enabled, disable it in the confirmation dialog.
+4. Enter the dataset name and select **Delete**.
+
+</TabItem>
+<TabItem label="API">
+
+1. Set `deletion_protection` to `false` with the [Update an account or zone dataset](/api/resources/logs/subresources/log_explorer/subresources/datasets/methods/update/) method.
+2. Delete the dataset with the [Delete an account or zone dataset](/api/resources/logs/subresources/log_explorer/subresources/datasets/methods/delete/) method.
+
+</TabItem>
+</Tabs>
