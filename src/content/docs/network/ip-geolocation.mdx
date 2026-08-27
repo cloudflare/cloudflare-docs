@@ -61,7 +61,7 @@ For use cases where location must be highly precise or compliance-critical, such
 Here is what you can expect regarding data accuracy and updates:
 
 - **Update frequency**: Cloudflare automatically updates its IP geolocation database multiple times per week.
-- **Processing time**: If a correction is submitted or a change is detected, Cloudflare generally processes the request within a few business days.
+- **Processing time**: Cloudflare reviews correction requests, which may or may not result in a change. Confirmed changes generally take effect within a few business days.
 - **Accuracy**: Due to the dynamic nature of IP address allocation, Cloudflare cannot guarantee that its IP geolocation will align with other providers. Cloudflare does not provide SLAs for IP geolocation accuracy or the timing of updates.
 
 ---
@@ -71,5 +71,7 @@ Here is what you can expect regarding data accuracy and updates:
 If you find an IP address with a location that you believe is incorrect, fill in the [data correction form](https://www.cloudflare.com/lp/ip-corrections/) with the relevant IP address range(s) along with the correct information as applicable (country, state/province, city name, and ZIP code).
 
 If the data is confirmed, Cloudflare will make the necessary changes, generally within a few business days.
+
+If Cloudflare cannot confirm the submitted location, the correction does not result in a change.
 
 If an end user's IP address rotates frequently, for example on mobile or CGNAT networks, the address may change again before the correction completes.
