@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Receive events and webhooks
-description: Receive notifications when Cloudflare Stream videos finish processing, enter an error state, or when a live input changes state.
+description: Receive notifications when Cloudflare Stream videos or live inputs are ready, enter an error state, or changes status.
 sidebar:
   order: 7
 products:
@@ -10,9 +10,9 @@ products:
 
 import { Details, DashButton, Render } from "~/components";
 
-Cloudflare Stream can notify your service when videos are ready to play, enter an error state, or when a live input connects, disconnects, or errors. You have two options for receiving these notifications:
+Cloudflare Stream can notify your service when videos are ready to play, are edited, have updated captions/downloads, or error; or when a live input connects, disconnects, or errors. You have two options for receiving these notifications:
 
-**Event subscriptions** publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints, signature verification, or retries. Event subscriptions offer a greater set of events and properties.
+**Event subscriptions _(recommended)_** publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints, signature verification, or retries. Event subscriptions offer a greater set of events and properties.
 
 **Webhooks** send an HTTP `POST` request to a URL you control. Use webhooks when you need to deliver notifications to a service outside of Cloudflare.
 
@@ -26,7 +26,7 @@ To create an event subscription, refer to [Manage event subscriptions](/queues/e
 
 ## Webhooks for uploaded videos
 
-Webhooks notify your service when videos successfully finish processing and are ready to stream or if your video enters an error state.
+Webhooks notify your service when videos successfully are ready to stream or if your video enters an error state.
 
 :::note
 
@@ -61,7 +61,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
 }
 ```
 
-## Notifications
+### Sample webhook payload
 
 When a video on your account finishes processing, you will receive a `POST` request notification with information about the video.
 
@@ -79,8 +79,6 @@ When a video on your account finishes processing, you will receive a `POST` requ
 		"errorReasonText": ""
 	},
 	"meta": {
-		"filename": "small.mp4",
-		"filetype": "video/mp4",
 		"name": "small.mp4",
 		"relativePath": "null",
 		"type": "video/mp4"
@@ -145,7 +143,7 @@ In addition to the `state` field, a video's `readyToStream` field must also be `
 }
 ```
 
-## Verify webhook authenticity
+### Verify webhook authenticity
 
 Cloudflare Stream will sign the webhook requests sent to your notification URLs and include the signature of each request in the `Webhook-Signature` HTTP header. This allows your application to verify the webhook requests are sent by Stream.
 
@@ -155,7 +153,7 @@ To verify the signature, get the value of the `Webhook-Signature` header, which 
 
 `Webhook-Signature: time=1230811200,sig1=60493ec9388b44585a29543bcf0de62e377d4da393246a8b1c901d0e3e672404`
 
-### 1. Parse the signature
+#### 1. Parse the signature
 
 Retrieve the `Webhook-Signature` header from the webhook request and split the string using the `,` character.
 
@@ -165,7 +163,7 @@ The value for `time` is the current [UNIX time](https://en.wikipedia.org/wiki/Un
 
 At this point, you should discard requests with timestamps that are too old for your application.
 
-### 2. Create the signature source string
+#### 2. Create the signature source string
 
 Prepare the signature source string and concatenate the following strings:
 
@@ -175,26 +173,26 @@ Prepare the signature source string and concatenate the following strings:
 
 Every byte in the request body must remain unaltered for successful signature verification.
 
-### 3. Create the expected signature
+#### 3. Create the expected signature
 
 Compute an HMAC with the SHA256 function (HMAC-SHA256) using your webhook secret and the source string from step 2.
 This step depends on the programming language used by your application.
 
 Cloudflare's signature will be encoded to hex.
 
-### 4. Compare expected and actual signatures
+#### 4. Compare expected and actual signatures
 
 Compare the signature in the request header to the expected signature. Preferably, use a constant-time comparison function to compare the signatures.
 
 If the signatures match, you can trust that Cloudflare sent the webhook.
 
-## Limitations
+### Webhook limitations
 
 - Webhooks will only be sent after video processing is complete, and the body will indicate whether the video processing succeeded or failed.
 - Only one webhook subscription is allowed per-account.
 - Cloudflare cannot send webhooks to `localhost` or local IP addresses. A publicly accessible URL is required. For local testing, use a [Quick Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local server to the Internet. For a step-by-step walkthrough, refer to [Test webhooks locally](/stream/examples/test-webhooks-locally/).
 
-## Examples
+### Webhook verification examples
 
 **Golang**
 

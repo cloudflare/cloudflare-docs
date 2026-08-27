@@ -12,13 +12,13 @@ import { AvailableNotifications, DashButton, Render } from "~/components";
 
 Cloudflare Stream can notify your service when a live input connects, disconnects, or encounters an error during a broadcast. You have two options for receiving these notifications:
 
-**Event subscriptions** _(recommended)_ publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints, signature verification, or retries. Event subscriptions offer a greater set of events and properties and are easier to configure than the legacy Cloudflare Notifications service.
+**Event subscriptions _(recommended)_** publish structured events to a [Cloudflare Queue](/queues/), which you can consume from a Worker or [HTTP pull consumer](/queues/configuration/pull-consumers/). Use event subscriptions when you want to build pipelines on Cloudflare without managing webhook endpoints, signature verification, or retries. Event subscriptions offer a greater set of events and properties and are easier to configure than the legacy Cloudflare Notifications service.
 
 - **Webhooks** send an HTTP `POST` request to a URL you control, configured through the Cloudflare dashboard's **Notifications** page. Use webhooks when you need to deliver notifications to a service outside of Cloudflare. Webhooks are only available for paid Stream plans.
 
 :::note
 
-Notifications work differently for uploaded and on-demand videos. For more information, refer to [Receive events and webhooks](/stream/manage-video-library/using-webhooks/).
+Webhooks work differently for uploaded and on-demand videos. For more information, refer to [Receive events and webhooks](/stream/manage-video-library/using-webhooks/).
 
 :::
 
@@ -30,13 +30,13 @@ Stream publishes `live_input.connected`, `live_input.disconnected`, and `live_in
 
 To create an event subscription, refer to [Manage event subscriptions](/queues/event-subscriptions/manage-event-subscriptions/). When combined with the [Stream bindings](/stream/manage-video-library/bindings/) for Workers, you can act on events from a queue consumer without managing credentials or signature verification.
 
-## Webhooks
+## Live webhooks
 
-Stream Live offers webhooks to notify your service when an Input connects, disconnects, or encounters an error with Stream Live.
+Stream Live uses Cloudflare Notifications to notify your service when an Input connects, disconnects, or encounters an error with Stream Live. These notifications can be delivered as webhooks, emails, or other integrations.
 
 <AvailableNotifications product="Stream" />
 
-### Subscribe to Stream Live Webhooks
+### Subscribe to Stream Live Webhooks from Cloudflare Notifications
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
 
