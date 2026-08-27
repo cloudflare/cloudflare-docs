@@ -1,31 +1,35 @@
 /**
  * OpenAPI schema loader for the APIRequest component.
  *
- * CF source: cloudflare-docs/src/util/api.ts — 1:1 port.
- *
- * Fetches the Cloudflare API OpenAPI document from the gh-code worker at a
- * PINNED commit and dereferences all `$ref`s. Memoized at module scope so the
- * fetch + deref run
+ * Fetches the Cloudflare API OpenAPI document from middlecache and dereferences
+ * all `$ref`s. The file is cached to `.tmp/middlecache/` (gitignored) via
+ * `downloadToDotTempIfNotPresent`, so the fetch only happens once per clean
+ * checkout. Dereferenced result is memoized at module scope so the deref runs
  * once per build, not per component instance.
- *
- * Reproducibility (migration WS9): the COMMIT below MUST match upstream's pin
- * for byte-parity. Bumping it is a manual step — keep it in lockstep with
- * cloudflare-docs/src/util/api.ts.
  */
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPI } from "openapi-types";
+import { downloadToDotTempIfNotPresent } from "./custom-loaders";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 
-const COMMIT = "2ac8369e9b63dccacee1a2284e95bb819f05b307";
+const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
+const API_SCHEMAS_PATH = "v1/cloudflare-api-schemas/openapi.json";
+
 let schema: OpenAPI.Document | undefined;
 
 export const getSchema = async () => {
 	if (!schema) {
-		const response = await fetch(
-			`https://gh-code.developers.cloudflare.com/cloudflare/api-schemas/${COMMIT}/openapi.json`,
+		await downloadToDotTempIfNotPresent(
+			`${MIDDLECACHE_BASE_URL}${API_SCHEMAS_PATH}`,
+			`middlecache/${API_SCHEMAS_PATH}`,
 		);
-		const obj = await response.json();
+		const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+		const filePath = join(dotTmpPath, "middlecache", API_SCHEMAS_PATH);
+		const raw = await readFile(filePath, "utf8");
 
-		schema = await SwaggerParser.dereference(obj);
+		schema = await SwaggerParser.dereference(JSON.parse(raw));
 	}
 
 	return schema;

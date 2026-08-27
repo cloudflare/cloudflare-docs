@@ -13,7 +13,6 @@
 *.ts @cloudflare/content-engineering @kodster28
 *.astro @cloudflare/content-engineering @kodster28
 package.json @cloudflare/content-engineering
-/src/util/api.ts @cloudflare/content-engineering @kodster28
 /src/components/ui/search/ @cloudflare/content-engineering @cloudflare/ai-search
 /src/scripts/analytics/search.ts @cloudflare/content-engineering @cloudflare/ai-search
 /src/scripts/webmcp.ts @cloudflare/content-engineering @cloudflare/ai-search
