@@ -52,7 +52,9 @@ On the REST API (`api.cloudflare.com/*`), Guardrails evaluates the response and 
 
 For non-streaming (`stream: false`) requests, both prompts and responses are evaluated and enforced.
 
-Response evaluation applies to text generation models. Embedding and unknown model types bypass response evaluation regardless of streaming mode. For more information, refer to [Supported model types](/ai-gateway/features/guardrails/supported-model-types/).
+Guardrails evaluates response payload text, including URL strings in image generation model responses. It does not retrieve or evaluate referenced images. Embedding and unknown model types bypass response evaluation regardless of streaming mode.
+
+For more information, refer to [Supported model types](/ai-gateway/features/guardrails/supported-model-types/).
 
 Full Guardrails support for streaming requests is on our roadmap.
 
