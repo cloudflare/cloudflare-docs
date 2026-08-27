@@ -43,7 +43,7 @@ The date and time.
 
 Type: `string`
 
-The user action type ('copy', 'paste', 'download', etc.).
+The user action type (for example, 'copy', 'paste', 'download').
 
 ## URL
 

@@ -1,0 +1,13 @@
+id: UtGqsm
+name: OAuth documentation
+
+entry:
+  title: OAuth documentation
+  url: /fundamentals/oauth/
+  group: Core platform
+  additional_groups: [Docs collections]
+
+meta:
+  title: Cloudflare OAuth docs
+  description: Create and integrate with Cloudflare using OAuth
+  author: "@cloudflare"

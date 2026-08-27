@@ -1,0 +1,32 @@
+---
+{}
+
+---
+```kotlin
+meeting.connectedMeetings.deleteMeetings(
+    meetingIds = listOf("MEETING_ID_TO_CLOSE_1", "MEETING_ID_TO_CLOSE_2")
+) { error ->
+    if (error != null) {
+        println("Failed to close breakout rooms: $error")
+    } else {
+        println("Breakout rooms closed successfully")
+    }
+}
+```
+
+This will also trigger the `onStateUpdate` event, updating the list of breakout rooms and participants.
+
+```kotlin
+meeting.addConnectedMeetingsEventListener(object : RtkConnectedMeetingsEventListener {
+    override fun onStateUpdate(meetings: List<RtkConnectedMeeting>, parentMeeting: RtkConnectedMeeting?) {
+        println("State updated. Meetings: $meetings, Parent: $parentMeeting")
+
+        // Alternatively, access state directly from the connectedMeetings object
+        println("Meetings List: ${meeting.connectedMeetings.meetings}")
+        println("Parent Meeting: ${meeting.connectedMeetings.parentMeeting}")
+    }
+
+    override fun onChangingMeeting(meetingId: String) {}
+    override fun onMeetingChanged(error: MeetingError?) {}
+})
+```

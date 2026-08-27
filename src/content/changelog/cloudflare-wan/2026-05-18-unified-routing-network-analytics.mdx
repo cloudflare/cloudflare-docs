@@ -1,0 +1,14 @@
+---
+title: Network Analytics support for Unified Routing
+description: Network Analytics is now fully supported for accounts using Unified Routing mode on Cloudflare WAN and Magic Transit.
+date: 2026-05-18
+products:
+  - cloudflare-wan
+  - magic-transit
+---
+
+[Network Analytics](/analytics/network-analytics/) is now fully supported for accounts using [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta) mode. Traffic that traverses Unified Routing onramps and offramps is now visible in Network Analytics with the same dimensions and filters as traffic on the standard data plane.
+
+This closes a parity gap for customers who had moved tunnels onto Unified Routing and lost visibility into their dataplane traffic in the Network Analytics dashboard. No configuration change is required — analytics data is collected automatically for all accounts with Unified Routing enabled.
+
+For the remaining beta limitations, refer to [Traffic steering beta limitations](/cloudflare-wan/reference/traffic-steering/#beta-limitations).

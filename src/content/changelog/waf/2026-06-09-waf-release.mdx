@@ -1,0 +1,117 @@
+---
+title: "WAF Release - 2026-06-09"
+description: Cloudflare WAF managed rulesets 2026-06-09
+date: 2026-06-09
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new detections for a critical SQL injection vulnerability in Drupal installations utilizing PostgreSQL (CVE-2026-9082), alongside targeted protection for an unsafe deserialization flaw in the Mirasvit Cache Warmer extension (CVE-2026-45247). Additionally, this release includes coverage for a prototype pollution vector in Axios (CVE-2026-40175) and a new generic rule designed to identify and block sophisticated SQL Injection (SQLi) bypass attempts leveraging obfuscated boolean logic.
+
+**Key Findings**
+
+- CVE-2026-9082: A database abstraction vulnerability affects Drupal sites configured with a PostgreSQL backend. Remote, unauthenticated attackers can exploit this flaw via crafted inputs to inject malicious SQL commands and access or manipulate backend data.
+
+- CVE-2026-45247: A PHP Object Injection vulnerability exists in the Mirasvit Cache Warmer extension for Magento and Adobe Commerce. This flaw stems from unsafe deserialization of untrusted user input, enabling unauthenticated attackers to execute arbitrary code on the hosting server.
+
+- CVE-2026-40175: A prototype pollution vulnerability affects the Axios HTTP client library. Attackers can exploit this to inject malicious properties into the global JavaScript object prototype, potentially causing application crashes (Denial of Service) or executing unauthorized code depending on the application structure.
+
+**Impact**
+
+Successful exploitation of these vulnerabilities could allow unauthenticated attackers to execute arbitrary code, manipulate database contents, or induce application crashes, leading to severe operational disruption or complete server compromise. These newly deployed signatures intercept these advanced malicious payloads at the edge before they can interact with vulnerable software configurations.
+
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="b4f88cb767874def810edd0b387cf935" />
+			</td>
+			<td>N/A</td>
+			<td>Axios - Prototype Pollution - CVE:CVE-2026-40175</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="098997bb8b5f48abb4039bd6417eb9e0" />
+			</td>
+			<td>N/A</td>
+			<td>Drupal - PostgreSQL SQLi - CVE:CVE-2026-9082 - Body</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="8a7650b99ec04a91a19b8295fd3857fd" />
+			</td>
+			<td>N/A</td>
+			<td>Drupal - PostgreSQL SQLi - CVE:CVE-2026-9082 - URI</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="525c0871787840e6a6193f6caee241d2" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Obfuscated Boolean - Body</td>
+			<td>N/A</td>
+			<td>Disabled</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="1ec4aeaf7900463397b82b35d8620070" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Obfuscated Boolean - Headers</td>
+			<td>N/A</td>
+			<td>Disabled</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="fb74766654c44ff2a5204dc4e0be4d47" />
+			</td>
+			<td>N/A</td>
+			<td>Mirasvit Cache Warmer - PHP Object Injection - CVE:CVE-2026-45247</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+	</tbody>
+</table>

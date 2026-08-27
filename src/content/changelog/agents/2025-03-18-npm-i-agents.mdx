@@ -68,7 +68,7 @@ export default {
 
 #### Call Agent methods from your client code <Badge text="New" variant="tip" size="small" />
 
-We've added a new [`@unstable_callable()`](/agents/api-reference/agents-api/) decorator for defining methods that can be called directly from clients. This allows you call methods from within your client code: you can call methods (with arguments) and get native JavaScript objects back.
+We've added a new [`@unstable_callable()`](/agents/runtime/agents-api/) decorator for defining methods that can be called directly from clients. This allows you call methods from within your client code: you can call methods (with arguments) and get native JavaScript objects back.
 
 <TypeScriptExample>
 
@@ -127,9 +127,9 @@ You can use the starter as a template for your own Agents projects: open up `src
 
 We've heard your feedback on the Agents SDK documentation, and we're shipping more API reference material and usage examples, including:
 
-- Expanded [API reference documentation](/agents/api-reference/), covering the methods and properties exposed by the Agents SDK, as well as more usage examples.
-- More [Client API](/agents/api-reference/agents-api/#client-api) documentation that documents `useAgent`, `useAgentChat` and the new `@unstable_callable` RPC decorator exposed by the SDK.
-- New documentation on how to [route requests to agents](/agents/api-reference/routing/) and (optionally) authenticate clients before they connect to your Agents.
+- Expanded [API reference documentation](/agents/runtime/), covering the methods and properties exposed by the Agents SDK, as well as more usage examples.
+- More [Client API](/agents/runtime/agents-api/#client-api) documentation that documents `useAgent`, `useAgentChat` and the new `@unstable_callable` RPC decorator exposed by the SDK.
+- New documentation on how to [route requests to agents](/agents/runtime/communication/routing/) and (optionally) authenticate clients before they connect to your Agents.
 
 Note that the Agents SDK is continually growing: the type definitions included in the SDK will always include the latest APIs exposed by the `agents` package.
 

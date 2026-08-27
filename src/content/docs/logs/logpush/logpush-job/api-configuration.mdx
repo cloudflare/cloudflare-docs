@@ -290,6 +290,10 @@ These parameters control the size of each upload batch — not how quickly data 
 These settings influence upload size, not delivery latency. Logpush processes data approximately once per minute, regardless of these parameter values. Adjusting these settings results in smaller or larger uploads per batch, which can help you avoid overloading destinations that have memory or request-size constraints.
 :::
 
+:::note
+When a Logpush job is catching up after a period of buffering (for example, after a destination outage), Cloudflare limits each upload to at most 2 minutes of log data. Very large `max_upload_bytes` or `max_upload_records` values will not produce a single oversized batch during catch-up.
+:::
+
 ### When to adjust these parameters
 
 - Reduce `max_upload_records` if your destination struggles with large payloads or runs out of memory processing big batches.

@@ -16,6 +16,8 @@ FROM from_item
 [WHERE condition]
 ```
 
+A pipeline runs one or more `INSERT INTO sink SELECT ... FROM stream` statements. To write to multiple sinks from the same pipeline, separate the statements with semicolons. See [Multiple statements](#multiple-statements).
+
 ## WITH clause
 
 The WITH clause allows you to define named subqueries that can be referenced in the main query. This can improve query readability by breaking down complex transformations.
@@ -133,3 +135,25 @@ This will produce:
 |       3 |
 +---------+
 ```
+
+## Multiple statements
+
+A pipeline can contain multiple `INSERT` statements, separated by semicolons. Each statement reads from a stream and writes to a sink. Use multiple statements to route events from a single stream into several sinks based on their content.
+
+```sql
+INSERT INTO purchases_sink
+SELECT user_id, product_id, amount FROM events
+WHERE event_type = 'purchase';
+
+INSERT INTO signups_sink
+SELECT user_id, created_at FROM events
+WHERE event_type = 'signup';
+```
+
+To provide multiple statements with the Wrangler CLI, pass a file with the `--sql-file` flag:
+
+```bash
+npx wrangler pipelines create my-pipeline --sql-file pipeline.sql
+```
+
+For a worked example, refer to [Fan out a stream to multiple Iceberg tables](/pipelines/examples/bluesky-firehose-fanout/).

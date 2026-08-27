@@ -111,6 +111,12 @@ Type: `string`
 
 The unique ID for the device registration.
 
+## DeviceRegistrationProfileID
+
+Type: `string`
+
+The ID for the Device Profile used for the device registration.
+
 ## DiskReadBPS
 
 Type: `int`

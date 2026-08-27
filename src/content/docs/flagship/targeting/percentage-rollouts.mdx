@@ -10,9 +10,29 @@ products:
 
 Percentage rollouts let you gradually release a feature to a fraction of your users. Any [targeting rule](/flagship/targeting/) can include a rollout percentage between 0 and 100.
 
+Use percentage rollouts when you want to limit blast radius, run an experiment, or sample requests without deploying new code.
+
 ## How percentage rollouts work
 
-When a rule has a percentage rollout, Flagship evaluates the rule's conditions first. If the conditions match, only the specified percentage of users receive the rule's variation. Users who do not fall into the rollout percentage continue to the next rule or receive the default variation if no further rules match.
+When a rule has a percentage rollout, the rule only serves its variant when both the rule conditions and the rollout bucket match. Contexts that do not match the rule continue to the next rule or receive the default variant if no later rule matches.
+
+For example, a rule can target users on the `enterprise` plan, then serve the new experience to only 10% of those users. Users outside the 10% continue through the rest of the rule list.
+
+```json
+{
+	"priority": 1,
+	"conditions": [
+		{ "attribute": "plan", "operator": "equals", "value": "enterprise" }
+	],
+	"serve_variation": "on",
+	"rollout": {
+		"percentage": 10,
+		"attribute": "userId"
+	}
+}
+```
+
+The `reason` in evaluation details is `SPLIT` when a percentage rollout serves the variant.
 
 ## Sticky bucketing
 
@@ -20,19 +40,44 @@ Flagship uses consistent hashing on a configurable attribute to assign users to 
 
 By default, the bucketing attribute is `targetingKey`. You can configure which attribute to use for bucketing when you set up the rollout in the dashboard.
 
+Rollout buckets are independent across accounts and flags. The same identifier may fall into different buckets for different flags, which helps avoid correlated rollouts across unrelated features.
+
+Choose a bucketing attribute based on what should remain stable:
+
+| Use case               | Suggested attribute                     |
+| ---------------------- | --------------------------------------- |
+| User-facing release    | Stable user ID or `targetingKey`        |
+| Account-level rollout  | Account ID                              |
+| Organization rollout   | Organization or workspace ID            |
+| Request-level sampling | Request ID or another per-request value |
+
+For most feature releases and experiments, use a stable user or account identifier. Use request-level values only when changing between requests is acceptable, such as for traffic sampling.
+
 :::caution[Random assignment without targetingKey]
 If `targetingKey` is not present in the evaluation context and no alternative bucketing attribute is configured, Flagship cannot produce a stable hash. In this case the rollout bucket is assigned randomly on each evaluation, meaning the same user may receive different flag values across requests.
 
 Always provide a stable `targetingKey` (or configure a consistent bucketing attribute) to guarantee sticky bucketing.
 :::
 
-## Example
+## Common rollout patterns
+
+### Progressive rollout
+
+Start with a small rollout, monitor your application, then increase the percentage as confidence grows.
+
+1. Create a flag with a 5% rollout.
+2. Monitor errors, latency, product metrics, and user feedback.
+3. Increase to 25%, then 50%, then 100%.
+4. After the rollout reaches 100%, remove temporary targeting rules and make the winning variant the default.
+5. After the feature is fully shipped, remove the old code path and delete the flag.
+
+### Targeted rollout plus percentage rollout
 
 Consider a flag `new-checkout` with the following rules:
 
-1. **Rule 1**: `plan equals "enterprise"` — serve variation `on`.
-2. **Rule 2**: 25% rollout on `userId` — serve variation `on`.
-3. **Default variation**: `off`.
+1. **Rule 1**: `plan equals "enterprise"` — serve variant `on`.
+2. **Rule 2**: 25% rollout on `userId` — serve variant `on`.
+3. **Default variant**: `off`.
 
 In this configuration:
 
@@ -41,3 +86,119 @@ In this configuration:
 - The remaining 75% of non-enterprise users see the standard checkout.
 
 As you gain confidence, increase the rollout percentage until you reach 100%.
+
+### A/B/n testing
+
+For a plain A/B/n test with no audience conditions, configure each variant's traffic share in the Cloudflare dashboard. The dashboard calculates the cumulative thresholds for you.
+
+If you manage a plain A/B/n test directly through the API, create one rule per variant with cumulative rollout percentages. Flagship evaluates rules in priority order. If a context matches a rule but does not fall into that rule's rollout percentage, evaluation continues to the next rule.
+
+For a 30% / 40% / 30% split across variants A, B, and C:
+
+| Variant | Share | Cumulative threshold |
+| ------- | ----- | -------------------- |
+| A       | 30%   | 30                   |
+| B       | 40%   | 70                   |
+| C       | 30%   | 100                  |
+
+```json
+[
+	{
+		"priority": 1,
+		"conditions": [],
+		"serve_variation": "variant-a",
+		"rollout": { "percentage": 30, "attribute": "targetingKey" }
+	},
+	{
+		"priority": 2,
+		"conditions": [],
+		"serve_variation": "variant-b",
+		"rollout": { "percentage": 70, "attribute": "targetingKey" }
+	},
+	{
+		"priority": 3,
+		"conditions": [],
+		"serve_variation": "variant-c",
+		"rollout": { "percentage": 100, "attribute": "targetingKey" }
+	}
+]
+```
+
+In API-managed configurations, the first rule covers buckets 0-30. The second rule covers buckets 31-70. The final rule catches the remaining buckets through 100. Always set the final rule to 100 when every eligible context should receive a variant.
+
+Use the same bucketing attribute on every rule in the experiment. If each rule uses a different attribute, users may not stay in the intended split.
+
+### Targeted A/B/n testing
+
+You can combine audience targeting with a multi-variant rollout. For example, you might want only premium users to enter an experiment, then split those premium users across three variants.
+
+For targeted A/B/n tests, repeat the same audience condition on each variant rule and use cumulative rollout thresholds. When you use this targeted multi-rule pattern, configure the cumulative threshold for each rule explicitly, whether you are using the dashboard or the API.
+
+For a premium-only split where 20% receive variant A, 40% receive variant B, and the remaining 40% receive variant C, use thresholds of 20, 60, and 100:
+
+```json
+[
+	{
+		"priority": 1,
+		"conditions": [
+			{ "attribute": "plan", "operator": "equals", "value": "premium" }
+		],
+		"serve_variation": "variant-a",
+		"rollout": { "percentage": 20, "attribute": "targetingKey" }
+	},
+	{
+		"priority": 2,
+		"conditions": [
+			{ "attribute": "plan", "operator": "equals", "value": "premium" }
+		],
+		"serve_variation": "variant-b",
+		"rollout": { "percentage": 60, "attribute": "targetingKey" }
+	},
+	{
+		"priority": 3,
+		"conditions": [
+			{ "attribute": "plan", "operator": "equals", "value": "premium" }
+		],
+		"serve_variation": "variant-c",
+		"rollout": { "percentage": 100, "attribute": "targetingKey" }
+	}
+]
+```
+
+Users who do not match `plan equals "premium"` skip all three rules and receive the flag's default variant, unless a later rule matches them.
+
+### Request sampling
+
+You can use percentage rollouts for request-level sampling by choosing a per-request bucketing attribute. For example, a 1% rollout can enable extra logging or diagnostics for a small fraction of requests.
+
+Only use this pattern when it is acceptable for the same user to receive different results on different requests.
+
+## Troubleshooting
+
+### Rollout results change between requests
+
+If the same user receives different values across requests, the evaluation context is probably missing `targetingKey` or the configured bucketing attribute.
+
+Pass the same stable identifier on every evaluation:
+
+```ts
+const enabled = await env.FLAGS.getBooleanValue("gradual-rollout", false, {
+	userId: session.user.id,
+});
+```
+
+Then configure the rollout to bucket by `userId`.
+
+### Rollout never reaches some users
+
+Check rule order. A catch-all rule with a lower priority number can return a variant before later rollout rules run. Place broad catch-all rules after more specific rules.
+
+### A/B/n split does not match expected percentages
+
+For plain dashboard-managed A/B/n tests, enter each variant's traffic share and let the dashboard calculate thresholds.
+
+For API-managed A/B/n tests, or for targeted A/B/n tests configured as multiple rules, use cumulative thresholds. A 30% / 40% / 30% split should use thresholds of 30, 70, and 100, not 30, 40, and 30.
+
+### Default variant appears during a rollout
+
+This can happen when a context matches the rule conditions but falls outside the rollout percentage, and no later rule matches. Add a later rule or use a 100% final rule if every matching context should receive a non-default variant.

@@ -1,0 +1,83 @@
+---
+title: Enterprise AI Vibe Coding Platform
+pcx_content_type: reference-architecture-diagram
+products: [ai-gateway, workers-for-platforms]
+sidebar:
+  order: 1
+  label: Enterprise AI Vibe Coding Platform
+updated: 2026-06-03
+description: Reference architecture for building a governed enterprise AI vibe coding platform on Cloudflare.
+---
+
+## Introduction
+
+[Vibe coding](https://www.cloudflare.com/learning/ai/ai-vibe-coding/) is a software development practice that uses large language models (LLMs) to generate applications from natural language descriptions. An enterprise AI vibe coding platform is an internal tool where employees describe what they want to build in natural language, and the platform generates working code, shows a live preview, and publishes it, all within an environment the organization controls.
+
+This allows all employees to build internal tools, dashboards, and business applications regardless of previous software development experiences. Without governance, each AI-built application risks uncontrolled data exposure, unapproved LLM provider usage, and code with an unknown security posture.
+
+This reference architecture extends the [AI Vibe Coding Platform](/reference-architecture/diagrams/ai/ai-vibe-coding-platform/) with enterprise controls for identity, data protection, cost attribution, discoverability, and audit logging. The base architecture builds on Cloudflare's Developer Platform: [AI Gateway](/ai-gateway/) for LLM governance and guardrails, a [Sandbox](/sandbox/) for code execution, and [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) for deployment and hosting. This document focuses on the enterprise layer built on top of those primitives.
+
+## Security model
+
+Enterprise vibe coding platforms must assume that AI-generated code is untrusted. The security model enforces protection at the platform level, not the code level.
+
+- **Untrusted code execution:** AI-generated code may contain bugs, vulnerabilities, or unintended behavior. Sandboxes and containers isolate it from production systems.
+- **Data exfiltration via prompts:** Employees may inadvertently include sensitive data in prompts. AI Gateway and DLP inspect and block before prompts reach LLM providers.
+- **Prompt injection:** Malicious prompts may attempt to manipulate the AI into generating harmful code. All interactions are logged and auditable.
+- **Credential exposure:** AI-generated code never handles real secrets. Outbound handlers or outbound workers inject credentials at the platform layer.
+- **Privilege escalation:** Misconfigured connection strings or network access could provision unauthorized access to higher-level resources. The binding model enforces allowlist-based connectivity.
+- **Unauthorized access:** Without identity controls, deployed applications could be accessed by anyone in the organization. Cloudflare Access enforces role-based policies on both the platform and deployed applications.
+
+## Core architecture
+
+An enterprise vibe coding platform consists of three systems where existing enterprise controls can be layered or extended as required:
+
+- **Development plane:** Where employees create and iterate on applications through AI, with controlled access to LLMs and enterprise data.
+- **Deployment pipeline:** The approval and validation workflow that promotes an application from development to production, including security checks, dependency scans, and human-in-the-loop review where required.
+- **Production plane:** Where approved applications run in isolated, multi-tenant environments with full observability, egress controls, and access policies.
+
+Observability, discoverability, and cost controls should be embedded across all three components. [Resource tagging](/resource-tagging/) applied across the lifecycle provides visibility, allowing platform administrators to track and manage all applications, users, and resources in one place.
+
+![Enterprise AI Vibe Coding Platform core architecture](~/assets/images/reference-architecture/enterprise-ai-vibe-coding/core-architecture.png)
+
+## Development plane
+
+![Development plane architecture](~/assets/images/reference-architecture/enterprise-ai-vibe-coding/dev-plane.png)
+
+[Cloudflare Access](/cloudflare-one/access-controls/) protects the entrypoint to the platform, whether that is a web-based user interface or authenticated access to a coding harness through the CLI. Access integrates with existing identity providers (Okta, Azure AD, Google Workspace) via SAML and OIDC, allowing organizations to use their existing SSO.
+
+The platform stores metadata such as user profiles, sessions, cost tags, department and team permissions in a data store such as [D1](/d1/) for structured queries, [KV](/kv/) for fast key-value lookups, or [R2](/r2/) for object storage. The frontend or agent flow queries this metadata to determine permissions and track usage.
+
+The development flow supports two paths. In a browser-based environment, employees interact through a web UI that orchestrates agents server-side. AI-generated code executes in one of two isolation models depending on the workload. [Sandboxed containers](/sandbox/) provide a complete development environment with preview URLs, suited for applications that need a full runtime with dependencies. [Dynamic Workers](/dynamic-workers/) provide lightweight, instant code evaluation without container overhead, suited for rapid iteration on smaller scripts and functions. The development service can use either option independently or combine them, using Dynamic Workers for fast code validation and containers for full application previews.
+
+With a local agent harness, developers use CLI-based tools like Cursor, Windsurf, or OpenCode integrated into their existing IDE and terminal workflow. Code iterates locally on the developer's machine. When ready, the developer pushes to Cloudflare where it executes in a sandboxed container or Dynamic Worker for preview and staging. [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) and [AI Gateway](/ai-gateway/) can be integrated into local development flows to provide visibility into tool usage, prompt logging, and cost tracking even before code reaches the platform.
+
+All LLM interactions are tracked and managed through [AI Gateway](/ai-gateway/), which provides provider routing, cost controls, prompt logging, and [DLP inspection](/cloudflare-one/data-loss-prevention/). [Cost tracking](/ai-gateway/observability/costs/) attributes usage to projects, teams, departments, and individual users.
+
+All egress from the development environment is controlled at the platform level. For containers, an [outbound handler](/containers/platform-details/outbound-traffic/) intercepts HTTP traffic. For Dynamic Workers, [egress control](/dynamic-workers/usage/egress-control/) provides equivalent capabilities. Secrets required for downstream connectivity are stored in [Secrets Store](/secrets-store/) and injected by the outbound handler at the platform level. The sandboxed environment never has direct access to credentials. With this outbound handler, platform administrators can allow or deny specific origin destinations, reroute traffic, apply custom policies on outbound traffic, or connect to other Cloudflare resources through [bindings](/workers/runtime-apis/bindings/). For access to on-premises or internal systems, [Workers VPC](/workers-vpc/) establishes private connectivity without exposing those systems to the Internet.
+
+Additional security controls can be layered into the development container through package version locking and organizational controls baked into the container image. If the harness uses MCP servers, [MCP portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) provide audit logging of tool invocations, permission management for tool access, and visibility into which tools agents use and what data they access.
+
+## Deployment pipeline
+
+![Deployment pipeline architecture](~/assets/images/reference-architecture/enterprise-ai-vibe-coding/deploy-pipeline.png)
+
+Assets generated in the development plane can be stored in existing enterprise code repositories or in [Artifacts](/artifacts/), Cloudflare's git-compatible storage built for agents. Teams can embed vibe-coded output into existing code review flows to ensure best practices and development controls are applied before the application is deployed to a production environment.
+
+The platform integrates with existing enterprise software development workflows. Git repositories, secret stores, and CI/CD pipelines can all be used alongside Cloudflare-native services.
+
+## Production plane
+
+![Production plane architecture](~/assets/images/reference-architecture/enterprise-ai-vibe-coding/prod-plane.png)
+
+Deployed applications are hosted on [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). [Cloudflare Access](/cloudflare-one/access-controls/) verifies and secures employee or third-party access for the entire custom domain, controlling access to deployed applications through the [dispatch worker](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/). Granular access controls can be applied at the dispatch worker level to ensure user access matches role-based access control and assigned permissions.
+
+Workers for Platforms host the vibe-coded application, with the [outbound worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) controlling all egress. Secrets are stored in [Secrets Store](/secrets-store/) and injected by the outbound worker, ensuring user workers never handle credentials directly. The outbound worker also controls downstream access: [bindings](/workers/runtime-apis/bindings/), external APIs, [Hyperdrive](/hyperdrive/) for existing databases, or [Workers VPC](/workers-vpc/) with [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to establish connectivity to on-premises or existing internal systems.
+
+Each user worker has access to a set of [bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) to provide storage and services to each vibe-coded application. For complete per-tenant isolation, the platform creates and attaches a unique D1 database, KV namespace, or R2 bucket per application. Each User Worker can only access the bindings that are explicitly attached to it.
+
+The dispatch worker can set [custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) per invocation, capping the maximum processing time and the number of subrequests to prevent abuse or unintentional loops from consuming excessive resources. The platform can assign different limits by user tier, team, or application classification. If a limit is exceeded, the user worker throws an exception that the dispatch worker can handle and log.
+
+Observability operates at two levels. At the platform level, [Workers Trace Events Logpush](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/) enabled on the dispatch worker covers all user workers in the namespace. The [GraphQL Analytics API](/analytics/graphql-api/) queries by `dispatchNamespaceName` for aggregate metrics across the platform. At the app level, [Tail Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/) can be attached to individual user workers for granular logging. [Workers Analytics Engine](/analytics/analytics-engine/) lets the platform write and query events by script tag, surfacing per-app usage metrics to individual users.
+
+As the number of vibe-coded applications grows, the platform metadata store serves as an application registry, surfacing the owner, team, description, connected data sources, and usage metrics for each deployment. As with the development plane, this metadata can be stored in any preferred data store such as [D1](/d1/), [KV](/kv/), or [R2](/r2/). This allows employees to find existing tools before duplicating efforts. [Resource tagging](/resource-tagging/) applied to the underlying Cloudflare resources links each user worker back to its owner and cost attribution.

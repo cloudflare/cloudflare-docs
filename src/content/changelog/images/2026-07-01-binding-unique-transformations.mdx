@@ -1,0 +1,16 @@
+---
+title: Images binding is now billed per unique transformation
+description: >
+  The Images binding now follows the same unique-transformation billing model as URL-based transformations, and calls to `.info()` are free.
+products:
+  - images
+date: 2026-07-01
+---
+
+The [Images binding](/images/optimization/binding/) is now billed per unique transformation, matching the model already used for URL-based transformations. Repeat requests for the same combination of source image and parameters within the same calendar month are counted only once.
+
+Previously, every call to the binding counted as a separate transformation regardless of whether the image or parameters were unique. With this change, you can call the binding on hot paths without paying for each individual request.
+
+Calls to [`.info()`](/images/optimization/binding/#infostream) are no longer billed.
+
+For more information, refer to [Images pricing](/images/pricing/#images-transformed) and the [Images binding documentation](/images/optimization/binding/).

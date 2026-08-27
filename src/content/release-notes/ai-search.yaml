@@ -3,10 +3,51 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-08-25"
+    title: Larger custom metadata values
+    description: |-
+      AI Search supports larger custom metadata values within a shared 10 KiB metadata envelope for each vector. The envelope includes system metadata and JSON overhead, and the first 64 UTF-8 bytes of each indexed string remain filterable. Refer to [Metadata attributes](/ai-search/configuration/indexing/metadata/) for details.
+  - publish_date: "2026-08-06"
+    title: Custom domains, Cloudflare Access, and namespace public endpoints
+    description: |-
+      An AI Search [public endpoint](/ai-search/configuration/retrieval/public-endpoint/) can now be served from a hostname that you own, such as `https://search.example.com/search`. Because a [custom domain](/ai-search/configuration/retrieval/public-endpoint/custom-domains/) routes through your own zone, you can protect the endpoint with [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/) so users authenticate with your identity provider before any request reaches AI Search. A namespace can also expose its own [public endpoint](/ai-search/configuration/retrieval/public-endpoint/namespace/), so one URL searches across the instances you choose and merges the results.
+  - publish_date: "2026-08-06"
+    title: Discover parse type for website crawling
+    description: |-
+      Website data sources support a new `discover` [parse type](/ai-search/configuration/data-source/website/parse-types/) that starts at the source URL and collects pages from both your sitemaps and the links it finds while crawling, so a site without a complete sitemap can still be indexed.
+  - publish_date: "2026-07-30"
+    title: Use AI Search with the Agents SDK, Vercel AI SDK, and LangChain
+    description: |-
+      New guides show how to use an AI Search instance from popular frameworks: the [Cloudflare Agents SDK](/ai-search/agent-sdks/agents-sdk/), the [Vercel AI SDK](/ai-search/agent-sdks/ai-sdk/), and [LangChain](/ai-search/agent-sdks/langchain/). The AI SDK integration is a new `ai-search-provider` package, and the LangChain integration is a new retriever in the existing `langchain-cloudflare` package. Refer to the [Agents](/ai-search/agent-sdks/) section.
+  - publish_date: "2026-07-08"
+    title: GIF and BMP image support
+    description: |-
+      AI Search now indexes `.gif` and `.bmp` image files. They are converted to searchable text with Workers AI [Markdown conversion](/workers-ai/features/markdown-conversion/) during sync, with no configuration changes. Refer to [supported file types](/ai-search/configuration/data-source/#supported-file-types) for the full list.
+  - publish_date: "2026-07-08"
+    title: Filter list items by exact object key
+    description: |-
+      The [list items endpoint](/ai-search/api/items/rest-api/) now accepts a `key` query parameter to return the item matching an exact object key. Keys are unique per data source, so combine `key` with `source` to disambiguate when the same key exists across multiple sources.
+  - publish_date: "2026-06-24"
+    title: Configurable similarity cache duration and on-demand purge
+    description: |-
+      You can now control how long AI Search retains cached responses with the `cache_ttl` setting, from 10 minutes up to 6 days. The default is now 48 hours, from the previous fixed duration of 30 days. You can also purge all cached responses for an instance on demand. Refer to [similarity cache](/ai-search/configuration/retrieval/cache/).
+  - publish_date: "2026-06-24"
+    title: Additional file type support
+    description: |-
+      Built-in storage, R2, and website data sources now support `.mdoc`, `.sql`, and `.log.gz` files. Refer to [supported file types](/ai-search/configuration/data-source/#supported-file-types) for the full list.
+  - publish_date: "2026-06-18"
+    title: Migration to managed infrastructure complete
+    description: |-
+      All AI Search instances have finished migrating to managed infrastructure. Every instance now includes built-in storage, a built-in vector index, and built-in web crawling, so the [current limits](/ai-search/platform/limits-pricing/#limits) apply across all instances. Storage, vector indexing, and Browser Run usage for crawling are now included; [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) are still billed separately.
+      If your instance previously crawled a website, the dedicated R2 bucket AI Search created in your account is no longer used and can be deleted.
+  - publish_date: "2026-06-10"
+    title: Manage AI Search namespaces with Wrangler CLI
+    description: |-
+      AI Search now supports namespace-level Wrangler commands to create, list, update, and delete [namespaces](/ai-search/concepts/namespaces/) from the command line. Instance-level commands also accept a `--namespace` flag to target instances within a specific namespace, and `--json` output is available for automation and agent workflows. Refer to [Wrangler commands](/ai-search/wrangler-commands/) for full usage details.
   - publish_date: "2026-05-12"
     title: Automatic migration to managed infrastructure on June 3, 2026
     description: |-
-      Instances created before April 16, 2026 will be automatically migrated to managed infrastructure on **June 3, 2026**. The migration may take up to three days with no service downtime expected. No action is required. After migration, instances will include built-in storage, a built-in vector index, and built-in web crawling, and [new limits](/ai-search/platform/limits-pricing/#new-instances) will apply. For full migration details, refer to [Limits & pricing](/ai-search/platform/limits-pricing/#previous-instances).
+      Instances created before April 16, 2026 will be automatically migrated to managed infrastructure on **June 3, 2026**. The migration may take up to three days with no service downtime expected. No action is required. After migration, instances will include built-in storage, a built-in vector index, and built-in web crawling, and [new limits](/ai-search/platform/limits-pricing/#limits) will apply. For full migration details, refer to [Limits & pricing](/ai-search/platform/limits-pricing/#historical-billing).
   - publish_date: "2026-04-16"
     title: Hybrid search
     description: |-
@@ -38,7 +79,7 @@ entries:
   - publish_date: "2026-03-23"
     title: Public endpoint, UI snippets, and MCP support
     description: |-
-      AI Search now supports [public endpoints](/ai-search/configuration/retrieval/public-endpoint/), [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/), and [MCP](/ai-search/api/search/mcp/), making it easy to add search to your website or connect AI agents.
+      AI Search now supports [public endpoints](/ai-search/configuration/retrieval/public-endpoint/), [UI snippets](/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/), and [MCP](/ai-search/api/search/mcp/), making it easy to add search to your website or connect AI agents.
   - publish_date: "2026-03-23"
     title: New REST API endpoints
     description: |-

@@ -18,44 +18,49 @@
 			"name": "Simple Question",
 			"description": "Basic message request",
 			"input": {
+				"max_tokens": 1024,
 				"messages": [
 					{
-						"role": "user",
-						"content": "What are the three laws of thermodynamics?"
+						"content": "What are the three laws of thermodynamics?",
+						"role": "user"
 					}
-				],
-				"max_tokens": 1024
+				]
 			},
 			"output": {
 				"text": "# The Three Laws of Thermodynamics\n\n## **First Law: Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n- Also stated as: \u0394U = Q - W (change in internal energy equals heat added minus work done)\n\n## **Second Law: Entropy**\nThe entropy of an isolated system always increases over time. Heat naturally flows from hot to cold, and processes tend toward disorder.\n- This law explains why certain processes are irreversible and why we can't have 100% efficient heat engines\n\n## **Third Law: Absolute Zero**\nAs temperature approaches absolute zero (0 Kelvin or -273.15\u00b0C), the entropy of a perfect crystal approaches zero.\n- Practically, this means absolute zero cannot be reached through any finite number of processes\n\n**Note:** There's also a \"Zeroth Law\" (named later): If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of temperature."
 			},
 			"raw_response": {
-				"id": "msg_01GZMN4RKsBb5RHXUJYBgBdG",
-				"type": "message",
-				"role": "assistant",
 				"content": [
 					{
-						"type": "text",
-						"text": "# The Three Laws of Thermodynamics\n\n## **First Law: Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n- Also stated as: \u0394U = Q - W (change in internal energy equals heat added minus work done)\n\n## **Second Law: Entropy**\nThe entropy of an isolated system always increases over time. Heat naturally flows from hot to cold, and processes tend toward disorder.\n- This law explains why certain processes are irreversible and why we can't have 100% efficient heat engines\n\n## **Third Law: Absolute Zero**\nAs temperature approaches absolute zero (0 Kelvin or -273.15\u00b0C), the entropy of a perfect crystal approaches zero.\n- Practically, this means absolute zero cannot be reached through any finite number of processes\n\n**Note:** There's also a \"Zeroth Law\" (named later): If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of temperature."
+						"text": "# The Three Laws of Thermodynamics\n\n## **First Law: Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n- Also stated as: \u0394U = Q - W (change in internal energy equals heat added minus work done)\n\n## **Second Law: Entropy**\nThe entropy of an isolated system always increases over time. Heat naturally flows from hot to cold, and processes tend toward disorder.\n- This law explains why certain processes are irreversible and why we can't have 100% efficient heat engines\n\n## **Third Law: Absolute Zero**\nAs temperature approaches absolute zero (0 Kelvin or -273.15\u00b0C), the entropy of a perfect crystal approaches zero.\n- Practically, this means absolute zero cannot be reached through any finite number of processes\n\n**Note:** There's also a \"Zeroth Law\" (named later): If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of temperature.",
+						"type": "text"
 					}
 				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_01GZMN4RKsBb5RHXUJYBgBdG",
 				"model": "claude-sonnet-4-5-20250929",
+				"role": "assistant",
+				"stop_details": null,
 				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
 				"usage": {
 					"input_tokens": 17,
 					"output_tokens": 240
-				},
-				"stop_sequence": null,
-				"stop_details": null,
-				"gatewayMetadata": {
-					"keySource": "BYOK"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'What are the three laws of thermodynamics?', role: 'user' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"What are the three laws of thermodynamics?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -63,13 +68,13 @@
 			"name": "With System Message",
 			"description": "Using a system message to set context",
 			"input": {
+				"max_tokens": 1024,
 				"messages": [
 					{
-						"role": "user",
-						"content": "How do I read a JSON file in Python?"
+						"content": "How do I read a JSON file in Python?",
+						"role": "user"
 					}
 				],
-				"max_tokens": 1024,
 				"system": "You are a helpful coding assistant specializing in Python.",
 				"temperature": 0.3
 			},
@@ -77,32 +82,37 @@
 				"text": "# Reading a JSON File in Python\n\nYou can read a JSON file using Python's built-in `json` module. Here are the common methods:\n\n## Basic Method\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n## Complete Example\n\n```python\nimport json\n\n# Reading JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n    \n# Access the data\nprint(data)\nprint(type(data))  # Usually dict or list\n```\n\n## With Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON String (not file)\n\nIf you have a JSON string instead of a file:\n\n```python\nimport json\n\njson_string = '{\"name\": \"John\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\nprint(data)\n```\n\n## Key Points\n\n- **`json.load()`** - reads from a **file object**\n- **`json.loads()`** - reads from a **string**\n- Always use `with open()` to ensure the file is properly closed\n- JSON objects become Python dictionaries\n- JSON arrays become Python lists"
 			},
 			"raw_response": {
-				"id": "msg_01KF2gMfuUeqNjxZytqgkfGd",
-				"type": "message",
-				"role": "assistant",
 				"content": [
 					{
-						"type": "text",
-						"text": "# Reading a JSON File in Python\n\nYou can read a JSON file using Python's built-in `json` module. Here are the common methods:\n\n## Basic Method\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n## Complete Example\n\n```python\nimport json\n\n# Reading JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n    \n# Access the data\nprint(data)\nprint(type(data))  # Usually dict or list\n```\n\n## With Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON String (not file)\n\nIf you have a JSON string instead of a file:\n\n```python\nimport json\n\njson_string = '{\"name\": \"John\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\nprint(data)\n```\n\n## Key Points\n\n- **`json.load()`** - reads from a **file object**\n- **`json.loads()`** - reads from a **string**\n- Always use `with open()` to ensure the file is properly closed\n- JSON objects become Python dictionaries\n- JSON arrays become Python lists"
+						"text": "# Reading a JSON File in Python\n\nYou can read a JSON file using Python's built-in `json` module. Here are the common methods:\n\n## Basic Method\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n## Complete Example\n\n```python\nimport json\n\n# Reading JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n    \n# Access the data\nprint(data)\nprint(type(data))  # Usually dict or list\n```\n\n## With Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## Reading JSON String (not file)\n\nIf you have a JSON string instead of a file:\n\n```python\nimport json\n\njson_string = '{\"name\": \"John\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\nprint(data)\n```\n\n## Key Points\n\n- **`json.load()`** - reads from a **file object**\n- **`json.loads()`** - reads from a **string**\n- Always use `with open()` to ensure the file is properly closed\n- JSON objects become Python dictionaries\n- JSON arrays become Python lists",
+						"type": "text"
 					}
 				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_01KF2gMfuUeqNjxZytqgkfGd",
 				"model": "claude-sonnet-4-5-20250929",
+				"role": "assistant",
+				"stop_details": null,
 				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
 				"usage": {
 					"input_tokens": 28,
 					"output_tokens": 371
-				},
-				"stop_sequence": null,
-				"stop_details": null,
-				"gatewayMetadata": {
-					"keySource": "BYOK"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    max_tokens: 1024,\n    system: 'You are a helpful coding assistant specializing in Python.',\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'How do I read a JSON file in Python?', role: 'user' }],\n    system: 'You are a helpful coding assistant specializing in Python.',\n    temperature: 0.3,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"system\": \"You are a helpful coding assistant specializing in Python.\",\n  \"temperature\": 0.3\n}'"
 				}
 			]
 		},
@@ -110,52 +120,57 @@
 			"name": "Multi-turn Conversation",
 			"description": "Continuing a conversation with context",
 			"input": {
+				"max_tokens": 1024,
 				"messages": [
 					{
-						"role": "user",
-						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+						"content": "I need help planning a road trip from San Francisco to Los Angeles.",
+						"role": "user"
 					},
 					{
-						"role": "assistant",
-						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?",
+						"role": "assistant"
 					},
 					{
-						"role": "user",
-						"content": "Yes, what are some good places to stop?"
+						"content": "Yes, what are some good places to stop?",
+						"role": "user"
 					}
-				],
-				"max_tokens": 1024
+				]
 			},
 			"output": {
 				"text": "Here are some great stops between San Francisco and Los Angeles:\n\n**Scenic Route (Highway 1/PCH - about 10 hours driving):**\n- **Monterey & Carmel** - Monterey Bay Aquarium, 17-Mile Drive, charming downtown Carmel\n- **Big Sur** - McWay Falls, Bixby Bridge, stunning coastal views\n- **Hearst Castle** - Historic mansion tours in San Simeon\n- **Morro Bay** - Iconic Morro Rock and waterfront\n- **San Luis Obispo** - Downtown shopping, Madonna Inn\n- **Santa Barbara** - Spanish architecture, beaches, wine country\n- **Solvang** - Danish-themed village (short detour)\n\n**Faster Route (Highway 101 - about 6 hours):**\n- **Gilroy** - Famous garlic capital\n- **San Luis Obispo** - Bubblegum Alley, Mission\n- **Pismo Beach** - Classic beach town\n- **Santa Barbara** - Mission, State Street\n\n**Tips:**\n- Big Sur has limited cell service and few gas stations\n- Book Hearst Castle tickets in advance\n- Consider splitting into 2-3 days to enjoy stops\n\nWhat interests you most - beaches, nature, food, or historic sites? I can refine recommendations based on your preferences!"
 			},
 			"raw_response": {
-				"id": "msg_013M3Nhg1ApNNGZf1GWxRHUj",
-				"type": "message",
-				"role": "assistant",
 				"content": [
 					{
-						"type": "text",
-						"text": "Here are some great stops between San Francisco and Los Angeles:\n\n**Scenic Route (Highway 1/PCH - about 10 hours driving):**\n- **Monterey & Carmel** - Monterey Bay Aquarium, 17-Mile Drive, charming downtown Carmel\n- **Big Sur** - McWay Falls, Bixby Bridge, stunning coastal views\n- **Hearst Castle** - Historic mansion tours in San Simeon\n- **Morro Bay** - Iconic Morro Rock and waterfront\n- **San Luis Obispo** - Downtown shopping, Madonna Inn\n- **Santa Barbara** - Spanish architecture, beaches, wine country\n- **Solvang** - Danish-themed village (short detour)\n\n**Faster Route (Highway 101 - about 6 hours):**\n- **Gilroy** - Famous garlic capital\n- **San Luis Obispo** - Bubblegum Alley, Mission\n- **Pismo Beach** - Classic beach town\n- **Santa Barbara** - Mission, State Street\n\n**Tips:**\n- Big Sur has limited cell service and few gas stations\n- Book Hearst Castle tickets in advance\n- Consider splitting into 2-3 days to enjoy stops\n\nWhat interests you most - beaches, nature, food, or historic sites? I can refine recommendations based on your preferences!"
+						"text": "Here are some great stops between San Francisco and Los Angeles:\n\n**Scenic Route (Highway 1/PCH - about 10 hours driving):**\n- **Monterey & Carmel** - Monterey Bay Aquarium, 17-Mile Drive, charming downtown Carmel\n- **Big Sur** - McWay Falls, Bixby Bridge, stunning coastal views\n- **Hearst Castle** - Historic mansion tours in San Simeon\n- **Morro Bay** - Iconic Morro Rock and waterfront\n- **San Luis Obispo** - Downtown shopping, Madonna Inn\n- **Santa Barbara** - Spanish architecture, beaches, wine country\n- **Solvang** - Danish-themed village (short detour)\n\n**Faster Route (Highway 101 - about 6 hours):**\n- **Gilroy** - Famous garlic capital\n- **San Luis Obispo** - Bubblegum Alley, Mission\n- **Pismo Beach** - Classic beach town\n- **Santa Barbara** - Mission, State Street\n\n**Tips:**\n- Big Sur has limited cell service and few gas stations\n- Book Hearst Castle tickets in advance\n- Consider splitting into 2-3 days to enjoy stops\n\nWhat interests you most - beaches, nature, food, or historic sites? I can refine recommendations based on your preferences!",
+						"type": "text"
 					}
 				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_013M3Nhg1ApNNGZf1GWxRHUj",
 				"model": "claude-sonnet-4-5-20250929",
+				"role": "assistant",
+				"stop_details": null,
 				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
 				"usage": {
 					"input_tokens": 76,
 					"output_tokens": 310
-				},
-				"stop_sequence": null,
-				"stop_details": null,
-				"gatewayMetadata": {
-					"keySource": "BYOK"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    max_tokens: 1024,\n    messages: [\n      {\n        content: 'I need help planning a road trip from San Francisco to Los Angeles.',\n        role: 'user',\n      },\n      {\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n        role: 'assistant',\n      },\n      { content: 'Yes, what are some good places to stop?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"I need help planning a road trip from San Francisco to Los Angeles.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"I'\\''d be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"Yes, what are some good places to stop?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
 				}
 			]
 		},
@@ -163,45 +178,50 @@
 			"name": "Creative Writing",
 			"description": "Higher temperature for creative output",
 			"input": {
+				"max_tokens": 512,
 				"messages": [
 					{
-						"role": "user",
-						"content": "Write a short story opening about a detective finding an unusual clue."
+						"content": "Write a short story opening about a detective finding an unusual clue.",
+						"role": "user"
 					}
 				],
-				"max_tokens": 512,
 				"temperature": 0.8
 			},
 			"output": {
 				"text": "# The Blue Feather\n\nDetective Sarah Chen had seen plenty of strange things at crime scenes over her fifteen years on the force, but she'd never seen anything quite like this.\n\nThe penthouse apartment was pristine\u2014too pristine for a place where someone had allegedly been murdered just hours ago. No blood spatter. No signs of struggle. No body, for that matter, despite three separate witnesses reporting screams and a gunshot at 2:47 AM.\n\nShe was about to call it in as a false alarm when the morning sun shifted through the floor-to-ceiling windows, catching something wedged between the marble tiles near the balcony door.\n\nSarah knelt down and pulled out her tweezers. The object was impossibly delicate: a single feather, no longer than her thumb, glowing an electric blue that seemed to pulse with its own light. She'd never seen a bird with plumage this color\u2014not naturally, anyway.\n\nBut it was what happened when she picked it up that made her breath catch.\n\nThe feather was warm. And getting warmer.\n\nThen it started to hum."
 			},
 			"raw_response": {
-				"id": "msg_01Qf12B9uws6JAnfRfQ6WgBe",
-				"type": "message",
-				"role": "assistant",
 				"content": [
 					{
-						"type": "text",
-						"text": "# The Blue Feather\n\nDetective Sarah Chen had seen plenty of strange things at crime scenes over her fifteen years on the force, but she'd never seen anything quite like this.\n\nThe penthouse apartment was pristine\u2014too pristine for a place where someone had allegedly been murdered just hours ago. No blood spatter. No signs of struggle. No body, for that matter, despite three separate witnesses reporting screams and a gunshot at 2:47 AM.\n\nShe was about to call it in as a false alarm when the morning sun shifted through the floor-to-ceiling windows, catching something wedged between the marble tiles near the balcony door.\n\nSarah knelt down and pulled out her tweezers. The object was impossibly delicate: a single feather, no longer than her thumb, glowing an electric blue that seemed to pulse with its own light. She'd never seen a bird with plumage this color\u2014not naturally, anyway.\n\nBut it was what happened when she picked it up that made her breath catch.\n\nThe feather was warm. And getting warmer.\n\nThen it started to hum."
+						"text": "# The Blue Feather\n\nDetective Sarah Chen had seen plenty of strange things at crime scenes over her fifteen years on the force, but she'd never seen anything quite like this.\n\nThe penthouse apartment was pristine\u2014too pristine for a place where someone had allegedly been murdered just hours ago. No blood spatter. No signs of struggle. No body, for that matter, despite three separate witnesses reporting screams and a gunshot at 2:47 AM.\n\nShe was about to call it in as a false alarm when the morning sun shifted through the floor-to-ceiling windows, catching something wedged between the marble tiles near the balcony door.\n\nSarah knelt down and pulled out her tweezers. The object was impossibly delicate: a single feather, no longer than her thumb, glowing an electric blue that seemed to pulse with its own light. She'd never seen a bird with plumage this color\u2014not naturally, anyway.\n\nBut it was what happened when she picked it up that made her breath catch.\n\nThe feather was warm. And getting warmer.\n\nThen it started to hum.",
+						"type": "text"
 					}
 				],
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"id": "msg_01Qf12B9uws6JAnfRfQ6WgBe",
 				"model": "claude-sonnet-4-5-20250929",
+				"role": "assistant",
+				"stop_details": null,
 				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"type": "message",
 				"usage": {
 					"input_tokens": 21,
 					"output_tokens": 243
-				},
-				"stop_sequence": null,
-				"stop_details": null,
-				"gatewayMetadata": {
-					"keySource": "BYOK"
 				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_tokens: 512,\n    temperature: 0.8,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    max_tokens: 512,\n    messages: [\n      {\n        content: 'Write a short story opening about a detective finding an unusual clue.',\n        role: 'user',\n      },\n    ],\n    temperature: 0.8,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.5\",\n  \"max_tokens\": 512,\n  \"messages\": [\n    {\n      \"content\": \"Write a short story opening about a detective finding an unusual clue.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"temperature\": 0.8\n}'"
 				}
 			]
 		},
@@ -209,13 +229,13 @@
 			"name": "Streaming Response",
 			"description": "Enable streaming for real-time output",
 			"input": {
+				"max_tokens": 1024,
 				"messages": [
 					{
-						"role": "user",
-						"content": "Explain the concept of recursion with a simple example."
+						"content": "Explain the concept of recursion with a simple example.",
+						"role": "user"
 					}
 				],
-				"max_tokens": 1024,
 				"stream": true
 			},
 			"output": {
@@ -236,152 +256,152 @@
 			},
 			"raw_response": [
 				{
-					"type": "message_start",
 					"message": {
-						"model": "claude-sonnet-4-5-20250929",
-						"id": "msg_01UgonW6EAQVn2dqA3yEGcj6",
-						"type": "message",
-						"role": "assistant",
 						"content": [],
+						"id": "msg_01UgonW6EAQVn2dqA3yEGcj6",
+						"model": "claude-sonnet-4-5-20250929",
+						"role": "assistant",
+						"stop_details": null,
 						"stop_reason": null,
 						"stop_sequence": null,
-						"stop_details": null,
+						"type": "message",
 						"usage": {
-							"input_tokens": 19,
+							"cache_creation": {
+								"ephemeral_1h_input_tokens": 0,
+								"ephemeral_5m_input_tokens": 0
+							},
 							"cache_creation_input_tokens": 0,
 							"cache_read_input_tokens": 0,
-							"cache_creation": {
-								"ephemeral_5m_input_tokens": 0,
-								"ephemeral_1h_input_tokens": 0
-							},
+							"inference_geo": "not_available",
+							"input_tokens": 19,
 							"output_tokens": 1,
-							"service_tier": "standard",
-							"inference_geo": "not_available"
+							"service_tier": "standard"
 						}
-					}
+					},
+					"type": "message_start"
 				},
 				{
-					"type": "content_block_start",
-					"index": 0,
 					"content_block": {
-						"type": "text",
-						"text": ""
-					}
+						"text": "",
+						"type": "text"
+					},
+					"index": 0,
+					"type": "content_block_start"
 				},
 				{
 					"type": "ping"
 				},
 				{
-					"type": "content_block_delta",
-					"index": 0,
 					"delta": {
-						"type": "text_delta",
-						"text": "#"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": " Recursion Explained\n\n**Recursion** is when a function calls itself to solve a problem by breaking it down into smaller, similar subproblems.\n\n## Key Components"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": "\n\n1. **Base case**: A condition that stops the recursion\n2. **Recursive case**: The function calling itself with a simpler input\n\n## Simple Example: Countdown"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": "\n\n```python\ndef countdown(n):\n    # Base case: stop when we reach 0\n    if n <= 0:\n        print(\"Done!\")\n    else:\n        # Recursive case"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": "\n        print(n)\n        countdown(n - 1)  # Call itself with smaller number\n\ncountdown(3"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": ")\n```\n\n**Output:**\n```\n3\n2\n1\nDone!\n```\n\n**How it works:**\n1. `countdown(3)` prints 3, then calls `countdown(2)`"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": "\n2. `countdown(2)` prints 2, then calls `countdown(1)`\n3. `countdown(1)` prints 1, then calls `countdown(0)`\n4. `countdown(0)` hits the base case and prints"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": " \"Done!\"\n\n## Real-World Analogy\n\nThink of Russian nesting dolls:\n- Opening one"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": " doll reveals a smaller doll inside\n- You keep opening dolls (recursion"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": ") until you find the smallest one (base case)\n- Then you're done!\n\n## Common Use Cases"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": "\n- Calculating factorials\n- Tree/graph traversal\n- Sorting algorithms (quicksort, mergesort)"
-					}
-				},
-				{
-					"type": "content_block_delta",
-					"index": 0,
-					"delta": {
-						"type": "text_delta",
-						"text": "\n- Processing nested structures"
-					}
-				},
-				{
-					"type": "content_block_stop",
-					"index": 0
-				},
-				{
-					"type": "message_delta",
-					"delta": {
-						"stop_reason": "end_turn",
-						"stop_sequence": null,
-						"stop_details": null
+						"text": "#",
+						"type": "text_delta"
 					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " Recursion Explained\n\n**Recursion** is when a function calls itself to solve a problem by breaking it down into smaller, similar subproblems.\n\n## Key Components",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n\n1. **Base case**: A condition that stops the recursion\n2. **Recursive case**: The function calling itself with a simpler input\n\n## Simple Example: Countdown",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n\n```python\ndef countdown(n):\n    # Base case: stop when we reach 0\n    if n <= 0:\n        print(\"Done!\")\n    else:\n        # Recursive case",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n        print(n)\n        countdown(n - 1)  # Call itself with smaller number\n\ncountdown(3",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": ")\n```\n\n**Output:**\n```\n3\n2\n1\nDone!\n```\n\n**How it works:**\n1. `countdown(3)` prints 3, then calls `countdown(2)`",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n2. `countdown(2)` prints 2, then calls `countdown(1)`\n3. `countdown(1)` prints 1, then calls `countdown(0)`\n4. `countdown(0)` hits the base case and prints",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " \"Done!\"\n\n## Real-World Analogy\n\nThink of Russian nesting dolls:\n- Opening one",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": " doll reveals a smaller doll inside\n- You keep opening dolls (recursion",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": ") until you find the smallest one (base case)\n- Then you're done!\n\n## Common Use Cases",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n- Calculating factorials\n- Tree/graph traversal\n- Sorting algorithms (quicksort, mergesort)",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"delta": {
+						"text": "\n- Processing nested structures",
+						"type": "text_delta"
+					},
+					"index": 0,
+					"type": "content_block_delta"
+				},
+				{
+					"index": 0,
+					"type": "content_block_stop"
+				},
+				{
+					"delta": {
+						"stop_details": null,
+						"stop_reason": "end_turn",
+						"stop_sequence": null
+					},
+					"type": "message_delta",
 					"usage": {
-						"input_tokens": 19,
 						"cache_creation_input_tokens": 0,
 						"cache_read_input_tokens": 0,
+						"input_tokens": 19,
 						"output_tokens": 349
 					}
 				},
@@ -393,12 +413,223 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    max_tokens: 1024,\n    stream: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    stream: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search",
+			"description": "Letting Claude use Anthropic's server-side web search tool to answer with current information",
+			"input": {
+				"max_tokens": 4096,
+				"messages": [
+					{
+						"content": "What were the top news stories about Cloudflare this week? Summarise in three bullets.",
+						"role": "user"
+					}
+				],
+				"tools": [
+					{
+						"max_uses": 3,
+						"name": "web_search",
+						"type": "web_search_20250305"
+					}
+				]
+			},
+			"output": {
+				"text": "Based on the search results, here are the top news stories about Cloudflare this week:\n\n\u2022 **Ongoing Network Outage**: "
+			},
+			"raw_response": {
+				"id": "msg_018Y4VGmTsaUk4xzCg2SNi29",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "server_tool_use",
+						"id": "srvtoolu_014NoiMmSbNDc3u27gXvxmcd",
+						"name": "web_search",
+						"input": {
+							"query": "Cloudflare news this week"
+						}
+					},
+					{
+						"type": "web_search_tool_result",
+						"tool_use_id": "srvtoolu_014NoiMmSbNDc3u27gXvxmcd",
+						"content": [
+							{
+								"type": "web_search_result",
+								"title": "Cloudflare Status",
+								"url": "https://www.cloudflarestatus.com/",
+								"encrypted_content": "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",
+								"page_age": "2 hours ago"
+							},
+							{
+								"type": "web_search_result",
+								"title": "The Cloudflare Blog: Product News",
+								"url": "https://blog.cloudflare.com/tag/product-news/",
+								"encrypted_content": "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",
+								"page_age": null
+							},
+							{
+								"type": "web_search_result",
+								"title": "Press Overview | Cloudflare",
+								"url": "https://www.cloudflare.com/press/press-releases/",
+								"encrypted_content": "Eq8CCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDBm1NJWPyY9MmVL8UxoMZ65papr1jPOCKmm+IjDn9YNVm/2wFAsdnf8kX8etW46PUE0plZju5EgqOWPS4aXZpRJ6Ys5/IjqlkTil30EqsgEv0Pz1UFV4KMUPDWf1f3QYOoJZImUIyTYcUHQqIBdnsPmgTyJNMPrNqgwfWOS5H9gUVDlSGAPG+IKzP9dvQ+FgVU5TiKxI6YtN11DiA6qxIH7HC/EsmaxuU37qu8wDzlrrALlHjBmqb48hapCueuXrqE0q32LPFTbdwceUzPlcYGFqJwHyDdLxq1X39fA8erRcq/eZ6I5c68dGaf9ORC7rmAMQV3vmWdzIC1Yox8yNSXoEGAM=",
+								"page_age": null
+							},
+							{
+								"type": "web_search_result",
+								"title": "What's New at Cloudflare | Cloudflare",
+								"url": "https://www.cloudflare.com/whats-new/",
+								"encrypted_content": "ErABCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDLSUlI7FJPWBndM+9BoMIzKcfDF3jtE+siqXIjCYNeFeMAwO/Iz/3iPpYvhUF+JtIuwBvUIeqN9jS1OOfgfsncbD9bhK1E5BH1cRxyEqNInKz588O/598EJF33u7D9Fvk4tv4Q369xZCvZUCjaPFEXhBOi9tn24FNNWgK9LpfGu9ZPwYAw==",
+								"page_age": null
+							},
+							{
+								"type": "web_search_result",
+								"title": "Agents Week 2026 Updates and Announcements | Cloudflare",
+								"url": "https://www.cloudflare.com/agents-week/updates/",
+								"encrypted_content": "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",
+								"page_age": "May 18, 2026"
+							},
+							{
+								"type": "web_search_result",
+								"title": "The Cloudflare Blog",
+								"url": "https://blog.cloudflare.com/",
+								"encrypted_content": "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",
+								"page_age": "May 7, 2026"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Building for the future",
+								"url": "https://blog.cloudflare.com/building-for-the-future/",
+								"encrypted_content": "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",
+								"page_age": "May 11, 2026"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Cloudflare Lays Off 1,100 Employees in AI-Driven Restructuring - SecurityWeek",
+								"url": "https://www.securityweek.com/cloudflare-lays-off-1100-employees-in-ai-driven-restructuring/",
+								"encrypted_content": "EowaCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDKCoJuuBBOX33yrKNRoMMUm9MkrlHuUQG7w2IjA8aGt19aAla70fUUpupZp+S4eCtRP4b6DpKbmeU0CFpUQ/SIZR4489zWv751vQvTEqjxnc78W6GoDiDFGfs+f5G9ui+BNb10vOlYQhjhuWiEnOnVBzdOOinJpmX/Qi+qsYjNFPbiV5oUaBZzzyVh6hFhzFZwpOA6cBAN0PBn9Or6tJg3G+vYB2K6GLxQhQw81sMUn82/eA05GSJtuw7cMtrh5BHvF93DLIF0FUa1bG4s3pcWZAqg+zJSAEfabPQ3WSUj1g6cWpPLgpt/4fXvxSEAXKec9Fq+ANz2aJYgDMSVbVGD9c5WbsjtRNO06u8JegxGB7ue5MtGGIX8Vs8IaxPK45aVpBkQlga3q7nev2iuVNmNvqrvRIVG+lhe3d/ZMK2tJjicxBV4hcD+HepEYiLi5TVU0vIMSyNJ0g2d40pRaJsEqgLC3fsiNff/ht87w9encDRjwKpaealHeF/iZA06LIY2xbCgAeGaIt8SgIDZwohtBYTgEcJ00U+cOxmMKq4iPXmnC6FDPqo/GSOQDMjCQmmfEyw0A9J4IseN57GESGg+ejaMk+qhd/eFQl4Y8mil45TJ8I3VBcp+wqGc38MBPRtFAP3444uAxbZQXcxS3WyyR+EDP9hrMTNi0+AbxA9beS4w0IYR9gOjDv2tl/ee6WaBe3IJOWPd7BMosQVs6xcNh3MfOdmOeMyHJbnqKDhaXaeCJHtEIprRdazlcNlbx5b9fS8H29sk8dyfmtefeSmV+SV0E/BDgeja+EWKjwpvKfSLejZavJi0KB/yMhWGknnAkInCc71RQ0fNTG5Q1Rf2YztigijgKBQMptfg2Aely7Ij7MSz1FemJxFNp1mxzex9hYR4/kW4CTvhlGq7h/5dsY1vbI8uz9UUiEvWjkBrnq+A/9BoUaBJRmHCBzrpZ85lc5yCY6DZjFixi9SnWGEPO89s/dsNKMuHd6fL3m5c8FYnfhZeFUvOwbiOd9m9B6nyV91tCH4HFogHgScDg7Ji75z60+9h/B0nNfL588ViJ4V2FfoGwvtditqvdBROZ+B+x6G/h25bp/bTmSNsNkVFDiPP1/KBRzRSyPVIROEy85l4dZH+PCnUjYIy6ET/JCgSH5bmxb+65f8ueaUqaJq67kD1J6H0i1glp60+KHYykKpU5h4EWlCc7irbNDOAMN40Q+ssl7H6guxvtLqUL7xXfslrex2WSS6BrH+hpDZK5eKMAAfm1H5BvznC98X51dU/dFKXiWLAyRLTqSeAWWKWLtsrLGaGIDB2CLZ++daqjzhJwUHbzTaR4W8fWJRfb71TlQKjU6II/j1+ePYyC2r3Ahyodpk1vdI+Lxti6iHmLwVljxdWZ6nJBlXmZ1+EkevsgBn/5e+dK1qxLjXFF1w7qaukkre6EzkPTjZJalSM+tRdU6+RELt6rgyQ0eSW49f0iFYoIL6OEf4huJP4I8nU2x/Cz/CqGXM4Mjcj36n+Th+zusF6IgAeYCPspUXfMCcpqVcQIGbuc0hL5fgL/Q0eDKAxjMZu60Zvtw30ZsE2JBkR5tU/YvKQDym7CnQ0dGAq6ICZ52Zg5nqfiI0Qluu5aQUeLpKTcYB/9PVQIfzxDNgF6Fl8HcgMfZKEcPyMsGzZboRL2Ouds4xgiF2ei62v3J+XH2lqtFsreYkW5hUTpyHsCs2KHqyiU+WqfPfYrqL0mADrnhLnMPAzUVw5hhkboS6UHrTAWJJCXpS4vVsrHUABeC2/qJdm62EZe+7QblvR7/h268VcTAGNDgSX5hiYl07FfxZxS03ydwp1fEAXWoL8rk1FSNn94+HNMvUIIJKN4qY6X2yoDIAWu7HPq/V4nbN4MaM0pvgURJPw2+huLAy4C5HAjXmghn7KLT/zve6Wb1rqYkQeBtKTsNi9Ql5WaOq9RGtDoANeXMypIPVRLcNIcJr+Q+BXXpSiUicS7G5msGMYfNRSllT36gM75u8TKjVF8jWrkyfZZduBzwaYVR1wJhWN2jL5dDpBO04ez26L4tDQq3xy5FBh1LJXhVlEy5ixfwdIrAsX+0Kknm6auln/jpAwMJ7BvHR+P+5jCkNu2CQPd3hKUp7WmmhrCh+OPdaBXfa4cKXiAGhbhBd8V8GGqAuxyS2nRE1Ex3j5dSoduQBW2o3nRqfxv8+g/oX67quttlNFSUDuBc2aHDPqLTc3HThw5KPEbHnLMVR/Of7MkjOHHsbfelhHcnM19ysGA5OmsqGgJZRUF9QYQXKn5PdSRa44yhNZstgW45/72AWPpXUQYtTmK/3K5xt+0agyiuxxBWBAkBCSPYH4xq18aeuYeVTd1Tla55vWhCLpGb5QTKtc/PYGKEnYAuKYcpIYgWz2nYvFD1eVgMaG75tIzK6jCjiBie/6aaF9cEsj8Gh5pFgIqLQvZg+ozvWgEBc9Uqyzdcrz9M3jejxfJ35f2s2n1sJKs2ZjP5JWFbUPTbV6pOotvYqAdakdD5ngSrgpVjnmsMW5OQaIxCqfvHBY45QESUw6hMrdjMUTTo/pmba3NOPiHDxphQfDoek7RLnZt/2JMIjCIr9cXcUhUpTImYtCG28J9sLDMjcjLPtB9NtrEHg5YZpCTP9FRiG2jSL7L6Gk/+kUZgw/PDhAbrhturmhhDxzZDeeizQ/a4/T+WJuiUBa2/4m0iziOaFKP1y37XMajG5jQxOP2nPSzY9yadlexWEPxbh5sLIgvix7MBk0pP2KCMLOkxPh+Ov6cRgkwfJloLENfiVWh2x7UGR/MIBNz9fK4JvS96mB8q6hHmuPTs0EPLvW2TCHMkf1iE1nKO4AzbWWOTQk/lL+ACsBL3+US2RBxespRaGAbuehz9l4PsDuAXwAg+AZKm9oEBgPmNGTxGy3/jcyzhWvj+7dw0ugkzZnWAqIsJnz4RXBIlMqo1HVFXw5YiAMb9y73T930+FPxPU8mdVErOUchYHCqMXiDyo3beYl9Ac7kiK3PFyFUP/hcZ3hNSkBOJPZgaGv8CDliZq6EghkY/H5Af5cNDXf+BFTO1CpEcCdBXnc5p+1Tf+zM06w9wxhRPfTJv580H26bXuKjjiaHuY0CjBAriQHMj/PFx/MHR3SWi5TIOEUs/2LqJRMYeiCcmz+sCoD7mPAReeURbqEWwB29RuCnCnvr+uvK89WFfZZ753X89Gu4RX4HLX8aRn+sGjP3CACqaAhzzqhTrkGjH1pTXhbBqix2UHNHBDcdF0wlWkd0DVXIZ0Aklq8bnsnq3+A3OzuYawu1dwpedROzfUiIH+lOiFvQN2y5P3gms8T8ZyxhLX23EE100JBdh+cqkp/wfcHS1T8IwPXxkf0JSAQWscEIPlM9xLQGx2gmcSqkVoQgexiht+D/3pNZcYd40ALosYhGSiCuwj2coN0Zn7ZEBsBK9eJSF9QSuISHq+K96I4iDSg1WbH7JQ0Fo8pDYm/AW+wR1LYivwei8q1PeJXmt8nLATumdQattaLfJVc4HgLe1wbK0LAT0dSOIGDGYIOsOXwR0jr77gpG4uO/tdcY37FCitLAEYaIkL6yLP9kGanNRiV21489DDNvQReq9i4ISgq0ij6eRMIeWZV6rKZs2DPovBhBvBEMSu/vTvIDjsmkKHnBTrp5I7Ad5Q2ECA/UXsVlXyk2Fs+htgz26dA4vExfXTP1qKiHgBQeEBvNYhhyAoezA4QQFPF5GfzZomFSStKwb6S6inGen1SM7GTCVhJs0w8zD80QrLEAjEbr63Zam1jrQSVwsBh+JvsxfPIbHChGm3sEJjbtyZ7JmT4AlRy10fRk0L438donmDcDV6xdr+tlspFC79kwHKAEwF7XPewD9Tc34FIgLTAK3Q+cgcqV++rr3qgePzj3luFOjL3A8JAxC/xX5bxPJdpZDog8LEIW/SyIVZ0Y4J5euxf45CFFj5EUIfZhLniTqRBluEmiyqQBWep3HlRLhgZUjK8NESbsckHjrRH30q+D2Rl/kFwksfqhLQuGhRFr4d1615GEPU9R7ioGLQ5Jn5n5S+vWKzsrOF0l3IeNgo87AkrE26gH2dm9SEoVXQXAa4q7HcVWyPeEeFoV5H19nEl50Kk/i2xKQqqcpFw8mylC4t6o9zgJSqNc5XO7LiSOYTt11UBEUBnGOw7VQ1uckjo95wnYc3HwMeMfa30nWOU6vlkuz7hrZKYO6s/DCurZi9rp8JJdWgsT1D1IyAMFKf2wcemlC7FZit1umqo3Pcr1aZPA/ApzQOwQtBz44Mu1KgEFzOdqwcgXynjewOnG+pUBK+oH1v2VR8h+V770Eo7lXn1yjh28eVmClDEpx/AfmL4IDhVfGL0Enm0x9tMBaGtL1DrGzsXnvtNGISIwfApTDnBLQ8hgD",
+								"page_age": "May 12, 2026"
+							},
+							{
+								"type": "web_search_result",
+								"title": "Cloudflare, Inc. (NET) Stock Price, News, Quote & History - Yahoo Finance",
+								"url": "https://finance.yahoo.com/quote/NET/",
+								"encrypted_content": "EucdCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDC6hEquN93m2N1BscRoMOhRNYFG0lVzRa9vzIjCc2RhQPUjtphT3iy6xr7lBlyaZhdTWq0W4AsY+K9z0ECUWL59g/tfjlrZtsy1q/K4q6hw1lXzufWDsv8hXxx+3g4AVrLlHWJ6LZXWVnsr9Ze2+G4JeBBnitZYVz0oFmFaKsxJLw2MWs90HUkDQyGosZZatYjwUjSyW429WlZd5x5iNABFuouxfRXoj7D2mXTJjfZ8bIK2jPc/nIPSbeysDpjybZle6dWcpkTi/dWF51BD7VIm3ts97JSFJFI1r5v98ZSntAFBgSpiZAPc/WbJab1+ZVu3jSQ/+vkaiayG6UdXtZD7ujVCLhVQV2Pa9D7fqSWZOvJ2p9j2GKelKRXI9GzZBpK5yZsqS7qa1bhtkdD0i+vc44ornwNsXScp3co+xoY61ZzlVSgv89z6CGDY40L6br4g7H1oJVVohTgmLgKhcm7XIwcA/L3A+gkjcw/yf/jfen0kSvWk+nuA388crECK/aHNn0MCTrrvyx1ajTJ25X8QvkHbrJk6m4UGNI4EQuXYDreKsgbgRZIDK+JV7oz6ywSoVgJynEatvZxRnTX+TroJsj7GC3aZQgE0muPE3lKV4dqIXMn7vGiqxVGZeicLsoX+90mZqi1srzNdnCYGCz+yiw+eHj63/cHKzQbUIa3ykHpsskmbyDhssfyETZ1bgFBLBXtmbrYVRvT/n9mB4jpkba3b1Li+X9YCWfftT3nfFkPK+eXxC2Kg9LUOPJpv86Fe/PoBjxslLtmzKUaq2OnckxX7kH+OcNVDDaiu5/TQMyZu+j/zJlfAruJJ9MBiekOJ5bFpPsRJsSOQyZ9oGK8Pd6nisIRAe6fHlMJwsCHZdwAm/X9GHOcTY7oi283h2tzSRfa96u0IfQ7RmqkaFiC85nbh/x3ON2sw8UW3CGKGNUPLyq6b4I59+H1cR2pzXu+GKvFOCgsdwEicow5HeG6cZf1F59JBtubavZf4Al89hYxalhOjignxm/KGPROo1GJ7H6Yp3BuA3LaD2WsV7TyPpmxdNfD4QY4ru9ICgior+0aRDlYNQIz/R/wACVb0YPmalYq+oRZF56itHLwAEhehF94H9bQHDmr57C36oZWpgjSYGM9KHg1tdDhxmig5O7l2zP6ZhVT7Ke6atfoDh3+a4URBzka36o3dftcSdabAWP8ZPvCcl30IYvid66lnzeVn+zg8JOO6ydzQNW2xgOiNJoXw203OGpEpX0oHi0MOCzlmP5myq5o+U1kyPDLklID1OXpr9HDlIctJv5agTwgCGfQ1IPgCGHnvHrvq+ZLDpfBb2vlezWwGBbX6eGJksdboJAjUSr6rh/ND5MILUV7GJKYpS6zJwQtmCZCfsZCR7GbAYwR3TU341oGz5sIauCvlDR5jqJCRft19iY0rStlJsvb9EplqJvMy0g8d0BYf+DTLLlmbM4taTIMjD6hY73ifdxG9zAsR5XQHUV61Wbf7PjS2oKA3Z1uR7kqvA7+5bmKY0lG32oPh3pRwh9ATqWRy7Uezl78/1vZMuJiUm5L1qpGi7VjQdywRXzj0Hw9DWyB8RlmdrxgbmcL6Q8Y93W2u1+yqZhl7udlddIh7JfYheJF3w2oP8/HVyHWq9XJDrTw+vimt4WhEo86ym7GIM/nvkugZSGicdhWZ30ro0FjYnJMkurGN7S7Wv1TlKrLmo3kTXO69txoencnEf6ZZ7F5MBA1Y1VyvPBLADSYHvk+fL/srytreRQx9STdTxKSyVr/duiLnLPdRPHLEl/2hpu6XzHLRAoI/IMr+CcLqIedBwLq54LQKtTlL4agOX2Hr25I8Eb6+dKRT4AgWrhGFPbmrcP3OE6td6niiLV+NRh5mPBQZBws1sWdVnQAh9XnzyfQawp/6EkmqZdyh6u91RUePIJZ0LDvn9N3GBm1SYKhqP9fLKKDDqg2Ff3t1LyiPApM+VD/Fgd0BXxiejRZ3LYyn4+srtmmVBTOhiVVz1fWcTuTDTUzn6/+y5VqbFWm36V9dxLbo1ZO4uVN3QlxTzjQ2q3F50sqUm2kQpT4L6ClAiaqLgBgy31f72Bj5A4+MFhfuuhnsuviu+R76XCUlmQlGb/B56A67joei1gQm25w5U0BNQ10otxOWJej4VCjgX+OrbYdCP7QAbZzXh9p7621mR5Xcs5Lu7uLk/BPqyA1Ef0UJgYRUzhPkWzkPq/XnlT3pQpQMcqs4C3zE1Nz2QYyenb00jazhegENi7m0cdmtI2WnxRM5CGTzRJQgj4/8AxN0vyvlPMmAhEvkYmobE2CfuRqpIIKEcPHhQop7y00D8Cak0qOKnnGYzE79Apwd2wqdaRlzeWLUpFeWsU1Yz8Afw0hKRnXnhxkBqhqnCfYdOIr4Kp43j+D33b5jkbQmpySZYjQrNi+GwBThT2NcseUJNKvkopZp3XpI6MdlNyj5yjEtvqrvXOR+oDw9NPjyRB3iMvO7x1f9IKxLS9cRCHngtE1E3GXzlGGAgO/69mC18LZImwtT9XYqUJXsDl1xA++B40KPFpBVrP7ONVsFtE8/X0xvbNDI4sPML2UV8HsKL+sVhuJwM9I4ge0qzCNp6WmrQ7rLvSPAfQt3ZkdZ5NWHb64eBvtYH7Vaz1w36d5oQVnJUAzHXMJAfbIgqqwEp9Zdz9Uf6hcdQ4kspt8BRxx7bVexcBJd/9sQ8PtWAkgYrLhM5ZNPrQZ8xsl/7xx+iJjeQa8N7qXpSkiCF+X2gSCs3nxTVph105c4/R8MlT6hl7hBe2m7q9PjX57pgobf62vYGmHY40KVNZ6uKI5otwgvXQLeK6FP2UKdznB3w/tbvT90OQqEyu7+VPwUaLWJlrKLsJyji5wmmj1vkBbolQ0YpY7KDkPWWZeE/J6TXph0jcB/xZaHK+/K7n2q8HSRV9RCpjRoq2P/u599V4NgfiMxLZ88RhPWJqusS6kL9TMn4P6sIsZvuQuXaxpnRt9HQW7+UPQQlMgx5sQ7H7BWEEsHikUhAmSYil8DBNPC8BgGSNhwkA/Xu1oMJUY+jRqjHZsSPWx6b9cHu1sCLybwQ7jf9ems3/dV4xXP/h3IceQ0mQaHYL699B2iocujCnefei7W2FahYyN/GRZSAHXDXfZEPKcigfHGQJWtuzdhAEIsQfLUR90PYXbmngo0sJsbSERAiPMCujGDPyxiKjnk0lXvV/4H/PKIeJU6/UAg7I2JkDR1N/yVnehIksPIh1Hhq5REaS88S78gMpcKk7vC20hWbI4xKQckIUw4wf2gQjSliP2UZ4ZtOPsnWugLaVQH9an9a6hLNSwHSo48kZOv3EwnUugrH77ZTemfk1wYxaLoD1DKxTxAajafgC5rZysHyLrWtZsAaKIxwsySTr5ijJH8R3hfd3fpHlHuAZS4+shr3vU3OTb7vEc+e5AdK0Qd9AKyaWfv/Oi6ea7benkSN2CAofjICeUDRQ0c+wHNXy3H5HsFgrXhTPSeLLimlFRjj0Yp9MGqJnRlYy+YaTbkB8BnwV+rU3pNg3Z2T4rt+4mbLWxL0jdY+J342cCcxseYG/HYyXV6UYBFpGRbU7/JG3QmDEKJJcDpdWfhamiieJwxc2fzjfZTXyEvOXuOoHkr4H7aAYlMS6U7O4qzYhYYxUq1MIX+nCrsTLuyyak9ebcmwluftXGjntaauVKH3CiUibFKmEh2t2dOVmMZHT50RbNmbRhoo9Wol1828c9wpuQtuIKvGUUa6mwQ7jkyYiekaIgJgs7pgQi8nywjBk1BXB6WaqQhbjMg0B43lHvzrBdAf75hhUF5A7fL6Ob0Pe+fzPveFzMeUTwQL44zd2fNKfTBfez90N5upR35m3xy7l29pTLYuM1wsttfW9A8HcA5hNL2I9udnyEP5SRvCzkQWAg6utI2AaSMNSBInVEUoZvR1mk+4EyKv7wNFDw//Pcei6TeYcKkiyz08A8Mi7hp+gWAans2IY+K1UWzo+Zm2YSDTO6YfgchmCkGucfKK44RKADEZ0Dn+lIqVn8dHAB/dQ4VVbkbse2t7hRYiRtDCdKoyRfzb4S6FP2WkY1NwTdT+EicWQVEW7wECjWFQiC995pYDCXmgE6GJCXFwrSKRPDUWKlUhORf/fmn2sK7w38YY7T9wrh9NzYgMNcSO0/ZncVIGbH07MMoViYmKjxgM+Ifo9bD+AaZp3iw9Lh4meEHhGaAv6fCrIV9WRx+97Tei8mQySROKoRsyUSxFstS7f/mnK2DgOULLle4zopuxzvBPkkQAfpSv1gc2a05ezjatGwqJEM1htx7FhlPVO3KuTizY70hzeEw4J3qkMBKC2EFeHY/KuKgI2IbqETqReMsyYJH6skMr/XDWJ3HSPBvubr6QY41/Ol0DYxAURb5T7n4WtX1uapIT+aDtpyujuwh4aRtKxdjy3r7MGax8z5lZfgiUTiYx89Nqh9HtD2JNCMw3xMtHlOljspWTIe5nw0I3SfNIYt+QxdpYLEiVVs/Ln7R9xh6F0y0Goi5KKXDLDF7ruyDcRX5g7Pn3RtGegzORqKA4reCuLkTRdErNlXiA+C/EKJlc8uT/dlN8tlhOYVMj70ihnyZWO+SQwfkwYTheZilCC0AGPlzKtxphKW+e1Kxr1yes1ejiNVj0F0HV7gOj8vrmOK7VtbKINzE3SaUoXau9v7GIHWc2yeRpaamnNQ9XPxsz2oxcdQAUBqAs7UOyRbSXzJuunmLtdiz+3qlsoX3UtXPtKGyOINZTP7cyJv1fg2zLADC6IL64nJcPruACQV3gF+wuFz9ytURxUkmRoSmcDN09w9+MVFHoema6XVbxxAakYc2OMSo+8y7Dq2+v+alfyTyDRJCFh2McDBVzLzxOcOlF2rTk0kEcYck43JMjGLDqdp98YH/iRvpef5/aRiJMdttc55eVvWrQ+LgfqPoFnyjcz86kRGdVVb1lBdLCB3oeAWYIFuXi2jvtCdZ3wA+eVM1gc6X9qb/zh2KYilv9TNZMjSJ335Ukx5AxCFLtTd/FX1Y4qfMYAw==",
+								"page_age": "6 hours ago"
+							}
+						],
+						"caller": {
+							"type": "direct"
+						}
+					},
+					{
+						"type": "text",
+						"text": "Based on the search results, here are the top news stories about Cloudflare this week:\n\n\u2022 **Ongoing Network Outage**: "
+					},
+					{
+						"type": "text",
+						"text": "Cloudflare is experiencing increased error rates and latency across multiple services due to a fiber cut in Eastern North America, with customers in North America and Europe seeing increased latencies and timeouts",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "Update - We are investigating a fiber cut in Eastern North America. ",
+								"url": "https://www.cloudflarestatus.com/",
+								"title": "Cloudflare Status",
+								"encrypted_index": "Eo8BCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDKtZTHdCsuWhUitMNRoMfUdBJA1oxBxzum/rIjCjyZXBnB4vjTvXp7nNQHFPWLTc+mGd3Ho5C54yH+TK7jLmww8gowr1cDZ/sAOKg8UqE3hWSatxG5wS4DCArV401jijmfoYBA=="
+							},
+							{
+								"type": "web_search_result_location",
+								"cited_text": "Jun 22, 2026 - 14:37 UTC \u00b7 Investigating - Cloudflare is investigating increased error rates and latency in multiple services beginning 13:35 UTC. ",
+								"url": "https://www.cloudflarestatus.com/",
+								"title": "Cloudflare Status",
+								"encrypted_index": "Eo8BCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDK6DXjtLRDEAjBAD+RoMtXH9YjNv6JFhmSO1IjDWxBBR5YfXJdhQSyhfRON0meHgJPKIRBDA8jb5CON+hMJ1yWTa+W2dCg3+DJFKSUMqE2r7YMntT4VEVDlVknBQqzhOtegYBA=="
+							}
+						]
+					},
+					{
+						"type": "text",
+						"text": ".\n\n\u2022 **Stock Volatility**: "
+					},
+					{
+						"type": "text",
+						"text": "Cloudflare stock (NET) is experiencing significant volatility, with a 4.8% drop today following an 11.7% decline in June",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "Learn more ... Cloudflare (NET) is experiencing significant volatility, with a 4.8% drop today following an 11.7% decline in June.\n\n",
+								"url": "https://finance.yahoo.com/quote/NET/",
+								"title": "Cloudflare, Inc. (NET) Stock Price, News, Quote & History - Yahoo Finance",
+								"encrypted_index": "Eo8BCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDAHSIyFXPQmPTGkRFhoMYmdt2apsmn7kI02KIjDYD2IAav/gFlBLWsEqwe5/HXOu+LE4Ge12sOMrlEXI6pKcw6RWu2NtIMcFNMr1u7AqE4hJ6m/5SsaQVE0aL/BIqJN7yLoYBA=="
+							},
+							{
+								"type": "web_search_result_location",
+								"cited_text": "Learn more ... Cloudflare (NET) is experiencing significant volatility, with a 4.8% drop today following an 11.7% decline in June. ",
+								"url": "https://finance.yahoo.com/quote/NET/",
+								"title": "Cloudflare, Inc. (NET) Stock Price, News, Quote & History - Yahoo Finance",
+								"encrypted_index": "EpABCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDKzBCAP7tEfPhkNXDhoMvmYJGBbQzNSANL+FIjAegWRrVKOglExls5orQ/NW/J85NGCxN9YiYHq4KqZdIcbzV/f0WihFSrVmjZvQ32YqFM4Pav4FYI2nbTzFYqOinT/f597rGAQ="
+							}
+						]
+					},
+					{
+						"type": "text",
+						"text": ".\n\n\u2022 **Scheduled Maintenance**: "
+					},
+					{
+						"type": "text",
+						"text": "Cloudflare is performing scheduled maintenance in the Newark (EWR) datacenter between June 22-23, with traffic being re-routed and possible slight increases in latency for end-users in the affected region",
+						"citations": [
+							{
+								"type": "web_search_result_location",
+								"cited_text": "Jun 22, 2026 - 01:00 UTC \u00b7 Scheduled - We will be performing scheduled maintenance in EWR (Newark) datacenter between 2026-06-22 01:00 and 2026-06-23 ...",
+								"url": "https://www.cloudflarestatus.com/",
+								"title": "Cloudflare Status",
+								"encrypted_index": "EpMBCioIERgCIiQ5ODY2MTIzNC03NmUwLTRlMGQtYTgyMS1iZThmOGMzNDc0ZDYSDJDi7bHrQsAHKE2XyhoMimV5R5Mfgyxqh5BAIjBsj5AeeVMgxMoAhe1XZP8OlviYN165ZiKrFB9C1n8+6mBrOo1hC6JP3N0rEsD4HVkqF1NIaWVmLRuNeTfb+AW05r/oItnTNXnSGAQ="
+							}
+						]
+					},
+					{
+						"type": "text",
+						"text": ".\n\nNote: The layoffs of 1,100 employees occurred in May 2026, so that story is from last month rather than this week."
+					}
+				],
+				"model": "claude-sonnet-4-5-20250929",
+				"stop_reason": "end_turn",
+				"usage": {
+					"input_tokens": 13506,
+					"output_tokens": 322
+				},
+				"stop_sequence": null,
+				"stop_details": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.5',\n  {\n    max_tokens: 4096,\n    messages: [\n      {\n        content:\n          'What were the top news stories about Cloudflare this week? Summarise in three bullets.',\n        role: 'user',\n      },\n    ],\n    tools: [{ max_uses: 3, name: 'web_search', type: 'web_search_20250305' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-sonnet-4.5\",\n  \"max_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"What were the top news stories about Cloudflare this week? Summarise in three bullets.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"max_uses\": 3,\n      \"name\": \"web_search\",\n      \"type\": \"web_search_20250305\"\n    }\n  ]\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
 	"external_info": "https://www.anthropic.com/claude/sonnet",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/anthropic/claude-sonnet-4.5.png",
@@ -406,11 +637,12 @@
 		"Architecture": "Transformer",
 		"Extended Thinking": "Yes"
 	},
-	"created_at": "2026-04-13 16:45:14",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"request_formats": [
+		"anthropic-messages"
+	],
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-05-22 17:52:57",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -444,12 +676,32 @@
 												"text": {
 													"type": "string"
 												},
-												"source": {}
+												"source": {},
+												"cache_control": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "ephemeral"
+														},
+														"ttl": {
+															"type": "string",
+															"enum": [
+																"5m",
+																"1h"
+															]
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": false
+												}
 											},
 											"required": [
 												"type"
 											],
-											"additionalProperties": false
+											"additionalProperties": {}
 										}
 									}
 								]

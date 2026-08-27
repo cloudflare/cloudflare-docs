@@ -24,19 +24,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/product-photography.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/product-photography.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows\",\n    \"aspect_ratio\": \"1:1\",\n    \"output_format\": \"png\"\n  }\n}'"
 				}
 			]
 		},
@@ -52,19 +57,24 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/fantasy-illustration.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/fantasy-illustration.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows',\n    aspect_ratio: '16:9',\n    image_size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows',\n    aspect_ratio: '16:9',\n    image_size: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows\",\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"2K\"\n  }\n}'"
 				}
 			]
 		},
@@ -74,26 +84,31 @@
 			"input": {
 				"prompt": "A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset",
 				"aspect_ratio": "16:9",
-				"output_format": "jpg",
-				"image_size": "4K"
+				"image_size": "4K",
+				"output_format": "jpg"
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/architectural-visualization.jpg"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/architectural-visualization.jpg"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    output_format: 'jpg',\n    image_size: '4K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'jpg',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset\",\n    \"aspect_ratio\": \"16:9\",\n    \"image_size\": \"4K\",\n    \"output_format\": \"jpg\"\n  }\n}'"
 				}
 			]
 		},
@@ -108,35 +123,43 @@
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/character-design.png"
 			},
 			"raw_response": {
-				"state": "Completed",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				},
 				"result": {
 					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/character-design.png"
 				},
-				"gatewayMetadata": {
-					"keySource": "Unified"
-				}
+				"state": "Completed"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles',\n    aspect_ratio: '3:2',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles',\n    aspect_ratio: '3:2',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles\",\n    \"aspect_ratio\": \"3:2\"\n  }\n}'"
 				}
 			]
 		}
 	],
+	"default_example": null,
+	"code_snippets": [],
 	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
 	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/nano-banana-pro.png",
 	"metadata": {
 		"Output Format": "JPEG"
 	},
-	"created_at": "2026-04-08 22:01:25",
-	"default_example": null,
-	"code_snippets": [],
-	"zdr": false,
-	"zdr_comment": null,
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-05-22 17:53:13",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

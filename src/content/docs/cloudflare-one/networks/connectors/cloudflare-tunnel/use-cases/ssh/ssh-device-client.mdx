@@ -85,7 +85,7 @@ Hostname routes allow you to SSH directly to `ssh.internal.local` without managi
 	When you create a hostname route in Cloudflare Tunnel:
 
 	1. Users SSH to your private hostname (for example, `ssh user@ssh.internal.local`).
-	2. Gateway resolves the hostname to an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> from a CGNAT range.
+	2. Gateway resolves the hostname to an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>.
 	3. Traffic routes through the WARP tunnel to Cloudflare.
 	4. Gateway network policies evaluate the connection.
 	5. Cloudflared proxies the connection to your SSH server's private IP.
@@ -98,15 +98,16 @@ If you do not have a private DNS resolver configured or would rather SSH to an I
 
 To add a hostname route to your tunnel:
 
-1. In your tunnel configuration, go to the **Hostname routes** tab.
-2. Enter the hostname of your SSH server (for example, `ssh.internal.local`).
+1. Go to **Networking** > **Tunnels** and select your tunnel.
+2. On the **Routes** tab, select **Add route**, then select **Private hostname**.
+3. Enter the hostname of your SSH server (for example, `ssh.internal.local`).
 
     <Render
       file="tunnel/hostname-format-restrictions"
       product="cloudflare-one"
     />
 
-3. Select **Complete setup**.
+4. Select **Save**.
 
 ### 3.2 Configure DNS resolution
 
@@ -150,7 +151,8 @@ The output should contain the server's private IP address (the **Internal IP** o
 
 To connect to private hostnames, Cloudflare One Clients must be configured to forward the following traffic to Cloudflare:
 
-- Initial resolved IPs (CGNAT range: `100.64.0.0/10`)
+- Initial resolved IPs:
+  <Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one" />
 - DNS queries for your private hostname
 
 #### 3.3.1 Configure Split Tunnels
@@ -256,7 +258,7 @@ If you cannot connect, verify the following:
 
    Non-authoritative answer:
    Name:	ssh.internal.local
-   Address: 100.80.200.48
+   Address: 172.64.128.48
    ```
 
    The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
@@ -273,8 +275,8 @@ If you cannot connect, verify the following:
 
 		```sh output
 		...
-		Authenticated to ssh.internal.local ([100.80.200.48]:22) using "publickey".
+		Authenticated to ssh.internal.local ([172.64.128.48]:22) using "publickey".
 		...
 		```
 
-		Look for a line showing connection to an IP in the `100.64.0.0/10` range. If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the server's private IP.
+		Look for a line showing connection to an IP in your account's [initial resolved IP range](/cloudflare-one/networks/routes/reserved-ips/#gateway-initial-resolved-ips). If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the server's private IP.

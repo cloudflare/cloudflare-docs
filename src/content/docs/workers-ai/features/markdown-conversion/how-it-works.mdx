@@ -34,6 +34,8 @@ more details.
 
 Images take a bit more work to prepare for conversion.
 
+For animated GIF files, only the first frame is extracted and analyzed. The remaining frames are discarded.
+
 As a first step, we detect what type the image is. If it is an SVG (Scalable Vector Graphics) file, we need to convert it into a raster format so that using the necessary Workers AI models does not fail. In this case, SVGs are converted into PNGs internally.
 
 Afterwards:
@@ -43,7 +45,7 @@ Afterwards:
 - The image is sent to an **object-detection model**. Specifically, we use the [`@cf/facebook/detr-resnet-50`](/workers-ai/models/detr-resnet-50/) from Workers AI.
 - If any objects were detected in the previous step, they are appended to a prompt that is used to instruct an **image-to-text model** on how to describe the image.
 - If a preferred conversion language is specified in the request's conversion options, the previous prompt is enriched with a directive for the model to output the content in the desired language. Refer to [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/#images) for more details.
-- The final prompt is sent, along with the image data, to the [`@cf/google/gemma-3-12b-it`](/workers-ai/models/gemma-3-12b-it/) model, also from Workers AI.
+- The final prompt is sent, along with the image data, to the [`@cf/google/gemma-4-26b-a4b-it`](/workers-ai/models/gemma-4-26b-a4b-it/) model, also from Workers AI.
 
 ### PDFs
 

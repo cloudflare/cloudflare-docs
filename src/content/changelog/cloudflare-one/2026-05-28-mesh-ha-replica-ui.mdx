@@ -1,0 +1,30 @@
+---
+title: High availability replica management for Cloudflare Mesh
+description: View per-replica status, Mesh IPs, and connection details for HA-enabled Mesh nodes. Manually promote a passive replica to active directly from the dashboard.
+date: 2026-05-28
+products:
+  - mesh
+---
+
+The [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) dashboard now shows per-replica details for [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) nodes. You can see which replica is active, view each replica's Mesh IP and connection details, and manually trigger failover — all from the node detail page.
+
+![Mesh HA replica tabs showing active and passive replicas with per-replica Mesh IPs and a manual failover option](~/assets/images/changelog/cloudflare-one/mesh-ha-replicas.gif)
+
+### What's new
+
+- **Replica tabs** on the node detail page — switch between replicas to see each one's Mesh IP, edge data center, origin IP, platform, version, and uptime.
+- **Active/passive badges** identify which replica is currently routing traffic.
+- **Manual failover** — promote a passive replica to active with a single click. The previous active replica switches to standby.
+- **HA badge** in the overview table identifies nodes running multiple replicas.
+- **Active replica IP** shown in the overview table — the dashboard now resolves which replica is active and displays the correct Mesh IP.
+
+### Manual failover
+
+To manually promote a passive replica:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh), go to **Networking** > **Mesh**.
+2. Select an HA-enabled node.
+3. Select the passive replica tab.
+4. Select **Promote to active** and confirm.
+
+Traffic reroutes to the promoted replica immediately. Refer to [High availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) for details on failover behavior.

@@ -1,0 +1,33 @@
+releaseNotes: |-
+  This package is the same release as 2026.6.822.0, with a fix for our RPM package. Previously the repository served a single build to every OS version, so an install could pull a dependency that isn't available on that release. The repository now serves the correct build for each operating system version, so installs automatically pull the dependencies that version requires. Debian and Ubuntu were not affected.
+
+  If you installed version 2026.6.822.0 on an RPM-based distribution, we recommend refreshing your repository configuration:
+  ```bash
+  sudo curl -fsSL https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo
+  sudo dnf clean all
+  sudo dnf install cloudflare-warp
+  ```
+version: 2026.6.836.0
+releaseDate: 2026-07-01T19:48:17.796Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/resolute-intel/version/2026.6.836.0
+packageSize: 74385660
+platformName: Linux
+linuxPlatforms:
+  resolute-intel: 74385660
+  trixie-intel: 74392576
+  jammy-arm: 73423758
+  trixie-arm: 73732456
+  noble-intel: 74385120
+  fedora44-intel: 77126870
+  bookworm-arm: 73442194
+  fedora43-arm: 75967809
+  jammy-intel: 74631278
+  fedora44-arm: 76000605
+  bookworm-intel: 74634824
+  fedora43-intel: 77129159
+  noble-arm: 73919322
+  resolute-arm: 73687566
+  almalinux9-intel: 77049157
+  almalinux9-arm: 76200322
+  almalinux10-arm: 75988921
+  almalinux10-intel: 77108835

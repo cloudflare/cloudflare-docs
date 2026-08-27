@@ -1,0 +1,409 @@
+---
+pcx_content_type: reference
+title: MCP handler APIs
+description: Create stateless or legacy MCP server handlers for Cloudflare Workers with the Agents SDK.
+tags:
+  - MCP
+sidebar:
+  order: 24
+products:
+  - agents
+---
+
+import { LinkCard, PackageManagers, TypeScriptExample } from "~/components";
+
+The Agents SDK provides two server handler paths:
+
+| API                      | Import path         | MCP server package             | Behavior                                       |
+| ------------------------ | ------------------- | ------------------------------ | ---------------------------------------------- |
+| `createMcpHandler`       | `agents/mcp/server` | `@modelcontextprotocol/server` | stateless with legacy compatibility by default |
+| `createLegacyMcpHandler` | `agents/mcp`        | `@modelcontextprotocol/sdk`    | legacy sessions through `WorkerTransport`      |
+
+`McpAgent` is deprecated and feature-frozen. Migrate existing `McpAgent` servers to a stateless handler. Refer to the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) when sessionful features require a staged rollout.
+
+## Install dependencies
+
+For a stateless server:
+
+<PackageManagers pkg="agents @modelcontextprotocol/server@2.0.0 zod" />
+
+For an explicit legacy server:
+
+<PackageManagers pkg="agents @modelcontextprotocol/sdk@1.30.0 zod" />
+
+Use the exact MCP versions required by your installed Agents release.
+
+## `createMcpHandler`
+
+`createMcpHandler` creates a callable stateless MCP request handler from an MCP SDK v2 server factory. Invoke it from a Worker's object `fetch()` export or compose it inside another handler.
+
+```ts
+import {
+	createMcpHandler,
+	type CreateMcpHandlerOptions,
+	type StatelessMcpHandler,
+} from "agents/mcp/server";
+import type { McpServerFactory } from "@modelcontextprotocol/server";
+
+function createMcpHandler(
+	factory: McpServerFactory,
+	options?: CreateMcpHandlerOptions,
+): StatelessMcpHandler;
+```
+
+### Parameters
+
+- `factory` creates a fresh `McpServer` or `Server` from `@modelcontextprotocol/server`. It can be synchronous or asynchronous.
+- `options` combines Agents Worker options with supported upstream SDK v2 handler options.
+
+The factory receives this request context:
+
+```ts
+interface McpRequestContext {
+	era: "modern" | "legacy";
+	authInfo?: AuthInfo;
+	requestInfo?: Request;
+}
+```
+
+A zero-argument factory remains valid.
+
+### Example
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { McpServer } from "@modelcontextprotocol/server";
+import { createMcpHandler } from "agents/mcp/server";
+import { z } from "zod";
+
+function createServer() {
+	const server = new McpServer({
+		name: "hello-server",
+		version: "1.0.0",
+	});
+
+	server.registerTool(
+		"hello",
+		{
+			description: "Return a greeting",
+			inputSchema: { name: z.string().optional() },
+		},
+		async ({ name }) => ({
+			content: [{ type: "text", text: `Hello, ${name ?? "World"}!` }],
+		}),
+	);
+
+	return server;
+}
+
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer)(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Pass the factory itself. Do not create one global server instance or pass a constructed SDK v2 server directly.
+
+### `CreateMcpHandlerOptions`
+
+The following options are available:
+
+| Option                   | Type                        | Default                                           | Description                                                   |
+| ------------------------ | --------------------------- | ------------------------------------------------- | ------------------------------------------------------------- |
+| `route`                  | `string`                    | `"/mcp"`                                          | Exact path handled by the Worker wrapper                      |
+| `corsOptions`            | `CORSOptions \| false`      | Wildcard CORS                                     | CORS response headers, or `false` to remove them              |
+| `allowedHostnames`       | `string[]`                  | Localhost or `workers.dev` route                  | Optional Host restriction for custom domains                  |
+| `allowedOriginHostnames` | `string[] \| "*"`           | Localhost, `workers.dev`, or concrete CORS Origin | Browser Origin restriction, or explicit middleware delegation |
+| `authContext`            | `McpAuthContext`            | Execution context props                           | Application props returned by `getMcpAuthContext()`           |
+| `legacy`                 | `"stateless" \| "reject"`   | `"stateless"`                                     | legacy compatibility or stateless-only rejection              |
+| `responseMode`           | `"auto" \| "json" \| "sse"` | `"auto"`                                          | stateless request response shaping                            |
+| `onerror`                | `(error: Error) => void`    | None                                              | Out-of-band error reporting                                   |
+| `maxSubscriptions`       | `number`                    | `1,024`                                           | Maximum concurrent listen streams                             |
+| `keepAliveMs`            | `number`                    | `15,000`                                          | Keepalive interval for listen streams                         |
+
+SDK v1 transport options do not apply to this handler. It rejects options such as `transport`, `storage`, `sessionIdGenerator`, `eventStore`, and `enableJsonResponse`.
+
+Use `responseMode: "json"` instead of `enableJsonResponse: true`. JSON mode drops notifications emitted before a final result.
+
+### Factory lifecycle
+
+The handler creates one MCP server for each request. This follows the draft protocol model, where version, identity, and capabilities travel with every request rather than through a protocol session.
+
+Application data can still be durable. Store cross-request data behind an authenticated handle in a Durable Object, D1, KV, or R2 rather than an MCP session ID.
+
+### Elicitation with a stateless handler
+
+Elicitation through a stateless handler returns `input_required` and completes through multi-round-trip requests (MRTR). On each retry, the SDK echoes the latest `requestState` and sends responses for the immediately preceding input round. It does not accumulate earlier `inputResponses`. The Worker does not remain suspended while a user responds.
+
+Use `inputRequired(...)` to request input. Read that round's accepted form content from `context.mcpReq.inputResponses` with `acceptedContent(...)`. Seal trusted intermediate values needed by later rounds into integrity-protected `requestState`.
+
+Refer to the [stateless elicitation example](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) for a two-round tool flow. For stateful pushed requests, refer to [Elicitation on legacy servers](/agents/model-context-protocol/apis/agent-api/#elicitation-on-legacy-servers).
+
+### Origin validation and CORS
+
+The Workers wrapper validates every present browser Origin. It rejects malformed, opaque, and non-HTTP Origins with `403`. Origin-less non-browser MCP clients remain valid.
+
+The default allowlist includes localhost-class Origins, the endpoint's `workers.dev` hostname, and a concrete hostname from `corsOptions.origin`. The handler also applies matching Host checks to localhost and `workers.dev` endpoints. This keeps local DNS rebinding protection without requiring a separate Origin list for the common Workers routes.
+
+For a custom domain with wildcard CORS, set `allowedHostnames` and `allowedOriginHostnames` explicitly. If `corsOptions.origin` is a concrete URL, the handler derives its Origin hostname automatically:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer, {
+			allowedHostnames: ["mcp.example.com"],
+			corsOptions: {
+				origin: "https://app.example.com",
+			},
+		})(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Allowlist values are hostnames without a scheme or port. Origin matching ignores scheme and port.
+
+Set `allowedOriginHostnames: "*"` only when trusted middleware validates Origins before calling the handler. This value turns off the handler Origin check, including malformed and opaque Origin rejection. MCP HTTP servers must validate browser Origins.
+
+CORS response headers are not authentication. Protect the MCP endpoint with OAuth or another authentication layer.
+
+The handler does not infer a Host allowlist from `request.url`. If a deployment accepts arbitrary Host values, validate them before calling the handler. Local servers outside Cloudflare Workers should follow the upstream SDK DNS rebinding guidance.
+
+### Compatibility with legacy clients
+
+The default `legacy: "stateless"` setting accepts ordinary legacy tools, prompts, and resources. This lane uses the SDK v2 web-standard transport and does not import `WorkerTransport`.
+
+This compatibility path does not provide a complete session transport:
+
+- Each POST creates a new server and transport.
+- HTTP GET and DELETE return `405`.
+- No MCP session ID persists.
+- Pushed elicitation, sampling, and roots requests fail immediately.
+- Standalone streams, resumability, replay, and session deletion are unavailable.
+- Published experimental tasks are not supported through this path.
+
+Set `legacy: "reject"` for a stateless-only endpoint. During migration, route legacy clients that still require protocol sessions to a temporary `createLegacyMcpHandler` or `McpAgent` lane.
+
+### Return value
+
+`createMcpHandler` returns a `StatelessMcpHandler`. It is callable and exposes request and notification controls:
+
+```ts
+interface StatelessMcpHandler {
+	(request: Request, env: unknown, ctx: ExecutionContext): Promise<Response>;
+
+	fetch(
+		request: Request,
+		options?: McpHandlerRequestOptions,
+	): Promise<Response>;
+
+	notify: {
+		toolsChanged(): void;
+		promptsChanged(): void;
+		resourcesChanged(): void;
+		resourceUpdated(uri: string): void;
+	};
+}
+
+type McpHandlerRequestOptions = {
+	authInfo?: AuthInfo;
+	parsedBody?: unknown;
+};
+```
+
+#### Invoke the handler
+
+Call the handler from a Worker's object `fetch()` export:
+
+```ts
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer)(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+Do not export the callable directly as a Worker's default export. Wrangler treats function default exports as `WorkerEntrypoint` classes.
+
+Use `fetch()` when another framework or authentication layer has already parsed or validated request data:
+
+```ts
+const response = await handler.fetch(request, {
+	authInfo,
+	parsedBody,
+});
+```
+
+`authInfo` is passed to the server factory and request handlers. The handler does not derive it from request headers or verify access tokens. `parsedBody` avoids reparsing a JSON body that upstream middleware already consumed.
+
+#### Publish list and resource changes
+
+The `notify` methods publish typed change events to matching open `subscriptions/listen` streams:
+
+| Method                        | MCP notification                       |
+| ----------------------------- | -------------------------------------- |
+| `notify.toolsChanged()`       | `notifications/tools/list_changed`     |
+| `notify.promptsChanged()`     | `notifications/prompts/list_changed`   |
+| `notify.resourcesChanged()`   | `notifications/resources/list_changed` |
+| `notify.resourceUpdated(uri)` | `notifications/resources/updated`      |
+
+Calling a notifier when no matching subscription is open is a no-op.
+
+#### Keep one handler for notifications
+
+Notification routing belongs to the handler instance. Constructing a new handler inside every Worker `fetch()` call is suitable for ordinary tools, prompts, resources, and MRTR elicitation. It cannot notify a `subscriptions/listen` stream owned by an earlier handler instance.
+
+Create the handler once at module scope when using `notify` or `subscriptions/listen`, then invoke it from the Worker object export:
+
+```ts
+const handler = createMcpHandler(createServer);
+
+export default {
+	fetch(request, env, ctx) {
+		return handler(request, env, ctx);
+	},
+} satisfies ExportedHandler;
+```
+
+Notifications are isolate-local. A notification published in one Worker isolate does not reach a subscription stream running in another isolate.
+
+## `createLegacyMcpHandler`
+
+`createLegacyMcpHandler` serves an SDK v1 server through `WorkerTransport`.
+
+```ts
+import {
+	createLegacyMcpHandler,
+	type CreateLegacyMcpHandlerOptions,
+	type LegacyMcpHandler,
+} from "agents/mcp";
+import type { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+function createLegacyMcpHandler(
+	server: McpServer | Server,
+	options?: CreateLegacyMcpHandlerOptions,
+): LegacyMcpHandler;
+```
+
+Use this handler only as a temporary migration bridge when an existing SDK v1 endpoint still requires legacy sessions, transport storage, event replay, or pushed server-to-client requests.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { createLegacyMcpHandler } from "agents/mcp";
+
+function createServer() {
+	return new McpServer({ name: "legacy-server", version: "1.0.0" });
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		return createLegacyMcpHandler(createServer())(request, env, ctx);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Passing an SDK v1 server to `createMcpHandler` still works but emits a deprecation warning. Move the server to an SDK v2 factory and pass the factory to `createMcpHandler`. If sessionful behavior prevents an immediate migration, use `createLegacyMcpHandler` only on the temporary legacy lane.
+
+`experimental_createMcpHandler` is also deprecated. Move its SDK v1 server to an SDK v2 factory. Use `createLegacyMcpHandler` only as a temporary bridge for sessionful behavior.
+
+### `CreateLegacyMcpHandlerOptions`
+
+`CreateLegacyMcpHandlerOptions` extends `WorkerTransportOptions` and adds these fields:
+
+| Option        | Type              | Default                 | Description                           |
+| ------------- | ----------------- | ----------------------- | ------------------------------------- |
+| `route`       | `string`          | `"/mcp"`                | Exact path handled by the handler     |
+| `authContext` | `McpAuthContext`  | Execution context props | Application props for tool handlers   |
+| `transport`   | `WorkerTransport` | New transport           | Persistent or preconfigured transport |
+
+Common `WorkerTransportOptions` include:
+
+| Option                                    | Description                                                |
+| ----------------------------------------- | ---------------------------------------------------------- |
+| `sessionIdGenerator`                      | Creates protocol session IDs                               |
+| `enableJsonResponse`                      | Returns JSON instead of SSE where supported                |
+| `storage`                                 | Persists transport state through an `{ get, set }` adapter |
+| `eventStore`                              | Persists events for replay and stream recovery             |
+| `corsOptions`                             | Adds CORS response and preflight headers                   |
+| `onsessioninitialized`, `onsessionclosed` | Observe session lifecycle changes                          |
+
+Create a fresh SDK v1 server for each request unless you provide a persistent transport already connected to that server. One server cannot reconnect to several transports.
+
+## Authentication context
+
+A compatible `@cloudflare/workers-oauth-provider` supplies verified standard `AuthInfo` to SDK v2 callbacks at `context.http.authInfo`.
+
+The existing `getMcpAuthContext()` helper continues to return application props:
+
+```ts
+interface McpAuthContext {
+	props: Record<string, unknown>;
+}
+```
+
+<TypeScriptExample>
+
+```ts
+import { getMcpAuthContext } from "agents/mcp/server";
+
+server.registerTool(
+	"whoami",
+	{ description: "Return the current identity", inputSchema: {} },
+	async (_args, context) => {
+		const auth = getMcpAuthContext();
+
+		return {
+			content: [
+				{
+					type: "text",
+					text: JSON.stringify({
+						clientId: context.http?.authInfo?.clientId,
+						scopes: context.http?.authInfo?.scopes,
+						userId: auth?.props.userId,
+					}),
+				},
+			],
+		};
+	},
+);
+```
+
+</TypeScriptExample>
+
+Do not log or return `authInfo.token` or `authInfo.extra.props`.
+
+## Migration
+
+Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) before changing an existing server. The migration guide covers dual-era routing, stateful servers, client changes, and rollout checks.
+
+## Related resources
+
+<LinkCard
+	title="Migrate to MCP SDK v2"
+	href="/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/"
+	description="Choose a migration path and roll out the SDK upgrade."
+/>
+
+<LinkCard
+	title="McpAgent API"
+	href="/agents/model-context-protocol/apis/agent-api/"
+	description="Reference for the deprecated, feature-frozen stateful server path during migration."
+/>
+
+<LinkCard
+	title="Secure MCP servers"
+	href="/agents/model-context-protocol/guides/securing-mcp-server/"
+	description="Protect an MCP endpoint with OAuth."
+/>

@@ -79,7 +79,7 @@ This usually indicates a missing dependency, such as .NET Framework `4.7.2` or l
 If WSL2 loses connectivity, check your [split tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). The IP range used by WSL to communicate with the host may be accidentally included in the tunnel. Exclude the WSL network range to restore connectivity.
 
 ### SMTP port 25 blocked
-By default, the client blocks outgoing traffic on port `25` to prevent spam. Use port `587` or `465` for encrypted email, or contact your account team to request an unblock.
+The client blocks outgoing traffic on port `25` to prevent spam and reputational harm to IP adresses used by customers. Use port `587` or `465` for encrypted email.
 
 ### Admin override codes expired
 [Admin override codes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) are time-sensitive and adhere to fixed-hour blocks. A code generated at 9:30 AM with a 1-hour timeout will expire at 10:00 AM because its validity is counted within the 9:00 AM-10:00 AM window.

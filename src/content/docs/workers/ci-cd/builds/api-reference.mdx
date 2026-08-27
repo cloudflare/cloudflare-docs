@@ -16,7 +16,7 @@ This guide shows you how to use the [Workers Builds REST API](/api/resources/wor
 
 ### 1. Create an API token with the correct permissions
 
-To use the Builds API, you need an API token to authenticate your requests. The Builds API requires a **user-scoped** API token, account-scoped tokens are not supported and will return "Invalid token" errors.
+To use the Builds API, you need an API token to authenticate your requests. The Builds API requires a **user-scoped** API token. Account-scoped tokens are not supported and will return "Invalid token" errors.
 
 Create your token at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens) with the following permissions:
 
@@ -27,8 +27,8 @@ Create your token at [dash.cloudflare.com/profile/api-tokens](https://dash.cloud
 
 <Aside type="note">
 	This API token is different from a **build token**. Build tokens are used by
-	the build system to deploy your Worker — you will need a build token UUID
-	when [creating triggers](#step-4-get-your-build-token-uuid). The API token
+	the build system to deploy your Worker — you will need a build token UUID when
+	[creating triggers](#step-4-get-your-build-token-uuid). The API token
 	described above is what you use to call the Builds API itself.
 </Aside>
 
@@ -49,19 +49,19 @@ A **trigger** is a configuration that defines how your Worker gets built and dep
 
 **Trigger fields:**
 
-| Field                   | Type    | Description                                                              |
-| ----------------------- | ------- | ------------------------------------------------------------------------ |
-| `trigger_name`          | string  | Display name for the trigger                                             |
+| Field                   | Type    | Description                                                                                                                                                                                                                                          |
+| ----------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `trigger_name`          | string  | Display name for the trigger                                                                                                                                                                                                                         |
 | `build_token_uuid`      | string  | UUID of the build token used to deploy your Worker. Find this in your Worker's **Settings** > **Builds** > **API token** section, or via the [`GET /builds/tokens`](/api/resources/workers_builds/subresources/build_tokens/methods/list/) endpoint. |
-| `build_command`         | string  | Command to build your project (for example, `npm run build`)             |
-| `deploy_command`        | string  | Command to deploy your Worker (for example, `npx wrangler deploy`)       |
-| `root_directory`        | string  | Path to your project root                                                |
-| `branch_includes`       | array   | Branch patterns that trigger builds (for example, `["main"]` or `["*"]`) |
-| `branch_excludes`       | array   | Branch patterns to exclude                                               |
-| `path_includes`         | array   | File path patterns that trigger builds                                   |
-| `path_excludes`         | array   | File path patterns to ignore                                             |
-| `build_caching_enabled` | boolean | Enable or disable build caching                                          |
-| `environment_variables` | object  | Build-time variables specific to this trigger                            |
+| `build_command`         | string  | Command to build your project (for example, `npm run build`)                                                                                                                                                                                         |
+| `deploy_command`        | string  | Command to deploy your Worker (for example, `npx wrangler deploy`)                                                                                                                                                                                   |
+| `root_directory`        | string  | Path to your project root                                                                                                                                                                                                                            |
+| `branch_includes`       | array   | Branch patterns that trigger builds (for example, `["main"]` or `["*"]`)                                                                                                                                                                             |
+| `branch_excludes`       | array   | Branch patterns to exclude                                                                                                                                                                                                                           |
+| `path_includes`         | array   | File path patterns that trigger builds                                                                                                                                                                                                               |
+| `path_excludes`         | array   | File path patterns to ignore                                                                                                                                                                                                                         |
+| `build_caching_enabled` | boolean | Enable or disable build caching                                                                                                                                                                                                                      |
+| `environment_variables` | object  | Build-time variables specific to this trigger                                                                                                                                                                                                        |
 
 ## Workflow overview
 
@@ -69,14 +69,14 @@ Most Builds API operations follow this pattern: first get your Worker's tag, the
 
 ![Workflow overview: get Worker tag, then get trigger UUID, then perform build operations.](~/assets/images/workers/builds/workflow-overview.svg)
 
-| Step | Action              | Endpoint                                              |
-| ---- | ------------------- | ----------------------------------------------------- |
-| 1    | Get Worker tag      | `GET /workers/scripts`                                |
-| 2    | Get trigger UUID    | `GET /builds/workers/:worker_tag/triggers`             |
-| 3a   | Trigger a build     | `POST /builds/triggers/:trigger_uuid/builds`           |
-| 3b   | List builds         | `GET /builds/workers/:worker_tag/builds`               |
-| 3c   | Get build logs      | `GET /builds/builds/:build_uuid/logs`                  |
-| 3d   | Cancel a build      | `PUT /builds/builds/:build_uuid/cancel`                |
+| Step | Action           | Endpoint                                     |
+| ---- | ---------------- | -------------------------------------------- |
+| 1    | Get Worker tag   | `GET /workers/scripts`                       |
+| 2    | Get trigger UUID | `GET /builds/workers/:worker_tag/triggers`   |
+| 3a   | Trigger a build  | `POST /builds/triggers/:trigger_uuid/builds` |
+| 3b   | List builds      | `GET /builds/workers/:worker_tag/builds`     |
+| 3c   | Get build logs   | `GET /builds/builds/:build_uuid/logs`        |
+| 3d   | Cancel a build   | `PUT /builds/builds/:build_uuid/cancel`      |
 
 ## Step 1: Get your Worker tag
 
@@ -150,9 +150,9 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
 
 You must specify `branch`, `commit_hash`, or both:
 
-| Field         | Description                                    |
-| ------------- | ---------------------------------------------- |
-| `branch`      | Git branch name to build (for example, `main`) |
+| Field         | Description                                                                                          |
+| ------------- | ---------------------------------------------------------------------------------------------------- |
+| `branch`      | Git branch name to build (for example, `main`)                                                       |
 | `commit_hash` | Specific commit SHA to build. If provided without `branch`, builds the commit on its current branch. |
 
 The response includes the `build_uuid` which you can use to monitor the build.
@@ -300,7 +300,7 @@ This example walks through the complete process of connecting a GitHub repositor
 | 4    | Get build token UUID        | `GET /builds/tokens`                                              |
 | 5a   | Create production trigger   | `POST /builds/triggers`                                           |
 | 5b   | Create preview trigger      | `POST /builds/triggers`                                           |
-| 6    | Set environment variables   | `PATCH /builds/triggers/:trigger_uuid/environment_variables`       |
+| 6    | Set environment variables   | `PATCH /builds/triggers/:trigger_uuid/environment_variables`      |
 | 7    | Trigger first build         | `POST /builds/triggers/:trigger_uuid/builds`                      |
 
 #### Prerequisites
@@ -423,6 +423,10 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
 
 Note the different `deploy_command`: production uses `wrangler deploy` while preview uses `wrangler versions upload` to create preview URLs without affecting the live deployment.
 
+:::note
+Preview URLs are not generated for Durable Object Workers, including [Containers](/containers/). Refer to [Preview URL limitations](/workers/versions-and-deployments/preview-urls/#limitations).
+:::
+
 #### Step 7: Set environment variables for each trigger
 
 Set production environment variables:
@@ -467,11 +471,11 @@ Redeploy your current active deployment to refresh build-time data. This is usef
 
 ![Redeploy flow: get active deployment, find the build for that version, retrigger with same branch and commit.](~/assets/images/workers/builds/redeploy-flow.svg)
 
-| Step | Action                            | Endpoint                                              |
-| ---- | --------------------------------- | ----------------------------------------------------- |
-| 1    | Get active deployment             | `GET /workers/scripts/:worker_name/deployments`        |
-| 2    | Find the build for that version   | `GET /builds/builds?version_ids=:version_id`           |
-| 3    | Retrigger with same branch/commit | `POST /builds/triggers/:trigger_uuid/builds`           |
+| Step | Action                            | Endpoint                                        |
+| ---- | --------------------------------- | ----------------------------------------------- |
+| 1    | Get active deployment             | `GET /workers/scripts/:worker_name/deployments` |
+| 2    | Find the build for that version   | `GET /builds/builds?version_ids=:version_id`    |
+| 3    | Retrigger with same branch/commit | `POST /builds/triggers/:trigger_uuid/builds`    |
 
 **Step 1: Get the active deployment's version ID**
 

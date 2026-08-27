@@ -25,6 +25,8 @@ Regional Services can be used with Gateway in all [supported regions](/data-loca
 Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
 This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/).
 
+Zero Trust [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) control the IPs used by WARP and Gateway traffic when it leaves Cloudflare toward the Internet. They are different from [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), which control the IPs used by the Cloudflare CDN when connecting to your origin server. For guaranteed egress IP geolocation from the Cloudflare CDN to your origin, refer to the [Cache](/data-localization/how-to/cache/#egress-to-origin) guide.
+
 ### HTTP policies
 
 As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)).
@@ -37,10 +39,6 @@ As part of Regional Services, Cloudflare Gateway will only perform [TLS decrypti
 You are able to [log the payload of matched DLP rules](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) and encrypt them with your public key so that only you can examine them later.
 
 [Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#data-privacy).
-
-### Network policies
-
-You are able to [configure SSH proxy and command logs](/cloudflare-one/traffic-policies/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
 
 ### DNS policies
 
@@ -67,11 +65,13 @@ Customers also have the option to reduce the logs that Cloudflare stores:
 
 ## Access
 
-To ensure that all reverse proxy requests for applications protected by Cloudflare Access will only occur in FedRAMP-compliant data centers, you should use [Regional Services](/data-localization/regional-services/get-started/) with the region set to FedRAMP.
+To ensure that all reverse proxy requests for applications protected by Cloudflare Access will only occur in FedRAMP-compliant data centers, you should use [Regional Services](/data-localization/regional-services/regional-hostnames/) with the region set to FedRAMP.
 
 ## Cloudflare Tunnel
 
-You can [configure Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
+The [`--region` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) in `cloudflared` controls where the tunnel connector establishes its connection to Cloudflare. This setting is separate from Regional Services, which controls where user traffic is decrypted and processed.
+
+For public hostnames served through a tunnel, Regional Services is configured at the DNS record level. The tunnel connector region and the Regional Services region operate independently.
 
 ## Cloudflare One Client settings
 

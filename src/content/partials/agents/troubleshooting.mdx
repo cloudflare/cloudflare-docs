@@ -1,0 +1,111 @@
+---
+{}
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+## Troubleshooting
+
+### Agent not found, or 404 errors
+
+1. **Check the export** - Agent class must be exported from your main entry point.
+2. **Check the binding** - `class_name` in the Wrangler configuration file must exactly match the exported class name.
+3. **Check the route** - Default route is `/agents/{'{agent-name}'}/{'{instance-name}'}`. Agent name in client matches the class name (case-insensitive).
+
+### No such Durable Object class error
+
+Add the migration to the Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["YourAgentClass"]
+```
+
+</WranglerConfig>
+
+### WebSocket connection fails
+
+Ensure your routing passes the response unchanged:
+
+<TypeScriptExample>
+
+```ts
+// Correct - return the response directly
+const agentResponse = await routeAgentRequest(request, env);
+if (agentResponse) return agentResponse;
+
+// Wrong - this breaks WebSocket connections
+if (agentResponse) return new Response(agentResponse.body);
+```
+
+</TypeScriptExample>
+
+### State not persisting
+
+Check that:
+
+1. You are calling `this.setState()`, not mutating `this.state` directly.
+2. The agent class is in `new_sqlite_classes` in migrations.
+3. You are connecting to the same agent instance name.
+4. The `onStateUpdate` callback is wired up in your client.
+5. WebSocket connection is established (check browser dev tools).
+
+### "Method X is not callable" errors
+
+Make sure your methods are decorated with `@callable()`:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+export class MyAgent extends Agent {
+	@callable()
+	increment() {
+		// ...
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Type errors with `agent.stub`
+
+Add the agent and state type parameters:
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents/react";
+import type { CounterAgent, CounterState } from "./server";
+
+// Pass the agent and state types to useAgent
+const agent = useAgent<CounterAgent, CounterState>({
+	agent: "CounterAgent",
+	onStateUpdate: (state) => setCount(state.count),
+});
+
+// Now agent.stub is fully typed
+agent.stub.increment();
+```
+
+</TypeScriptExample>
+
+### `SyntaxError: Invalid or unexpected token` with `@callable()`
+
+If your dev server fails with `SyntaxError: Invalid or unexpected token`, set `"target": "ES2021"` in your `tsconfig.json`. This ensures that Vite's esbuild transpiler downlevels TC39 decorators instead of passing them through as native syntax.
+
+```json
+{
+	"compilerOptions": {
+		"target": "ES2021"
+	}
+}
+```
+
+:::caution
+Do not set `"experimentalDecorators": true` in your `tsconfig.json`. The Agents SDK uses [TC39 standard decorators](https://github.com/tc39/proposal-decorators), not TypeScript legacy decorators. Enabling `experimentalDecorators` applies an incompatible transform that silently breaks `@callable()` at runtime.
+:::

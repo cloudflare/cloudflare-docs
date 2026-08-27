@@ -1,7 +1,7 @@
 ---
 
 summary: Send invoice when shopping cart is checked out and paid for
-products: [d1, email-routing]
+products: [d1, email-service]
 tags:
   - TypeScript
 pcx_content_type: example
@@ -16,7 +16,7 @@ import { TabItem, Tabs, WranglerConfig, Render } from "~/components";
 
 In this example, we implement a Workflow for an e-commerce website that is triggered every time a shopping cart is created.
 
-Once a Workflow instance is triggered, it starts polling a [D1](/d1) database for the cart ID until it has been checked out. Once the shopping cart is checked out, we proceed to process the payment with an external provider doing a fetch POST. Finally, assuming everything goes well, we try to send an email using [Email Workers](/email-routing/email-workers/) with the invoice to the customer.
+Once a Workflow instance is triggered, it starts polling a [D1](/d1) database for the cart ID until it has been checked out. Once the shopping cart is checked out, we proceed to process the payment with an external provider doing a fetch POST. Finally, assuming everything goes well, we try to send an email using [Email Workers](/email-service/api/route-emails/email-handler/) with the invoice to the customer.
 
 As you can see, Workflows handles all the different service responses and failures; it will retry D1 until the cart is checked out, retry the payment processor if it fails for some reason, and retry sending the email with the invoice if it can't. The developer doesn't have to care about any of that logic, and the workflow can run for hours, handling all the possible conditions until it is completed.
 
@@ -121,7 +121,7 @@ export class cartInvoicesWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 		// Send invoice to the customer, retry 10 times every 5 minutes or give up
 		// Requires that cart.account.email has previously been validated in Email Routing,
-		// See https://developers.cloudflare.com/email-routing/email-workers/
+		// See https://developers.cloudflare.com/email-service/api/route-emails/email-handler/
 		await step.do(
 			"send invoice",
 			{

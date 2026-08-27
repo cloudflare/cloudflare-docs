@@ -18,10 +18,14 @@ Private Network Load Balancing enables you to load balance traffic between serve
 
 Private Network Load Balancing supports not only public IPs but also virtual IPs and private IPs as endpoint values.
 
+---
+
 :::note
 
 This page assumes a certain level of familiarity with how the Cloudflare Load Balancing solution works. For an introductory overview refer to [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
 :::
+
+---
 
 ---
 
@@ -38,6 +42,10 @@ Currently, to be able to connect to private IP origins, Cloudflare load balancer
 Once the endpoint and virtual network (VNet) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
 
 Refer to [Set up Private Network Load Balancing for Public traffic to Tunnel](/load-balancing/private-network/public-to-tunnel/) for a detailed guide.
+
+:::note
+If your application only needs TCP or UDP proxying (not load balancing), you can skip the Load Balancer and attach Spectrum directly to a virtual network. Refer to [Create a Spectrum application using a virtual network](/spectrum/get-started/#create-a-spectrum-application-using-a-virtual-network-origin).
+:::
 
 ### Cloudflare WAN
 

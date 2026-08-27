@@ -23,10 +23,9 @@ To get started, open a terminal window and run:
 <PackageManagers type="create" pkg="cloudflare@latest" args={"r2-worker"} />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "JavaScript",
 	}}
@@ -93,7 +92,7 @@ Within your Worker code, your bucket is now available under the `MY_BUCKET` vari
 
 By default `wrangler dev` runs in local development mode. In this mode, all operations performed by your local worker will operate against local storage on your machine.
 
-If you want the R2 operations that are performed during development to be performed against a real R2 bucket, you can set `"remote" : true` in the R2 binding configuration. Refer to [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
+If you want the R2 operations that are performed during development to be performed against a real R2 bucket, you can set `"remote" : true` in the R2 binding configuration. Refer to [remote bindings documentation](/workers/local-development/#remote-bindings) for more information.
 
 :::
 
@@ -112,14 +111,14 @@ export default class extends WorkerEntrypoint<Env> {
 
     switch (request.method) {
       case "PUT": {
-        await this.env.R2.put(key, request.body, {
+        await this.env.MY_BUCKET.put(key, request.body, {
           onlyIf: request.headers,
           httpMetadata: request.headers,
         });
         return new Response(`Put ${key} successfully!`);
       }
       case "GET": {
-        const object = await this.env.R2.get(key, {
+        const object = await this.env.MY_BUCKET.get(key, {
           onlyIf: request.headers,
           range: request.headers,
         });
@@ -139,7 +138,7 @@ export default class extends WorkerEntrypoint<Env> {
         });
       }
       case "DELETE": {
-        await this.env.R2.delete(key);
+        await this.env.MY_BUCKET.delete(key);
         return new Response("Deleted!");
       }
       default:
@@ -162,14 +161,14 @@ export default {
 
     switch (request.method) {
       case "PUT": {
-        await this.env.R2.put(key, request.body, {
+        await env.MY_BUCKET.put(key, request.body, {
           onlyIf: request.headers,
           httpMetadata: request.headers,
         });
         return new Response(`Put ${key} successfully!`);
       }
       case "GET": {
-        const object = await this.env.R2.get(key, {
+        const object = await env.MY_BUCKET.get(key, {
           onlyIf: request.headers,
           range: request.headers,
         });
@@ -189,7 +188,7 @@ export default {
         });
       }
       case "DELETE": {
-        await this.env.R2.delete(key);
+        await env.MY_BUCKET.delete(key);
         return new Response("Deleted!");
       }
       default:
@@ -216,7 +215,7 @@ class Default(WorkerEntrypoint):
 		key = url.path[1:]
 
 		if request.method == "PUT":
-			await self.env.R2.put(
+			await self.env.MY_BUCKET.put(
 				key,
 				request.body,
 				onlyIf=request.headers,
@@ -224,7 +223,7 @@ class Default(WorkerEntrypoint):
 			)
 			return Response(f"Put {key} successfully!")
 		elif request.method == "GET":
-			obj = await self.env.R2.get(
+			obj = await self.env.MY_BUCKET.get(
 				key,
 				onlyIf=request.headers,
 				range=request.headers,
@@ -240,7 +239,7 @@ class Default(WorkerEntrypoint):
 			headers = {"etag": obj.httpEtag}
 			return Response(body, status=status, headers=headers)
 		elif request.method == "DELETE":
-			await self.env.R2.delete(key)
+			await self.env.MY_BUCKET.delete(key)
 			return Response("Deleted!")
 		else:
 			return Response(
@@ -251,6 +250,7 @@ class Default(WorkerEntrypoint):
 ```
 </TabItem>
 </Tabs>
+
 <Render file="request-dot-clone-warning" product="workers" />
 
 ## 5. Bucket access and privacy

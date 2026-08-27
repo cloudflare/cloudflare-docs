@@ -1,88 +1,175 @@
 ---
-import { Image } from "astro:assets";
+/**
+ * Header — the changelog hero: title, RSS button, tagline, and a product
+ * filter.
+ *
+ * Design: Nimbus changelog feature (registry/features/changelog.md, 5g).
+ * Adapted to the kept product model — the filter is the composable
+ * <Combobox> whose options navigate to the per-product / per-group
+ * views (and "All products" → /changelog/). The RSS href is contextual.
+ */
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import PageHeader from "~/components/PageHeader.astro";
 import { directory, directoryByGroup, groups } from "~/util/directory";
 import { changelogProductIds } from "~/util/changelog";
-
-import RSSButton from "~/components/RSSButton.astro";
-import ProductSelect from "~/components/changelog/ProductSelect";
-import HeroImage from "~/assets/images/changelog/hero.svg";
+import { LinkButton } from "~/components/ui/link-button";
+import {
+	Combobox,
+	ComboboxOption,
+	ComboboxGroup,
+	ComboboxGroupLabel,
+} from "~/components/ui/combobox";
 
 interface Props {
-	showProductSelect?: boolean;
+	heading?: string;
+	tagline?: string;
+	/** RSS feed for the current view (defaults to the all-products feed). */
+	rssHref?: string;
+	/** Show the product filter. */
+	showFilter?: boolean;
 }
 
-const { showProductSelect = true } = Astro.props;
+const {
+	heading = "Changelog",
+	tagline = "New updates and improvements at Cloudflare.",
+	rssHref = "/changelog/rss/index.xml",
+	showFilter = true,
+} = Astro.props;
 
-// Only show products and groups that have at least one visible changelog entry.
-const products = directory.filter(
-	(entry) => entry.data.entry.url && changelogProductIds.includes(entry.id),
-);
+// Products that have at least one visible changelog entry, sorted by title.
+const products = directory
+	.filter((entry) => changelogProductIds.includes(entry.id))
+	.sort((a, b) =>
+		(a.data.entry?.title ?? "").localeCompare(b.data.entry?.title ?? ""),
+	);
 
-const filteredGroups = groups.filter((group) => {
-	const groupProducts =
-		directoryByGroup.find(([name]) => name === group)?.[1] ?? [];
-	return groupProducts.some((p) => changelogProductIds.includes(p.id));
-});
+// Groups that have at least one visible changelog entry.
+const filteredGroups = groups
+	.filter((group) => {
+		const groupProducts =
+			directoryByGroup.find(([name]) => name === group)?.[1] ?? [];
+		return groupProducts.some((p) => changelogProductIds.includes(p.id));
+	})
+	.map((group) => ({
+		label: group,
+		href: `/changelog/product-group/${group.replaceAll(" ", "-").toLowerCase()}/`,
+	}));
 
-const currentPath = Astro.url.pathname;
+// The option value is the destination URL; on change the filter navigates
+// there. Match the current view so the right option shows as selected.
+const path = Astro.url.pathname;
+const productMatch = path.match(/^\/changelog\/product\/([^/]+)\//);
+const groupMatch = path.match(/^\/changelog\/product-group\/([^/]+)\//);
+const selectedHref = productMatch
+	? `/changelog/product/${productMatch[1]}/`
+	: groupMatch
+		? `/changelog/product-group/${groupMatch[1]}/`
+		: "/changelog/";
+
+// The option labels live in slotted children, which the component can't read
+// at render time — so it shows the placeholder until JS resolves the selected
+// label. Seed the placeholder with the current label so the trigger reads
+// correctly on first paint (and with no JS).
+const selectedLabel = productMatch
+	? (products.find((p) => p.id === productMatch[1])?.data.entry?.title ??
+		productMatch[1])
+	: groupMatch
+		? (filteredGroups.find((g) => g.href === selectedHref)?.label ??
+			groupMatch[1])
+		: "All products";
 ---
 
+<PageHeader title={heading} tagline={tagline} />
+
+{
+	/* Controls toolbar — horizontal padding matches the feed's --body-x (the
+    entry text indent) so the controls line up with the entry titles/body:
+    0 below md, 3.5rem at md, 4rem at lg. */
+}
 <div
-	id="changelogHeader"
-	class="mt-0! mb-8 ml-[calc(50%-50vw)] flex w-screen items-center justify-evenly border-b-2 border-b-(--sl-color-hairline) bg-linear-to-r from-[#FFE9CB99] to-[#FFFFFF99] p-4 max-sm:flex-col-reverse sm:mb-16 sm:h-[18.75rem] dark:from-[#FBAD411F] dark:to-[#2C2C2C00]"
+	class="mt-12 mb-12 flex flex-wrap items-center gap-3 pt-10 md:px-14 lg:px-16"
 >
-	<div class="text-center sm:text-left">
-		<h1>Changelog</h1>
-		<p>New updates and improvements at Cloudflare.</p>
-		<div
-			class="flex flex-row flex-wrap items-center justify-center gap-x-3 sm:flex-col sm:items-start"
+	{
+		showFilter && products.length > 0 && (
+			<div class="w-full max-w-xs sm:w-auto sm:min-w-[15rem]">
+				<Combobox
+					size="lg"
+					aria-label="Filter changelog by product"
+					value={selectedHref}
+					displayValue={selectedLabel}
+					placeholder="Search products…"
+					emptyText="No products found."
+					data-changelog-product-nav
+				>
+					<ComboboxOption value="/changelog/">All products</ComboboxOption>
+					{filteredGroups.length > 0 && (
+						<ComboboxGroup>
+							<ComboboxGroupLabel>Product groups</ComboboxGroupLabel>
+							{filteredGroups.map((group) => (
+								<ComboboxOption value={group.href}>
+									{group.label}
+								</ComboboxOption>
+							))}
+						</ComboboxGroup>
+					)}
+					<ComboboxGroup>
+						<ComboboxGroupLabel>Products</ComboboxGroupLabel>
+						{products.map((product) => (
+							<ComboboxOption value={`/changelog/product/${product.id}/`}>
+								{product.data.entry?.title ?? product.id}
+							</ComboboxOption>
+						))}
+					</ComboboxGroup>
+				</Combobox>
+			</div>
+		)
+	}
+
+	<div class="ml-auto flex items-center gap-2">
+		<LinkButton
+			href="https://developers.cloudflare.com/fundamentals/new-features/available-rss-feeds/"
+			variant="minimal"
+			size="lg"
+			class="rounded-lg"
+			target="_blank"
 		>
-			<RSSButton changelog="index" />
-			<RSSButton
-				href="/fundamentals/new-features/available-rss-feeds/"
-				text="View RSS feeds"
-				icon="right-caret"
-			/>
-		</div>
-		{
-			showProductSelect && (
-				<div class="not-content">
-					<ProductSelect
-						client:load
-						products={products}
-						groups={filteredGroups}
-						currentPath={currentPath}
-					/>
-				</div>
-			)
-		}
+			View RSS feeds
+		</LinkButton>
+		<LinkButton
+			href={rssHref}
+			variant="secondary"
+			size="lg"
+			class="rounded-lg"
+			target="_blank"
+			aria-label="Subscribe to the changelog RSS feed"
+		>
+			<Icon name="ph:rss-simple" class="h-4 w-4" />
+			Subscribe to RSS
+		</LinkButton>
 	</div>
-	<Image
-		src={HeroImage}
-		alt="hero image"
-		height="240"
-		class="mt-0!"
-		id="changelogHero"
-	/>
 </div>
 
-<style is:global>
-	.sl-markdown-content {
-		margin-top: 0px !important;
+<script>
+	// Navigate when the product filter changes. The <Combobox> emits a bubbling
+	// `combobox:change` (detail.value = destination URL). Bound per-element so
+	// view-transition re-renders don't double-fire.
+	function bindChangelogNav() {
+		document
+			.querySelectorAll<HTMLElement>("[data-changelog-product-nav]")
+			.forEach((el) => {
+				if (el.dataset.navBound) return;
+				el.dataset.navBound = "1";
+				el.addEventListener("combobox:change", (event) => {
+					const { value } = (event as CustomEvent<{ value: string | null }>)
+						.detail;
+					if (value && value !== window.location.pathname) {
+						window.location.href = value;
+					}
+				});
+			});
 	}
 
-	.content-panel {
-		padding-top: 0 !important;
-		overflow-x: hidden;
-	}
-
-	@media (max-width: 640px) {
-		#changelogHeader h1 {
-			font-size: 1.75rem;
-		}
-
-		#changelogHero {
-			display: none;
-		}
-	}
-</style>
+	document.addEventListener("DOMContentLoaded", bindChangelogNav);
+	document.addEventListener("astro:page-load", bindChangelogNav);
+	bindChangelogNav();
+</script>

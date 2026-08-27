@@ -47,9 +47,9 @@ For more information, refer to [Configure a DLP profile](/cloudflare-one/data-lo
 
 ### Add a new integration
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Cloud & Saas**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Cloud & SaaS**.
 2. Select **Add integration** and choose a [supported integration](#supported-integrations).
-3. During the setup process, you will be prompted to select DLP profiles for the integration.
+3. During the setup process, you are prompted to select DLP profiles for the integration.
 4. Select **Save integration**.
 
 CASB will scan every publicly accessible file in the integration for text that matches the DLP profile. The initial scan may take up to a few hours to complete.
@@ -77,5 +77,6 @@ If you add a DLP profile to an existing integration, CASB only scans files modif
 
 DLP in CASB will only scan:
 
+- [Text-based files](/cloudflare-one/data-loss-prevention/#supported-file-types) such as documents, spreadsheets, and PDFs. Images are not supported.
 - Files less than or equal to 100 MB in size.
 - Java and R source code files that are at least 5 KB. Smaller files in these languages are skipped.

@@ -1,0 +1,55 @@
+---
+pcx_content_type: concept
+title: Slack
+description: Connect agents to Slack workspaces so they can respond to direct messages, mentions, and threaded conversations.
+sidebar:
+  order: 4
+---
+
+import { LinkCard } from "~/components";
+
+Slack is a communication channel for agents that need to participate in team conversations. A Slack-connected agent can receive events from Slack, route each message to the right agent instance, and respond back to direct messages or channel mentions.
+
+Use Slack when you want an agent to:
+
+- Respond to direct messages from Slack users.
+- Reply when mentioned in public channels.
+- Maintain context inside Slack threads.
+- Serve multiple Slack workspaces from one deployment.
+
+## How it works
+
+Slack sends events to your Worker through the [Slack Events API](https://api.slack.com/apis/events-api). Your Worker verifies each request, identifies the installed workspace, and routes the event to an agent instance.
+
+Common Slack events include:
+
+| Event | Use case |
+| --- | --- |
+| `message.im` | Direct messages to the bot |
+| `app_mention` | Mentions in channels |
+
+For multi-workspace Slack apps, store each workspace installation separately and route events by team or enterprise ID. Each workspace can map to an isolated agent instance with its own Durable Object-backed state.
+
+## Build a Slack agent
+
+For a complete walkthrough, including Slack app setup, OAuth, event subscriptions, and deployment, use the Slack agent example.
+
+<LinkCard
+	title="Slack agent"
+	href="/agents/examples/slack-agent/"
+	description="Build and deploy an AI-powered Slack bot on Cloudflare Workers using the Agents SDK."
+/>
+
+## Related resources
+
+<LinkCard
+	title="Slack Events API"
+	href="https://api.slack.com/apis/events-api"
+	description="Receive events when users message, mention, or interact with a Slack app."
+/>
+
+<LinkCard
+	title="Slack app authentication"
+	href="https://api.slack.com/authentication"
+	description="Configure OAuth, bot tokens, signing secrets, and request verification for Slack apps."
+/>

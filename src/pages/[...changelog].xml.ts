@@ -1,15 +1,30 @@
+/**
+ * Per-product changelog RSS — one feed per docs page tagged
+ * `pcx_content_type: changelog` that has a `release_notes_file_name`.
+ * Served at `/<docs-page-id>/index.xml`, which is exactly where the
+ * <RSSButton /> rendered by ProductReleaseNotes points.
+ *
+ * CF source: cloudflare-docs/src/pages/[...changelog].xml.ts
+ *
+ * Faithful port with one adaptation to this app's conventions:
+ *   - Site origin comes from `virtual:nimbus/config` (`config.site`) — the
+ *     same source the llms.txt routes use — rather than `context.site`.
+ */
 import rss from "@astrojs/rss";
 import { getCollection, getEntry } from "astro:content";
 import type { APIRoute } from "astro";
 import { marked, type Token } from "marked";
 import { slug } from "github-slugger";
+import { config } from "virtual:nimbus/config";
 import { entryToString } from "~/util/container";
+
+export const prerender = true;
 
 export async function getStaticPaths() {
 	const releaseNotes = await getCollection("docs", (entry) => {
 		return (
 			entry.data.pcx_content_type === "changelog" &&
-			entry.data.release_notes_file_name
+			Boolean(entry.data.release_notes_file_name)
 		);
 	});
 
@@ -21,6 +36,7 @@ export async function getStaticPaths() {
 			props: {
 				entry,
 			},
+			cacheKey: String(entry.digest),
 		};
 	});
 }
@@ -29,7 +45,7 @@ export const GET: APIRoute = async (context) => {
 	function walkTokens(token: Token) {
 		if (token.type === "image" || token.type === "link") {
 			if (token.href.startsWith("/")) {
-				token.href = context.site + token.href.slice(1);
+				token.href = new URL(token.href, config.site).href;
 			}
 		}
 	}
@@ -105,7 +121,7 @@ export const GET: APIRoute = async (context) => {
 
 	const rssName = releaseNotes[0].data.productName;
 
-	const site = new URL(context.site ?? "");
+	const site = new URL(config.site);
 	site.pathname = entry.id.concat("/");
 
 	return rss({

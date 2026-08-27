@@ -73,6 +73,25 @@ const screenshot = await client.browserRendering.screenshot.create({
 console.log(screenshot.status);
 ```
 
+</TabItem> <TabItem label="Workers binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("screenshot", {
+			html: "Hello World!",
+			screenshotOptions: {
+				omitBackground: true,
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
 </TabItem> </Tabs>
 
 ### Take a screenshot from a URL

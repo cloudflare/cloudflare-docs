@@ -27,7 +27,9 @@ import {Type, MetaInfo, AnchorHeading} from "~/components";
 
     The size of keys and values have different limits depending on the Durable Object storage backend you are using. Refer to either:
     - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
-    - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits).<br/><br/>
+    - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits).
+
+    On a KV-backed Durable Object, if the serialized value exceeds the 128 KiB (131072 bytes) value-size limit, `put()` throws a `RangeError` (for example, `Values cannot be larger than 131072 bytes.`) before the write is applied.<br/><br/>
 
 - <code>put(entries <Type text="Object" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
   - Takes an Object and stores each of its keys and values to storage.

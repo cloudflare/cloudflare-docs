@@ -10,6 +10,12 @@ products:
 
 Terminal connections let browser-based UIs interact directly with sandbox shells. Instead of executing discrete commands with `exec()`, a terminal connection opens a persistent, bidirectional channel to a bash shell — the same model as SSH or a local terminal emulator.
 
+:::note[Sandbox SDK 1.0 preview]
+This page describes terminal connections on today's stable `@cloudflare/sandbox` package.
+
+On **`@cloudflare/sandbox@next`**, terminals use `createTerminal`, `getTerminal`, and `terminal.connect`. Refer to [Terminals](/sandbox/1-0-preview/terminals/) and [Terminals API](/sandbox/1-0-preview/api/terminals/).
+:::
+
 ## How terminal connections work
 
 Terminal connections use WebSockets to stream raw bytes between a browser terminal (like [xterm.js](https://xtermjs.org/)) and a pseudo-terminal (PTY) process running inside the sandbox container.
@@ -44,7 +50,7 @@ Network interruptions are common in browser-based applications. Terminal connect
 
 The `SandboxAddon` for xterm.js implements this automatically. If you are building a custom client, you are responsible for your own reconnection logic — the server-side buffering works regardless of which client connects. Refer to the [WebSocket protocol reference](/sandbox/api/terminal/#websocket-protocol) for details on the connection lifecycle.
 
-## Session isolation
+## Session-specific terminals
 
 Each [session](/sandbox/concepts/sessions/) can have its own terminal with independent shell state:
 
@@ -65,7 +71,7 @@ const testSession = await sandbox.createSession({
 // environment variables, and command history
 ```
 
-Multiple browser clients can connect to the same session's terminal simultaneously — they all see the same shell output and can all send input. This enables collaborative terminal use cases.
+Multiple browser clients can connect to the same session's terminal simultaneously. They all see the same shell output and can send input. Use this pattern for intentional collaboration inside one workspace, not to separate independent users.
 
 ## WebSocket protocol
 

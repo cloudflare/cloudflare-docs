@@ -20,7 +20,7 @@ import {
 
 This guide will instruct you through:
 
-- Creating your first [R2 bucket](/r2/buckets/) and enabling its [data catalog](/r2/data-catalog/).
+- Creating your first [R2 bucket](/r2/buckets/) and enabling its [data catalog](/r2-data-catalog/).
 - Creating an [API token](/r2/api/tokens/) needed for pipelines to authenticate with your data catalog.
 - Creating your first pipeline with a simple ecommerce schema that writes to an [Apache Iceberg](https://iceberg.apache.org/) table managed by R2 Data Catalog.
 - Sending sample ecommerce data via HTTP endpoint.
@@ -38,13 +38,13 @@ This guide will instruct you through:
 <Steps>
 1. If not already logged in, run:
 
-    ```
+    ```bash
     npx wrangler login
     ```
 
 2. Create an R2 bucket:
 
-   ```
+   ```bash
    npx wrangler r2 bucket create pipelines-tutorial
    ```
 
@@ -74,7 +74,7 @@ This guide will instruct you through:
 
 Enable the catalog on your R2 bucket:
 
-```
+```bash
 npx wrangler r2 bucket catalog enable pipelines-tutorial
 ```
 
@@ -341,13 +341,13 @@ LIMIT 10"
 
 Replace `YOUR_WAREHOUSE_NAME` with the warehouse name from step 2.
 
-You can also query this table with any engine that supports Apache Iceberg. To learn more about connecting other engines to R2 Data Catalog, refer to [Connect to Iceberg engines](/r2/data-catalog/config-examples/).
+You can also query this table with any engine that supports Apache Iceberg. To connect other engines to R2 Data Catalog, refer to [Connect to Iceberg engines](/r2-data-catalog/config-examples/).
 
 ## Learn more
 
 <LinkCard
 	title="Managing R2 Data Catalogs"
-	href="/r2/data-catalog/manage-catalogs/"
+	href="/r2-data-catalog/manage-catalogs/"
 	description="Enable or disable R2 Data Catalog on your bucket, retrieve configuration details, and authenticate your Iceberg engine."
 />
 

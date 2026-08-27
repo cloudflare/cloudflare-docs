@@ -9,65 +9,156 @@ products:
   - workers
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 The FastAPI package is supported in Python Workers.
 
-FastAPI applications use a protocol called the [Asynchronous Server Gateway Interface (ASGI)](https://asgi.readthedocs.io/en/latest/). This means that FastAPI never reads from or writes to a socket itself. An ASGI application expects to be hooked up to an ASGI server, typically [uvicorn](https://www.uvicorn.org/). The ASGI server handles all of the raw sockets on the application’s behalf.
+FastAPI applications use a protocol called the [Asynchronous Server Gateway Interface (ASGI)](https://asgi.readthedocs.io/en/latest/).
+This means that FastAPI never reads from or writes to a socket itself. An ASGI application expects to be hooked up to an ASGI server,
+typically [uvicorn](https://uvicorn.dev/).
+The ASGI server handles all of the raw sockets on the application’s behalf.
 
-The Workers runtime provides [an ASGI server](https://github.com/cloudflare/workerd/blob/main/src/pyodide/internal/workers-api/src/asgi.py) directly to your Python Worker, which lets you use FastAPI in Python Workers.
+The Python Workers provide [an ASGI server](https://github.com/cloudflare/workers-py/blob/main/packages/runtime-sdk/src/asgi.py)
+that you can use directly in your Python Worker, which lets you use FastAPI in Python Workers.
 
-## Get Started
+## Quick Start
 
-Clone the `cloudflare/python-workers-examples` repository and run the FastAPI example:
+To get started with FastAPI in Python Workers, follow these steps:
 
-```bash
-git clone https://github.com/cloudflare/python-workers-examples
-cd python-workers-examples/03-fastapi
-uv run pywrangler dev
-```
-
-### Example code
-
+2. Create a `src/main.py` file with your FastAPI application:
 ```python
-from workers import WorkerEntrypoint
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
-import asgi
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        return await asgi.fetch(app, request, self.env)
+from fastapi import FastAPI
 
 app = FastAPI()
 
 @app.get("/")
-async def root():
-    return {"message": "Hello, World!"}
+def read_root():
+    return {"Hello": "World"}
 
-@app.get("/env")
-async def root(req: Request):
-    env = req.scope["env"]
-    return {"message": "Here is an example of getting an environment variable: " + env.MESSAGE}
+from workers import asgi
+Default = asgi.entrypoint(app)
+```
 
-class Item(BaseModel):
-    name: str
-    description: str | None = None
-    price: float
-    tax: float | None = None
+3. Create a `wrangler.jsonc` file to configure your Worker:
 
-@app.post("/items/")
-async def create_item(item: Item):
-    return item
+<WranglerConfig>
 
-@app.put("/items/{item_id}")
-async def create_item(item_id: int, item: Item, q: str | None = None):
-    result = {"item_id": item_id, **item.dict()}
-    if q:
-        result.update({"q": q})
-    return result
+```jsonc
+{
+	"name": "my-fastapi-app",
+	"main": "src/main.py",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["python_workers"],
+}
+```
+</WranglerConfig>
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int):
-    return {"item_id": item_id}
+4. Create a `pyproject.toml` file to manage your dependencies:
+```toml
+[project]
+name = "my-fastapi-app"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py",
+    "workers-runtime-sdk"
+]
+```
+
+5. Run your Worker locally:
+```bash
+uv run pywrangler dev
+```
+
+## Serve a frontend
+
+You can serve a single-page application (SPA) or any static frontend alongside your FastAPI backend by using [Workers Static Assets](/workers/static-assets/).
+
+This is equivalent to FastAPI's native [`app.frontend()`](https://fastapi.tiangolo.com/tutorial/frontend/) method, which serves a static build directory as low-priority routes so that API path operations are checked first. The difference is where the files live: `app.frontend()` reads files from the local filesystem, while on Workers the static assets are served from Cloudflare's globally distributed asset store through the `ASSETS` binding. This means your frontend files are not bundled inside the Worker itself, keeping the bundle small.
+
+Place your frontend build output (for example, HTML, CSS, and JavaScript files) in a directory such as `./public/`. Then configure your Wrangler file with an `assets` block that includes a `binding` and sets `run_worker_first` to `true`. This ensures every request reaches your FastAPI Worker first, so your API routes take priority over static files.
+
+Add a catch-all route at the end of your FastAPI app that proxies unmatched requests to the assets binding:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-fastapi-app",
+	"main": "src/worker.py",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["python_workers"],
+	"assets": {
+		"directory": "./public/",
+		"binding": "ASSETS",
+		"run_worker_first": true
+	}
+}
+```
+</WranglerConfig>
+
+Be sure to create a `pyproject.toml` file to manage your dependencies:
+
+```toml
+[project]
+name = "my-fastapi-app"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py",
+    "workers-runtime-sdk"
+]
+```
+
+Then write your worker:
+
+```python title="src/worker.py"
+from fastapi import FastAPI, Request
+from fastapi.responses import Response
+from workers import asgi
+
+
+app = FastAPI()
+Default = asgi.entrypoint(app)
+
+@app.get("/api/hello")
+async def api_hello():
+    return {"message": "Hello from the API"}
+
+# Catch-all: proxy everything else to Workers Static Assets.
+# This is the Workers equivalent of app.frontend("/", directory="dist").
+@app.get("/{path:path}")
+async def frontend(path: str, request: Request):
+    env = request.scope["env"]
+    asset_url = f"https://assets.local/{path}"
+    resp = await env.ASSETS.fetch(asset_url)
+    body = await resp.bytes()
+    headers = dict(resp.headers)
+    return Response(content=body, status_code=resp.status, headers=headers)
+```
+
+You can run this worker locally using `uv run pywrangler dev`.
+
+With this setup, a request to `/api/hello` is handled by FastAPI, while a request to `/index.html` or any other path is served from the `./public/` directory through the assets binding.
+
+For more information on configuring static assets, refer to the [Workers Static Assets documentation](/workers/static-assets/).
+
+## More examples
+
+Clone the `cloudflare/python-workers-examples` repository and run the FastAPI examples there:
+
+```bash
+git clone https://github.com/cloudflare/python-workers-examples
+cd python-workers-examples/fastapi
+uv run pywrangler dev
 ```

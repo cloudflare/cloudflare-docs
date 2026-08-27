@@ -2,232 +2,626 @@
 {}
 ---
 
-This tutorial contains a configuration example for setting up an Internet Protocol Security (IPsec) tunnel between Cisco IOS XE and Cloudflare. For this tutorial, the tested Cisco IOS XE software was version 17.03.07.
+This tutorial provides a comprehensive configuration example for establishing a secure Internet Protocol Security (IPsec) tunnel between Cisco IOS XE and Cloudflare using Post-Quantum Cryptography (PQC).
 
-You should replace peer addresses with the anycast IP addresses assigned to your account, available in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space). For example:
+Interconnecting your Cisco IOS XE infrastructure with Cloudflare Anycast IPsec tunnels delivers a highly resilient connectivity solution with two primary benefits:
 
-- **Anycast 01**: `162.159.###.###`
-- **Anycast 02**: `172.64.###.###`
+1. **Post-Quantum Encryption:** Your connection is protected by ML-KEM post-quantum encryption, protecting data in transit against harvest-now, decrypt-later attacks, to provide long-term confidentiality against emerging quantum-computing threats.
+2. **Anycast-Powered Resilience & Global Reach:** Cloudflare's distributed Anycast IP network simplifies your architecture by allowing you to interconnect routers that are not physically co-located or directly linked. Traffic is automatically routed to the nearest optimal Cloudflare data center, providing built-in active/active path redundancy, automated failover, and high availability.
 
-## Cisco IOS XE configuration example
+This guide covers everything required to deploy this architecture, including Virtual Tunnel Interfaces (VTIs), IKEv2 profiles utilizing quantum-safe parameters, and diagnostic validation.
+
+## Test environment
+
+| **Field**   | **Value**                |
+| ----------- | ------------------------ |
+| Vendor      | Cisco                    |
+| Model       | Cisco Series 8000 Router |
+| Release     | IOS-XE 26.1.1            |
+| Date tested | May 2026                 |
+
+## IKE/IPsec crypto and relevant settings
+
+| **Field**                          | **Value**       |
+| ---------------------------------- | --------------- |
+| Traffic Selection Criteria         | Route-Based VPN |
+| Routing                            | Static          |
+| Redundant Tunnels                  | Yes             |
+| Tunnel Load Balancing              | Active/Active   |
+| IKE Version                        | IKEv2           |
+| Authentication                     | Pre-Shared Key  |
+| Anti-Replay Protection             | Disabled        |
+| NAT Traversal (NAT-T)              | Validated       |
+| NAT-T Port                         | 4500/udp        |
+| Phase 1 - DH-Group                 | Group 20        |
+| Phase 1 - Encryption               | AES-256-CBC     |
+| Phase 1 - Authentication/Integrity | SHA-256         |
+| Phase 2 - DH-Group                 | Group 20        |
+| Phase 2 - Transport                | ESP             |
+| Phase 2 - Encryption               | AES-256-CBC     |
+| Post-Quantum Cryptography          | ML-KEM 768      |
+
+## Supported platforms
+
+Support for ML-KEM is available on [Cisco 8000 Series Secure Routers](https://www.cisco.com/site/us/en/products/networking/sdwan-routers/8000-secure-routers/index.html).
+
+## Cloudflare WAN and Cisco IOS XE configuration settings
+
+While following these steps, ensure you update any object names and IP addresses to match your environment. Aligning these elements with your actual naming conventions and network scheme ensures the configuration integrates seamlessly with your production setup. Use **Find & Replace** on the examples below to update names and addresses, maintaining consistency throughout.
+
+### Cloudflare WAN - Tunnel 01 of 02
+
+| **Attribute**                     | **Value/Address**  |
+| --------------------------------- | ------------------ |
+| Name (required)                   | `CF_WAN_TUN_01`    |
+| Description                       | ---                |
+| IPv4 Interface Address (required) | `169.254.250.0/31` |
+| IPv6 Interface Address            | ---                |
+| Customer Endpoint                 | `203.0.113.100`    |
+| Cloudflare Endpoint               | `162.159.135.1`    |
+| Tunnel health checks              | True               |
+| Rate                              | Medium             |
+| **Type**                          | **Request**        |
+| **Direction**                     | **Bidirectional**  |
+| Target                            | Default            |
+| Turn on replay protection         | False              |
+| **Automatic return routing**      | **True**           |
+
+IKE Identity and Pre-shared Key (obtained after tunnel creation):
+
+| **Attribute**  | **Value/Address**                         |
+| -------------- | ----------------------------------------- |
+| FQDN ID        | `bf6c493d03REDACTED.ipsec.cloudflare.com` |
+| Pre-shared key | `Cloudflare-WAN-T1-PSK-1234!`             |
+
+### Cloudflare WAN - Tunnel 02 of 02
+
+| **Attribute**                     | **Value/Address**  |
+| --------------------------------- | ------------------ |
+| Name (required)                   | `CF_WAN_TUN_02`    |
+| Description                       | ---                |
+| IPv4 Interface Address (required) | `169.254.250.2/31` |
+| IPv6 Interface Address            | ---                |
+| Customer Endpoint                 | `203.0.113.100`    |
+| Cloudflare Endpoint               | `172.64.135.1`     |
+| Tunnel health checks              | True               |
+| Rate                              | Medium             |
+| **Type**                          | **Request**        |
+| **Direction**                     | **Bidirectional**  |
+| Target                            | Default            |
+| Turn on replay protection         | False              |
+| **Automatic return routing**      | **True**           |
+
+IKE Identity and Pre-shared Key (obtained after tunnel creation):
+
+| **Attribute**  | **Value/Address**                         |
+| -------------- | ----------------------------------------- |
+| FQDN ID        | `0287844e9dREDACTED.ipsec.cloudflare.com` |
+| Pre-shared key | `Cloudflare-WAN-T2-PSK-1234!`             |
+
+## Customer premise equipment - Cisco IOS XE
+
+| **WAN Interface** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
+| ----------------- | ------------------- | ------------------- |
+| WAN Interface     | `GigabitEthernet2`  | `GigabitEthernet2`  |
+| IP Address        | `203.0.113.100/24`  | `203.0.113.100/24`  |
+
+| **Virtual Tunnel Interface (VTI)** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
+| ---------------------------------- | ------------------- | ------------------- |
+| Tunnel interface                   | `Tunnel01`          | `Tunnel02`          |
+| IP Address                         | `169.254.250.1/31`  | `169.254.250.3/31`  |
+
+| **LAN Interface** | **Tunnel 01 of 02** | **Tunnel 02 of 02** |
+| ----------------- | ------------------- | ------------------- |
+| LAN Interface     | `ge-0/0/1.0`        | `ge-0/0/1.0`        |
+| IP Address        | `192.168.125.1/24`  | `192.168.125.1/24`  |
+| Security Zone     | trust               | trust               |
+
+## Configuration
+
+The process to establish IPsec tunnels on Cisco IOS XE involves the following steps:
+
+- Virtual Tunnel Interfaces (one per tunnel)
+- IKEv2 Proposal
+- IKEv2 Policy
+- IKEv2 Keyring (one per tunnel)
+- IKEv2 Profile (one per tunnel)
+- IKEv2 Profile with NAT-T Support (optional)
+- IPsec Profile (one per tunnel)
+- Bind IPsec Profiles to Virtual Tunnel Interfaces
+- Policy-Based Routing (recommended)
+- Health Tracking - IP SLA (recommended)
+
+### Virtual tunnel interfaces
+
+Add one Virtual Tunnel Interface per IPsec tunnel to facilitate routing to Cloudflare.
+
+#### Tunnel1
 
 ```txt
-crypto ikev2 proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
+interface Tunnel1
+ ip address 169.254.250.1 255.255.255.254
+ ip proxy-arp
+ ip mtu 1450
+ ip tcp adjust-mss 1350
+ tunnel source 203.0.113.100
+ tunnel mode ipsec ipv4
+ tunnel destination 162.159.135.1
+ tunnel path-mtu-discovery
+```
+
+#### Tunnel2
+
+```txt
+interface Tunnel2
+ ip address 169.254.250.3 255.255.255.254
+ ip proxy-arp
+ ip mtu 1450
+ ip tcp adjust-mss 1350
+ tunnel source 203.0.113.100
+ tunnel mode ipsec ipv4
+ tunnel destination 172.64.135.1
+ tunnel path-mtu-discovery
+```
+
+### IKE - Phase 1
+
+Configure the following to facilitate IKEv2 Phase 1 negotiation:
+
+- IKEv2 Proposal
+- IKEv2 Policy
+- IKEv2 Keyring (one required per Cloudflare WAN IPsec tunnel)
+- IKEv2 Profile (one required per Cloudflare WAN IPsec tunnel)
+
+#### IKEv2 Proposal
+
+Define an IKEv2 Proposal as follows:
+
+```txt
+crypto ikev2 proposal CF_WAN_IKEV2_PROP
+ pqc mlkem768
  encryption aes-cbc-256
- integrity sha512 sha384 sha256
+ prf sha512 sha384 sha256
  group 20
-!
-crypto ikev2 policy CF_MAGIC_WAN_IKEV2_POLICY
+ exit
+```
+
+:::tip
+Simply add/remove `pqc mlkem768` from the proposal to enable/disable Post-Quantum Cryptography.
+:::
+
+#### IKEv2 Policy
+
+Configure one IKEv2 Policy per tunnel:
+
+```txt
+crypto ikev2 policy CF_WAN_IKEV2_POL
  match fvrf any
- proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
-!
-crypto ikev2 keyring CF_MAGIC_WAN_KEYRING
- peer CF_MAGIC_WAN_IPSEC01
-  address 162.159.###.###
-  pre-shared-key hbGnJzFMqwltb###############BapXCOwsGZz2NMg
- !
- peer CF_MAGIC_WAN_IPSEC02
-  address 172.64.###.###
-  pre-shared-key 1VscPp0LPFAcZ###############HOdN-1cUgKVduL4
- !
-!
-!
-crypto ikev2 profile CF_MAGIC_WAN_01
- match identity remote address 162.159.###.### 255.255.255.255
- identity local fqdn ad329f56###############bbe898c0a0.33145236.ipsec.cloudflare.com
+ proposal CF_WAN_IKEV2_PROP
+ exit
+```
+
+#### IKEv2 Keyrings
+
+Add one keyring per tunnel:
+
+##### `CF_WAN_TUN_01_IKEV2_PEER`
+
+```txt
+crypto ikev2 keyring CF_WAN_TUN_01_IKEV2_KEYRING
+ peer CF_WAN_TUN_01_IKEV2_PEER
+  address 162.159.135.1
+  pre-shared-key 0 Cloudflare-WAN-T1-PSK-1234!
+exit
+```
+
+##### `CF_WAN_TUN_02_IKEV2_PEER`
+
+```txt
+crypto ikev2 keyring CF_WAN_TUN_02_IKEV2_KEYRING
+ peer CF_WAN_TUN_02_IKEV2_PEER
+  address 172.64.135.1
+  pre-shared-key 0 Cloudflare-WAN-T2-PSK-1234!
+exit
+```
+
+:::note
+Specifying `0` before the pre-shared-key lets IOS XE know the string is unencrypted.
+:::
+
+#### IKEv2 Profiles
+
+Configure one IKEv2 Profile per tunnel:
+
+##### `CF_WAN_TUN_01_IKEV2_PROF`
+
+```txt
+crypto ikev2 profile CF_WAN_TUN_01_IKEV2_PROF
+ match identity remote address 162.159.135.1 255.255.255.255
+ identity local fqdn bf6c493d03REDACTED.ipsec.cloudflare.com
  authentication remote pre-share
  authentication local pre-share
- keyring local CF_MAGIC_WAN_KEYRING
+ keyring local CF_WAN_TUN_01_IKEV2_KEYRING
  no config-exchange request
-!
-crypto ikev2 profile CF_MAGIC_WAN_02
- match identity remote address 172.64.###.### 255.255.255.255
- identity local fqdn 83f9c418###############29b3f97049.33145236.ipsec.cloudflare.com
+ exit
+```
+
+##### `CF_WAN_TUN_02_IKEV2_PROF`
+
+```txt
+crypto ikev2 profile CF_WAN_TUN_02_IKEV2_PROF
+ match identity remote address 172.64.135.1 255.255.255.255
+ identity local fqdn 0287844e9dREDACTED.ipsec.cloudflare.com
  authentication remote pre-share
  authentication local pre-share
- keyring local CF_MAGIC_WAN_KEYRING
+ keyring local CF_WAN_TUN_02_IKEV2_KEYRING
  no config-exchange request
-!
-!
-!
-!
-crypto ipsec profile CF_MAGIC_WAN_01
+ exit
+```
+
+#### IKEv2 Profiles with NAT-T support (optional)
+
+If the WAN interface on the Cisco IOS XE device is behind a device performing Network Address Translation (NAT), you can add `nat force-encap` under `crypto ikev2 profile` to force IKE Phase 1 to use UDP port `4500`.
+
+This is only needed when you want to force encapsulation instead of using the standard NAT-T flow, which starts on UDP port `500` and switches to UDP port `4500` after NAT is detected.
+
+##### `CF_WAN_TUN_01_IKEV2_PROF` with NAT-T
+
+```txt {8}
+crypto ikev2 profile CF_WAN_TUN_01_IKEV2_PROF
+ match identity remote address 162.159.135.1 255.255.255.255
+ identity local fqdn bf6c493d03REDACTED.ipsec.cloudflare.com
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local CF_WAN_TUN_01_IKEV2_KEYRING
+ no config-exchange request
+ nat force-encap
+ exit
+```
+
+##### `CF_WAN_TUN_02_IKEV2_PROF` with NAT-T
+
+```txt {8}
+crypto ikev2 profile CF_WAN_TUN_02_IKEV2_PROF
+ match identity remote address 172.64.135.1 255.255.255.255
+ identity local fqdn 0287844e9dREDACTED.ipsec.cloudflare.com
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local CF_WAN_TUN_02_IKEV2_KEYRING
+ no config-exchange request
+ nat force-encap
+ exit
+```
+
+### IPsec - Phase 2
+
+#### IPsec Profile
+
+Add one IPsec Profile per tunnel:
+
+##### `CF_WAN_TUN_01_IPSEC_PROF`
+
+```txt
+crypto ipsec profile CF_WAN_TUN_01_IPSEC_PROF
  set security-association lifetime kilobytes disable
  set security-association replay disable
  set pfs group20
- set ikev2-profile CF_MAGIC_WAN_01
-!
-crypto ipsec profile CF_MAGIC_WAN_02
+ set ikev2-profile CF_WAN_TUN_01_IKEV2_PROF
+ exit
+```
+
+##### `CF_WAN_TUN_02_IPSEC_PROF`
+
+```txt
+crypto ipsec profile CF_WAN_TUN_02_IPSEC_PROF
  set security-association lifetime kilobytes disable
  set security-association replay disable
- set pfs group14
- set ikev2-profile CF_MAGIC_WAN_02
-!
-!
-!
-!
-interface Tunnel101
- ip address 10.252.2.35 255.255.255.254
- ip mtu 1450
- ip tcp adjust-mss 1350
- tunnel source 10.141.0.9
- tunnel mode ipsec ipv4
- tunnel destination 162.159.###.###
- tunnel path-mtu-discovery
- tunnel protection ipsec profile CF_MAGIC_WAN_01
-!
-interface Tunnel102
- ip address 10.252.2.37 255.255.255.254
- ip mtu 1450
- ip tcp adjust-mss 1350
- tunnel source 10.141.0.9
- tunnel mode ipsec ipv4
- tunnel destination 172.64.###.###
- tunnel path-mtu-discovery
- tunnel protection ipsec profile CF_MAGIC_WAN_02
-!
-interface GigabitEthernet1
- ip address dhcp
- ip nat outside
- negotiation auto
- no mop enabled
- no mop sysid
-!
-interface GigabitEthernet2
- ip address 10.10.0.35 255.255.255.0
- negotiation auto
- no mop enabled
- no mop sysid
+ set pfs group20
+ set ikev2-profile CF_WAN_TUN_02_IKEV2_PROF
+ exit
 ```
 
-### Establish IPsec behind a NAT
+### Bind IPsec profiles to tunnel interfaces
+
+Bind the IPsec profiles to the corresponding Virtual Tunnel Interfaces to instantiate the IPsec tunnels:
+
+#### Tunnel1
+
+```txt
+interface Tunnel1
+ tunnel protection ipsec profile CF_WAN_TUN_01_IPSEC_PROF
+ exit
+```
+
+#### Tunnel2
+
+```txt
+interface Tunnel2
+ tunnel protection ipsec profile CF_WAN_TUN_02_IPSEC_PROF
+ exit
+```
+
+### Policy-Based Routing
+
+Use this section when the router must keep its existing default route in the global routing table — for example, to preserve IPsec underlay reachability or support other non-LAN traffic. This approach lets you direct only a specific source subnet across both Cloudflare WAN tunnels while keeping the global default route unchanged.
+
+If your deployment can use Cloudflare as the global default route, you can use a simpler design with two equal-cost static default routes in the global table. In that case, this section is not required.
+
+In this example, the router already uses a global-table default route for IPsec underlay reachability and other non-LAN traffic. To send only traffic sourced from `192.168.125.0/24` across `Tunnel1` and `Tunnel2`, configure Policy-Based Routing (PBR) to match that source subnet and forward the matched traffic into a dedicated VRF. Inside that VRF, configure two equal-cost static default routes — one through each tunnel. CEF then performs per-flow load sharing across both tunnels.
 
 :::note
-This configuration is no longer required. Cloudflare now supports NAT-T starting on UDP port `500`, so devices can negotiate the standard NAT-T flow without forcing port `4500`. Refer to the [changelog entry](/changelog/2026-05-11-nat-t-port-500/) for details. This guide has not been re-tested since the change.
+PBR on Cisco IOS XE does not provide ECMP on its own. If you specify multiple egress interfaces or next hops in a single `set` statement, IOS XE treats them as an ordered failover list rather than as load-sharing paths. To achieve true per-flow ECMP, use PBR only to steer matched traffic into a VRF whose forwarding table contains two equal-cost static default routes.
 :::
 
-If your Cisco router is behind a Network Address Translation (NAT) or Carrier-Grade NAT (CGNAT) and you need to establish a connection on port `4500`, you can use the `nat force-encap` command.
-
-Add the `nat force-encap` command when setting up the `crypto ikev2 profile` for your tunnels:
-
-```txt {7}
-crypto ikev2 profile CF_MAGIC_WAN_01
- match identity remote address 162.159.###.### 255.255.255.255
- identity local fqdn ad329f56###############bbe898c0a0.33145236.ipsec.cloudflare.com
- authentication remote pre-share
- authentication local pre-share
- keyring local CF_MAGIC_WAN_KEYRING
- nat force-encap
- no config-exchange request
-```
-
-## Diagnostic output: show crypto session detail
+#### Create VRF as local PBR forwarding target
 
 ```txt
-cisco-csr1000v#show crypto session detail
-Crypto session current status
-
-Code: C - IKE Configuration mode, D - Dead Peer Detection
-K - Keepalives, N - NAT-traversal, T - cTCP encapsulation
-X - IKE Extended Authentication, F - IKE Fragmentation
-R - IKE Auto Reconnect, U - IKE Dynamic Route Update
-S - SIP VPN
-
-Interface: Tunnel101
-Profile: CF_MAGIC_WAN_01
-Uptime: 00:15:16
-Session status: UP-ACTIVE
-Peer: 162.159.###.### port 500 fvrf: (none) ivrf: (none)
-      Phase1_id: 162.159.###.###
-      Desc: (none)
-  Session ID: 6
-  IKEv2 SA: local 10.141.0.9/500 remote 162.159.###.###/500 Active
-          Capabilities:(none) connid:1 lifetime:23:44:44
-  IPSEC FLOW: permit ip 0.0.0.0/0.0.0.0 0.0.0.0/0.0.0.0
-        Active SAs: 2, origin: crypto map
-        Inbound:  #pkts dec'ed 28110 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2684
-        Outbound: #pkts enc'ed 0 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2684
-
-Interface: Tunnel102
-Profile: CF_MAGIC_WAN_02
-Uptime: 00:14:59
-Session status: UP-ACTIVE
-Peer: 172.64.###.### port 500 fvrf: (none) ivrf: (none)
-      Phase1_id: 172.64.###.###
-      Desc: (none)
-  Session ID: 7
-  IKEv2 SA: local 10.141.0.9/500 remote 172.64.###.###/500 Active
-          Capabilities:(none) connid:2 lifetime:23:45:01
-  IPSEC FLOW: permit ip 0.0.0.0/0.0.0.0 0.0.0.0/0.0.0.0
-        Active SAs: 2, origin: crypto map
-        Inbound:  #pkts dec'ed 27586 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2701
-        Outbound: #pkts enc'ed 0 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2701
+ip vrf CF_WAN_PBR_VRF
+exit
 ```
 
-## Diagnostic output: show crypto session remote `<ANYCAST 01>` detail
+#### Define equal-cost static default routes
 
 ```txt
-cisco-csr1000v#show crypto session remote 162.159.###.### detail
-Crypto session current status
-
-Code: C - IKE Configuration mode, D - Dead Peer Detection
-K - Keepalives, N - NAT-traversal, T - cTCP encapsulation
-X - IKE Extended Authentication, F - IKE Fragmentation
-R - IKE Auto Reconnect, U - IKE Dynamic Route Update
-S - SIP VPN
-
-Interface: Tunnel101
-Profile: CF_MAGIC_WAN_01
-Uptime: 00:15:45
-Session status: UP-ACTIVE
-Peer: 162.159.###.### port 500 fvrf: (none) ivrf: (none)
-      Phase1_id: 162.159.###.###
-      Desc: (none)
-  Session ID: 6
-  IKEv2 SA: local 10.141.0.9/500 remote 162.159.###.###/500 Active
-          Capabilities:(none) connid:1 lifetime:23:44:15
-  IPSEC FLOW: permit ip 0.0.0.0/0.0.0.0 0.0.0.0/0.0.0.0
-        Active SAs: 2, origin: crypto map
-        Inbound:  #pkts dec'ed 29000 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2655
-        Outbound: #pkts enc'ed 0 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2655
+ip route vrf CF_WAN_PBR_VRF 0.0.0.0 0.0.0.0 169.254.250.0 global track 1
+ip route vrf CF_WAN_PBR_VRF 0.0.0.0 0.0.0.0 169.254.250.2 global track 2
 ```
 
-## Diagnostic output: show crypto session remote `<ANYCAST 02>` detail
+#### Match traffic to steer to Cloudflare
 
 ```txt
-cisco-csr1000v#show crypto session remote 172.64.###.### detail
-Crypto session current status
+ip access-list extended CF_WAN_PBR_ALL
+ permit ip 192.168.125.0 0.0.0.255 any
+```
 
-Code: C - IKE Configuration mode, D - Dead Peer Detection
-K - Keepalives, N - NAT-traversal, T - cTCP encapsulation
-X - IKE Extended Authentication, F - IKE Fragmentation
-R - IKE Auto Reconnect, U - IKE Dynamic Route Update
-S - SIP VPN
+#### Define route map to associate matched traffic to PBR VRF
 
-Interface: Tunnel102
-Profile: CF_MAGIC_WAN_02
-Uptime: 00:17:10
-Session status: UP-ACTIVE
-Peer: 172.64.###.### port 500 fvrf: (none) ivrf: (none)
-      Phase1_id: 172.64.###.###
-      Desc: (none)
-  Session ID: 7
-  IKEv2 SA: local 10.141.0.9/500 remote 172.64.###.###/500 Active
-          Capabilities:(none) connid:2 lifetime:23:42:50
-  IPSEC FLOW: permit ip 0.0.0.0/0.0.0.0 0.0.0.0/0.0.0.0
-        Active SAs: 2, origin: crypto map
-        Inbound:  #pkts dec'ed 31639 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2569
-        Outbound: #pkts enc'ed 0 drop 0 life (KB/Sec) KB Vol Rekey Disabled/2569
+```txt
+route-map CF_WAN_PBR_RM permit 10
+ match ip address CF_WAN_PBR_ALL
+ set vrf CF_WAN_PBR_VRF
+ exit
+```
+
+#### Apply route map to LAN interface
+
+Assuming the IP address assigned to the LAN interface is `192.168.125.1/24`:
+
+```txt
+interface GigabitEthernet1
+ description LAN interface
+ ip address 192.168.125.1 255.255.255.0
+ ip policy route-map CF_WAN_PBR_RM
+```
+
+#### Configure Cisco Express Forwarding (CEF) for load sharing (universal algorithm)
+
+Set the load-sharing algorithm to universal:
+
+```txt
+ip cef load-sharing algorithm universal
+```
+
+:::note
+This example keeps `Tunnel1` and `Tunnel2` in the global routing table so the existing IPsec underlay configuration, IKE control plane, and management commands remain unchanged.
+
+The VRF in this configuration is used only as a local forwarding target for PBR. It does not participate in any dynamic routing protocol, so no Route Distinguisher or address-family configuration is required.
+
+The global default route remains in place and continues to forward IPsec underlay traffic and any non-LAN traffic out the router's normal Internet path. Return traffic from Cloudflare arrives on `Tunnel1` and `Tunnel2` in the global table and is forwarded to the LAN via the connected route for `192.168.125.0/24`, so no return-path configuration is required.
+:::
+
+### Health Tracking - IP SLA (recommended)
+
+The PBR and VRF-based ECMP design described above installs both static default routes in `CF_WAN_PBR_VRF` as long as line protocol is `up` on the corresponding tunnel interfaces.
+
+On Cisco IOS XE, a Virtual Tunnel Interface (VTI) remains `up/up` based on its tunnel source and destination configuration, not on the state of the underlying IKE/IPsec security associations. As a result, a tunnel can appear available to the routing table even when its IKE/IPsec SAs have failed. In this condition, CEF can continue to hash traffic toward the failed tunnel, which can silently drop a portion of flows.
+
+To prevent this, configure an IP SLA `icmp-echo` probe for each tunnel, using the local VTI address as the source and the remote tunnel IP address as the destination. If a probe stops receiving responses, its associated `track` object changes to `down`, and the corresponding static route is removed from the VRF forwarding table.
+
+CEF then removes that path from the ECMP set, and all matched traffic shifts to the remaining healthy tunnel. When the failed tunnel recovers, the probe succeeds, the `track` object returns to `up`, the route is reinstalled, and traffic is automatically balanced across both tunnels again.
+
+:::note
+This tracking is separate from Cloudflare tunnel health checks. Cloudflare uses its own bidirectional health checks to make forwarding decisions on the Cloudflare side. The IP SLA tracking described here affects the router's forwarding decisions. These mechanisms are complementary and serve different purposes.
+:::
+
+#### Define IP SLA probes
+
+Instantiate an IP SLA probe (type `icmp-echo`) with `Tunnel1` source IP `169.254.250.1` and destination IP `169.254.250.0` - send a probe every five seconds:
+
+```txt
+ip sla 1
+ icmp-echo 169.254.250.0 source-interface Tunnel1
+ frequency 5
+ip sla schedule 1 life forever start-time now
+```
+
+Instantiate an IP SLA probe (type `icmp-echo`) with `Tunnel2` source IP `169.254.250.3` and destination IP `169.254.250.2` - send a probe every five seconds:
+
+```txt
+ip sla 2
+ icmp-echo 169.254.250.2 source-interface Tunnel2
+ frequency 5
+ip sla schedule 2 life forever start-time now
+```
+
+#### Define track objects
+
+The following `track` objects dampen short-lived packet loss to avoid route flaps on transient events:
+
+```txt
+track 1 ip sla 1 reachability
+ delay down 3 up 3
+```
+
+```txt
+track 2 ip sla 2 reachability
+ delay down 3 up 3
 ```
 
 ## Troubleshooting
 
-If you notice connectivity issues after rebooting your Cisco router, your IPsec Security Associations (SAs) might be out of sync. Cisco recommends that you enable the Invalid Security Parameter Index (SPI) recovery feature to solve this issue. To do so, add the following lines to your configuration file:
+### IKEv2/IPsec diagnostics
+
+- Display IKE (Phase 1) Security Associations detail:
 
 ```txt
-conf t
-crypto isakmp invalid-spi-recovery
-exit
+show crypto ikev2 sa detailed
 ```
 
-Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/security-vpn/ipsec-negotiation-ike-protocols/115801-technote-iosvpn-00.html) for more information.
+```txt
+ IPv4 Crypto IKEv2  SA
+
+Tunnel-id Local                 Remote                fvrf/ivrf            Status
+1     203.0.113.100/500     162.159.135.1/500     none/none            READY
+      Encr: AES-GCM, keysize: 256, PRF: SHA512, Hash: None, DH Grp:20, Auth sign: PSK, Auth verify: PSK
+      PQC Key Exchange: ML-KEM-768
+      Life/Active Time: 86400/501 sec
+      CE id: 0, Session-id: 3
+      Local spi: 9BEA9E397377D9BB       Remote spi: 0830302A3CD0A874
+      Status Description: Negotiation done
+      Local id: bf6c493d03REDACTED.ipsec.cloudflare.com
+      Remote id: 162.159.135.1
+      Local req msg id:  3              Remote req msg id:  0
+      Local next msg id: 3              Remote next msg id: 0
+      Local req queued:  3              Remote req queued:  0
+      Local window:      20             Remote window:      1
+      DPD configured for 0 seconds, retry 0
+      IETF Std Fragmentation  enabled.
+      Quantum-safe Encryption using PQC: ML-KEM-768
+      Dynamic Route Update: disabled
+      IETF Std Fragmentation MTU in use: 1372 bytes.
+      Extended Authentication not configured.
+      NAT-T is detected inside
+      Cisco Trust Security SGT is disabled
+      Initiator of SA : Yes
+      PEER TYPE: Other
+```
+
+- Clear security associations:
+
+```txt
+clear crypto session remote <peer-ip-address>
+```
+
+Another option to restart the IPsec tunnels is to administratively disable and re-enable the tunnel interfaces using `shutdown` and `no shutdown`:
+
+```txt
+int Tunnel1
+shutdown
+
+no shutdown
+```
+
+```txt
+int Tunnel2
+shutdown
+
+no shutdown
+```
+
+### Policy-based routing
+
+- Display Route Map details. Ensure the counters increment to confirm whether traffic matches the policy (`CF_WAN_PBR_ALL`):
+
+```txt
+show route-map CF_WAN_PBR_RM
+```
+
+```txt
+route-map CF_WAN_PBR_RM, permit, sequence 10
+  Match clauses:
+    ip address (access-lists): CF_WAN_PBR_ALL
+  Set clauses:
+    vrf CF_WAN_PBR_VRF
+  Policy routing matches: 12077 packets, 4639582 bytes
+```
+
+- List routes in the VRF (`CF_WAN_PBR_VRF`):
+
+```txt
+show ip route vrf CF_WAN_PBR_VRF
+
+Routing Table: CF_WAN_PBR_VRF
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, m - OMP
+       n - NAT, Ni - NAT inside, No - NAT outside, Nd - NAT DIA
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       H - NHRP, G - NHRP registered, g - NHRP registration summary
+       o - ODR, P - periodic downloaded static route, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+       & - replicated local route overrides by connected
+
+Gateway of last resort is 169.254.244.6 to network 0.0.0.0
+
+S*    0.0.0.0/0 [1/0] via 169.254.250.0
+                [1/0] via 169.254.250.2
+```
+
+- List routes matching `0.0.0.0/0` in the CEF table:
+
+```txt
+show ip cef vrf CF_WAN_PBR_VRF 0.0.0.0/0
+```
+
+```txt
+0.0.0.0/0
+  nexthop 169.254.250.0 Tunnel1
+  nexthop 169.254.250.2 Tunnel2
+```
+
+#### Health tracking - IP SLA
+
+- Display `track` object state:
+
+```txt
+show track brief
+```
+
+```txt
+Track Type        Instance                   Parameter        State Last Change
+1     ip sla      1                          reachability     Up    00:15:13
+2     ip sla      2                          reachability     Up    01:16:08
+```
+
+- Display IP SLA statistics:
+
+```txt
+show ip sla statistics
+```
+
+```txt
+IPSLAs Latest Operation Statistics
+
+IPSLA operation id: 1
+        Latest RTT: 6 milliseconds
+Latest operation start time: 15:23:03 CDT Mon Jun 1 2026
+Latest operation return code: OK
+Number of successes: 380
+Number of failures: 1
+Operation time to live: Forever
+
+IPSLA operation id: 2
+        Latest RTT: 6 milliseconds
+Latest operation start time: 15:23:00 CDT Mon Jun 1 2026
+Latest operation return code: OK
+Number of successes: 376
+Number of failures: 0
+Operation time to live: Forever
+```
+
+#### Validate tunnel failover
+
+To validate failover, administratively shut one tunnel interface or block ICMP across one of the tunnel paths. Within a few seconds the affected track transitions to `Down`, the corresponding route is removed from `CF_WAN_PBR_VRF`, and the remaining tunnel carries all LAN traffic. Restoring the tunnel reverses the change automatically.
+
+## References
+
+- [Release Notes for Cisco 8000 Series Secure Routers, Release 26.1.x](https://www.cisco.com/c/en/us/td/docs/routers/secure-routers/cisco-8000-series-secure-routers-release-26-1-x.html)
+- [Understanding Quantum-Safe Encryption on Cisco IOS XE Platforms](https://learningnetwork.cisco.com/s/article/understanding-quantum-safe-encryption-on-cisco-ios-xe-platforms)
+- [Configuring Quantum-Safe Encryption Using Postquantum Keys - Cisco IOS XE 17.x](https://www.cisco.com/c/en/us/td/docs/routers/ios/config/17-x/sec-vpn/b-security-vpn/m-sec-cfg-quantum-encryption-ppk.html)
+- [Security and VPN Configuration Guide - Cisco IOS XE 17.x](https://www.cisco.com/c/en/us/td/docs/routers/ios/config/17-x/sec-vpn/b-security-vpn.html)
+- [IPsec Virtual Tunnel Interfaces - Cisco IOS XE 17.x](https://www.cisco.com/c/en/us/td/docs/routers/ios/config/17-x/sec-vpn/b-security-vpn/m_sec-ipsec-virt-tunnl-0.html)
+- [Configuring Security for VPNs with IPsec - Cisco IOS XE 17.x](https://www.cisco.com/c/en/us/td/docs/routers/ios/config/17-x/sec-vpn/b-security-vpn/m_sec-cfg-vpn-ipsec-0.html)

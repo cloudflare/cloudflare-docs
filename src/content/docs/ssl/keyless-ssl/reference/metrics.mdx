@@ -241,13 +241,13 @@ This metric is updated:
 
 ### Signing throughput by key type
 
-```promql
+```txt
 sum by (opcode) (rate(keyless_requests[1m]))
 ```
 
 ### Error rate by error type
 
-```promql
+```txt
 sum by (error) (
   rate(keyless_request_exec_duration_per_opcode_count{error!="no error"}[5m])
 )
@@ -255,7 +255,7 @@ sum by (error) (
 
 ### 99th percentile signing latency for RSA
 
-```promql
+```txt
 histogram_quantile(
   0.99,
   rate(keyless_request_exec_duration_per_opcode_bucket{type="rsa"}[5m])
@@ -266,7 +266,7 @@ A value approaching 10 seconds indicates PKCS#11 session pool exhaustion. Refer 
 
 ### 99th percentile key load latency
 
-```promql
+```txt
 histogram_quantile(0.99, rate(keyless_key_load_duration_bucket[5m]))
 ```
 
@@ -274,7 +274,7 @@ A spike here without a corresponding spike in exec duration suggests the keystor
 
 ### Connection failure rate
 
-```promql
+```txt
 rate(keyless_failed_connection_total[5m])
 ```
 
@@ -282,6 +282,6 @@ A sustained non-zero rate indicates network or TLS problems between the Cloudfla
 
 ### Alert on certificate expiry within 30 days
 
-```promql
+```txt
 (certificate_expiration_timestamp_seconds - time()) / 86400 < 30
 ```

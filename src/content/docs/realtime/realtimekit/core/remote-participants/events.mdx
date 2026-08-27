@@ -62,7 +62,7 @@ meeting.participants.on(
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 This event is not available on this platform.
 
@@ -117,7 +117,7 @@ const pageCount = useRealtimeKitSelector((m) => m.participants.pageCount);
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 This event is not available on this platform.
 
@@ -195,24 +195,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onActiveSpeakerChanged(RtkRemoteParticipant? participant) {
-		if (participant != null) {
-			print('${participant.id} is currently speaking');
-		}
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -290,22 +272,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onParticipantJoin(RtkRemoteParticipant participant) {
-		print('A participant with id ${participant.id} has joined');
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -377,22 +343,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onParticipantLeave(RtkRemoteParticipant participant) {
-		print('A participant with id ${participant.id} has left the meeting');
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -454,22 +404,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onActiveParticipantsChanged(List<RtkRemoteParticipant> active) {
-		// Called when active participants change
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-</RTKCodeSnippet>
-
 ### Participant pinned
 
 Triggered when a participant is pinned.
@@ -525,22 +459,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onParticipantPinned(RtkRemoteParticipant participant) {
-		print('Participant with id ${participant.id} was pinned');
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -612,22 +530,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onParticipantUnpinned(RtkRemoteParticipant participant) {
-		print('Participant with id ${participant.id} was unpinned');
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -711,22 +613,6 @@ meeting.addParticipantEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
-	@override
-	void onVideoUpdate(RtkRemoteParticipant participant, bool isEnabled) {
-		print('Participant ${participant.id} video is now ${isEnabled ? "enabled" : "disabled"}');
-	}
-}
-
-participant.addParticipantUpdateListener(ParticipantUpdateHandler());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -806,22 +692,6 @@ meeting.addParticipantEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
-	@override
-	void onAudioUpdate(RtkRemoteParticipant participant, bool isEnabled) {
-		print('Participant ${participant.id} audio is now ${isEnabled ? "enabled" : "disabled"}');
-	}
-}
-
-participant.addParticipantUpdateListener(ParticipantUpdateHandler());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -901,22 +771,6 @@ meeting.addParticipantEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
-	@override
-	void onScreenShareUpdate(RtkRemoteParticipant participant, bool isEnabled) {
-		print('Participant ${participant.id} screen share is now ${isEnabled ? "enabled" : "disabled"}');
-	}
-}
-
-participant.addParticipantUpdateListener(ParticipantUpdateHandler());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -1006,7 +860,7 @@ useEffect(() => {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 This event is not available on this platform.
 
@@ -1175,54 +1029,6 @@ meeting.addParticipantEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Implement the `RtkParticipantUpdateListener` interface and add the listener on a participant:
-
-```dart
-class ParticipantUpdateHandler extends RtkParticipantUpdateListener {
-	@override
-	void onVideoUpdate(RtkRemoteParticipant participant, bool isEnabled) {
-		print("${participant.name}'s video is now ${isEnabled ? 'on' : 'off'}");
-	}
-
-	@override
-	void onAudioUpdate(RtkRemoteParticipant participant, bool isEnabled) {
-		print("${participant.name}'s audio is now ${isEnabled ? 'on' : 'off'}");
-	}
-
-	@override
-	void onPinned(RtkRemoteParticipant participant) {
-		print("${participant.name} was pinned");
-	}
-
-	@override
-	void onUnpinned(RtkRemoteParticipant participant) {
-		print("${participant.name} was unpinned");
-	}
-
-	@override
-	void onScreenShareUpdate(RtkRemoteParticipant participant, bool isEnabled) {
-		print("${participant.name}'s screen-share is now ${isEnabled ? 'on' : 'off'}");
-	}
-
-	@override
-	void onUpdate(RtkRemoteParticipant participant) {
-		print("${participant.name} was updated");
-	}
-}
-
-// Register the listener with a specific participant
-final listener = ParticipantUpdateHandler();
-participant.addParticipantUpdateListener(listener);
-
-// When done listening, remove the listener
-participant.removeParticipantUpdateListener(listener);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx

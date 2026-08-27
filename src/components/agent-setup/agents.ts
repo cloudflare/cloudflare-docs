@@ -39,7 +39,7 @@ export const AGENTS: AgentData[] = [
 		slug: "codex",
 		icon: "codex",
 		description:
-			"Lightweight open-source terminal agent that reads and writes files, runs commands, and browses the web in a sandbox. Made by OpenAI.",
+			"OpenAI coding agent available as a terminal CLI and desktop app. It reads and writes files, runs commands, and browses the web in a sandbox.",
 		capabilities: {
 			ide: false,
 			terminal: true,
@@ -191,6 +191,68 @@ export const AGENTS: AgentData[] = [
 			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			docs: "https://docs.windsurf.com",
 			website: "https://windsurf.com",
+		},
+	},
+	{
+		name: "Visual Studio Code",
+		vendor: "Microsoft",
+		slug: "visual-studio-code",
+		icon: "visual-studio-code",
+		description:
+			"Free, open-source code editor with native Model Context Protocol (MCP) client support and Copilot Chat integration. Made by Microsoft.",
+		capabilities: {
+			ide: true,
+			terminal: true,
+			standalone: true,
+			cloud: false,
+			extension: true,
+			open_source: true,
+		},
+		features: [
+			"Native MCP client",
+			"Copilot Chat integration",
+			"Terminal integration",
+			"Extension ecosystem",
+		],
+		pricing_model: "byok",
+		model_flexibility: "multi_provider",
+		context_approach: "project_memory",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
+			docs: "https://code.visualstudio.com/docs",
+			website: "https://code.visualstudio.com",
+		},
+	},
+	{
+		name: "Bionic",
+		vendor: "LM Studio",
+		slug: "bionic",
+		icon: "bionic",
+		description:
+			"Powerful agent for coding and work. Natively local, with open models in the cloud. By LM Studio.",
+		capabilities: {
+			ide: false,
+			terminal: false,
+			standalone: true,
+			cloud: true,
+			extension: false,
+			open_source: false,
+		},
+		features: [
+			"Local, remote, and cloud models",
+			"Code Projects for local codebases",
+			"Repository search and file editing",
+			"Git and local shell tools",
+		],
+		pricing_model: "hybrid",
+		model_flexibility: "multi_provider",
+		links: {
+			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
+			docs: "https://lmstudio.ai/docs/bionic",
+			website: "https://lmstudio.ai/",
 		},
 	},
 ];

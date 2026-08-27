@@ -3,6 +3,35 @@ link: "/realtime/changelog/"
 productName: Realtime
 productLink: "/realtime/"
 entries:
+  - publish_date: "2026-08-13"
+    title: DataChannels reliability and ordering (ordered, maxRetransmits, maxPacketLifeTime)
+    description: |-
+      DataChannels now accept reliability settings on both publisher (`location: "local"`) and subscriber (`location: "remote"`) channels, so unreliable and unordered delivery is honored end to end.
+
+      - `ordered` (default `true`) controls in-order delivery. When `false`, a delayed message does not block later messages.
+      - Set `ordered: false` and omit both retry fields for reliable, unordered delivery.
+      - `maxRetransmits` or `maxPacketLifeTime` enable partial reliability; set `maxRetransmits: 0` for fully unreliable delivery.
+      - Set the same fields on local and remote `/datachannels/new` calls, and mirror them on `createDataChannel()` for negotiated channels.
+      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Connection API](/realtime/sfu/https-api/)
+  - publish_date: "2026-07-23"
+    title: DataChannels return-to-publisher (canReply)
+    description: |-
+      DataChannels now support opt-in reverse traffic from one subscriber back to the publisher on the same channel. When a subscriber pulls a remote DataChannel with `canReply: true` (or is granted it later via `datachannels/update`), the SFU admits that subscriber's messages to the publisher only.
+
+      - Opt-in per subscriber; defaults to `false`, so existing publisher-to-subscriber fan-out is unchanged.
+      - Reverse traffic is not fanned out to other subscribers.
+      - Exclusive: at most one subscriber holds `canReply` per publisher DataChannel; a new grant replaces the previous holder.
+      - Grant or revoke without re-pulling via `PUT .../datachannels/update`.
+      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Limits, timeouts and quotas](/realtime/sfu/limits/)
+  - publish_date: "2026-06-10"
+    title: DataChannels subscriber acknowledgment gate (waitForAck)
+    description: |-
+      DataChannels now support an opt-in subscriber acknowledgment gate. When a subscriber pulls a remote DataChannel with `waitForAck: true`, the SFU holds delivery to that subscriber until it sends its first message (the acknowledgment). This avoids losing the first messages before the subscriber is ready to handle them.
+
+      - Opt-in per subscriber; defaults to `false`, so existing behavior is unchanged.
+      - The acknowledgment is consumed by the SFU and is not forwarded, so the channel stays unidirectional.
+      - Send the acknowledgment within 30 seconds of creating the remote DataChannel.
+      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Limits, timeouts and quotas](/realtime/sfu/limits/)
   - publish_date: "2025-11-21"
     title: WebSocket adapter video (JPEG) support
     description: |-

@@ -4,7 +4,7 @@ This file helps AI agents understand the structure, tooling, and conventions of 
 
 ## Repository overview
 
-This is the source for [developers.cloudflare.com](https://developers.cloudflare.com). It is an **Astro** site using the **Starlight** documentation framework. Content is authored in **MDX** (Markdown + JSX). The site is deployed as a Cloudflare Worker.
+This is the source for [developers.cloudflare.com](https://developers.cloudflare.com). It is an **Astro** site using the **Nimbus** (`nimbus-docs`) documentation framework. Content is authored in **MDX** (Markdown + JSX). The site is deployed as a Cloudflare Worker.
 
 - **Node.js**: 24.x
 - **Package manager**: pnpm (use `pnpm install --frozen-lockfile` to install)
@@ -22,16 +22,18 @@ cloudflare-docs/
 │   │   ├── glossary/       # Glossary term definitions (YAML)
 │   │   ├── products/       # Product metadata (YAML, 135 files)
 │   │   └── ...             # Other data collections (plans, fields, models, etc.)
-│   ├── components/         # Custom Astro + React components
-│   │   ├── index.ts        # Central re-export barrel — all MDX imports come from here
-│   │   └── overrides/      # Starlight component overrides (Banner, Footer, Head, etc.)
+│   ├── components/         # Astro + React components (barrel: components.ts)
+│   ├── components.ts       # MDX component barrel — all MDX imports come from here
+│   ├── layouts/            # Page layout components
+│   ├── pages/              # Dynamic route pages (changelog, llms.txt, RSS, etc.)
 │   ├── schemas/            # Zod schemas for all content collections
-│   ├── plugins/            # Remark, Rehype, Starlight, and Expressive Code plugins
+│   ├── plugins/            # Satteri hast pipeline plugins
+│   ├── scripts/            # Client-side scripts (analytics, mermaid, webmcp, etc.)
+│   ├── styles/             # CSS (Tailwind 4)
 │   ├── icons/              # Product SVG icons (~110)
 │   ├── assets/             # Processed images (optimized by Astro)
-│   ├── styles/             # CSS (Tailwind 4)
-│   ├── pages/              # Dynamic route pages (changelog, glossary, search)
-│   └── util/               # Shared utility functions
+│   ├── util/               # App utility functions
+│   └── content.config.ts   # Content collection definitions
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
 ├── bin/                    # Build scripts and CI helpers
@@ -40,8 +42,8 @@ cloudflare-docs/
 │                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
 │                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
 │                           # skills/ is in .gitignore and is NOT committed to the repository.
-├── astro.config.ts         # Astro + Starlight configuration
-├── ec.config.mjs           # Expressive Code (syntax highlighting) configuration
+├── .flue/                  # Flue cloudflare-docs-bot — see .flue/AGENTS.md
+├── astro.config.ts         # Astro + Nimbus configuration
 ├── package.json
 └── tsconfig.json
 ```
@@ -73,14 +75,14 @@ pcx_content_type: how-to # Page type (see below)
 sidebar:
   order: 1 # Sort order in sidebar
   label: Custom Label # Override sidebar text
-products: # References to src/content/products/ entries
+products: # References to src/content/directory/ entries
   - workers
 difficulty: Beginner # For tutorials: Beginner | Intermediate | Advanced
 reviewed: 2025-01-15 # YYYY-MM-DD of last content review
 ---
 ```
 
-Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
+Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `troubleshooting`, `tutorial`, `video`.
 
 ### Writing and style rules
 
@@ -128,18 +130,17 @@ pnpm run format:core:check  # Prettier formatting check
 pnpm run check              # Astro + Worker type checking
 pnpm run lint               # ESLint
 pnpm run format:core:check  # Prettier formatting check
-pnpm run build              # Full build with link checking (set RUN_LINK_CHECK=true)
+pnpm run build              # Full build with link checking
 pnpm run test               # All test suites
 pnpm exec tsm bin/validate-redirects.ts  # Only if public/__redirects was modified
 ```
 
 ### Fixing formatting
 
-After editing any `.ts`, `.tsx`, `.js`, `.mjs`, or `.css` file, run:
+After editing any prettier-scoped file, run:
 
 ```bash
-pnpm run format             # Auto-fix code + data files
-pnpm run format:content     # Auto-fix MDX/MD/Astro files
+pnpm run format             # Auto-fix all prettier-scoped files
 ```
 
 Always format edited files before committing — CI runs `pnpm run format:core:check` and will fail if formatting is off.
@@ -158,7 +159,7 @@ The CI workflow (`.github/workflows/ci.yml`) runs on PRs to `production` and che
 2. `pnpm run check` (Astro + Worker type checking)
 3. ESLint (reported inline on PR via reviewdog)
 4. `pnpm run format:core:check` (Prettier formatting)
-5. `pnpm run build` with `RUN_LINK_CHECK=true` (full build + internal link validation)
+5. `pnpm run build` (full build + MDX parsing + image path validation)
 6. Redirect validation (`bin/validate-redirects.ts`)
 7. `pnpm run test` (all Vitest suites)
 
@@ -175,13 +176,13 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 7. **Wrong image location** — images go in `src/assets/images/`, never in `src/content/`.
 8. **Skipping heading levels** — H2 then H4 without H3 will violate style guide rules.
 9. **`$` prefix in terminal commands** — the copy button copies verbatim, including the `$`.
-10. **Invalid changelog product folders** — the product directory must exist in `src/content/products/`.
+10. **Invalid changelog product folders** — the changelog folder name must match a `directory` entry id in `src/content/directory/`.
 11. **Redirect issues** — source URLs in `public/__redirects` must end in `/` (or `*`, `.xml`, `.json`, `.html`). No fragments in source URLs. No infinite loops.
 12. **Hand-crafted directory entry IDs** — never manually write `id` values in `src/content/directory/` files. Always run `node tools/directory-entry-ids --fix` to generate them.
 
 ## Content collections
 
-The site defines 20 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
+The site defines 19 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
 | Collection          | Location                         | Description                              |
 | ------------------- | -------------------------------- | ---------------------------------------- |
@@ -189,8 +190,6 @@ The site defines 20 content collections in `src/content.config.ts` with schemas 
 | `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)          |
 | `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                 |
 | `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                    |
-| `products`          | `src/content/products/`          | Product metadata (YAML)                  |
-| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                 |
 | `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)              |
 | `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
 | `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML)  |
@@ -221,7 +220,7 @@ node tools/directory-entry-ids --fix  # Auto-fix missing, malformed, or duplicat
 
 ## Testing
 
-Tests use Vitest with three workspace projects (`vitest.workspace.ts`):
+Tests use Vitest with three workspace projects (`vitest.config.ts`):
 
 | Suite   | File pattern       | Runtime                           |
 | ------- | ------------------ | --------------------------------- |
@@ -245,18 +244,27 @@ New web components in this codebase should use the `cfdocs-` prefix for custom e
 
 Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `r2-local-uploads-diagram`, `animated-workflow-diagram`, `autoconfig-diagram`) are exempt from the `cfdocs-` prefix requirement and do not need to be renamed.
 
-## Agent skills
+## Flue cloudflare-docs-bot
 
-Repo-specific skills live in `.agents/skills/`. Each skill provides specialized instructions for a particular task. Load a skill when the task matches its description.
+The PR review bot for this repository lives in `.flue/`. It is a Cloudflare Worker (`cloudflare-docs-flue`) built with the Flue framework that reviews pull requests and posts structured feedback as GitHub comments.
 
-| Skill               | When to use                                                        |
-| ------------------- | ------------------------------------------------------------------ |
-| `changelog`         | Creating, editing, or reviewing changelog entries                  |
-| `code-review`       | Reviewing Workers/platform code for type correctness and API usage |
-| `dependabot-review` | Analyzing a Dependabot PR for impact on this repo                  |
-| `docs-review`       | Reviewing documentation PRs for style, structure, and correctness  |
-| `eli5`              | Simplifying technical documentation for broader audiences          |
-| `pr`                | Creating or updating GitHub pull requests                          |
+**If the bot is relevant to the task, read `.flue/AGENTS.md` first.** That file covers the worker architecture, workflow routing, specialist agents (code review, conventions, style-guide), R2 state management, local dev scripts, and deployment. All bot-related npm scripts are prefixed `flue:` in the root `package.json` (e.g. `pnpm run flue:dev`, `pnpm run flue:deploy`).
+
+## Agent skills, commands, and agents
+
+Repo-specific agent config lives in `.agents/`. All subdirectories are committed. Tool-specific paths (`.opencode/agents`, `CLAUDE.md`) are symlinks into `.agents/`.
+
+### Skills
+
+Skills live in `.agents/skills/`. Each skill's `SKILL.md` describes what it does and when to use it. Load a skill when the task matches its description.
+
+The `contributing` skill is the entry point for any change to the docs — writing or editing pages, choosing content types and components, reviewing docs or code examples, adding changelog entries, and opening pull requests. It is a router that dispatches to task-specific files under `.agents/skills/contributing/references/`. Load it first for contribution tasks.
+
+### Agents
+
+Custom agent definitions live in `.agents/agents/` (symlinked from `.opencode/agents/`). Each agent's frontmatter describes its role.
+
+### Reference files
 
 Shared reference files in `.agents/references/`:
 
@@ -265,6 +273,10 @@ Shared reference files in `.agents/references/`:
 | `style-guide.md` | Canonical writing and formatting rules for all content work |
 | `components.md`  | Full MDX component catalog with props and usage examples    |
 | `procedures.md`  | Rules for writing step-by-step procedural instructions      |
+
+## Terminology and naming preferences
+
+- **Do not use "PayGo" in public-facing documentation.** Instead use the term **"Free"** when referring to standalone Free accounts that can be created from the dashboard.
 
 ## Commit conventions
 

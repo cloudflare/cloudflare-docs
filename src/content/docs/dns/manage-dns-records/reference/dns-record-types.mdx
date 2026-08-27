@@ -397,10 +397,6 @@ With Enterprise accounts, you also have the option to change the SOA record valu
 - As a DNS zone default: Define the SOA record values that Cloudflare will use for all new zones added to your account. Refer to [Configure DNS zone defaults](/dns/additional-options/dns-zone-defaults/) for step-by-step guidance.
 - For existing zones: Override the defaults or Cloudflare-generated values under **DNS record options** on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page.
 
-:::note
-If you are an Enterprise customer and these options are not displayed on your Cloudflare dashboard, reach out to your account team.
-:::
-
 Refer to the following list for information about each SOA record field:
 
 <Details header="SOA record fields">
@@ -447,6 +443,10 @@ Refer to the following list for information about each SOA record field:
   | `1800`  | `60`    | `86400` |
 
 </Details>
+
+:::note
+When you query the SOA record itself, the TTL in the response is the smaller of the `Record TTL` and the `Minimum TTL` values. For example, if `Record TTL` is `3600` and `Minimum TTL` is `1800`, the SOA record is returned with a TTL of `1800`.
+:::
 
 ### NS
 

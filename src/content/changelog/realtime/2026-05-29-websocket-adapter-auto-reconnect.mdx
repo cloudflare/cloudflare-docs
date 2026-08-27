@@ -1,0 +1,44 @@
+---
+title: Cloudflare's Realtime WebSocket adapter now auto-reconnects and buffers WebRTC media
+description: Realtime SFU WebSocket adapters now automatically reconnect and buffer media after brief endpoint disconnects or restarts when using Stream mode.
+products:
+  - realtime
+date: 2026-05-29
+---
+
+[Cloudflare Realtime SFU](/realtime/sfu/) is a [WebRTC Selective Forwarding Unit that runs on Cloudflare's global network](/realtime/sfu/calls-vs-sfus/), so you can route live audio, video, and data between WebRTC clients around the world without managing SFU infrastructure or regions.
+
+When you use the [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/) to stream WebRTC media to a WebSocket endpoint, the adapter now auto-reconnects and buffers audio and video after brief endpoint disconnects or restarts.
+
+## Streaming WebRTC media to WebSocket endpoints
+
+Many teams also use Realtime SFU as the media layer for backend applications, such as transcription, recording, note-taking, and agentic media-processing services. These systems often need to consume live WebRTC audio or video from the SFU in backend infrastructure, including [Durable Objects](/durable-objects/), [Workers](/workers/), [Containers](/containers/), or external services, without running a WebRTC client themselves.
+
+The [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/) bridges that gap by streaming WebRTC media from the SFU to a standard WebSocket endpoint as application-consumable payloads: [PCM audio frames and JPEG video frames](/realtime/sfu/media-transport-adapters/websocket-adapter/#media-formats).
+
+## What changed
+
+When you use the WebSocket adapter in [Stream mode (egress)](/realtime/sfu/media-transport-adapters/websocket-adapter/#stream-mode-egress) to send live audio or video from the SFU to your own WebSocket endpoint, the SFU now [automatically reconnects](/realtime/sfu/media-transport-adapters/websocket-adapter/#automatic-reconnection-for-streaming) after brief endpoint disconnects or restarts. This is especially helpful for long-running media pipelines where the WebSocket endpoint may briefly restart while a recording, transcription, or live analysis job is still in progress.
+
+Previously, a brief disconnect from your WebSocket endpoint could close the adapter and require your application to recreate it before media could resume. Now, the SFU retries the same endpoint for up to 5 seconds with no API change required. If the endpoint comes back within that window, audio and video delivery resumes automatically.
+
+The reconnect behavior also includes [live-first media buffering](/realtime/sfu/media-transport-adapters/websocket-adapter/#media-buffering-during-reconnect), so brief interruptions reduce media loss without replaying stale video.
+
+## Reconnect behavior
+
+During reconnect:
+
+- Audio uses a short bounded backlog to reduce audible loss. If the interruption lasts longer than the backlog can cover, older audio may be dropped.
+- Video resumes from the [latest available JPEG frame](/realtime/sfu/media-transport-adapters/websocket-adapter/#video-jpeg) instead of replaying stale frames.
+- Recovery is best effort and does not guarantee gapless or exactly-once delivery.
+
+If the endpoint remains unavailable after the 5-second reconnect window, the adapter closes and must be recreated.
+
+## Learn more
+
+- [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/)
+- [Automatic reconnection for streaming](/realtime/sfu/media-transport-adapters/websocket-adapter/#automatic-reconnection-for-streaming)
+- [Get started with Realtime SFU](/realtime/sfu/get-started/)
+- [Realtime SFU example architecture](/realtime/sfu/example-architecture/)
+- [Realtime vs Regular SFUs](/realtime/sfu/calls-vs-sfus/)
+- [Global SFU Network Visualization](https://realtime-sfu.dev-demos.workers.dev/)

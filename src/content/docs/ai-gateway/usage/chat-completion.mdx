@@ -5,7 +5,7 @@ pcx_content_type: reference
 tags:
   - AI
 sidebar:
-  order: 2
+  order: 3
   badge: Deprecated
 products:
   - ai-gateway
@@ -18,8 +18,12 @@ import {
 } from "~/components";
 import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
 
-:::caution[Deprecated]
-This endpoint is deprecated. Use the [REST API](/ai-gateway/usage/rest-api/) instead, which provides OpenAI-compatible endpoints at `api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/v1/chat/completions`. The `/compat/chat/completions` endpoint will continue to work for existing integrations.
+:::caution[Deprecated for single-model calls]
+For standard single-model chat completions, this endpoint is deprecated. Use the [REST API](/ai-gateway/usage/rest-api/) instead, which provides OpenAI-compatible endpoints at `api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/v1/chat/completions`. The `/compat/chat/completions` endpoint will continue to work for existing integrations.
+:::
+
+:::note[Required for dynamic routing]
+[Dynamic routes](/ai-gateway/features/dynamic-routing/) (`dynamic/{route}`) are invoked through this `/compat/chat/completions` endpoint. The REST API does not currently cover dynamic routing, so continue to use this endpoint when calling a dynamic route. See [Using a dynamic route](/ai-gateway/features/dynamic-routing/usage/) for examples.
 :::
 
 Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.

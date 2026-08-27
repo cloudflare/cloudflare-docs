@@ -1,18 +1,179 @@
 {
 	"$schema": "../node_modules/wrangler/config-schema.json",
 	"name": "cloudflare-docs-flue",
+	"account_id": "b54f07a6c269ecca2fa60f1ae4920c99",
 	"compatibility_date": "2026-04-01",
 	"compatibility_flags": ["nodejs_compat"],
 	"ai": {
 		"binding": "AI",
 	},
-	"worker_loaders": [{ "binding": "LOADER" }],
 	"r2_buckets": [
 		{
 			"binding": "DOCS_FLUE_BUCKET",
 			"bucket_name": "docs-flue-bucket",
 		},
 	],
+	// App-owned Cloudflare Workflow (D1). class_name resolves against the
+	// generated Worker entry, which re-exports cloudflare.ts's named exports
+	// (`export * from cloudflare.ts`). Cloudflare Workflows are not Durable
+	// Objects, so this needs no `migrations` entry.
+	"workflows": [
+		{
+			"name": "cloudflare-docs-flue-review-orchestrator",
+			"binding": "REVIEW_ORCHESTRATOR",
+			"class_name": "ReviewOrchestrator",
+		},
+		{
+			"name": "cloudflare-docs-flue-dependabot-review",
+			"binding": "DEPENDABOT_REVIEW",
+			"class_name": "DependabotReviewWorkflow",
+		},
+		{
+			"name": "cloudflare-docs-flue-rebase",
+			"binding": "REBASE",
+			"class_name": "RebaseWorkflow",
+		},
+		{
+			"name": "cloudflare-docs-flue-ingest",
+			"binding": "INGEST",
+			"class_name": "IngestWorkflow",
+		},
+	],
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"FlueRegistry",
+				"OrchestrateWorkflow",
+				"CodeReviewOrchestratorWorkflow",
+				"SpamAndOffTopicFilterWorkflow",
+				"StyleGuideReviewWorkflow",
+			],
+		},
+		{
+			"tag": "v2",
+			"new_sqlite_classes": ["DependabotReviewWorkflow"],
+		},
+		{
+			"tag": "v3",
+			"renamed_classes": [
+				{ "from": "OrchestrateWorkflow", "to": "FlueOrchestrateWorkflow" },
+				{
+					"from": "CodeReviewOrchestratorWorkflow",
+					"to": "FlueCodeReviewOrchestratorWorkflow",
+				},
+				{
+					"from": "SpamAndOffTopicFilterWorkflow",
+					"to": "FlueSpamAndOffTopicFilterWorkflow",
+				},
+				{
+					"from": "StyleGuideReviewWorkflow",
+					"to": "FlueStyleGuideReviewWorkflow",
+				},
+				{
+					"from": "DependabotReviewWorkflow",
+					"to": "FlueDependabotReviewWorkflow",
+				},
+			],
+		},
+		{
+			// The style-guide-review workflow was retired: its per-file review now
+			// runs in-process inside the style-guide-specialist workflow via
+			// concurrent sessions (lib/style-guide-inproc.ts), so the standalone
+			// workflow's Durable Object class is no longer generated.
+			"tag": "v4",
+			"deleted_classes": ["FlueStyleGuideReviewWorkflow"],
+		},
+		{
+			// The code review and style-guide fan-outs were split back out of the
+			// orchestrator into their own specialist workflows, so each runs in its
+			// own Durable Object isolate (own memory budget) instead of competing
+			// for the orchestrator DO's. See workflows/{code-review,style-guide}-specialist.ts.
+			"tag": "v5",
+			"new_sqlite_classes": [
+				"FlueCodeReviewSpecialistWorkflow",
+				"FlueStyleGuideSpecialistWorkflow",
+			],
+		},
+		{
+			// The finalize-review workflow handles reconciliation, rendering, and
+			// posting the review comment. It is admitted by whichever specialist
+			// finishes last via an R2 rendezvous lock, replacing the orchestrator's
+			// 20-minute specialist poll. See workflows/finalize-review.ts.
+			"tag": "v6",
+			"new_sqlite_classes": ["FlueFinalizeReviewWorkflow"],
+		},
+		{
+			// Two new specialist workflows added to the review pipeline:
+			// - ConventionsSpecialist: checks PR title, description, and scope via a
+			//   light AI session (conventions-check skill).
+			// - RedirectSpecialist: pure TypeScript, no model; checks that renamed or
+			//   deleted docs pages have entries in public/__redirects.
+			// See workflows/conventions-specialist.ts (RedirectSpecialist since removed).
+			"tag": "v7",
+			"new_sqlite_classes": [
+				"FlueConventionsSpecialistWorkflow",
+				"FlueRedirectSpecialistWorkflow",
+			],
+		},
+		{
+			// RedirectSpecialist removed from the review pipeline — the check added
+			// noise without enough signal. DO class deleted to clean up the registry.
+			"tag": "v8",
+			"deleted_classes": ["FlueRedirectSpecialistWorkflow"],
+		},
+		{
+			// Rebase workflow added: handles the /rebase slash
+			// commands. Rebases a PR branch against production via the GitHub API
+			// and optionally uses AI to resolve conflicts.
+			"tag": "v9",
+			"new_sqlite_classes": ["FlueRebaseWorkflow"],
+		},
+		{
+			// Flue 2.0 migration (D3 — destructive DO reset; bot state is
+			// disposable and re-triggerable). The 0.11 workflow-per-DO architecture
+			// is replaced by one Durable Object per Flue agent. Delete every 0.11
+			// workflow DO class that still exists after v9 (plus the retired
+			// FlueRegistry — 2.0 has no registry DO), and create the five per-agent
+			// SQLite DO classes the 2.0 build binds (see durable_objects.bindings in
+			// the generated config: FLUE_*_AGENT → Flue*Agent). Classnames are
+			// framework-generated as `Flue<PascalCase(agentName)>Agent`.
+			"tag": "v10",
+			"deleted_classes": [
+				"FlueRegistry",
+				"FlueOrchestrateWorkflow",
+				"FlueCodeReviewOrchestratorWorkflow",
+				"FlueSpamAndOffTopicFilterWorkflow",
+				"FlueCodeReviewSpecialistWorkflow",
+				"FlueStyleGuideSpecialistWorkflow",
+				"FlueFinalizeReviewWorkflow",
+				"FlueConventionsSpecialistWorkflow",
+				"FlueDependabotReviewWorkflow",
+				"FlueRebaseWorkflow",
+			],
+			"new_sqlite_classes": [
+				"FlueCodeReviewFileAgent",
+				"FlueConventionsReviewerAgent",
+				"FlueDependabotReviewerAgent",
+				"FlueReconcileReviewerAgent",
+				"FlueRebaseConflictResolverAgent",
+				"FlueSpamFilterAgent",
+				"FlueStyleGuideFileAgent",
+			],
+		},
+		{
+			// v11: Add the review-validator agent DO class. The validation step
+			// runs after reconcile and before publish, using GLM-5.2 to suppress
+			// false-positive findings from the specialist agents.
+			"tag": "v11",
+			"new_sqlite_classes": ["FlueReviewValidatorAgent"],
+		},
+	],
+	// Explicitly empty crons list so wrangler clears any previously registered
+	// cron triggers on deploy (an absent triggers key leaves existing ones intact).
+	"triggers": {
+		"crons": [],
+	},
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,
@@ -23,9 +184,20 @@
 			"invocation_logs": false,
 		},
 		"traces": {
-			"enabled": false,
+			"enabled": true,
 			"persist": true,
 			"head_sampling_rate": 1,
 		},
+	},
+	"secrets": {
+		"required": [
+			"DOCS_FLUE_AI_GATEWAY_ID",
+			"DOCS_FLUE_GITHUB_APP_ID",
+			"DOCS_FLUE_GITHUB_APP_PRIVATE_KEY",
+			"DOCS_FLUE_GITHUB_INSTALLATION_ID",
+			"GITHUB_WEBHOOK_SECRET",
+			"GITHUB_ORG_TOKEN",
+			"DOCS_FLUE_INTERNAL_TOKEN",
+		],
 	},
 }

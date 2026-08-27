@@ -1,9 +1,24 @@
 dist
 .astro
+
+# fetched at prebuild/predev by bin/fetch-skills.ts
+.tmp
 # generated actions JS
 .github/**/*/index.js
 .github/CODEOWNERS
 public/__redirects
 public/analytics/static/downloads/main.css
 src/content/workers-ai-models/*.json
+src/content/catalog-models/*.json
 src/content/partials/images/*.mdx
+
+# Lock files
+pnpm-lock.yaml
+
+# Local agent state (not committed but ignore defensively)
+.opencode/
+
+# Symlinks — prettier errors on these
+CLAUDE.md
+GEMINI.md
+.claude/CLAUDE.md

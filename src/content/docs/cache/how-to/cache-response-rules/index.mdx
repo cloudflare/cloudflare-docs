@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { FeatureTable, InlineBadge, Render } from "~/components";
+import { InlineBadge, Render } from "~/components";
 
 Cache Response Rules allow you to configure cache settings based on request and response attributes. These rules execute prior to caching in the `http_response_cache_settings` phase, which runs after Cloudflare receives the origin response.
 
@@ -30,7 +30,10 @@ Cache Response Rules require that you [proxy the DNS records](/dns/proxy-status/
 
 The following table describes Cache Response Rules availability per plan.
 
-<FeatureTable id="cache.cache_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 10 | 25 | 50 | 300 |
 
 <Render
 	file="troubleshoot-rules-with-trace"
@@ -58,6 +61,12 @@ Consider the following scenario:
 3. The origin responds with `Cache-Control: s-maxage=600`.
 
 In this case, the Cache Response Rule takes precedence. Cloudflare caches the asset for `3600` seconds (1 hour) based on the `s-maxage` directive set by the Cache Response Rule, while visitors still receive the original `s-maxage=600` from the origin because `cloudflare_only` is enabled.
+
+## Difference from Workers and Transform Rules
+
+Workers and [Response Header Transform Rules](/rules/transform/response-header-modification/) execute after the caching decision has been made and cannot influence whether or how a response is cached. Only [Cache Response Rules](/cache/how-to/cache-response-rules/) can modify caching behavior based on origin response headers.
+
+If you need to override `Cache-Control` directives from the origin (for example, remove `private` or add `s-maxage`), use a [Cache Response Rule](/cache/how-to/cache-response-rules/) — not a Worker or Transform Rule.
 
 ## Notes
 

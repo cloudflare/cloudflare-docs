@@ -44,9 +44,9 @@ Domain plan charges (Free, Pro, Business, Enterprise) are flat-rate and billed a
 
 The line item lists the domain names the plan covers. For example:
 
-| Description | Qty | Unit price | Amount |
-|---|---|---|---|
-| Cloudflare Pro Plan (example1.com, example2.com, example3.com) | 3 | $25.00 | $75.00 |
+| Description                                                    | Qty | Unit price | Amount |
+| -------------------------------------------------------------- | --- | ---------- | ------ |
+| Cloudflare Pro Plan (example1.com, example2.com, example3.com) | 3   | $25.00     | $75.00 |
 
 ### Subscription and add-on charges (flat rate, billed in advance)
 
@@ -54,11 +54,11 @@ Add-on services with flat monthly fees — such as Load Balancing, Argo Smart Ro
 
 For example:
 
-| Description | Period | Qty | Amount |
-|---|---|---|---|
-| Basic Load Balancing | Apr 14 - May 13 | 1 | $5.00 |
-| Images Stream Bundle Basic | Apr 14 - May 13 | 1 | $5.00 |
-| Smart Shield Argo Zone Level Plan - Basic | Apr 14 - May 13 | 1 | $5.00 |
+| Description                               | Period          | Qty | Amount |
+| ----------------------------------------- | --------------- | --- | ------ |
+| Basic Load Balancing                      | Apr 14 - May 13 | 1   | $5.00  |
+| Images Stream Bundle Basic                | Apr 14 - May 13 | 1   | $5.00  |
+| Smart Shield Argo Zone Level Plan - Basic | Apr 14 - May 13 | 1   | $5.00  |
 
 Some add-ons have multiple sub-line items (for example, Load Balancing shows separate lines for pools, origins, health check intervals, and health check regions). Many of these sub-items may show $0.00 if they are within your included allocation.
 
@@ -68,11 +68,11 @@ Products like Workers, R2, Cache Reserve operations, Stream minutes viewed, and 
 
 For example:
 
-| Description | Period | Qty | Unit price | Amount |
-|---|---|---|---|---|
-| Cache Reserve Reads | Mar 14 - Apr 13 | 166,865 | $0.36 per 1,000,000 | $0.36 |
-| Smart Shield Argo Accelerated Gigabytes (First GB is included) | Mar 14 - Apr 13 | 34 | $0.10 | $3.40 |
-| Stream Bundle Basic Minutes of Video Viewed (in thousands) | Mar 14 - Apr 13 | 198 | $1.00 per 1,000 | $1.00 |
+| Description                                                    | Period          | Qty     | Unit price          | Amount |
+| -------------------------------------------------------------- | --------------- | ------- | ------------------- | ------ |
+| Cache Reserve Reads                                            | Mar 14 - Apr 13 | 166,865 | $0.36 per 1,000,000 | $0.36  |
+| Smart Shield Argo Accelerated Gigabytes (First GB is included) | Mar 14 - Apr 13 | 34      | $0.10               | $3.40  |
+| Stream Bundle Basic Minutes of Video Viewed (in thousands)     | Mar 14 - Apr 13 | 198     | $1.00 per 1,000     | $1.00  |
 
 Many usage-based products include a free tier (for example, "First 10GB-Month included" for R2 storage). If your usage stays within the free tier, the line item appears with a quantity of 0 and a $0.00 amount.
 
@@ -85,6 +85,7 @@ A typical Cloudflare invoice may span several pages and contain 20-30+ line item
 ### Invoice header
 
 The top of the invoice shows:
+
 - **Invoice number** (for example, IN-62358374)
 - **Date of issue** and **date due** (usually the same day for automatic payments)
 - **Company name** — the name on your billing profile
@@ -95,12 +96,13 @@ The top of the invoice shows:
 
 Line items are grouped by billing period. You will typically see two groups on every invoice:
 
-| Section | Billing period | What it covers |
-|---|---|---|
-| Usage-based charges | Previous period (for example, Mar 14 - Apr 13) | Metered consumption from the period that just ended |
-| Flat-rate charges | Upcoming period (for example, Apr 14 - May 13) | Plan fees, subscription fees, and add-on base fees prepaid for the next period |
+| Section             | Billing period                                 | What it covers                                                                 |
+| ------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------ |
+| Usage-based charges | Previous period (for example, Mar 14 - Apr 13) | Metered consumption from the period that just ended                            |
+| Flat-rate charges   | Upcoming period (for example, Apr 14 - May 13) | Plan fees, subscription fees, and add-on base fees prepaid for the next period |
 
 Each line item shows:
+
 - **Description**: Product name and any included free tier
 - **Date range**: The billing period the charge covers
 - **Qty**: Units consumed (for usage) or count (for plans/subscriptions)
@@ -115,15 +117,15 @@ Many products have multiple billable dimensions (for example, R2 has separate li
 
 A single R2 subscription can generate six or more line items:
 
-| Line item | What it measures |
-|---|---|
-| R2 Data Storage (First 10GB-Month included) | Stored data volume |
-| R2 Storage Class A Operations (First 1M included) | Write/modify operations |
-| R2 Storage Class B Operations (First 10M included) | Read/list operations |
-| R2 Infrequent Access - Storage | IA tier storage |
-| R2 Infrequent Access - Data Retrieval | IA tier reads |
-| R2 Infrequent Access - Class A Operations | IA tier writes |
-| R2 Infrequent Access - Class B Operations | IA tier reads |
+| Line item                                          | What it measures        |
+| -------------------------------------------------- | ----------------------- |
+| R2 Data Storage (First 10GB-Month included)        | Stored data volume      |
+| R2 Storage Class A Operations (First 1M included)  | Write/modify operations |
+| R2 Storage Class B Operations (First 10M included) | Read/list operations    |
+| R2 Infrequent Access - Storage                     | IA tier storage         |
+| R2 Infrequent Access - Data Retrieval              | IA tier reads           |
+| R2 Infrequent Access - Class A Operations          | IA tier writes          |
+| R2 Infrequent Access - Class B Operations          | IA tier reads           |
 
 If your usage falls within the included free tier, all of these show $0.00.
 
@@ -132,6 +134,7 @@ If your usage falls within the included free tier, all of these show $0.00.
 ### Invoice total
 
 The bottom of the invoice shows:
+
 - **Subtotal**: Sum of all line items
 - **Sales tax**: If applicable based on your billing address (refer to [Sales tax](/billing/understand/sales-tax/))
 - **Total** and **Amount due**: The final amount charged
@@ -141,7 +144,7 @@ The bottom of the invoice shows:
 The Cloudflare dashboard organizes billing information across four tabs under **Manage Account** > **Billing**:
 
 - **Invoices and documents** — view, download, and pay invoices. Configure your billing email preference and set up billable usage notifications.
-- **Billable usage** — track daily usage-based costs across all products for the current or previous billing period.
+- **Billable Usage** — track daily usage-based costs across all products for the current or previous billing period.
 - **Payment** — manage your primary and additional payment methods, billing address, and tax-exempt status.
 - **Subscriptions** — view all active subscriptions with their renewal dates, pricing, and invoice status. Cancel or modify subscriptions from this tab.
 
@@ -153,7 +156,7 @@ The billable usage dashboard shows a daily cost breakdown chart and a per-produc
 
 ### Budget alerts
 
-Budget alerts notify you by email when your account-wide usage-based spend crosses a dollar threshold. Set these up under **Manage Account** > **Notifications**.
+Budget alerts notify you by email when your account-wide usage-based spend crosses a dollar threshold. Set these up under **Manage Account** > **Billing** > **Billable Usage**.
 
 ![The budget alert creation modal showing threshold and notification configuration](~/assets/images/billing/budget-alert-modal.png)
 

@@ -1,0 +1,123 @@
+---
+title: Sandbox
+pcx_content_type: concept
+sidebar:
+  order: 1
+description: Give agents isolated Linux environments for running code, managing files, and executing commands.
+---
+
+import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
+
+Agents can use [Sandbox](/sandbox/) to run code in isolated container environments. Use Sandbox when an agent needs a real filesystem, shell commands, language runtimes, package installation, or long-lived project state that should not run inside the agent's own Worker isolate.
+
+Sandbox is built on [Cloudflare Containers](/containers/) and exposes a TypeScript API for command execution, file operations, background processes, and service previews.
+
+## When to use Sandbox
+
+Use Sandbox for agents that need to:
+
+- Run untrusted or model-generated code in isolation.
+- Execute Python, Node.js, shell commands, or package managers.
+- Read, write, and manage project files.
+- Run tests, linters, build tools, or data analysis scripts.
+- Maintain a workspace across multiple agent turns.
+
+## Basic pattern
+
+Bind the Sandbox Durable Object to your Worker, then access a sandbox from your agent methods with `getSandbox()`.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+import { getSandbox } from "@cloudflare/sandbox";
+import type { Sandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+type Env = {
+	Sandbox: DurableObjectNamespace<Sandbox>;
+};
+
+export class CodeAgent extends Agent<Env, { lastOutput?: string }> {
+	@callable()
+	async runPython(code: string) {
+		const sandbox = getSandbox(this.env.Sandbox, this.name);
+
+		await sandbox.writeFile("/workspace/script.py", code);
+		const result = await sandbox.exec("python3 /workspace/script.py");
+
+		this.setState({ lastOutput: result.stdout });
+
+		return {
+			success: result.success,
+			stdout: result.stdout,
+			stderr: result.stderr,
+			exitCode: result.exitCode,
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Configuration
+
+Configure the Sandbox container, Durable Object binding, and migration in `wrangler.jsonc`.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"instance_type": "lite",
+			"max_instances": 1
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "Sandbox",
+				"class_name": "Sandbox"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["Sandbox"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## Sandbox and agent state
+
+Use agent state for user-visible progress and small metadata. Use the sandbox filesystem for workspace files, generated code, package installs, logs, and artifacts.
+
+For long-running sandbox work, pair Sandbox with [durable execution with fibers](/agents/runtime/execution/durable-execution/) or [Workflows](/agents/runtime/execution/run-workflows/) so the agent can recover or report progress if work outlives a single request.
+
+## Related resources
+
+<LinkCard
+	title="Sandbox SDK"
+	href="/sandbox/"
+	description="Full Sandbox documentation for commands, files, sessions, and deployment."
+/>
+
+<LinkCard
+	title="Execute commands"
+	href="/sandbox/guides/execute-commands/"
+	description="Run shell commands in a sandbox environment."
+/>
+
+<LinkCard
+	title="Manage files"
+	href="/sandbox/guides/manage-files/"
+	description="Read, write, upload, and download sandbox files."
+/>

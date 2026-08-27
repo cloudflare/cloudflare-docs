@@ -1,0 +1,16 @@
+---
+title: Workers AI toMarkdown and AI Search now supports GIF and BMP image conversion 
+description: Convert GIF and BMP image files to searchable text with Workers AI Markdown conversion (toMarkdown), so AI Search can index them automatically.
+products:
+  - workers-ai
+  - ai-search
+date: 2026-07-08
+---
+
+Workers AI [Markdown conversion](/workers-ai/features/markdown-conversion/) (`toMarkdown`) now supports `.gif` and `.bmp` image files, in addition to the JPEG, PNG, WebP, and SVG formats already supported.
+
+GIF and BMP files run through the same [image pipeline](/workers-ai/features/markdown-conversion/how-it-works/#images) as other formats. Each image is resized if needed (and for animated GIFs, only the first frame is used), then passed to an object-detection model to identify what it contains. Those detected objects prompt a vision model that writes a natural-language description of the image, which becomes searchable, machine-readable Markdown.
+
+[AI Search](/ai-search/) uses `toMarkdown` automatically to process the files it ingests, so any `.gif` and `.bmp` files are included the next time your index syncs, with no configuration changes required. This helps when your content mixes formats, for example a support knowledge base full of screenshots or an archive of BMP scans.
+
+Learn more about [Markdown conversion](/workers-ai/features/markdown-conversion/) and the full list of [AI Search's supported file types](/ai-search/configuration/data-source/#supported-file-types).

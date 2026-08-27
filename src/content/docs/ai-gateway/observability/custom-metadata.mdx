@@ -14,12 +14,11 @@ Custom metadata in AI Gateway allows you to tag requests with user IDs or other 
 
 ## Key Features
 
-* **Custom Tagging**: Add user IDs, team names, test indicators, and other relevant information to your requests.
-* **Enhanced Logging**: Metadata appears in your logs, allowing for detailed inspection and troubleshooting.
-* **Search and Filter**: Use metadata to efficiently search and filter through logged requests.
+- **Custom Tagging**: Add user IDs, team names, test indicators, and other relevant information to your requests.
+- **Enhanced Logging**: Metadata appears in your logs, allowing for detailed inspection and troubleshooting.
+- **Search and Filter**: Use metadata to efficiently search and filter through logged requests.
 
 :::note
-
 
 AI Gateway allows you to pass up to five custom metadata entries per request. If more than five entries are provided, only the first five will be saved; additional entries will be ignored. Ensure your custom metadata is limited to five entries to avoid unprocessed or lost data.
 
@@ -27,17 +26,23 @@ AI Gateway allows you to pass up to five custom metadata entries per request. If
 
 ## Supported Metadata Types
 
-* String
-* Number
-* Boolean
+- String
+- Number
+- Boolean
 
 :::note
 
-
 Objects are not supported as metadata values.
 
-
 :::
+
+## Reserved metadata
+
+Metadata keys that begin with `cf.` are reserved for metadata added by Cloudflare. Do not send your own `cf.*` metadata keys. AI Gateway removes customer-supplied `cf.*` keys before saving request metadata.
+
+When a request reaches AI Gateway through a custom domain protected by [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), AI Gateway adds the authenticated Access user ID to request metadata as `cf.user_id`. This value is the verified Access JWT `sub` claim, not the user's email address.
+
+AI Gateway guarantees that `cf.user_id` is saved when a valid Access user ID is present. If the request already has five custom metadata entries, AI Gateway may remove the last custom entry so `cf.user_id` can be saved. Service-token requests and requests without a user subject do not receive `cf.user_id` metadata.
 
 ## Implementations
 
@@ -46,6 +51,8 @@ Objects are not supported as metadata values.
 To include custom metadata in your request using cURL:
 
 ```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
@@ -105,14 +112,19 @@ To include custom metadata in your request using [Bindings](/workers/runtime-api
 
 ```javascript
 export default {
- async fetch(request, env, ctx) {
-   const aiResp = await env.AI.run(
-       '@cf/mistral/mistral-7b-instruct-v0.1',
-       { prompt: 'What should I eat for lunch?' },
-       { gateway: { id: 'gateway_id', metadata: { "team": "AI", "user": 12345, "test": true} } }
-   );
+	async fetch(request, env, ctx) {
+		const aiResp = await env.AI.run(
+			"@cf/mistral/mistral-7b-instruct-v0.1",
+			{ prompt: "What should I eat for lunch?" },
+			{
+				gateway: {
+					id: "gateway_id",
+					metadata: { team: "AI", user: 12345, test: true },
+				},
+			},
+		);
 
-   return new Response(aiResp);
- },
+		return new Response(aiResp);
+	},
 };
 ```

@@ -8,12 +8,13 @@ products:
 pcx_content_type: video
 thumbnail:
   timestamp: 2s
-chapters: {
-  "How Cloudflare Works": "0s",
-  "Getting Started: Domain Onboarding": "55s",
-  "DNS and Reverse Proxy Explained": "01m24s",
-  "Request Lifecycle and Performance Optimization": "03m20s"
-}
+chapters:
+  {
+    "How Cloudflare Works": "0s",
+    "Getting Started: Domain Onboarding": "55s",
+    "DNS and Reverse Proxy Explained": "01m24s",
+    "Request Lifecycle and Performance Optimization": "03m20s",
+  }
 transcript: |
 
   WEBVTT

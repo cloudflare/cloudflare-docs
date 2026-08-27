@@ -21,6 +21,7 @@ If you do have a CORS issue, refer to [Resolving CORS issues](#if-it-is-actually
 1. Open developer tools on your browser.
 2. Go to the **Network** tab and find the failing request. You may need to reload the page, as requests are only logged after developer tools have been opened.
 3. Check the response headers for the following two headers:
+
 - `cf-cache-status`
 - `cf-mitigated`
 
@@ -48,6 +49,20 @@ Here are some common issues with CORS configurations:
 - `AllowedHeaders` is missing headers like `Authorization` or `Content-Type`
 - `AllowedMethods` is missing methods like `POST`/`PUT`
 
+## Object-level API tokens fail against the REST API
+
+If you use an R2 API token created with the **Object Read & Write** or **Object Read only** permissions against the [Cloudflare REST API](/api/resources/r2/) (`api.cloudflare.com`), object requests fail to authenticate and return one of the following:
+
+- When the token applies to all buckets: `{"code":10002,"message":"Unauthorized"}` (HTTP 401).
+- When the token is scoped to specific buckets: `{"code":10000,"message":"Authentication error"}` (HTTP 403).
+
+Object-level tokens are only supported by the [S3-compatible API](/r2/api/s3/api/), which authenticates with AWS Signature Version 4 (SigV4).
+
+To resolve this:
+
+- To keep using an Object-level token, make object requests through the [S3-compatible API](/r2/api/s3/api/) instead of the REST API. The S3-compatible API is also better suited for object operations: the REST API is [rate limited](/r2/platform/limits/#cloudflare-rest-api).
+- To use the REST API, authenticate with an **Admin Read & Write** or **Admin Read only** token. Admin tokens grant account-wide access rather than bucket-scoped access.
+
 ## HTTP 5XX Errors and capacity limitations of Cloudflare R2
 
 When you encounter an HTTP 5XX error, it is usually a sign that your Cloudflare R2 bucket has been overwhelmed by too many concurrent requests. These errors can trigger bucket-wide read and write locks, affecting the performance of all ongoing operations.
@@ -64,7 +79,7 @@ If your users are directly uploading to the bucket (for example, using the S3 or
 
 ### Bucket sharding
 
-For higher capacity at the cost of added complexity, consider bucket sharding. This approach distributes reads and writes across multiple buckets, reducing the load on any single bucket.  While sharding cannot prevent a single hot object from exhausting capacity, it can mitigate the overall impact and improve system resilience.
+For higher capacity at the cost of added complexity, consider bucket sharding. This approach distributes reads and writes across multiple buckets, reducing the load on any single bucket. While sharding cannot prevent a single hot object from exhausting capacity, it can mitigate the overall impact and improve system resilience.
 
 ## Objects named `This object is unnamed`
 

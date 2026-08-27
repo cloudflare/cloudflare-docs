@@ -1,0 +1,57 @@
+---
+title: "WAF Release - 2026-06-15"
+description: Cloudflare WAF managed rulesets 2026-06-15
+date: 2026-06-15
+---
+
+import { RuleID } from "~/components";
+
+This week's release introduces new managed protection to address a critical SQL injection vulnerability in Ghost CMS (CVE-2026-26980) and a new generic rule designed to identify and block sophisticated SQL Injection (SQLi) bypass attempts leveraging obfuscated boolean logic. These rules protect affected installations from unauthorized data exfiltration at the network edge.
+
+**Key Findings**
+
+- CVE-2026-26980: A blind SQL injection vulnerability in the Ghost CMS Content API (versions 3.24.0 to 6.19.0) allows unauthenticated remote attackers to inject malicious SQL commands via query parameters due to improper input validation.
+
+
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="439c4ef64b32447989bdf412b4c29bc6" />
+			</td>
+			<td>N/A</td>
+			<td>Ghost CMS - SQLi - CVE:CVE-2026-26980</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="6c64b68ef5ed45e7a622cdaab56f403f" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Obfuscated Boolean - URI</td>
+			<td>Log</td>
+			<td>Disabled</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>		
+	</tbody>
+</table>

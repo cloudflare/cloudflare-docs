@@ -8,7 +8,7 @@ products:
   - billing
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Render } from "~/components";
 
 For some Cloudflare subscriptions and services, Cloudflare charges you based on how much you used a feature during your previous billing period. This differs from other services, which are a prepaid flat fee for the upcoming month (for example, plans and page rules).
 
@@ -20,33 +20,24 @@ The pricing structure varies based on the service being used.
 
 ## Products with usage-based billing
 
-The following products bill based on consumption. Each product includes a free tier — you are only charged for usage that exceeds the included amount.
+The following products bill based on consumption. Many products include a free tier or included usage — you are only charged for usage that exceeds the included amount.
 
 For current overage rates, refer to the [Cloudflare plans page](https://www.cloudflare.com/plans/) or each product's pricing page linked below. Rates may change — the links below are always up to date.
 
-| Product | Billable metric | Free tier (included) | Pricing details |
-|---|---|---|---|
-| [Workers](/workers/platform/pricing/) | Requests, CPU time | 10M requests, 30M CPU-ms | [Workers pricing](/workers/platform/pricing/) |
-| [R2](/r2/pricing/) | Storage, operations | 10 GB storage, 1M Class A, 10M Class B | [R2 pricing](/r2/pricing/) |
-| [Argo Smart Routing](/argo-smart-routing/) | Data transfer (GB) | First 1 GB | [Argo pricing](/argo-smart-routing/) |
-| [Cache Reserve](/cache/advanced-configuration/cache-reserve/) | Reads, writes, storage | None | [Cache Reserve pricing](/cache/advanced-configuration/cache-reserve/) |
-| [Load Balancing](/load-balancing/) | DNS queries | First 500K | [Load Balancing](/load-balancing/) |
-| [Stream](/stream/pricing/) | Minutes stored, minutes viewed | Varies by plan | [Stream pricing](/stream/pricing/) |
-| [Images](/images/pricing/) | Transformations, storage | Varies by plan | [Images pricing](/images/pricing/) |
-| [Spectrum](/spectrum/) | Data transfer (GB) | None | [Spectrum](/spectrum/) |
+<Render file="usage-based-products" product="billing" />
 
 ## Optimize usage-based costs
 
 Reducing usage-based charges starts with understanding where your consumption comes from. Use the [billable usage dashboard](/billing/manage/billable-usage/) to identify which products are driving costs, then apply the strategies below.
 
-| Strategy | What it reduces |
-|---|---|
-| Increase cache hit ratio with longer TTLs and appropriate `Cache-Control` headers | Argo data transfer, Workers invocations, origin load |
-| Use [Cache Reserve](/cache/advanced-configuration/cache-reserve/) for long-tail content | Origin fetches for infrequently accessed assets |
-| Set up [R2 lifecycle rules](/r2/buckets/object-lifecycles/) to transition cold data to Infrequent Access | R2 storage costs |
-| Use [Workers Smart Placement](/workers/configuration/placement/) for data-heavy Workers | Workers CPU time |
-| Batch R2 operations where possible instead of per-object reads | R2 Class B operation count |
-| Set up [budget alerts](/billing/manage/budget-alerts/) to catch unexpected spikes early | All products — prevents surprise invoices |
+| Strategy                                                                                                 | What it reduces                                      |
+| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Increase cache hit ratio with longer TTLs and appropriate `Cache-Control` headers                        | Argo data transfer, Workers invocations, origin load |
+| Use [Cache Reserve](/cache/advanced-configuration/cache-reserve/) for long-tail content                  | Origin fetches for infrequently accessed assets      |
+| Set up [R2 lifecycle rules](/r2/buckets/object-lifecycles/) to transition cold data to Infrequent Access | R2 storage costs                                     |
+| Use [Workers Smart Placement](/workers/configuration/placement/) for data-heavy Workers                  | Workers CPU time                                     |
+| Batch R2 operations where possible instead of per-object reads                                           | R2 Class B operation count                           |
+| Set up [budget alerts](/billing/manage/budget-alerts/) to catch unexpected spikes early                  | All products — prevents surprise invoices            |
 
 For a detailed walkthrough of how a single request generates charges across multiple products, refer to [How charges accrue](/billing/understand/how-charges-accrue/).
 

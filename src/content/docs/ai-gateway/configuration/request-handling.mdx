@@ -8,8 +8,6 @@ products:
   - ai-gateway
 ---
 
-import { Render } from "~/components";
-
 :::note
 
 [Dynamic Routing](/ai-gateway/features/dynamic-routing/) also offers timeouts and retries per model, along with conditional routing, rate limiting, and budget limiting through a visual interface. This page documents request-handling configuration available through per-request `cf-aig-*` headers that work with any provider endpoint. You can also configure retries at the [gateway level](/ai-gateway/configuration/manage-gateway/#retry-requests).
@@ -33,7 +31,9 @@ A timeout is set in milliseconds. The timeout is based on when the first part of
 
 For a provider-specific endpoint, configure the timeout value by adding a `cf-aig-request-timeout` header.
 
-```bash title="Request with timeout" {4}
+```bash title="Request with timeout" {6}
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \

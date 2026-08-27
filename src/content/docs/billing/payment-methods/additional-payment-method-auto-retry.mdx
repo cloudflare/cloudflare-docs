@@ -8,7 +8,7 @@ products:
   - billing
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 If a subscription renewal payment fails on your primary payment method, Cloudflare automatically retries the payment using your additional payment methods on file. This keeps your services active without requiring you to take action.
 
@@ -42,12 +42,16 @@ When an additional payment method is charged, you receive an email with:
 
 ## Manage your payment methods
 
-1. In the Cloudflare dashboard, go to the Billing page.
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Billing** page.
 
    <DashButton url="/?to=/:account/billing" />
 
 2. Go to the **Subscriptions** page and open the **Payment methods** panel.
 3. Review your primary and additional payment methods.
+
+</Steps>
 
 Add a second payment method to ensure auto-retry can keep your services active if your primary method fails.
 

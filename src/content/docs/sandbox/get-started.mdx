@@ -12,6 +12,14 @@ import { Render, PackageManagers, Steps, WranglerConfig } from "~/components";
 
 Build your first application with Sandbox SDK - a secure code execution environment. In this guide, you'll create a Worker that can execute Python code and work with files in isolated containers.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This guide uses today's stable `@cloudflare/sandbox` package.
+
+For **new projects**, we recommend the [1.0 preview](/sandbox/1-0-preview/) on `@cloudflare/sandbox@next` so you start on the APIs that become Sandbox SDK 1.0. Refer to [Get started with the 1.0 preview](/sandbox/1-0-preview/get-started/).
+
+Coding agents: install [Cloudflare Skills](https://github.com/cloudflare/skills) ([Agent setup](/agent-setup/)). Use **`sandbox-stable`** with this guide; use **`sandbox-next`** for `@next`; use **`sandbox-migrate-to-next`** when porting.
+:::
+
 :::note[What you're building]
 A simple API that can safely execute Python code and perform file operations in isolated sandbox environments.
 :::
@@ -63,7 +71,8 @@ export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
 
-		// Get or create a sandbox instance
+		// Get or create a sandbox instance. For user-facing apps,
+		// derive this ID from the authenticated user.
 		const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
 		// Execute Python code
@@ -93,7 +102,7 @@ export default {
 
 **Key concepts**:
 
-- `getSandbox()` - Gets or creates a sandbox instance by ID. Use the same ID to reuse the same sandbox instance across requests.
+- `getSandbox()` - Gets or creates a sandbox instance by ID. Use a stable ID to reconnect to the same sandbox. In user-facing apps, scope IDs to a single user.
 - `sandbox.exec()` - Execute shell commands in the sandbox and capture stdout, stderr, and exit codes.
 - `sandbox.writeFile()` / `readFile()` - Write and read files in the sandbox filesystem.
 
@@ -137,7 +146,7 @@ This will:
 3. Deploy your Worker globally
 
 :::caution[Wait for provisioning]
-After first deployment, wait 2-3 minutes before making requests. The Worker deploys immediately, but the container needs time to provision.
+After the first deployment, wait several minutes before you expect sandbox requests to succeed. The Worker deploys immediately, but the container image still has to provision.
 :::
 
 Check deployment status:
@@ -156,10 +165,6 @@ curl https://my-sandbox.YOUR_SUBDOMAIN.workers.dev/run
 ```
 
 Your sandbox is now deployed and can execute code in isolated containers.
-
-:::note[Preview URLs require custom domain]
-If you plan to expose ports from sandboxes (using `exposePort()` for preview URLs), you will need to set up a custom domain with wildcard DNS routing. The `.workers.dev` domain does not support the subdomain patterns required for preview URLs. See [Production Deployment](/sandbox/guides/production-deployment/) when you are ready to expose services.
-:::
 
 ## Understanding the configuration
 
@@ -209,6 +214,8 @@ Now that you have a working sandbox, explore more capabilities:
 - [Code interpreter with Workers AI](/sandbox/tutorials/workers-ai-code-interpreter/) - Build an AI-powered code execution system
 - [Execute commands](/sandbox/guides/execute-commands/) - Run shell commands and stream output
 - [Manage files](/sandbox/guides/manage-files/) - Work with files and directories
+- [Deploy a Sandbox application](/sandbox/guides/deploy/) - Deploy and keep package and image aligned
 - [Expose services](/sandbox/guides/expose-services/) - Get public URLs for services running in your sandbox
-- [Production Deployment](/sandbox/guides/production-deployment/) - Set up custom domains for preview URLs
+- [Quick tunnels](/sandbox/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for development and `.workers.dev` deployments
+- [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/) - Wildcard DNS and TLS for `exposePort()`
 - [API reference](/sandbox/api/) - Complete API documentation

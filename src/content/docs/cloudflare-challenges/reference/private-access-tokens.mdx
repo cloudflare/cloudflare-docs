@@ -13,3 +13,11 @@ When a visitor is presented with a Challenge Page, Cloudflare evaluates various 
 A PAT does not automatically solve a challenge or let a visitor bypass the Challenge Page. The visitor still encounters the Challenge Page regardless of whether they have a valid PAT.
 
 While some challenges require interactivity, most challenges served are invisible to the visitor.
+
+## Expected 401 responses
+
+While loading a Challenge Page, the visitor's browser may attempt to retrieve a Private Access Token by issuing a request to a `/cdn-cgi/challenge-platform/.../pat/...` path. When the visitor's device, browser, or network environment cannot provide a token — for example, on unsupported platforms, in some managed or enterprise environments, or when connected through certain VPNs — this request returns an HTTP `401` response.
+
+This `401` is expected and does **not** mean the visitor is blocked. The Private Access Token flow is an optimization used to reduce challenge steps. When a token is unavailable, Cloudflare falls back to a standard challenge and the visitor continues through the Challenge Page as usual.
+
+If you are inspecting network requests in your browser's developer tools and notice a `401` on a `/cdn-cgi/challenge-platform/.../pat/...` request, you can safely disregard it. It is part of normal challenge processing and is not the cause of a block.

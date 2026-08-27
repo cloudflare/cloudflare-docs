@@ -24,14 +24,20 @@ Tracing gives you end-to-end visibility into the life of a request as it travels
 
 ### Automatic instrumentation
 
-Cloudflare Workers provides tracing instrumentation **out of the box** - no code changes or SDK are required. Simply enable tracing on your Worker and Cloudflare automatically captures telemetry data for:
+Cloudflare Workers provides tracing instrumentation **out of the box** — no code changes or SDK are required. Simply enable tracing on your Worker and Cloudflare automatically captures telemetry data for:
 
-- **Fetch calls** - All outbound HTTP requests, capturing timing, status codes, and request metadata. This enables you to quickly identify how external dependencies affect your application's performance.
-- **Binding calls** - Interactions with various Worker bindings such as KV reads and writes, R2 object storage operations and Durable Object invocations.
-- **Handler calls** - The complete lifecycle of each Worker invocation, including triggers such as [fetch handlers](/workers/runtime-apis/handlers/fetch/),
+- **Fetch calls** — All outbound HTTP requests, capturing timing, status codes, and request metadata. This enables you to quickly identify how external dependencies affect your application's performance.
+- **Binding calls** — Interactions with various Worker bindings such as KV reads and writes, R2 object storage operations and Durable Object invocations.
+- **Handler calls** — The complete lifecycle of each Worker invocation, including triggers such as [fetch handlers](/workers/runtime-apis/handlers/fetch/),
   [scheduled handlers](/workers/runtime-apis/handlers/scheduled/), and [queue handlers](/queues/configuration/javascript-apis/#consumer).
 
-For a full list of instrumented operations , see the [spans and attributes documentation](/workers/observability/traces/spans-and-attributes).
+For a full list of instrumented operations, refer to the [spans and attributes documentation](/workers/observability/traces/spans-and-attributes/).
+
+### Custom spans
+
+You can also create your own spans to trace application-specific logic. Custom spans nest automatically with the built-in instrumentation, giving you end-to-end visibility across both platform operations and your own code.
+
+For more information, refer to [Custom spans](/workers/observability/traces/custom-spans/).
 
 ### How to enable tracing
 
@@ -60,6 +66,8 @@ You can configure tracing by setting `observability.traces.enabled = true` in yo
 Workers tracing follows [OpenTelemetry (OTel) standards](https://opentelemetry.io/). This makes it compatible with popular observability platforms,
 such as [Honeycomb](/workers/observability/exporting-opentelemetry-data/honeycomb/), [Grafana Cloud](/workers/observability/exporting-opentelemetry-data/grafana-cloud/), and
 [Axiom](/workers/observability/exporting-opentelemetry-data/axiom/), while requiring zero development effort from you. If your observability provider has an available OpenTelemetry endpoint, you can export traces (and logs)!
+
+You can also set `persist: false` to export traces to your destination without persisting them in the Cloudflare dashboard. This allows you to use a third-party observability provider as your sole traces destination.
 
 Learn more about exporting OpenTelemetry data from Workers [here](/workers/observability/exporting-opentelemetry-data/).
 
@@ -108,9 +116,9 @@ Sampling is [head-based](https://opentelemetry.io/docs/concepts/sampling/#head-s
 
 Workers tracing is currently **free** during the initial beta period. This includes all tracing functionality such as collecting traces, storing them, and viewing them in the Cloudflare dashboard.
 
-Starting on March 1, 2026, tracing will be billed as part of your usage on the Workers Free Paid and Enterprise plans. Each span in a trace represents one observability event, sharing the same monthly quota and pricing as [Workers logs](/workers/platform/pricing/#workers-logs):
+Starting on October 1, 2026, tracing will be billed as part of your usage on the Workers Free Paid and Enterprise plans. Each span in a trace represents one observability event, sharing the same monthly quota and pricing as [Workers logs](/workers/platform/pricing/#workers-logs):
 
 |                  | Events (trace spans or log events)                                 | Retention |
 | ---------------- | ------------------------------------------------------------------ | --------- |
 | **Workers Free** | 200,000 per day                                                    | 3 Days    |
-| **Workers Paid** | 10 million included per month +$0.60 per additional million events | 7 Days    |
+| **Workers Paid** | 20 million included per month +$0.60 per additional million events | 7 Days    |

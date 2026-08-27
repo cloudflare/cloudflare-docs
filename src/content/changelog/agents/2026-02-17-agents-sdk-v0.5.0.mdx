@@ -73,7 +73,7 @@ class MyAgent extends Agent {
 
 Connections with protocol messages disabled still fully participate in RPC and regular messaging. Use `isConnectionProtocolEnabled(connection)` to check a connection's status at any time. The flag persists across Durable Object hibernation.
 
-See [Protocol messages](/agents/api-reference/protocol-messages/) for full documentation.
+See [Protocol messages](/agents/runtime/communication/protocol-messages/) for full documentation.
 
 ## `@cloudflare/ai-chat` v0.1.0
 
@@ -81,7 +81,7 @@ The first stable release of `@cloudflare/ai-chat` ships alongside this release w
 
 Key new features:
 
-- **Data parts** — Attach typed JSON blobs (`data-*`) to messages alongside text. Supports reconciliation (type+id updates in-place), append, and transient parts (ephemeral via `onData` callback). See [Data parts](/agents/api-reference/chat-agents/#data-parts).
+- **Data parts** — Attach typed JSON blobs (`data-*`) to messages alongside text. Supports reconciliation (type+id updates in-place), append, and transient parts (ephemeral via `onData` callback). See [Data parts](/agents/communication-channels/chat/chat-agents/#data-parts).
 - **Tool approval persistence** — The `needsApproval` approval UI now survives page refresh and DO hibernation. The streaming message is persisted to SQLite when a tool enters `approval-requested` state.
 - **`maxPersistedMessages`** — Cap SQLite message storage with automatic oldest-message deletion.
 - **`body` option on `useAgentChat`** — Send custom data with every request (static or dynamic).

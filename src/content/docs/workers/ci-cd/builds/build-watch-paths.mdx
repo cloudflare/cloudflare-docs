@@ -8,7 +8,7 @@ products:
   - workers
 ---
 
-When you connect a git repository to Workers, by default a change to any file in the repository will trigger a build. You can configure Workers to include or exclude specific paths to specify if Workers should skip a build for a given path. This can be especially helpful if you are using a monorepo project structure and want to limit the amount of builds being kicked off.
+When you connect a git repository to Workers, by default a change to any file in the repository will trigger a build. You can configure Workers to include or exclude specific paths to specify if Workers should skip a build for a given path. This can be especially helpful if you are using a monorepo project structure and want to limit the number of builds being kicked off.
 
 ## Configure Paths
 
@@ -24,7 +24,7 @@ The configuration fields can be filled in two ways:
 
 :::note[Wildcard syntax]
 
-A wildcard (`*`) is a character that is used within rules. It can be placed alone to match anything or placed at the start or end of a rule to allow for better control over branch configuration. A wildcard will match zero or more characters.For example, if you wanted to match all branches that started with `fix/` then you would create the rule `fix/*` to match strings like `fix/1`, `fix/bugs`or `fix/`.
+A wildcard (`*`) is a character that is used within rules. It can be placed alone to match anything or placed at the start or end of a rule to allow for better control over branch configuration. A wildcard will match zero or more characters. For example, if you wanted to match all branches that started with `fix/` then you would create the rule `fix/*` to match strings like `fix/1`, `fix/bugs`, or `fix/`.
 
 :::
 
@@ -36,7 +36,7 @@ For each path in a push event, build watch paths will be evaluated as follows:
 
 Workers will bypass the path matching for a push event and default to building the project if:
 
-- A push event contains 0 file changes, in case a user pushes a empty push event to trigger a build
+- A push event contains 0 file changes, in case a user pushes an empty push event to trigger a build
 - A push event contains 3000+ file changes or 20+ commits
 
 ## Examples

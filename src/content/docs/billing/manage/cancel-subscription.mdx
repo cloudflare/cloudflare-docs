@@ -1,18 +1,18 @@
 ---
 pcx_content_type: how-to
 title: Cancel Cloudflare subscriptions
-description: Cancel Cloudflare subscriptions
+description: Cancel Cloudflare plans, add-ons, or subscriptions before the next billing period.
 sidebar:
   order: 3
 products:
   - billing
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 Cancellations take effect at the end of the current billing period. You retain access to paid features until then. To avoid charges for the next billing period, start the cancellation process before your current period ends.
 
-Downgrades follow the same timing — switching from a yearly plan to a monthly plan, or from a paid plan to Free, does not take immediate effect. You continue to have access to the higher-tier service for the remainder of the current billing period. Refunds are not issued for unused time within a billing period.
+Downgrades follow the same timing. Switching from a yearly plan to a monthly plan, or from a paid plan to Free, does not take immediate effect. You continue to have access to the higher-tier service for the remainder of the current billing period. Refunds are not issued for unused time within a billing period.
 
 For some subscriptions, cancellation is done by switching to the Free plan rather than selecting a separate cancel option.
 
@@ -24,33 +24,39 @@ All billing dates are in UTC. Make any downgrades or changes at least 24 hours b
 Changing the DNS on your domain does not cancel your account or active subscriptions. You must explicitly cancel subscriptions through the Cloudflare dashboard.
 :::
 
----
+## Turn off the Cloudflare subscription
 
-## Step 1: Disable the Cloudflare subscription
+For some subscriptions, you must turn off the product feature before you cancel the billing subscription.
 
-To disable a subscription:
-
-1. In the Cloudflare dashboard, go to the **Billing** page.
-
-    <DashButton url="/?to=/:account/billing" />
-
-2. Select **Subscriptions**.
-3. Select the feature you want to disable under **Active Subscriptions** (Free or Pro customers) or **Plan Extensions** (Enterprise customers).
-4. Follow the instructions to disable the feature. Each feature has a different process which could include toggling a switch, clicking a button, or choosing *Disable* from a drop-down list.
-
-## Step 2: Cancel the subscription in your billing profile
+<Steps>
 
 1. In the Cloudflare dashboard, go to the **Billing** page.
 
-    <DashButton url="/?to=/:account/billing" />
+   <DashButton url="/?to=/:account/billing" />
 
 2. Select **Subscriptions**.
-3. Find the subscription you want to disable and select **Cancel**.
+3. Select the feature you want to turn off under **Active Subscriptions** (Free or Pro customers) or **Plan Extensions** (Enterprise customers).
+4. Follow the product-specific instructions to turn off the feature. The flow may ask you to turn off a switch, select a button, or choose _Disable_ from a drop-down list.
+
+</Steps>
+
+## Cancel the subscription in your billing profile
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+   <DashButton url="/?to=/:account/billing" />
+
+2. Select **Subscriptions**.
+3. Find the subscription you want to cancel and select **Cancel**.
 4. Select a reason for cancellation.
 5. Select **Confirm**.
 
+</Steps>
+
 :::note
-To change your plan instead of cancelling, select **Change** under **Active Subscriptions** and choose a new plan type. To cancel a paid plan entirely, select **Free**.
+To change your plan instead of canceling, select **Change** under **Active Subscriptions** and choose a new plan type. To cancel a paid plan entirely, select **Free**.
 :::
 
 :::caution
@@ -59,6 +65,6 @@ Fees are non-refundable. You are billed for the full billing period in which you
 
 ## Related resources
 
-- [Change domain plan](/billing/manage/change-plan/) — Upgrade or downgrade instead of cancelling
+- [Change domain plan](/billing/manage/change-plan/) — Upgrade or downgrade instead of canceling
 - [Billing policy](/billing/understand/billing-policy/) — Refund policy and subscription terms
 - [How Cloudflare billing works](/billing/understand/how-billing-works/) — When downgrades and cancellations take effect

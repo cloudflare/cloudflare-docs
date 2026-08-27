@@ -1,0 +1,23 @@
+---
+title: Query R2 Data Catalog tables with R2 SQL from the dashboard
+description: Run R2 SQL queries against your R2 Data Catalog tables directly in the Cloudflare dashboard, no local setup required.
+products:
+  - r2-sql
+date: 2026-07-08
+---
+import { Image } from "astro:assets";
+import screenshot from "~/assets/images/r2-sql/r2-sql-studio.png";
+
+You can now query your [R2 Data Catalog](/r2-data-catalog/) tables with [R2 SQL](/r2-sql/) directly from the Cloudflare dashboard, without installing a CLI or wiring up a client. This makes it easy to explore your [Apache Iceberg](https://iceberg.apache.org/) data, validate queries, and inspect results in one place.
+
+<Image src={screenshot} alt="R2 SQL Query Editor" />
+
+To get started, go to [R2 Data Catalog](https://dash.cloudflare.com/?to=/:account/data-catalog/overview) in the Cloudflare dashboard and select **Query data** to launch the built-in SQL editor. From there you can:
+
+- **Write and run queries interactively** — Iterate on R2 SQL directly in the browser with syntax highlighting and autocomplete, instead of re-running commands through Wrangler or the REST API.
+- **Explore your data** — Explore your namespaces and tables alongside the editor so you can discover what's queryable without leaving the page or using other tools.
+- **Understand results and performance** — View result sets with per-query statistics, export them, and get helpful `EXPLAIN` outputs to see exactly how a query runs.
+
+:::note
+Your R2 SQL credential is generated and stored for you and can be rotated in the R2 Data Catalog settings page.
+:::

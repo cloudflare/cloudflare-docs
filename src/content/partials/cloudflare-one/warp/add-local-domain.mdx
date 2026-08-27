@@ -12,7 +12,7 @@ To add a domain to the Local Domain Fallback list:
 
 4. In **Domain**, enter the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`).
 
-5. In **DNS Servers**, enter the IP address of the DNS servers that should resolve that domain name.
+5. In **DNS Servers**, enter the IP address of the DNS servers that should resolve that domain name. Cloudflare recommends keeping the list to a maximum of eight servers to avoid performance issues.
 
 6. Enter an optional description and select **Save domain**.
 
@@ -97,7 +97,7 @@ A Local Domain Fallback list is scoped to a specific [device profile](/cloudflar
    }
    ```
 
-For `suffix`, specify the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`). For `dns_server`, enter the IP address of the DNS servers that should resolve that domain name.
+For `suffix`, specify the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`). For `dns_server`, enter the IP address of the DNS servers that should resolve that domain name. Cloudflare recommends keeping the list to a maximum of eight servers to avoid performance issues.
 
 </TabItem>
 </Tabs>
@@ -109,7 +109,7 @@ The Cloudflare One Client tries all servers and always uses the fastest response
 The Cloudflare One Client routes DNS traffic to your [Local Domain Fallback server](#add-a-domain) according to your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). To ensure that queries can reach your private DNS server:
 
 - If your DNS server is only reachable inside of the WARP tunnel (for example, via `cloudflared` or Cloudflare WAN):
-  1.  Go to **Networks** > **Routes** and verify that the DNS server is connected to Cloudflare. To connect a DNS server, refer to [Private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
+  1.  Go to **Networking** > **Routes** and verify that the DNS server is connected to Cloudflare. To connect a DNS server, refer to [Private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
 
   2.  In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/), verify that the DNS server IP routes through the WARP tunnel.
 

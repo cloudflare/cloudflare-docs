@@ -31,21 +31,21 @@ When you run `wrangler deploy` or `wrangler setup` in a project directory withou
 
 Automatic configuration supports the following frameworks:
 
-| Framework                                                                    | Adapter/Tool                   | Notes                                                                                                          |
-| ---------------------------------------------------------------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `@opennextjs/cloudflare`       | Runs `@opennextjs/cloudflare migrate` automatically. [R2 caching](#nextjs-caching) is configured if available. |
-| [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically                                                                      |
-| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically                                                                  |
-| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                                                                                |
-| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         |                                                                                                                |
-| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     |                                                                                                                |
-| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         |                                                                                                                |
-| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   |                                |                                                                                                                |
-| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     |                                                                                                                |
-| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         |                                                                                                                |
-| [Vike](/workers/framework-guides/web-apps/vike/)                             |                                |                                                                                                                |
-| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                                                                                |
-| Static sites                                                                 | None                           | Any directory with an `index.html`                                                                             |
+| Framework                                                                    | Adapter/Tool                   | Notes                                                                                           |
+| ---------------------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------- |
+| [Next.js](/workers/framework-guides/web-apps/nextjs/)                        | `vinext`          | Configures vinext for Cloudflare Workers and adds the required Vite and Wrangler configuration. |
+| [Astro](/workers/framework-guides/web-apps/astro/)                           | `@astrojs/cloudflare`          | Runs `astro add cloudflare` automatically                                                       |
+| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)                   | `@sveltejs/adapter-cloudflare` | Runs `sv add sveltekit-adapter` automatically                                                   |
+| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)         | Built-in Cloudflare preset     |                                                                                                 |
+| [React Router](/workers/framework-guides/web-apps/react-router/)             | Cloudflare Vite plugin         |                                                                                                 |
+| [Solid Start](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Built-in Cloudflare preset     |                                                                                                 |
+| [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/)         | Cloudflare Vite plugin         |                                                                                                 |
+| [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)   |                                |                                                                                                 |
+| [Analog](/workers/framework-guides/web-apps/more-web-frameworks/analog/)     | Built-in Cloudflare preset     |                                                                                                 |
+| [Vite](/workers/vite-plugin/)                                                | Cloudflare Vite plugin         |                                                                                                 |
+| [Vike](/workers/framework-guides/web-apps/vike/)                             |                                |                                                                                                 |
+| [Waku](/workers/framework-guides/web-apps/more-web-frameworks/waku/)         |                                |                                                                                                 |
+| Static sites                                                                 | None                           | Any directory with an `index.html`                                                              |
 
 Automatic configuration may also work with other projects, such as React or Vue SPAs. Try running `wrangler deploy` or `wrangler setup` to see if your project is detected.
 
@@ -162,14 +162,13 @@ If you do not want automatic configuration to run, ensure you have a valid Wrang
 
 You can also manually configure your project by following the framework-specific guides in the [Framework guides](/workers/framework-guides/).
 
-## Next.js caching
+## Next.js configuration
 
-For Next.js projects, automatic configuration will set up [R2](/r2/) for caching if your Cloudflare account has R2 enabled. R2 caching improves performance for [Incremental Static Regeneration (ISR)](https://opennext.js.org/cloudflare/caching) and other Next.js caching features.
+For Next.js projects, automatic configuration uses [vinext](/workers/framework-guides/web-apps/nextjs/) as the default deployment path for Cloudflare Workers. The generated configuration adds the vinext and Vite dependencies, creates the Cloudflare Workers configuration, and adds package scripts for development, builds, and deployment.
 
-- **If R2 is enabled on your account**: Automatic configuration creates an R2 bucket and configures caching automatically.
-- **If R2 is not enabled**: Your project will be configured without caching. You can [enable R2](/r2/get-started/) later and manually configure caching by following the [OpenNext caching documentation](https://opennext.js.org/cloudflare/caching).
+vinext supports Next.js caching features such as Incremental Static Regeneration (ISR), `"use cache"`, and `unstable_cache`. For production applications, configure the generated Workers project with the cache backend your application requires. For more information, refer to [vinext caching](https://github.com/cloudflare/vinext#caching).
 
-To check if R2 is enabled or to enable it, go to **Storage & Databases** > **R2** in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+If you need the OpenNext adapter instead of vinext, configure it manually by following the [OpenNext adapter guide](/workers/framework-guides/web-apps/opennext/).
 
 ## Troubleshooting
 

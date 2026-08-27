@@ -1,9 +1,9 @@
 ---
-import { Aside } from "@astrojs/starlight/components";
+import { Aside } from "~/components";
 
-import AnchorHeading from "./AnchorHeading.astro";
-import RSSButton from "./RSSButton.astro";
-import Details from "./Details.astro";
+import AnchorHeading from "./cf/AnchorHeading.astro";
+import RSSButton from "./cf/RSSButton.astro";
+import Details from "./cf/Details.astro";
 
 import { getCollection } from "astro:content";
 import { getChangelogs } from "~/util/changelog";
@@ -19,8 +19,8 @@ const directory = await getCollection("directory", (entry) => {
 
 const directoryByGroup = Object.entries(
 	Object.groupBy(
-		directory.filter((entry) => Boolean(entry.data.entry.group)),
-		(entry) => entry.data.entry.group,
+		directory.filter((entry) => Boolean(entry.data.entry?.group)),
+		(entry) => entry.data.entry!.group!,
 	),
 ).sort();
 ---
@@ -54,7 +54,9 @@ const directoryByGroup = Object.entries(
 					{entries?.map((entry) => (
 						<li>
 							<p>
-								<a href={entry.data.entry.url}>{entry.data.entry.title}</a>
+								<a href={entry.data.entry?.url ?? `/${entry.id}/`}>
+									{entry.data.entry?.title ?? entry.id}
+								</a>
 							</p>
 							<RSSButton changelog={entry.id} />
 						</li>

@@ -8,7 +8,7 @@ products:
   - billing
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 Budget alerts notify you by email when your account-wide usage-based spend crosses a dollar threshold you define. Use budget alerts to manage costs proactively instead of discovering unexpected charges at the end of a billing cycle.
 
@@ -18,15 +18,16 @@ Budget alerts are available to Pay-as-you-go accounts only. Enterprise contract 
 
 ## Create a budget alert
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select your account.
-3. Go to **Manage Account** > **Billing**.
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Manage Account** > **Billing**.
 
    <DashButton url="/?to=/:account/billing" />
 
-4. Select **Billable Usage**.
-5. Select **Create budget alert**.
-6. Configure the alert:
+3. Select **Billable Usage**.
+4. Select **Create budget alert**.
+5. Configure the alert:
 
    | Field | Description |
    | --- | --- |
@@ -35,7 +36,9 @@ Budget alerts are available to Pay-as-you-go accounts only. Enterprise contract 
    | **Budget threshold (USD)** | The dollar amount that triggers the alert. When your cumulative usage-based spend for the current billing period crosses this value, Cloudflare sends a notification. |
    | **Email recipients** | One or more email addresses to notify. Select **Add email** to add additional recipients. |
 
-7. Select **Save**.
+6. Select **Save**.
+
+</Steps>
 
 ## View and manage budget alerts
 
@@ -54,12 +57,12 @@ From there you can edit or delete existing alerts.
 
 Cloudflare offers two types of spend monitoring:
 
-| Feature | Budget alerts | Usage notifications |
-| --- | --- | --- |
-| **Scope** | Account-wide, all usage-based products combined | Per-product (for example, Argo bytes or Workers requests) |
-| **Threshold** | Dollar amount | Product-specific metric (bytes, requests, minutes) |
-| **Setup location** | **Billing** > **Billable Usage** | **Notifications** |
-| **Best for** | Overall cost management | Monitoring a single product |
+| Feature            | Budget alerts                                   | Usage notifications                                       |
+| ------------------ | ----------------------------------------------- | --------------------------------------------------------- |
+| **Scope**          | Account-wide, all usage-based products combined | Per-product (for example, Argo bytes or Workers requests) |
+| **Threshold**      | Dollar amount                                   | Product-specific metric (bytes, requests, minutes)        |
+| **Setup location** | **Billing** > **Billable Usage**                | **Notifications**                                         |
+| **Best for**       | Overall cost management                         | Monitoring a single product                               |
 
 For per-product usage notifications, refer to [Usage-based billing](/billing/understand/usage-based-billing/#usage-based-billing-notifications).
 

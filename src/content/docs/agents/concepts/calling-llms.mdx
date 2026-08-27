@@ -14,11 +14,11 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 Agents change how you work with LLMs. In a stateless Worker, every request starts from scratch — you reconstruct context, call a model, return the response, and forget everything. An Agent keeps state between calls, stays connected to clients over WebSocket, and can call models on its own schedule without a user present.
 
-This page covers the patterns that become possible when your LLM calls happen inside a stateful Agent. For provider setup and code examples, refer to [Using AI Models](/agents/api-reference/using-ai-models/).
+This page covers the patterns that become possible when your LLM calls happen inside a stateful Agent. For provider setup and code examples, refer to [Using AI Models](/agents/runtime/operations/using-ai-models/).
 
 ## State as context
 
-Every Agent has a built-in [SQL database](/agents/api-reference/store-and-sync-state/) and key-value state. Instead of passing an entire conversation history from the client on every request, the Agent stores it and builds prompts from its own storage.
+Every Agent has a built-in [SQL database](/agents/runtime/lifecycle/state/) and key-value state. Instead of passing an entire conversation history from the client on every request, the Agent stores it and builds prompts from its own storage.
 
 <TypeScriptExample>
 
@@ -82,7 +82,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-With [`AIChatAgent`](/agents/api-reference/chat-agents/), this is handled automatically — messages are persisted to SQLite and streams resume on reconnect.
+With [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/), this is handled automatically — messages are persisted to SQLite and streams resume on reconnect.
 
 ## Autonomous model calls
 
@@ -202,24 +202,24 @@ For provider-level caching and rate limit management across multiple agents, use
 
 <LinkCard
 	title="Using AI Models"
-	href="/agents/api-reference/using-ai-models/"
+	href="/agents/runtime/operations/using-ai-models/"
 	description="Provider setup, streaming, and code examples for Workers AI, OpenAI, Anthropic, and more."
 />
 
 <LinkCard
 	title="Chat agents"
-	href="/agents/api-reference/chat-agents/"
+	href="/agents/communication-channels/chat/chat-agents/"
 	description="AIChatAgent handles message persistence, resumable streaming, and tools automatically."
 />
 
 <LinkCard
 	title="Store and sync state"
-	href="/agents/api-reference/store-and-sync-state/"
+	href="/agents/runtime/lifecycle/state/"
 	description="SQL database and key-value state APIs for building context and caching."
 />
 
 <LinkCard
 	title="Schedule tasks"
-	href="/agents/api-reference/schedule-tasks/"
+	href="/agents/runtime/execution/schedule-tasks/"
 	description="Run autonomous model calls on a delay, schedule, or cron."
 />

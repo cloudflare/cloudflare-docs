@@ -12,6 +12,10 @@ products:
 
 The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from the [Cloudflare global network](https://www.cloudflare.com/network/) cache.
 
+:::note
+The Cache API is a programmatic interface for reading from and writing to Cloudflare's cache from inside a Worker. To cache responses from your Worker so that Cloudflare returns them without executing your Worker, use [Workers Caching](/workers/cache/) instead. The two mechanisms are independent.
+:::
+
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
 :::caution[Tiered caching]
@@ -22,7 +26,7 @@ The `cache.put` method is not compatible with tiered caching. Refer to [Cache AP
 
 Workers deployed to custom domains have access to functional `cache` operations. So do [Pages functions](/pages/functions/), whether attached to custom domains or `*.pages.dev` domains.
 
-However, any Cache API operations in the Cloudflare Workers dashboard editor and [Playground](/workers/playground/) previews will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available.
+However, any Cache API operations in the Cloudflare Workers dashboard editor and [Playground](/workers/playground/) previews will have no impact. For Workers fronted by [Cloudflare Access](/workers/configuration/cloudflare-access/), the Cache API is not currently available.
 
 :::note
 
@@ -47,20 +51,6 @@ You may create and manage additional Cache instances via the [`caches.open`](htt
 let myCache = await caches.open('custom:cache');
 await myCache.match(request);
 ```
-
-:::note
-
-When using the cache API, avoid overriding the hostname in cache requests, as this can lead to unnecessary DNS lookups and cache inefficiencies. Always use the hostname that matches the domain associated with your Worker.
-
-```js
-// recommended approach: use your Worker hostname to ensure efficient caching
-request.url = "https://your-Worker-hostname.com/";
-
-let myCache = await caches.open('custom:cache');
-let response = await myCache.match(request);
-```
-
-:::
 
 ***
 
@@ -129,6 +119,17 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 #### Errors
 
 `cache.put` returns a `413` error if `Cache-Control` instructs not to cache or if the response is too large.
+
+:::note
+
+`cache.put` will silently reject a `301` or `302` redirect response if both of the following are true:
+
+1. The cache key does not include the query string (for example, a custom cache key set via Workers or Page Rules that strips the query string).
+2. The `Location` header in the redirect response contains the request's query string.
+
+This is a cache-poisoning mitigation. To cache redirect responses with query strings, either include the query string in your cache key, or remove the query string from the `Location` header before calling `cache.put()`. This restriction does not apply on `.workers.dev` domains, which include the query string in the cache key by default.
+
+:::
 
 ### `Match`
 

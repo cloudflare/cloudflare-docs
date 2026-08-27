@@ -1,0 +1,29 @@
+---
+title: Manage all your routes from one page in the dashboard
+description: A unified Routes page in the dashboard shows the routes for your Cloudflare Mesh, Cloudflare Tunnel, Cloudflare WAN, and Magic Transit connectors in one place, with an interactive network map.
+date: 2026-06-19
+products:
+  - mesh
+  - tunnel
+  - cloudflare-wan
+---
+
+import { DashButton } from "~/components";
+
+The **Routes** page in the Cloudflare dashboard now shows the routes across all of your connectors — [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) and [Cloudflare Tunnel](/tunnel/) routes alongside [Cloudflare WAN](/cloudflare-wan/) and [Magic Transit](/magic-transit/) static routes — in a single table, instead of a separate routes view per product.
+
+![The unified Routes page in the Cloudflare dashboard, showing routes across connectors in a single table](~/assets/images/changelog/cloudflare-one/2026-06-19-unified-routes.gif)
+
+From the unified Routes page you can:
+
+- **Visualize your network with an interactive map** that shows how your destinations flow through to your connectors — including equal-cost multi-path (ECMP) routes where the same prefix is served by several connectors. Select a node to filter the table down to the routes behind it.
+- **See every route in one table**, with its destination, type, connector, priority, and source, and filter or sort to find what you need.
+- **Create, edit, and delete routes** of any supported type without leaving the page. When adding a Cloudflare WAN or Magic Transit static route, you now pick the next hop by **connector name** instead of typing its IP.
+- **Manage [virtual networks](/cloudflare-one/networks/virtual-networks/)** from a dedicated tab.
+- **Test a route** to see which connector and next hop a destination resolves to before you commit a change.
+
+To find it, go to **Networking** > **Routes** in the dashboard sidebar.
+
+<DashButton url="/?to=/:account/magic-networks/routes" />
+
+Your existing routes, APIs, and configurations are unchanged — this is a dashboard experience that brings them together in one place. Learn how to [add routes](/cloudflare-one/networks/routes/add-routes/) and [manage virtual networks](/cloudflare-one/networks/virtual-networks/).

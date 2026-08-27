@@ -1,0 +1,41 @@
+---
+pcx_content_type: concept
+title: Attribution Business Insights
+description: Understand which bots help or harm your business with crawl-to-referral ratios and behavior-based classification.
+products:
+  - bots
+tags:
+  - AI
+  - Bots
+sidebar:
+  order: 7
+head:
+  - tag: title
+    content: Attribution Business Insights
+---
+
+import { DashButton } from "~/components"
+
+**Attribution Business Insights** is a dashboard designed for business decision-makers and content owners, delivering a targeted view of bot traffic flowing to your website. Analyze crawler patterns to your website in the last 24 hours, 7 days, or 30 days.
+
+## Availability
+
+Attribution Business Insights is available to all [Bot Management Enterprise](/bots/get-started/bot-management/) customers.
+
+This dashboard is meant for visibility for a new set of stakeholders, and does not provide a new control plane. To mitigate certain bots, website owners can use [Security rules](/security/rules/) or the [new AI bot mitigation options](/bots/additional-configurations/block-ai-bots/).
+
+## Access
+
+<DashButton url="/?to=/:account/:zone/analytics/attribution-business-insights" />
+
+You can also reach the dashboard from your zone-level **Analytics** > **Attribution Business Insights** in the Cloudflare dashboard.
+
+## Definitions
+
+The dashboard surfaces both existing and new metrics that help you evaluate AI traffic. In the current version, we use the following definitions for the metrics shown on the dashboard:
+
+- **Content pages**: Content is initially defined as HTML pages on your website.
+- **Crawl-to-referral ratio, per bot operator**: The average crawl-to-referral ratio (number of crawls sent by this company, vs. the number of visitors who visit you through a referral link from that company, tracked through UTM parameters) for a given company, in the selected time period.
+- **Crawl-to-referral ratio, site-wide**: The average crawl-to-referral ratio (number of crawls sent by this company, vs. the number of visitors who visit you through a referral link from that company, tracked through UTM parameters) across all activity on your zone, in the selected time period.
+- **Classification**: Each crawler is classified with Cloudflare's updated taxonomy. See [Verified bot classifications](/bots/concepts/bot/verified-bots/) for more information. If the company has at least 1 bot with an AI use case, we label the operator with the "AI" label, plus provide this as a filter.
+- **Action**: Action reflects whether requests from this company are Blocked, Allowed, or Partially blocked. Companies that have some bots blocked but at least 1 bot allowed will be marked as "Partially Blocked", and configuration can be confirmed in [Security rules](/security/rules/).

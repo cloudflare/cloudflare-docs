@@ -1,0 +1,146 @@
+---
+title: Workers binding
+pcx_content_type: get-started
+sidebar:
+  order: 1
+description: Create, populate, and query an AI Search instance from a Cloudflare Worker.
+products:
+  - ai-search
+---
+
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	LinkCard,
+} from "~/components";
+
+This guide walks you through creating and querying an AI Search instance from a [Cloudflare Worker](/workers/) using the Workers Binding. The Workers Binding uses a runtime [API](/ai-search/api/search/workers-binding/) that runs inside a Worker and calls AI Search without managing API tokens.
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create a Worker project
+
+Create a new Worker project using the `create-cloudflare` CLI (C3). [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+
+Create a new project named `ai-search-tutorial` by running:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"ai-search-tutorial"} />
+
+<Render
+	file="c3-post-run-steps-hello-world"
+	product="workers"
+	params={{
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+Go to your application directory:
+
+```sh
+cd ai-search-tutorial
+```
+
+## 2. Connect your Worker to AI Search
+
+Create a binding between your Worker and your AI Search instance. [Bindings](/workers/runtime-apis/bindings/) allow your Worker to interact with resources on the Cloudflare Developer Platform.
+
+Add the following to your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+remote = true
+```
+
+</WranglerConfig>
+
+This binds the `default` namespace to `env.AI_SEARCH`. Instances that you create without specifying a namespace belong to the `default` namespace. The `remote` option lets `wrangler dev` proxy requests to your deployed instance, since AI Search does not run locally. For all binding options, refer to the [Workers binding reference](/ai-search/api/search/workers-binding/).
+
+## 3. Create and query AI Search from your Worker
+
+Update the `src/index.ts` file in your `ai-search-tutorial` directory with the following code. It exposes two routes: `/setup` creates an instance named `my-instance` and indexes a sample document, and the default route queries it.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export interface Env {
+	AI_SEARCH: AiSearchNamespace;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Visit /setup once to create an instance and index a sample document.
+		if (url.pathname === "/setup") {
+			const instance = await env.AI_SEARCH.create({ id: "my-instance" });
+			const item = await instance.items.uploadAndPoll(
+				"getting-started.md",
+				"AI Search indexes uploaded content for retrieval.",
+			);
+			return Response.json({ created: "my-instance", status: item.status });
+		}
+
+		// Query the instance.
+		const query = url.searchParams.get("q") ?? "What does AI Search do?";
+
+		const results = await env.AI_SEARCH.get("my-instance").search({
+			messages: [{ role: "user", content: query }],
+			ai_search_options: {
+				retrieval: { max_num_results: 3 },
+			},
+		});
+
+		return Response.json(results.chunks);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## 4. Develop locally
+
+Start a local development server:
+
+```sh
+npx wrangler dev
+```
+
+Wrangler gives you a URL (usually `localhost:8787`). Visit `/setup` once to create your instance and index the sample document, then query it at `/?q=your+search+terms`.
+
+## 5. Deploy your Worker
+
+Log in with your Cloudflare account:
+
+```sh
+npx wrangler login
+```
+
+Deploy your Worker to make it accessible on the Internet:
+
+```sh
+npx wrangler deploy
+```
+
+```txt
+https://ai-search-tutorial.<YOUR_SUBDOMAIN>.workers.dev
+```
+
+## Next steps
+
+<LinkCard
+	title="Search Workers binding"
+	description="Full reference for searching and chatting from a Worker."
+	href="/ai-search/api/search/workers-binding/"
+/>
+<LinkCard
+	title="Items Workers binding"
+	description="Upload, list, and manage documents from a Worker."
+	href="/ai-search/api/items/workers-binding/"
+/>

@@ -3,12 +3,19 @@ title: API reference
 description: Sandbox SDK API for executing code, managing files, running processes, and exposing services.
 pcx_content_type: navigation
 sidebar:
-  order: 4
+  order: 6
 products:
   - sandbox
 ---
 
 import { LinkTitleCard, CardGrid } from "~/components";
+
+:::note[Coming soon: Sandbox SDK 1.0]
+This is the API hub for today's stable `@cloudflare/sandbox` package.
+
+For **`@cloudflare/sandbox@next`**, use the [1.0 preview API reference](/sandbox/1-0-preview/api/).
+:::
+
 
 The Sandbox SDK provides a comprehensive API for executing code, managing files, running processes, and exposing services in isolated sandboxes.
 
@@ -50,6 +57,12 @@ The Sandbox SDK provides a comprehensive API for executing code, managing files,
 <LinkTitleCard title="Ports" href="/sandbox/api/ports/" icon="download">
 	Expose services running in the sandbox via preview URLs. Access web servers
 	and APIs from the internet.
+</LinkTitleCard>
+
+<LinkTitleCard title="Tunnels" href="/sandbox/api/tunnels/" icon="connection">
+	Expose services on zero-config `*.trycloudflare.com` URLs via
+	`sandbox.tunnels.get(port)`. Best for quick development and `.workers.dev`
+	deployments.
 </LinkTitleCard>
 
 <LinkTitleCard title="Storage" href="/sandbox/api/storage/" icon="database">

@@ -1,0 +1,727 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+interface Props {
+	autoPlay?: boolean;
+	loop?: boolean;
+}
+
+const { autoPlay = true, loop = true } = Astro.props;
+---
+
+<figure
+	class="ai-search-namespaces-diagram not-content"
+	aria-label="Per-tenant multitenancy with a namespace binding: requests from multiple tenants reach one Worker, which uses its namespace binding to route each request to that tenant's own isolated AI Search instance inside the namespace."
+>
+	<cfdocs-ai-search-namespaces-diagram
+		data-autoplay={String(autoPlay)}
+		data-loop={String(loop)}
+	>
+		<div class="asnd-track">
+			<!-- Incoming tenant requests -->
+			<div class="asnd-tenants">
+				<a
+					class="asnd-cap asnd-tenant"
+					data-tenant="a"
+					href="/ai-search/how-to/per-tenant-search/"
+				>
+					<span class="asnd-cap-icon" aria-hidden="true">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<circle cx="12" cy="8" r="3.5"></circle>
+							<path d="M5 20a7 7 0 0 1 14 0"></path>
+						</svg>
+					</span>
+					<span>Tenant A</span>
+				</a>
+				<a
+					class="asnd-cap asnd-tenant"
+					data-tenant="b"
+					href="/ai-search/how-to/per-tenant-search/"
+				>
+					<span class="asnd-cap-icon" aria-hidden="true">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<circle cx="12" cy="8" r="3.5"></circle>
+							<path d="M5 20a7 7 0 0 1 14 0"></path>
+						</svg>
+					</span>
+					<span>Tenant B</span>
+				</a>
+				<a
+					class="asnd-cap asnd-tenant"
+					data-tenant="c"
+					href="/ai-search/how-to/per-tenant-search/"
+				>
+					<span class="asnd-cap-icon" aria-hidden="true">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+						>
+							<circle cx="12" cy="8" r="3.5"></circle>
+							<path d="M5 20a7 7 0 0 1 14 0"></path>
+						</svg>
+					</span>
+					<span>Tenant C</span>
+				</a>
+			</div>
+
+			<!-- Fan-in: every tenant request reaches the same Worker -->
+			<div class="asnd-bracket asnd-fanin" aria-hidden="true">
+				<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+					<line
+						class="asnd-trunk"
+						x1="60"
+						y1="13"
+						x2="60"
+						y2="26"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="a"
+						x1="20"
+						y1="0"
+						x2="20"
+						y2="13"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="a"
+						x1="20"
+						y1="13"
+						x2="60"
+						y2="13"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="b"
+						x1="60"
+						y1="0"
+						x2="60"
+						y2="13"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="c"
+						x1="100"
+						y1="0"
+						x2="100"
+						y2="13"
+						vector-effect="non-scaling-stroke"></line>
+					<line
+						data-tenant="c"
+						x1="60"
+						y1="13"
+						x2="100"
+						y2="13"
+						vector-effect="non-scaling-stroke"></line>
+				</svg>
+			</div>
+
+			<!-- Worker: routes each request by tenant id via the namespace binding -->
+			<a
+				class="asnd-node asnd-worker"
+				href="/ai-search/how-to/per-tenant-search/"
+			>
+				<span class="asnd-node-head">env.AI_SEARCH.get(id)</span>
+				<span class="asnd-node-body">
+					<span class="asnd-icon" aria-hidden="true"
+						><Icon name="workers" /></span
+					>
+					<span class="asnd-node-title">Worker</span>
+				</span>
+			</a>
+
+			<!-- Line into the namespace scope -->
+			<div class="asnd-connector asnd-trunk"></div>
+
+			<div class="asnd-group asnd-group-terminal">
+				<span class="asnd-group-label">namespace: tenants</span>
+
+				<!-- Split: the binding gets or creates one instance per tenant -->
+				<div class="asnd-bracket asnd-split" aria-hidden="true">
+					<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+						<line
+							class="asnd-trunk"
+							x1="60"
+							y1="0"
+							x2="60"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							data-tenant="a"
+							x1="20"
+							y1="13"
+							x2="60"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							data-tenant="a"
+							x1="20"
+							y1="13"
+							x2="20"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							data-tenant="b"
+							x1="60"
+							y1="13"
+							x2="60"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							data-tenant="c"
+							x1="60"
+							y1="13"
+							x2="100"
+							y2="13"
+							vector-effect="non-scaling-stroke"></line>
+						<line
+							data-tenant="c"
+							x1="100"
+							y1="13"
+							x2="100"
+							y2="26"
+							vector-effect="non-scaling-stroke"></line>
+					</svg>
+				</div>
+
+				<!-- One isolated instance per tenant -->
+				<div class="asnd-instances">
+					<a
+						class="asnd-node asnd-terminal"
+						data-tenant="a"
+						href="/ai-search/how-to/per-tenant-search/"
+					>
+						<span class="asnd-node-head">AI Search instance</span>
+						<span class="asnd-node-body">
+							<span class="asnd-icon" aria-hidden="true"
+								><Icon name="ai-search" /></span
+							>
+							<span class="asnd-node-title">tenant-a</span>
+						</span>
+					</a>
+					<a
+						class="asnd-node asnd-terminal"
+						data-tenant="b"
+						href="/ai-search/how-to/per-tenant-search/"
+					>
+						<span class="asnd-node-head">AI Search instance</span>
+						<span class="asnd-node-body">
+							<span class="asnd-icon" aria-hidden="true"
+								><Icon name="ai-search" /></span
+							>
+							<span class="asnd-node-title">tenant-b</span>
+						</span>
+					</a>
+					<a
+						class="asnd-node asnd-terminal"
+						data-tenant="c"
+						href="/ai-search/how-to/per-tenant-search/"
+					>
+						<span class="asnd-node-head">AI Search instance</span>
+						<span class="asnd-node-body">
+							<span class="asnd-icon" aria-hidden="true"
+								><Icon name="ai-search" /></span
+							>
+							<span class="asnd-node-title">tenant-c</span>
+						</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</cfdocs-ai-search-namespaces-diagram>
+</figure>
+
+<style>
+	.ai-search-namespaces-diagram {
+		/* Neutral, Kumo-style monochrome palette */
+		--asnd-panel: #fbfbfb;
+		--asnd-dot: rgb(0 0 0 / 8%);
+		--asnd-card: #ffffff;
+		--asnd-head: #f4f4f5;
+		--asnd-border: #e3e3e6;
+		--asnd-line: #c1c1c8;
+		--asnd-joint: #ffffff;
+		--asnd-text: #1a1a1c;
+		--asnd-muted: #8a8a90;
+		/* Accent — used sparingly to trace the active tenant */
+		--asnd-accent: #f6821f;
+		--asnd-accent-soft: rgb(246 130 31 / 14%);
+
+		margin: 1.5rem 0;
+		/* Respond to the diagram's own available width, not the viewport. */
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .ai-search-namespaces-diagram {
+		--asnd-panel: #121213;
+		--asnd-dot: rgb(255 255 255 / 9%);
+		--asnd-card: #1b1b1d;
+		--asnd-head: #242427;
+		--asnd-border: #38383c;
+		--asnd-line: #4d4d54;
+		--asnd-joint: #1b1b1d;
+		--asnd-text: #f3f3f5;
+		--asnd-muted: #9a9aa2;
+	}
+
+	cfdocs-ai-search-namespaces-diagram {
+		display: block;
+		width: 100%;
+		padding: 1.5rem 1rem;
+		border: 1px solid var(--asnd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--asnd-dot) 1px, transparent 1px),
+			var(--asnd-panel);
+		background-size: 16px 16px;
+	}
+
+	.asnd-track {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	/* --- Cards (clickable) --- */
+	.asnd-node {
+		position: relative;
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 300px;
+		background: var(--asnd-card);
+		border: 1px solid var(--asnd-border);
+		border-radius: 0.625rem;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		color: inherit;
+		text-decoration: none;
+		transition:
+			border-color 0.25s ease,
+			box-shadow 0.25s ease,
+			transform 0.15s ease;
+	}
+
+	/* Output port — every box that emits a line (the tenant requests and the
+	   Worker) carries a centred node on its bottom edge. Terminal instances
+	   carry no port. */
+	.asnd-node::after,
+	.asnd-cap::after {
+		content: "";
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--asnd-joint);
+		border: 2px solid var(--asnd-line);
+		box-sizing: border-box;
+		transform: translateX(-50%);
+		transition: border-color 0.25s ease;
+		z-index: 2;
+	}
+
+	.asnd-terminal::after {
+		display: none;
+	}
+
+	/* Input node — the boxes that receive a line (the Worker from the fan-in,
+	   each instance from the split) carry a matching node on their top edge, so
+	   every connector runs node-to-node. */
+	.asnd-worker::before,
+	.asnd-instances .asnd-node::before {
+		content: "";
+		position: absolute;
+		top: -5px;
+		left: 50%;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--asnd-joint);
+		border: 2px solid var(--asnd-line);
+		box-sizing: border-box;
+		transform: translateX(-50%);
+		transition: border-color 0.25s ease;
+		z-index: 2;
+	}
+
+	.asnd-node-head {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.25rem 0.625rem;
+		background: var(--asnd-head);
+		border-bottom: 1px solid var(--asnd-border);
+		border-radius: 0.5625rem 0.5625rem 0 0;
+		white-space: nowrap;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		letter-spacing: 0.01em;
+		color: var(--asnd-muted);
+	}
+
+	.asnd-node-body {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 0.625rem;
+	}
+
+	.asnd-node-title {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.2;
+		color: var(--asnd-text);
+	}
+
+	.asnd-node:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asnd-accent) 55%,
+			var(--asnd-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+		transform: translateY(-1px);
+	}
+
+	.asnd-node:focus-visible {
+		outline: 2px solid var(--asnd-accent);
+		outline-offset: 2px;
+	}
+
+	/* Icon chip — normalise every product glyph to currentColor */
+	.asnd-icon {
+		flex: none;
+		width: 1.25rem;
+		height: 1.25rem;
+		color: var(--asnd-muted);
+		transition: color 0.25s ease;
+	}
+
+	.asnd-icon :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.asnd-icon :global(svg path) {
+		fill: currentColor;
+	}
+
+	/* --- Tenant request row + instance row: three equal columns so each card
+	   centre lands on the fan stub at 16.7% / 50% / 83.3%. --- */
+	.asnd-tenants,
+	.asnd-instances {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0;
+		width: 100%;
+		justify-items: center;
+	}
+
+	/* Cards sit narrower than their column so neighbouring instance blocks keep
+	   a clear gap between them while each card centre still lands on its split
+	   stub (16.7% / 50% / 83.3%). */
+	.asnd-instances .asnd-node {
+		max-width: none;
+		width: calc(100% - 0.9rem);
+		margin: 0;
+	}
+
+	/* --- Dashed namespace scope. Zero top padding so the entry line flows
+	   straight through the dashed border into the split. --- */
+	.asnd-group {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		padding: 0 0.75rem;
+		border: 1px dashed var(--asnd-border);
+		border-radius: 0.75rem;
+	}
+
+	/* Terminal scope (nothing exits the bottom) gets breathing room. */
+	.asnd-group-terminal {
+		padding-bottom: 0.9rem;
+	}
+
+	.asnd-group-label {
+		position: absolute;
+		top: -0.85rem;
+		left: 1rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.1rem 0.5rem;
+		background: var(--asnd-panel);
+		border: 1px solid var(--asnd-border);
+		border-radius: 9999px;
+		font-size: 0.625rem;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: var(--asnd-muted);
+	}
+
+	/* --- Connectors (vertical wires) --- */
+	.asnd-connector {
+		width: 2px;
+		height: 1.5rem;
+		margin: 0 auto;
+		background: var(--asnd-line);
+		transition: background-color 0.25s ease;
+	}
+
+	/* --- Brackets (orthogonal SVG fan-in / split) --- */
+	/* Full width so the vertical stubs line up with the node centres. */
+	.asnd-bracket {
+		width: 100%;
+	}
+
+	.asnd-bracket svg {
+		display: block;
+		width: 100%;
+		height: 1.5rem;
+	}
+
+	/* The split sits inside the namespace box; give it extra height so its fan
+	   bar and stubs clear the "namespace: …" label straddling the box border,
+	   keeping the tenant-a branch from running behind the label. */
+	.asnd-split svg {
+		height: 2.1rem;
+	}
+
+	.asnd-bracket line {
+		stroke: var(--asnd-line);
+		stroke-width: 2;
+		fill: none;
+		stroke-linecap: round;
+		transition: stroke 0.25s ease;
+	}
+
+	/* Light the active tenant's path: its stubs + the shared trunk light up
+	   with the tenant and instance cards, tracing request to instance. */
+	.asnd-bracket line.current {
+		stroke: var(--asnd-accent);
+	}
+
+	.asnd-connector.current {
+		background: var(--asnd-accent);
+	}
+
+	/* --- Tenant request caps (pills) --- */
+	.asnd-cap {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.3rem 0.8rem;
+		border-radius: 9999px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		background: var(--asnd-card);
+		border: 1px solid var(--asnd-border);
+		color: var(--asnd-text);
+		text-decoration: none;
+		transition:
+			box-shadow 0.25s ease,
+			border-color 0.25s ease;
+	}
+
+	.asnd-cap:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--asnd-accent) 55%,
+			var(--asnd-border)
+		);
+		box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+	}
+
+	.asnd-cap:focus-visible {
+		outline: 2px solid var(--asnd-accent);
+		outline-offset: 2px;
+	}
+
+	.asnd-cap-icon {
+		width: 0.875rem;
+		height: 0.875rem;
+		color: var(--asnd-muted);
+	}
+
+	.asnd-cap-icon svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* --- Active tenant highlight --- */
+	.asnd-node.current,
+	.asnd-cap.current {
+		border-color: var(--asnd-accent);
+		box-shadow: 0 0 0 2px var(--asnd-accent-soft);
+		animation: asnd-pulse 1.2s ease-in-out infinite;
+	}
+
+	.asnd-node.current .asnd-icon,
+	.asnd-cap.current .asnd-cap-icon {
+		color: var(--asnd-accent);
+	}
+
+	.asnd-node.current::after,
+	.asnd-cap.current::after {
+		border-color: var(--asnd-accent);
+	}
+
+	.asnd-worker.current::before,
+	.asnd-instances .asnd-node.current::before {
+		border-color: var(--asnd-accent);
+	}
+
+	@keyframes asnd-pulse {
+		0%,
+		100% {
+			box-shadow: 0 0 0 2px var(--asnd-accent-soft);
+		}
+		50% {
+			box-shadow: 0 0 0 5px transparent;
+		}
+	}
+
+	/* --- Responsive: the three tenants routing to three instances IS the
+	   diagram — collapsing to one column would lose the per-tenant isolation
+	   it shows. Keep the three-column rows and the orthogonal forks (which
+	   scale to any width); only tighten spacing + fonts so the cards fit. --- */
+	@container (max-width: 560px) {
+		cfdocs-ai-search-namespaces-diagram {
+			padding: 1.25rem 0.5rem;
+		}
+
+		.asnd-group {
+			padding-inline: 0.35rem;
+		}
+
+		.asnd-instances .asnd-node {
+			width: calc(100% - 0.5rem);
+			margin: 0;
+		}
+
+		/* "AI Search instance" wraps to two lines in the narrow columns. */
+		.asnd-instances .asnd-node-head {
+			white-space: normal;
+			line-height: 1.2;
+		}
+
+		.asnd-cap {
+			padding: 0.3rem 0.5rem;
+			font-size: 0.6875rem;
+		}
+
+		.asnd-node-head {
+			padding: 0.25rem 0.4rem;
+			font-size: 0.5625rem;
+		}
+
+		.asnd-node-body {
+			gap: 0.375rem;
+			padding: 0.45rem 0.45rem;
+		}
+
+		.asnd-node-title {
+			font-size: 0.6875rem;
+		}
+	}
+
+	/* --- Reduced motion: leave the complete, neutral diagram static --- */
+	@media (prefers-reduced-motion: reduce) {
+		.asnd-node,
+		.asnd-cap,
+		.asnd-icon,
+		.asnd-cap-icon,
+		.asnd-connector,
+		.asnd-node::after,
+		.asnd-node::before {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	class AiSearchNamespacesDiagramElement extends HTMLElement {
+		private loop = false;
+		private timer: number | null = null;
+		private tenants: string[] = [];
+
+		connectedCallback() {
+			this.loop = this.dataset.loop === "true";
+
+			// Collect the tenant keys in document order (a, b, c).
+			const seen = new Set<string>();
+			this.querySelectorAll<HTMLElement>("[data-tenant]").forEach((el) => {
+				if (el.dataset.tenant) seen.add(el.dataset.tenant);
+			});
+			this.tenants = [...seen];
+
+			const reduced = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+
+			// Only animate when asked to and motion is allowed. Otherwise the
+			// diagram simply rests in its complete, neutral state.
+			if (!reduced && this.dataset.autoplay === "true" && this.tenants.length) {
+				this.timer = window.setTimeout(() => this.cycle(0), 600);
+			}
+		}
+
+		disconnectedCallback() {
+			if (this.timer !== null) window.clearTimeout(this.timer);
+		}
+
+		private clearCurrent() {
+			this.querySelectorAll(".current").forEach((el) =>
+				el.classList.remove("current"),
+			);
+		}
+
+		/** Highlight one tenant's request + its isolated instance at a time,
+		 *  making the per-tenant routing and isolation legible. */
+		private cycle(index: number) {
+			this.clearCurrent();
+
+			if (index >= this.tenants.length) {
+				if (this.loop) this.timer = window.setTimeout(() => this.cycle(0), 900);
+				return;
+			}
+
+			const tenant = this.tenants[index];
+			this.querySelectorAll(`[data-tenant="${tenant}"]`).forEach((el) =>
+				el.classList.add("current"),
+			);
+			// The Worker is the shared router, so light it on every tenant's turn.
+			this.querySelector(".asnd-worker")?.classList.add("current");
+
+			// Light the shared trunk (the Worker connector and the centre of each
+			// fork) so the whole path from tenant to instance reads as one line.
+			this.querySelectorAll(".asnd-trunk").forEach((el) =>
+				el.classList.add("current"),
+			);
+
+			this.timer = window.setTimeout(() => this.cycle(index + 1), 1400);
+		}
+	}
+
+	customElements.define(
+		"cfdocs-ai-search-namespaces-diagram",
+		AiSearchNamespacesDiagramElement,
+	);
+</script>

@@ -106,7 +106,7 @@ class Default(WorkerEntrypoint):
 
 ```
 
-The value of `binding` in your Wrangler file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and query this binding via `await env.DB.prepare(...)`.
+The value of `binding` in your Wrangler file exactly must match the name of the variable in your Python code. This example refers to the database via a `DB` binding, and queries this binding via `await self.env.DB.prepare(...)`.
 
 You can then deploy your Python Worker directly:
 

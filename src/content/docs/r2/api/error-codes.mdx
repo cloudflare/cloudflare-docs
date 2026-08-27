@@ -41,7 +41,7 @@ For the **S3-compatible API**, errors are returned as XML in the response body:
 |------------|------|-------------|---------|-----------------|
 | 10002 | Unauthorized | 401 | Missing or invalid authentication credentials. | Verify your [API token](/r2/api/tokens/) or access key credentials are correct and have not expired. |
 | 10003 | AccessDenied | 403 | Insufficient permissions for the requested operation. | Check that your [API token](/r2/api/tokens/) has the required permissions for the bucket and operation. |
-| 10018 | ExpiredRequest | 400 | Presigned URL or request signature has expired. | Regenerate the [presigned URL](/r2/api/s3/presigned-urls/) or signature. |
+| 10018 | ExpiredRequest | 403 | Presigned URL or request signature has expired. | Regenerate the [presigned URL](/r2/api/s3/presigned-urls/) or signature. |
 | 10035 | SignatureDoesNotMatch | 403 | Request signature does not match calculated signature. | Verify your secret key and signing algorithm. Check for URL encoding issues. |
 | 10042 | NotEntitled | 403 | Account not entitled to this feature. | Ensure your account has an [R2 subscription](/r2/pricing/). |
 
@@ -52,7 +52,7 @@ For the **S3-compatible API**, errors are returned as XML in the response body:
 | 10005 | InvalidBucketName | 400 | Bucket name does not meet naming requirements. | Bucket names must be 3-63 chars, lowercase alphanumeric and hyphens, start/end with alphanumeric. |
 | 10006 | NoSuchBucket | 404 | The specified bucket does not exist. | Verify the bucket name is correct and the bucket exists in your account. |
 | 10008 | BucketNotEmpty | 409 | Cannot delete bucket that contains objects. | Delete all objects in the bucket before deleting the bucket. |
-| 10009 | TooManyBuckets | 400 | Account bucket limit exceeded (default: 1,000,000 buckets). | Request a limit increase via the [Limits Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7). |
+| 10009 | TooManyBuckets | 400 | Account bucket limit exceeded (default: 1,000,000 buckets). | Request a limit increase via the [Limits Increase Request Form](https://forms.gle/eX6pXvit1wBv77Yw5). |
 | 10073 | BucketConflict | 409 | Bucket name already exists. | Choose a different bucket name. Bucket names must be unique within your account. |
 
 ### Object errors

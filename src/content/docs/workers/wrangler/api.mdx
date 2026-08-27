@@ -15,6 +15,7 @@ import {
 	TabItem,
 	Tabs,
 	Type,
+	TypeScriptExample,
 	MetaInfo,
 	WranglerConfig,
 	PackageManagers,
@@ -22,10 +23,190 @@ import {
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
+- [`createTestHarness`](#createtestharness) - Start one or more Workers for integration tests in any Node.js test runner.
 - [`experimental_generateTypes`](#experimental_generatetypes) - Generate TypeScript type definitions from your Worker configuration.
 - [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
+
+## `createTestHarness`
+
+`createTestHarness()` starts one or more Workers for integration tests from any Node.js test runner. It runs production build output from Wrangler configuration files, Vite-generated configuration files, or inline Wrangler configuration objects. The API wraps Miniflare and provides methods for dispatching requests and scheduled events.
+
+For setup guidance and examples, refer to [Integration test harness](/workers/testing/test-harness/).
+
+### Syntax
+
+<TypeScriptExample>
+
+```ts
+import { createTestHarness } from "wrangler";
+
+const server = createTestHarness(options);
+```
+
+</TypeScriptExample>
+
+### Parameters
+
+- `options` <Type text="object" /> <MetaInfo text="optional" />
+
+  - Test harness options. If you call `createTestHarness()` without options, call `server.update(options)` before `server.listen()`.
+
+    - `root` <Type text="string" /> <MetaInfo text="optional" />
+
+      Base directory used to resolve relative Worker configuration paths. Defaults to `process.cwd()`.
+
+    - `workers` <Type text="WorkerInput[]" />
+
+      Workers to run in the test server. The first Worker is the primary Worker.
+
+Each `WorkerInput` can load a Worker from a Wrangler configuration file:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{ configPath: "./wrangler.web.jsonc" },
+		{ configPath: "./wrangler.api.jsonc" },
+	],
+});
+```
+
+</TypeScriptExample>
+
+Configuration file inputs support these fields:
+
+- `configPath` <Type text="string | URL" />
+  - Path to a Wrangler configuration file. Relative paths resolve from `root`.
+- `env` <Type text="string" /> <MetaInfo text="optional" />
+  - Wrangler environment to load from the configuration file.
+- `vars` <Type text="Record<string, Json>" /> <MetaInfo text="optional" />
+  - Test-only variables that override variables from the Wrangler configuration file.
+- `secrets` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Test-only secrets that override values loaded from `.dev.vars` and `.env` files.
+- `bindingOverrides` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Test-only service binding overrides. Keys are binding names in this Worker's environment. Values are Worker names in this test harness.
+
+Each `WorkerInput` can also use `config` to provide an inline Wrangler configuration object:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{
+			config: {
+				name: "api-worker",
+				main: "src/api.ts",
+				compatibility_date: "YYYY-MM-DD",
+			},
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+### Return type
+
+`createTestHarness()` returns a <Type text="TestHarness" /> object with these methods:
+
+- `listen()` <Type text="Promise<{ url: URL }>" />
+  - Starts the server and returns its current URL. Repeated calls return the same session until the server is closed or reset.
+- `fetch(input, init)` <Type text="Promise<Response>" />
+  - Dispatches a fetch request through the server. Relative URLs resolve against the current server URL. Absolute URLs follow the configured Worker routes and fall back to the primary Worker.
+- `getWorker(name?)` <Type text="WorkerHandle" />
+  - Returns a handle for dispatching events directly to a Worker. When no name is provided, this returns the primary Worker.
+- `getLogs()` <Type text="WorkerdStructuredLog[]" />
+  - Returns captured Workers runtime logs since the current server session started or `clearLogs()` was last called.
+- `clearLogs()` <Type text="void" />
+  - Clears captured Workers runtime logs.
+- `debug()` <Type text="void" />
+  - Prints a diagnostic timeline for this test server, including server events and captured Workers runtime logs. This is useful in a test runner failure or cleanup hook.
+- `update(optionsOrUpdater)` <Type text="Promise<void>" />
+  - Updates the server configuration with a `TestHarnessOptions` object or a function that receives the current options and returns the next options. If the server has not started yet, this configures the options used by `listen()`. If the server is running, this reloads the running Workers. Updating the number of Workers in a running server is not supported.
+- `reset()` <Type text="Promise<void>" />
+  - Restores the server to the options used when the current session first started. Storage is recreated, and the server URL may change after reset.
+- `close()` <Type text="Promise<void>" />
+  - Stops the server and releases all runtime resources.
+
+`getWorker(name?)` returns a <Type text="WorkerHandle" /> object with these methods:
+
+- `fetch(input, init)` <Type text="Promise<Response>" />
+  - Dispatches a fetch event directly to this Worker.
+- `scheduled(options)` <Type text={'Promise<{ outcome: "ok" | "canceled" | "exception"; noRetry: boolean }>'} />
+  - Dispatches a scheduled event directly to this Worker.
+- `getEnv()` <Type text="Promise<Env>" />
+  - Returns the full environment object configured for this Worker, including variables, secrets, and bindings.
+- `getExport()` <Type text={"Promise<Service<Module['default']>>"} />
+  - Returns the default Worker export, including RPC methods.
+- `applyD1Migrations(bindingName)` <Type text="Promise<void>" />
+  - Applies local D1 migration files that have not already run to a D1 binding on this Worker.
+- `getDurableObjectStorage(classNameOrBindingName, options)` <Type text="Promise<DurableObjectStorageHandle>" />
+  - Returns SQL storage access for a Durable Object instance.
+- `introspectWorkflow(bindingName)` <Type text="Promise<WorkflowIntrospector>" />
+  - Creates an introspector for Workflow instances created after this method is called.
+- `introspectWorkflowInstance(bindingName, instanceId)` <Type text="Promise<WorkflowInstanceIntrospector>" />
+  - Creates an introspector for a specific Workflow instance.
+
+### Usage
+
+This example uses the Node.js built-in test runner:
+
+<TypeScriptExample>
+
+```ts
+import assert from "node:assert/strict";
+import { after, afterEach, before, describe, test } from "node:test";
+import { createTestHarness } from "wrangler";
+
+const server = createTestHarness({
+	workers: [
+		{ configPath: "./wrangler.web.jsonc" },
+		{ configPath: "./wrangler.api.jsonc" },
+	],
+});
+
+const apiWorker = server.getWorker("api-worker");
+
+describe("Worker", () => {
+	before(async () => {
+		await server.listen();
+	});
+
+	afterEach(async () => {
+		await server.reset();
+	});
+
+	after(async () => {
+		await server.close();
+	});
+
+	test("dispatches through configured routes", async () => {
+		const response = await server.fetch("http://example.com/users/123");
+		assert.equal(response.status, 200);
+	});
+
+	test("calls a specific Worker directly", async () => {
+		const response = await apiWorker.fetch(
+			"http://api.example.com/v1/users/123",
+		);
+		assert.equal(response.status, 200);
+	});
+
+	test("triggers a scheduled handler", async () => {
+		const result = await apiWorker.scheduled({
+			cron: "0 0 * * *",
+			scheduledTime: new Date(),
+		});
+		assert.equal(result.outcome, "ok");
+	});
+});
+```
+
+</TypeScriptExample>
 
 ## `experimental_generateTypes`
 
@@ -143,6 +324,12 @@ const result = await experimental_generateTypes({
 
 ## `unstable_startWorker`
 
+:::caution
+
+`unstable_startWorker()` is deprecated. Cloudflare recommends [`createTestHarness()`](#createtestharness) for integration testing. To start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+:::
+
 This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
 
 ```js
@@ -172,19 +359,17 @@ describe("worker", () => {
 
 ## `unstable_dev`
 
+:::caution
+
+`unstable_dev()` is deprecated. Cloudflare recommends [`createTestHarness()`](#createtestharness) for integration testing. To start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+:::
+
 Start an HTTP server for testing your Worker.
 
 Once called, `unstable_dev` will return a `fetch()` function for invoking your Worker without needing to know the address or port, as well as a `stop()` function to shut down the HTTP server.
 
 By default, `unstable_dev` will perform integration tests against a local server. If you wish to perform an e2e test against a preview Worker, pass `local: false` in the `options` object when calling the `unstable_dev()` function. Note that e2e tests can be significantly slower than integration tests.
-
-:::note
-
-The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future. We recommend migrating to the `unstable_startWorker()` API, documented above.
-
-If you have been using `unstable_dev()` for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from `unstable_dev` migration guide](/workers/testing/vitest-integration/migration-guides/migrate-from-unstable-dev/) for more information.
-
-:::
 
 ### Constructor
 
@@ -413,7 +598,7 @@ const platform = await getPlatformProxy(options);
 
     - `remoteBindings` boolean <MetaInfo text="optional (default: `true`)" />
 
-      Whether or not [remote bindings](/workers/development-testing/#remote-bindings) should be enabled.
+      Whether or not [remote bindings](/workers/local-development/#remote-bindings) should be enabled.
 
 ### Return Type
 

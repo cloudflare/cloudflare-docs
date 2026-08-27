@@ -1,0 +1,15 @@
+---
+title: Reduced end-to-end latency for vector changes
+description: Improvements to Vectorize WAL throughput reduce p99 end-to-end latency for vector changes to under 2 minutes.
+products:
+  - vectorize
+date: 2026-07-01
+---
+
+We have greatly improved the throughput of the Vectorize [write-ahead log (WAL)](https://blog.cloudflare.com/building-vectorize-a-distributed-vector-database-on-cloudflare-developer-platform/#the-wal). As a result, we have significantly reduced the end-to-end latency for a vector change to become queryable: median latency has dropped from 2 minutes to under 30 seconds, and p99 latency from 5 minutes to under 2 minutes.
+
+![Vectorize p99 WAL batch end-to-end latency improved](~/assets/images/vectorize/vectorize-p99-wal-batch-end-to-end-latency-improvement.png)
+
+This means inserts, upserts, and deletes are reflected in query results faster, improving the freshness of semantic search, recommendation, and retrieval-augmented generation (RAG) workloads. You do not need to change your code or configuration to benefit from this improvement.
+
+For more information, refer to the [Vectorize documentation](/vectorize/).

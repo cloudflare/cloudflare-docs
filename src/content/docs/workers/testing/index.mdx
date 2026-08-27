@@ -1,37 +1,35 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: overview
 title: Testing
-description: Compare testing options for Cloudflare Workers, including Vitest integration, Miniflare, and unstable_startWorker.
+description: Choose testing tools for Cloudflare Workers, including createTestHarness and the Vitest integration.
 sidebar:
-  order: 14
+  order: 15
 products:
   - workers
 ---
 
-import { Render, LinkButton } from "~/components";
+The Workers platform provides complementary tools for testing different parts of your application. For most projects, use the [Workers Vitest integration](/workers/testing/vitest-integration/) for unit tests and the [`createTestHarness()`](/workers/testing/test-harness/) API for integration tests.
 
-The Workers platform has a variety of ways to test your applications, depending on your requirements. We recommend using the [Vitest integration](/workers/testing/vitest-integration), which allows you to run tests _inside_ the Workers runtime, and unit test individual functions within your Worker.
+## Unit tests
 
-<LinkButton href="/workers/testing/vitest-integration/write-your-first-test/">
-	Get started with Vitest
-</LinkButton>
+Use the [Workers Vitest integration](/workers/testing/vitest-integration/) for fast feedback while testing individual functions and modules. Tests run inside the Workers runtime, so your test code can access bindings and runtime APIs directly.
 
-## Testing comparison matrix
+The Workers Vitest integration provides:
 
-However, if you don't use Vitest, both [Miniflare's API](/workers/testing/miniflare/writing-tests) and the [`unstable_startWorker()`](/workers/wrangler/api/#unstable_startworker) API provide options for testing your Worker in any testing framework.
+- Fast feedback while testing individual functions and modules.
+- Direct assertions against binding state, such as values written to KV, R2, D1, or Durable Objects.
+- Direct calls to Durable Objects and other runtime APIs.
 
-| Feature                               | [Vitest integration](/workers/testing/vitest-integration) | [`unstable_startWorker()`](/workers/testing/unstable_startworker/) | [Miniflare's API](/workers/testing/miniflare/writing-tests/) |
-| ------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------ |
-| Unit testing                          | ✅                                                        | ❌                                                                 | ❌                                                           |
-| Integration testing                   | ✅                                                        | ✅                                                                 | ✅                                                           |
-| Loading Wrangler configuration files  | ✅                                                        | ✅                                                                 | ❌                                                           |
-| Use bindings directly in tests        | ✅                                                        | ❌                                                                 | ✅                                                           |
-| Isolated per-test storage             | ✅                                                        | ❌                                                                 | ❌                                                           |
-| Outbound request mocking              | ✅                                                        | ❌                                                                 | ✅                                                           |
-| Multiple Worker support               | ✅                                                        | ✅                                                                 | ✅                                                           |
-| Direct access to Durable Objects      | ✅                                                        | ❌                                                                 | ❌                                                           |
-| Run Durable Object alarms immediately | ✅                                                        | ❌                                                                 | ❌                                                           |
-| List Durable Objects                  | ✅                                                        | ❌                                                                 | ❌                                                           |
-| Testing service Workers               | ❌                                                        | ✅                                                                 | ✅                                                           |
+To set up unit tests, refer to [Write your first Vitest test](/workers/testing/vitest-integration/write-your-first-test/).
 
-<Render file="testing-pages-functions" product="workers" />
+## Integration tests
+
+Use the [`createTestHarness()`](/workers/testing/test-harness/) API to exercise one or more Workers as a whole and test how they interact with each other and with external services.
+
+The integration test harness provides:
+
+- Confidence from exercising production Worker builds.
+- Coverage through configured HTTP routes across Workers.
+- Compatibility with any Node.js test runner and tools such as Playwright or MSW.
+
+To set up integration tests, refer to [Get started with the integration test harness](/workers/testing/test-harness/get-started/).

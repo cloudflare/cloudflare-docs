@@ -1,0 +1,154 @@
+---
+title: Agent Memory
+pcx_content_type: overview
+description: Persistent, scoped memory for agents that need to remember users, organizations, and domain-specific context across conversations.
+products:
+  - agent-memory
+sidebar:
+  order: 1
+  badge:
+    text: Beta
+head:
+  - tag: title
+    content: Cloudflare Agent Memory docs
+---
+
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkButton,
+	LinkTitleCard,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+
+Persistent, scoped memory for agents that need to remember users, organizations, and domain-specific context across conversations.
+
+</Description>
+
+:::note
+
+Agent Memory is in private beta. To understand the memory model, refer to [How Agent Memory works](/agent-memory/concepts/how-agent-memory-works/).
+
+:::
+
+Agent Memory gives agents durable memory across conversations without requiring you to build your own extraction, storage, search, and summarization pipeline. Ingest conversations to extract memories automatically, or explicitly remember information when your application already knows what to store.
+
+Use Agent Memory to remember user preferences, company operating rules, support history, project state, or the state of a specific object.
+
+**Agent Memory gives you:**
+
+- Isolated profiles for users, agents, tenants, teams, or application entities
+- Namespaces for separating applications, environments, or memory layers
+- Automatic extraction of facts, events, instructions, and tasks from conversations
+- APIs to add, list, recall, and delete memories
+- Profile summaries for observing what Agent Memory remembers
+
+<LinkButton href="/agent-memory/get-started/">Get started</LinkButton>
+<LinkButton
+	variant="secondary"
+	href="/agent-memory/concepts/how-agent-memory-works/"
+>
+	Learn how it works
+</LinkButton>
+
+---
+
+## Features
+
+    <Feature
+    	header="Scoped memory profiles"
+    	href="/agent-memory/concepts/namespaces-profiles/"
+    	cta="Learn about profiles"
+    >
+
+Store memories in isolated profiles for users, agents, teams, tenants, or application entities. Use namespaces to separate applications, environments, or memory layers.
+
+</Feature>
+
+<Feature
+	header="Automatic memory extraction"
+	href="/agent-memory/api/workers-api/#ingest-conversations"
+	cta="Review the API"
+>
+
+Ingest conversations to extract memories automatically, or explicitly add important information when your agent already knows what should be remembered.
+
+</Feature>
+
+<Feature
+	header="Recall memories across agent executions"
+	href="/agent-memory/api/workers-api/#recall-memories"
+	cta="Recall memories"
+>
+
+Retrieve relevant memory when an agent needs durable context that is not present in the current prompt, conversation, or execution.
+
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Agent Memory is accessed through a Worker binding. Build serverless applications that use persistent memory.
+
+</RelatedProduct>
+
+<RelatedProduct header="Agents" href="/agents/" product="agents">
+
+Build AI-powered agents with persistent state, tool use, and real-time communication.
+
+</RelatedProduct>
+
+---
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/agent-memory/get-started/"
+	icon="open-book"
+>
+	Add durable memory recall and ingestion to an agent.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="How Agent Memory works"
+	href="/agent-memory/concepts/how-agent-memory-works/"
+	icon="document"
+>
+	Learn how Agent Memory extracts, classifies, and retrieves knowledge from
+	conversations.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Workers API"
+	href="/agent-memory/api/workers-api/"
+	icon="document"
+>
+	Use Agent Memory from a Worker through an `agent_memory` binding.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="HTTP API"
+	href="/agent-memory/api/http-api/"
+	icon="document"
+>
+	Use Agent Memory from services that call the Cloudflare API directly.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Limits"
+	href="/agent-memory/platform/limits/"
+	icon="document"
+>
+	Review validation limits and constraints for Agent Memory.
+</LinkTitleCard>
+
+</CardGrid>

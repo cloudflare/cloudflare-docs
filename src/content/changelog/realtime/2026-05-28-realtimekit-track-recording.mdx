@@ -1,0 +1,31 @@
+---
+title: Record specific participant audio tracks in RealtimeKit
+description: You can now record specific participant audio tracks in RealtimeKit with track recording.
+products:
+  - realtime
+date: 2026-05-28
+---
+
+You can now record specific participant audio tracks in RealtimeKit with [track recording](/realtime/realtimekit/recording-guide/track-recording/). Track recording creates separate WebM files for each participant instead of a single composite recording, which is useful for post-processing, transcription, and regulated or content-sensitive workflows.
+
+To record specific participants, pass `user_ids` when starting a track recording:
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_id>/realtime/kit/<app_id>/recordings/track \
+  --header 'Authorization: Bearer <api_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "meeting_id": "97440c6a-140b-40a9-9499-b23fd7a3868a",
+  "user_ids": ["user-123", "user-456"]
+}'
+```
+
+To pass `user_ids` for selective track recording, use the following minimum SDK versions:
+
+- Web Core: `@cloudflare/realtimekit` version `1.4.0` or later
+- Web UI Kit: `@cloudflare/realtimekit-ui`, `@cloudflare/realtimekit-react-ui`, or `@cloudflare/realtimekit-angular-ui` version `1.1.2` or later
+- Android Core or iOS Core: version `2.0.0` or later
+- Android UI Kit or iOS UI Kit: version `1.1.0` or later
+
+[RealtimeKit](/realtime/realtimekit/) provides SDKs and UI components so that you can build your own meeting experience on Cloudflare's [global WebRTC infrastructure](/realtime/#realtime-sfu). Teams today build products ranging from telehealth to education on RealtimeKit for global audiences. You can get started today with our [Quickstart](/realtime/realtimekit/quickstart/) or take a look at our [Cloudflare Meet repo](https://github.com/cloudflare/meet) as a reference.

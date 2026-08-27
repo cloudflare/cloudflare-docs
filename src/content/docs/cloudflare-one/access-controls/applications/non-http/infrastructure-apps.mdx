@@ -33,7 +33,7 @@ import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
 
 :::note
-Access for Infrastructure currently only supports [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/). To connect using other protocols, [add a self-hosted private application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/). For browser-based SSH, RDP, or VNC, refer to [browser-rendered terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
+Access for Infrastructure currently supports [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/). To connect using other protocols, [add a self-hosted private application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/). For browser-based SSH, RDP, or VNC, refer to [browser-rendered terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
 :::
 
 ## Prerequisites
@@ -44,9 +44,8 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/networks
 ## 1. Add a target
 
 <Render
-	file="access/add-target"
+	file="access/add-target-generic"
 	product="cloudflare-one"
-	params={{ protocol: "generic" }}
 />
 
 ## 2. Add an infrastructure application
@@ -56,18 +55,28 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/networks
 ## 3. (Recommended) Modify order of precedence in Gateway
 
 <Render
-	file="access/modify-gateway-policy-precedence"
+	file="access/modify-gateway-policy-precedence-infra"
 	product="cloudflare-one"
-	params={{ selector: "Access Infrastructure Target", protocol: "infra" }}
+	params={{ selector: "Access Infrastructure Target" }}
 />
 
-## 4. Configure the server
+## 4. (Optional) Require independent MFA
+
+You can require independent MFA before users connect with SSH. The application configuration selects the supported infrastructure authenticators: PIV key (`piv_key`), FIDO2 key (`ssh_fido2_key`), or both.
+
+Application-level settings define the default authenticators and session duration. A policy can define custom settings for specific users or usernames.
+
+For setup instructions, refer to [Enforce MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).
+
+## 5. Configure the server
 
 Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
 
-- [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#6-configure-ssh-server)
+- [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
 
-## 5. Connect as a user
+For SSH, this includes trusting the Cloudflare SSH CA and, if your server restricts certificate principals, [authorizing the SSH usernames](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#confirm-the-account-authorizes-the-certificate-principal) you configured on the target.
+
+## 6. Connect as a user
 
 Users connect to the target's IP address using their preferred client software. The user must be logged into the Cloudflare One Client on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/traffic-policies/resolver-policies/) to allow connections to the target's private hostname.
 
@@ -84,13 +93,13 @@ If a user is connected to a target in VNET-A and needs to connect to a target in
 <Details header="Feature availability">
 
 | System   | Availability | Minimum client version |
-| -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2024.9.346.0         |
-| macOS    | ✅           | 2024.9.346.0         |
-| Linux    | ✅           | 2024.9.346.0         |
-| iOS      | ❌           |                      |
-| Android  | ❌           |                      |
-| ChromeOS | ❌           |                      |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2024.9.346.0           |
+| macOS    | ✅           | 2024.9.346.0           |
+| Linux    | ✅           | 2024.9.346.0           |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
 
 </Details>
 
@@ -109,6 +118,12 @@ To view all available filters, type `warp-cli target list --help`.
 ## Revoke a user's session
 
 To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/access-controls/access-settings/session-management/#per-user) or revoke their device. Cloudflare does not currently support revoking a user's session for a specific target.
+
+## Granular target permissions
+
+Infrastructure Access supports granular read permissions through [Cloudflare's role-based access control](/fundamentals/manage-members/roles/). Administrators can assign read-only roles scoped to specific targets instead of granting account-wide access. When a user with a scoped role calls the targets list API, the response is automatically filtered to only include the targets they have permission to view.
+
+This is useful for organizations that want to give teams visibility into their own infrastructure targets without exposing the full target inventory.
 
 ## Infrastructure policy selectors
 

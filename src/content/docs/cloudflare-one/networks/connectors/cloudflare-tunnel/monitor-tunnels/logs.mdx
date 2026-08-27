@@ -13,7 +13,7 @@ head:
     content: Tunnel log streams
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 Tunnel logs record all activity between a `cloudflared` instance and Cloudflare's global network, as well as all activity between `cloudflared` and your origin server. These logs allow you to investigate connectivity or performance issues with a Cloudflare Tunnel. You can configure your server to store persistent logs, or you can stream real-time logs from any client machine.
 
@@ -65,7 +65,10 @@ The `cloudflared` daemon can stream logs from any tunnel in your account to the 
 
 If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/)), you must specify an individual instance to stream logs from:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels** and select your tunnel.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels** and select your tunnel.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
 2. Find the **Connector ID** for the `cloudflared` instance you want to view.
 3. Specify the Connector ID in `cloudflared tail`:
    ```sh

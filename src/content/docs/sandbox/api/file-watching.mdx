@@ -10,6 +10,12 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents file watching on today's stable `@cloudflare/sandbox` package, including `sessionId` and session helpers.
+
+On the **1.0 preview** (`@next`), `watch` remains available without sessions. Refer to [Migrate](/sandbox/1-0-preview/migrate/) for the sessionless execution model.
+:::
+
 Monitor filesystem changes in real-time using Linux's native inotify system. The `watch()` method returns a Server-Sent Events (SSE) stream of file change events that you consume with `parseSSEStream()`.
 
 ## Methods
@@ -29,7 +35,7 @@ const stream = await sandbox.watch(path: string, options?: WatchOptions): Promis
   - `recursive` - Watch subdirectories recursively (default: `true`)
   - `include` - Glob patterns to include (for example, `['*.ts', '*.js']`). Cannot be used together with `exclude`.
   - `exclude` - Glob patterns to exclude (default: `['.git', 'node_modules', '.DS_Store']`). Cannot be used together with `include`.
-  - `sessionId` - Session to run the watch in (if omitted, the default session is used)
+  - `sessionId` - Session to run the watch in (if omittied, will use the default session unless `enableDefaultSession` is set to false)
 
 **Returns**: `Promise<ReadableStream<Uint8Array>>` — an SSE stream of `FileWatchSSEEvent` objects
 
@@ -142,7 +148,7 @@ interface WatchOptions {
 	include?: string[];
 	/** Glob patterns to exclude. Cannot be used together with `include`. Default: ['.git', 'node_modules', '.DS_Store'] */
 	exclude?: string[];
-	/** Session to run the watch in. If omitted, the default session is used. */
+	/** Session to run the watch in. If omitted, the sandbox's implicit execution mode is used. */
 	sessionId?: string;
 }
 ```

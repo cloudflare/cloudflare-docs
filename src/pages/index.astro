@@ -1,512 +1,172 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { Image } from "astro:assets";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { SidebarFilter } from "@/components/ui/sidebar";
+import Sidebar from "../components/landing/Sidebar.astro";
+import Hero from "../components/landing/Hero.astro";
+import BuildFromScratch from "../components/landing/BuildFromScratch.astro";
+import AgentSetup from "../components/landing/AgentSetup.astro";
+import ChangelogSection from "../components/landing/ChangelogSection.astro";
+import SecureSection from "../components/landing/SecureSection.astro";
+import AccelerateSection from "../components/landing/AccelerateSection.astro";
+import CommunityGrid from "../components/landing/CommunityGrid.astro";
+import StructuralGrid from "../components/landing/StructuralGrid.astro";
+import FullPageLines from "../components/landing/FullPageLines.astro";
+import Footer from "../components/Footer.astro";
+import { config } from "virtual:nimbus/config";
+import logo from "~/assets/logo.svg";
 
-import AgentsIllustration from "~/assets/agents.svg";
-
-import HeroImageDark from "~/assets/Dev-Docs-Header-Illustration-Dark-Mode-cropped.svg";
-import HeroImageLight from "~/assets/Dev-Docs-Header-Illustration-Light-Mode-cropped.svg";
-
-import SectionImageDeveloperPlatformDark from "~/assets/developer-platform-dark.svg";
-import SectionImageDeveloperPlatformLight from "~/assets/developer-platform-light.svg";
-import SectionImageZeroTrustDark from "~/assets/zero-trust-dark.svg";
-import SectionImageZeroTrustLight from "~/assets/zero-trust-light.svg";
-import PromptCopyBlock from "~/components/agent-setup/PromptCopyBlock.astro";
-
-import {
-	FourCardGrid,
-	ListCard,
-	TryItSection,
-	FeaturedContentSection,
-	RecommendedContentSection,
-	FooterHeroBlock,
-} from "~/components";
-
-const frontmatter = {
-	title: "Welcome to Cloudflare",
-	description:
-		"Explore guides and tutorials to start building on Cloudflare's platform",
-	template: "splash",
-	hero: {
-		title: "Welcome to Cloudflare",
-		tagline:
-			"Explore guides and tutorials to start building on Cloudflare's platform",
-		image: {
-			dark: HeroImageDark,
-			light: HeroImageLight,
-		},
-	},
-} as const;
-
-const topCards = [
-	{
-		title: "Featured",
-		links: [
-			{ text: "Docs for agents", href: "/docs-for-agents/" },
-			{
-				text: "Troubleshoot errors",
-				href: "/support/troubleshooting/http-status-codes/",
-			},
-			{ text: "Register a domain", href: "/registrar/" },
-			{ text: "Setup 1.1.1.1", href: "/1.1.1.1/setup/" },
-			{
-				text: "Get started with Cloudflare",
-				href: "/learning-paths/get-started/concepts/",
-			},
-		],
-		cta: {
-			text: "View all docs",
-			href: "/directory/",
-		},
-	},
-	{
-		title: "Developer Products",
-		links: [
-			{ text: "Workers", href: "/workers/" },
-			{ text: "Pages", href: "/pages/" },
-			{ text: "R2", href: "/r2/" },
-			{ text: "Images", href: "/images/" },
-			{ text: "Stream", href: "/stream/" },
-		],
-		cta: {
-			text: "View all developer products",
-			href: "/directory/?product-group=Developer+platform",
-		},
-	},
-	{
-		title: "AI Products",
-		links: [
-			{ text: "AI Search", href: "/ai-search/" },
-			{ text: "Workers AI", href: "/workers-ai/" },
-			{ text: "AI Crawl Control", href: "/ai-crawl-control/" },
-			{ text: "AI Gateway", href: "/ai-gateway/" },
-			{ text: "AI Agents", href: "/agents/" },
-		],
-		cta: {
-			text: "View all AI products",
-			href: "/directory/?product-group=AI",
-		},
-	},
-	{
-		title: "Zero Trust",
-		links: [
-			{ text: "Access", href: "/cloudflare-one/access-controls/policies/" },
-			{
-				text: "Tunnel",
-				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-			},
-			{ text: "Gateway", href: "/cloudflare-one/traffic-policies/" },
-			{
-				text: "Browser Isolation",
-				href: "/cloudflare-one/remote-browser-isolation/",
-			},
-			{
-				text: "Replace your VPN",
-				href: "/learning-paths/replace-vpn/concepts/",
-			},
-		],
-		cta: {
-			text: "View all Cloudflare One products",
-			href: "/directory/?product-group=Cloudflare+One",
-		},
-	},
-];
-
-const featuredSections = [
-	{
-		title: "Developer Platform",
-		text: "The Cloudflare Developer Platform provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.",
-		image: {
-			light: SectionImageDeveloperPlatformLight,
-			dark: SectionImageDeveloperPlatformDark,
-		},
-		imagePosition: "before",
-		cards: [
-			// Currently unused.
-			// {
-			// 	title: "Create API Tokens",
-			// 	text: "If you are going to be using the Cloudflare API, you first need an API token to authenticate your requests.",
-			// 	cta: {
-			// 		title: "Create Tokens",
-			// 		href: "/fundamentals/api/get-started/create-token/",
-			// 	},
-			// },
-			// {
-			// 	title: "View Workers Examples",
-			// 	text: "Review fully functional sample scripts to get started with Workers.",
-			// 	cta: {
-			// 		title: "View Examples",
-			// 		href: "/workers/examples/",
-			// 	},
-			// },
-		],
-	},
-	{
-		title: "Zero Trust",
-		text: "Cloudflare Zero Trust replaces legacy security perimeters with our global network, making the Internet faster and safer for teams around the world.",
-		image: {
-			light: SectionImageZeroTrustLight,
-			dark: SectionImageZeroTrustDark,
-		},
-		imagePosition: "after",
-		cards: [
-			{
-				title: "Install the WARP Client",
-				text: "The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.",
-				cta: {
-					title: "Get started",
-					href: "/cloudflare-one/team-and-resources/devices/warp/",
-				},
-			},
-			{
-				title: "Set up a tunnel",
-				text: "Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.",
-				cta: {
-					title: "Set up a tunnel",
-					href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-				},
-			},
-		],
-	},
-];
-
-const recommendedSection = {
-	title: "Other docs you might also like",
-	cards: [
-		{
-			title: "Install an Origin CA certificate",
-			text: "Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth.",
-			cta: {
-				title: "Install Origin CA",
-				href: "/ssl/origin-configuration/origin-ca/",
-			},
-		},
-		{
-			title: "Change your nameservers",
-			text: "Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.",
-			cta: {
-				title: "Update nameservers",
-				href: "/dns/zone-setups/full-setup/setup/",
-			},
-		},
-		{
-			title: "SSL/TLS Encryption mode",
-			text: "Your domain's encryption mode controls how Cloudflare connects to your origin server and how SSL certificates at your origin will be validated.",
-			cta: {
-				title: "Set encryption mode",
-				href: "/ssl/origin-configuration/ssl-modes/",
-			},
-		},
-		{
-			title: "Allow traffic from specific countries only",
-			text: "Block requests based on a list of allowed countries by configuring a custom rule in the Web Application Firewall (WAF).",
-			cta: {
-				title: "Allow traffic from specific countries only",
-				href: "/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/",
-			},
-		},
-	],
-};
+const currentPath = Astro.url.pathname;
 ---
 
-<StarlightPage frontmatter={frontmatter}>
-	<FourCardGrid>
-		{
-			topCards.map((card) => (
-				<ListCard title={card.title}>
-					<ul>
-						{card.links.map((link) => (
-							<li>
-								<a
-									href={link.href}
-									class="hover:text-accent! dark:text-accent-high! text-black! dark:hover:text-black!"
-								>
-									{link.text}
-								</a>
-							</li>
-						))}
-					</ul>
-					<p>
-						<strong>
-							<a href={card.cta.href}>{card.cta.text}</a>
-						</strong>
-					</p>
-				</ListCard>
-			))
-		}
-	</FourCardGrid>
+<BaseLayout
+	title="Cloudflare Developer Docs"
+	description="Connect, protect, and build everywhere."
+	footer={false}
+>
+	<div class="flex h-full flex-col">
+		<Header showSidebar />
 
-	<div class="hidden md:block">
-		<hr />
-		<!-- Agent Setup -->
-		<section class="agent-hero">
-			<div class="agent-hero-illustration">
-				<Image src={AgentsIllustration} alt="AI agents illustration" />
-			</div>
-			<div class="agent-hero-content">
-				<h2 class="agent-hero-title">Build with your favorite AI agent</h2>
-				<PromptCopyBlock
-					text="Fetch https://developers.cloudflare.com/agent-setup/prompt.md"
-				/>
-				<p class="agent-hero-secondary">
-					Or <a href="/agent-setup/"
-						>read more about Cloudflare agent tools and setup guides &rarr;</a
+		<div
+			class="bg-background text-foreground flex w-full flex-col overflow-x-clip"
+		>
+			<div class="flex">
+				{
+					/* Full-height column carries the divider so it runs the entire
+				    page length; the inner <aside> stays sticky for the nav. */
+				}
+				<div
+					class="border-border hidden w-(--nb-sidebar-width) shrink-0 border-r lg:block"
+				>
+					<aside
+						data-nb-desktop-sidebar
+						class="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col overflow-y-auto"
 					>
-				</p>
-				<div class="agent-hero-logos">
-					<a
-						href="/agent-setup/claude-code/"
-						title="Claude Code"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/claude/light.svg"
-							alt="Claude Code"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/claude/dark.svg"
-							alt="Claude Code"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a href="/agent-setup/codex/" title="Codex" class="agent-hero-logo">
-						<img
-							src="/icons/agents/codex/light.svg"
-							alt="Codex"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/codex/dark.svg"
-							alt="Codex"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a href="/agent-setup/cursor/" title="Cursor" class="agent-hero-logo">
-						<img
-							src="/icons/agents/cursor/light.svg"
-							alt="Cursor"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/cursor/dark.svg"
-							alt="Cursor"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a
-						href="/agent-setup/opencode/"
-						title="OpenCode"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/opencode/light.svg"
-							alt="OpenCode"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/opencode/dark.svg"
-							alt="OpenCode"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a
-						href="/agent-setup/github-copilot/"
-						title="GitHub Copilot"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/copilot/light.svg"
-							alt="GitHub Copilot"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/copilot/dark.svg"
-							alt="GitHub Copilot"
-							class="agent-icon-dark"
-						/>
-					</a>
-					<a
-						href="/agent-setup/windsurf/"
-						title="Windsurf"
-						class="agent-hero-logo"
-					>
-						<img
-							src="/icons/agents/windsurf/light.svg"
-							alt="Windsurf"
-							class="agent-icon-light"
-						/>
-						<img
-							src="/icons/agents/windsurf/dark.svg"
-							alt="Windsurf"
-							class="agent-icon-dark"
-						/>
-					</a>
+						<nav class="flex-1 px-4 pt-5 pb-12" aria-label="Documentation">
+							<SidebarFilter placeholder="Filter sidebar" />
+							<Sidebar currentPath={currentPath} />
+						</nav>
+						<div
+							class="from-background pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t to-transparent"
+						>
+						</div>
+					</aside>
 				</div>
+
+				<main id="main-content" class="min-w-0 flex-1">
+					<div class="relative">
+						<FullPageLines />
+						<StructuralGrid />
+						<div
+							class="relative z-10 mx-auto max-w-[1280px] px-4 pt-16 min-[800px]:pt-[max(2rem,4vw)] lg:px-[max(2rem,4vw)]"
+						>
+							<Hero />
+							<BuildFromScratch />
+							<AgentSetup />
+							<ChangelogSection />
+							<SecureSection />
+							<AccelerateSection />
+							<CommunityGrid />
+						</div>
+					</div>
+				</main>
 			</div>
-		</section>
-		<hr />
 
-		{
-			featuredSections.map((section) => (
-				<>
-					<FeaturedContentSection
-						title={section.title}
-						text={section.text}
-						image={section.image}
-						imagePosition={section.imagePosition}
-						cards={section.cards}
-					/>
-					<hr />
-				</>
-			))
-		}
-
-		<TryItSection />
-		<hr />
-
-		<RecommendedContentSection
-			title={recommendedSection.title}
-			cards={recommendedSection.cards}
-		/>
-		<hr />
-		<FooterHeroBlock />
+			{
+				/* Footer spans the full page width (beneath the sidebar), rendered
+			    outside the sidebar+main row. Its own lines layer repeats
+			    FullPageLines offset by the sidebar width on desktop, so the vertical
+			    dashed rules stay vertically aligned with the content column above
+			    and read as one continuous run. Footer fill is transparent in light
+			    mode (globals.css) so the rules show through. */
+			}
+			<div class="relative">
+				<div
+					class="pointer-events-none absolute inset-0 z-0 hidden lg:left-(--nb-sidebar-width) lg:block"
+					aria-hidden="true"
+				>
+					<FullPageLines />
+				</div>
+				<Footer class="nb-home-footer" />
+			</div>
+		</div>
 	</div>
-</StarlightPage>
 
-<style>
-	.agent-hero {
-		display: flex;
-		align-items: center;
-		gap: 3rem;
-		margin: 2.75rem 0;
-	}
+	<dialog
+		data-mobile-sidebar
+		data-state="closed"
+		class="group fixed inset-0 m-0 h-full max-h-full w-full max-w-full border-0 bg-transparent p-0 data-[state=closing]:bg-black/40 data-[state=open]:bg-black/40"
+		aria-label="Site navigation"
+	>
+		<div
+			data-mobile-sidebar-panel
+			class="bg-card h-full w-full -translate-x-full overflow-y-auto shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
+		>
+			<div
+				class="border-border bg-card sticky top-0 z-[1] flex items-center justify-between border-b px-4 py-3"
+			>
+				<a href="/" class="group flex items-center gap-2 no-underline">
+					<img
+						src={logo.src}
+						alt=""
+						width="51"
+						height="23"
+						class="h-[20px] w-auto"
+					/>
+					<span
+						class="text-foreground group-hover:text-primary text-lg font-semibold tracking-tight transition-colors"
+					>
+						{config.title}
+					</span>
+				</a>
+				<button
+					data-close-sidebar
+					class="text-muted-foreground hover:bg-accent hover:text-foreground flex h-8 w-8 items-center justify-center rounded-md transition-colors"
+					aria-label="Close sidebar"
+				>
+					<Icon name="ph:x" class="h-5 w-5" />
+				</button>
+			</div>
+			<nav class="px-4 pt-5 pb-8" aria-label="Documentation">
+				<SidebarFilter placeholder="Filter..." />
+				<Sidebar currentPath={currentPath} />
+			</nav>
+		</div>
+	</dialog>
 
-	.agent-hero-content {
-		flex: 1 1 70%;
-		min-width: 0;
-	}
-
-	.agent-hero-content :global(.pcb-root) {
-		margin-bottom: 0;
-	}
-
-	.agent-hero-illustration {
-		flex: 1 1 30%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.agent-hero-illustration :global(img) {
-		width: 266px;
-		height: auto;
-	}
-
-	@media (max-width: 900px) {
-		.agent-hero {
-			flex-direction: column;
-			gap: 2rem;
+	<script>
+		// Instant jump to a hash target on load; in-page clicks stay smooth.
+		{
+			const hash = window.location.hash;
+			if (hash.length > 1) {
+				let target: Element | null = null;
+				let id = hash.slice(1);
+				try {
+					id = decodeURIComponent(id);
+				} catch {
+					// Keep raw id if it isn't valid percent-encoding.
+				}
+				target = document.getElementById(id);
+				if (!target) {
+					try {
+						target = document.querySelector(hash);
+					} catch {
+						target = null;
+					}
+				}
+				if (target) {
+					const html = document.documentElement;
+					const prev = html.style.scrollBehavior;
+					html.style.scrollBehavior = "auto";
+					requestAnimationFrame(() => {
+						target!.scrollIntoView();
+						requestAnimationFrame(() => {
+							html.style.scrollBehavior = prev;
+						});
+					});
+				}
+			}
 		}
-
-		.agent-hero-illustration {
-			display: none;
-		}
-	}
-
-	.agent-hero-logos {
-		display: flex;
-		align-items: center;
-
-		gap: 1.25rem;
-		margin: 2.25rem 0 0;
-		flex-wrap: wrap;
-	}
-
-	.agent-hero-logo {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 60px;
-		height: 60px;
-		line-height: 0;
-		border-radius: 12px;
-		overflow: hidden;
-		transition: transform 0.2s ease;
-		position: relative;
-		flex-shrink: 0;
-	}
-
-	.agent-hero-logo:hover {
-		transform: scale(1.08);
-	}
-
-	.agent-hero-logo img {
-		margin: 0;
-		width: 60px;
-		height: 60px;
-		max-width: 60px;
-		max-height: 60px;
-		object-fit: contain;
-		display: block;
-	}
-
-	.agent-hero-title {
-		font-size: 2rem !important;
-		font-weight: 700 !important;
-		letter-spacing: -0.02em;
-		line-height: 1.15 !important;
-		margin: 0 0 1rem !important;
-		max-width: 720px;
-		border: none !important;
-		padding: 0 !important;
-	}
-
-	.agent-hero-secondary {
-		margin: 1rem 0 0;
-	}
-
-	.agent-hero-secondary a {
-		color: var(--color-cl1-brand-orange) !important;
-		text-decoration: underline;
-		text-underline-offset: 2px;
-		text-decoration-color: color-mix(
-			in srgb,
-			var(--color-cl1-brand-orange) 40%,
-			transparent
-		);
-		transition: text-decoration-color 0.15s ease;
-	}
-
-	.agent-hero-secondary a:hover {
-		text-decoration-color: var(--color-cl1-brand-orange);
-	}
-
-	img.agent-icon-dark {
-		display: none !important;
-	}
-
-	:root[data-theme="dark"] img.agent-icon-light {
-		display: none !important;
-	}
-
-	:root[data-theme="dark"] img.agent-icon-dark {
-		display: block !important;
-	}
-
-	@media (max-width: 640px) {
-		.agent-hero-logos {
-			gap: 0.5rem;
-		}
-		.agent-hero-logo,
-		.agent-hero-logo img {
-			width: 40px;
-			height: 40px;
-			max-width: 40px;
-			max-height: 40px;
-		}
-		.agent-hero-title {
-			font-size: 1.5rem !important;
-		}
-	}
-</style>
+	</script>
+</BaseLayout>

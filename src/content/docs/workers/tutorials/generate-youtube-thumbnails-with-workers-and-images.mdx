@@ -374,10 +374,9 @@ Create a Worker to serve the image you uploaded to Images by running:
 />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "JavaScript",
 	}}
@@ -484,7 +483,7 @@ if (url.pathname === "/thumbnail") {
 }
 ```
 
-Next, add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/optimization/transformations/draw-overlays/) option to add overlay text using the deployed URL of your `text-to-image` Worker.
+Next, add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/optimization/draw-overlays/) option to add overlay text using the deployed URL of your `text-to-image` Worker.
 
 ```js null {3,4,5,6,7,8,9,10,11,12}
 fetch(imageURL, {
@@ -557,10 +556,6 @@ for (const title of url.searchParams.values()) {
 	}
 }
 ```
-
-This will always return the text you pass as a query string in the generated image. This example URL, [https://socialcard.cdnuptime.com/thumbnail?Getting%20Started%20With%20Cloudflare%20Images](https://socialcard.cdnuptime.com/thumbnail?Getting%20Started%20With%20Cloudflare%20Images), will generate the following image:
-
-![An example thumbnail.](~/assets/images/workers/tutorials/youtube-thumbnails/thumbnail2.png)
 
 By completing this tutorial, you have successfully made a custom YouTube thumbnail generator.
 

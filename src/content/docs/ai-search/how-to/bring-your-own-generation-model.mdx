@@ -1,29 +1,103 @@
 ---
-pcx_content_type: concept
+pcx_content_type: how-to
 title: Bring your own generation model
 description: Use AI Search for retrieval while generating responses with an external model like OpenAI.
+difficulty: Intermediate
 tags:
   - AI
 sidebar:
-  order: 5
+  order: 8
 products:
   - ai-search
 ---
 
-import { TypeScriptExample } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	LinkCard,
+} from "~/components";
 
-When using AI Search, AI Search uses a Workers AI model to generate the response. If you want to use a model outside of Workers AI, you can use AI Search for `search` while using a different model to generate responses.
-
-This example uses an OpenAI model to generate responses from AI Search results. It uses the [Workers binding](/ai-search/api/search/workers-binding/).
+By default, AI Search uses a Workers AI model to generate responses. To use a model outside of Workers AI, use AI Search for `search` and pass the retrieved content to a different model for generation. This guide uses an OpenAI model.
 
 :::note
 AI Search supports [bringing your own models natively](/ai-search/configuration/models/). You can attach provider keys through AI Gateway and select third-party models directly in your AI Search settings. The example below still works, but the recommended approach is to configure your external model through AI Gateway.
 :::
 
-<TypeScriptExample>
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You also need:
+
+- An AI Search instance that already contains indexed content. To create one and add content, refer to [Get started](/ai-search/get-started/).
+- An [OpenAI API key](https://platform.openai.com/api-keys).
+
+## 1. Create a Worker project
+
+Create a new Worker project using the `create-cloudflare` CLI (C3). [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+
+Create a new project named `byo-model` by running:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"byo-model"} />
+
+<Render
+	file="c3-post-run-steps-hello-world"
+	product="workers"
+	params={{
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+Go to your application directory:
+
+```sh
+cd byo-model
+```
+
+## 2. Install the AI SDK and OpenAI provider
+
+Install the [AI SDK](https://sdk.vercel.ai/) and its OpenAI provider:
+
+<PackageManagers pkg="ai @ai-sdk/openai" />
+
+## 3. Bind your Worker and set your API key
+
+Add the AI Search binding to your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+remote = true
+```
+
+</WranglerConfig>
+
+Store your OpenAI API key as a [secret](/workers/configuration/secrets/):
+
+```sh
+npx wrangler secret put OPENAI_API_KEY
+```
+
+For local development, add the key to a `.dev.vars` file in your project root instead:
+
+```txt title=".dev.vars"
+OPENAI_API_KEY="<YOUR_OPENAI_API_KEY>"
+```
+
+## 4. Add the code
+
+Update `src/index.ts`. This Worker searches your instance, formats the retrieved chunks, and passes them to OpenAI to generate an answer. Replace `my-instance` with the name of your instance.
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 
 export interface Env {
@@ -34,10 +108,9 @@ export interface Env {
 export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
-
 		const userQuery = url.searchParams.get("query") ?? "What is Cloudflare?";
 
-		// Search for documents in AI Search
+		// Search for documents in AI Search.
 		const searchResult = await env.AI_SEARCH.get("my-instance").search({
 			messages: [{ role: "user", content: userQuery }],
 		});
@@ -46,21 +119,20 @@ export default {
 			return Response.json({ text: `No data found for query "${userQuery}"` });
 		}
 
-		// Join all document chunks into a single string
+		// Join the retrieved chunks into a single string.
 		const chunks = searchResult.chunks
-			.map((chunk) => {
-				return `<file name="${chunk.item.key}">${chunk.text}</file>`;
-			})
+			.map((chunk) => `<file name="${chunk.item.key}">${chunk.text}</file>`)
 			.join("\n\n");
 
-		// Send the user query + matched documents to OpenAI for answer
+		// Send the query and retrieved content to OpenAI for the answer.
+		const openai = createOpenAI({ apiKey: env.OPENAI_API_KEY });
 		const generateResult = await generateText({
 			model: openai("gpt-4o-mini"),
 			messages: [
 				{
 					role: "system",
 					content:
-						"You are a helpful assistant and your task is to answer the user question using the provided files.",
+						"You are a helpful assistant. Answer the user question using the provided files.",
 				},
 				{ role: "user", content: chunks },
 				{ role: "user", content: userQuery },
@@ -73,3 +145,32 @@ export default {
 ```
 
 </TypeScriptExample>
+
+## 5. Run and deploy
+
+Start a local development server, then query it at `/?query=your+search+terms`:
+
+```sh
+npx wrangler dev
+```
+
+Log in with your Cloudflare account, then deploy your Worker to make it accessible on the Internet:
+
+```sh
+npx wrangler login
+npx wrangler deploy
+```
+
+## Next steps
+
+<LinkCard
+	title="Models"
+	href="/ai-search/configuration/models/"
+	description="Use third-party models natively through AI Gateway."
+/>
+
+<LinkCard
+	title="Search Workers binding"
+	href="/ai-search/api/search/workers-binding/"
+	description="Full reference for searching and chatting from a Worker."
+/>

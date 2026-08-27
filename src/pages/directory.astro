@@ -1,21 +1,30 @@
 ---
+/**
+ * /directory — filterable catalog of every documentation product folder.
+ *
+ * CF source: cloudflare-docs/src/pages/directory.astro (faithful port). The
+ * Starlight splash wrapper is swapped for Nimbus's BaseLayout + Header
+ * chrome; the data pipeline (directory collection → local icon lookup →
+ * grouped, sorted product list) is unchanged.
+ */
 import { getCollection, type CollectionEntry } from "astro:content";
-// @ts-expect-error virtual module
-import iconCollection from "virtual:astro-icon";
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import iconCollection from "virtual:nimbus/icons";
 import { getIconData, iconToSVG } from "@iconify/utils";
-import DirectoryCatalog from "~/components/DirectoryCatalog";
-import type { ProductData } from "~/components/DirectoryCatalog";
-import type { StarlightPageProps } from "@astrojs/starlight/props";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Header from "~/components/Header.astro";
+import Directory from "~/components/directory/Directory.astro";
+import type { ProductData } from "~/components/directory/grid";
 
-let products: CollectionEntry<"directory">[] = await getCollection(
+export const prerender = true;
+
+const products: CollectionEntry<"directory">[] = await getCollection(
 	"directory",
 	(entry: CollectionEntry<"directory">) => {
-		return entry.data.entry?.show ?? true;
+		return Boolean(entry.data.entry?.show ?? true);
 	},
 );
 
-let productData: ProductData[] = products
+const productData: ProductData[] = products
 	.map((product) => {
 		const iconData = getIconData(iconCollection.local, product.id);
 		let icon = undefined;
@@ -27,23 +36,22 @@ let productData: ProductData[] = products
 			...product,
 			icon,
 			groups: [
-				product.data.entry.group,
-				...(product.data.entry.additional_groups || []),
-			].filter((val) => Boolean(val)),
+				product.data.entry?.group,
+				...(product.data.entry?.additional_groups || []),
+			].filter((val): val is string => Boolean(val)),
 		};
 	})
 	.sort((a, b) => a.id.localeCompare(b.id));
-
-const props = {
-	frontmatter: {
-		title: "Docs directory",
-		description: "Explore the different areas of our documentation site.",
-		template: "splash",
-	},
-	hideBreadcrumbs: true,
-} as StarlightPageProps;
 ---
 
-<StarlightPage {...props}>
-	<DirectoryCatalog products={productData} client:load />
-</StarlightPage>
+<BaseLayout
+	title="Docs directory"
+	description="Explore the different areas of our documentation site."
+>
+	<div class="flex min-h-screen flex-col">
+		<Header showSidebar={false} />
+		<main id="main-content" class="flex-1">
+			<Directory products={productData} />
+		</main>
+	</div>
+</BaseLayout>

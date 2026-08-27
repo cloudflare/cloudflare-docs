@@ -1,0 +1,474 @@
+---
+title: Human-in-the-loop knowledge base updates
+pcx_content_type: tutorial
+sidebar:
+  order: 5
+  label: Human-in-the-loop updates
+description: Build an agent that searches a knowledge base and proposes updates to it, with a human approving and able to roll back each write.
+difficulty: Advanced
+products:
+  - ai-search
+---
+
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	LinkCard,
+} from "~/components";
+
+This tutorial builds an agent that searches a knowledge base and adds to it, with a human approving every write. Letting an agent modify your data is risky, so each save pauses for approval before it runs, and you can roll back a save that turned out wrong.
+
+## What you will build
+
+A Cloudflare Agent that searches an AI Search instance, proposes new documents to index, waits for you to approve each one, and can undo an approved save.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You do not need anything else. The agent provisions its own AI Search instance the first time it runs.
+
+## How it works
+
+The agent uses [Code Mode](/agents/tools/codemode/), a tool-use pattern where the model writes a small program that calls your tools instead of requesting each call separately. A **durable runtime** records every call the program makes, pauses before sensitive calls so a human can approve them, and can compensate applied calls by running a `revert`. That durable state lives in the Agent's Durable Object, so an approval can wait across requests and hibernation.
+
+You expose AI Search to the runtime through a **connector**: a plain class that turns AI Search operations into methods the model can call. This tutorial gives the model a read-only `search` method and a `saveDocument` method that requires approval.
+
+:::caution
+Code Mode is experimental and may introduce breaking changes. Use caution in production.
+:::
+
+## 1. Create a Worker project
+
+Create a new Worker project using the `create-cloudflare` CLI (C3). [C3](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) is a command-line tool designed to help you set up and deploy new applications to Cloudflare.
+
+Create a new project named `kb-agent` by running:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"kb-agent"} />
+
+<Render
+	file="c3-post-run-steps-hello-world"
+	product="workers"
+	params={{
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+Go to your application directory:
+
+```sh
+cd kb-agent
+```
+
+Install the dependencies. The `ai` and `zod` versions are pinned to the ranges the Agents SDK expects as peer dependencies:
+
+<PackageManagers pkg="@cloudflare/codemode @cloudflare/ai-chat agents ai@6 workers-ai-provider zod@4" />
+
+This tutorial uses the AI Search and Worker Loader bindings, which require Wrangler v4. If `create-cloudflare` set up your project with an earlier version, upgrade it:
+
+<PackageManagers pkg="wrangler@4" dev />
+
+## 2. Configure Wrangler
+
+Replace your [Wrangler configuration file](/workers/wrangler/configuration/) with the following. This adds the AI Search binding, a Workers AI binding for the model, a Worker Loader binding that runs the model's code in an isolated Worker, and the Durable Object that stores the agent's chat history and durable runtime state.
+
+<WranglerConfig>
+
+```toml
+name = "kb-agent"
+main = "src/server.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+remote = true
+
+[[worker_loaders]]
+binding = "LOADER"
+
+[[durable_objects.bindings]]
+name = "Chat"
+class_name = "Chat"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Chat"]
+```
+
+</WranglerConfig>
+
+AI Search has no local emulator, so the binding always talks to the remote service (`remote = true`). Because of this, you exercise the agent by deploying it rather than with `wrangler dev`. `AIChatAgent` persists messages to SQLite, so its class must be listed in `new_sqlite_classes`.
+
+## 3. Create the AI Search connector
+
+Create `src/ai-search-connector.ts`. The connector calls the AI Search binding directly, so requests stay in-process and no public endpoint is required.
+
+Give the model a read-only `search` method and a `saveDocument` method. Because `saveDocument` writes content, mark it `requiresApproval` and add a `revert` so the runtime can roll it back.
+
+<TypeScriptExample filename="src/ai-search-connector.ts">
+
+```ts
+import { CodemodeConnector, type ConnectorTools } from "@cloudflare/codemode";
+
+// The instance this connector reads from and writes to.
+const INSTANCE_ID = "knowledge-base";
+
+// A connector turns AI Search operations into methods the model can call from
+// its generated code. Each connector becomes one named object in the sandbox.
+export class AISearchConnector extends CodemodeConnector<Env> {
+	// The sandbox global. The model calls `aiSearch.search()` and
+	// `aiSearch.saveDocument()`.
+	override name() {
+		return "aiSearch";
+	}
+
+	// Shown to the model so it knows what this connector is for.
+	protected override instructions() {
+		return "Use this connector to search indexed content and save new documents.";
+	}
+
+	// Every method the model can call. `inputSchema` is JSON Schema; the runtime
+	// validates the model's arguments against it before calling `execute`.
+	protected override tools(): ConnectorTools {
+		return {
+			// Read-only, so it runs without approval.
+			search: {
+				description: "Search indexed content and return the matching chunks.",
+				inputSchema: {
+					type: "object",
+					properties: { query: { type: "string" } },
+					required: ["query"],
+				},
+				execute: async (input) => {
+					const { query } = input as { query: string };
+					return this.env.AI_SEARCH.get(INSTANCE_ID).search({
+						query,
+						ai_search_options: { retrieval: { max_num_results: 5 } },
+					});
+				},
+			},
+			// Writes content, so it is gated behind approval and made reversible.
+			saveDocument: {
+				description: "Save a new document to the knowledge base.",
+				inputSchema: {
+					type: "object",
+					properties: {
+						name: { type: "string" },
+						content: { type: "string" },
+					},
+					required: ["name", "content"],
+				},
+				// Pauses the run before this method executes so a human can approve it.
+				requiresApproval: true,
+				execute: async (input) => {
+					const { name, content } = input as { name: string; content: string };
+					// upload() queues the document for indexing and returns right away.
+					// The item becomes searchable once indexing finishes, a few seconds later.
+					const item = await this.env.AI_SEARCH.get(INSTANCE_ID).items.upload(
+						name,
+						content,
+					);
+					// This return value is passed to `revert` if the call is rolled back.
+					return { id: item.id, key: item.key, status: item.status };
+				},
+				// Compensating action for rollback: delete the document this call added.
+				revert: async (_input, result) => {
+					const { id } = result as { id: string };
+					await this.env.AI_SEARCH.get(INSTANCE_ID).items.delete(id);
+				},
+			},
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `name()` result (`aiSearch`) becomes the global the model's code calls, so the methods are available as `aiSearch.search()` and `aiSearch.saveDocument()`.
+
+## 4. Build the agent
+
+Create `src/server.ts`. The agent provisions an AI Search instance with [hybrid search](/ai-search/configuration/indexing/hybrid-search/) enabled the first time it runs, then creates the Code Mode runtime with the connector and exposes it to the model as a single `codemode` tool. The `@callable()` methods let your client list pending approvals and approve, reject, or roll back a write.
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import {
+	createCodemodeRuntime,
+	DynamicWorkerExecutor,
+	type CodemodeRuntimeHandle,
+	type PendingAction,
+} from "@cloudflare/codemode";
+import { callable, routeAgentRequest } from "agents";
+import { createWorkersAI } from "workers-ai-provider";
+import { convertToModelMessages, stepCountIs, streamText } from "ai";
+import { AISearchConnector } from "./ai-search-connector";
+
+// Code Mode stores its durable state (execution log, pending approvals) in a
+// facet exported from the Worker entry. The runtime requires this export.
+export { CodemodeRuntime } from "@cloudflare/codemode";
+
+const INSTANCE_ID = "knowledge-base";
+
+// Seed content, so the agent has something to find on the first query.
+const SEED_DOC = `# Getting started
+AI Search indexes your content so an agent can search it and add to it.`;
+
+export class Chat extends AIChatAgent<Env> {
+	// In-memory guard, so the one-time setup runs once per instance lifetime.
+	private ready = false;
+
+	// Create the AI Search instance with hybrid search enabled, then seed it.
+	// create() throws if the instance already exists, so the try/catch makes
+	// this safe to call on every message.
+	private async ensureInstance() {
+		if (this.ready) return;
+		try {
+			// index_method with both vector and keyword enables hybrid search.
+			await this.env.AI_SEARCH.create({
+				id: INSTANCE_ID,
+				index_method: { vector: true, keyword: true },
+			});
+			// Queue the seed document for indexing so the first search has content.
+			await this.env.AI_SEARCH.get(INSTANCE_ID).items.upload(
+				"getting-started.md",
+				SEED_DOC,
+			);
+		} catch (err) {
+			// create() throws if the instance already exists, which is expected on
+			// every run after the first. Log anything else so real failures surface.
+			console.error("ensureInstance:", err);
+		}
+		this.ready = true;
+	}
+
+	// Build the Code Mode runtime for this request. The handle is cheap to
+	// create; the durable state lives in the Durable Object, not the handle.
+	#runtime(): CodemodeRuntimeHandle {
+		return createCodemodeRuntime({
+			ctx: this.ctx,
+			// Runs the model's generated code in an isolated Worker.
+			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
+			connectors: [new AISearchConnector(this.ctx, this.env)],
+		});
+	}
+
+	// Runs on every chat message from the client.
+	async onChatMessage() {
+		await this.ensureInstance();
+
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/zai-org/glm-5.2"),
+			system:
+				"You help maintain a knowledge base. Use codemode to search existing " +
+				"content and to save new documents. Search before you answer.",
+			messages: await convertToModelMessages(this.messages),
+			// The model sees one `codemode` tool and writes code that calls the connector.
+			tools: { codemode: this.#runtime().tool() },
+			// Cap the agent's tool-use loop.
+			stopWhen: stepCountIs(10),
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+
+	// The methods below are called from your client to drive the approval flow.
+
+	// List the writes that are paused waiting for approval.
+	@callable()
+	async pendingApprovals(): Promise<PendingAction[]> {
+		return this.#runtime().pending();
+	}
+
+	// Approve a paused write. The runtime resumes the program and runs it.
+	@callable()
+	async approveExecution(executionId: string) {
+		return this.#runtime().approve({ executionId });
+	}
+
+	// Decline a paused write. The execution ends without saving.
+	@callable()
+	async rejectExecution(executionId: string, seq: number): Promise<boolean> {
+		return this.#runtime().reject({ executionId, seq });
+	}
+
+	// Undo an applied write by running the connector's revert.
+	@callable()
+	async rollbackExecution(executionId: string): Promise<void> {
+		await this.#runtime().rollback({ executionId });
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env)) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Generate types:
+
+```sh
+npx wrangler types
+```
+
+## 5. Deploy
+
+Because AI Search runs remotely, you deploy the Worker to run the agent.
+
+Log in with your Cloudflare account:
+
+```sh
+npx wrangler login
+```
+
+Deploy your Worker to make it accessible on the Internet:
+
+```sh
+npx wrangler deploy
+```
+
+Wrangler prints your Worker's URL, for example `https://kb-agent.<your-subdomain>.workers.dev`. You use it in the next step.
+
+## 6. Try the approval and rollback flow
+
+The model receives one `codemode` tool. When you ask it to find and save content, it writes a short program that calls the connector methods:
+
+```js
+// The model writes this program. It runs inside the Code Mode sandbox.
+async () => {
+	// The read-only search runs immediately.
+	const existing = await aiSearch.search({ query: "onboarding steps" });
+
+	// Only save when the knowledge base has no matching content yet.
+	if (existing.chunks.length === 0) {
+		// saveDocument requires approval, so this call pauses the program here.
+		await aiSearch.saveDocument({
+			name: "onboarding.md",
+			content: "# Onboarding\nStep 1: create an account.",
+		});
+	}
+
+	return existing.chunks.length;
+};
+```
+
+`aiSearch.search()` runs immediately. When the program reaches `aiSearch.saveDocument()`, the runtime records the call as pending and pauses the execution before the upload runs.
+
+Your client sends the chat message that starts the run, then drives the approval with the `@callable()` methods. The following script uses the [Agents SDK client](/agents/communication-channels/chat/client-sdk/) to do both. Save it as `client.mjs`, set `HOST` to your deployed Worker, and run it with `node client.mjs`:
+
+<TypeScriptExample filename="client.mjs">
+
+```js
+import { AgentClient } from "agents/client";
+
+// Your deployed Worker, without the protocol.
+const HOST = "kb-agent.<your-subdomain>.workers.dev";
+
+const client = new AgentClient({ agent: "Chat", name: "default", host: HOST });
+await client.ready;
+
+// 1. Ask the agent to find and save content. It writes a Code Mode program;
+//    the saveDocument call pauses for approval instead of running.
+client.send(
+	JSON.stringify({
+		type: "cf_agent_use_chat_request",
+		id: crypto.randomUUID(),
+		init: {
+			method: "POST",
+			body: JSON.stringify({
+				messages: [
+					{
+						id: crypto.randomUUID(),
+						role: "user",
+						parts: [
+							{
+								type: "text",
+								text: "Search for onboarding steps. If there is none, save a document named onboarding.md with a short onboarding guide.",
+							},
+						],
+					},
+				],
+			}),
+		},
+	}),
+);
+
+// Give the turn time to run and pause at saveDocument.
+await new Promise((r) => setTimeout(r, 20_000));
+
+// 2. List the writes waiting for approval.
+const pending = await client.call("pendingApprovals");
+console.log("Pending approvals:", pending);
+
+// 3. Approve the first one. The runtime replays the program: completed calls
+//    return their recorded results, and the approved saveDocument runs.
+if (pending.length > 0) {
+	await client.call("approveExecution", [pending[0].executionId]);
+	console.log("Approved", pending[0].executionId);
+
+	// To roll back later, delete the uploaded document:
+	// await client.call("rollbackExecution", [pending[0].executionId]);
+}
+
+client.close();
+```
+
+</TypeScriptExample>
+
+Each `PendingAction` from `pendingApprovals()` includes the `executionId`, a `seq` number, and the method and arguments, so you can show the pending document to the user before deciding. The approval methods behave as follows:
+
+- `approveExecution(executionId)` replays the program and runs the approved `saveDocument`. The document is queued for indexing and becomes searchable a few seconds later.
+- `rejectExecution(executionId, seq)` ends the execution without saving.
+- `rollbackExecution(executionId)` undoes an applied write by running the connector's `revert`, which deletes the uploaded document.
+
+## What you built
+
+Your agent can now:
+
+- Search the knowledge base with a read-only tool.
+- Propose new documents through a write tool that pauses for human approval.
+- Resume the same program after approval, without re-running completed work.
+- Roll back an approved save by deleting the indexed document.
+
+## Next steps
+
+<LinkCard
+	title="Create a durable Code Mode runtime"
+	href="/agents/tools/codemode/durable-runtime/"
+	description="The full runtime API: rejection, execution history, and reusable snippets."
+/>
+
+<LinkCard
+	title="AI Search as an agent tool"
+	href="/agents/tools/ai-search/"
+	description="Give a Cloudflare Agent retrieval with AI Search."
+/>
+
+<LinkCard
+	title="Hybrid search"
+	href="/ai-search/configuration/indexing/hybrid-search/"
+	description="Combine vector and keyword search with configurable fusion."
+/>
+
+<LinkCard
+	title="Items Workers binding"
+	href="/ai-search/api/items/workers-binding/"
+	description="Full reference for uploading, listing, and deleting documents."
+/>

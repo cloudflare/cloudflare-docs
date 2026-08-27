@@ -17,7 +17,9 @@ When using Cloudflare DNS, you have a few options for your DNS zone setup:
 * [Zone transfers](/dns/zone-setups/zone-transfers/): Use Cloudflare and another DNS provider together across your entire zone to increase availability and fault tolerance. DNS records will be transferred between providers using [AXFR](https://datatracker.ietf.org/doc/html/rfc5936) or [IXFR](https://datatracker.ietf.org/doc/html/rfc1995).
 * [Subdomain setup](/dns/zone-setups/subdomain-setup/): With your apex domain (`example.com`) on a CNAME setup (partial) or primary setup (full), independently manage the settings for a delegated subdomain (`blog.example.com`) within a separate zone and, potentially, a separate account.
 
-   <Render file="subdomain-setup-matrix" product="dns" params={{ linkForMore: true }} />
+   <Render file="subdomain-setup-matrix" product="dns" />
+
+   For details, refer to [setup](/dns/zone-setups/subdomain-setup/setup/).
 
 ---
 
@@ -67,6 +69,28 @@ If you are on an Enterprise plan, you can use [subdomain setup](/dns/zone-setups
 
 
 </Details>
+
+## Configure DNS-only zones via API
+
+You can configure zones to operate in DNS-only mode (no HTTP proxying) at the account level or per zone using the API.
+
+**Account-level default** (applies to zones created after the setting is applied):
+
+```bash
+curl --request PATCH \
+  https://api.cloudflare.com/client/v4/accounts/{account_id}/dns_settings \
+  --header "Content-Type: application/json" \
+  --data '{"zone_defaults":{"zone_mode":"dns_only"}}'
+```
+
+**Per-zone** (for existing zones):
+
+```bash
+curl --request PATCH \
+  https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings \
+  --header "Content-Type: application/json" \
+  --data '{"zone_mode":"dns_only"}'
+```
 
 :::note
 If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycast network, check out [DNS Firewall](/dns/dns-firewall/).

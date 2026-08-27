@@ -1,0 +1,52 @@
+---
+title: Share sandbox previews through Cloudflare Tunnel
+description: Expose Sandbox services on public preview URLs with sandbox.tunnels — zero-config quick tunnels on *.trycloudflare.com, plus named tunnels that bind a persistent custom hostname backed by a Cloudflare Tunnel.
+products:
+  - agents
+date: 2026-05-29
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+[Sandboxes](/sandbox/) can expose a service running inside the container on a public preview URL through the `sandbox.tunnels` namespace. The SDK uses `cloudflared` inside the sandbox so you can share a running service without configuring `exposePort()` or a custom domain.
+
+By default, `sandbox.tunnels.get(port)` creates a [quick tunnel](https://try.cloudflare.com/) on a zero-config `*.trycloudflare.com` URL — no Cloudflare account, DNS record, or custom domain required. This is perfect for quick development and for `.workers.dev` deployments.
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+await sandbox.startProcess("python -m http.server 8080");
+
+const tunnel = await sandbox.tunnels.get(8080);
+console.log(tunnel.url); // → https://random-words-here.trycloudflare.com
+```
+
+</TypeScriptExample>
+
+## Named tunnels
+
+For more control you can create a named tunnel through `sandbox.tunnels.get(port, { name })`. A named tunnel binds a hostname (`<name>.<your-zone>`) backed by a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and a CNAME record on your zone resulting in something like https://my-app-preview.example.com.
+
+Unlike quick tunnels, which generate a new random URL each time, a named tunnel produces a persistent URL that survives container restarts. This makes named tunnels suitable for production use cases where you want control over the tunnel and it's origin.
+
+<TypeScriptExample>
+
+```ts
+const tunnel = await sandbox.tunnels.get(8080, { name: "my-app-preview" });
+console.log(tunnel.url); // → https://my-app-preview.example.com
+```
+
+</TypeScriptExample>
+
+Calling `sandbox.destroy()` tears down the Cloudflare Tunnel and the associated DNS record alongside the container, so you do not leave dangling tunnels or records behind.
+
+## Upgrade
+
+To update to the latest version:
+
+<PackageManagers pkg="@cloudflare/sandbox@latest" />
+
+For full API details, refer to the [Sandbox tunnels reference](/sandbox/api/tunnels/).

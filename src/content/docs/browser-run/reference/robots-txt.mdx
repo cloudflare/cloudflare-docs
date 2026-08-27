@@ -10,13 +10,19 @@ products:
 
 This page provides general guidance on configuring `robots.txt` and sitemaps for websites you plan to access with Browser Run.
 
+:::note[robots.txt is advisory, not enforceable]
+The `robots.txt` standard is a voluntary protocol. Only well-behaved bots choose to follow it. Any client can send any User-Agent string, so `robots.txt` rules that target a specific User-Agent cannot prevent a spoofed or malicious client from accessing your site. To enforce access restrictions, use server-side controls such as a web application firewall (WAF), request header validation, or authentication.
+
+To verify that a request originated from Cloudflare Browser Run specifically, use the cryptographic [Web Bot Auth](/browser-run/reference/automatic-request-headers/#about-web-bot-auth) signatures or the [non-configurable headers](/browser-run/reference/automatic-request-headers/#non-configurable-headers) that Cloudflare attaches to every Browser Run request. You can also create [WAF rules](/browser-run/faq/#can-i-allowlist-browser-run-on-my-own-website) using the [bot detection IDs](/browser-run/reference/automatic-request-headers/#bot-detection) to allow or block Browser Run traffic.
+:::
+
 ## Identifying Browser Run requests
 
 Requests can be identified by the [automatic headers](/browser-run/reference/automatic-request-headers/) that Cloudflare attaches:
 
-- [User-Agent](/browser-run/reference/automatic-request-headers/#user-agent) — Each Browser Run method has a different default User-Agent, which you can use to write targeted `robots.txt` rules
-- `cf-brapi-request-id` — Unique identifier for Quick Actions requests
-- `Signature-agent` — Pointer to Cloudflare's bot verification keys
+- [User-Agent](/browser-run/reference/automatic-request-headers/#user-agent): Each Browser Run method has a different default User-Agent, which you can use to write targeted `robots.txt` rules
+- `cf-brapi-request-id`: Unique identifier for Quick Actions requests
+- `Signature-agent`: Pointer to Cloudflare's bot verification keys
 
 To allow or block Browser Run traffic using WAF rules instead of `robots.txt`, use the [bot detection IDs](/browser-run/reference/automatic-request-headers/#bot-detection) on the automatic request headers page.
 

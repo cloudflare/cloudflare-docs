@@ -1,0 +1,30 @@
+---
+title: Authenticated SMTP submission now available in beta
+description: Send transactional emails through Cloudflare Email Service from any SMTP-capable application or mail client using authenticated SMTP submission on smtp.mx.cloudflare.net.
+date: 2026-06-08
+---
+
+You can now send emails through **Cloudflare Email Service** using authenticated [SMTP submission](/email-service/api/send-emails/smtp/) on `smtp.mx.cloudflare.net:465`. SMTP joins the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) as a third way to send transactional email — useful for existing applications that already speak SMTP and language-native SMTP libraries (Nodemailer, `smtplib`, PHPMailer, JavaMail).
+
+| Setting  | Value                                                                             |
+| -------- | --------------------------------------------------------------------------------- |
+| Host     | `smtp.mx.cloudflare.net`                                                          |
+| Port     | `465` (implicit TLS)                                                              |
+| AUTH     | `PLAIN` or `LOGIN`                                                                |
+| Username | `api_token`                                                                       |
+| Password | A Cloudflare API token (account-owned or user-owned) with **Email Sending: Edit** |
+
+Submissions enter the same delivery pipeline as the REST API and Workers binding: identical [limits](/email-service/platform/limits/), automatic DKIM and ARC signing, and shared dashboard logs.
+
+Send your first email with a single command:
+
+```sh
+curl --ssl-reqd \
+  --url "smtps://smtp.mx.cloudflare.net:465" \
+  --user "api_token:<API_TOKEN>" \
+  --mail-from "welcome@yourdomain.com" \
+  --mail-rcpt "user@example.com" \
+  --upload-file mail.txt
+```
+
+Refer to the [SMTP reference](/email-service/api/send-emails/smtp/) for authentication details, response codes, and language-specific examples.

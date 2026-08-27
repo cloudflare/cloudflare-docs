@@ -92,6 +92,16 @@ To revoke access, unexpose the port:
 await sandbox.unexposePort(8080);
 ```
 
+### Quick tunnel URLs
+
+Quick tunnels (`sandbox.tunnels.get(port)`) return a `*.trycloudflare.com` URL with a random hostname assigned by Cloudflare — there is no separate access token. The hostname itself is the access control: anyone who knows the URL can reach the service. To revoke access, destroy the tunnel:
+
+```typescript
+await sandbox.tunnels.destroy(8080);
+```
+
+URLs do not survive a container restart, so a restart effectively rotates the hostname. As with preview URLs, add application-level authentication for any sensitive service. See the [Tunnels API](/sandbox/api/tunnels/) for details.
+
 ```python
 from flask import Flask, request, abort
 import os
@@ -111,7 +121,7 @@ def get_data():
 
 ## Secrets management
 
-Use environment variables, not hardcoded secrets:
+Use environment variables, not hardcoded secrets, for values the sandbox process must consume directly:
 
 ```typescript
 // Bad - hardcoded in file
@@ -119,13 +129,15 @@ await sandbox.writeFile('/workspace/config.js', `
   const API_KEY = 'sk_live_abc123';
 `);
 
-// Good - use environment variables
+// Good - use environment variables for values the sandbox process needs
 await sandbox.startProcess('node app.js', {
   env: {
     API_KEY: env.API_KEY,  // From Worker environment binding
   }
 });
 ```
+
+For external API credentials that the sandbox does not need to read directly, keep the credential in the Worker and inject it with an outbound handler.
 
 Clean up temporary sensitive data:
 
@@ -138,19 +150,19 @@ try {
 }
 ```
 
-## Proxying external API requests
+## Handle outbound traffic
 
-Passing credentials directly to a sandbox — via environment variables or files — means the sandbox process holds a live credential that any code running inside it can read. A Worker proxy removes that exposure by keeping credentials exclusively in the Worker and giving the sandbox a short-lived JWT instead.
+Passing external API credentials directly to a sandbox — via environment variables or files — means the sandbox process holds a live credential that any code running inside it can read. Outbound handlers remove that exposure by keeping credentials in the Worker and injecting them into outbound requests.
 
 The flow works as follows:
 
-```
-Sandbox (short-lived JWT) → Worker proxy (validates JWT, injects real credentials) → External API
+```txt
+Sandbox request → Outbound handler (injects real credentials) → External API
 ```
 
-The sandbox never sees the real credential. If the JWT is compromised, it expires after a short window and cannot be reused.
+The sandbox never sees the real credential. Rotate the secret in your Worker's environment and every request uses the updated value.
 
-This pattern is useful when accessing GitHub for private repository operations, AI services, or object storage where you want to keep credentials out of the container entirely. Refer to [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) for a complete implementation.
+This pattern is useful when accessing GitHub for private repository operations, AI services, or object storage where you want to keep credentials out of the container entirely. For implementation details, refer to [Handle outbound traffic](/sandbox/guides/outbound-traffic/).
 
 ## What the SDK protects against
 

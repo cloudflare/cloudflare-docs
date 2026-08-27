@@ -5,7 +5,7 @@ params:
   - validatingJwtURL
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { GlossaryTooltip, TabItem, Tabs, DashButton } from "~/components";
 
 Origin parameters determine how `cloudflared` sends requests to the origin server of your [published application](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
 
@@ -16,12 +16,14 @@ This section describes how to update origin parameters for a <GlossaryTooltip te
 <Tabs>
 <TabItem label="Dashboard">
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
-2. Choose a tunnel and select **Edit**.
-3. Select the **Published application routes** tab.
-4. Choose an application and select **Edit**.
-5. Under **Additional application settings**, modify one or more origin parameters.
-6. Select **Save**.
+1. In the Cloudflare dashboard, go to **Networking** > **Tunnels** and select your tunnel.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Go to the **Routes** tab.
+3. Select **Edit route** from the action menu on the published application you want to configure, or select **Add route** to create a new one.
+4. Expand **Additional application settings** and modify origin parameters under the **HTTP**, **TLS**, or **Connection** categories.
+5. Select **Save changes**.
 
 </TabItem>
 </Tabs>

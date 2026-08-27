@@ -1,0 +1,34 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+### `upscale`
+
+Controls the algorithm used when an image needs to be enlarged. This parameter works with any [`fit`](#fit) mode that upscales, such as [`contain`](#contain), [`cover`](#cover), and [`scale-up`](#scale-up). It has no effect when `fit=scale-down` or when the target dimensions are smaller than the source.
+
+Accepts the following values:
+
+- `interpolate` (default) — Uses bicubic interpolation, which may reduce image quality. This is the default behavior when `upscale` is not specified.
+- `generate` — Uses AI upscaling ([ESRGAN](https://github.com/xinntao/ESRGAN)) to produce sharper, more detailed results when enlarging images.
+
+When `upscale=generate` is specified, the AI model runs a single pass at the nearest supported scale (2x or 4x), then adjusts to the exact target dimensions. Scale factors beyond 4x are handled with AI upscaling to 4x, then bicubic interpolation for the remainder.
+
+:::note
+
+`upscale=generate` has higher latency than `upscale=interpolate` due to GPU inference. Results are cached following the same [caching rules](/images/optimization/features/#caching) as other optimizations.
+
+:::
+
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    upscale=generate
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {upscale: "generate"}}
+  ```
+  </TabItem>
+</Tabs>

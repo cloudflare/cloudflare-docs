@@ -34,7 +34,7 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 <TabItem label="API">
 
 1. To create records with the API, use the [API POST](/api/resources/dns/subresources/records/methods/create/) command.
-2. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the hostname to create a `regional_hostnames` with a specific region.
+2. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the hostname to create a `regional_hostnames` with a specific region.
 
 </TabItem> </Tabs>
 
@@ -43,6 +43,12 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 Take into consideration that only [Generic Global Tiered Cache](/cache/how-to/tiered-cache/#generic-global-tiered-cache) and [Custom Tiered Cache](/cache/how-to/tiered-cache/#custom-tiered-cache) respect Regional Services. [Smart Tiered Cache](/cache/how-to/tiered-cache/#smart-tiered-cache) is incompatible with Regional Services.
 
 :::
+
+### Egress to origin
+
+Regional Services controls where user traffic is decrypted and processed within Cloudflare's network. It does not by itself guarantee the geolocation of the egress IPs used by the Cloudflare CDN when connecting to your origin server. Egress IPs to your origin are site-local IPs from the in-region data center where the request was processed.
+
+If you need guaranteed egress IP geolocation — for example, to allowlist Cloudflare IPs on your origin from a specific country — use [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) in combination with Regional Services.
 
 ## Customer Metadata Boundary
 

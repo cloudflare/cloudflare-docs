@@ -1,0 +1,111 @@
+---
+title: AI Search
+description: Give agents retrieval capabilities with Cloudflare AI Search.
+pcx_content_type: concept
+sidebar:
+  order: 4
+products:
+  - agents
+---
+
+import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
+
+Agents can use [AI Search](/ai-search/) to retrieve relevant information from indexed content and use it to augment [calls to AI models](/agents/runtime/operations/using-ai-models/). AI Search manages the retrieval pipeline for you, including indexing, search, and optional chat completions over your content.
+
+Use AI Search when you want an agent to:
+
+- Search product docs, support content, user files, or internal knowledge bases.
+- Retrieve relevant chunks before calling a model.
+- Use managed indexing instead of building retrieval infrastructure yourself.
+- Query content from an R2 bucket, website, or uploaded files.
+
+## Basic pattern
+
+Bind AI Search to your Worker, then query an instance from an agent method.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+type Env = {
+	AI_SEARCH: AiSearchNamespace;
+};
+
+export class SearchAgent extends Agent<Env> {
+	@callable()
+	async searchKnowledge(query: string) {
+		const instance = this.env.AI_SEARCH.get("my-instance");
+
+		const results = await instance.search({
+			messages: [{ role: "user", content: query }],
+		});
+
+		return results;
+	}
+}
+```
+
+</TypeScriptExample>
+
+For answer generation, use `chatCompletions()` to retrieve relevant content and generate a response in one call.
+
+<TypeScriptExample>
+
+```ts
+const instance = this.env.AI_SEARCH.get("my-instance");
+
+const response = await instance.chatCompletions({
+	messages: [{ role: "user", content: "How do I deploy an Agent?" }],
+	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	ai_search_options: {
+		retrieval: {
+			max_num_results: 5,
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+## Configuration
+
+Use an `ai_search_namespaces` binding when the agent needs to access AI Search instances by name.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai_search_namespaces": [
+		{
+			"binding": "AI_SEARCH",
+			"namespace": "default",
+			"remote": true
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Use `remote: true` to query deployed AI Search instances during local development with `wrangler dev`.
+
+## Related resources
+
+<LinkCard
+	title="AI Search"
+	href="/ai-search/"
+	description="Create managed retrieval pipelines over websites, R2 buckets, and uploaded files."
+/>
+
+<LinkCard
+	title="Workers binding"
+	href="/ai-search/api/search/workers-binding/"
+	description="Query AI Search directly from Workers code."
+/>
+
+<LinkCard
+	title="Create an AI Search instance"
+	href="/ai-search/get-started/"
+	description="Create your first AI Search instance and run your first query."
+/>

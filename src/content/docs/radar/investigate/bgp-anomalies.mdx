@@ -186,10 +186,9 @@ First, create a new Workers app in a local directory:
 <PackageManagers type="create" pkg="cloudflare@latest" args={"hijack-alerts"} />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "JavaScript",
 	}}
@@ -432,8 +431,8 @@ async function send_email_alert(hijacker, prefixes, victims) {
 }
 ```
 
-[email-routing]: /email-routing/
-[email-workers-tutorial]: /email-routing/email-workers/send-email-workers/
+[email-routing]: /email-service/
+[email-workers-tutorial]: /email-service/api/send-emails/workers-api/
 [wrangler-send-email]: /workers/wrangler/configuration/#email-bindings
 
 ## Next steps

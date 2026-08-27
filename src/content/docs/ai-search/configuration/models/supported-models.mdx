@@ -16,7 +16,7 @@ If you would like to use a model that is not currently supported, reach out to u
 
 ## Production models
 
-Production models are the actively supported and recommended models that are stable, fully available.
+Production models are the actively supported and recommended models that are stable and fully available.
 
 ### Text generation
 
@@ -26,12 +26,8 @@ Production models are the actively supported and recommended models that are sta
 |                      | `anthropic/claude-sonnet-4`                   | 200,000                 |
 |                      | `anthropic/claude-opus-4`                     | 200,000                 |
 |                      | `anthropic/claude-3-5-haiku`                  | 200,000                 |
-| **Cerebras**         | `cerebras/qwen-3-235b-a22b-instruct`          | 64,000                  |
-|                      | `cerebras/qwen-3-235b-a22b-thinking`          | 65,000                  |
-|                      | `cerebras/llama-3.3-70b`                      | 65,000                  |
-|                      | `cerebras/llama-4-maverick-17b-128e-instruct` | 8,000                   |
-|                      | `cerebras/llama-4-scout-17b-16e-instruct`     | 8,000                   |
-|                      | `cerebras/gpt-oss-120b`                       | 64,000                  |
+| **Cerebras**         | `cerebras/gpt-oss-120b`                       | 131,072                 |
+|                      | `cerebras/gemma-4-31b`                        | 131,072                 |
 | **Google AI Studio** | `google-ai-studio/gemini-2.5-flash`           | 1,048,576               |
 |                      | `google-ai-studio/gemini-2.5-pro`             | 1,048,576               |
 | **Grok (x.ai)**      | `grok/grok-4`                                 | 256,000                 |
@@ -44,6 +40,12 @@ Production models are the actively supported and recommended models that are sta
 |                      | `@cf/meta/llama-3.1-8b-instruct-fast`         | 60,000                  |
 |                      | `@cf/meta/llama-3.1-8b-instruct-fp8`          | 32,000                  |
 |                      | `@cf/meta/llama-4-scout-17b-16e-instruct`     | 131,000                 |
+|                      | `@cf/deepseek-ai/deepseek-v4-flash-0731`      | 1,048,576               |
+|                      | `@cf/deepseek-ai/deepseek-v4-pro-0813`        | 1,048,576               |
+|                      | `@cf/openai/gpt-oss-120b`                     | 128,000                 |
+|                      | `@cf/openai/gpt-oss-20b`                      | 128,000                 |
+|                      | `@cf/qwen/qwen3.8-27b`                        | 262,144                 |
+|                      | `@cf/moonshotai/kimi-k2.7-code`               | 262,144                 |
 |                      | `@cf/zai-org/glm-4.7-flash`                   | 131,072                 |
 |                      | `@cf/qwen/qwen3-30b-a3b-fp8`                  | 32,000                  |
 
@@ -56,7 +58,7 @@ Production models are the actively supported and recommended models that are sta
 |                      | `openai/text-embedding-3-large`         | 1,536       | 8192         | cosine |
 | **Workers AI**       | `@cf/baai/bge-m3`                       | 1,024       | 512          | cosine |
 |                      | `@cf/baai/bge-large-en-v1.5`            | 1,024       | 512          | cosine |
-|                      | `@cf/qwen/qwen3-embedding-0.6b`         | 1,024       | 4,096        | cosine |
+|                      | `@cf/qwen/qwen3-embedding-0.6b`         | 1,024       | 8,192        | cosine |
 |                      | `@cf/google/embeddinggemma-300m`        | 768         | 512          | cosine |
 
 ### Reranking

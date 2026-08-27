@@ -8,47 +8,45 @@ products:
   - billing
 ---
 
+import { DashButton, Render, Steps } from "~/components";
+
 When attempting to remove a payment method, you may see one of the following error messages:
 
-* "You can't remove this payment method while it's linked to active subscriptions. Go to Billing to manage subscriptions."
-* "You can't remove a payment method while there are transactions in progress. Make sure all transactions are completed and all subscriptions are cancelled."
+- "You can't remove this payment method while it's linked to active subscriptions. Go to Billing to manage subscriptions."
+- "You can't remove a payment method while there are transactions in progress. Make sure all transactions are completed and all subscriptions are cancelled."
 
 ## Causes
-* You still have active paid subscriptions
-* You have cancelled your paid subscriptions, but a usage-based charge is still scheduled
-* You have an upcoming Registrar domain registration renewal within the next 24 hours
+
+- You still have active paid subscriptions.
+- You have canceled your paid subscriptions, but a usage-based charge is still scheduled.
+- You have an upcoming Registrar domain registration renewal within the next 24 hours.
 
 ## Solutions
 
 ### Check for active paid subscriptions
 
-You can only remove a payment method after all paid subscriptions are cancelled and outstanding charges are settled.
+You can only remove a payment method after all paid subscriptions are canceled and outstanding charges are settled.
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account > Billing**.
-3. Go to **Subscriptions**.
-4. Check **Service status** for any which are marked “Active”
-5. Click the “Cancel” button
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Manage Account** > **Billing**.
+
+   <DashButton url="/?to=/:account/billing" />
+
+3. Select **Subscriptions**.
+4. Check **Service status** for any subscriptions marked **Active**.
+5. Select **Cancel** for each active paid subscription.
+
+</Steps>
 
 Repeat this for all active paid subscriptions before attempting to remove the payment method.
 
 ### Check for usage-based products
 
-If you have cancelled all paid subscriptions, any usage-based products cancelled within the last 30 days may still generate charges. Your payment method must remain on file until those charges are processed. If you recently cancelled any of the following products, wait 30 days before removing your payment method:
+If you have canceled all paid subscriptions, any usage-based products canceled within the last 30 days may still generate charges. Your payment method must remain on file until those charges are processed. If you recently canceled any of the following products, wait 30 days before removing your payment method:
 
-* Images
-* Stream
-* Workers
-* Argo
-* Spectrum
-* R2
-* Cache Reserve
-* Load Balancing
-* Rate Limiting
-* Log Explorer
-* Zero Trust
-* Vectorize
-* Analytics
+<Render file="usage-based-products" product="billing" />
 
 After the next monthly invoice is generated, you can remove the payment method.
 
@@ -56,15 +54,23 @@ After the next monthly invoice is generated, you can remove the payment method.
 
 For Registrar domains scheduled for auto-renewal, we will attempt to renew approximately 30 days before your renewal date. In the 24 hours prior to that, we will automatically process a payment hold using your payment method. During this time you will be unable to remove your payment method.
 
-To check if any of your domains are in the process of renewal:
+To check if any of your domains are in the renewal process:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Domain Registration > Manage Domains**.
-3. Under the **Expires** column, look for any domains expiring within the next 31 days which have Auto-renew enabled.
+<Steps>
 
-If you have any domains with auto-renew enabled that are expiring in 31 days or less, you will need to wait for them to renew before you can remove your payment method. To understand more about this process, refer to [renew domains](/registrar/account-options/renew-domains/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Domain Registration** > **Manage Domains**.
+3. Under **Expires**, look for domains expiring within the next 31 days that have auto-renewal turned on.
 
-### If none of the above apply
+</Steps>
+
+If you have any domains with auto-renewal turned on that are expiring in 31 days or less, wait for them to renew before you remove your payment method. To understand more about this process, refer to [Renew domains](/registrar/account-options/renew-domains/).
+
+## Verify the fix
+
+After you clear active subscriptions, pending usage-based charges, and upcoming Registrar renewals, return to **Payment** > **Payment methods** and try to remove the payment method again.
+
+## If none of the above apply
 
 If none of the above apply and you still receive an error, [contact Cloudflare support](/support/contacting-cloudflare-support/).
 

@@ -51,10 +51,9 @@ Create a new Worker to create and deploy your API.
     <PackageManagers type="create" pkg="cloudflare@latest" args={"d1-http"} />
 
     <Render
-    	file="c3-post-run-steps"
+    	file="c3-post-run-steps-hello-world"
     	product="workers"
     	params={{
-    	category: "hello-world",
     	type: "Worker only",
     	lang: "TypeScript",
     	}}
@@ -286,7 +285,7 @@ Upon successful execution, a new table will be added to your database.
 
 :::note
 
-The table will be created in the local instance of the database. If you want to add this table to your production database set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
+The table will be created in the local instance of the database. If you want to add this table to your production database set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/local-development/#remote-bindings) for more information.
 
 :::
 

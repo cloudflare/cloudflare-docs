@@ -1,0 +1,27 @@
+---
+title: Use Cloudforce One threat intelligence in WAF rules
+description: New cf.intel.ip fields available in custom rules and rate limiting rules for threat intelligence matching.
+products:
+  - waf
+date: 2026-06-15
+---
+
+You can now match incoming requests against Cloudforce One threat intelligence in your WAF rules. A new detection looks up the client IP address of each request against the threat intelligence database. If the IP was involved in threat activity in the past seven days, Cloudflare populates `cf.intel.ip.*` fields that you can use in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
+
+The detection populates the following fields. Use the [`any()`](/ruleset-engine/rules-language/functions/#any) function with the `[*]` wildcard to match array values:
+
+- `cf.intel.ip.datasets` — the dataset that flagged the IP address (`ddos` or `waf`).
+- `cf.intel.ip.target_industries` — industries the IP address has targeted.
+- `cf.intel.ip.attacker_names` — known threat actors associated with the IP address.
+- `cf.intel.ip.attacker_countries` — source countries of the threat activity.
+- `cf.intel.ip.target_countries` — countries the IP address has targeted.
+
+For example, the following custom rule expression blocks requests from IP addresses associated with DDoS activity that have targeted France:
+
+```txt
+any(cf.intel.ip.target_countries[*] == "FR") and any(cf.intel.ip.datasets[*] == "ddos")
+```
+
+These fields work with the Cloudflare API and Terraform. Matches are logged in [Security Analytics](/waf/analytics/security-analytics/).
+
+The threat intelligence detection is available to customers with an active [Cloudforce One](/security-center/cloudforce-one/) subscription. For more information, refer to [Threat intelligence](/waf/detections/threat-intelligence/).

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-description: High availability in Zero Trust networking.
+description: High availability for Cloudflare Mesh nodes.
 title: High availability
 products:
   - mesh
@@ -16,6 +16,8 @@ head:
 import { DashButton, Tabs, TabItem, Render, Details } from "~/components";
 
 For production deployments, you can run multiple replicas of a Mesh node in active-passive mode. All replicas share the same node identity and advertise the same [routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/). If the active replica goes down, Cloudflare automatically promotes a standby replica.
+
+<Render file="mesh/masque-required" product="cloudflare-one" />
 
 ## When to use high availability
 
@@ -117,6 +119,23 @@ The new replica will be in standby mode until the active replica disconnects.
 
 ## View replicas
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Select an HA-enabled node. HA nodes display an **HA** badge in the overview table.
+3. The node detail page shows a tab for each replica. Each tab displays:
+   - **Active** or **Passive** badge
+   - Mesh IP (IPv4 and IPv6)
+   - Edge data center
+   - Origin IP
+   - Platform, version, and device name
+   - Connected since timestamp
+
+</TabItem> <TabItem label="API">
+
 To view all replicas and their HA status, query the connections API endpoint:
 
 ```sh
@@ -158,13 +177,49 @@ The response includes each replica with its `ha_status` (`active` or `passive`),
 }
 ```
 
+</TabItem> </Tabs>
+
+## Manual failover
+
+In addition to automatic failover when the active replica disconnects, you can manually promote a passive replica to active.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Select an HA-enabled node.
+3. Select the tab for the passive replica you want to promote.
+4. Select **Promote to active**.
+5. In the confirmation dialog, select **Promote to active** to confirm.
+
+Traffic reroutes to the promoted replica immediately. The previous active replica switches to passive standby.
+
+</TabItem> <TabItem label="API">
+
+To manually trigger failover, send a `PUT` request with the `client_id` of the replica you want to promote:
+
+```sh
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/warp_connector/{node_id}/failover" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "client_id": "e07272a6-21fc-11f1-8997-e28f01ba3991"
+  }'
+```
+
+Get the `client_id` from the [connections endpoint](#view-replicas). Use the `id` field of the replica you want to promote.
+
+</TabItem> </Tabs>
+
 ## Considerations
 
 ### Setup requirements
 
 - High availability is set at node creation time and cannot be changed afterward.
 - You must install the client on at least two hosts for failover to work. A single replica means no redundancy.
-- High availability requires the MASQUE transport protocol. WireGuard does not support HA. Mesh nodes use MASQUE by default.
+- High availability requires that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol), the default protocol for the Cloudflare One Client. It does not work if the device profile uses WireGuard instead.
 
 ### Network configuration
 

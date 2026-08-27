@@ -1,0 +1,133 @@
+---
+title: Connect your AI Search to an MCP client
+pcx_content_type: how-to
+sidebar:
+  order: 4
+description: Expose your indexed content as a search tool for any MCP client or agent using the built-in MCP endpoint.
+difficulty: Beginner
+products:
+  - ai-search
+---
+
+import { Render, DashButton, Steps, LinkCard } from "~/components";
+
+Every AI Search instance can expose a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) endpoint. The endpoint provides a `search` tool over your indexed content, so any MCP client or agent, such as an AI assistant or IDE, can search your knowledge base without any code.
+
+This guide creates an AI Search instance that indexes a documentation site, then exposes it as a search tool that any MCP client can call.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+To index a website, you also need a domain [onboarded to your Cloudflare account](/fundamentals/manage-domains/add-site/). Otherwise, you can upload your own files to [built-in storage](/ai-search/configuration/data-source/built-in-storage/).
+
+## 1. Create an AI Search instance
+
+If you already have an instance with indexed content, skip to [step 2](#2-enable-the-mcp-endpoint).
+
+Create an instance with the [Wrangler CLI](/ai-search/wrangler-commands/). This example indexes a documentation site, using the Cloudflare Developer Docs at `developers.cloudflare.com`, so an assistant can answer questions from it. Connect the site as a [website data source](/ai-search/configuration/data-source/website/) so AI Search crawls and indexes it automatically:
+
+```sh
+npx wrangler ai-search create docs-search --type web-crawler --source developers.cloudflare.com
+```
+
+Replace `developers.cloudflare.com` with a domain you have [onboarded to your Cloudflare account](/fundamentals/manage-domains/add-site/), since you can only crawl sites you own. To index content without crawling a site, run `npx wrangler ai-search create docs-search --type builtin` and upload files to [built-in storage](/ai-search/configuration/data-source/built-in-storage/) instead.
+
+Check indexing progress:
+
+```sh
+npx wrangler ai-search stats docs-search
+```
+
+Once indexing completes, your instance has content to expose over MCP.
+
+## 2. Enable the MCP endpoint
+
+Your instance's public endpoint serves the MCP endpoint.
+
+<Steps>
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+2. Select your `docs-search` instance.
+3. Go to **Settings** > **Public Endpoint**.
+4. Turn on **Enable Public Endpoint**, then turn on the **MCP** endpoint.
+5. Copy the endpoint host. Your MCP URL is that host followed by `/mcp`:
+
+   ```txt
+   https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/mcp
+   ```
+
+</Steps>
+
+## 3. Describe your search tool
+
+An MCP client reads a tool's description to decide when to call it. Under **Settings** > **Public Endpoint**, set the **Tool Description** to explain what your content covers and the questions it answers. For example:
+
+```txt
+Search the Cloudflare Developer Documentation for product concepts,
+configuration, and API references. Use this when users ask how to build
+or configure Cloudflare products.
+```
+
+A specific description helps agents call your search tool at the right time. Refer to [Public endpoint settings](/ai-search/configuration/retrieval/public-endpoint/) for the full configuration.
+
+## 4. Connect your MCP client
+
+Add the MCP URL to your client as a remote MCP server. Many clients use an `mcpServers` configuration like the following:
+
+```json
+{
+	"mcpServers": {
+		"ai-search": {
+			"url": "https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/mcp"
+		}
+	}
+}
+```
+
+The exact configuration depends on your client. Some clients require a transport field on the server entry, such as `"type": "http"` for a remote HTTP server, so refer to your MCP client's documentation for how to add a remote server. Once connected, the client can call the `search` tool to retrieve relevant content from your instance.
+
+To test the endpoint directly or build your own client, refer to [MCP](/ai-search/api/search/mcp/) for the request format.
+
+## Security considerations
+
+The public endpoint does not require authentication, so anyone with the URL can query your indexed content.
+
+To require authentication, add a [custom domain](/ai-search/configuration/retrieval/public-endpoint/custom-domains/) and protect it with [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/). MCP clients then authenticate with an Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) sent as request headers.
+
+If you keep the endpoint open:
+
+- Only index content that is safe to expose publicly.
+- Enable rate limiting under **Settings** > **Public Endpoint**.
+- Restrict allowed origins under **Authorized hosts**. This only affects browser clients.
+
+Refer to [Public endpoint settings](/ai-search/configuration/retrieval/public-endpoint/) for details.
+
+## Next steps
+
+<LinkCard
+	title="MCP endpoint reference"
+	href="/ai-search/api/search/mcp/"
+	description="The MCP endpoint tools and request format."
+/>
+
+<LinkCard
+	title="Public endpoint settings"
+	href="/ai-search/configuration/retrieval/public-endpoint/"
+	description="Rate limiting, CORS, and tool description."
+/>
+
+<LinkCard
+	title="Cloudflare Access"
+	href="/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/"
+	description="Require MCP clients to authenticate before they can search."
+/>
+
+<LinkCard
+	title="AI Search as an agent tool"
+	href="/agents/tools/ai-search/"
+	description="Query AI Search in code from a Cloudflare Agent."
+/>

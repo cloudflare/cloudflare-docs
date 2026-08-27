@@ -1,0 +1,35 @@
+---
+title: Type highlighting
+description: Components for styling type information for CLI/function parameters.
+styleGuide:
+  component: Type
+products:
+  - style-guide
+---
+
+## Type
+
+```mdx
+import { Type } from "~/components";
+
+<Type text="Promise<T | string | ArrayBuffer>" />
+```
+
+## MetaInfo
+
+```mdx
+import { MetaInfo } from "~/components";
+
+<MetaInfo text="(default: false) optional" />
+```
+
+## Combined example
+
+```mdx
+import { Type, MetaInfo } from "~/components";
+
+- `name` <Type text="string" />
+  - The name of your service.
+- `local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - If the service should run locally or not.
+```

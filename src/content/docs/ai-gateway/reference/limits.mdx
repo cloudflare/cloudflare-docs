@@ -24,6 +24,7 @@ The following limits apply to gateway configurations, logs, and related features
 | Gateways paid plan                                                    | 20 per account                      |
 | Gateway name length                                                   | 64 characters                       |
 | Log storage rate limit                                                | 500 logs per second per gateway     |
+| [Unified Billing](/ai-gateway/features/unified-billing/) request rate | 200 requests per 60 seconds per gateway <sup>4</sup> |
 | Logs stored [paid plan](/ai-gateway/reference/pricing/)               | 10 million per gateway <sup>1</sup> |
 | Logs stored [free plan](/ai-gateway/reference/pricing/)               | 100,000 per account <sup>2</sup>    |
 | [Log size stored](/ai-gateway/observability/logging/)                 | 10 MB per log <sup>3</sup>          |
@@ -40,6 +41,8 @@ for more details.
 <sup>2</sup> On the free plan, the log storage limit applies to total logs across all gateways in your account. Same auto-delete or stop-saving behavior as <sup>1</sup>.
 
 <sup>3</sup> Logs larger than 10 MB will not be stored.
+
+<sup>4</sup> This rate limit applies to requests that use Cloudflare-managed credentials through [Unified Billing](/ai-gateway/features/unified-billing/). When the limit is exceeded, AI Gateway returns a `429` error. This limit does not apply to requests that use your own provider keys through [bring your own keys (BYOK)](/ai-gateway/configuration/bring-your-own-keys/).
 
 ## DLP limits
 

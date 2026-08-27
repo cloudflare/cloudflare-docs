@@ -1,3 +1,15 @@
+/**
+ * Changelog data layer for the unified `/changelog/*` views and RSS feeds.
+ *
+ * CF source: cloudflare-docs/src/util/changelog.ts
+ *
+ * Adaptations for this app:
+ *   - getRSSItems renders each entry via `entryToString` and rewrites
+ *     root-relative links/images to absolute URLs with a small regex,
+ *     instead of upstream's unified/rehype pipeline (which relies on
+ *     custom plugins + extra deps not present here). The Markdown-body
+ *     RSS variant (`/changelog/rss/index.md.xml`) is not ported.
+ */
 import type { RSSFeedItem } from "@astrojs/rss";
 import {
 	getCollection,
@@ -5,20 +17,18 @@ import {
 	getEntry,
 	type CollectionEntry,
 } from "astro:content";
+import { config } from "virtual:nimbus/config";
 import { entryToString } from "~/util/container";
-
-import { unified, type PluggableList } from "unified";
-
-import rehypeParse from "rehype-parse";
-import rehypeStringify from "rehype-stringify";
-import rehypeBaseUrl from "~/plugins/rehype/base-url";
-import rehypeFilterElements from "~/plugins/rehype/filter-elements";
-import remarkGfm from "remark-gfm";
-import rehypeRemark from "rehype-remark";
-import remarkStringify from "remark-stringify";
 import { marked } from "marked";
 import { sub } from "date-fns";
 
+export const slugifyArea = (value: string) =>
+	value.replaceAll(" ", "-").toLowerCase();
+
+// Synthesize changelog entries from the `warp-releases` collection, attributed
+// to the `cloudflare-one-client` product. Ported from CF's
+// `getWARPReleases()`; logic verbatim (entries carry a precomputed
+// `rendered.html`, honoured by `render(entry)` downstream).
 async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 	const releases = await getCollection("warp-releases", (e) => {
 		if (e.id.startsWith("linux/beta/")) {
@@ -144,8 +154,9 @@ export async function getChangelogs({
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
-// Pre-computed set of all product IDs that have at least one visible changelog
-// entry. Used by Header to scope the filter dropdown consistently across all pages.
+// Pre-computed set of all product IDs that have at least one visible
+// changelog entry. Used by Header to scope the filter dropdown consistently
+// across all pages.
 export const changelogProductIds: string[] = [
 	...new Set(
 		(await getChangelogs({ filter: (e) => !e.data.hidden })).flatMap((e) =>
@@ -154,28 +165,26 @@ export const changelogProductIds: string[] = [
 	),
 ];
 
+const SITE_ORIGIN = new URL(config.site).origin;
+
+// Rewrite root-relative URLs (href="/..", src="/..") to absolute so feed
+// readers resolve them. Leaves protocol-relative (`//`) and absolute URLs
+// untouched.
+function absolutizeUrls(html: string): string {
+	return html.replace(
+		/\b(href|src)="\/(?!\/)/g,
+		(_match, attr) => `${attr}="${SITE_ORIGIN}/`,
+	);
+}
+
 type GetRSSItemsOptions = {
-	/**
-	 * An array of changelog entries from the `getChangelogs({})` function.
-	 * @see {@link getChangelogs}
-	 */
 	notes: Array<CollectionEntry<"changelog">>;
-	/**
-	 * `locals`, either from `Astro.locals` in custom pages or
-	 * `context.locals` in endpoints.
-	 * @see {@link https://docs.astro.build/en/reference/api-reference/#locals}
-	 */
 	locals: App.Locals;
-	/**
-	 * Returns Markdown in the `<description>` field instead of HTML.
-	 */
-	markdown?: boolean;
 };
 
 export async function getRSSItems({
 	notes,
 	locals,
-	markdown,
 }: GetRSSItemsOptions): Promise<Array<RSSFeedItem>> {
 	return await Promise.all(
 		notes.map(async (note) => {
@@ -184,34 +193,13 @@ export async function getRSSItems({
 			const productEntries = await getEntries(products);
 			const productTitles = productEntries.map((p) => p.data.name as string);
 
-			const html = await entryToString(note, locals);
-
-			const plugins: PluggableList = [
-				rehypeParse,
-				rehypeBaseUrl,
-				rehypeFilterElements,
-			];
-
-			if (markdown) {
-				plugins.push(remarkGfm, rehypeRemark, remarkStringify);
-			} else {
-				plugins.push(rehypeStringify);
-			}
-
-			const file = await unified()
-				.data("settings", {
-					fragment: true,
-				})
-				.use(plugins)
-				.process(html);
-
-			const content = String(file).trim();
+			const html = absolutizeUrls((await entryToString(note, locals)) ?? "");
 
 			const itemTitle = `${productTitles.join(", ")} - ${title}`;
 
 			return {
 				title: itemTitle,
-				description: content,
+				description: html,
 				pubDate: date,
 				categories: productTitles,
 				link: `/changelog/post/${note.id}/`,

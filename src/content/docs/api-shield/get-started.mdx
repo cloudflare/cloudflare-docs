@@ -9,13 +9,9 @@ sidebar:
   label: Get started
 ---
 
-import { GlossaryTooltip, Render, Steps } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 API Shield protects your APIs by discovering endpoints, validating request schemas, and detecting abuse patterns. This guide walks through the initial setup from configuring session identifiers to enabling advanced protections.
-
-:::note
-Enabling API Shield features will have no impact on your traffic until you choose to move a setting from `log` to `block` mode.
-:::
 
 ## Session identifiers
 
@@ -27,17 +23,13 @@ Enabling API Shield features will have no impact on your traffic until you choos
 
 <Render file="set-up-session-identifiers" product="api-shield" />
 
-## Upload a schema using Schema validation (optional)
+## Create a Schema Profile
 
-Schema validation protects your APIs by checking incoming requests against your <GlossaryTooltip term="API schema">API schema</GlossaryTooltip>. Depending on your configured action, requests that do not match the schema are logged or blocked.
+[Application Profiles](/waf/detections/application-profiles/) provides one Schema Profile with two sources. Schema Learning derives a profile from traffic, while Schema Validation uses an uploaded <GlossaryTooltip term="API schema">OpenAPI schema</GlossaryTooltip>.
 
-When you upload a schema via the Cloudflare dashboard, its endpoints are automatically added to Endpoint Management. If you already have an OpenAPI specification, upload it to [Schema validation](/api-shield/security/schema-validation/).
+Both sources provide an **always-on detection** after their profile becomes available. Mitigation requires a separate WAF Custom Rule.
 
-:::note
-It is recommended to start with Schema validation rules set to `log` to review logged requests in [Security Events](/waf/analytics/security-events/). When you are confident that only the correct requests are logged, you should switch the rule to `block`.
-:::
-
-If you do not have a schema to upload, continue reading this guide to learn how to generate a schema with API Shield.
+If you maintain an OpenAPI schema, follow the [Schema Validation upload procedure](/api-shield/security/schema-validation/#upload-a-schema). API Shield remains the reference for OpenAPI compatibility, schema governance, and automation.
 
 ## Enable the Sensitive Data Detection ruleset and accompanying rules
 
@@ -49,29 +41,15 @@ Sensitive Data Detection requires a separate subscription. Contact your account 
 
 You can identify endpoints returning sensitive data by selecting the icon next to the path in a row. Expand the endpoint to see details on which rules were triggered and view more information by exploring events in **Firewall Events**.
 
-## Add your discovered endpoints to Endpoint Management
+## Manage operations
 
-Cloudflare automatically discovers API endpoints by inspecting your traffic. Adding these discovered endpoints to [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/) unlocks additional security and monitoring features.
+Web Assets continuously discovers operations from traffic. An operation represents an endpoint by HTTP method, hostname pattern, and path pattern.
 
-Endpoint Management tracks request counts, error rates, and latency for each saved endpoint.
+You can also add operations manually under **Web Assets** > **Operations**. Discovery and manual creation only add inventory entries.
 
-:::note
-Schema validation, schema learning, JWT validation, Sequence Analytics, sequence mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management.
-:::
+To start Schema Learning, select **Learn profile** from the operation overflow menu. Review the learned schema through **View details** > **Security overview**.
 
-You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-from-api-discovery), [Schema validation](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-manually) by method, path, and host.
-
-You can view your list of saved endpoints in the **Endpoint Management** page. Cloudflare will aggregate [performance data](/api-shield/management-and-monitoring/endpoint-management/#endpoint-analysis) and security data on your endpoint once it is saved.
-
-### Allow the system to learn your traffic patterns
-
-After you add an endpoint, Cloudflare begins learning schema parameters from your API traffic. Endpoints must be saved for at least 24 hours before schema learning begins. Schema learning is a continuous process that inspects the most recent 72 hours of traffic. Endpoints with higher traffic volumes produce more accurate schemas.
-
-Cloudflare also uses your configured session identifiers to generate rate limit recommendations for each endpoint.
-
-Allow at least 24 hours after adding endpoints before proceeding to the schema and rate limit steps below.
-
-While the system learns your traffic patterns, you can continue with [additional configurations](/api-shield/get-started/#additional-configuration) such as JWT validation or mTLS.
+For the complete workflow and traffic thresholds, refer to [Get started with Application Profiles](/waf/detections/application-profiles/get-started/).
 
 ## Add rate limits to your most sensitive endpoints
 
@@ -81,19 +59,13 @@ API Shield generates rate limit recommendations for each endpoint based on your 
 
 Per-session rate limits track traffic from individual visitors during their session to a specific endpoint. This reduces false positives from broadly scoped rules while still limiting abusive traffic.
 
-## Import a learned schema to Schema validation
-
-Cloudflare learns schema parameters by inspecting request traffic for all endpoints saved to Endpoint Management. You can export the learned schema as an OpenAPI v3.0.0 specification by hostname.
-
-Import the learned schema into Schema validation to protect endpoints that Cloudflare discovered through traffic inspection — including endpoints you may not have had a schema for previously.
-
-You can import the learned schema of an entire hostname using the [Cloudflare dashboard](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname). Alternatively, you can [apply learned schemas to individual endpoints](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-a-single-endpoint). Before applying a learned schema, export and review it to verify the schema accurately represents your expected traffic patterns.
-
-## Export a learned schema from Endpoint Management
+## Export a learned schema
 
 Learned schemas include the hostname, all endpoints by host, method, and path, and detected path variables (for example, `/users/{id}`). They can also include detected query parameters and their format. You can optionally include rate limit threshold recommendations.
 
 You can export your learned schemas in the [Cloudflare dashboard](/api-shield/management-and-monitoring/endpoint-management/schema-learning/#export-a-schema) or via the [API](/api/resources/api_gateway/subresources/schemas/methods/list/).
+
+Exporting creates an OpenAPI `v3.0.0` file. To use a fixed profile, upload that file through [Schema Validation](/api-shield/security/schema-validation/).
 
 ## View and configure Sequence Analytics
 

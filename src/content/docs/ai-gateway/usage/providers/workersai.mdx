@@ -10,18 +10,20 @@ products:
   - ai-gateway
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { TypeScriptExample } from "~/components";
 
-Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/).
+Use AI Gateway as a unified control layer for [Workers AI](/workers-ai/) requests, with analytics, logging, caching, security, and prepaid billing. To use prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/), set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**. Requests to frontier models billed with prepaid credits receive [higher rate limits](/workers-ai/platform/limits/#frontier-models).
 
 ## REST API
 
 Use the [REST API](/ai-gateway/usage/rest-api/) to call Workers AI models. Workers AI models use the `@cf/` prefix in the model name and require the `cf-aig-gateway-id` header to specify which gateway to route through.
 
 ```bash title="Request to Workers AI Kimi model"
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "cf-aig-gateway-id: my-gateway" \
+  --header "cf-aig-gateway-id: default" \
   --header "Content-Type: application/json" \
   --data '{
     "model": "@cf/moonshotai/kimi-k2.6",

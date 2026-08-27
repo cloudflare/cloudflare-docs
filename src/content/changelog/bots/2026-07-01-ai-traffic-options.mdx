@@ -1,0 +1,16 @@
+---
+title: New options to manage AI traffic
+description: All customers can now manage AI crawlers by behavior — Search, Agent, and Training — instead of a single Block AI bots toggle.
+products:
+  - bots
+date: 2026-07-01
+publish_future_dated_entry: true
+---
+
+Not all AI traffic is the same. Now, all customers — including those on the Free plan — can manage AI crawlers based on what they actually do on your site. Cloudflare groups AI traffic into three behaviors you can control independently: [Search, Agent, and Training](/bots/concepts/bot/#ai-bots). This lets you keep the automated traffic that sends readers and revenue back to you, while blocking the traffic that only takes from your content.
+
+Each behavior maps to a real use case. **Search** covers crawlers that index your content so they can answer questions about it later, where you should expect referral traffic or other equitable compensation in return. **Agent** covers automated activity acting in real time on a person's behalf, such as chat fetch bots and browser-use agents. **Training** covers crawlers that take your content to train or fine-tune a model. For each preset you can choose to block on all pages, block only on pages that display ads, or choose not to block.
+
+![The Configure AI bot traffic policies screen, where Search, Agent, and Training can each be set to allow, block, or block only on pages with ads](~/assets/images/changelog/bots/ai-bot-traffic-policies.png)
+
+Starting **September 15, 2026**, new domains onboarding to Cloudflare receive updated defaults: Bots classified as Training or as Agent are blocked on pages that display ads, while **Search** remains allowed. On that date, multi-purpose crawlers that combine Search and Training will be affected by the new defaults to block Training. All customers can [opt out of the new defaults](https://dash.cloudflare.com/?to=/:account/:zone/security/settings) at any time before September 15.
