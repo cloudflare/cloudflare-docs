@@ -144,6 +144,12 @@ const authorName = model.authorName;
 const requiresWorkersPaid =
 	model.properties.require_workers_paid === true ||
 	model.properties.require_workers_paid === "true";
+const reasoningEffortGuidance = new Map<string, string>([
+	["@cf/zai-org/glm-5.2", "glm-5.2"],
+	["@cf/google/gemma-4-26b-a4b-it", "gemma-4"],
+	["@cf/deepseek-ai/deepseek-v4-flash-0731", "deepseek-v4-official"],
+	["@cf/deepseek-ai/deepseek-v4-pro-0813", "deepseek-v4-official"],
+]).get(model.name);
 
 // `hasSchema`: input must have at least one key.
 const hasSchema = Object.keys(model.schema.input).length > 0;
@@ -214,6 +220,11 @@ const pageTitle = `${displayName} (${authorName})`;
 const headTitle = `${pageTitle} · Cloudflare AI docs`;
 
 const headings: MarkdownHeading[] = [
+	reasoningEffortGuidance && {
+		depth: 2,
+		slug: "reasoning-effort",
+		text: "Reasoning effort",
+	},
 	hasPlayground && { depth: 2, slug: "playground", text: "Playground" },
 	hasCodeExamples && { depth: 2, slug: "usage", text: "Usage" },
 	hasRemainingExamples && { depth: 2, slug: "examples", text: "Examples" },
@@ -342,6 +353,106 @@ const headings: MarkdownHeading[] = [
 	}
 
 	<ModelFeatures model={model} />
+
+	{
+		reasoningEffortGuidance === "glm-5.2" && (
+			<Fragment>
+				<AnchorHeading
+					depth={2}
+					title="Reasoning effort"
+					slug="reasoning-effort"
+				/>
+				<p>
+					GLM-5.2 supports <code>high</code> and <code>max</code> reasoning
+					effort, or you can turn reasoning off. For compatibility with Chat
+					Completions and other protocols in the ecosystem, other reasoning
+					efforts will be mapped to these modes:
+				</p>
+				<ul>
+					<li>
+						<code>none</code> and <code>minimal</code> turn reasoning off.
+					</li>
+					<li>
+						<code>low</code> and <code>medium</code> map to <code>high</code>.
+					</li>
+					<li>
+						<code>xhigh</code> maps to <code>max</code>.
+					</li>
+				</ul>
+				<p>
+					This is the same mapping used by Z.ai's API, and{" "}
+					<a href="https://docs.z.ai/api-reference/llm/chat-completion#body-one-of-0-reasoning-effort">
+						in their <code>reasoning_effort</code> documentation
+					</a>
+					.
+				</p>
+			</Fragment>
+		)
+	}
+
+	{
+		reasoningEffortGuidance === "deepseek-v4-official" && (
+			<Fragment>
+				<AnchorHeading
+					depth={2}
+					title="Reasoning effort"
+					slug="reasoning-effort"
+				/>
+				<p>
+					DeepSeek V4 Flash 0731 and Pro 0813 support <code>low</code>,{" "}
+					<code>high</code>, and <code>max</code> reasoning effort. You can also
+					turn reasoning off. Reasoning is off by default.
+				</p>
+				<p>Other reasoning efforts map to these modes:</p>
+				<ul>
+					<li>
+						<code>none</code> and <code>minimal</code> turn reasoning off.
+					</li>
+					<li>
+						<code>medium</code> and <code>auto</code> map to <code>high</code>.
+					</li>
+					<li>
+						<code>xhigh</code> maps to <code>max</code>.
+					</li>
+				</ul>
+				<p>
+					A request without reasoning controls remains off. If a prior assistant
+					message contains non-empty <code>reasoning_content</code>, the model
+					continues reasoning at <code>high</code> to preserve that context.
+				</p>
+			</Fragment>
+		)
+	}
+
+	{
+		reasoningEffortGuidance === "gemma-4" && (
+			<Fragment>
+				<AnchorHeading
+					depth={2}
+					title="Reasoning effort"
+					slug="reasoning-effort"
+				/>
+				<p>
+					Gemma 4 supports turning reasoning on or off. It does not support
+					different reasoning intensity levels. Reasoning is off by default.
+				</p>
+				<ul>
+					<li>
+						<code>none</code> and <code>minimal</code> turn reasoning off.
+					</li>
+					<li>
+						<code>low</code>, <code>medium</code>, <code>high</code>,{" "}
+						<code>xhigh</code>, <code>max</code>, and <code>auto</code> turn
+						reasoning on.
+					</li>
+				</ul>
+				<p>
+					These values provide API compatibility. They do not change the amount
+					of reasoning Gemma 4 performs.
+				</p>
+			</Fragment>
+		)
+	}
 
 	{
 		/* Defensive dead branch (model not in slice): nova-3 transport pricing. */
