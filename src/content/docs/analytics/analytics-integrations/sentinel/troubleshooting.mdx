@@ -129,6 +129,10 @@ different types.
 
 **Verify:** Send a fresh Logpush batch and query `CloudflareV2_CL` for the affected fields. Values should now be populated and no longer `null`.
 
+:::note[Known unsupported fields]
+The `JSDetectionPassed` and `VerifiedBotCategory` fields are not currently ingested by the Cloudflare CCF connector, regardless of DCR or table configuration. Support for these fields requires changes to the connector implementation. This page will be updated when support is available.
+:::
+
 ## The Cloudflare CCF solution workbook does not populate
 
 The Cloudflare workbook shipped with the CCF solution loads but shows no data, or its queries fail with an error indicating that the referenced table or connector does not exist.
