@@ -18,7 +18,7 @@ Cloudflare has integrations with Microsoft Sentinel to make analyzing your Cloud
 **[Sentinel Function Based Connector](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_sentinel?tab=Overview)**: The Cloudflare connector for Microsoft Sentinel uses [Azure Functions](https://azure.microsoft.com/en-us/products/functions) to process security logs from Cloudflare's Logpush service and ingest them directly into the SIEM platform.
 
 :::caution[Legacy connector deprecation — action required by 2026-09-14]
-Microsoft is deprecating the Azure Monitor HTTP Data Collector API on 2026-09-14. As a result, Cloudflare will no longer maintain the Azure Functions-based Microsoft Sentinel connector after that date. Cloudflare Enterprise customers using the Function-based connector must migrate to the CCF connector documented below by 2026-09-14. Refer to the [deprecation changelog entry](/changelog/2026-08-26-sentinel-functions-connector-deprecation/) for details.
+Microsoft is deprecating the Azure Monitor HTTP Data Collector API on 2026-09-14. As a result, Cloudflare will no longer maintain the Azure Functions-based Microsoft Sentinel connector after that date. Cloudflare Enterprise customers using the Function-based connector must migrate to the CCF connector documented in this guide by 2026-09-14. Refer to the [deprecation changelog entry](/changelog/2026-08-26-sentinel-functions-connector-deprecation/) for details.
 :::
 
 This guide provides clear, step-by-step instructions for integrating Cloudflare logs with the CCF connector for Microsoft Sentinel using Azure Blob Storage. By following these steps, you will be able to securely collect, store, and analyze your Cloudflare logs within Microsoft Sentinel, enhancing your organization's security monitoring and incident response capabilities.
@@ -42,7 +42,7 @@ The CCF connector authenticates to Azure using a service principal that is manag
 - **Microsoft Sentinel Contributor** (or `Contributor` / `Owner`) on the Microsoft Sentinel workspace.
 - **Owner** or **EventGrid Contributor** on the storage account, so that the deployment can create the Event Grid system topic and subscription.
 
-For reference, the connector's service principal receives the following roles on the storage account at deployment time:
+For reference, the Cloudflare CCF connector service principal receives the following roles on the storage account at deployment time:
 
 - `Storage Blob Data Reader` on the storage account, to read log files from the Blob container.
 - `Storage Queue Data Contributor` on the storage account, to read and delete pointer messages from the Storage Queue.
@@ -106,7 +106,7 @@ For complete details, refer to the [Cloudflare Logpush to Azure documentation](/
 
 On the connector page, fill in the following fields:
 
-- **Service Principal ID**: this field is prepopulated with the object ID of the Microsoft-managed service principal used by the connector. If it is empty, ensure that admin consent has been granted for the Microsoft Sentinel application in your Entra ID tenant, then reload the page. Refer to Microsoft's [admin consent workflow](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-admin-consent-workflow) for details.
+- **Service Principal ID**: this field is prepopulated with the object ID of the Cloudflare CCF connector service principal in your tenant. If it is empty, ensure that admin consent has been granted for the Cloudflare CCF connector application in your Microsoft Entra tenant, then reload the page. Refer to Microsoft's [admin consent workflow](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-admin-consent-workflow) for details.
 - **Blob Container URL**: in the Azure portal, open the storage account that receives Cloudflare logs. Under **Data storage** > **Containers**, open the target container, go to **Properties**, and copy the URL.
 - **Storage Account Resource Group Name**, **Storage Account Location**, and **Storage Account Subscription ID**: available on the storage account's **Overview** page.
 - **Event Grid System Topic Name**: leave this field blank on the first deployment. The ARM template creates the topic automatically. If you are reconfiguring an existing deployment, open **Event Grid** > **System topics** in the Azure portal, filter by location, and copy the name of the topic whose **Source** matches your storage account.
