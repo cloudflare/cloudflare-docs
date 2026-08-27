@@ -1,5 +1,5 @@
 {
-    "name": "@cf/deepseek-ai/deepseek-v4-pro-0813",
+    "name": "@cf/zai-org/glm-5.3-flash",
     "properties": [
         {
             "property_id": "require_workers_paid",
@@ -18,39 +18,43 @@
             "value": "true"
         },
         {
-            "property_id": "reasoning_effort",
-            "value": "Off, Low, High, Max"
+            "property_id": "terms",
+            "value": "https://huggingface.co/zai-org/GLM-5.3-Flash/blob/main/LICENSE"
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
         },
         {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 1.32,
+                    "price": 0.15,
                     "currency": "USD"
                 },
                 {
                     "unit": "per M output tokens",
-                    "price": 3.96,
+                    "price": 0.5,
                     "currency": "USD"
                 },
                 {
                     "unit": "per M cached input tokens",
-                    "price": 0.044,
+                    "price": 0.03,
                     "currency": "USD"
                 }
             ]
         }
     ],
-    "id": "2d50837b-2dc7-4994-a690-a38e25c16d74",
+    "id": "95666467-f984-4211-b48a-7c246dd4adb7",
     "source": 1,
-    "description": "DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek with a one million token context window, built for long-horizon agentic workflows and complex, multi-step problem-solving",
+    "description": "The first natively multimodal model in the GLM-5 series. With 320B total parameters and just 18B active parameters, it outperforms GLM-5.2 across benchmarks and real-world workloads at one-tenth the price, while approaching Claude Opus 4.8 on coding and agentic benchmarks.",
     "task": {
         "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
-    "created_at": "2026-08-13 17:15:08.489",
+    "created_at": "2026-08-26 14:21:42.917",
     "tags": [],
     "schema": {
         "input": {
@@ -299,29 +303,24 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "none",
-                                                "minimal",
                                                 "low",
                                                 "medium",
-                                                "high",
-                                                "xhigh",
-                                                "max",
-                                                "auto"
+                                                "high"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
+                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": false,
-                                            "description": "Whether to turn reasoning on. Reasoning is off by default."
+                                            "default": true,
+                                            "description": "Whether to enable reasoning, enabled by default."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1570,29 +1569,24 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "none",
-                                                "minimal",
                                                 "low",
                                                 "medium",
-                                                "high",
-                                                "xhigh",
-                                                "max",
-                                                "auto"
+                                                "high"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
+                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": false,
-                                            "description": "Whether to turn reasoning on. Reasoning is off by default."
+                                            "default": true,
+                                            "description": "Whether to enable reasoning, enabled by default."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -2411,29 +2405,24 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "none",
-                                                            "minimal",
                                                             "low",
                                                             "medium",
-                                                            "high",
-                                                            "xhigh",
-                                                            "max",
-                                                            "auto"
+                                                            "high"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
+                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": false,
-                                                        "description": "Whether to turn reasoning on. Reasoning is off by default."
+                                                        "default": true,
+                                                        "description": "Whether to enable reasoning, enabled by default."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -3682,29 +3671,24 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "none",
-                                                            "minimal",
                                                             "low",
                                                             "medium",
-                                                            "high",
-                                                            "xhigh",
-                                                            "max",
-                                                            "auto"
+                                                            "high"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Controls reasoning effort. none and minimal turn reasoning off; medium and auto map to high; xhigh maps to max."
+                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": false,
-                                                        "description": "Whether to turn reasoning on. Reasoning is off by default."
+                                                        "default": true,
+                                                        "description": "Whether to enable reasoning, enabled by default."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
