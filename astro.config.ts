@@ -276,6 +276,9 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
+	experimental: {
+		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
+	},
 	markdown,
 	image: {
 		service: {

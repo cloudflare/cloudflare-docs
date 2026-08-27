@@ -160,6 +160,7 @@ const rawContentType =
 	meta?.contentType ?? inferContentType(pathname, currentSection) ?? "";
 const { contentType, isChangelog, schemaType } =
 	classifyContentType(rawContentType);
+const resolvedSchemaType = pathname === "/" ? "WebPage" : schemaType;
 
 const reviewed = meta?.reviewed ? new Date(meta.reviewed) : null;
 const daysSince = (d: Date | null | undefined) =>
@@ -172,7 +173,7 @@ const datePublished = meta?.datePublished
 	: undefined;
 
 const jsonLd = buildStructuredData({
-	schemaType,
+	schemaType: resolvedSchemaType,
 	canonical,
 	fullTitle,
 	description: structuredDescription,

@@ -40,9 +40,8 @@ Use this setup when the MCP server runs on a hostname you control in Cloudflare,
 6. In **HTTP URL**, enter the MCP server URL, including the MCP path. For example, `https://mcp.example.com/mcp`.
 7. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can use the MCP server.
 8. <Render
-   	file="access/access-choose-idps"
+   	file="access/access-choose-idps-default"
    	product="cloudflare-one"
-   	params={{ appType: "mcp" }}
    />
 9. Select **Save and connect server**.
 10. If the MCP server prompts you to authenticate, complete the third-party OAuth flow.
@@ -179,9 +178,8 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 9. (Optional) Under **Advanced settings**, turn on [**Refresh tokens**](/cloudflare-one/access-controls/applications/http-apps/saas-apps/generic-oidc-saas/#advanced-settings) if you want to reduce the number of times a user needs to log in to the identity provider.
 10. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server.
 11. <Render
-    	file="access/access-choose-idps"
+    	file="access/access-choose-idps-default"
     	product="cloudflare-one"
-    	params={{ appType: "saas" }}
     />
 12. Select **Create**.
 
