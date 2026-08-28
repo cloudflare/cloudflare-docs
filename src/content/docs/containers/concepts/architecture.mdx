@@ -17,7 +17,38 @@ times when scaling up the number of concurrent container instances.
 
 Worker code goes live on deploy. Container instances update with a [rollout](/containers/configuration/rollouts/). Refer to [Deploy Containers](/containers/guides/deploy/).
 
-## Lifecycle of a Request
+## Container instance lifecycle
+
+```mermaid
+flowchart LR
+    accTitle: Container instance lifecycle
+    accDescr: A Worker accesses a container through its Durable Object. The container moves from stopped to starting, running but not ready, ready for traffic, stopping, and stopped.
+
+    Worker["Worker"] -->|Durable Object binding| DurableObject["Durable Object"]
+    DurableObject -->|<code>ctx.container</code>| Container
+
+    subgraph Container["Container instance"]
+        direction TD
+        Stopped["Stopped"]
+        Starting["Starting<br/><code>start()</code> called"]
+        Running["Running<br/>Not ready"]
+        Ready["Ready<br/>Accepting traffic"]
+        Stopping["Stopping<br/>Stop requested"]
+        StoppedAgain["Stopped"]
+
+        Stopped --> Starting --> Running --> Ready --> Stopping --> StoppedAgain
+    end
+```
+
+A Container can only be accessed through its Durable Object. A Worker sends a request to the Durable Object, which accesses the Container through `ctx.container`.
+
+An inactivity timeout, `signal()`, `destroy()`, a rollout, or a process exit can stop the instance. If startup fails or the process exits early, the instance returns to the stopped state.
+
+The `ctx.container.running` property becomes `true` before the process is ready to accept traffic. Check port readiness before you send the first request.
+
+You can manage this lifecycle through the [Durable Object Container API](/containers/api/durable-object-container/) or the higher-level [`Container` class](/containers/api/container-class/). To compare both options, refer to [Containers APIs](/containers/api/).
+
+## Lifecycle of a request
 
 ### Client to Worker
 
@@ -33,11 +64,9 @@ or UDP from an end-user, please [let us know](https://forms.gle/AGSq54VvUje6kmKu
 
 ### Worker to Durable Object
 
-From the Worker, a request passes through a Durable Object instance (the [Container class](/containers/reference/container-class/) extends a Durable Object class).
+From the Worker, a request passes through a Durable Object instance. You can extend `DurableObject` and use `ctx.container` directly, or extend the [`Container` class](/containers/api/container-class/).
 Each Durable Object instance is a globally routable isolate that can execute code and store state. This allows
-developers to easily address and route to specific container instances (no matter where they are placed),
-define and run hooks on container status changes, execute recurring checks on the instance, and store persistent
-state associated with each instance.
+developers to address and route to specific container instances, run code when a container exits, and store persistent state associated with each instance.
 
 ### Starting a Container
 
@@ -91,9 +120,9 @@ should be built for the `linux/amd64` architecture, and should stay within
 
 ### Container shutdown
 
-The Container class sets [`sleepAfter`](/containers/reference/container-class/#sleepafter) to 10 minutes by default. Its default [`onActivityExpired()`](/containers/reference/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook.
+With the Durable Object Container API, call [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout) to let the runtime stop an inactive container. You can also stop a container with [`signal()`](/containers/api/durable-object-container/#signal) or [`destroy()`](/containers/api/durable-object-container/#destroy).
 
-You can stop a container instance yourself with [`stop()`](/containers/reference/container-class/#stop) or [`destroy()`](/containers/reference/container-class/#destroy).
+The `Container` class sets [`sleepAfter`](/containers/api/container-class/#sleepafter) to 10 minutes by default. Its [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) implementation calls [`stop()`](/containers/api/container-class/#stop). You can change the duration or override the hook.
 
 When the platform is about to stop a container instance, it:
 
@@ -103,14 +132,16 @@ When the platform is about to stop a container instance, it:
 
 Handle `SIGTERM` in your image if you need cleanup before exit. The same sequence runs when a [rollout](/containers/configuration/rollouts/) replaces a container instance with a new image.
 
-### Lifecycle hooks
+### Lifecycle events
 
-The [`Container` class](/containers/reference/container-class/) provides hooks that run Worker code when the container changes state:
+The Durable Object Container API provides [`monitor()`](/containers/api/durable-object-container/#monitor). Its promise resolves when the container exits and rejects when the container errors.
 
-- [`onStart()`](/containers/reference/container-class/#onstart) — Runs after the container has started.
-- [`onStop()`](/containers/reference/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
-- [`onActivityExpired()`](/containers/reference/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/reference/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
-- [`onError()`](/containers/reference/container-class/#onerror) — Runs when the container exits with an error.
+The [`Container` class](/containers/api/container-class/) adds hooks that run Worker code when the container changes state:
+
+- [`onStart()`](/containers/api/container-class/#onstart) — Runs after the container has started.
+- [`onStop()`](/containers/api/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
+- [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/api/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
+- [`onError()`](/containers/api/container-class/#onerror) — Runs when the container exits with an error.
 
 Refer to the [status hooks example](/containers/examples/status-hooks/) for a full implementation.
 

@@ -1,0 +1,73 @@
+---
+title: Wrangler configuration
+description: Configure a Container, its Durable Object binding, and its migration in Wrangler.
+pcx_content_type: configuration
+sidebar:
+  order: 0
+products:
+  - containers
+  - durable-objects
+---
+
+import { WranglerConfig } from "~/components";
+
+Define Containers in the Wrangler configuration file for your Worker. Each Container is associated with a Durable Object class, which provides access to the Container at runtime.
+
+## Minimal configuration
+
+A Container application requires a Container definition, a Durable Object binding, and a Durable Object migration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "my-container-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+The configuration uses three sections:
+
+1. **`containers`** defines the container image and associates it with a Durable Object class through `class_name`.
+2. **`durable_objects.bindings`** makes the Durable Object namespace available to Worker code. In this example, access it through `env.MY_CONTAINER`.
+3. **`migrations`** creates the SQLite-backed Durable Object class. Use `new_sqlite_classes`, not `new_classes`, for a Container.
+
+The `class_name` in all three sections must match the exported Durable Object class in your Worker.
+
+## Container settings
+
+The `containers` entry can also configure the instance type, maximum number of running instances, image build, placement constraints, rollouts, and SSH access.
+
+For all available fields and values, refer to the [Containers Wrangler configuration reference](/workers/wrangler/configuration/#containers).
+
+## Next steps
+
+- [Deploy Containers](/containers/guides/deploy/) — Build the image and deploy the Worker.
+- [Scaling and Routing](/containers/configuration/scaling-and-routing/) — Route requests and scale Container instances.
+- [Rollouts](/containers/configuration/rollouts/) — Control how configuration changes reach running instances.
+- [Image management](/containers/guides/image-management/) — Use local and remote container images.
