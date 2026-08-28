@@ -53,7 +53,7 @@ Alternatively, run the following Azure CLI commands:
 
 ```sh
 az provider register --namespace Microsoft.EventGrid --subscription <subscription-id>
-az provider show --namespace Microsoft.EventGrid --query "registrationState"
+az provider show --namespace Microsoft.EventGrid --subscription <subscription-id> --query "registrationState"
 ```
 
 The registration state should report `Registered` before you continue.
