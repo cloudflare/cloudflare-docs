@@ -107,12 +107,12 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 Available in closed beta for Enterprise accounts with [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/). Contact your account team to request access.
 :::
 
-By default, DNS requests that Gateway sends to your custom resolvers use shared Cloudflare IP addresses. If your upstream resolver restricts access by source IP, you can configure a resolver policy to send those requests from your [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) instead.
+By default, DNS requests that Gateway sends to your custom resolvers use shared Cloudflare source IP addresses. If your upstream resolver restricts access by source IP, you can configure a resolver policy to send those requests from your [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) instead.
 
 ### Prerequisites
 
 - Your account must have dedicated egress IPs provisioned.
-- The resolver policy must include at least one public resolver. Dedicated egress cannot be used when all resolvers route through private networks.
+- The resolver policy must include at least one public resolver. Dedicated egress IPs cannot be used when all resolvers route through private networks.
 
 ### Enable dedicated egress on a resolver policy
 

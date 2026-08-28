@@ -78,7 +78,7 @@ Each dedicated egress IP supports up to 40,000 concurrent connections per unique
 
 Dedicated egress IPs do not apply to the following traffic types. These connections use the default shared IPs because Cloudflare identifies them by other means (for example, tunnel ID or account context) rather than source IP.
 
-- DNS queries resolved through Gateway (unless you enable [dedicated egress on a resolver policy](/cloudflare-one/traffic-policies/resolver-policies/#dedicated-egress-ips-for-resolver-policies))
+- DNS queries resolved through Gateway. DNS queries are only forwarded through dedicated egress IPs when [dedicated egress is enabled in a resolver policy](/cloudflare-one/traffic-policies/resolver-policies/#dedicated-egress-ips-for-resolver-policies).
 - Private networks connected to Zero Trust via Cloudflare Tunnel
 - Traffic destined for private networks connected to Zero Trust via [Cloudflare WAN](/cloudflare-wan/)
 - ICMP traffic (for example, `ping`)
