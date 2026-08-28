@@ -37,15 +37,11 @@ Before you begin, make sure the following prerequisites are met.
 
 ### RBAC roles
 
-The CCF connector authenticates to Azure using a service principal that is managed by Microsoft Sentinel. The ARM template that deploys the connector assigns the required roles automatically, so you only need to make sure that the deploying user has enough privileges:
+The CCF connector authenticates to Azure using a service principal that belongs to the Cloudflare CCF connector application, registered as a multi-tenant Microsoft Entra application. The ARM template that deploys the connector assigns the required roles to this service principal automatically.
 
-- **Microsoft Sentinel Contributor** (or `Contributor` / `Owner`) on the Microsoft Sentinel workspace.
-- **Owner** or **EventGrid Contributor** on the storage account, so that the deployment can create the Event Grid system topic and subscription.
+The deploying user must have **Microsoft Sentinel Contributor** (or `Contributor` / `Owner`) on the Microsoft Sentinel workspace and **Owner** or **EventGrid Contributor** on the storage account, so that the deployment can create the Event Grid system topic and subscription.
 
-For reference, the Cloudflare CCF connector service principal receives the following roles on the storage account at deployment time:
-
-- `Storage Blob Data Reader` on the storage account, to read log files from the Blob container.
-- `Storage Queue Data Contributor` on the storage account, to read and delete pointer messages from the Storage Queue.
+At deployment time, the Cloudflare CCF connector service principal receives `Storage Blob Data Reader` on the storage account to read log files from the Blob container and `Storage Queue Data Contributor` to read and delete pointer messages from the Storage Queue.
 
 Refer to the Microsoft documentation on [Azure roles for Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/roles) and [Azure roles for storage](https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access) for details.
 
