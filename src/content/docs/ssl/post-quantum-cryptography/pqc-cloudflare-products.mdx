@@ -40,6 +40,8 @@ Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quan
 - The Cloudflare API and dashboard.
 - [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) self-hosted applications (browser-to-edge leg).
 
+Customers can measure per-zone post-quantum key agreement adoption on their inbound traffic using the [`ClientTLSKeyExchangeGroup`](/logs/logpush/logpush-job/datasets/zone/http_requests/#clienttlskeyexchangegroup) field in the `http_requests` Logpush dataset, which is also queryable in [Log Explorer](/log-explorer/).
+
 This section only covers the inbound TLS connection from the end-user client to Cloudflare's edge. When a Worker fetches data from a backend storage service ([D1](/d1/), [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), [Workers AI](/workers-ai/), [Hyperdrive](/hyperdrive/), and similar), that connection is governed by the [Cloudflare internal network](#cloudflare-internal-network) section. When a Worker calls out to a third-party origin via `fetch()`, it is governed by the [Cloudflare to origin](#cloudflare-to-origin) section.
 
 ## Cloudflare internal network
