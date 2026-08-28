@@ -1,11 +1,9 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: how-to
 title: Image Management
 description: Learn how to use Cloudflare Registry, Docker Hub, and Amazon ECR images with Containers.
 sidebar:
-  order: 5
-  group:
-    hideIndex: true
+  order: 4
 products:
   - containers
 ---
@@ -311,7 +309,7 @@ using the `wrangler containers push` command.
 
 ## Registry limits
 
-Images are limited in size by available disk of the configured [instance type](/containers/platform-details/limits/#instance-types) for a Container.
+Images are limited in size by available disk of the configured [instance type](/containers/platform/limits/#instance-types) for a Container.
 
 Delete images with `wrangler containers images delete` to free up space, but reverting a
 Worker to a previous version that uses a deleted image will then error.

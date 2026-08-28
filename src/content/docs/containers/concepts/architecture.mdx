@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: concept
 title: Lifecycle of a Container
 description: Understand how a Container is deployed, started, routed, and shut down across Cloudflare's network.
 sidebar:
@@ -11,11 +11,11 @@ products:
 ## Deployment
 
 After you deploy an application with a Container, your image is uploaded to
-[Cloudflare's Registry](/containers/platform-details/image-management/) and distributed globally to Cloudflare's Network.
+[Cloudflare's Registry](/containers/guides/image-management/) and distributed globally to Cloudflare's Network.
 Cloudflare will pre-schedule instances and pre-fetch images across the globe to ensure quick start
 times when scaling up the number of concurrent container instances.
 
-Worker code goes live on deploy. Container instances update with a [rollout](/containers/platform-details/rollouts/). Refer to [Deploy Containers](/containers/deploy/).
+Worker code goes live on deploy. Container instances update with a [rollout](/containers/configuration/rollouts/). Refer to [Deploy Containers](/containers/guides/deploy/).
 
 ## Lifecycle of a Request
 
@@ -33,7 +33,7 @@ or UDP from an end-user, please [let us know](https://forms.gle/AGSq54VvUje6kmKu
 
 ### Worker to Durable Object
 
-From the Worker, a request passes through a Durable Object instance (the [Container class](/containers/container-class/) extends a Durable Object class).
+From the Worker, a request passes through a Durable Object instance (the [Container class](/containers/reference/container-class/) extends a Durable Object class).
 Each Durable Object instance is a globally routable isolate that can execute code and store state. This allows
 developers to easily address and route to specific container instances (no matter where they are placed),
 define and run hooks on container status changes, execute recurring checks on the instance, and store persistent
@@ -84,16 +84,16 @@ This location will again be the nearest location to the originating request with
 Each container instance runs inside its own VM, which provides strong
 isolation from other workloads running on Cloudflare's network. Containers
 should be built for the `linux/amd64` architecture, and should stay within
-[size limits](/containers/platform-details/limits/).
+[size limits](/containers/platform/limits/).
 
 [Logging](/containers/faq/#how-do-container-logs-work), metrics collection, and
 [networking](/containers/faq/#how-do-i-allow-or-disallow-egress-from-my-container) are automatically set up on each container, as configured by the developer.
 
 ### Container shutdown
 
-The Container class sets [`sleepAfter`](/containers/container-class/#sleepafter) to 10 minutes by default. Its default [`onActivityExpired()`](/containers/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook.
+The Container class sets [`sleepAfter`](/containers/reference/container-class/#sleepafter) to 10 minutes by default. Its default [`onActivityExpired()`](/containers/reference/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook.
 
-You can stop a container instance yourself with [`stop()`](/containers/container-class/#stop) or [`destroy()`](/containers/container-class/#destroy).
+You can stop a container instance yourself with [`stop()`](/containers/reference/container-class/#stop) or [`destroy()`](/containers/reference/container-class/#destroy).
 
 When the platform is about to stop a container instance, it:
 
@@ -101,16 +101,16 @@ When the platform is about to stop a container instance, it:
 2. Waits up to 15 minutes for that process to exit.
 3. Sends `SIGKILL` if the process is still running.
 
-Handle `SIGTERM` in your image if you need cleanup before exit. The same sequence runs when a [rollout](/containers/platform-details/rollouts/) replaces a container instance with a new image.
+Handle `SIGTERM` in your image if you need cleanup before exit. The same sequence runs when a [rollout](/containers/configuration/rollouts/) replaces a container instance with a new image.
 
 ### Lifecycle hooks
 
-The [`Container` class](/containers/container-class/) provides hooks that run Worker code when the container changes state:
+The [`Container` class](/containers/reference/container-class/) provides hooks that run Worker code when the container changes state:
 
-- [`onStart()`](/containers/container-class/#onstart) — Runs after the container has started.
-- [`onStop()`](/containers/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
-- [`onActivityExpired()`](/containers/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
-- [`onError()`](/containers/container-class/#onerror) — Runs when the container exits with an error.
+- [`onStart()`](/containers/reference/container-class/#onstart) — Runs after the container has started.
+- [`onStop()`](/containers/reference/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
+- [`onActivityExpired()`](/containers/reference/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/reference/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
+- [`onError()`](/containers/reference/container-class/#onerror) — Runs when the container exits with an error.
 
 Refer to the [status hooks example](/containers/examples/status-hooks/) for a full implementation.
 

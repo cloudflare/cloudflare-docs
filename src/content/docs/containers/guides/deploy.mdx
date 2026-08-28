@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Deploy Containers
 description: Deploy from your machine or Workers Builds, including how images and container instances update.
 sidebar:
-  order: 6.5
+  order: 1
 products:
   - containers
   - workers
@@ -15,7 +15,7 @@ import { Steps, DashButton, PackageManagers } from "~/components";
 
 <Steps>
 
-1. If `image` in your Wrangler config is a path to a Dockerfile, start [Docker](https://www.docker.com/) or another Docker-compatible engine. Specify the Dockerfile itself, not its directory. If `image` is a registry reference (Cloudflare Registry, Docker Hub, Amazon ECR, or Google Artifact Registry), you do not need Docker at deploy time. Refer to [Image management](/containers/platform-details/image-management/).
+1. If `image` in your Wrangler config is a path to a Dockerfile, start [Docker](https://www.docker.com/) or another Docker-compatible engine. Specify the Dockerfile itself, not its directory. If `image` is a registry reference (Cloudflare Registry, Docker Hub, Amazon ECR, or Google Artifact Registry), you do not need Docker at deploy time. Refer to [Image management](/containers/guides/image-management/).
 2. From your project directory, run:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
@@ -24,7 +24,7 @@ import { Steps, DashButton, PackageManagers } from "~/components";
 
 </Steps>
 
-`wrangler deploy` uploads and activates your Worker before it processes the container configuration. For a Dockerfile image, Wrangler then builds and pushes the image when needed. For a registry image, it uses the configured image reference. These steps are not transactional: an image build, image push, or [rollout](/containers/platform-details/rollouts/) error can happen after the new Worker is already live.
+`wrangler deploy` uploads and activates your Worker before it processes the container configuration. For a Dockerfile image, Wrangler then builds and pushes the image when needed. For a registry image, it uses the configured image reference. These steps are not transactional: an image build, image push, or [rollout](/containers/configuration/rollouts/) error can happen after the new Worker is already live.
 
 For an existing container application, Wrangler starts a rollout when the effective container configuration changes. The command does not wait for every container instance to be replaced, so new Worker code may briefly talk to containers that still run the previous image. The first deploy creates the container application directly, and a deploy with no effective container changes starts no rollout.
 
@@ -32,7 +32,7 @@ For an existing container application, Wrangler starts a rollout when the effect
 The first deploy can take several minutes while Cloudflare provisions the image. The Worker URL may respond before container routes succeed.
 :::
 
-For rollout flags and step configuration, refer to [Rollouts](/containers/platform-details/rollouts/).
+For rollout flags and step configuration, refer to [Rollouts](/containers/configuration/rollouts/).
 
 ## Deploy with Workers Builds
 
@@ -71,7 +71,7 @@ To connect a repository, refer to [Workers Builds](/workers/ci-cd/builds/).
 
 | Goal                                                                    | What to do                                                                                                                                                                                                                                                                                                  |
 | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Change Worker and container together on your machine                    | [Local development](/containers/local-dev/) with `wrangler dev`                                                                                                                                                                                                                                             |
+| Change Worker and container together on your machine                    | [Local development](/containers/guides/local-dev/) with `wrangler dev`                                                                                                                                                                                                                                             |
 | Share a deployed environment with its own image and container instances | A [Wrangler environment](/workers/wrangler/environments/) or a separate Worker, each connected to Workers Builds with a full deploy command such as `npx wrangler deploy --env staging`. Refer to [Workers Builds and Wrangler environments](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
 | Update production                                                       | Merge to the production branch (or run `wrangler deploy` locally)                                                                                                                                                                                                                                           |
 
@@ -93,21 +93,21 @@ After `wrangler deploy` or a production Workers Builds deploy:
 
 </Steps>
 
-For gradual steps, grace periods, and rollout modes, refer to [Rollouts](/containers/platform-details/rollouts/).
+For gradual steps, grace periods, and rollout modes, refer to [Rollouts](/containers/configuration/rollouts/).
 
 ## Troubleshooting
 
 | Problem                                                                         | What to do                                                                                                                                                                                                                                                   |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Non-production Workers Builds run succeeds but you cannot fully preview the app | Use [local development](/containers/local-dev/) or a staging Worker or environment with `wrangler deploy`. Refer to [Before production](#before-production).                                                                                                 |
-| Deploy or Workers Builds run succeeds but container instances look unchanged    | A gradual rollout may still be running, or the command did not update containers (`versions upload` or `--containers-rollout=none`). Refer to [Rollouts](/containers/platform-details/rollouts/).                                                            |
-| Deploy fails because Docker is missing                                          | Required only when `image` is a Dockerfile path. Start Docker, use Workers Builds, switch to a [registry image](/containers/platform-details/image-management/#use-pre-built-container-images), or use `--containers-rollout=none` for a Worker-only deploy. |
+| Non-production Workers Builds run succeeds but you cannot fully preview the app | Use [local development](/containers/guides/local-dev/) or a staging Worker or environment with `wrangler deploy`. Refer to [Before production](#before-production).                                                                                                 |
+| Deploy or Workers Builds run succeeds but container instances look unchanged    | A gradual rollout may still be running, or the command did not update containers (`versions upload` or `--containers-rollout=none`). Refer to [Rollouts](/containers/configuration/rollouts/).                                                            |
+| Deploy fails because Docker is missing                                          | Required only when `image` is a Dockerfile path. Start Docker, use Workers Builds, switch to a [registry image](/containers/guides/image-management/#use-pre-built-container-images), or use `--containers-rollout=none` for a Worker-only deploy. |
 | First deploy: Worker works, container routes error                              | Wait several minutes for provisioning, then check logs.                                                                                                                                                                                                      |
 
 ## Related
 
-- [Rollouts](/containers/platform-details/rollouts/)
-- [Image management](/containers/platform-details/image-management/)
-- [Local development](/containers/local-dev/)
+- [Rollouts](/containers/configuration/rollouts/)
+- [Image management](/containers/guides/image-management/)
+- [Local development](/containers/guides/local-dev/)
 - [Workers Builds](/workers/ci-cd/builds/)
 - [Wrangler environments](/workers/wrangler/environments/)
