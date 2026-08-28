@@ -5,7 +5,7 @@
 	"scripts": {
 		"preinstall": "npx --yes only-allow pnpm",
 		"astro": "astro",
-		"prebuild": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts",
+		"prebuild": "pnpm run fetch:assets",
 		"build": "astro build",
 		"build:incremental": "INCREMENTAL_BUILD=true astro build",
 		"typegen:worker": "wrangler types ./worker/worker-configuration.d.ts",
@@ -39,7 +39,8 @@
 		"flue:evals": "tsx .flue/bin/run-evals.ts",
 		"lint": "eslint",
 		"prepare": "husky",
-		"prebuild:incremental": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
+		"prebuild:incremental": "pnpm run fetch:assets",
+		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
 	},
 	"devDependencies": {
 		"@actions/core": "3.0.1",

@@ -4,7 +4,7 @@
  * Used by `bin/fetch-openapi.ts`, which runs from the `prebuild`,
  * `prebuild:incremental`, and `predev` hooks (see package.json).
  */
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, rename, rm } from "node:fs/promises";
 import { join } from "node:path";
 
 import {
@@ -39,11 +39,30 @@ export const fetchOpenApiSchema = async (): Promise<string> => {
 			`middlecache/${OPENAPI_ARCHIVE_PATH}`,
 			{
 				validate: async (archivePath) => {
-					// Extract + parse as the integrity check: a corrupt or truncated
-					// download fails here (gzip CRC32 + JSON) and is re-downloaded.
-					await extractTarGz(archivePath, extractDir);
-					const raw = await readFile(join(extractDir, "openapi.json"), "utf8");
-					void JSON.parse(raw);
+					// Extract into a staging directory, then promote it on success
+					// so a failed extract or parse never leaves stale or partial
+					// files in the destination that could mask a fresh failure.
+					const stagingDir = join(
+						getDotTmpPath(),
+						"middlecache",
+						"v1",
+						".openapi-staging",
+					);
+					await rm(stagingDir, { recursive: true, force: true });
+					try {
+						await mkdir(stagingDir, { recursive: true });
+						await extractTarGz(archivePath, stagingDir);
+						const raw = await readFile(
+							join(stagingDir, "openapi.json"),
+							"utf8",
+						);
+						void JSON.parse(raw);
+						await rm(extractDir, { recursive: true, force: true });
+						await rename(stagingDir, extractDir);
+					} catch (err) {
+						await rm(stagingDir, { recursive: true, force: true });
+						throw err;
+					}
 				},
 			},
 		);

@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { Readable } from "node:stream";
 import type { ReadableStream as WebReadableStream } from "node:stream/web";
 import { writeFile } from "node:fs/promises";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import fs from "fs";
 import { dirname, join } from "path";
 
@@ -170,6 +170,11 @@ const downloadWithRetry = async (
 /**
  * Extract a gzip-compressed tar archive into destinationDir.
  *
+ * Member paths are validated before extraction: entries containing `..`
+ * segments or leading `/` are rejected (zip-slip) so a network-downloaded
+ * archive cannot write outside destinationDir. Extraction failures reject
+ * with captured stderr instead of hanging.
+ *
  * @param options.stripComponents - strip the given number of leading path
  *   components from each entry before extracting (matches the skills archive,
  *   which contains a top-level `skills/` directory).
@@ -179,6 +184,27 @@ export async function extractTarGz(
 	destinationDir: string,
 	options: { stripComponents?: number } = {},
 ): Promise<void> {
+	// Refuse archives whose members could escape destinationDir.
+	const list = spawnSync("tar", ["-tzf", tarballPath], { encoding: "utf8" });
+	if (list.status !== 0 || list.error) {
+		throw new Error(
+			`tar extraction failed for ${tarballPath}: not a valid archive${
+				list.stderr ? `: ${list.stderr.trim()}` : ""
+			}`,
+		);
+	}
+	for (const member of list.stdout.split("\n")) {
+		const name = member.trimEnd();
+		if (!name) {
+			continue;
+		}
+		if (name.startsWith("/") || name.split("/").includes("..")) {
+			throw new Error(
+				`tar extraction failed for ${tarballPath}: refusing unsafe member path "${name}"`,
+			);
+		}
+	}
+
 	fs.mkdirSync(destinationDir, { recursive: true });
 
 	const args = ["-xz", "-C", destinationDir];
@@ -187,13 +213,20 @@ export async function extractTarGz(
 	}
 	args.push("-f", tarballPath);
 
-	const tar = spawn("tar", args, { stdio: "ignore" });
-	const exitCode = await new Promise<number | null>((resolve) =>
-		tar.on("close", resolve),
-	);
+	const tar = spawn("tar", args, { stdio: ["ignore", "ignore", "pipe"] });
+	const stderr: Buffer[] = [];
+	tar.stderr?.on("data", (chunk: Buffer) => stderr.push(chunk));
+	const exitCode = await new Promise<number | null>((resolve, reject) => {
+		tar.on("error", reject);
+		tar.on("close", resolve);
+	});
 	if (exitCode !== 0) {
 		throw new Error(
-			`tar extraction failed for ${tarballPath} (exit code ${exitCode})`,
+			`tar extraction failed for ${tarballPath} (exit code ${exitCode})${
+				stderr.length
+					? `: ${Buffer.concat(stderr).toString("utf8").trim()}`
+					: ""
+			}`,
 		);
 	}
 }
