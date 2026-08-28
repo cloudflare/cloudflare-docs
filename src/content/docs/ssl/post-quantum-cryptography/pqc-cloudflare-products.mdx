@@ -144,6 +144,19 @@ TLS 1.3 control-plane connection used by the [Cloudflare One Appliance](/cloudfl
 
 Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/reference/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-ipsec).
 
+### Cloudflare Email Security
+
+Post-quantum protection applies to inbound and outbound TLS 1.3 SMTP connections between Cloudflare [Email Security](/cloudflare-one/email-security/) MX deployments and third-party mail servers:
+
+| Protection    | Status            |
+| ------------- | ----------------- |
+| Key agreement | ✅ X25519MLKEM768 |
+| Signatures    | Not yet           |
+
+Reference: [Email Security](/cloudflare-one/email-security/), [MX/Inline deployment](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/).
+
+Post-quantum key agreement is negotiated automatically when the remote SMTP peer advertises support (for example, [Google Workspace](https://workspace.google.com/)). Senders and receivers that do not yet advertise post-quantum key agreement continue to connect with classical key exchange.
+
 ## Contributing
 
 This listing is maintained alongside the rest of the Cloudflare SSL/TLS documentation. If you spot an inaccuracy or have an update after a product announcement, [contributions](/style-guide/contributions/) are welcome.
