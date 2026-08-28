@@ -8,7 +8,17 @@ sidebar:
   order: 2
 ---
 
-import { Details, Markdown, Render, Tabs, TabItem } from "~/components";
+import {
+	Details,
+	Markdown,
+	Render,
+	Tabs,
+	TabItem,
+	Steps,
+	DashButton,
+} from "~/components";
+import { Image } from "astro:assets";
+import cloudflareManagedRulesetImg from "~/assets/images/waf/managed-rulesets/ruleset-config-cloudflare-managed-ruleset.png";
 
 export const availableActions =
 	"The available actions are: _Block_, _Log_, _Non-Interactive Challenge_, _Managed Challenge_, and _Interactive Challenge_.";
@@ -29,14 +39,18 @@ It is not recommended that you enable all the available rules using overrides, s
 
 ## Deploy the Cloudflare Managed Ruleset {/* deploy-in-the-dashboard */}
 
-<Render
-	file="dash-deploy-managed-ruleset-zone"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare Managed Ruleset",
-		dashOptionName: "Cloudflare managed ruleset",
-	}}
-/>
+<Steps>
+	1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+		<DashButton url="/?to=/:account/:zone/security/settings" />
+	2. (Optional) Filter by **Web application exploits**.
+	3. Turn on **Cloudflare managed ruleset**.
+
+	4. Review the deployment settings. Edit the scope, if necessary, to apply the ruleset to a subset of the incoming requests, or configure any custom settings (also known as overrides).
+	5. Select **Save**.
+</Steps>
+
+This operation deploys the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
 
 ## Configure in the dashboard
 
@@ -64,13 +78,22 @@ You can configure (or override) the following Cloudflare Managed Ruleset setting
 
 Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:
 
-<Render
-	file="dash-configure-all-rules"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare Managed Ruleset",
-	}}
-/>
+<Steps>
+	1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+		<DashButton url="/?to=/:account/:zone/security/security-rules" />
+	2. (Optional) Filter by **Managed rules**.
+	3. Search for **Cloudflare Managed Ruleset**. Look for a rule with an _Execute_ action.
+	4. Select the rule name (containing the name of the managed ruleset) to open the deployment configuration page.
+	5. (Optional) To execute the Cloudflare Managed Ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+	6. In the ruleset configuration section, define settings for all the rules in the Cloudflare Managed Ruleset by setting one or more fields using the drop-down lists.
+
+		For example, select the action to perform for all the rules in the ruleset.
+
+		<Image src={cloudflareManagedRulesetImg} alt="The Configure deployment page displaying the available options to override all the rules in the Cloudflare Managed Ruleset: ruleset action and ruleset status." />
+
+	7. Select **Save**.
+</Steps>
 
 ### Tag-level configuration
 
@@ -86,12 +109,11 @@ Setting any of these configurations for specific tags affects all current and fu
 Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure rules with specific tags in the dashboard:
 
 <Render
-	file="dash-configure-rules-by-tag"
+	file="managed-rules-browse-zone-new-nav-cloudflare-managed"
 	product="waf"
-	params={{
-		rulesetName: "Cloudflare Managed Ruleset",
-	}}
 />
+
+<Render file="managed-ruleset-configure-rules-by-tag" product="waf" />
 
 ### Rule-level configuration
 
@@ -102,21 +124,9 @@ You can configure (or override) the following Cloudflare Managed Ruleset setting
 
 Once you have [deployed the Cloudflare Managed Ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
 
-<Render
-	file="managed-rules-browse-zone-new-nav"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare Managed Ruleset",
-	}}
-/>
+<Render file="managed-rules-browse-zone-new-nav-cloudflare-managed" product="waf" />
 
-<Render
-	file="managed-ruleset-configure-individual-rules"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare Managed Ruleset",
-	}}
-/>
+<Render file="managed-ruleset-configure-individual-rules" product="waf" />
 
 ## Configure via API
 
@@ -127,11 +137,10 @@ To deploy the Cloudflare Managed Ruleset for a given zone via API, create a rule
 <Render file="managed-rulesets/api-zone-example" product="waf" />
 
 <Render
-	file="managed-rulesets/api-next-steps"
+	file="managed-rulesets/api-next-steps-customizable"
 	product="waf"
 	params={{
 		rulesetName: "Cloudflare Managed Ruleset",
-		customizableAction: true,
 	}}
 />
 

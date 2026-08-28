@@ -43,7 +43,20 @@ These codes also appear in the `guardrails` property of the AI Gateway REST API,
 - **Latency impact**: Enabling Guardrails introduces additional latency to requests. Typically, evaluations using Llama Guard 3 8B on Workers AI add approximately 500 milliseconds per request. However, larger requests may experience increased latency, though this increase is not linear. Consider this when balancing safety and performance.
 - **Handling long content**: When evaluating long prompts or responses, Guardrails automatically segments the content into smaller chunks, processing each through separate Guardrail requests. This approach ensures comprehensive moderation but may result in increased latency for longer inputs.
 - **Supported languages**: Llama Guard 3.3 8B supports content safety classification in the following languages: English, French, German, Hindi, Italian, Portuguese, Spanish, and Thai.
-- **Streaming support**: Streaming is not supported when using Guardrails.
+
+### Streaming behavior
+
+Guardrails does not support streaming (`stream: true`) requests. Prompts are still evaluated and enforced, but response behavior depends on the API surface.
+
+On the REST API (`api.cloudflare.com/*`), Guardrails evaluates the response and logs the result, but does not enforce it — the client receives the full streaming response regardless of what Guardrails would have flagged. On the gateway endpoints (`gateway.ai.cloudflare.com/v1/*`), Guardrails buffers the full response, evaluates it, and returns a single non-streamed payload — the request no longer streams.
+
+For non-streaming (`stream: false`) requests, both prompts and responses are evaluated and enforced.
+
+Guardrails evaluates response payload text, including URL strings in image generation model responses. It does not retrieve or evaluate referenced images. Embedding and unknown model types bypass response evaluation regardless of streaming mode.
+
+For more information, refer to [Supported model types](/ai-gateway/features/guardrails/supported-model-types/).
+
+Full Guardrails support for streaming requests is on our roadmap.
 
 :::note
 

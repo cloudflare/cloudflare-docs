@@ -40,3 +40,7 @@ Signals Intelligence fields show observations about a particular JA4 that Cloudf
 | `ips_quantile_1h`                         | The quantile position of the JA4 fingerprint based on the number of unique client IP addresses across all fingerprints in the last hour. Higher values indicate a relatively higher number of distinct client IPs compared to other fingerprints. |
 
 <Render file="signals-intelligence-and-ja4" product="bots" />
+
+:::note
+Signals Intelligence fields are available for analysis in [Security Analytics](/waf/analytics/security-analytics/) and [Security Events](/waf/analytics/security-events/). They cannot be used as filter fields in WAF custom rule expressions.
+:::
