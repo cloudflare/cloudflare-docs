@@ -1,5 +1,6 @@
 #!/usr/bin/env tsx
 
+import fs from "fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -15,7 +16,9 @@ const OPENAPI_JSON_PATH = "v1/cloudflare-api-schemas/openapi.json";
 
 // --soft: warn and continue on failure instead of exiting non-zero.
 //         Used by the predev hook so a network failure doesn't block local development.
+// --force: re-fetch even if the schema already exists.
 const soft = process.argv.includes("--soft");
+const force = process.argv.includes("--force");
 
 const fail = (message: string): never => {
 	if (soft) {
@@ -34,6 +37,14 @@ const extractDir = join(
 	"v1",
 	"cloudflare-api-schemas",
 );
+const openapiFile = join(extractDir, "openapi.json");
+
+if (fs.existsSync(openapiFile) && !force) {
+	console.log(
+		"OpenAPI schema already exists, skipping fetch. (run `pnpm tsx bin/fetch-openapi.ts --force` to re-fetch)",
+	);
+	process.exit(0);
+}
 
 console.log("Fetching Cloudflare API OpenAPI schema from middlecache");
 
