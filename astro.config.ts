@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import skills from "astro-skills";
@@ -281,9 +281,15 @@ export default defineConfig({
 	},
 	markdown,
 	image: {
-		service: {
-			entrypoint: "@astrojs/cloudflare/image-service",
-		},
+		// Cloudflare Image Resizing (/cdn-cgi/image/) is only available on the
+		// edge, so in dev serve the original images directly (no resizing — the
+		// full files are already local). The production build still uses the
+		// Cloudflare service to keep image processing off the build (fixes
+		// rolldown OOM) and mirror what's served in production.
+		service:
+			process.env.NODE_ENV === "production"
+				? { entrypoint: "@astrojs/cloudflare/image-service" }
+				: passthroughImageService(),
 	},
 	server: {
 		port: 1111,
