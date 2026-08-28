@@ -123,15 +123,25 @@ export async function downloadToDotTempIfNotPresent(
 
 /**
  * Extract a gzip-compressed tar archive into destinationDir.
+ *
+ * @param options.stripComponents - strip the given number of leading path
+ *   components from each entry before extracting (matches the skills archive,
+ *   which contains a top-level `skills/` directory).
  */
 export async function extractTarGz(
 	tarballPath: string,
 	destinationDir: string,
+	options: { stripComponents?: number } = {},
 ): Promise<void> {
 	fs.mkdirSync(destinationDir, { recursive: true });
-	const tar = spawn("tar", ["-xzf", tarballPath, "-C", destinationDir], {
-		stdio: "ignore",
-	});
+
+	const args = ["-xz", "-C", destinationDir];
+	if (options.stripComponents && options.stripComponents > 0) {
+		args.push(`--strip-components=${options.stripComponents}`);
+	}
+	args.push("-f", tarballPath);
+
+	const tar = spawn("tar", args, { stdio: "ignore" });
 	const exitCode = await new Promise<number | null>((resolve) =>
 		tar.on("close", resolve),
 	);

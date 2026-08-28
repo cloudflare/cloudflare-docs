@@ -1,8 +1,13 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import fs from "fs";
+import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 
-import { downloadToDotTempIfNotPresent, getDotTmpPath } from "./custom-loaders";
+import {
+	downloadToDotTempIfNotPresent,
+	extractTarGz,
+	getDotTmpPath,
+} from "./custom-loaders";
 
 const dotTmpPath = getDotTmpPath();
 const TEST_DIR = join(dotTmpPath, "middlecache", "__custom-loaders-test__");
@@ -148,5 +153,71 @@ describe("downloadToDotTempIfNotPresent", () => {
 
 		expect(fetchMock).toHaveBeenCalledTimes(1);
 		expect(fs.readFileSync(join(TEST_DIR, "file.txt"), "utf8")).toBe("fresh");
+	});
+});
+
+describe("extractTarGz", () => {
+	const FIXTURE = join(dotTmpPath, "middlecache", "__extract-test__");
+
+	const buildFixture = () => {
+		fs.mkdirSync(join(FIXTURE, "src", "skills", "skill-name"), {
+			recursive: true,
+		});
+		fs.writeFileSync(
+			join(FIXTURE, "src", "skills", "skill-name", "file.txt"),
+			"content",
+		);
+		spawnSync(
+			"tar",
+			[
+				"-czf",
+				join(FIXTURE, "fixture.tar.gz"),
+				"-C",
+				join(FIXTURE, "src"),
+				"skills",
+			],
+			{ stdio: "ignore" },
+		);
+	};
+
+	beforeEach(() => {
+		fs.rmSync(FIXTURE, { recursive: true, force: true });
+	});
+
+	afterEach(() => {
+		fs.rmSync(FIXTURE, { recursive: true, force: true });
+	});
+
+	test("extracts without stripping components", async () => {
+		buildFixture();
+		const dest = join(FIXTURE, "out");
+
+		await extractTarGz(join(FIXTURE, "fixture.tar.gz"), dest);
+
+		expect(
+			fs.readFileSync(join(dest, "skills", "skill-name", "file.txt"), "utf8"),
+		).toBe("content");
+	});
+
+	test("strips leading components when stripComponents is set", async () => {
+		buildFixture();
+		const dest = join(FIXTURE, "out");
+
+		await extractTarGz(join(FIXTURE, "fixture.tar.gz"), dest, {
+			stripComponents: 1,
+		});
+
+		expect(fs.readFileSync(join(dest, "skill-name", "file.txt"), "utf8")).toBe(
+			"content",
+		);
+	});
+
+	test("throws on a corrupt archive", async () => {
+		fs.mkdirSync(FIXTURE, { recursive: true });
+		fs.writeFileSync(join(FIXTURE, "bad.tar.gz"), "not a gzip archive");
+
+		await expect(
+			extractTarGz(join(FIXTURE, "bad.tar.gz"), join(FIXTURE, "out")),
+		).rejects.toThrow(/tar extraction failed/);
 	});
 });
