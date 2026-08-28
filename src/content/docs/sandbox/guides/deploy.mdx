@@ -11,7 +11,7 @@ products:
 
 import { PackageManagers } from "~/components";
 
-Sandbox runs on [Containers](/containers/). For deploy commands, Workers Builds, and rollout flags, refer to [Deploy Containers](/containers/guides/deploy/) and [Rollouts](/containers/reference/rollouts/).
+Sandbox runs on [Containers](/containers/). For deploy commands, Workers Builds, and rollout flags, refer to [Deploy Containers](/containers/guides/deploy/) and [Rollouts](/containers/configuration/rollouts/).
 
 To put `exposePort()` on a custom domain, refer to [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
 
@@ -33,7 +33,7 @@ When you bump the npm package:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy --containers-rollout=immediate" />
 
-   Use this for stable to `@next` cutovers and other breaking package/image pairs. Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/reference/rollouts/).
+   Use this for stable to `@next` cutovers and other breaking package/image pairs. Refer to [Migrate](/sandbox/1-0-preview/migrate/#deploy-the-cutover) and [Rollouts](/containers/configuration/rollouts/).
 
 Do not mix a stable package with a `@next` image, or the reverse.
 
@@ -59,6 +59,6 @@ More detail: [Before production](/containers/guides/deploy/#before-production).
 ## Related
 
 - [Deploy Containers](/containers/guides/deploy/)
-- [Rollouts](/containers/reference/rollouts/)
+- [Rollouts](/containers/configuration/rollouts/)
 - [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/)
 - [Migrate to Sandbox SDK 1.0 preview](/sandbox/1-0-preview/migrate/)

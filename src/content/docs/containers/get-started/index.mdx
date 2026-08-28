@@ -118,7 +118,7 @@ Your container image must be able to run on the `linux/amd64` architecture, but 
 
 In the example you just deployed, it is a simple Golang server that responds to requests on port 8080 using
 the `MESSAGE` environment variable that will be set in the Worker and an [auto-generated
-environment variable](/containers/reference/environment-variables/) `CLOUDFLARE_DEPLOYMENT_ID.`
+environment variable](/containers/configuration/environment-variables/) `CLOUDFLARE_DEPLOYMENT_ID.`
 
 ```go
 func handler(w http.ResponseWriter, r *http.Request) {

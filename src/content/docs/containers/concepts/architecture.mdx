@@ -15,7 +15,7 @@ After you deploy an application with a Container, your image is uploaded to
 Cloudflare will pre-schedule instances and pre-fetch images across the globe to ensure quick start
 times when scaling up the number of concurrent container instances.
 
-Worker code goes live on deploy. Container instances update with a [rollout](/containers/reference/rollouts/). Refer to [Deploy Containers](/containers/guides/deploy/).
+Worker code goes live on deploy. Container instances update with a [rollout](/containers/configuration/rollouts/). Refer to [Deploy Containers](/containers/guides/deploy/).
 
 ## Lifecycle of a Request
 
@@ -101,7 +101,7 @@ When the platform is about to stop a container instance, it:
 2. Waits up to 15 minutes for that process to exit.
 3. Sends `SIGKILL` if the process is still running.
 
-Handle `SIGTERM` in your image if you need cleanup before exit. The same sequence runs when a [rollout](/containers/reference/rollouts/) replaces a container instance with a new image.
+Handle `SIGTERM` in your image if you need cleanup before exit. The same sequence runs when a [rollout](/containers/configuration/rollouts/) replaces a container instance with a new image.
 
 ### Lifecycle hooks
 

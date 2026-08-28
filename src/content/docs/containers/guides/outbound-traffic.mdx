@@ -2,7 +2,7 @@
 title: Handle outbound traffic
 pcx_content_type: how-to
 sidebar:
-  order: 5
+  order: 6
 description: Intercept and handle outbound HTTP from containers using Workers.
 products:
   - containers
@@ -18,7 +18,7 @@ Use them to:
 - Safely inject authorization headers or tokens
 - Transparently reroute traffic
 - Add custom policy on outbound traffic (such as denying specific HTTP requests)
-- [Connect to Workers bindings](/containers/concepts/workers-connections/) like KV, R2, and Durable Objects
+- [Connect to Workers bindings](/containers/configuration/workers-connections/) like KV, R2, and Durable Objects
 
 ## Block outbound traffic
 
@@ -411,7 +411,7 @@ The `Container` class calls these methods automatically when you use the functio
 
 ## Related resources
 
-- [Connect to Workers bindings](/containers/concepts/workers-connections/) — Access KV, R2, Durable Objects, and other bindings from a container
+- [Connect to Workers bindings](/containers/configuration/workers-connections/) — Access KV, R2, Durable Objects, and other bindings from a container
 - [Control outbound traffic (Sandboxes)](/sandbox/guides/outbound-traffic/) — Sandbox SDK API for outbound handlers
-- [Environment variables and secrets](/containers/reference/environment-variables/) — Configure secrets and environment variables
+- [Environment variables and secrets](/containers/configuration/environment-variables/) — Configure secrets and environment variables
 - [Durable Object interface](/durable-objects/api/container/) — Full `ctx.container` API reference
