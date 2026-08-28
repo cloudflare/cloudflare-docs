@@ -38,7 +38,8 @@
 		"flue:reset:local": "rm -rf .flue/.wrangler/state .flue/.wrangler/tmp .flue/dist/cloudflare_docs_flue/.wrangler/state && echo 'Cleared local flue dev state (Durable Objects + R2). Stop the dev server before running this.'",
 		"flue:evals": "tsx .flue/bin/run-evals.ts",
 		"lint": "eslint",
-		"prepare": "husky"
+		"prepare": "husky",
+		"prebuild:incremental": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
 	},
 	"devDependencies": {
 		"@actions/core": "3.0.1",

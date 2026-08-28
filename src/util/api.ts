@@ -1,37 +1,33 @@
 /**
  * OpenAPI schema loader for the APIRequest component.
  *
- * The schema is fetched and extracted by `bin/fetch-openapi.ts`, which runs
- * from the `prebuild`/`predev` hooks (see package.json), so the prerender only
- * reads the local copy at `.tmp/middlecache/v1/cloudflare-api-schemas/`.
- * Dereferenced result is memoized so the deref runs once per build, not per
+ * The schema is fetched by `bin/fetch-openapi.ts` from the `prebuild` and
+ * `prebuild:incremental` hooks (see package.json). `getSchema` reads the local
+ * copy and fails loudly if it is missing, so a build invoked without the
+ * pre-step is caught early instead of silently downloading mid-render. The
+ * dereferenced result is memoized so the deref runs once per build, not per
  * component instance.
  */
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPI } from "openapi-types";
-import { getDotTmpPath } from "./custom-loaders";
 import { readFile } from "node:fs/promises";
-import { join } from "node:path";
-
-const OPENAPI_JSON_PATH = join(
-	getDotTmpPath(),
-	"middlecache",
-	"v1",
-	"cloudflare-api-schemas",
-	"openapi.json",
-);
+import { getOpenApiJsonPath } from "./openapi-schema";
 
 let schemaPromise: Promise<OpenAPI.Document> | undefined;
 
 const loadSchema = async (): Promise<OpenAPI.Document> => {
+	const openapiFile = getOpenApiJsonPath();
+
 	let raw: string;
 	try {
-		raw = await readFile(OPENAPI_JSON_PATH, "utf8");
-	} catch (err) {
+		raw = await readFile(openapiFile, "utf8");
+	} catch (cause) {
 		throw new Error(
-			`OpenAPI schema not found at ${OPENAPI_JSON_PATH} — run \`pnpm run build\` (or \`pnpm prebuild\`) first. ${(err as Error).message}`,
+			`OpenAPI schema not found at ${openapiFile}. Run \`pnpm run build\` (or \`pnpm run build:incremental\`) so the prebuild hook fetches it first.`,
+			{ cause },
 		);
 	}
+
 	return await SwaggerParser.dereference(JSON.parse(raw));
 };
 
