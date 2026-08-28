@@ -96,15 +96,15 @@ You can also manually configure Data Models by going to **Settings** > **Data mo
 
 Create the Logpush job by following [Enable Logpush to Splunk](/logs/logpush/logpush-job/enable-destinations/splunk/). When you fill in the Splunk destination:
 
-- Use the endpoint you built in [Task 1 - step 9](#task-1---install-and-configure-the-cloudflare-app-for-splunk) for **Splunk HEC URL**, including the `/services/collector/raw` path.
-- Use the HEC token you saved in [Task 1 - step 7](#task-1---install-and-configure-the-cloudflare-app-for-splunk) for **Auth Token**, prefixed with `Splunk` (for example, `Splunk 12345678-1234-1234-1234-1234567890ab`).
+- Use the endpoint you configured in [Task 1](#task-1---install-and-configure-the-cloudflare-app-for-splunk) for **Splunk HEC URL**, including the `/services/collector/raw` path.
+- Use the HEC token you created in [Task 1](#task-1---install-and-configure-the-cloudflare-app-for-splunk) for **Auth Token**, prefixed with `Splunk` (for example, `Splunk 12345678-1234-1234-1234-1234567890ab`).
 - Set **Source Type** to the value that matches the dataset you want to push, so the Cloudflare App for Splunk parses events correctly:
   - HTTP requests, Firewall events, Spectrum events, and most zone-scoped datasets: `cloudflare:json`
-  - DNS logs: `cloudflare:dns`
+  - DNS logs, including Zero Trust Gateway DNS: `cloudflare:dns`
   - Audit logs: `cloudflare:audit`
   - Access requests: `cloudflare:access`
   - CASB findings, Zero Trust Gateway HTTP, and Zero Trust Gateway Network: `cloudflare:json`
-- Only turn on **Use insecure skip verify option** if your Splunk instance uses a self-signed certificate, as noted in [Task 1 - step 8](#task-1---install-and-configure-the-cloudflare-app-for-splunk).
+- Only turn on **Use insecure skip verify option** if your Splunk instance uses a self-signed certificate, as noted in [Task 1](#task-1---install-and-configure-the-cloudflare-app-for-splunk).
 
 Under **Send the following fields**, keep the defaults or refer to the [Dashboard section](#task-3---view-the-dashboards) to select the fields required to fully populate the Cloudflare App for Splunk dashboards.
 
@@ -208,9 +208,11 @@ Available Filters:
 
 ## Splunk CIM field mappings
 
-The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Information Model (CIM)](https://docs.splunk.com/Documentation/CIM/latest/User/Overview) field names, so that Cloudflare data can be searched, correlated, and accelerated alongside other CIM-compliant sources in your Splunk deployment. The following tables list the mappings the app applies per Cloudflare Logpush dataset.
+The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Information Model (CIM)](https://docs.splunk.com/Documentation/CIM/latest/User/Overview) field names, so that you can search, correlate, and accelerate Cloudflare data alongside other CIM-compliant sources in your Splunk deployment. The following tables list the mappings the app applies per Cloudflare Logpush dataset.
 
 ### HTTP requests
+
+The app applies the following mappings:
 
 | Cloudflare field           | Splunk CIM field    |
 | -------------------------- | ------------------- |
@@ -233,6 +235,8 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 
 ### CASB findings
 
+The app applies the following mappings:
+
 | Cloudflare field         | Splunk CIM field |
 | ------------------------ | ---------------- |
 | `AssetDisplayName`       | `dest`           |
@@ -243,6 +247,8 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 | `InstanceID`             | `signature_id`   |
 
 ### Zero Trust Gateway DNS
+
+The app applies the following mappings:
 
 | Cloudflare field | Splunk CIM field |
 | ---------------- | ---------------- |
@@ -257,6 +263,8 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 
 ### Audit logs
 
+The app applies the following mappings:
+
 | Cloudflare field | Splunk CIM field |
 | ---------------- | ---------------- |
 | `ActionResult`   | `status`         |
@@ -267,6 +275,8 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 | `OwnerID`        | `src_user`       |
 
 ### Access requests
+
+The app applies the following mappings:
 
 | Cloudflare field               | Splunk CIM field         |
 | ------------------------------ | ------------------------ |
@@ -280,11 +290,13 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 
 ### Zero Trust Gateway HTTP
 
+The app applies the following mappings:
+
 | Cloudflare field | Splunk CIM field  |
 | ---------------- | ----------------- |
 | `Action`         | `action`          |
 | `DestinationIP`  | `dest`            |
-| `DestinationPort`| `dest_port`       |
+| `DestinationPort` | `dest_port`       |
 | `HTTPMethod`     | `http_method`     |
 | `Referer`        | `http_referrer`   |
 | `SourceIP`       | `src`             |
@@ -293,6 +305,8 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 | `UserID`         | `user`            |
 
 ### Zero Trust Gateway Network
+
+The app applies the following mappings:
 
 | Cloudflare field  | Splunk CIM field       |
 | ----------------- | ---------------------- |
@@ -303,7 +317,7 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 | `OverrideIP`      | `dest_translated_ip`   |
 | `OverridePort`    | `dest_translated_port` |
 | `PolicyID`        | `rule`                 |
-| `SessionID`       | `ssid`                 |
+| `SessionID`       | `session_id`           |
 | `SourceIP`        | `src_ip`               |
 | `SourcePort`      | `src_port`             |
 | `Transport`       | `transport`            |
