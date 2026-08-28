@@ -281,11 +281,8 @@ export default defineConfig({
 	},
 	markdown,
 	image: {
-		// Cloudflare Image Resizing (/cdn-cgi/image/) is only available on the
-		// edge, so in dev serve the original images directly (no resizing — the
-		// full files are already local). The production build still uses the
-		// Cloudflare service to keep image processing off the build (fixes
-		// rolldown OOM) and mirror what's served in production.
+		// /cdn-cgi/image/ only exists on Cloudflare's edge, so dev serves
+		// originals directly; production keeps edge resizing.
 		service:
 			process.env.NODE_ENV === "production"
 				? { entrypoint: "@astrojs/cloudflare/image-service" }
