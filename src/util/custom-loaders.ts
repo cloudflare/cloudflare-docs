@@ -7,10 +7,27 @@ import { fileURLToPath } from "node:url";
 import { Readable } from "node:stream";
 import type { ReadableStream as WebReadableStream } from "node:stream/web";
 import { writeFile } from "node:fs/promises";
+import { spawn } from "node:child_process";
 import fs from "fs";
 import { dirname, join } from "path";
 
 import * as z from "zod";
+
+const MAX_DOWNLOAD_ATTEMPTS = 3;
+
+/**
+ * Resolve the repo-root `.tmp/` directory used for downloaded artifacts.
+ * Prefers the file-relative path (how Astro/tsx resolve it) and falls back to
+ * the current working directory (needed under Vitest, where `import.meta.url`
+ * is not a `file://` URL).
+ */
+export const getDotTmpPath = () => {
+	try {
+		return fileURLToPath(new URL("../../.tmp", import.meta.url));
+	} catch {
+		return join(process.cwd(), ".tmp");
+	}
+};
 
 /**
  * downloadToDotTempIfNotPresent is a convenience function for handling downloads to a .tmp directory
@@ -18,11 +35,14 @@ import * as z from "zod";
  *
  * @param url - source URL
  * @param dotTmpDestination - path relative to .tmp/ as destination for downloaded file
+ * @param options - { validate: optional async check run against the downloaded file; a rejected
+ *   promise discards the file and triggers a re-download }
  */
 
 export async function downloadToDotTempIfNotPresent(
 	url: string,
 	dotTmpDestination: string,
+	options: { validate?: (filePath: string) => Promise<void> } = {},
 ) {
 	const source = z.url().parse(url);
 	const relativeDestination = z
@@ -38,25 +58,87 @@ export async function downloadToDotTempIfNotPresent(
 	const destinationParts = relativeDestination.split("/");
 	const universalRelativeDestination = join(...destinationParts);
 
-	const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+	const dotTmpPath = getDotTmpPath();
 
 	const destination = join(dotTmpPath, universalRelativeDestination);
 
-	if (!fs.existsSync(destination)) {
-		fs.mkdirSync(dirname(destination), { recursive: true });
-
-		const response = await fetch(source);
+	for (let attempt = 1; attempt <= MAX_DOWNLOAD_ATTEMPTS; attempt++) {
 		try {
+			if (fs.existsSync(destination)) {
+				await options.validate?.(destination);
+				return;
+			}
+
+			fs.mkdirSync(dirname(destination), { recursive: true });
+
+			// Write to a temp file first so a partial/failed download never
+			// leaves a file that looks "present".
+			const tmpDestination = `${destination}.tmp`;
+			fs.rmSync(tmpDestination, { force: true });
+
+			// Request the identity encoding so middlecache serves the bytes
+			// as-is rather than on-the-fly brotli, which has no integrity check
+			// and can silently decompress a truncated transfer into garbage.
+			const response = await fetch(source, {
+				headers: { "Accept-Encoding": "identity" },
+			});
+
+			if (!response.ok) {
+				throw new Error(
+					`Failed to download ${url}: HTTP ${response.status} ${response.statusText}`,
+				);
+			}
+
 			// Stream file to destination to avoid storing in memory
 			await writeFile(
-				destination,
+				tmpDestination,
 				Readable.fromWeb(response.body! as WebReadableStream),
 			);
+
+			const expectedLength = Number(response.headers.get("content-length"));
+			if (Number.isFinite(expectedLength) && expectedLength > 0) {
+				const actualLength = fs.statSync(tmpDestination).size;
+				if (actualLength !== expectedLength) {
+					throw new Error(
+						`Downloaded file size mismatch for ${url}: expected ${expectedLength} bytes, got ${actualLength}`,
+					);
+				}
+			}
+
+			fs.renameSync(tmpDestination, destination);
+			await options.validate?.(destination);
+			return;
 		} catch (err) {
-			// Clean up partial download if stream fails
 			fs.rmSync(destination, { force: true });
-			throw err;
+			fs.rmSync(`${destination}.tmp`, { force: true });
+			if (attempt === MAX_DOWNLOAD_ATTEMPTS) {
+				throw err;
+			}
+			console.warn(
+				`Retrying download of ${url} (attempt ${attempt}/${MAX_DOWNLOAD_ATTEMPTS}): ${(err as Error).message}`,
+			);
 		}
+	}
+}
+
+/**
+ * Extract a gzip-compressed tar archive into destinationDir.
+ */
+export async function extractTarGz(
+	tarballPath: string,
+	destinationDir: string,
+): Promise<void> {
+	fs.mkdirSync(destinationDir, { recursive: true });
+	const tar = spawn("tar", ["-xzf", tarballPath, "-C", destinationDir], {
+		stdio: "ignore",
+	});
+	const exitCode = await new Promise<number | null>((resolve) =>
+		tar.on("close", resolve),
+	);
+	if (exitCode !== 0) {
+		throw new Error(
+			`tar extraction failed for ${tarballPath} (exit code ${exitCode})`,
+		);
 	}
 }
 
