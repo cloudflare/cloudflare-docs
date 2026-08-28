@@ -450,6 +450,64 @@ export class MyContainer extends Container {
 
 Calling `kill()` without an argument queues a `SIGTERM`, signal `15`. You can pass another signal when the process requires it. A process can handle or ignore a signal, so this is not a hard execution deadline. Observe completion through `exitCode`, and do not infer a specific exit code from a signal.
 
+You can also cancel a process with an `AbortSignal`. Aborting the signal terminates the process with `SIGKILL`, and pairs well with `AbortSignal.timeout()` to set a hard deadline.
+
+<TypeScriptExample>
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async runWithDeadline() {
+		if (!this.ctx.container.running) {
+			await this.start();
+		}
+
+		const process = await this.ctx.container.exec(["sleep", "120"], {
+			signal: AbortSignal.timeout(30_000),
+		});
+
+		return await process.exitCode;
+	}
+}
+```
+</TypeScriptExample>
+
+## Allocate a pseudo-terminal
+
+Set the `pty` option to run a process under a pseudo-terminal (PTY). A PTY exposes a single stream that merges standard output and standard error, so read the combined output from `stdout`.
+
+Pass `pty: true` to use the default size of 80 columns by 24 rows, or pass `cols` and `rows` to set the size. Call `resize()` when the terminal dimensions change.
+
+<TypeScriptExample>
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async runInteractive() {
+		if (!this.ctx.container.running) {
+			await this.start();
+		}
+
+		const process = await this.ctx.container.exec(["bash", "-i"], {
+			pty: { cols: 120, rows: 40 },
+		});
+
+		// Resize the terminal window when the client viewport changes.
+		process.resize(80, 24);
+
+		// Write commands and close stdin so the shell exits.
+		const writer = process.stdin!.getWriter();
+		const encoder = new TextEncoder();
+		await writer.write(encoder.encode("whoami\n"));
+		await writer.write(encoder.encode("exit\n"));
+		await writer.close();
+
+		return await process.output();
+	}
+}
+```
+</TypeScriptExample>
+
 ## Coordinate operations
 
 Place `exec()` calls in the Durable Object that controls the Container. The Durable Object can coordinate process state and Container lifecycle.
