@@ -118,7 +118,66 @@ Triggered when a video's state or metadata changes after it is ready, for exampl
 }
 ```
 
+#### `caption`
+
+Caption events will be dispatched for `caption.created` and `caption.deleted`
+
+```
+{
+  "type": "cf.stream.caption.created",
+  "source": {
+    "type": "stream"
+  },
+  "metadata": {
+    "accountId": "da131bc3947cc704da2af463750bb126",
+    "eventSubscriptionId": "1b86a4af9ef549fcb8d6d8d0f57828b3",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2026-08-27T16:27:25.369Z"
+  },
+  "payload": {
+    "videoId": "1df1d001b77725e10bfdd70f36c7ada1",
+    "generated": true,
+    "label": "English (auto-generated)",
+    "language": "en",
+    "status": "inprogress"
+  }
+}
+```
+
+#### `download`
+
+Download events will be dispatched for `download.created` and `download.deleted`
+
+```
+{
+  "type": "cf.stream.download.created",
+  "source": {
+    "type": "stream"
+  },
+  "metadata": {
+    "accountId": "da131bc3947cc704da2af463750bb126",
+    "eventSubscriptionId": "1b86a4af9ef549fcb8d6d8d0f57828b3",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2026-08-28T18:12:18.711Z"
+  },
+  "payload": {
+    "videoId": "1df1d001b77725e10bfdd70f36c7ada1",
+    "percentComplete": 0,
+    "status": "inprogress",
+    "url": "https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/1df1d001b77725e10bfdd70f36c7ada1/downloads/audio.m4a"
+  }
+}
+```
+
+### Live input events
+
 **Live input events** — Subscribe to the `stream` source to receive live input events for your account. The `payload` mirrors the live input object returned by the [Stream API](/api/resources/stream/subresources/live_inputs/), with a top-level `status` field reflecting the current connection state.
+
+:::caution
+
+Live input event `payload` objects include RTMPS, SRT, and WebRTC stream keys and passphrases. Treat the message body as sensitive.
+
+:::
 
 #### `live_input.connected`
 
@@ -183,12 +242,6 @@ Triggered when a broadcaster connects to a live input and begins sending video.
 	}
 }
 ```
-
-:::caution
-
-The `payload` includes RTMPS, SRT, and WebRTC stream keys and passphrases. Treat the message body as sensitive and restrict who can consume the queue.
-
-:::
 
 #### `live_input.disconnected`
 
