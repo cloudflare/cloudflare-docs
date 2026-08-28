@@ -53,9 +53,9 @@ package.json @cloudflare/content-engineering
 /src/pages/agent-setup @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 
 # AI Crawl Control
-/src/content/docs/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso
-/src/content/changelog/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso
-/src/content/partials/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso
+/src/content/docs/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian
+/src/content/changelog/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian
+/src/content/partials/ai-crawl-control/ @cloudflare/product-owners @jinhee-c-lee @wafonso @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian
 
 # Analytics & Logs
 
@@ -95,7 +95,6 @@ package.json @cloudflare/content-engineering
 /src/content/changelog/waiting-room/ @angelampcosta @dcpena @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @hsaxenaCF @danielegm @cloudflare/product-owners
 /src/content/changelog/logs/ @soheiokamoto @angelampcosta @rianvdm @dcpena @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/audit-logs/ @dcpena @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/changelog/log-explorer/ @angelampcosta @dcpena @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/changelog/dns/ @cloudflare/pm-changelogs @cloudflare/product-owners @hannes-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
@@ -104,7 +103,7 @@ package.json @cloudflare/content-engineering
 /src/content/changelog/waiting-room/ @angelampcosta @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @hsaxenaCF @danielegm @cloudflare/product-owners
 /src/content/changelog/logs/ @soheiokamoto @angelampcosta @rianvdm @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/audit-logs/ @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/changelog/log-explorer/ @angelampcosta @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/log-explorer/ @angelampcosta @sahidya @cjolowicz @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/changelog/dns/ @cloudflare/pm-changelogs @cloudflare/product-owners @hannes-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
 /src/assets/images/changelog/1.1.1.1/ @cloudflare/pm-changelogs @cloudflare/product-owners @hannes-cf @fattouche @xofyarg @dklbreitling @chreo @svenr-cf @kerolasa @matildeopbravo @vavrusa @mworsley-cloudflare @sebastiaanyn @vendemiat @Woutifier
@@ -162,12 +161,13 @@ package.json @cloudflare/content-engineering
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
+/src/content/docs/network/ip-geolocation.mdx @cloudflare/product-owners @mbullock1986
 /src/content/docs/notifications/ @cloudflare/product-owners
 /src/content/docs/registrar/ @cloudflare/product-owners
 /src/content/docs/rules/ @cloudflare/appsec-reviewers @smarsh-cf @maurizioabba @cloudflare/product-owners @mbullock1986
 /src/content/docs/ruleset-engine/ @cloudflare/appsec-reviewers @maurizioabba @cloudflare/product-owners @mbullock1986
 /src/content/fields/ @cloudflare/appsec-reviewers @maurizioabba @mbullock1986 @danielegm @xmflsct
-/src/content/docs/log-explorer/ @angelampcosta @sahidya @cloudflare/product-owners
+/src/content/docs/log-explorer/ @angelampcosta @sahidya @cjolowicz @cloudflare/product-owners
 
 # Developer Platform
 
@@ -186,10 +186,12 @@ package.json @cloudflare/content-engineering
 /src/content/partials/hyperdrive/ @rita3ko @irvinebroque @vy-ton @ivoryibu @thomasgauvin @sejoker @knickish @cloudflare/product-owners
 /src/content/docs/images/ @cloudflare/product-owners @renandincer @third774 @deannalam @dochne
 /src/content/partials/images/ @cloudflare/product-owners @renandincer @third774 @deannalam @dochne
-/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/product-owners @MattieTK
-/src/content/partials/pages/ @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK
-/src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
-/src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
+/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/partials/pages/ @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/directory/pages.yaml @cloudflare/product-owners @scottbuscemi
+/src/content/pages-framework-presets/ @cloudflare/product-owners @scottbuscemi
 /src/content/docs/kv/ @thomasgauvin @irvinebroque @rts-rob @vy-ton @cloudflare/product-owners
 /src/content/release-notes/kv.yaml @thomasgauvin @cloudflare/product-owners
 /src/content/partials/kv/ @thomasgauvin @cloudflare/product-owners
@@ -214,6 +216,7 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/realtimekit-react-native-ui-kit.yaml @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare @cloudflare/product-owners
 /src/content/release-notes/realtimekit-react-native-core.yaml @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare @cloudflare/product-owners
 /src/content/release-notes/realtimekit-android-core.yaml @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare @cloudflare/product-owners
+/src/content/release-notes/realtimekit-recording-sdk.yaml @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare @cloudflare/product-owners
 /public/realtime/ @cloudflare/product-owners @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
 /src/content/docs/stream/ @tsmith512 @cloudflare/product-owners @renandincer @third774
 /src/content/release-notes/stream.yaml @tsmith512 @cloudflare/product-owners
@@ -225,9 +228,15 @@ package.json @cloudflare/content-engineering
 /src/content/docs/zaraz/ @kathayl @jonnyparris @simonabadoiu @cloudflare/product-owners
 /src/content/release-notes/zaraz.yaml @jonnyparris @simonabadoiu @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @ericclemmons @cloudflare/product-owners @yomna-shousha @MattieTK @vy-ton
+/src/content/docs/workers/ci-cd/builds/ @irvinebroque @aninibread @GregBrimble @ericclemmons @cloudflare/product-owners @yomna-shousha @MattieTK @vy-ton @scottbuscemi
+/src/assets/images/workers/ci-cd/builds/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/directory/workers-builds.yaml @cloudflare/product-owners @scottbuscemi
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/product-owners @MattieTK
 /src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @cloudflare/product-owners @MattieTK @vy-ton
-/src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/product-owners @MattieTK
+/src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/docs/workers/framework-guides/web-apps/nextjs.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/docs/workers/framework-guides/web-apps/opennext.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/docs/workers/framework-guides/automatic-configuration.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @nevikashah @WalshyDev @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/product-owners
@@ -344,17 +353,17 @@ package.json @cloudflare/content-engineering
 # Security products
 
 /src/content/docs/api-shield/ @cloudflare/appsec-reviewers @xmflsct @danielegm @cloudflare/product-owners @janrueth @djhworld @alexpovel @mattrighetti @abdelrahman-t
-/src/content/docs/bots/ @worenga @jinhee-c-lee @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1
-/src/content/partials/bots/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/content/changelog/bots/ @worenga @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @marinaelmore
-/src/content/release-notes/bots.yaml @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/content/directory/bots.yaml @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/content/glossary/bots.yaml @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/assets/images/bots/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/assets/images/changelog/bots/ @worenga @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @marinaelmore
+/src/content/docs/bots/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/partials/bots/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/changelog/bots/ @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/release-notes/bots.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/directory/bots.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/glossary/bots.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/assets/images/bots/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/assets/images/changelog/bots/ @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/content/docs/firewall/ @worenga @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @danielegm @cloudflare/product-owners @hsaxenaCF
-/src/assets/images/changelog/bots/ @worenga @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @marinaelmore
+/src/content/docs/firewall/ @cloudflare/firewall @cloudflare/appsec-reviewers @danielegm @cloudflare/product-owners @hsaxenaCF @migueldemoura @worenga
+/src/assets/images/changelog/bots/ @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
 /src/content/docs/dmarc-management/ @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/firewall/ @worenga @cloudflare/firewall @cloudflare/appsec-reviewers @danielegm @cloudflare/product-owners @hsaxenaCF
 /src/content/partials/firewall/ @worenga @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/product-owners
@@ -378,11 +387,11 @@ package.json @cloudflare/content-engineering
 /src/assets/images/waf/ @worenga @cloudflare/firewall @cloudflare/appsec-reviewers @hsaxenaCF @danielegm @cloudflare/product-owners @danielegm @xmflsct
 /src/assets/images/changelog/waf/ @worenga @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @danielegm @cloudflare/product-owners @xmflsct
 /public/images/waf/ @worenga @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/product-owners @danielegm @xmflsct
-/src/content/docs/cloudflare-challenges/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @migueldemoura
-/src/content/partials/cloudflare-challenges/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/content/changelog/cloudflare-challenges/ @worenga @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/cloudflare-challenges.yaml @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners
-/public/images/precursor/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
+/src/content/docs/cloudflare-challenges/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @migueldemoura @njustus1 @olipayne @cf-jian @worenga
+/src/content/partials/cloudflare-challenges/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/changelog/cloudflare-challenges/ @cloudflare/appsec-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/directory/cloudflare-challenges.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/public/images/precursor/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
 
 # Support
 
@@ -391,13 +400,13 @@ package.json @cloudflare/content-engineering
 
 # Turnstile
 
-/src/content/docs/turnstile/ @migueldemoura @punkeel @marinaelmore @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/content/partials/turnstile/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/content/release-notes/turnstile.yaml @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/content/directory/turnstile.yaml @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/content/glossary/turnstile.yaml @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/src/assets/images/turnstile/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore
-/public/turnstile/ @migueldemoura @punkeel @marinaelmore @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/turnstile/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/partials/turnstile/ @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/release-notes/turnstile.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/directory/turnstile.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/content/glossary/turnstile.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/src/assets/images/turnstile/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
+/public/turnstile/ @cloudflare/appsec-reviewers @cloudflare/product-owners @marinaelmore @njustus1 @migueldemoura @olipayne @cf-jian @worenga
 
 # Waiting Room
 

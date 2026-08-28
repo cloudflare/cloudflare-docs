@@ -128,7 +128,9 @@ const worker = env.LOADER.get("hello-v1", async () => {
 
 ## Supported languages
 
-Dynamic Workers support JavaScript (ES modules and CommonJS) and Python. The code is passed as strings in the `modules` object. There is no build step, so languages like TypeScript must be compiled to JavaScript before being passed to `load()` or `get()`.
+Dynamic Workers support JavaScript (ES modules and CommonJS), Python, and WebAssembly (Wasm) modules. Pass JavaScript and Python code as strings in the `modules` object. Pass compiled Wasm binaries as `{ wasm: ArrayBuffer }` module objects.
+
+There is no build step, so languages like TypeScript must be compiled to JavaScript before being passed to `load()` or `get()`.
 
 For the full list of supported module types, refer to the [API reference](/dynamic-workers/api-reference/#modules).
 
