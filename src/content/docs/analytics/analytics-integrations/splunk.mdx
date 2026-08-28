@@ -205,6 +205,110 @@ Available Filters:
 
 - Client Request Method
 
+## Splunk CIM field mappings
+
+The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Information Model (CIM)](https://docs.splunk.com/Documentation/CIM/latest/User/Overview) field names, so that Cloudflare data can be searched, correlated, and accelerated alongside other CIM-compliant sources in your Splunk deployment. The tables below list the mappings the app applies per Cloudflare Logpush dataset.
+
+### HTTP requests
+
+| Cloudflare field           | Splunk CIM field    |
+| -------------------------- | ------------------- |
+| `ClientIP`                 | `src_ip`            |
+| `ClientRequestBytes`       | `bytes_in`          |
+| `ClientRequestHost`        | `dest_host`         |
+| `ClientRequestMethod`      | `http_method`       |
+| `ClientRequestPath`        | `uri_path`          |
+| `ClientRequestReferer`     | `http_referer`      |
+| `ClientRequestURI`         | `uri`               |
+| `ClientRequestUserAgent`   | `http_user_agent`   |
+| `ClientSrcPort`            | `src_port`          |
+| `ClientSSLProtocol`        | `ssl_protocol`      |
+| `EdgeRateLimitAction`      | `action`            |
+| `EdgeResponseBytes`        | `bytes_out`         |
+| `EdgeResponseContentType`  | `http_content_type` |
+| `EdgeResponseStatus`       | `status`            |
+| `OriginIP`                 | `dest_ip`           |
+| `OriginResponseTime`       | `response_time`     |
+
+### CASB findings
+
+| Cloudflare field         | Splunk CIM field |
+| ------------------------ | ---------------- |
+| `AssetDisplayName`       | `dest`           |
+| `AssetLink`              | `url`            |
+| `FindingTypeDisplayName` | `category`       |
+| `FindingTypeID`          | `category_id`    |
+| `FindingTypeSeverity`    | `severity`       |
+| `InstanceID`             | `signature_id`   |
+
+### DNS logs
+
+| Cloudflare field | Splunk CIM field |
+| ---------------- | ---------------- |
+| `DstIP`          | `dest`           |
+| `DstPort`        | `dest_port`      |
+| `Protocol`       | `transport`      |
+| `QueryName`      | `query`          |
+| `QuerySize`      | `query_count`    |
+| `QueryTypeName`  | `query_type`     |
+| `RCode`          | `reply_code`     |
+| `SrcIP`          | `src`            |
+| `SrcPort`        | `src_port`       |
+
+### Audit logs
+
+| Cloudflare field | Splunk CIM field |
+| ---------------- | ---------------- |
+| `ActionResult`   | `status`         |
+| `ActionType`     | `action`         |
+| `ActorID`        | `user`           |
+| `ActorIP`        | `src`            |
+| `ActorType`      | `user_category`  |
+| `OwnerID`        | `src_user`       |
+
+### Access requests
+
+| Cloudflare field               | Splunk CIM field         |
+| ------------------------------ | ------------------------ |
+| `Action`                       | `action`                 |
+| `AppDomain`                    | `app`                    |
+| `Connection`                   | `authentication_service` |
+| `IPAddress`                    | `src`                    |
+| `PurposeJustificationResponse` | `reason`                 |
+| `RayID`                        | `signature_id`           |
+| `UserUID`                      | `user_id`                |
+
+### Zero Trust Gateway HTTP
+
+| Cloudflare field | Splunk CIM field  |
+| ---------------- | ----------------- |
+| `Action`         | `action`          |
+| `DestinationIP`  | `dest`            |
+| `DestinationPort`| `dest_port`       |
+| `HTTPMethod`     | `http_method`     |
+| `Referer`        | `http_referrer`   |
+| `SourceIP`       | `src`             |
+| `URL`            | `url`             |
+| `UserAgent`      | `http_user_agent` |
+| `UserID`         | `user`            |
+
+### Zero Trust Gateway Network
+
+| Cloudflare field  | Splunk CIM field       |
+| ----------------- | ---------------------- |
+| `Action`          | `action`               |
+| `DestinationIP`   | `dest_ip`              |
+| `DestinationPort` | `dest_port`            |
+| `DeviceName`      | `dvc`                  |
+| `OverrideIP`      | `dest_translated_ip`   |
+| `OverridePort`    | `dest_translated_port` |
+| `PolicyID`        | `rule`                 |
+| `SessionID`       | `ssid`                 |
+| `SourceIP`        | `src_ip`               |
+| `SourcePort`      | `src_port`             |
+| `Transport`       | `transport`            |
+| `UserID`          | `user`                 |
+
 ## Debugging tips
 
 ### Incomplete dashboards
