@@ -154,6 +154,42 @@ describe("downloadToDotTempIfNotPresent", () => {
 		expect(fetchMock).toHaveBeenCalledTimes(1);
 		expect(fs.readFileSync(join(TEST_DIR, "file.txt"), "utf8")).toBe("fresh");
 	});
+
+	test("concurrent calls to the same destination share a single download", async () => {
+		const fetchMock = vi.fn().mockResolvedValue(okResponse("shared"));
+		vi.stubGlobal("fetch", fetchMock);
+
+		await Promise.all([
+			downloadToDotTempIfNotPresent("https://example.com/file.txt", TEST_DEST),
+			downloadToDotTempIfNotPresent("https://example.com/file.txt", TEST_DEST),
+			downloadToDotTempIfNotPresent("https://example.com/file.txt", TEST_DEST),
+		]);
+
+		expect(fetchMock).toHaveBeenCalledTimes(1);
+		expect(fs.readFileSync(join(TEST_DIR, "file.txt"), "utf8")).toBe("shared");
+	});
+
+	test("a failed in-flight download can be retried by a later call", async () => {
+		const fetchMock = vi
+			.fn()
+			.mockResolvedValueOnce(errResponse(500))
+			.mockResolvedValueOnce(errResponse(500))
+			.mockResolvedValueOnce(errResponse(500))
+			.mockResolvedValueOnce(okResponse("ok"));
+		vi.stubGlobal("fetch", fetchMock);
+
+		await expect(
+			downloadToDotTempIfNotPresent("https://example.com/file.txt", TEST_DEST),
+		).rejects.toThrow(/HTTP 500/);
+
+		await downloadToDotTempIfNotPresent(
+			"https://example.com/file.txt",
+			TEST_DEST,
+		);
+
+		expect(fetchMock).toHaveBeenCalledTimes(4);
+		expect(fs.readFileSync(join(TEST_DIR, "file.txt"), "utf8")).toBe("ok");
+	});
 });
 
 describe("extractTarGz", () => {

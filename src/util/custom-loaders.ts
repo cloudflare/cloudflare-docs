@@ -15,17 +15,45 @@ import * as z from "zod";
 
 const MAX_DOWNLOAD_ATTEMPTS = 3;
 
+// Serialize concurrent downloads of the same destination. Prerender renders
+// pages in parallel, so multiple callers can hit the same middlecache file at
+// once; without this they race on the temp-file write/rename and a retry's
+// cleanup can delete a sibling call's freshly-written output.
+const inFlightDownloads = new Map<string, Promise<void>>();
+
 /**
  * Resolve the repo-root `.tmp/` directory used for downloaded artifacts.
- * Prefers the file-relative path (how Astro/tsx resolve it) and falls back to
- * the current working directory (needed under Vitest, where `import.meta.url`
- * is not a `file://` URL).
+ *
+ * The tsx prebuild scripts and the bundled prerender resolve `import.meta.url`
+ * to different locations (source files vs `dist/.prerender/chunks/`), so the
+ * repo root is found by walking up from the module location until a
+ * `package.json` is found. Falls back to the current working directory for
+ * runtimes where `import.meta.url` is not a `file://` URL (e.g. Vitest).
  */
 export const getDotTmpPath = () => {
 	try {
-		return fileURLToPath(new URL("../../.tmp", import.meta.url));
+		const moduleDir = dirname(fileURLToPath(import.meta.url));
+		const root = findRepoRoot(moduleDir);
+		if (root) {
+			return join(root, ".tmp");
+		}
 	} catch {
-		return join(process.cwd(), ".tmp");
+		// not a file:// URL (e.g. under Vitest)
+	}
+	return join(process.cwd(), ".tmp");
+};
+
+const findRepoRoot = (startDir: string): string | undefined => {
+	let dir = startDir;
+	for (;;) {
+		if (fs.existsSync(join(dir, "package.json"))) {
+			return dir;
+		}
+		const parent = dirname(dir);
+		if (parent === dir) {
+			return undefined;
+		}
+		dir = parent;
 	}
 };
 
@@ -58,14 +86,32 @@ export async function downloadToDotTempIfNotPresent(
 	const destinationParts = relativeDestination.split("/");
 	const universalRelativeDestination = join(...destinationParts);
 
-	const dotTmpPath = getDotTmpPath();
+	const destination = join(getDotTmpPath(), universalRelativeDestination);
 
-	const destination = join(dotTmpPath, universalRelativeDestination);
+	const inFlight = inFlightDownloads.get(destination);
+	if (inFlight) {
+		return inFlight;
+	}
 
+	const promise = downloadWithRetry(source, url, destination, options.validate);
+	inFlightDownloads.set(destination, promise);
+	try {
+		await promise;
+	} finally {
+		inFlightDownloads.delete(destination);
+	}
+}
+
+const downloadWithRetry = async (
+	source: string,
+	url: string,
+	destination: string,
+	validate: ((filePath: string) => Promise<void>) | undefined,
+) => {
 	for (let attempt = 1; attempt <= MAX_DOWNLOAD_ATTEMPTS; attempt++) {
 		try {
 			if (fs.existsSync(destination)) {
-				await options.validate?.(destination);
+				await validate?.(destination);
 				return;
 			}
 
@@ -106,7 +152,7 @@ export async function downloadToDotTempIfNotPresent(
 			}
 
 			fs.renameSync(tmpDestination, destination);
-			await options.validate?.(destination);
+			await validate?.(destination);
 			return;
 		} catch (err) {
 			fs.rmSync(destination, { force: true });
@@ -119,7 +165,7 @@ export async function downloadToDotTempIfNotPresent(
 			);
 		}
 	}
-}
+};
 
 /**
  * Extract a gzip-compressed tar archive into destinationDir.
