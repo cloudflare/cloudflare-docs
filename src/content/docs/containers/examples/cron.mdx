@@ -10,7 +10,7 @@ products:
   - containers
 ---
 
-import { WranglerConfig } from "~/components";
+import { TabItem, Tabs, TypeScriptExample, WranglerConfig } from "~/components";
 
 To launch a container on a schedule, you can use a Workers [Cron Trigger](/workers/configuration/cron-triggers/).
 
@@ -54,10 +54,81 @@ Use a cron expression in your Wrangler config to specify the schedule:
 
 </WranglerConfig>
 
-Then in your Worker, call your Container from the "scheduled" handler:
+Then call the Container from the `scheduled()` handler in the Worker. The raw API example expects the Container to expose a `POST /run` endpoint that starts the scheduled task.
+
+<Tabs>
+	<TabItem label="Durable Object Container API">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {
+	CRON_CONTAINER: DurableObjectNamespace<CronContainer>;
+}
+
+export class CronContainer extends DurableObject<Env> {
+	private currentRun: Promise<void> | undefined;
+
+	run(startTime: string): Promise<void> {
+		this.currentRun ??= this.runOnce(startTime).finally(() => {
+			this.currentRun = undefined;
+		});
+		return this.currentRun;
+	}
+
+	private async runOnce(startTime: string): Promise<void> {
+		const container = this.ctx.container!;
+		await container.setInactivityTimeout(10_000);
+
+		if (!container.running) {
+			container.start();
+		}
+
+		const port = container.getTcpPort(8080);
+		let lastError: unknown;
+		for (let attempt = 0; attempt < 50; attempt++) {
+			try {
+				await port.fetch("http://container/");
+				lastError = undefined;
+				break;
+			} catch (error) {
+				lastError = error;
+				await scheduler.wait(100);
+			}
+		}
+		if (lastError) {
+			throw lastError;
+		}
+
+		const response = await port.fetch("http://container/run", {
+			method: "POST",
+			body: JSON.stringify({ startTime }),
+			headers: { "content-type": "application/json" },
+		});
+		if (!response.ok) {
+			throw new Error(`Container returned ${response.status}`);
+		}
+	}
+}
+
+export default {
+	async fetch(): Promise<Response> {
+		return new Response("This Worker runs a scheduled Container task.");
+	},
+
+	async scheduled(_controller: ScheduledController, env: Env): Promise<void> {
+		await env.CRON_CONTAINER.getByName("cron").run(new Date().toISOString());
+	},
+};
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
 
 ```ts
-import { Container, getContainer } from '@cloudflare/containers';
+import { Container, getContainer } from "@cloudflare/containers";
 
 export class CronContainer extends Container {
   sleepAfter = '10s';
@@ -72,17 +143,20 @@ export class CronContainer extends Container {
 }
 
 export default {
-  async fetch(): Promise<Response> {
-    return new Response("This Worker runs a cron job to execute a container on a schedule.");
-  },
+	async fetch(): Promise<Response> {
+		return new Response("This Worker runs a cron job to execute a container on a schedule.");
+	},
 
-  async scheduled(_controller: any, env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> }) {
-    let container = getContainer(env.CRON_CONTAINER);
-    await container.start({
-      envVars: {
+	async scheduled(_controller: ScheduledController, env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> }) {
+		const container = getContainer(env.CRON_CONTAINER);
+		await container.start({
+			envVars: {
 				MESSAGE: "Start Time: " + new Date().toISOString(),
-      }
-    })
-  },
+			},
+		});
+	},
 };
 ```
+
+	</TabItem>
+</Tabs>
