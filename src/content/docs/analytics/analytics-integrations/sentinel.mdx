@@ -161,7 +161,7 @@ For the full list of storage-related failure modes and mitigations, refer to Mic
 
 We support the following fields to be utilized within the Sentinel Connectors (CCF & Function based). You can push all log fields to Azure using our logpush function as described in [Enable Microsoft Azure](/logs/logpush/logpush-job/enable-destinations/azure/) documentation.
 
-The CCF connector normalizes Cloudflare log fields to the [Microsoft Sentinel ASIM schema](https://learn.microsoft.com/en-us/azure/sentinel/normalization) where a canonical equivalent exists (for example, `ClientIP` becomes `SrcIpAddr`, `EdgeResponseStatus` becomes `HttpStatusCode`), and preserves Cloudflare-native names for fields that do not have a schema equivalent. Use the field names in the tables below in your KQL queries against the connector's output table.
+The CCF connector normalizes Cloudflare log fields to the [Microsoft Sentinel ASIM schema](https://learn.microsoft.com/en-us/azure/sentinel/normalization) where a canonical equivalent exists (for example, `ClientIP` becomes `SrcIpAddr`, `EdgeResponseStatus` becomes `HttpStatusCode`), and preserves Cloudflare-native names for fields that do not have a schema equivalent. Use the field names in the following tables in your KQL queries against the connector's output table.
 
 <Details header="Parser fields">
 

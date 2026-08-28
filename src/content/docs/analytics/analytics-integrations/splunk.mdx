@@ -218,7 +218,7 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 | `ClientRequestHost`        | `dest_host`         |
 | `ClientRequestMethod`      | `http_method`       |
 | `ClientRequestPath`        | `uri_path`          |
-| `ClientRequestReferer`     | `http_referer`      |
+| `ClientRequestReferer`     | `http_referrer`     |
 | `ClientRequestURI`         | `uri`               |
 | `ClientRequestUserAgent`   | `http_user_agent`   |
 | `ClientSrcPort`            | `src_port`          |
@@ -241,7 +241,7 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 | `FindingTypeSeverity`    | `severity`       |
 | `InstanceID`             | `signature_id`   |
 
-### DNS logs
+### Zero Trust Gateway DNS
 
 | Cloudflare field | Splunk CIM field |
 | ---------------- | ---------------- |
@@ -249,7 +249,6 @@ The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Infor
 | `DstPort`        | `dest_port`      |
 | `Protocol`       | `transport`      |
 | `QueryName`      | `query`          |
-| `QuerySize`      | `query_count`    |
 | `QueryTypeName`  | `query_type`     |
 | `RCode`          | `reply_code`     |
 | `SrcIP`          | `src`            |
