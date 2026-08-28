@@ -101,6 +101,17 @@ describe("downloadToDotTempIfNotPresent", () => {
 		expect(fetchMock).toHaveBeenCalledTimes(3);
 	});
 
+	test("rejects when the response has no body", async () => {
+		vi.stubGlobal(
+			"fetch",
+			vi.fn().mockResolvedValue(new Response(null, { status: 200 })),
+		);
+
+		await expect(
+			downloadToDotTempIfNotPresent("https://example.com/file.txt", TEST_DEST),
+		).rejects.toThrow(/Missing response body/);
+	});
+
 	test("re-downloads when the validate callback rejects", async () => {
 		const fetchMock = vi
 			.fn()

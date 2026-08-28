@@ -135,10 +135,14 @@ const downloadWithRetry = async (
 				);
 			}
 
+			if (!response.body) {
+				throw new Error(`Missing response body for ${url}`);
+			}
+
 			// Stream file to destination to avoid storing in memory
 			await writeFile(
 				tmpDestination,
-				Readable.fromWeb(response.body! as WebReadableStream),
+				Readable.fromWeb(response.body as WebReadableStream),
 			);
 
 			const expectedLength = Number(response.headers.get("content-length"));
