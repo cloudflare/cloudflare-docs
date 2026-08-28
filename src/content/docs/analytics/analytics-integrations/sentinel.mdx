@@ -30,7 +30,7 @@ Before you begin, make sure the following prerequisites are met.
 ### Azure resources
 
 - **Azure subscription** with permission to create and manage resources (`Contributor` or `Owner` role recommended).
-- **Azure Storage account** with [Azure Data Lake Storage Gen2 enabled](https://learn.microsoft.com/en-us/azure/storage/blobs/create-data-lake-storage-account) (hierarchical namespace on). This account holds the Cloudflare log files pushed by Logpush.
+- **Azure Storage account** with [Azure Data Lake Storage Gen2 enabled](https://learn.microsoft.com/en-us/azure/storage/blobs/create-data-lake-storage-account) (hierarchical namespace on). Logpush writes the Cloudflare log files to this account.
 - **Azure Blob container** inside the storage account, dedicated to receiving Cloudflare Logpush files. The CCF connector monitors this container for new files via Event Grid.
 - **Microsoft Sentinel workspace** already deployed on top of a Log Analytics workspace. The connector's Data Collection Rule (DCR) and Data Collection Endpoint (DCE) are tied to this Log Analytics workspace, and all ingested Cloudflare log records land in tables within it.
 - **Cloudflare account** with access to the domain or account whose logs you want to export, and permission to configure Logpush jobs.
@@ -149,7 +149,7 @@ To resolve the error:
 
 1. **Verify co-location**: in the Azure portal, open both the storage account and the Microsoft Sentinel workspace (or its underlying Log Analytics workspace) and confirm that **Resource group** and **Subscription** match on the **Overview** blade. If they differ, move the storage account into the resource group that hosts Sentinel, or create a new storage account in that resource group.
 2. **Verify network access**: confirm that public network access is enabled on the storage account, or that a Network Security Perimeter is configured as described in [Prerequisites](#network-access-configuration). Selected network limits using IPv4 CIDR addresses are not supported.
-3. **Retry the deployment**: once the resources are aligned, re-run the ARM template deployment. The `CreateDataFlowResources` error should not recur.
+3. **Retry the deployment**: after you align the resources, re-run the ARM template deployment. The `CreateDataFlowResources` error should not recur.
 
 For the full list of storage-related failure modes and mitigations, refer to Microsoft's [Azure Storage Blob connector troubleshooting guide](https://learn.microsoft.com/en-us/azure/sentinel/azure-storage-blob-connector-troubleshoot).
 

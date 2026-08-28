@@ -107,13 +107,13 @@ Create the Logpush job by following [Enable Logpush to Splunk](/logs/logpush/log
 
 Under **Send the following fields**, keep the defaults or refer to the [Dashboard section](#task-3---view-the-dashboards) to select the fields required to fully populate the Cloudflare App for Splunk dashboards.
 
-Once the job is created, enable it to start sending logs. To confirm end-to-end delivery, run the following search in Splunk:
+After you create the job, enable it to start sending logs. To confirm end-to-end delivery, run the following search in Splunk:
 
 ```txt
 index="cloudflare"
 ```
 
-Cloudflare sends two system confirmation events to verify connectivity and delivery setup as soon as the job is enabled. Regular Cloudflare logs start streaming shortly afterward. Data can take a few minutes to appear.
+Cloudflare sends two system confirmation events to verify connectivity and delivery setup as soon as you enable the job. Regular Cloudflare logs start streaming shortly afterward. Data can take a few minutes to appear.
 
 ## Task 3 - View the Dashboards
 
