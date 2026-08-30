@@ -30,7 +30,7 @@ To setup VS Code for breakpoint debugging in your Worker project:
 {
 	"configurations": [
 		{
-			"name": "Wrangler",
+			"name": "Listen Wrangler",
 			"type": "node",
 			"request": "attach",
 			"port": 9229,
@@ -39,6 +39,14 @@ To setup VS Code for breakpoint debugging in your Worker project:
 			"attachExistingChildren": false,
 			"autoAttachChildProcesses": false,
 			"sourceMaps": true // works with or without this line
+		},
+		{
+			"name": "Launch Wrangler",
+			"command": "npm run dev",
+			"type": "node-terminal",
+			"request": "launch",
+			"console": "integratedTerminal",
+			"sourceMaps": true
 		}
 	]
 }
