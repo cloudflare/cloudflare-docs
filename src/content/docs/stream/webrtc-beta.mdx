@@ -61,22 +61,7 @@ Retrieve the WHIP endpoint URL:
 
 - The `webRTC.url` property in the API response when the input is created.
 
-::: note
-TODO: Confirm Code Sippet
-:::
-
-```javascript title="Simplified example code" {4}
-// Add a <video> element to the HTML page this code runs in:
-// <video id="input-video" autoplay muted></video>
-
-import WHIPClient from "./WHIPClient.js";
-
-const url = "<WEBRTC_URL_FROM_YOUR_LIVE_INPUT>"; // add the webRTC URL from your live input here
-const videoElement = document.getElementById("input-video");
-const client = new WHIPClient(url, videoElement);
-```
-
-Once the creator grants permission to their camera and microphone, live video and audio will automatically start being streamed to Cloudflare, using WebRTC.
+To broadcast from a browser, create an [`RTCPeerConnection`](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), add the camera and microphone tracks, and `POST` the SDP offer to the WHIP URL. Once the creator grants permission to their camera and microphone, live video and audio will automatically start being streamed to Cloudflare, using WebRTC. For a complete, no-dependency browser example, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
 
 You can use this URL with any client that supports the [WebRTC-HTTP Ingestion Protocol (WHIP)](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
@@ -135,21 +120,7 @@ Copy the URL from either:
 
 This URL can be used with any client that supports the [WebRTC-HTTP Egress Protocol (WHEP)](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
-
-::: note
-TODO: Confirm Code Sippet
-:::
-
-```javascript title="Simplified example code" {4}
-// Add a <video> element to the HTML page this code runs in:
-// <video id="output-video" autoplay muted></video>
-
-import WHEPClient from "./WHEPClient.js";
-
-const url = "<WEBRTC_URL_FROM_YOUR_LIVE_INPUT>"; // add the webRTCPlayback URL from your live input here
-const videoElement = document.getElementById("output-video");
-const client = new WHEPClient(url, videoElement);
-```
+To play back in a browser, create an [`RTCPeerConnection`](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), add receive-only transceivers, `POST` the SDP offer to the WHEP URL, and attach the incoming media to a `<video>` element. For a complete, no-dependency browser example, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
 
 While the creator is actively streaming, viewers can watch the broadcast in their browsers with less than 500 milliseconds of latency. There are no fixed limits on the number of concurrent viewers.
 
@@ -161,25 +132,31 @@ While the creator is actively streaming, viewers can watch the broadcast in thei
 
 ## Supported WHIP and WHEP clients
 
-Beyond the example WHIP client and example WHEP client used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
+You can write your own WHIP and WHEP clients using the browser's native WebRTC APIs — see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial. Beyond native code, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
 
 ### WHIP for Broadcasting
 
 - [OBS (Open Broadcaster Software)](https://obsproject.com)
+- [whip-whep](https://www.npmjs.com/package/whip-whep) (JavaScript, the reference implementation from a WHIP specification author)
+- [@norskvideo/webrtc-client](https://www.npmjs.com/package/@norskvideo/webrtc-client) (TypeScript)
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (TypeScript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 - [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
+- [react-native-whip-whep](https://www.npmjs.com/package/react-native-whip-whep) (React Native)
 
 ### WHEP for Playback
 
+- [whip-whep](https://www.npmjs.com/package/whip-whep) (JavaScript, the reference implementation from a WHEP specification author)
+- [@norskvideo/webrtc-client](https://www.npmjs.com/package/@norskvideo/webrtc-client) (TypeScript)
 - [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (TypeScript)
 - [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (TypeScript)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
+- [react-native-whip-whep](https://www.npmjs.com/package/react-native-whip-whep) (React Native)
 
 ## Using WebRTC in native apps
 
-If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
+If you are building a native app, the browser example from the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
 
 ## Supported broadcast codecs
 
