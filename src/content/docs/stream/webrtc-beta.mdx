@@ -61,9 +61,9 @@ Retrieve the WHIP endpoint URL:
 
 - The `webRTC.url` property in the API response when the input is created.
 
-To broadcast from a browser, create an [`RTCPeerConnection`](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), add the camera and microphone tracks, and `POST` the SDP offer to the WHIP URL. Once the creator grants permission to their camera and microphone, live video and audio will automatically start being streamed to Cloudflare, using WebRTC. For a complete, no-dependency browser example, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
+For a complete, no-dependency example of going live from a browser, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
 
-You can use this URL with any client that supports the [WebRTC-HTTP Ingestion Protocol (WHIP)](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
+You can also use this URL with any client that supports the [WebRTC-HTTP Ingestion Protocol (WHIP)](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 ### Broadcasting from other software (OBS, FFmpeg)
 
@@ -118,11 +118,11 @@ Copy the URL from either:
 
 - The `webRTCPlayback.url` property in the API response when the input is created.
 
-This URL can be used with any client that supports the [WebRTC-HTTP Egress Protocol (WHEP)](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
-
-To play back in a browser, create an [`RTCPeerConnection`](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), add receive-only transceivers, `POST` the SDP offer to the WHEP URL, and attach the incoming media to a `<video>` element. For a complete, no-dependency browser example, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
-
 While the creator is actively streaming, viewers can watch the broadcast in their browsers with less than 500 milliseconds of latency. There are no fixed limits on the number of concurrent viewers.
+
+For a complete, no-dependency example of playing WebRTC in a browser, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
+
+This URL can also be used with any client that supports the [WebRTC-HTTP Egress Protocol (WHEP)](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 ## Debugging WebRTC
 
