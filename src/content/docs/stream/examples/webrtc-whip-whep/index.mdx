@@ -15,11 +15,11 @@ import { DashButton } from "~/components";
 
 ## Overview
 
-This tutorial shows how to broadcast ultra-low latency live video from a browser to Cloudflare Stream using [WHIP](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html), and play it back in a browser using [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). Both the broadcaster and the player use the browser's built-in [WebRTC](/stream/webrtc-beta/) APIs — there are no libraries to install and no build step.
+This tutorial shows how to broadcast ultra-low latency live video from a browser to Cloudflare Stream using [WHIP](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html) and play it back in a browser using [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). Both the broadcaster and the player use the browser's built-in [WebRTC](/stream/webrtc-beta/) APIs — there are no libraries to install and no external applications.
 
-By the end, you will have a single HTML page that captures your camera and microphone, streams it to a live input, and plays the same stream back with sub-second latency. You should be able to complete this walkthrough in less than 15 minutes.
+By the end, you will have a basic HTML page that captures your camera and microphone, streams it to a live input, and plays the same stream back with sub-second latency. You should be able to complete this walkthrough in less than 15 minutes.
 
-WHIP and WHEP are simple HTTP-based signaling protocols for WebRTC. In both cases, your code creates an [`RTCPeerConnection`](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), generates a local session description (SDP offer), sends that offer to a Cloudflare URL with a single HTTP `POST`, and applies the SDP answer that Cloudflare returns. Because the whole exchange is one request and response, you do not need a signaling server of your own.
+WHIP and WHEP are simple HTTP-based signaling protocols for WebRTC. In both cases, this code creates an [`RTCPeerConnection`](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), generates a local session description (SDP offer), sends that offer to a Cloudflare URL with a single HTTP `POST`, and applies the SDP answer that Cloudflare returns. Because the whole exchange is one request and response, you do not need a signaling server of your own.
 
 ### Before you start
 
@@ -30,17 +30,19 @@ To follow this tutorial, you will need:
   - A Pro or Business zone plan — these include 100 minutes of video storage and 10,000 minutes of video delivery.
   - An enterprise contract with Stream enabled.
 - A modern browser with a camera and microphone.
-- To serve your page over `https://` or from `http://localhost`. Browsers only allow [`getUserMedia()`](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) in a [secure context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts). Opening an HTML file directly with a `file://` URL will not work.
+- To serve your page over `https` or from `localhost`.
+	- _Why?_ Browsers only allow [`getUserMedia()`](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) in a [secure context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts). Opening an HTML file directly with a `file://` URL will _not_ work.
+	- Deploy to Cloudflare [Workers](/workers/) or [Pages](/pages/) to get started quickly, for free.
 
 ## 1. Create a live input
 
 Every broadcast targets a live input. Create one using either option:
 
-- Use the **Live inputs** page of the Cloudflare dashboard.
+- Use the **Live inputs** page of the Cloudflare dashboard, then look under the Broadcast and Playback tabs to get the WebRTC URLs.
 
   <DashButton url="/?to=/:account/stream/inputs" />
 
-- Make a POST request to the [`/live_inputs` API endpoint](/api/resources/stream/subresources/live_inputs/methods/create/).
+- Make a `POST` request to the [`/live_inputs` API endpoint](/api/resources/stream/subresources/live_inputs/methods/create/).
 
 The response includes two URLs you will use in this tutorial:
 
@@ -58,22 +60,22 @@ The response includes two URLs you will use in this tutorial:
 }
 ```
 
-- `webRTC.url` is the **WHIP** endpoint you broadcast to. Because the broadcast secret is part of this URL, treat it like a stream key and share it only with the person broadcasting.
-- `webRTCPlayback.url` is the **WHEP** endpoint viewers play from. It is safe to share publicly, unless you have enabled signed URLs on the input (not covered here).
+- `webRTC.url` is the **WHIP** endpoint you broadcast to. _The broadcast secret is part of this URL,_ so treat it like a stream key and share it only with the person broadcasting.
+- `webRTCPlayback.url` is the **WHEP** endpoint viewers play from, unless you have enabled signed URLs on the input (not covered here).
 
 Copy both URLs. You will paste them into the code below.
 
 ## 2. Broadcast with WHIP
 
-The broadcaster captures local media, adds it to an `RTCPeerConnection` as send-only tracks, and posts the resulting SDP offer to the WHIP URL.
+This broadcast script captures local media, adds it to an `RTCPeerConnection` as send-only tracks, and posts the resulting SDP offer to the WHIP URL.
 
-Add a `<video>` element to preview the local camera:
+Starting with a basic HTML page, add a `<video>` element to preview the local camera:
 
 ```html
 <video id="broadcast-preview" autoplay muted playsinline></video>
 ```
 
-Then broadcast:
+Then add this script to broadcast:
 
 ```javascript title="broadcast.js"
 // Paste the webRTC.url value from your live input.
@@ -123,19 +125,21 @@ async function startBroadcast() {
 startBroadcast().catch(console.error);
 ```
 
-Once you call `startBroadcast()` and grant camera and microphone permission, the browser negotiates a connection and begins sending live video and audio to Cloudflare over WebRTC. You do not need to select a codec — the browser and Cloudflare negotiate a [supported codec](/stream/webrtc-beta/#supported-codecs) automatically.
+Once you call `startBroadcast()` and grant camera and microphone permission, the browser negotiates a connection and begins sending live video and audio to Cloudflare over WebRTC. You do not need to select a codec — the browser will negotiate a [supported codec](/stream/webrtc-beta/#supported-codecs) automatically.
+
+This script does not cover selecting between multiple camera or audio sources and will use the default provided by the browser.
 
 ## 3. Play back with WHEP
 
-The player is the mirror image of the broadcaster. Instead of adding local tracks, it adds receive-only transceivers, posts an offer to the WHEP URL, and attaches the incoming media to a `<video>` element.
+The player script is the reverse of the broadcaster. Instead of adding local tracks, it adds receive-only transceivers, posts an offer to the WHEP URL, and attaches the incoming media to a `<video>` element.
 
-Add a `<video>` element for playback:
+Starting with a basic HTML page, add a `<video>` element for playback:
 
 ```html
 <video id="playback-video" autoplay playsinline controls></video>
 ```
 
-Then play:
+Then add this script to play:
 
 ```javascript title="playback.js"
 // Paste the webRTCPlayback.url value from your live input.
@@ -182,7 +186,7 @@ async function startPlayback() {
 startPlayback().catch(console.error);
 ```
 
-While the broadcaster is live, the player connects and shows the stream with less than 500 milliseconds of latency. There are no fixed limits on the number of concurrent viewers.
+While the broadcaster is live, the player connects and shows the stream with less than 500 milliseconds of latency.
 
 ## 4. Stop the broadcast
 
@@ -201,7 +205,7 @@ This applies to both WHIP and WHEP sessions — pass the object returned by `sta
 
 ## 5. Full working example
 
-The following single file combines everything above. Replace the two placeholder URLs with the `webRTC.url` and `webRTCPlayback.url` values from your live input, serve the file over `https://` or `localhost`, and open it in a browser.
+The following single file combines everything above. Replace the two placeholder URLs with the `webRTC.url` and `webRTCPlayback.url` values from your live input. Then serve the file over `https` (with Workers or Pages) or `localhost` and open it in a browser.
 
 ```html title="index.html"
 <!doctype html>
@@ -288,9 +292,9 @@ If a broadcast or playback session does not connect, your browser's built-in Web
 
 Common issues:
 
-- **`getUserMedia` throws or returns nothing** — confirm the page is served over `https://` or `localhost`, and that you granted camera and microphone permission.
+- **`getUserMedia` throws an error or returns nothing** — confirm the page is served securely and that you granted camera and microphone permission.
 - **The `POST` fails** — confirm you pasted the correct URL. Use `webRTC.url` for broadcasting and `webRTCPlayback.url` for playback.
-- **Playback stays black** — confirm a broadcaster is actively live on the same input.
+- **Playback stays black** — confirm a broadcaster is actively live on the same input and that signed URLs are not enabled.
 
 ## Next steps
 
