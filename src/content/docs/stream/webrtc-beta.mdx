@@ -21,7 +21,7 @@ WebRTC allows ultra-low latency (sub-second) live streaming (using WHIP) and pla
 - When the outcome of a live event is time-sensitive: gaming, live sports, financial news
 - When viewers interact with the content: e-learning, live Q&A, auctions
 
-WebRTC is also ideally suited to creator platforms or in-browser experiences because your users can go live without special broadcast applications or dedicated hardware encoders.
+WebRTC is also ideally suited to creator platforms or in-browser experiences because your users can go live _without_ special broadcast applications or dedicated hardware encoders.
 
 ## Step 1: Create a live input
 
@@ -51,7 +51,7 @@ Create a live input using one of the two options:
 
 ### Broadcasting from the browser
 
-Every live input has a unique URL that one creator can be stream to. This URL should _only_ be shared with the creator — anyone with this URL has the ability to stream live video to this live input.
+Every live input has a unique URL that one creator can be stream to. _This is a credential_ and should _only_ be shared with the creator — anyone with this URL can stream live video to this input.
 
 Retrieve the WHIP endpoint URL:
 
@@ -59,7 +59,7 @@ Retrieve the WHIP endpoint URL:
 
   <DashButton url="/?to=/:account/stream/inputs" />
 
-- The `webRTC.url` property in the API response (see above).
+- The `webRTC.url` property in the API response when the input is created.
 
 ::: note
 TODO: Confirm Code Sippet
@@ -131,7 +131,7 @@ Copy the URL from either:
 
   <DashButton url="/?to=/:account/stream/inputs" />
 
-- The `webRTCPlayback.url` property in the API response (see above)
+- The `webRTCPlayback.url` property in the API response when the input is created.
 
 This URL can be used with any client that supports the [WebRTC-HTTP Egress Protocol (WHEP)](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
@@ -181,9 +181,9 @@ Beyond the example WHIP client and example WHEP client used in the examples abov
 
 If you are building a native app, the example code above can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
 
-## Supported codecs
+## Supported broadcast codecs
 
-- [VP9](https://developers.google.com/media/vp9) (recommended for highest quality)
+- [VP9](https://developers.google.com/media/vp9)
 - [VP8](https://en.wikipedia.org/wiki/VP8)
 - [h264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) (Constrained Baseline Profile Level 3.1, referred to as `42e01f` in the SDP offer's `profile-level-id` parameter.)
 
@@ -198,11 +198,11 @@ You can find the specific version of WHIP and WHEP being used in the `protocol-v
 
 ## Limitations
 
-**WHIP and WHEP must be used together:** we do not yet support streaming using RTMP/SRT and playing using WHEP, or streaming using WHIP and playing using HLS or DASH.
+**WHIP and WHEP must be used together:** we do not yet support inputs using RTMP/SRT to be played using WHEP, or inputs using WHIP to be recorded and played played using HLS/DASH.
 
-- Broadcast and player metrics are not supported
+- Broadcast metrics and player experience metrics are not supported
 - Recording and live HLS playback are not yet supported
-- Simulcasting (restreaming) is not supported
+- Simulcasting (restreaming via RTMP/SRT) is not supported
 - Live viewer counts are not supported
 
 ## Pricing
