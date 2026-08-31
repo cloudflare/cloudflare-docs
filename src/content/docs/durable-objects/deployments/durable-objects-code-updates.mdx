@@ -17,9 +17,9 @@ import { WranglerConfig, PackageManagers } from "~/components";
     (`code_update_strategy` with `mode` and `max_delay`). Update this page once the spec and
     schema catch up. */}
 
-When you deploy new code, Cloudflare applies the update to every Durable Object it affects. By default, this happens immediately: Cloudflare resets each active Durable Object right away, which drops in-flight requests, closes WebSocket connections, and interrupts storage operations, because a Durable Object can only run one version of your code at a time.
+By default, Durable Objects delay applying code updates so in-flight requests, WebSocket connections, and storage operations can finish. Instead of resetting an active Durable Object immediately, Cloudflare applies the update once the object hibernates.
 
-Set a Durable Object's code update strategy to `deferred` to let an active object keep running its current code until it hibernates, instead of resetting it right away. Cloudflare still applies the update once the object hibernates, or once the strategy's maximum delay is reached, whichever comes first.
+Set a Durable Object's code update strategy to `immediate` to reset it and apply the update right away instead of waiting. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more on when an object hibernates.
 
 ## Code update strategy
 
@@ -37,25 +37,30 @@ An explicit `code_update_strategy` — whether in your Wrangler configuration, p
 
 ## How it works
 
-1. You deploy a code change.
+1. You deploy a new version to 100% of traffic.
 2. A client makes a request to a Durable Object that is not running, either an inactive object or a new object. This uses the latest version of your code.
-3. Some Durable Objects are currently active — they are performing work or holding open connections. If their code update strategy is `deferred`, these objects continue running their existing version of your code. They keep handling requests, events, storage operations, and messages on WebSockets accepted with the [Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api).
-4. If an active Durable Object hibernates before `max_delay` is reached, Cloudflare applies the new version the next time that Durable Object "wakes up" in response to an incoming request or WebSocket message. Hibernated WebSocket connections stay connected throughout.
-5. If a Durable Object is still active when `max_delay` is reached, Cloudflare resets it and applies the update.
+3. If a Durable Object is active — performing work or holding open connections — with a `deferred` code update strategy, it keeps running its existing version, handling requests, events, storage operations, and Hibernation API WebSocket messages, until it hibernates. Once it hibernates before `max_delay` is reached, Cloudflare applies the new version the next time it "wakes up." Hibernated WebSocket connections stay connected throughout.
+4. If the object is still active when `max_delay` is reached, Cloudflare resets it and applies the update.
 
 ```mermaid
-flowchart LR
-    A["You deploy a code change"] --> B{"Is the Durable Object<br/>currently running?"}
+flowchart TD
+    A["You deploy a new version"] --> B{"Is the Durable Object<br/>currently running?"}
     B -->|Inactive| C["Adopts the new version<br/>on its next request"]
-    B -->|"Active, mode is deferred"| D["Starts its max_delay timer,<br/>keeps running its current version"]
-    D --> E{"Hibernates before<br/>max_delay ends?"}
-    E -->|Yes| F["Adopts the new version<br/>on next request"]
-    E -->|"No, max_delay reached"| G["Cloudflare resets it and<br/>applies the update"]
+    B -->|Active| D{"code_update_strategy<br/>mode?"}
+    D -->|immediate| E["Cloudflare resets it and<br/>applies the update"]
+    D -->|deferred| F["Starts its max_delay timer,<br/>keeps running its current version"]
+    F --> G{"Hibernates before<br/>max_delay ends?"}
+    G -->|Yes| H["Adopts the new version<br/>on next request"]
+    G -->|"No, max_delay reached"| E
 ```
 
-Deploying again before an object hibernates does not restart or extend its `max_delay`. The object applies the latest deployed version once it hibernates or the original `max_delay` is reached, and it might skip versions you deployed in between.
+Deploying again before an object hibernates does not extend its `max_delay` window — a later deploy can only shorten the remaining wait, never lengthen it. For example, if you deploy version A with `max_delay: 30`, then deploy version B with `max_delay: 60` before the object hibernates, the object still resets after the original 30 seconds, not 60. This means an `immediate` deploy always forces the update right away, even while an earlier `deferred` deploy's window is still running. In every case, the object applies the latest deployed version once it hibernates or its deadline is reached, and it might skip versions you deployed in between.
 
 ## Configure a code update strategy
+
+Configure `code_update_strategy` as a persistent default in your Wrangler configuration, or override it for a single deployment using the CLI flag or the REST API.
+
+### Options
 
 Add `code_update_strategy` alongside `bindings` in the `durable_objects` object of your [Wrangler configuration file](/workers/wrangler/configuration/#durable-objects):
 
@@ -82,25 +87,15 @@ Add `code_update_strategy` alongside `bindings` in the `durable_objects` object 
 
 `max_delay` is in seconds and only applies when `mode` is `deferred`. The maximum is `300` (five minutes). Omit `max_delay` to use the default for your compatibility date.
 
-## What each configuration does
+### Set strategy for a single deployment
 
-| `code_update_strategy`                                                    | Result                                                                                                                       |
-| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| *(omitted)*, compatibility date before `COMPATIBILITY_DATE`                 | Defaults to `immediate`.                                                                                                     |
-| *(omitted)*, compatibility date on or after `COMPATIBILITY_DATE`            | Defaults to `deferred` with a 30-second `max_delay`.                                                                         |
-| `{ "mode": "deferred" }`                                                     | Cloudflare waits up to the default `max_delay` (30 seconds) for the object to hibernate.                                     |
-| `{ "mode": "deferred", "max_delay": 0 }`                                     | Valid, but Cloudflare waits zero seconds — behaves identically to `immediate`.                                               |
-| `{ "mode": "deferred", "max_delay": 120 }`                                   | Cloudflare waits up to 120 seconds for the object to hibernate before applying the update.                                   |
-| `{ "mode": "immediate" }`                                                    | Cloudflare applies the update immediately, without waiting for the object to hibernate.                                     |
-| `{ "mode": "immediate", "max_delay": 60 }`                                   | **Invalid.** Wrangler and the REST API reject this configuration — `max_delay` has no effect when `mode` is `immediate`.     |
+Use a single-deployment override when you need different behavior than your checked-in Wrangler configuration, without editing and re-committing it.
 
-## Override the mode for one deployment
-
-Use the flag when a single deployment needs different behavior than your checked-in Wrangler configuration — for example, applying an `immediate` update during an incident without editing and re-committing `code_update_strategy`. Pass `--durable-objects-code-update-mode` to `wrangler versions deploy` or `wrangler versions rollback` (or their `wrangler deploy` and `wrangler rollback` aliases) to override the configured mode for a single deployment:
+Pass `--durable-objects-code-update-mode` to `wrangler versions deploy` or `wrangler versions rollback` (or their `wrangler deploy` and `wrangler rollback` aliases):
 
 <PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-code-update-mode immediate" />
 
-The flag accepts `deferred` or `immediate` and overrides only `mode`. To use a `max_delay` other than the default, set `code_update_strategy` in your Wrangler configuration or in the REST API request instead — the flag does not accept `max_delay`.
+The flag overrides only `mode`. `max_delay` is set only through your Wrangler configuration or the REST API.
 
 Wrangler resolves `mode` in this order:
 
@@ -108,9 +103,7 @@ Wrangler resolves `mode` in this order:
 2. `durable_objects.code_update_strategy.mode` in your Wrangler configuration.
 3. The default for your compatibility date.
 
-## Use the REST API
-
-Add `code_update_strategy` to a [Create deployment](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) request. This field belongs to the deployment, not the Worker version.
+To set a strategy through the REST API instead, add `code_update_strategy` to a [Create deployment](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) request. This field belongs to the deployment, not the Worker version:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/deployments" \
@@ -149,22 +142,28 @@ Cloudflare returns the effective strategy in create, get, and list deployment re
 }
 ```
 
-To apply an update immediately through the REST API, set `"code_update_strategy": { "mode": "immediate" }`.
-
 Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the strategy Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history.
 
 :::note
 The REST API field name above reflects the proposed naming and is not yet final. Check back here or in the [API reference](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) before you build automation against it.
 :::
 
-## Apply an update immediately
-
-Set `code_update_strategy` to `{ "mode": "immediate" }`, or pass `--durable-objects-code-update-mode immediate` for a single deployment, when waiting is worse than resetting. Common cases:
+A single-deployment override is most useful when waiting is worse than resetting. For example, set `code_update_strategy` to `{ "mode": "immediate" }` (or pass `--durable-objects-code-update-mode immediate`) when:
 
 - You need to ship a correctness or security fix immediately, even if it interrupts active objects.
 - Some of your objects rarely or never hibernate, and you need to force them onto new code, or reduce their duration costs, without waiting.
 
-Cloudflare applies an `immediate` update without waiting for the Durable Object to hibernate.
+## What each configuration does
+
+| `code_update_strategy`                                                    | Result                                                                                                                       |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| *(omitted)*, compatibility date before `COMPATIBILITY_DATE`                 | Defaults to `immediate`.                                                                                                     |
+| *(omitted)*, compatibility date on or after `COMPATIBILITY_DATE`            | Defaults to `deferred` with a 30-second `max_delay`.                                                                         |
+| `{ "mode": "deferred" }`                                                     | Cloudflare waits up to the default `max_delay` (30 seconds) for the object to hibernate.                                     |
+| `{ "mode": "deferred", "max_delay": 0 }`                                     | Valid, but Cloudflare waits zero seconds — behaves identically to `immediate`.                                               |
+| `{ "mode": "deferred", "max_delay": 120 }`                                   | Cloudflare waits up to 120 seconds for the object to hibernate before applying the update.                                   |
+| `{ "mode": "immediate" }`                                                    | Cloudflare applies the update immediately, without waiting for the object to hibernate.                                     |
+| `{ "mode": "immediate", "max_delay": 60 }`                                   | **Invalid.** Wrangler and the REST API reject this configuration — `max_delay` has no effect when `mode` is `immediate`.     |
 
 ## Gradual deployments
 
@@ -179,7 +178,7 @@ Keep your Worker and Durable Object code forward and backward compatible for as 
 - A `deferred` code update strategy is best-effort. Cloudflare does not guarantee that an object keeps running its current code for the entire `max_delay`.
 - A `deferred` code update does not stop an object from accepting new requests, events, or storage operations while it waits to hibernate.
 - An object that is still active when `max_delay` is reached resets the same way an `immediate` update does.
-- A code update strategy does not delay restarts unrelated to code updates, such as process sandbox migrations, resource limits, or Workers runtime updates.
+- A code update strategy does not delay restarts unrelated to code updates, such as Workers runtime updates.
 - A code update strategy does not make incompatible Worker and Durable Object versions safe to run together. Keep your interfaces forward and backward compatible across versions.
 
 ## Related resources
