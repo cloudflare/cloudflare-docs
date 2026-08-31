@@ -8,23 +8,27 @@ products:
   - ai-search
 ---
 
-AI Search usage limits and pricing depend on your [Workers plan](/workers/platform/pricing/).
-
 ## Limits
 
 The following limits apply based on your [Workers plan](/workers/platform/pricing/):
 
-| Limit                           | Workers Free             | Workers Paid                 |
-| ------------------------------- | ------------------------ | ---------------------------- |
-| AI Search instances per account | 100                      | 5,000                        |
-| Namespaces per account          | 100                      | 100                          |
-| Files per instance              | 100,000                  | 1M or 500K for hybrid search |
-| Max file size                   | 4 MB                     | 4 MB                         |
-| Queries per month               | 20,000                   | Unlimited                    |
-| Instances per cross-instance search request | 10                       | 10                           |
-| Maximum pages crawled per day   | 500                      | Unlimited                    |
-| Max custom metadata fields      | 5 per AI Search instance | 5 per AI Search instance     |
-| Max text metadata value length  | 500 characters           | 500 characters               |
+| Limit                                       | Workers Free                            | Workers Paid                            |
+| ------------------------------------------- | --------------------------------------- | --------------------------------------- |
+| AI Search instances per account             | 100                                     | 5,000                                   |
+| Namespaces per account                      | 100                                     | 100                                     |
+| Files per instance                          | 100,000                                 | 1M or 500K for hybrid search            |
+| Pages per crawl, `discover` parse type      | 100,000                                 | 100,000                                 |
+| Max file size                               | 4 MB                                    | 4 MB                                    |
+| Queries per month                           | 20,000                                  | Unlimited                               |
+| Instances per cross-instance search request | 10                                      | 10                                      |
+| Maximum pages crawled per day               | 500                                     | Unlimited                               |
+| Max custom metadata fields                  | 5 per AI Search instance                | 5 per AI Search instance                |
+| Metadata per vector                         | 10 KiB total, including system overhead | 10 KiB total, including system overhead |
+| Filterable indexed string data              | First 64 UTF-8 bytes per string         | First 64 UTF-8 bytes per string         |
+
+Website crawling is bounded by several of these limits at once. A `discover` crawl accepts up to 100,000 pages, but the files per instance and maximum pages crawled per day limits also apply, so the number of pages you end up with is whichever of those values is lowest. On Workers Free, the daily limit of 500 pages is the binding one.
+
+For the limits that apply only to website data sources, refer to [Website](/ai-search/configuration/data-source/website/#limits).
 
 :::note[Need a higher limit?]
 To request an adjustment to a limit, complete the [Limit Increase Request Form](https://forms.gle/wnizxrEUW33Y15CT8). If the limit can be increased, Cloudflare will contact you with next steps.
@@ -33,6 +37,8 @@ To request an adjustment to a limit, complete the [Limit Increase Request Form](
 ## Pricing
 
 During the open beta, AI Search is free within these limits. [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) usage is billed separately. Pricing details will be communicated at least 30 days before any billing begins.
+
+Storage, vector indexing, and the [Browser Run](/browser-run/pricing/) usage that website crawling consumes are included with AI Search. You are not billed separately for them.
 
 ## Historical billing
 

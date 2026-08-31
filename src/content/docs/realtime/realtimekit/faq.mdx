@@ -4,7 +4,7 @@ title: FAQ
 description: Frequently asked questions about RealtimeKit meetings, recordings, and SDK usage.
 slug: realtime/realtimekit/faq
 sidebar:
-  order: 14
+  order: 15
 ---
 
 import { Details } from "~/components";
@@ -181,6 +181,32 @@ To troubleshoot integration issues, first check if the user has joined the meeti
 If this does not solve the issue, check if your framework is blocking the UI. Frameworks like Material UI can block input focus using focus traps in Drawer component. There is usually a prop to disable the focus trap. Material UI has a `disableEnforceFocus` prop for this purpose.
 
 If you are still unable to send a message, please contact support.
+
+</Details>
+
+### Recording
+
+<Details header="Watermark images appear broken in recordings">
+
+When you pass a watermark image URL via the [Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, the recorder loads that image inside a browser running in a Cloudflare container. If the image appears broken, check the following:
+
+- **CORS headers**: The image URL must return proper CORS headers (for example, `Access-Control-Allow-Origin: *`) in the HTTP response. Without these headers, the browser blocks the image from loading.
+- **Direct image URL**: The URL must point directly to the image file (for example, `https://example.com/logo.png`), not to an HTML page that embeds the image.
+- **No redirects**: The URL must not redirect to another location. The recorder fetches the URL as-is, so redirects may cause the image to fail to load.
+
+</Details>
+
+### Network access
+
+<Details header="Which domains and ports must I allowlist when my network restricts outbound traffic?">
+
+If your network restricts outbound traffic, refer to [Network allowlist](/realtime/realtimekit/network-allowlist/) for the domains and ports required for your RealtimeKit integration.
+
+</Details>
+
+<Details header="How can I check if my network and devices are ready for a RealtimeKit meeting?">
+
+Go to [test.realtime.cloudflare.com](https://test.realtime.cloudflare.com/) and run the pre-call test. The test checks your camera, microphone, and network, and verifies connectivity to Cloudflare Realtime endpoints, so you can confirm that the required services are not blocked by your network or firewall before joining a meeting. For required domains and ports, refer to [Network allowlist](/realtime/realtimekit/network-allowlist/).
 
 </Details>
 

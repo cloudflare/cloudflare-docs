@@ -1,0 +1,38 @@
+---
+title: "Browser Run adds structured handoff for Human in the Loop"
+description: Browser Run now supports structured handoff, letting automation scripts formally request human intervention and resume when complete.
+products:
+  - browser-run
+date: 2026-07-28
+---
+
+[Browser Run](/browser-run/) now supports structured handoff for [Human in the Loop](/browser-run/features/human-in-the-loop/) workflows. Using Cloudflare-specific [CDP commands](/browser-run/features/human-in-the-loop/#cloudflare-cdp-commands), your agent can signal that it needs help, a human steps in through [Live View](/browser-run/features/live-view/) to handle the task, and the agent resumes once the work is done.
+
+For agents running multi-step browser workflows, a single login wall or unexpected prompt can fail the entire run. Previously, scripts had to manage human intervention manually by sharing a Live View URL and polling for completion. Structured handoff replaces this with a formal pause-and-resume flow.
+
+The following example requests human intervention for a login page and waits for the human to finish before continuing:
+
+```js
+const cdp = await page.createCDPSession();
+
+// Get Live View URL for the human operator
+const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
+	mode: "tab",
+});
+console.log(`Human input needed: ${devtoolsFrontendUrl}`);
+
+// Request human intervention and wait for completion
+const handoffComplete = new Promise((resolve) => {
+	cdp.once("Cloudflare.handoffComplete", resolve);
+});
+
+await cdp.send("Cloudflare.handoff", {
+	instructions: "Please log in with your credentials",
+	timeout: 600000,
+});
+
+const result = await handoffComplete;
+console.log(result.success ? "Handoff complete" : `Failed: ${result.reason}`);
+```
+
+Refer to the [Human in the Loop documentation](/browser-run/features/human-in-the-loop/) for the full API reference, examples, and best practices.

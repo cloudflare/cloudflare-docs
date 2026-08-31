@@ -1,0 +1,56 @@
+---
+/**
+ * PagesBuildEnvironment — per-version OS/architecture table for Pages builds.
+ *
+ * CF source: cloudflare-docs/src/components/PagesBuildEnvironment.astro
+ * Mapping notes: Starlight Tabs/TabItem → ui/tabs.
+ */
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Tabs, TabItem } from "../ui/tabs";
+import { marked } from "marked";
+
+type VersionWithBuildEnvironment =
+	CollectionEntry<"pages-build-environment"> & {
+		data: {
+			build_environment: NonNullable<
+				CollectionEntry<"pages-build-environment">["data"]["build_environment"]
+			>;
+		};
+	};
+
+// build_environment is .optional() in the schema; skip any version that
+// omits it rather than render a table with missing OS/architecture rows.
+const versions = (await getCollection("pages-build-environment")).filter(
+	(version): version is VersionWithBuildEnvironment =>
+		version.data.build_environment !== undefined,
+);
+---
+
+<Tabs>
+	{
+		versions.reverse().map((version) => (
+			<TabItem label={version.id}>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<strong>Build environment</strong>
+							</td>
+							<td
+								set:html={marked.parse(
+									version.data.build_environment.operating_system,
+								)}
+							/>
+						</tr>
+						<tr>
+							<td>
+								<strong>Architecture</strong>
+							</td>
+							<td>{version.data.build_environment.architecture}</td>
+						</tr>
+					</tbody>
+				</table>
+			</TabItem>
+		))
+	}
+</Tabs>

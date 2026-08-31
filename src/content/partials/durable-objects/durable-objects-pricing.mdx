@@ -1,14 +1,17 @@
 ---
 params:
-  - product
+  - computeDepth
+  - storageDepth
+  - backendDepth
 ---
 
 import { Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/components";
 
-{ props.product === "durable-objects" && <><AnchorHeading title="Compute billing" depth={2}/></> }
-{ props.product === "workers" && <><AnchorHeading title="Compute billing" depth={3}/></> }
+<AnchorHeading title="Compute billing" depth={props.computeDepth} />
 
 Durable Objects are billed for compute duration (wall-clock time) while the Durable Object is actively running or is idle in memory but unable to [hibernate](/durable-objects/concepts/durable-object-lifecycle/). Durable Objects that are idle and eligible for hibernation are not billed for duration, even before the runtime has hibernated them. Requests to a Durable Object keep it active or create the object if it was inactive.
+
+For each metered dimension, billable usage is the amount consumed in excess of the included monthly allocation. This billable usage is rounded up to the next billable unit before the corresponding rate is applied. For example, 500,000 GB-s of billable compute duration is rounded up to 1,000,000 GB-s and billed accordingly.
 
 |                      | Free plan         | Paid plan                                                                                                                               |
 | -------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -38,16 +41,14 @@ await durableObjectStub.cat(); // billed as a request
 
 </Details>
 
-{ props.product === "durable-objects" && <><AnchorHeading title="Storage billing" depth={2}/></> }
-{ props.product === "workers" && <><AnchorHeading title="Storage billing" depth={3}/></> }
+<AnchorHeading title="Storage billing" depth={props.storageDepth} />
 
 The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
 
 - **SQLite-backed Durable Objects (recommended)**: [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) is recommended for all new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
 - **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/reference/durable-object-class-migrations-legacy/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
 
-{ props.product === "durable-objects" && <><AnchorHeading title="SQLite storage backend" depth={3}/></> }
-{ props.product === "workers" && <><AnchorHeading title="SQLite storage backend" depth={4}/></> }
+<AnchorHeading title="SQLite storage backend" depth={props.backendDepth} />
 
 <Render file="do-sqlite-storage-no-bill-note" product="durable-objects" />
 
@@ -71,8 +72,7 @@ The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is o
 
 </Details>
 
-{ props.product === "durable-objects" && <><AnchorHeading title="Key-value storage backend" depth={3}/></> }
-{ props.product === "workers" && <><AnchorHeading title="Key-value storage backend" depth={4}/></> }
+<AnchorHeading title="Key-value storage backend" depth={props.backendDepth} />
 
 |                                  | Workers Paid plan          |
 | -------------------------------- | -------------------------- |

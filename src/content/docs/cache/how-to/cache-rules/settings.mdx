@@ -37,7 +37,9 @@ If you select the [Edit expression](/ruleset-engine/rules-language/expressions/e
 
 :::note
 
-[Single file purge](/cache/how-to/purge-cache/purge-by-single-file/) is not compatible if you add other [fields](/ruleset-engine/rules-language/fields/reference/) than those listed, such as `ip.*` fields.
+[Single-file purge](/cache/how-to/purge-cache/purge-by-single-file/) may not work as expected if your Cache Rule sets a [custom cache key](/cache/how-to/cache-keys/) (because the dashboard cannot send the headers or cookies that are part of the key), or if your rule expression matches only `GET` requests (because purge requests use a different HTTP method internally).
+
+For more information and alternatives, refer to [Purge by single-file limitations](/cache/how-to/purge-cache/purge-by-single-file/#limitations-and-alternatives).
 
 :::
 

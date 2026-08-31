@@ -1,6 +1,6 @@
 ---
-import ProductCard from "./ProductCard.astro";
-import ProductCardGrid from "./ProductCardGrid.astro";
+import ProductCard from "@/components/ProductCard.astro";
+import ProductCardGrid from "@/components/ProductCardGrid.astro";
 import SectionHeading from "./SectionHeading.astro";
 import ViewAllLink from "./ViewAllLink.astro";
 import { products } from "./accelerate-data";
@@ -17,7 +17,7 @@ import { products } from "./accelerate-data";
 				Faster web performance
 			</SectionHeading>
 			<p
-				class="text-foreground-muted max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
+				class="text-muted-foreground max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
 			>
 				Accelerate websites and applications with Cloudflare CDN caching, image
 				optimization, smart routing, load balancing, and web analytics.
@@ -38,6 +38,7 @@ import { products } from "./accelerate-data";
 					detail={p.detail}
 					href={p.href}
 					cta={p.cta}
+					headingLevel={3}
 					category={p.category}
 				/>
 			))

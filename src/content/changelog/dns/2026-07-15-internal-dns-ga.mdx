@@ -1,0 +1,30 @@
+---
+title: Internal DNS is now generally available
+description: Cloudflare Internal DNS is now generally available, consolidating public and private DNS onto a single global control plane.
+products:
+  - gateway
+date: 2026-07-15
+---
+
+[Internal DNS](/dns/internal-dns/) is now generally available. Internal DNS provides authoritative and recursive DNS for private networks on the same global network and control plane you already use for public DNS, Zero Trust, and application services.
+
+## Why it matters
+
+- **Consolidate DNS operations.** Public and private DNS run on one platform, with one API, one audit trail, and one place to set policy.
+- **Simplify split-horizon DNS.** Internal and external resolution are defined as separate [views](/dns/internal-dns/dns-views/) over shared zones, managed from a single control plane — so there is no drift to chase down.
+- **Extend Zero Trust to DNS.** Resolver policies decide which users and devices resolve against which view, enforced by the same [Gateway](/cloudflare-one/traffic-policies/) that already governs the rest of your traffic.
+
+Setting up Internal DNS takes three steps: create a zone, create a view, and define a resolver policy.
+
+```json
+POST /zones
+{
+  "account": {
+    "id": "<ACCOUNT_ID>"
+  },
+  "name": "corp.internal",
+  "type": "internal"
+}
+```
+
+Internal DNS is included with [Cloudflare Gateway](/cloudflare-one/traffic-policies/) for Enterprise customers. To get started, refer to the [Internal DNS documentation](/dns/internal-dns/).

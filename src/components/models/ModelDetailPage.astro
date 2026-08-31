@@ -1,84 +1,83 @@
 ---
+/**
+ * ModelDetailPage — a single AI model page, shared by the `/workers-ai/models`
+ * and `/ai/models` per-model routes, rendered through DocsLayout. Sections:
+ * author logo + heading, copyable model ID, banner, the Model Info table,
+ * Playground, Usage (ExampleCard for catalog / per-task `code/*` for legacy),
+ * the Examples list, the recursive Parameters (multi-mode loop + top-level
+ * variant tabs driving both Input/Output), and raw schema links.
+ *
+ * Props:
+ *   - model:    the resolved ModelView (full, with schema).
+ *   - basePath: "/workers-ai/models" | "/ai/models" — URL prefix.
+ *   - slug:     the URL slug segment(s) under basePath.
+ */
 import type { MarkdownHeading } from "astro";
-import StarlightPage, {
-	type StarlightPageProps,
-} from "@astrojs/starlight/components/StarlightPage.astro";
-import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
-import ModelInfo from "~/components/models/ModelInfo.tsx";
-import ModelFeatures from "~/components/models/ModelFeatures.tsx";
+import { getSidebar } from "@cloudflare/nimbus-docs";
+import { docsSidebarTransform, getCfRouteNavigation } from "~/util/sidebar";
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import { Badge } from "~/components/ui/badge";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+import { LinkButton } from "~/components/ui/link-button";
+import { Aside } from "~/components/ui/aside";
+import { PageActions } from "~/components/ui/page-actions";
+import ModelBadges from "~/components/models/ModelBadges.astro";
+import ModelFeatures from "~/components/models/ModelFeatures.astro";
+import CopyableCode from "~/components/models/CopyableCode.astro";
+import ExampleCard from "~/components/models/ExampleCard.astro";
+import Render from "~/components/Render.astro";
 import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
 import SchemaVariantTabs from "~/components/models/SchemaVariantTabs.tsx";
-import { getTopLevelVariants } from "~/util/model-schema";
-import ExampleCard from "~/components/models/ExampleCard.astro";
-import CopyableCode from "~/components/models/CopyableCode.astro";
-
-import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
-import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
-import ImageClassificationCode from "~/components/models/code/ImageClassificationCode.astro";
-import ImageToTextCode from "~/components/models/code/ImageToTextCode.astro";
-import ObjectDetectionCode from "~/components/models/code/ObjectDetectionCode.astro";
-import SummarizationCode from "~/components/models/code/SummarizationCode.astro";
-import TextClassificationCode from "~/components/models/code/TextClassificationCode.astro";
-import TextEmbeddingCode from "~/components/models/code/TextEmbeddingCode.astro";
-import TextToImageCode from "~/components/models/code/TextToImageCode.astro";
-import TranslationCode from "~/components/models/code/TranslationCode.astro";
-import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
-import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
-import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
-import Flux2 from "~/components/models/code/Flux-2.astro";
-import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
-import MelottsCode from "~/components/models/code/MelottsCode.astro";
-import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
-import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
-import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
-import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
-import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
-import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
-
-import Render from "~/components/Render.astro";
+import SchemaFileLinks from "~/components/models/SchemaFileLinks.astro";
+import AnchorHeading from "~/components/cf/AnchorHeading.astro";
 import { authorData } from "~/components/models/data";
-import { hasProperty } from "~/util/model-properties";
-import { getModelAuthor } from "~/util/model-resolver";
-import type { ResolvedModel } from "~/util/model-types";
+import {
+	detectApiModes,
+	getTopLevelVariants,
+	type ModelView,
+} from "~/util/models";
+
+// Legacy per-task code-example components (only the ones our slice needs).
+import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
+import SummarizationCode from "~/components/models/code/SummarizationCode.astro";
+import TextEmbeddingCode from "~/components/models/code/TextEmbeddingCode.astro";
+import ObjectDetectionCode from "~/components/models/code/ObjectDetectionCode.astro";
+import TextClassificationCode from "~/components/models/code/TextClassificationCode.astro";
+import TranslationCode from "~/components/models/code/TranslationCode.astro";
+import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
+import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
+import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
 
 interface Props {
-	model: ResolvedModel;
+	model: ModelView;
+	basePath: string;
+	slug: string;
 }
 
-const { model } = Astro.props;
+const { model, basePath, slug } = Astro.props;
 
-// Display name: use catalog displayName, or fall back to last segment of model ID
+// Display name: catalog displayName, or fall back to last segment of model ID.
 const displayName =
 	model.displayName !== model.slug
 		? model.displayName
-		: model.name.split("/").at(-1);
+		: (model.name.split("/").at(-1) ?? model.name);
 
-// For catalog models, first example is the "Usage" section
+// For catalog models, the first example is the "Usage" section; the rest go
+// into the Examples disclosure list.
 const firstExample = model.examples?.[0];
 const remainingExamples = model.examples?.slice(1) ?? [];
 const hasCatalogUsage = !!firstExample?.code_snippets?.length;
 
-// Legacy code example overrides (only used when no catalog usage)
-let CodeExamples = null;
+// Legacy code-example overrides (only used when there is no catalog usage).
+let CodeExamples: any = null;
 if (!hasCatalogUsage) {
-	switch (model.task.name) {
+	switch (model.task) {
 		case "Text Generation":
 			CodeExamples = TextGenerationCode;
 			break;
-		case "Automatic Speech Recognition":
-			CodeExamples = AutomaticSpeechRecognitionCode;
-			break;
-		case "Image Classification":
-			CodeExamples = ImageClassificationCode;
-			break;
 		case "Object Detection":
 			CodeExamples = ObjectDetectionCode;
-			break;
-		case "Image-to-Text":
-			CodeExamples = ImageToTextCode;
-			break;
-		case "Text-to-Image":
-			CodeExamples = TextToImageCode;
 			break;
 		case "Translation":
 			CodeExamples = TranslationCode;
@@ -94,64 +93,26 @@ if (!hasCatalogUsage) {
 			break;
 	}
 
-	// Model-specific overrides
-	if (model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
-		CodeExamples = StableDiffusionV15Img2ImgCode;
-	}
-	if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
-		CodeExamples = StableDiffusionV15InpaintingCode;
-	}
+	// Model-specific overrides (by exact model id).
 	if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 		CodeExamples = Flux1Schnell;
-	}
-	if (
-		model.name === "@cf/black-forest-labs/flux-2-dev" ||
-		model.name === "@cf/black-forest-labs/flux-2-klein-4b" ||
-		model.name === "@cf/black-forest-labs/flux-2-klein-9b"
-	) {
-		CodeExamples = Flux2;
-	}
-	if (model.name === "@cf/openai/whisper-large-v3-turbo") {
-		CodeExamples = WhisperBase64Code;
-	}
-	if (model.name === "@cf/myshell-ai/melotts") {
-		CodeExamples = MelottsCode;
-	}
-	if (model.name === "@cf/meta/llama-guard-3-8b") {
-		CodeExamples = LlamaGuard;
 	}
 	if (model.name === "@cf/baai/bge-reranker-base") {
 		CodeExamples = BgeRerankerBase;
 	}
-	if (
-		model.name === "@cf/openai/gpt-oss-120b" ||
-		model.name === "@cf/openai/gpt-oss-20b"
-	) {
-		CodeExamples = OpenAIResponsesTextGenerationCode;
-	}
 	if (model.name === "@cf/deepgram/aura-1") {
 		CodeExamples = DeepgramAura;
 	}
-	if (model.name === "@cf/deepgram/nova-3") {
-		CodeExamples = DeepgramNova;
-	}
-	if (model.name === "@cf/deepgram/flux") {
-		CodeExamples = DeepgramFlux;
-	}
 }
 
-const hasCodeExamples = hasCatalogUsage || CodeExamples;
+const hasCodeExamples = hasCatalogUsage || !!CodeExamples;
 const hasRemainingExamples = remainingExamples.length > 0;
 
 const description = model.description;
-const isBeta = hasProperty(model.properties, "beta");
+const isBeta = model.beta;
 
-// Catalog `banner` is rendered as a Starlight `Aside`. Map the upstream
-// `severity` (observed today: "warning", "info") onto the four Aside types;
-// unknown severities fall back to the neutral "note" style so a new
-// upstream value never breaks the build. Defined as a function so the
-// switch only evaluates inside the `banner && (...)` JSX block on pages
-// that actually carry a banner — most model pages have `banner: null`.
+// Map the banner `severity` onto the four Aside types; unknown severities fall
+// back to neutral "note".
 const banner = model.banner ?? null;
 function bannerAsideType(
 	severity: string,
@@ -169,90 +130,162 @@ function bannerAsideType(
 	}
 }
 
+// Playground: Text Generation + Cloudflare-hosted, with a defensive gpt-oss
+// exclusion (gpt-oss is not in our slice — kept as a documented dead branch).
 let hasPlayground =
-	model.task.name === "Text Generation" && model.hosting === "hosted";
+	model.task === "Text Generation" && model.hosting === "hosted";
 if (model.name.includes("@cf/openai/gpt-oss")) {
 	hasPlayground = false;
 }
 
-const authorId = getModelAuthor(model.name);
-const author = authorData[authorId];
+const author = authorData[model.author];
+const authorName = model.authorName;
 
-const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
+const requiresWorkersPaid =
+	model.properties.require_workers_paid === true ||
+	model.properties.require_workers_paid === "true";
+const hasReasoningEffortGuidance = model.name === "@cf/zai-org/glm-5.2";
 
-const hasSchema =
-	model.schema.input && Object.keys(model.schema.input).length > 0;
+// `hasSchema`: input must have at least one key.
+const hasSchema = Object.keys(model.schema.input).length > 0;
+const apiModes = detectApiModes(model.schema);
+const allInputsIdentical =
+	apiModes &&
+	apiModes.every(
+		(mode) => JSON.stringify(mode.input) === JSON.stringify(apiModes[0].input),
+	);
 
-// Base path for the static schema JSON endpoints.
-// workers-ai models use the short slug (last segment of model name).
-// catalog models use the full slug as-is (may be multi-segment, e.g. "openai/gpt-5.4-mini").
-const schemaBasePath =
-	model.dataSource === "legacy"
-		? `/workers-ai/models/${model.name.split("/").at(-1)}`
-		: `/ai/models/${model.slug}`;
+// Top-level request-format variants (single-mode branch). Hoist a union of
+// titled branches so a single selector drives both Input + Output panes.
+const inputVariants = getTopLevelVariants(model.schema.input) ?? [];
+const outputVariants =
+	model.schema.output && model.schema.output.format !== "binary"
+		? (getTopLevelVariants(model.schema.output) ?? [])
+		: [];
+const variantTitles: string[] = [];
+for (const v of [...inputVariants, ...outputVariants]) {
+	if (!variantTitles.includes(v.title)) variantTitles.push(v.title);
+}
+const activeVariant = variantTitles[0];
 
-const authorName = author?.name ?? authorId;
-const pageTitle = `${displayName} (${authorName}) · Cloudflare AI docs`;
+const outputIsBinary = model.schema.output.format === "binary";
+const outputContentType = model.schema.output.contentType as string | undefined;
 
-const starlightPageProps = {
-	frontmatter: {
-		title: displayName,
-		description,
-		pcx_content_type: "reference",
-		head: [{ tag: "title" as const, content: pageTitle }],
+// Raw-schema endpoint links, matching the [...schema].json.ts route: per-mode
+// `{mode.id}-input/-output` when modes exist, else `schema-input/-output`.
+const schemaBasePath = `${basePath}/${slug}`;
+const rawLinks = apiModes
+	? apiModes.flatMap((mode) => [
+			{ name: mode.name, kind: "Input", file: `${mode.id}-input` },
+			{ name: mode.name, kind: "Output", file: `${mode.id}-output` },
+		])
+	: [
+			{ name: "Input", kind: null, file: "schema-input" },
+			{ name: "Output", kind: null, file: "schema-output" },
+		];
+
+// Navigation for this catalog leaf: the model name is the <h1>, not a crumb,
+// and the leaf is never injected into the nav tree. getCfRouteNavigation
+// resolves the section crumb to its directory title (AI / Workers AI). The
+// `/ai` section lands on `/ai/models/` with no "Models" group, so append one
+// for Home › AI › Models; `/workers-ai/models/` already has it.
+const trail = basePath === "/ai/models" ? [{ label: "Models" }] : [];
+const { breadcrumbs } = await getCfRouteNavigation({
+	path: `${basePath}/${slug}/`,
+	section: `${basePath}/`,
+	collection: "docs",
+	prevNext: false,
+	trail,
+});
+// getRouteNavigation ignores transforms, so build the sidebar directly to
+// get the Agent resources group + badges.
+const sidebar = await getSidebar(`${basePath}/`, {
+	collection: "docs",
+	transform: docsSidebarTransform,
+});
+
+const markdownPath = `${basePath}/${slug}/index.md`;
+const markdownUrl = Astro.site
+	? new URL(markdownPath, Astro.site).href
+	: markdownPath;
+
+// Match production Starlight: the head title carries displayName + author + AI suffix;
+// the shared Head layer then applies the product-specific suffix.
+const pageTitle = `${displayName} (${authorName})`;
+const headTitle = `${pageTitle} · Cloudflare AI docs`;
+
+const headings: MarkdownHeading[] = [
+	hasReasoningEffortGuidance && {
+		depth: 2,
+		slug: "reasoning-effort",
+		text: "Reasoning effort",
 	},
-	headings: [
-		hasSupportedLanguages
-			? { depth: 2, slug: "supported-languages", text: "Supported languages" }
-			: false,
-		hasPlayground
-			? { depth: 2, slug: "Playground", text: "Playground" }
-			: false,
-		hasCodeExamples ? { depth: 2, slug: "Usage", text: "Usage" } : false,
-		hasRemainingExamples
-			? { depth: 2, slug: "Examples", text: "Examples" }
-			: false,
-		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
-		hasSchema
-			? { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" }
-			: false,
-	].filter((v) => Boolean(v)) as MarkdownHeading[],
-	hideTitle: true,
-} as StarlightPageProps;
+	hasPlayground && { depth: 2, slug: "playground", text: "Playground" },
+	hasCodeExamples && { depth: 2, slug: "usage", text: "Usage" },
+	hasRemainingExamples && { depth: 2, slug: "examples", text: "Examples" },
+	hasSchema && { depth: 2, slug: "parameters", text: "Parameters" },
+	hasSchema && { depth: 2, slug: "api-schemas", text: "API Schemas (Raw)" },
+].filter(Boolean) as MarkdownHeading[];
 ---
 
-<StarlightPage {...starlightPageProps}>
-	<div class="align-center flex">
-		{
-			author ? (
-				<img
-					class="mr-4 block h-14 w-14 rounded-xs dark:ml-1 dark:bg-gray-200 dark:ring-4 dark:ring-gray-200"
-					src={author.logo}
-					alt={`${author.name} logo`}
-				/>
-			) : (
-				<div class="mr-4 flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 text-2xl font-black text-gray-400 uppercase">
-					{authorId.substring(0, 1)}
+<DocsLayout
+	title={displayName}
+	description={description}
+	sidebar={sidebar}
+	headings={headings}
+	breadcrumbs={breadcrumbs}
+	head={[{ tag: "title", content: headTitle }]}
+	markdownUrl={markdownUrl}
+	prevNext={{}}
+	collection="docs"
+	meta={{ contentType: "reference" }}
+>
+	<Fragment slot="pagination"></Fragment>
+
+	<div slot="page-title">
+		<div class="not-prose mt-6 flex items-center gap-4">
+			{
+				author ? (
+					<img
+						class="bg-card h-14 w-14 shrink-0 rounded-sm object-contain dark:bg-gray-200 dark:p-1"
+						src={author.logo}
+						alt={`${authorName} logo`}
+					/>
+				) : (
+					<span
+						aria-hidden="true"
+						class="bg-accent text-muted-foreground flex h-14 w-14 shrink-0 items-center justify-center rounded-md text-2xl font-black uppercase"
+					>
+						{model.author.charAt(0)}
+					</span>
+				)
+			}
+			<div class="min-w-0">
+				<div class="flex flex-wrap items-center gap-3">
+					<h1
+						class="text-foreground mb-0 leading-tight"
+						style={`font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)`}
+					>
+						{displayName}
+					</h1>
+					{isBeta && <Badge text="Beta" variant="caution" size="medium" />}
 				</div>
-			)
-		}
-		<div>
-			<h1
-				id="_top"
-				class="-mt-4! mb-0! flex items-center text-4xl! leading-none! font-bold!"
-			>
-				{displayName}
-				{isBeta && <Badge text="Beta" variant="caution" class="mt-2 ml-3" />}
-			</h1>
-			<span class="-mt-1 block"><ModelInfo model={model} /></span>
+				<p class="text-muted-foreground mt-1 mb-0 text-sm">
+					{model.task} • {authorName}
+				</p>
+			</div>
 		</div>
+		<PageActions class="mt-3" />
+		<div class="bg-border mt-3 mb-6 h-px w-full" role="none"></div>
 	</div>
 
-	<div class="mt-4">
+	<div class="not-prose mb-4">
 		<CopyableCode text={model.name} label="Copy model ID" />
 	</div>
 
-	<p class="mt-3 mb-2!">{description}</p>
+	<div class="not-prose mb-4"><ModelBadges model={model} /></div>
+
+	<p>{description}</p>
 
 	{
 		banner && (
@@ -261,7 +294,7 @@ const starlightPageProps = {
 					{banner.title && <strong>{banner.title}: </strong>}
 					{banner.text}
 					{banner.link && (
-						<>
+						<Fragment>
 							{" "}
 							<a
 								href={banner.link.url}
@@ -272,7 +305,7 @@ const starlightPageProps = {
 								{banner.link.label}
 								<span class="external-link"> ↗</span>
 							</a>
-						</>
+						</Fragment>
 					)}
 				</p>
 			</Aside>
@@ -280,6 +313,7 @@ const starlightPageProps = {
 	}
 
 	{
+		/* Defensive dead branch (model not in slice): Llama 3.2 11b license note. */
 		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
 			<Aside>
 				<p>
@@ -307,8 +341,52 @@ const starlightPageProps = {
 		)
 	}
 
-	<ModelFeatures model={model} />
 	{
+		requiresWorkersPaid && (
+			<Render file="workers-paid-only-note" product="workers-ai" />
+		)
+	}
+
+	<ModelFeatures model={model} />
+
+	{
+		hasReasoningEffortGuidance && (
+			<Fragment>
+				<AnchorHeading
+					depth={2}
+					title="Reasoning effort"
+					slug="reasoning-effort"
+				/>
+				<p>
+					GLM-5.2 supports <code>high</code> and <code>max</code> reasoning
+					effort, or you can turn reasoning off. For compatibility with Chat
+					Completions and other protocols in the ecosystem, other reasoning
+					efforts will be mapped to these modes:
+				</p>
+				<ul>
+					<li>
+						<code>none</code> and <code>minimal</code> turn reasoning off.
+					</li>
+					<li>
+						<code>low</code> and <code>medium</code> map to <code>high</code>.
+					</li>
+					<li>
+						<code>xhigh</code> maps to <code>max</code>.
+					</li>
+				</ul>
+				<p>
+					This is the same mapping used by Z.ai's API, and{" "}
+					<a href="https://docs.z.ai/api-reference/llm/chat-completion#body-one-of-0-reasoning-effort">
+						in their <code>reasoning_effort</code> documentation
+					</a>
+					.
+				</p>
+			</Fragment>
+		)
+	}
+
+	{
+		/* Defensive dead branch (model not in slice): nova-3 transport pricing. */
 		model.name === "@cf/deepgram/nova-3" && (
 			<Aside>
 				<p>
@@ -316,71 +394,60 @@ const starlightPageProps = {
 					is different based on transport. Transport-based pricing does not
 					apply to all models.
 				</p>
-				<p>
-					<ul>
-						<li>
-							WebSocket: $0.0092 per audio minute output (836.36 neurons per
-							audio minute output)
-						</li>
-						<li>
-							Regular HTTP: $0.0052 per audio minute output (472.73 neurons per
-							audio minute output)
-						</li>
-					</ul>
-				</p>
+				<ul>
+					<li>
+						WebSocket: $0.0092 per audio minute output (836.36 neurons per audio
+						minute output)
+					</li>
+					<li>
+						Regular HTTP: $0.0052 per audio minute output (472.73 neurons per
+						audio minute output)
+					</li>
+				</ul>
 			</Aside>
 		)
 	}
 
 	{
-		hasSupportedLanguages && (
-			<>
-				<h2 id="supported-languages">Supported languages</h2>
-				<Render file="nova-3-supported-languages" product="workers-ai" />
-			</>
-		)
-	}
-
-	{
 		hasPlayground && (
-			<>
-				<h2 id="Playground">Playground</h2>
+			<Fragment>
+				<AnchorHeading depth={2} title="Playground" slug="playground" />
 				<p>
 					Try out this model with Workers AI LLM Playground. It does not require
-					any setup or authentication and an instant way to preview and test a
-					model directly in the browser.
+					any setup or authentication and is an instant way to preview and test
+					a model directly in the browser.
 				</p>
 				<LinkButton
 					href={`https://playground.ai.cloudflare.com/?model=${model.name}`}
 				>
 					Launch the LLM Playground
 				</LinkButton>
-			</>
+			</Fragment>
 		)
 	}
 
 	{
 		hasCatalogUsage && firstExample && (
-			<>
-				<h2 id="Usage">Usage</h2>
+			<Fragment>
+				<AnchorHeading depth={2} title="Usage" slug="usage" />
 				<ExampleCard example={firstExample} layout="stack" />
-			</>
+			</Fragment>
 		)
 	}
 
 	{
 		!hasCatalogUsage && CodeExamples && (
-			<>
-				<h2 id="Usage">Usage</h2>
+			<Fragment>
+				<AnchorHeading depth={2} title="Usage" slug="usage" />
 				<CodeExamples name={model.name} lora={false} />
-			</>
+			</Fragment>
 		)
 	}
 
 	{
 		hasRemainingExamples && (
-			<>
-				<h2 id="Examples">Examples</h2>
+			<Fragment>
+				<AnchorHeading depth={2} title="Examples" slug="examples" />
 				{remainingExamples.map((example) => (
 					<details>
 						<summary>
@@ -392,434 +459,180 @@ const starlightPageProps = {
 						<ExampleCard example={example} />
 					</details>
 				))}
-			</>
+			</Fragment>
 		)
 	}
 
 	{
-		hasSchema && model.apiModes && model.apiModes.length > 1 ? (
-			<>
-				<h2 id="Parameters">Parameters</h2>
+		hasSchema && apiModes && apiModes.length > 1 ? (
+			<Fragment>
+				<AnchorHeading depth={2} title="Parameters" slug="parameters" />
 
-				{/*
-				 * Render input schema once (shared across all modes), then
-				 * render per-mode output sections. This avoids duplicating the
-				 * processed SchemaRowData tree in the HTML for every mode.
-				 *
-				 * Sync and streaming always share the same input; batch may differ.
-				 * We detect shared input by comparing JSON serialisation.
-				 */}
-				{(() => {
-					// Detect which modes share the same input as the first mode
-					const firstInputJson = JSON.stringify(model.apiModes[0].input);
-					const allInputsIdentical = model.apiModes.every(
-						(mode) => JSON.stringify(mode.input) === firstInputJson,
-					);
+				{allInputsIdentical ? (
+					<Fragment>
+						<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
+						<SchemaDisplay schema={apiModes[0].input} title="Input" />
 
-					return allInputsIdentical ? (
-						<>
-							{/* Input rendered once */}
-							<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
-							<SchemaDisplay schema={model.apiModes[0].input} title="Input" />
-
-							{/* Output per mode */}
-							<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
-							<div class="space-y-3">
-								{model.apiModes.map((mode) => (
-									<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
-										<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
-											<span>{mode.name}</span>
-											{mode.description && (
-												<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-													— {mode.description}
-												</span>
-											)}
-										</summary>
-										<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
-											<SchemaDisplay schema={mode.output} title="Output" />
-										</div>
-									</details>
-								))}
-							</div>
-						</>
-					) : (
-						/* Inputs differ (e.g. batch has different input) — show per-mode tabs */
-						<div class="space-y-3">
-							{model.apiModes.map((mode) => (
-								<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
-									<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+						<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
+						<div class="not-prose space-y-3">
+							{apiModes.map((mode) => (
+								<details class="group border-border rounded-lg border py-3">
+									<summary class="text-foreground cursor-pointer px-8 font-medium">
 										<span>{mode.name}</span>
 										{mode.description && (
-											<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+											<span class="text-muted-foreground text-sm font-normal">
+												{" "}
 												— {mode.description}
 											</span>
 										)}
 									</summary>
-									<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
-										<Tabs syncKey={`schema-${mode.id}`}>
-											<TabItem label="Input">
-												<SchemaDisplay schema={mode.input} title="Input" />
-											</TabItem>
-											<TabItem label="Output">
-												<SchemaDisplay schema={mode.output} title="Output" />
-											</TabItem>
-										</Tabs>
+									<div class="border-border border-t p-4 pb-1">
+										<SchemaDisplay schema={mode.output} title="Output" />
 									</div>
 								</details>
 							))}
 						</div>
-					);
-				})()}
-
-				<h2 id="API-Schemas">API Schemas (Raw)</h2>
-				<div class="not-content grid grid-cols-1 gap-2 sm:grid-cols-2">
-					{model.apiModes.flatMap((mode) => [
-						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
-							<span class="text-sm">
-								<span class="font-medium text-gray-900 dark:text-gray-100">
-									{mode.name}
-								</span>
-								<span class="ml-2 text-gray-500 dark:text-gray-400">Input</span>
-							</span>
-							<span class="flex items-center gap-1">
-								<a
-									href={`${schemaBasePath}/${mode.id}-input.json`}
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Open"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-										<polyline points="15 3 21 3 21 9" />
-										<line x1="10" y1="14" x2="21" y2="3" />
-									</svg>
-								</a>
-								<a
-									href={`${schemaBasePath}/${mode.id}-input.json`}
-									download={`${mode.id}-input.json`}
-									title="Download"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-										<polyline points="7 10 12 15 17 10" />
-										<line x1="12" y1="15" x2="12" y2="3" />
-									</svg>
-								</a>
-							</span>
-						</div>,
-						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
-							<span class="text-sm">
-								<span class="font-medium text-gray-900 dark:text-gray-100">
-									{mode.name}
-								</span>
-								<span class="ml-2 text-gray-500 dark:text-gray-400">
-									Output
-								</span>
-							</span>
-							<span class="flex items-center gap-1">
-								<a
-									href={`${schemaBasePath}/${mode.id}-output.json`}
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Open"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-										<polyline points="15 3 21 3 21 9" />
-										<line x1="10" y1="14" x2="21" y2="3" />
-									</svg>
-								</a>
-								<a
-									href={`${schemaBasePath}/${mode.id}-output.json`}
-									download={`${mode.id}-output.json`}
-									title="Download"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-										<polyline points="7 10 12 15 17 10" />
-										<line x1="12" y1="15" x2="12" y2="3" />
-									</svg>
-								</a>
-							</span>
-						</div>,
-					])}
-				</div>
-			</>
+					</Fragment>
+				) : (
+					<div class="not-prose space-y-3">
+						{apiModes.map((mode) => (
+							<details class="group border-border rounded-lg border py-3">
+								<summary class="text-foreground cursor-pointer px-8 font-medium">
+									<span>{mode.name}</span>
+									{mode.description && (
+										<span class="text-muted-foreground text-sm font-normal">
+											{" "}
+											— {mode.description}
+										</span>
+									)}
+								</summary>
+								<div class="border-border border-t p-4 pb-1">
+									<Tabs syncKey={`schema-${mode.id}`}>
+										<TabItem label="Input">
+											<SchemaDisplay schema={mode.input} title="Input" />
+										</TabItem>
+										<TabItem label="Output">
+											<SchemaDisplay schema={mode.output} title="Output" />
+										</TabItem>
+									</Tabs>
+								</div>
+							</details>
+						))}
+					</div>
+				)}
+			</Fragment>
 		) : (
 			hasSchema && (
-				<>
-					<h2 id="Parameters">Parameters</h2>
-					{(() => {
-						// Compute the union of titled top-level oneOf branches across
-						// input and output. When at least one side has them, hoist a
-						// single variant selector above the Input/Output tabs so picking
-						// "Chat Completions" (etc.) filters both panels together. If a
-						// side has no matching branch (e.g. only the input is variant),
-						// SchemaDisplay falls back to rendering its full schema.
-						const inputVariants = getTopLevelVariants(model.schema.input) ?? [];
-						const outputVariants =
-							model.schema.output && model.schema.output.format !== "binary"
-								? (getTopLevelVariants(model.schema.output) ?? [])
-								: [];
-						const variantTitles: string[] = [];
-						for (const v of [...inputVariants, ...outputVariants]) {
-							if (!variantTitles.includes(v.title)) variantTitles.push(v.title);
-						}
-						const activeVariant = variantTitles[0];
-						return variantTitles.length > 0 ? (
-							<div data-variant-section data-active-variant={activeVariant}>
-								<SchemaVariantTabs titles={variantTitles} client:visible />
-								<Tabs syncKey="schema-tab">
-									<TabItem label="Input">
-										{variantTitles.map((title) => (
+				<Fragment>
+					<AnchorHeading depth={2} title="Parameters" slug="parameters" />
+					{variantTitles.length > 0 ? (
+						<div data-variant-section data-active-variant={activeVariant}>
+							<SchemaVariantTabs titles={variantTitles} client:visible />
+							<Tabs syncKey="schema-tab">
+								<TabItem label="Input">
+									{variantTitles.map((title) => (
+										<div
+											data-variant-pane={title}
+											hidden={title !== activeVariant}
+										>
+											<SchemaDisplay
+												schema={model.schema.input}
+												title="Input"
+												variantTitle={title}
+											/>
+										</div>
+									))}
+								</TabItem>
+								<TabItem label="Output">
+									{outputIsBinary ? (
+										<p>
+											{outputContentType?.startsWith("audio/") ? (
+												<Fragment>
+													The binding returns a <code>ReadableStream</code> with
+													the audio in{" "}
+													{outputContentType
+														.replace("audio/", "")
+														.toUpperCase()}{" "}
+													format (check the model's output schema).
+												</Fragment>
+											) : (
+												<Fragment>
+													The binding returns a <code>ReadableStream</code> with
+													the output (check the model's output schema).
+												</Fragment>
+											)}
+										</p>
+									) : (
+										variantTitles.map((title) => (
 											<div
 												data-variant-pane={title}
 												hidden={title !== activeVariant}
 											>
 												<SchemaDisplay
-													schema={model.schema.input}
-													title="Input"
+													schema={model.schema.output}
+													title="Output"
 													variantTitle={title}
 												/>
 											</div>
-										))}
-									</TabItem>
-									<TabItem label="Output">
-										{model.schema.output.format === "binary" ? (
-											<p>
-												{(
-													model.schema.output.contentType as string
-												)?.startsWith("audio/") ? (
-													<>
-														The binding returns a <code>ReadableStream</code>{" "}
-														with the audio in{" "}
-														{(model.schema.output.contentType as string)
-															.replace("audio/", "")
-															.toUpperCase()}{" "}
-														format (check the model's output schema).
-													</>
-												) : (
-													<>
-														The binding returns a <code>ReadableStream</code>{" "}
-														with the output (check the model's output schema).
-													</>
-												)}
-											</p>
-										) : (
-											variantTitles.map((title) => (
-												<div
-													data-variant-pane={title}
-													hidden={title !== activeVariant}
-												>
-													<SchemaDisplay
-														schema={model.schema.output}
-														title="Output"
-														variantTitle={title}
-													/>
-												</div>
-											))
-										)}
-									</TabItem>
-								</Tabs>
-							</div>
-						) : (
-							<Tabs syncKey="schema-tab">
-								<TabItem label="Input">
-									<SchemaDisplay schema={model.schema.input} title="Input" />
-								</TabItem>
-								<TabItem label="Output">
-									{model.schema.output.format === "binary" ? (
-										<p>
-											{(model.schema.output.contentType as string)?.startsWith(
-												"audio/",
-											) ? (
-												<>
-													The binding returns a <code>ReadableStream</code> with
-													the audio in{" "}
-													{(model.schema.output.contentType as string)
-														.replace("audio/", "")
-														.toUpperCase()}{" "}
-													format (check the model's output schema).
-												</>
-											) : (
-												<>
-													The binding returns a <code>ReadableStream</code> with
-													the output (check the model's output schema).
-												</>
-											)}
-										</p>
-									) : (
-										<SchemaDisplay
-											schema={model.schema.output}
-											title="Output"
-										/>
+										))
 									)}
 								</TabItem>
 							</Tabs>
-						);
-					})()}
-
-					<h2 id="API-Schemas">API Schemas (Raw)</h2>
-					<div class="not-content grid grid-cols-1 gap-2 sm:grid-cols-2">
-						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
-							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">
-								Input
-							</span>
-							<span class="flex items-center gap-1">
-								<a
-									href={`${schemaBasePath}/schema-input.json`}
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Open"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<>
-											<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-											<polyline points="15 3 21 3 21 9" />
-											<line x1="10" y1="14" x2="21" y2="3" />
-										</>
-									</svg>
-								</a>
-								<a
-									href={`${schemaBasePath}/schema-input.json`}
-									download="schema-input.json"
-									title="Download"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<>
-											<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-											<polyline points="7 10 12 15 17 10" />
-											<line x1="12" y1="15" x2="12" y2="3" />
-										</>
-									</svg>
-								</a>
-							</span>
 						</div>
-						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
-							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">
-								Output
-							</span>
-							<span class="flex items-center gap-1">
-								<a
-									href={`${schemaBasePath}/schema-output.json`}
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Open"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<>
-											<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-											<polyline points="15 3 21 3 21 9" />
-											<line x1="10" y1="14" x2="21" y2="3" />
-										</>
-									</svg>
-								</a>
-								<a
-									href={`${schemaBasePath}/schema-output.json`}
-									download="schema-output.json"
-									title="Download"
-									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="14"
-										height="14"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									>
-										<>
-											<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-											<polyline points="7 10 12 15 17 10" />
-											<line x1="12" y1="15" x2="12" y2="3" />
-										</>
-									</svg>
-								</a>
-							</span>
-						</div>
-					</div>
-				</>
+					) : (
+						<Tabs syncKey="schema-tab">
+							<TabItem label="Input">
+								<SchemaDisplay schema={model.schema.input} title="Input" />
+							</TabItem>
+							<TabItem label="Output">
+								{outputIsBinary ? (
+									<p>
+										{outputContentType?.startsWith("audio/") ? (
+											<Fragment>
+												The binding returns a <code>ReadableStream</code> with
+												the audio in{" "}
+												{outputContentType.replace("audio/", "").toUpperCase()}{" "}
+												format (check the model's output schema).
+											</Fragment>
+										) : (
+											<Fragment>
+												The binding returns a <code>ReadableStream</code> with
+												the output (check the model's output schema).
+											</Fragment>
+										)}
+									</p>
+								) : (
+									<SchemaDisplay schema={model.schema.output} title="Output" />
+								)}
+							</TabItem>
+						</Tabs>
+					)}
+				</Fragment>
 			)
 		)
 	}
-</StarlightPage>
+
+	{
+		hasSchema && (
+			<Fragment>
+				<AnchorHeading depth={2} title="API Schemas (Raw)" slug="api-schemas" />
+				<div class="not-prose grid grid-cols-1 gap-2 sm:grid-cols-2">
+					{rawLinks.map((link) => (
+						<div class="border-border flex items-center justify-between rounded-lg border px-4 py-1.5">
+							<span class="text-sm">
+								<span class="text-foreground font-medium">{link.name}</span>
+								{link.kind && (
+									<span class="text-muted-foreground ml-2">{link.kind}</span>
+								)}
+							</span>
+							<SchemaFileLinks
+								href={`${schemaBasePath}/${link.file}.json`}
+								filename={`${link.file}.json`}
+							/>
+						</div>
+					))}
+				</div>
+			</Fragment>
+		)
+	}
+</DocsLayout>

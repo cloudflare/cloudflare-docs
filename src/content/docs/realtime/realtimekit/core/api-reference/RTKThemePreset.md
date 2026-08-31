@@ -1,7 +1,6 @@
 ---
 title: RTKThemePreset
 sidebar_position: 19
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -12,129 +11,85 @@ The RTKThemePreset class represents the meeting theme for the current participan
 
 
 * [RTKThemePreset](#module_RTKThemePreset)
-    * [module.exports](#exp_module_RTKThemePreset--module.exports) ⏏
-        * [new module.exports(preset)](#new_module_RTKThemePreset--module.exports_new)
-        * _instance_
-            * ~~[.setupScreen](#module_RTKThemePreset--module.exports+setupScreen)~~
-            * ~~[.waitingRoom](#module_RTKThemePreset--module.exports+waitingRoom)~~
-            * ~~[.controlBar](#module_RTKThemePreset--module.exports+controlBar)~~
-            * ~~[.header](#module_RTKThemePreset--module.exports+header)~~
-            * ~~[.pipMode](#module_RTKThemePreset--module.exports+pipMode)~~
-            * [.viewType](#module_RTKThemePreset--module.exports+viewType)
-            * [.livestreamViewerQualities](#module_RTKThemePreset--module.exports+livestreamViewerQualities)
-            * [.maxVideoStreams](#module_RTKThemePreset--module.exports+maxVideoStreams)
-            * [.maxScreenShareCount](#module_RTKThemePreset--module.exports+maxScreenShareCount)
-            * ~~[.plugins](#module_RTKThemePreset--module.exports+plugins)~~
-            * [.disabledPlugins](#module_RTKThemePreset--module.exports+disabledPlugins)
-        * _static_
-            * [.fromResponse(preset)](#module_RTKThemePreset--module.exports.fromResponse)
-            * [.default()](#module_RTKThemePreset--module.exports.default)
-            * [.init([preset], [useDefault])](#module_RTKThemePreset--module.exports.init)
+    * ~~[.setupScreen](#module_RTKThemePreset+setupScreen)~~
+    * ~~[.waitingRoom](#module_RTKThemePreset+waitingRoom)~~
+    * ~~[.controlBar](#module_RTKThemePreset+controlBar)~~
+    * ~~[.header](#module_RTKThemePreset+header)~~
+    * ~~[.pipMode](#module_RTKThemePreset+pipMode)~~
+    * [.viewType](#module_RTKThemePreset+viewType)
+    * [.livestreamViewerQualities](#module_RTKThemePreset+livestreamViewerQualities)
+    * [.maxVideoStreams](#module_RTKThemePreset+maxVideoStreams)
+    * [.maxScreenShareCount](#module_RTKThemePreset+maxScreenShareCount)
+    * ~~[.plugins](#module_RTKThemePreset+plugins)~~
+    * [.disabledPlugins](#module_RTKThemePreset+disabledPlugins)
 
-<a name="exp_module_RTKThemePreset--module.exports"></a>
+<a name="module_RTKThemePreset+setupScreen"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKThemePreset--module.exports_new"></a>
-
-#### new module.exports(preset)
-
-| Param | Type |
-| --- | --- |
-| preset | <code>PresetV2CamelCased</code> | 
-
-<a name="module_RTKThemePreset--module.exports+setupScreen"></a>
-
-#### ~~module.exports.setupScreen~~
+### ~~meeting.self.config.setupScreen~~
 ***Deprecated***
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+waitingRoom"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+waitingRoom"></a>
 
-#### ~~module.exports.waitingRoom~~
+### ~~meeting.self.config.waitingRoom~~
 ***Deprecated***
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+controlBar"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+controlBar"></a>
 
-#### ~~module.exports.controlBar~~
+### ~~meeting.self.config.controlBar~~
 ***Deprecated***
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+header"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+header"></a>
 
-#### ~~module.exports.header~~
+### ~~meeting.self.config.header~~
 ***Deprecated***
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+pipMode"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+pipMode"></a>
 
-#### ~~module.exports.pipMode~~
+### ~~meeting.self.config.pipMode~~
 ***Deprecated***
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+viewType"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+viewType"></a>
 
-#### module.exports.viewType
+### meeting.self.config.viewType
 The `viewType` tells the type of the meeting
 possible values are: GROUP_CALL| LIVESTREAM | CHAT | AUDIO_ROOM
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+livestreamViewerQualities"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+livestreamViewerQualities"></a>
 
-#### module.exports.livestreamViewerQualities
+### meeting.self.config.livestreamViewerQualities
 The `livestreamViewerQualities` specifies the allowed qualities of a stream,
 that can be viewed by a livestream viewer
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+maxVideoStreams"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+maxVideoStreams"></a>
 
-#### module.exports.maxVideoStreams
+### meeting.self.config.maxVideoStreams
 The `maxVideoStreams` contains the maximum video
 streams for mobile and desktop
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+maxScreenShareCount"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+maxScreenShareCount"></a>
 
-#### module.exports.maxScreenShareCount
+### meeting.self.config.maxScreenShareCount
 The `maxScreenShareCount` contains the maximum
 possible concurrent screen shares
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+plugins"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+plugins"></a>
 
-#### ~~module.exports.plugins~~
+### ~~meeting.self.config.plugins~~
 ***Deprecated***
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports+disabledPlugins"></a>
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  
+<a name="module_RTKThemePreset+disabledPlugins"></a>
 
-#### module.exports.disabledPlugins
+### meeting.self.config.disabledPlugins
 The `disabledPlugins` property returns id of all disabled plugins
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-<a name="module_RTKThemePreset--module.exports.fromResponse"></a>
-
-#### module.exports.fromResponse(preset)
-**Kind**: static method of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-**Deprecated.**: Use init()  
-
-| Param | Type |
-| --- | --- |
-| preset | <code>PresetV2CamelCased</code> | 
-
-<a name="module_RTKThemePreset--module.exports.default"></a>
-
-#### module.exports.default()
-**Kind**: static method of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-**Deprecated.**: Use init()  
-<a name="module_RTKThemePreset--module.exports.init"></a>
-
-#### module.exports.init([preset], [useDefault])
-**Kind**: static method of [<code>module.exports</code>](#exp_module_RTKThemePreset--module.exports)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| [preset] | <code>PresetV2CamelCased</code> |  | 
-| [useDefault] | <code>boolean</code> | <code>true</code> | 
-
+**Kind**: instance property of [<code>RTKThemePreset</code>](#module_RTKThemePreset)  

@@ -18,7 +18,7 @@ import {
 	WranglerConfig,
 	InlineBadge,
 } from "~/components";
-import { FileTree } from "@astrojs/starlight/components";
+import { FileTree } from "~/components";
 
 Wrangler optionally uses a configuration file to customize the development and deployment setup for a Worker.
 
@@ -104,7 +104,7 @@ Further, there are a few keys that can _only_ appear at the top-level.
 
 Wrangler can automatically provision resources for you when you deploy your Worker without you having to create them ahead of time.
 
-This currently works for KV, R2, D1, and Flagship bindings.
+This currently works for the following resources: KV, R2, D1, Flagship, AI Search, Agent Memory, Dispatch Namespaces and Queues.
 
 To use this feature, add bindings to your configuration file _without_ adding resource IDs, or in the case of R2, a bucket name. Resources will be created with the name of your worker as the prefix.
 
@@ -132,14 +132,11 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 
 - `keep_vars` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
-
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
-
 - `dependencies_instrumentation` <Type text="object" /> <MetaInfo text="optional" />
   - Configures npm package dependency instrumentation when deploying or uploading a Worker version. Defaults to enabled.
   - `enabled` <Type text="boolean" /> — Whether Wrangler should collect and send npm package dependency metadata (package names and versions). Defaults to `true`.
-
 - `site` <Type text="object" /> <MetaInfo text="optional deprecated" />
   - See the [Workers Sites](#workers-sites) section below for more information. Cloudflare Pages and Workers Assets is preferred over this approach.
   - This is not supported by the [Cloudflare Vite plugin](/workers/vite-plugin/).
@@ -157,93 +154,69 @@ The `main` key is optional for assets-only Workers.
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
   - The name of your Worker. Alphanumeric characters (`a`,`b`,`c`, etc.) and dashes (`-`) only. Do not use underscores (`_`). Worker names can be up to 255 characters. If you plan to use a [`workers.dev` subdomain](/workers/configuration/routing/workers-dev/), the name must be 63 characters or less and cannot start or end with a dash.
-
 - `main` <Type text="string" /> <MetaInfo text="required" />
   - The path to the entrypoint of your Worker that will be executed. For example: `./src/index.ts`.
-
 - `compatibility_date` <Type text="string" /> <MetaInfo text="required" />
   - A date in the form `yyyy-mm-dd`, which will be used to determine which version of the Workers runtime is used. Refer to [Compatibility dates](/workers/configuration/compatibility-dates/).
-
 - `account_id` <Type text="string" /> <MetaInfo text="optional" />
   - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the zone/route you provide, if you provide one. It can also be specified through the `CLOUDFLARE_ACCOUNT_ID` environment variable.
-
 - `compatibility_flags` <Type text="string[]" /> <MetaInfo text="optional" />
   - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
-
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
-
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/versions-and-deployments/preview-urls/).
-
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
-
 - `routes` <Type text="Route[]" /> <MetaInfo text="optional" />
   - An array of routes that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
-
 - `tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig`.
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
 - `triggers` <Type text="object" /> <MetaInfo text="optional" />
   - Cron definitions to trigger a Worker's `scheduled` function. Refer to [triggers](#triggers).
-
 - `rules` <Type text="Rule" /> <MetaInfo text="optional" />
   - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
 - `build` <Type text="Build" /> <MetaInfo text="optional" />
   - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [Custom builds](#custom-builds).
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
 - `no_bundle` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip internal build steps and directly deploy your Worker script. You must have a plain JavaScript Worker with no dependencies.
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
 - `find_additional_modules` <Type text="boolean" /> <MetaInfo text="optional" />
   - If true then Wrangler will traverse the file tree below `base_dir`.
     Any files that match `rules` will be included in the deployed Worker.
     Defaults to true if `no_bundle` is true, otherwise false.
     Can only be used with Module format Workers (not Service Worker format).
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
 - `base_dir` <Type text="string" /> <MetaInfo text="optional" />
   - The directory in which module "rules" should be evaluated when including additional files (via `find_additional_modules`) into a Worker deployment. Defaults to the directory containing the `main` entry point of the Worker if not specified.
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
 - `preserve_file_names` <Type text="boolean" /> <MetaInfo text="optional" />
   - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
     The default is to prepend filenames with a content hash.
     For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
   - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
 - `minify` <Type text="boolean" /> <MetaInfo text="optional" />
   - Minify the Worker script before uploading.
   - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `minify` is replaced by Vite's [`build.minify`](https://vite.dev/config/build-options.html#build-minify).
-
 - `keep_names` <Type text="boolean" /> <MetaInfo text="optional" />
   - Wrangler uses esbuild to process the Worker code for development and deployment. This option allows
     you to specify whether esbuild should apply its [keepNames](https://esbuild.github.io/api/#keep-names) logic to the code or not. Defaults to `true`.
-
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`. Refer to [Workers Logpush](/workers/observability/logs/logpush/).
-
 - `limits` <Type text="Limits" /> <MetaInfo text="optional" />
   - Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
 * `observability` <Type text="object" /> <MetaInfo text="optional" />
   - Configures automatic observability settings for telemetry data emitted from your Worker. Refer to [Observability](#observability).
-
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
-
 * `exports` <Type text="object"/> <MetaInfo text="optional"/>
   - Declares the Durable Object classes this Worker exports and their lifecycle state (`created`, `deleted`, `renamed`, `transferred`, `expecting-transfer`). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Mutually exclusive with `migrations`.
-
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
   - Legacy imperative configuration that maps a Durable Object from a class name to a runtime state. For new Workers, prefer [`exports`](/durable-objects/reference/durable-objects-migrations/). Refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
-
 * `placement` <Type text="object"/> <MetaInfo text="optional"/>
   - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/placement/).
   - `mode` <Type text="string"/> — Set to `"smart"` to automatically place your Worker near back-end services based on observed latency.
@@ -258,44 +231,31 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `define` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
   - A map of values to substitute when deploying your Worker.
   - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `define` is replaced by Vite's [`define`](https://vite.dev/config/shared-options.html#define).
-
 - `vars` <Type text="object" /> <MetaInfo text="optional" />
   - A map of environment variables to set when deploying your Worker. Refer to [Environment variables](/workers/configuration/environment-variables/).
-
 - `durable_objects` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Durable Objects that your Worker should be bound to. Refer to [Durable Objects](#durable-objects).
-
 - `kv_namespaces` <Type text="object" /> <MetaInfo text="optional" />
   - A list of KV namespaces that your Worker should be bound to. Refer to [KV namespaces](#kv-namespaces).
-
 - `r2_buckets` <Type text="object" /> <MetaInfo text="optional" />
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
-
 - `ai_search_namespaces` <Type text="object" /> <MetaInfo text="optional" />
   - A list of AI Search namespaces that your Worker should be bound to. Refer to [AI Search namespaces](#ai-search-namespaces).
-
 - `ai_search` <Type text="object" /> <MetaInfo text="optional" />
   - A list of AI Search instance bindings bound directly to pre-existing instances in the default namespace. Refer to [AI Search instances](#ai-search-instances).
-
 - `vectorize` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Vectorize indexes that your Worker should be bound to. Refer to [Vectorize indexes](#vectorize-indexes).
-
 - `services` <Type text="object" /> <MetaInfo text="optional" />
   - A list of service bindings that your Worker should be bound to. Refer to [service bindings](#service-bindings).
-
 - `queues` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Queue producers and consumers that your Worker should be bound to. Refer to [Queues](#queues).
-
 - `workflows` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Workflows that your Worker should be bound to. Refer to [Workflows](#workflows).
-
 - `tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
   - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
-
 - `secrets` <Type text="object" /> <MetaInfo text="optional" />
   - Declares the secret names your Worker requires. Used for validation during local development and deploy, and as the source of truth for type generation. Refer to [Secrets](#secrets).
   - `required` <Type text="string[]" /> <MetaInfo text="optional" /> — A list of secret names that must be set to deploy your Worker.
-
 - `secrets_store_secrets` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Secrets Store bindings that your worker should be bound to. Refer to [Secrets Store](/secrets-store/).
 
@@ -309,7 +269,6 @@ There are three types of [routes](/workers/configuration/routing/): [Custom Doma
 
 - `pattern` <Type text="string" /> <MetaInfo text="required" />
   - The pattern that your Worker should be run on, for example, `"example.com"`.
-
 - `custom_domain` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`.
 
@@ -338,7 +297,6 @@ Example:
 
 - `pattern` <Type text="string" /> <MetaInfo text="required" />
   - The pattern that your Worker can be run on, for example,`"example.com/*"`.
-
 - `zone_id` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the zone that your `pattern` is associated with. Refer to [Find zone and account IDs](/fundamentals/account/find-account-and-zone-ids/).
 
@@ -363,7 +321,6 @@ Example:
 
 - `pattern` <Type text="string" /> <MetaInfo text="required" />
   - The pattern that your Worker should be run on, for example, `"example.com/*"`.
-
 - `zone_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the zone that your `pattern` is associated with. If you are using API tokens, this will require the `Account` scope.
 
@@ -445,7 +402,6 @@ The [Observability](/workers/observability/logs/workers-logs) setting allows you
 
 - `enabled` <Type text="boolean" /> <MetaInfo text="required" />
   - When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
-
 - `head_sampling_rate` <Type text="number" /> <MetaInfo text="optional" />
   - A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
 
@@ -474,10 +430,8 @@ You can configure a custom build step that will be run before your Worker is dep
 
 - `command` <Type text="string" /> <MetaInfo text="optional" />
   - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
-
 - `cwd` <Type text="string" /> <MetaInfo text="optional" />
   - The directory in which the command is executed.
-
 - `watch_dir` <Type text="string | string[]" /> <MetaInfo text="optional" />
   - The directory to watch for changes while using `wrangler dev`. Defaults to the current working directory.
 
@@ -507,7 +461,6 @@ can be set to a maximum of 300,000 milliseconds (5 minutes).
 
 - `cpu_ms` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum CPU time allowed per invocation, in milliseconds.
-
 - `subrequests` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum number of subrequests allowed per invocation. This value defaults to 50 for free accounts and 10,000 for paid accounts. The free account maximum is 50 and the paid account maximum is 10,000,000. Refer to [subrequest limits](/workers/platform/limits/#subrequests) for more information.
 
@@ -559,20 +512,16 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
-
 - `database_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the database. This is a human-readable name that allows you to distinguish between different databases, and is set when you first create the database.
-
 - `database_id` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
-
 - `preview_database_id` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview ID of this D1 database. If provided, `wrangler dev` uses this ID. Otherwise, it uses `database_id`. This option is required when using `wrangler dev --remote`.
+  - The preview ID of this D1 database. If provided, `wrangler dev` uses this ID. Otherwise, it uses `database_id`. This option is recommended when using `wrangler dev --remote` to avoid using your production database.
 
 - `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
   - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files (for example, if you have a mono-repo setup, and want to use a single D1 instance across your apps/packages).
   - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/d1/#d1-migrations-create) and [D1 migrations](/d1/reference/migrations/).
-
 - `migrations_pattern` <Type text="string" /> <MetaInfo text="optional" />
   - A glob pattern (relative to your Wrangler config file) used to discover migration files. Defaults to `migrations/*.sql`.
   - Use this to opt in to nested layouts produced by ORMs like Drizzle (for example, `migrations/*/migration.sql`).
@@ -608,10 +557,8 @@ Dispatch namespace bindings allow for communication between a [dynamic dispatch 
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_NAMESPACE"` or `binding = "productionNamespace"` would both be valid names for the binding.
-
 - `namespace` <Type text="string" /> <MetaInfo text="required" />
   - The name of the [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).
-
 - `outbound` <Type text="object" /> <MetaInfo text="optional" />
   - `service` <Type text="string" /> <MetaInfo text="required" /> The name of the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to bind to.
   - `parameters` array optional A list of parameters to pass data from your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) to the [outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
@@ -643,13 +590,10 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the binding used to refer to the Durable Object.
-
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The exported class name of the Durable Object.
-
 - `script_name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the Worker where the Durable Object is defined, if it is external to this Worker. This option can be used both in local and remote development. In local development, you must run the external Worker in a separate process (via `wrangler dev`). In remote development, the appropriate remote binding must be used.
-
 - `environment` <Type text="string" /> <MetaInfo text="optional" />
   - The environment of the `script_name` to bind to.
 
@@ -680,19 +624,14 @@ Each entry in `exports` is keyed by Durable Object class name. The fields on eac
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
   - For Durable Object class entries, set this to `"durable-object"`.
-
 - `state` <Type text="string" /> <MetaInfo text="optional" />
   - The lifecycle state. One of `"created"` (the default — a live class), `"deleted"`, `"renamed"`, `"transferred"`, or `"expecting-transfer"`.
-
 - `storage` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"created"` or `"expecting-transfer"`. One of `"sqlite"` (recommended; required for new namespaces) or `"legacy-kv"` (only for existing key-value-backed namespaces).
-
 - `renamed_to` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"renamed"`. The destination class name, which must also appear as a live entry in the same `exports` map.
-
 - `transferred_to` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"transferred"`. The name of the target Worker that will receive the namespace.
-
 - `transfer_from` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"expecting-transfer"`. The name of the source Worker the namespace is being transferred from.
 
@@ -738,19 +677,14 @@ When making changes to your Durable Object classes on a Worker that uses the leg
 
 - `tag` <Type text="string" /> <MetaInfo text="required" />
   - A unique identifier for this migration.
-
 - `new_sqlite_classes` <Type text="string[]" /> <MetaInfo text="optional" />
   - New Durable Object classes being defined with the SQLite storage backend.
-
 - `new_classes` <Type text="string[]" /> <MetaInfo text="optional" />
   - New Durable Object classes being defined with the legacy key-value storage backend.
-
 - `renamed_classes` <Type text="{from: string, to: string}[]" /> <MetaInfo text="optional" />
   - The Durable Object classes being renamed.
-
 - `deleted_classes` <Type text="string[]" /> <MetaInfo text="optional" />
   - The Durable Object classes being removed.
-
 - `transferred_classes` <Type text="{from: string, from_script: string, to: string}[]" /> <MetaInfo text="optional" />
   - The Durable Object classes being transferred from another Worker.
 
@@ -800,10 +734,8 @@ Example:
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
   - The binding name.
-
 - `destination_address` <Type text="string" /> <MetaInfo text="optional" />
   - The [chosen email address](/email-service/configuration/send-bindings/#binding-types) you send emails to.
-
 - `allowed_destination_addresses` <Type text="string[]" /> <MetaInfo text="optional" />
   - The [allowlist of email addresses](/email-service/configuration/send-bindings/#binding-types) you send emails to.
 
@@ -823,7 +755,6 @@ Example:
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name.
-
 - `id` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the Hyperdrive configuration.
 
@@ -874,10 +805,8 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the KV namespace.
-
 - `id` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the KV namespace.
-
 - `preview_id` <Type text="string" /> <MetaInfo text="optional" />
   - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/local-development/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
 
@@ -916,7 +845,6 @@ To bind AI Search namespaces to your Worker, assign an array of the below object
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the AI Search namespace.
-
 - `namespace` <Type text="string" /> <MetaInfo text="required" />
   - The name of the AI Search namespace. A `default` namespace is created automatically for every account. If the namespace does not exist, Wrangler creates it on deploy.
 
@@ -943,7 +871,6 @@ To bind directly to a pre-existing [AI Search](/ai-search/) instance in the [def
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the AI Search instance.
-
 - `instance_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the AI Search instance. Must exist in the default namespace at deploy time.
 
@@ -972,10 +899,8 @@ To bind Queues to your producer Worker, assign an array of the below object to t
 
 - `queue` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue, used on the Cloudflare dashboard.
-
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the queue in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_QUEUE"` or `binding = "productionQueue"` would both be valid names for the binding.
-
 - `delivery_delay` <Type text="number" /> <MetaInfo text="optional" />
   - The number of seconds to [delay messages sent to a queue](/queues/configuration/batching-retries/#delay-messages) for by default. This can be overridden on a per-message or per-batch basis.
 
@@ -1003,25 +928,19 @@ To bind Queues to your consumer Worker, assign an array of the below object to t
 
 - `queue` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue, used on the Cloudflare dashboard.
-
 - `max_batch_size` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum number of messages allowed in each batch.
-
 - `max_batch_timeout` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum number of seconds to wait for messages to fill a batch before the batch is sent to the consumer Worker.
-
 - `max_retries` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/configuration/javascript-apis/#messagebatch) is invoked.
-
 - `dead_letter_queue` <Type text="string" /> <MetaInfo text="optional" />
   - The name of another queue to send a message if it fails processing at least `max_retries` times.
   - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will be discarded.
   - If there is no queue with the specified name, it will be created automatically.
-
 - `max_concurrency` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
   - Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.
-
 - `retry_delay` <Type text="number" /> <MetaInfo text="optional" />
   - The number of seconds to [delay retried messages](/queues/configuration/batching-retries/#delay-messages) for by default, before they are re-delivered to the consumer. This can be overridden on a per-message or per-batch basis [when retrying messages](/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries).
 
@@ -1057,13 +976,10 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the R2 bucket.
-
 - `bucket_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of this R2 bucket.
-
 - `jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
 - `preview_bucket_name` <Type text="string" /> <MetaInfo text="optional" />
   - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/local-development/#remote-bindings)).
 
@@ -1102,7 +1018,6 @@ To bind Vectorize indexes to your Worker, assign an array of the below object to
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the bound index from your Worker code.
-
 - `index_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the index to bind.
 
@@ -1131,11 +1046,9 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the bound Worker.
-
 - `service` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Worker.
   - To bind to a Worker in a specific [environment](/workers/wrangler/environments), you need to append the environment name to the Worker name. This should be in the format `<worker-name>-<environment-name>`. For example, to bind to a Worker called `worker-name` in its `staging` environment, `service` should be set to `worker-name-staging`.
-
 - `entrypoint` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the [entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) to bind to. If you do not specify an entrypoint, the default export of the Worker will be used.
 
@@ -1169,7 +1082,6 @@ To bind Analytics Engine datasets to your Worker, assign an array of the below o
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the dataset.
-
 - `dataset` <Type text="string" /> <MetaInfo text="optional" />
   - The dataset name to write to. This will default to the same name as the binding if it is not supplied.
 
@@ -1198,7 +1110,6 @@ To create a [binding](/workers/runtime-apis/bindings/) to an mTLS certificate fo
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the certificate.
-
 - `certificate_id` <Type text="string" /> <MetaInfo text="required" />
   - The ID of the certificate. Wrangler displays this via the `mtls-certificate upload` and `mtls-certificate list` commands.
 
@@ -1259,16 +1170,12 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the Workflow in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_WORKFLOW"` would be a valid name for the binding.
-
 - `name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the Workflow.
-
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the exported Workflow class. The `class_name` must match the name of the Workflow class exported from your Worker code.
-
 - `script_name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the Worker script where the Workflow class is defined. Only required if the Workflow is defined in a different Worker than the one the binding is configured on.
-
 - `schedules` <Type text="string[]" /> <MetaInfo text="optional" />
   - A list of cron schedules that create new instances of this Workflow automatically.
   - Use this when you want to run a Workflow on a recurring interval without defining top-level `triggers.crons` and a separate `scheduled` handler.
@@ -1303,16 +1210,12 @@ The following options are available under the `assets` key.
 - `directory` <Type text="string" /> <MetaInfo text="optional" />
   - Folder of static assets to be served.
   - Not required if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), which will automatically point to the client build output.
-
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
-
 - `run_worker_first` <Type text="boolean | string[]" /> <MetaInfo text="optional, defaults to false" />
   - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
-
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
   - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/advanced/html-handling/).
-
 - `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
   - Determines the handling of requests that do not map to an asset. Learn more about the various options for [routing behavior](/workers/static-assets/#routing-behavior).
 
@@ -1365,62 +1268,40 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
-    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/platform-details/image-management/).
-
+    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/guides/image-management/).
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
     and allow each instance to control a container. See [Durable Object Container Methods](/durable-objects/api/container/) for details.
-
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
-    the see [instance types documentation](/containers/platform-details#instance-types).
-
+    see the [instance types documentation](/containers/platform/limits/#instance-types).
   - To specify a custom instance type, see [here](#custom-instance-types).
-
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
   - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
-
   - Defaults to 20.
-
   - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
-
 - `name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of your container. Used as an identifier. This will default to a combination of your Worker name, the class
     name, and your environment.
-
 - `image_build_context` <Type text="string" /> <MetaInfo text="optional" />
   - The build context of the application, by default it is the directory of `image`.
-
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
   - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
-
 - `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
-  - The minimum number of seconds to wait before an active container instance becomes eligible for updating during a [rollout](/containers/platform-details/rollouts/). At that point, the container will be sent a `SIGTERM` signal and still has 15 minutes to shut down before it is forcibly killed and updated.
-  - Defaults to `0`.
-
+  - During a [rollout](/containers/configuration/rollouts/), minimum seconds a container instance must already have been connected to its Durable Object before it may be replaced. Defaults to `0`. Still applies with `--containers-rollout=immediate`.
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
-  - Configures what percentage of instances should be updated at each step of a [rollout](/containers/faq#how-do-container-updates-and-rollouts-work).
-  - If this is set to a single number, each step will rollout to that percentage of instances. The options are `5`, `10`, `20`, `25`, `50` or `100`.
-  - If this is an array of numbers, each step specifies the cumulative rollout progress, so the final step must be `100`.
-  - Defaults to `[10, 100]`.
-  - This can be overridden ad hoc by deploying with the `--containers-rollout=immediate` flag, which will roll out to 100% of instances in one step. Note that flag will not override `rollout_active_grace_period`, if configured.
-
+  - Percentage of container instances to update at each [rollout](/containers/configuration/rollouts/) step. A single number uses that step size (`5`, `10`, `20`, `25`, `50`, or `100`). An array must contain ascending integer values from `10` through `100`, end in `100`, contain at most 10 entries, and contain no more entries than `max_instances`; its values are cumulative. Defaults to `100` if `max_instances` is omitted or less than `2`; otherwise defaults to `[10, 100]`. Override for one deploy with `--containers-rollout=immediate` (single 100% step; does not override grace period).
 - `ssh` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for SSH through Wrangler. Refer to [SSH](#ssh).
-
 - `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional deprecated, use `ssh`" />
   - Deprecated alias for `ssh`. Still supported for backward compatibility.
-
 - `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
   - Public keys that should be added to the Container's `authorized_keys` file.
-
 - `constraints` <Type text="object" /> <MetaInfo text="optional" />
-  - Placement constraints for the container. Refer to [Containers placement](/containers/platform-details/placement/) for details.
-
+  - Placement constraints for the container. Refer to [Containers placement](/containers/concepts/placement/) for details.
 - `constraints.regions` <Type text="string[]" /> <MetaInfo text="optional" />
   - Limit container placement to specific geographic regions. Valid values: `"ENAM"`, `"WNAM"`, `"EEUR"`, `"WEUR"`, `"APAC"`, `"SAM"`, `"ME"`, `"OC"`, `"AFR"`.
-
 - `constraints.jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - Restrict containers to compliance boundaries. Valid values: `"eu"`, `"fedramp"`.
 
@@ -1464,17 +1345,15 @@ The following options are available:
 
 ### Custom Instance Types
 
-In place of the [named instance types](/containers/platform-details/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
-See the [limits documentation](/containers/platform-details/limits/#custom-instance-types) for constraints on custom instance types.
+In place of the [named instance types](/containers/platform/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
+See the [limits documentation](/containers/platform/limits/#custom-instance-types) for constraints on custom instance types.
 
 The following options are available:
 
 - `vcpu` <Type text="number" /> <MetaInfo text="optional" />
   - The vCPU to be used by your container. Defaults to `0.0625` (1/16 vCPU).
-
 - `memory_mib` <Type text="number" /> <MetaInfo text="optional" />
   - The memory to be used by your container, in MiB. Defaults to `256`.
-
 - `disk_mb` <Type text="number" /> <MetaInfo text="optional" />
   - The disk to be used by your container, in MB. Defaults to `2000` (2GB).
 
@@ -1501,13 +1380,12 @@ The following options are available:
 
 ### SSH
 
-Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/ssh/).
+Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/guides/ssh/).
 
 The following options are available:
 
 - `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether SSH through Wrangler is enabled. Defaults to `true`. Set to `false` to disable SSH access.
-
 - `port` <Type text="number" /> <MetaInfo text="optional" />
   - The port for the SSH service to run on. Defaults to `22`.
 
@@ -1519,7 +1397,6 @@ The following are properties of a key:
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
   - The display name of the key.
-
 - `public_key` <Type text="string" /> <MetaInfo text="required" />
   - The public key itself.
   - Currently only the `ssh-ed25519` key type is supported.
@@ -1540,10 +1417,8 @@ The `rules` key will be an array of the below object.
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
   - The type of module. Must be one of: `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
-
 - `globs` <Type text="string[]" /> <MetaInfo text="required" />
   - An array of glob rules (for example, `["**/*.md"]`). Refer to [glob](https://man7.org/linux/man-pages/man7/glob.7.html).
-
 - `fallthrough` <Type text="boolean" /> <MetaInfo text="optional" />
   - When set to `true` on a rule, this allows you to have multiple rules for the same `Type`.
 
@@ -1631,19 +1506,14 @@ You can configure various aspects of local development, such as the local protoc
 
 - `local_protocol` <Type text="string" /> <MetaInfo text="optional" />
   - Protocol that local dev server listens to requests on. Defaults to `http`.
-
 - `upstream_protocol` <Type text="string" /> <MetaInfo text="optional" />
   - Protocol that the local dev server forwards requests on. Defaults to `https`.
-
 - `host` <Type text="string" /> <MetaInfo text="optional" />
   - Host to forward requests to, defaults to the host of the first `route` of the Worker.
-
 - `enable_containers` <Type text="boolean" /> <MetaInfo text="optional" />
   - Determines whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers.
-
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
-  - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
-
+  - Used for local development of [Containers](/containers/guides/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
 - `generate_types` <Type text="boolean" /> <MetaInfo text="optional" />
   - Generate types from your Worker configuration. Defaults to `false`.
 
@@ -1818,10 +1688,8 @@ Example:
 
 - `bucket` <Type text="string" /> <MetaInfo text="required" />
   - The directory containing your static assets. It must be a path relative to your Wrangler configuration file.
-
 - `include` <Type text="string[]" /> <MetaInfo text="optional" />
   - An exclusive list of `.gitignore`-style patterns that match file or directory names from your bucket location. Only matched items will be uploaded.
-
 - `exclude` <Type text="string[]" /> <MetaInfo text="optional" />
   - A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
 
@@ -1918,26 +1786,26 @@ A common example of using a redirected configuration is where a custom build too
 - First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
   <WranglerConfig>
-
-  ```jsonc
-  {
-  	"$schema": "./node_modules/wrangler/config-schema.json",
-  	"name": "my-worker",
-  	"main": "src/index.ts",
-  	"vars": {
-  		"MY_VARIABLE": "production variable",
-  	},
-  	"env": {
-  		"staging": {
-  			"vars": {
-  				"MY_VARIABLE": "staging variable",
-  			},
-  		},
-  	},
-  }
-  ```
-
-  </WranglerConfig>
+      
+        ```jsonc
+        {
+        	"$schema": "./node_modules/wrangler/config-schema.json",
+        	"name": "my-worker",
+        	"main": "src/index.ts",
+        	"vars": {
+        		"MY_VARIABLE": "production variable",
+        	},
+        	"env": {
+        		"staging": {
+        			"vars": {
+        				"MY_VARIABLE": "staging variable",
+        			},
+        		},
+        	},
+        }
+        ```
+      
+        </WranglerConfig>
 
   This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
 
@@ -1951,13 +1819,13 @@ A common example of using a redirected configuration is where a custom build too
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
-		- dist/
-			- index.js
-			- wrangler.jsonc
-		- .wrangler/
-			- deploy/
-				- config.json
-  </FileTree>
+      		- dist/
+      			- index.js
+      			- wrangler.jsonc
+      		- .wrangler/
+      			- deploy/
+      				- config.json
+        </FileTree>
 
 The generated `dist/wrangler.jsonc` might contain:
 

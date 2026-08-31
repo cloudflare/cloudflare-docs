@@ -1,10 +1,9 @@
 ---
-import { Icon } from "@astrojs/starlight/components";
-import CornerMarks from "./CornerMarks.astro";
+import CornerMarks from "@/components/CornerMarks.astro";
 import HalftoneBackground from "./HalftoneBackground.astro";
 import SectionHeading from "./SectionHeading.astro";
-import CopyPromptButton from "./CopyPromptButton.astro";
-import Button from "./Button.astro";
+import CopyPromptButton from "@/components/CopyPromptButton.astro";
+import { LinkButton } from "@/components/ui/link-button";
 
 const ALL_GUIDES_HREF = "/agent-setup/";
 ---
@@ -14,12 +13,10 @@ const ALL_GUIDES_HREF = "/agent-setup/";
 	class="pt-10 pb-6 lg:pt-14"
 	aria-labelledby="agents-heading"
 >
-	<div
-		class="border-accent-100/20 bg-accent-100/20 relative overflow-visible border"
-	>
+	<div class="border-primary/20 bg-primary/20 relative overflow-visible border">
 		<CornerMarks />
 
-		<div class="bg-accent-100/20 grid grid-cols-12 gap-px">
+		<div class="bg-primary/20 grid grid-cols-12 gap-px">
 			<div
 				class="bg-background/90 col-span-12 flex min-w-0 flex-col gap-3 p-5 sm:p-8 lg:col-span-8"
 			>
@@ -28,33 +25,32 @@ const ALL_GUIDES_HREF = "/agent-setup/";
 				</SectionHeading>
 
 				<p
-					class="text-foreground-muted mt-0 mb-2 max-w-[50ch] text-sm leading-relaxed text-pretty md:text-base"
+					class="text-muted-foreground mt-0 mb-2 max-w-[50ch] text-sm leading-relaxed text-pretty md:text-base"
 				>
 					Paste into any AI coding agent to install Cloudflare agent tooling:
 				</p>
 				<CopyPromptButton class="mr-auto" />
 			</div>
 			<div
-				class="bg-background/90 focus-visible:outline-accent-100 relative col-span-12 flex min-w-0 flex-row items-center justify-between overflow-hidden p-5 no-underline transition-colors duration-150 focus-visible:bg-[#FCEDE0] focus-visible:outline-2 focus-visible:-outline-offset-2 sm:p-8 lg:col-span-4 lg:flex-col lg:items-stretch dark:focus-visible:bg-[#2A2118]"
+				class="bg-background/90 focus-visible:outline-primary focus-visible:bg-muted relative col-span-12 flex min-w-0 flex-row items-center justify-between overflow-hidden p-5 no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2 sm:p-8 lg:col-span-4 lg:flex-col lg:items-stretch"
 			>
 				<HalftoneBackground />
 				<div class="relative z-[1] flex flex-col gap-2.5">
-					<span
+					<h3
 						class="text-foreground max-w-[14ch] text-lg leading-tight font-medium md:text-xl"
 					>
 						Browse all agent setup guides
-					</span>
+					</h3>
 				</div>
 
-				<Button
+				<LinkButton
 					href={ALL_GUIDES_HREF}
 					variant="primary"
 					class="ml-auto"
-					size="md"
+					size="lg"
 				>
 					All agents
-					<Icon name="right-arrow" size="1rem" />
-				</Button>
+				</LinkButton>
 			</div>
 		</div>
 	</div>

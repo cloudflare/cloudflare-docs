@@ -17,11 +17,10 @@ import {
 	Example,
 	Render,
 	DashButton,
+	APIRequest,
 } from "~/components";
 
 Follow this guide to get started with Internal DNS.
-
-<Render file="internal-dns-beta-note" product="dns" />
 
 ## Before you begin
 
@@ -49,44 +48,81 @@ Follow this guide to get started with Internal DNS.
 
 **Zone Resources**
 
-- _Include_ - _All zones_
+- _Include_ - _Specific zones_
+
+  When creating a token for Internal DNS, we recommend scoping it to specific internal zones rather than using "All zones". This follows the principle of least privilege. If you create new internal zones later, you will need to update the token scope to include them. Support for automatic zone-type scoping (for example, "all internal zones") is planned for a future release.
 
 </ Example>
 </ Details>
+
+:::note[About authentication]
+Internal DNS uses the same authentication model as the rest of Cloudflare DNS. There is no separate role or special permission group for internal zones. You use standard DNS permissions scoped to the specific zones you want to manage.
+
+One important distinction: a zone-scoped token cannot create a zone because the zone does not exist yet to be scoped to. To create an internal zone via API, you need a token with **Zone > Zone > Edit** scoped to **All zones** or at the account level. After the zone exists, switch to a zone-scoped token for managing records and settings.
+:::
 
 ## 1. Set up your internal DNS zone
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render
-	file="internal-zone-create-dash"
-	product="dns"
-	params={{
-		conditional: "get-started-detail",
-	}}
-/>
+1. In the Cloudflare dashboard, go to the **Internal DNS** page.
+
+   <DashButton url="/?to=/:account/internal-dns" />
+
+2. Select **Create an internal zone**.
+3. Give your internal zone a name.
+
+<Details header="Internal zone configuration conditions">
+	<Render file="internal-zones-conditions" product="dns" />
+</Details>
+
+4. Add DNS records to your internal zone using your preferred option:
+
+- [Import](/dns/manage-dns-records/how-to/import-and-export/) a formatted BIND file.
+- Select **Add a record** and choose **Create** under the record type you want to add. Refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/) for details.
+
+5. Repeat this process for each internal zone you wish to add.
+
+:::note
+Creating multiple internal DNS records in batch is currently only supported via API.
+:::
 
 </TabItem> <TabItem label="API">
 
-<Render
-	file="internal-zone-create-api"
-	product="dns"
-	params={{
-		conditional: "get-started-detail",
-	}}
-/>
+1. Use the [Create Zone](/api/resources/zones/methods/create/) endpoint to create an [internal zone](/dns/internal-dns/internal-zones/). Specify your account ID and set the `type` to `internal`.
+
+<Details header="Internal zone configuration conditions">
+	<Render file="internal-zones-conditions" product="dns" />
+</Details>
+
+<Details header="Example">
+	<APIRequest
+		path="/zones"
+		method="POST"
+		json={{
+			account: {
+				id: "<ACCOUNT_ID>",
+			},
+			name: "<ZONE_NAME>",
+			type: "internal",
+		}}
+	/>
+</Details>
+
+2. Add DNS records to your internal zone using your preferred option:
+
+- [Import](/api/resources/dns/subresources/records/methods/import/) a formatted BIND file. Refer to the [DNS records how-to](/dns/manage-dns-records/how-to/import-and-export/) for guidance.
+- Use other API endpoints, such as [`/batch`](/api/resources/dns/subresources/records/methods/batch/), to manage DNS records. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/#use-the-api) for details.
+
+3. Repeat this process for each internal zone you wish to add.
 
 </TabItem> </Tabs>
 
 ### (Optional) Reference a zone from another zone
 
-<Render
-	file="internal-reference-zone-intro"
-	product="dns"
-	params={{
-		conditional: "get-started-link",
-	}}
-/>
+<Render file="internal-reference-zone-intro" product="dns" />
+
+For details, refer to [reference zones](/dns/internal-dns/internal-zones/reference-zones/).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -115,13 +151,20 @@ Since the resolver policy will require a [DNS view](/dns/internal-dns/dns-views/
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render
-	file="internal-dns-view-create-dash"
-	product="dns"
-	params={{
-		conditional: "get-started-detail",
-	}}
-/>
+1. In the Cloudflare dashboard, go to the **Internal DNS** page.
+
+   <DashButton url="/?to=/:account/internal-dns" />
+
+2. Go to **Internal DNS Views**.
+3. Select **Create a view**.
+4. Give your view a descriptive name.
+
+<Details header="DNS view configuration conditions">
+	<Render file="internal-dns-view-conditions" product="dns" />
+</Details>
+
+5. Select **Manage zones** to add zones to your view. Select the internal zones that should be used to resolve queries sent by Gateway resolver to this view.
+6. Choose **Save** to confirm.
 
 </TabItem> <TabItem label="API">
 
@@ -166,3 +209,9 @@ Use the rule settings object to define `resolve_dns_internally`, specifying `vie
 </TabItem> </Tabs>
 
 Once you add the Gateway resolver policy, it will be listed in the respective internal view under **Resolver policies referencing this view**.
+
+## Manage with Terraform
+
+You can also manage Internal DNS resources with the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). The patterns are identical to public DNS zones — the only difference is setting `type = "internal"` on the `cloudflare_zone` resource.
+
+Use a zone-scoped API token for day-to-day management and an account-level token for creating new zones. If your token is scoped to specific zones, remember to update it when you add new internal zones. For a complete working example, refer to the [Terraform provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).

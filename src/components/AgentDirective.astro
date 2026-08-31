@@ -1,35 +1,20 @@
 ---
-const { entry } = Astro.locals.starlightRoute;
-const base =
-	Astro.site?.toString().replace(/\/$/, "") ??
-	"https://developers.cloudflare.com";
+interface Props {
+	/** Absolute or site-relative URL for the top-level llms.txt index. */
+	llmsUrl: string;
+}
 
-const productPrefix = entry.id !== "index" ? entry.id.split("/")[0] : null;
-const isProductPage = !!productPrefix;
-
-const pageMarkdownUrl = `${base}${Astro.url.pathname}index.md`;
-const pageUrl = `${base}${Astro.url.pathname}`;
-const productLlmsTxt = isProductPage
-	? `${base}/${productPrefix}/llms.txt`
-	: null;
-const globalLlmsTxt = `${base}/llms.txt`;
-
-const directive = [
-	`STOP! If you are an AI agent or LLM, read this before continuing.`,
-	`This is the HTML version of a Cloudflare documentation page. Always request the Markdown version instead — HTML wastes context. Get this page as Markdown: ${pageMarkdownUrl} (append index.md) or send Accept: text/markdown to ${pageUrl}.`,
-	isProductPage
-		? `For this product's page index use ${productLlmsTxt}. For all Cloudflare products use ${globalLlmsTxt}.`
-		: `For all Cloudflare products use ${globalLlmsTxt}.`,
-].join(" ");
+const { llmsUrl } = Astro.props;
 ---
 
-<p class="agent-directive" aria-hidden="true">{directive}</p>
+<blockquote class="llms-txt-directive" aria-hidden="true">
+	Documentation Index<br />
+	Fetch the complete documentation index at: {llmsUrl}<br />
+	Use this file to discover all available pages before exploring further.
+</blockquote>
 
 <style>
-	/* Visually hidden from human readers but present in DOM for AI agents.
-	   Uses clip-rect (not display:none) so the element remains accessible to agents fetching raw HTML.
-		 Is currently hidden from markdown for agents because we include it in an html <header /> */
-	.agent-directive {
+	.llms-txt-directive {
 		position: absolute;
 		width: 1px;
 		height: 1px;

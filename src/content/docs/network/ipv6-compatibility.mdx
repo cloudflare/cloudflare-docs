@@ -9,7 +9,7 @@ products:
   - network
 ---
 
-import { FeatureTable, TabItem, Tabs, Render, DashButton } from "~/components";
+import { TabItem, Tabs, Render, DashButton } from "~/components";
 
 Cloudflare enables IPv6 on all domains without requiring additional configuration or hardware (as long as your host provides IPv6 support).
 
@@ -19,7 +19,10 @@ For [proxied DNS records](/dns/proxy-status/) that have both an IPv6 and IPv4 or
 
 ## Availability
 
-<FeatureTable id="network.ipv6" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Can customize | No | No | No | Yes |
 
 ## Enable IPv6 compatibility
 
@@ -35,11 +38,7 @@ If your origin web server only understands IPv4 formatted IP addresses, non-Ente
 
 Alternatively, customers with an Enterprise account can turn off Cloudflare's IPv6 compatibility.
 
-<Render
-	file="note-ipv6-client-to-ipv4-origin"
-	product="network"
-	params={{ page: "ipv6-compatibility" }}
-/>
+<Render file="note-ipv6-client-to-ipv4-origin" product="network" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

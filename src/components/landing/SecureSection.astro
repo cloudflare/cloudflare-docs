@@ -1,6 +1,6 @@
 ---
-import ProductCard from "./ProductCard.astro";
-import ProductCardGrid from "./ProductCardGrid.astro";
+import ProductCard from "@/components/ProductCard.astro";
+import ProductCardGrid from "@/components/ProductCardGrid.astro";
 import SectionHeading from "./SectionHeading.astro";
 
 const categories = [
@@ -80,7 +80,7 @@ const categories = [
 		Security that scales
 	</SectionHeading>
 	<p
-		class="text-foreground-muted mb-8 max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
+		class="text-muted-foreground mb-8 max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
 	>
 		Everything you need to secure applications, APIs, and infrastructure.
 	</p>
@@ -97,6 +97,7 @@ const categories = [
 							detail={t.detail}
 							href={t.href}
 							cta={t.cta}
+							headingLevel={4}
 							category={"category" in cat ? cat.category : undefined}
 						/>
 					))}

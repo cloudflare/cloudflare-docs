@@ -211,6 +211,10 @@ await sandbox.moveFile('/tmp/download.txt', '/workspace/data.txt');
 
 ### `gitCheckout()`
 
+:::note[Coming soon: Sandbox SDK 1.0]
+On `@next`, `gitCheckout` is **removed**. Clone and other git operations with argv `exec` (for example `['git', 'clone', url, dir]`). See the [Processes API](/sandbox/1-0-preview/api/processes/) and [Migrate](/sandbox/1-0-preview/migrate/).
+:::
+
 Clone a git repository.
 
 ```ts

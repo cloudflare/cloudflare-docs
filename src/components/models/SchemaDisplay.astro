@@ -1,14 +1,9 @@
 ---
 /**
- * SchemaDisplay - Unified schema display component for model parameters
- *
- * Features:
- * - Table layout with Name, Type, Default, Description columns
- * - Tree-line indentation for nested objects/arrays
- * - Collapsible nested sections with lazy rendering
- * - Search/filter with auto-expand on match
- * - Essential params shown first (Input only), Advanced collapsed
- * - Tabs for top-level anyOf/oneOf variants
+ * SchemaDisplay — schema display for model parameters. Walks the JSON Schema at
+ * build time (allOf merge, nullable collapse, $ref resolve, flat-schema rows)
+ * into `SchemaRowData`, then hands off to the interactive `SchemaTree` /
+ * `SchemaVariantSelector` islands. Handles top-level anyOf/oneOf variants.
  */
 import {
 	SchemaTree,
@@ -22,7 +17,7 @@ import { resolveInlineRef } from "@stoplight/json";
 import SchemaTreeView from "./SchemaTree.tsx";
 import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
 import type { SchemaRowData } from "./types";
-import { getTopLevelVariants } from "~/util/model-schema";
+import { getTopLevelVariants } from "~/util/models";
 
 interface Props {
 	schema: Record<string, unknown>;
@@ -47,8 +42,7 @@ function isFlatSchema(schemaObj: Record<string, unknown>): boolean {
 	if (schemaObj.properties) return false;
 	// Has oneOf/anyOf with properties inside = not flat
 	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
-		| Record<string, unknown>[]
-		| undefined;
+		Record<string, unknown>[] | undefined;
 	if (variants?.some((v) => v.properties)) return false;
 	// Has type and some other attributes but no nested structure
 	return !!(schemaObj.type || schemaObj.contentType || schemaObj.format);
@@ -82,8 +76,15 @@ function flatSchemaToRows(schemaObj: Record<string, unknown>): SchemaRowData[] {
 	}));
 }
 
-// Generate unique ID for sessionStorage keys
-const schemaId = `schema-${title.toLowerCase()}-${Date.now()}`;
+// Generate a stable ID for sessionStorage keys based on schema content.
+// Using a simple hash of the JSON so the key is consistent across builds —
+// Date.now() was non-deterministic and silently lost user state on every deploy.
+const schemaJson = JSON.stringify(schema);
+let schemaHash = 0;
+for (let i = 0; i < schemaJson.length; i++) {
+	schemaHash = (schemaHash * 31 + schemaJson.charCodeAt(i)) >>> 0;
+}
+const schemaId = `schema-${title.toLowerCase()}-${schemaHash.toString(36)}`;
 
 type ReferenceInfo = {
 	source: string | null;
@@ -170,6 +171,7 @@ function collectRows(
 		let isNullable = false;
 		let nullableType: string | undefined;
 		let nullableChildDescription: string | undefined;
+		let nullableChildEnumValues: unknown[] | undefined;
 		if ((hasOneOf || hasAnyOf) && reg.children?.length === 2) {
 			const childTypes = reg.children.map((c) =>
 				String((c as RegularNode).primaryType ?? ""),
@@ -181,8 +183,11 @@ function collectRows(
 				const nonNullChild = reg.children[nonNullIndex] as RegularNode;
 				nullableType = childTypes[nonNullIndex];
 				nullableChildDescription = nonNullChild.annotations?.description as
-					| string
-					| undefined;
+					string | undefined;
+				nullableChildEnumValues =
+					(nonNullChild.validations?.enum as unknown[]) ??
+					((nonNullChild.fragment as Record<string, unknown>)
+						?.enum as unknown[]);
 				isNullable = true;
 			}
 		}
@@ -207,7 +212,8 @@ function collectRows(
 		// Check both validations and fragment for enum (different schema parsers put it in different places)
 		const enumValues = (
 			(reg.validations?.enum as unknown[]) ??
-			((reg.fragment as Record<string, unknown>)?.enum as unknown[])
+			((reg.fragment as Record<string, unknown>)?.enum as unknown[]) ??
+			nullableChildEnumValues
 		)?.map(String);
 
 		// Collect all metadata from fragment and validations
@@ -303,8 +309,7 @@ function collectRows(
 			const title =
 				reg.title ??
 				((reg.annotations as Record<string, unknown>)?.title as
-					| string
-					| undefined) ??
+					string | undefined) ??
 				(fragment?.title as string | undefined);
 
 			if (title) {
@@ -312,8 +317,7 @@ function collectRows(
 			} else {
 				// Try to infer from role property's enum (for message types)
 				const properties = fragment?.properties as
-					| Record<string, Record<string, unknown>>
-					| undefined;
+					Record<string, Record<string, unknown>> | undefined;
 				const roleEnum = properties?.role?.enum as string[] | undefined;
 				if (roleEnum && roleEnum.length === 1) {
 					// Single role value - use it as the name (e.g., "user", "assistant", "tool")
@@ -321,8 +325,7 @@ function collectRows(
 				} else {
 					// Try other heuristics
 					const nestedOneOf = fragment?.oneOf as
-						| Record<string, unknown>[]
-						| undefined;
+						Record<string, unknown>[] | undefined;
 					if (nestedOneOf && nestedOneOf.length > 0 && nestedOneOf[0]?.title) {
 						displayName = `${nestedOneOf[0].title as string} format`;
 					} else if (properties) {
@@ -421,9 +424,7 @@ const variantRows =
 				client:visible
 			/>
 		) : rows.length === 0 ? (
-			<p class="text-sm text-gray-500 dark:text-gray-400">
-				No parameters defined.
-			</p>
+			<p class="text-muted-foreground text-sm">No parameters defined.</p>
 		) : (
 			<SchemaTreeView
 				rows={rows}

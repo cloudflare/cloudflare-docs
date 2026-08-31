@@ -8,13 +8,40 @@ const platforms = await fetch(`${BASE_URL}/platforms`)
 	.then((res) => res.json())
 	.then((data) => data.result);
 
+const PLATFORMS_PATH = "./src/util/warp-platforms.json";
+
+let existingPlatforms = [];
+if (fs.existsSync(PLATFORMS_PATH)) {
+	try {
+		const parsed = JSON.parse(fs.readFileSync(PLATFORMS_PATH, "utf-8"));
+		if (Array.isArray(parsed)) {
+			existingPlatforms = parsed;
+		} else {
+			console.warn(
+				`${PLATFORMS_PATH} did not contain an array; ignoring existing content.`,
+			);
+		}
+	} catch {
+		console.warn(
+			`Failed to parse ${PLATFORMS_PATH}; ignoring existing content.`,
+		);
+	}
+}
+
+const platformsById = Object.fromEntries(
+	existingPlatforms.map((p) => [p.platform, p]),
+);
+for (const p of platforms) {
+	platformsById[p.platform] = p;
+}
+
 fs.writeFileSync(
-	"./src/util/warp-platforms.json",
-	JSON.stringify(platforms, null, "\t"),
+	PLATFORMS_PATH,
+	JSON.stringify(Object.values(platformsById), null, "\t"),
 	"utf-8",
 );
 
-const linuxDistributions = ["Ubuntu", "Debian", "CentOS", "Fedora"];
+const linuxDistributions = ["Ubuntu", "Debian", "CentOS", "Fedora", "Alma"];
 
 const linesToRemove = [
 	"For related Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",

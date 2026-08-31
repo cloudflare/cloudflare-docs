@@ -1,395 +1,172 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import type { StarlightPageProps } from "@astrojs/starlight/props";
-import StructuralGrid from "~/components/landing/StructuralGrid.astro";
-import FullPageLines from "~/components/landing/FullPageLines.astro";
-import Hero from "~/components/landing/Hero.astro";
-import BuildFromScratch from "~/components/landing/BuildFromScratch.astro";
-import SecureSection from "~/components/landing/SecureSection.astro";
-import AccelerateSection from "~/components/landing/AccelerateSection.astro";
-import AgentSetup from "~/components/landing/AgentSetup.astro";
-import ChangelogSection from "~/components/landing/ChangelogSection.astro";
-import CommunityGrid from "~/components/landing/CommunityGrid.astro";
-import "../styles/landing.css";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { SidebarFilter } from "@/components/ui/sidebar";
+import Sidebar from "../components/landing/Sidebar.astro";
+import Hero from "../components/landing/Hero.astro";
+import BuildFromScratch from "../components/landing/BuildFromScratch.astro";
+import AgentSetup from "../components/landing/AgentSetup.astro";
+import ChangelogSection from "../components/landing/ChangelogSection.astro";
+import SecureSection from "../components/landing/SecureSection.astro";
+import AccelerateSection from "../components/landing/AccelerateSection.astro";
+import CommunityGrid from "../components/landing/CommunityGrid.astro";
+import StructuralGrid from "../components/landing/StructuralGrid.astro";
+import FullPageLines from "../components/landing/FullPageLines.astro";
+import Footer from "../components/Footer.astro";
+import { config } from "virtual:nimbus/config";
+import logo from "~/assets/logo.svg";
 
-const heading = (icon: string) => ({
-	text: icon,
-	variant: "default" as const,
-	class: "sidebar-heading",
-});
-
-const groupIcon = (icon: string) => ({
-	text: icon,
-	variant: "default" as const,
-	class: "sidebar-group-icon",
-});
-
-const sidebar = [
-	{
-		label: "Get started",
-		collapsed: false,
-		badge: heading("heading-get-started"),
-		items: [
-			{ label: "Overview", link: "/" },
-			{ label: "API", link: "/api/" },
-			{ label: "Agent Setup", link: "/agent-setup/" },
-			{ label: "Directory", link: "/directory/" },
-			{ label: "Changelog", link: "/changelog/" },
-			{
-				label: "Resources",
-				collapsed: true,
-				items: [
-					{
-						label: "Learning paths",
-						link: "/resources/?filter-pcx_content_type=learning-path",
-					},
-					{ label: "Use cases", link: "/use-cases/" },
-					{ label: "Reference architecture", link: "/reference-architecture/" },
-				],
-			},
-			{
-				label: "API & IaC",
-				collapsed: true,
-				items: [
-					{ label: "API reference", link: "/api/" },
-					{ label: "Terraform", link: "/terraform/" },
-					{ label: "Pulumi", link: "/pulumi/" },
-					{ label: "SDKs", link: "/fundamentals/api/reference/sdks/" },
-				],
-			},
-			{ label: "Support", link: "/support/" },
-		],
-	},
-	{
-		label: "Build",
-		collapsed: false,
-		badge: heading("heading-build"),
-		items: [
-			{
-				label: "Compute",
-				collapsed: true,
-				badge: groupIcon("workers"),
-				items: [
-					{ label: "Workers", link: "/workers/" },
-					{ label: "Containers", link: "/containers/" },
-					{ label: "Durable Objects", link: "/durable-objects/" },
-					{ label: "Queues", link: "/queues/" },
-					{ label: "Workflows", link: "/workflows/" },
-					{ label: "Flagship", link: "/flagship/" },
-					{ label: "Browser Run", link: "/browser-run/" },
-					{ label: "Workers VPC", link: "/workers-vpc/" },
-					{
-						label: "Cloudflare for Platforms",
-						link: "/cloudflare-for-platforms/",
-					},
-					{ label: "Email Service", link: "/email-service/" },
-				],
-			},
-			{
-				label: "AI",
-				collapsed: true,
-				badge: groupIcon("workers-ai"),
-				items: [
-					{ label: "Models", link: "/ai/models/" },
-					{ label: "Workers AI", link: "/workers-ai/" },
-					{ label: "AI Gateway", link: "/ai-gateway/" },
-					{ label: "Agents", link: "/agents/" },
-					{ label: "Agent Memory", link: "/agent-memory/" },
-					{ label: "Sandbox SDK", link: "/sandbox/" },
-					{ label: "Vectorize", link: "/vectorize/" },
-					{ label: "AI Search", link: "/ai-search/" },
-					{ label: "AI Crawl Control", link: "/ai-crawl-control/" },
-				],
-			},
-			{
-				label: "Storage & Database",
-				collapsed: true,
-				badge: groupIcon("kv"),
-				items: [
-					{ label: "R2", link: "/r2/" },
-					{ label: "R2 Data Catalog", link: "/r2/data-catalog/" },
-					{ label: "R2 SQL", link: "/r2-sql/" },
-					{ label: "Pipelines", link: "/pipelines/" },
-					{ label: "D1", link: "/d1/" },
-					{ label: "KV", link: "/kv/" },
-					{ label: "Postgres & MySQL (Hyperdrive)", link: "/hyperdrive/" },
-				],
-			},
-			{
-				label: "Media",
-				collapsed: true,
-				badge: groupIcon("images"),
-				items: [
-					{ label: "Images", link: "/images/" },
-					{ label: "Stream", link: "/stream/" },
-					{ label: "Realtime", link: "/realtime/" },
-				],
-			},
-		],
-	},
-	{
-		label: "Protect & Connect",
-		collapsed: false,
-		badge: heading("heading-protect-connect"),
-		items: [
-			{
-				label: "Application Security",
-				collapsed: true,
-				badge: groupIcon("waf"),
-				items: [
-					{ label: "WAF", link: "/waf/" },
-					{ label: "DDoS Protection", link: "/ddos-protection/" },
-					{ label: "SSL/TLS", link: "/ssl/" },
-					{ label: "Bots", link: "/bots/" },
-					{ label: "API Shield", link: "/api-shield/" },
-					{ label: "Page Shield", link: "/page-shield/" },
-					{ label: "Turnstile", link: "/turnstile/" },
-					{ label: "Security Center", link: "/security-center/" },
-				],
-			},
-			{
-				label: "Cloudflare One",
-				collapsed: true,
-				badge: groupIcon("cloudflare-one"),
-				items: [
-					{ label: "Overview", link: "/cloudflare-one/" },
-					{ label: "Insights & Logs", link: "/cloudflare-one/insights/" },
-					{
-						label: "Team & Resources",
-						link: "/cloudflare-one/team-and-resources/",
-					},
-					{ label: "Networks", link: "/cloudflare-one/networks/" },
-					{
-						label: "Access controls",
-						link: "/cloudflare-one/access-controls/",
-					},
-					{
-						label: "Traffic policies",
-						link: "/cloudflare-one/traffic-policies/",
-					},
-					{
-						label: "Cloud & SaaS findings",
-						link: "/cloudflare-one/cloud-and-saas-findings/",
-					},
-					{
-						label: "Email security",
-						link: "/cloudflare-one/email-security/",
-					},
-					{
-						label: "Data loss prevention",
-						link: "/cloudflare-one/data-loss-prevention/",
-					},
-					{
-						label: "Browser isolation",
-						link: "/cloudflare-one/remote-browser-isolation/",
-					},
-					{
-						label: "Reusable components",
-						link: "/cloudflare-one/reusable-components/",
-					},
-					{ label: "Integrations", link: "/cloudflare-one/integrations/" },
-				],
-			},
-			{
-				label: "Domains & DNS",
-				collapsed: true,
-				badge: groupIcon("dns"),
-				items: [
-					{ label: "DNS", link: "/dns/" },
-					{ label: "1.1.1.1", link: "/1.1.1.1/" },
-					{ label: "Registrar", link: "/registrar/" },
-					{ label: "Email Routing", link: "/email-service/" },
-					{ label: "DMARC Management", link: "/dmarc-management/" },
-				],
-			},
-			{
-				label: "Networking",
-				collapsed: true,
-				badge: groupIcon("network"),
-				items: [
-					{ label: "Tunnel", link: "/tunnel/" },
-					{ label: "Mesh", link: "/mesh/" },
-					{ label: "Magic Transit", link: "/magic-transit/" },
-					{ label: "Cloudflare WAN", link: "/cloudflare-wan/" },
-					{
-						label: "Cloudflare Network Firewall",
-						link: "/cloudflare-network-firewall/",
-					},
-					{ label: "Network Interconnect", link: "/network-interconnect/" },
-					{ label: "Spectrum", link: "/spectrum/" },
-					{ label: "BYOIP", link: "/byoip/" },
-				],
-			},
-			{
-				label: "Delivery & Performance",
-				collapsed: true,
-				badge: groupIcon("speed"),
-				items: [
-					{ label: "Cache", link: "/cache/" },
-					{ label: "Speed", link: "/speed/" },
-					{ label: "Load Balancing", link: "/load-balancing/" },
-					{ label: "Waiting Room", link: "/waiting-room/" },
-					{ label: "Argo Smart Routing", link: "/argo-smart-routing/" },
-					{ label: "Zaraz", link: "/zaraz/" },
-				],
-			},
-		],
-	},
-	{
-		label: "Manage & Observe",
-		collapsed: false,
-		badge: heading("heading-other"),
-		items: [
-			{
-				label: "Observe",
-				collapsed: true,
-				badge: groupIcon("analytics"),
-				items: [
-					{ label: "Analytics", link: "/analytics/" },
-					{ label: "Web Analytics", link: "/web-analytics/" },
-					{ label: "Logs", link: "/logs/" },
-					{ label: "Log Explorer", link: "/log-explorer/" },
-					{ label: "Health Checks", link: "/health-checks/" },
-				],
-			},
-		],
-	},
-];
-
-const props = {
-	frontmatter: {
-		title: "Cloudflare Developer Docs",
-		description: "Connect, protect, and build everywhere.",
-		template: "doc",
-		tableOfContents: false,
-	},
-	sidebar,
-	hasSidebar: true,
-	hideBreadcrumbs: true,
-	hideTitle: true,
-	headings: [],
-} as StarlightPageProps;
+const currentPath = Astro.url.pathname;
 ---
 
-<StarlightPage {...props}>
-	<div class="landing-root">
-		<div class="relative">
-			<FullPageLines />
-			<StructuralGrid />
-			<main
-				class="relative z-10 mx-auto max-w-[1280px]"
-				id="main-content"
-				style="padding-inline: var(--l-section-pad); padding-top: var(--l-pad-top);"
-			>
-				<Hero />
+<BaseLayout
+	title="Cloudflare Developer Docs"
+	description="Connect, protect, and build everywhere."
+	footer={false}
+>
+	<div class="flex h-full flex-col">
+		<Header showSidebar />
 
-				<BuildFromScratch />
+		<div
+			class="bg-background text-foreground flex w-full flex-col overflow-x-clip"
+		>
+			<div class="flex">
+				{
+					/* Full-height column carries the divider so it runs the entire
+				    page length; the inner <aside> stays sticky for the nav. */
+				}
+				<div
+					class="border-border hidden w-(--nb-sidebar-width) shrink-0 border-r lg:block"
+				>
+					<aside
+						data-nb-desktop-sidebar
+						class="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col overflow-y-auto"
+					>
+						<nav class="flex-1 px-4 pt-5 pb-12" aria-label="Documentation">
+							<SidebarFilter placeholder="Filter sidebar" />
+							<Sidebar currentPath={currentPath} />
+						</nav>
+						<div
+							class="from-background pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t to-transparent"
+						>
+						</div>
+					</aside>
+				</div>
 
-				<AgentSetup />
+				<main id="main-content" class="min-w-0 flex-1">
+					<div class="relative">
+						<FullPageLines />
+						<StructuralGrid />
+						<div
+							class="relative z-10 mx-auto max-w-[1280px] px-4 pt-16 min-[800px]:pt-[max(2rem,4vw)] lg:px-[max(2rem,4vw)]"
+						>
+							<Hero />
+							<BuildFromScratch />
+							<AgentSetup />
+							<ChangelogSection />
+							<SecureSection />
+							<AccelerateSection />
+							<CommunityGrid />
+						</div>
+					</div>
+				</main>
+			</div>
 
-				<ChangelogSection />
-
-				<SecureSection />
-
-				<AccelerateSection />
-
-				<CommunityGrid />
-			</main>
+			{
+				/* Footer spans the full page width (beneath the sidebar), rendered
+			    outside the sidebar+main row. Its own lines layer repeats
+			    FullPageLines offset by the sidebar width on desktop, so the vertical
+			    dashed rules stay vertically aligned with the content column above
+			    and read as one continuous run. Footer fill is transparent in light
+			    mode (globals.css) so the rules show through. */
+			}
+			<div class="relative">
+				<div
+					class="pointer-events-none absolute inset-0 z-0 hidden lg:left-(--nb-sidebar-width) lg:block"
+					aria-hidden="true"
+				>
+					<FullPageLines />
+				</div>
+				<Footer class="nb-home-footer" />
+			</div>
 		</div>
 	</div>
-</StarlightPage>
 
-<script>
-	// Instant scroll to hash target on page load (no smooth animation).
-	// Subsequent in-page clicks use CSS scroll-behavior: smooth.
-	{
-		const hash = window.location.hash;
-		if (hash.length > 1) {
-			let target: Element | null = null;
-			let id = hash.slice(1);
-			try {
-				id = decodeURIComponent(id);
-			} catch {
-				// keep raw id when hash is malformed
-			}
-			target = document.getElementById(id);
-			if (!target) {
+	<dialog
+		data-mobile-sidebar
+		data-state="closed"
+		class="group fixed inset-0 m-0 h-full max-h-full w-full max-w-full border-0 bg-transparent p-0 data-[state=closing]:bg-black/40 data-[state=open]:bg-black/40"
+		aria-label="Site navigation"
+	>
+		<div
+			data-mobile-sidebar-panel
+			class="bg-card h-full w-full -translate-x-full overflow-y-auto shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
+		>
+			<div
+				class="border-border bg-card sticky top-0 z-[1] flex items-center justify-between border-b px-4 py-3"
+			>
+				<a href="/" class="group flex items-center gap-2 no-underline">
+					<img
+						src={logo.src}
+						alt=""
+						width="51"
+						height="23"
+						class="h-[20px] w-auto"
+					/>
+					<span
+						class="text-foreground group-hover:text-primary text-lg font-semibold tracking-tight transition-colors"
+					>
+						{config.title}
+					</span>
+				</a>
+				<button
+					data-close-sidebar
+					class="text-muted-foreground hover:bg-accent hover:text-foreground flex h-8 w-8 items-center justify-center rounded-md transition-colors"
+					aria-label="Close sidebar"
+				>
+					<Icon name="ph:x" class="h-5 w-5" />
+				</button>
+			</div>
+			<nav class="px-4 pt-5 pb-8" aria-label="Documentation">
+				<SidebarFilter placeholder="Filter..." />
+				<Sidebar currentPath={currentPath} />
+			</nav>
+		</div>
+	</dialog>
+
+	<script>
+		// Instant jump to a hash target on load; in-page clicks stay smooth.
+		{
+			const hash = window.location.hash;
+			if (hash.length > 1) {
+				let target: Element | null = null;
+				let id = hash.slice(1);
 				try {
-					target = document.querySelector(hash);
+					id = decodeURIComponent(id);
 				} catch {
-					target = null;
+					// Keep raw id if it isn't valid percent-encoding.
+				}
+				target = document.getElementById(id);
+				if (!target) {
+					try {
+						target = document.querySelector(hash);
+					} catch {
+						target = null;
+					}
+				}
+				if (target) {
+					const html = document.documentElement;
+					const prev = html.style.scrollBehavior;
+					html.style.scrollBehavior = "auto";
+					requestAnimationFrame(() => {
+						target!.scrollIntoView();
+						requestAnimationFrame(() => {
+							html.style.scrollBehavior = prev;
+						});
+					});
 				}
 			}
-			if (target) {
-				// Temporarily disable smooth scrolling for the initial jump
-				const html = document.documentElement;
-				const prev = html.style.scrollBehavior;
-				html.style.scrollBehavior = "auto";
-				requestAnimationFrame(() => {
-					target.scrollIntoView();
-					// Restore after the frame so future clicks are smooth again
-					requestAnimationFrame(() => {
-						html.style.scrollBehavior = prev;
-					});
-				});
-			}
 		}
-	}
-</script>
-
-<style is:global>
-	/* Starlight layout overrides */
-	.right-sidebar-container,
-	mobile-starlight-toc {
-		display: none;
-	}
-
-	.main-frame {
-		padding-top: var(--sl-nav-height);
-	}
-	.main-pane {
-		padding: 0;
-		gap: 0;
-		isolation: isolate;
-		z-index: 0;
-	}
-	.content-panel {
-		padding: 0;
-		margin: 0;
-		overflow: visible;
-	}
-	.sl-container {
-		max-width: none;
-		margin: 0;
-		padding: 0;
-		overflow: visible;
-	}
-	.sl-markdown-content {
-		margin: 0;
-		padding: 0;
-		overflow: visible;
-	}
-	.sl-markdown-content > :first-child {
-		margin-top: 0;
-	}
-	.sl-markdown-content
-		:not(a, strong, em, del, span, input, code, br)
-		+ :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
-		margin-top: 0;
-	}
-
-	/* Restore footer spacing — scoped to the landing page only */
-	body:has(.landing-root) footer {
-		margin-top: 0;
-	}
-	body:has(.landing-root) footer .custom-footer-section {
-		position: relative;
-		z-index: 1;
-		max-width: 1280px;
-		margin-inline: auto;
-		padding-inline: var(--l-section-pad, 1.5rem);
-		padding-bottom: 1.5rem;
-		border-top: 1px solid var(--sl-color-gray-6);
-		background-color: var(--sl-color-bg);
-	}
-</style>
+	</script>
+</BaseLayout>

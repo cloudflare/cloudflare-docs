@@ -1,0 +1,30 @@
+---
+import { z } from "astro/zod";
+
+const MAPPINGS = {
+	all: "Available on all plans",
+	paid: "Available on Paid plans",
+	pro: "Pro and above",
+	business: "Business and above",
+	enterprise: "Enterprise-only",
+	"add-on": "Add-on feature",
+	"ent-add-on": "Enterprise-only paid add-on",
+	"workers-all": "Available on Free and Paid plans",
+	"workers-paid": "Available on Workers Paid plan",
+	beta: "Available in open beta",
+} as const satisfies Record<string, string>;
+
+type PlanType = keyof typeof MAPPINGS;
+
+const props = z.object({
+	type: z.enum(Object.keys(MAPPINGS) as [PlanType, ...PlanType[]]),
+});
+
+const input = props.parse(Astro.props);
+
+const availability = MAPPINGS[input.type];
+---
+
+<div class="text-info font-semibold">
+	{availability}
+</div>

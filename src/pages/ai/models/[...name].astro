@@ -1,20 +1,34 @@
 ---
+/**
+ * /ai/models/<slug>/ — a single model page in the unified catalog.
+ *
+ * Rest param because `/ai` slugs are the full `model_id` (multi-segment, e.g.
+ * `openai/tts-1`) for catalog models and the full `@cf/...` name for legacy
+ * models. Bound to `getResolvedModels` with `model.slug`.
+ *
+ * Legacy-not-in-catalog models are intentionally emitted at BOTH this route
+ * (full slug) and `/workers-ai/models/[...name]` (short slug) — dual URLs, not
+ * canonical-deduped.
+ */
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
-import { getResolvedModels } from "~/util/model-resolver";
+import { getResolvedModels } from "~/util/models";
+
+export const prerender = true;
 
 export const getStaticPaths = (async () => {
 	const models = await getResolvedModels();
-
-	// Generate pages at full model ID path only (e.g., "@cf/moonshotai/kimi-k2.5")
-	// Short slugs are handled by /workers-ai/models/[...name].astro for legacy URLs
 	return models.map((model) => ({
 		params: { name: model.slug },
-		props: { model },
+		props: { model, slug: model.slug },
+		cacheKey: String(model.digest ?? model.id),
 	}));
 }) satisfies GetStaticPaths;
 
-const { model } = Astro.props;
+const { model, slug } = Astro.props as {
+	model: Awaited<ReturnType<typeof getResolvedModels>>[number];
+	slug: string;
+};
 ---
 
-<ModelDetailPage model={model} />
+<ModelDetailPage model={model} basePath="/ai/models" slug={slug} />

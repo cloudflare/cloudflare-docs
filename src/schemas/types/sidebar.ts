@@ -59,13 +59,13 @@ export const sidebar = z
 					.string()
 					.optional()
 					.describe(
-						"Overrides the default 'Overview' label for index pages in the sidebar. Refer to https://developers.cloudflare.com/style-guide/frontmatter/sidebar/.",
+						"Overrides the default 'Overview' label for index pages in the sidebar. Refer to https://developers.cloudflare.com/style-guide/build-the-page/frontmatter/sidebar/.",
 					),
 				hideIndex: z
 					.boolean()
 					.default(false)
 					.describe(
-						"Hides the index page from the sidebar. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
+						"Hides the index page from the sidebar. Refer to [Sidebar](/style-guide/build-the-page/frontmatter/sidebar/).",
 					),
 				badge: BadgeConfigSchema(),
 			})
@@ -73,5 +73,5 @@ export const sidebar = z
 	})
 	.prefault({})
 	.describe(
-		"Used to configure various sidebar options. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
+		"Used to configure various sidebar options. Refer to [Sidebar](/style-guide/build-the-page/frontmatter/sidebar/).",
 	);

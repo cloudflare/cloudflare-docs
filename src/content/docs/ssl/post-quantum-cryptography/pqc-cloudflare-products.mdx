@@ -40,7 +40,9 @@ Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quan
 - The Cloudflare API and dashboard.
 - [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) self-hosted applications (browser-to-edge leg).
 
-This section only covers the inbound TLS connection from the end-user client to Cloudflare's edge. When a Worker fetches data from a backend storage service ([D1](/d1/), [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), [Workers AI](/workers-ai/), [Hyperdrive](/hyperdrive/), and similar), that connection is governed by the [Cloudflare internal network](#cloudflare-internal-network) section. When a Worker calls out to a third-party origin via `fetch()`, it is governed by the [Cloudflare to origin](#cloudflare-to-origin) section. The [Agentless via proxy endpoints](#agentless-via-proxy-endpoints) on-ramp to Cloudflare Gateway terminates inbound TLS in its own edge stack and is covered separately below.
+Customers can measure per-zone post-quantum key agreement adoption on their inbound traffic using the [`ClientTLSKeyExchangeGroup`](/logs/logpush/logpush-job/datasets/zone/http_requests/#clienttlskeyexchangegroup) field in the `http_requests` Logpush dataset, which is also queryable in [Log Explorer](/log-explorer/).
+
+This section only covers the inbound TLS connection from the end-user client to Cloudflare's edge. When a Worker fetches data from a backend storage service ([D1](/d1/), [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), [Workers AI](/workers-ai/), [Hyperdrive](/hyperdrive/), and similar), that connection is governed by the [Cloudflare internal network](#cloudflare-internal-network) section. When a Worker calls out to a third-party origin via `fetch()`, it is governed by the [Cloudflare to origin](#cloudflare-to-origin) section.
 
 ## Cloudflare internal network
 
@@ -114,22 +116,10 @@ Mesh inherits its post-quantum protection from the [Cloudflare One Client](#clou
 
 - The [Cloudflare One Client](#cloudflare-one-client).
 - A [Cloudflare IPsec](#cloudflare-ipsec) tunnel.
-- The [Agentless via proxy endpoints](#agentless-via-proxy-endpoints) on-ramp.
 
 The egress leg from Gateway to third-party origin servers is covered by [Cloudflare to origin](#cloudflare-to-origin) and is independent of the on-ramp.
 
 Reference: [PQC and Cloudflare One: Secure Web Gateway](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#secure-web-gateway).
-
-### Agentless via proxy endpoints
-
-Cloudflare Gateway [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) let browsers route their egress HTTPS traffic through Cloudflare Gateway for inspection and filtering, without an agent installed on the device. Browsers are configured via a Proxy Auto-Configuration (PAC) file or system proxy settings to forward traffic to a Cloudflare-hosted proxy endpoint, which terminates TLS at Cloudflare's edge.
-
-| Protection    | Status            |
-| ------------- | ----------------- |
-| Key agreement | ✅ X25519MLKEM768 |
-| Signatures    | Not yet           |
-
-Reference: [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/), [PQC and Cloudflare One: Secure Web Gateway](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#secure-web-gateway).
 
 ### Cloudflare IPsec
 
@@ -155,6 +145,19 @@ TLS 1.3 control-plane connection used by the [Cloudflare One Appliance](/cloudfl
 | Signatures    | Not yet           |
 
 Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/reference/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-ipsec).
+
+### Cloudflare Email Security
+
+Post-quantum protection applies to inbound and outbound TLS 1.3 SMTP connections between Cloudflare [Email Security](/cloudflare-one/email-security/) MX deployments and third-party mail servers:
+
+| Protection    | Status            |
+| ------------- | ----------------- |
+| Key agreement | ✅ X25519MLKEM768 |
+| Signatures    | Not yet           |
+
+Reference: [Email Security](/cloudflare-one/email-security/), [MX/Inline deployment](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/).
+
+Post-quantum key agreement is negotiated automatically when the remote SMTP peer advertises support (for example, [Google Workspace](https://workspace.google.com/)). Senders and receivers that do not yet advertise post-quantum key agreement continue to connect with classical key exchange.
 
 ## Contributing
 

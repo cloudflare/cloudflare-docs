@@ -18,7 +18,7 @@ To generate a presigned URL, you specify:
 2. **Operation**: The S3 API operation permitted (GET, PUT, HEAD, or DELETE)
 3. **Expiry**: Timeout from 1 second to 7 days (604,800 seconds)
 
-Presigned URLs are generated client-side with no communication with R2, requiring only your R2 API credentials and an implementation of the AWS Signature Version 4 signing algorithm.
+Presigned URLs are generated server-side with no communication with R2, requiring only your R2 API credentials and an implementation of the AWS Signature Version 4 signing algorithm.
 
 ## Choosing an approach
 

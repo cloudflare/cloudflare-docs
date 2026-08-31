@@ -2,6 +2,10 @@
     "name": "@cf/zai-org/glm-5.2",
     "properties": [
         {
+            "property_id": "require_workers_paid",
+            "value": "true"
+        },
+        {
             "property_id": "context_window",
             "value": "262144"
         },
@@ -32,6 +36,10 @@
         {
             "property_id": "reasoning",
             "value": "true"
+        },
+        {
+            "property_id": "reasoning_effort",
+            "value": "Off, High, Max"
         }
     ],
     "id": "4edc7dfe-de78-4156-890c-85b79227694e",
@@ -291,9 +299,9 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "none",
+                                                "high",
+                                                "max"
                                             ]
                                         },
                                         {
@@ -1557,9 +1565,9 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "none",
+                                                "high",
+                                                "max"
                                             ]
                                         },
                                         {
@@ -2393,9 +2401,9 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "none",
+                                                            "high",
+                                                            "max"
                                                         ]
                                                     },
                                                     {
@@ -3659,9 +3667,9 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "none",
+                                                            "high",
+                                                            "max"
                                                         ]
                                                     },
                                                     {

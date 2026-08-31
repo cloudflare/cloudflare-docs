@@ -17,8 +17,8 @@ const marks =
 	{
 		LINE_TIERS.map((tier) => {
 			const stroke = tier.accent
-				? "var(--l-grid-mark-accent, var(--l-grid-mark))"
-				: "var(--l-grid-mark)";
+				? "var(--nb-grid-line-accent, var(--nb-grid-line))"
+				: "var(--nb-grid-line)";
 			const size = tier.accent ? 9 : 7;
 			const half = size / 2;
 			const offset = `-${half}px`;

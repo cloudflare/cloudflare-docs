@@ -63,6 +63,8 @@ dig kate.ns.cloudflare.com
 kate.ns.cloudflare.com.    68675    IN    A    173.245.58.124.
 ```
 
+To verify that your domain's parent zone is publishing the Cloudflare nameservers assigned to you (for example, when your zone is stuck in **Pending Nameserver Update** status), refer to [Zone stuck in Pending Nameserver Update](/dns/zone-setups/troubleshooting/pending-nameservers/).
+
 ### Where do I change my nameservers to point to Cloudflare?
 
 Make the change at your registrar, which is where you registered your domain. This may or may not be your hosting provider - refer to [Update nameservers](/dns/nameservers/update-nameservers/) for further context.
@@ -89,6 +91,24 @@ For domains where Cloudflare hosts the DNS, Cloudflare continuously checks wheth
 This is important because, if a domain is in a **Moved** state for a [long enough period of time](/dns/zone-setups/reference/domain-status/), it will be deleted from Cloudflare.
 
 <Render file="recover-deleted-domain" product="dns" />
+
+### Why does my new zone have different nameservers than my other zones?
+
+Nameserver assignments happen at zone creation and [cannot be changed](/dns/nameservers/nameserver-options/#assignment-method) afterwards, even by Cloudflare Support.
+
+A newly added zone can be assigned different nameservers from your other zones for a few reasons:
+
+- The same domain is (or was recently) active on another Cloudflare account.
+- The zone was previously deleted from Cloudflare and re-added.
+- A parent or child zone in the same account already uses the preferred nameservers.
+- The account uses [Foundation DNS advanced nameservers](/dns/foundation-dns/advanced-nameservers/), which use different sets (`blue`, `gold`, `orange`) and rotate to keep [directly descending zones](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment) on different nameservers.
+
+To make future zones share the same nameservers, use one of the following options depending on your plan:
+
+- [Account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/) — available on Enterprise (self-serve), or on Business after [contacting Cloudflare Support](/support/contacting-cloudflare-support/) to enable them.
+- [DNS zone defaults](/dns/additional-options/dns-zone-defaults/) with advanced nameservers or account custom nameservers — available on Enterprise.
+
+Deleting and re-adding the zone does not force a specific nameserver assignment and can produce yet another different set.
 
 ---
 

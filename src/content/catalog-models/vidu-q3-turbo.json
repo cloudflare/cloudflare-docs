@@ -23,7 +23,7 @@
 				"resolution": "720p"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/simple-text-to-video.mp4"
+				"video": "https://examples.aig.cloudflare.com/vidu/q3-turbo/simple-text-to-video.mp4"
 			},
 			"raw_response": {
 				"gatewayMetadata": {
@@ -56,7 +56,7 @@
 				"resolution": "1080p"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/high-resolution.mp4"
+				"video": "https://examples.aig.cloudflare.com/vidu/q3-turbo/high-resolution.mp4"
 			},
 			"raw_response": {
 				"gatewayMetadata": {
@@ -90,7 +90,7 @@
 				"resolution": "720p"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/portrait-video.mp4"
+				"video": "https://examples.aig.cloudflare.com/vidu/q3-turbo/portrait-video.mp4"
 			},
 			"raw_response": {
 				"gatewayMetadata": {
@@ -123,7 +123,7 @@
 				"resolution": "720p"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/extended-duration.mp4"
+				"video": "https://examples.aig.cloudflare.com/vidu/q3-turbo/extended-duration.mp4"
 			},
 			"raw_response": {
 				"gatewayMetadata": {
@@ -156,7 +156,7 @@
 				"resolution": "540p"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/low-resolution-fast-preview.mp4"
+				"video": "https://examples.aig.cloudflare.com/vidu/q3-turbo/low-resolution-fast-preview.mp4"
 			},
 			"raw_response": {
 				"gatewayMetadata": {
@@ -197,6 +197,7 @@
 		"Resolutions": "540p, 720p, 1080p"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-22 17:54:00",
 	"schema": {

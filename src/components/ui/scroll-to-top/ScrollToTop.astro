@@ -1,0 +1,41 @@
+---
+// Scroll-to-top button; ring uses pathLength="1" so offset = 1 - progress.
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+---
+
+<button
+	type="button"
+	data-nb-scroll-top
+	aria-label="Scroll to top"
+	class="border-border bg-background text-foreground hover:text-primary hover:border-primary focus-visible:ring-primary pointer-events-none fixed right-6 bottom-6 z-40 grid size-11 translate-y-2 place-items-center rounded-full border opacity-0 shadow-md transition-[opacity,transform] duration-200 focus-visible:ring-2 focus-visible:outline-none data-[nb-visible]:pointer-events-auto data-[nb-visible]:translate-y-0 data-[nb-visible]:opacity-100 motion-reduce:transition-none print:hidden"
+>
+	<svg
+		class="nb-scroll-ring pointer-events-none absolute inset-0 size-full -rotate-90"
+		viewBox="0 0 44 44"
+		fill="none"
+		aria-hidden="true"
+	>
+		<circle class="nb-scroll-track" cx="22" cy="22" r="20" stroke-width="2"
+		></circle>
+		<circle
+			class="nb-scroll-progress"
+			cx="22"
+			cy="22"
+			r="20"
+			stroke-width="2"
+			pathLength="1"></circle>
+	</svg>
+	<Icon name="ph:arrow-up-bold" class="relative size-4" />
+</button>
+
+<style>
+	.nb-scroll-track {
+		stroke: var(--nb-border);
+	}
+	.nb-scroll-progress {
+		stroke: var(--nb-primary);
+		stroke-linecap: round;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+	}
+</style>

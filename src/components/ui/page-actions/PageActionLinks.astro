@@ -1,0 +1,32 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+interface Props {
+	editUrl?: string;
+}
+
+const { editUrl } = Astro.props;
+
+const linkClass =
+	"group inline-flex items-center gap-2 text-[13px] text-muted-foreground no-underline transition-colors hover:text-foreground";
+---
+
+<nav aria-label="Page actions" class="flex flex-col gap-3">
+	{
+		editUrl && (
+			<a href={editUrl} target="_blank" rel="noopener" class={linkClass}>
+				<Icon name="ph:pencil-simple" class="h-3.5 w-3.5" aria-hidden="true" />
+				<span>Edit page</span>
+			</a>
+		)
+	}
+	<a
+		href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+		target="_blank"
+		rel="noopener"
+		class={linkClass}
+	>
+		<Icon name="ph:github-logo" class="h-3.5 w-3.5" aria-hidden="true" />
+		<span>Report issue</span>
+	</a>
+</nav>

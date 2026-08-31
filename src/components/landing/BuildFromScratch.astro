@@ -1,9 +1,8 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import CommandBlock from "./CommandBlock.astro";
-import CornerMarks from "./CornerMarks.astro";
-import Button from "./Button.astro";
-import RightArrow from "./RightArrow.astro";
+import CornerMarks from "@/components/CornerMarks.astro";
+import { LinkButton } from "@/components/ui/link-button";
 import SectionHeading from "./SectionHeading.astro";
 import TabBar from "./TabBar.astro";
 
@@ -28,6 +27,7 @@ const primitives = [
 			{ label: "Containers", href: "/containers/" },
 			{ label: "Durable Objects", href: "/durable-objects/" },
 			{ label: "Queues", href: "/queues/" },
+			{ label: "Flagship", href: "/flagship/" },
 		],
 	},
 	{
@@ -68,7 +68,7 @@ const primitives = [
 			{ label: "Pipelines", href: "/pipelines/" },
 			{ label: "D1", href: "/d1/" },
 			{ label: "KV", href: "/kv/" },
-			{ label: "Postgres & MySQL (Hyperdrive)", href: "/hyperdrive/" },
+			{ label: "Hyperdrive", href: "/hyperdrive/" },
 		],
 	},
 	{
@@ -101,7 +101,7 @@ const primitives = [
 		Powerful primitives, seamlessly integrated
 	</SectionHeading>
 
-	<div class="border-border-100 relative overflow-visible border">
+	<div class="border-border relative overflow-visible border">
 		<CornerMarks />
 
 		<TabBar
@@ -120,7 +120,7 @@ const primitives = [
 					data-tabbar="build"
 					data-tab-id={p.id}
 					hidden={i !== 0}
-					class="bg-background p-5 sm:p-8"
+					class="bg-card p-5 sm:p-8"
 				>
 					<div class="w-full">
 						<div class="mb-4 flex items-center gap-3">
@@ -134,7 +134,7 @@ const primitives = [
 								{p.heading}
 							</h3>
 						</div>
-						<p class="text-foreground-muted mb-6 text-sm leading-relaxed md:text-base">
+						<p class="text-muted-foreground mb-6 text-sm leading-relaxed md:text-base">
 							{p.description}
 						</p>
 
@@ -146,13 +146,11 @@ const primitives = [
 						/>
 
 						<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-							<Button href={p.cta.href} variant="secondary" size="md">
-								<span class="inline-flex items-center gap-2">
-									{p.cta.label}
-									<RightArrow size={12} />
-								</span>
-							</Button>
-							<p class="text-foreground-muted relative top-px min-w-0 flex-1 text-sm">
+							<LinkButton href={p.cta.href} variant="secondary" size="base">
+								{p.cta.label}
+								<Icon name="ph:arrow-right" class="h-3 w-3" />
+							</LinkButton>
+							<p class="text-muted-foreground relative top-px min-w-0 flex-1 text-sm">
 								{p.tags.map((tag, idx) => (
 									<span class="inline-flex items-center">
 										<a
@@ -162,7 +160,7 @@ const primitives = [
 											{tag.label}
 										</a>
 										{idx < p.tags.length - 1 && (
-											<span class="text-border-100 mx-1.5" aria-hidden="true">
+											<span class="text-border mx-1.5" aria-hidden="true">
 												·
 											</span>
 										)}
@@ -183,7 +181,7 @@ const primitives = [
 		border-color: var(--build-icon-color);
 		background: var(--build-icon-bg);
 	}
-	:global(:root[data-theme="dark"]) .build-panel-icon {
+	:global(:root[data-mode="dark"]) .build-panel-icon {
 		background: var(--build-icon-bg-dark);
 	}
 </style>
