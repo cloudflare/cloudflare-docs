@@ -163,23 +163,24 @@ The MCP server status indicates the synchronization status of the MCP server to 
 
 | Status        | Description                                                                                                                                                                                         |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) for more information. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
+| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                              |
 | Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                |
 | Waiting       | The server's tools, prompts, and resources are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                      |
 | Ready         | The server was successfully synchronized and all tools, prompts, and resources are available.                                                                                                       |
 
 #### Error details
 
-When an MCP server is in the **Error** or **Sync Required** state, Cloudflare Access surfaces structured information to help you diagnose the issue. In the dashboard, hover over the server's status to view the error message, the error category (upstream or connection), the HTTP status code, and the MCP protocol error code (if applicable). The same details are returned by the API as an `error_details` object:
+When an MCP server is in the **Error** or **Sync Required** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
 
-| Field              | Description                                                                                                                                         |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `message`          | A human-readable description of the error.                                                                                                          |
-| `type`             | The category of error — for example, `upstream_error` (the server returned an error response) or `unreachable` (the server could not be contacted). |
-| `http_status_code` | The HTTP status code returned by the upstream server, if applicable.                                                                                |
-| `mcp_error_code`   | The MCP protocol error code, if the server returned an MCP-level error.                                                                             |
+| Field         | Description                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `status_code` | The HTTP status code returned by the MCP server, if available.                                                         |
+| `mcp_code`    | The MCP protocol error code, if the server returned an MCP error.                                                      |
+| `retryable`   | Whether the error is likely to be temporary and the connection is worth retrying.                                     |
+| `is_upstream` | `true` if the MCP server returned the error; `false` if the connection to the MCP server failed.                       |
+| `cause`       | The underlying error message.                                                                                          |
 
-Common causes of server errors include expired OAuth credentials, unreachable server URLs, and upstream server misconfigurations. If the error type is `upstream_error`, check the HTTP and MCP error codes to identify the issue on the upstream server. If the type is `unreachable`, verify that the server URL is correct and accessible.
+If `is_upstream` is `true`, use `status_code`, `mcp_code`, and `cause` to troubleshoot the MCP server. If it is `false`, verify that the server URL is correct and reachable. Retry the sync when `retryable` is `true`; otherwise, correct the reported cause before trying again. Reauthenticate the server only when the error points to expired or invalid credentials.
 
 ### Reauthenticate the MCP server
 
