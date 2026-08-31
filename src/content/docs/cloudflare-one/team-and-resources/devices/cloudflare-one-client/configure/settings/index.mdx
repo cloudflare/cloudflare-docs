@@ -639,11 +639,11 @@ Unknown adapter CloudflareWARP:
 
 By default, the Cloudflare One Client shows every [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) (VNET) in your account in the [VNET dropdown](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network). **VNET availability** restricts the dropdown to a subset of VNETs and chooses a default VNET on a per-[device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) basis. The active profile controls which VNETs devices can see and switch between.
 
-To enable this beta feature, contact your Cloudflare account team.
+VNET availability is a gated beta. Contact your Cloudflare account team to request access.
 
 For example, if your QA team uses a `staging-vnet` and your sales team should never reach it, you can assign the sales device profile to only include `production-vnet`. Sales users will not see `staging-vnet` in the dropdown.
 
-After you change VNET availability settings, allow up to 20 minutes for the changes to reach devices. Users must then fully disconnect the Cloudflare One Client and reconnect it. Selecting a VNET from the dropdown or closing and reopening the client interface does not refresh the settings.
+After you change VNET availability settings, allow up to 20 minutes for the changes to reach devices. Users must then disconnect and reconnect the Cloudflare One Client to refresh the available VNETs. Selecting a VNET automatically reconnects the client, but does not force an earlier settings update. Closing and reopening the client interface does not refresh the settings.
 
 ### DNS search suffixes <Badge text="Beta" variant="caution" size="small" />
 
