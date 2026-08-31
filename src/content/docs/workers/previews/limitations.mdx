@@ -1,0 +1,84 @@
+---
+pcx_content_type: reference
+title: Limitations
+description: Current limitations for Worker Previews, including service bindings, routes, Cron Triggers, Queue consumers, and container cleanup.
+sidebar:
+  order: 3.5
+products:
+  - workers
+---
+
+Previews isolate your branch's code and Preview settings, but some invocation types still target production or sit outside the Previews system.
+
+Preview support for these areas may come later. If one of these limitations blocks your workflow, [open an issue in the workers-sdk repository](https://github.com/cloudflare/workers-sdk/issues/new/choose). Describe whether the resource should be shared, auto-created per Preview, and cleaned up when the Preview is deleted.
+
+## Container application cleanup
+
+When you create a Preview that uses [Containers](/containers/), Wrangler creates a container app for that Preview. The app name includes the Worker name, Preview name, and container class name, for example:
+
+```text
+my-worker_feature-login_MyContainer
+```
+
+Deleting the Preview deletes the Preview record. The Preview URL should stop serving after deletion propagates, and the backing Durable Object namespace is deleted with the Preview. However, the container app can remain visible in `wrangler containers list` after the Preview is gone.
+
+If you need deterministic cleanup today, check for leftover Preview container apps after deleting the Preview:
+
+```sh
+npx wrangler preview delete --name "feature-login" --skip-confirmation
+npx wrangler containers list
+```
+
+Delete any leftover app whose name belongs to the deleted Preview:
+
+```sh
+npx wrangler containers delete <APPLICATION_ID>
+```
+
+You can automate this in CI by matching Wrangler's generated Preview container app name prefix. Review the IDs before using this pattern broadly:
+
+```sh
+WORKER_NAME="my-worker"
+PREVIEW_NAME="feature-login"
+PREFIX="${WORKER_NAME}_${PREVIEW_NAME}_"
+
+npx wrangler preview delete --name "$PREVIEW_NAME" --skip-confirmation
+
+npx wrangler containers list --json \
+	| jq -r --arg prefix "$PREFIX" '.[] | select(.name | startswith($prefix)) | .id' \
+	| while read -r app_id; do
+		npx wrangler containers delete "$app_id"
+	done
+```
+
+Do not delete container apps by Worker name alone. A production container app for the same Worker can have a similar name but does not include the Preview name segment.
+
+## Service bindings
+
+A [service binding](/workers/runtime-apis/bindings/service-bindings/) from Worker A to Worker B tells Cloudflare: when Worker A calls `env.AUTH.fetch()`, route that request to Worker B.
+
+Today, if Worker A has a service binding to Worker B and you deploy a Preview of Worker A, the Preview of Worker A can only bind to the production Worker B. It does not automatically bind to a matching Preview of Worker B.
+
+If you need same-Worker calls to stay inside the Preview, use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a service binding.
+
+## Queue consumers
+
+Previews can produce messages to [Queues](/queues/). For example, a Preview can call `env.MY_QUEUE.send(message)` if its `previews` block includes a Queue producer binding.
+
+Previews cannot consume messages from Queues today. A Queue can have only one consumer Worker, and the Queues service does not yet register a Preview as that consumer.
+
+Do not point a Preview at a production Queue and expect isolated testing. The Preview could produce messages that production consumes. Do not point every Preview at one shared staging Queue and expect each Preview's `queue(batch, env, ctx)` handler to run. Only one consumer can receive those messages.
+
+## Cron Triggers
+
+A [Cron Trigger](/workers/configuration/cron-triggers/) tells Cloudflare: on this schedule, run your Worker's `scheduled()` handler.
+
+Cron Triggers target production. Previews do not create separate scheduled invocations, and the scheduler does not call a Preview's `scheduled()` handler today.
+
+To test scheduled logic in a Preview, put the work behind a function that you can call from both `scheduled()` and a test-only route. Then call the test route on the Preview URL.
+
+## Routes
+
+[Production routes](/workers/configuration/routing/routes/) target production. Previews do not take over zone routes, production custom domains, queue consumers, or other production triggers.
+
+To send HTTP traffic to a Preview, use its Preview URL on `workers.dev` or a [custom domain Preview URL](/workers/previews/custom-domains/). Custom domain Preview URLs are separate Preview hostnames, such as `<preview-name>.app.example.com`.

@@ -14,7 +14,7 @@ import { WorkerPreviewsDiagram } from "~/components";
 
 <WorkerPreviewsDiagram />
 
-Coming from Version URLs or Wrangler environments? Refer to [Previews, Version URLs, and Wrangler environments](/workers/previews/compare-preview-workflows/) to compare and migrate.
+Used [Version URLs](/workers/versions-and-deployments/version-urls/) or [Wrangler environments](/workers/wrangler/environments/) before? Refer to [Compare workflows](/workers/previews/compare-workflows/) to understand how they differ from Previews and our recommended practices for branch testing.
 
 ## How it works
 
@@ -43,7 +43,7 @@ Previews do not inherit production values. Configure each Preview independently,
 
 Durable Objects and Containers get separate state per Preview automatically. KV, D1, R2, and other resources are isolated when you bind the Preview to a separate resource. For the full matrix, refer to [Resources and isolation](/workers/previews/resources/).
 
-Service bindings, routes, Cron Triggers, and queue consumers currently target production. Preview support for these is coming.
+[Service bindings](/workers/previews/limitations/#service-bindings), [routes](/workers/previews/limitations/#routes), [Cron Triggers](/workers/previews/limitations/#cron-triggers), and [Queue consumers](/workers/previews/limitations/#queue-consumers) currently target production or sit outside the Previews system.
 
 ### Access control
 
@@ -61,4 +61,11 @@ When a limit is reached, Cloudflare automatically deletes the oldest to make roo
 - **Preview limit**: the Preview that was deployed to least recently is deleted.
 - **Deployment limit**: the oldest deployment in that Preview is deleted.
 
-You can also delete Previews yourself with `npx wrangler preview delete --name <preview-name>`.
+You can also delete Previews yourself with `npx wrangler preview delete --name <preview-name>`. For a pull request cleanup example, refer to [Delete closed pull request Previews](/workers/previews/automation-examples/#delete-closed-pull-request-previews).
+
+## Next steps
+
+- [Get started](/workers/previews/get-started/) - Set up your first Preview
+- [Configuration](/workers/previews/configuration/) - Configure variables, secrets, bindings, and Base configuration
+- [Resources and isolation](/workers/previews/resources/) - Understand which resources are isolated or shared
+- [Limitations](/workers/previews/limitations/) - Review current support gaps and workarounds

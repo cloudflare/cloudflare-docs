@@ -260,16 +260,34 @@ None of the options for this command are required. Also, many can be set in your
 
 ## `preview`
 
-Create or update a Preview for branch and pull request work. Use [`wrangler deploy`](#deploy) for production.
+Create a Preview deployment of the current Worker for branch and pull request work. Use [`wrangler deploy`](#deploy) for production.
 
 ```txt
-wrangler preview [OPTIONS]
+wrangler preview [<SCRIPT>] [OPTIONS]
 ```
 
+:::note
+
+None of the options for this command are required. Also, many can be set in your Wrangler file or in your [Previews Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration). Refer to the [Wrangler configuration](/workers/wrangler/configuration/) documentation for more information.
+
+:::
+
+- `SCRIPT` <Type text="string" />
+  - The path to an entry point for your Worker. Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the Preview to create or update.
-- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Name of the Preview. Defaults to the current git branch.
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - A tag for this Preview deployment.
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
+  - A descriptive message for this Preview deployment.
+- `--json` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Return machine-readable output.
+- `--ignore-base-config` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Only use settings from your Wrangler file, ignoring the Preview base config configured in the Cloudflare dashboard.
+- `--worker-name` <Type text="string" /> <MetaInfo text="optional" />
+  - Name of the Worker to target. Defaults to the name in your local Wrangler file.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 For example:
 
@@ -281,147 +299,39 @@ Other Preview branches are not affected.
 
 ---
 
-### `preview delete`
-
-Delete one Preview and its deployments.
-
-```txt
-wrangler preview delete --name <preview-name> [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Preview to delete.
+<WranglerCommand command="preview delete" />
 
 ---
 
-### `preview secret put`
-
-Create or update a secret on a Preview. This patches the named Preview's latest deployment and creates a new deployment that goes live immediately.
-
-```txt
-wrangler preview secret put SECRET_NAME [OPTIONS]
-```
-
-- `SECRET_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the secret to add or update.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the Preview to update. Defaults to the current git branch.
-- `--message` <Type text="string" /> <MetaInfo text="optional" />
-  - A descriptive message for this deployment.
-- `--tag` <Type text="string" /> <MetaInfo text="optional" />
-  - A tag for this deployment.
+<WranglerCommand command="preview secret put" />
 
 ---
 
-### `preview secret delete`
-
-Delete a secret from a Preview. This patches the named Preview's latest deployment and creates a new deployment that goes live immediately.
-
-```txt
-wrangler preview secret delete SECRET_NAME [OPTIONS]
-```
-
-- `SECRET_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the secret to delete.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the Preview to update. Defaults to the current git branch.
-- `--message` <Type text="string" /> <MetaInfo text="optional" />
-  - A descriptive message for this deployment.
-- `--tag` <Type text="string" /> <MetaInfo text="optional" />
-  - A tag for this deployment.
+<WranglerCommand command="preview secret delete" />
 
 ---
 
-### `preview secret list`
-
-List all secrets on a Preview. Reads from the named Preview's latest deployment. Secret values are masked in the output.
-
-```txt
-wrangler preview secret list [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the Preview to inspect. Defaults to the current git branch.
+<WranglerCommand command="preview secret list" />
 
 ---
 
-### `preview secret bulk`
-
-Upload multiple secrets to a Preview. This patches the named Preview's latest deployment and creates a new deployment that goes live immediately. Setting a key to `null` in JSON format deletes that secret, matching the behavior of `wrangler secret bulk`.
-
-```txt
-wrangler preview secret bulk [FILE] [OPTIONS]
-```
-
-- `FILE` <Type text="string" /> <MetaInfo text="optional" />
-  - The file of key-value pairs to upload, as JSON or `.env` format. Reads from stdin if omitted.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - The name of the Preview to update. Defaults to the current git branch.
-- `--message` <Type text="string" /> <MetaInfo text="optional" />
-  - A descriptive message for this deployment.
-- `--tag` <Type text="string" /> <MetaInfo text="optional" />
-  - A tag for this deployment.
+<WranglerCommand command="preview secret bulk" />
 
 ---
 
-### `preview base-config secret put`
-
-Add or update a secret in the base configuration.
-
-```txt
-wrangler preview base-config secret put SECRET_NAME [OPTIONS]
-```
-
-- `SECRET_NAME` <Type text="string" />
-  - The name of the secret to add or update.
-- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Apply the base secret change to Previews that already exist, instead of new Previews only.
-
-For example:
-
-```sh
-npx wrangler preview base-config secret put API_TOKEN
-```
+<WranglerCommand command="preview base-config secret put" />
 
 ---
 
-### `preview base-config secret delete`
-
-Delete a secret from the base configuration.
-
-```txt
-wrangler preview base-config secret delete SECRET_NAME [OPTIONS]
-```
-
-- `SECRET_NAME` <Type text="string" />
-  - The name of the secret to delete.
-- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Apply the base secret change to Previews that already exist, instead of new Previews only.
+<WranglerCommand command="preview base-config secret delete" />
 
 ---
 
-### `preview base-config secret list`
-
-List secrets in the base configuration.
-
-```txt
-wrangler preview base-config secret list [OPTIONS]
-```
+<WranglerCommand command="preview base-config secret list" />
 
 ---
 
-### `preview base-config secret bulk`
-
-Upload multiple secrets to the base configuration.
-
-```txt
-wrangler preview base-config secret bulk [OPTIONS]
-```
-
-- `--apply-to-existing` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Apply the base secret changes to Previews that already exist, instead of new Previews only.
-
-Existing Previews keep their own settings unless you also apply the change to existing Previews.
+<WranglerCommand command="preview base-config secret bulk" />
 
 ---
 

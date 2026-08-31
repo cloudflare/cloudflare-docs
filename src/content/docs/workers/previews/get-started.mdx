@@ -1,28 +1,36 @@
 ---
 pcx_content_type: get-started
 title: Get started
-description: Set up Worker Previews in two steps — configure Preview settings, then deploy from any workflow.
+description: Set up Worker Previews in three steps — configure Preview settings, deploy from a workflow, then override settings for a specific Preview.
 sidebar:
   order: 1
 products:
   - workers
 ---
 
-import { DashButton, Steps, TabItem, Tabs, WorkerPreviewsAgentPrompt } from "~/components";
+import {
+	DashButton,
+	Steps,
+	TabItem,
+	Tabs,
+	WorkerPreviewsAgentPrompt,
+} from "~/components";
 
-You need Wrangler version **TODO: version** or later. Update with `npm install wrangler@latest`.
+This page gets your first Preview deployed. For details about which resources share data and which stay isolated, refer to [Resources and isolation](/workers/previews/resources/).
 
-To avoid any risk of accidentally using production resources, Previews are fully isolated from production and do not inherit any production configuration.
+Previews do not inherit production configuration. Configure Preview variables, secrets, bindings, and runtime settings before you share a Preview URL.
 
-Configure your Previews [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration) first to deploy a running Preview from any branch.
+Use the latest Wrangler version. When you run `npx wrangler preview`, npm uses the Wrangler installed in your project if one exists. Update the project dependency, not only a global Wrangler install:
+
+```sh
+npm install -D wrangler@latest @cloudflare/workers-types@latest
+```
 
 <WorkerPreviewsAgentPrompt />
 
 ## Step 1: Configure Previews Base settings
 
-You can configure Previews in the dashboard or your Wrangler configuration file, just as you would for production.
-
-To understand how resources work with your [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration) — including how to configure [separate namespaces for Durable Objects and Containers](/workers/previews/resources/#durable-objects-and-containers) — refer to [Resources and isolation](/workers/previews/resources/).
+You can configure Previews in the dashboard or in your Wrangler configuration file, just as you would for production.
 
 <Tabs syncKey="workerPreviewsSetup">
 <TabItem label="Dashboard">
@@ -37,7 +45,7 @@ To understand how resources work with your [Base configuration](/workers/preview
 
    ![Settings tab showing Production and Previews Base toggles for variables, secrets, and bindings](~/assets/images/workers/previews/settings-base-configuration.png)
 
-4. Select **[Previews Base](/workers/previews/configuration/#setting-your-previews-base-configuration)** in each section to configure your Preview settings. To get started quicker, you can import names and values from production and then edit them — but secrets must be manually re-entered.
+4. Select **[Previews Base](/workers/previews/configuration/#setting-your-previews-base-configuration)** in each section to configure what new Previews start from. To start faster, import names and values from production, then edit them. Secrets must be manually re-entered.
 
    ![Import dialog showing variables and secrets imported from production to Previews](~/assets/images/workers/previews/import_from_prod.png)
 </Steps>
@@ -45,7 +53,7 @@ To understand how resources work with your [Base configuration](/workers/preview
 </TabItem>
 <TabItem label="Wrangler">
 
-Add a `previews` block to your Wrangler configuration file. Top-level settings are production. The `previews` block contains the configuration for the Preview you deploy to.
+Add a `previews` block to your Wrangler configuration file. Top-level settings are production. The `previews` block contains Preview settings.
 
 ```txt title="wrangler.jsonc"
 {
@@ -60,14 +68,14 @@ Add a `previews` block to your Wrangler configuration file. Top-level settings a
 }
 ```
 
-For details on what to include in your `previews` block based on your production settings, refer to [Wrangler configuration file](/workers/previews/configuration/#wrangler-configuration-file).
+For a field-by-field guide, refer to [Wrangler configuration file](/workers/previews/configuration/#wrangler-configuration-file).
 
 </TabItem>
 </Tabs>
 
 ## Step 2: Deploy a Preview
 
-Deploy a Preview by running `npx wrangler preview`. The Preview name defaults to your current Git branch, or you can set it explicitly with `--name`.
+Deploy a Preview with `npx wrangler preview`. The Preview name defaults to your current Git branch. Use `--name` to set it yourself.
 
 <Tabs syncKey="workerPreviewsDeploy">
 <TabItem label="Workers Builds">
@@ -78,58 +86,95 @@ Best when your Worker is connected to GitHub or GitLab and you want automatic Pr
 1. [Connect your repo to Workers Builds](/workers/ci-cd/builds/#get-started).
 2. Enable [Preview Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds), if not already enabled. If your Worker is already connected to Builds, you need to update your preview command. Select **Enable Worker Previews** in the dashboard to switch from your old version command to `npx wrangler preview`.
 
-   **TODO: input screenshot of command change dialog**
-
 3. Push a branch or open a pull request.
 </Steps>
 
 Workers Builds runs `npx wrangler preview`, deploys the Preview, and [comments the Preview URL](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment) on your PR.
 
 </TabItem>
-<TabItem label="External CI">
+<TabItem label="Existing workflow">
 
-Best when you already use GitHub Actions, GitLab CI, Buildkite, or another provider.
+Best when you already use GitHub Actions, GitLab CI, Buildkite, or another automation tool.
 
-Add `wrangler preview` to your CI workflow. You do not need Workers Builds.
+Add `npx wrangler preview --json` to your workflow.
 
 ```yaml title=".github/workflows/preview.yml"
 name: Preview
-on:
-  pull_request:
-    types: [opened, synchronize]
+
+on: [pull_request]
 
 jobs:
   preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cloudflare/wrangler-action@v4
-        with:
-          command: preview
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - run: npx wrangler preview --json
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
 
 The Preview URL stays stable across commits to the same PR.
 
-For more CI examples, refer to [GitHub Actions and CI](/workers/previews/ci-cd/).
+For PR comments, cleanup, screenshots, and `wrangler-action` examples, refer to [Automation examples](/workers/previews/automation-examples/).
 
 </TabItem>
 </Tabs>
 
-## Override settings for a specific Preview
+## Step 3: Override settings for a specific Preview
 
-Once a Preview is deployed, you can access it through the breadcrumb dropdown in the dashboard, which lets you switch between Production and any of your Previews.
+<Tabs syncKey="workerPreviewsOverride">
+<TabItem label="Dashboard">
+
+Once a Preview is deployed, use the breadcrumb dropdown in the dashboard to switch between Production and any Preview.
 
 ![Breadcrumb dropdown showing Production and individual Previews](~/assets/images/workers/previews/breadcrumb.png)
 
-Each Preview has its own Metrics, Deployments, Observability, and Settings tabs. If you go to **Settings**, you can override any value copied over from [Previews Base](/workers/previews/configuration/#setting-your-previews-base-configuration) — meaning each Preview effectively has its own independent settings.
+Each Preview has its own Metrics, Deployments, Observability, and Settings tabs. In **Settings**, you can override values copied from [Previews Base](/workers/previews/configuration/#setting-your-previews-base-configuration).
 
 ![Per-Preview settings page with its own variables and bindings](~/assets/images/workers/previews/scoped_settings.png)
+
+</TabItem>
+<TabItem label="Wrangler">
+
+For non-secret settings, edit the `previews` block on the branch you are deploying. When you run `npx wrangler preview`, Wrangler uses that branch's `previews` block.
+
+```jsonc title="wrangler.jsonc"
+{
+  "previews": {
+    "vars": {
+      "DEBUG": "true"
+    }
+  }
+}
+```
+
+For binding examples, refer to [Configuration](/workers/previews/configuration/#wrangler-configuration-file). To decide whether a binding should point at shared staging data or a separate resource, refer to [Resources and isolation](/workers/previews/resources/).
+
+After editing the `previews` block, deploy the Preview again:
+
+```sh
+npx wrangler preview --name <preview-name>
+```
+
+Secrets cannot be stored in Wrangler configuration files. Use these commands instead:
+
+| Scope                         | Command                                                                                                                          |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Base configuration            | [`npx wrangler preview base-config secret put SECRET_NAME`](/workers/wrangler/commands/workers/#preview-base-config-secret-put)  |
+| One Preview                   | [`npx wrangler preview secret put SECRET_NAME --name <preview>`](/workers/wrangler/commands/workers/#preview-secret-put)         |
+| List secrets for one Preview  | [`npx wrangler preview secret list --name <preview>`](/workers/wrangler/commands/workers/#preview-secret-list)                  |
+| Bulk upload to one Preview    | [`npx wrangler preview secret bulk secrets.json --name <preview>`](/workers/wrangler/commands/workers/#preview-secret-bulk)     |
+
+For supported fields and more secret commands, refer to [Configuration](/workers/previews/configuration/#secrets).
+
+</TabItem>
+</Tabs>
 
 ## Next steps
 
 - [Configuration](/workers/previews/configuration/) — full reference for variables, secrets, bindings, and Base configuration
 - [Resources and isolation](/workers/previews/resources/) — which resources are isolated and which are shared
-- [GitHub Actions and CI](/workers/previews/ci-cd/) — more CI examples and cleanup workflows
+- [Limitations](/workers/previews/limitations/) — current support gaps for service bindings, routes, Cron Triggers, and Queue consumers
+- [Automation examples](/workers/previews/automation-examples/) — more automation examples and cleanup workflows
 - [Wrangler `preview` commands](/workers/wrangler/commands/workers/#preview) — all CLI flags and options

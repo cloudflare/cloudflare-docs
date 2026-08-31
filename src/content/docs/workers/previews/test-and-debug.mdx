@@ -1,9 +1,9 @@
 ---
 pcx_content_type: concept
-title: Observability
-description: Monitor and debug Previews with logs, traces, metrics, Tail Workers, and browser evidence.
+title: Test and debug
+description: Test and debug Previews with logs, traces, metrics, Tail Workers, and browser evidence.
 sidebar:
-  order: 3.5
+  order: 5
 products:
   - workers
 ---
@@ -78,32 +78,26 @@ A **Tail Worker** is a configured destination that receives execution events. [`
 Preview invocation metrics are available through the [GraphQL Analytics API](/analytics/graphql-api/). Query the `workersInvocationsAdaptive` dataset with `isPreview: 1` to filter for Preview traffic.
 
 ```graphql
-query PreviewMetrics(
-  $accountTag: String!
-  $since: Time!
-) {
-  viewer {
-    accounts(filter: { accountTag: $accountTag }) {
-      workersInvocationsAdaptive(
-        limit: 100
-        filter: {
-          datetime_geq: $since
-          isPreview: 1
-        }
-      ) {
-        dimensions {
-          datetime
-          scriptName
-          previewSlug
-          status
-        }
-        sum {
-          requests
-          errors
-        }
-      }
-    }
-  }
+query PreviewMetrics($accountTag: String!, $since: Time!) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			workersInvocationsAdaptive(
+				limit: 100
+				filter: { datetime_geq: $since, isPreview: 1 }
+			) {
+				dimensions {
+					datetime
+					scriptName
+					previewSlug
+					status
+				}
+				sum {
+					requests
+					errors
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -128,6 +122,8 @@ curl "https://YOUR_BROWSER_RUN_WORKER.workers.dev/screenshot?url=https://my-feat
 ```
 
 Browser Run is not required — you can also use curl, Playwright, integration tests, or any other tool to send traffic to the Preview URL. Browser Run is useful when you want the review artifact to include what a browser actually rendered.
+
+For GitHub Actions examples that create a Preview URL, probe it, capture a screenshot, or post it back to a pull request, refer to [Automation examples](/workers/previews/automation-examples/).
 
 ## Exporting data
 
