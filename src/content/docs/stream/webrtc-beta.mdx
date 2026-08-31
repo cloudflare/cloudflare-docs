@@ -16,6 +16,12 @@ products:
 
 import { Badge, InlineBadge, DashButton } from "~/components";
 
+:::note[Stream Live WebRTC is going GA:]
+
+Billing for WebRTC delivery will begin on October 1st, 2026.
+
+:::
+
 WebRTC allows ultra-low latency (sub-second) live streaming (using WHIP) and playback (using WHEP) to thousands of concurrent viewers. WebRTC is ideally suited for one-to-many broadcasts with a real-time experience, for example:
 
 - When the outcome of a live event is time-sensitive: gaming, live sports, financial news
@@ -27,7 +33,7 @@ WebRTC is also ideally suited to creator platforms or in-browser experiences bec
 
 Create a live input using one of the two options:
 
-- Use the **Live inputs** page of the Cloudflare dashboard.
+- Use the **Live inputs** page of the Cloudflare dashboard, then look under the Broadcast and Playback tabs to get the WebRTC URLs.
 
   <DashButton url="/?to=/:account/stream/inputs" />
 
@@ -102,7 +108,7 @@ If using Windows/PowerShell:
 - Add `:fontfile='C\:/Windows/Fonts/consola.ttf'` to the `vf` string; a font must be specified in Windows environments
 - Use backticks `\`` instead of backslashes `\` to segment a multiline command
 
-FFmpeg's WHIP support currently requires the use of `libx264` at `baseline`. The `ts_buffer_size` is a memory allocation strategy
+FFmpeg's WHIP support currently requires the use of `libx264` at `baseline`. The `ts_buffer_size` is a memory allocation strategy, not a buffer that increases latency.
 
 ## Step 3: Play live video using WHEP
 
@@ -132,26 +138,26 @@ This URL can also be used with any client that supports the [WebRTC-HTTP Egress 
 
 ## Supported WHIP and WHEP clients
 
-You can write your own WHIP and WHEP clients using the browser's native WebRTC APIs — see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial. Beyond native code, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
+You can write your own broadcast and publishing apps using the browser's native WebRTC APIs — see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial. Beyond native code, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
 
 ### WHIP for Broadcasting
 
-- [OBS (Open Broadcaster Software)](https://obsproject.com)
+Dedicated applications:
+
+- [OBS (Open Broadcaster Software)](https://obsproject.com) version 31.0 or higher (desktop streaming app)
+- [Larix Broadcaster](https://softvelum.com/larix/) (mobile app)
+- [FFmpeg](https://www.ffmpeg.org/) version 8.1 or higher (cross-platform command-line application)
+
+Development libraries:
+
 - [whip-whep](https://www.npmjs.com/package/whip-whep) (JavaScript, the reference implementation from a WHIP specification author)
-- [@norskvideo/webrtc-client](https://www.npmjs.com/package/@norskvideo/webrtc-client) (TypeScript)
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (TypeScript)
-- [whip-go](https://github.com/ggarber/whip-go) (Go)
-- [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
-- [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
-- [react-native-whip-whep](https://www.npmjs.com/package/react-native-whip-whep) (React Native)
 
 ### WHEP for Playback
 
+- Stream's built-in player
 - [whip-whep](https://www.npmjs.com/package/whip-whep) (JavaScript, the reference implementation from a WHEP specification author)
-- [@norskvideo/webrtc-client](https://www.npmjs.com/package/@norskvideo/webrtc-client) (TypeScript)
 - [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (TypeScript)
-- [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (TypeScript)
-- [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 - [react-native-whip-whep](https://www.npmjs.com/package/react-native-whip-whep) (React Native)
 
 ## Using WebRTC in native apps
