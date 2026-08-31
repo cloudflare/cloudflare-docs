@@ -78,30 +78,9 @@ In some circumstances, custom hostnames can also enter a **Moved** state if your
 
 ---
 
-## CAA Errors
+## CAA errors
 
-The `caa_error` in the status of a custom hostname means that the CAA records configured on the domain prevented the Certificate Authority to issue the certificate.
-
-You can check which CAA records are configured on a domain using the `dig` command:
-`dig CAA example.com`
-
-You will need to ensure that the required CAA records for the selected Certificate Authority are configured.
-For example, here are the records required to issue [Let's Encrypt](https://letsencrypt.org/docs/caa/) and [Google Trust Services](https://pki.goog/faq/#caa) certificates:
-
-```txt
-example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
-example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
-
-example.com CAA 0 issue "letsencrypt.org"
-example.com CAA 0 issuewild "letsencrypt.org"
-
-example.com CAA 0 issue "ssl.com"
-example.com CAA 0 issuewild "ssl.com"
-```
-
-For more details, refer to [CAA records FAQ](/ssl/faq/#caa-records).
-
-For a full list of certificate authority errors and who needs to act to resolve them, refer to [DCV troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/dcv-troubleshooting/).
+If a custom hostname shows a `caa_error` status, refer to [DCV troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/dcv-troubleshooting/#caa-records) for resolution steps, including the exact CAA records required per certificate authority.
 
 ***
 
