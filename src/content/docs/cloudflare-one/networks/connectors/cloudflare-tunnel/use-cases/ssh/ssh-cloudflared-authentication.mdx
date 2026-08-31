@@ -21,6 +21,8 @@ Client-side `cloudflared` can be used in conjunction with [the Cloudflare One Cl
 
 <Render file="ssh/tunnel-public-hostname" product="cloudflare-one" />
 
+By default, anyone on the Internet can connect to the published hostname. To control who can reach your server, add a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) to Cloudflare Access.
+
 ## 2. Connect as a user
 
 1. [Install `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) on the client machine.

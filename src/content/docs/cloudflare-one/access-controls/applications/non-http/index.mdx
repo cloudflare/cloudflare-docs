@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-description: How Non-HTTP applications works in Access.
+description: How Non-HTTP applications work in Access.
 products:
   - cloudflare-one
 title: Non-HTTP applications
@@ -40,9 +40,9 @@ If you would like to define how users access specific infrastructure servers wit
 
 Clientless access methods are suited for organizations that cannot deploy the Cloudflare One Client or need to support third-party contractors where installing a client is not possible. Clientless access requires onboarding a domain to Cloudflare and configuring a public hostname in order to make the server reachable. Command logging is not supported.
 
-### Browser-rendered terminal
+### Browser rendering
 
-Cloudflare's [browser-based terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/) allows users to connect over SSH, RDP, and VNC without any configuration. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser. For RDP connections, users must authenticate to the Windows server using their Windows username and password in addition to being authenticated by Cloudflare Access.
+Cloudflare's [browser rendering](/cloudflare-one/access-controls/applications/non-http/browser-rendering/) allows users to connect over SSH, RDP, and VNC without any configuration. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render the session in their browser. For RDP connections, users must authenticate to the Windows server using their Windows username and password in addition to being authenticated by Cloudflare Access.
 
 ### Client-side cloudflared
 

@@ -219,8 +219,8 @@ SSH sessions have a maximum expected duration of 10 hours. For more information,
 Failure to connect to your SSH endpoint could be the result of multiple variables. Use the following steps to investigate and resolve the source of your connection failure.
 
 1. [Verify that your Access policies](#1-review-access-policies) allow the user to access the target.
-2. [Check Cloudflare Tunnel](#2-check-target-machine-connection) health.
-3. [Confirm user existence](#3-confirm-user-existence-on-the-target-server) on the server.
+2. [Check Cloudflare Tunnel](#2-check-target-connection) health.
+3. [Confirm user existence](#3-confirm-user-existence-on-the-server) on the server.
 4. [Check your `sshd_config` file](#4-debug-sshd_config-file-misconfiguration) for misconfiguration.
 
 ### 1. Review Access policies
@@ -243,7 +243,7 @@ As an end user, run [`warp-cli target list`](/cloudflare-one/access-controls/app
 
 <Render file="tunnel/warp-cli-target-list" product="cloudflare-one" />
 
-- If the target appears in the list, confirm that the username you are attempting to connect with is shown in the output. If the username is not shown, an administrator must find the Access policy associated with the target and add that username to the Access policy. An administrator should have created an Access policy in [substep 9 of step 5: Add an infrastructure application](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application). If the username is shown, that means the Access policy should be granting access and you should ensure that the tunnel is healthy in [step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection).
+- If the target appears in the list, confirm that the username you are attempting to connect with is shown in the output. If the username is not shown, an administrator must find the Access policy associated with the target and add that username to the Access policy. An administrator should have created an Access policy in [substep 9 of step 5: Add an infrastructure application](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application). If the username is shown, that means the Access policy should be granting access and you should ensure that the tunnel is healthy in [step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-connection).
 
 - If the target does not appear in the list, an administrator must audit the Access policies for the target in Cloudflare One for potential misconfiguration that may be blocking connection.
 
@@ -265,7 +265,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 4. Review the **Decision**. If the **Decision** is `Access denied`, select the application and copy the name under App.
 
-   If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel ([step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection)), the SSH server ([step 3](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#3-confirm-user-existence-on-the-target-server)), or the `sshd_config` file ([step 4](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration)).
+   If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel ([step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-connection)), the SSH server ([step 3](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#3-confirm-user-existence-on-the-server)), or the `sshd_config` file ([step 4](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration)).
 
 5. Go to **Access controls** > **Applications**.
 

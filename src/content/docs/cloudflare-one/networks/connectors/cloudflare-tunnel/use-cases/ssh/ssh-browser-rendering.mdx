@@ -8,23 +8,171 @@ tags:
   - SSH
 sidebar:
   order: 6
-  label: Browser-rendered SSH terminal
+  label: Browser-based SSH
 ---
 
-import { Render } from "~/components";
+import { Details, Render } from "~/components";
 
-Cloudflare's browser-based terminal allows end users to connect to an SSH server without managing SSH keys or installing the Cloudflare One Client.
+Cloudflare's browser-based SSH allows end users to connect to an SSH server without managing SSH keys or installing the Cloudflare One Client.
 
 This method requires routing SSH access to the server through a public hostname. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
 
-The browser-based terminal can be used in conjunction with [the Cloudflare One Client](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/) and [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
+Browser-based SSH can be used in conjunction with [the Cloudflare One Client](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/) and [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
+
+For constraints that apply to all browser-rendered applications, refer to [Limitations](/cloudflare-one/access-controls/applications/non-http/browser-rendering/#limitations).
 
 ## 1. Connect the server to Cloudflare
 
 <Render file="ssh/tunnel-public-hostname" product="cloudflare-one" />
 
-## 2. Connect as a user
+## 2. Turn on browser-based SSH
 
-To enable browser-rendering for SSH, refer to [Browser-rendered terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
+Browser rendering is a setting on a self-hosted Access application, so your server needs one. Without an application, anyone on the Internet can connect to the published hostname.
 
-When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Add a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for the hostname you created in step 1, or select **Configure** on an existing one.
+3. Turn on **Allow access through browser-based RDP, SSH, or VNC sessions**, then select _SSH_.
+	<Render file="access/self-hosted-app/browser-rendering-policies" product="cloudflare-one" />
+4. Select **Save**.
+
+## 3. Configure the SSH server
+
+The browser terminal signs in with a short-lived certificate issued by Access. Your server must trust the Access certificate authority and have a Unix account matching each user's email prefix.
+
+### Generate a short-lived certificate CA
+
+<Render file="ssh/short-lived-cert-ca" product="cloudflare-one" />
+
+### Save the public key
+
+<Render file="ssh/public-key" product="cloudflare-one" />
+
+### Modify your `sshd_config` file
+
+<Render file="ssh/modify-sshd" product="cloudflare-one" />
+
+Your server must also accept the `ecdsa-sha2-nistp256-cert-v01@openssh.com` algorithm for user certificates and offer at least one algorithm from each list in [SSH server requirements](#ssh-server-requirements).
+
+#### Allow password sign-in
+
+The terminal falls back to password sign-in when the server does not accept the certificate. To allow the fallback, add `PasswordAuthentication yes` so that the file contains all three directives:
+
+```txt
+PubkeyAuthentication yes
+TrustedUserCAKeys /etc/ssh/ca.pub
+PasswordAuthentication yes
+```
+
+To require certificate sign-in, omit `PasswordAuthentication` or set it to `no`.
+
+The terminal offers only the `publickey` and `password` authentication methods. It does not use `keyboard-interactive`, so a server that handles password sign-in through keyboard-interactive will reject the fallback.
+
+To allow password sign-in for specific accounts only, turn it off globally and re-enable it in a `Match` block:
+
+```txt
+PasswordAuthentication no
+
+Match User jdoe,asmith
+  PasswordAuthentication yes
+```
+
+Place `Match` blocks at the end of the file. Every directive after a `Match` line belongs to that block until the next one.
+
+### Create Unix accounts that match user email prefixes
+
+The terminal connects as the user's email prefix, so an account with exactly that name must exist on the server. A user who signs in as `jdoe@example.com` connects as `jdoe`.
+
+If the server uses `AuthorizedPrincipalsFile` or `AuthorizedPrincipalsCommand`, the email prefix is also the principal, so `jdoe` must appear in that file or be returned by that command.
+
+```sh
+sudo adduser jdoe
+```
+
+On distributions without `adduser`, such as Amazon Linux and RHEL, use `useradd` and create the home directory explicitly:
+
+```sh
+sudo useradd -m jdoe
+```
+
+### Reload your SSH server
+
+<Render file="ssh/restart-server" product="cloudflare-one" />
+
+## 4. Connect as a user
+
+To connect to an SSH server in the browser:
+
+1. Open a browser and go to the public hostname you created, for example `https://ssh.example.com`.
+
+2. Follow the prompts to log in to your identity provider.
+
+3. Cloudflare renders a terminal in your browser and signs in with a short-lived certificate, using your email prefix as the account name.
+
+   If the server does not accept the certificate, the terminal prompts for an account name and password instead.
+
+   Password sign-in allows three attempts before the session ends. You can change the account name twice; after that, it is locked for the remainder of the session.
+
+You now have a terminal session on the SSH server.
+
+## SSH server requirements
+
+Browser-based SSH negotiates a fixed set of algorithms. You may need to update the `sshd_config` file on your server so that it shares at least one algorithm with each list below. Enable these alongside the algorithms your other SSH clients rely on. Restricting `sshd_config` to only the algorithms listed here would prevent those clients from connecting.
+
+<Details header="Key exchange">
+
+- `curve25519-sha256`
+- `curve25519-sha256@libssh.org`
+- `ecdh-sha2-nistp256`
+- `ecdh-sha2-nistp384`
+- `ecdh-sha2-nistp521`
+- `diffie-hellman-group14-sha256`
+- `diffie-hellman-group16-sha512`
+
+</Details>
+
+<Details header="Host key">
+
+- `ecdsa-sha2-nistp256`
+- `ssh-ed25519`
+- `rsa-sha2-256`
+- `rsa-sha2-512`
+- `ecdsa-sha2-nistp384`
+- `ecdsa-sha2-nistp521`
+
+</Details>
+
+<Details header="Encryption and message authentication">
+
+- `aes256-gcm@openssh.com`
+- `aes256-ctr`: **requires a message authentication algorithm.** Offer one of:
+  - `hmac-sha2-256-etm@openssh.com`
+  - `hmac-sha2-256`
+
+</Details>
+
+## Troubleshooting
+
+If a user cannot connect, check the following.
+
+- **The session fails immediately without any prompt**: the server and the browser client share no algorithm. Compare your server's effective configuration against [SSH server requirements](#ssh-server-requirements). A server restricted to algorithms the browser client does not offer, such as `chacha20-poly1305@openssh.com`, fails here.
+- **The terminal prompts for a password when you expect certificate sign-in**: the server is not trusting the Access certificate authority. Confirm that `TrustedUserCAKeys` points to the public key you saved in [Save the public key](#save-the-public-key).
+- **Password sign-in is rejected even with the correct password**: confirm that password sign-in is enabled and that the server does not require keyboard-interactive. Refer to [Allow password sign-in](#allow-password-sign-in).
+- **The user reaches the server but login fails**: the Unix account must match the user's email prefix. Refer to [Create Unix accounts that match user email prefixes](#create-unix-accounts-that-match-user-email-prefixes).
+
+### Check your effective configuration
+
+`Include` statements and `Match` blocks can override a directive you set earlier in the file, so confirm the values the server will actually use:
+
+```sh
+sudo sshd -T | grep -iE 'pubkeyauthentication|trustedusercakeys|passwordauthentication'
+```
+
+To check the syntax of `sshd_config` before you reload the server:
+
+```sh
+sudo sshd -t
+```
+
+For Access errors such as `Error 0: Bad Request. Please create a ca for application` or `Origin auth failed`, refer to [Access troubleshooting](/cloudflare-one/access-controls/troubleshooting/).
+
+To diagnose certificate and principal problems in more depth, refer to [Debug `sshd_config` file misconfiguration](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration).
