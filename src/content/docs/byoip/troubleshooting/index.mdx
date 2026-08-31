@@ -38,11 +38,10 @@ When onboarding BYOIP prefixes via the API, you may encounter the following erro
 
 | Error code | Meaning | Resolution |
 |---|---|---|
-| `prefix_not_valid_and_approved` | The prefix has not passed IRR validation, RPKI validation, and ownership verification (or manual approval). | Verify all three validation steps have completed. If one or more are failing, check prefix registration with your Regional Internet Registry (RIR) and your RPKI ROA configuration. If validation is passing but you are still seeing this error, contact support for manual approval. |
+| `prefix_not_valid_and_approved` | The prefix has not passed all applicable validation checks or manual approval. | Use the Prefix Details endpoint and follow [Prefix validation checks](/byoip/troubleshooting/prefix-validation/). ASN ownership and Autonomous System Provider Authorization (ASPA) checks apply only when you use your own ASN. If all applicable checks pass but you still see this error, contact support for manual approval. |
 | `incomplete_bgp_deployment` | Cannot create a BGP prefix without a default edge service binding configured. | Configure a default edge service binding before creating BGP prefixes. |
 | `advertise_state_locked` | Cannot create a BGP prefix — the default edge service binding is still deploying. | Wait for the edge service binding deployment to complete, then retry. |
 
 :::note
 Self-serve BYOIP onboarding is not supported when BYOIP is used as a Magic Transit on-ramp configuration. For more information, refer to [Magic Transit with CDN](/byoip/service-bindings/magic-transit-with-cdn/).
 :::
-

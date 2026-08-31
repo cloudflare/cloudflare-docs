@@ -30,14 +30,17 @@ The process described on this page does not support onboarding IP prefixes for u
     - [LACNIC](https://lacnic.net/)
     - [RIPE](https://www.ripe.net/)
 
+    Self-service onboarding with your own ASN is available for ASNs registered with AFRINIC, APNIC, ARIN, or RIPE. For a LACNIC-registered ASN, contact your account team.
+
 - Also verify that your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records are  are up to date and contain:
 
     - `route` or `route6` objects matching the exact prefixes you want to onboard
     - `origin` matching the correct ASN you want to onboard
-
-    <Render file="cloudflare-asn-callout" product="byoip" />
+    - An editable `aut-num` object for your ASN, if you use your own ASN
 
 - You must use [Resource Public Key Infrastructure (RPKI) validation](/byoip/concepts/route-filtering-rpki/) and make sure your ROAs are accurate. You can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/) to double-check your prefixes.
+
+- If your own ASN has a published [Autonomous System Provider Authorization (ASPA)](/byoip/concepts/route-filtering-rpki/), it must authorize AS13335 as a provider. AS13335 can appear with other providers. An unpublished ASPA does not block onboarding.
 
 - If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/). Make sure you have the necessary permissions and that you have your account ID.
 
@@ -49,42 +52,57 @@ The process described on this page does not support onboarding IP prefixes for u
 
 1. Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to create a prefix in the Cloudflare account that should own the BYOIP prefix.
 
-<Render file="cloudflare-asn-callout" product="byoip" />
+    Set `asn` to `13335` to use Cloudflare's ASN. To use your own ASN, enter it as an integer without the `AS` prefix. Your IRR route and ROA must authorize the selected ASN.
 
-<APIRequest
- path="/accounts/{account_id}/addressing/prefixes"
- method="POST"
- json={{
-   "cidr": "203.0.113.0/24",
-   "asn": 13335,
-   "delegate_loa_creation": true
- }}
-/>
+    <APIRequest
+     path="/accounts/{account_id}/addressing/prefixes"
+     method="POST"
+     json={{
+       "cidr": "203.0.113.0/24",
+       "asn": 13335,
+       "delegate_loa_creation": true
+     }}
+    />
 
-```json title="Response" {3,15-19}
+    ```json title="Response" {3,15-19}
 
- "result": {
+     "result": {
 	 "id": "72823e95d6c64d48a8111fec81179816",
-    "created_at": "2025-02-25T00:34:11.423722Z",
-    "modified_at": "2025-02-25T00:34:11.423722Z",
-    "cidr": "203.0.113.0/24",
-    "account_id": "654c5f71c324478cc9f68d60065d4620",
-    "description": "",
-    "approved": "P",
-    "on_demand_enabled": false,
-    "on_demand_locked": false,
-    "advertised": null,
-    "advertised_modified_at": null,
-    "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
-    "asn": 13335,
-    "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
-    "delegate_loa_creation" : true,
-    "irr_validation_state": "pending",
-    "rpki_validation_state": "pending",
-    "ownership_validation_state": "pending",
-  }
+        "created_at": "2025-02-25T00:34:11.423722Z",
+        "modified_at": "2025-02-25T00:34:11.423722Z",
+        "cidr": "203.0.113.0/24",
+        "account_id": "654c5f71c324478cc9f68d60065d4620",
+        "description": "",
+        "approved": "P",
+        "on_demand_enabled": false,
+        "on_demand_locked": false,
+        "advertised": null,
+        "advertised_modified_at": null,
+        "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
+        "asn": 13335,
+        "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
+        "delegate_loa_creation": true,
+        "irr_validation_state": "pending",
+        "rpki_validation_state": "pending",
+        "ownership_validation_state": "pending",
+      }
 
-```
+    ```
+
+    When you use your own ASN, `result` can also include ASN ownership and ASPA validation states:
+
+    ```json title="Customer ASN response excerpt"
+    {
+      "result": {
+        "asn_ownership_validation_state": "pending",
+        "aspa_validation_state": "pending"
+      }
+    }
+    ```
+
+    `asn_ownership_validation_state` is omitted when ASN ownership validation does not apply, such as when you use AS13335. Its initial state can be `valid` if the account previously verified the ASN.
+
+    When `aspa_validation_state` is present, its value can be `pending`, `valid`, or `invalid`. If the field is omitted, the response has no ASPA validation result. An unpublished ASPA does not block onboarding.
 
 2. Take note of the `id` assigned to the prefix you added. It will be used in future steps.
 
@@ -140,11 +158,17 @@ The process described on this page leverages automated <GlossaryTooltip term="le
 
    </TabItem> </Tabs>
 
-2. <Render file="validate-prefix-endpoint" product="byoip" />
+2. If `asn_ownership_validation_state` is present and is not `valid`, add `cf-validation: <OWNERSHIP_VALIDATION_TOKEN>` to any editable field in the `aut-num` object for your ASN. Use the same token returned as `ownership_validation_token`.
 
-Once the ownership validation is successful, you can remove the token.
+   Cloudflare verifies ASN ownership once per Cloudflare account and ASN. If `asn_ownership_validation_state` is `valid`, you do not need to update the `aut-num` object.
 
-When all validations pass - RPKI, IRR, and ownership - the `approved` field in your prefix will return `"V"`. This means you can proceed to create IP address service bindings[^1].
+3. If your ASN has a published ASPA, use your RIR's RPKI tooling to confirm its provider list includes AS13335.
+
+4. <Render file="validate-prefix-endpoint" product="byoip" />
+
+After `ownership_validation_state` and, when present, `asn_ownership_validation_state` return `valid`, you can remove the token from the IRR, reverse DNS, and `aut-num` records where you added it.
+
+When all applicable validations pass (RPKI, IRR, prefix ownership, ASN ownership, and ASPA), the `approved` field in your prefix will return `"V"`. This means you can proceed to create IP address service bindings[^1].
 
 If needed, you can use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation. If so, proceed with the necessary changes and make a request to restart validation. Refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/) for details.
 
