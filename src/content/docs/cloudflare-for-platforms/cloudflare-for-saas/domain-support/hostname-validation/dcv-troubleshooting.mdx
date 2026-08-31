@@ -56,7 +56,7 @@ The following errors appear in `ssl.validation_errors` on the custom hostname ob
 | `dns problem: looking up caa for <hostname>: dnssec: bogus` | DNSSEC validation failed for the hostname. | Your customer | Fix the DNSSEC configuration at the authoritative DNS provider. Use [DNSViz](https://dnsviz.net/) to identify invalid signatures. |
 | `CAA records block issuance. Please remove all CAA records or add records for this authority.` | Your customer's CAA records do not permit the selected CA to issue certificates for their domain. | Your customer | Ask your customer to add CAA records for the selected CA, or remove restrictive CAA records. Refer to [CAA records](#caa-records) for the exact records required per CA. |
 | `Certificate authority encountered a multiple perspective CAA check error, please ensure your DNS is configured to allow CAA queries from all geographic perspectives.` | The CA validates from multiple geographic locations; CAA records do not return consistent results across all locations. | Your customer | Ensure CAA records have fully propagated across all authoritative DNS servers. Check for split-horizon DNS configurations that may return different results depending on query origin. |
-| `The authority has rate limited these domains. Please wait for the rate limit to expire or try another authority.` | The CA has temporarily blocked certificate issuance for this domain due to too many recent requests. | You | Wait for the rate limit window to expire (Let's Encrypt: up to 7 days; Google Trust Services: varies), or switch to a different CA using the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. |
+| `The authority has rate limited these domains. Please wait for the rate limit to expire or try another authority.` | The CA has temporarily blocked certificate issuance for this domain due to too many recent requests. | You | Wait for the rate limit window to expire (Let's Encrypt: up to 7 days; Google Trust Services: varies), or switch to a different CA by calling the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint and setting `ssl.certificate_authority` to `google`, `lets_encrypt`, or `ssl_com` (or `""` to let Cloudflare choose). |
 | `Internal error with Certificate Authority. Please check later.` | Transient error on the CA side. | You | Wait and retry. If the error persists after 24 hours, switch CA using the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint or contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
 
 ---
@@ -66,14 +66,14 @@ The following errors appear in `ssl.validation_errors` on the custom hostname ob
 If a custom hostname shows a `caa_error` status, your customer's CAA records are preventing the certificate authority from issuing a certificate for their domain. Your customer needs to resolve this issue.
 
 :::caution[Check CAA records at every level]
-Certificate authorities walk up the DNS tree when checking CAA records. For a custom hostname like `shop.customer.com`, the CA checks CAA records at `shop.customer.com` **and** at `customer.com`. A restrictive CAA record on the parent domain will block issuance even if the subdomain has no CAA records.
+Certificate authorities walk up the DNS tree when checking CAA records. For a custom hostname like `shop.example.com`, the CA checks CAA records at `shop.example.com` **and** at `example.com`. A restrictive CAA record on the parent domain will block issuance even if the subdomain has no CAA records.
 :::
 
 Ask your customer to check CAA records at both the subdomain and parent domain level:
 
 ```sh
-dig CAA shop.customer.com
-dig CAA customer.com
+dig CAA shop.example.com
+dig CAA example.com
 ```
 
 The records must permit the certificate authority you selected for their custom hostname. Add the appropriate records based on the selected CA:
@@ -104,7 +104,7 @@ DCV tokens become invalid in the following situations:
 - Universal SSL is toggled off and back on for your SaaS zone.
 - The custom hostname is deleted and re-created.
 
-The custom hostname shows `ssl.status: pending_validation` and `ssl.validation_errors` reports a SERVFAIL or missing token on a domain your customer believes is correctly configured, or your customer confirms they placed the token but validation has not progressed.
+The custom hostname shows `ssl.status: pending_validation` and `ssl.validation_errors` reports a missing token on a domain your customer believes is correctly configured, or your customer confirms they placed the token but validation has not progressed.
 
 To refresh the DCV tokens, send a PATCH request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. This starts a new DCV cycle and generates fresh tokens. Share the updated tokens from `ssl.validation_records` with your customer.
 
