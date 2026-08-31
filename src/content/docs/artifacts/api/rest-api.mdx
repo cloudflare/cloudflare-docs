@@ -200,6 +200,25 @@ curl "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
+### Delete a namespace
+
+Route: `DELETE /artifacts/namespaces/:namespace`
+
+The namespace must be empty before you delete it.
+
+```sh
+curl --request DELETE "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+The API returns the following response status codes:
+
+| Status | Description                              |
+| ------ | ---------------------------------------- |
+| `204`  | Namespace deleted.                       |
+| `404`  | Namespace is missing or already deleted. |
+| `409`  | Namespace contains repositories.         |
+
 ## Repos
 
 ### Create a repo
