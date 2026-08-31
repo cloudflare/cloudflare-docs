@@ -30,7 +30,7 @@ Before you begin, make sure the following prerequisites are met.
 ### Azure resources
 
 - **Azure subscription** with permission to create and manage resources (`Contributor` or `Owner` role recommended).
-- **Azure Storage account** with [Azure Data Lake Storage Gen2 enabled](https://learn.microsoft.com/en-us/azure/storage/blobs/create-data-lake-storage-account) (hierarchical namespace on). Logpush writes the Cloudflare log files to this account.
+- **Azure Storage account** with [Azure Data Lake Storage Gen2 enabled](https://learn.microsoft.com/en-us/azure/storage/blobs/create-data-lake-storage-account) (hierarchical namespace on). Although the generic Logpush Azure destination supports standard Blob Storage, the CCF connector requires hierarchical namespace. Logpush writes the Cloudflare log files to this account.
 - **Azure Blob container** inside the storage account, dedicated to receiving Cloudflare Logpush files. The CCF connector monitors this container for new files via Event Grid.
 - **Microsoft Sentinel workspace** already deployed on top of a Log Analytics workspace. The connector's Data Collection Rule (DCR) and Data Collection Endpoint (DCE) are tied to this Log Analytics workspace, and all ingested Cloudflare log records land in tables within it.
 - **Cloudflare account** with access to the domain or account whose logs you want to export, and permission to configure Logpush jobs.
