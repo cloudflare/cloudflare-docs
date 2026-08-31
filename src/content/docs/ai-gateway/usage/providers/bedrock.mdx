@@ -175,6 +175,70 @@ export default {
 };
 ```
 
+## Use the Anthropic Messages API
+
+Amazon Bedrock provides an Anthropic-native Messages API through the [`bedrock-mantle` endpoint](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-messages-api.html). AI Gateway passes native Anthropic requests, responses, and server-sent events through without translation.
+
+Configure native Anthropic clients with this base URL:
+
+```txt
+https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/aws-bedrock/bedrock-mantle/<AWS_REGION>/anthropic
+```
+
+The client appends `/v1/messages` to the base URL. Choose an AWS Region that [supports the `bedrock-mantle` endpoint](https://docs.aws.amazon.com/bedrock/latest/userguide/endpoints.html), and use a model ID with the `anthropic.` prefix, such as `anthropic.claude-sonnet-5`.
+
+If you use stored AWS credentials, the associated AWS Identity and Access Management (IAM) policy must allow the `bedrock-mantle:CreateInference` action. AI Gateway signs each request for the `bedrock-mantle` service.
+
+The following examples call the Messages API with stored AWS credentials or an Amazon Bedrock API key:
+
+Set `$ACCOUNT_ID`, `$GATEWAY_ID`, `$AWS_REGION`, and `$CF_AIG_TOKEN` before running an example. For the API key example, also set `$BEDROCK_API_KEY` to an [Amazon Bedrock API key](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html).
+
+<Tabs>
+<TabItem label="Stored AWS credentials">
+
+```bash
+curl "https://gateway.ai.cloudflare.com/v1/$ACCOUNT_ID/$GATEWAY_ID/aws-bedrock/bedrock-mantle/$AWS_REGION/anthropic/v1/messages" \
+  --header "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
+  --header "anthropic-version: 2023-06-01" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "anthropic.claude-sonnet-5",
+    "max_tokens": 256,
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+</TabItem>
+<TabItem label="Bedrock API key">
+
+```bash
+curl "https://gateway.ai.cloudflare.com/v1/$ACCOUNT_ID/$GATEWAY_ID/aws-bedrock/bedrock-mantle/$AWS_REGION/anthropic/v1/messages" \
+  --header "Authorization: Bearer $BEDROCK_API_KEY" \
+  --header "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
+  --header "anthropic-version: 2023-06-01" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "anthropic.claude-sonnet-5",
+    "max_tokens": 256,
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+AI Gateway maps the bearer token to the `x-api-key` header that Bedrock Mantle expects. Clients that already send the Bedrock API key in `x-api-key` can keep that header unchanged.
+
+</TabItem>
+</Tabs>
+
 ## Using the Unified API (OpenAI compatible)
 
 AI Gateway provides a [Unified API](/ai-gateway/usage/chat-completion/) that lets you use the OpenAI chat completions format with Bedrock models. This is currently supported for **Anthropic Claude** and **Amazon Nova** model families. You can use the OpenAI SDK to access these models running on Bedrock without changing your request format.
@@ -227,5 +291,3 @@ const response = await client.chat.completions.create({
 
 console.log(response.choices[0].message.content);
 ```
-
-
