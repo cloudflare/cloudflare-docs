@@ -1,0 +1,144 @@
+---
+pcx_content_type: troubleshooting
+title: DCV troubleshooting
+description: Resolve domain control validation failures for custom hostnames in Cloudflare for SaaS.
+products:
+  - cloudflare-for-saas
+sidebar:
+  order: 7
+head:
+  - tag: title
+    content: DCV troubleshooting - Cloudflare for SaaS
+---
+
+import { Details, Tabs, TabItem } from "~/components";
+
+When a custom hostname certificate is stuck in **Pending Validation** or fails to issue, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) step has not been completed successfully.
+
+## Who is responsible
+
+DCV for SaaS involves two parties with distinct responsibilities. Use the table below to understand who needs to act before troubleshooting a specific error.
+
+| | SaaS Provider | End customer |
+| --- | --- | --- |
+| **Controls** | DCV method selection (TXT or HTTP), CA selection, DCV token delivery to the end customer | DNS settings (NS records, DNSSEC), CAA records, DNS CNAME pointing to your SaaS target |
+| **Responsible for** | Generating and sharing fresh DCV tokens, switching CA if rate limited or blocked, Workers not intercepting DCV paths | Placing DCV tokens in DNS, fixing DNSSEC, updating CAA records to allow the selected CA |
+
+The [CA error reference](#ca-error-reference) below specifies who needs to act for each error type.
+
+:::note
+DCV errors appear under `ssl.validation_errors` when you query the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint.
+:::
+
+---
+
+## Quick checklist
+
+Before investigating a specific error, verify the following:
+
+- [ ] **DCV tokens are placed** — your end customer has added the TXT record or HTTP token that you provided to their DNS.
+- [ ] **Tokens are not expired** — Let's Encrypt tokens expire after 7 days; Google Trust Services and SSL.com tokens expire after 14 days. If tokens may have expired, [refresh them](#stale-or-expired-dcv-tokens).
+- [ ] **CAA records allow the CA** — the end customer's domain must have CAA records that permit Cloudflare's [partner certificate authorities](/ssl/reference/certificate-authorities/), or no CAA records at all.
+- [ ] **DNS is reachable** — the end customer's authoritative DNS must respond without SERVFAIL from all geographic locations.
+- [ ] **No Workers intercepting DCV paths** — if your SaaS zone uses a [Worker as the fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/), ensure it passes through `/.well-known/pki-validation/*` and `/.well-known/acme-challenge/*` without modification.
+
+For DCV issues that apply to all Cloudflare zones (WAF rules, redirects, DNS configuration), refer to [Troubleshooting DCV](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+
+---
+
+## CA error reference
+
+The following errors appear in `ssl.validation_errors` on the custom hostname object.
+
+| Error message | Cause | Who acts | Resolution |
+| --- | --- | --- | --- |
+| `Certificate authority encountered a SERVFAIL during DNS lookup, please check your DNS reachability.` | The CA cannot reach the end customer's authoritative DNS server. | **End customer** | Check DNS reachability. Ensure NS records are healthy and accessible from all geographic locations. Use [DNSViz](https://dnsviz.net/) to diagnose issues. |
+| `dns problem: looking up caa for <hostname>: dnssec: bogus` | DNSSEC validation failed for the hostname. | **End customer** | Fix the DNSSEC configuration at the authoritative DNS provider. Use [DNSViz](https://dnsviz.net/) to identify invalid signatures. |
+| `CAA records block issuance. Please remove all CAA records or add records for this authority.` | The end customer's CAA records do not permit the selected CA to issue certificates for their domain. | **End customer** | Ask your end customer to add CAA records for the selected CA, or remove restrictive CAA records. Refer to [CAA records](/ssl/edge-certificates/caa-records/) for the records required per CA. |
+| `Certificate authority encountered a multiple perspective CAA check error, please ensure your DNS is configured to allow CAA queries from all geographic perspectives.` | The CA validates from multiple geographic locations; CAA records do not return consistent results across all locations. | **End customer** | Ensure CAA records have fully propagated across all authoritative DNS servers. Check for split-horizon DNS configurations that may return different results depending on query origin. |
+| `The authority has rate limited these domains. Please wait for the rate limit to expire or try another authority.` | The CA has temporarily blocked certificate issuance for this domain due to too many recent requests. | **SaaS Provider** | Wait for the rate limit window to expire (Let's Encrypt: up to 7 days; Google Trust Services: varies), or switch to a different CA using the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. |
+| `Internal error with Certificate Authority. Please check later.` | Transient error on the CA side. | **SaaS Provider** | Wait and retry. If the error persists after 24 hours, switch CA using the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint or contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
+
+---
+
+## Stale or expired DCV tokens
+
+DCV tokens become invalid in the following situations:
+
+- The token validity period expires before the end customer places them (Let's Encrypt: 7 days; Google Trust Services and SSL.com: 14 days).
+- Universal SSL is toggled off and back on for your SaaS zone.
+- The custom hostname is deleted and re-created.
+
+**Symptom**: The custom hostname shows `ssl.status: pending_validation` and `ssl.validation_errors` reports a SERVFAIL or missing token on a domain your end customer believes is correctly configured, or your end customer confirms they placed the token but validation has not progressed.
+
+**Resolution**: Send a PATCH request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to start a new DCV cycle and generate fresh tokens. Share the updated tokens from `ssl.validation_records` with your end customer.
+
+<Details header="Example API call">
+
+```sh
+curl --request PATCH \
+  "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "ssl": {
+      "method": "txt",
+      "type": "dv"
+    }
+  }'
+```
+
+</Details>
+
+If the PATCH does not generate new tokens within 15 minutes, contact [Cloudflare Support](/support/contacting-cloudflare-support/). Orphaned tokens can become stuck in the backend and require manual cleanup.
+
+---
+
+## Timed Out Validation
+
+A custom hostname enters **Timed Out Validation** (`ssl.status: timed_out`) when the DCV tokens were not placed before the retry schedule was exhausted.
+
+**Resolution**: Send a PATCH request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to restart the DCV cycle:
+
+<Details header="Example API call">
+
+```sh
+curl --request PATCH \
+  "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
+  --header "X-Auth-Email: <EMAIL>" \
+  --header "X-Auth-Key: <API_KEY>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "ssl": {
+      "method": "txt",
+      "type": "dv"
+    }
+  }'
+```
+
+</Details>
+
+After sending the PATCH, share the updated DCV tokens from `ssl.validation_records` with your end customer. Make sure the tokens are placed before they expire again.
+
+:::tip
+If you are managing DCV tokens on behalf of your end customers, consider using [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) to avoid manual token delivery altogether.
+:::
+
+---
+
+## SSL.com: separate DCV cycles for RSA and ECDSA
+
+When using [SSL.com](/ssl/reference/certificate-authorities/) as the certificate authority, Cloudflare requests both an RSA certificate and an ECDSA certificate. **Each certificate type requires its own DCV cycle with a separate set of tokens.**
+
+Your end customer must place both sets of tokens before either certificate can issue. The `ssl.validation_records` field in the API response returns one entry per certificate type — confirm that records for both are placed in DNS.
+
+---
+
+## Related resources
+
+- [Troubleshooting DCV](/ssl/edge-certificates/changing-dcv-method/troubleshooting/) — DCV issues that apply to all Cloudflare zones: WAF rules, redirects, DNS settings, and CA errors
+- [Token validity periods](/cloudflare-for-platforms/cloudflare-for-saas/reference/token-validity-periods/) — how long DCV tokens remain valid per CA
+- [DCV backoff schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) — how Cloudflare retries DCV before timing out
+- [Validation status](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/validation-status/) — what each `ssl.status` value means
+- [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) — let Cloudflare manage DCV on behalf of your end customers
