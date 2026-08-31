@@ -561,9 +561,43 @@ The `auth_type` field accepts the following values:
 
 | Value             | Description                                                                                                                                          |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `oauth`           | The server requires OAuth authentication. After creating the server, you will need to authenticate via the dashboard to establish admin credentials. |
+| `oauth`           | The server requires OAuth authentication. You can use automatic OAuth registration or provide manual OAuth credentials.                           |
 | `bearer`          | The server uses a static bearer token or custom authentication headers. Provide the credentials in `auth_credentials` (refer to [Bearer authentication credentials](#bearer-authentication-credentials)). |
 | `unauthenticated` | The server does not require authentication.                                                                                                          |
+
+#### Manual OAuth credentials
+
+To create an MCP server with a pre-registered OAuth client, set `auth_type` to `oauth` and provide both `auth_credentials` and `client_secret`. The `auth_credentials` value is required and must be a JSON-encoded string:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/servers"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		id: "github",
+		name: "GitHub MCP Server",
+		hostname: "https://github-mcp.example.com/mcp",
+		auth_type: "oauth",
+		auth_credentials:
+			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","redirect_uris":["https://mcp.example.com/servers-callback"],"token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
+		client_secret: "<client-secret>",
+	}}
+/>
+
+The decoded `auth_credentials` object must contain:
+
+- `auth_mode`: Must be `manual`.
+- `config.authorization_endpoint` and `config.token_endpoint`: The upstream provider's OAuth endpoints. `issuer` and `revocation_endpoint` are optional.
+- `registration_info.client_id`: The client ID issued by the upstream provider.
+- `registration_info.redirect_uris`: At least one registered redirect URI. This can be omitted when `is_shared_oauth_callback_enabled` is `true`; Cloudflare then adds the shared callback URL.
+- `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
+- `registration_info.scope`: Optional space-delimited scope string.
+
+Do not include `client_secret` or OAuth tokens inside `auth_credentials`. Send `client_secret` as the separate sibling field shown above.
+
+To change the OAuth metadata, send `auth_credentials` in a `PUT` request to the [update an MCP server](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/servers/methods/update/) endpoint. An existing manual OAuth server can be updated without `client_secret`; the stored secret remains unchanged. Send a new `client_secret` to rotate it. A new manual OAuth server, or a server being changed to manual OAuth, requires a non-empty `client_secret`.
+
+The client secret is write-only. Cloudflare encrypts it before storage and never returns it from read, create, or update requests. Responses also omit the raw `auth_credentials` value. Use `auth_config_summary.has_client_secret` and `auth_config_summary.client_secret_version` to confirm that a secret is configured and identify its current version.
 
 #### Bearer authentication credentials
 
