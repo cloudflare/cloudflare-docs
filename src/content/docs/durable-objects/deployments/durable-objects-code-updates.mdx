@@ -54,7 +54,11 @@ flowchart TD
     G -->|"No, max_delay reached"| E
 ```
 
-Deploying again before an object hibernates does not extend its `max_delay` window — a later deploy can only shorten the remaining wait, never lengthen it. For example, if you deploy version A with `max_delay: 30`, then deploy version B with `max_delay: 60` before the object hibernates, the object still resets after the original 30 seconds, not 60. This means an `immediate` deploy always forces the update right away, even while an earlier `deferred` deploy's window is still running. In every case, the object applies the latest deployed version once it hibernates or its deadline is reached, and it might skip versions you deployed in between.
+Deploying again before an object hibernates does not extend its `max_delay` window — a later deploy can only shorten the remaining wait, never lengthen it. Whichever deploy's `max_delay` sets the deadline, the object always applies the *latest* deployed version when that deadline arrives, not necessarily the version that set it.
+
+For example: you deploy version A with `max_delay: 30`. Ten seconds later, you deploy version B with `max_delay: 60` before the object hibernates. The deadline stays at 30 seconds from A's deploy — B's longer window doesn't extend it — but when that deadline arrives, Cloudflare resets the object and applies version B, the latest version, not A. The same is true if the object hibernates on its own before the deadline: it always wakes up running the latest deployed version.
+
+This means an `immediate` deploy always forces the update right away, even while an earlier `deferred` deploy's window is still running, and it might skip versions you deployed in between.
 
 ## Configure a code update strategy
 
@@ -86,6 +90,8 @@ Add `code_update_strategy` alongside `bindings` in the `durable_objects` object 
 </WranglerConfig>
 
 `max_delay` is in seconds and only applies when `mode` is `deferred`. The maximum is `300` (five minutes). Omit `max_delay` to use the default for your compatibility date.
+
+`code_update_strategy` applies to every Durable Object class this Worker exports and binds to — you can't set a different strategy for one class than another in the same deployment. If a binding uses `script_name` to reference a class defined in a different Worker, that class's code updates are controlled by that other Worker's own `code_update_strategy`, not this one.
 
 ### Set strategy for a single deployment
 
