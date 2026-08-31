@@ -8,10 +8,9 @@ tags:
   - SCIM
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 System for Cross-domain Identity Management (SCIM) is an open standard protocol that allows identity providers to synchronize user identity information with cloud applications and services. After configuring SCIM, user identities that you create, edit, or delete in the identity provider are automatically updated across all supported applications. This makes it easier for IT admins to onboard new users, update their groups and permissions, and revoke access in the event of an employee termination or security breach.
 
@@ -23,7 +22,15 @@ Users provisioned via the [Zero Trust SCIM integration](#sync-users-and-groups-i
 
 ## Supported identity providers
 
-Cloudflare One supports SCIM provisioning for all SAML and OIDC identity providers that use SCIM version `2.0`.
+SCIM provisioning support depends on your identity provider:
+
+| Identity provider                                                                                                                                                                                                        | Support                                               |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| [Microsoft Entra ID](/cloudflare-one/integrations/identity-providers/entra-id/#synchronize-users-and-groups)                                                                                                             | Supported                                             |
+| [Okta](/cloudflare-one/integrations/identity-providers/okta/#synchronize-users-and-groups)                                                                                                                               | Supported                                             |
+| [JumpCloud](/cloudflare-one/integrations/identity-providers/jumpcloud-saml/#synchronize-users-and-groups)                                                                                                                | Supported                                             |
+| [Generic SAML](/cloudflare-one/integrations/identity-providers/generic-saml/#synchronize-users-and-groups) or [generic OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/#synchronize-users-and-groups) | Supported when the provider offers SCIM version `2.0` |
+| [Google Workspace](/cloudflare-one/integrations/identity-providers/google-workspace/)                                                                                                                                    | Not supported                                         |
 
 ## Sync users and groups in Zero Trust policies
 
