@@ -48,6 +48,33 @@ When resizing fails, the response body contains an error message explaining the 
 - 9529 - The image timed out while processing. This may happen when files with very large dimensions are requested or the server is overloaded.
 - 9424, 9516, 9517, 9518 — Internal errors. Please contact support if you encounter these errors.
 
+## Warnings from resizing
+
+Some conditions do not fail a transformation, but stop Cloudflare from optimizing an image as well as it otherwise would. The image is still returned with a `200` status code, and a `Warning` response header explains why. A response may carry more than one. Warnings are advisory and never change the status code.
+
+### cache-control is too restrictive
+
+Optimizing an image costs CPU time, and that cost is only worthwhile if the result can be reused from cache. Before transforming a remote image, Cloudflare inspects the cache directives on the source image response. If the optimized image is unlikely to stay in cache for at least an hour, Cloudflare returns:
+
+```txt
+Warning: cf-images 299 "cache-control is too restrictive"
+```
+
+The source image is treated as poorly cacheable when any of the following is true:
+
+- The directives include `private` or `no-store`.
+- The directives include `no-cache` or `must-revalidate`, and the response has neither an `ETag` nor a `Last-Modified` header.
+- `max-age` is less than `3600` seconds. If `s-maxage` is present, it is used instead of `max-age`.
+
+Cloudflare then optimizes the image with reduced effort.
+
+To restore full-effort optimization, make the source image cacheable for at least an hour:
+
+- Return `Cache-Control: public, max-age=3600` or longer from your origin. Images often suit much longer lifetimes, for example `max-age=604800`.
+- Without an origin change, a Cache Response Rule can set the max-age directive on origin responses before they reach our cache: https://developers.cloudflare.com/cache/how-to/cache-response-rules/
+
+After changing the headers, purge the source image URL so the new directives take effect. Refer to [Caching and purging](#caching-and-purging).
+
 ---
 
 ## Limits
