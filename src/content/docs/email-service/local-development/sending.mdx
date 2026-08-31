@@ -145,7 +145,8 @@ From: sender@yourdomain.com
 To: recipient@example.com
 Subject: Test Email
 
-Text: /tmp/miniflare-.../files/email-text/<message-id>.txt
+Text (system): /tmp/miniflare-.../files/email-text/<message-id>.txt
+Text (project): <project root>/.wrangler/tmp/email/<session-id>/email-text/<message-id>.txt
 ```
 
 The email content (text and HTML) is saved to local files that you can inspect to verify your email structure before deploying.
