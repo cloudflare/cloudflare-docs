@@ -5,17 +5,13 @@ products:
   - load-balancing
 title: Pool sets
 sidebar:
-  order: 3
+  order: 1
 head:
   - tag: title
     content: Pool sets
 ---
 
-A **pool set** pairs a match condition with routing behavior. For new API-managed configurations that route traffic by location, use pool sets.
-
-Use [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) for simple geographic failover configured in the dashboard. Use pool sets when you need per-location steering policies, weights, fallback pools, or custom rules.
-
-Geo steering assigns pools to each location in failover order. It cannot split traffic across pools within one location. It also cannot select the lowest-latency pool within that location. Geo steering uses one global fallback pool. When every pool for a location is unhealthy, traffic may move to a distant data center.
+Pool sets allow you to combine geographic steering with other traffic steering policies. For example, you can apply Dynamic Latency steering within a specific region or country. For load balancers managed through the API, pool sets can replace Geo steering.
 
 With pool sets you can:
 
@@ -25,16 +21,16 @@ With pool sets you can:
 - Return a fixed HTTP response for matched proxied traffic
 
 :::note
-Pool sets are available to Enterprise customers who have purchased Traffic Steering, and are configurable through the API only.
+Use [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) for simple, dashboard-managed geographic failover. Geo steering evaluates each location's pools in failover order and uses one global fallback pool. It cannot split traffic across pools within a location.
 :::
 
 ## How pool sets are evaluated
 
 Pool sets are stored as an ordered array on the load balancer. Cloudflare evaluates them in array order and stops at the first pool set whose `match` succeeds. That pool set then supplies the pools, steering policy, weights, and fallback pool for the request.
 
-Array position is the only precedence mechanism. A pool set matching a single data center does not automatically take priority over one matching a whole region — order the array from most specific to least specific yourself.
+Pool sets are evaluated in array order, and the first matching pool set wins. A pool set matching a single data center does not automatically take priority over one matching a region. Order the array from most specific to least specific.
 
-Place a catch-all pool set last so requests that match no location still have a destination:
+Place a default pool set last by setting `match.default` to `true`. The `default` match applies to every request. Since pool sets use first-match wins, this pool set handles requests that did not match an earlier pool set:
 
 ```json
 {
@@ -45,7 +41,7 @@ Place a catch-all pool set last so requests that match no location still have a 
 			"overrides": { "pools": ["17b5962d775c646f3f9725cbc7a53df4"] }
 		},
 		{
-			"name": "catch-all",
+			"name": "default",
 			"match": { "default": true },
 			"overrides": { "pools": ["ff02c959d17f7bb2b1184a202e3c0af7"] }
 		}
@@ -155,27 +151,11 @@ Pool sets are evaluated before [custom rules](/load-balancing/additional-options
 
 A pool set that returns a `fixed_response` is the complete response, so custom rules are not evaluated for that request.
 
-## Supported load balancer types
-
-Pool sets work on:
-
-- Proxied (orange-clouded) zone load balancers
-- DNS-only (gray-clouded) zone load balancers
-- Account load balancers
-
-Available steering behavior differs by load balancer type.
-
-### DNS-only load balancers
+## DNS-only load balancers
 
 Country matching depends on the top-level steering policy and `location_strategy`. With a configured strategy, Geo and Proximity steering can use EDNS Client Subnet (ECS), the resolver IP address, or the responding Cloudflare data center. Without a configured strategy, Proximity uses ECS when available, while Geo uses the responding data center. Other top-level policies use the responding data center.
 
 A pool set applies `overrides.steering_policy` after evaluating its match. The override therefore cannot change the location used for country matching. For more information, refer to [EDNS Client Subnet (ECS) support](/load-balancing/understand-basics/traffic-steering/steering-policies/#edns-client-subnet-ecs-support).
-
-`least_outstanding_requests` does not provide counter-based selection for DNS-only load balancers. All pool outstanding request counts are treated as zero. Use a different policy when selection must reflect active requests.
-
-### Account load balancers
-
-`least_outstanding_requests` and `least_connections` do not provide counter-based selection for account load balancers. Account lookups do not use live request or connection counters. Use a different policy when you require counter-based routing.
 
 ## Limits
 
@@ -193,7 +173,7 @@ Duplicate entries within a single `pops`, `countries`, or `regions` list are rej
 A pool referenced by a pool set cannot be [deleted](/load-balancing/pools/create-pool/#delete-a-pool) until you remove it from every pool set that references it. This applies to pools in `overrides.pools`, `overrides.pool_weights`, and `overrides.fallback_pool`.
 :::
 
-## Update pool sets
+## Configure pool sets via the API
 
 Pool sets are managed through the `pool_sets` field on the [Update Load Balancer](/api/resources/load_balancers/methods/edit/) endpoint. When you send a `PATCH` request:
 
@@ -201,13 +181,17 @@ Pool sets are managed through the `pool_sets` field on the [Update Load Balancer
 - Sending `"pool_sets": []` removes all pool sets
 - Sending `"pool_sets": null` makes no change
 
-## Example
+### Example request
 
-This load balancer splits North American traffic across two pools by weight with a regional fallback pool, sends German traffic to a single pool by lowest latency, and routes everything else to a default pool:
+Before using this example, create the referenced pools. Replace each example pool ID with an ID from your account.
+
+This request splits Western North American traffic across two pools by weight and uses a regional fallback pool. It selects the lowest-latency pool for German traffic. A default pool set handles all remaining traffic. The load balancer uses a separate global fallback pool.
+
+Send a `PATCH` request to `/zones/{zone_id}/load_balancers/{load_balancer_id}` with the following body:
 
 ```json title="Request"
-// PATCH /zones/{zone_id}/load_balancers/{load_balancer_id}
 {
+	"fallback_pool": "6f1ed002ab5595859014ebf0951522d9",
 	"pool_sets": [
 		{
 			"name": "wnam-active-active",
@@ -229,12 +213,15 @@ This load balancer splits North American traffic across two pools by weight with
 			"name": "de-lowest-latency",
 			"match": { "topology": { "countries": ["DE"] } },
 			"overrides": {
-				"pools": ["0930eec54a4c7ae6616985b79f678210"],
+				"pools": [
+					"0930eec54a4c7ae6616985b79f678210",
+					"c8b4f5a6d7e84910a2b3c4d5e6f70819"
+				],
 				"steering_policy": "dynamic_latency"
 			}
 		},
 		{
-			"name": "catch-all",
+			"name": "default",
 			"match": { "default": true },
 			"overrides": {
 				"pools": ["ff02c959d17f7bb2b1184a202e3c0af7"],
@@ -245,17 +232,29 @@ This load balancer splits North American traffic across two pools by weight with
 }
 ```
 
-## Error codes
+### Resulting behavior
 
-| Code                            | Cause                                                               |
-| ------------------------------- | ------------------------------------------------------------------- |
-| `POOL_SETS_TOO_LARGE`           | More than 1,000 pool sets on one load balancer                      |
-| `POOL_SET_NO_INTENT`            | A pool set specifies neither `overrides.pools` nor `fixed_response` |
-| `POOL_SET_EMPTY_MATCH`          | A `match` object is present but sets no condition                   |
-| `POOL_SET_DEFAULT_WITH_MATCH`   | A `match` combines `default` with `topology`                        |
-| `POOL_SET_EMPTY_TOPOLOGY`       | A `topology` sets none of `pops`, `countries`, or `regions`         |
-| `POOL_SET_TOPOLOGY_TOO_LARGE`   | A `topology` list exceeds 1,000 entries                             |
-| `POOL_SET_POP_ENTITLEMENT`      | The account is not entitled to data center steering                 |
-| `POOL_SET_REGION_ENTITLEMENT`   | The account is not entitled to region steering                      |
-| `POOL_SET_COUNTRY_ENTITLEMENT`  | The account is not entitled to country steering                     |
-| `POOL_SET_STEERING_ENTITLEMENT` | The account has not purchased Traffic Steering                      |
+After the request completes, the load balancer routes traffic with this configuration:
+
+| Order | Match                         | Pools                                                                      | Steering policy  | Fallback pool                              |
+| ----- | ----------------------------- | -------------------------------------------------------------------------- | ---------------- | ------------------------------------------ |
+| 1     | Western North America (`WNAM`) | `17b5962d775c646f3f9725cbc7a53df4`, `9290f38c5d07c2e2f4df57b1f61d4196` | Random, 50% each | `2a28d35d1c00f000540fe739a04b3230`         |
+| 2     | Germany (`DE`)                | `0930eec54a4c7ae6616985b79f678210`, `c8b4f5a6d7e84910a2b3c4d5e6f70819` | Dynamic Latency  | Global fallback                            |
+| 3     | All remaining traffic         | `ff02c959d17f7bb2b1184a202e3c0af7`                                       | Failover order   | Global fallback                            |
+
+The global fallback pool is `6f1ed002ab5595859014ebf0951522d9`.
+
+## Validation errors
+
+Invalid Pool Sets configurations return HTTP status `400` and API error code `1002`. The error message explains the problem and can include one of these identifiers:
+
+| Message identifier             | Cause                                                               |
+| ------------------------------ | ------------------------------------------------------------------- |
+| `POOL_SETS_TOO_LARGE`          | More than 1,000 pool sets on one load balancer                      |
+| `POOL_SET_NO_INTENT`           | A pool set specifies neither `overrides.pools` nor `fixed_response` |
+| `POOL_SET_DEFAULT_WITH_MATCH`  | A `match` combines `default` with `topology`                        |
+| `POOL_SET_EMPTY_TOPOLOGY`      | A `topology` sets none of `pops`, `countries`, or `regions`         |
+| `POOL_SET_TOPOLOGY_TOO_LARGE`  | A `topology` list exceeds 1,000 entries                             |
+| `POOL_SET_POP_ENTITLEMENT`     | The account is not entitled to data center steering                 |
+| `POOL_SET_REGION_ENTITLEMENT`  | The account is not entitled to region steering                      |
+| `POOL_SET_COUNTRY_ENTITLEMENT` | The account is not entitled to country steering                     |
