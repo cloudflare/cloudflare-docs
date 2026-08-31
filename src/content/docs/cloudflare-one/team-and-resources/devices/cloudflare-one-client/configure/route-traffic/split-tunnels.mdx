@@ -67,6 +67,10 @@ In [Traffic only mode](/cloudflare-one/team-and-resources/devices/cloudflare-one
 - `104.19.194.29`
 - `104.19.195.29`
 
+## Device IP ranges
+
+Current default device profiles route the default [device IP range](/cloudflare-one/networks/routes/reserved-ips/#device-ips) (`100.96.0.0/12`) through Cloudflare. Existing or customized profiles may still exclude the entire CGNAT range (`100.64.0.0/10`). Verify that the profile applied to your device does not exclude the device IP range or a parent range that contains it.
+
 ## Automatically managed ranges
 
 The Cloudflare One Client automatically includes the following ranges in Include mode, and automatically removes them from any exclusions configured in Exclude mode. This happens at runtime on the device: the ranges are not stored in your device profile, do not appear in the Split Tunnels list in the dashboard, and do not need to be added manually.
