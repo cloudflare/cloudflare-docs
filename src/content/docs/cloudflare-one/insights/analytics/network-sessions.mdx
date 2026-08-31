@@ -63,7 +63,7 @@ For the full list of reasons for session termination, refer to [ConnectionCloseR
 
 ### Troubleshoot session limit errors
 
-Session limit close reasons identify the type and scope of a limit. Reasons containing `ACTIVE_SESSIONS` indicate too many concurrent sessions. Reasons containing `NEW_SESSIONS` indicate that sessions are being created too quickly. `FOR_ACCOUNT` reasons apply across the account, while `FOR_USER` reasons apply to one user.
+Session limit close reasons identify the type and scope of a limit. Reasons containing `ACTIVE_SESSIONS` indicate too many concurrent sessions. Reasons containing `NEW_SESSIONS` indicate that sessions are being created too quickly. `FOR_ACCOUNT` reasons aggregate sessions for the account on the Cloudflare server enforcing the limit and can affect multiple users connected to that server. `FOR_USER` reasons apply to one user.
 
 Use [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/), not Gateway activity logs, to investigate these errors. Filter by `ConnectionCloseReason`, then correlate `SessionStartTime` and `SessionID` with fields such as `Email`, `UserID`, `DeviceID`, `SourceIP`, `OriginIP`, `OriginPort`, `Protocol`, and `ConnectionReuse`.
 
