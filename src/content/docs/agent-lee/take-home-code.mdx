@@ -1,0 +1,78 @@
+---
+title: Export generated code
+description: Take the source code Agent Lee generates with you by exporting it to a temporary, Git-cloneable repository.
+pcx_content_type: how-to
+tags:
+  - AI
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Export generated code
+products:
+  - agent-lee
+---
+
+import { Description, Steps } from "~/components";
+
+<Description>
+
+Take the source code Agent Lee generates with you by exporting it to a temporary, Git-cloneable repository.
+
+</Description>
+
+:::note[Beta]
+Code export is part of the Agent Lee beta. Behaviors and limits described here may change.
+:::
+
+When Agent Lee generates a small project for you — for example, a starter static site or a Worker — you can export the source so you can keep working on it locally. Agent Lee packages the generated files into a temporary repository and gives you a one-time command to clone it to your machine.
+
+This is a **take-home** flow: the repository is short-lived and lives in Cloudflare's infrastructure, not your account. It is meant for getting generated code onto your own machine, after which you push it to a Git host of your choice.
+
+## How it works
+
+- **Temporary repository.** When you export, Agent Lee writes the generated files to a repository that automatically expires roughly 36 hours after creation. After it expires, the code and clone command no longer work.
+- **On-demand clone command.** Agent Lee does not put a clone command or credential in the chat transcript. Instead, the export card shows a **Copy clone command** button that fetches a fresh command when you click it. The command embeds a short-lived read credential that is valid for about one hour.
+- **Export card.** The card shows the project name, the list of exported files, and a countdown to expiry so you know how long you have to clone.
+
+## Export and clone your code
+
+<Steps>
+
+1. Ask Agent Lee to build something that produces code, then ask it to export the code. For example: "Export this project so I can clone it."
+
+2. In the export card that appears, review the file list and the expiry countdown.
+
+3. Select **Copy clone command**. Agent Lee fetches a one-time command and copies it to your clipboard.
+
+4. Paste the command into your terminal and run it to clone the repository locally:
+
+   ```sh
+   git clone <copied-command>
+   ```
+
+5. Point the local repository at your own Git host and push it there to keep it:
+
+   ```sh
+   git remote set-url origin https://your-git-host.example/you/your-repo.git
+   git push -u origin main
+   ```
+
+</Steps>
+
+## Security and privacy
+
+- **No credential in chat.** The clone command and its read credential are delivered only when you select **Copy clone command** — never in the message text, conversation history, or model context. Agent Lee will not type the clone command into the chat, so do not ask it to.
+- **Short-lived access.** The read credential expires about an hour after it is issued. Generate a fresh command if it stops working.
+- **Automatic cleanup.** The temporary repository is deleted automatically after roughly 36 hours. Clone and push to your own host before it expires.
+
+## Limitations
+
+- Exported repositories are temporary and are not backed up. Once a repository expires, it cannot be recovered.
+- The clone credential is read-only and single-purpose. You cannot push back to the temporary repository — push to your own Git host instead.
+- Code export is intended for small, self-contained projects that Agent Lee generates during a conversation.
+
+## Related resources
+
+- [Agent Lee overview](/agent-lee/)
+- [Workers](/workers/)
