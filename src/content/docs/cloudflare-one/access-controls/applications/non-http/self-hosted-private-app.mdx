@@ -111,9 +111,11 @@ For applications served over plaintext HTTP on port `80`, Cloudflare Access pres
 
 ### Other non-HTTP applications
 
-For applications that are not HTTP or HTTPS (for example, SSH, RDP, or arbitrary TCP/UDP), the Cloudflare One Client manages the session. Users will receive an `Authentication required` pop-up notification from the Cloudflare One Client. When the user selects the notification, the Cloudflare One Client will open a browser window with your Access login page.
+For applications that are not HTTP or HTTPS (for example, SSH, RDP, or arbitrary TCP/UDP), the Cloudflare One Client manages the session. When authentication is required, the operating system displays an `Authentication required` notification from the Cloudflare One Client. Cloudflare One Client notifications must be allowed in the operating system settings. When the user selects the notification, the Cloudflare One Client opens a browser window with your Access login page.
 
 <Render file="gateway/client-notifications-os" product="cloudflare-one" />
+
+While authentication is pending, the Cloudflare icon in the macOS menu bar or Windows system tray indicates that action is required. If the user misses the notification, they can open the Cloudflare One Client and select **Profile** > **Account information** > **Re-authenticate**. In version 2026.1 and earlier, select **Preferences** > **Account** > **Re-Authenticate Session**. After authentication, retry the connection.
 
 ## Order of precedence
 
