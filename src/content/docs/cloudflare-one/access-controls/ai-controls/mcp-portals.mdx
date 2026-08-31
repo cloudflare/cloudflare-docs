@@ -589,6 +589,32 @@ The `auth_credentials` field accepts two forms:
 
   The value of `auth_credentials` must be a JSON string. The parsed object must have a `headers` field mapping header names to string values. The portal forwards all headers verbatim to the upstream MCP server.
 
+### View tool-call analytics
+
+Use the account endpoint to retrieve daily or monthly MCP tool-call counts across the account:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/analytics/tool-calls/timeseries?granularity=daily&aggregate=false&tz=utc&days=30"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+The same query parameters apply to each endpoint:
+
+| Parameter     | Values and behavior                                                                                                                                                         |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `granularity` | `daily` or `monthly`. Defaults to `daily`.                                                                                                                                   |
+| `aggregate`   | `true` or `false`. Defaults to `false`. Set to `true` to request aggregated counts.                                                                                          |
+| `tz`          | `utc`, `Z`, or a fixed `+HH:MM` or `-HH:MM` offset. Defaults to `utc`. Offsets range from `-12:00` through `+14:00`; `+14:00` and `-12:00` are the limits. The offset is used for local-day bucketing and does not account for daylight saving time changes within the window. |
+| `days`        | An integer from `1` to `179`. For daily results, this sets the trailing window and defaults to `7`. It is ignored when `granularity=monthly`.                               |
+
+The response `result` includes the selected `granularity`, `aggregate`, and `tz`, the `start` and `end` of the window as epoch milliseconds, a `series` of `day` and `count` values, and the `total` count. The window includes `start` and excludes `end`. Daily `day` values use `YYYY-MM-DD` in the requested timezone offset.
+
+Use a scoped endpoint to limit the counts:
+
+- Server: `GET /accounts/{account_id}/access/ai-controls/mcp/analytics/servers/{server_id}/tool-calls/timeseries`
+- Portal: `GET /accounts/{account_id}/access/ai-controls/mcp/analytics/portals/{portal_id}/tool-calls/timeseries`
+
 ### Force sync an MCP server
 
 To manually trigger a synchronization of tools and prompts from an upstream MCP server:
