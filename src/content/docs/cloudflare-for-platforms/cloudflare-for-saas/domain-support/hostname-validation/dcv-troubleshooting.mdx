@@ -38,7 +38,7 @@ Before investigating a specific error, verify the following:
 
 - [ ] **DCV tokens are placed** — your end customer has added the TXT record or HTTP token that you provided to their DNS.
 - [ ] **Tokens are not expired** — Let's Encrypt tokens expire after 7 days; Google Trust Services and SSL.com tokens expire after 14 days. If tokens may have expired, [refresh them](#stale-or-expired-dcv-tokens).
-- [ ] **CAA records allow the CA** — the end customer's domain must have CAA records that permit Cloudflare's [partner certificate authorities](/ssl/reference/certificate-authorities/), or no CAA records at all.
+- [ ] **CAA records allow the CA** — CAA records are checked at every level of the DNS tree: the CA checks the custom hostname itself (for example, `shop.customer.com`) **and** the parent domain (`customer.com`). Both levels must permit Cloudflare's [partner certificate authorities](/ssl/reference/certificate-authorities/), or have no CAA records at all.
 - [ ] **DNS is reachable** — the end customer's authoritative DNS must respond without SERVFAIL from all geographic locations.
 - [ ] **No Workers intercepting DCV paths** — if your SaaS zone uses a [Worker as the fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/), ensure it passes through `/.well-known/pki-validation/*` and `/.well-known/acme-challenge/*` without modification.
 
@@ -67,10 +67,15 @@ If a custom hostname shows a `caa_error` status, the end customer's CAA records 
 
 **Who acts: End customer**
 
-Ask your end customer to verify their CAA records using the `dig` command:
+:::caution[Check CAA records at every level]
+Certificate authorities walk up the DNS tree when checking CAA records. For a custom hostname like `shop.customer.com`, the CA checks CAA records at `shop.customer.com` **and** at `customer.com`. A restrictive CAA record on the parent domain will block issuance even if the subdomain has no CAA records.
+:::
+
+Ask your end customer to check CAA records at both the subdomain and parent domain level:
 
 ```sh
-dig CAA example.com
+dig CAA shop.customer.com
+dig CAA customer.com
 ```
 
 The records must permit the certificate authority you selected for their custom hostname. Add the appropriate records based on the selected CA:
