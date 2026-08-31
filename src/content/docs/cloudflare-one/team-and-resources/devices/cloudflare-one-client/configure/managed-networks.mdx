@@ -235,7 +235,7 @@ The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed
 </TabItem>
 </Tabs>
 
-The Cloudflare One Client will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, the Cloudflare One Client will not automatically exclude it.
+The Cloudflare One Client will automatically exclude the TLS endpoint from all device profiles if it is specified as an IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of an IP address, the Cloudflare One Client will not automatically exclude it.
 
 :::note[Split Tunnels in Include mode]
 If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the TLS endpoint IP address; otherwise the Cloudflare One Client will exclude the entire Split Tunnel entry from the tunnel. For example, if you are currently including `10.0.0.0/8` but your TLS endpoint is on `10.0.0.1`, use our [IP subtraction calculator](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#add-a-route) to remove `10.0.0.1` from `10.0.0.0/8`.
