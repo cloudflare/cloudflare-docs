@@ -620,6 +620,19 @@ entries:
     example_block: |-
       any(cf.bot_management.detection_ids[*] eq 33554817)
 
+  - name: cf.bot_management.tags
+    data_type: Array<String>
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor, tags]
+    plan_info_label: Enterprise add-on
+    summary: Provides the tags associated with bot traffic.
+    description: |-
+      Use this field to match requests associated with a specific bot tag.
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      any(cf.bot_management.tags[*] eq "API")
+
   - name: cf.client.bot
     data_type: Boolean
     categories: [Request, Bots]
