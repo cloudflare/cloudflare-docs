@@ -217,13 +217,13 @@ pre.mermaid:not([data-processed]) {
 	overflow: hidden;
 }
 
-/* Scale the SVG larger in the dialog */
+/* The dialog body scrolls, so diagrams render at their natural size instead
+   of shrinking to fit the viewport height. */
 .mermaid-dialog-body pre.mermaid[data-processed] {
 	padding: 3rem;
 }
 
 .mermaid-dialog-body pre.mermaid[data-processed] svg {
-	max-height: calc(92vh - 120px);
 	width: 100%;
 }
 

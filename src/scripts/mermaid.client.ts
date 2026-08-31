@@ -70,7 +70,14 @@ function openDiagram(container: HTMLElement) {
 
 	const svg = clone.querySelector("svg");
 	if (svg) {
-		svg.removeAttribute("style");
+		// A taller-than-wide diagram must keep its natural-width cap, otherwise
+		// the dialog stretches it to full width and the content shrinks to
+		// letterbox inside the viewport-bounded body. Wide diagrams stretch.
+		const [, , vbW = 0, vbH = 0] = (svg.getAttribute("viewBox") ?? "")
+			.trim()
+			.split(/[\s,]+/)
+			.map(Number);
+		if (!(vbH > vbW)) svg.removeAttribute("style");
 		svg.setAttribute("width", "100%");
 		svg.setAttribute("height", "auto");
 	}
