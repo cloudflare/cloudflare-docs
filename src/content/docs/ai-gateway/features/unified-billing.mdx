@@ -135,16 +135,21 @@ Set [spend limit rules](/ai-gateway/features/spend-limits/) on individual gatewa
 
 ### Zero Data Retention (ZDR)
 
-Zero Data Retention (ZDR) routes Unified Billing traffic through provider endpoints that do not retain prompts or responses. Enable it with the gateway-level `zdr` setting, which maps to ZDR-capable upstream provider configurations. This setting only applies to Unified Billing requests that use Cloudflare-managed credentials. It does not apply to BYOK or other AI Gateway requests.
+Zero Data Retention (ZDR) routes Unified Billing traffic through provider configurations that do not retain prompts or responses. It applies only to Unified Billing requests that use Cloudflare-managed credentials — it does not apply to BYOK or other AI Gateway requests.
+
+Where possible, Unified Billing traffic runs through zero-retention configurations by default, so you do not need to change any setting. The gateway-level `zdr` setting (and the per-request `cf-aig-zdr` header) control retention for providers where Cloudflare offers both a retained and a zero-retention upstream. Today, that setting selects the zero-retention configuration for OpenAI.
+
+Enabling the setting for a provider that has no separate zero-retention configuration has no effect. Those requests continue to use the provider's default Unified Billing configuration.
+
+Some models are covered by provider agreements that require data retention. These models always route through a retained upstream regardless of the `zdr` setting. For example, `anthropic/claude-fable-5` requires upstream retention and is never served through a zero-retention configuration.
+
+:::note
+To check whether a specific model supports ZDR, open its page in the [model catalog](/ai/models/). Each model's detail page in the dashboard shows its ZDR status.
+
+<DashButton url="/?to=/:account/ai/models" />
+:::
 
 ZDR does not control AI Gateway logging. To disable request/response logging in AI Gateway, update the logging settings separately in [Logging](/ai-gateway/observability/logging/).
-
-ZDR is currently supported for:
-
-- [OpenAI](/ai-gateway/usage/providers/openai/)
-- [Anthropic](/ai-gateway/usage/providers/anthropic/)
-
-If ZDR is enabled for a provider that does not support it, AI Gateway falls back to the standard (non-ZDR) Unified Billing configuration.
 
 #### Default configuration
 
