@@ -1,6 +1,6 @@
 import fs from "fs";
 import YAML from "yaml";
-import { marked } from "marked";
+import { markdownToMdast } from "satteri";
 
 const BASE_URL = "https://downloads.cloudflareclient.com/v1";
 
@@ -128,18 +128,24 @@ for (const { platform, display_name } of platforms) {
 
 					markdown = markdown.trim();
 
-					const tokens = marked.lexer(markdown);
-
-					marked.walkTokens(tokens, (token) => {
-						if (token.type === "heading") {
-							token.type = "strong";
-							token.raw = `**${token.text}**\n`;
-
-							delete token.depth;
-						}
-					});
-
-					const releaseNotes = tokens.reduce((s, t) => s + t.raw, "");
+					// Demote headings to bold text (they render inside a collapsible
+					// <Details> block, where real headings would pollute the outline).
+					// Walks the parsed tree so `#` lines inside code fences survive.
+					const tree = markdownToMdast(markdown);
+					let releaseNotes = "";
+					let cursor = 0;
+					for (const node of tree.children) {
+						if (node.type !== "heading") continue;
+						const { start, end } = node.position;
+						releaseNotes += markdown.slice(cursor, start.offset);
+						releaseNotes += `**${markdown
+							.slice(start.offset, end.offset)
+							.replace(/^#{1,6}[ \t]+/, "")
+							.replace(/[ \t]+#+[ \t]*$/, "")
+							.trim()}**\n`;
+						cursor = end.offset;
+					}
+					releaseNotes += markdown.slice(cursor);
 					const platformName = isLinux ? "Linux" : data.platformName;
 
 					fs.writeFileSync(
