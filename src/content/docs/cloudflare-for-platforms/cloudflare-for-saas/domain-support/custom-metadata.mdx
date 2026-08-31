@@ -44,10 +44,6 @@ You may add custom metadata to Cloudflare via the Custom Hostnames API. This dat
 	path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
 	method="PATCH"
 	json={{
-		ssl: {
-			method: "http",
-			type: "dv",
-		},
 		custom_metadata: {
 			customer_id: "12345",
 			redirect_to_https: true,
