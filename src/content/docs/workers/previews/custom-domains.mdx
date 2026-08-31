@@ -40,22 +40,11 @@ If your production domain already has subdomains like `docs.example.com`, use a 
 2. Select your Worker.
 3. Go to the **Domains** tab.
 4. Under **Custom Domains and Routes**, select **+ Add Domain**.
-
-   ![Domains tab showing workers.dev Preview URLs enabled with no custom domains configured](~/assets/images/workers/previews/emptydomain.png)
-
-   In this example, only the `workers.dev` Preview URL is enabled, so Preview traffic is served only on `workers.dev`.
-
 5. Enter your domain and optional subdomain. Set **Enable for** to _Preview_ to serve only Preview URLs on this domain, then select **Add domain**.
-
-   ![Add Domain modal with Enable for set to Preview](~/assets/images/workers/previews/replace.png)
 
    You can also choose _Production and Preview_ to serve both production and Preview URLs on the same domain, or _Production_ for production traffic only.
 
 6. Confirm that your custom domain appears in **Custom Domains and Routes**.
-
-   ![Domains tab showing workers.dev URLs disabled and a custom domain enabled for Preview](~/assets/images/workers/previews/customdomainonly.png)
-
-   In this example, both `workers.dev` URLs are disabled. Preview traffic is served only on `previews.example.com`.
 </Steps>
 
 </TabItem>
@@ -105,10 +94,6 @@ The `workers.dev` Production and Preview URLs are toggled separately. You do not
 2. Select your Worker.
 3. Go to the **Domains** tab.
 4. Under **Worker URL**, toggle on the **Preview** URL (`*-<worker-name>.<subdomain>.workers.dev`).
-
-   ![Domains tab showing workers.dev Preview URLs enabled with no custom domains configured](~/assets/images/workers/previews/emptydomain.png)
-
-   In this example, the production `workers.dev` URL is disabled, the Preview `workers.dev` URL is enabled, and no custom domains are configured.
 </Steps>
 
 </TabItem>
