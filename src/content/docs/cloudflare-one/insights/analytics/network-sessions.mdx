@@ -61,6 +61,14 @@ The Network session analytics dashboard helps you:
 
 For the full list of reasons for session termination, refer to [ConnectionCloseReason](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/#connectionclosereason).
 
+### Troubleshoot session limit errors
+
+Session limit close reasons identify the type and scope of a limit. Reasons containing `ACTIVE_SESSIONS` indicate too many concurrent sessions. Reasons containing `NEW_SESSIONS` indicate that sessions are being created too quickly. `FOR_ACCOUNT` reasons apply across the account, while `FOR_USER` reasons apply to one user.
+
+Use [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/), not Gateway activity logs, to investigate these errors. Filter by `ConnectionCloseReason`, then correlate `SessionStartTime` and `SessionID` with fields such as `Email`, `UserID`, `DeviceID`, `SourceIP`, `OriginIP`, `OriginPort`, `Protocol`, and `ConnectionReuse`.
+
+Reduce automatic retries and connection churn in the affected application. Reuse connections when the application and protocol support it. If expected sustained traffic continues to produce these errors, contact your account team or [Cloudflare Support](/cloudflare-one/troubleshooting/contact-support/) for review.
+
 ## Related resources
 
 - [Zero Trust network sessions Logpush dataset](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/): View detailed logs for individual network sessions.
