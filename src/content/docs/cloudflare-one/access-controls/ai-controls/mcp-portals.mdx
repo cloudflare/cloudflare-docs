@@ -224,16 +224,16 @@ Allowlist this URL as a redirect URI at the upstream OAuth provider. OAuth provi
 
 #### Shared Cloudflare callback URL (opt-in)
 
-If you have turned on the shared callback URL for the portal, the portal uses a Cloudflare-owned URL instead:
+If you turn on the shared callback URL for an MCP server, every portal that uses that server uses this Cloudflare-owned URL instead:
 
 ```txt
 https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
 ```
 
-Use the shared callback URL when upstream vendors only allow a small number of redirect URIs in their allowlist, or when you want to use a single Cloudflare-owned URL across multiple portals. The shared callback URL is only used when explicitly turned on for the portal.
+Use the shared callback URL when an upstream vendor only allows a small number of redirect URIs, or when you want one callback URL for a server across multiple portals. This setting is off by default and configured separately for each OAuth server. To turn it on, go to **Zero Trust** > **Access controls** > **MCP Portals** > **MCP servers**, add or edit an OAuth server, and turn on **Use the Cloudflare-hosted OAuth callback** under **Basic information** > **Advanced settings**.
 
 :::note
-If an upstream OAuth provider rejects the callback URL, verify that the correct URL for the portal (`https://<your-portal-hostname>/servers-callback` by default, or the shared Cloudflare URL when turned on) is allowlisted as a redirect URI at the upstream provider. OAuth providers typically exact-match the full URI including path.
+If an upstream OAuth provider rejects the callback URL, check whether **Use the Cloudflare-hosted OAuth callback** is turned on for that MCP server. If it is on, allowlist the shared Cloudflare URL. If it is off, allowlist `https://<your-portal-hostname>/servers-callback` for each portal that uses the server. OAuth providers typically exact-match the full URI including path.
 :::
 
 ## Create a portal
