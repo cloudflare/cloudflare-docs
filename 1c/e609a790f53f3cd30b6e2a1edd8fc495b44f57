@@ -1,0 +1,31 @@
+src/content/docs/workers/previews/get-started.mdx
+  s_49c7d32c522411::t_df6ec14e665757 13-14,17,21,25-26,36,40,63-64,70,126,132
+src/content/docs/workers/previews/index.mdx
+  s_bde361b5ec9e93::t_c6907db0750639 42
+src/content/docs/workers/previews/resources/index.mdx
+  s_bde361b5ec9e93::t_c348b6beb93e60 36,116,191
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1ce609a790f53f3cd30b6e2a1edd8fc495b44f57",
+  "prompts": {},
+  "sessions": {
+    "s_49c7d32c522411": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ff8caa94cffeion3nBnj9sj017",
+        "model": "gpt-5.5"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    },
+    "s_bde361b5ec9e93": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcee5ae32ffel2GxEUKUEf8CWY",
+        "model": "gpt-5.5"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}
