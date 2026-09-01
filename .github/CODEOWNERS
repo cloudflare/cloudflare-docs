@@ -114,26 +114,46 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/account-limits.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/applications/ @alexmoraru7 @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/users/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @cf-rhett @csujedihy @lpraneis @jiulingz @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up.mdx @asamborski @cf-rhett @csujedihy @lpraneis @jiulingz @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/vnc-browser-rendering.mdx @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/tunnel/ @nikitacano @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/warp/ @cf-rhett @csujedihy @lpraneis @jiulingz @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/posture/ @cloudflare/cf1-reviewers @cloudflare/product-owners @mmiranda-cf @zesilva63 @mkdewidar @marcinflare @jlu-cloudflare @pjennings1020 @TylerStanish @claudiocn
+/src/content/partials/cloudflare-one/choose-team-name.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/access/ @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/ssh/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/troubleshooting/browser-isolation.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/changelog/cloudflare-one/ @kennyj42 @asamborski @cloudflare/pm-changelogs @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/changelog/access/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/browser-isolation/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/gateway/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/cloudflare-one/changelog/access.mdx @asamborski @cloudflare/product-owners
+/src/content/docs/cloudflare-one/changelog/browser-isolation.mdx @asamborski @cloudflare/product-owners
+/src/content/docs/cloudflare-one/changelog/gateway.mdx @asamborski @cloudflare/product-owners
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/integrations/ @cloudflare/cf1-reviewers @cloudflare/product-owners @mmiranda-cf @zesilva63 @mkdewidar @marcinflare @jlu-cloudflare @pjennings1020 @TylerStanish @claudiocn
-/src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/cloudflare-one/remote-browser-isolation/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/identity-providers/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/product-owners @mmiranda-cf @zesilva63 @mkdewidar @marcinflare @jlu-cloudflare @pjennings1020 @TylerStanish @claudiocn
+/src/content/docs/cloudflare-one/traffic-policies/ @asamborski @alexmoraru7 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/gateway/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/remote-browser-isolation/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/setup/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/setup/secure-private-apps/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/data-loss-prevention/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/insights/dex/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/assets/images/cloudflare-one/ @cf-rhett @csujedihy @lpraneis @jiulingz @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/cloudflare-one/identity/ @asamborski @cf-rhett @csujedihy @lpraneis @jiulingz @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/cloudflare-one/ @asamborski @cf-rhett @csujedihy @lpraneis @jiulingz @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # Consumer products
 
