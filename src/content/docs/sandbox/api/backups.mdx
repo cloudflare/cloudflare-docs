@@ -1,6 +1,6 @@
 ---
 title: Backups
-description: Create point-in-time snapshots of sandbox directories and restore them with copy-on-write overlays.
+description: Create and restore point-in-time snapshots of sandbox directories.
 pcx_content_type: concept
 sidebar:
   order: 5
@@ -10,13 +10,15 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Create point-in-time snapshots of sandbox directories and restore them with copy-on-write overlays.
+Create point-in-time snapshots of sandbox directories and restore them from R2.
+
+For setup, restore workflows, and generated-cache exclusions, refer to [Backup and restore](/sandbox/guides/backup-restore/). For overlay semantics, refer to [Directory backups](/sandbox/concepts/backup-restore/).
 
 ## Methods
 
 ### `createBackup()`
 
-Create a point-in-time snapshot of a directory and upload it to R2 storage.
+Create a snapshot of a directory and upload it to R2.
 
 ```ts
 await sandbox.createBackup(options: BackupOptions): Promise<DirectoryBackup>
@@ -25,16 +27,20 @@ await sandbox.createBackup(options: BackupOptions): Promise<DirectoryBackup>
 **Parameters**:
 
 - `options` - Backup configuration (see [`BackupOptions`](#backupoptions)):
-  - `dir` (required) - Absolute path to the directory to back up (for example, `"/workspace"`)
-  - `name` (optional) - Human-readable name for the backup. Maximum 256 characters, no control characters.
-  - `ttl` (optional) - Time-to-live in seconds until the backup expires. Default: `259200` (3 days). Must be a positive number.
-  - `useGitignore` (optional) - When `true`, excludes files matching `.gitignore` rules from the backup. Default: `false`. If the directory is not inside a git repository, no exclusions are applied. Requires `git` to be available in the container.
-  - `localBucket` (optional) - When `true`, uses the `BACKUP_BUCKET` R2 binding directly instead of presigned URLs. Intended for use with `wrangler dev`. Default: `false`.
+  - `dir` (required) - Absolute path to back up. Must be under `/workspace`, `/home`, `/tmp`, `/var/tmp`, or `/app`.
+  - `name` (optional) - Human-readable name. Maximum 256 characters. Control characters are rejected.
+  - `ttl` (optional) - Time-to-live in seconds. Default: `259200` (3 days). Must be a positive number.
+  - `gitignore` (optional) - When `true`, exclude paths matching `.gitignore` rules if `dir` is inside a git repository. Default: `false`. If the directory is not in a git repository, no git exclusions apply. If `git` is not installed, the SDK logs a warning and continues without git-based exclusions.
+  - `excludes` (optional) - Glob patterns to omit from the archive. Passed to `mksquashfs` as wildcard excludes. `**` globstars are normalized automatically. Default: `[]`.
+  - `localBucket` (optional) - When `true`, use the `BACKUP_BUCKET` R2 binding instead of presigned URLs. Intended for `wrangler dev`. Default: `false`.
+  - `compression` (optional) - Archive compression. Default format: `lz4`. Default threads: `8`. Format must be `gzip`, `lz4`, or `zstd`. `threads` must be a positive integer.
+  - `multipart` (optional) - Use parallel multipart upload for large archives. Default: `true`.
 
 **Returns**: `Promise<DirectoryBackup>` containing:
 
 - `id` - Unique backup identifier (UUID)
 - `dir` - Directory that was backed up
+- `localBucket` (optional) - Whether the backup used local R2 binding mode
 
 <TypeScriptExample>
 
@@ -43,10 +49,7 @@ import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-// Create a backup of /workspace
 const backup = await sandbox.createBackup({ dir: "/workspace" });
-
-// Later, restore the backup
 await sandbox.restoreBackup(backup);
 ```
 
@@ -56,40 +59,40 @@ await sandbox.restoreBackup(backup);
 
 In production:
 
-1. The container creates a compressed squashfs archive from the directory.
-2. The container uploads the archive directly to R2 using a presigned URL.
+1. The container creates a compressed squashfs archive.
+2. The container uploads the archive to R2 with a presigned URL.
 3. Metadata is stored alongside the archive in R2.
-4. The local archive is cleaned up.
+4. The local archive is deleted.
 
-With `localBucket: true` (local development):
+With `localBucket: true`:
 
-1. The container creates a compressed squashfs archive from the directory.
-2. The archive is uploaded directly to the `BACKUP_BUCKET` R2 binding.
+1. The container creates a compressed squashfs archive.
+2. The archive is uploaded through the `BACKUP_BUCKET` R2 binding.
 3. Metadata is stored alongside the archive in R2.
-4. The local archive is cleaned up.
+4. The local archive is deleted.
 
 **Throws**:
 
-- `InvalidBackupConfigError` - If `dir` is not absolute, contains `..`, the `BACKUP_BUCKET` binding is missing, or (in production) the R2 presigned URL credentials are not configured
-- `BackupCreateError` - If the container fails to create the archive, the upload to R2 fails, or `useGitignore` is `true` but `git` is not available in the container
+- `InvalidBackupConfigError` - If `dir` is not an allowed absolute path, the `BACKUP_BUCKET` binding is missing, or (in production) R2 presigned URL credentials are not configured
+- `BackupCreateError` - If archive creation or the upload to R2 fails
 
 :::note[R2 binding required]
-You must configure a `BACKUP_BUCKET` R2 binding in your `wrangler.jsonc` before using backup methods. For production, you must also configure R2 presigned URL credentials (`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `CLOUDFLARE_ACCOUNT_ID`, `BACKUP_BUCKET_NAME`). Refer to the [backup and restore guide](/sandbox/guides/backup-restore/#prerequisites) for setup details.
+Configure a `BACKUP_BUCKET` R2 binding in `wrangler.jsonc` before using backup methods. Production also requires `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `CLOUDFLARE_ACCOUNT_ID`, and `BACKUP_BUCKET_NAME`. Refer to [Backup and restore](/sandbox/guides/backup-restore/#prerequisites).
 :::
 
 :::caution[Path permissions]
-The backup process uses `mksquashfs`, which must have read access to every file and subdirectory in the target path. If any file has restrictive permissions (for example, directories owned by a different user), the backup fails with a `BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied` error. Run `chmod -R a+rX` on the target directory before backing up, or refer to the [path permissions guide](/sandbox/guides/backup-restore/#path-permissions) for other options.
+`mksquashfs` must read every file and subdirectory in `dir`. Restrictive permissions fail with `BackupCreateError` and `Permission denied`. Refer to [Fix path permissions](/sandbox/guides/backup-restore/#fix-path-permissions).
 :::
 
 :::caution[Partial writes]
-Partially-written files may not be captured consistently. Only completed writes are guaranteed to be included in the backup.
+Partially written files may not be captured consistently. Completed writes are included.
 :::
 
 ---
 
 ### `restoreBackup()`
 
-Restore a previously created backup into a directory.
+Restore a previously created backup.
 
 ```ts
 await sandbox.restoreBackup(backup: DirectoryBackup): Promise<RestoreBackupResult>
@@ -97,7 +100,7 @@ await sandbox.restoreBackup(backup: DirectoryBackup): Promise<RestoreBackupResul
 
 **Parameters**:
 
-- `backup` - The backup handle returned by `createBackup()`. Contains `id` and `dir`. (see [`DirectoryBackup`](#directorybackup))
+- `backup` - Handle returned by `createBackup()`. Contains `id` and `dir`. Restore writes into `backup.dir`, which may differ from the original backup path. (see [`DirectoryBackup`](#directorybackup))
 
 **Returns**: `Promise<RestoreBackupResult>` containing:
 
@@ -108,15 +111,7 @@ await sandbox.restoreBackup(backup: DirectoryBackup): Promise<RestoreBackupResul
 <TypeScriptExample>
 
 ```ts
-// Create a named backup with 24-hour TTL
-const backup = await sandbox.createBackup({
-	dir: "/workspace",
-	name: "before-refactor",
-	ttl: 86400,
-});
-
-// Store the handle for later use
-await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
+await sandbox.restoreBackup(backup);
 ```
 
 </TypeScriptExample>
@@ -125,135 +120,71 @@ await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
 
 In production:
 
-1. Metadata is downloaded from R2 and the TTL is checked. If expired, an error is thrown (with a 60-second buffer).
-2. The container downloads the archive directly from R2 using a presigned URL.
-3. The container mounts the squashfs archive with FUSE overlayfs.
+1. Metadata is downloaded from R2 and the TTL is checked, with a 60-second buffer. An expired backup throws.
+2. The container downloads the archive from R2 with a presigned URL.
+3. The container mounts the archive with FUSE overlayfs.
 
-With `localBucket: true` (local development):
+With `localBucket: true`:
 
-1. Metadata is downloaded from the `BACKUP_BUCKET` R2 binding and the TTL is checked.
+1. Metadata is downloaded from the `BACKUP_BUCKET` binding and the TTL is checked.
 2. The archive is downloaded from the R2 binding.
-3. The archive is extracted into the target directory using `unsquashfs`.
+3. The archive is extracted with `unsquashfs`.
 
 **Throws**:
 
-- `InvalidBackupConfigError` - If `backup.id` is missing or not a valid UUID, or `backup.dir` is invalid
-- `BackupNotFoundError` - If the backup metadata or archive is not found in R2
-- `BackupExpiredError` - If the backup TTL has elapsed
+- `InvalidBackupConfigError` - If `backup.id` is missing or not a UUID, or `backup.dir` is invalid
+- `BackupNotFoundError` - If the metadata or archive is not in R2
+- `BackupExpiredError` - If the TTL has elapsed
 - `BackupRestoreError` - If the container fails to restore
 
 :::note[Copy-on-write]
-In production, restore uses copy-on-write semantics. The backup is mounted as a read-only lower layer, and new writes go to a writable upper layer. The backup can be restored into a different directory than the original. In local development, the directory is replaced on restore.
+In production, the backup is a read-only lower layer and new writes go to a writable upper layer. In local development, the directory is replaced. For overlay constraints, refer to [Directory backups](/sandbox/concepts/backup-restore/).
 :::
 
 :::caution[Ephemeral mount]
-In production, the FUSE mount is lost when the sandbox sleeps or restarts. Re-restore from the backup handle to recover. Stop processes writing to the target directory before restoring.
+In production, the FUSE mount is lost when the sandbox sleeps or restarts. Restore again from the handle. Stop processes that write to the target directory before restoring.
 :::
-
-## Usage patterns
-
-### Exclude gitignored files
-
-Use `useGitignore` to exclude files matching `.gitignore` rules (such as `node_modules/` or `dist/`) from the backup. This reduces backup size for git repositories.
-
-<TypeScriptExample>
-
-```ts
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-// Exclude gitignored files from the backup
-const backup = await sandbox.createBackup({
-	dir: "/workspace",
-	useGitignore: true,
-});
-
-// Without useGitignore (default), all files are included
-const fullBackup = await sandbox.createBackup({
-	dir: "/workspace",
-});
-```
-
-</TypeScriptExample>
-
-If the directory is not inside a git repository, `useGitignore` has no effect and all files are included. If `useGitignore` is `true` but `git` is not installed in the container, a `BackupCreateError` is thrown.
-
-### Checkpoint and restore
-
-Use backups as checkpoints before risky operations.
-
-<TypeScriptExample>
-
-```ts
-// Save checkpoint before risky operation
-const checkpoint = await sandbox.createBackup({ dir: "/workspace" });
-
-try {
-	await sandbox.exec("npm install some-experimental-package");
-	await sandbox.exec("npm run build");
-} catch (error) {
-	// Restore to the checkpoint if something goes wrong
-	await sandbox.restoreBackup(checkpoint);
-}
-```
-
-</TypeScriptExample>
-
-### Error handling
-
-<TypeScriptExample>
-
-```ts
-import { getSandbox } from "@cloudflare/sandbox";
-
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-try {
-	const backup = await sandbox.createBackup({ dir: "/workspace" });
-	console.log(`Backup created: ${backup.id}`);
-} catch (error) {
-	if (error.code === "INVALID_BACKUP_CONFIG") {
-		console.error("Configuration error:", error.message);
-	} else if (error.code === "BACKUP_CREATE_FAILED") {
-		console.error("Backup failed:", error.message);
-	}
-}
-```
-
-</TypeScriptExample>
 
 ## Behavior
 
-- Concurrent backup and restore operations on the same sandbox are automatically serialized.
-- The returned `DirectoryBackup` handle is serializable — store it in KV, D1, or Durable Object storage.
-- Overlapping backups are independent. Restoring a parent directory overwrites subdirectory mounts.
-
-### TTL enforcement
-
-The `ttl` value controls when a backup is considered expired. The SDK enforces this at **restore time only** — when you call `restoreBackup()`, the SDK reads the backup metadata from R2 and checks whether the TTL has elapsed. If it has, the restore is rejected with a `BACKUP_EXPIRED` error.
-
-The TTL does **not** automatically delete objects from R2. Expired backup archives and metadata remain in your R2 bucket until you delete them. To automatically clean up expired objects, configure an [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on your backup bucket. Without a lifecycle rule, expired backups continue to consume R2 storage.
+- Concurrent backup and restore operations on the same sandbox are serialized.
+- `DirectoryBackup` is serializable. Store it in KV, D1, or Durable Object storage.
+- Overlapping backups are independent. Restoring a parent directory overwrites subdirectory mounts. Restore the parent first when restoring both.
+- `ttl` is enforced at restore time only. Expired objects remain in R2 until you delete them or an [R2 lifecycle rule](/r2/buckets/object-lifecycles/) removes them.
+- Backup objects use `backups/{id}/data.sqsh` and `backups/{id}/meta.json`.
 
 ## Types
 
 ### `BackupOptions`
 
 ```ts
+interface BackupCompressionOptions {
+	format?: "gzip" | "lz4" | "zstd";
+	threads?: number;
+}
+
 interface BackupOptions {
 	dir: string;
 	name?: string;
 	ttl?: number;
-	useGitignore?: boolean;
+	gitignore?: boolean;
+	excludes?: string[];
 	localBucket?: boolean;
+	compression?: BackupCompressionOptions;
+	multipart?: boolean;
 }
 ```
 
 **Fields**:
 
-- `dir` (required) - Absolute path to the directory to back up
-- `name` (optional) - Human-readable backup name. Maximum 256 characters, no control characters.
+- `dir` (required) - Absolute path under `/workspace`, `/home`, `/tmp`, `/var/tmp`, or `/app`
+- `name` (optional) - Human-readable name. Maximum 256 characters. No control characters.
 - `ttl` (optional) - Time-to-live in seconds. Default: `259200` (3 days). Must be a positive number.
-- `useGitignore` (optional) - When `true`, excludes files matching `.gitignore` rules if the directory is inside a git repository. Default: `false`. If the directory is not inside a git repository, no git-based exclusions are applied.
-- `localBucket` (optional) - When `true`, uses the `BACKUP_BUCKET` R2 binding directly instead of presigned URLs. Intended for use with `wrangler dev`. Default: `false`.
+- `gitignore` (optional) - When `true`, exclude `.gitignore` matches if `dir` is inside a git repository. Default: `false`.
+- `excludes` (optional) - Glob patterns to omit. Example: `['node_modules/.cache', '*.log']`. Refer to [Exclude generated caches](/sandbox/guides/backup-restore/#exclude-generated-caches).
+- `localBucket` (optional) - Use the `BACKUP_BUCKET` binding instead of presigned URLs. Default: `false`.
+- `compression` (optional) - `format` defaults to `lz4`. `threads` defaults to `8`.
+- `multipart` (optional) - Parallel multipart upload. Default: `true`.
 
 ### `DirectoryBackup`
 
@@ -261,13 +192,15 @@ interface BackupOptions {
 interface DirectoryBackup {
 	readonly id: string;
 	readonly dir: string;
+	readonly localBucket?: boolean;
 }
 ```
 
 **Fields**:
 
 - `id` - Unique backup identifier (UUID)
-- `dir` - Directory that was backed up
+- `dir` - Directory to restore into
+- `localBucket` (optional) - Whether the backup used local R2 binding mode
 
 ### `RestoreBackupResult`
 
@@ -287,6 +220,8 @@ interface RestoreBackupResult {
 
 ## Related resources
 
+- [Backup and restore](/sandbox/guides/backup-restore/) - Setup and restore workflows
+- [Directory backups](/sandbox/concepts/backup-restore/) - Overlay restore and `EXDEV`
 - [Storage API](/sandbox/api/storage/) - Mount S3-compatible buckets
 - [Files API](/sandbox/api/files/) - Read and write files
 - [Wrangler configuration](/sandbox/configuration/wrangler/) - Configure bindings

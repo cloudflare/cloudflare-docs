@@ -1,0 +1,42 @@
+---
+title: Directory backups
+description: Production restore mounts a copy-on-write overlay. Local restore extracts the archive instead.
+pcx_content_type: concept
+sidebar:
+  order: 8
+products:
+  - sandbox
+---
+
+Backup and restore snapshot a sandbox directory into an R2 archive, then bring that tree back later. The public API is the same in production and in `wrangler dev`. The restore mechanism is not.
+
+Use backups when you want a project directory such as `/workspace` to return later. Use [bucket mounts](/sandbox/guides/mount-buckets/) when a separate storage path such as `/data` should persist independently of the sandbox filesystem.
+
+## Production restore
+
+In production, `restoreBackup()` mounts the squashfs archive with FUSE overlayfs:
+
+- The backup is a read-only lower layer.
+- New writes go to a writable upper layer.
+- The original archive in R2 does not change.
+- Restoring the same handle again discards the upper layer.
+
+The overlay exists only while the container is running. When the sandbox sleeps or the container restarts, the mount is gone and the directory is empty. Store the `DirectoryBackup` handle and restore again.
+
+## Local restore
+
+With `localBucket: true`, `wrangler dev` extracts the archive with `unsquashfs`. The target directory is replaced. There is no overlay, so local restore does not reproduce production FUSE behavior.
+
+## Cross-device renames
+
+Overlayfs treats the lower and upper layers as different devices. A rename that moves a directory from the restored lower layer into the writable upper layer can fail with `EXDEV` (`cross-device link not permitted`).
+
+Generated caches that atomically replace a directory trigger this. Vite does this with `node_modules/.vite/deps`. Omit those directories from the backup, or delete them after restore.
+
+For the procedure, refer to [Exclude generated caches](/sandbox/guides/backup-restore/#exclude-generated-caches).
+
+## Related resources
+
+- [Backup and restore](/sandbox/guides/backup-restore/) - Create, restore, and exclude caches
+- [Backups API](/sandbox/api/backups/) - Method signatures and options
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - What happens when a sandbox sleeps

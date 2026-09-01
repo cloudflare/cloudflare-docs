@@ -3,26 +3,28 @@ title: Backup and restore
 pcx_content_type: how-to
 sidebar:
   order: 11
-description: Create point-in-time backups and restore sandbox directories.
+description: Snapshot a sandbox directory to R2 and restore it later.
 products:
   - sandbox
 ---
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Create point-in-time snapshots of sandbox directories and restore them using copy-on-write overlays. Backups are stored in an R2 bucket and use squashfs compression.
+This guide shows you how to snapshot a sandbox directory to R2 and restore it later.
 
-Use backup and restore when you want workspace state, such as `/workspace`, to come back later. This is often a better fit for persistent project directories, while bucket mounts are better suited to separate persisted storage paths. If you mount a bucket over `/workspace`, be aware that it can overlay files seeded by your image in production.
+Use backup and restore when a project directory such as `/workspace` should come back after the sandbox sleeps. For a separate persisted storage path, mount a bucket instead. If you mount a bucket over `/workspace`, the mount overlays files seeded by your image in production.
+
+For why production restore uses an overlay, refer to [Directory backups](/sandbox/concepts/backup-restore/).
 
 ## Prerequisites
 
-1. Create an R2 bucket for storing backups:
+1. Create an R2 bucket:
 
    ```sh
    npx wrangler r2 bucket create my-backup-bucket
    ```
 
-2. Add the `BACKUP_BUCKET` R2 binding and presigned URL credentials to your Wrangler configuration:
+2. Add the `BACKUP_BUCKET` R2 binding and presigned URL settings to your Wrangler configuration:
 
    <WranglerConfig>
 
@@ -67,25 +69,23 @@ Use backup and restore when you want workspace state, such as `/workspace`, to c
 
    </WranglerConfig>
 
-   If your R2 bucket uses a jurisdiction-specific endpoint, you can also add `BACKUP_BUCKET_ENDPOINT` to `vars` to override the default presigned URL endpoint (for example, `https://<ACCOUNT_ID>.eu.r2.cloudflarestorage.com` for an EU-region bucket).
+   If the bucket uses a jurisdiction-specific endpoint, add `BACKUP_BUCKET_ENDPOINT` to `vars`. For an EU bucket, use `https://<ACCOUNT_ID>.eu.r2.cloudflarestorage.com`.
 
-3. Set your R2 API credentials as secrets:
+3. Store R2 API credentials as secrets:
 
    ```sh
    npx wrangler secret put R2_ACCESS_KEY_ID
    npx wrangler secret put R2_SECRET_ACCESS_KEY
    ```
 
-   You can create R2 API tokens in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **R2** > **Overview** > **Manage R2 API Tokens**. The token needs **Object Read & Write** permissions for your backup bucket.
+   Create the token in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **R2** > **Overview** > **Manage R2 API Tokens**. Grant **Object Read & Write** on the backup bucket.
 
 :::note
-The `vars` and API secrets in steps 2 and 3 are only required for production. For local development with `wrangler dev`, only the `BACKUP_BUCKET` R2 binding is required. Refer to [Local development](#local-development) for details.
+The `vars` and API secrets in steps 2 and 3 are required for production. For `wrangler dev`, only the `BACKUP_BUCKET` binding is required. Refer to [Use backup and restore in local development](#use-backup-and-restore-in-local-development).
 :::
 
 ## Create a backup
 
-Use `createBackup()` to snapshot a directory and upload it to R2:
-
 <TypeScriptExample>
 
 ```ts
@@ -93,18 +93,16 @@ import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-// Create a backup of /workspace
 const backup = await sandbox.createBackup({ dir: "/workspace" });
-console.log(`Backup created: ${backup.id}`);
 ```
 
 </TypeScriptExample>
 
-The SDK creates a compressed squashfs archive of the directory and uploads it directly to your R2 bucket using a presigned URL.
+The directory must be an absolute path under `/workspace`, `/home`, `/tmp`, `/var/tmp`, or `/app`.
 
 ## Restore a backup
 
-Use `restoreBackup()` to restore a directory from a backup:
+Stop processes that write to the target directory, then restore:
 
 <TypeScriptExample>
 
@@ -113,67 +111,74 @@ import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-// Create a backup
 const backup = await sandbox.createBackup({ dir: "/workspace" });
-
-// Restore the backup
 const result = await sandbox.restoreBackup(backup);
-console.log(`Restored: ${result.success}`);
 ```
 
 </TypeScriptExample>
 
-:::caution[Ephemeral mount]
-In production, the FUSE mount is lost when the sandbox sleeps or the container restarts. Re-restore from the backup handle to recover. This does not apply to local development.
-:::
+In production, restore mounts a copy-on-write overlay. The mount is lost when the sandbox sleeps or the container restarts. Restore again from the stored handle.
 
-## Exclude gitignored files
+The restore target is `backup.dir`. You can point that field at a different allowed directory than the one you originally backed up.
 
-When backing up a directory inside a git repository, set `useGitignore: true` to exclude files matching `.gitignore` rules. This is useful for skipping large generated directories like `node_modules/`, `dist/`, or `build/` that can be recreated.
+## Exclude generated caches
+
+After a production restore, renaming a directory inside the restored tree can fail with `EXDEV` (`cross-device link not permitted`). The restored backup is a read-only lower layer, so the rename is a cross-device move.
+
+Omit disposable generated directories from the backup, or delete them after restore before the process that rewrites them starts. Vite's cache is one such directory:
 
 <TypeScriptExample>
 
 ```ts
-import { getSandbox } from "@cloudflare/sandbox";
-
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-// Back up only tracked and untracked non-ignored files
 const backup = await sandbox.createBackup({
-	dir: "/workspace",
-	useGitignore: true,
+	dir: "/workspace/app",
+	excludes: ["node_modules/.vite"],
 });
 ```
 
 </TypeScriptExample>
 
-The SDK uses `git ls-files` to resolve which files are ignored. Both root-level and nested `.gitignore` files are respected.
+<TypeScriptExample>
 
-By default, `useGitignore` is `false` and all files in the directory are included in the backup.
+```ts
+await sandbox.restoreBackup(backup);
+await sandbox.exec("rm -rf /workspace/app/node_modules/.vite");
+```
 
-:::note[Requirements]
-`useGitignore` requires `git` to be installed in the container. If `useGitignore` is `true` and `git` is not available, `createBackup()` throws a `BackupCreateError`. If the backup directory is not inside a git repository, the option has no effect and all files are included.
-:::
+</TypeScriptExample>
 
-## Checkpoint and rollback
+`wrangler dev` extracts the archive and does not mount an overlay, so this failure does not appear locally. For overlay restore, refer to [Directory backups](/sandbox/concepts/backup-restore/).
 
-Save state before risky operations and restore if something fails:
+## Exclude gitignored files
+
+To skip `.gitignore` matches such as `node_modules/` or `dist/` in a git repository:
+
+<TypeScriptExample>
+
+```ts
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	gitignore: true,
+});
+```
+
+</TypeScriptExample>
+
+If the directory is not inside a git repository, `gitignore` has no effect. If `git` is not installed in the container, the SDK logs a warning and continues without git-based exclusions.
+
+## Checkpoint and roll back
 
 <TypeScriptExample>
 
 ```ts
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-// Save checkpoint before risky operation
 const checkpoint = await sandbox.createBackup({ dir: "/workspace" });
 
 try {
 	await sandbox.exec("npm install some-experimental-package");
 	await sandbox.exec("npm run build");
 } catch (error) {
-	// Restore to checkpoint if something goes wrong
 	await sandbox.restoreBackup(checkpoint);
-	console.log("Rolled back to checkpoint");
 }
 ```
 
@@ -181,14 +186,11 @@ try {
 
 ## Store backup handles
 
-The `DirectoryBackup` handle is serializable. Persist it to KV, D1, or Durable Object storage for later use:
+`DirectoryBackup` is serializable. Persist it to KV, D1, or Durable Object storage:
 
 <TypeScriptExample>
 
 ```ts
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-// Create a backup and store the handle in KV
 const backup = await sandbox.createBackup({
 	dir: "/workspace",
 	name: "deploy-v2",
@@ -197,51 +199,28 @@ const backup = await sandbox.createBackup({
 
 await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
 
-// Later, retrieve and restore
 const stored = await env.KV.get(`backup:${userId}`);
 if (stored) {
-	const backupHandle = JSON.parse(stored);
-	await sandbox.restoreBackup(backupHandle);
+	await sandbox.restoreBackup(JSON.parse(stored));
 }
 ```
 
 </TypeScriptExample>
 
-## Use named backups
+## Set a name and TTL
 
-Add a `name` option to identify backups. Names can be up to 256 characters:
-
-<TypeScriptExample>
-
-```ts
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-const backup = await sandbox.createBackup({
-	dir: "/workspace",
-	name: "before-migration",
-});
-
-console.log(`Backup ID: ${backup.id}`);
-```
-
-</TypeScriptExample>
-
-## Configure TTL
-
-Set a custom time-to-live for backups. The default TTL is 3 days (259200 seconds). The `ttl` value must be a positive number of seconds:
+Names can be up to 256 characters. The default TTL is 3 days (`259200` seconds). The SDK rejects an expired backup at restore time. It does not delete the R2 objects.
 
 <TypeScriptExample>
 
 ```ts
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-// Short-lived backup for a quick operation
 const shortBackup = await sandbox.createBackup({
 	dir: "/workspace",
 	ttl: 600, // 10 minutes
 });
 
-// Long-lived backup for extended workflows
 const longBackup = await sandbox.createBackup({
 	dir: "/workspace",
 	name: "daily-snapshot",
@@ -251,192 +230,84 @@ const longBackup = await sandbox.createBackup({
 
 </TypeScriptExample>
 
-### How TTL is enforced
+To delete expired objects automatically, add an [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on the `backups/` prefix. If your longest TTL is 7 days, expire objects older than 7 days.
 
-The TTL is enforced at **restore time**, not at creation time. When you call `restoreBackup()`, the SDK reads the backup metadata from R2 and compares the creation timestamp plus TTL against the current time (with a 60-second buffer to prevent race conditions). If the TTL has elapsed, the restore is rejected with a `BACKUP_EXPIRED` error.
+## Clean up backup objects
 
-The TTL does **not** automatically delete backup objects from R2. Expired backups remain in your bucket and continue to consume storage until you explicitly delete them or configure an automatic cleanup rule.
+Archives live at `backups/{backupId}/data.sqsh` and `backups/{backupId}/meta.json`.
 
-### Configure R2 lifecycle rules for automatic cleanup
-
-To automatically remove expired backup objects from R2, set up an [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on your backup bucket. This is the recommended way to prevent expired backups from accumulating indefinitely.
-
-For example, if your longest TTL is 7 days, configure a lifecycle rule to delete objects older than 7 days from the `backups/` prefix. This ensures R2 storage does not grow unbounded while giving you a buffer to restore any non-expired backup.
-
-## Local development
-
-You can use backup and restore during local development with `wrangler dev` by passing the `localBucket: true` option to `createBackup()`. This uses the `BACKUP_BUCKET` R2 binding from your Worker environment directly, so no presigned URL credentials are required.
-
-### Configure R2 binding
-
-Add a `BACKUP_BUCKET` R2 binding to your Wrangler configuration:
-
-<WranglerConfig>
-
-```jsonc
-{
-	"r2_buckets": [
-		{
-			"binding": "BACKUP_BUCKET",
-			"bucket_name": "my-backup-bucket"
-		}
-	]
-}
-```
-
-</WranglerConfig>
-
-### Back up and restore with `localBucket`
-
-Pass `localBucket: true` to `createBackup()` to back up and restore using the R2 binding directly:
+### Replace the latest backup
 
 <TypeScriptExample>
 
 ```ts
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+if (previousBackup) {
+	await env.BACKUP_BUCKET.delete([
+		`backups/${previousBackup.id}/data.sqsh`,
+		`backups/${previousBackup.id}/meta.json`,
+	]);
+}
 
-// Create a local backup
 const backup = await sandbox.createBackup({
 	dir: "/workspace",
-	localBucket: true,
+	name: "latest",
 });
-
-// Restore the backup
-const result = await sandbox.restoreBackup(backup);
-console.log(`Restored: ${result.success}`);
+await env.KV.put("latest-backup", JSON.stringify(backup));
 ```
 
 </TypeScriptExample>
 
-:::note
-You can use an environment variable to toggle `localBucket` between local development and production. Set an environment variable such as `LOCAL_DEV` in your Wrangler configuration using `vars` for local development, then reference it in your code:
+### Delete a backup by ID
+
+<TypeScriptExample>
+
+```ts
+await env.BACKUP_BUCKET.delete([
+	`backups/${backup.id}/data.sqsh`,
+	`backups/${backup.id}/meta.json`,
+]);
+```
+
+</TypeScriptExample>
+
+## Use backup and restore in local development
+
+Pass `localBucket: true` so `wrangler dev` uses the `BACKUP_BUCKET` binding. Presigned URL credentials are not required.
+
+<TypeScriptExample>
 
 ```ts
 const backup = await sandbox.createBackup({
 	dir: "/workspace",
 	localBucket: Boolean(env.LOCAL_DEV),
 });
-```
 
-When `localBucket` is `true`, presigned URL credentials are not required and the SDK uses the R2 binding directly. For more information on setting environment variables, refer to [Environment variables in Wrangler configuration](/workers/configuration/environment-variables/).
-:::
-
-### Local development considerations
-
-- **No presigned URLs** - The SDK reads and writes backup archives directly through the R2 binding, so no S3-compatible credentials are needed.
-- **No FUSE required** - Local restore extracts the archive using `unsquashfs` instead of mounting with FUSE overlayfs. The backup is not applied as a copy-on-write overlay; the directory is replaced on restore.
-- **Same archive format** - Local backups use the same squashfs archive format as production backups.
-
-:::note
-These considerations apply to local development with `wrangler dev` only. In production, backup and restore use presigned URLs and FUSE overlayfs. Local backup and restore behavior can also differ from local bucket mounting behavior, which uses sync-style updates rather than a production FUSE mount.
-:::
-
-## Clean up backup objects in R2
-
-Backup archives are stored in your R2 bucket under the `backups/` prefix with the structure `backups/{backupId}/data.sqsh` and `backups/{backupId}/meta.json`. You can use the `BACKUP_BUCKET` R2 binding to manage these objects directly.
-
-### Replace the latest backup (delete-then-write)
-
-If you only need the most recent backup, delete the previous one before creating a new one:
-
-<TypeScriptExample>
-
-```ts
-import { getSandbox } from "@cloudflare/sandbox";
-
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-// Delete the previous backup's R2 objects before creating a new one
-if (previousBackup) {
-	await env.BACKUP_BUCKET.delete(`backups/${previousBackup.id}/data.sqsh`);
-	await env.BACKUP_BUCKET.delete(`backups/${previousBackup.id}/meta.json`);
-}
-
-// Create a fresh backup
-const backup = await sandbox.createBackup({
-	dir: "/workspace",
-	name: "latest",
-});
-
-// Store the handle so you can delete it next time
-await env.KV.put("latest-backup", JSON.stringify(backup));
+const result = await sandbox.restoreBackup(backup);
 ```
 
 </TypeScriptExample>
 
-### List and delete old backups by prefix
+Local restore extracts the archive with `unsquashfs`. It replaces the directory instead of mounting an overlay.
 
-To clean up multiple old backups, list objects under the `backups/` prefix and delete them by key:
+## Fix path permissions
 
-<TypeScriptExample>
+`createBackup()` must be able to read every file under the target directory. Restrictive modes such as `0600` or directories owned by another user cause `BackupCreateError` with `Permission denied`.
 
-```ts
-// List all backup objects in the bucket
-const listed = await env.BACKUP_BUCKET.list({ prefix: "backups/" });
+Set permissions in the image when you can:
 
-for (const object of listed.objects) {
-	// Parse the backup ID from the key (backups/{id}/data.sqsh or backups/{id}/meta.json)
-	const parts = object.key.split("/");
-	const backupId = parts[1];
-
-	// Delete objects older than 7 days
-	const ageMs = Date.now() - object.uploaded.getTime();
-	const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
-	if (ageMs > sevenDaysMs) {
-		await env.BACKUP_BUCKET.delete(object.key);
-		console.log(`Deleted expired object: ${object.key}`);
-	}
-}
+```dockerfile
+RUN mkdir -p /home/sandbox && chmod -R a+rX /home/sandbox
 ```
 
-</TypeScriptExample>
-
-### Delete a specific backup by ID
-
-If you have the backup ID, delete both its archive and metadata directly:
-
-<TypeScriptExample>
+If a process creates restrictive files at runtime, fix them before the backup:
 
 ```ts
-const backupId = backup.id;
-
-await env.BACKUP_BUCKET.delete(`backups/${backupId}/data.sqsh`);
-await env.BACKUP_BUCKET.delete(`backups/${backupId}/meta.json`);
+await sandbox.exec("chmod -R a+rX /home/sandbox/.claude");
+const backup = await sandbox.createBackup({ dir: "/home/sandbox" });
 ```
-
-</TypeScriptExample>
-
-## Copy-on-write behavior
-
-In production, restore uses FUSE overlayfs to mount the backup as a read-only lower layer. New writes go to a writable upper layer and do not affect the original backup:
-
-<TypeScriptExample>
-
-```ts
-const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-// Create a backup
-const backup = await sandbox.createBackup({ dir: "/workspace" });
-
-// Restore the backup
-await sandbox.restoreBackup(backup);
-
-// New writes go to the upper layer — the backup is unchanged
-await sandbox.writeFile(
-	"/workspace/new-file.txt",
-	"This does not modify the backup",
-);
-
-// Restore the same backup again to discard changes
-await sandbox.restoreBackup(backup);
-```
-
-</TypeScriptExample>
 
 ## Handle errors
 
-Backup and restore operations can throw specific errors. Wrap calls in [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) blocks:
-
 <TypeScriptExample>
 
 ```ts
@@ -444,20 +315,16 @@ import { getSandbox } from "@cloudflare/sandbox";
 
 const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-// Handle backup errors
 try {
 	const backup = await sandbox.createBackup({ dir: "/workspace" });
 } catch (error) {
 	if (error.code === "INVALID_BACKUP_CONFIG") {
-		// Missing BACKUP_BUCKET binding or invalid directory path
 		console.error("Configuration error:", error.message);
 	} else if (error.code === "BACKUP_CREATE_FAILED") {
-		// Archive creation or upload to R2 failed
 		console.error("Backup failed:", error.message);
 	}
 }
 
-// Handle restore errors
 try {
 	await sandbox.restoreBackup(backup);
 } catch (error) {
@@ -473,61 +340,10 @@ try {
 
 </TypeScriptExample>
 
-## Path permissions
-
-The `createBackup()` method uses `mksquashfs` to create a compressed archive of the target directory. This process must be able to read every file and subdirectory within the path you are backing up. If any file or directory has restrictive permissions that prevent the archiver from reading it, the backup fails with a `BackupCreateError` and a "Permission denied" message.
-
-### Common causes
-
-- **Directories owned by other users** — If the target directory contains subdirectories created by a different user or process (for example, `/home/sandbox/.claude`), the archiver may not have read access.
-- **Restrictive file modes** — Files with modes like `0600` or directories with `0700` that belong to a different user than the one running the backup process.
-- **Runtime-generated config directories** — Tools and applications often create configuration directories (such as `.cache`, `.config`, or tool-specific dotfiles) with restrictive permissions.
-
-### Fix permissions at build time
-
-The recommended approach is to set permissions in your Dockerfile so that every container starts with the correct access. This avoids running `chmod` at runtime before every backup:
-
-```dockerfile
-# Ensure the backup target directory is readable
-RUN mkdir -p /home/sandbox && chmod -R a+rX /home/sandbox
-```
-
-The `a+rX` flag grants read access to all files and execute (traverse) access to all directories, without changing write permissions.
-
-### Fix permissions at runtime
-
-If the restrictive permissions come from files created at runtime (for example, a tool that generates config files with `0600` mode), fix them before calling `createBackup()`:
-
-```ts
-await sandbox.exec("chmod -R a+rX /home/sandbox/.claude");
-const backup = await sandbox.createBackup({ dir: "/home/sandbox" });
-```
-
-### Example error
-
-If the backup encounters a permission issue, you will see an error like:
-
-```txt
-BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied
-```
-
-This means `mksquashfs` could not read one or more files inside the directory you passed to `createBackup()`. Check the permissions of all files and subdirectories within that path.
-
-## Best practices
-
-- **Stop writes before restoring** - Stop processes writing to the target directory before calling `restoreBackup()`
-- **Use checkpoints** - Create backups before risky operations like package installations or migrations
-- **Exclude gitignored files** - Set `useGitignore: true` when backing up git repositories to skip generated files like `node_modules/` and reduce backup size
-- **Set appropriate TTLs** - Use short TTLs for temporary checkpoints and longer TTLs for persistent snapshots
-- **Store handles externally** - Persist `DirectoryBackup` handles to KV, D1, or Durable Object storage for cross-request access
-- **Configure R2 lifecycle rules** - Set up [object lifecycle rules](/r2/buckets/object-lifecycles/) to automatically delete expired backups from R2, since TTL is only enforced at restore time
-- **Clean up old backups** - Delete previous backup objects from R2 when you no longer need them, or use the delete-then-write pattern for rolling backups
-- **Handle errors** - Wrap backup and restore calls in `try...catch` blocks
-- **Re-restore after restart** - In production, the FUSE mount is ephemeral, so re-restore from the backup handle after container restarts
-
 ## Related resources
 
-- [Backups API reference](/sandbox/api/backups/) - Full method documentation
-- [Storage API reference](/sandbox/api/storage/) - Mount S3-compatible buckets
-- [R2 documentation](/r2/) - Learn about Cloudflare R2
-- [R2 lifecycle rules](/r2/buckets/object-lifecycles/) - Configure automatic object cleanup
+- [Directory backups](/sandbox/concepts/backup-restore/) - Overlay restore, local extract, and `EXDEV`
+- [Backups API](/sandbox/api/backups/) - Methods, options, and types
+- [Storage API](/sandbox/api/storage/) - Mount S3-compatible buckets
+- [R2 documentation](/r2/) - R2 buckets and credentials
+- [R2 lifecycle rules](/r2/buckets/object-lifecycles/) - Automatic object cleanup
