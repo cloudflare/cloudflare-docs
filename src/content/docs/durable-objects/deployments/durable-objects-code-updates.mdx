@@ -17,9 +17,9 @@ import { WranglerConfig, PackageManagers } from "~/components";
     (`code_update_strategy` with `mode` and `max_delay`). Update this page once the spec and
     schema catch up. */}
 
-By default, Durable Objects delay applying code updates so in-flight requests, WebSocket connections, and storage operations can finish. Instead of resetting an active Durable Object immediately, Cloudflare applies the update once the object hibernates.
+By default, Durable Objects delay applying Worker code deployments so in-flight requests can finish. Instead of resetting an active Durable Object immediately to apply a code update, Cloudflare applies the code update once the object is inactive (is hibernated).
 
-Set a Durable Object's code update strategy to `immediate` to reset it and apply the update right away instead of waiting. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more on when an object hibernates.
+Deploy a Worker with `durable-objects-code-update-strategy` set to `immediate` to apply a code update right away instead of waiting. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more on when an object hibernates.
 
 ## Code update strategy
 
@@ -39,18 +39,18 @@ An explicit `code_update_strategy` — whether in your Wrangler configuration, p
 
 1. You deploy a new version to 100% of traffic.
 2. A client makes a request to a Durable Object that is not running, either an inactive object or a new object. This uses the latest version of your code.
-3. If a Durable Object is active — performing work or holding open connections — with a `deferred` code update strategy, it keeps running its existing version, handling requests, events, storage operations, and Hibernation API WebSocket messages, until it hibernates. Once it hibernates before `max_delay` is reached, Cloudflare applies the new version the next time it "wakes up." Hibernated WebSocket connections stay connected throughout.
+3. If a Durable Object is active with a `deferred` code update strategy, it keeps running its existing version and handling requests until it hibernates. If the object hibernates before `max_delay` is reached, Cloudflare applies the new version on next request. 
 4. If the object is still active when `max_delay` is reached, Cloudflare resets it and applies the update.
 
 ```mermaid
 flowchart TD
     A["You deploy a new version"] --> B{"Is the Durable Object<br/>currently running?"}
-    B -->|Inactive| C["Adopts the new version<br/>on its next request"]
+    B -->|Inactive| C["Starts on new version<br/>on next request"]
     B -->|Active| D{"code_update_strategy<br/>mode?"}
-    D -->|immediate| E["Cloudflare resets it and<br/>applies the update"]
-    D -->|deferred| F["Starts its max_delay timer,<br/>keeps running its current version"]
-    F --> G{"Hibernates before<br/>max_delay ends?"}
-    G -->|Yes| H["Adopts the new version<br/>on next request"]
+    D -->|immediate| E["Cloudflare resets it and<br/>applies the code update"]
+    D -->|deferred| F["Starts a max_delay timer,<br/>keeps running its current version"]
+    F --> G{"Hibernates before<br/>max_delay timer ends?"}
+    G -->|Yes| H["Starts on new version<br/>on next request"]
     G -->|"No, max_delay reached"| E
 ```
 
@@ -173,7 +173,7 @@ A single-deployment override is most useful when waiting is worse than resetting
 
 ## Gradual deployments
 
-During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/), Cloudflare assigns each Durable Object to one of the versions in the deployment. Increasing a version's traffic percentage assigns more objects to that version. Only the newly assigned objects follow the mechanism described in [How it works](/durable-objects/deployments/durable-objects-code-updates/#how-it-works) above — for example, increasing a version's traffic percentage from 20% to 50% starts a `deferred` wait only for the additional 30% of objects newly assigned to it. Objects that already run that version, and objects still assigned to an earlier version, are not affected.
+During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/), Cloudflare assigns each Durable Object to one of the versions in the deployment. Increasing a version's traffic percentage assigns more objects to that version. Only the newly assigned objects follow the mechanism described in [How it works](/durable-objects/deployments/durable-objects-code-updates/#how-it-works) above — for example, increasing a version's traffic percentage from 20% to 50% starts a `max_delay` wait only for the additional 30% of objects newly assigned to it. Objects that already run that version are not affected.
 
 Different objects can be on different `max_delay` clocks at the same time. If a later progression uses a different code update strategy, that strategy applies only to the objects that progression reassigns.
 
@@ -182,7 +182,7 @@ Keep your Worker and Durable Object code forward and backward compatible for as 
 ## Limitations
 
 - A `deferred` code update strategy is best-effort. Cloudflare does not guarantee that an object keeps running its current code for the entire `max_delay`.
-- A `deferred` code update does not stop an object from accepting new requests, events, or storage operations while it waits to hibernate.
+- A `deferred` code update does not stop an object from accepting new requests while it waits to hibernate.
 - An object that is still active when `max_delay` is reached resets the same way an `immediate` update does.
 - A code update strategy does not delay restarts unrelated to code updates, such as Workers runtime updates.
 - A code update strategy does not make incompatible Worker and Durable Object versions safe to run together. Keep your interfaces forward and backward compatible across versions.
