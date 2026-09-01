@@ -311,11 +311,7 @@ Local restore extracts the archive with `unsquashfs`. It replaces the directory 
 
 ## Fix path permissions
 
-`createBackup()` must be able to read every file under the target directory. Restrictive modes such as `0600` or directories owned by another user fail with:
-
-```txt
-BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied
-```
+`createBackup()` must be able to read every file under the target directory. Restrictive modes such as `0600` or directories owned by another user fail with `BackupCreateError`. The message includes `mksquashfs failed` and the archiver output.
 
 Set permissions in the image when you can. `a+rX` grants read on files and traverse on directories. It does not add write access:
 
