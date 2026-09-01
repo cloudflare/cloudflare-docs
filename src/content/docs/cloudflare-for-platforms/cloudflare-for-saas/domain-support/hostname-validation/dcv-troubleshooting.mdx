@@ -38,7 +38,7 @@ Before investigating a specific error, verify the following:
 
 - [ ] **DCV tokens are placed** — your customer has added the TXT record or HTTP token that you provided to their DNS.
 - [ ] **Tokens are not expired** — Let's Encrypt tokens expire after 7 days; Google Trust Services and SSL.com tokens expire after 14 days. If tokens may have expired, [refresh them](#stale-or-expired-dcv-tokens).
-- [ ] **CAA records allow the CA** — CAA records are checked at every level of the DNS tree: the CA checks the custom hostname itself (for example, `shop.customer.com`) **and** the parent domain (`customer.com`). Both levels must permit Cloudflare's [partner certificate authorities](/ssl/reference/certificate-authorities/), or have no CAA records at all.
+- [ ] **CAA records allow the CA** — CAA records are evaluated from the hostname up the DNS tree — the CA first checks the custom hostname itself (for example, `shop.example.com`), and only moves up to the parent domain (`example.com`) if the subdomain has no CAA records. A restrictive record at any level that contains CAA records will block issuance. Refer to [CAA records](#caa-records) for details.
 - [ ] **DNS is reachable** — your customer's authoritative DNS must respond without SERVFAIL from all geographic locations.
 - [ ] **No Workers intercepting DCV paths** — if your SaaS zone uses a [Worker as the fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/), ensure it passes through `/.well-known/pki-validation/*` and `/.well-known/acme-challenge/*` without modification.
 
@@ -65,11 +65,11 @@ The following errors appear in `ssl.validation_errors` on the custom hostname ob
 
 If a custom hostname shows a `caa_error` status, your customer's CAA records are preventing the certificate authority from issuing a certificate for their domain. Your customer needs to resolve this issue.
 
-:::caution[Check CAA records at every level]
-Certificate authorities walk up the DNS tree when checking CAA records. For a custom hostname like `shop.example.com`, the CA checks CAA records at `shop.example.com` **and** at `example.com`. A restrictive CAA record on the parent domain will block issuance even if the subdomain has no CAA records.
+:::caution[CAA lookup walks up the DNS tree]
+Under [RFC 8659](https://www.rfc-editor.org/rfc/rfc8659#section-3), a certificate authority checks CAA records starting at the custom hostname (for example, `shop.example.com`) and stops at the first DNS level that has CAA records. It only falls back to the parent domain (`example.com`) when the subdomain has no CAA records of its own. A restrictive record at whichever level the CA stops at will block issuance.
 :::
 
-Ask your customer to check CAA records at both the subdomain and parent domain level:
+Ask your customer to check CAA records at both the subdomain and parent domain level, since either may be authoritative:
 
 ```sh
 dig CAA shop.example.com
