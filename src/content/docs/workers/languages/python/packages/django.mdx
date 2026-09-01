@@ -47,9 +47,7 @@ To get started with Django in Python Workers, follow these steps:
 ## Choose between ASGI and WSGI
 
 Your Django application needs to be served using either ASGI or WSGI.
-
-If you are not sure which adapter to use, start with ASGI since it fits better with the asynchronous nature of Workers.
-If you are porting an existing Django application, you may need to use WSGI for compatibility.
+While Python workers is optimized for ASGI, you can still use WSGI which is compatible with Django.
 
 ### Serve a WSGI application
 
@@ -193,9 +191,6 @@ from workers import WorkerEntrypoint, wsgi
 # your Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
 
-# If you are using wsgi, you need to set this to allow database operations.
-os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "1")
-
 application = get_wsgi_application()
 
 
@@ -203,20 +198,6 @@ class Default(WorkerEntrypoint):
     async def fetch(self, request):
         return await wsgi.fetch(application, request, self.env)
 ```
-
-:::note[DJANGO_ALLOW_ASYNC_UNSAFE]
-
-When you are accessing any database backend in Django, you must set this environment variable
-to allow database operations to work in Python Workers.
-
-By default, Django does not allow running database operations inside the event loop,
-to prevent multiple event loops from accessing the same database connection simultaneously,
-which can lead to data corruption.
-
-Cloudflare database backends (D1, Durable Objects) are designed to work with event loops,
-so this environment variable is required to enable database operations.
-
-:::
 
 #### Durable Objects backend
 
@@ -266,9 +247,6 @@ from workers import WorkerEntrypoint, DurableObject, wsgi
 
 # your Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
-
-# If you are using wsgi, you need to set this to allow database operations.
-os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "1")
 
 application = get_wsgi_application()
 
