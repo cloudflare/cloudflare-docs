@@ -89,9 +89,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
 application = get_asgi_application()
 
 
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        return await asgi.fetch(application, request, self.env)
+Default = asgi.entrypoint(app)
 ```
 
 `asgi.fetch` takes the application object, the incoming request, and the environment.
