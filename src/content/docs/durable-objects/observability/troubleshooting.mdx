@@ -47,7 +47,7 @@ This error occurs when a code update is applied before a Durable Object reaches 
 
 Reset in error messages refers to in-memory state. Any durable state already persisted with `ctx.storage` is not affected. Make operations retryable and persist important state so a forced update can safely restart the object.
 
-Refer to [Defer code updates until hibernation](/durable-objects/deployments/durable-objects-code-updates/) and [Global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness).
+Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) and [Global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness).
 
 ### Durable Object storage operation exceeded timeout which caused object to be reset.
 
