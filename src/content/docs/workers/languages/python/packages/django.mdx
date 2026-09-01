@@ -57,17 +57,14 @@ Build the application object with `get_wsgi_application()` and pass it to `worke
 import os
 
 from django.core.wsgi import get_wsgi_application
-from workers import WorkerEntrypoint, wsgi
+from workers import wsgi
 
 # your Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
 
-application = get_wsgi_application()
+app = get_wsgi_application()
 
-
-class Default(WorkerEntrypoint):
-    async def fetch(self, request):
-        return await wsgi.fetch(application, request, self.env)
+Default = wsgi.entrypoint(app)
 ```
 
 `wsgi.fetch` takes the application object, the incoming request, and the environment.
@@ -81,13 +78,12 @@ Build the application object with `get_asgi_application()` and pass it to `worke
 import os
 
 from django.core.asgi import get_asgi_application
-from workers import WorkerEntrypoint, asgi
+from workers import asgi
 
 # your Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
 
-application = get_asgi_application()
-
+app = get_asgi_application()
 
 Default = asgi.entrypoint(app)
 ```
