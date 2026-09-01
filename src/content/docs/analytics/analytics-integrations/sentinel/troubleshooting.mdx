@@ -119,7 +119,7 @@ different types.
    - **For datatype mismatches:** Update the field's datatype in both the DCR `streamDeclarations` and the `CloudflareV2_CL` table definition to match the Cloudflare Logpush schema (for example, `real` for floating-point values such as `EdgeResponseCompressionRatio`, or `dynamic` for `BotDetectionIDs`).
    - **For reserved name conflicts:** Rename the field in the DCR `transformKql` transformation and add the renamed column to the `CloudflareV2_CL` table definition. For example, to preserve the NEL `Type` value:
 
-     ```kql
+     ```kusto
      source
      | extend NELType = Type
      | project-away Type
@@ -143,7 +143,7 @@ The Cloudflare workbook shipped with the CCF solution loads but shows no data, o
 
 **Verify:** Reopen the workbook. Panels should populate with recent Cloudflare log data.
 
-## Still not resolved?
+## Still not resolved
 
 If your issue is not covered here:
 

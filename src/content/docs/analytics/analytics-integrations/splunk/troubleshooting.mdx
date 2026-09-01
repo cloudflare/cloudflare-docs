@@ -44,7 +44,7 @@ MAX_TIMESTAMP_LOOKAHEAD = 150
 
 The `Cloudflare – Security (WAF)` dashboard in the Cloudflare App for Splunk loads without errors, but all panels are empty. Other dashboards (Overview, Performance, Reliability) populate normally, and running the WAF panels' underlying SPL directly in the search bar also returns zero results — even when WAF and security events are confirmed present in the target index.
 
-**Cause:** In older versions of the Cloudflare App for Splunk, the WAF dashboard SPL references Cloudflare log fields that were [removed from the HTTP Requests dataset on August 1, 2023](/logs/reference/change-notices/2023-02-01-security-fields-updates/#http-requests-dataset-changes):
+**Cause:** In older versions of the Cloudflare App for Splunk, the WAF dashboard SPL references Cloudflare log fields that were [removed from the HTTP Requests dataset](/logs/reference/change-notices/2023-02-01-security-fields-updates/#http-requests-dataset-changes):
 
 | Deprecated field           | Current field             |
 | :------------------------- | :------------------------ |
@@ -59,7 +59,7 @@ If you maintain a customized fork of the app, replace all references to `Firewal
 
 **Verify:** Reload the `Cloudflare – Security (WAF)` dashboard. Panels should populate with recent WAF and security events. A direct search such as `index=<your-index> sourcetype=cloudflare:json SecurityRuleIDs=*` should also return matching events.
 
-## Still not resolved?
+## Still not resolved
 
 If your issue is not covered here:
 
