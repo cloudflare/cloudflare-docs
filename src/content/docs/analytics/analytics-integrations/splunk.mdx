@@ -103,7 +103,9 @@ Create the Logpush job by following [Enable Logpush to Splunk](/logs/logpush/log
   - DNS logs, including Zero Trust Gateway DNS: `cloudflare:dns`
   - Audit logs: `cloudflare:audit`
   - Access requests: `cloudflare:access`
-  - CASB findings, Zero Trust Gateway HTTP, and Zero Trust Gateway Network: `cloudflare:json`
+  - CASB findings: `cloudflare:casb`
+  - Zero Trust Gateway HTTP: `cloudflare:http`
+  - Zero Trust Gateway Network: `cloudflare:network`
 - Only turn on **Use insecure skip verify option** if your Splunk instance uses a self-signed certificate, as noted in [Task 1](#task-1---install-and-configure-the-cloudflare-app-for-splunk).
 
 Under **Send the following fields**, keep the defaults or refer to the [Dashboard section](#task-3---view-the-dashboards) to select the fields required to fully populate the Cloudflare App for Splunk dashboards.
