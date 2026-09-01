@@ -31,7 +31,7 @@ With `localBucket: true`, `wrangler dev` extracts the archive with `unsquashfs`.
 
 Overlayfs treats the lower and upper layers as different devices. A rename that moves a directory from the restored lower layer into the writable upper layer can fail with `EXDEV` (`cross-device link not permitted`).
 
-Generated caches that atomically replace a directory trigger this. Vite does this with `node_modules/.vite/deps`. Omit those directories from the backup, or delete them after restore.
+Vite does this with `node_modules/.vite/deps`. Omit that directory from the backup, or delete it after restore.
 
 For the procedure, refer to [Exclude generated caches](/sandbox/guides/backup-restore/#exclude-generated-caches).
 

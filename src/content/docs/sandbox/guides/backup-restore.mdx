@@ -123,9 +123,7 @@ The restore target is `backup.dir`. You can point that field at a different allo
 
 ## Exclude generated caches
 
-After a production restore, renaming a directory inside the restored tree can fail with `EXDEV` (`cross-device link not permitted`). The restored backup is a read-only lower layer, so the rename is a cross-device move.
-
-Omit disposable generated directories from the backup, or delete them after restore before the process that rewrites them starts. Vite's cache is one such directory:
+After a production restore, renaming a directory inside the restored tree can fail with `EXDEV` (`cross-device link not permitted`). Omit disposable generated directories from the backup, or delete them after restore. Vite's cache is one such directory:
 
 <TypeScriptExample>
 
@@ -147,7 +145,7 @@ await sandbox.exec("rm -rf /workspace/app/node_modules/.vite");
 
 </TypeScriptExample>
 
-`wrangler dev` extracts the archive and does not mount an overlay, so this failure does not appear locally. For overlay restore, refer to [Directory backups](/sandbox/concepts/backup-restore/).
+This failure does not occur in `wrangler dev`, which extracts the archive. For overlay restore, refer to [Directory backups](/sandbox/concepts/backup-restore/).
 
 ## Exclude gitignored files
 
@@ -164,7 +162,7 @@ const backup = await sandbox.createBackup({
 
 </TypeScriptExample>
 
-If the directory is not inside a git repository, `gitignore` has no effect. If `git` is not installed in the container, the SDK logs a warning and continues without git-based exclusions. Nested `.gitignore` files apply because the SDK uses `git ls-files` from the backup directory.
+If the directory is not inside a git repository, `gitignore` has no effect. If `git` is not installed in the container, the SDK logs a warning and continues without git-based exclusions. Nested `.gitignore` files apply.
 
 ## Checkpoint and roll back
 
@@ -272,7 +270,7 @@ await env.BACKUP_BUCKET.delete([
 
 ### Delete backups by age
 
-If you do not have the backup IDs, list objects under `backups/` and delete by upload time:
+List objects under `backups/` and delete by upload time:
 
 <TypeScriptExample>
 
@@ -307,13 +305,13 @@ const result = await sandbox.restoreBackup(backup);
 
 </TypeScriptExample>
 
-Local restore extracts the archive with `unsquashfs`. It replaces the directory instead of mounting an overlay. Local and production backups use the same squashfs archive format. Restore still follows `localBucket` on the stored handle.
+Local restore extracts the archive with `unsquashfs` and replaces the directory. The stored handle's `localBucket` field selects the restore path.
 
 ## Fix path permissions
 
-`createBackup()` must be able to read every file under the target directory. Restrictive modes such as `0600` or directories owned by another user fail with `BackupCreateError`. The message includes `mksquashfs failed` and the archiver output.
+`createBackup()` must read every file under the target directory. Files with mode `0600` or directories owned by another user cause `BackupCreateError`.
 
-Set permissions in the image when you can. `a+rX` grants read on files and traverse on directories. It does not add write access:
+Set permissions in the image when you can. `a+rX` adds read permission on files and execute permission on directories:
 
 ```dockerfile
 RUN mkdir -p /home/sandbox && chmod -R a+rX /home/sandbox

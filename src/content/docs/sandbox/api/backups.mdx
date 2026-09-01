@@ -81,7 +81,7 @@ Configure a `BACKUP_BUCKET` R2 binding in `wrangler.jsonc` before using backup m
 :::
 
 :::caution[Path permissions]
-`mksquashfs` must read every file and subdirectory in `dir`. Restrictive permissions fail with `BackupCreateError`. The message includes `mksquashfs failed` and the archiver output. Refer to [Fix path permissions](/sandbox/guides/backup-restore/#fix-path-permissions).
+`mksquashfs` must read every file and subdirectory in `dir`. Restrictive permissions fail with `BackupCreateError`. Refer to [Fix path permissions](/sandbox/guides/backup-restore/#fix-path-permissions).
 :::
 
 :::caution[Partial writes]
