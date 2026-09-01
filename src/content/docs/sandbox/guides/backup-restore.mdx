@@ -164,7 +164,7 @@ const backup = await sandbox.createBackup({
 
 </TypeScriptExample>
 
-If the directory is not inside a git repository, `gitignore` has no effect. If `git` is not installed in the container, the SDK logs a warning and continues without git-based exclusions.
+If the directory is not inside a git repository, `gitignore` has no effect. If `git` is not installed in the container, the SDK logs a warning and continues without git-based exclusions. Nested `.gitignore` files apply because the SDK uses `git ls-files` from the backup directory.
 
 ## Checkpoint and roll back
 
@@ -270,6 +270,26 @@ await env.BACKUP_BUCKET.delete([
 
 </TypeScriptExample>
 
+### Delete backups by age
+
+If you do not have the backup IDs, list objects under `backups/` and delete by upload time:
+
+<TypeScriptExample>
+
+```ts
+const listed = await env.BACKUP_BUCKET.list({ prefix: "backups/" });
+const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+
+for (const object of listed.objects) {
+	const ageMs = Date.now() - object.uploaded.getTime();
+	if (ageMs > sevenDaysMs) {
+		await env.BACKUP_BUCKET.delete(object.key);
+	}
+}
+```
+
+</TypeScriptExample>
+
 ## Use backup and restore in local development
 
 Pass `localBucket: true` so `wrangler dev` uses the `BACKUP_BUCKET` binding. Presigned URL credentials are not required.
@@ -287,13 +307,17 @@ const result = await sandbox.restoreBackup(backup);
 
 </TypeScriptExample>
 
-Local restore extracts the archive with `unsquashfs`. It replaces the directory instead of mounting an overlay.
+Local restore extracts the archive with `unsquashfs`. It replaces the directory instead of mounting an overlay. Local and production backups use the same squashfs archive format. Restore still follows `localBucket` on the stored handle.
 
 ## Fix path permissions
 
-`createBackup()` must be able to read every file under the target directory. Restrictive modes such as `0600` or directories owned by another user cause `BackupCreateError` with `Permission denied`.
+`createBackup()` must be able to read every file under the target directory. Restrictive modes such as `0600` or directories owned by another user fail with:
 
-Set permissions in the image when you can:
+```txt
+BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied
+```
+
+Set permissions in the image when you can. `a+rX` grants read on files and traverse on directories. It does not add write access:
 
 ```dockerfile
 RUN mkdir -p /home/sandbox && chmod -R a+rX /home/sandbox

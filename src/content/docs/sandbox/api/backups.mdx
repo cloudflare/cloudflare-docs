@@ -81,7 +81,7 @@ Configure a `BACKUP_BUCKET` R2 binding in `wrangler.jsonc` before using backup m
 :::
 
 :::caution[Path permissions]
-`mksquashfs` must read every file and subdirectory in `dir`. Restrictive permissions fail with `BackupCreateError` and `Permission denied`. Refer to [Fix path permissions](/sandbox/guides/backup-restore/#fix-path-permissions).
+`mksquashfs` must read every file and subdirectory in `dir`. Restrictive permissions fail with `BackupCreateError: mksquashfs failed: Could not create destination file: Permission denied`. Refer to [Fix path permissions](/sandbox/guides/backup-restore/#fix-path-permissions).
 :::
 
 :::caution[Partial writes]
