@@ -17,18 +17,62 @@ Cloudflare has integrations with Microsoft Sentinel to make analyzing your Cloud
 
 **[Sentinel Function Based Connector](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_sentinel?tab=Overview)**: The Cloudflare connector for Microsoft Sentinel uses [Azure Functions](https://azure.microsoft.com/en-us/products/functions) to process security logs from Cloudflare's Logpush service and ingest them directly into the SIEM platform.
 
-This guide provides clear, step-by-step instructions for integrating Cloudflare logs with the new CCF connector for Microsoft Sentinel using Azure Blob Storage. By following these steps, you will be able to securely collect, store, and analyse your Cloudflare logs within Microsoft Sentinel, enhancing your organisation's security monitoring and incident response capabilities.
+:::caution[Legacy connector deprecation]
+Microsoft is deprecating the Azure Monitor HTTP Data Collector API. As a result, Cloudflare will no longer maintain the Azure Functions-based Microsoft Sentinel connector after the API end-of-support date. Cloudflare Enterprise customers using the Function-based connector must migrate to the CCF connector documented in this guide. Refer to the [deprecation changelog entry](/changelog/2026-08-26-sentinel-functions-connector-deprecation/) for the exact end-of-support date and migration details.
+:::
+
+This guide provides clear, step-by-step instructions for integrating Cloudflare logs with the CCF connector for Microsoft Sentinel using Azure Blob Storage. By following these steps, you will be able to securely collect, store, and analyze your Cloudflare logs within Microsoft Sentinel, enhancing your organization's security monitoring and incident response capabilities.
 
 ## Step 1: Prerequisites
 
-- Azure Subscription with permission to create and manage resources (Contributor/Owner role recommended).
-- Microsoft Sentinel Workspace already set up in your Azure environment.
-- Azure Storage Account with a Blob container for storing Cloudflare logs.
-- Cloudflare Account with access to the domain whose logs you wish to export, and permission to configure Logpush jobs.
-- The Azure Storage account needs to be set to public network access.
-- The Azure Storage account needs to be in the same subscription as the Microsoft Sentinel Workspace. 
+Before you begin, make sure the following prerequisites are met.
 
-## Step 2: Set up a logpush job
+### Azure resources
+
+- **Azure subscription** with permission to create and manage resources (`Contributor` or `Owner` role recommended).
+- **Azure Storage account** with [Azure Data Lake Storage Gen2 enabled](https://learn.microsoft.com/en-us/azure/storage/blobs/create-data-lake-storage-account) (hierarchical namespace on). Although the generic Logpush Azure destination supports standard Blob Storage, the CCF connector requires hierarchical namespace. Logpush writes the Cloudflare log files to this account.
+- **Azure Blob container** inside the storage account, dedicated to receiving Cloudflare Logpush files. The CCF connector monitors this container for new files via Event Grid.
+- **Microsoft Sentinel workspace** already deployed on top of a Log Analytics workspace. The connector's Data Collection Rule (DCR) and Data Collection Endpoint (DCE) are tied to this Log Analytics workspace, and all ingested Cloudflare log records land in tables within it.
+- **Cloudflare account** with access to the domain or account whose logs you want to export, and permission to configure Logpush jobs.
+
+### RBAC roles
+
+The CCF connector authenticates to Azure using a service principal that belongs to the Cloudflare CCF connector application, registered as a multi-tenant Microsoft Entra application. The ARM template that deploys the connector assigns the required roles to this service principal automatically.
+
+The deploying user must have **Microsoft Sentinel Contributor**, `Contributor`, or `Owner` on the Microsoft Sentinel workspace to deploy the connector resources. Because the ARM template creates role assignments for the service principal, the user must also have `Owner` or `User Access Administrator` at the storage account scope. `Contributor` and **Microsoft Sentinel Contributor** alone cannot create role assignments.
+
+At deployment time, the Cloudflare CCF connector service principal receives `Storage Blob Data Reader` on the storage account to read log files from the Blob container and `Storage Queue Data Contributor` to read and delete pointer messages from the Storage Queue.
+
+Refer to the Microsoft documentation on [Azure roles for Microsoft Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/roles) and [Azure roles for storage](https://learn.microsoft.com/en-us/azure/storage/blobs/assign-azure-role-data-access) for details.
+
+### Event Grid resource provider
+
+The `Microsoft.EventGrid` resource provider must be registered in the subscription that hosts the storage account. Verify the registration state in the Azure portal under **Subscriptions** > select the subscription > **Settings** > **Resource providers** > search for `Microsoft.EventGrid`.
+
+Alternatively, run the following Azure CLI commands:
+
+```sh
+az provider register --namespace Microsoft.EventGrid --subscription <subscription-id>
+az provider show --namespace Microsoft.EventGrid --subscription <subscription-id> --query "registrationState"
+```
+
+The registration state should report `Registered` before you continue.
+
+### Network access configuration
+
+By default, the storage account must allow public network access so that the connector's managed resources can reach both the Blob container endpoint and the Storage Queue endpoint.
+
+- If you are not restricting access with a Network Security Perimeter (NSP), open the storage account's **Networking** blade and set **Public network access** to **Enabled from all networks**.
+- Restricting access using selected virtual networks or IPv4 CIDR ranges is not supported for this connector, because of Azure Storage firewall limitations around IP ranges and caller region affinity.
+- If network restrictions are required for compliance, use an [Azure Network Security Perimeter (NSP)](https://learn.microsoft.com/en-us/azure/private-link/network-security-perimeter-concepts) instead. Include the Sentinel service tag inbound ranges in the NSP rules and configure the Event Grid system topic subscription to use system-assigned managed identity delivery.
+
+Refer to Microsoft's guidance on [enabling storage network security for Sentinel](https://learn.microsoft.com/en-us/azure/sentinel/enable-storage-network-security) for the full options.
+
+### Storage account and Sentinel co-location
+
+The Azure Blob Storage account and the Microsoft Sentinel workspace must live in the **same Azure subscription and the same resource group**. Deployments where these resources are split across subscriptions or resource groups fail during ARM template validation. Refer to [Troubleshooting](#troubleshooting) for details.
+
+## Step 2: Set up a Logpush job
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Analytics** > **Logs** and select **Logpush**.
@@ -43,72 +87,81 @@ This guide provides clear, step-by-step instructions for integrating Cloudflare 
 
 For complete details, refer to the [Cloudflare Logpush to Azure documentation](/logs/logpush/logpush-job/enable-destinations/azure/).
 
-## Step 3: Configure Azure and deploy the Data Connector in Microsoft Sentinel
+## Step 3: Install the Cloudflare CCF solution
 
-1. Log in to the Azure Portal and go to your **Microsoft Sentinel** workspace.
-2. Select **Content Hub** in the navigation bar and search for **Cloudflare**.
-3. Select the **Cloudflare** solution from the results.
-4. Select **Install** in the right pane.
-5. In your **Sentinel workspace**, go to **Data connectors**.
-6. Search for the **Cloudflare connector** (may appear as **Cloudflare (using Azure Blob Storage)**).
-7. Select the connector to configure it.
+1. Log in to the Azure portal and open your Microsoft Sentinel workspace. If you do not have one yet, follow Microsoft's [onboarding guide](https://learn.microsoft.com/en-us/azure/sentinel/quickstart-onboard) to create a Log Analytics workspace and enable Microsoft Sentinel on it.
+2. In the left navigation pane, under **Content management**, select **Content hub**. If the page appears empty, refresh and wait for the content list to load.
+3. In the search bar, enter `Cloudflare` and press **Enter**.
+4. Select the **Cloudflare CCF** solution and select **Install**.
+5. After you install the solution, select **Manage**.
+6. Select **Cloudflare (Using Blob Container) (via Codeless Connector Framework)** and select **Open connector page**.
 
 ![Azure portal](~/assets/images/analytics/azure-portal.png)
 
-## Step 4: Fill out required fields
+## Step 4: Configure the CCF connector
 
-When configuring the Cloudflare data connector, you will need to provide the following information:
+On the connector page, fill in the following fields:
 
-- Blob container URL
+- **Service Principal ID**: this field is prepopulated with the object ID of the Cloudflare CCF connector service principal in your tenant. If it is empty, ensure that admin consent has been granted for the Cloudflare CCF connector application in your Microsoft Entra tenant, then reload the page. Refer to Microsoft's [admin consent workflow](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-admin-consent-workflow) for details.
+- **Blob Container URL**: in the Azure portal, open the storage account that receives Cloudflare logs. Under **Data storage** > **Containers**, open the target container, go to **Properties**, and copy the URL.
+- **Storage Account Resource Group Name**, **Storage Account Location**, and **Storage Account Subscription ID**: available on the storage account's **Overview** page.
+- **Event Grid System Topic Name**: leave this field blank on the first deployment. The ARM template creates the topic automatically. If you are reconfiguring an existing deployment, open **Event Grid** > **System topics** in the Azure portal, filter by location, and copy the name of the topic whose **Source** matches your storage account.
 
-To obtain the container URL within your Azure storage account, access the Azure Portal and navigate to your storage account. Under **Data Storage**, select **Containers**, then choose the relevant container receiving logs from Cloudflare. The container properties section will display the URL link.
-
-- Resource group name for the storage account
-- Storage account location
-- Subscription ID
-- Event grid topic name (only if reconfiguring; not needed for initial setup)
-
-After entering all information, select **Connect**.
-
-Ensure all fields are correctly filled to enable seamless log ingestion.
+Select **Connect** to start the deployment. When the deployment completes, the Azure portal shows a `Deployment succeeded` notification and the button changes to **Disconnect**.
 
 ![Configuration fields](~/assets/images/analytics/configuration.png)
 
-## Step 5: Complete deployment
+## Step 5: Verify log ingestion
 
-1. Select **Apply changes** or **Connect** to finalise the connector setup.
-2. Monitor the Data connectors page in Sentinel to confirm that the Cloudflare connector status is **Connected**.
-3. Verify that Cloudflare logs are appearing in your Sentinel workspace under **Log Analytics** > **Logs**.
-4. If logs are not appearing, review your Blob Storage permissions, Cloudflare Logpush configuration, and Sentinel connector settings.
+1. In the Azure portal, open the Log Analytics workspace backing your Sentinel instance.
+2. In the left navigation pane, select **Logs**.
+3. Enter the following query in the editor and select **Run**:
+
+   ```kusto
+   CloudflareV2_CL
+   | take 10
+   ```
+
+4. Confirm that Cloudflare log records are returned.
+
+:::note[Note]
+Data usually starts appearing in the workspace within 20 to 30 minutes of the connector reporting a successful deployment. If logs do not appear after that window, review your storage account permissions, Cloudflare Logpush configuration, Event Grid subscription, and Sentinel connector settings.
+:::
 
 ![Data connectors](~/assets/images/analytics/data-connectors.png)
 
-By following these steps, you have successfully integrated Cloudflare logs with Microsoft Sentinel using Azure Blob Storage. This integration enables advanced security analytics and incident response capabilities for your Cloudflare-protected environments. If you encounter issues, review each configuration step, check permissions, and review Microsoft's official documentation.
-
 ![Cloudflare traffic overview](~/assets/images/analytics/traffic-overview.png)
+
+## Troubleshooting
+
+### `CreateDataFlowResources` deployment error
+
+The ARM template deployment fails with an error similar to:
+
+```txt
+InvalidTemplate: Deployment template validation failed:
+'The resource 'Microsoft.Resources/deployments/CreateDataFlowResources' is not defined in the template.'
+```
+
+The CCF connector's ARM template operates within a single resource group scope and cross-references the storage account, Blob container, Event Grid system topic, Storage Queue, Data Collection Rule (DCR), Data Collection Endpoint (DCE), and Microsoft Sentinel workspace as co-located resources. If any of those resources live outside the deployment scope, the template cannot resolve the references and validation fails before anything is created.
+
+To resolve the error:
+
+1. **Verify co-location**: in the Azure portal, open both the storage account and the Microsoft Sentinel workspace (or its underlying Log Analytics workspace) and confirm that **Resource group** and **Subscription** match on the **Overview** blade. If they differ, move the storage account into the resource group that hosts Sentinel, or create a new storage account in that resource group.
+2. **Verify network access**: confirm that public network access is enabled on the storage account, or that a Network Security Perimeter is configured as described in [Prerequisites](#network-access-configuration). Selected network limits using IPv4 CIDR addresses are not supported.
+3. **Retry the deployment**: after you align the resources, re-run the ARM template deployment. The `CreateDataFlowResources` error should not recur.
+
+For the full list of storage-related failure modes and mitigations, refer to Microsoft's [Azure Storage Blob connector troubleshooting guide](https://learn.microsoft.com/en-us/azure/sentinel/azure-storage-blob-connector-troubleshoot).
 
 ## Supported Logs
 
 We support the following fields to be utilized within the Sentinel Connectors (CCF & Function based). You can push all log fields to Azure using our logpush function as described in [Enable Microsoft Azure](/logs/logpush/logpush-job/enable-destinations/azure/) documentation.
 
+The CCF connector normalizes Cloudflare log fields to the [Microsoft Sentinel ASIM schema](https://learn.microsoft.com/en-us/azure/sentinel/normalization) where a canonical equivalent exists (for example, `ClientIP` becomes `SrcIpAddr`, `EdgeResponseStatus` becomes `HttpStatusCode`), and preserves Cloudflare-native names for fields that do not have a schema equivalent. Use the field names in the following tables in your KQL queries against the connector's output table.
+
 <Details header="Parser fields">
 
-ClientDeviceType<br />
-Source<br />
-ClientSSLCipher<br />
-ClientTlsCipher<br />
-ClientSSLProtocol<br />
-ClientTlsProtocol<br />
-FirewallMatchesActions<br />
-Event<br />
-FirewallMatchesRuleIDs<br />
-RuleID<br />
-ClientRequestBytes<br />
-ClientBytes<br />
-ClientSrcPort<br />
-ClientPort<br />
-EdgeResponseBytes<br />
-OriginBytes<br />
+Application<br />
 BotScore<br />
 BotScoreSrc<br />
 CacheCacheStatus<br />
@@ -116,17 +169,31 @@ CacheResponseBytes<br />
 CacheResponseStatus<br />
 CacheTieredFill<br />
 ClientASN<br />
-ClientCountry<br />
-ClientIP<br />
+ClientASNDescription<br />
+ClientDeviceType<br />
 ClientIPClass<br />
-ClientRequestHost<br />
-ClientRequestMethod<br />
+ClientMatchedIpFirewall<br />
+ClientRefererHost<br />
+ClientRefererPath<br />
+ClientRefererQuery<br />
+ClientRefererScheme<br />
 ClientRequestPath<br />
 ClientRequestProtocol<br />
-ClientRequestReferer<br />
+ClientRequestQuery<br />
+ClientRequestScheme<br />
 ClientRequestURI<br />
-ClientRequestUserAgent<br />
+ClientTcpRtt<br />
+ClientTlsClientHelloServerName<br />
+ClientTlsStatus<br />
 ClientXRequestedWith<br />
+ColoCode<br />
+ConnectTimestamp<br />
+Datetime<br />
+DisconnectTimestamp<br />
+DstBytes<br />
+DstIpAddr<br />
+DstPortNumber<br />
+DvcAction<br />
 EdgeColoCode<br />
 EdgeColoID<br />
 EdgeEndTimestamp<br />
@@ -137,21 +204,47 @@ EdgeRateLimitAction<br />
 EdgeRateLimitID<br />
 EdgeRequestHost<br />
 EdgeResponseCompressionRatio<br />
-EdgeResponseContentType<br />
 EdgeResponseStatus<br />
 EdgeServerIP<br />
 EdgeStartTimestamp<br />
+EventResult<br />
+EventSubType<br />
 FirewallMatchesSources<br />
-OriginIP<br />
+HttpContentType<br />
+HttpReferrerOriginal<br />
+HttpRequestHeaderHost<br />
+HttpRequestMethod<br />
+HttpStatusCode<br />
+HttpUserAgentOriginal<br />
+IpFirewall<br />
+MatchIndex<br />
+NetworkProtocol<br />
+NetworkRuleName<br />
+OriginProto<br />
 OriginResponseBytes<br />
 OriginResponseHTTPExpires<br />
 OriginResponseHTTPLastModified<br />
-OriginResponseStatus<br />
 OriginResponseTime<br />
 OriginSSLProtocol<br />
+OriginTcpRtt<br />
+OriginTlsCipher<br />
+OriginTlsFingerprint<br />
+OriginTlsMode<br />
+OriginTlsProtocol<br />
+OriginTlsStatus<br />
+OriginatorRayID<br />
 ParentRayID<br />
+ProxyProtocol<br />
 RayID<br />
 SecurityLevel<br />
+SrcBytes<br />
+SrcGeoCountry<br />
+SrcIpAddr<br />
+SrcPortNumber<br />
+TimeGenerated<br />
+Timestamp<br />
+TlsCipher<br />
+TlsVersion<br />
 WAFAction<br />
 WAFFlags<br />
 WAFMatchedVar<br />
@@ -163,136 +256,60 @@ WorkerStatus<br />
 WorkerSubrequest<br />
 WorkerSubrequestCount<br />
 ZoneID<br />
-Application<br />
-ClientMatchedIpFirewall<br />
-ClientProto<br />
-ClientTcpRtt<br />
-ClientTlsClientHelloServerName<br />
-ClientTlsStatus<br />
-ColoCode<br />
-ConnectTimestamp<br />
-DisconnectTimestamp<br />
-IpFirewall<br />
-OriginPort<br />
-OriginProto<br />
-OriginTcpRtt<br />
-OriginTlsCipher<br />
-OriginTlsFingerprint<br />
-OriginTlsMode<br />
-OriginTlsProtocol<br />
-OriginTlsStatus<br />
-ProxyProtocol<br />
-Status<br />
-Timestamp<br />
-ClientASNDescription<br />
-ClientRefererHost<br />
-ClientRefererPath<br />
-ClientRefererQuery<br />
-ClientRefererScheme<br />
-ClientRequestQuery<br />
-ClientRequestScheme<br />
-Datetime<br />
-Kind<br />
-MatchIndex<br />
-OriginatorRayID<br />
-TimeGenerated<br />
 
 </Details>
 
-<Details header="WorkBook fields">
+<Details header="Workbook fields">
 
-ClientCountry_s<br />
-ClientDeviceType_s<br />
-ClientIP_s<br />
-ClientIPClass_s<br />
-ClientRequestMethod_s<br />
-ClientRequestProtocol_s<br />
-ClientRequestReferer_s<br />
-ClientRequestURI_s<br />
-ClientRequestUserAgent_s<br />
-EdgePathingOp_s<br />
-EdgePathingSrc_s<br />
-EdgePathingStatus_s<br />
-EdgeResponseContentType_s<br />
+ClientDeviceType<br />
+SrcIpAddr<br />
+ClientIPClass<br />
+ClientRequestProtocol<br />
+ClientRequestReferer<br />
+ClientRequestURI<br />
+ClientRequestUserAgent<br />
+EdgePathingOp<br />
+EdgePathingSrc<br />
+EdgePathingStatus<br />
+EdgeResponseContentType<br />
+HttpRequestMethod<br />
+HttpStatusCode<br />
+TimeGenerated<br />
 threat<br />
-TimeGenerated<br />
-EdgePathingSrc_s<br />
-EdgePathingOp_s<br />
-EdgePathingStatus_s<br />
-EdgeResponseStatus_d<br />
-OriginResponseStatus_d<br />
-TimeGenerated<br />
 
 </Details>
 
 <Details header="Analytic rules">
 
 ClientIPClass<br />
-SrcIpAddr<br />
 ClientRequestURI<br />
-HttpUserAgentOriginal<br />
-HttpRequestMethod<br />
-TimeGenerated<br />
-SrcGeoCountry<br />
-ClientRequestURI<br />
+DstBytes<br />
 HttpRequestMethod<br />
 HttpStatusCode<br />
-DstBytes<br />
+HttpUserAgentOriginal<br />
 SrcBytes<br />
+SrcGeoCountry<br />
+SrcIpAddr<br />
+TimeGenerated<br />
+WAFAction<br />
 WAFRuleID<br />
 WAFRuleMessage<br />
-WAFAction<br />
 
 </Details>
 
 <Details header="Hunting queries">
 
-TimeGenerated<br />
-HttpStatusCode<br />
-SrcIpAddr<br />
 ClientRequestURI<br />
 ClientTlsStatus<br />
-HttpUserAgentOriginal<br />
-OriginTlsStatus<br />
-NetworkRuleName<br />
 EdgeRequestHost<br />
-SrcGeoCountry<br />
 EdgeResponseStatus<br />
-ClientCountry<br />
-ClientDeviceType<br />
-status<br />
-OriginResponseStatus<br />
-WorkerSubrequest<br />
-http_method<br />
-dest_ip<br />
-dest_host<br />
-uri_path<br />
-http_user_agent<br />
-status<br />
-src_ip<br />
-OriginResponseStatus<br />
-RayID<br />
-WorkerSubrequest<br />
-http_method<br />
-bytes_out<br />
-bytes_cached_requests<br />
-threat<br />
-ClientRequestProtocol<br />
-http_referrer<br />
-ClientIPClass<br />
-cf_http_status_codes<br />
-http_content_type<br />
-cf_http_status_codes<br />
-cached_requests<br />
-CacheCacheStatus<br />
-ClientASN<br />
-EdgePathingSrc<br />
-EdgePathingOp<br />
-EdgePathingStatus<br />
-ClientRequestUserAgent<br />
-SecurityAction<br />
-SecurityRuleID<br />
-SecurityRuleDescription<br />
+HttpStatusCode<br />
+HttpUserAgentOriginal<br />
+NetworkRuleName<br />
+OriginTlsStatus<br />
+SrcGeoCountry<br />
+SrcIpAddr<br />
+TimeGenerated<br />
 
 </Details>
 
