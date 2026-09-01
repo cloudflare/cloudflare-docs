@@ -87,7 +87,7 @@ different types.
 
 **Fix:** Update the existing table schema directly through the Azure Monitor REST API before redeploying the connector. Run the update from Azure Cloud Shell using an account that holds the `Log Analytics Contributor` role on the workspace.
 
-1. Download the latest `CloudflareV2_CL.json` schema definition from the Cloudflare CCF connector solution package (available in the [Microsoft Sentinel Content Hub](https://learn.microsoft.com/azure/sentinel/sentinel-solutions-catalog)) and upload it to your Cloud Shell session.
+1. Download the latest `CloudflareV2_CL.json` schema definition from the Cloudflare CCF connector solution package (available in the [Microsoft Sentinel Content Hub](https://marketplace.microsoft.com/en-us/product/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview)) and upload it to your Cloud Shell session.
 2. Request an Azure Resource Manager access token:
 
    ```sh
@@ -114,7 +114,7 @@ different types.
 
 **Fix:**
 
-1. Upgrade the Cloudflare CCF solution to the latest version from the [Microsoft Sentinel Content Hub](https://learn.microsoft.com/azure/sentinel/sentinel-solutions-catalog). New releases progressively correct field datatypes shipped by the connector and add support for new Cloudflare Logpush fields.
+1. Upgrade the Cloudflare CCF solution to the latest version from the [Microsoft Sentinel Content Hub](https://marketplace.microsoft.com/en-us/product/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview). New releases progressively correct field datatypes shipped by the connector and add support for new Cloudflare Logpush fields.
 2. If missing fields persist after upgrading — for example, because the DCR has been customized — apply a manual fix:
    - **For datatype mismatches:** Update the field's datatype in both the DCR `streamDeclarations` and the `CloudflareV2_CL` table definition to match the Cloudflare Logpush schema (for example, `real` for floating-point values such as `EdgeResponseCompressionRatio`, or `dynamic` for `BotDetectionIDs`).
    - **For reserved name conflicts:** Rename the field in the DCR `transformKql` transformation and add the renamed column to the `CloudflareV2_CL` table definition. For example, to preserve the NEL `Type` value:
@@ -139,7 +139,7 @@ The Cloudflare workbook shipped with the CCF solution loads but shows no data, o
 
 **Cause:** In earlier releases, the workbook shipped with the Cloudflare CCF solution referenced the legacy `Cloudflare_CL` table and the legacy `CloudflareDataConnector`. The CCF connector ingests into `CloudflareV2_CL` through a parser, so workbook queries against the legacy table return no results even when logs are ingesting correctly.
 
-**Fix:** Upgrade the Cloudflare CCF solution to a version whose workbook references the CCF connector's parser and the `CloudflareV2_CL` table. The latest solution release is available from the [Microsoft Sentinel Content Hub](https://learn.microsoft.com/azure/sentinel/sentinel-solutions-catalog).
+**Fix:** Upgrade the Cloudflare CCF solution to a version whose workbook references the CCF connector's parser and the `CloudflareV2_CL` table. The latest solution release is available from the [Microsoft Sentinel Content Hub](https://marketplace.microsoft.com/en-us/product/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview).
 
 **Verify:** Reopen the workbook. Panels should populate with recent Cloudflare log data.
 
