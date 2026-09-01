@@ -113,7 +113,7 @@
 		"mdast-util-from-markdown": "2.0.3",
 		"mdast-util-mdx": "3.0.0",
 		"medium-zoom": "1.1.0",
-		"mermaid": "11.17.0",
+		"mermaid": "11.16.0",
 		"micromark-extension-mdxjs": "3.0.0",
 		"nanostores": "1.5.2",
 		"node-html-parser": "9.0.1",
