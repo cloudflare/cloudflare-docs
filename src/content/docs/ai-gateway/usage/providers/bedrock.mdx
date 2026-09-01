@@ -243,6 +243,8 @@ AI Gateway maps the bearer token to the `x-api-key` header that Bedrock Mantle e
 
 AI Gateway provides a [Unified API](/ai-gateway/usage/chat-completion/) that lets you use the OpenAI chat completions format with Bedrock models. This is currently supported for **Anthropic Claude** and **Amazon Nova** model families. You can use the OpenAI SDK to access these models running on Bedrock without changing your request format.
 
+When you authenticate to Amazon Bedrock with an API key, the Unified API sends requests to `us-east-1`. When you use stored AWS credentials, it uses the configured `region` value instead.
+
 ### Endpoint
 
 ```txt
