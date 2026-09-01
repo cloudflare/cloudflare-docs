@@ -1,0 +1,183 @@
+{
+	"model_id": "black-forest-labs/flux-1-kontext-pro",
+	"provider_id": "black-forest-labs",
+	"name": "FLUX.1 Kontext [pro]",
+	"description": "FLUX.1 Kontext [pro] creates and edits images from text prompts with strong character and style consistency.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Character Consistency"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Text to Image",
+			"description": "Create an image from a detailed text prompt.",
+			"input": {
+				"prompt": "A small furry elephant pet looks out from a cat house"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-pro/text-to-image.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-pro/text-to-image.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-1-kontext-pro',\n  { prompt: 'A small furry elephant pet looks out from a cat house' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-1-kontext-pro\",\n  \"input\": {\n    \"prompt\": \"A small furry elephant pet looks out from a cat house\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Wide Cinematic Image",
+			"description": "Generate a cinematic landscape using a wide aspect ratio.",
+			"input": {
+				"prompt": "A remote gas station swallowed by crimson fog, green glow from overhead lights staining the asphalt, cinematic wide shot",
+				"input_image": "https://cdn.sanity.io/images/gsvmb6gz/production/3ae6ee032b85373b84934574f3ac3bb2fb792d64-2048x1365.jpg",
+				"aspect_ratio": "16:9",
+				"output_format": "jpeg"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-pro/wide-cinematic-image.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-pro/wide-cinematic-image.jpeg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-1-kontext-pro',\n  {\n    prompt:\n      'A remote gas station swallowed by crimson fog, green glow from overhead lights staining the asphalt, cinematic wide shot',\n    input_image:\n      'https://cdn.sanity.io/images/gsvmb6gz/production/3ae6ee032b85373b84934574f3ac3bb2fb792d64-2048x1365.jpg',\n    aspect_ratio: '16:9',\n    output_format: 'jpeg',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-1-kontext-pro\",\n  \"input\": {\n    \"prompt\": \"A remote gas station swallowed by crimson fog, green glow from overhead lights staining the asphalt, cinematic wide shot\",\n    \"input_image\": \"https://cdn.sanity.io/images/gsvmb6gz/production/3ae6ee032b85373b84934574f3ac3bb2fb792d64-2048x1365.jpg\",\n    \"aspect_ratio\": \"16:9\",\n    \"output_format\": \"jpeg\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bfl.ml/api-reference/models/edit-or-create-an-image-with-flux1-kontext-[pro]",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/black-forest-labs/flux-1-kontext-pro.png",
+	"metadata": {
+		"Max Reference Images": "1",
+		"Output Formats": "JPEG, PNG",
+		"Pricing": "$0.04 per image"
+	},
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-08-19 20:42:08",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt for image generation or editing.",
+					"type": "string"
+				},
+				"input_image": {
+					"description": "Optional base64 encoded image or URL to edit.",
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"aspect_ratio": {
+					"description": "Output aspect ratio, from 3:7 to 7:3. Defaults to 1:1.",
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"seed": {
+					"description": "Optional seed for reproducible generation.",
+					"anyOf": [
+						{
+							"type": "integer",
+							"minimum": -9007199254740991,
+							"maximum": 9007199254740991
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"prompt_upsampling": {
+					"description": "Whether to upsample the prompt. Defaults to false.",
+					"type": "boolean"
+				},
+				"safety_tolerance": {
+					"description": "Moderation tolerance. 0 is strictest and 6 is most permissive.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 6
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"description": "URL to the generated image",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

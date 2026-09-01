@@ -513,7 +513,7 @@ entries:
     data_type: Boolean
     categories: [Request]
     keywords: [request, api shield, client, visitor]
-    summary: Indicates whether the request [violated the schema](/api-shield/security/schema-validation/) assigned to the respective saved endpoint.
+    summary: This field is deprecated. Use [`cf.schema_validation.uploaded.violated`](/ruleset-engine/rules-language/fields/reference/cf.schema_validation.uploaded.violated/) instead.
 
   - name: cf.schema_validation.learned.violated
     data_type: Boolean
