@@ -29,7 +29,7 @@ Cloudflare Support can help you troubleshoot Cloudflare-side log delivery, inclu
 
    The output should return `"state": "Registered"`.
 
-2. In an **InPrivate/Incognito** browser session, sign in as a user holding one of the following Microsoft Entra roles: **Privileged Role Administrator**, **Cloud Application Administrator**, **AI Administrator**, or **Application Administrator**.
+2. In an **InPrivate/Incognito** browser session, sign in as a user holding one of these Microsoft Entra roles: **Privileged Role Administrator**, **Cloud Application Administrator**, **AI Administrator**, or **Application Administrator**.
 3. Open the direct tenant-wide admin consent URL for the Microsoft-managed application (App ID `4f05ce56-95b6-4612-9d98-a45c8cc33f9f`), replacing `{tenant-id}` with your Entra tenant ID:
 
    ```txt
@@ -64,7 +64,7 @@ A less common variant of this error occurs when the `Microsoft.EventGrid` resour
    az provider register --namespace Microsoft.EventGrid
    ```
 
-3. After deployment, confirm that the Microsoft-managed service principal holds the following role assignments on the Storage account:
+3. After deployment, confirm that the Microsoft-managed service principal holds these role assignments on the Storage account:
    - `Storage Blob Data Reader`
    - `Storage Queue Data Contributor`
 
@@ -145,7 +145,7 @@ The Cloudflare workbook shipped with the CCF solution loads but shows no data, o
 
 ## Still not resolved?
 
-If your issue is not covered above:
+If your issue is not covered here:
 
 - Consult the [Cloudflare CCF solution page](https://azuremarketplace.microsoft.com/marketplace/apps/cloudflare.azure-sentinel-solution-cloudflare-ccf) on the Azure Marketplace for the latest solution version and deployment prerequisites.
 - Review the [Cloudflare Logs change notices](/logs/reference/change-notices/) for recent schema changes that may affect your DCR or table definitions.
