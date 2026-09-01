@@ -39,7 +39,7 @@ DHCP options can only be configured when the appliance is acting as the DHCP ser
 You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
 :::
 
-DHCP options are also configured via the API and Terraform, using the `dhcp_options` field on the LAN's `dhcp_server` configuration. Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to configure DHCP options:
+You can also configure DHCP options via the API and Terraform using the `dhcp_options` field on the LAN's `dhcp_server` configuration. Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to configure DHCP options:
 
 <APIRequest
   path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
@@ -69,7 +69,7 @@ Each option is defined by three fields:
 
 | Field           | Description                                                         | Example                |
 | --------------- | -------------------------------------------------------------------- | ---------------------- |
-| `option_number` | The DHCP option code (1–254).                                         | `67`                   |
+| `code`          | The DHCP option code (1–254).                                         | `67`                   |
 | `type`          | The value encoding: `text`, `hex`, `ip`, `byte`, `short`, `integer`.  | `text`                 |
 | `value`         | The option value, encoded per `type`.                                 | `boot/x64/pxelinux.0`  |
 
