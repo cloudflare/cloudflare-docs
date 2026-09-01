@@ -1,0 +1,20 @@
+---
+title: Define custom applications for breakout and prioritized traffic from the dashboard
+description: Create, edit, and delete custom applications — matched by hostname, IP subnet, or source subnet — directly from the dashboard on Cloudflare One Appliance.
+date: 2026-09-01
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+You can now define [custom applications](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/breakout-traffic/#create-edit-or-delete-a-custom-application) for [breakout](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/breakout-traffic/) and [prioritized](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) traffic directly from the dashboard, without calling the API.
+
+![Adding a custom application by hostname, IP subnet, and source subnet from the Traffic Steering tab of an appliance profile](~/assets/images/changelog/cloudflare-wan/2026-09-01-appliance-custom-application-traffic-steering.gif)
+
+- In **Traffic Steering** > **Breakout traffic** or **Prioritized traffic**, select **Assign application traffic** > **Add** to create a custom application matched by **Hostnames**, **IP subnets**, and/or the new **Source subnets** field, alongside Cloudflare-managed applications.
+- Edit or delete an existing custom application from the same panel, no API round-trip required.
+- **Source subnets** lets you match traffic by its source IP range, complementing the existing [source LAN interface breakout criteria](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/breakout-traffic/#breakout-by-source).
+
+This complements the existing API and Terraform workflow for managing applications.
+
+For details, refer to [Breakout traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/breakout-traffic/) and [Prioritized traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/).

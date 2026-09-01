@@ -39,9 +39,31 @@ For details on how Cloudflare routes traffic, refer to [Traffic steering](/cloud
 
 ## Add an application to your account
 
-Before you can add or remove Breakout traffic applications to your Cloudflare One Appliance, you need to create an account-level list with the applications that you want to configure. Currently, adding to or modifying this list is only possible via API, through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+Before you can add or remove Breakout traffic applications to your Cloudflare One Appliance, you need an account-level list with the applications that you want to configure. This list contains two kinds of applications:
 
-To add applications to your account:
+- **Cloudflare-managed applications** — Cloudflare's built-in catalog of recognized applications. These already exist in your account and do not need to be created; select them directly when assigning application traffic.
+- **Custom applications** — applications you define by **hostname**, **IP subnet**, and/or **source subnet**. Custom applications can be created, edited, and deleted directly from the dashboard, or through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+
+### Create, edit, or delete a custom application
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Connectors** page.
+
+<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Profiles**.
+3. Select the Cloudflare One Appliance you want to configure > **Edit**.
+4. Select **Traffic Steering**.
+5. In **Breakout traffic**, select **Assign application traffic**.
+6. In **Custom applications**, select **Add** to create a new custom application, and enter:
+   - **Name** — a display name for the application.
+   - **Category** — an optional group label, such as `Productivity` or `Video conferencing`.
+   - At least one of **Hostnames**, **IP subnets**, or **Source subnets** — the traffic that identifies this application. Hostnames must be valid FQDNs (for example `auth.example.com`). IP subnets and source subnets must be valid IPv4 CIDRs (for example `10.0.0.0/24`); a single address needs a `/32` suffix. IPv6 is not yet supported.
+7. Select **Add application**.
+8. To change or remove an existing custom application, select the **three dots** next to it in the **Custom applications** table, then **Edit** or **Delete**.
+
+</TabItem> <TabItem label="API">
 
 Send a `POST` request to add new apps to your account.
 
@@ -70,6 +92,8 @@ Send a `POST` request to add new apps to your account.
 
 You can now add this new app to the Breakout traffic list in your Cloudflare One Appliance.
 
+</TabItem> </Tabs>
+
 ### Add an application to Cloudflare One Appliance
 
 You need to configure Breakout traffic applications for each of your existing sites, as this is a per-site configuration.
@@ -85,7 +109,7 @@ You need to configure Breakout traffic applications for each of your existing si
 3. Select the Cloudflare One Appliance you want to configure > **Edit**.
 4. Select **Traffic Steering**.
 5. In **Breakout traffic**, select **Assign application traffic**.
-6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
+6. Select one or more applications that should bypass Cloudflare filtering, from either **Custom applications** or **Cloudflare-managed applications**. You can also use the search box, or select **Add** to define a new custom application without leaving this panel — refer to [Create, edit, or delete a custom application](#create-edit-or-delete-a-custom-application).
 
 7. (Optional) You can also pin an application to a WAN port. In **Preferred breakout port**, select the WAN you want to assign your applications to. Refer to [Designate WAN ports for breakout apps](#designate-wan-ports-for-breakout-apps) for more information.
 
@@ -301,14 +325,12 @@ Refer to [Cloudflare One Client with firewall](/cloudflare-one/team-and-resource
 
 In addition to matching by destination application, you can define breakout rules that match by **source** — by source LAN interface, source VLAN, or source IP address / CIDR block. This is useful for breaking out an entire guest VLAN or a specific subnet to the local Internet without enumerating destination applications.
 
-Source-based breakout is configured via the API and Terraform.
-
 ### Match criteria
 
-| Criterion              | Behavior                                                                                                            |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Source LAN interface   | All traffic originating on the selected LAN is broken out. Any VLAN attached to that LAN is included automatically. |
-| Source CIDR / IP range | All traffic with a source IP in the specified range is broken out. Accepts a single IP, a range, or a CIDR block.   |
+| Criterion              | Behavior                                                                                                            | Configuration                                                                                                                        |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------| --------------------------------------------------------------------------------------------------------------------------------------|
+| Source LAN interface   | All traffic originating on the selected LAN is broken out. Any VLAN attached to that LAN is included automatically. | API and Terraform.                                                                                                                    |
+| Source CIDR / IP range | All traffic with a source IP in the specified range is broken out. Accepts a single IP, a range, or a CIDR block.   | Dashboard (**Source subnets** field on a [custom application](#create-edit-or-delete-a-custom-application)), API, and Terraform.     |
 
 The same criteria can be used to mark traffic as **prioritized** instead of broken out. Refer to [Prioritized traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) for details.
 
