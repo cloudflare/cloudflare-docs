@@ -185,7 +185,7 @@ Configure native Anthropic clients with this base URL:
 https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/aws-bedrock/bedrock-mantle/<AWS_REGION>/anthropic
 ```
 
-The client appends `/v1/messages` to the base URL. Choose an AWS Region that [supports the `bedrock-mantle` endpoint](https://docs.aws.amazon.com/bedrock/latest/userguide/endpoints.html), and use a model ID with the `anthropic.` prefix, such as `anthropic.claude-sonnet-5`.
+The client appends `/v1/messages` to the base URL. Choose an AWS Region that [supports the `bedrock-mantle` endpoint](https://docs.aws.amazon.com/bedrock/latest/userguide/endpoints.html), and use a model ID with the `anthropic.` prefix, such as `anthropic.claude-opus-5`.
 
 If you use stored AWS credentials, the associated AWS Identity and Access Management (IAM) policy must allow the `bedrock-mantle:CreateInference` action. AI Gateway signs each request for the `bedrock-mantle` service.
 
@@ -202,7 +202,7 @@ curl "https://gateway.ai.cloudflare.com/v1/$ACCOUNT_ID/$GATEWAY_ID/aws-bedrock/b
   --header "anthropic-version: 2023-06-01" \
   --header "Content-Type: application/json" \
   --data '{
-    "model": "anthropic.claude-sonnet-5",
+    "model": "anthropic.claude-opus-5",
     "max_tokens": 256,
     "messages": [
       {
@@ -223,7 +223,7 @@ curl "https://gateway.ai.cloudflare.com/v1/$ACCOUNT_ID/$GATEWAY_ID/aws-bedrock/b
   --header "anthropic-version: 2023-06-01" \
   --header "Content-Type: application/json" \
   --data '{
-    "model": "anthropic.claude-sonnet-5",
+    "model": "anthropic.claude-opus-5",
     "max_tokens": 256,
     "messages": [
       {
