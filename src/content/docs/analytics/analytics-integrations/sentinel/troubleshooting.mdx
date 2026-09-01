@@ -1,0 +1,153 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+description: Resolve common issues when integrating Cloudflare with Microsoft Sentinel.
+sidebar:
+  order: 10
+products:
+  - analytics
+  - logs
+---
+
+Use this guide to resolve common issues when integrating Cloudflare logs with [Microsoft Sentinel](/analytics/analytics-integrations/sentinel/) through the Codeless Connector Framework (CCF).
+
+:::note[Support scope]
+Cloudflare Support can help you troubleshoot Cloudflare-side log delivery, including [Logpush](/logs/logpush/) job configuration. Configuring or troubleshooting your Microsoft Azure environment — including subscriptions, resource groups, role assignments, Log Analytics workspaces, or Data Collection Rules — is outside the scope of Cloudflare Support. Contact your Microsoft representative or your integration partner for assistance with those components.
+:::
+
+## Connector deployment fails with `InternalServerError (HTTP 500)`
+
+**Cause:** The Microsoft-managed service principal required by the Cloudflare CCF connector has not been provisioned in your Microsoft Entra ID tenant. This typically happens when the **Grant tenant-wide admin consent** button on the connector configuration page cannot complete the OAuth redirect — for example, due to browser extensions, a cached session, a conflicting signed-in account, a Conditional Access policy, or an unmet Multi-Factor Authentication (MFA) challenge.
+
+**Fix:**
+
+1. Confirm that the `Microsoft.SecurityInsights` resource provider is registered on your subscription:
+
+   ```sh
+   az provider show --namespace Microsoft.SecurityInsights --query "{state:registrationState}"
+   ```
+
+   The output should return `"state": "Registered"`.
+
+2. In an **InPrivate/Incognito** browser session, sign in as a user holding one of these Microsoft Entra roles: **Privileged Role Administrator**, **Cloud Application Administrator**, **AI Administrator**, or **Application Administrator**.
+3. Open the direct tenant-wide admin consent URL for the Microsoft-managed application (App ID `4f05ce56-95b6-4612-9d98-a45c8cc33f9f`), replacing `{tenant-id}` with your Entra tenant ID:
+
+   ```txt
+   https://login.microsoftonline.com/{tenant-id}/adminconsent?client_id=4f05ce56-95b6-4612-9d98-a45c8cc33f9f
+   ```
+
+4. Complete the consent flow, including any MFA challenge.
+
+**Verify:** Refresh the Cloudflare connector configuration page in Microsoft Sentinel. The **Service Principal ID** field should populate automatically, and the **Grant tenant-wide admin consent** button should no longer be displayed. Retry the connector deployment.
+
+## Deployment fails with `InvalidTemplate` on `CreateDataFlowResources`
+
+You see a deployment failure with an error similar to:
+
+```txt
+Deployment template validation failed: 'The resource
+'Microsoft.Resources/deployments/CreateDataFlowResources'
+is not defined in the template.'
+```
+
+**Cause:** The ARM template requires the Azure Blob Storage account and the Microsoft Sentinel workspace (and its underlying Log Analytics workspace) to reside in the **same Azure subscription and the same resource group**. When they are in different subscriptions or different resource groups, the nested `CreateDataFlowResources` sub-deployment cannot resolve the required resource references and validation fails.
+
+A less common variant of this error occurs when the `Microsoft.EventGrid` resource provider is not registered in the target subscription.
+
+**Fix:**
+
+1. Confirm that both resources are co-located in the same Azure subscription and the same resource group. If they are not, redeploy or migrate them so they share both.
+2. Register the required resource providers on the target subscription:
+
+   ```sh
+   az provider register --namespace Microsoft.SecurityInsights
+   az provider register --namespace Microsoft.EventGrid
+   ```
+
+3. After deployment, confirm that the Microsoft-managed service principal holds these role assignments on the Storage account:
+   - `Storage Blob Data Reader`
+   - `Storage Queue Data Contributor`
+
+4. Confirm that the Storage account's networking configuration allows the connector to access the Azure Storage Queue.
+
+**Verify:** Redeploy the connector. The Deployments blade should show status **Succeeded**, and the connector should transition to **Connected**.
+
+## Connector update fails with `Invalid output table schema`
+
+You see a deployment failure with an error similar to:
+
+```txt
+Failed to create required resources for data connector.
+Invalid output table schema: The following columns which exist
+in the current schema do not exist in the new schema or have
+different types.
+```
+
+**Cause:** An earlier version of the Cloudflare CCF connector created a `CloudflareV2_CL` table in your Log Analytics workspace. When you deploy a newer connector version, the ARM template attempts to update this table schema. Azure Monitor rejects the update if the new schema omits columns that exist in the current table, or changes an existing column to an incompatible datatype.
+
+**Fix:** Update the existing table schema directly through the Azure Monitor REST API before redeploying the connector. Run the update from Azure Cloud Shell using an account that holds the `Log Analytics Contributor` role on the workspace.
+
+1. Download the latest `CloudflareV2_CL.json` schema definition from the Cloudflare CCF connector solution package (available in the [Microsoft Sentinel Content Hub](https://marketplace.microsoft.com/en-us/product/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview)) and upload it to your Cloud Shell session.
+2. Request an Azure Resource Manager access token:
+
+   ```sh
+   az account get-access-token --resource https://management.azure.com/
+   ```
+
+3. Apply the updated table schema, replacing the placeholders with your values:
+
+   ```sh
+   az rest --method PUT \
+     --url "https://management.azure.com/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.OperationalInsights/workspaces/<workspace-name>/tables/CloudflareV2_CL?api-version=2025-07-01" \
+     --headers "Authorization=Bearer <access-token>" "Content-Type=application/json" \
+     --body @CloudflareV2_CL.json
+   ```
+
+**Verify:** The command returns the updated table definition as JSON. Redeploy the Cloudflare CCF connector — the deployment should complete without a schema validation error.
+
+## Fields are missing or `null` in `CloudflareV2_CL`
+
+**Cause:** The Data Collection Rule (DCR) schema is out of sync with the Cloudflare Logpush schema being delivered. Two variants are common:
+
+- **Datatype mismatch:** A field is declared with the wrong Sentinel datatype in the DCR `streamDeclarations` — for example, a numeric field declared as `string`, or a variable-shape field such as `BotDetectionIDs` declared as anything other than `dynamic`. The record is ingested, but the mismatched column is populated with `null`.
+- **Reserved column name conflict:** A Cloudflare field name collides with a [Microsoft Sentinel reserved column name](https://learn.microsoft.com/azure/azure-monitor/logs/create-custom-table?tabs=azure-portal-1%2Cazure-portal-2%2Cazure-portal-3#add-or-delete-a-custom-column). For example, the Cloudflare Network Error Logging (NEL) dataset contains a `Type` field, but `Type` is reserved in Sentinel. Fields with reserved names cannot be stored under their original name.
+
+**Fix:**
+
+1. Upgrade the Cloudflare CCF solution to the latest version from the [Microsoft Sentinel Content Hub](https://marketplace.microsoft.com/en-us/product/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview). New releases progressively correct field datatypes shipped by the connector and add support for new Cloudflare Logpush fields.
+2. If missing fields persist after upgrading — for example, because the DCR has been customized — apply a manual fix:
+   - **For datatype mismatches:** Update the field's datatype in both the DCR `streamDeclarations` and the `CloudflareV2_CL` table definition to match the Cloudflare Logpush schema (for example, `real` for floating-point values such as `EdgeResponseCompressionRatio`, or `dynamic` for `BotDetectionIDs`).
+   - **For reserved name conflicts:** Rename the field in the DCR `transformKql` transformation and add the renamed column to the `CloudflareV2_CL` table definition. For example, to preserve the NEL `Type` value:
+
+     ```kusto
+     source
+     | extend NELType = Type
+     | project-away Type
+     ```
+
+     Add a `NELType` column to `CloudflareV2_CL` with datatype `string`.
+
+**Verify:** Send a fresh Logpush batch and query `CloudflareV2_CL` for the affected fields. Values should now be populated and no longer `null`.
+
+:::note[Known unsupported fields]
+The `JSDetectionPassed` and `VerifiedBotCategory` fields are not currently ingested by the Cloudflare CCF connector, regardless of DCR or table configuration. Support for these fields requires changes to the connector implementation. This page will be updated when support is available.
+:::
+
+## The Cloudflare CCF solution workbook does not populate
+
+The Cloudflare workbook shipped with the CCF solution loads but shows no data, or its queries fail with an error indicating that the referenced table or connector does not exist.
+
+**Cause:** In earlier releases, the workbook shipped with the Cloudflare CCF solution referenced the legacy `Cloudflare_CL` table and the legacy `CloudflareDataConnector`. The CCF connector ingests into `CloudflareV2_CL` through a parser, so workbook queries against the legacy table return no results even when logs are ingesting correctly.
+
+**Fix:** Upgrade the Cloudflare CCF solution to a version whose workbook references the CCF connector's parser and the `CloudflareV2_CL` table. The latest solution release is available from the [Microsoft Sentinel Content Hub](https://marketplace.microsoft.com/en-us/product/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview).
+
+**Verify:** Reopen the workbook. Panels should populate with recent Cloudflare log data.
+
+## Still not resolved
+
+If your issue is not covered here:
+
+- Consult the [Cloudflare CCF solution page](https://azuremarketplace.microsoft.com/marketplace/apps/cloudflare.azure-sentinel-solution-cloudflare-ccf) on the Azure Marketplace for the latest solution version and deployment prerequisites.
+- Review the [Cloudflare Logs change notices](/logs/reference/change-notices/) for recent schema changes that may affect your DCR or table definitions.
+- [Contact Cloudflare Support](/support/contacting-cloudflare-support/) for issues involving Cloudflare-side log delivery.
+- Contact your Microsoft representative or your integration partner for issues within your Azure environment.
