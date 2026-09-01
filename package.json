@@ -5,14 +5,14 @@
 	"scripts": {
 		"preinstall": "npx --yes only-allow pnpm",
 		"astro": "astro",
-		"prebuild": "tsx bin/fetch-skills.ts",
+		"prebuild": "pnpm run fetch:assets",
 		"build": "astro build",
 		"build:incremental": "INCREMENTAL_BUILD=true astro build",
 		"typegen:worker": "wrangler types ./worker/worker-configuration.d.ts",
 		"check": "pnpm run check:astro && pnpm run check:worker",
 		"check:astro": "astro check --minimumFailingSeverity=hint",
 		"check:worker": "tsc --noEmit -p ./worker/tsconfig.json",
-		"predev": "tsx bin/fetch-skills.ts --soft",
+		"predev": "tsx bin/fetch-skills.ts --soft && tsx bin/fetch-openapi.ts --soft",
 		"dev": "astro dev",
 		"format": "pnpm run format:core:fix && pnpm run format:data:fix && pnpm run format:content:fix",
 		"format:check": "pnpm run format:core:check && pnpm run format:data:check && pnpm run format:content:check",
@@ -38,7 +38,9 @@
 		"flue:reset:local": "rm -rf .flue/.wrangler/state .flue/.wrangler/tmp .flue/dist/cloudflare_docs_flue/.wrangler/state && echo 'Cleared local flue dev state (Durable Objects + R2). Stop the dev server before running this.'",
 		"flue:evals": "tsx .flue/bin/run-evals.ts",
 		"lint": "eslint",
-		"prepare": "husky"
+		"prepare": "husky",
+		"prebuild:incremental": "pnpm run fetch:assets",
+		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
 	},
 	"devDependencies": {
 		"@actions/core": "3.0.1",

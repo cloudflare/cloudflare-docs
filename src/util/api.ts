@@ -1,36 +1,43 @@
 /**
  * OpenAPI schema loader for the APIRequest component.
  *
- * Fetches the Cloudflare API OpenAPI document from middlecache and dereferences
- * all `$ref`s. The file is cached to `.tmp/middlecache/` (gitignored) via
- * `downloadToDotTempIfNotPresent`, so the fetch only happens once per clean
- * checkout. Dereferenced result is memoized at module scope so the deref runs
- * once per build, not per component instance.
+ * The schema is fetched by `bin/fetch-openapi.ts` from the `prebuild` and
+ * `prebuild:incremental` hooks (see package.json). `getSchema` reads the local
+ * copy and fails loudly if it is missing, so a build invoked without the
+ * pre-step is caught early instead of silently downloading mid-render. The
+ * dereferenced result is memoized so the deref runs once per build, not per
+ * component instance.
  */
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPI } from "openapi-types";
-import { downloadToDotTempIfNotPresent } from "./custom-loaders";
 import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { join } from "node:path";
+import { getOpenApiJsonPath } from "./openapi-schema";
 
-const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
-const API_SCHEMAS_PATH = "v1/cloudflare-api-schemas/openapi.json";
+let schemaPromise: Promise<OpenAPI.Document> | undefined;
 
-let schema: OpenAPI.Document | undefined;
+const loadSchema = async (): Promise<OpenAPI.Document> => {
+	const openapiFile = getOpenApiJsonPath();
 
-export const getSchema = async () => {
-	if (!schema) {
-		await downloadToDotTempIfNotPresent(
-			`${MIDDLECACHE_BASE_URL}${API_SCHEMAS_PATH}`,
-			`middlecache/${API_SCHEMAS_PATH}`,
+	let raw: string;
+	try {
+		raw = await readFile(openapiFile, "utf8");
+	} catch (cause) {
+		throw new Error(
+			`OpenAPI schema not found at ${openapiFile}. Run \`pnpm run build\` (or \`pnpm run build:incremental\`) so the prebuild hook fetches it first.`,
+			{ cause },
 		);
-		const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
-		const filePath = join(dotTmpPath, "middlecache", API_SCHEMAS_PATH);
-		const raw = await readFile(filePath, "utf8");
-
-		schema = await SwaggerParser.dereference(JSON.parse(raw));
 	}
 
-	return schema;
+	return await SwaggerParser.dereference(JSON.parse(raw));
+};
+
+/**
+ * Load (and cache) the Cloudflare API OpenAPI document. Prerender renders
+ * pages in parallel, so this is single-flighted to avoid duplicate derefs.
+ */
+export const getSchema = (): Promise<OpenAPI.Document> => {
+	if (!schemaPromise) {
+		schemaPromise = loadSchema();
+	}
+	return schemaPromise;
 };
