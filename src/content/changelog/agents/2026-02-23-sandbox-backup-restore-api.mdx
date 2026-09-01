@@ -35,14 +35,14 @@ await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
 await sandbox.restoreBackup(backup);
 ```
 
-Backups are stored in [R2](/r2/). The SDK rejects expired backups at restore time. To delete objects from the bucket, use [R2 object lifecycle rules](/sandbox/guides/backup-restore/#set-a-name-and-ttl).
+Backups are stored in [R2](/r2) and can take advantage of [R2 object lifecycle rules](/sandbox/guides/backup-restore/#configure-r2-lifecycle-rules-for-automatic-cleanup) to ensure they do not persist forever.
 
 Key capabilities:
 
 - **Persist and reuse across sandbox sessions** — Easily store backup handles in KV, D1, or Durable Object storage for use in subsequent sessions
 - **Usable across multiple instances** — Fork a backup across many sandboxes for parallel work
 - **Named backups** — Provide optional human-readable labels for easier management
-- **TTLs** — Set time-to-live durations. Expired backups cannot be restored. They remain in R2 until you delete them or a lifecycle rule removes them.
+- **TTLs** — Set time-to-live durations so backups are automatically removed from storage once they are no longer needed
 
 :::note
 Backup and restore currently uses a FUSE overlay. Soon, native snapshotting at a lower level will be added to Containers and Sandboxes, improving speed and ergonomics. The current backup functionality provides a significant speed improvement over manually recreating a file system, but it will be further optimized in the future. The new snapshotting system will use a similar API, so changing to this system will be simple once it is available.
