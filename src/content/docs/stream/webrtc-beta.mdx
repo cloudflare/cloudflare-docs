@@ -67,7 +67,7 @@ Retrieve the WHIP endpoint URL:
 
 - The `webRTC.url` property in the API response when the input is created.
 
-For a complete, no-dependency example of going live from a browser, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
+For a complete, no-dependency example of going live from a browser, see the [First WebRTC broadcast in the browser](/stream/examples/browser-based-webrtc/) tutorial.
 
 You can also use this URL with any client that supports the [WebRTC-HTTP Ingestion Protocol (WHIP)](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
@@ -126,7 +126,7 @@ Copy the URL from either:
 
 While the creator is actively streaming, viewers can watch the broadcast in their browsers with less than 500 milliseconds of latency. There are no fixed limits on the number of concurrent viewers.
 
-For a complete, no-dependency example of playing WebRTC in a browser, see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial.
+For a complete, no-dependency example of playing WebRTC in a browser, see the [First WebRTC broadcast in the browser](/stream/examples/browser-based-webrtc/) tutorial.
 
 This URL can also be used with any client that supports the [WebRTC-HTTP Egress Protocol (WHEP)](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). See [supported WHEP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
@@ -138,7 +138,7 @@ This URL can also be used with any client that supports the [WebRTC-HTTP Egress 
 
 ## Supported WHIP and WHEP clients
 
-You can write your own broadcast and publishing apps using the browser's native WebRTC APIs — see the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial. Beyond native code, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
+You can write your own broadcast and publishing apps using the browser's native WebRTC APIs — see the [First WebRTC broadcast in the browser](/stream/examples/browser-based-webrtc/) tutorial. Beyond native code, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
 
 ### WHIP for Broadcasting
 
@@ -162,7 +162,7 @@ Development libraries:
 
 ## Using WebRTC in native apps
 
-If you are building a native app, the browser example from the [First WebRTC broadcast in the browser](/stream/examples/webrtc-whip-whep/) tutorial can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
+If you are building a native app, the browser example from the [First WebRTC broadcast in the browser](/stream/examples/browser-based-webrtc/) tutorial can run within a [WkWebView (iOS)](https://developer.apple.com/documentation/webkit/wkwebview), [WebView (Android)](https://developer.android.com/reference/android/webkit/WebView) or using [react-native-webrtc](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/BasicUsage.md). If you need to use WebRTC without a webview, you can use Google's Java and Objective-C native [implementations of WebRTC APIs](https://webrtc.googlesource.com/src/+/refs/heads/main/sdk).
 
 ## Supported broadcast codecs
 
