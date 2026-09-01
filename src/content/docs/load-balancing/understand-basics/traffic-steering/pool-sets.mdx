@@ -76,6 +76,22 @@ Entries within a single field are combined with OR. A request from Germany match
 Fields are combined with AND, not OR. A `topology` that sets both `"countries": ["US"]` and `"regions": ["WNAM"]` matches only requests that are in the United States **and** in the WNAM region. To match either location, use two separate pool sets.
 :::
 
+For example, this topology sets multiple values in all three fields:
+
+```json
+{
+	"match": {
+		"topology": {
+			"pops": ["SJC", "IAD"],
+			"countries": ["US", "CA"],
+			"regions": ["WNAM", "ENAM"]
+		}
+	}
+}
+```
+
+A request matches when its data center is `SJC` or `IAD`, its country is `US` or `CA`, **and** its region hierarchy includes `WNAM` or `ENAM`.
+
 Set one field per `topology` unless you specifically want that AND behavior.
 
 A `regions` entry matches if it appears anywhere in the request's region hierarchy, so a broader region code can match a request from a narrower one.
@@ -84,7 +100,7 @@ Country matching uses the location resolved for the request. When the client loc
 
 ## Overrides
 
-The `overrides` object holds the routing behavior applied on a match. All fields are optional.
+The `overrides` object holds the routing behavior applied on a match. Its fields are optional, but a pool set without `fixed_response` must set `overrides.pools`.
 
 | Field                 | Description                                                                                     |
 | --------------------- | ----------------------------------------------------------------------------------------------- |
@@ -121,12 +137,11 @@ For proxied zone load balancers, a pool set can return a `fixed_response` instea
 {
 	"pool_sets": [
 		{
-			"name": "unavailable-region",
+			"name": "redirect-region",
 			"match": { "topology": { "countries": ["US"] } },
 			"fixed_response": {
-				"status_code": 403,
-				"content_type": "text/plain",
-				"message_body": "This service is not available in your region."
+				"status_code": 302,
+				"location": "https://example.com/service-unavailable"
 			}
 		}
 	]
