@@ -1,0 +1,7 @@
+releaseNotes: This hotfix resolves an issue where a small but noticeable
+  percentage of DNS queries fail across platforms.
+version: 2026.7.1376.0
+releaseDate: 2026-08-28T15:42:20.198Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.7.1376.0
+packageSize: 152847432
+platformName: macOS

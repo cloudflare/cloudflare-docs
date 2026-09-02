@@ -7,7 +7,7 @@
         },
         {
             "property_id": "context_window",
-            "value": "1048576"
+            "value": "1310720"
         },
         {
             "property_id": "function_calling",

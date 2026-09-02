@@ -1,0 +1,307 @@
+---
+import SplashLayout from "~/layouts/SplashLayout.astro";
+import BackgroundLines from "~/components/BackgroundLines.astro";
+import PageHeader from "~/components/PageHeader.astro";
+import PageShell from "~/components/PageShell.astro";
+import ContributorCard from "~/components/contributors/ContributorCard.astro";
+import contributorsSnapshot from "~/data/github-contributors.json";
+
+export const prerender = true;
+
+const contributors = Array.isArray(contributorsSnapshot?.contributors)
+	? contributorsSnapshot.contributors
+	: [];
+
+const visibleContributors = contributors.filter((c) => {
+	const name = typeof c?.name === "string" ? c.name : "";
+	// Bot logins typically end with "[bot]".
+	return name && !name.endsWith("[bot]");
+});
+
+function isRenderableContributor(value: unknown): value is {
+	name: string;
+	profile_url: string;
+	contributions_url: string;
+	contributions: number;
+	avatar_urls?: Record<string, string>;
+} {
+	if (!value || typeof value !== "object") return false;
+	const v = value as Record<string, unknown>;
+	return (
+		typeof v.name === "string" &&
+		typeof v.profile_url === "string" &&
+		typeof v.contributions_url === "string" &&
+		typeof v.contributions === "number" &&
+		Number.isFinite(v.contributions)
+	);
+}
+
+const renderableContributors = visibleContributors.filter(
+	isRenderableContributor,
+);
+const totalVisibleContributors = renderableContributors.length;
+
+const totalContributorsAll =
+	typeof contributorsSnapshot?.totalContributorsAll === "number"
+		? contributorsSnapshot.totalContributorsAll
+		: 0;
+
+const tooltipContent =
+	"GitHub only links the first 500 unique author email addresses in a repository to accounts; the rest appear anonymous. This page only shows GitHub accounts (no anonymous entries) and hides bots.";
+
+const initialContributorCount = 60;
+const initialContributors = renderableContributors.slice(
+	0,
+	initialContributorCount,
+);
+
+function resolveAvatarUrl(c: unknown): string {
+	const urls = (c as { avatar_urls?: Record<string, string> })?.avatar_urls;
+	return urls?.["160"] ?? urls?.["240"] ?? urls?.["80"] ?? "";
+}
+---
+
+<SplashLayout
+	title="Contributors"
+	description="People who have contributed to Cloudflare Developer Docs."
+>
+	<div class="relative">
+		<BackgroundLines inner={1120} outer={1360} />
+		<PageShell>
+			<PageHeader title="Contributors">
+				<Fragment slot="tagline">
+					Cloudflare Developer Docs are{" "}
+					<a
+						class="underline underline-offset-4"
+						href="https://github.com/cloudflare/cloudflare-docs"
+						target="_blank"
+						rel="noopener"
+					>
+						open source
+					</a>
+					. Thank you to everyone who contributes!
+				</Fragment>
+			</PageHeader>
+
+			<section class="mt-12 pt-10" aria-label="Contributors">
+				<div class="space-y-6">
+					<p class="text-muted-foreground max-w-[80ch] leading-relaxed">
+						This list is generated from{" "}
+						<a
+							class="underline underline-offset-4"
+							href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors"
+							target="_blank"
+							rel="noopener"
+						>
+							GitHub contributor data
+						</a>
+						.
+					</p>
+
+					<div id="contributors-status" class="text-muted-foreground text-sm">
+						<span>
+							Showing {totalVisibleContributors} of {totalContributorsAll} total contributors
+						</span>
+						<button
+							type="button"
+							class="border-border text-muted-foreground hover:text-foreground ml-1.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border align-super text-[10px] leading-none transition-colors"
+							data-tooltip
+							data-content={tooltipContent}
+							aria-label="Why not all contributors are shown"
+						>
+							<span aria-hidden="true" class="font-semibold"> i </span>
+						</button>
+					</div>
+
+					<div
+						id="contributors-grid"
+						class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+						aria-live="polite"
+						data-initial-count={initialContributors.length}
+					>
+						<template id="contributor-card-template">
+							<ContributorCard
+								name=""
+								profileUrl=""
+								contributionsUrl=""
+								contributions={0}
+								avatarUrl=""
+							/>
+						</template>
+						{
+							initialContributors.map((c) => (
+								<ContributorCard
+									name={c.name}
+									profileUrl={c.profile_url}
+									contributionsUrl={c.contributions_url}
+									contributions={c.contributions}
+									avatarUrl={resolveAvatarUrl(c)}
+								/>
+							))
+						}
+					</div>
+
+					<div id="contributors-sentinel" aria-hidden="true" class="h-px"></div>
+				</div>
+			</section>
+
+			<script
+				is:inline
+				type="module"
+				define:vars={{
+					contributors: renderableContributors,
+					initialCount: initialContributorCount,
+				}}
+			>
+				(() => {
+					const GRID = document.getElementById("contributors-grid");
+					const SENTINEL = document.getElementById("contributors-sentinel");
+					const TEMPLATE = document.getElementById("contributor-card-template");
+
+					if (!(GRID && SENTINEL)) {
+						// If the page structure changes, silently skip the enhancement.
+						return;
+					}
+					if (GRID.dataset.infiniteScrollReady === "true") return;
+					GRID.dataset.infiniteScrollReady = "true";
+					if (!(TEMPLATE instanceof HTMLTemplateElement)) {
+						return;
+					}
+
+					const total = Array.isArray(contributors) ? contributors.length : 0;
+					const batchSize = 60;
+					const startingCount =
+						typeof initialCount === "number"
+							? initialCount
+							: Number(GRID.dataset.initialCount || "0");
+					let idx = startingCount;
+
+					function buildCell(c) {
+						const node = TEMPLATE.content.firstElementChild?.cloneNode(true);
+						if (!(node instanceof HTMLElement)) return null;
+
+						const profileLink = node.querySelector(
+							"[data-contributor-profile-link]",
+						);
+						if (profileLink instanceof HTMLAnchorElement) {
+							profileLink.href = c.profile_url;
+							profileLink.title = `Open profile for ${c.name}`;
+						}
+
+						const contributionsLink = node.querySelector(
+							"[data-contributor-contributions-link]",
+						);
+						if (contributionsLink instanceof HTMLAnchorElement) {
+							contributionsLink.href = c.contributions_url;
+							contributionsLink.title = `View issues and PRs by ${c.name}`;
+						}
+
+						const avatar = node.querySelector("[data-contributor-avatar]");
+						if (avatar instanceof HTMLImageElement) {
+							avatar.src =
+								c.avatar_urls?.["160"] ||
+								c.avatar_urls?.["240"] ||
+								c.avatar_urls?.["80"] ||
+								"";
+						}
+
+						const name = node.querySelector("[data-contributor-name]");
+						if (name instanceof HTMLElement) name.textContent = c.name;
+
+						const count = node.querySelector("[data-contributor-count]");
+						if (count instanceof HTMLElement) {
+							const label =
+								c.contributions === 1 ? "contribution" : "contributions";
+							count.textContent = `${c.contributions} ${label}`;
+						}
+
+						return node;
+					}
+
+					function appendBatch() {
+						if (idx >= total) return;
+
+						const next = Math.min(idx + batchSize, total);
+						const frag = document.createDocumentFragment();
+						for (; idx < next; idx += 1) {
+							const c = contributors[idx];
+							if (!c?.name || !c?.profile_url || !c?.contributions_url)
+								continue;
+							const cell = buildCell(c);
+							if (cell) frag.append(cell);
+						}
+						GRID.append(frag);
+					}
+
+					function fillViewport() {
+						// If the sentinel is already in view (common on large screens),
+						// append until it moves below the fold.
+						let safety = 10;
+						while (idx < total && safety > 0) {
+							safety -= 1;
+							const rect = SENTINEL.getBoundingClientRect();
+							if (rect.top > window.innerHeight + 600) break;
+							appendBatch();
+						}
+					}
+
+					let io;
+					let onScroll;
+					function cleanup() {
+						if (io) io.disconnect();
+						if (onScroll) window.removeEventListener("scroll", onScroll);
+					}
+					document.addEventListener("astro:before-swap", cleanup, {
+						once: true,
+					});
+					document.addEventListener("astro:before-preparation", cleanup, {
+						once: true,
+					});
+
+					if ("IntersectionObserver" in window) {
+						io = new IntersectionObserver(
+							(entries) => {
+								if (!entries.some((e) => e.isIntersecting)) return;
+								appendBatch();
+								fillViewport();
+								if (idx >= total) cleanup();
+							},
+							{ rootMargin: "800px" },
+						);
+						io.observe(SENTINEL);
+					} else {
+						let ticking = false;
+						onScroll = () => {
+							if (ticking) return;
+							ticking = true;
+							requestAnimationFrame(() => {
+								ticking = false;
+								fillViewport();
+							});
+						};
+						window.addEventListener("scroll", onScroll, { passive: true });
+					}
+
+					fillViewport();
+				})();
+			</script>
+			<script>
+				import { addTooltip } from "~/util/tippy";
+
+				function initTooltips() {
+					const tooltips = document.querySelectorAll<HTMLElement>(
+						"[data-tooltip][data-content]",
+					);
+
+					for (const tooltip of tooltips) {
+						if ((tooltip as unknown as { _tippy?: unknown })._tippy) continue;
+						addTooltip(tooltip, tooltip.dataset.content as string);
+					}
+				}
+
+				initTooltips();
+				document.addEventListener("astro:page-load", initTooltips);
+			</script>
+		</PageShell>
+	</div>
+</SplashLayout>

@@ -1,0 +1,182 @@
+{
+	"model_id": "black-forest-labs/flux-1-kontext-max",
+	"provider_id": "black-forest-labs",
+	"name": "FLUX.1 Kontext [max]",
+	"description": "FLUX.1 Kontext [max] is Black Forest Labs' highest-quality Kontext model for text-to-image generation and context-aware image editing.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Maximum Quality"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Maximum Quality Generation",
+			"description": "Create a high-quality image from a text prompt.",
+			"input": {
+				"prompt": "A lone warrior in bloodstained samurai armor stands before a pagoda engulfed in flames, cinematic dark fantasy realism"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-max/maximum-quality-generation.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-max/maximum-quality-generation.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-1-kontext-max',\n  {\n    prompt:\n      'A lone warrior in bloodstained samurai armor stands before a pagoda engulfed in flames, cinematic dark fantasy realism',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-1-kontext-max\",\n  \"input\": {\n    \"prompt\": \"A lone warrior in bloodstained samurai armor stands before a pagoda engulfed in flames, cinematic dark fantasy realism\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Reproducible Generation",
+			"description": "Use a seed and PNG output for reproducible image generation.",
+			"input": {
+				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with an intricate lace collar",
+				"seed": 42,
+				"output_format": "png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-max/reproducible-generation.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-max/reproducible-generation.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-1-kontext-max',\n  {\n    prompt:\n      'A detailed oil painting portrait of a Renaissance nobleman with an intricate lace collar',\n    seed: 42,\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-1-kontext-max\",\n  \"input\": {\n    \"prompt\": \"A detailed oil painting portrait of a Renaissance nobleman with an intricate lace collar\",\n    \"seed\": 42,\n    \"output_format\": \"png\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bfl.ml/api-reference/models/edit-or-create-an-image-with-flux1-kontext-[max]",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/black-forest-labs/flux-1-kontext-max.png",
+	"metadata": {
+		"Max Reference Images": "1",
+		"Output Formats": "JPEG, PNG",
+		"Pricing": "$0.08 per image"
+	},
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-08-19 20:45:47",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt for image generation or editing.",
+					"type": "string"
+				},
+				"input_image": {
+					"description": "Optional base64 encoded image or URL to edit.",
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"aspect_ratio": {
+					"description": "Output aspect ratio, from 3:7 to 7:3. Defaults to 1:1.",
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"seed": {
+					"description": "Optional seed for reproducible generation.",
+					"anyOf": [
+						{
+							"type": "integer",
+							"minimum": -9007199254740991,
+							"maximum": 9007199254740991
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"prompt_upsampling": {
+					"description": "Whether to upsample the prompt. Defaults to false.",
+					"type": "boolean"
+				},
+				"safety_tolerance": {
+					"description": "Moderation tolerance. 0 is strictest and 6 is most permissive.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 6
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"description": "URL to the generated image",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}
