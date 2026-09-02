@@ -17,6 +17,8 @@ When browser automation fails or behaves unexpectedly, it can be difficult to un
 
 ## Enable session recording
 
+Session recording must be enabled during the initial session acquisition. You cannot enable recording when reconnecting to an existing session.
+
 Pass `recording: true` to `puppeteer.launch()` or `playwright.launch()`:
 
 <Tabs>
@@ -131,20 +133,25 @@ A successful response looks similar to the following:
 
 ```json
 {
-	"sessionId": "e26d4660-5b78-4761-b82f-c6b5bad5a925",
-	"duration": 4380,
-	"events": {
-		"target-1": [],
-		"target-2": []
+	"success": true,
+	"result": {
+		"sessionId": "e26d4660-5b78-4761-b82f-c6b5bad5a925",
+		"duration": 4380,
+		"events": {
+			"target-1": [],
+			"target-2": []
+		}
 	}
 }
 ```
 
-The keys in `events` (such as `target-1`, `target-2`) are [CDP targets](https://chromedevtools.github.io/devtools-protocol/tot/Target/). In the context of session recording, each target typically corresponds to a browser tab. A session that opened multiple tabs will have one target per tab, and each target's value is an independent rrweb event array for that tab.
+After a recorded session closes, the recording may still be finalizing. The endpoint can briefly return `404` during this period. Callers can retry the request until finalization completes.
+
+The event arrays are available under `result.events`. The keys in `result.events` (such as `target-1`, `target-2`) are [CDP targets](https://chromedevtools.github.io/devtools-protocol/tot/Target/). In the context of session recording, each target typically corresponds to a browser tab. A session that opened multiple tabs will have one target per tab, and each target's value is an independent rrweb event array for that tab.
 
 ## Replay a recording
 
-Each value in `events` is a standard rrweb event array and can be passed directly to [`rrweb-player`](https://github.com/rrweb-io/rrweb/tree/master/packages/rrweb-player) to self-host a replay UI with a timeline scrubber and playback controls.
+Each value in `result.events` is a standard rrweb event array and can be passed directly to [`rrweb-player`](https://github.com/rrweb-io/rrweb/tree/master/packages/rrweb-player) to self-host a replay UI with a timeline scrubber and playback controls.
 
 Tabs replay independently — to replay a multi-tab session, render one player per target, or build a UI that lets the user switch between targets (similar to the tab selector in the dashboard recording viewer).
 

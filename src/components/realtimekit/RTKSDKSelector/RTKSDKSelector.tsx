@@ -46,10 +46,6 @@ export default function SDKSelector({ disabledPlatforms }: SDKSelectorProps) {
 			id: "mobile-ios",
 		},
 		{
-			label: "Flutter",
-			id: "mobile-flutter",
-		},
-		{
 			label: "React Native",
 			id: "mobile-react-native",
 		},
@@ -65,7 +61,6 @@ export default function SDKSelector({ disabledPlatforms }: SDKSelectorProps) {
 		angular: "web-angular",
 		android: "mobile-android",
 		ios: "mobile-ios",
-		flutter: "mobile-flutter",
 		"react-native": "mobile-react-native",
 	};
 
