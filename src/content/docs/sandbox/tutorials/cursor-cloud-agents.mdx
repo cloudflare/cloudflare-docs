@@ -30,11 +30,9 @@ You need:
 
 Create a team pool in Cursor before you deploy the template. Record the team pool name for `CURSOR_POOL`.
 
-To register an Any repo pool with the Cursor Agent CLI, run the controller before you submit any agent requests:
+To register an Any repo pool with the Cursor Agent CLI, set `CURSOR_API_KEY` in your shell. Then, run the controller before you submit any agent requests:
 
 ```sh
-read -s CURSOR_API_KEY
-echo
 CURSOR_API_KEY="$CURSOR_API_KEY" agent worker controller \
   --pool cloudflare-pool \
   --spawn /usr/bin/true
