@@ -3,7 +3,7 @@ link: "/web-analytics/changelog/"
 productName: beacon.min.js
 productLink: "/web-analytics/"
 entries:
-  - publish_date: "2026-09-01"
+  - publish_date: "2026-09-02"
     description: |-
       1. Bug fix to prevent rounding of Cumulative Layout Shift (CLS)
       2. Polyfills introduced for `Array.prototype.findLast` and `.at` to improve browser compatibility
