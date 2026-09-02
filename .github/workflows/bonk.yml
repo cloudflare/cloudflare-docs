@@ -75,8 +75,6 @@ jobs:
           # Auto-approve tool calls in CI only, so Bonk doesn't get stuck on
           # approval prompts. This is intentionally not in opencode.jsonc so
           # local/interactive sessions keep their normal permission prompts.
-          # small_model is used for title generation; the default (haiku) 404s
-          # because the gateway has no Anthropic credentials.
           OPENCODE_CONFIG_CONTENT: '{"permission":"allow","small_model":"cloudflare-ai-gateway/workers-ai/@cf/zai-org/glm-4.7-flash"}'
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/deepseek-ai/deepseek-v4-flash-0731"
