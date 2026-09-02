@@ -66,7 +66,7 @@ The following errors appear in `ssl.validation_errors` on the custom hostname ob
 If a custom hostname shows a `caa_error` status, your customer's CAA records are preventing the certificate authority from issuing a certificate for their domain. Your customer needs to resolve this issue.
 
 :::caution[CAA lookup walks up the DNS tree]
-Under [RFC 8659](https://www.rfc-editor.org/rfc/rfc8659#section-3), a certificate authority checks CAA records starting at the custom hostname (for example, `shop.example.com`) and stops at the first DNS level that has CAA records. It only falls back to the parent domain (`example.com`) when the subdomain has no CAA records of its own. A restrictive record at whichever level the CA stops at will block issuance.
+Under [RFC 8659 section 4.1](https://www.rfc-editor.org/rfc/rfc8659#section-4.1), a certificate authority checks CAA records starting at the custom hostname (for example, `shop.example.com`) and stops at the first DNS level that has CAA records. It only falls back to the parent domain (`example.com`) when the subdomain has no CAA records of its own. A restrictive record at whichever level the CA stops at will block issuance.
 :::
 
 Ask your customer to check CAA records at both the subdomain and parent domain level, since either may be authoritative:
