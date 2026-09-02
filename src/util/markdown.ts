@@ -48,20 +48,29 @@ const isWhitespaceText = (node: Node): boolean =>
 
 /**
  * Flatten a rendered node to inline-safe HTML: paragraphs lose their
- * wrapper, list items are separated by newlines, and every other element
- * (heading, quote, table, …) is unwrapped to its own inline content.
+ * wrapper, and every other element (heading, quote, list, table, …) is
+ * unwrapped to its own inline content. Whitespace between inline siblings
+ * is collapsed, never dropped, so words stay separated; the line breaks the
+ * HTML serializer puts between blocks collapse to a single newline.
  */
 function inlineContent(node: Node): string {
-	if (node.nodeType === NodeType.TEXT_NODE) return (node as TextNode).rawText;
+	if (node.nodeType === NodeType.TEXT_NODE) {
+		const raw = (node as TextNode).rawText;
+		if (raw.trim() === "") return raw.includes("\n") ? "\n" : " ";
+		return raw;
+	}
 
 	const element = node as HTMLElement;
 	if (element.tagName === "P") return element.innerHTML;
 
-	const separator = ["UL", "OL"].includes(element.tagName) ? "\n" : "";
-	return element.childNodes
-		.filter((child) => !isWhitespaceText(child))
-		.map(inlineContent)
-		.join(separator);
+	return (
+		element.childNodes
+			.map(inlineContent)
+			.join("")
+			// Serialization pads block children with line breaks; trim them so
+			// containers do not leak padding into the surrounding join.
+			.trim()
+	);
 }
 
 /**

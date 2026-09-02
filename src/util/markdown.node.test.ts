@@ -74,6 +74,16 @@ describe("renderMarkdownInline", () => {
 			"para one\n\na\nb\n\npara two",
 		);
 	});
+
+	test("keeps whitespace between inline siblings when flattening blocks", () => {
+		expect(renderMarkdownInline("# *A* **B**")).toBe("A B");
+		expect(renderMarkdownInline("- *A* **B**")).toBe("A B");
+	});
+
+	test("separates block content nested in list items", () => {
+		expect(renderMarkdownInline("- Parent\n\n  - Child")).toBe("Parent\nChild");
+		expect(renderMarkdownInline("- Parent\n  - Child")).toBe("Parent\nChild");
+	});
 });
 
 describe("stripMarkdownToText", () => {
