@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-Run [Cursor Cloud Agents](https://cursor.com/docs/cloud-agent/bring-your-own-machine) on Cloudflare. Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
+Run [Cursor self-hosted Cloud Agents](https://cursor.com/docs/cloud-agent/self-hosted) on Cloudflare. Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
 
 Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, file edits, repository operations, and other tools inside infrastructure that you control.
 
@@ -219,7 +219,7 @@ If you change the cron interval, update both `triggers.crons` in `wrangler.jsonc
 ## Related resources
 
 - [Cursor Cloudflare Workers template](https://github.com/anysphere/cloudflare-workers)
-- [Cursor Bring Your Own Machine overview](https://cursor.com/docs/cloud-agent/bring-your-own-machine)
+- [Cursor self-hosted Cloud Agents overview](https://cursor.com/docs/cloud-agent/self-hosted)
 - [Cursor self-hosted pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool)
 - [Cloudflare Containers](/containers/)
 - [R2](/r2/)
