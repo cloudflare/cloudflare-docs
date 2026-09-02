@@ -28,7 +28,7 @@ To make your applications easier to manage, standardize the public hostnames tha
 
 If your public hostname route serves an `HTTPS` application, keep TLS certificate verification enabled. If the service URL uses `localhost` or an IP address but the certificate covers a hostname, set [**Origin Server Name**](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/#originservername) to the hostname covered by the certificate. If the origin uses a private certificate authority, set [**CA Pool**](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/#capool).
 
-Turn on [**Disable TLS certificate verification**](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/#notlsverify) only for temporary testing while you fix the certificate configuration. For a complete HTTPS origin decision tree, refer to [Troubleshoot HTTPS origins with Cloudflare Tunnel](/tunnel/troubleshoot-https-origin/).
+Turn on [**Disable TLS certificate verification**](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/#notlsverify) only for temporary testing while you fix the certificate configuration. For a complete HTTPS origin decision tree, refer to [Troubleshoot HTTPS origins with Cloudflare Tunnel](/tunnel/troubleshooting/https-origins/).
 
 ## (Optional) Add `Host` header to accommodate local traffic management tools
 
