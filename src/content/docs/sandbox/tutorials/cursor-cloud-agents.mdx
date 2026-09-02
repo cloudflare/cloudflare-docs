@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 difficulty: Beginner
 sidebar:
   order: 5
-description: Deploy Cursor self-hosted Cloud Agents that run each claimed request in an isolated Cloudflare container.
+description: Deploy Cursor self-hosted Cloud Agents that run each assigned session in an isolated Cloudflare container.
 products:
   - sandbox
   - containers
@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-Run [Cursor Cloud Agents](https://cursor.com/docs/cloud-agent/bring-your-own-machine) on Cloudflare. Each claimed request runs in an isolated container backed by Cloudflare Containers.
+Run [Cursor Cloud Agents](https://cursor.com/docs/cloud-agent/bring-your-own-machine) on Cloudflare. Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
 
 Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, file edits, repository operations, and other tools inside infrastructure that you control.
 
@@ -108,7 +108,7 @@ Repository-bound agents route work by Git remote. The pool name provides an addi
 
 3. Select **Self-hosted**, then select the name configured in `CURSOR_POOL`.
 
-4. Wait for the Worker to claim the request. A scheduled controller run can take up to five minutes to begin.
+4. Wait for Cursor to assign the session to the deployment. The Worker then starts a container for the session. The initial scheduled controller run can take up to five minutes to begin.
 </Steps>
 
 The request provides the repository URL. The container restores or clones that repository into `$HOME/workspaces/repo-0`. It then starts the Cursor worker:
@@ -166,12 +166,12 @@ A cache miss performs a normal Git clone. It does not prevent the agent from sta
 
 ## How the template works
 
-The template manages one container for each claimed Cursor request:
+The template manages one container for each assigned Cursor session:
 
-- **List:** A cron trigger runs every five minutes. The Worker lists requests waiting for `CURSOR_POOL`.
+- **List:** A cron trigger runs every five minutes. The Worker lists sessions waiting for `CURSOR_POOL`.
 - **Stream:** The Worker holds Cursor's server-sent events stream open until the next scheduled run.
-- **Claim:** The Worker claims each request with a unique worker ID. Cursor's claim API prevents duplicate claims.
-- **Start:** A Durable Object starts one container with the request environment and repository information.
+- **Assign:** The Worker accepts a waiting session with a unique worker ID. Cursor assigns that session exclusively to the Worker, which prevents duplicate processing.
+- **Start:** A Durable Object starts one container with the session environment and repository information.
 - **Stop:** The container exits after the configured idle timeout. The Durable Object also enforces a maximum run lifetime.
 
 The container opens an outbound connection to Cursor. The container does not require an inbound port or public IP address.
@@ -208,13 +208,13 @@ If you change the cron interval, update both `triggers.crons` in `wrangler.jsonc
 
 ## Troubleshooting
 
-| Symptom                                   | Cause                                                                      | Resolution                                                                                          |
-| ----------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| No requests are claimed                   | The cron does not run, the key is missing, or the pool name does not match | Run `npx wrangler tail`. Check controller runs, `401` responses, and the configured pool name.      |
-| The controller returns `401`              | The key is personal or lacks agent scope                                   | Replace `CURSOR_API_KEY` with a team service-account key that has agent scope.                      |
-| The pool is absent for a repo             | The worker started without repository labels                               | Select **Any repo**, or start a repository-bound agent with a configured Git remote.                |
-| The request is claimed but does not start | The container cannot start, clone the repository, or authenticate          | Run `npx wrangler containers list` and inspect `npx wrangler tail`. Check capacity and Git secrets. |
-| The first repository start is slow        | The snapshot cache is empty or not configured                              | Configure both `WORKER_PUBLIC_URL` and `SNAPSHOT_AUTH_TOKEN`, or allow a cold Git clone.            |
+| Symptom                                    | Cause                                                                      | Resolution                                                                                          |
+| ------------------------------------------ | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| No sessions are assigned                   | The cron does not run, the key is missing, or the pool name does not match | Run `npx wrangler tail`. Check controller runs, `401` responses, and the configured pool name.      |
+| The controller returns `401`               | The key is personal or lacks agent scope                                   | Replace `CURSOR_API_KEY` with a team service-account key that has agent scope.                      |
+| The pool is absent for a repo              | The worker started without repository labels                               | Select **Any repo**, or start a repository-bound agent with a configured Git remote.                |
+| The session is assigned but does not start | The container cannot start, clone the repository, or authenticate          | Run `npx wrangler containers list` and inspect `npx wrangler tail`. Check capacity and Git secrets. |
+| The first repository start is slow         | The snapshot cache is empty or not configured                              | Configure both `WORKER_PUBLIC_URL` and `SNAPSHOT_AUTH_TOKEN`, or allow a cold Git clone.            |
 
 ## Related resources
 
