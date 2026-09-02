@@ -1,10 +1,10 @@
 ---
-title: Run Cursor Cloud Agents on Cloudflare
+title: Run Cursor Cloud Agents on Cloudflare via self-hosted machines
 pcx_content_type: tutorial
 difficulty: Beginner
 sidebar:
   order: 5
-description: Deploy Cursor self-hosted Cloud Agents that run each assigned session in an isolated Cloudflare container.
+description: Deploy Cursor self-hosted machines that run each assigned session in an isolated Cloudflare container.
 products:
   - sandbox
   - containers
@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-Run [Cursor self-hosted Cloud Agents](https://cursor.com/docs/cloud-agent/self-hosted) on Cloudflare. Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
+Run Cursor Cloud Agents on Cloudflare via [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
 
 Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, file edits, repository operations, and other tools inside infrastructure that you control.
 
@@ -20,17 +20,17 @@ Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, 
 
 You need:
 
-- A Cursor Enterprise plan with self-hosted Cloud Agents enabled
+- A Cursor Enterprise plan with self-hosted machines enabled
 - A Cursor team service-account API key with agent scope
 - A Cloudflare Workers Paid account with access to Containers and R2
 - [Node.js 20](https://nodejs.org/) or later
 - A running [Docker](https://www.docker.com/) daemon for deployment and local development
 
-### Configure a Cursor pool
+### Configure a Cursor team pool
 
-Create a self-hosted pool in Cursor before you deploy the template. Record the pool name for `CURSOR_POOL`.
+Create a team pool in Cursor before you deploy the template. Record the team pool name for `CURSOR_POOL`.
 
-For more information, refer to [Cursor self-hosted pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool).
+For more information, refer to [Cursor team pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool).
 
 ## Deploy the template
 
@@ -76,7 +76,7 @@ The template deploys a Worker, a Durable Object namespace, a container applicati
 
    For GitHub, set `GIT_USERNAME` to `x-access-token`. Set `GIT_TOKEN` to a token with access to the repositories that the agents use.
 
-6. In `wrangler.jsonc`, set `vars.CURSOR_POOL` to the Cursor pool name:
+6. In `wrangler.jsonc`, set `vars.CURSOR_POOL` to the Cursor team pool name:
 
    ```jsonc
    {
@@ -99,7 +99,7 @@ The template deploys a Worker, a Durable Object namespace, a container applicati
 
 ## Run a repository-bound agent
 
-Repository-bound agents route work by Git remote. The pool name provides an additional routing constraint.
+Repository-bound agents route work by Git remote. The team pool name provides an additional routing constraint.
 
 <Steps>
 1. Go to [Cursor Cloud Agents](https://cursor.com/agents).
@@ -121,14 +121,14 @@ The Cursor worker derives its repository label from the Git remote. Do not confi
 
 ## Run an any-repository agent
 
-Any-repository agents route work by pool name. They start with an empty working directory and no Git remote.
+Any-repository agents route work by team pool name. They start with an empty working directory and no Git remote.
 
 <Steps>
 1. Go to [Cursor Cloud Agents](https://cursor.com/agents).
 
 2. Start an agent and select the **Any repo** group.
 
-3. Select the pool name configured in `CURSOR_POOL`.
+3. Select the team pool name configured in `CURSOR_POOL`.
 </Steps>
 
 The container creates `$HOME/workspaces/repo-0` without a Git remote. The agent or a project hook can clone a repository during the session.
@@ -208,18 +208,18 @@ If you change the cron interval, update both `triggers.crons` in `wrangler.jsonc
 
 ## Troubleshooting
 
-| Symptom                                    | Cause                                                                      | Resolution                                                                                          |
-| ------------------------------------------ | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| No sessions are assigned                   | The cron does not run, the key is missing, or the pool name does not match | Run `npx wrangler tail`. Check controller runs, `401` responses, and the configured pool name.      |
-| The controller returns `401`               | The key is personal or lacks agent scope                                   | Replace `CURSOR_API_KEY` with a team service-account key that has agent scope.                      |
-| The pool is absent for a repo              | The worker started without repository labels                               | Select **Any repo**, or start a repository-bound agent with a configured Git remote.                |
-| The session is assigned but does not start | The container cannot start, clone the repository, or authenticate          | Run `npx wrangler containers list` and inspect `npx wrangler tail`. Check capacity and Git secrets. |
-| The first repository start is slow         | The snapshot cache is empty or not configured                              | Configure both `WORKER_PUBLIC_URL` and `SNAPSHOT_AUTH_TOKEN`, or allow a cold Git clone.            |
+| Symptom                                    | Cause                                                                           | Resolution                                                                                          |
+| ------------------------------------------ | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| No sessions are assigned                   | The cron does not run, the key is missing, or the team pool name does not match | Run `npx wrangler tail`. Check controller runs, `401` responses, and the configured team pool name. |
+| The controller returns `401`               | The key is personal or lacks agent scope                                        | Replace `CURSOR_API_KEY` with a team service-account key that has agent scope.                      |
+| The team pool is absent for a repo         | The worker started without repository labels                                    | Select **Any repo**, or start a repository-bound agent with a configured Git remote.                |
+| The session is assigned but does not start | The container cannot start, clone the repository, or authenticate               | Run `npx wrangler containers list` and inspect `npx wrangler tail`. Check capacity and Git secrets. |
+| The first repository start is slow         | The snapshot cache is empty or not configured                                   | Configure both `WORKER_PUBLIC_URL` and `SNAPSHOT_AUTH_TOKEN`, or allow a cold Git clone.            |
 
 ## Related resources
 
 - [Cursor Cloudflare Workers template](https://github.com/anysphere/cloudflare-workers)
-- [Cursor self-hosted Cloud Agents overview](https://cursor.com/docs/cloud-agent/self-hosted)
-- [Cursor self-hosted pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool)
+- [Cursor self-hosted machines overview](https://cursor.com/docs/cloud-agent/self-hosted)
+- [Cursor team pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool)
 - [Cloudflare Containers](/containers/)
 - [R2](/r2/)
