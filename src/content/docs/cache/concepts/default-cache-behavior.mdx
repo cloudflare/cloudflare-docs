@@ -93,6 +93,10 @@ Cloudflare’s CDN provides several cache customization options:
 
 Customers can adjust the **Maximum Upload Size** from the zone's **Network** page. Enterprise customers can self-serve any value up to 5 GB. Uploads larger than 5 GB require additional configuration — contact your account team.
 
+:::note
+Very large uploads take longer to transfer. Requests that exceed the connection or read timeout can fail mid-upload before reaching the size limit — a failure that may look unrelated to **Maximum Upload Size**. If you raise the limit substantially, make sure your clients and origin allow enough time for the full transfer.
+:::
+
 If you require a larger upload, you can group requests into smaller chunks, upload the full resource through a [DNS-only (unproxied) DNS record](/dns/proxy-status/) or [upgrade your plan](/billing/manage/change-plan/).
 
 ### Cacheable size limits
