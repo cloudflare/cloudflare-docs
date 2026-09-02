@@ -109,6 +109,9 @@ export default {
 		const imageURL = "https://example.com/photo.jpg";
 
 		const response = await fetch(imageURL);
+		if (!response.ok || !response.body) {
+			return new Response("Upstream fetch failed", { status: 502 });
+		}
 
 		return (
 			await env.IMAGES.input(response.body)
@@ -158,6 +161,9 @@ The example below shows how you can resize an image that is [stored in Images](/
 ```ts
 // Get the raw bytes of a hosted image
 const bytes = await env.IMAGES.hosted.image("IMAGE_ID").bytes();
+if (!bytes) {
+	return new Response("Not found", { status: 404 });
+}
 
 // Resize and transcode the image
 const response = (

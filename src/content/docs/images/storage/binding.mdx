@@ -86,22 +86,22 @@ Accepts the following options as an `ImageListOptions` object:
 - `cursor` <Type text="string" /> — The continuation token returned by the previous `list()` call. Omit on the first page.
 - `sortOrder` <Type text="'asc' | 'desc'" /> — The order to sort results in by `uploaded` timestamp. Defaults to `asc`.
 - `creator` <Type text="string" /> — Filter results to images uploaded with this creator identifier.
-- `metadataFilter` <Type text="Record&lt;string, MetadataFilterCondition&gt;" /> — Filter results to images where the custom metadata matches the given conditions.
+- `filter` <Type text="ImageListFilter" /> — Filter results by image properties. Accepts a `metadata` field to filter by custom metadata.
 
 #### Filter by custom metadata
 
-When you list images, you can pass the `metadataFilter` option to `.list()` to return images by their custom metadata fields.
+When you list images, you can pass `filter.metadata` to `.list()` to return images by their custom metadata fields.
 
-Each entry in `metadataFilter` is a metadata field name, and its value sets the conditions that the field must meet. When you pass more than one entry, an image must match all of them to be returned.
+Each entry in `filter.metadata` is a metadata field name, and its value sets the conditions that the field must meet. When you pass more than one entry, an image must match all of them to be returned.
 
-Field names may contain only letters, numbers, and underscores. If a metadata field name contains other characters, such as hyphens or spaces, then you cannot filter on it.
+Field names may contain only letters, numbers, underscores, and dots. If a metadata field name contains other characters, such as hyphens or spaces, then you cannot filter on it.
 
-To filter on a nested field, separate the levels with dot notation, for example, `{ "camera.make": "nikon" }`. Field names can be up to five levels deep and 100 characters long.
+To filter on a nested field, separate the levels with dot notation, for example, `{ "config.region": "eu-west" }` matches `{ config: { region: "eu-west" } }`. Field paths can be up to five levels deep.
 
-Accepts the following operators as a `MetadataFilterCondition` object:
+Accepts the following operators as an `ImageMetadataFilterOperators` object:
 
 - `eq` <Type text="string | number | boolean" /> — Matches a field exactly.
-- `in` <Type text="Array&lt;string&gt; | Array&lt;number&gt;" /> — Matches a field against any value in an array. An array accepts up to 10 values.
+- `in` <Type text="Array&lt;string&gt; | Array&lt;number&gt;" /> — Matches a field against any value in an array. An array accepts up to 10 values, and a string value cannot contain the pipe character (`|`).
 - `gt` <Type text="number" /> — Matches a field that is greater than the value.
 - `gte` <Type text="number" /> — Matches a field that is greater than or equal to the value.
 - `lt` <Type text="number" /> — Matches a field that is less than the value.
@@ -121,9 +121,11 @@ A request that references an unsupported field name, uses an unsupported operato
 export default {
 	async fetch(request, env) {
 		const { images } = await env.IMAGES.hosted.list({
-			metadataFilter: {
-				status: "active",
-				priority: { gte: 2, lte: 5 },
+			filter: {
+				metadata: {
+					status: "active",
+					priority: { gte: 2, lte: 5 },
+				},
 			},
 		});
 
