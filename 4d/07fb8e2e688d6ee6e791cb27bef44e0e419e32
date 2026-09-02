@@ -1,0 +1,21 @@
+src/components/StorageDecisionTree.astro
+  s_257b8eeb7d0204::t_af6b1fdcf7d97b 1-343
+src/content/docs/workers/platform/storage-options.mdx
+  s_257b8eeb7d0204::t_c58e71d3a675f9 15,27-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4d07fb8e2e688d6ee6e791cb27bef44e0e419e32",
+  "prompts": {},
+  "sessions": {
+    "s_257b8eeb7d0204": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff28b-c573-7510-8d09-5c6dc3f5a3e7",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}
