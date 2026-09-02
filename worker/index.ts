@@ -1,6 +1,8 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
+import { markdownNotFound, requestsMarkdown } from "./markdown-404";
+import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -24,10 +26,8 @@ const API_CATALOG = JSON.stringify({
 				},
 			],
 			"service-doc": [
-				{
-					href: "https://developers.cloudflare.com/api/index.md",
-					type: "text/markdown",
-				},
+				// TODO: Add a Markdown `service-doc` URL once /api/* supports a real
+				// Markdown representation (e.g. content negotiation or /index.md).
 				{
 					href: "https://developers.cloudflare.com/api/",
 					type: "text/html",
@@ -100,6 +100,12 @@ export default class extends WorkerEntrypoint<Env> {
 					"Content-Type":
 						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
 				},
+			});
+		}
+
+		if (pathname === "/.well-known/ai-catalog.json") {
+			return new Response(AI_CATALOG_BODY, {
+				headers: AI_CATALOG_HEADERS,
 			});
 		}
 
@@ -202,6 +208,10 @@ export default class extends WorkerEntrypoint<Env> {
 		const response = await this.env.ASSETS.fetch(request);
 
 		if (response.status === 404) {
+			if (requestsMarkdown(request)) {
+				return markdownNotFound();
+			}
+
 			const section = new URL(response.url).pathname.split("/").at(1);
 
 			if (!section) return response;

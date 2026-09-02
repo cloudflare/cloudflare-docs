@@ -36,6 +36,7 @@ export async function getStaticPaths() {
 			props: {
 				entry,
 			},
+			cacheKey: String(entry.digest),
 		};
 	});
 }

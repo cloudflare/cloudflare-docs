@@ -1,0 +1,30 @@
+---
+title: "New in Images: text rasterization and updates to the binding"
+description: >
+  Rasterize text, sign private image URLs, create Direct Creator Upload links, filter hosted images by custom metadata, and set response headers directly from a Worker.
+products:
+  - images
+date: 2026-09-02
+---
+
+We've added more ways to manage and manipulate images with the [Images binding](/images/optimization/binding/). Here's what's new:
+
+**Render text into an image.** Output a string of text into its own image or draw it over another image.
+
+- Use the [`.text()`](/images/optimization/binding/#textcontent-options) method to rasterize text with the Images binding.
+- Style content using the `font`, `size`, and `color` options.
+- The [`draw`](/images/optimization/draw-overlays/#draw-with-cfimage) array in `cf.image` now accepts a `text` key.
+
+**Manage hosted images without an API token.**
+
+- **Metadata filtering:** Pass `filter.metadata` to [`.list()`](/images/storage/binding/#listoptions) to return images by custom metadata. Match a bounded range by setting two operators in one condition, for example, `priority: { gte: 2, lte: 5 }`.
+- **Server-side signing:** Get a signed URL for a private image with [`.signedUrl()`](/images/storage/binding/#imageimageidsignedurloptions).
+- **User uploads:** Create a Direct Creator Upload link with [`.createDirectUpload()`](/images/storage/binding/#createdirectuploadoptions) so that a client can upload an image to your storage.
+
+**Set headers in a single call.**
+
+- Pass a `headers` option to [`.response()`](/images/optimization/binding/#responseoptions) to set headers without rebuilding the `Response`.
+- `Content-Type` is always taken from the optimized image and can't be overridden by a specified header.
+- Set `Cache-Control` with [Workers Cache](/workers/cache/) to cache your optimized image at the edge.
+
+For more information, refer to [Optimize with Workers](/images/optimization/binding/), [Draw overlays and watermarks](/images/optimization/draw-overlays/), and [Manage hosted images with Workers](/images/storage/binding/).

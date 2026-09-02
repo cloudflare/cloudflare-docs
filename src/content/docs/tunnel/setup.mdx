@@ -93,6 +93,8 @@ Your tunnel should appear on the **Tunnels** page with a `Healthy` [status](/tun
 
 To make an application accessible from the Internet, add a published application route to your tunnel. The tunnel route maps a public hostname to a local service.
 
+If your origin already serves HTTPS or redirects HTTP to HTTPS, refer to [Troubleshoot HTTPS origins](/tunnel/troubleshooting/https-origins/) to choose the **Service URL** and origin settings.
+
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
@@ -111,6 +113,8 @@ To make an application accessible from the Internet, add a published application
    - HTTPS on port `443`: `https://localhost:443`
 
    If your web server runs on a different machine: `http://192.0.2.1:80`
+
+   If the origin certificate covers the public hostname rather than the service address, set **Origin Server Name** to the certificate hostname and keep **Disable TLS certificate verification** turned off. Refer to [Troubleshoot HTTPS origins](/tunnel/troubleshooting/https-origins/) for the complete configuration.
 
 6. Select **Add route**.
 
