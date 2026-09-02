@@ -1,0 +1,21 @@
+src/content/docs/load-balancing/understand-basics/traffic-steering/pool-sets.mdx
+  s_397b4e60c122ae::t_4ae445df45f074 79-94,103,140,143-144
+src/content/docs/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering.mdx
+  s_397b4e60c122ae::t_3a688db1e050e1 23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4c8256e0f84f0dfb48cb75a4fcde53ecb0f751ec",
+  "prompts": {},
+  "sessions": {
+    "s_397b4e60c122ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fbd6480c5ffeuyQVWdA0zo74K8",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "ncrouch-cflare <ncrouch@cloudflare.com>"
+    }
+  }
+}
