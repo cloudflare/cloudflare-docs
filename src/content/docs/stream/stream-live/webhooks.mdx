@@ -63,6 +63,7 @@ If there are issues detected with the input, the `event_type` will be `live_inpu
 * `ERR_UNSUPPORTED_AUDIO_CODEC` – The input audio codec is unsupported for the protocol used.
 * `ERR_STORAGE_QUOTA_EXHAUSTED` – The account storage quota has been exceeded. Delete older content or purchase additional storage.
 * `ERR_MISSING_SUBSCRIPTION` – Unauthorized to start a live stream. Check subscription or log into Dash for details.
+* `ERR_UNHEALTHY` – The active broadcast cannot be processed for an unknown reason that is most often due to encoder misconfiguration. Confirm the broadcast follows [required and recommended settings](/stream/stream-live/start-stream-live/#recommendations-requirements-and-limitations), then disconnect and reconnect to try again.
 
 ```json title="Example live_input.errored webhook payload"
 {
