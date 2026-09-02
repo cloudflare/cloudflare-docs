@@ -9,6 +9,12 @@ sidebar:
 
 The descriptions below detail the fields available for `firewall_events`.
 
+## AISecurityCustomTopicCategories
+
+Type: `object`
+
+Customer-defined AI Security topic labels and their relevance scores. A score of 1 indicates the highest relevance, and 99 indicates the lowest relevance.
+
 ## AISecurityInjectionScore
 
 Type: `int`
@@ -266,6 +272,18 @@ The Cloudflare security product-specific RuleID triggered by this request.
 Type: `string`
 
 The Cloudflare security product triggered by this request. <br />Possible sources are <em>unknown</em> \| <em>asn</em> \| <em>country</em> \| <em>ip</em> \| <em>iprange</em> \| <em>securitylevel</em> \| <em>zonelockdown</em> \| <em>waf</em> \| <em>firewallrules</em> \| <em>uablock</em> \| <em>ratelimit</em> \| <em>bic</em> \| <em>hot</em> \| <em>l7ddos</em> \| <em>validation</em> \| <em>botfight</em> \| <em>apishield</em> \| <em>botmanagement</em> \| <em>dlp</em> \| <em>firewallmanaged</em> \| <em>firewallcustom</em> \| <em>apishieldschemavalidation</em> \| <em>apishieldtokenvalidation</em> \| <em>apishieldsequencemitigation</em>.
+
+## WAFRequestSignatureCategories
+
+Type: `array[string]`
+
+List of attack signature categories matched for the request.
+
+## WAFRequestSignatureRefs
+
+Type: `array[string]`
+
+List of attack signature rule references (refs) matched for the request.
 
 ## ZoneName
 

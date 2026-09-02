@@ -1,0 +1,163 @@
+{
+	"model_id": "black-forest-labs/flux-video-upscale",
+	"provider_id": "black-forest-labs",
+	"name": "FLUX Video Upscale",
+	"description": "FLUX Video Upscale increases video resolution with a precise mode for source-faithful results and a creative mode for stronger detail enhancement. It accepts clips up to 20 seconds and preserves audio.",
+	"task": "video-to-video",
+	"tags": [
+		"Video Upscaling",
+		"Video Enhancement",
+		"Super Resolution"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Precise Video Upscale",
+			"description": "Upscale a source clip while preserving its identity and original detail.",
+			"input": {
+				"input_video": "https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4",
+				"upscale_factor": 2,
+				"creativity": 0
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/black-forest-labs/flux-video-upscale/precise-video-upscale.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/black-forest-labs/flux-video-upscale/precise-video-upscale.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-video-upscale',\n  {\n    input_video: 'https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4',\n    upscale_factor: 2,\n    creativity: 0,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-video-upscale\",\n  \"input\": {\n    \"input_video\": \"https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4\",\n    \"upscale_factor\": 2,\n    \"creativity\": 0\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Video Upscale",
+			"description": "Enhance fine detail in a source clip using creative mode.",
+			"input": {
+				"input_video": "https://replicate.delivery/xezq/q1XccP3m8V4HMBNDY3LBkaiKjPdJ6e7t74ICqq2wbfWHJNFXA/tmpq8inl7pd.mp4",
+				"upscale_factor": 2,
+				"creativity": 1,
+				"prompt": "A cinematic travel video with detailed natural scenery and crisp texture"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/black-forest-labs/flux-video-upscale/creative-video-upscale.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/black-forest-labs/flux-video-upscale/creative-video-upscale.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-video-upscale',\n  {\n    input_video: 'https://replicate.delivery/xezq/q1XccP3m8V4HMBNDY3LBkaiKjPdJ6e7t74ICqq2wbfWHJNFXA/tmpq8inl7pd.mp4',\n    upscale_factor: 2,\n    creativity: 1,\n    prompt: 'A cinematic travel video with detailed natural scenery and crisp texture',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-video-upscale\",\n  \"input\": {\n    \"input_video\": \"https://replicate.delivery/xezq/q1XccP3m8V4HMBNDY3LBkaiKjPdJ6e7t74ICqq2wbfWHJNFXA/tmpq8inl7pd.mp4\",\n    \"upscale_factor\": 2,\n    \"creativity\": 1,\n    \"prompt\": \"A cinematic travel video with detailed natural scenery and crisp texture\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bfl.ml/flux_tools/flux_video_upscale",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": null,
+	"metadata": {
+		"Maximum Source Duration": "20 seconds",
+		"Maximum Source Resolution": "2560 x 1440",
+		"Maximum Source Size": "50 MB",
+		"Output Audio": "Preserved",
+		"Pricing": "$0.07 precise or $0.10 creative per megapixel-second"
+	},
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-08-24 14:41:58",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input_video": {
+					"description": "HTTP(S) URL or base64-encoded MP4 video, up to 20 seconds and 50MB.",
+					"type": "string"
+				},
+				"upscale_factor": {
+					"description": "Output scale relative to the source resolution, from 1.5x to 3x.",
+					"type": "number",
+					"minimum": 1.5,
+					"maximum": 3
+				},
+				"creativity": {
+					"description": "0 preserves the source precisely; 1 enhances fine detail creatively.",
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 0
+						},
+						{
+							"type": "number",
+							"const": 1
+						}
+					]
+				},
+				"prompt": {
+					"description": "Optional description of the clip to guide creative detail enhancement.",
+					"type": "string"
+				},
+				"safety_tolerance": {
+					"description": "Moderation strictness, from 0 (strictest) to 4.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 4
+				}
+			},
+			"required": [
+				"input_video"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "Signed URL to the upscaled MP4. Download promptly before it expires.",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}
