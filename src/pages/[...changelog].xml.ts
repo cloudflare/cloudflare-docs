@@ -17,7 +17,7 @@ import { slug } from "github-slugger";
 import { config } from "virtual:nimbus/config";
 import { entryToString } from "~/util/container";
 import { renderMarkdown } from "~/util/markdown";
-import { absolutizeUrls } from "~/util/changelog";
+import { absolutizeUrls } from "~/util/rss";
 
 export const prerender = true;
 

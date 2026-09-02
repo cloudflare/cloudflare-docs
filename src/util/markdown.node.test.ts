@@ -62,6 +62,18 @@ describe("renderMarkdownInline", () => {
 	test("returns an empty string for empty input", () => {
 		expect(renderMarkdownInline("")).toBe("");
 	});
+
+	test("flattens block constructs to inline content", () => {
+		expect(renderMarkdownInline("# Heading")).toBe("Heading");
+		expect(renderMarkdownInline("- a\n- b")).toBe("a\nb");
+		expect(renderMarkdownInline("> quoted text")).toBe("quoted text");
+	});
+
+	test("flattens mixed block content to inline text", () => {
+		expect(renderMarkdownInline("para one\n\n- a\n- b\n\npara two")).toBe(
+			"para one\n\na\nb\n\npara two",
+		);
+	});
 });
 
 describe("stripMarkdownToText", () => {

@@ -130,20 +130,42 @@ for (const { platform, display_name } of platforms) {
 
 					// Demote headings to bold text (they render inside a collapsible
 					// <Details> block, where real headings would pollute the outline).
-					// Walks the parsed tree so `#` lines inside code fences survive.
+					// Recursively collects headings so ones nested in containers are
+					// demoted too, while `#` lines inside code fences survive. The
+					// heading text is sliced from the first child's offset, which
+					// skips ATX markers and setext underlines alike.
 					const tree = markdownToMdast(markdown);
+					const headings = [];
+					const collectHeadings = (node) => {
+						if (node.type === "heading") headings.push(node);
+						for (const child of node.children ?? []) collectHeadings(child);
+					};
+					collectHeadings(tree);
+
 					let releaseNotes = "";
 					let cursor = 0;
-					for (const node of tree.children) {
-						if (node.type !== "heading") continue;
-						const { start, end } = node.position;
-						releaseNotes += markdown.slice(cursor, start.offset);
-						releaseNotes += `**${markdown
-							.slice(start.offset, end.offset)
-							.replace(/^#{1,6}[ \t]+/, "")
+					for (const node of headings) {
+						const nodeStart = node.position?.start?.offset;
+						const textStart = node.children?.[0]?.position?.start?.offset;
+						const end = node.position?.end?.offset;
+						if (
+							typeof nodeStart !== "number" ||
+							typeof textStart !== "number" ||
+							typeof end !== "number"
+						) {
+							continue;
+						}
+
+						releaseNotes += markdown.slice(cursor, nodeStart);
+						const text = markdown
+							.slice(textStart, end)
+							.split("\n")[0]
 							.replace(/[ \t]+#+[ \t]*$/, "")
-							.trim()}**\n`;
-						cursor = end.offset;
+							.trim();
+						releaseNotes += `**${text}**\n`;
+						// Headings end at a line break; consume it so it is not
+						// duplicated by the following between-heading text.
+						cursor = markdown[end] === "\n" ? end + 1 : end;
 					}
 					releaseNotes += markdown.slice(cursor);
 					const platformName = isLinux ? "Linux" : data.platformName;

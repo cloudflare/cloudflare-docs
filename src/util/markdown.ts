@@ -12,7 +12,8 @@
  * core has none), and smart punctuation disabled (marked never applied it).
  */
 import { markdownToHtml } from "satteri";
-import { parse } from "node-html-parser";
+import { NodeType, parse } from "node-html-parser";
+import type { HTMLElement, Node, TextNode } from "node-html-parser";
 import he from "he";
 import { EXTERNAL_LINK_ARROW } from "@cloudflare/nimbus-docs/markdown";
 
@@ -28,13 +29,39 @@ export function renderMarkdown(source: string): string {
 
 /**
  * Render inline Markdown (no block wrappers), mirroring `marked`'s
- * parseInline: a single wrapping paragraph is unwrapped, and paragraph
- * breaks collapse to blank lines like any other inline whitespace.
+ * parseInline: the output is phrasing content only. Paragraph wrappers are
+ * unwrapped, paragraph breaks collapse to blank lines like any other inline
+ * whitespace, and block constructs (headings, lists, quotes, …) are flattened
+ * so no block element can leak into an inline context.
  */
 export function renderMarkdownInline(source: string): string {
-	return renderMarkdown(source)
-		.replace(/<\/p>\n<p>/g, "\n\n")
-		.replace(/^<p>([\s\S]*)<\/p>\n?$/, "$1");
+	const dom = parse(renderMarkdown(source));
+
+	return dom.childNodes
+		.filter((node) => !isWhitespaceText(node))
+		.map(inlineContent)
+		.join("\n\n");
+}
+
+const isWhitespaceText = (node: Node): boolean =>
+	node.nodeType === NodeType.TEXT_NODE && !(node as TextNode).rawText.trim();
+
+/**
+ * Flatten a rendered node to inline-safe HTML: paragraphs lose their
+ * wrapper, list items are separated by newlines, and every other element
+ * (heading, quote, table, …) is unwrapped to its own inline content.
+ */
+function inlineContent(node: Node): string {
+	if (node.nodeType === NodeType.TEXT_NODE) return (node as TextNode).rawText;
+
+	const element = node as HTMLElement;
+	if (element.tagName === "P") return element.innerHTML;
+
+	const separator = ["UL", "OL"].includes(element.tagName) ? "\n" : "";
+	return element.childNodes
+		.filter((child) => !isWhitespaceText(child))
+		.map(inlineContent)
+		.join(separator);
 }
 
 /**
