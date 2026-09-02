@@ -18,7 +18,7 @@ CT Monitoring alerts are triggered whenever a certificate that covers your monit
 :::caution[Aspects to consider]
 
 - Certificates that Cloudflare did not issue can still trigger CT Monitoring emails. This includes certificates issued by services outside Cloudflare, as well as custom certificates you upload yourself.
-- If your domain is included in a shared certificate, you may receive notifications for domains or subdomains that do not belong to you but are included as <GlossaryTooltip term="Subject Alternative Names (SANs)">subject alternative names (SANs)</GlossaryTooltip> together with your domain. You can use a tool like [Certificate Search](https://crt.sh/) to gather more information in such cases.
+- If your domain is included in a shared certificate, you may receive notifications for domains or subdomains that do not belong to you but are included as <GlossaryTooltip term="Subject Alternative Names (SANs)">subject alternative names (SANs)</GlossaryTooltip> together with your domain. You can use a tool like [Certificate Search](https://crt.sh/) or [CertObserver CT search](https://certobserver.com/ct-search) to gather more information in such cases.
 - CT Monitoring does not detect phishing attempts. For example, for `cloudflare.com`, an alert would not trigger if a certificate was issued for `cloudf1are.com` or `cloud-flare.com`.
 
 :::
@@ -43,7 +43,7 @@ Most alerts are routine. Open the email and check three things:
 2. **The issuer.** Did you or your organization request this certificate, or was it requested by a service you use? The issuer is listed as the [Certificate Authority](/ssl/reference/certificate-authorities/) in the email.
 3. **The DNS names and validity dates.** Do they look reasonable?
 
-If you can confirm that your organization or a service you use requested the certificate, no action is required. Otherwise, investigate the issuance with your security team or certificate provider. You can review certificates configured on Cloudflare from the [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) in the dashboard. For external certificates, review the CT log entry or use [Certificate Search](https://crt.sh/).
+If you can confirm that your organization or a service you use requested the certificate, no action is required. Otherwise, investigate the issuance with your security team or certificate provider. You can review certificates configured on Cloudflare from the [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) in the dashboard. For external certificates, review the CT log entry or use either [Certificate Search](https://crt.sh/) or [CertObserver CT search](https://certobserver.com/ct-search).
 
 Take action if:
 
