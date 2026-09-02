@@ -150,7 +150,7 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 Configures the frequency of `cloudflared` updates.
 
-By default, `cloudflared` will periodically check for updates and restart with the new version. Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests. See also: [`no-autoupdate`](#no-autoupdate).
+Built-in automatic updates are enabled when `cloudflared` is installed as a standalone binary and runs as a service. They are not available on Windows, for package-manager installations, or when `cloudflared` runs interactively in a terminal. When an update is available, `cloudflared` restarts to use the new version. The updater does not wait for the replacement process to connect to Cloudflare before shutting down the old process. Active connections may be interrupted. To control when updates occur, use [`no-autoupdate`](#no-autoupdate).
 
 ### `config`
 
@@ -241,7 +241,7 @@ Exposes a Prometheus endpoint on the specified IP address and port, which you ca
 
 :::note
 
-Does not apply if you installed `cloudflared` using a package manager. <Render file="tunnel/package-manager" product="cloudflare-one" />
+This parameter does not apply when `cloudflared` runs on Windows, was installed by a package manager, or runs interactively in a terminal. Automatic updates are not available in these environments. <Render file="tunnel/package-manager" product="cloudflare-one" />
 
 :::
 
@@ -249,7 +249,7 @@ Does not apply if you installed `cloudflared` using a package manager. <Render f
 | ------------------------------------------------------- | -------------------- |
 | `cloudflared tunnel --no-autoupdate run <UUID or NAME>` | `NO_AUTOUPDATE`      |
 
-Disables automatic `cloudflared` updates. See also: [`autoupdate-freq`](#autoupdate-freq).
+Disables automatic `cloudflared` updates. To change the automatic update interval instead, refer to [`autoupdate-freq`](#autoupdate-freq). For manual update methods and options to minimize downtime, refer to [Update `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/update-cloudflared/).
 
 ### `origincert`
 
