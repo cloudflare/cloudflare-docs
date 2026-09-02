@@ -29,6 +29,7 @@ export const getStaticPaths = (async () => {
 				name: entry.name,
 			},
 			props: { field: entry },
+			cacheKey: String(fields.digest),
 		};
 	});
 }) satisfies GetStaticPaths;

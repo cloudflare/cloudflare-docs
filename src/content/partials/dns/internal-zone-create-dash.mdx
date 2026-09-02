@@ -1,9 +1,8 @@
 ---
-params:
-  - conditional?
+{}
 ---
 
-import { Details, Render, DashButton } from "~/components";
+import { DashButton } from "~/components";
 
 1. In the Cloudflare dashboard, go to the **Internal DNS** page.
 
@@ -11,13 +10,6 @@ import { Details, Render, DashButton } from "~/components";
 
 2. Select **Create an internal zone**.
 3. Give your internal zone a name.
-
-{ props.conditional === "get-started-detail" && (
-
-<Details header="Internal zone configuration conditions">
-	<Render file="internal-zones-conditions" product="dns" />
-</Details>
-) }
 
 4. Add DNS records to your internal zone using your preferred option:
 

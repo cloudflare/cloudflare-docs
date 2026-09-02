@@ -5,7 +5,7 @@
 	"compatibility_date": "2025-06-02",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.ts",
-	"workers_dev": true,
+	"workers_dev": false,
 	"route": {
 		"pattern": "developers.cloudflare.com/*",
 		"zone_name": "developers.cloudflare.com",
