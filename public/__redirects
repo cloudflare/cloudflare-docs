@@ -627,12 +627,38 @@
 /constellation/ /workers-ai/ 301
 # Containers
 /containers/beta-info/ /containers/faq/ 301
-/containers/image-management/ /containers/platform-details/image-management/ 301
-/containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
-/containers/architecture/ /containers/platform-details/architecture/ 301
-/containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
-/containers/container-package/ /containers/container-class/ 301
-/containers/platform-details/ /containers/platform-details/architecture/ 301
+/containers/container-package/ /containers/reference/container-class/ 301
+/containers/durable-object-methods/ /durable-objects/api/container/ 301
+# Containers IA rework: loose pages folded into core sections
+/containers/container-class/ /containers/reference/container-class/ 301
+/containers/local-dev/ /containers/guides/local-dev/ 301
+/containers/deploy/ /containers/guides/deploy/ 301
+/containers/execute-commands/ /containers/guides/execute-commands/ 301
+/containers/ssh/ /containers/guides/ssh/ 301
+/containers/pricing/ /containers/platform/pricing/ 301
+/containers/image-management/ /containers/guides/image-management/ 301
+/containers/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/architecture/ /containers/concepts/architecture/ 301
+# Containers IA rework: platform-details/ dissolved into core sections
+/containers/platform-details/architecture/ /containers/concepts/architecture/ 301
+/containers/platform-details/placement/ /containers/concepts/placement/ 301
+/containers/platform-details/outbound-traffic/ /containers/guides/outbound-traffic/ 301
+/containers/platform-details/workers-connections/ /containers/configuration/workers-connections/ 301
+/containers/platform-details/environment-variables/ /containers/configuration/environment-variables/ 301
+/containers/platform-details/rollouts/ /containers/configuration/rollouts/ 301
+/containers/platform-details/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/platform-details/limits/ /containers/platform/limits/ 301
+/containers/platform-details/image-management/ /containers/guides/image-management/ 301
+/containers/platform-details/durable-object-methods/ /durable-objects/api/container/ 301
+/containers/platform-details/ /containers/concepts/architecture/ 301
+# Containers IA rework: Configuration section + Local Development to Guides + Wrangler pages to Reference
+/containers/reference/local-dev/ /containers/guides/local-dev/ 301
+/containers/reference/environment-variables/ /containers/configuration/environment-variables/ 301
+/containers/reference/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/reference/rollouts/ /containers/configuration/rollouts/ 301
+/containers/concepts/workers-connections/ /containers/configuration/workers-connections/ 301
+/containers/wrangler-configuration/ /containers/reference/wrangler-configuration/ 301
+/containers/wrangler-commands/ /containers/reference/wrangler-commands/ 301
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
@@ -1382,6 +1408,8 @@
 /cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-policies/http-policies/package-registry-security/ 301
 # CF1 packet filtering overview rename
 /cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
+# CF1 Audit SSH retired
+/cloudflare-one/traffic-policies/network-policies/ssh-logging/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/ 301
 # cross-product magic-firewall slug renames
 /learning-paths/data-center-protection/enable-magic-firewall/ /learning-paths/data-center-protection/enable-network-firewall/ 301
 /analytics/graphql-api/tutorials/querying-magic-firewall-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-samples/ 301
@@ -2742,6 +2770,7 @@
 /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
+/cloudflare-one/integrations/cloud-and-saas/findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
