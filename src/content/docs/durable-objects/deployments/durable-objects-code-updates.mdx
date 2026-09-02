@@ -19,7 +19,7 @@ import { WranglerConfig, PackageManagers } from "~/components";
 
 By default, Durable Objects delay applying Worker code deployments so in-flight requests can finish. Instead of resetting an active Durable Object immediately to apply a code update, Cloudflare applies the code update once the object is inactive (is hibernated).
 
-Deploy a Worker with `durable-objects-code-update-strategy` set to `immediate` to apply a code update right away instead of waiting. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more on when an object hibernates.
+Deploy a Worker with `--durable-objects-code-update-mode immediate` to apply a code update right away instead of waiting. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more on when an object hibernates.
 
 ## Code update strategy
 
@@ -67,7 +67,9 @@ This means an `immediate` deploy always forces the update right away, even while
 
 Configure `code_update_strategy` as a persistent default in your Wrangler configuration, or override it for a single deployment using the CLI flag or the REST API.
 
-`code_update_strategy` applies to every Durable Object class this Worker exports — you can't set a different strategy for one class than another in the same deployment. This includes classes exported through [`ctx.exports`](/workers/runtime-apis/context/#exports) without an explicit `bindings` entry. If a binding uses `script_name` to reference a class defined in a different Worker, that class's code updates are controlled by that other Worker's own `code_update_strategy`, not this one.
+`code_update_strategy` applies to every Durable Object class this Worker exports — you can't set a different strategy for one class than another in the same Worker. This includes classes exported through [`ctx.exports`](/workers/runtime-apis/context/#exports) without an explicit `bindings` entry. 
+
+If a Durable Objects binding uses `script_name` to reference a class defined in a different Worker, that class's code updates are controlled by that other Worker's own `code_update_strategy`, not the Worker with the binding.
 
 ### Options
 
@@ -79,9 +81,9 @@ Configure `code_update_strategy` as a persistent default in your Wrangler config
 | `{ "mode": "deferred", "max_delay": 0 }`                                     | Valid, but Cloudflare waits zero seconds — behaves identically to `immediate`.                                               |
 | `{ "mode": "deferred", "max_delay": 120 }`                                   | Cloudflare waits up to 120 seconds for the object to hibernate before applying the update.                                   |
 | `{ "mode": "immediate" }`                                                    | Cloudflare applies the update immediately, without waiting for the object to hibernate.                                     |
-| `{ "mode": "immediate", "max_delay": 60 }`                                   | **Invalid.** Wrangler and the REST API reject this configuration — `max_delay` has no effect when `mode` is `immediate`.     |
+| `{ "mode": "immediate", "max_delay": 60 }`                                   | **Returns error.** `max_delay` cannot be combined with `mode: immediate`.     |
 
-### wrangler
+### Wrangler
 
 Add `code_update_strategy` alongside `bindings` in the `durable_objects` object of your [Wrangler configuration file](/workers/wrangler/configuration/#durable-objects):
 
