@@ -339,8 +339,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/smart-shield/configuration/cache-reserve/ @cloudflare/appsec-reviewers @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
 /src/content/docs/smart-shield/configuration/regional-tiered-cache.mdx @cloudflare/appsec-reviewers @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
 /src/content/docs/smart-shield/configuration/smart-tiered-cache.mdx @cloudflare/appsec-reviewers @cloudflare/product-owners @ncrouch-cflare @ack-cf @zaidoon1 @mbullock1986
-/src/content/docs/spectrum/ @cloudflare/appsec-reviewers @cloudflare/product-owners @cansu @steve-cloudflare
-/src/content/partials/spectrum/ @cloudflare/appsec-reviewers @cloudflare/product-owners @cansu @steve-cloudflare
+/src/content/docs/spectrum/ @cloudflare/appsec-reviewers @cloudflare/product-owners @alpdot @steve-cloudflare
+/src/content/partials/spectrum/ @cloudflare/appsec-reviewers @cloudflare/product-owners @alpdot @steve-cloudflare
 /src/content/docs/speed/ @cloudflare/product-owners @ack-cf @mbullock1986
 /src/content/docs/speed/optimization/content/ @cloudflare/product-owners @ack-cf @axiapubsub @cnachiappan-dev @icrutche @rvml @wglane @mbullock1986
 /src/content/docs/speed/optimization/protocol/http2-to-origin.mdx @cloudflare/product-owners @ack-cf @zaidoon1 @mbullock1986
