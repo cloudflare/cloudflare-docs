@@ -1,0 +1,134 @@
+---
+pcx_content_type: tutorial
+difficulty: Advanced
+products:
+  - ssl
+title: Securosys HSM
+description: >-
+  Learn how to use Keyless SSL with a Securosys CloudHSM or on-premise Primus HSM.
+tags:
+  - Securosys
+---
+
+import { Tabs, TabItem } from "~/components";
+
+:::note[Note]
+
+This guide covers both the Securosys CloudHSM (HSM as a Service) and the on-premise Primus HSM. You can either generate a fresh key pair directly inside the HSM or import an existing key pair.
+
+:::
+
+---
+
+## Before you start
+
+Make sure you have:
+
+- An enterprise Cloudflare account with the [Keyless SSL](/ssl/keyless-ssl/) paid add-on.
+- A Securosys Hardware Security Module, either a:
+  - [CloudHSM partition](https://docs.securosys.com/cloudhsm/overview/) (HSM as a Service), or
+  - On-premise Primus HSM running firmware v2.8.21 or newer. [Contact Securosys sales](https://www.securosys.com/en/contact).
+- A server to run the Keyless SSL server and the Primus PKCS#11 provider on.
+
+---
+
+## 1. Get a Securosys HSM
+
+<Tabs> <TabItem label="Cloud">
+
+[Securosys CloudHSM](https://docs.securosys.com/cloudhsm/overview/) is pre-configured and allows instant HSM operation for Cloudflare Keyless SSL. Its redundant cluster architecture provides redundant regions up to a redundant world-wide cluster, and scales according to your needs.
+
+- [Subscribe online or try for free](https://cloud.securosys.com/cloudhsm), or
+- [Contact Securosys sales](https://www.securosys.com/cloud-security/cloudhsm-overview).
+
+</TabItem> <TabItem label="On-premise">
+
+Consult the [Primus HSM PKCS#11 Provider User Guide](https://docs.securosys.com/pkcs/Installation/primus_hsm_settings) to set up the Primus HSM for PKCS#11 usage.
+
+For further details on on-premise Primus HSM hardware, HA cluster setup, and operation in FIPS or Common Criteria certified modes, refer to the [Primus HSM User Guide](https://support.securosys.com/external/knowledge-base/article/63) (login required).
+
+</TabItem> </Tabs>
+
+---
+
+## 2. Install the PKCS#11 provider
+
+Enable the PKCS#11 API on the HSM. Then install and configure the Primus PKCS#11 provider on your server. For detailed instructions, refer to the [PKCS#11 provider documentation](https://docs.securosys.com/pkcs/Installation/primus_hsm_settings).
+
+---
+
+## 3. Install the Keyless SSL server
+
+Install the [Keyless SSL server](https://github.com/cloudflare/gokeyless) on the same server as the PKCS#11 provider.
+
+Then configure how the Cloudflare edge should reach your Keyless SSL server:
+
+- Via [Cloudflare Tunnel](/ssl/keyless-ssl/configuration/cloudflare-tunnel/), or
+- Via [public DNS](/ssl/keyless-ssl/configuration/public-dns/).
+
+---
+
+## 4. Obtain a TLS key
+
+You need a private key and a corresponding certificate to authenticate the TLS handshakes.
+
+To create the private key, you can either generate a fresh key pair directly inside the HSM or import an existing key pair. This can be done via any of the APIs that the Primus HSM supports. To do it with PKCS#11-based tools, refer to the [Key Management via PKCS#11](https://docs.securosys.com/pkcs/Tutorials/key_management) tutorial.
+
+---
+
+## 5. Obtain a TLS certificate
+
+Obtain a certificate for your key pair. In most cases, this should be from a public CA. The flow of obtaining a certificate depends on the CA.
+
+On the HSM side, you need to create and sign the Certificate Signing Request (CSR). This can also be done with PKCS#11-based tools. Refer to [Create a certificate signed by a CA](https://docs.securosys.com/pkcs/Tutorials/key_management#create-a-certificate-signed-by-a-ca).
+
+---
+
+## 6. Configure the Keyless SSL key server
+
+After installing the Keyless SSL server, make sure that the `keyless` user - created during installation - has the necessary permissions to access the Primus PKCS#11 provider files. For more information about user and user group permissions, refer to [Primus PKCS#11 Provider Installation](https://docs.securosys.com/pkcs/Installation/pkcs11_provider_installation).
+
+Ensure that the `keyless` user is a member of the `primus` user group. To add the `keyless` user to the `primus` user group, run:
+
+```sh
+sudo usermod -a -G primus keyless
+```
+
+:::note[Note]
+
+Adding a user to a new group may require a logout/login or reboot to update permissions.
+
+:::
+
+Next, modify the configuration file that the key server reads on startup to point the private key store at the Securosys HSM.
+
+1. Open `/etc/keyless/gokeyless.yaml`. Immediately after:
+
+   ```yaml
+   private_key_stores:
+     - dir: /etc/keyless/keys
+   ```
+
+   add:
+
+   ```yaml
+   - uri: pkcs11:token=<KeylessSSL>;object=<myrsakey>?module-path=/usr/local/primus/lib/libprimusP11.so&pin-value=<password>&max-sessions=1
+   ```
+
+   - Replace the `token` `<KeylessSSL>` parameter with the partition name on which you stored the certificate private key.
+   - Replace the `object` `<myrsakey>` parameter with your private RSA key.
+   - Only replace `module-path` if `libprimusP11.so` is saved in a different location.
+   - Replace the `pin-value` `<password>` parameter with your PKCS#11 PIN.
+
+2. Save the configuration file, restart the `gokeyless` service, and verify that it started successfully.
+
+   ```sh
+   sudo systemctl restart gokeyless.service
+   sudo systemctl status gokeyless.service -l
+   ```
+
+---
+
+## 7. Upload the TLS certificate
+
+Upload the TLS server certificate to Cloudflare. For details, refer to the [Keyless SSL documentation](/ssl/keyless-ssl/).
