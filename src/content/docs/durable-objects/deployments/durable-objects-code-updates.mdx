@@ -25,7 +25,7 @@ Deploy a Worker with `--durable-objects-code-update-mode immediate` to apply a c
 
 | Mode        | Default `max_delay` | Behavior                                                                                                                                          |
 | ----------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `deferred`  | 30 seconds            | Cloudflare waits for an active Durable Object to hibernate before applying the update. If the object does not hibernate within `max_delay`, Cloudflare resets it and applies the update. |
+| `deferred`  | 30 seconds            | Cloudflare waits for an active Durable Object to hibernate before applying the update. If the object does not hibernate within `max_delay` (300 seconds maximum), Cloudflare resets it and applies the update. |
 | `immediate` | Not applicable        | Cloudflare resets an active Durable Object and applies the update right away, without waiting for it to hibernate.                                |
 
 Durable Objects code update strategy depends on your Workers compatibility date:
@@ -60,6 +60,15 @@ Consecutive Worker deployments have the following behavior:
 - The first `max_delay` timer to expire applies the latest deployed version — not necessarily the version whose timer expired.
 
 For example: you deploy version A with `max_delay: 30`, starting a 30-second timer. Ten seconds later, you deploy version B with `max_delay: 60`, starting a separate 60-second timer. Version A's timer expires first, at the 30-second mark. When it expires, Cloudflare resets the object and applies version B — the latest deployed version — even though it was version A's timer that fired. The same is true if the object hibernates on its own before either timer expires: it always wakes up running the latest deployed version.
+
+```mermaid
+flowchart LR
+    A["Deploy version A<br/>max_delay: 30s"] --> B["Timer A:<br/>expires in 30s"]
+    C["Deploy version B<br/>10s later<br/>max_delay: 60s"] --> D["Timer B:<br/>expires in 60s"]
+    B --> E["Timer A expires first"]
+    D -.->|"superseded, never expires"| E
+    E --> F["Cloudflare resets the object<br/>and applies version B,<br/>the latest deployed version"]
+```
 
 This means an `immediate` deploy always forces the update right away, even while an earlier `deferred` deploy's timer is still running, and it might skip versions you deployed in between.
 
@@ -110,23 +119,24 @@ Add `code_update_strategy` alongside `bindings` in the `durable_objects` object 
 
 `max_delay` is in seconds and only applies when `mode` is `deferred`. The maximum is `300` (five minutes). Omit `max_delay` to use the default for your compatibility date.
 
-Pass `--durable-objects-code-update-mode` to `wrangler versions deploy` or `wrangler versions rollback` (or their `wrangler deploy` and `wrangler rollback` alternatives) to override the configured mode for a single deployment:
+If you're using [`ctx.exports`](/workers/runtime-apis/context/#exports) and don't need an explicit `bindings` entry, `code_update_strategy` still applies on its own:
 
-<PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-code-update-mode immediate" />
+<WranglerConfig>
 
-The flag overrides only `mode`. `max_delay` is set only through your Wrangler configuration or the REST API.
+```jsonc
+{
+	"durable_objects": {
+		"code_update_strategy": {
+			"mode": "deferred",
+			"max_delay": 60,
+		},
+	},
+}
+```
 
-Wrangler resolves `mode` in this order:
-
-1. The `--durable-objects-code-update-mode` flag.
-2. `durable_objects.code_update_strategy.mode` in your Wrangler configuration.
-3. The default for your compatibility date.
+</WranglerConfig>
 
 ### REST
-
-:::note
-The REST API field name below reflects the proposed naming and is not yet final. Check back here or in the [API reference](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) before you build automation against it.
-:::
 
 Add `code_update_strategy` to a [Create deployment](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) request. This field belongs to the deployment, not the Worker version:
 
@@ -150,7 +160,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/
   }'
 ```
 
-Cloudflare returns the effective strategy in create, get, and list deployment responses, including the compatibility-date default when you omit the field:
+Cloudflare returns the effective strategy in create, get, and list deployment responses, including the compatibility-date default when you omit the field. Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the strategy Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history:
 
 ```json
 {
@@ -167,9 +177,19 @@ Cloudflare returns the effective strategy in create, get, and list deployment re
 }
 ```
 
-Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the strategy Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history.
-
 ### Set strategy for a single deployment
+
+Pass `--durable-objects-code-update-mode` to `wrangler versions deploy` or `wrangler versions rollback` (or their `wrangler deploy` and `wrangler rollback` alternatives) to override the configured mode for a single deployment:
+
+<PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% --durable-objects-code-update-mode immediate" />
+
+The flag overrides only `mode`. `max_delay` is set only through your Wrangler configuration or the REST API.
+
+Wrangler resolves `mode` in this order:
+
+1. The `--durable-objects-code-update-mode` flag.
+2. `durable_objects.code_update_strategy.mode` in your Wrangler configuration.
+3. The default for your compatibility date.
 
 A single-deployment override is most useful when waiting is worse than resetting. For example, set `code_update_strategy` to `{ "mode": "immediate" }` (or pass `--durable-objects-code-update-mode immediate`) when:
 
