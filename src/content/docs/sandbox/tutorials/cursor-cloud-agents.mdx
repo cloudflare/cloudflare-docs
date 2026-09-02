@@ -30,6 +30,27 @@ You need:
 
 Create a team pool in Cursor before you deploy the template. Record the team pool name for `CURSOR_POOL`.
 
+To register an Any repo pool with the Cursor Agent CLI, run the controller before you submit any agent requests:
+
+```sh
+read -s CURSOR_API_KEY
+echo
+CURSOR_API_KEY="$CURSOR_API_KEY" agent worker controller \
+  --pool cloudflare-pool \
+  --spawn /usr/bin/true
+```
+
+To restrict the pool to one repository, add `--repository` with its URL:
+
+```sh
+CURSOR_API_KEY="$CURSOR_API_KEY" agent worker controller \
+  --pool cloudflare-pool \
+  --repository https://github.com/example/example \
+  --spawn /usr/bin/true
+```
+
+The controller registers a non-default pool when it starts. After the pool appears in Cursor, stop the controller with `Ctrl+C` and run `unset CURSOR_API_KEY`. The Cloudflare deployment starts workers for the pool on demand.
+
 For more information, refer to [Cursor team pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool).
 
 ## Deploy the template
@@ -95,6 +116,8 @@ The template deploys a Worker, a Durable Object namespace, a container applicati
    ```
 
    Wrangler builds the image and deploys the Worker, Durable Object, container application, and cron trigger.
+
+   A new container image rollout stops running containers. Wait for active Cursor sessions to finish before you deploy an update.
 </Steps>
 
 ## Run a repository-bound agent
