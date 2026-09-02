@@ -213,13 +213,23 @@ The value `auto` relies on the host operating system to determine which IP versi
 
 When `cloudflared` receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shut down. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
 
+### `log-directory`
+
+| Syntax                                                        | Environment Variable  |
+| ------------------------------------------------------------- | --------------------- |
+| `cloudflared tunnel --log-directory <PATH> run <UUID or NAME>` | `TUNNEL_LOGDIRECTORY` |
+
+Writes logs to a file named `cloudflared.log` in the specified directory. When the file reaches 1 MB, `cloudflared` rotates it and keeps up to five backup files. Rotation is based on file size; there is no age-based retention.
+
+Use `log-directory` for routine persistent logging. If you also specify [`logfile`](#logfile), `logfile` takes precedence.
+
 ### `logfile`
 
 | Syntax                                                   | Environment Variable |
 | -------------------------------------------------------- | -------------------- |
 | `cloudflared tunnel --logfile <PATH> run <UUID or NAME>` | `TUNNEL_LOGFILE`     |
 
-Saves application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to <a href={props.faqURL}>this guide</a>.
+Saves the application log to this file. `cloudflared` does not rotate this file. Use `logfile` for short troubleshooting sessions or when another tool manages log rotation. If you also specify [`log-directory`](#log-directory), `logfile` takes precedence. For more details on what information you need when contacting Cloudflare support, refer to <a href={props.faqURL}>this guide</a>.
 
 ### `loglevel`
 
