@@ -118,7 +118,7 @@ const resolvedDescription = description;
 const structuredDescription = resolvedDescription
 	? meta?.descriptionDerived
 		? resolvedDescription
-		: await stripMarkdownDescription(resolvedDescription)
+		: stripMarkdownDescription(resolvedDescription)
 	: undefined;
 
 // canonical honours meta.canonical + version pointer and %40-encodes `@`;
