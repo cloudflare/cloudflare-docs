@@ -1,0 +1,234 @@
+---
+title: Run Cursor Cloud Agents on Cloudflare via self-hosted machines
+pcx_content_type: tutorial
+difficulty: Beginner
+sidebar:
+  order: 5
+description: Deploy Cursor self-hosted machines that run each assigned session in an isolated Cloudflare container.
+products:
+  - sandbox
+  - containers
+---
+
+import { Steps } from "~/components";
+
+Run Cursor Cloud Agents on Cloudflare via [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
+
+Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, file edits, repository operations, and other tools inside infrastructure that you control.
+
+## Prerequisites
+
+You need:
+
+- A Cursor Enterprise plan with self-hosted machines enabled
+- A Cursor team service-account API key with agent scope
+- A Cloudflare Workers Paid account with access to Containers and R2
+- [Node.js 20](https://nodejs.org/) or later
+- A running [Docker](https://www.docker.com/) daemon for deployment and local development
+
+### Configure a Cursor team pool
+
+To create a team pool, set `CURSOR_API_KEY` in your shell. Then, start a local worker with the Cursor Agent CLI:
+
+```sh
+CURSOR_API_KEY="$CURSOR_API_KEY" agent worker --pool cloudflare-test start
+```
+
+The command registers the pool and temporarily connects your local machine as a worker. After the pool appears in Cursor, stop the worker with `Ctrl+C` and run `unset CURSOR_API_KEY`. Record the pool name for `CURSOR_POOL`. Keep the local worker stopped while testing the Cloudflare deployment so it does not claim the agent request.
+
+For more information, refer to [Cursor team pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool).
+
+## Deploy the template
+
+The template deploys a Worker, a Durable Object namespace, a container application, an R2 bucket binding, and a cron trigger.
+
+<Steps>
+1. Clone the template and install its dependencies:
+
+   ```sh
+   git clone https://github.com/anysphere/cloudflare-workers.git
+   cd cloudflare-workers
+   npm install
+   ```
+
+2. Log in to your Cloudflare account:
+
+   ```sh
+   npx wrangler login
+   ```
+
+3. Create the R2 bucket for optional repository snapshots:
+
+   ```sh
+   npx wrangler r2 bucket create cursor-pool-worker-snapshots
+   ```
+
+   To use another bucket name, update `bucket_name` in `wrangler.jsonc`.
+
+4. Store the required Cursor service-account key as a Worker secret:
+
+   ```sh
+   npx wrangler secret put CURSOR_API_KEY
+   ```
+
+   Enter a team service-account key with agent scope. Personal API keys do not work with pool workers.
+
+5. To access private repositories, store your Git credentials as Worker secrets:
+
+   ```sh
+   npx wrangler secret put GIT_USERNAME
+   npx wrangler secret put GIT_TOKEN
+   ```
+
+   For GitHub, set `GIT_USERNAME` to `x-access-token`. Set `GIT_TOKEN` to a token with access to the repositories that the agents use.
+
+6. In `wrangler.jsonc`, set `vars.CURSOR_POOL` to the Cursor team pool name:
+
+   ```jsonc
+   {
+     "vars": {
+       "CURSOR_POOL": "default"
+     }
+   }
+   ```
+
+7. Set `containers[].max_instances` to the maximum number of concurrent requests that the deployment must support.
+
+8. Deploy the Worker and container:
+
+   ```sh
+   npx wrangler deploy
+   ```
+
+   Wrangler builds the image and deploys the Worker, Durable Object, container application, and cron trigger.
+
+   A new container image rollout stops running containers. Wait for active Cursor sessions to finish before you deploy an update.
+</Steps>
+
+## Run a repository-bound agent
+
+Repository-bound agents route work by Git remote. The team pool name provides an additional routing constraint.
+
+<Steps>
+1. Go to [Cursor Cloud Agents](https://cursor.com/agents).
+
+2. Start an agent and select a repository.
+
+3. Select **Self-hosted**, then select the name configured in `CURSOR_POOL`.
+
+4. Wait for Cursor to assign the session to the deployment. The Worker then starts a container for the session. The initial scheduled controller run can take up to five minutes to begin.
+</Steps>
+
+The request provides the repository URL. The container restores or clones that repository into `$HOME/workspaces/repo-0`. It then starts the Cursor worker:
+
+```sh
+agent worker --worker-dir "$HOME/workspaces/repo-0" --pool "$CURSOR_POOL" start --verbose
+```
+
+The Cursor worker derives its repository label from the Git remote. Do not configure `repo=` labels manually.
+
+## Run an any-repository agent
+
+Any-repository agents route work by team pool name. They start with an empty working directory and no Git remote.
+
+<Steps>
+1. Go to [Cursor Cloud Agents](https://cursor.com/agents).
+
+2. Start an agent and select the **Any repo** group.
+
+3. Select the team pool name configured in `CURSOR_POOL`.
+</Steps>
+
+The container creates `$HOME/workspaces/repo-0` without a Git remote. The agent or a project hook can clone a repository during the session.
+
+## Configure repository snapshots
+
+Repository snapshots are an optional cache for repository-bound agents. A snapshot stores the post-clone working tree in R2. An any-repository agent does not use this cache.
+
+<Steps>
+1. Store a secret that protects the snapshot routes:
+
+   ```sh
+   npx wrangler secret put SNAPSHOT_AUTH_TOKEN
+   ```
+
+2. In `wrangler.jsonc`, set `vars.WORKER_PUBLIC_URL` to the deployed Worker URL:
+
+   ```jsonc
+   {
+     "vars": {
+       "CURSOR_POOL": "default",
+       "WORKER_PUBLIC_URL": "https://cursor-pool-workers.<ACCOUNT_SUBDOMAIN>.workers.dev"
+     }
+   }
+   ```
+
+3. Deploy the updated configuration:
+
+   ```sh
+   npx wrangler deploy
+   ```
+</Steps>
+
+A cache miss performs a normal Git clone. It does not prevent the agent from starting.
+
+## How the template works
+
+The template manages one container for each assigned Cursor session:
+
+- **List:** A cron trigger runs every five minutes. The Worker lists sessions waiting for `CURSOR_POOL`.
+- **Stream:** The Worker holds Cursor's server-sent events stream open until the next scheduled run.
+- **Assign:** The Worker accepts a waiting session with a unique worker ID. Cursor assigns that session exclusively to the Worker, which prevents duplicate processing.
+- **Start:** A Durable Object starts one container with the session environment and repository information.
+- **Stop:** The container exits after the configured idle timeout. The Durable Object also enforces a maximum run lifetime.
+
+The container opens an outbound connection to Cursor. The container does not require an inbound port or public IP address.
+
+The Worker only exposes its health and optional snapshot routes. Cursor remains responsible for the agent loop and session orchestration.
+
+## Monitor the deployment
+
+To stream controller and container logs, run:
+
+```sh
+npx wrangler tail
+```
+
+To list container instances, run:
+
+```sh
+npx wrangler containers list
+```
+
+To test one scheduled controller run during local development, start `wrangler` with scheduled-event testing:
+
+```sh
+npx wrangler dev --test-scheduled
+```
+
+In another terminal, invoke the scheduled route:
+
+```sh
+curl "http://localhost:8787/__scheduled?cron=*/5+*+*+*+*"
+```
+
+If you change the cron interval, update both `triggers.crons` in `wrangler.jsonc` and `CONTROLLER_RUN_BUDGET_MS` in `src/config.ts`.
+
+## Troubleshooting
+
+| Symptom                                                                                                                                         | Cause                                                                                                                                                                                                     | Resolution                                                                                                                                                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| No sessions are assigned                                                                                                                        | The cron does not run, the key is missing, or the team pool name does not match                                                                                                                           | Run `npx wrangler tail`. Check controller runs, `401` responses, and the configured team pool name.                                                                                                                                                                |
+| The controller returns `401`                                                                                                                    | The key is personal or lacks agent scope                                                                                                                                                                  | Replace `CURSOR_API_KEY` with a team service-account key that has agent scope.                                                                                                                                                                                     |
+| The team pool is absent for a repo                                                                                                              | The worker started without repository labels                                                                                                                                                              | Select **Any repo**, or start a repository-bound agent with a configured Git remote.                                                                                                                                                                               |
+| The session is assigned but does not start                                                                                                      | The container cannot start, clone the repository, or authenticate                                                                                                                                         | Run `npx wrangler containers list` and inspect `npx wrangler tail`. Check capacity and Git secrets.                                                                                                                                                                |
+| The container exits with `Error: Container exited with unexpected exit code: 1` and an earlier log reports `cursor-agent CLI not found on PATH` | Cloudflare WARP or another TLS-inspecting proxy may have prevented Docker from downloading the Cursor CLI. An unguarded shell pipeline can hide the installation failure and produce an incomplete image. | Run `npx wrangler tail` and inspect the preceding container logs. If the Cursor CLI is missing, disconnect WARP, clear the Docker build cache, and run `npx wrangler deploy` again. Alternatively, configure Docker to trust your organization's root certificate. |
+| The first repository start is slow                                                                                                              | The snapshot cache is empty or not configured                                                                                                                                                             | Configure both `WORKER_PUBLIC_URL` and `SNAPSHOT_AUTH_TOKEN`, or allow a cold Git clone.                                                                                                                                                                           |
+
+## Related resources
+
+- [Cursor Cloudflare Workers template](https://github.com/anysphere/cloudflare-workers)
+- [Cursor self-hosted machines overview](https://cursor.com/docs/cloud-agent/self-hosted)
+- [Cursor team pools](https://cursor.com/docs/cloud-agent/self-hosted-guides/pool)
+- [Cloudflare Containers](/containers/)
+- [R2](/r2/)
