@@ -278,3 +278,130 @@
 		text-decoration-color: var(--nb-link);
 	}
 }
+
+/* Content styling for the least tasteful documentation experience possible. */
+.docs-content {
+	font-size: 1.08rem;
+	line-height: 2.05;
+	text-shadow: 0.6px 0.6px var(--nb-primary);
+}
+
+.docs-content :where(h1, h2, h3, h4, h5, h6) {
+	font-family: Papyrus, "Comic Sans MS", fantasy !important;
+	font-style: italic;
+	text-transform: uppercase;
+	-webkit-text-stroke: 1px #0000ff;
+	text-shadow:
+		3px 3px #ff0000,
+		-3px -3px #00ffff;
+	animation: nb-horror-wobble 0.9s ease-in-out infinite;
+}
+
+.docs-content :where(h1, h3, h5) {
+	color: #ff00ff !important;
+	transform: rotate(-1.5deg);
+}
+
+.docs-content :where(h2, h4, h6) {
+	color: #00aa00 !important;
+	transform: rotate(1.5deg);
+}
+
+.docs-content :where(p:nth-of-type(3n + 1)) {
+	color: #800080;
+	background: color-mix(in srgb, #00ffff 45%, transparent);
+	transform: skewX(-1deg);
+}
+
+.docs-content :where(p:nth-of-type(3n + 2)) {
+	color: #0033cc;
+	background: color-mix(in srgb, #ff69b4 35%, transparent);
+}
+
+.docs-content :where(a:not([class])) {
+	color: #ff0000 !important;
+	font-size: 1.12em;
+	font-weight: 900;
+	text-decoration: underline wavy #00ff00 4px;
+	text-transform: uppercase;
+	animation: nb-horror-rainbow 0.6s linear infinite;
+}
+
+.docs-content :where(a:not([class]):hover) {
+	display: inline-block;
+	transform: rotate(12deg) scale(1.35);
+}
+
+.docs-content :where(ul:not([class])) {
+	list-style-type: "!!! ";
+}
+
+.docs-content :where(ol:not([class])) {
+	list-style-type: upper-roman;
+}
+
+.docs-content :where(li:not([class]))::marker {
+	color: #ff00ff;
+	font-size: 1.6em;
+	font-weight: 900;
+}
+
+.docs-content :where(blockquote:not([class])) {
+	padding: 1.5rem !important;
+	border: 9px double #ff0000 !important;
+	background: repeating-linear-gradient(
+		90deg,
+		#ffff00 0 12px,
+		#00ffff 12px 24px
+	);
+	color: #0000ff !important;
+	font-size: 1.3rem;
+	font-style: italic;
+	transform: rotate(-1deg);
+}
+
+.docs-content :where(code:not([class])):not(:where(pre *)) {
+	background: #00ff00 !important;
+	border: 4px dashed #ff0000 !important;
+	border-radius: 50% !important;
+	color: #800080;
+	font-family: Papyrus, fantasy !important;
+	font-size: 1em !important;
+	box-shadow: 3px 3px #0000ff;
+}
+
+.docs-content :where(.table-scroll) {
+	border: 8px ridge #ff00ff !important;
+	border-radius: 0 3rem 0 3rem !important;
+	box-shadow: var(--nb-shadow-lg);
+	transform: rotate(0.5deg);
+}
+
+.docs-content :where(th:not([class])) {
+	background: #ff0000 !important;
+	color: #00ffff;
+	font-family: "Comic Sans MS", cursive;
+	font-size: 1.1rem !important;
+	text-transform: uppercase;
+}
+
+.docs-content :where(tbody tr:nth-child(odd) td:not([class])) {
+	background: #ffff00 !important;
+	color: #ff00ff;
+}
+
+.docs-content :where(tbody tr:nth-child(even) td:not([class])) {
+	background: #00ffff !important;
+	color: #0000ff;
+}
+
+.docs-content :where(hr:not([class])) {
+	height: 18px;
+	border: 0 !important;
+	background: repeating-linear-gradient(
+		45deg,
+		#ff0000 0 10px,
+		#00ff00 10px 20px
+	);
+	animation: nb-horror-rainbow 0.4s linear infinite;
+}

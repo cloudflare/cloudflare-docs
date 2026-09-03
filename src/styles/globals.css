@@ -872,3 +872,241 @@ body:not(:has([data-mobile-sidebar])) [data-menu-btn] {
 		transition: none;
 	}
 }
+
+/* Deliberately hostile visual theme. */
+@keyframes nb-horror-rainbow {
+	0% {
+		filter: hue-rotate(0deg) saturate(2);
+	}
+	100% {
+		filter: hue-rotate(360deg) saturate(5);
+	}
+}
+
+@keyframes nb-horror-wobble {
+	0%,
+	100% {
+		transform: rotate(-1deg) scale(1);
+	}
+	25% {
+		transform: rotate(2deg) scale(1.02);
+	}
+	75% {
+		transform: rotate(-2deg) scale(0.98);
+	}
+}
+
+@keyframes nb-horror-bounce {
+	0%,
+	100% {
+		transform: translateY(0) rotate(0deg);
+	}
+	50% {
+		transform: translateY(-7px) rotate(4deg);
+	}
+}
+
+@keyframes nb-horror-background {
+	to {
+		background-position:
+			120px 80px,
+			-160px 120px;
+	}
+}
+
+html {
+	cursor: progress;
+}
+
+body {
+	background-color: var(--nb-background);
+	background-image:
+		repeating-conic-gradient(
+			from 13deg at 20% 30%,
+			color-mix(in srgb, var(--nb-primary) 45%, transparent) 0deg 12deg,
+			transparent 12deg 28deg
+		),
+		repeating-linear-gradient(
+			117deg,
+			transparent 0 19px,
+			color-mix(in srgb, var(--nb-info) 38%, transparent) 20px 29px
+		);
+	background-size:
+		140px 110px,
+		190px 170px;
+	animation: nb-horror-background 2.2s linear infinite;
+	font-variant: small-caps;
+}
+
+body::before {
+	content: "WELCOME TO THE INFORMATION SUPERHIGHWAY!!!";
+	position: fixed;
+	inset: auto 0 0;
+	z-index: 9999;
+	padding: 0.15rem;
+	border-block: 4px ridge #ffff00;
+	background: #ff0000;
+	color: #00ffff;
+	font-size: clamp(0.75rem, 2vw, 1.25rem);
+	font-weight: 900;
+	text-align: center;
+	text-shadow: 2px 2px #0000ff;
+	pointer-events: none;
+	animation: nb-horror-rainbow 0.8s linear infinite;
+}
+
+header {
+	border-bottom: 7px double var(--nb-border-strong) !important;
+	background: repeating-linear-gradient(
+		45deg,
+		#ff00ff 0 14px,
+		#00ffff 14px 28px,
+		#ffff00 28px 42px
+	) !important;
+	box-shadow:
+		0 8px 0 #00ff00,
+		0 14px 0 #ff0000;
+	animation: nb-horror-rainbow 1.5s linear infinite;
+}
+
+header > div:first-child {
+	opacity: 0.28;
+}
+
+header a,
+header button {
+	background: #ffff00 !important;
+	color: #ff0000 !important;
+	border: 3px outset #0000ff !important;
+	border-radius: 50% 10% 45% 3% !important;
+	text-shadow: 1px 1px #00ffff;
+	animation: nb-horror-bounce 0.7s ease-in-out infinite;
+}
+
+a,
+button,
+[role="button"],
+summary,
+select {
+	cursor: crosshair !important;
+}
+
+button,
+[data-nb-button],
+[role="button"],
+select,
+input {
+	border-width: 3px !important;
+	border-style: outset !important;
+	border-color: #ff0000 #0000ff #00ff00 #ff00ff !important;
+	border-radius: 18% 42% 13% 35% !important;
+	box-shadow: var(--nb-shadow) !important;
+	font-family: Papyrus, fantasy !important;
+	font-weight: 900 !important;
+	text-transform: uppercase;
+}
+
+button:hover,
+[data-nb-button]:hover,
+[role="button"]:hover {
+	transform: rotate(8deg) scale(1.18) !important;
+	filter: invert(1) saturate(5);
+}
+
+main,
+aside,
+nav,
+footer {
+	border-color: var(--nb-border) !important;
+}
+
+[data-nb-sidebar-link]:nth-child(odd),
+[data-nb-sidebar-group-label]:nth-child(odd) {
+	background: #00ffff;
+	color: #ff0000 !important;
+}
+
+[data-nb-sidebar-link]:nth-child(even),
+[data-nb-sidebar-group-label]:nth-child(even) {
+	background: #ff69b4;
+	color: #0033ff !important;
+}
+
+[data-nb-sidebar-link],
+[data-nb-sidebar-group-label] {
+	border: 2px dotted #00ff00;
+	border-radius: 0 50% 0 50% !important;
+}
+
+[data-nb-sidebar-link]:hover,
+[data-nb-sidebar-group-label]:hover {
+	animation: nb-horror-wobble 0.18s linear infinite;
+}
+
+.nb-code-figure,
+pre.astro-code {
+	border: 6px ridge #ff00ff !important;
+	border-radius: 2rem 0 2rem 0 !important;
+	background: #000080 !important;
+	box-shadow:
+		10px 10px 0 #00ff00,
+		-7px -7px 0 #ff0000 !important;
+}
+
+.nb-code-title,
+.nb-code-title-lang,
+.nb-code-figure::before {
+	background: #ff4500 !important;
+	color: #00ffff !important;
+	font-family: "Comic Sans MS", cursive !important;
+	font-size: 1rem !important;
+	text-decoration: blink;
+}
+
+.nb-footer {
+	background: repeating-radial-gradient(
+		circle,
+		#ff00ff 0 15px,
+		#00ff00 16px 30px
+	) !important;
+	border-top: 12px groove #00ffff !important;
+	transform: skewY(-1deg);
+	animation: nb-horror-rainbow 3s linear infinite;
+}
+
+.nb-footer * {
+	font-family: "Comic Sans MS", cursive !important;
+	font-weight: 900 !important;
+	text-shadow: 2px 2px #000000;
+}
+
+img:not(header img),
+svg:not(header svg) {
+	animation: nb-horror-wobble 1.1s ease-in-out infinite;
+}
+
+::selection {
+	background: #00ff00;
+	color: #ff00ff;
+}
+
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #ff00ff #00ff00;
+}
+
+::-webkit-scrollbar {
+	width: 22px;
+	height: 22px;
+}
+
+::-webkit-scrollbar-track {
+	background: #00ff00;
+	border: 3px dotted #ff0000;
+}
+
+::-webkit-scrollbar-thumb {
+	background: repeating-linear-gradient(45deg, #ff00ff 0 5px, #ffff00 5px 10px);
+	border: 4px outset #0000ff;
+	border-radius: 0;
+}
