@@ -69,7 +69,7 @@ In [Traffic only mode](/cloudflare-one/team-and-resources/devices/cloudflare-one
 
 ## Device IP ranges
 
-Current default device profiles route the default [device IP range](/cloudflare-one/networks/routes/reserved-ips/#device-ips) (`100.96.0.0/12`) through Cloudflare. Existing or customized profiles may still exclude the entire CGNAT range (`100.64.0.0/10`). Verify that the profile applied to your device does not exclude the device IP range or a parent range that contains it.
+In Exclude mode, default device profiles exclude the CGNAT range (`100.64.0.0/10`), which contains the default [device IP range](/cloudflare-one/networks/routes/reserved-ips/#device-ips) (`100.96.0.0/12`). The Mesh setup wizard updates the default profile to route the device IP range through Cloudflare. If you did not use the wizard, or if another profile applies to the device, verify that the profile does not exclude the device IP range or a parent range that contains it.
 
 ## Automatically managed ranges
 
