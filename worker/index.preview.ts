@@ -67,6 +67,9 @@ const PREVIEW_ROBOTS_TXT = [
 function withRobotsHeaders(response: Response): Response {
 	const headers = new Headers(response.headers);
 	headers.set("X-Robots-Tag", ROBOTS_POLICY);
+	if ((headers.get("Content-Type") ?? "").includes("text/html")) {
+		headers.set("Cache-Control", "no-store");
+	}
 	return new Response(response.body, {
 		status: response.status,
 		statusText: response.statusText,

@@ -38,6 +38,7 @@ describe("Preview anti-indexing", () => {
 			);
 			expect(response.status).toBe(200);
 			expect(response.headers.get("X-Robots-Tag")).toBe(ROBOTS_POLICY);
+			expect(response.headers.get("Cache-Control")).toBe("no-store");
 		});
 
 		it("is present on 404 pages", async () => {
@@ -64,6 +65,7 @@ describe("Preview anti-indexing", () => {
 			);
 			expect(response.status).toBe(200);
 			expect(response.headers.get("X-Robots-Tag")).toBe(ROBOTS_POLICY);
+			expect(response.headers.get("Cache-Control")).not.toBe("no-store");
 		});
 
 		it("is present on RSS endpoints", async () => {
