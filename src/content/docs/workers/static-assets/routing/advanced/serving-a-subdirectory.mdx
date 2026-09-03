@@ -43,6 +43,6 @@ Set `assets.base_path` to `/blog` in your Wrangler configuration file:
 
 Requests to `example.com/blog/` serve `dist/index.html`. Requests to `example.com/blog/posts/post1` serve `dist/posts/post1.html`.
 
-Requests outside `/blog` do not resolve static assets. The [asset binding](/workers/static-assets/binding/#binding) remains asset-relative, so binding requests do not include `base_path`.
+Requests outside `/blog` do not resolve static assets. Requests made through the [assets binding](/workers/static-assets/binding/#binding) also use the mounted public path. Forwarding the original request works unchanged. When constructing a request, include `/blog` in its pathname, for example, `env.ASSETS.fetch("https://assets.local/blog/posts/post1")`.
 
 Paths in `_headers`, `_redirects`, and `assets.run_worker_first` use the public URL path. Include `/blog` in those paths when they apply to this example.
