@@ -3,7 +3,7 @@ title: Web Crypto adds ML-KEM and ML-DSA support
 description: The Workers runtime adds opt-in post-quantum algorithms and key encapsulation methods through a compatibility flag.
 products:
   - workers
-date: 2026-07-23
+date: 2026-09-28
 ---
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
@@ -28,11 +28,10 @@ This example uses ML-KEM-768 to establish the same shared secret on both sides:
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-const keyPair = await crypto.subtle.generateKey(
-	"ML-KEM-768",
-	false,
-	["encapsulateBits", "decapsulateBits"],
-);
+const keyPair = await crypto.subtle.generateKey("ML-KEM-768", false, [
+	"encapsulateBits",
+	"decapsulateBits",
+]);
 
 if (!("publicKey" in keyPair)) {
 	throw new Error("Expected an ML-KEM key pair");
