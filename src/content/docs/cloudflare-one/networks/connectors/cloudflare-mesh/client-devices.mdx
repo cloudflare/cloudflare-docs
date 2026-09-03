@@ -85,7 +85,7 @@ if (-not (curl.exe --silent https://www.cloudflare.com/cdn-cgi/trace | Select-St
 </TabItem>
 </Tabs>
 
-In Include mode, `warp=off` is expected for destinations that are not in the include list. Use the successful connection to an included Mesh IP as the data-path check. Do not rely only on the success message from `warp-cli`: Mesh connectivity requires Traffic and DNS mode. In DNS-only mode, use `warp-cli registration show` only to verify enrollment. DNS-only mode cannot carry Mesh traffic.
+In Include mode, expect `warp=off` for destinations that are not in the include list. Use the successful connection to an included Mesh IP as the data-path check. Do not rely only on the success message from `warp-cli`: Mesh connectivity requires Traffic and DNS mode. In DNS-only mode, use `warp-cli registration show` only to verify enrollment. DNS-only mode cannot carry Mesh traffic.
 
 ## What devices can reach
 
@@ -103,7 +103,7 @@ For client devices to reach Mesh IPs, the Mesh IP range must route through Cloud
 
 ### Exclude mode (default)
 
-Current default profiles route the Mesh IP range through Cloudflare. Existing or customized profiles may contain a broad CGNAT exclusion. Verify that `100.96.0.0/12` (or your custom device IP range) is not in the exclude list that applies to the device.
+The Mesh setup wizard updates the default device profile to route the Mesh IP range through Cloudflare. If you did not use the wizard, or if another profile applies to the device, verify that `100.96.0.0/12` (or your custom device IP range) is not in the exclude list or contained by a broader exclusion.
 
 Depending on your Cloudflare networking configuration, you may need to remove additional IPs from your exclude list. For a list of IPs to check, refer to [Reserved IP addresses](/cloudflare-one/networks/routes/reserved-ips/).
 

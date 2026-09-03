@@ -213,7 +213,7 @@ Traffic from Mesh nodes appears in [Gateway activity logs](/cloudflare-one/insig
 
 ## Required account settings
 
-Mesh requires the following Cloudflare One settings. The dashboard wizard configures them automatically for new deployments. Non-wizard deployments must configure the same settings.
+The dashboard wizard configures the following Cloudflare One settings automatically for new deployments. Non-wizard deployments must configure the same settings:
 
 | Setting                                                                                                                                                                                                                                                                                                                                                                                       | What it does                                                                                                                                                                                                                                                                                                                                                                                                  |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -250,7 +250,7 @@ If your account already has a Cloudflare One deployment, the setup wizard will n
 - [ ] **Mesh connectivity** — In your device profile settings, enable [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
 - [ ] **Unique device IPs** — Enable [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) so that each participant gets a routable Mesh IP.
 - [ ] **Client mode** — Mesh nodes must run in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/). DNS-only or proxy-only modes are not supported.
-- [ ] **Traffic proxying** — Enable the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for the protocols you use. TCP and UDP carry Mesh services. ICMP supports diagnostic tools such as `ping` and `traceroute`.
+- [ ] **Traffic proxying** — Turn on the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for the protocols you use. TCP and UDP carry Mesh services. ICMP supports diagnostic tools such as `ping` and `traceroute`.
 
 ## Troubleshooting
 

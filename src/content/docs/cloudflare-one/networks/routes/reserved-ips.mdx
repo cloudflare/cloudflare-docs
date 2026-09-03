@@ -80,7 +80,7 @@ For deployments that use the [Cloudflare One Client](/cloudflare-one/team-and-re
 
 ### Exclude mode (default)
 
-Current default profiles route the device IP range (`100.96.0.0/12`) through Cloudflare. Existing or customized profiles may still exclude the entire CGNAT range (`100.64.0.0/10`). In these profiles, delete or narrow any exclude entry that contains a reserved range required by your deployment.
+In **Exclude IPs and domains** mode, default device profiles exclude the CGNAT range (`100.64.0.0/10`) from Cloudflare. To route a reserved range within CGNAT space through Cloudflare, delete or narrow the CGNAT exclusion. The Mesh setup wizard does this automatically for the device IP range used by Mesh.
 
 [Gateway initial resolved IPs](#gateway-initial-resolved-ips) are the exception: the default range (`172.64.128.0/20`) is public Cloudflare address space, not CGNAT, so it is **not** excluded by default in Exclude mode. The Cloudflare One Client also automatically removes this range, along with the entire `2606:4700:0cf1::/48` IPv6 range (which also covers [device IPs](#device-ips) and [Cloudflare source IPs](#cloudflare-source-ips) on IPv6), from any exclusions you configure — refer to [Automatically managed ranges](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges). No Split Tunnel changes are required for these ranges. This only applies to the default IPv4 range: if you configured a custom initial resolved IP range within CGNAT space, treat it the same as the other CGNAT-based ranges below.
 

@@ -2,7 +2,7 @@
 
 ---
 
-Current default device profiles route the default [device IP range](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) (`100.96.0.0/12`) through the WARP tunnel. Existing or customized profiles may require changes. Configuration depends on your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#change-split-tunnels-mode):
+In Exclude mode, default device profiles exclude the CGNAT range (`100.64.0.0/10`), which contains the default [device IP range](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) (`100.96.0.0/12`). The Mesh setup wizard updates the default profile to route the device IP range through Cloudflare. If you did not use the wizard, or if another profile applies to the device, configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#change-split-tunnels-mode) as follows:
 
 - **Exclude mode**: Delete or narrow any exclusion that contains `100.96.0.0/12`. You can [exclude the remaining CGNAT ranges](/cloudflare-one/networks/routes/reserved-ips/#split-tunnel-configuration) that your deployment does not use.
 - **Include mode**: Add `100.96.0.0/12` to your Split Tunnels list.
