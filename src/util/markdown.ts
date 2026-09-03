@@ -32,7 +32,10 @@ export function renderMarkdown(source: string): string {
  * parseInline: the output is phrasing content only. Paragraph wrappers are
  * unwrapped, paragraph breaks collapse to blank lines like any other inline
  * whitespace, and block constructs (headings, lists, quotes, …) are flattened
- * so no block element can leak into an inline context.
+ * so no block element can leak into an inline context. Phrasing markup inside
+ * flattened blocks — emphasis, links, inline code — is preserved; form
+ * controls (task-list checkboxes) are dropped since they mean nothing in
+ * tooltips and summaries.
  */
 export function renderMarkdownInline(source: string): string {
 	const dom = parse(renderMarkdown(source));
@@ -48,10 +51,13 @@ const isWhitespaceText = (node: Node): boolean =>
 
 /**
  * Flatten a rendered node to inline-safe HTML: paragraphs lose their
- * wrapper, and every other element (heading, quote, list, table, …) is
- * unwrapped to its own inline content. Whitespace between inline siblings
- * is collapsed, never dropped, so words stay separated; the line breaks the
- * HTML serializer puts between blocks collapse to a single newline.
+ * wrapper, and every other block wrapper (heading, quote, list, table, …) is
+ * unwrapped to its own inline content. Phrasing elements keep their markup so
+ * formatting inside flattened blocks survives; anything absent from
+ * PHRASING_TAGS is unwrapped to its text content. Whitespace between inline
+ * siblings is collapsed, never dropped, so words stay separated; the line
+ * breaks the HTML serializer puts between blocks collapse to a single
+ * newline.
  */
 function inlineContent(node: Node): string {
 	if (node.nodeType === NodeType.TEXT_NODE) {
@@ -62,6 +68,7 @@ function inlineContent(node: Node): string {
 
 	const element = node as HTMLElement;
 	if (element.tagName === "P") return element.innerHTML;
+	if (PHRASING_TAGS.has(element.tagName)) return element.outerHTML;
 
 	return (
 		element.childNodes
@@ -72,6 +79,43 @@ function inlineContent(node: Node): string {
 			.trim()
 	);
 }
+
+// Standard HTML phrasing elements that Markdown or inline HTML can produce
+// inside block constructs.
+const PHRASING_TAGS = new Set([
+	"A",
+	"ABBR",
+	"B",
+	"BDI",
+	"BDO",
+	"BR",
+	"CITE",
+	"CODE",
+	"DATA",
+	"DEL",
+	"DFN",
+	"EM",
+	"I",
+	"IMG",
+	"INS",
+	"KBD",
+	"MARK",
+	"Q",
+	"RP",
+	"RT",
+	"RUBY",
+	"S",
+	"SAMP",
+	"SMALL",
+	"SPAN",
+	"STRONG",
+	"SUB",
+	"SUP",
+	"TIME",
+	"U",
+	"VAR",
+	"WBR",
+]);
 
 /**
  * Reduce Markdown to plain text, matching production's

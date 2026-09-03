@@ -75,9 +75,19 @@ describe("renderMarkdownInline", () => {
 		);
 	});
 
-	test("keeps whitespace between inline siblings when flattening blocks", () => {
-		expect(renderMarkdownInline("# *A* **B**")).toBe("A B");
-		expect(renderMarkdownInline("- *A* **B**")).toBe("A B");
+	test("preserves inline formatting when flattening blocks", () => {
+		expect(renderMarkdownInline("## **bold**")).toBe("<strong>bold</strong>");
+		expect(renderMarkdownInline("# *A* plain **B**")).toBe(
+			"<em>A</em> plain <strong>B</strong>",
+		);
+		expect(renderMarkdownInline("- `x` and [docs](/d)")).toBe(
+			`<code>x</code> and <a href="/d">docs</a>`,
+		);
+		expect(renderMarkdownInline("> ~~struck~~")).toBe("<del>struck</del>");
+	});
+
+	test("drops form controls flattened inside blocks", () => {
+		expect(renderMarkdownInline("- [ ] task")).toBe("task");
 	});
 
 	test("separates block content nested in list items", () => {
