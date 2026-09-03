@@ -8,7 +8,7 @@ products:
 
 Cloudflare Web Analytics (Real User Monitoring) is rolling out accuracy improvements to client-side soft navigations.
 
-**This change may alter the volume of pageviews reported in the dashboard and GraphQL API**, though the extent depends on your front-end architecture and visitor traffic patterns.
+**This change may alter the volume of reported pageviews and visits in the dashboard and GraphQL API. The reported Largest Contentful Paint (LCP) metric may also fluctuate.** The extent of these variances depend on your front-end architecture and visitor traffic patterns.
 
 Single Page Applications (SPAs)—such as websites built with React, Angular, Vue, or Svelte—predominantly use soft navigations. Soft navigations avoid fully unloading the current page and rendering the next one from scratch as visitors navigate.
 
