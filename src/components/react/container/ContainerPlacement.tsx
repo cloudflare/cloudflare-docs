@@ -22,11 +22,13 @@ import {
 	EASE_OUT,
 	MOTION,
 } from "../diagram-weld";
+import { indentedRect } from "../diagram-weld/welding";
 import { RENDER_SCALE, WeldCanvas } from "./WeldCanvas";
 import { Toolbar, ResetButton } from "./Transport";
 import type { DiagramFallbackProps } from "./DiagramFallback";
 
-const REGION_H = 32;
+const REGION_H = 60;
+const REGION_HEADER_H = 28;
 const REGION_PAD_X = 12;
 const REGION_FONT_SIZE = 11;
 
@@ -270,7 +272,7 @@ function PlacementBody() {
 	useEffect(() => clearAllTimers, []);
 
 	const regionW = uniformCardWidth(
-		REGIONS.map((r) => `+ ${REGION_LABELS[r]}`),
+		[...REGIONS.map((r) => REGION_LABELS[r]), "SEND REQUEST"],
 		{ padX: REGION_PAD_X, fontSize: REGION_FONT_SIZE },
 	);
 	const viewRegionRowW = regionW * 3 + DESKTOP_REGION_GAP * 2;
@@ -372,24 +374,28 @@ function PlacementBody() {
 			}
 			overlay={visibleRegionRects.map((rect, i) => {
 				const id = regionAt(i);
+				const actionCenter =
+					rect.t + REGION_HEADER_H + (rect.h - REGION_HEADER_H) / 2;
 				return (
 					<button
 						key={id}
 						type="button"
 						aria-label={`Send a request to ${REGION_LABELS[id]}`}
 						onClick={() => sendRequest(i)}
-						className="absolute flex cursor-pointer items-center justify-center gap-1 rounded-sm bg-transparent font-mono text-[10px] font-medium tracking-widest text-neutral-700 uppercase transition-colors hover:bg-neutral-50/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-neutral-300 dark:hover:bg-neutral-900/70"
+						className="absolute flex min-h-11 -translate-y-1/2 cursor-pointer items-center justify-center gap-2 rounded-b-sm bg-transparent px-2.5 font-mono text-[9px] font-medium tracking-widest text-neutral-600 uppercase transition-[color,transform] duration-150 ease-out hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 dark:text-neutral-400 dark:hover:text-neutral-100"
 						style={{
 							left: `${(rect.l / VIEW_W) * 100}%`,
-							top: `${(rect.t / VIEW_H) * 100}%`,
+							top: `${(actionCenter / VIEW_H) * 100}%`,
 							width: `${(rect.w / VIEW_W) * 100}%`,
-							height: `${(rect.h / VIEW_H) * 100}%`,
 						}}
 					>
+						<span className="hidden leading-none min-[480px]:inline">
+							Send request
+						</span>
 						<svg
 							aria-hidden="true"
 							viewBox="0 0 16 16"
-							className="h-3.5 w-3.5 shrink-0"
+							className="size-3 shrink-0"
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="1.75"
@@ -397,7 +403,6 @@ function PlacementBody() {
 						>
 							<path d="M8 3v10M3 8h10" />
 						</svg>
-						<span className="leading-none">{REGION_LABELS[id]}</span>
 					</button>
 				);
 			})}
@@ -453,12 +458,29 @@ function PlacementBody() {
 				})}
 
 				{visibleRegionRects.map((rect, i) => (
-					<WeldedCard
+					<SimpleCard
 						key={`region-${i}`}
 						rect={rect}
 						notches={{ bottom: true }}
+						label={REGION_LABELS[regionAt(i)]}
 						active={pulse[regionAt(i)]}
-					/>
+						headerH={REGION_HEADER_H}
+						headerFontSize={instanceHeaderFS}
+						pad={Math.max(2, (REGION_HEADER_H - 6) / 2)}
+					>
+						<path
+							d={indentedRect(
+								makeRect(
+									rect.l + 1,
+									rect.t + REGION_HEADER_H + 1,
+									rect.w - 2,
+									rect.h - REGION_HEADER_H - 2,
+								),
+								{ bottom: true },
+							)}
+							className="fill-neutral-50 dark:fill-neutral-950"
+						/>
+					</SimpleCard>
 				))}
 
 				{visibleInstRects.map((rect, i) => {

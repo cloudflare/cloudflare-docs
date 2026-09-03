@@ -4,8 +4,8 @@
 // configured outbound handlers can connect it to bindings and external
 // services. The container has no SDK for those bindings, so requests use the
 // configured handler path.
-// Self-paced: opens paused; the reader steps with Next / Previous (Play
-// autoplays). A local step index drives it — usePhase has no backward step.
+// Autoplays once; the reader can also step with Next / Previous or replay it.
+// A local step index drives it — usePhase has no backward step.
 import { useEffect, useState } from "react";
 import { Diagram, useDiagramOrDefault } from "@cloudflare/nimbus-docs/react";
 import {
@@ -209,7 +209,7 @@ export function ContainerConnectivity(_props: DiagramFallbackProps) {
 function ConnectivityBody() {
 	const ctx = useDiagramOrDefault("ContainerConnectivity");
 	const [stepIdx, setStepIdx] = useState(0);
-	const [isPlaying, setIsPlaying] = useState(false);
+	const [isPlaying, setIsPlaying] = useState(true);
 	const [hasPersisted, setHasPersisted] = useState(false);
 
 	// Reduced-motion users rest on the idle frame and never autoplay.

@@ -66,6 +66,7 @@ function IsolationBody() {
 		loop: false,
 		autoplay: false,
 	});
+	// Nimbus memoizes `start`, so this runs once for the mounted walker.
 	useEffect(() => {
 		walker.start();
 	}, [walker.start]);
