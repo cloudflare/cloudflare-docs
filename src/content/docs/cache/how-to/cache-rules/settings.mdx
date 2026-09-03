@@ -367,7 +367,7 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Origin range requests
 
-Origin Range Requests let Cloudflare fetch large files from your origin in cache-aligned byte ranges. Cloudflare may expand a client range and issue several single-range origin requests. The ranges received by your origin can differ from the client's `Range` header.
+Origin Range Requests let Cloudflare fetch large files from your origin in cache-aligned byte ranges. Cloudflare may expand a client range and issue several single-range origin requests. Your origin may receive ranges that differ from the client's `Range` header.
 
 This setting does not make a request or response cacheable. Cloudflare can use origin range fetching for an eligible `GET` even if the response is not stored. File-size limits apply to the complete object, not the requested range. Origin Range Requests are not supported with [Cache Reserve](/cache/advanced-configuration/cache-reserve/#limits).
 
