@@ -61,10 +61,10 @@ The following configuration will modify settings in your Cloudflare account.
 
         # (Optional) Routes internal IP of GCP instance through the tunnel for private network access using WARP.
         resource "cloudflare_zero_trust_tunnel_cloudflared_route" "example_tunnel_route" {
-        account_id         = var.cloudflare_account_id
-        tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
-        network            = google_compute_instance.http_server.network_interface.0.network_ip
-        comment            = "Example tunnel route"
+        	account_id         = var.cloudflare_account_id
+        	tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        	network            = google_compute_instance.http_server.network_interface.0.network_ip
+        	comment            = "Example tunnel route"
         }
 
         # Creates a reusable Access policy.
@@ -143,10 +143,10 @@ The following configuration will modify settings in your Cloudflare account.
 
         # (Optional) Route internal IP of GCP instance through the tunnel for private network access using WARP.
         resource "cloudflare_zero_trust_tunnel_route" "example_tunnel_route" {
-        account_id         = var.cloudflare_account_id
-        tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
-        network            = google_compute_instance.http_server.network_interface.0.network_ip
-        comment            = "Example tunnel route"
+        	account_id         = var.cloudflare_account_id
+        	tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        	network            = google_compute_instance.http_server.network_interface.0.network_ip
+        	comment            = "Example tunnel route"
         }
 
         # Creates an Access application to control who can connect to the public hostname.
