@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-for-platforms/workers-for-platforms/configuration/custom-bindings.mdx
+  s_26acf6c8fd54e4::t_b020e92a6b3626 13-19,21,25-29,31,33,36-37,49,51,54,59-61,63,68-119,121-122,124-127,137,145-147,157,173,175,177-203,211-217,220,232,236,239,244,246,251-252,255-256,272,283,285,287,290,301,303-314,327,337,339-340,359,371,375,379,381,386-437,439-445,449,454-455,463-477,481,483-510,518-524,527,539,541,559-564,570,572,574-651
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "460d0536b3662238ee02bbe8a28f95f00944b506",
+  "prompts": {},
+  "sessions": {
+    "s_26acf6c8fd54e4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fda227929ffes2EptM3cGuxNXW",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+src/content/docs/workers/get-started/guide.mdx
+  s_5e0a5827b474e1::t_9302eb9051cdf0 53-57
+  s_5e0a5827b474e1::t_4832e34f19e51e 204
+src/content/docs/artifacts/get-started/index.mdx
+  s_5e0a5827b474e1::t_f105252672c74b 3,18
+src/content/docs/artifacts/get-started/workers.mdx
+  s_5e0a5827b474e1::t_f105252672c74b 22,24,26,30,32,34-41
+  s_5e0a5827b474e1::t_ecb38da0c4132d 16,45,47
+  s_5e0a5827b474e1::t_0b95d41af6083e 51
+src/content/docs/artifacts/index.mdx
+  s_5e0a5827b474e1::t_f105252672c74b 33,43
+src/content/docs/artifacts/api/workers-binding.mdx
+  s_5e0a5827b474e1::t_f105252672c74b 381,383
+src/content/docs/artifacts/examples/isomorphic-git.mdx
+  s_5e0a5827b474e1::t_f105252672c74b 21
+src/content/docs/artifacts/get-started/rest-api.mdx
+  s_5e0a5827b474e1::t_f105252672c74b 32
+src/content/changelog/artifacts/2026-08-31-workers-builds-integration.mdx
+  s_5e0a5827b474e1::t_621a135ead4b0c 14
+  s_5e0a5827b474e1::t_ecb38da0c4132d 16-17
+  s_5e0a5827b474e1::t_bea296b6dde8fe 11-13
+  s_5e0a5827b474e1::t_630f893b2fc45a 15
+  s_5e0a5827b474e1::t_86afbbb8a6d1b2 18
+src/content/docs/workers/ci-cd/index.mdx
+  s_5e0a5827b474e1::t_f1d31f20e81eee 24
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_5e0a5827b474e1::t_f105252672c74b 33-35,39-41,52-55,73-75
+  s_5e0a5827b474e1::t_ecb38da0c4132d 79
+  s_5e0a5827b474e1::t_7acc4f173ffc99 30-32
+src/content/docs/workers/ci-cd/builds/git-integration/artifacts-integration.mdx
+  s_5e0a5827b474e1::t_ecb38da0c4132d 23-49
+  s_5e0a5827b474e1::t_236358c64b115e 17
+  s_5e0a5827b474e1::t_09541a0ae0c37a 14-16
+  s_5e0a5827b474e1::t_f014ee8c6721e2 18-22
+  s_5e0a5827b474e1::t_651abd45a2b167 50-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c5bb67d3a0b1f865f69d1e1e4324e992839a2cd5",
+  "prompts": {},
+  "sessions": {
+    "s_5e0a5827b474e1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fa61a9725ffeSYrwHsL9i1f7Xx",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
