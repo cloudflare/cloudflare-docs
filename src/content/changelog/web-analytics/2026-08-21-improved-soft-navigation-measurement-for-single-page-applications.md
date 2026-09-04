@@ -6,7 +6,7 @@ products:
   - web-analytics
 ---
 
-Cloudflare Web Analytics (Real User Monitoring) is rolling out accuracy improvements to client-side soft navigations.
+Cloudflare Web Analytics (Real User Monitoring) is rolling out accuracy improvements to client-side soft navigations. **Update: this update is complete as of 2026-09-04.**
 
 **This change may alter the volume of reported pageviews and visits in the dashboard and GraphQL API. The reported Largest Contentful Paint (LCP) metric may also fluctuate.** The extent of these variances depend on your front-end architecture and visitor traffic patterns.
 
