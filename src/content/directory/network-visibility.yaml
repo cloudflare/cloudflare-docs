@@ -1,0 +1,12 @@
+id: gpuHsD
+name: Network visibility
+
+entry:
+  title: Network visibility
+  group: Cloudflare One
+  url: /cloudflare-one/insights/network-visibility/
+
+meta:
+  title: Cloudflare One network visibility docs
+  description: Record and analyze raw network traffic with packet captures to diagnose connectivity and security issues
+  author: "@cloudflare"

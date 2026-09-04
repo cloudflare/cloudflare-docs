@@ -56,6 +56,15 @@ export const GET: APIRoute = async ({ url }) => {
 		}
 		groupedMap.get(group)!.push(entry);
 	}
+	// Sort within each group by title. Collection order is filename order, which
+	// is arbitrary from a reader's point of view (it put "Digital Experience
+	// Monitoring" before "Data Loss Prevention"). Matches the `## Other` list,
+	// which is already title-sorted.
+	for (const entries of groupedMap.values()) {
+		entries.sort((a, b) =>
+			(a.data.entry?.title ?? "").localeCompare(b.data.entry?.title ?? ""),
+		);
+	}
 	const grouped = Array.from(groupedMap.entries()).sort(([a], [b]) =>
 		a.localeCompare(b),
 	);
