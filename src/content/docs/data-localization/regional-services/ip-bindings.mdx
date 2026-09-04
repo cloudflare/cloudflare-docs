@@ -31,6 +31,7 @@ Bindings are managed through the Data Localization Suite API under `/accounts/{a
 A binding covers a range of addresses within a prefix, not just a single address — you do **not** need to create one binding per IP address. The `cidr` you bind must:
 
 - Fall within the prefix identified by `prefix_id`.
+- Contain only unused IP addresses. Binding IP addresses that are already in use interrupts their traffic while the change propagates.
 - Be **more specific than the prefix itself** — a sub-range within it. For example, within a `/24` prefix you can bind any range from a `/25` down to a single address (a `/32` for IPv4, or a `/128` for IPv6). Binding the entire prefix (the full `/24`) is rejected with a [conflict error](#handle-a-conflict-error), because the whole prefix range is already in use once Cloudflare advertises it.
 
 How you choose the CIDR depends on how you want to split the prefix across regions:
@@ -139,15 +140,40 @@ Bind a CIDR from one of your BYOIP prefixes to a region. The `cidr` must fall wi
 }
 ```
 
-:::note
+:::caution[Always bind unused IP addresses]
 
-After you create or change a binding, it can take a few hours for the change to propagate across Cloudflare's network before traffic is regionalized at the edge.
+Creating or changing a binding can take four to six hours to propagate across Cloudflare's network. If the affected IP addresses are already in use, this process interrupts their traffic and clients receive TCP resets.
 
-Connectivity to these addresses is not interrupted while the binding propagates — existing traffic continues to be served. However, a binding must finish propagating and become **active** before you can add its addresses to an [address map](/byoip/address-maps/) (including creating a new address map that contains them). Until the binding is active, those operations are rejected.
-
-For this reason, create the binding **first** and allow it to finish propagating before you configure address maps for the affected addresses.
+Always bind unused IP addresses. Wait for the binding to become **active** before you direct production traffic to the addresses or add them to an [address map](/byoip/address-maps/).
 
 :::
+
+### Check binding status
+
+Use the binding ID returned by the create request to call the [Get service binding](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/get/) endpoint. The Regionalized IP Bindings API and Service Bindings API use the same binding ID.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings/{binding_id}"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+The binding is ready when `result.provisioning.state` is `active`:
+
+```json title="Response"
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"id": "f0e1d2c3-b4a5-6789-0abc-def123456789",
+		"cidr": "203.0.113.0/25",
+		"provisioning": {
+			"state": "active"
+		}
+	}
+}
+```
 
 ### Handle a conflict error
 
