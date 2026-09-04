@@ -18,7 +18,9 @@ Use the Streamable HTTP endpoint at `/mcp` for new connections. The servers supp
 
 ## Cloudflare API MCP server
 
-The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product — through just two tools: `search()` and `execute()`.
+:::tip[You only need one MCP server]
+The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) at `https://mcp.cloudflare.com/mcp` provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product. You do **not** need to install the product-specific servers in [Optional product-specific MCP servers](#optional-product-specific-mcp-servers) unless you have a specialized use case that requires them.
+:::
 
 It uses [the search-and-execute Code Mode pattern](/agents/model-context-protocol/codemode/#search-and-execute), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) sandbox.
 
@@ -86,9 +88,9 @@ Clone the [cloudflare/skills](https://github.com/cloudflare/skills) repository a
 | OpenAI Codex | `~/.codex/skills/`           | [OpenAI Codex skills](https://developers.openai.com/codex/skills/)                                   |
 | Pi           | `~/.pi/agent/skills/`        | [Pi coding agent skills](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent#skills) |
 
-## Product-specific MCP servers
+## Optional product-specific MCP servers
 
-In addition to the Cloudflare API MCP server, Cloudflare provides product-specific MCP servers for targeted use cases:
+The following product-specific MCP servers are available for targeted use cases. These are **optional** — the [Cloudflare API MCP server](#cloudflare-api-mcp-server) already covers the full Cloudflare API.
 
 | Server Name                                                                                                             | Description                                                                                     | Server URL                                     |
 | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
