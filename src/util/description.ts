@@ -1,7 +1,6 @@
 import { parse } from "node-html-parser";
 import he from "he";
-import { remark } from "remark";
-import strip from "strip-markdown";
+import { stripMarkdownToText } from "./markdown";
 import { EXTERNAL_LINK_ARROW } from "@cloudflare/nimbus-docs/markdown";
 
 // Parity: mirrors production's src/util/props.ts generateDescription (html
@@ -21,10 +20,6 @@ export function generateDescriptionFromHtml(html: string): string | undefined {
 
 // Parity: production strips Markdown from the description only for JSON-LD
 // (via Page.astro), leaving the raw string in <meta>/OG. No-op on plain text.
-export async function stripMarkdownDescription(
-	markdown: string,
-): Promise<string> {
-	const file = await remark().use(strip).process(markdown);
-
-	return file.toString().replaceAll(EXTERNAL_LINK_ARROW, "").trim();
+export function stripMarkdownDescription(markdown: string): string {
+	return stripMarkdownToText(markdown);
 }

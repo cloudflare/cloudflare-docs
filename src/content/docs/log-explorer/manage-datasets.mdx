@@ -8,7 +8,7 @@ products:
   - log-explorer
 ---
 
-import { TabItem, Tabs, Render, DashButton } from "~/components";
+import { TabItem, Tabs, Render, DashButton, Steps } from "~/components";
 
 Log Explorer allows you to enable, disable, or delete datasets available to query in Log Search.
 
@@ -44,6 +44,7 @@ Log Explorer currently supports the following datasets:
 - [Browser Isolation User Actions](/logs/logpush/logpush-job/datasets/account/biso_user_actions/) (`biso_user_actions`)
 - [DNS firewall logs](/logs/logpush/logpush-job/datasets/account/dns_firewall_logs/) (`dns_firewall_logs`)
 - [Email security alerts](/logs/logpush/logpush-job/datasets/account/email_security_alerts/) (`email_security_alerts`)
+- [Magic BGP Logs](/logs/logpush/logpush-job/datasets/account/magic_bgp_logs/) (`magic_bgp_logs`)
 - [Magic IDS Detections](/logs/logpush/logpush-job/datasets/account/magic_ids_detections/) (`magic_ids_detections`)
 - [Network Analytics](/logs/logpush/logpush-job/datasets/account/network_analytics_logs/) (`network_analytics_logs`)
 - [Sinkhole HTTP Logs](/logs/logpush/logpush-job/datasets/account/sinkhole_http_logs/) (`sinkhole_http_logs`)
@@ -51,20 +52,41 @@ Log Explorer currently supports the following datasets:
 
 ## Enable Log Explorer
 
-In order for Log Explorer to begin storing logs, you need to enable the desired datasets. You can do this via the dashboard or the API.
+To begin storing logs, enable the desired datasets through the dashboard or API.
+
+### Dashboard
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to the **Log Explorer** > **Manage datasets** page.
 
    <DashButton url="/?to=/:account/log-explorer/manage-sources" />
 
-2. Select **Add dataset** to select the datasets you want to query.
-3. Choose a dataset and then a zone. Then, select **Add**. You can always return to this page to enable more datasets or manage your existing ones.
+2. Select **Add dataset**.
+3. Choose a dataset and, for zone-level datasets, a zone.
+4. Under **Select fields**, choose the fields that Log Explorer should ingest.
+5. Under **Filter logs**, choose whether to ingest all events or only events that match a filter.
+6. Select **Add**.
+
+</Steps>
 
 :::note
 It may take a few minutes for the logs to become available for querying.
 :::
 
-If you are using the API, Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take a few minutes after a log stream is enabled before you can view the logs.
+#### Configure fields and filters
+
+Use **Select fields** to control which data points Log Explorer stores. Fields are grouped by category, and each category shows its selected field count. Select a category to add or remove all fields in that group, or expand the category to select individual fields. Each field shows its data type.
+
+Required fields remain selected and are marked **Required**. Fields that Cloudflare no longer recommends are marked **Deprecated**. Select **Select all** to include every available field, or **Reset to default** to restore the dataset defaults.
+
+Use **Filter logs** to ingest **All events** or **Only events matching a filter**. A filter condition consists of a field, an operator, and a value. All conditions within a group must match. An event can match any filter group.
+
+To change the fields or filter for an enabled dataset, go to **Log Explorer** > **Manage datasets**. Find the dataset, select **Actions** > **Edit**, update the configuration, and select **Update**.
+
+### API
+
+Use the Log Explorer API to enable each dataset you want to store. It may take a few minutes after a log stream is enabled before you can view the logs.
 
 The following `curl` command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
 

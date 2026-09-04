@@ -32,10 +32,12 @@ After you create a token configuration, Cloudflare checks every request in the z
 3. On **Token configurations**, select **Configure tokens**.
 4. Add a name for your configuration.
 5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
-6. Copy and paste your JWT issuer's public key(s) (JWKS).
+6. Copy and paste your JWT issuer's verification keys (JWKS). You can provide asymmetric public keys or symmetric keys used with HMAC algorithms.
 </Steps>
 
-Each JWT issuer typically publishes public keys (JWKS) for verification at a known URL on the Internet. If you do not know where to get them, contact your identity administrator.
+JWT issuers that use asymmetric algorithms typically publish public keys (JWKS) for verification at a known URL on the Internet. Issuers that use HMAC algorithms share a symmetric credential with the validator. If you do not know where to get your issuer's verification keys or symmetric credential, contact your identity administrator.
+
+For supported algorithms and symmetric key requirements, refer to [Configure JWT validation via the API](/api-shield/security/jwt-validation/api/#credentials).
 
 To automatically keep your JWKS up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
 

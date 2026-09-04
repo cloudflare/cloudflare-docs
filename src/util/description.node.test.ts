@@ -42,14 +42,14 @@ describe("generateDescriptionFromHtml", () => {
 });
 
 describe("stripMarkdownDescription", () => {
-	test("strips links, emphasis, and inline code", async () => {
-		expect(
-			await stripMarkdownDescription("Use [X](/x) with **y** and `z`"),
-		).toBe("Use X with y and z");
+	test("strips links, emphasis, and inline code", () => {
+		expect(stripMarkdownDescription("Use [X](/x) with **y** and `z`")).toBe(
+			"Use X with y and z",
+		);
 	});
 
-	test("leaves plain text unchanged", async () => {
-		expect(await stripMarkdownDescription("Just plain text.")).toBe(
+	test("leaves plain text unchanged", () => {
+		expect(stripMarkdownDescription("Just plain text.")).toBe(
 			"Just plain text.",
 		);
 	});

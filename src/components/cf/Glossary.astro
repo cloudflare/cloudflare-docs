@@ -10,7 +10,7 @@
  * swapped for Nimbus tokens.
  */
 import { getCollection } from "astro:content";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 
 interface Props {
 	product?: string;
@@ -55,7 +55,7 @@ const INITIAL_VISIBLE_ROWS = 20;
 					<tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
 						<td>{entry.term}</td>
 						<td
-							set:html={marked.parse(
+							set:html={renderMarkdown(
 								entry.general_definition.charAt(0).toUpperCase() +
 									entry.general_definition.slice(1),
 							)}

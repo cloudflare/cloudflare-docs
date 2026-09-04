@@ -5,7 +5,7 @@
 /* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */
 // Dashed-underlined term; reveals its glossary definition via Tippy.
 import { getCollection } from "astro:content";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 
 interface Props {
 	term: string;
@@ -35,7 +35,7 @@ definition = definition.split(/\r?\n/)[0]!;
 <span
   id={term}
   data-tooltip
-  data-content={marked.parse(definition)}
+  data-content={renderMarkdown(definition)}
   class="glossary-tooltip"
   tabindex="0"
   >{link ? <a href={link}><slot /></a> : <slot />}</span><script>

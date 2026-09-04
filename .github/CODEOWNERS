@@ -7,7 +7,6 @@
 /.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhite @ahaywood @MohamedH1998
 /.github/CODEOWNERS @cloudflare/product-owners @cloudflare/content-engineering @kodster28
 /.github/actions/assign-pr/index.js @cloudflare/product-owners @cloudflare/content-engineering @kodster28
-/.github/labeler.yml @cloudflare/pcx-technical-writing
 /src/components/ @cloudflare/content-engineering @kodster28
 *.js @cloudflare/content-engineering @kodster28
 *.ts @cloudflare/content-engineering @kodster28
@@ -24,7 +23,7 @@ package.json @cloudflare/content-engineering
 
 # AI
 
-/src/content/docs/agent-lee/ @kczajkowski @Brayden @cloudflare/ax @cloudflare/product-owners
+/src/content/docs/agent-lee/ @kczajkowski @Brayden @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @rita3ko @irvinebroque @vy-ton @thomasgauvin @cloudflare/product-owners
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @shridhar-cf @adriandlam @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners
@@ -114,26 +113,46 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/account-limits.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/applications/ @alexmoraru7 @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/users/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @cf-rhett @csujedihy @lpraneis @jiulingz @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up.mdx @asamborski @cf-rhett @csujedihy @lpraneis @jiulingz @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/vnc-browser-rendering.mdx @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/tunnel/ @nikitacano @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/warp/ @cf-rhett @csujedihy @lpraneis @jiulingz @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/posture/ @cloudflare/cf1-reviewers @cloudflare/product-owners @mmiranda-cf @zesilva63 @mkdewidar @marcinflare @jlu-cloudflare @pjennings1020 @TylerStanish @claudiocn
+/src/content/partials/cloudflare-one/choose-team-name.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/access/ @kennyj42 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/ssh/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/troubleshooting/browser-isolation.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/changelog/cloudflare-one/ @kennyj42 @asamborski @cloudflare/pm-changelogs @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/changelog/access/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/browser-isolation/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/gateway/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/cloudflare-one/changelog/access.mdx @asamborski @cloudflare/product-owners
+/src/content/docs/cloudflare-one/changelog/browser-isolation.mdx @asamborski @cloudflare/product-owners
+/src/content/docs/cloudflare-one/changelog/gateway.mdx @asamborski @cloudflare/product-owners
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/integrations/ @cloudflare/cf1-reviewers @cloudflare/product-owners @mmiranda-cf @zesilva63 @mkdewidar @marcinflare @jlu-cloudflare @pjennings1020 @TylerStanish @claudiocn
-/src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/cloudflare-one/remote-browser-isolation/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/identity-providers/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/product-owners @mmiranda-cf @zesilva63 @mkdewidar @marcinflare @jlu-cloudflare @pjennings1020 @TylerStanish @claudiocn
+/src/content/docs/cloudflare-one/traffic-policies/ @asamborski @alexmoraru7 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/gateway/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/remote-browser-isolation/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/setup/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/setup/secure-private-apps/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/data-loss-prevention/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/insights/dex/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/assets/images/cloudflare-one/ @cf-rhett @csujedihy @lpraneis @jiulingz @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/cloudflare-one/identity/ @asamborski @cf-rhett @csujedihy @lpraneis @jiulingz @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/cloudflare-one/ @asamborski @cf-rhett @csujedihy @lpraneis @jiulingz @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # Consumer products
 
@@ -161,6 +180,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @jeffh-cloudflare @alpdot @cloudflare/product-owners
+/src/content/docs/network/ip-geolocation.mdx @cloudflare/product-owners @mbullock1986
 /src/content/docs/notifications/ @cloudflare/product-owners
 /src/content/docs/registrar/ @cloudflare/product-owners
 /src/content/docs/rules/ @cloudflare/appsec-reviewers @smarsh-cf @maurizioabba @cloudflare/product-owners @mbullock1986
@@ -185,10 +205,12 @@ package.json @cloudflare/content-engineering
 /src/content/partials/hyperdrive/ @rita3ko @irvinebroque @vy-ton @ivoryibu @thomasgauvin @sejoker @knickish @cloudflare/product-owners
 /src/content/docs/images/ @cloudflare/product-owners @renandincer @third774 @deannalam @dochne
 /src/content/partials/images/ @cloudflare/product-owners @renandincer @third774 @deannalam @dochne
-/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/product-owners @MattieTK
-/src/content/partials/pages/ @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK
-/src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
-/src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK
+/src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/partials/pages/ @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/directory/pages.yaml @cloudflare/product-owners @scottbuscemi
+/src/content/pages-framework-presets/ @cloudflare/product-owners @scottbuscemi
 /src/content/docs/kv/ @thomasgauvin @irvinebroque @rts-rob @vy-ton @cloudflare/product-owners
 /src/content/release-notes/kv.yaml @thomasgauvin @cloudflare/product-owners
 /src/content/partials/kv/ @thomasgauvin @cloudflare/product-owners
@@ -225,9 +247,15 @@ package.json @cloudflare/content-engineering
 /src/content/docs/zaraz/ @kathayl @jonnyparris @simonabadoiu @cloudflare/product-owners
 /src/content/release-notes/zaraz.yaml @jonnyparris @simonabadoiu @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @ericclemmons @cloudflare/product-owners @yomna-shousha @MattieTK @vy-ton
+/src/content/docs/workers/ci-cd/builds/ @irvinebroque @aninibread @GregBrimble @ericclemmons @cloudflare/product-owners @yomna-shousha @MattieTK @vy-ton @scottbuscemi
+/src/assets/images/workers/ci-cd/builds/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/directory/workers-builds.yaml @cloudflare/product-owners @scottbuscemi
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/product-owners @MattieTK
 /src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @cloudflare/product-owners @MattieTK @vy-ton
-/src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/product-owners @MattieTK
+/src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/product-owners @MattieTK @scottbuscemi
+/src/content/docs/workers/framework-guides/web-apps/nextjs.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/docs/workers/framework-guides/web-apps/opennext.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
+/src/content/docs/workers/framework-guides/automatic-configuration.mdx @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @cloudflare/wrangler @MattieTK @cloudflare/dev-plat-leads @vy-ton @cloudflare/workers-runtime-1 @scottbuscemi
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @nevikashah @WalshyDev @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/product-owners
