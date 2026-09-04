@@ -1,1 +1,260 @@
-H@áí6Ù¦i¿uoÝÚÓfÞsÖœ{žùí·_Aˆ6Ê.­Ç
+---
+pcx_content_type: how-to
+description: Configure your Cloudflare zone for PCI DSS compliance â€” set minimum TLS version, configure approved cipher suites, and understand how Cloudflare interacts with PCI ASV scans.
+products:
+  - ssl
+source: https://support.cloudflare.com/hc/en-us/articles/205043158-PCI-compliance-and-Cloudflare-SSL-TLS
+title: PCI DSS compliance
+tags:
+  - TLS
+  - Compliance
+---
+
+import { DashButton, APIRequest } from "~/components";
+
+The Payment Card Industry Data Security Standard (PCI DSS) applies to any organization that stores, processes, or transmits payment card data. When your site or application runs behind Cloudflare, several PCI DSS requirements apply to how Cloudflare handles your traffic â€” and some require explicit configuration on your zone.
+
+This guide walks through the Cloudflare configuration steps required for PCI DSS compliance, explains how Cloudflare interacts with PCI Approved Scanning Vendor (ASV) scans, and lists known scanner false positives.
+
+## Cloudflare's PCI DSS certification
+
+Cloudflare is certified as a **Level 1 PCI DSS Service Provider** â€” the highest certification level. You can obtain Cloudflare's current Attestation of Compliance (AOC) from the [Cloudflare Trust Hub](https://www.cloudflare.com/trust-hub/compliance-resources/pci-dss/).
+
+:::note
+Cloudflare's AOC covers Cloudflare's own infrastructure. It does not automatically extend to your zone or application. You are responsible for configuring Cloudflare correctly and securing your own systems.
+:::
+
+## Shared responsibility
+
+| Area | Cloudflare | You |
+| --- | --- | --- |
+| TLS protocol support | Supports TLS 1.2 and 1.3 on all plans | Set minimum TLS version to 1.2 on your zone |
+| Cipher suites | Offers PCI DSS-approved cipher suites | Enable the PCI DSS cipher suite profile on your zone |
+| Vulnerability patching | Patches Cloudflare infrastructure (ROBOT, Sweet32, and others) | Keep your origin server and any third-party software patched |
+| Client-side scripts | Client-Side Security Advanced inventories and monitors payment page scripts | Enable and configure Client-Side Security |
+
+## Configure TLS settings
+
+Steps 1 and 2 are required for PCI DSS compliance. Step 3 is Cloudflare's recommendation for a stronger configuration but is not mandated by PCI DSS v4.0, which sets TLS 1.2 as the minimum. A PCI scan checks each layer independently â€” completing only Steps 1 and 2 is sufficient to meet the standard.
+
+### Step 1: Set minimum TLS version to 1.2
+
+PCI DSS requirement 4.2.1 mandates strong cryptography for cardholder data in transit, with TLS 1.2 as the minimum acceptable version. TLS 1.0 and TLS 1.1 are not considered strong cryptography under PCI DSS.
+
+1. In the Cloudflare dashboard, go to **SSL/TLS** > **Edge Certificates**.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Minimum TLS Version**, select **TLS 1.2** or higher.
+
+Refer to [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) for API and Terraform options.
+
+### Step 2: Configure PCI DSS cipher suites
+
+PCI DSS prohibits weak and deprecated cipher algorithms. You must restrict your zone to the PCI DSS-approved cipher list.
+
+:::note[Prerequisite]
+Cipher suite customization requires an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) subscription.
+:::
+
+:::note
+- You cannot configure specific TLS 1.3 cipher suites. When you [enable TLS 1.3](#step-3-enable-tls-13-recommended), Cloudflare automatically uses all supported TLS 1.3 cipher suites, all of which meet PCI DSS requirements. The cipher list in this step applies to TLS 1.2 connections only.
+- Updating cipher suites triggers certificate redeployment, which may take a few minutes. Wait before running a verification scan.
+:::
+
+Follow the steps in [Customize cipher suites (dashboard)](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/dashboard/) and select the cipher suites from the PCI DSS profile listed in [Compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/#pci-dss). Alternatively, use the API:
+
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	json={{
+		value: [
+			"ECDHE-ECDSA-AES128-GCM-SHA256",
+			"ECDHE-RSA-AES128-GCM-SHA256",
+			"ECDHE-ECDSA-AES256-GCM-SHA384",
+			"ECDHE-RSA-AES256-GCM-SHA384",
+			"ECDHE-ECDSA-CHACHA20-POLY1305",
+			"ECDHE-RSA-CHACHA20-POLY1305",
+		],
+	}}
+	parameters={{
+		setting_id: "ciphers",
+	}}
+/>
+
+### Step 3: Enable TLS 1.3 (recommended)
+
+TLS 1.3 provides stronger security guarantees than TLS 1.2, eliminates several legacy handshake patterns, and is recommended alongside TLS 1.2 for a stronger, future-proof configuration. It is not required for PCI DSS compliance, which mandates TLS 1.2 as the minimum.
+
+1. In the Cloudflare dashboard, go to **SSL/TLS** > **Edge Certificates**.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. Enable **TLS 1.3**.
+
+Refer to [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/) for API and Terraform options.
+
+## Verify your configuration
+
+After applying all settings, confirm that non-compliant connections are rejected.
+
+### Use an online TLS scanner
+
+Online TLS scanners give you an external view of your configuration â€” the same perspective a PCI ASV scan sees. Two commonly used options are:
+
+- [SSL Labs Server Test](https://www.ssllabs.com/ssltest/) â€” enter your domain and review the report. Check for **Protocol support** (TLS 1.2 and 1.3 only), **Cipher strength** (no weak or deprecated suites), and an overall grade of **A** or **A+**.
+- [SSL Shopper SSL Checker](https://www.sslshopper.com/ssl-checker.html) â€” validates your certificate chain and TLS configuration from an external vantage point.
+
+:::note
+Cloudflare does not endorse any specific third-party tool. Use any scanner that fits your workflow â€” what matters is verifying from outside the Cloudflare dashboard.
+:::
+
+### Use openssl
+
+`openssl s_client` lets you test specific TLS versions from the command line. Connections using TLS 1.0 or TLS 1.1 should fail:
+
+```sh
+# Should fail â€” TLS 1.0 rejected
+openssl s_client -connect example.com:443 -tls1
+
+# Should fail â€” TLS 1.1 rejected
+openssl s_client -connect example.com:443 -tls1_1
+```
+
+A rejected connection returns an error such as:
+
+```sh
+4087F5C1E27F0000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version
+```
+
+To confirm which cipher suite is negotiated over TLS 1.2:
+
+```sh
+openssl s_client -connect example.com:443 -tls1_2 2>/dev/null | grep -E "Protocol|Cipher"
+```
+
+The output should show a cipher from the PCI DSS-approved list â€” for example `ECDHE-RSA-AES128-GCM-SHA256`.
+
+### Use curl
+
+To confirm TLS 1.0 and TLS 1.1 are rejected:
+
+```sh
+# Should fail â€” TLS 1.0 rejected
+curl https://example.com --tls-max 1.0 -svo /dev/null
+
+# Should fail â€” TLS 1.1 rejected
+curl https://example.com --tls-max 1.1 -svo /dev/null
+```
+
+A rejected connection returns an error such as:
+
+```sh
+* error:1400442E:SSL routines:CONNECT_CR_SRVR_HELLO:tlsv1 alert
+```
+
+### Check from the dashboard
+
+On the **Edge Certificates** page, select **View current ciphers** to see the cipher suites configured on your zone.
+
+:::note
+The dashboard shows your configured cipher suites. The ciphers actually negotiated in a TLS handshake depend on the connecting client and certificate algorithm (RSA vs. ECDSA). Use SSL Labs or `openssl s_client` for the external view that a PCI scanner sees.
+:::
+
+## Cloudflare Pages
+
+It is not possible to configure minimum TLS version or cipher suites for `*.pages.dev` hostnames. These settings only apply to zones you control in the Cloudflare dashboard.
+
+For payment pages hosted on a Pages project, use a [custom domain](/pages/configuration/custom-domains/) attached to a zone you control. Zone-level TLS and cipher suite settings apply to traffic served through that custom domain.
+
+## PCI DSS v4 client-side requirements
+
+PCI DSS v4.0 introduced two requirements for scripts running in the consumer's browser on payment pages:
+
+| Requirement | Description | Cloudflare feature |
+| --- | --- | --- |
+| **6.4.3** | Maintain an inventory of all scripts on payment pages, with authorization and integrity checks | Client-Side Security Advanced |
+| **11.6.1** | Detect and alert on unauthorized changes to HTTP security headers and payment page content | Client-Side Security Advanced |
+
+Refer to [Client-side security and PCI DSS compliance](/client-side-security/reference/pci-dss/) for setup guidance.
+
+## PCI ASV scans
+
+PCI DSS requires quarterly vulnerability scans by an Approved Scanning Vendor (ASV). When your domain is proxied through Cloudflare, ASV scanners interact with Cloudflare's edge network rather than your origin server directly. Several behaviors commonly arise.
+
+### TCP source port behavior
+
+Some ASV tools report a **TCP Source Port Pass Firewall** finding against Cloudflare-proxied IP addresses. This is a false positive caused by how source port selection works in Cloudflare's reverse proxy infrastructure, not a vulnerability in your environment.
+
+If your QSA or scanning tool flags this finding, provide:
+
+- Cloudflare's current [Attestation of Compliance (AOC)](https://www.cloudflare.com/trust-hub/compliance-resources/pci-dss/)
+- Documentation that your domain is proxied through Cloudflare as a PCI DSS Level 1 Service Provider
+
+Your QSA can treat this as a compensating control or documented exception based on Cloudflare's shared responsibility boundary.
+
+### WAF and DDoS blocking ASV scanners
+
+ASV scanners send attack-pattern traffic â€” SQL injection probes, XSS payloads, vulnerability fingerprinting â€” to test your application. Cloudflare's WAF blocks many of these probes, which is correct WAF behavior, but it can prevent the scanner from completing its assessment.
+
+To allow a scan without disabling your WAF:
+
+1. Obtain the source IP ranges used by your ASV vendor.
+2. Create a [WAF custom rule](/waf/custom-rules/) that skips managed ruleset matching for those IP ranges, scoped to your scan maintenance window.
+3. Remove or disable the rule immediately after the scan completes.
+
+:::caution
+Keep the WAF exception as narrow as possible â€” scoped to the scanner's IP range only. Remove it as soon as scanning is complete.
+:::
+
+Cloudflare's WAF blocking scanner probes is not a compliance failure â€” a correctly configured WAF mitigating attack patterns is itself a PCI DSS control (requirement 6.4.1).
+
+### Non-standard ports
+
+Cloudflare proxies a [defined set of HTTP and HTTPS ports](/fundamentals/reference/network-ports/). For ports outside that list, Cloudflare's anycast network may cause those ports to appear open at the TCP layer even though they are not proxied â€” the TCP connection is accepted at the edge but HTTP/HTTPS requests are blocked at the application layer before reaching your origin.
+
+If an ASV scan targets non-proxied ports, findings for those ports reflect Cloudflare's edge behavior rather than your origin. Configure your scan to target the ports your application actually serves on, and provide your QSA with the [network ports reference](/fundamentals/reference/network-ports/) to document the expected behavior.
+
+## Vulnerability mitigations
+
+Cloudflare applies these mitigations by default across all proxied zones. No configuration is needed.
+
+Cloudflare does not support:
+
+- Header compression in TLS
+- Header compression in SPDY 3.1
+- RC4
+- SSL 3.0
+- Renegotiation with clients
+- DHE cipher suites
+- Export-grade ciphers
+
+Cloudflare mitigates:
+
+- CRIME
+- BREACH
+- POODLE
+- RC4 cryptographic weaknesses
+- SSL renegotiation attacks
+- Protocol downgrade attacks
+- FREAK
+- LogJam
+- Sweet32 â€” 3DES is disabled for TLS 1.1 and 1.2. For TLS 1.0, Cloudflare rotates session keys before the 32 GB threshold required for a successful attack
+
+All Cloudflare servers are patched against Heartbleed, Lucky Thirteen, and CCS injection vulnerability.
+
+## Common scanner false positives
+
+### ROBOT
+
+Security scans that report **Return of Bleichenbacher's Oracle Threat (ROBOT)** against a Cloudflare-proxied domain are false positives. Cloudflare validates RSA PKCS#1 v1.5 padding in real time and substitutes a random session key if padding is incorrect, eliminating any exploitable oracle.
+
+### Sweet32 (CVE-2016-2183)
+
+If a scanner flags Sweet32, verify that TLS 1.0 is disabled on your zone. Refer to [Set minimum TLS version to 1.2](#step-1-set-minimum-tls-version-to-12) for steps. With TLS 1.0 disabled, the 3DES cipher suites where Sweet32 applies are not in use and the finding does not apply to your environment.
+
+### `_cfuvid` cookie missing Secure flag
+
+Cloudflare sets the `_cfuvid` cookie on some zones for rate limiting. When a scanner accesses your site over HTTP, it may report this cookie as missing the `Secure` attribute. On HTTPS connections, the `Secure` flag is set correctly â€” this is a scanner methodology artifact from testing HTTP rather than HTTPS.
+
+To prevent this finding: ensure your zone redirects all HTTP traffic to HTTPS before scanning, and configure your ASV to scan HTTPS endpoints. Refer to [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) for setup steps.
