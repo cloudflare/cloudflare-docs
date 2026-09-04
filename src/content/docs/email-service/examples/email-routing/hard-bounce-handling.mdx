@@ -192,7 +192,7 @@ async function handleHardBounce(bounceInfo, env) {
 Create a test bounce notification:
 
 ```bash
-curl --request POST 'http://localhost:8787/cdn-cgi/handler/email' \
+curl --request POST 'http://localhost:8787/cdn-cgi/local/email' \
   --url-query 'from=mailer-daemon@example.com' \
   --url-query 'to=bounce-handler@yourdomain.com' \
   --header 'Content-Type: application/json' \

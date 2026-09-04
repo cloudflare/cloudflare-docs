@@ -14,10 +14,10 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 :::note[Testing scheduled() handlers in local development]
 
-You can test the behavior of your `scheduled()` handler in local development by sending an HTTP request to `/cdn-cgi/handler/scheduled` to trigger the handler. Pass `?format=json` to return the structured scheduled handler result.
+You can test the behavior of your `scheduled()` handler in local development by sending an HTTP request to `/cdn-cgi/local/scheduled` to trigger the handler. Pass `?format=json` to return the structured scheduled handler result.
 
 ```sh
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?format=json"
+curl "http://localhost:8787/cdn-cgi/local/scheduled?format=json"
 ```
 
 :::
@@ -69,16 +69,12 @@ class Default(WorkerEntrypoint):
 
 - `controller.cron` string
   - The value of the [Cron Trigger](/workers/configuration/cron-triggers/) that started the `ScheduledEvent`.
-
 - `controller.type` string
   - The type of controller. This will always return `"scheduled"`.
-
 - `controller.scheduledTime` number
   - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(controller.scheduledTime)</code>.
-
 - `env` object
   - An object containing the bindings associated with your Worker using ES modules format, such as KV namespaces and Durable Objects.
-
 - `ctx` object
   - An object containing the context associated with your Worker using ES modules format. Currently, this object just contains the `waitUntil` function.
 
