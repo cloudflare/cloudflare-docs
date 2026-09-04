@@ -136,7 +136,8 @@ To resolve a memory limit error:
 
 1. **Stream request and response bodies** — Use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) or [`node:stream`](/workers/runtime-apis/nodejs/streams/) instead of buffering entire payloads in memory.
 2. **Avoid large in-memory objects** — Store large data in [KV](/kv/), [R2](/r2/), or [D1](/d1/) instead of holding it in Worker memory.
-3. **Profile memory usage** — Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to identify leaks and high-memory allocations.
+3. **Update Zod** — If your Worker uses Zod, use [version 4.5.0 or later](https://github.com/colinhacks/zod/releases/tag/v4.5.0). Earlier versions use substantially more memory per schema.
+4. **Profile memory usage** — Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to identify leaks and high-memory allocations.
 
 To view memory errors in the dashboard:
 
