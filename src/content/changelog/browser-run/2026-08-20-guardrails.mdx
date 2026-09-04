@@ -1,0 +1,26 @@
+---
+title: "Browser Run adds guardrails to restrict browser sessions"
+description: Browser Run now supports guardrails, letting you restrict which hosts a browser session can reach and share read-only views of a running session.
+products:
+  - browser-run
+date: 2026-08-20
+---
+
+[Browser Run](/browser-run/) now supports [guardrails](/browser-run/features/guardrails/), a per-session allowlist of hosts the browser can reach. Guardrails are set when the session is acquired and cannot be changed afterwards, so agents and automation scripts stay within the boundaries you define.
+
+Every outbound request — including subresources like scripts, images, and fonts — is checked against the allowlist. Requests to hosts not on the list return a `403` response.
+
+Set them when you launch a session with Puppeteer, Playwright, or the REST API:
+
+```ts
+const browser = await puppeteer.launch(env.MYBROWSER, {
+	guardrails: {
+		allowedDomains: ["example.com", "*.example.com"],
+		allowedDomainSets: ["common-cdns"],
+	},
+});
+```
+
+Guardrails also apply to [Live View](/browser-run/features/live-view/) links. Set `guardrails` when generating a link to [share a view-only URL](/browser-run/features/live-view/#share-a-view-only-link), which streams the session but blocks navigation, input, and JavaScript evaluation.
+
+Refer to the [guardrails documentation](/browser-run/features/guardrails/) for hostname pattern rules, domain sets, and limits.

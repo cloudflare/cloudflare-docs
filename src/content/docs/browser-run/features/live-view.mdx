@@ -131,9 +131,62 @@ If you have a running session and want to connect to it:
 
 3. Copy the `devtoolsFrontendUrl` and open it in your browser.
 
-## Get Live View URL via CDP
+## Generate a Live View URL
 
-When using Puppeteer, Playwright, or a direct WebSocket connection, you can retrieve a Live View URL programmatically using the `Cloudflare.getLiveView` CDP command:
+Listing targets returns a `devtoolsFrontendUrl` for every tab, using [default settings](#live-view-parameters). To pick a viewing mode, extend the expiry, or restrict what the recipient can do, generate a custom Live View URL using either the REST API or CDP.
+
+### REST API
+
+Use the `live_view` endpoint to generate a Live View URL:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/live_view"
+	method="POST"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
+	json={{
+		mode: "tab",
+		expiresInMs: 300000,
+	}}
+/>
+
+#### Live View parameters
+
+| Parameter    | Type     | Default              | Description                                                            |
+| ------------ | -------- | -------------------- | ---------------------------------------------------------------------- |
+| `mode`       | `string` | `devtools`           | Viewing mode: `devtools`, `tab`, or `full`.                            |
+| `expiresInMs`| `number` | `300000` (5 minutes) | How long the URL stays valid, in milliseconds. Maximum is 1 hour.      |
+| `targetId`   | `string` | First active target  | Target (tab) to view.                                                  |
+| `guardrails` | `object` | None                 | Restrictions for the viewer. Set `{ "mode": "readonly" }` for view-only. |
+
+All parameters are **optional**. The response contains a `devtoolsFrontendUrl` to open in a browser or embed in an iframe, and a `webSocketDebuggerUrl` for programmatic CDP access.
+
+### Share a view-only link
+
+To let someone watch a session without interacting with it, set `guardrails` to `{ "mode": "readonly" }`:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/live_view"
+	method="POST"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
+	json={{
+		mode: "tab",
+		guardrails: { mode: "readonly" },
+	}}
+/>
+
+The returned link streams the session and lets the viewer inspect the page, but blocks navigation, input, and JavaScript evaluation. Navigation controls are turned off, and the browser tab title is prefixed with `READ ONLY - ` so the recipient knows the session is not interactive.
+
+:::caution
+A view-only link is for humans, not automation. Puppeteer and Playwright cannot drive a read-only connection, because the commands they rely on to open pages and run scripts are blocked.
+:::
+
+### CDP
+
+When using Puppeteer, Playwright, or a direct WebSocket connection, you can generate a Live View URL using the `Cloudflare.getLiveView` CDP command:
 
 ```js
 // Create a CDP session from your page
@@ -160,9 +213,10 @@ const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
 	targetId, // use the target ID from above, this is optional, if omitted the current target will be used
 	mode: "tab", // Options: "devtools", "tab", or "full"
 	expiresInMs: 300000, // optional, default is 5 minutes (max 1 hour)
+	guardrails: { mode: "readonly" }, // optional, returns a view-only URL
 });
 
 console.log(`Live View URL: ${devtoolsFrontendUrl}`);
 ```
 
-Refer to the [Human in the Loop reference](/browser-run/features/human-in-the-loop/#cloudflaregetliveview) for full parameter and return details.
+If you want to use Live View as part of a human operator handoff, refer to [Human in the Loop](/browser-run/features/human-in-the-loop/) for the full workflow and parameter details.
