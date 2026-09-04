@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-09-11-user-scoped-github-repositories.mdx
+  s_0a88b989226253::t_196809eb4d027b 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9a015c84aa9321c85c54e532e04910566c3133f8",
+  "prompts": {},
+  "sessions": {
+    "s_0a88b989226253": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f9260e2fcffeQuLsNCWXhBmDs8",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
