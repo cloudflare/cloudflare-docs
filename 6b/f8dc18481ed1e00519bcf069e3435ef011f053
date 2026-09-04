@@ -1,0 +1,35 @@
+src/content/changelog/r2/2026-08-25-r2-data-access-logs.mdx
+  s_f0abfdbd3b2f02::t_46ef76d0dd7f3a 11-13
+src/content/docs/r2/buckets/data-access-logs.mdx
+  s_f0abfdbd3b2f02::t_46ef76d0dd7f3a 18
+  s_77ab7b03678f2f::t_fc52ff5af42ef3 23,25-30
+  s_77ab7b03678f2f::t_bd7cabaa63aa39 88-100
+  s_f0abfdbd3b2f02::t_af7e47241c3d3e 36-40,42,82-87,101-108,112-113,120-131
+src/content/docs/r2/platform/audit-logs.mdx
+  s_f0abfdbd3b2f02::t_46ef76d0dd7f3a 41
+  s_f0abfdbd3b2f02::t_5b9df8f1e193e6 25-36,50-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6bf8dc18481ed1e00519bcf069e3435ef011f053",
+  "prompts": {},
+  "sessions": {
+    "s_77ab7b03678f2f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a03b3a-935e-7694-b0c9-b342bdc8c4ac",
+        "model": "deepseek-v4-pro"
+      },
+      "human_author": "helloimalastair <helloimalastair@users.noreply.github.com>"
+    },
+    "s_f0abfdbd3b2f02": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06901-c147-71b0-91be-816aad853286",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "helloimalastair <helloimalastair@users.noreply.github.com>"
+    }
+  }
+}
