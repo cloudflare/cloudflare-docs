@@ -161,10 +161,8 @@ Also note that CORS rule propagation can, in rare cases, take up to 30 seconds.
 
 ## Common Issues
 
-- Only a cross-origin request will include CORS response headers.
-  - A cross-origin request is identified by the presence of an `Origin` HTTP request header, with the value of the `Origin` representing a valid, allowed origin as defined by the `AllowedOrigins` field of your CORS policy.
-  - A request without an `Origin` HTTP request header will _not_ return any CORS response headers.
-- The `AllowedOrigins` values in your CORS policy must be either `*` or a valid pattern based on an [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does _not_ include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
+- Only a cross-origin request includes CORS response headers. R2 identifies these requests by an `Origin` HTTP request header. The header value must match an origin in your policy's `AllowedOrigins` field. Requests without an `Origin` header do not return CORS response headers.
+- The `AllowedOrigins` values in your CORS policy must be either `*` or a valid pattern based on an [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does _not_ include a path component and must only contain a `scheme://host[:port]` (where port is optional).
   - Use `*` to allow requests from any origin.
   - An origin pattern can contain at most one `*` wildcard. The wildcard can span periods. For example, `https://*.example.com` matches both `https://api.example.com` and `https://a.b.example.com`, but not `https://example.com`.
   - Origin values without a wildcard must match the request's `Origin` header exactly.
