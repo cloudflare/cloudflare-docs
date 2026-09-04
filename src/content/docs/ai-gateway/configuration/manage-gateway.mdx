@@ -8,7 +8,7 @@ products:
   - ai-gateway
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render, Steps } from "~/components";
 
 You have several different options for managing an AI Gateway.
 
@@ -24,13 +24,14 @@ The request that triggers auto-creation must be authenticated. When using the [R
 
 The auto-created default gateway uses the following settings:
 
-| Setting            | Default value    |
-| ------------------ | ---------------- |
-| Authentication     | On               |
-| Log collection     | On               |
-| Caching            | Off (TTL of 0)   |
-| Rate limiting      | Off              |
-| Workers AI billing | Standard billing |
+| Setting                      | Default value    |
+| ---------------------------- | ---------------- |
+| Authentication               | On               |
+| Log collection               | On               |
+| Caching                      | Off (TTL of 0)   |
+| Rate limiting                | Off              |
+| Require provider credentials | Off              |
+| Workers AI billing           | Standard billing |
 
 After creation, you can edit the default gateway settings like any other gateway. If you delete the default gateway, sending a new authenticated request to the `default` gateway ID auto-creates it again.
 
@@ -65,6 +66,25 @@ To use prepaid AI Gateway credits for Workers AI requests:
 5. Select **Save**.
 
 Workers AI requests routed through this gateway will deduct from your AI Gateway credit balance in real time.
+
+### Require provider credentials
+
+By default, third-party provider requests without credentials can use [Unified Billing](/ai-gateway/features/unified-billing/). To prevent this fallback:
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **AI** > **AI Gateway**.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+2. Select your gateway.
+3. Go to **Settings** and find **Require provider credentials**.
+4. Turn on **Require provider credentials**.
+5. Confirm the change.
+</Steps>
+
+Requests must use provider credentials supplied with the request or stored on the gateway. Requests without applicable credentials fail instead of using Unified Billing.
+
+Workers AI requests do not use provider credentials. When Unified Billing fallback is unavailable, Workers AI uses standard billing instead.
 
 ## Retry requests
 
