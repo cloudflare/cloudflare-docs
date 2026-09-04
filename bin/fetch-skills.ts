@@ -1,10 +1,12 @@
 #!/usr/bin/env tsx
 
-import { spawn } from "child_process";
 import fs from "fs";
 import { join } from "path";
 
-import { downloadToDotTempIfNotPresent } from "../src/util/custom-loaders";
+import {
+	downloadToDotTempIfNotPresent,
+	extractTarGz,
+} from "../src/util/custom-loaders";
 
 const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
 const SKILLS_MIDDLECACHE_PATH = "v1/cloudflare-skills/skills.tar.gz";
@@ -66,18 +68,10 @@ fs.mkdirSync(SKILLS_DIR, { recursive: true });
 // Extract the tarball from .tmp/ into ./skills/.
 // The archive contains skills/<skill-name>/... so we strip the leading "skills/"
 // component and extract into SKILLS_DIR.
-const tar = spawn(
-	"tar",
-	["--strip-components=1", "-xz", "-C", SKILLS_DIR, "-f", tarballPath],
-	{ stdio: "inherit" },
-);
-
-const exitCode = await new Promise<number | null>((resolve) =>
-	tar.on("close", resolve),
-);
-
-if (exitCode !== 0) {
-	fail(`tar exited with code ${exitCode}`);
+try {
+	await extractTarGz(tarballPath, SKILLS_DIR, { stripComponents: 1 });
+} catch (err) {
+	fail(`tar extraction failed: ${(err as Error).message}`);
 }
 
 const cloudflareSkills = fs

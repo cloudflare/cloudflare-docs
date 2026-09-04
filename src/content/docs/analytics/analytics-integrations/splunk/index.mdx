@@ -45,15 +45,20 @@ To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/450
    1. Open the setup screen by clicking the **Settings** dropdown, then click **Indexes**.
    2. Select **New Index**. Note that the **Indexes** page also gives you the status of all your existing indexes so that you can see whether you're about to use up your licensed amount of space.
    3. Name the index **cloudflare**, which is the default index that the Cloudflare App will use.
+   4. Set **Index Data Type** to **Events**, then select **Save**.
 
 7. Set up the HTTP Event Collector (HEC) on Splunk. To create an HEC:
    1. Click the **Settings** dropdown and select **Data inputs**.
-   2. Click **+Add new** and follow the wizard. When prompted, submit the following responses:
+   2. Select **+Add new** next to **HTTP Event Collector** and follow the wizard. When prompted, submit the following responses:
       - Name: Cloudflare
-      - Source Type: Select > "cloudflare:json"
+      - Source Type: Select > `cloudflare:json`
       - App Context: Cloudflare App for Splunk (cloudflare)
       - Index: cloudflare
    3. At the end of the wizard you will see a **Token Value**. This token authorizes the Cloudflare Logpush job to send data to your Splunk instance. If you forget to copy it now, Splunk allows you to get the value at any time.
+
+   :::note[Enable HEC and SSL]
+   After creating the token, go to **Settings** > **Data inputs** > **HTTP Event Collector** > **Global Settings** and confirm that **All Tokens** is turned on and that **Enable SSL** is selected, then select **Save**. Verify that the status of your new HEC token is enabled in the token list. Refer to the [Splunk HEC documentation](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector) for details.
+   :::
 
 8. Verify whether Splunk is using a self-signed certificate. You'll need this information when creating the Logpush job.
 
@@ -87,17 +92,31 @@ Enable or disable acceleration after the initial configuration by accessing the 
 
 You can also manually configure Data Models by going to **Settings** > **Data models**. Learn more about data model acceleration in the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Acceleratedatamodels).
 
-## Task 2 - Make the API call to create the Logpush job
+## Task 2 - create the Cloudflare Logpush job to Splunk
 
-Create the Logpush job by following the instructions on [Enable Logpush to Splunk](/logs/logpush/logpush-job/enable-destinations/splunk/). The API call creates a Logpush job but does not enable it.
+Create the Logpush job by following [Enable Logpush to Splunk](/logs/logpush/logpush-job/enable-destinations/splunk/). When you fill in the Splunk destination:
 
-Enable the Logpush job through the Cloudflare dashboard or through the API by following the instructions on [Enable Logpush to Splunk](/logs/logpush/logpush-job/enable-destinations/splunk/). To enable through the dashboard:
+- Use the endpoint you configured in [Task 1](#task-1---install-and-configure-the-cloudflare-app-for-splunk) for **Splunk HEC URL**, including the `/services/collector/raw` path.
+- Use the HEC token you created in [Task 1](#task-1---install-and-configure-the-cloudflare-app-for-splunk) for **Auth Token**, prefixed with `Splunk` (for example, `Splunk 12345678-1234-1234-1234-1234567890ab`).
+- Set **Source Type** to the value that matches the dataset you want to push, so the Cloudflare App for Splunk parses events correctly:
+  - HTTP requests, Firewall events, Spectrum events, and most zone-scoped datasets: `cloudflare:json`
+  - DNS logs, including Zero Trust Gateway DNS: `cloudflare:dns`
+  - Audit logs: `cloudflare:audit`
+  - Access requests: `cloudflare:access`
+  - CASB findings: `cloudflare:casb`
+  - Zero Trust Gateway HTTP: `cloudflare:http`
+  - Zero Trust Gateway Network: `cloudflare:network`
+- Only turn on **Use insecure skip verify option** if your Splunk instance uses a self-signed certificate, as noted in [Task 1](#task-1---install-and-configure-the-cloudflare-app-for-splunk).
 
-1. Navigate to the Cloudflare dashboard and select **Analytics & Logs** > **Logs**.
-2. Select **Edit** and select the fields referenced in the Dashboard section below to fully populate all tables and graphs.
-3. Enable the Logpush job by toggling on the switch next to the Edit link. Data takes a few minutes to populate.
+Under **Send the following fields**, keep the defaults or refer to the [Dashboard section](#task-3---view-the-dashboards) to select the fields required to fully populate the Cloudflare App for Splunk dashboards.
 
-To validate that you are receiving data, search `index=cloudflare` in Splunk.
+After you create the job, enable it to start sending logs. To confirm end-to-end delivery, run the following search in Splunk:
+
+```txt
+index="cloudflare"
+```
+
+Cloudflare sends two system confirmation events to verify connectivity and delivery setup as soon as you enable the job. Regular Cloudflare logs start streaming shortly afterward. Data can take a few minutes to appear.
 
 ## Task 3 - View the Dashboards
 
@@ -188,6 +207,123 @@ Available Filters:
 - Worker Subrequest
 
 - Client Request Method
+
+## Splunk CIM field mappings
+
+The Cloudflare App for Splunk maps Cloudflare log fields to [Splunk Common Information Model (CIM)](https://docs.splunk.com/Documentation/CIM/latest/User/Overview) field names, so that you can search, correlate, and accelerate Cloudflare data alongside other CIM-compliant sources in your Splunk deployment. The following tables list the mappings the app applies per Cloudflare Logpush dataset.
+
+### HTTP requests
+
+The app applies the following mappings:
+
+| Cloudflare field           | Splunk CIM field    |
+| -------------------------- | ------------------- |
+| `ClientIP`                 | `src_ip`            |
+| `ClientRequestBytes`       | `bytes_in`          |
+| `ClientRequestHost`        | `dest_host`         |
+| `ClientRequestMethod`      | `http_method`       |
+| `ClientRequestPath`        | `uri_path`          |
+| `ClientRequestReferer`     | `http_referrer`     |
+| `ClientRequestURI`         | `uri`               |
+| `ClientRequestUserAgent`   | `http_user_agent`   |
+| `ClientSrcPort`            | `src_port`          |
+| `ClientSSLProtocol`        | `ssl_protocol`      |
+| `EdgeRateLimitAction`      | `action`            |
+| `EdgeResponseBytes`        | `bytes_out`         |
+| `EdgeResponseContentType`  | `http_content_type` |
+| `EdgeResponseStatus`       | `status`            |
+| `OriginIP`                 | `dest_ip`           |
+| `OriginResponseTime`       | `response_time`     |
+
+### CASB findings
+
+The app applies the following mappings:
+
+| Cloudflare field         | Splunk CIM field |
+| ------------------------ | ---------------- |
+| `AssetDisplayName`       | `dest`           |
+| `AssetLink`              | `url`            |
+| `FindingTypeDisplayName` | `category`       |
+| `FindingTypeID`          | `category_id`    |
+| `FindingTypeSeverity`    | `severity`       |
+| `InstanceID`             | `signature_id`   |
+
+### Zero Trust Gateway DNS
+
+The app applies the following mappings:
+
+| Cloudflare field | Splunk CIM field |
+| ---------------- | ---------------- |
+| `DstIP`          | `dest`           |
+| `DstPort`        | `dest_port`      |
+| `Protocol`       | `transport`      |
+| `QueryName`      | `query`          |
+| `QueryTypeName`  | `query_type`     |
+| `RCode`          | `reply_code`     |
+| `SrcIP`          | `src`            |
+| `SrcPort`        | `src_port`       |
+
+### Audit logs
+
+The app applies the following mappings:
+
+| Cloudflare field | Splunk CIM field |
+| ---------------- | ---------------- |
+| `ActionResult`   | `status`         |
+| `ActionType`     | `action`         |
+| `ActorID`        | `user`           |
+| `ActorIP`        | `src`            |
+| `ActorType`      | `user_category`  |
+| `OwnerID`        | `src_user`       |
+
+### Access requests
+
+The app applies the following mappings:
+
+| Cloudflare field               | Splunk CIM field         |
+| ------------------------------ | ------------------------ |
+| `Action`                       | `action`                 |
+| `AppDomain`                    | `app`                    |
+| `Connection`                   | `authentication_service` |
+| `IPAddress`                    | `src`                    |
+| `PurposeJustificationResponse` | `reason`                 |
+| `RayID`                        | `signature_id`           |
+| `UserUID`                      | `user_id`                |
+
+### Zero Trust Gateway HTTP
+
+The app applies the following mappings:
+
+| Cloudflare field | Splunk CIM field  |
+| ---------------- | ----------------- |
+| `Action`         | `action`          |
+| `DestinationIP`  | `dest`            |
+| `DestinationPort` | `dest_port`       |
+| `HTTPMethod`     | `http_method`     |
+| `Referer`        | `http_referrer`   |
+| `SourceIP`       | `src`             |
+| `URL`            | `url`             |
+| `UserAgent`      | `http_user_agent` |
+| `UserID`         | `user`            |
+
+### Zero Trust Gateway Network
+
+The app applies the following mappings:
+
+| Cloudflare field  | Splunk CIM field       |
+| ----------------- | ---------------------- |
+| `Action`          | `action`               |
+| `DestinationIP`   | `dest_ip`              |
+| `DestinationPort` | `dest_port`            |
+| `DeviceName`      | `dvc`                  |
+| `OverrideIP`      | `dest_translated_ip`   |
+| `OverridePort`    | `dest_translated_port` |
+| `PolicyID`        | `rule`                 |
+| `SessionID`       | `session_id`           |
+| `SourceIP`        | `src_ip`               |
+| `SourcePort`      | `src_port`             |
+| `Transport`       | `transport`            |
+| `UserID`          | `user`                 |
 
 ## Debugging tips
 

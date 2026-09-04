@@ -1,7 +1,7 @@
 ---
 import { z } from "astro/zod";
 import { baseSchema } from "~/schemas";
-import { marked } from "marked";
+import { renderMarkdownInline } from "~/util/markdown";
 
 import Type from "./cf/Type.astro";
 import MetaInfo from "./cf/MetaInfo.astro";
@@ -146,7 +146,7 @@ const required = isObject(jsonSchema) ? jsonSchema.required : [];
 					{description && (
 						<p>
 							<strong>Description: </strong>
-							<Fragment set:html={marked.parseInline(description)} />
+							<Fragment set:html={renderMarkdownInline(description)} />
 						</p>
 					)}
 					{enumValues && enumValues.length > 0 && (
