@@ -1,0 +1,150 @@
+---
+title: OpenCode
+description: Connect OpenCode to an Access-protected AI Gateway custom domain with shared provider configuration.
+pcx_content_type: configuration
+sidebar:
+  order: 5
+products:
+  - ai-gateway
+---
+
+import { Steps } from "~/components";
+
+[OpenCode](https://opencode.ai/) can discover shared configuration from an AI Gateway custom domain. Users run one login command to authenticate with Cloudflare Access and load shared provider defaults.
+
+This setup hosts two JSON files at public HTTPS URLs. The files contain configuration, but no credentials. A Single Redirect sends `/.well-known/opencode` requests from your AI Gateway custom domain to the discovery file.
+
+:::caution
+OpenCode executes the `auth.command` from the discovery file. Only host these files on infrastructure that you control. Protect the configuration host and its DNS from unauthorized changes.
+:::
+
+Users can override remote configuration in their global or project configuration. To enforce organization-wide settings, refer to [OpenCode managed settings](https://opencode.ai/docs/config/#managed-settings).
+
+## Prerequisites
+
+Before you start, you need:
+
+- An AI Gateway with a [custom domain](/ai-gateway/configuration/custom-domains/).
+- [Cloudflare Access configured](/ai-gateway/configuration/cloudflare-access/) on the gateway.
+- [Unified Billing](/ai-gateway/features/unified-billing/) or stored [provider keys](/ai-gateway/configuration/bring-your-own-keys/) for each provider.
+- A public HTTPS location for the configuration files. You can use an [R2 bucket with a custom domain](/r2/buckets/public-buckets/#custom-domains).
+- OpenCode and [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) installed on each user's device.
+
+## Set up OpenCode discovery
+
+The following example uses `ai.example.com` for the AI Gateway domain and `config.example.com` for the configuration host. Replace both hostnames with your own values.
+
+<Steps>
+
+1. Create an `opencode.json` file with the shared provider configuration:
+
+   ```json title="opencode.json"
+   {
+     "$schema": "https://opencode.ai/config.json",
+     "share": "disabled",
+     "disabled_providers": ["opencode"],
+     "enabled_providers": ["anthropic", "openai", "google", "xai"],
+     "provider": {
+       "anthropic": {
+         "name": "Anthropic through Cloudflare AI Gateway",
+         "options": {
+           "baseURL": "https://ai.example.com/anthropic",
+           "apiKey": "",
+           "headers": {
+             "cf-access-token": "{env:TOKEN}",
+             "X-Requested-With": "XMLHttpRequest"
+           }
+         }
+       },
+       "openai": {
+         "name": "OpenAI through Cloudflare AI Gateway",
+         "options": {
+           "baseURL": "https://ai.example.com/openai",
+           "apiKey": "",
+           "headers": {
+             "cf-access-token": "{env:TOKEN}",
+             "X-Requested-With": "XMLHttpRequest"
+           }
+         }
+       },
+       "google": {
+         "name": "Google AI Studio through Cloudflare AI Gateway",
+         "options": {
+           "baseURL": "https://ai.example.com/google-ai-studio/v1beta",
+           "apiKey": "",
+           "headers": {
+             "cf-access-token": "{env:TOKEN}",
+             "X-Requested-With": "XMLHttpRequest"
+           }
+         }
+       },
+       "xai": {
+         "name": "xAI through Cloudflare AI Gateway",
+         "options": {
+           "baseURL": "https://ai.example.com/grok",
+           "apiKey": "",
+           "headers": {
+             "cf-access-token": "{env:TOKEN}",
+             "X-Requested-With": "XMLHttpRequest"
+           }
+         }
+       }
+     }
+   }
+   ```
+
+   Leave each `apiKey` value empty. AI Gateway supplies provider credentials through Unified Billing or your stored provider keys. Remove providers that you do not use. For more configuration options, refer to [OpenCode providers](https://opencode.ai/docs/providers/).
+
+2. Create an `opencode` discovery file. Set `remote_config.url` to the public URL of the `opencode.json` file:
+
+   ```json title="opencode"
+   {
+     "auth": {
+       "command": [
+         "cloudflared",
+         "access",
+         "login",
+         "--no-verbose",
+         "-app=https://ai.example.com/"
+       ],
+       "env": "TOKEN"
+     },
+     "remote_config": {
+       "url": "https://config.example.com/opencode.json"
+     }
+   }
+   ```
+
+   OpenCode runs the authentication command and makes its output available as `{env:TOKEN}`. It then substitutes that value into the remote provider configuration.
+
+3. Upload `opencode.json` and `opencode` to your public HTTPS host. Confirm that both URLs return the expected JSON without authentication.
+
+   If you use R2, upload both objects to the bucket and [connect a custom domain](/r2/buckets/public-buckets/#custom-domains). The example files should be available at `https://config.example.com/opencode.json` and `https://config.example.com/opencode`.
+
+4. In the zone for your AI Gateway custom domain, [create a Single Redirect](/rules/url-forwarding/single-redirects/create-dashboard/) with these settings:
+
+   - **Rule name**: `OpenCode discovery`
+   - **Custom filter expression**: `(http.host eq "ai.example.com" and http.request.uri.path eq "/.well-known/opencode")`
+   - **Target URL**: `https://config.example.com/opencode`
+   - **Status code**: `302`
+   - **Preserve query string**: Off
+
+5. In a browser without an active Access session, open `https://ai.example.com/.well-known/opencode`. Confirm that the request returns the discovery JSON without an Access prompt.
+
+6. To connect OpenCode, run:
+
+   ```sh
+   opencode auth login https://ai.example.com
+   ```
+
+   Complete the Access login flow when prompted. OpenCode stores the resulting credential locally and loads the remote configuration. Run the command again when the Access session expires.
+
+7. Start OpenCode and select a configured provider and model:
+
+   ```sh
+   opencode
+   ```
+
+</Steps>
+
+To confirm traffic reaches AI Gateway, refer to [Verify it works](/ai-gateway/integrations/coding-agents/#verify-it-works).
