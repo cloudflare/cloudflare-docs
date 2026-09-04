@@ -18,6 +18,7 @@ Observe the following best practices when enabling Always Online with Internet A
 
 Do not use Always Online with:
 
+- A [Custom Hostname (Cloudflare for SaaS)](/cloudflare-for-platforms/cloudflare-for-saas/) domain. Always Online is not supported for Custom Hostnames and can result in [Error 1001](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1001/).
 - API traffic.
 - An [IP Access rule](/waf/tools/ip-access-rules/) or a [WAF custom rule](/waf/custom-rules/) that blocks the United States or
 - Bypass Cache cache rules. Always Online ignores Bypass Cache cache rules and serves Always Online cached assets.
