@@ -72,7 +72,7 @@ The `cf-aig-byok-alias` header selects a non-default alias only on [direct provi
 
 ## Require provider credentials
 
-Turn on **Require provider credentials** to prevent Unified Billing fallback for third-party providers. Requests must use provider credentials supplied with the request or stored on the gateway. Requests without applicable credentials fail instead of using Cloudflare-managed credentials.
+Turn on **Require provider credentials** to prevent Unified Billing fallback for third-party providers. Third-party provider requests must use credentials supplied with the request or stored on the gateway. Requests without applicable credentials return an HTTP `400` response instead of using Cloudflare-managed credentials.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -94,7 +94,7 @@ Send a [`PUT` request](/api/resources/ai_gateway/methods/update/) to update the 
 
 To require provider credentials for one third-party provider request, set the `cf-aig-no-wholesale` header to `true`. This header can prevent Unified Billing fallback but cannot relax the gateway setting. If **Require provider credentials** is on, setting the header to `false` has no effect.
 
-Workers AI requests do not use provider credentials. When Unified Billing fallback is unavailable, Workers AI uses standard billing instead.
+Workers AI requests do not use provider credentials. This setting does not block these requests. They use standard Workers AI account billing, not AI Gateway Unified Billing.
 
 ## Use Unified Billing
 
