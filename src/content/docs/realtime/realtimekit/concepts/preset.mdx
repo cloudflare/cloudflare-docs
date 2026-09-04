@@ -14,7 +14,7 @@ import RTKPill from "~/components/realtimekit/RTKPill/RTKPill.astro";
 A Preset is a **re-usable configuration** that defines a participant’s experience in a Meeting.
 It determines:
 
-- The meeting type they join (Video, Audio, or Webinar)
+- The meeting type they join (Video, Audio, Webinar, or Livestream <RTKPill>Beta</RTKPill>)
 - Actions they can perform (permissions and controls)
 - The UI’s look and feel, including colors and themes, so the experience matches your application's branding.
 
@@ -69,7 +69,7 @@ The permissions are divided into the following categories:
         Hosts can admit or remove participants at any time, and you can configure who should bypass the waiting room automatically.
         Read more about waiting rooms in [Meetings](/realtime/realtimekit/concepts/meeting#waiting-room).
 
-- **Connected Meetings:** <RTKPill>Beta</RTKPill> Connected Meetings let you meeting spaces linked to a main meeting, enabling smaller group discussions or parallel sessions. Participants can be given permission to move between meetings or return to the parent meeting. Hosts can create, update, or delete these connected spaces.
+- **Connected Meetings:** Connected Meetings let you split a main meeting into linked spaces for smaller group discussions or parallel sessions. Permissions determine whether participants can move between connected meetings, return to the parent meeting, or create, update, and delete those meetings.
 
         Read more about connected meetings in [Meetings](/realtime/realtimekit/concepts/meeting#connected-meetings).
 
