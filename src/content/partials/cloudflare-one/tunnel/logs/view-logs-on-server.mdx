@@ -7,6 +7,14 @@ params:
 
 If you have access to the origin server, you can use the <a href={props.loglevelURL}>`--loglevel` flag</a> to enable logging when you start the tunnel. By default, `cloudflared` prints logs to stdout and does not store logs on the server.
 
+To format each log line as a JSON object, add `--output json` before `run`:
+
+```sh
+cloudflared tunnel --output json run <UUID>
+```
+
+This format is useful for Kubernetes deployments and log collection systems that consume JSON.
+
 For routine persistent logging, <a href={props.runParametersURL + "#log-directory"}>run the tunnel</a> with `--log-directory <PATH>`. This flag writes logs to `cloudflared.log` in the specified directory, rotates the file when it reaches 1 MB, and keeps up to five backups. It does not remove logs based on age.
 
 ```sh
