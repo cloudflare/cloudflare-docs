@@ -1,0 +1,356 @@
+---
+// Icons are inlined as SVG so the diagram never depends on a build-time icon
+// module. This keeps the diagram from failing to render if icon resolution
+// breaks in a given environment.
+---
+
+<figure
+	class="custom-bindings-diagram not-content"
+	aria-label="D1 custom binding query interception flow: the User Worker calls env.DB, the D1 binding routes the query to the Platform Worker query() hook, which inspects the query and either rejects it or forwards it to the real D1 database, then returns the result back to the User Worker"
+>
+	<ol class="flow">
+		<li class="flow-step">
+			<div class="node-card user-card">
+				<div class="node-header">
+					<span class="node-icon user-icon" aria-hidden="true"
+						><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"
+							><path
+								d="m18.63 37.418-9.645-12.9 9.592-12.533-1.852-2.527L5.917 23.595l-.015 1.808 10.86 14.542z"
+							></path><path
+								d="M21.997 6.503h-3.712l13.387 18.3-13.072 17.7h3.735L35.4 24.81z"
+							></path><path
+								d="M29.175 6.503h-3.758l13.598 18.082-13.598 17.918h3.765l12.908-17.01v-1.808z"
+							></path></svg
+						></span
+					>
+					<span class="node-title">User Worker</span>
+				</div>
+				<p class="node-caption">
+					Calls <code>env.DB.prepare().all()</code> like a normal D1 binding
+				</p>
+			</div>
+		</li>
+
+		<li class="flow-connector">
+			<span class="connector-label">query() over RPC</span>
+			<span class="connector-arrow" aria-hidden="true">↓</span>
+		</li>
+
+		<li class="flow-step">
+			<div class="node-card platform-card">
+				<div class="node-header">
+					<span class="node-icon platform-icon" aria-hidden="true"
+						><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"
+							><path
+								d="M36.2 51.3 33 54.6v77l3.3 3.2 3.3 3.2h32.1l1.7 4.4q3.15 8.1 11.1 11.7c3.6 1.7 7.1 1.9 35.1 1.9 34.8 0 37.4-.4 43.8-6.6 5.4-5.3 7-9 7.1-16.4 0-5.4-.5-7.3-2.8-11.3-3.2-5.4-8.5-9.3-15-11-3.5-.9-5.2-2.2-8.1-6L141 100V54.4l-3.3-3.2-3.3-3.2h-95zM129 67.5V75H45V60h84zm0 22.3v3.7h-8.2c-7.1 0-9.1.4-14 2.8-6.6 3.3-13 9.9-15.3 16.2-1.5 3.7-2.2 4.4-5.2 5-2 .3-5.3 2.3-7.8 4.6l-4.2 3.9H45V86h84zm1.1 17.5c3.6 1.9 5 3.5 7.4 8.6l3 6.2 4.1-.4c8.1-.8 14.4 4.3 14.4 11.5 0 3.2-.7 4.7-3.4 7.4l-3.4 3.4h-31.8c-31.2 0-31.8 0-34.1-2.2-3.2-3-3.1-8.1.3-11.5 2.4-2.3 3.1-2.5 8.4-2l5.8.6.4-5.8c.5-7.2 4.1-13.1 9.5-16s13.7-2.8 19.4.2"
+							></path><path
+								d="M52.6 64.6c-.9.8-1.6 2.2-1.6 2.9 0 1.8 2.7 4.5 4.5 4.5s4.5-2.7 4.5-4.5-2.7-4.5-4.5-4.5c-.7 0-2.1.7-2.9 1.6m15 0c-.9.8-1.6 2.2-1.6 2.9s.7 2.1 1.6 2.9c.8.9 2.2 1.6 2.9 1.6s2.1-.7 2.9-1.6c.9-.8 1.6-2.2 1.6-2.9s-.7-2.1-1.6-2.9c-.8-.9-2.2-1.6-2.9-1.6s-2.1.7-2.9 1.6m15 0c-.9.8-1.6 2.2-1.6 2.9s.7 2.1 1.6 2.9c.8.9 2.2 1.6 2.9 1.6s2.1-.7 2.9-1.6c.9-.8 1.6-2.2 1.6-2.9s-.7-2.1-1.6-2.9c-.8-.9-2.2-1.6-2.9-1.6s-2.1.7-2.9 1.6"
+							></path></svg
+						></span
+					>
+					<span class="node-title">Platform Worker</span>
+				</div>
+				<p class="node-caption">
+					The <code>query()</code> hook inspects each operation
+				</p>
+				<div class="pill-row">
+					<span class="policy-pill">log</span>
+					<span class="policy-pill">rate-limit</span>
+					<span class="policy-pill">reject</span>
+					<span class="policy-pill">forward</span>
+				</div>
+			</div>
+		</li>
+
+		<li class="flow-branch">
+			<div class="branch-arm branch-reject">
+				<span class="connector-arrow" aria-hidden="true">↩</span>
+				<span class="connector-label">reject</span>
+				<p class="branch-caption">
+					Returns a failed <code>QueryResponse</code>. The User Worker sees a
+					<code>D1_ERROR</code>.
+				</p>
+			</div>
+			<div class="branch-arm branch-forward">
+				<span class="connector-arrow" aria-hidden="true">↓</span>
+				<span class="connector-label">forward</span>
+				<span class="branch-sub" aria-hidden="true"
+					><code>ctx.props.D1.query()</code></span
+				>
+			</div>
+		</li>
+
+		<li class="flow-step">
+			<div class="node-card resource-card">
+				<div class="node-header">
+					<span class="node-icon d1-icon" aria-hidden="true"
+						><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64"
+							><path
+								d="m23.6 22.2 3.03 1.75v3.5L23.6 29.2l-3.03-1.75v-3.5zM20.06 49l3.54-3.54L27.14 49l-3.54 3.54zm3.54-14.7c.593 0 1.17.176 1.67.506.493.33.878.798 1.1 1.35a3 3 0 0 1-.65 3.27c-.42.42-.954.705-1.54.821a3 3 0 0 1-1.73-.171 3.04 3.04 0 0 1-1.35-1.1 3 3 0 0 1-.506-1.67c0-.796.316-1.56.879-2.12a3 3 0 0 1 2.12-.879zM10.3 11.2l6.42-4.89 1.21-.37h29l1.19.39 6.61 4.89.82 1.61v38L55 52.21l-4.83 5.11-1.46.63h-31.7l-1.37-.54-5.48-5.11-.64-1.47v-38zm3.21 25.4 4.47 4.94h.056v4h-1.83l-2.7-3v7.39l4.26 4h30l3.7-3.91V42.3l-3.67 3.24h-18.6v-4h17.2l5.19-4.61v-7.44l-3.67 3.25h-18.7v-4h17.2l5.19-4.6v-6.92l-3.67 3.26h-31.6l-2.74-2.8v6.12l4.47 4.94h.056v4h-1.83l-2.7-3zm32.7-26.7h-27.6l-4.07 3.11 3.4 3.48h28.4l4-3.56z"
+							></path></svg
+						></span
+					>
+					<span class="node-title">D1 database</span>
+				</div>
+				<p class="node-caption">
+					The real database, passed to the Platform Worker through <code
+						>props</code
+					>
+				</p>
+			</div>
+		</li>
+	</ol>
+</figure>
+
+<style>
+	.custom-bindings-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-caption: light-dark(#737373, #a3a3a3);
+		--map-brand: #f6821f;
+		--map-platform: light-dark(#7c3aed, #a78bfa);
+		--map-d1: light-dark(#10b981, #34d399);
+		--map-reject: light-dark(#dc2626, #f87171);
+
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin: 1.25rem 0;
+		padding: 18px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 14px 14px;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.custom-bindings-diagram a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.flow {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.flow-step {
+		display: block;
+		width: 100%;
+		max-width: 380px;
+	}
+
+	.node-card {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 12px 14px;
+		border: 1px solid var(--map-line);
+		border-radius: 10px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		color: var(--map-text);
+	}
+
+	.node-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+	}
+
+	.node-title {
+		min-width: 0;
+		color: var(--map-text);
+		font-size: 14px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.node-icon {
+		display: inline-flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 7px;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.node-icon :global(svg) {
+		width: 18px;
+		height: 18px;
+		fill: currentColor;
+	}
+
+	.user-icon {
+		background: color-mix(in srgb, var(--map-brand) 14%, transparent);
+		color: var(--map-brand);
+	}
+
+	.platform-icon {
+		background: color-mix(in srgb, var(--map-platform) 14%, transparent);
+		color: var(--map-platform);
+	}
+
+	.d1-icon {
+		background: color-mix(in srgb, var(--map-d1) 14%, transparent);
+		color: var(--map-d1);
+	}
+
+	.node-caption {
+		margin: 0;
+		color: var(--map-caption);
+		font-size: 12px;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.node-caption code {
+		display: inline;
+		padding: 1px 6px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+
+	.flow-connector {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 2px;
+		padding: 2px 0;
+		color: var(--map-strong);
+	}
+
+	.connector-label {
+		color: var(--map-caption);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 1;
+	}
+
+	.connector-arrow {
+		font-size: 18px;
+		line-height: 1;
+		color: var(--map-strong);
+	}
+
+	.pill-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 6px;
+	}
+
+	.policy-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 4px 10px;
+		border: 1px solid
+			color-mix(in srgb, var(--map-platform) 35%, var(--map-line));
+		border-radius: 6px;
+		background: color-mix(in srgb, var(--map-platform) 6%, var(--map-card));
+		color: var(--map-platform);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+
+	.flow-branch {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 12px;
+		width: 100%;
+		max-width: 380px;
+	}
+
+	.branch-arm {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		padding: 10px 8px;
+		border: 1px dashed var(--map-line);
+		border-radius: 8px;
+	}
+
+	.branch-reject {
+		border-color: color-mix(in srgb, var(--map-reject) 40%, var(--map-line));
+	}
+
+	.branch-reject .connector-label,
+	.branch-reject .connector-arrow {
+		color: var(--map-reject);
+	}
+
+	.branch-caption {
+		margin: 0;
+		color: var(--map-caption);
+		font-size: 11px;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.branch-caption code {
+		padding: 1px 5px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 10px;
+		white-space: nowrap;
+	}
+
+	.branch-sub {
+		color: var(--map-caption);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 10px;
+	}
+
+	.branch-sub code {
+		border: 0;
+		background: transparent;
+		color: var(--map-d1);
+		font-size: 10px;
+	}
+
+	@media (max-width: 480px) {
+		.flow-branch {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
