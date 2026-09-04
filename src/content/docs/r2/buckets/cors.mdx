@@ -166,7 +166,7 @@ Also note that CORS rule propagation can, in rare cases, take up to 30 seconds.
   - A request without an `Origin` HTTP request header will _not_ return any CORS response headers.
 - The `AllowedOrigins` values in your CORS policy must be either `*` or a valid pattern based on an [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does _not_ include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
   - Use `*` to allow requests from any origin.
-  - An origin pattern can contain at most one `*` wildcard. For example, `https://*.example.com` matches origins such as `https://api.example.com`.
+  - An origin pattern can contain at most one `*` wildcard. The wildcard can span periods. For example, `https://*.example.com` matches both `https://api.example.com` and `https://a.b.example.com`, but not `https://example.com`.
   - Origin values without a wildcard must match the request's `Origin` header exactly.
   - Ports cannot contain wildcards. To allow multiple localhost ports, list each origin separately, such as `http://localhost:3000` and `http://localhost:5173`.
   - Valid `AllowedOrigins` value: `https://static.example.com` - includes the scheme and host. A port is optional and implied by the scheme.
