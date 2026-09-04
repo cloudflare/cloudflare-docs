@@ -99,6 +99,20 @@ Users who match a policy configured with a _Same as application session timeout_
 
 When [Authenticate with Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) is enabled for an Access application, the Cloudflare One Client session duration takes precedence over all other session durations (application, policy, and global). As long as the Cloudflare One Client session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.
 
+#### Return 401 responses for non-browser traffic
+
+By default, failed Cloudflare One Client authentication requests return a `302` redirect to the Access login page. API clients, command-line tools, and automation often cannot complete this browser login flow. You can return a `401 Unauthorized` response for non-browser traffic instead so that these clients can detect the authentication failure directly.
+
+To enable this behavior:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+2. Under **Cloudflare One Client authentication**, ensure that **Enable authentication using the Cloudflare One Client session** is turned on.
+3. Turn on **Return 401 response for non-browser traffic**.
+
+You can also set `warp_auth_non_browser_401` to `true` using the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) API.
+
+This account setting only applies to failed Cloudflare One Client authentication. It is separate from `service_auth_401_redirect`, which controls Service Auth behavior for an individual Access application.
+
 ### MFA session duration
 
 If you use [independent multi-factor authentication (MFA)](/cloudflare-one/access-controls/access-settings/independent-mfa/), the MFA session duration determines how long a user can log in to Cloudflare Access without being prompted for MFA. The MFA session is independent of the global, policy, and application session durations. When logging in to an Access app with [MFA enabled](/cloudflare-one/access-controls/policies/mfa-requirements/#configure-independent-mfa-for-an-application), users must complete an MFA challenge if their last MFA authentication falls outside the configured session duration. After authenticating with their identity provider, users are prompted for MFA. The [`CF_Device` cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#cf_device) ensures both authentication steps occur on the same device. MFA session durations do not affect how long a user has access to the application (that is controlled by the [application token](#session-durations)).
