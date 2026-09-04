@@ -18,7 +18,20 @@ The AI Labyrinth adds invisible links on your webpage with specific `Nofollow` t
 
 These links do not impact your search engine optimization (SEO) or your website's appearance, and are only seen by bots. AI bots that respect no-crawl instructions will safely ignore this honeypot.
 
-To enable AI Labyrinth:
+## AI Labyrinth in Security Analytics
+
+When AI Labyrinth is enabled, Cloudflare logs security events for AI Labyrinth under the **AI Labyrinth** service. The following actions describe what happened to the request:
+
+| Action | Value | Description |
+| --- | --- | --- |
+| **AI Labyrinth Served** | `link_maze_injected` | Cloudflare injected AI Labyrinth honeypot links into the HTML response. |
+| **AI Labyrinth Crawls** | `link_maze_visited` | A crawler followed one of the injected honeypot links and entered the maze. |
+
+A high volume of **AI Labyrinth Crawls** relative to **AI Labyrinth Served** indicates that non-compliant AI crawlers are actively following the injected links.
+
+You can view these events in [Security Analytics](/security/analytics/) and [Security Events](/waf/analytics/security-events/).
+
+## Enable AI Labyrinth
 
 <Steps>
   1. In the Cloudflare dashboard, go to the **Security Settings** page.
