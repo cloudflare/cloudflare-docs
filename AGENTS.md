@@ -37,7 +37,8 @@ cloudflare-docs/
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
 ├── bin/                    # Build scripts and CI helpers
-│   └── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
+│   ├── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
+│   └── fetch-logpush-datasets.ts # Syncs generated Logpush dataset pages
 ├── skills/                 # Agent Skills served at /.well-known/skills/ — GENERATED, do not edit
 │                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
 │                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
