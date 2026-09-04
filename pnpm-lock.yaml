@@ -147,8 +147,8 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(astro@7.2.4(@astrojs/markdown-remark@7.2.4(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.2.0)(jiti@2.7.0)(tsx@4.23.12)(yaml@2.9.0))(typescript@5.9.3)
       cidr-tools:
-        specifier: 12.1.2
-        version: 12.1.2
+        specifier: 13.0.1
+        version: 13.0.1
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -2848,8 +2848,12 @@ packages:
     resolution: {integrity: sha512-77PSwercCZU2Fc4sX94eF8k8Pxte6JAwL4/ICZLFjJLqegs7kCuAsqqj/70NQF6TvDpgFjkubQB2FW2ZZddvQg==}
     engines: {node: '>=8'}
 
-  cidr-tools@12.1.2:
-    resolution: {integrity: sha512-31tot6DSnNHhgs0SPHyr9E3mneltfcj1tsePwpixFWxMgYi125nIguEFOFl8tl9gLohw628g+0Qcv11gtFeC4w==}
+  cidr-regex@7.1.0:
+    resolution: {integrity: sha512-BQ5X/OTeC6hrD7k8/rNY93etXfQ3mcjIiYOkYDrB5oThXyOrgoa/jgeQxVglQaDA7UrtEnSEpHBqpfuyriwXsQ==}
+    engines: {node: '>=22'}
+
+  cidr-tools@13.0.1:
+    resolution: {integrity: sha512-j9aD4mSRkq1djA4jyk2rU2/K4gyio3wUggFVX+NZ2Dn2Fv8p1ZxSNbg4YuJI8eXjbNDp8IEMaiNBsz5BGUayuA==}
     engines: {node: '>=22'}
 
   cjs-module-lexer@1.2.3:
@@ -3906,8 +3910,8 @@ packages:
     resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
     engines: {node: '>=12'}
 
-  ip-bigint@9.0.6:
-    resolution: {integrity: sha512-dpEy7cSzYM9JsL6Ai9KGO0eCKALRtbYCb57Nfc8/kflSyBakf1Orb6/8u+NDlhS+7THbjrOfY52z9PnJXh/mWA==}
+  ip-bigint@10.0.1:
+    resolution: {integrity: sha512-vXJrmSsmlZE7KIwKvBzmGESLqqLV//YbjdMmTFPmhGYhh2wB7K5o7U+qZbzePOGNkdwNdUWdWnjQ6QKKBiSx4w==}
     engines: {node: '>=22'}
 
   iron-webcrypto@1.2.1:
@@ -8758,9 +8762,12 @@ snapshots:
 
   ci-info@4.4.0: {}
 
-  cidr-tools@12.1.2:
+  cidr-regex@7.1.0: {}
+
+  cidr-tools@13.0.1:
     dependencies:
-      ip-bigint: 9.0.6
+      cidr-regex: 7.1.0
+      ip-bigint: 10.0.1
 
   cjs-module-lexer@1.2.3: {}
 
@@ -10068,7 +10075,9 @@ snapshots:
 
   internmap@2.0.3: {}
 
-  ip-bigint@9.0.6: {}
+  ip-bigint@10.0.1:
+    dependencies:
+      cidr-regex: 7.1.0
 
   iron-webcrypto@1.2.1: {}
 
