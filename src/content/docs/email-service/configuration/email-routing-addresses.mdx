@@ -8,7 +8,7 @@ products:
   - email-service
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, WranglerConfig } from "~/components";
 
 In Email Routing, a routing rule pairs an email pattern with a destination — either a verified email address or a Worker. You can route emails to either:
 
@@ -138,6 +138,35 @@ You can enable subaddressing at **Compute** > **Email Service** > **Email Routin
 Once enabled, you can use subaddressing with any of your routing rules. For example, if you send an email to `user+detail@example.com` it will be matched by the `user@example.com` routing rule. The `+detail` part does not affect rule matching, but it is preserved in `message.to` and can be inspected by a [Worker](/email-service/api/route-emails/email-handler/), an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent), or via the activity log.
 
 If a routing rule for `user+detail@example.com` already exists, it takes precedence over the rule for `user@example.com`. This prevents breaking existing routing rules and allows certain sub-addresses to be captured by a specific rule.
+
+## Configure rules with Wrangler
+
+If your routing rules send mail to a [Worker](/email-service/api/route-emails/email-handler/), you can define them in your Worker's [Wrangler configuration file](/workers/wrangler/configuration/). Add the inbound addresses to the top-level `addresses` field:
+
+<WranglerConfig>
+
+```toml
+name = "invoice-handler"
+main = "src/index.ts"
+compatibility_date = "$today"
+addresses = ["invoice@yourdomain.com"]
+```
+
+</WranglerConfig>
+
+Each entry is a literal recipient address or a `*@domain` catch-all. Every entry uses the _Send to a Worker_ action to route mail to the Worker you are deploying.
+
+The `addresses` field applies to every [Worker environment](/workers/wrangler/environments/). Wrangler ignores `addresses` values under `env`.
+
+If you omit `addresses`, Wrangler does not change Email Routing rules. If you set `addresses` to an empty array, Wrangler removes every Email Routing rule managed by this Worker.
+
+When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Wrangler reconciles the Worker's managed Email Routing rules with the configured addresses. Wrangler shows the planned changes and asks for confirmation before applying potentially destructive changes.
+
+:::note
+
+Rules created from `addresses` are managed by your Wrangler configuration file. The dashboard warns you before an edit detaches a managed rule. On the next deploy, Wrangler reports a takeover conflict and asks for confirmation before restoring the configured rule.
+
+:::
 
 ## Next steps
 
