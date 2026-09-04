@@ -39,7 +39,7 @@ How you choose the CIDR depends on how you want to split the prefix across regio
 - **One region for the whole prefix** — cover the prefix with sub-ranges that all point to the same region. For example, bind both `203.0.113.0/25` and `203.0.113.128/25` to `eu` to regionalize every address in a `/24`.
 - **Different regions for different addresses** — bind each range to the region you want (for example, `203.0.113.0/25` to `eu` and `203.0.113.128/25` to `us`). Cloudflare applies the most specific binding that matches a given address, so a narrower binding takes precedence over a broader one that overlaps it.
 
-Each CIDR can have only one binding. If you try to create a second binding for a CIDR that is already bound, the API returns a [conflict error](#handle-a-conflict-error). To change the region for an existing binding, [update it](#update-the-region-for-a-binding) instead of creating a new one.
+A conflict occurs only when you try to create two bindings for the exact same CIDR. Bindings with overlapping but different CIDRs can coexist, and Cloudflare applies the most specific matching binding. To change the region for an existing CIDR, [update its binding](#update-the-region-for-a-binding) instead of creating another one.
 
 ## Prerequisites
 
