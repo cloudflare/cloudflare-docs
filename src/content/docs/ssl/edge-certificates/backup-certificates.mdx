@@ -26,16 +26,16 @@ For additional details, refer to the [introductory blog post](https://blog.cloud
 
 ## Troubleshooting
 
-### Backup certificate deleted after re-enabling Universal SSL
+### Backup certificate deleted after turning Universal SSL back on
 
-After you disable and quickly re-enable Universal SSL, your domain may end up without a backup certificate.
+After you turn off and quickly turn Universal SSL back on, your domain may end up without a backup certificate.
 
 When Universal SSL is toggled off and on in quick succession, certificate processing jobs are not guaranteed to run in the order they were submitted. This race condition can cause a newly issued backup certificate to be deleted before it becomes active.
 
 To recover your backup certificate:
 
-1. Wait several minutes after disabling Universal SSL before re-enabling it.
-2. Re-enable Universal SSL, then allow time for a new backup certificate to be issued.
+1. Wait several minutes after turning off Universal SSL before turning it back on.
+2. Turn Universal SSL back on, then allow time for a new backup certificate to be issued.
 
 If you need uninterrupted certificate coverage, consider ordering an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) certificate before toggling Universal SSL.
 
