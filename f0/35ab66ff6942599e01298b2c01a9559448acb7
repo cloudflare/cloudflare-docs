@@ -1,0 +1,19 @@
+src/components/PlaceholderConnectionString.astro
+  s_6adba50a4cca80::t_4415183d81b432 1-158
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f035ab66ff6942599e01298b2c01a9559448acb7",
+  "prompts": {},
+  "sessions": {
+    "s_6adba50a4cca80": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05b3015cbffeGhvuIR9M2pSkWA",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}
