@@ -10,7 +10,7 @@ products:
   - email-service
 ---
 
-import { DashButton, Render, Tabs, TabItem } from "~/components";
+import { DashButton, Render, Steps, Tabs, TabItem } from "~/components";
 
 Configure your domains to work with Cloudflare Email Service. This includes DNS record management, domain verification, and advanced domain settings.
 
@@ -326,6 +326,25 @@ Disabling Email Routing on a domain stops processing incoming emails and removes
 1. The domain must remain in the same Cloudflare account.
 2. DNS records are tied to the account, not to specific users.
 3. Use Cloudflare account-level permissions to manage access.
+
+## Drop suppressed recipients
+
+**Drop suppressed recipients** controls suppression handling for one sending domain. The setting is off by default.
+
+When the setting is off, a message containing any [suppressed recipient](/email-service/concepts/suppressions/) fails. The REST API returns `400`, the Workers binding throws `E_RECIPIENT_SUPPRESSED`, and SMTP rejects the message.
+
+When the setting is on, Email Service removes suppressed recipients and processes the remaining recipients.
+
+To turn on the setting:
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Sending**.
+
+   <DashButton url="/?to=/:account/email-service/sending" />
+
+2. Select the sending domain, then open **Settings**.
+3. Turn on **Drop suppressed recipients**.
+</Steps>
 
 ## Email preview
 
