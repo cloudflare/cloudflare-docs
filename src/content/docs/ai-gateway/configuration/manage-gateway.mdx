@@ -82,9 +82,9 @@ By default, third-party provider requests without credentials can use [Unified B
 5. Confirm the change.
 </Steps>
 
-Requests must use provider credentials supplied with the request or stored on the gateway. Requests without applicable credentials fail instead of using Unified Billing.
+Third-party provider requests must use credentials supplied with the request or stored on the gateway. Requests without applicable credentials return an HTTP `400` response instead of using Unified Billing.
 
-Workers AI requests do not use provider credentials. When Unified Billing fallback is unavailable, Workers AI uses standard billing instead.
+Workers AI requests do not use provider credentials. This setting does not block these requests. They use standard Workers AI account billing, not AI Gateway Unified Billing.
 
 ## Retry requests
 
