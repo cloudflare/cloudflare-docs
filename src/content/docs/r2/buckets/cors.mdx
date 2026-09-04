@@ -163,8 +163,12 @@ Also note that CORS rule propagation can, in rare cases, take up to 30 seconds.
 
 - Only a cross-origin request will include CORS response headers.
   - A cross-origin request is identified by the presence of an `Origin` HTTP request header, with the value of the `Origin` representing a valid, allowed origin as defined by the `AllowedOrigins` field of your CORS policy.
-  - A request without an `Origin` HTTP request header will _not_ return any CORS response headers. Origin values must match exactly.
-- The value(s) for `AllowedOrigins` in your CORS policy must be a valid [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does _not_ include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
+  - A request without an `Origin` HTTP request header will _not_ return any CORS response headers.
+- The `AllowedOrigins` values in your CORS policy must be either `*` or a valid pattern based on an [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does _not_ include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
+  - Use `*` to allow requests from any origin.
+  - An origin pattern can contain at most one `*` wildcard. For example, `https://*.example.com` matches origins such as `https://api.example.com`.
+  - Origin values without a wildcard must match the request's `Origin` header exactly.
+  - Ports cannot contain wildcards. To allow multiple localhost ports, list each origin separately, such as `http://localhost:3000` and `http://localhost:5173`.
   - Valid `AllowedOrigins` value: `https://static.example.com` - includes the scheme and host. A port is optional and implied by the scheme.
   - Invalid `AllowedOrigins` value: `https://static.example.com/` or `https://static.example.com/fonts/Calibri.woff2` - incorrectly includes the path component.
 - If you need to access specific header values via JavaScript on the origin page, such as when using a video player, ensure you set `Access-Control-Expose-Headers` correctly and include the headers your JavaScript needs access to, such as `Content-Length`.
