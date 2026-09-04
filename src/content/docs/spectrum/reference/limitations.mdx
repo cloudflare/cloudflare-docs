@@ -1,13 +1,28 @@
 ---
 pcx_content_type: reference
 title: Limitations
-description: Protocol-specific limitations for Spectrum applications.
+description: Limitations that apply to Spectrum applications.
 products:
   - spectrum
 weight: 0
 ---
 
-The following limitations apply to different protocols supported by Spectrum.
+The following limitations apply to Spectrum applications.
+
+## IPv4 hostname quota
+
+By default, an account is limited to **10 unique Spectrum hostnames** using Cloudflare-managed IPv4 addresses, across all zones on the account. Each hostname is backed by a dedicated IPv4 address, and this quota is applied at the account level — not per zone.
+
+IPv6-only Spectrum applications do not count against this quota.
+
+If you need more than 10 IPv4-backed Spectrum hostnames, you can:
+
+- **Use [BYOIP](/spectrum/about/byoip/)** — bring your own IP space so Spectrum applications are not constrained by the default shared-IPv4 allocation.
+- **Use IPv6-only Spectrum applications** — IPv6 addresses are not subject to the same scarcity as IPv4.
+- **CNAME multiple subdomains to a single Spectrum application** — point several DNS-only (gray-clouded) `CNAME` records at one Spectrum application hostname. This works only when those hostnames share the same origin (one origin per application).
+- **Use [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)** — configure the Spectrum application as the target (fallback origin) for Custom Hostnames.
+
+Contact your account team if you expect to exceed the quota.
 
 ## HTTPS
 
