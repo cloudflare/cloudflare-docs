@@ -124,7 +124,7 @@ function IsolationBody() {
 				anchor="middle"
 				size={WORKER_FS}
 				tone="ghost"
-				opacity={0.5}
+				opacity={0.75}
 			>
 				Request
 			</Caption>

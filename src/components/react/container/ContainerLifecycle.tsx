@@ -44,7 +44,7 @@ const REQUEST_MS = 750;
 const STARTING_MS = 1200;
 const RUNNING_MS = 1600;
 const IDLE_MS = 1200;
-const STOPPED_MS = 1700;
+const STOPPED_MS = 2400;
 
 const VIEW_W = 340;
 const REQUEST_TOP = 14;
@@ -146,10 +146,10 @@ function LifecycleBody() {
 			? "Request received"
 			: "Awaiting request";
 	const slotSecondary = stopped
-		? "resources released until needed"
+		? ["resources released", "until needed"]
 		: phase === "request"
-			? "starting a Container"
-			: "nothing runs until a request arrives";
+			? ["starting a Container"]
+			: ["nothing runs until", "a request arrives"];
 	const slotPrimaryFS = Math.max(13, DO_BODY_FS + 1);
 	const slotSecondaryFS = Math.max(9, DO_CAPTION_FS - 1);
 
@@ -209,7 +209,7 @@ function LifecycleBody() {
 						x={doRect.cx}
 						y={doRect.cy - 3}
 						textAnchor="middle"
-						className="fill-neutral-500 dark:fill-neutral-300"
+						className="fill-neutral-500 dark:fill-neutral-400"
 						style={{
 							fontFamily: "var(--font-sans)",
 							fontSize: slotPrimaryFS,
@@ -219,19 +219,22 @@ function LifecycleBody() {
 					>
 						{slotPrimary}
 					</text>
-					<text
-						x={doRect.cx}
-						y={doRect.cy + slotSecondaryFS + 5}
-						textAnchor="middle"
-						className="fill-neutral-400 dark:fill-neutral-500"
-						style={{
-							fontFamily: "var(--font-mono)",
-							fontSize: slotSecondaryFS,
-							letterSpacing: "0.04em",
-						}}
-					>
-						{slotSecondary}
-					</text>
+					{slotSecondary.map((line, index) => (
+						<text
+							key={line}
+							x={doRect.cx}
+							y={doRect.cy + slotSecondaryFS + 7 + index * 13}
+							textAnchor="middle"
+							className="fill-neutral-400 dark:fill-neutral-500"
+							style={{
+								fontFamily: "var(--font-mono)",
+								fontSize: slotSecondaryFS,
+								letterSpacing: "0.04em",
+							}}
+						>
+							{line}
+						</text>
+					))}
 				</g>
 			)}
 

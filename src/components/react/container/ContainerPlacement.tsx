@@ -368,7 +368,15 @@ function PlacementBody() {
 			contentRef={contentRef}
 			liveStatus={status}
 			controls={
-				<Toolbar>
+				<Toolbar
+					status={
+						<span className="block text-center text-[11px] leading-4 font-medium tracking-wide text-balance text-neutral-600 normal-case dark:text-neutral-300">
+							Choose a location
+							<br className="min-[480px]:hidden" /> to send a request
+						</span>
+					}
+					className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-2 py-2.5 [&>div]:col-start-3 [&>div]:ml-auto [&>span]:col-start-2"
+				>
 					<ResetButton onClick={handleReset} />
 				</Toolbar>
 			}
@@ -387,6 +395,7 @@ function PlacementBody() {
 							left: `${(rect.l / VIEW_W) * 100}%`,
 							top: `${(actionCenter / VIEW_H) * 100}%`,
 							width: `${(rect.w / VIEW_W) * 100}%`,
+							cursor: "pointer",
 						}}
 					>
 						<span className="hidden leading-none min-[480px]:inline">
@@ -465,7 +474,7 @@ function PlacementBody() {
 						label={REGION_LABELS[regionAt(i)]}
 						active={pulse[regionAt(i)]}
 						headerH={REGION_HEADER_H}
-						headerFontSize={instanceHeaderFS}
+						headerFontSize={Math.min(instanceHeaderFS, 13.5)}
 						pad={Math.max(2, (REGION_HEADER_H - 6) / 2)}
 					>
 						<path

@@ -1,0 +1,541 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PlacementCueLab } from "@/components/react/container/PlacementCueLab";
+---
+
+<BaseLayout
+	title="Placement interaction cues"
+	description="Temporary design exploration for interactive diagram affordances."
+	noindex
+	footer={false}
+>
+	<PlacementCueLab client:load />
+</BaseLayout>
+
+<style is:global>
+	.placement-scene {
+		--cue-accent: var(--color-brand);
+		position: relative;
+		padding: 18px 18px 16px;
+		background-color: var(--nb-background);
+		background-image: radial-gradient(
+			circle at 1px 1px,
+			color-mix(in oklch, var(--nb-border-strong) 65%, transparent) 1px,
+			transparent 0
+		);
+		background-size: 14px 14px;
+	}
+
+	[data-mode="dark"] .placement-scene {
+		background-image: radial-gradient(
+			circle at 1px 1px,
+			color-mix(in oklch, var(--nb-border) 55%, transparent) 1px,
+			transparent 0
+		);
+	}
+
+	.scene-canvas {
+		position: relative;
+		margin-inline: auto;
+		max-width: 620px;
+	}
+
+	.location-row {
+		position: absolute;
+		top: 10.625%;
+		left: 12.5%;
+		display: grid;
+		width: 75%;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 8.5%;
+	}
+
+	.location-button,
+	.passive-location {
+		position: relative;
+		display: flex;
+		min-width: 0;
+		height: 42px;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		border: 1px solid var(--nb-border-strong);
+		border-radius: 5px;
+		background: var(--nb-background);
+		color: var(--nb-foreground);
+		font-family: var(--font-mono);
+		font-size: 10px;
+		font-weight: 500;
+		text-transform: uppercase;
+		transition:
+			transform 160ms ease-out,
+			opacity 160ms ease-out,
+			border-color 160ms ease-out,
+			box-shadow 160ms ease-out;
+	}
+
+	.location-button {
+		cursor: pointer;
+	}
+
+	.location-button:hover,
+	.location-button:focus-visible,
+	.location-button.is-active {
+		border-color: var(--cue-accent);
+	}
+
+	.location-button:focus-visible,
+	.route-dock button:focus-visible {
+		outline: 2px solid var(--color-blue-600);
+		outline-offset: 3px;
+	}
+
+	.location-button:active {
+		transform: scale(0.97);
+	}
+
+	.location-action {
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1;
+		color: var(--nb-muted-foreground);
+	}
+
+	.option-control {
+		display: grid;
+		width: 14px;
+		height: 14px;
+		flex: none;
+		place-items: center;
+		border: 1px solid var(--nb-border-strong);
+		border-radius: 999px;
+	}
+
+	.option-control span {
+		width: 6px;
+		height: 6px;
+		border-radius: inherit;
+		background: transparent;
+	}
+
+	.location-button.is-active .option-control {
+		border-color: var(--cue-accent);
+	}
+
+	.location-button.is-active .option-control span {
+		background: var(--cue-accent);
+	}
+
+	.node-actuator {
+		display: grid;
+		height: 100%;
+		margin-right: -1px;
+		margin-left: auto;
+		padding-inline: 10px;
+		place-items: center;
+		border-left: 1px solid var(--nb-border-strong);
+		color: var(--nb-muted-foreground);
+	}
+
+	.node-actuator svg {
+		width: 13px;
+		height: 13px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.location-button:hover .location-action,
+	.location-button:focus-visible .location-action,
+	.location-button.is-active .location-action {
+		color: var(--cue-accent);
+	}
+
+	.instance-card,
+	.instance-stack,
+	.scheduler-card {
+		fill: var(--nb-background);
+		stroke: var(--nb-border-strong);
+		stroke-width: 1.2;
+	}
+
+	.instance-card,
+	.instance-stack {
+		transition:
+			transform 180ms ease-out,
+			opacity 180ms ease-out,
+			stroke 180ms ease-out;
+	}
+
+	.instance-stack {
+		opacity: 0.7;
+	}
+
+	.instance-card.is-active {
+		stroke: var(--cue-accent);
+	}
+
+	.instance-rule,
+	.scheduler-lines {
+		stroke: var(--nb-border-strong);
+		stroke-width: 1.2;
+		fill: none;
+	}
+
+	.node-label,
+	.scheduler-label {
+		fill: var(--nb-foreground);
+		font-family: var(--font-mono);
+		font-size: 10px;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+
+	.status-idle {
+		fill: var(--nb-border-strong);
+	}
+
+	.status-active,
+	.compute-active {
+		fill: var(--cue-accent);
+	}
+
+	.compute-idle {
+		fill: var(--nb-muted-foreground);
+	}
+
+	.route-idle path,
+	.route-active path {
+		fill: none;
+		stroke-linecap: round;
+		transition:
+			opacity 180ms ease-out,
+			stroke 180ms ease-out;
+	}
+
+	.route-idle path {
+		stroke: var(--nb-border-strong);
+		stroke-width: 1.2;
+		opacity: 0.6;
+	}
+
+	.route-active path {
+		stroke: var(--cue-accent);
+		stroke-width: 2;
+	}
+
+	.pending-request path {
+		fill: none;
+		stroke: var(--nb-border-strong);
+		stroke-width: 1.2;
+	}
+
+	.pending-request circle:first-of-type {
+		fill: var(--cue-accent);
+		animation: cue-arrive 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
+	}
+
+	.pending-ring {
+		fill: none;
+		stroke: var(--cue-accent);
+		stroke-width: 1;
+		transform-box: fill-box;
+		transform-origin: center;
+		animation: cue-wait 1600ms 700ms ease-out 3 forwards;
+	}
+
+	.routing-junction path {
+		fill: none;
+		stroke: var(--nb-border-strong);
+		stroke-width: 1.2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.routing-junction circle {
+		fill: var(--nb-background);
+		stroke: var(--nb-border-strong);
+		stroke-width: 1.2;
+	}
+
+	.routing-junction .switch-arm {
+		stroke: var(--cue-accent);
+		stroke-width: 2.5;
+	}
+
+	.cue-junction .route-idle path,
+	.cue-junction .route-active path {
+		opacity: 0.18;
+	}
+
+	.junction-control {
+		position: absolute;
+		top: 30.625%;
+		left: 50%;
+		width: 44px;
+		height: 44px;
+		border: 0;
+		border-radius: 999px;
+		background: transparent;
+		cursor: pointer;
+		transform: translate(-50%, -50%);
+	}
+
+	.junction-control:focus-visible {
+		outline: 2px solid var(--color-blue-600);
+		outline-offset: 2px;
+	}
+
+	.junction-control:active {
+		transform: translate(-50%, -50%) scale(0.94);
+	}
+
+	.cue-rail .location-row::before {
+		position: absolute;
+		right: 8%;
+		bottom: -12px;
+		left: 8%;
+		height: 1px;
+		background: var(--nb-border-strong);
+		content: "";
+	}
+
+	.cue-rail .location-button::after {
+		position: absolute;
+		bottom: -16px;
+		left: 50%;
+		width: 9px;
+		height: 9px;
+		border: 1px solid var(--nb-border-strong);
+		border-radius: 999px;
+		background: var(--nb-background);
+		content: "";
+		transform: translateX(-50%);
+	}
+
+	.cue-rail .location-button.is-active::after {
+		border-color: var(--cue-accent);
+		background: var(--cue-accent);
+		box-shadow: 0 0 0 3px var(--nb-background);
+	}
+
+	.cue-rail .location-action,
+	.cue-junction .location-action,
+	.cue-actuator .location-action,
+	.cue-inset .location-action {
+		display: none;
+	}
+
+	.cue-actuator .location-button {
+		justify-content: flex-start;
+		gap: 0;
+		padding-left: 12px;
+	}
+
+	.cue-actuator .location-button.is-active .node-actuator {
+		border-color: var(--cue-accent);
+		color: var(--cue-accent);
+	}
+
+	.cue-inset .location-button {
+		border-color: var(--nb-border-strong);
+		box-shadow:
+			0 0 0 4px var(--nb-accent),
+			inset 0 1px 2px color-mix(in oklch, var(--nb-foreground) 12%, transparent);
+		transform: scale(0.96);
+	}
+
+	.cue-inset .location-button.is-active {
+		border-color: var(--cue-accent);
+		box-shadow: 0 0 0 1px var(--nb-background);
+		transform: scale(1);
+	}
+
+	.cue-depth .location-button {
+		transform: translateY(-2px);
+		box-shadow: 0 3px 0 var(--nb-border-strong);
+	}
+
+	.cue-depth .location-button:hover,
+	.cue-depth .location-button:focus-visible {
+		transform: translateY(-3px);
+		box-shadow: 0 4px 0
+			color-mix(in oklch, var(--cue-accent) 55%, var(--nb-border-strong));
+	}
+
+	.cue-depth .location-button:active,
+	.cue-depth .location-button.is-active {
+		transform: translateY(1px) scale(0.98);
+		box-shadow: 0 0 0 var(--nb-border-strong);
+	}
+
+	.cue-ripple.is-ready .location-button::after {
+		position: absolute;
+		inset: -5px;
+		border: 1px solid var(--cue-accent);
+		border-radius: 8px;
+		content: "";
+		opacity: 0;
+		transform: scale(0.94);
+		pointer-events: none;
+		animation: cue-invite 700ms ease-out 1;
+	}
+
+	.cue-ripple.is-ready .location-button:nth-child(2)::after {
+		animation-delay: 180ms;
+	}
+
+	.cue-ripple.is-ready .location-button:nth-child(3)::after {
+		animation-delay: 360ms;
+	}
+
+	.route-dock {
+		display: flex;
+		width: fit-content;
+		margin: -2px auto 2px;
+		padding: 3px;
+		gap: 2px;
+		border: 1px solid var(--nb-border);
+		border-radius: 7px;
+		background: var(--nb-background);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.route-dock button {
+		display: flex;
+		height: 44px;
+		align-items: center;
+		gap: 8px;
+		padding-inline: 11px;
+		border: 0;
+		border-radius: 4px;
+		background: transparent;
+		color: var(--nb-muted-foreground);
+		font-family: var(--font-mono);
+		font-size: 10px;
+		cursor: pointer;
+		transition:
+			transform 140ms ease-out,
+			background-color 140ms ease-out,
+			color 140ms ease-out;
+	}
+
+	.route-dock button:hover,
+	.route-dock button:focus-visible,
+	.route-dock button.is-active {
+		background: var(--nb-accent);
+		color: var(--nb-foreground);
+	}
+
+	.route-dock button:active {
+		transform: scale(0.96);
+	}
+
+	.route-dock svg {
+		width: 13px;
+		height: 13px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	@keyframes cue-arrive {
+		from {
+			opacity: 0;
+			transform: translateY(-16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes cue-wait {
+		0%,
+		100% {
+			opacity: 0.15;
+			transform: scale(0.7);
+		}
+		50% {
+			opacity: 0.55;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes cue-invite {
+		0% {
+			opacity: 0;
+			transform: scale(0.94);
+		}
+		35% {
+			opacity: 0.6;
+		}
+		100% {
+			opacity: 0;
+			transform: scale(1.04);
+		}
+	}
+
+	@media (max-width: 540px) {
+		.placement-scene {
+			padding-inline: 8px;
+			overflow-x: auto;
+		}
+
+		.scene-canvas {
+			min-width: 500px;
+		}
+
+		.location-row {
+			left: 9%;
+			width: 82%;
+			gap: 5%;
+		}
+
+		.location-button,
+		.passive-location {
+			height: 44px;
+			gap: 3px;
+			font-size: 9px;
+		}
+
+		.location-action {
+			font-size: 11px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pending-request circle,
+		.cue-ripple.is-ready .location-button::after {
+			animation: none;
+		}
+
+		.pending-ring {
+			opacity: 0.45;
+		}
+
+		.cue-ripple.is-ready .location-button::after {
+			opacity: 0.3;
+			transform: none;
+		}
+
+		.location-button,
+		.route-dock button,
+		.instance-card,
+		.instance-stack {
+			transition-duration: 0.01ms;
+		}
+
+		.cue-depth .location-button,
+		.cue-depth .location-button:hover,
+		.cue-depth .location-button:focus-visible,
+		.cue-depth .location-button:active,
+		.cue-depth .location-button.is-active {
+			transform: none;
+		}
+	}
+</style>

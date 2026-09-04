@@ -46,6 +46,7 @@ const MOBILE_TOP_SCALE = 1.5;
 const MOBILE_DO_SCALE = 1.3;
 const MOBILE_DO_W = 230;
 const MOBILE_VM_SCALE = 1.5;
+const TOP_OFFSET = 10;
 const BOTTOM_MARGIN = 32;
 
 const DO_HEADER_H = 26;
@@ -144,13 +145,13 @@ function RequestPathBody() {
 		"8X97": VIEW_W - MARGIN - colW / 2,
 	};
 
-	const stubTop = 16;
+	const stubTop = 16 + TOP_OFFSET;
 	const workerTop = stubTop + 14;
 	const workerH = 28;
 	const worker = makeRect(cx - workerW / 2, workerTop, workerW, workerH);
 	const mobileWorkerW = workerW * MOBILE_TOP_SCALE;
 	const mobileWorkerH = workerH * MOBILE_TOP_SCALE;
-	const mobileWorkerTop = 34;
+	const mobileWorkerTop = 34 + TOP_OFFSET;
 	const mobileWorker = makeRect(
 		cx - mobileWorkerW / 2,
 		mobileWorkerTop,
@@ -204,7 +205,14 @@ function RequestPathBody() {
 			height={VIEW_H}
 			liveStatus={status}
 			controls={
-				<Toolbar>
+				<Toolbar
+					status={
+						<span className="block text-center text-[11px] leading-4 font-medium tracking-wide text-balance text-neutral-600 normal-case dark:text-neutral-300">
+							Choose an instance to send a request
+						</span>
+					}
+					className="grid grid-cols-1 items-center gap-2 px-2 py-2.5 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] [&>div]:col-start-1 [&>div]:row-start-2 [&>div]:ml-auto sm:[&>div]:col-start-3 sm:[&>div]:row-start-1 [&>span]:col-start-1 sm:[&>span]:col-start-2"
+				>
 					{identityButtons}
 					<ResetButton onClick={handleReset} />
 				</Toolbar>
@@ -213,11 +221,11 @@ function RequestPathBody() {
 			<g className="hidden sm:inline">
 				<Caption
 					x={cx}
-					y={12}
+					y={12 + TOP_OFFSET}
 					anchor="middle"
 					size={FS}
 					tone="ghost"
-					opacity={0.5}
+					opacity={0.75}
 				>
 					Request
 				</Caption>
@@ -258,17 +266,17 @@ function RequestPathBody() {
 			<g className="sm:hidden">
 				<Caption
 					x={cx}
-					y={16}
+					y={16 + TOP_OFFSET}
 					anchor="middle"
 					size={FS * MOBILE_TOP_SCALE}
 					tone="ghost"
-					opacity={0.5}
+					opacity={0.75}
 				>
 					Request
 				</Caption>
 
 				<Connector
-					from={{ x: cx, y: 20 }}
+					from={{ x: cx, y: 20 + TOP_OFFSET }}
 					to={edgePoint(mobileWorker, "top")}
 					arrowhead
 					active={requestFiring}

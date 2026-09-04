@@ -97,7 +97,9 @@ export function WeldedCard({
 				!active && "text-neutral-300 dark:text-neutral-700",
 			)}
 			style={{
-				fill: muted ? "var(--nb-muted)" : undefined,
+				fill: muted
+					? "color-mix(in oklch, var(--nb-muted) 20%, var(--nb-background))"
+					: undefined,
 				transition: `stroke ${MOTION.transition}ms ${EASE_OUT}, stroke-width ${MOTION.transition}ms ${EASE_OUT}, opacity ${MOTION.transition}ms ${EASE_OUT}`,
 			}}
 		/>
