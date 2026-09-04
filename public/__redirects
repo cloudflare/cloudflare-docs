@@ -2802,6 +2802,9 @@
 /cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
 /cloudflare-one/remote-browser-isolation/canvas-rendering/ /cloudflare-one/remote-browser-isolation/canvas-remoting/ 301
 
+# Agent setup (Windsurf rebranded to Devin Desktop)
+/agent-setup/windsurf/ /agent-setup/devin/ 301
+
 # ============================================================================
 # DYNAMIC REDIRECTS
 /agents/think/* /agents/harnesses/think/:splat 301

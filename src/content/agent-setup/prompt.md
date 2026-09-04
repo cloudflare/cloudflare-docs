@@ -62,7 +62,7 @@ Then run:
 opencode mcp auth cloudflare
 ```
 
-### Windsurf — `~/.codeium/windsurf/mcp_config.json`
+### Devin Desktop — `~/.codeium/windsurf/mcp_config.json`
 
 Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
@@ -111,7 +111,7 @@ For MCP setup guides and troubleshooting, refer to each agent's official documen
 
 - Claude Code: `https://docs.anthropic.com/en/docs/claude-code/mcp`
 - Cursor: `https://cursor.com/docs/mcp`
-- Windsurf: `https://docs.windsurf.com/windsurf/cascade/mcp`
+- Devin Desktop: `https://docs.devin.ai/desktop/cascade/mcp`
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
 - GitHub Copilot (VS Code): `https://code.visualstudio.com/docs/copilot/customization/mcp-servers`
 - Skills: `https://github.com/cloudflare/skills`
