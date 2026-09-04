@@ -31,7 +31,7 @@ Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 ## `createTestHarness`
 
-`createTestHarness()` starts one or more Workers for integration tests from any Node.js test runner. It runs production build output from Wrangler configuration files, Vite-generated configuration files, or inline Wrangler configuration objects. The API wraps Miniflare and provides methods for dispatching requests and scheduled events.
+`createTestHarness()` starts one or more Workers for integration tests from any Node.js test runner. It runs production build output from Wrangler configuration files, Vite-generated configuration files, or inline Wrangler configuration objects. The API wraps Miniflare and provides methods for dispatching requests and triggering event handlers.
 
 For setup guidance and examples, refer to [Integration test harness](/workers/testing/test-harness/).
 
@@ -138,6 +138,8 @@ const server = createTestHarness({
   - Dispatches a fetch event directly to this Worker.
 - `scheduled(options)` <Type text={'Promise<{ outcome: "ok" | "canceled" | "exception"; noRetry: boolean }>'} />
   - Dispatches a scheduled event directly to this Worker.
+- `email(options)` <Type text="Promise<FetcherEmailResult>" />
+  - Dispatches an email event directly to this Worker.
 - `getEnv()` <Type text="Promise<Env>" />
   - Returns the full environment object configured for this Worker, including variables, secrets, and bindings.
 - `getExport()` <Type text={"Promise<Service<Module['default']>>"} />

@@ -70,10 +70,13 @@ Start your development server:
 npx wrangler dev
 ```
 
-Send a test email using the local endpoint. The request body must be a raw email message in [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) format, and the message must include a `Message-ID` header:
+Send a test email using the local endpoint. The request body must be a raw email message in [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) format, and the message must include a `Message-ID` header.
+
+By default, the endpoint returns the email handler outcome as text. Pass `format=json` to return the structured handler result:
 
 ```bash
 curl --request POST 'http://localhost:8787/cdn-cgi/handler/email' \
+  --url-query 'format=json' \
   --url-query 'from=sender@example.com' \
   --url-query 'to=recipient@example.com' \
   --data-raw 'Received: from smtp.example.com (127.0.0.1)
@@ -91,7 +94,32 @@ Message-ID: <6114391943504294873000@ZSH-GHOSTTY>
 Hi there'
 ```
 
-This will output the parsed email structure in the console:
+The endpoint returns the handler outcome, rejection reason, forwarded messages and replies:
+
+```json
+{
+	"outcome": "ok",
+	"forwards": [
+		{
+			"messageId": "<generated-message-id>@example.com",
+			"recipient": "general@example.com",
+			"headers": []
+		}
+	],
+	"replies": [],
+	"events": [
+		{
+			"type": "forward",
+			"timestamp": "<ISO 8601 timestamp>",
+			"messageId": "<generated-message-id>@example.com"
+		}
+	]
+}
+```
+
+The response includes `rejectReason` when the handler calls `message.setReject()`. The `outcome` is `"exception"` when the handler throws.
+
+This will also output the parsed email structure in the console:
 
 ```json
 {
