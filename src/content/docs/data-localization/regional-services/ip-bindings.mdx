@@ -32,6 +32,7 @@ A binding covers a range of addresses within a prefix, not just a single address
 
 - Fall within the prefix identified by `prefix_id`.
 - Be **more specific than the prefix itself** — a sub-range within it. For example, within a `/24` prefix you can bind any range from a `/25` down to a single address (a `/32` for IPv4, or a `/128` for IPv6). Binding the entire prefix (the full `/24`) is rejected with a [conflict error](#handle-a-conflict-error), because the whole prefix range is already in use once Cloudflare advertises it.
+- Must not be already bound to another [Cloudflare service](/byoip/service-bindings/).
 
 How you choose the CIDR depends on how you want to split the prefix across regions:
 
