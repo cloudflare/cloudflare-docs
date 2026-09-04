@@ -25,7 +25,7 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import ComponentUsage from "@/components/cf/ComponentUsage.astro";
 import FeedbackPrompt from "@/components/react/FeedbackPrompt";
 import type { DocsPageProps } from "@cloudflare/nimbus-docs/types";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 import {
 	getVersionStatus,
 	getVersionAlternates,
@@ -263,7 +263,7 @@ const showFeedback = feedback !== false && !isCustom;
 													{summary && (
 														<div
 															class="text-muted-foreground mt-2 text-lg leading-relaxed"
-															set:html={marked.parse(summary)}
+															set:html={renderMarkdown(summary)}
 														/>
 													)}
 													{/* `description` is meta-only (head tags via BaseLayout), matching

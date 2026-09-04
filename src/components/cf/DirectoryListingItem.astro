@@ -4,7 +4,7 @@
  *
  * CF source: cloudflare-docs/src/components/DirectoryListingItem.astro
  */
-import { marked } from "marked";
+import { renderMarkdownInline } from "~/util/markdown";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -34,7 +34,7 @@ const href =
 		descriptions && node.page.data.description && (
 			<>
 				<span>: </span>
-				<Fragment set:html={marked.parseInline(node.page.data.description)} />
+				<Fragment set:html={renderMarkdownInline(node.page.data.description)} />
 			</>
 		)
 	}

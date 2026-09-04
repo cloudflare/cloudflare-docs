@@ -1,0 +1,17 @@
+---
+title: Configure DHCP options from the dashboard on Cloudflare One Appliance
+description: Add custom DHCP options to a LAN's DHCP server directly from the dashboard, no API or Terraform required.
+date: 2026-09-02
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+You can now configure [custom DHCP options](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-options/) directly from the dashboard when the [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/) is acting as the DHCP server for a LAN.
+
+![Adding a custom DHCP option to a LAN's DHCP server from the Network Configuration tab of an appliance profile](~/assets/images/changelog/cloudflare-wan/2026-09-01-appliance-dhcp-options-ui.gif)
+
+- In **LAN configuration**, under **DHCP server options**, select **Add DHCP option** to choose from common options for PXE / iPXE boot, VoIP phone provisioning, and vendor-specific configuration, or select **Add custom option** to enter your own option code, type, and value.
+- This complements the existing [API and Terraform workflow](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-options/#configure-dhcp-options) for configuring DHCP options.
+
+For details, refer to [DHCP server options](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-options/).
