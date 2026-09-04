@@ -1,0 +1,193 @@
+---
+pcx_content_type: how-to
+description: Configure Cisco Duo as an OpenID Connect identity provider in Cloudflare One.
+products:
+  - cloudflare-one
+title: Duo
+tags:
+  - OIDC
+  - SSO
+---
+
+import {
+	APIRequest,
+	DashButton,
+	Render,
+	Steps,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+Cloudflare Access supports Cisco Duo Single Sign-On as an OpenID Connect (OIDC) identity provider.
+
+## Prerequisites
+
+- A commercial Duo plan that includes Duo Single Sign-On
+- A working Duo Single Sign-On authentication source
+- A Duo user with access to the application
+- A Cloudflare Zero Trust organization
+
+## 1. Create an application in Duo
+
+<Steps>
+1. Log in to the Duo Admin Panel and go to **Applications** > **Application Catalog**.
+
+2. Find **Generic OIDC Relying Party** with the **SSO** label, then select **Add**.
+
+3. Under **User access**, grant access to selected Duo groups or all users.
+
+4. In the **Metadata** tab, copy these values:
+
+   - **Client ID**
+   - **Client Secret**
+   - **Discovery URL**
+
+5. In the **General** tab, turn on the **Authorization Code** grant type.
+
+6. Under **Sign-In Redirect URLs**, enter your Cloudflare Access callback URL:
+
+   ```txt
+   https://<YOUR_TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
+
+   <Render file="find-team-name" product="cloudflare-one" />
+
+7. In the **Scopes** tab, turn on the `email` and `profile` scopes. The `openid` scope is always enabled.
+
+8. Confirm that the `email` claim maps to the user's email attribute.
+
+9. Select **Save**.
+</Steps>
+
+## 2. Add Duo to Cloudflare One
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
+
+2. Under **Your identity providers**, select **Add new identity provider**.
+
+3. Select **Duo**.
+
+4. Enter the **Client ID**, **Client Secret**, and **Discovery URL** copied from Duo.
+
+5. (Optional) Turn on Proof Key for Code Exchange (PKCE) if you configured PKCE in Duo.
+
+6. To use group membership in Access policies, under **Optional configurations** > **OIDC Claims**, enter `groups`.
+
+7. (Optional) Configure a different email claim, other custom OIDC claims, or additional scopes.
+
+8. Select **Save**.
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
+
+<APIRequest
+	path="/accounts/{account_id}/access/identity_providers"
+	method="POST"
+	json={{
+		name: "Duo",
+		type: "duo",
+		config: {
+			client_id: "$DUO_CLIENT_ID",
+			client_secret: "$DUO_CLIENT_SECRET",
+			discovery_url: "$DUO_DISCOVERY_URL",
+			email_claim_name: "email",
+			pkce_enabled: false,
+			claims: ["groups"],
+			scopes: ["openid", "email", "profile"],
+		},
+	}}
+/>
+
+</TabItem>
+</Tabs>
+
+## 3. Test the connection
+
+In **Zero Trust** > **Integrations** > **Identity providers**, select **Test** next to Duo. Complete authentication through Duo and confirm that Cloudflare returns the expected email address.
+
+<DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
+
+## Group membership
+
+Duo's **User access** setting controls which Duo users can open the application, but it does not send those Duo group memberships to Cloudflare. To use groups in Access policies, configure Duo to return a `groups` claim from your SSO authentication source.
+
+<Steps>
+1. In the Duo application's **Scopes** tab, add a `groups` claim to an enabled scope such as `profile`.
+
+2. Map the claim to the group membership attribute from your Duo SSO authentication source.
+
+3. If your Active Directory returns group distinguished names, use Duo's [`format_ad_groups` claim transformation](https://duo.com/docs/sso-oidc-generic#claim-transformations) to return group names.
+
+4. Use Duo's **Preview Response** tool to confirm that `groups` is a string or an array of strings.
+
+5. In **Zero Trust** > **Integrations** > **Identity providers**, edit Duo. Under **OIDC Claims**, enter `groups`, then select **Save**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
+
+6. Test the identity provider and confirm that `oidc_fields.groups` contains the expected group names.
+
+7. In an Access policy, use the **Duo OIDC Claims** selector. Enter `groups` as the claim name and the exact group name as the claim value.
+</Steps>
+
+The **Identity provider group** selector requires a group integration that can list groups, such as SCIM. Duo group matching in this integration uses the OIDC claim instead.
+
+## Other custom OIDC claims
+
+To use another Duo claim in an Access policy:
+
+<Steps>
+1. In the Duo application's **Scopes** tab, add the claim to an enabled scope.
+
+2. In **Zero Trust** > **Integrations** > **Identity providers**, edit Duo.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
+
+3. Under **OIDC Claims**, enter the exact claim name.
+
+4. Select **Save**, then test the identity provider.
+
+5. In an Access policy, use the **Duo OIDC Claims** selector.
+</Steps>
+
+An empty `oidc_fields` object means Duo returned none of the configured custom claims. Confirm each claim is mapped in Duo and listed under **OIDC Claims** in Cloudflare.
+
+## Troubleshooting
+
+### Relying Party is not configured
+
+Confirm that the Cloudflare callback URL is present in Duo's **Sign-In Redirect URLs**. Save the Duo application after adding the URL.
+
+### Invalid credentials
+
+Confirm that Duo Single Sign-On uses the expected authentication source. If Duo looks up users by email, confirm that the user's email attribute is populated.
+
+### User email was not returned
+
+Confirm that the Duo application enables the `email` scope and maps the `email` claim to a populated user attribute.
+
+### User cannot access the application
+
+Under **User access** in Duo, grant access to the user's Duo group or all users.
+
+### Group policy does not match
+
+Use Duo's **Preview Response** tool to confirm that the `groups` claim contains the expected group name. Confirm that `groups` is listed under **OIDC Claims** in Cloudflare and that the Access policy uses the **Duo OIDC Claims** selector.
+
+### Discovery metadata cannot be loaded
+
+Copy the exact **Discovery URL** from the Duo application's **Metadata** tab. Do not enter a Duo Admin API hostname, email domain, or custom login domain.
+
+Confirm that the Client ID and Discovery URL came from the same Duo application.
+
+### Duo passcode does not arrive
+
+Select another enrolled Duo authentication method, or contact your Duo administrator to confirm telephony availability.
