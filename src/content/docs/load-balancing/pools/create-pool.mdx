@@ -34,7 +34,7 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 ## Endpoint address uniqueness
 
-Within a single pool, each endpoint must be unique. Endpoints can share the same IP address as long as they are differentiated by port or by [virtual network](/load-balancing/private-network/) — a common pattern for private endpoints reachable on the same IP across different internal networks.
+Within a single pool, each endpoint address must be unique. Endpoints cannot share the same IP address, even when they use different ports or virtual networks. To use overlapping IP addresses, assign the endpoints to different pools.
 
 ---
 

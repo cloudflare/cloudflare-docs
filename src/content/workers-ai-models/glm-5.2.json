@@ -36,6 +36,10 @@
         {
             "property_id": "reasoning",
             "value": "true"
+        },
+        {
+            "property_id": "reasoning_effort",
+            "value": "Off, High, Max"
         }
     ],
     "id": "4edc7dfe-de78-4156-890c-85b79227694e",
@@ -295,9 +299,9 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "none",
+                                                "high",
+                                                "max"
                                             ]
                                         },
                                         {
@@ -1561,9 +1565,9 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "none",
+                                                "high",
+                                                "max"
                                             ]
                                         },
                                         {
@@ -2397,9 +2401,9 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "none",
+                                                            "high",
+                                                            "max"
                                                         ]
                                                     },
                                                     {
@@ -3663,9 +3667,9 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "none",
+                                                            "high",
+                                                            "max"
                                                         ]
                                                     },
                                                     {

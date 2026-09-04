@@ -6,7 +6,7 @@
  * the body's custom `<h1>` stands in). Body unchanged.
  */
 import type { GetStaticPaths } from "astro";
-import { marked } from "marked";
+import { renderMarkdown, renderMarkdownInline } from "~/util/markdown";
 import { getEntry } from "astro:content";
 import { getSidebar } from "@cloudflare/nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
@@ -36,9 +36,6 @@ export const getStaticPaths = (async () => {
 
 const { name } = Astro.params;
 const { field } = Astro.props;
-
-// disable conversion of relative links to absolute links
-marked.use({ walkTokens: null });
 
 const description = field.description;
 
@@ -78,12 +75,12 @@ const editUrl =
 	<code>{field.name}</code>
 	<Type text={field.data_type} />
 
-	<p class="mt-3" set:html={marked.parseInline(field.summary)} />
+	<p class="mt-3" set:html={renderMarkdownInline(field.summary)} />
 
 	{
 		description && (
 			<>
-				<div set:html={marked.parse(description)} />
+				<div set:html={renderMarkdown(description)} />
 			</>
 		)
 	}

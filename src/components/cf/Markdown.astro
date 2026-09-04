@@ -9,7 +9,7 @@
  *     common-leading-whitespace strip to avoid adding a dependency.
  */
 import { z } from "astro/zod";
-import { marked } from "marked";
+import { renderMarkdown, renderMarkdownInline } from "~/util/markdown";
 
 type Props = z.infer<typeof props>;
 
@@ -33,4 +33,6 @@ const props = z.object({
 const { text, inline } = props.parse(Astro.props);
 ---
 
-<Fragment set:html={inline ? marked.parseInline(text) : marked.parse(text)} />
+<Fragment
+	set:html={inline ? renderMarkdownInline(text) : renderMarkdown(text)}
+/>

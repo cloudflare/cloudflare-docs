@@ -74,6 +74,14 @@ You can use wildcards to match traffic to multiple subdomains. For example, if y
 
 You can also enter regular expressions for the `path` key. For example, if `hostname` is `static.example.com` and `path` is `\.(jpg|png|css|js)$`, matching URLs could include `https://static.example.com/data.js`, `http://static.example.com/images/photo.jpg`, and so on. Cloudflare parses the path regex using the [Go `syntax` package](https://pkg.go.dev/regexp/syntax).
 
+:::note[Path forwarding]
+`cloudflared` matches request paths to evaluate rules, but it forwards the full request path to your service without modifying or stripping it.
+
+For example, if an ingress rule matches `path: /api`, a request to `https://example.com/api/users` is sent to your service as `http://localhost:8000/api/users`.
+
+If your application requires path stripping or URL rewriting, you can rewrite the URL at the Cloudflare edge using [URL Rewrite Rules](/rules/transform/url-rewrite/), or forward traffic from `cloudflared` to a local reverse proxy (such as Nginx or Traefik) configured to strip path prefixes before reaching your application.
+:::
+
 ### Services
 
 In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and Unix sockets. You can also route traffic to the built-in `hello_world` test server or respond to traffic with an HTTP status. For a full list of supported service types, refer to <a href="/tunnel/routing/#supported-protocols">Protocols for published applications</a>.

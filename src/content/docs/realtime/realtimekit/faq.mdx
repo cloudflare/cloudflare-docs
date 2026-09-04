@@ -4,7 +4,7 @@ title: FAQ
 description: Frequently asked questions about RealtimeKit meetings, recordings, and SDK usage.
 slug: realtime/realtimekit/faq
 sidebar:
-  order: 14
+  order: 17
 ---
 
 import { Details } from "~/components";
@@ -196,11 +196,17 @@ When you pass a watermark image URL via the [Start Recording](/api/resources/rea
 
 </Details>
 
-### Pre-call test
+### Network access
+
+<Details header="Which domains and ports must I allowlist when my network restricts outbound traffic?">
+
+If your network restricts outbound traffic, refer to [Network allowlist](/realtime/realtimekit/network-allowlist/) for the domains and ports required for your RealtimeKit integration.
+
+</Details>
 
 <Details header="How can I check if my network and devices are ready for a RealtimeKit meeting?">
 
-Go to [test.realtime.cloudflare.com](https://test.realtime.cloudflare.com/) and run the pre-call test. The test checks your camera, microphone, and network, and verifies connectivity to Cloudflare Realtime endpoints, so you can confirm that the required services are not blocked by your network or firewall before joining a meeting.
+Go to [test.realtime.cloudflare.com](https://test.realtime.cloudflare.com/) and run the pre-call test. The test checks your camera, microphone, and network, and verifies connectivity to Cloudflare Realtime endpoints, so you can confirm that the required services are not blocked by your network or firewall before joining a meeting. For required domains and ports, refer to [Network allowlist](/realtime/realtimekit/network-allowlist/).
 
 </Details>
 
