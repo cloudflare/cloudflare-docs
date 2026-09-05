@@ -1,0 +1,64 @@
+---
+title: Response body inspection
+pcx_content_type: concept
+description: Understand when Cloudflare inspects response bodies and how inspection can affect streaming responses.
+products:
+  - rules
+sidebar:
+  order: 7
+---
+
+import { Steps } from "~/components";
+
+When no enabled feature needs response content, Cloudflare can send data to the client as it arrives. Some features inspect or change response content at the edge.
+
+Inspection can hold part of a response at the edge. This may increase time to first byte (TTFB) or delay incremental delivery. The amount of data held depends on the feature and response.
+
+## Features that inspect response bodies
+
+Cloudflare features primarily inspect responses with a `Content-Type` of `text/html`. Some features change the body, while others only read it.
+
+The following features can change HTML response bodies when turned on and applicable:
+
+| Feature | Body change |
+| - | - |
+| [AI Labyrinth](/bots/additional-configurations/ai-labyrinth/) | Adds invisible links for unauthorized AI crawlers |
+| [Always Online](/cache/how-to/always-online/) | Adds a banner to archived pages |
+| [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) | Rewrites eligible HTTP links to HTTPS |
+| [Cloudflare challenge features](/cloudflare-challenges/) | Injects challenge scripts or returns challenge content |
+| [Cloudflare Fonts](/speed/optimization/content/fonts/) and [Automatic Platform Optimization](/automatic-platform-optimization/) | Rewrites Google Fonts references |
+| [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) | Obfuscates email addresses in page content |
+| [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) | Converts HTML to Markdown for eligible requests |
+| [Replace insecure JavaScript libraries](/waf/tools/replace-insecure-js-libraries/) | Rewrites supported insecure library URLs |
+| [Rocket Loader](/speed/optimization/content/rocket-loader/) | Changes script loading behavior |
+| [Web Analytics](/web-analytics/) | Injects the Real User Monitoring beacon |
+
+Security and AI features may also read HTML without changing it. [Prefetch URLs](/speed/optimization/content/prefetch-urls/) reads URL manifests served as `text/plain`.
+
+This list excludes explicit rules that inspect response content. Review each rule separately when troubleshooting.
+
+## Streaming considerations
+
+Response body inspection most often affects progressive HTML and plain-text streams. It can affect other responses selected by explicit inspection rules. A client may receive data later or in larger groups than the origin sent it.
+
+Set an accurate `Content-Type` at your origin. Do not serve streaming API responses as `text/html` or `text/plain` unless that media type is required.
+
+The `Cache-Control: no-transform` response directive prevents body changes by supported features. It does not prevent read-only inspection. Refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives) for other effects of this directive.
+
+## Isolate inspection issues
+
+If a response stops streaming after you proxy it through Cloudflare:
+
+<Steps>
+
+1. Verify that the origin sends data incrementally without Cloudflare.
+2. Check the origin response's `Content-Type` and `Cache-Control` headers.
+3. Review features and rules that apply to the response path.
+4. Create a path-specific [Configuration Rule](/rules/configuration-rules/) that sets **Response Body Buffering** to **None**.
+5. Test the response again through Cloudflare.
+
+</Steps>
+
+The **None** setting streams the body without inspection. It can prevent security, optimization, and analytics features from working on matching responses. Use the narrowest matching expression possible.
+
+For setting values and API configuration, refer to [Response Body Buffering](/rules/configuration-rules/settings/#response-body-buffering).
