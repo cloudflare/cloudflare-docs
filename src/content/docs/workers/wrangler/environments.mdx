@@ -13,6 +13,8 @@ Wrangler allows you to use environments to create different configurations for t
 
 When you create an environment, Cloudflare effectively creates a new Worker with the name `<top-level-name>-<environment-name>`. For example, a Worker project named `my-worker` with an environment `dev` would deploy as a Worker named `my-worker-dev`.
 
+Use Wrangler environments for persistent Workers such as staging or development. Use [Previews](/workers/previews/) when you want every branch or pull request to get a URL. For the difference between these workflows, refer to [Compare workflows](/workers/previews/compare-workflows/).
+
 Review the following environments flow:
 
 <Steps>

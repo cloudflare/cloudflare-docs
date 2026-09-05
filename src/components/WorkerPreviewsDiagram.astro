@@ -1,0 +1,905 @@
+---
+interface Props {
+	variant?: "overview" | "paths";
+}
+
+const { variant = "overview" } = Astro.props;
+
+const paths = [
+	{
+		label: "Git-connected Worker",
+		meta: "Workers Builds",
+		detail:
+			"Enable preview builds, then set the Preview command to run Wrangler.",
+		command: "npx wrangler preview",
+		href: "/workers/previews/get-started/#workers-builds",
+	},
+	{
+		label: "Local branch test",
+		meta: "Wrangler",
+		detail: "Create or update one branch Preview from your terminal.",
+		command: "npx wrangler preview --name feature-branch",
+		href: "/workers/previews/get-started/#wrangler",
+	},
+	{
+		label: "External CI",
+		meta: "GitHub Actions, Buildkite, or other CI",
+		detail:
+			"Run Wrangler in your pull request workflow with a CI-safe Preview name.",
+		command: 'npx wrangler preview --name "$PREVIEW_NAME"',
+		href: "/workers/previews/get-started/#external-ci",
+	},
+	{
+		label: "Custom automation",
+		meta: "API",
+		detail:
+			"Create Previews and deployments from bots, dashboards, or custom release tooling.",
+		command: "Create Preview -> deploy -> share URL",
+		href: "/workers/previews/get-started/#api",
+	},
+];
+---
+
+{
+	variant === "paths" ? (
+		<figure class="worker-previews-diagram worker-previews-paths">
+			<div class="diagram-shell">
+				<header class="diagram-header">
+					<p class="eyebrow">Choose your path</p>
+					<div class="diagram-title">Start from how you already ship code</div>
+				</header>
+
+				<div class="path-grid">
+					{paths.map((path) => (
+						<a class="path-card" href={path.href}>
+							<span class="path-meta">{path.meta}</span>
+							<strong>{path.label}</strong>
+							<span class="path-detail">{path.detail}</span>
+							<code>{path.command}</code>
+						</a>
+					))}
+				</div>
+
+				<div class="path-outcome" aria-label="Shared Preview result">
+					<span aria-hidden="true">-&gt;</span>
+					<strong>Preview URL</strong>
+					<code>preview.app.example.com</code>
+				</div>
+			</div>
+		</figure>
+	) : (
+		<figure
+			class="worker-previews-diagram worker-previews-overview"
+			aria-label="Previews repository model"
+		>
+			<div class="diagram-shell">
+				<div class="repo-diagram">
+					<div class="repo-stage unified-stage">
+						<section class="repo-window" aria-label="Repository branch">
+							<header class="repo-titlebar">
+								<span class="repo-dot" />
+								<span class="repo-dot" />
+								<span class="repo-dot" />
+								<strong>Repository</strong>
+							</header>
+							<label class="branch-selector unified-branch-selector">
+								<span>Branch</span>
+								<select class="unified-branch-select" aria-label="Branch">
+									<option
+										value="main"
+										data-mode="production"
+										data-href="/workers/configuration/routing/custom-domains/"
+										data-eyebrow="Live app"
+										data-title="app.example.com"
+										data-detail="Production variables, secrets, bindings, and custom domain."
+										data-url="app.example.com"
+										data-command="npx wrangler deploy"
+										data-command-href="/workers/wrangler/commands/workers/#deploy"
+										data-url-href="/workers/configuration/routing/custom-domains/"
+										data-traffic-label="Traffic"
+										data-traffic-text="where live requests go"
+										data-traffic-href="/workers/configuration/versions-and-deployments/"
+									>
+										main
+									</option>
+									<option
+										value="feature/login"
+										data-mode="preview"
+										data-href="/workers/previews/configuration/"
+										data-eyebrow="Preview"
+										data-title="feature/login"
+										data-detail="Preview variables, secrets, bindings, and custom domain"
+										data-url="feature-login.app.example.com"
+										data-command="npx wrangler preview"
+										data-command-href="/workers/wrangler/commands/workers/#preview"
+										data-url-href="/workers/previews/custom-domains/"
+										data-traffic-label="Preview"
+										data-traffic-text="branch code with preview settings"
+										data-traffic-href="/workers/previews/resources/"
+									>
+										feature/login
+									</option>
+									<option
+										value="redesign"
+										data-mode="preview"
+										data-href="/workers/previews/resources/"
+										data-eyebrow="Preview"
+										data-title="redesign"
+										data-detail="Preview variables, secrets, bindings, and custom domain"
+										data-url="redesign.app.example.com"
+										data-command="npx wrangler preview"
+										data-command-href="/workers/wrangler/commands/workers/#preview"
+										data-url-href="/workers/previews/custom-domains/"
+										data-traffic-label="Preview"
+										data-traffic-text="branch code with preview settings"
+										data-traffic-href="/workers/previews/resources/"
+									>
+										redesign
+									</option>
+									<option
+										value="fix-api"
+										data-mode="preview"
+										data-href="/workers/previews/custom-domains/"
+										data-eyebrow="Preview"
+										data-title="fix-api"
+										data-detail="Preview variables, secrets, bindings, and custom domain"
+										data-url="fix-api.app.example.com"
+										data-command="npx wrangler preview"
+										data-command-href="/workers/wrangler/commands/workers/#preview"
+										data-url-href="/workers/previews/custom-domains/"
+										data-traffic-label="Preview"
+										data-traffic-text="branch code with preview settings"
+										data-traffic-href="/workers/previews/resources/"
+									>
+										fix-api
+									</option>
+								</select>
+							</label>
+							<ul class="file-list" aria-label="Repository files">
+								<li>src/index.ts</li>
+								<li>package.json</li>
+							</ul>
+						</section>
+
+						<div class="app-card unified-app-card">
+							<p class="eyebrow" data-unified-eyebrow>
+								Live app
+							</p>
+							<strong data-unified-title>app.example.com</strong>
+							<span data-unified-detail>
+								Production variables, secrets, bindings, and custom domain.
+							</span>
+						</div>
+
+						<div class="repo-summary unified-summary">
+							<div>
+								<strong>Command:</strong>{" "}
+								<span data-unified-command>npx wrangler deploy</span>
+							</div>
+							<div>
+								<strong>URL:</strong>{" "}
+								<span data-unified-url>app.example.com</span>
+							</div>
+							<div>
+								<strong data-unified-traffic-label>Traffic:</strong>{" "}
+								<span data-unified-traffic-text>where live requests go</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</figure>
+	)
+}
+
+<style>
+	.worker-previews-diagram {
+		--preview-bg: light-dark(#fafafa, #0f0f10);
+		--preview-card: light-dark(#ffffff, #171719);
+		--preview-muted: light-dark(#737373, #a3a3a3);
+		--preview-text: light-dark(#171717, #f5f5f5);
+		--preview-border: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--preview-soft: light-dark(#f5f5f5, #222226);
+		--preview-brand: #f6821f;
+		--preview-brand-soft: light-dark(#fff7ed, #431407);
+		margin: 1.25rem 0 1.75rem;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		letter-spacing: -0.01em;
+	}
+
+	.worker-previews-diagram a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.diagram-shell {
+		position: relative;
+		padding: 16px;
+		border: 1px solid var(--preview-border);
+		border-radius: 14px;
+		background:
+			radial-gradient(circle, var(--preview-border) 1px, transparent 1px),
+			var(--preview-bg);
+		background-size: 14px 14px;
+		overflow: hidden;
+	}
+
+	.repo-diagram {
+		display: grid;
+		gap: 14px;
+	}
+
+	.repo-stage {
+		display: grid;
+		grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.2fr);
+		gap: 14px;
+		align-items: stretch;
+	}
+
+	.repo-window,
+	.app-card,
+	.preview-copy,
+	.repo-summary {
+		box-sizing: border-box;
+		border: 1px solid var(--preview-border);
+		border-radius: 12px;
+		background: var(--preview-card);
+		box-shadow: 0 10px 28px rgb(0 0 0 / 6%);
+	}
+
+	.repo-window {
+		display: grid;
+		grid-template-rows: auto auto auto 1fr;
+		min-height: 258px;
+		overflow: hidden;
+	}
+
+	.repo-titlebar {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		padding: 10px 12px;
+		border-bottom: 1px solid var(--preview-border);
+		color: var(--preview-muted);
+		font-size: 0.75rem;
+	}
+
+	.repo-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 999px;
+		background: var(--preview-border);
+	}
+
+	.repo-titlebar strong {
+		margin-left: 4px;
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.branch-selector {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 8px;
+		align-items: center;
+		margin: 12px;
+		padding: 10px 11px;
+		border: 1px solid var(--preview-border);
+		border-radius: 9px;
+		background: var(--preview-soft);
+		font-size: 0.8125rem;
+	}
+
+	.branch-selector span {
+		color: var(--preview-muted);
+	}
+
+	.branch-selector select {
+		appearance: none;
+		cursor: pointer;
+		width: 100%;
+		margin: 0;
+		padding: 0 22px 0 0;
+		border: 0;
+		background:
+			linear-gradient(45deg, transparent 50%, var(--preview-muted) 50%) right
+				8px center / 6px 6px no-repeat,
+			linear-gradient(135deg, var(--preview-muted) 50%, transparent 50%) right
+				4px center / 6px 6px no-repeat;
+		color: var(--preview-text);
+		font: inherit;
+		font-weight: 650;
+		line-height: 1.45;
+	}
+
+	.branch-selector select:focus,
+	.branch-selector select:focus-visible {
+		outline: none;
+		box-shadow: none;
+	}
+
+	.branch-selector strong {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.preview-branch-selector {
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 42%,
+			var(--preview-border)
+		);
+		background: var(--preview-brand-soft);
+	}
+
+	.file-list {
+		display: grid;
+		gap: 7px;
+		align-content: start;
+		margin: 0;
+		padding: 0 12px 12px;
+		list-style: none;
+	}
+
+	.file-list li {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 10px;
+		border: 1px solid var(--preview-border);
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--preview-card) 70%, transparent);
+		color: var(--preview-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.75rem;
+	}
+
+	.file-list li::before {
+		content: "";
+		width: 8px;
+		height: 10px;
+		border: 1px solid var(--preview-muted);
+		border-radius: 2px;
+		opacity: 0.65;
+	}
+
+	.app-card {
+		display: grid;
+		align-content: center;
+		gap: 12px;
+		min-width: 0;
+		min-height: 258px;
+		padding: 18px;
+		background: linear-gradient(
+			135deg,
+			var(--preview-brand-soft),
+			var(--preview-card) 72%
+		);
+		transition: border-color 200ms ease;
+	}
+
+	.app-card.preview-app {
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 35%,
+			var(--preview-border)
+		);
+	}
+
+	.unified-branch-selector {
+		transition:
+			border-color 200ms ease,
+			background 200ms ease;
+	}
+
+	.app-card strong,
+	.preview-copy strong,
+	.repo-summary strong {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.app-card > strong {
+		font-size: 1.15rem;
+		overflow-wrap: anywhere;
+	}
+
+	.app-card span,
+	.preview-copy span,
+	.preview-copy small,
+	.preview-copy code,
+	.repo-summary a {
+		color: var(--preview-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	.app-card code {
+		display: inline-flex;
+		width: fit-content;
+		padding: 3px 7px;
+		border-radius: 7px;
+		background: var(--preview-soft);
+		color: var(--preview-text);
+		font-size: 0.75rem;
+	}
+
+	.preview-copies {
+		display: flex;
+		align-items: flex-start;
+		justify-content: stretch;
+		gap: 12px;
+		align-self: stretch;
+		min-width: 0;
+		transform: translateY(-12px);
+	}
+
+	.preview-copy {
+		position: relative;
+		isolation: isolate;
+		display: grid;
+		align-content: start;
+		gap: 12px;
+		width: 100%;
+		min-height: 258px;
+		margin-top: 0;
+		padding: 64px 24px 18px;
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 35%,
+			var(--preview-border)
+		);
+		background: linear-gradient(
+			135deg,
+			var(--preview-brand-soft),
+			var(--preview-card) 74%
+		);
+	}
+
+	.preview-copy::before,
+	.preview-copy::after {
+		content: "";
+		position: absolute;
+		inset: 5px -5px -5px 5px;
+		z-index: -1;
+		border: 1px solid var(--preview-border);
+		border-radius: 12px;
+		background: var(--preview-card);
+	}
+
+	.preview-copy::after {
+		inset: 10px -10px -10px 10px;
+		opacity: 0.65;
+	}
+
+	.preview-copy code {
+		margin-top: 4px;
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		word-break: break-word;
+	}
+
+	.repo-summary {
+		grid-column: 1 / -1;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0;
+		overflow: hidden;
+	}
+
+	.repo-summary div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 0.35em;
+		padding: 11px 12px;
+		color: var(--preview-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	.repo-summary div + div {
+		border-left: 1px solid var(--preview-border);
+	}
+
+	.flow-map {
+		display: grid;
+		gap: 14px;
+	}
+
+	.flow-row {
+		display: flex;
+		gap: 14px;
+		align-items: stretch;
+		margin: 0;
+		width: 100%;
+	}
+
+	.source-row > .flow-node,
+	.command-row > .flow-node,
+	.result-row > .flow-node {
+		flex: 1 1 0;
+		margin: 0;
+		min-width: 0;
+	}
+
+	.source-row,
+	.command-row {
+		min-height: 124px;
+	}
+
+	.result-row {
+		min-height: 156px;
+	}
+
+	.arrow-row {
+		height: 34px;
+	}
+
+	.flow-node,
+	.info-card,
+	.path-card {
+		position: relative;
+		box-sizing: border-box;
+		border: 1px solid var(--preview-border);
+		border-radius: 12px;
+		background: var(--preview-card);
+		box-shadow: 0 10px 28px rgb(0 0 0 / 6%);
+	}
+
+	.flow-node {
+		display: grid;
+		gap: 5px;
+		align-content: start;
+		align-self: stretch;
+		flex: 1 1 0;
+		min-width: 0;
+		min-height: 0;
+		width: 100%;
+		height: 100%;
+		padding: 16px 18px;
+	}
+
+	.source-node {
+		padding-top: 22px;
+	}
+
+	.command-node {
+		padding-top: 24px;
+	}
+
+	.destination-node {
+		padding-top: 24px;
+	}
+
+	.flow-arrow {
+		position: relative;
+		flex: 0 0 2px;
+		width: 2px;
+		height: 100%;
+		margin: 0 auto;
+		border-radius: 999px;
+		background: var(--preview-border);
+	}
+
+	.flow-arrow::after {
+		content: "";
+		position: absolute;
+		bottom: -1px;
+		left: -3px;
+		display: block;
+		width: 8px;
+		height: 8px;
+		border-right: 2px solid var(--preview-border);
+		border-bottom: 2px solid var(--preview-border);
+		transform: rotate(45deg);
+	}
+
+	.accent-node {
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 45%,
+			var(--preview-border)
+		);
+		background: linear-gradient(
+			135deg,
+			var(--preview-brand-soft),
+			var(--preview-card) 72%
+		);
+	}
+
+	.flow-node span,
+	.flow-node small,
+	.path-meta,
+	.path-detail,
+	.info-card p,
+	.diagram-header p {
+		color: var(--preview-muted);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	.flow-node strong,
+	.path-card strong,
+	.diagram-title {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.flow-node code,
+	.path-card code,
+	.path-outcome code {
+		display: inline-flex;
+		width: fit-content;
+		max-width: 100%;
+		padding: 3px 7px;
+		border-radius: 7px;
+		background: var(--preview-soft);
+		color: var(--preview-text);
+		font-size: 0.75rem;
+		white-space: normal;
+	}
+
+	.info-grid {
+		display: flex;
+		gap: 12px;
+		align-items: stretch;
+		min-height: 260px;
+		width: 100%;
+		margin-top: 14px;
+	}
+
+	.info-grid > * {
+		flex: 1 1 0;
+		margin: 0;
+		min-width: 0;
+	}
+
+	.info-card {
+		display: grid;
+		grid-template-rows: auto 1fr 1fr;
+		gap: 10px;
+		align-content: start;
+		align-self: stretch;
+		min-width: 0;
+		min-height: 0;
+		width: 100%;
+		padding: 12px;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: var(--preview-brand);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.info-card p {
+		margin: 0;
+	}
+
+	.info-card p strong {
+		color: var(--preview-text);
+		font-weight: 650;
+	}
+
+	.info-card a {
+		color: var(--preview-text);
+		font-size: 0.8125rem;
+		line-height: 1.45;
+	}
+
+	.info-card a:hover,
+	.flow-node[href]:hover strong {
+		color: var(--preview-brand);
+	}
+
+	.diagram-header {
+		max-width: 720px;
+		margin-bottom: 14px;
+	}
+
+	.diagram-title {
+		margin: 0.15rem 0 0.35rem;
+		font-size: clamp(1.125rem, 2vw, 1.45rem);
+	}
+
+	.diagram-header p:last-child {
+		margin: 0;
+	}
+
+	.path-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.path-card {
+		display: flex;
+		flex-direction: column;
+		gap: 9px;
+		min-width: 0;
+		padding: 13px;
+	}
+
+	.path-card:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--preview-brand) 42%,
+			var(--preview-border)
+		);
+		transform: translateY(-1px);
+		transition:
+			border-color 150ms ease,
+			transform 150ms ease;
+	}
+
+	.path-meta {
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 0.7rem;
+	}
+
+	.path-detail {
+		flex: 1;
+	}
+
+	.path-outcome {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 12px;
+		padding: 11px 14px;
+		border: 1px solid
+			color-mix(in srgb, var(--preview-brand) 42%, var(--preview-border));
+		border-radius: 12px;
+		background: linear-gradient(
+			135deg,
+			var(--preview-brand-soft),
+			var(--preview-card) 72%
+		);
+		color: var(--preview-text);
+		font-size: 0.8125rem;
+	}
+
+	.path-outcome span {
+		color: var(--preview-brand);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-weight: 600;
+	}
+
+	@media (max-width: 900px) {
+		.info-grid,
+		.path-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.diagram-shell {
+			padding: 12px;
+		}
+
+		.repo-stage {
+			grid-template-columns: 1fr;
+		}
+
+		.repo-window,
+		.app-card {
+			min-height: 0;
+		}
+
+		.repo-summary {
+			grid-template-columns: 1fr;
+		}
+
+		.repo-summary div + div {
+			border-left: 0;
+			border-top: 1px solid var(--preview-border);
+		}
+
+		.flow-map {
+			gap: 12px;
+		}
+
+		.flow-row {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
+
+		.source-row,
+		.command-row,
+		.result-row {
+			min-height: 0;
+		}
+
+		.arrow-row {
+			height: 24px;
+			justify-items: center;
+		}
+
+		.arrow-row .flow-arrow:nth-child(2) {
+			display: none;
+		}
+
+		.info-grid,
+		.path-grid {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
+
+		.preview-copies {
+			transform: none;
+		}
+
+		.info-card {
+			min-height: 0;
+		}
+
+		.info-grid {
+			grid-auto-rows: auto;
+		}
+	}
+</style>
+
+<script>
+	for (const diagram of document.querySelectorAll(
+		".worker-previews-overview",
+	)) {
+		const select = diagram.querySelector(".unified-branch-select");
+		const appCard = diagram.querySelector(".unified-app-card");
+		const branchSelector = diagram.querySelector(".unified-branch-selector");
+		const eyebrow = diagram.querySelector("[data-unified-eyebrow]");
+		const title = diagram.querySelector("[data-unified-title]");
+		const detail = diagram.querySelector("[data-unified-detail]");
+		const commandSpan = diagram.querySelector("[data-unified-command]");
+		const urlSpan = diagram.querySelector("[data-unified-url]");
+		const trafficLabel = diagram.querySelector("[data-unified-traffic-label]");
+		const trafficText = diagram.querySelector("[data-unified-traffic-text]");
+
+		if (!(select instanceof HTMLSelectElement)) continue;
+
+		const updateDiagram = () => {
+			const option = select.selectedOptions[0];
+			if (!option) return;
+
+			const isPreview = option.dataset.mode === "preview";
+
+			if (branchSelector) {
+				branchSelector.classList.toggle("preview-branch-selector", isPreview);
+			}
+			if (appCard) {
+				appCard.classList.toggle("production-app", !isPreview);
+				appCard.classList.toggle("preview-app", isPreview);
+			}
+			if (eyebrow) eyebrow.textContent = option.dataset.eyebrow || "Live app";
+			if (title) title.textContent = option.dataset.url || "app.example.com";
+			if (detail) detail.textContent = option.dataset.detail || "";
+			if (commandSpan)
+				commandSpan.textContent =
+					option.dataset.command || "npx wrangler deploy";
+			if (urlSpan)
+				urlSpan.textContent = option.dataset.url || "app.example.com";
+			if (trafficLabel)
+				trafficLabel.textContent =
+					(option.dataset.trafficLabel || "Traffic") + ":";
+			if (trafficText)
+				trafficText.textContent =
+					option.dataset.trafficText || "where live requests go";
+		};
+
+		select.addEventListener("change", updateDiagram);
+		updateDiagram();
+	}
+</script>

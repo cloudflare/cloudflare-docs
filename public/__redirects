@@ -2187,6 +2187,8 @@
 /workers/platform/changelog/wrangler/index.xml https://github.com/cloudflare/workers-sdk/releases.atom 301
 /workers/platform/scripts/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
+/workers/configuration/previews/ /workers/versions-and-deployments/version-urls/ 301
+/workers/configuration/version-urls/ /workers/versions-and-deployments/version-urls/ 301
 /workers/platform/web-assembly/ /workers/runtime-apis/webassembly/ 301
 /workers/quickstart/ /workers/get-started/quickstarts/ 301
 /workers/recipes/ /workers/get-started/quickstarts/ 301
@@ -2206,6 +2208,11 @@
 /workers/reference/apis/response/ /workers/runtime-apis/response/ 301
 /workers/reference/apis/streams/ /workers/runtime-apis/streams/ 301
 /workers/learning/using-streams/ /workers/runtime-apis/streams/ 301
+/workers/previews/commands/ /workers/wrangler/commands/workers/#preview 301
+/workers/previews/recipes/ /workers/previews/ci-cd/ 301
+/workers/previews/resources/bindings/ /workers/previews/resources/ 301
+/workers/previews/resources/durable-objects/ /workers/previews/resources/ 301
+/workers/previews/troubleshooting/ /workers/previews/ 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
@@ -2341,7 +2348,7 @@
 /workers/observability/local-development-and-testing/ /workers/local-development/ 301
 /workers/observability/sentry-integration/ /workers/observability/integrations/sentry 301
 /workers/configuration/deployments/ /workers/versions-and-deployments/ 301
-/workers/configuration/previews/ /workers/versions-and-deployments/preview-urls/ 301
+/workers/versions-and-deployments/preview-urls/ /workers/versions-and-deployments/version-urls/ 301
 /workers/configuration/versions-and-deployments/ /workers/versions-and-deployments/ 301
 /workers/configuration/versions-and-deployments/gradual-deployments/ /workers/versions-and-deployments/gradual-deployments/ 301
 /workers/configuration/versions-and-deployments/version-overrides/ /workers/versions-and-deployments/version-overrides/ 301

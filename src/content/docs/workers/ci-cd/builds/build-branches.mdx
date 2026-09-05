@@ -8,11 +8,7 @@ products:
   - workers
 ---
 
-When you connect a git repository to Workers, commits made on the production git branch will produce a Workers Build. If you want to take advantage of [preview URLs](/workers/versions-and-deployments/preview-urls/) and [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment), you can additionally enable "non-production branch builds" in order to trigger a build on all branches of your repository.
-
-:::note
-[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. Refer to [Deploy Containers](/containers/guides/deploy/#before-production) if your Worker uses containers.
-:::
+When you connect a git repository to Workers, commits made on the production branch produce a production build. To create [Previews](/workers/previews/) and [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment) for branches that are not your production branch, enable preview builds.
 
 ## Change production branch
 
@@ -23,11 +19,19 @@ To change the production branch of your project:
 
 Every push event made to this branch will trigger a build and execute the [build command](/workers/ci-cd/builds/configuration/#deploy-command), followed by the [deploy command](/workers/ci-cd/builds/configuration/#deploy-command).
 
-## Configure non-production branch builds
+## Configure preview builds
 
-To enable or disable non-production branch builds:
+Preview builds are builds for branches that are not your production branch.
+
+To enable or disable preview builds:
 
 1. In **Overview**, select your Workers project.
-2. Go to **Settings** > **Build** > **Branch control**. The checkbox **Builds for non-production branches** allows you to enable or disable builds for non-production branches.
+2. Go to **Settings** > **Build** > **Branch control**. The checkbox **Enable Preview Builds** allows you to enable or disable Preview Builds.
 
-When enabled, every push event made to a non-production branch will trigger a build and execute the [build command](/workers/ci-cd/builds/configuration/#deploy-command), followed by the [non-production branch deploy command](/workers/ci-cd/builds/configuration/#non-production-branch-deploy-command).
+When enabled, every push to a branch that is not your production branch triggers a preview build. Workers Builds runs the [build command](/workers/ci-cd/builds/configuration/#deploy-command), followed by the [Preview command](/workers/ci-cd/builds/configuration/#preview-command).
+
+### Existing Workers connected to Builds
+
+If your Worker is already connected to a Git repository, you will see an **Enable Worker Previews** banner in **Settings** > **Build**. Click **Enable** to switch your preview command from `npx wrangler deploy` to `npx wrangler preview`. You can customize this command in the modal that appears.
+
+For Preview-specific settings such as variables, secrets, and bindings, refer to [Previews](/workers/previews/configuration/).

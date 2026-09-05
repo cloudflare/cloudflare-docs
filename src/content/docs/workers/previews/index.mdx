@@ -1,0 +1,71 @@
+---
+pcx_content_type: concept
+title: Previews
+description: Test branch and pull request changes in isolated copies of your Worker before production.
+sidebar:
+  order: 8.5
+products:
+  - workers
+---
+
+import { WorkerPreviewsDiagram } from "~/components";
+
+**Previews** give each branch or pull request its own URL, variables, secrets, and bindings — separate from production — so you can test changes before merging.
+
+<WorkerPreviewsDiagram />
+
+Used [Version URLs](/workers/versions-and-deployments/version-urls/) or [Wrangler environments](/workers/wrangler/environments/) before? Refer to [Compare workflows](/workers/previews/compare-workflows/) to understand how they differ from Previews and our recommended practices for branch testing.
+
+## How it works
+
+Running `npx wrangler preview` creates or updates a Preview from your current branch. As you use `npx wrangler deploy` for production, use `npx wrangler preview` to test a branch before merging.
+
+| Branch          | Command                | What happens                                        |
+| --------------- | ---------------------- | --------------------------------------------------- |
+| `main`          | `npx wrangler deploy`  | Deploys to production with production settings.     |
+| `feature/login` | `npx wrangler preview` | Creates or updates a Preview with its own settings. |
+
+### URLs
+
+Each Preview gets two types of URLs. You can serve them on `workers.dev`, a [custom domain](/workers/previews/custom-domains/), or both.
+
+- **Preview URL**: always serves the latest deployment. Share this with your team so they always see the most up-to-date version of your branch.
+- **Deployment URL**: points to one specific deploy and never changes. Use this to reference or compare exact versions, like linking a specific deploy in a PR review.
+
+| Host type     | Preview URL                                            | Deployment URL                                          |
+| ------------- | ------------------------------------------------------ | ------------------------------------------------------- |
+| `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
+| Custom domain | `<preview-name>.app.example.com`                       | `<deployment-id>-<preview-name>.app.example.com`        |
+
+### Settings and isolation
+
+Previews do not inherit production values. Configure each Preview independently, or set a [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration) that new Previews start from. Full details in [Configuration](/workers/previews/configuration/).
+
+Durable Objects and Containers get separate state per Preview automatically. KV, D1, R2, and other resources are isolated when you bind the Preview to a separate resource. For the full matrix, refer to [Resources and isolation](/workers/previews/resources/).
+
+[Service bindings](/workers/previews/limitations/#service-bindings), [routes](/workers/previews/limitations/#routes), [Cron Triggers](/workers/previews/limitations/#cron-triggers), and [Queue consumers](/workers/previews/limitations/#queue-consumers) currently target production or sit outside the Previews system.
+
+### Access control
+
+Preview URLs are public by default. Use [Cloudflare Access](/workers/configuration/cloudflare-access/) to require sign-in. You can protect all Previews on an account, one Worker's Previews, or specific hostnames. Details in [Custom domains](/workers/previews/custom-domains/).
+
+### Limits
+
+| Limit                   | Free plan | Paid plans |
+| ----------------------- | --------- | ---------- |
+| Previews per Worker     | 100       | 500        |
+| Deployments per Preview | 100       | 100        |
+
+When a limit is reached, Cloudflare automatically deletes the oldest to make room:
+
+- **Preview limit**: the Preview that was deployed to least recently is deleted.
+- **Deployment limit**: the oldest deployment in that Preview is deleted.
+
+You can also delete Previews yourself with `npx wrangler preview delete --name <preview-name>`. For a pull request cleanup example, refer to [Delete closed pull request Previews](/workers/previews/automation-examples/#delete-closed-pull-request-previews).
+
+## Next steps
+
+- [Get started](/workers/previews/get-started/) - Set up your first Preview
+- [Configuration](/workers/previews/configuration/) - Configure variables, secrets, bindings, and Base configuration
+- [Resources and isolation](/workers/previews/resources/) - Understand which resources are isolated or shared
+- [Limitations](/workers/previews/limitations/) - Review current support gaps and workarounds
