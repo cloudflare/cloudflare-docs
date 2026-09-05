@@ -550,6 +550,20 @@ If a feature only implements the operation partially, details are listed.
 
 3. <a name="footnote-3"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm. Do not rely upon MD5 for security.
 
+#### Modern algorithms
+
+The [`webcrypto_modern_algorithms` experimental compatibility flag](/workers/configuration/compatibility-flags/#web-crypto-modern-algorithms) enables a subset of the evolving [Modern Algorithms in the Web Cryptography API](https://wicg.github.io/webcrypto-modern-algos/) draft.
+
+| Algorithm                                     | sign()<br/>verify() | encapsulateKey()<br/>encapsulateBits()<br/>decapsulateKey()<br/>decapsulateBits() | generateKey() | exportKey() | importKey() |
+| :-------------------------------------------- | :------------------ | :-------------------------------------------------------------------------------- | :------------ | :---------- | :---------- |
+| ML-DSA-44, ML-DSA-65, and ML-DSA-87          | ✓                   |                                                                                   | ✓             | ✓           | ✓           |
+| ML-KEM-768 and ML-KEM-1024                    |                     | ✓                                                                                 | ✓             | ✓           | ✓           |
+| ML-KEM-512                                    |                     | ✘                                                                                 | ✘             | ✘           | ✘           |
+
+The flag also adds `getPublicKey()` and `SubtleCrypto.supports()`. It supports JSON Web Keys (JWKs) with the `AKP` key type.
+
+Workers does not implement other algorithms from the draft. This API may change as the draft evolves.
+
 ***
 
 ## Related resources
