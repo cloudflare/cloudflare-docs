@@ -1,66 +1,68 @@
 ---
 import { getCollection } from "astro:content";
 
-interface Props {
-	/** Whether to show the "bundled" chip. Only relevant for plugin-based agents (Claude Code, Cursor). */
-	showBundled?: boolean;
-}
-
-const { showBundled = false } = Astro.props;
-
 const CODE_MODE_URL = "https://mcp.cloudflare.com/mcp";
 
 const allServers = await getCollection("mcp-servers");
-
-// Code Mode first, then the rest in manifest order
-const servers = [
-	...allServers.filter((s) => s.data.url === CODE_MODE_URL),
-	...allServers.filter((s) => s.data.url !== CODE_MODE_URL),
-];
-
-/**
- * URLs of servers included in the cloudflare/skills plugin bundle
- * (Claude Code, Cursor).
- */
-const BUNDLED = new Set([
-	"https://mcp.cloudflare.com/mcp",
-	"https://docs.mcp.cloudflare.com/mcp",
-	"https://bindings.mcp.cloudflare.com/mcp",
-	"https://builds.mcp.cloudflare.com/mcp",
-	"https://observability.mcp.cloudflare.com/mcp",
-]);
+const codeModeServer = allServers.find((s) => s.data.url === CODE_MODE_URL);
+const productServers = allServers.filter((s) => s.data.url !== CODE_MODE_URL);
 
 const tagBase =
 	"inline-flex items-center rounded-full border px-1.5 py-0.5 text-[0.625rem] font-medium uppercase tracking-wide";
 ---
 
-<ul class="not-content m-0 flex list-none flex-col gap-3 p-0">
-	{
-		servers.map((s) => (
-			<li class="flex flex-col gap-0.5">
-				<span class="text-foreground flex flex-wrap items-center gap-2 text-sm font-medium">
-					{s.data.name}
-					{s.data.url === CODE_MODE_URL && (
-						<span class={`${tagBase} border-primary/30 text-primary`}>
-							code mode
+<div class="not-content">
+	<section class="border-border border-t border-dashed pt-4">
+		<div class="flex flex-wrap items-center gap-2">
+			<p class="text-foreground m-0 text-sm font-semibold">
+				Cloudflare MCP server (Code Mode)
+			</p>
+			<span class={`${tagBase} border-primary/30 bg-primary/10 text-primary`}>
+				recommended
+			</span>
+		</div>
+		<p class="text-muted-foreground mt-2 mb-0 text-sm leading-relaxed">
+			The Cloudflare MCP server uses Code Mode to connect your agent to all
+			Cloudflare resources. Your agent writes JavaScript against the Cloudflare
+			API, allowing it to access more than 2,500 API endpoints with low token
+			overhead. Refer to the{" "}<a
+				href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-mcp-server"
+				>Code Mode documentation</a
+			>{" "}
+			to learn more. This server also includes a <code>docs</code> tool that searches
+			current Cloudflare developer documentation.
+		</p>
+		{
+			codeModeServer && (
+				<span class="text-muted-foreground/70 mt-2 inline-block font-mono text-xs break-all">
+					{codeModeServer.data.url}
+				</span>
+			)
+		}
+	</section>
+
+	<section class="border-border mt-5 border-t border-dashed pt-4">
+		<p class="text-foreground m-0 text-sm font-semibold">Separate by product</p>
+		<p class="text-muted-foreground mt-2 mb-3 text-sm leading-relaxed">
+			If you do not want to use Code Mode, connect one or more focused servers
+			for the Cloudflare products you need.
+		</p>
+		<ul class="m-0 flex list-none flex-col gap-3 p-0">
+			{
+				productServers.map((s) => (
+					<li class="flex flex-col gap-0.5">
+						<span class="text-foreground text-sm font-medium">
+							{s.data.name}
 						</span>
-					)}
-					{showBundled && BUNDLED.has(s.data.url) && (
-						<span
-							class={`${tagBase} border-border bg-muted text-muted-foreground`}
-							title="Included in the cloudflare/skills plugin"
-						>
-							bundled
+						<span class="text-muted-foreground text-sm leading-relaxed">
+							{s.data.description}
 						</span>
-					)}
-				</span>
-				<span class="text-muted-foreground text-sm leading-relaxed">
-					{s.data.description}
-				</span>
-				<span class="text-muted-foreground/70 font-mono text-xs break-all">
-					{s.data.url}
-				</span>
-			</li>
-		))
-	}
-</ul>
+						<span class="text-muted-foreground/70 font-mono text-xs break-all">
+							{s.data.url}
+						</span>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</div>

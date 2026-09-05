@@ -7,7 +7,8 @@ products:
   - agent-setup
 ---
 
-import { Steps } from "~/components";
+import { Details, LinkButton, Steps } from "~/components";
+import { Icon } from "astro-icon/components";
 import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
 import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
 import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
@@ -29,28 +30,18 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 		Install [Visual Studio Code](https://code.visualstudio.com/) and make sure it is fully up to date. Then install the [GitHub Copilot extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) and sign in with a GitHub account. The Copilot free tier is enough to try this.
 
-	2. **Configure the Cloudflare MCP server**
+	2. **Install the Cloudflare plugin**
 
-		Create `.vscode/mcp.json` inside your workspace folder:
+		<LinkButton href="vscode://chat-plugin/install?source=Y2xvdWRmbGFyZS9za2lsbHM%3D&plugin=cloudflare">
+			<Icon name="simple-icons:visualstudiocode" class="h-4 w-4" />
+			Install in Visual Studio Code
+		</LinkButton>
 
-		```json
-		{
-		  "servers": {
-		    "cloudflare-api": {
-		      "type": "http",
-		      "url": "https://mcp.cloudflare.com/mcp"
-		    }
-		  }
-		}
-		```
+		<Details header="Install manually">
+			If you cannot install with the button, install manually by opening the command palette (`CMD/CTRL+SHIFT+P`) and typing `Chat: Install plugin from source`. Paste the repository name `cloudflare/skills`, press **Enter**, and then select **Install** next to the plugin.
+		</Details>
 
-		Visual Studio Code uses `servers` as the root key. Configurations copied from Cursor or Claude Desktop use `mcpServers` and will silently do nothing here. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
-
-	3. **Start the server and authorize**
-
-		After you save `mcp.json`, Visual Studio Code shows a **Start** CodeLens on the `cloudflare-api` server definition. Select it and complete the OAuth flow to authorize the Cloudflare MCP server against your account. Start with a demo account until you are comfortable with the scope you grant.
-
-	4. **Try a prompt**
+	3. **Try a prompt**
 
 		Open Copilot Chat (**Ctrl+Shift+I** / **Cmd+Shift+I**), switch to agent mode, and try a prompt — for example:
 
@@ -72,7 +63,7 @@ For a screenshot-by-screenshot walkthrough — including the OAuth authorization
 
 <TipsList>
 
-- The Cloudflare API MCP server uses Code Mode — the agent writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens. That is why you see only three tools registered, not thousands.
+- The Cloudflare MCP server uses Code Mode so the agent can use JavaScript against a typed API to reach any of 2,500+ endpoints and current developer documentation in approximately 1,100 tokens. That is why you see only three tools registered, not thousands.
 - Visual Studio Code's MCP configuration uses `servers` as the root key. Configurations copied from other agents (Cursor, Claude Desktop) use `mcpServers` and will not work in Visual Studio Code.
 - Scope the OAuth grant to a single account, and start with **Read only** or a **Custom** permission set before granting **Full access**.
 - Revoke the grant at any time from the Cloudflare dashboard under **My Profile → Access Management → Connected Applications**.

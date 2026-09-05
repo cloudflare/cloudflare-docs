@@ -1,6 +1,7 @@
 export type PricingModel = "subscription" | "byok" | "hybrid";
 export type ModelFlexibility = "locked" | "multi_provider";
 export type ContextApproach = "session" | "project_memory" | "indexed_codebase";
+export type AgentSetupWorkflow = "terminal" | "desktop" | "cloud" | "extension";
 
 export interface AgentData {
 	name: string;
@@ -9,9 +10,8 @@ export interface AgentData {
 	icon: string;
 	description: string;
 	capabilities: {
-		ide: boolean;
 		terminal: boolean;
-		standalone: boolean;
+		desktop: boolean;
 		cloud: boolean;
 		extension: boolean;
 		open_source: boolean;
@@ -20,10 +20,10 @@ export interface AgentData {
 	pricing_model?: PricingModel;
 	model_flexibility?: ModelFlexibility;
 	context_approach?: ContextApproach;
+	workflow_links?: Partial<Record<AgentSetupWorkflow, string>>;
 	links: {
 		skills?: string;
 		mcp_server?: string;
-		mcp_server_domain?: string;
 		cli?: string;
 		docs?: string;
 		website?: string;
