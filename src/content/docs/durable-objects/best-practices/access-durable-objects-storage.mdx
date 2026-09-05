@@ -181,6 +181,65 @@ You can represent the shape of any result type you wish, including more complex 
 
 Creating indexes for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
 
+### Spatial and range indexes with R\*Tree
+
+A regular B-tree index cannot efficiently answer a query that filters on two or more independent ranges at once, such as finding every rectangle that contains a given point. SQLite's [R\*Tree module](https://www.sqlite.org/rtree.html) solves this. It indexes bounding boxes of one to five dimensions and returns the entries that overlap or contain a query box without scanning the table.
+
+Common uses are geospatial lookups, time interval overlap, and 3D visibility tests. Create an R\*Tree index as a virtual table. The first column is a 64-bit integer primary key, the next columns are minimum and maximum pairs, one pair per dimension, and any auxiliary columns come last:
+
+```ts
+this.ctx.storage.sql.exec(`
+	CREATE VIRTUAL TABLE IF NOT EXISTS delivery_zones USING rtree(
+		id,
+		minLng, maxLng,
+		minLat, maxLat,
+		+name
+	);
+`);
+```
+
+Prefixing a column name with `+`, as with the `name` column, adds an auxiliary column. Auxiliary columns store arbitrary data alongside the coordinates so you do not need to join against a separate table. They must follow all coordinate columns, and an R\*Tree table can have at most 100 columns in total.
+
+Insert rows as you would for an ordinary table. Refer to an auxiliary column by its bare name, without the `+` prefix:
+
+```ts
+this.ctx.storage.sql.exec(
+	`INSERT INTO delivery_zones (id, minLng, maxLng, minLat, maxLat, name)
+	 VALUES (?, ?, ?, ?, ?, ?)`,
+	1,
+	-0.51,
+	0.33,
+	51.29,
+	51.69,
+	"London",
+);
+```
+
+Query the index with an ordinary `WHERE` clause. The more coordinates you constrain and the smaller the query box, the faster the query returns:
+
+```ts
+const zones = this.ctx.storage.sql
+	.exec(
+		`SELECT id, name FROM delivery_zones
+		 WHERE minLng <= ? AND maxLng >= ?
+			 AND minLat <= ? AND maxLat >= ?`,
+		lng,
+		lng,
+		lat,
+		lat,
+	)
+	.toArray();
+```
+
+Keep the following limitations in mind:
+
+- The primary key and coordinate columns must total an odd number between 3 and 11, which caps an R\*Tree at five dimensions. Auxiliary columns do not count towards this limit.
+- Coordinates are stored as 32-bit floats. Lower bounds round down and upper bounds round up, so a stored box is never smaller than the box you inserted. To store coordinates as 32-bit signed integers instead, use `rtree_i32` in place of `rtree`.
+- Because stored boxes round outwards, an R\*Tree can return rows that do not truly match. Treat it as a fast pre-filter, then confirm each result against exact coordinates. For the same reason, expand contained-within query boxes slightly so that edge matches are not excluded.
+- Each R\*Tree table is backed by three shadow tables, named `<name>_node`, `<name>_rowid`, and `<name>_parent`. They appear when you list tables, and writes to the index count more rows written than an equivalent ordinary table. Refer to [Durable Objects pricing](/durable-objects/platform/pricing/).
+- Writing to an R\*Tree while a query against the same R\*Tree is still open fails with `SQLITE_LOCKED`. Read results into an array first, then write.
+- Of the functions the module provides, only `rtreecheck()` is available. `rtreenode()` and `rtreedepth()` are not. Custom geometry callbacks and the Geopoly module are also unsupported, so you cannot `MATCH` against application-defined regions.
+
 <Render file="durable-objects-vs-d1" product="durable-objects" />
 
 ## Related resources
