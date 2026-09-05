@@ -243,7 +243,7 @@ Source IP of the network session.
 
 Type: `string`
 
-Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp.
+Internal IP of the device. For Cloudflare One Client (WARP) traffic, this is the WARP CGNAT address. For GRE/IPsec on-ramps, this is the source IP behind the tunnel.
 
 ## SourcePort
 
