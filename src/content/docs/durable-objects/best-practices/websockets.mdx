@@ -715,9 +715,11 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 
 A full example is available in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
 
-:::caution[WebSocket disconnection on deploy]
+:::caution[WebSocket disconnection when a Durable Object restarts]
 
-Code updates disconnect all WebSockets. Deploying a new version restarts every Durable Object, which disconnects any existing connections.
+A Durable Object restarts occasionally, for example when you deploy a new version of your Worker. Restarting closes every WebSocket connected to it, including hibernating ones, so build your clients to reconnect.
+
+Hibernation on its own does not close connections. Refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior) for the reasons a Durable Object restarts.
 
 :::
 
@@ -727,5 +729,3 @@ Code updates disconnect all WebSockets. Deploying a new version restarts every D
 - [Cloudflare's WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)
 - [Durable Object base class](/durable-objects/api/base/)
 - [Durable Object State interface](/durable-objects/api/state/)
-```
-````
