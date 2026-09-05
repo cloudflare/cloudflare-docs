@@ -19,7 +19,25 @@ For additional details, refer to the [introductory blog post](https://blog.cloud
 
 ## Availability
 
-|  | Free | Pro | Business | Enterprise |
+| | Free | Pro | Business | Enterprise |
 | - | - | - | - | - |
 | Availability | Yes | Yes | Yes | Yes |
 | Can opt out? | No | No | No | Yes |
+
+## Troubleshooting
+
+### Backup certificate deleted after turning Universal SSL back on
+
+After you turn off and quickly turn Universal SSL back on, your domain may end up without a backup certificate.
+
+When Universal SSL is toggled off and on in quick succession, certificate processing jobs are not guaranteed to run in the order they were submitted. This race condition can cause a newly issued backup certificate to be deleted before it becomes active.
+
+To recover your backup certificate:
+
+1. If another valid edge certificate is already active, or if you are operating in a maintenance window, turn Universal SSL off again.
+2. Wait several minutes.
+3. Turn Universal SSL back on, then allow time for Cloudflare to issue a new backup certificate.
+
+If you need uninterrupted certificate coverage, consider using [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and ensure an advanced certificate is already issued and active before toggling Universal SSL.
+
+For more troubleshooting help, refer to [Troubleshooting SSL errors](/ssl/troubleshooting/).
