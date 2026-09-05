@@ -12,6 +12,12 @@ sidebar:
 
 import { AvailableNotifications, Render, Example } from "~/components";
 
+:::note[Availability]
+Access mTLS is available with Enterprise and pay-as-you-go Zero Trust plans. It is not included in the Free plan. Free customers can use [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) to authenticate automated systems.
+
+This page covers Access mTLS for Service Auth policies. [Zone-level mTLS](/api-shield/security/mtls/) is a separate feature with different plan availability.
+:::
+
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) requires both the client and the server to present certificates during the TLS handshake. In the Cloudflare Access implementation, the CA you upload is used to verify the client certificate (server certificate verification is handled by standard TLS). Access mTLS serves two purposes:
 
 - **Authenticate devices that do not use an identity provider** — Automated systems and IoT devices can prove their identity by presenting a client certificate instead of logging in through an IdP.
