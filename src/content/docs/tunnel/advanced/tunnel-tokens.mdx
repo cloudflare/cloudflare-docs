@@ -67,6 +67,14 @@ Rotate tokens regularly to reduce the risk of compromise. For tunnels with multi
 	sudo cloudflared service install <NEW_TOKEN>
 	```
 
+	`cloudflared service install <TOKEN>` writes the token into the generated service definition, so the token appears in the process command line. On Linux, `/proc/<pid>/cmdline` is world-readable, so any local user can recover the token with `ps`. To keep the token out of the process list, write it to a root-owned file and use `--token-file` (or the `TUNNEL_TOKEN_FILE` environment variable) instead:
+
+	```sh
+	sudo install -o root -g root -m 600 /dev/null /etc/cloudflared/tunnel.token
+	# Write the new token into /etc/cloudflared/tunnel.token, then run:
+	# cloudflared --no-autoupdate tunnel run --token-file /etc/cloudflared/tunnel.token
+	```
+
 <Details header="Rotate a compromised token">
 
 If your tunnel token is compromised, immediately [rotate the token](#rotate-a-token), then force-disconnect all existing connections:
@@ -76,6 +84,6 @@ If your tunnel token is compromised, immediately [rotate the token](#rotate-a-to
 	method="DELETE"
 />
 
-Then reinstall the `cloudflared` service on all replicas using the new token.
+Then reinstall the `cloudflared` service on all replicas using the new token. Use `--token-file` rather than passing the new token on the command line, so that the replacement token is not exposed in the process list to the same local users who could have read the compromised one.
 
 </Details>
