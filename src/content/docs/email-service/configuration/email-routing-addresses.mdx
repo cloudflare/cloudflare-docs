@@ -143,6 +143,8 @@ If a routing rule for `user+detail@example.com` already exists, it takes precede
 
 If your routing rules send mail to a [Worker](/email-service/api/route-emails/email-handler/), you can define them in your Worker's [Wrangler configuration file](/workers/wrangler/configuration/) instead of creating them in the dashboard. Add the inbound addresses to the top-level `addresses` field:
 
+This feature requires Wrangler 4.113.0 or later.
+
 <WranglerConfig>
 
 ```toml
@@ -154,13 +156,15 @@ addresses = ["support@example.com", "*@example.com"]
 
 </WranglerConfig>
 
-Each entry is either a literal recipient address (for example, `support@example.com`), which creates a routing rule for that address, or a `*@domain` catch-all (for example, `*@example.com`), which configures the [catch-all rule](#catch-all-rule) for that domain. Every entry uses the _Send to a Worker_ action to route mail to the Worker you are deploying.
+Each entry is either a literal recipient address (for example, `support@example.com`), which creates a routing rule for that address, or a `*@domain` catch-all (for example, `*@example.com`), which configures the [catch-all rule](#catch-all-rule) for that domain. Catch-all entries support apex domains only. To route mail sent to an Email Routing subdomain, list each literal recipient address, such as `support@mail.example.com`.
+
+Every entry uses the _Send to a Worker_ action to route mail to the Worker you are deploying.
 
 The `addresses` field is top-level only and applies to every [environment](/workers/wrangler/environments/) of the Worker. Wrangler ignores `addresses` values under `env`.
 
 If you omit `addresses`, Wrangler does not change Email Routing rules. If you set `addresses` to an empty array, Wrangler removes every Email Routing rule managed by this Worker.
 
-When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Wrangler reconciles the Email Routing rules for the addresses you listed. It adds rules for new entries, updates the rules it manages, and removes managed rules that are no longer listed. Wrangler prints the planned changes and asks you to confirm before applying a destructive change, such as deleting or taking over a rule. In non-interactive environments, Wrangler does not apply destructive changes and exits with an error after deploying the Worker.
+When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) or [`wrangler triggers deploy`](/workers/wrangler/commands/workers/#triggers), Wrangler reconciles the Email Routing rules for the addresses you listed. It adds rules for new entries, updates the rules it manages, and removes managed rules that are no longer listed. Wrangler prints the planned changes and asks you to confirm before applying a destructive change, such as deleting or taking over a rule. In non-interactive environments, Wrangler does not apply destructive changes and exits with an error after deploying the Worker.
 
 To validate your local configuration without deploying or checking remote rules, run `wrangler deploy --dry-run`.
 
