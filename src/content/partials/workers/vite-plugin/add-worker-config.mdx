@@ -11,14 +11,12 @@ Update your Wrangler configuration file to add a `main` field that points to you
 <WranglerConfig>
 
 ```toml
-$schema = "./node_modules/wrangler/config-schema.json"
 name = "my-app"
 compatibility_date = "$today"
+main = "./worker/index.ts"
 
 [assets]
 not_found_handling = "single-page-application"
-
-main = "./worker/index.ts"
 ```
 
 </WranglerConfig>
