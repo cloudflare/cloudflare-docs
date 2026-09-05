@@ -326,6 +326,42 @@ steps = 25_000
 
 Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workflow limits](/workflows/reference/limits/) for more information.
 
+## Default instance retention
+
+By default, the state of a finished Workflow instance is retained for the maximum [retention period](/workflows/reference/limits/) available on your account. To retain instances for a shorter period, configure `default_retention` on the Workflow binding in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"default_retention": {
+				"success_retention": "3 days",
+				"error_retention": "7 days",
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+- `success_retention` applies to instances that complete successfully and to instances that are terminated, and `error_retention` applies to instances that end in an errored state.
+- Both fields are optional and accept either a duration string, such as `"3 days"`, or a whole number of milliseconds.
+- Values larger than your account's retention limit are capped at that limit.
+
+An instance that sets its own [`retention`](/workflows/build/workers-api/#workflowinstancecreateoptions) when it is created uses that value instead of the binding default.
+
+:::note
+
+`default_retention` cannot be combined with `script_name`. If you bind to a Workflow defined in another Worker, set `default_retention` on the Worker that defines the Workflow.
+
+:::
+
 ## NonRetryableError
 
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
@@ -555,11 +591,12 @@ interface WorkflowInstanceCreateOptions {
 	 */
 	retention?: {
 		/**
-		 * How long to retain instance state after the Workflow completes successfully.
+		 * How long to retain instance state after the Workflow completes successfully
+		 * or is terminated.
 		 */
 		successRetention?: WorkflowRetentionDuration;
 		/**
-		 * How long to retain instance state after the Workflow ends in an errored or terminated state.
+		 * How long to retain instance state after the Workflow ends in an errored state.
 		 */
 		errorRetention?: WorkflowRetentionDuration;
 	};
@@ -568,7 +605,7 @@ interface WorkflowInstanceCreateOptions {
 type WorkflowRetentionDuration = WorkflowSleepDuration;
 ```
 
-If `retention` is not set, instance state is retained for the maximum retention period available on your account (3 days on the Workers Free plan, 30 days on the Workers Paid plan). Refer to the [retention limit](/workflows/reference/limits/) for more information.
+If `retention` is not set, instance state is retained for the [`default_retention`](/workflows/build/workers-api/#default-instance-retention) configured on the Workflow binding. If the binding does not set a default either, instance state is retained for the maximum retention period available on your account (3 days on the Workers Free plan, 30 days on the Workers Paid plan). Refer to the [retention limit](/workflows/reference/limits/) for more information.
 
 The following example creates an instance that retains state for 1 day after success and 7 days after an error:
 
