@@ -29,7 +29,7 @@ Cloudflare's AOC covers Cloudflare's own infrastructure. It does not automatical
 | Area | Cloudflare | You |
 | --- | --- | --- |
 | TLS protocol support | Supports TLS 1.2 and 1.3 on all plans | Set minimum TLS version to 1.2 on your zone |
-| Cipher suites | Offers PCI DSS-approved cipher suites | Enable the PCI DSS cipher suite profile on your zone |
+| Cipher suites | Offers PCI DSS-approved cipher suites | Enable the PCI DSS cipher suite profile on your zone. Configuring cipher suites requires an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) subscription. |
 | Vulnerability patching | Patches Cloudflare infrastructure (ROBOT, Sweet32, and others) | Keep your origin server and any third-party software patched |
 | Client-side scripts | Client-Side Security Advanced inventories and monitors payment page scripts | Enable and configure Client-Side Security |
 
@@ -102,7 +102,7 @@ After applying all settings, confirm that non-compliant connections are rejected
 
 Online TLS scanners give you an external view of your configuration — the same perspective a PCI ASV scan sees. Two commonly used options are:
 
-- [SSL Labs Server Test](https://www.ssllabs.com/ssltest/) — enter your domain and review the report. Check for **Protocol support** (TLS 1.2 and 1.3 only), **Cipher strength** (no weak or deprecated suites), and an overall grade of **A** or **A+**.
+- [SSL Labs Server Test](https://www.ssllabs.com/ssltest/) — enter your domain and review the report. Check that TLS 1.0 and TLS 1.1 are rejected, TLS 1.2 or higher is supported, and no weak or deprecated cipher suites are negotiated.
 - [SSL Shopper SSL Checker](https://www.sslshopper.com/ssl-checker.html) — validates your certificate chain and TLS configuration from an external vantage point.
 
 :::note
@@ -207,7 +207,7 @@ To allow a scan without disabling your WAF:
 Keep the WAF exception as narrow as possible — scoped to the scanner's IP range only. Remove it as soon as scanning is complete.
 :::
 
-Cloudflare's WAF blocking scanner probes is not a compliance failure — a correctly configured WAF mitigating attack patterns is itself a PCI DSS control (requirement 6.4.1).
+Cloudflare's WAF may block attack-pattern traffic used by ASV scanners. If scanning is impacted, work with your ASV and QSA to determine the appropriate exception handling.
 
 ### Non-standard ports
 
