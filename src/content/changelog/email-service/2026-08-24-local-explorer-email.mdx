@@ -1,0 +1,21 @@
+---
+title: Inspect Email Workers with Local Explorer
+description: Inspect locally routed and sent email, and deliver test messages to Email Workers from Local Explorer.
+products:
+  - workers
+date: 2026-08-24
+---
+
+Local Explorer now includes **Routing** and **Sending** views for Email Workers during local development.
+
+The **Routing** view captures messages delivered to an `email()` handler. You can inspect message content, headers, attachments, replies, forwarding, rejection, and other handler activity. The test email composer can deliver custom text, HTML, headers, and attachments directly to the handler.
+
+![Local Explorer Routing detail showing a received email that was forwarded and replied to](~/assets/images/email-service/local-explorer-email-routing-detail.png)
+
+The **Sending** view captures messages sent through simulated local `send_email` bindings. You can inspect the recipients, headers, attachments, and body for each message.
+
+![Local Explorer Sending view showing a sent email list and selected message detail](~/assets/images/email-service/local-explorer-email-sending-detail.png)
+
+Run `wrangler dev` and press `e` to open Local Explorer.
+
+For configuration and usage details, refer to the [Local Explorer documentation](/workers/local-development/local-explorer/) and [Email Service local development documentation](/email-service/local-development/).
