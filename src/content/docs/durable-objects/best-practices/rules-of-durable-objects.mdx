@@ -45,32 +45,32 @@ export interface Env {
 // ✅ Good use of Durable Objects: Seat booking requires coordination
 // All booking requests for a venue must be serialized to prevent double-booking
 export class SeatBooking extends DurableObject<Env> {
-async bookSeat(
-seatId: string,
-userId: string
-): Promise<{ success: boolean; message: string }> {
-// Check if seat is already booked
-const existing = this.ctx.storage.sql
-.exec<{ user_id: string }>(
-"SELECT user_id FROM bookings WHERE seat_id = ?",
-seatId
-)
-.toArray();
+	async bookSeat(
+		seatId: string,
+		userId: string
+	): Promise<{ success: boolean; message: string }> {
+		// Check if seat is already booked
+		const existing = this.ctx.storage.sql
+			.exec<{ user_id: string }>(
+			"SELECT user_id FROM bookings WHERE seat_id = ?",
+			seatId
+		)
+		.toArray();
 
-    	if (existing.length > 0) {
-    		return { success: false, message: "Seat already booked" };
-    	}
+		if (existing.length > 0) {
+			return { success: false, message: "Seat already booked" };
+		}
 
-    	// Book the seat - this is safe because Durable Objects are single-threaded
-    	this.ctx.storage.sql.exec(
-    		"INSERT INTO bookings (seat_id, user_id, booked_at) VALUES (?, ?, ?)",
-    		seatId,
-    		userId,
-    		Date.now()
-    	);
+		// Book the seat - this is safe because Durable Objects are single-threaded
+		this.ctx.storage.sql.exec(
+			"INSERT INTO bookings (seat_id, user_id, booked_at) VALUES (?, ?, ?)",
+			seatId,
+			userId,
+			Date.now()
+		);
 
-    	return { success: true, message: "Seat booked successfully" };
-    }
+		return { success: true, message: "Seat booked successfully" };
+	}
 }
 
 export default {
@@ -164,16 +164,16 @@ export interface Env {
 
 // 🔴 Bad: A single Durable Object handling ALL chat rooms
 export class ChatRoom extends DurableObject<Env> {
-async sendMessage(roomId: string, userId: string, message: string) {
-// All messages for ALL rooms go through this single instance.
-// This becomes a bottleneck as traffic grows.
-this.ctx.storage.sql.exec(
-"INSERT INTO messages (room_id, user_id, content) VALUES (?, ?, ?)",
-roomId,
-userId,
-message
-);
-}
+	async sendMessage(roomId: string, userId: string, message: string) {
+		// All messages for ALL rooms go through this single instance.
+		// This becomes a bottleneck as traffic grows.
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (room_id, user_id, content) VALUES (?, ?, ?)",
+			roomId,
+			userId,
+			message
+		);
+	}
 }
 
 export default {
@@ -1510,16 +1510,16 @@ import { describe, it, expect } from "vitest";
 
 describe("ChatRoom", () => {
 
-it("should send and retrieve messages", async () => {
-const id = env.CHAT_ROOM.idFromName("test-room");
-const stub = env.CHAT_ROOM.get(id);
+	it("should send and retrieve messages", async () => {
+		const id = env.CHAT_ROOM.idFromName("test-room");
+		const stub = env.CHAT_ROOM.get(id);
 
-    	// Call RPC methods directly on the stub
-    	await stub.sendMessage("user-1", "Hello!");
-    	await stub.sendMessage("user-2", "Hi there!");
+		// Call RPC methods directly on the stub
+		await stub.sendMessage("user-1", "Hello!");
+		await stub.sendMessage("user-2", "Hi there!");
 
-    	const messages = await stub.getMessages(10);
-    	expect(messages).toHaveLength(2);
+		const messages = await stub.getMessages(10);
+		expect(messages).toHaveLength(2);
     });
 
     it("can access instance internals and trigger alarms", async () => {
