@@ -80,13 +80,13 @@ For deployments that use the [Cloudflare One Client](/cloudflare-one/team-and-re
 
 ### Exclude mode (default)
 
-In **Exclude IPs and domains** mode, the Cloudflare One Client excludes the CGNAT range (`100.64.0.0/10`) from its routing by default. You must delete the reserved IP ranges that fall within CGNAT space from your Split Tunnels exclude list, or the associated features will stop working.
+In **Exclude IPs and domains** mode, default device profiles exclude the CGNAT range (`100.64.0.0/10`) from Cloudflare. To route a reserved range within CGNAT space through Cloudflare, delete or narrow the CGNAT exclusion. The Mesh setup wizard does this automatically for the device IP range used by Mesh.
 
 [Gateway initial resolved IPs](#gateway-initial-resolved-ips) are the exception: the default range (`172.64.128.0/20`) is public Cloudflare address space, not CGNAT, so it is **not** excluded by default in Exclude mode. The Cloudflare One Client also automatically removes this range, along with the entire `2606:4700:0cf1::/48` IPv6 range (which also covers [device IPs](#device-ips) and [Cloudflare source IPs](#cloudflare-source-ips) on IPv6), from any exclusions you configure — refer to [Automatically managed ranges](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges). No Split Tunnel changes are required for these ranges. This only applies to the default IPv4 range: if you configured a custom initial resolved IP range within CGNAT space, treat it the same as the other CGNAT-based ranges below.
 
-Cloudflare recommends adding back the IPs that are not explicitly used for Cloudflare One services. This reduces the risk of conflicts with existing private network configurations that may use CGNAT address space.
+Cloudflare recommends excluding CGNAT IPs that are not used for Cloudflare One services. This reduces the risk of conflicts with private network configurations that use CGNAT address space.
 
-Use the following calculator to determine which IP ranges to add back based on the Cloudflare One features you use. For example, if your deployment requires [Cloudflare source IPs](#cloudflare-source-ips) (`100.64.0.0/12`) and [device IPs](#device-ips) (`100.96.0.0/12`), delete `100.64.0.0/10` from Split Tunnels and add back `100.80.0.0/12` and `100.112.0.0/12`.
+Use the following calculator to determine which ranges you can exclude based on the Cloudflare One features you use. For example, if your deployment requires [Cloudflare source IPs](#cloudflare-source-ips) (`100.64.0.0/12`) and [device IPs](#device-ips) (`100.96.0.0/12`), exclude `100.80.0.0/12` and `100.112.0.0/12`.
 
 <SubtractIPCalculator
 	client:load
