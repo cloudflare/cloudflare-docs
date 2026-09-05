@@ -1,7 +1,7 @@
 ---
 title: Client-side security and PCI DSS compliance
 pcx_content_type: reference
-description: Use client-side security to meet PCI DSS v4 requirements 6.4.3 and 11.6.1.
+description: Use Cloudflare's client-side security to meet PCI DSS v4.0 requirements 6.4.3 and 11.6.1 for payment page script management and tamper detection.
 products:
   - client-side-security
 sidebar:
@@ -11,10 +11,42 @@ tags:
   - Compliance
 ---
 
-You can use Cloudflare's client-side security for PCI DSS v4's client-side security requirements (items 6.4.3 and 11.6.1).
-
-Refer to the [PCI DSS v.4.0 Evaluation](https://cfl.re/4dhk8Gx) whitepaper for details on how you can use Cloudflare's client-side security to meet the new v4 requirements.
+PCI DSS v4.0 introduced two requirements that apply to scripts running in the consumer's browser on payment pages. Cloudflare's client-side security helps you meet both.
 
 :::note
-To help with PCI DSS requirements, you must have Client-Side Security Advanced. Refer to [Availability](/client-side-security/#availability) for details on what is included in each package.
+Client-Side Security Advanced is required to meet PCI DSS requirements 6.4.3 and 11.6.1. Refer to [Availability](/client-side-security/#availability) for plan details.
 :::
+
+## Requirements
+
+### Requirement 6.4.3 — Payment page script management
+
+Requirement 6.4.3 applies to all scripts that a payment page loads into the consumer's browser, regardless of whether those scripts are first-party or third-party.
+
+| Control objective | What it requires | How client-side security addresses it |
+| --- | --- | --- |
+| Script inventory | A documented inventory of all scripts loaded to a payment page | The **Monitor resources** view lists every script loaded on monitored pages, including third-party scripts |
+| Business justification | A written justification (business or technical) for each script | You can review scripts in the dashboard and export the inventory for annotation to document each script's purpose |
+| Authorization method | A method to confirm that each script is authorized | Content security rules block or report scripts that are not explicitly allowed |
+
+### Requirement 11.6.1 — Tamper detection for payment pages
+
+Requirement 11.6.1 requires a mechanism that detects unauthorized modifications to your payment pages and their security headers.
+
+| Control objective | What it requires | How client-side security addresses it |
+| --- | --- | --- |
+| Tamper detection | Detect unauthorized changes to monitored client-side resources on payment pages | Alerts can identify changes to monitored client-side resources on payment pages. Cloudflare's detection runs continuously — no manual scheduling is required. Refer to the [PCI DSS v4.0 Evaluation](https://cfl.re/4dhk8Gx) whitepaper for the full requirement mapping |
+
+## Get started
+
+1. Follow [Get started with client-side security](/client-side-security/get-started/) to enable monitoring on your payment pages.
+2. Use [Monitor resources and cookies](/client-side-security/detection/monitor-connections-scripts/) to review the full inventory of scripts and connections detected on those pages.
+3. Classify and approve each script to build your authorized inventory for requirement 6.4.3.
+4. Configure [alerts](/client-side-security/alerts/) to receive notifications when unauthorized changes are detected (requirement 11.6.1).
+5. Deploy [rules](/client-side-security/rules/) to enforce your script policy and block unauthorized scripts.
+
+For a detailed mapping of client-side security features to PCI DSS v4.0 controls, refer to the [PCI DSS v4.0 Evaluation](https://cfl.re/4dhk8Gx) whitepaper.
+
+## Related resources
+
+For related resources, refer to the [PCI DSS compliance](/ssl/reference/compliance-and-vulnerabilities/) guide to configure TLS version and cipher suites to meet PCI DSS requirement 4.2.1, and the [Cloudflare Trust Hub](https://www.cloudflare.com/trust-hub/compliance-resources/pci-dss/) to obtain Cloudflare's Attestation of Compliance (AOC) for your QSA.
