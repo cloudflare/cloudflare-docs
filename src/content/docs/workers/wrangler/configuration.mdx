@@ -1271,7 +1271,7 @@ The following options are available:
     build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/guides/image-management/).
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
-    and allow each instance to control a container. See [Durable Object Container Methods](/durable-objects/api/container/) for details.
+    and allow each instance to control a container. Refer to the [Durable Object Container API](/containers/api/durable-object-container/) for details.
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
