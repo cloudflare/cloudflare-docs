@@ -1,0 +1,156 @@
+---
+title: SaladCloud AI Gateway
+description: Route SaladCloud AI Gateway requests through Cloudflare AI Gateway for observability and control.
+pcx_content_type: get-started
+products:
+  - ai-gateway
+---
+
+import { Steps, Tabs, TabItem, TypeScriptExample } from "~/components";
+
+[SaladCloud AI Gateway](https://docs.salad.com/ai-gateway) provides an OpenAI-compatible API for AI inference. Add SaladCloud to Cloudflare AI Gateway as a [custom provider](/ai-gateway/configuration/custom-providers/) to use Cloudflare's observability, caching, and rate limiting with SaladCloud requests.
+
+:::note
+Custom providers are specific to your Cloudflare account. The examples on this page send your SaladCloud API key with each request and do not use Unified Billing.
+:::
+
+## Endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-saladcloud
+```
+
+The `custom-` prefix is required for custom providers. These examples use `saladcloud` as the provider slug.
+
+## Prerequisites
+
+Before you start, you need:
+
+- Your Cloudflare account ID and AI Gateway gateway name.
+- A Cloudflare API token with the `AI Gateway - Edit` permission to create the custom provider.
+- A Cloudflare API token with the `AI Gateway - Run` permission if your gateway has [Authenticated Gateway](/ai-gateway/configuration/authentication/) enabled.
+- A [SaladCloud AI Gateway API key](https://docs.salad.com/ai-gateway/tutorials/getting-started).
+
+<Steps>
+
+1. Create the SaladCloud custom provider. Set `base_url` to the root domain because Cloudflare AI Gateway appends the request path to it.
+
+   ```bash title="Create the SaladCloud custom provider"
+   # Run `wrangler whoami` to get your account ID.
+   # Run `wrangler auth token` to get an API token.
+   curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-gateway/custom-providers" \
+     --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+     --header "Content-Type: application/json" \
+     --data '{
+       "name": "SaladCloud AI Gateway",
+       "slug": "saladcloud",
+       "base_url": "https://ai.salad.cloud",
+       "description": "OpenAI-compatible inference through SaladCloud AI Gateway",
+       "link": "https://docs.salad.com/ai-gateway",
+       "enable": true
+     }'
+   ```
+
+2. Send a chat completion request through the custom provider. Cloudflare AI Gateway appends `/v1/chat/completions` to `https://ai.salad.cloud`.
+
+   <Tabs>
+   <TabItem label="With Authenticated Gateway">
+
+   ```bash title="Chat completion"
+   curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-saladcloud/v1/chat/completions \
+     --header "Authorization: Bearer $SALAD_API_KEY" \
+     --header "cf-aig-authorization: Bearer $CF_AIG_TOKEN" \
+     --header "Content-Type: application/json" \
+     --data '{
+       "model": "qwen3.6-35b-a3b",
+       "messages": [
+         {
+           "role": "user",
+           "content": "What is Cloudflare?"
+         }
+       ]
+     }'
+   ```
+
+   </TabItem>
+   <TabItem label="Unauthenticated Gateway">
+
+   ```bash title="Chat completion"
+   curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/custom-saladcloud/v1/chat/completions \
+     --header "Authorization: Bearer $SALAD_API_KEY" \
+     --header "Content-Type: application/json" \
+     --data '{
+       "model": "qwen3.6-35b-a3b",
+       "messages": [
+         {
+           "role": "user",
+           "content": "What is Cloudflare?"
+         }
+       ]
+     }'
+   ```
+
+   </TabItem>
+   </Tabs>
+
+3. To use the OpenAI SDK, set its base URL to the custom provider path plus `/v1`. The SDK appends `/chat/completions` when it sends the request.
+
+   <Tabs>
+   <TabItem label="With Authenticated Gateway">
+
+   <TypeScriptExample>
+
+   ```ts
+   import OpenAI from "openai";
+
+   const accountId = "{account_id}";
+   const gatewayId = "{gateway_id}";
+
+   const openai = new OpenAI({
+     apiKey: process.env.SALAD_API_KEY,
+     baseURL: `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/custom-saladcloud/v1`,
+     defaultHeaders: {
+       "cf-aig-authorization": `Bearer ${process.env.CF_AIG_TOKEN}`,
+     },
+   });
+
+   const response = await openai.chat.completions.create({
+     model: "qwen3.6-35b-a3b",
+     messages: [{ role: "user", content: "What is Cloudflare?" }],
+   });
+
+   console.log(response.choices[0].message);
+   ```
+
+   </TypeScriptExample>
+
+   </TabItem>
+   <TabItem label="Unauthenticated Gateway">
+
+   <TypeScriptExample>
+
+   ```ts
+   import OpenAI from "openai";
+
+   const accountId = "{account_id}";
+   const gatewayId = "{gateway_id}";
+
+   const openai = new OpenAI({
+     apiKey: process.env.SALAD_API_KEY,
+     baseURL: `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/custom-saladcloud/v1`,
+   });
+
+   const response = await openai.chat.completions.create({
+     model: "qwen3.6-35b-a3b",
+     messages: [{ role: "user", content: "What is Cloudflare?" }],
+   });
+
+   console.log(response.choices[0].message);
+   ```
+
+   </TypeScriptExample>
+
+   </TabItem>
+   </Tabs>
+
+</Steps>
