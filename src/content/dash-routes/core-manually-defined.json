@@ -53,5 +53,10 @@
 		"deeplink": "/?to=/:account/:zone/speed/origin-analytics",
 		"name": "Origin Analytics",
 		"parent": ["Speed"]
+	},
+	{
+		"deeplink": "/?to=/:account/r2/:bucket/settings",
+		"name": "Bucket settings",
+		"parent": ["Storage & databases", "R2 object storage"]
 	}
 ]
