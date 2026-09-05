@@ -16,34 +16,35 @@ This is the source for [developers.cloudflare.com](https://developers.cloudflare
 cloudflare-docs/
 ├── src/
 │   ├── content/
-│   │   ├── docs/           # 5,400+ MDX pages — the user-facing documentation
-│   │   ├── partials/       # 1,200+ reusable MDX snippets (by product)
-│   │   ├── changelog/      # Product changelogs (by product subdirectory)
-│   │   ├── glossary/       # Glossary term definitions (YAML)
-│   │   ├── products/       # Product metadata (YAML, 135 files)
-│   │   └── ...             # Other data collections (plans, fields, models, etc.)
-│   ├── components/         # Astro + React components (barrel: components.ts)
-│   ├── components.ts       # MDX component barrel — all MDX imports come from here
-│   ├── layouts/            # Page layout components
-│   ├── pages/              # Dynamic route pages (changelog, llms.txt, RSS, etc.)
-│   ├── schemas/            # Zod schemas for all content collections
-│   ├── plugins/            # Satteri hast pipeline plugins
-│   ├── scripts/            # Client-side scripts (analytics, mermaid, webmcp, etc.)
-│   ├── styles/             # CSS (Tailwind 4)
-│   ├── icons/              # Product SVG icons (~110)
-│   ├── assets/             # Processed images (optimized by Astro)
-│   ├── util/               # App utility functions
-│   └── content.config.ts   # Content collection definitions
-├── public/                 # Static files served as-is (images, redirects, robots.txt)
-├── worker/                 # Cloudflare Worker for serving the site
-├── bin/                    # Build scripts and CI helpers
-│   └── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
-├── skills/                 # Agent Skills served at /.well-known/skills/ — GENERATED, do not edit
-│                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
-│                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
-│                           # skills/ is in .gitignore and is NOT committed to the repository.
-├── .flue/                  # Flue cloudflare-docs-bot — see .flue/AGENTS.md
-├── astro.config.ts         # Astro + Nimbus configuration
+│   │   ├── docs/                 # 5,400+ MDX pages — the user-facing documentation
+│   │   ├── partials/             # 1,200+ reusable MDX snippets (by product)
+│   │   ├── changelog/            # Product changelogs (by product subdirectory)
+│   │   ├── glossary/             # Glossary term definitions (YAML)
+│   │   ├── products/             # Product metadata (YAML, 135 files)
+│   │   └── ...                   # Other data collections (plans, fields, models, etc.)
+│   ├── components/               # Astro + React components (barrel: components.ts)
+│   ├── components.ts             # MDX component barrel — all MDX imports come from here
+│   ├── layouts/                  # Page layout components
+│   ├── pages/                    # Dynamic route pages (changelog, llms.txt, RSS, etc.)
+│   ├── schemas/                  # Zod schemas for all content collections
+│   ├── plugins/                  # Satteri hast pipeline plugins
+│   ├── scripts/                  # Client-side scripts (analytics, mermaid, webmcp, etc.)
+│   ├── styles/                   # CSS (Tailwind 4)
+│   ├── icons/                    # Product SVG icons (~110)
+│   ├── assets/                   # Processed images (optimized by Astro)
+│   ├── util/                     # App utility functions
+│   └── content.config.ts         # Content collection definitions
+├── public/                       # Static files served as-is (images, redirects, robots.txt)
+├── worker/                       # Cloudflare Worker for serving the site
+├── bin/                          # Build scripts and CI helpers
+│   ├── fetch-skills.ts           # Downloads skills.tar.gz from middlecache, extracts to skills/
+│   └── fetch-logpush-datasets.ts # Downloads generated Logpush dataset pages; fetch failures retain checked-in pages
+├── skills/                       # Agent Skills served at /.well-known/skills/ — GENERATED, do not edit
+│                                 # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
+│                                 # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
+│                                 # skills/ is in .gitignore and is NOT committed to the repository.
+├── .flue/                        # Flue cloudflare-docs-bot — see .flue/AGENTS.md
+├── astro.config.ts               # Astro + Nimbus configuration
 ├── package.json
 └── tsconfig.json
 ```

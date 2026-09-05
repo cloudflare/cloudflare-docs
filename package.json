@@ -12,7 +12,7 @@
 		"check": "pnpm run check:astro && pnpm run check:worker",
 		"check:astro": "astro check --minimumFailingSeverity=hint",
 		"check:worker": "tsc --noEmit -p ./worker/tsconfig.json",
-		"predev": "tsx bin/fetch-skills.ts --soft && tsx bin/fetch-openapi.ts --soft",
+		"predev": "tsx bin/fetch-skills.ts --soft && tsx bin/fetch-openapi.ts --soft && tsx bin/fetch-logpush-datasets.ts --soft --force",
 		"dev": "astro dev",
 		"format": "pnpm run format:core:fix && pnpm run format:data:fix && pnpm run format:content:fix",
 		"format:check": "pnpm run format:core:check && pnpm run format:data:check && pnpm run format:content:check",
@@ -40,7 +40,7 @@
 		"lint": "eslint",
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets",
-		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
+		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts && tsx bin/fetch-logpush-datasets.ts --soft --force"
 	},
 	"devDependencies": {
 		"@actions/core": "3.0.1",
