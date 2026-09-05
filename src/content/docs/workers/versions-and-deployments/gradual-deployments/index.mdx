@@ -109,6 +109,8 @@ You can use [version overrides](/workers/versions-and-deployments/version-overri
 
 Gradual deployments work differently for [Durable Objects](/durable-objects/) because only one version of each Durable Object can run at a time. Refer to [Gradual Deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/) for details on version assignment, guarantees, and migrations.
 
+A version upload that includes a Durable Object class lifecycle change is rejected with error 10211. Apply the migration with a non-versioned deploy. Refer to [With Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/#durable-object-class-lifecycle-changes) for details.
+
 ## Observability
 
 When using gradual deployments, you may want to attribute Workers invocations to a specific version in order to get visibility into the impact of deploying new versions.
