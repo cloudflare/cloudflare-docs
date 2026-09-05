@@ -16,6 +16,7 @@ import {
 	Type,
 	MetaInfo,
 	TypeScriptExample,
+	Badge,
 } from "~/components";
 
 The `DurableObject` base class is an abstract class which all Durable Objects inherit from. This base class provides a set of optional methods, frequently referred to as handler methods, which can respond to events, for example a `webSocketMessage` when using the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). To provide a concrete example, here is a Durable Object `MyDurableObject` which extends `DurableObject` and implements the fetch handler to return "Hello, World!" to the calling Worker.
@@ -306,6 +307,65 @@ class MyDurableObject(DurableObject):
 
 </TabItem> </Tabs>
 
+### `preShutdown` <Badge text="Beta" variant="caution" size="small" />
+
+- <code>preShutdown(info <Type text="PreShutdownInfo" />)</code>
+  : <Type text="void" /> | <Type text="Promise<void>" />
+  - Called by the system before some planned shutdowns, giving the Durable Object a chance to run best-effort cleanup, such as a final checkpoint to storage.
+  - `preShutdown()` is not guaranteed to run. It does not run if a Durable Object shuts down unexpectedly, for example after a crash. Use it to reduce how often you checkpoint state, not to replace incremental writes. Refer to [Shutdown notifications](/durable-objects/concepts/durable-object-lifecycle/#shutdown-notifications) for the shutdown causes that trigger this handler.
+  - Once `preShutdown()` starts, the shutdown cannot be canceled. No new requests, RPC calls, alarms, or WebSocket messages are delivered to this instance.
+  - A request that arrives while `preShutdown()` is running waits for a new instance to start once the shutdown finishes.
+  - The handler has a 10-second execution budget. If it throws, rejects, or exceeds the budget, the runtime logs the failure and continues with the shutdown.
+  - Storage writes issued from `preShutdown()`, including any issued before a timeout, are saved before the next instance's constructor runs.
+  - This method can be `async`. You do not need `blockConcurrencyWhile()` inside `preShutdown()`, because no new events are delivered while the handler runs.
+  - `preShutdown()` must be idempotent, since your own code can also call it directly.
+
+#### Parameters
+
+- `info` <Type text="PreShutdownInfo"/> - an object describing why the shutdown is happening:
+  - `reason` <Type text="string"/> - one of `"inactive"` (the Durable Object was idle) or `"codeUpdated"` (a new version of your Worker was deployed). Additional reason values may be added in future releases.
+
+#### Return values
+
+- None.
+
+#### Example
+
+<Tabs>
+
+<TypeScriptExample omitTabs={true}>
+```ts
+export class MyDurableObject extends DurableObject<Env> {
+	events: string[] = [];
+	dirty = false;
+
+	async recordEvent(event: string) {
+		this.events.push(event);
+		this.dirty = true;
+	}
+
+	async preShutdown(info: PreShutdownInfo) {
+		if (this.dirty) {
+			await this.ctx.storage.put("events", this.events);
+		}
+	}
+}
+```
+</TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    async def preShutdown(self, info):
+        if self.dirty:
+            await self.ctx.storage.put("events", self.events)
+```
+
+</TabItem> </Tabs>
+
 ## Properties
 
 ### `ctx`
@@ -321,3 +381,4 @@ class MyDurableObject(DurableObject):
 - [Use WebSockets](/durable-objects/best-practices/websockets/) for WebSocket handler best practices.
 - [Alarms API](/durable-objects/api/alarms/) for scheduling future work.
 - [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for type-safe method calls.
+- [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/#shutdown-notifications) for when `preShutdown()` runs relative to eviction and code updates.

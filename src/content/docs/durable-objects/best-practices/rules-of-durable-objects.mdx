@@ -1443,6 +1443,59 @@ export class ChatRoom extends DurableObject<Env> {
 
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
 
+Use [`preShutdown()`](/durable-objects/api/base/#preshutdown) to reduce how often you checkpoint buffered state, such as batched agent messages or metrics, not to replace incremental writes:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	AGENT: DurableObjectNamespace<Agent>;
+}
+
+export class Agent extends DurableObject<Env> {
+	conversation: string[] = [];
+	dirty = false;
+
+	// ✅ Good: Buffer in memory, flush periodically and on shutdown
+	async addMessage(message: string) {
+		this.conversation.push(message);
+		this.dirty = true;
+
+		// Checkpoint on a relaxed interval, not on every message
+		if (!(await this.ctx.storage.getAlarm())) {
+			await this.ctx.storage.setAlarm(Date.now() + 30_000);
+		}
+	}
+
+	async alarm() {
+		await this.checkpoint();
+	}
+
+	// preShutdown() is best-effort and may not run, so the periodic
+	// alarm above still owns durability. This handler only shortens
+	// the gap before eviction.
+	async preShutdown() {
+		await this.checkpoint();
+	}
+
+	private async checkpoint() {
+		if (this.dirty) {
+			await this.ctx.storage.put("conversation", this.conversation);
+			this.dirty = false;
+		}
+	}
+
+	// 🔴 Bad: Relying on preShutdown() as the only durability mechanism
+	async addMessageRisky(message: string) {
+		this.conversation.push(message);
+		// No periodic checkpoint — data written since the last checkpoint
+		// may be lost if the object shuts down unexpectedly.
+	}
+}
+```
+</TypeScriptExample>
+
 ## Anti-patterns to avoid
 
 ### Do not use a single Durable Object as a global singleton

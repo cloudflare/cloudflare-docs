@@ -8,7 +8,7 @@ products:
   - durable-objects
 ---
 
-import { Render } from "~/components";
+import { Render, Badge } from "~/components";
 
 This section describes the lifecycle of a [Durable Object](/durable-objects/concepts/what-are-durable-objects/).
 
@@ -103,6 +103,17 @@ It is important to ensure that any services using Durable Objects are designed t
 
 When your Durable Object code is updated, your Worker and Durable Objects are released globally in an eventually consistent manner. This will cause a Durable Object to shut down, with the behavior described above. Updates can also create a situation where a request reaches a new version of your Worker in one location, and calls to a Durable Object still running a previous version elsewhere. Refer to [Code updates](/durable-objects/platform/known-issues/#code-updates) for more information about handling this scenario.
 
-### Working without shutdown hooks
+### Shutdown notifications
+
+A Durable Object class can define a [`preShutdown()`](/durable-objects/api/base/#preshutdown) handler <Badge text="Beta" variant="caution" size="small" /> to run best-effort cleanup work, such as a final checkpoint to storage, before a shutdown. Cloudflare invokes `preShutdown()` for some, but not all, of the shutdown causes listed above:
+
+| Shutdown cause | `preShutdown()` invoked |
+| --- | --- |
+| Lack of requests to an object (eviction due to inactivity) | Yes |
+| New Worker deployment with a code update | Yes |
+| Cloudflare updates to the Workers runtime system | No |
+| Workers runtime decisions on where to host objects | No |
+
+`preShutdown()` is not guaranteed to run, even for the causes marked "Yes" above — for example, the object may shut down unexpectedly before the handler completes. Design your Durable Object to write important state incrementally, and use `preShutdown()` only to reduce how often you need to checkpoint, not as a substitute for durable writes.
 
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
