@@ -576,7 +576,7 @@ Returns a system prompt for parsing natural language into scheduling parameters:
 <TypeScriptExample>
 
 ```ts
-import { getSchedulePrompt, scheduleSchema } from "agents";
+import { getSchedulePrompt, scheduleSchema } from "agents/schedules/parser";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 
@@ -634,7 +634,7 @@ A Zod schema for validating parsed scheduling data. Uses a discriminated union o
 <TypeScriptExample>
 
 ```ts
-import { scheduleSchema } from "agents";
+import { scheduleSchema } from "agents/schedules/parser";
 
 // The schema is a discriminated union:
 // {

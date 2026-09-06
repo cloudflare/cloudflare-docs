@@ -266,12 +266,7 @@ For custom integrations, import the building blocks directly:
 <TypeScriptExample>
 
 ```ts
-import {
-	CdpSession,
-	connectBrowser,
-	connectUrl,
-	createBrowserToolHandlers,
-} from "agents/browser";
+import { CdpSession, connectBrowser, connectUrl } from "agents/browser";
 
 // Connect to a custom CDP endpoint
 const session = await connectUrl("http://localhost:9222");
