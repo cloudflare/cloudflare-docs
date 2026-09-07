@@ -416,7 +416,7 @@ product:network-flow:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/network-flow/**
-          - src/content/partials/networking-services/**
+          - src/content/partials/networking-services/mnm/**
           - src/assets/images/network-flow/**
 
 product:network-interconnect:
