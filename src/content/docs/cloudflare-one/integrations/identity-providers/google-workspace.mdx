@@ -126,3 +126,32 @@ To test successfully, you must [finish setup](https://community.cloudflare.com/t
 ### `Error 401: deleted_client`
 
 <Render file="access/error-401" product="cloudflare-one" />
+
+### Redirect loop when protecting Google apps with Access
+
+If you use Google Workspace as your identity provider (IdP) in Cloudflare Access and also protect a Google-hosted application (such as a Google Cloud app, Google Admin console, or a custom app on `accounts.google.com`) with an Access policy, you can create a circular authentication loop: Access redirects users to Google to log in, but Google itself is behind Access, so the redirect loops indefinitely.
+
+The note at the top of this page explains that this configuration is not supported by default. To protect Google apps while using Google Workspace as your IdP, use one of these approaches:
+
+- **Use a different IdP for the protected app.** Configure a second identity provider (for example, Okta or Azure AD) for the Access application protecting the Google app, while keeping Google Workspace as the IdP for other applications.
+- **Exclude Google authentication endpoints from Access.** Create a Bypass policy rule for `accounts.google.com` so that the Google login flow is not intercepted by Access. Add a policy rule: **Action**: Bypass — **Selector**: Domain — **Value**: `accounts.google.com`.
+
+### Group membership not reflected in Access policies
+
+Google Workspace group membership changes do not immediately propagate to Cloudflare Access. There are two delays to be aware of:
+
+1. **Google sync delay.** Google Workspace can take up to 24 hours to reflect group changes via the Admin SDK API.
+2. **Session cache.** Cloudflare caches identity information for the duration of a user's active session. A user who was added to or removed from a group will not see the policy change until their session expires or they re-authenticate.
+
+To force an immediate update for a specific user, ask them to disconnect and reconnect WARP, or clear their Access session by visiting `<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout`.
+
+For WARP-enrolled devices, you can also trigger a re-authentication from **Zero Trust** > **My Team** > **Devices** by selecting the device and choosing **Revoke session**.
+
+### Using multiple Google Workspace domains in Access policies
+
+If your organization has a primary Google Workspace domain and one or more secondary domains (for example, `company.com` and `company.co.uk`), all users authenticate through the same Google Workspace organization. You do not need to add separate identity providers for each domain.
+
+When building Access policies, you can target users across all domains by using group membership selectors rather than email domain selectors. Alternatively, use the **Emails ending in** selector with each domain as a separate policy rule connected with **OR** logic.
+
+If you have multiple distinct Google Workspace organizations (not just multiple domains within one organization), you must add each organization as a separate Google Workspace identity provider in Cloudflare Zero Trust.
+
