@@ -17,7 +17,6 @@
 /src/scripts/analytics/search.ts @cloudflare/ai-search @cloudflare/content-engineering
 /src/scripts/webmcp.ts @cloudflare/ai-search @cloudflare/content-engineering
 /src/util/api.ts @kodster28 @cloudflare/content-engineering
-/src/util/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 /src/util/search.ts @cloudflare/ai-search @cloudflare/content-engineering
 package.json @cloudflare/content-engineering
 
@@ -32,7 +31,10 @@ package.json @cloudflare/content-engineering
 
 # access
 
+/src/assets/images/changelog/access/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/access/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/access.yaml @asamborski @cloudflare/product-owners
+/src/icons/access.svg @asamborski @cloudflare/product-owners
 
 # agent-lee
 
@@ -67,6 +69,9 @@ package.json @cloudflare/content-engineering
 
 # ai
 
+/src/content/docs/ai/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/content/directory/ai.yaml @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/icons/ai.svg @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 /src/pages/ai/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 
 # ai-crawl-control
@@ -148,7 +153,9 @@ package.json @cloudflare/content-engineering
 
 # audit-logs
 
+/src/assets/images/changelog/audit-logs/ @dcpena @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/audit-logs/ @dcpena @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/audit-logs.yaml @dcpena @sahidya @cloudflare/product-owners
 
 # automatic-platform-optimization
 
@@ -187,7 +194,10 @@ package.json @cloudflare/content-engineering
 
 # browser-isolation
 
+/src/assets/images/changelog/browser-isolation/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/browser-isolation/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/browser-isolation.yaml @asamborski @cloudflare/product-owners
+/src/icons/browser-isolation.svg @asamborski @cloudflare/product-owners
 
 # browser-run
 
@@ -259,7 +269,10 @@ package.json @cloudflare/content-engineering
 
 # cloudflare-for-platforms
 
+/src/assets/images/cloudflare-for-platforms/ @dinasaur404 @irvinebroque @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/ @dinasaur404 @irvinebroque @cloudflare/product-owners
+/src/content/directory/cloudflare-for-platforms.yaml @dinasaur404 @irvinebroque @cloudflare/product-owners
+/src/icons/cloudflare-for-platforms.svg @dinasaur404 @irvinebroque @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @dinasaur404 @irvinebroque @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @dinasaur404 @irvinebroque @cloudflare/deploy-config @cloudflare/product-owners
 /src/content/partials/cloudflare-for-platforms/ @baubuchon-cf @dinasaur404 @irvinebroque @cloudflare/appsec-reviewers @cloudflare/product-owners
@@ -313,6 +326,7 @@ package.json @cloudflare/content-engineering
 # cloudflare-one-client
 
 /src/content/changelog/cloudflare-one-client/ @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/cloudflare-one-client.yaml @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # cloudflare-wan
 
@@ -461,7 +475,11 @@ package.json @cloudflare/content-engineering
 
 # gateway
 
+/src/assets/images/changelog/gateway/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/gateway/ @asamborski @cloudflare/product-owners
 /src/content/changelog/gateway/ @asamborski @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/gateway.yaml @asamborski @cloudflare/product-owners
+/src/icons/gateway.svg @asamborski @cloudflare/product-owners
 
 # google-tag-gateway
 
@@ -515,7 +533,11 @@ package.json @cloudflare/content-engineering
 
 # learning-paths
 
+/src/assets/images/learning-paths/ @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
+/src/content/partials/learning-paths/ @cloudflare/product-owners
+/src/content/directory/learning-paths.yaml @cloudflare/product-owners
+/src/icons/learning-paths.svg @cloudflare/product-owners
 
 # load-balancing
 
@@ -559,6 +581,8 @@ package.json @cloudflare/content-engineering
 # migration-guides
 
 /src/content/docs/migration-guides/ @cloudflare/product-owners
+/src/content/directory/migration-guides.yaml @cloudflare/product-owners
+/src/icons/migration-guides.svg @cloudflare/product-owners
 
 # moq
 
@@ -576,6 +600,7 @@ package.json @cloudflare/content-engineering
 
 # network
 
+/src/content/docs/network/ @mbullock1986 @cloudflare/product-owners
 /src/content/docs/network/ip-geolocation.mdx @mbullock1986 @cloudflare/product-owners
 /src/content/partials/network/ @mbullock1986 @cloudflare/product-owners
 /src/content/directory/network.yaml @mbullock1986 @cloudflare/product-owners
@@ -583,7 +608,10 @@ package.json @cloudflare/content-engineering
 
 # network-error-logging
 
+/src/assets/images/network-error-logging/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @cloudflare/product-owners
+/src/content/directory/network-error-logging.yaml @cloudflare/product-owners
+/src/icons/network-error-logging.svg @cloudflare/product-owners
 
 # network-flow
 
@@ -609,6 +637,9 @@ package.json @cloudflare/content-engineering
 # notifications
 
 /src/content/docs/notifications/ @cloudflare/product-owners
+/src/content/partials/notifications/ @cloudflare/product-owners
+/src/content/directory/notifications.yaml @cloudflare/product-owners
+/src/icons/notifications.svg @cloudflare/product-owners
 
 # pages
 
@@ -783,7 +814,13 @@ package.json @cloudflare/content-engineering
 
 # registrar
 
+/src/assets/images/changelog/registrar/ @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/registrar/ @cloudflare/product-owners
+/src/content/changelog/registrar/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/docs/registrar/ @cloudflare/product-owners
+/src/content/partials/registrar/ @cloudflare/product-owners
+/src/content/directory/registrar.yaml @cloudflare/product-owners
+/src/icons/registrar.svg @cloudflare/product-owners
 
 # resource-tagging
 # Needs CODEOWNERS
@@ -894,7 +931,12 @@ package.json @cloudflare/content-engineering
 
 # style-guide
 
+/src/assets/images/style-guide/ @cloudflare/product-owners
 /src/content/docs/style-guide/ @cloudflare/product-owners
+/src/content/partials/style-guide/ @cloudflare/product-owners
+/src/content/directory/style-guide.yaml @cloudflare/product-owners
+/src/content/glossary/style-guide.yaml @cloudflare/product-owners
+/src/icons/style-guide.svg @cloudflare/product-owners
 
 # support
 
@@ -1059,6 +1101,7 @@ package.json @cloudflare/content-engineering
 /src/content/catalog-models/ @abhishekkankani @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridhar-cf @superhighfives @thebongy @zeke @cloudflare/product-owners @cloudflare/content-engineering
 /src/content/workers-ai-models/ @craigsdennis @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners
 /src/pages/workers-ai/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/util/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 /src/content/docs/workers-ai/ @aninibread @craigsdennis @ethulia @kflansburg @mattrothenberg @mchenco @rita3ko @shridhar-cf @superhighfives @zeke @cloudflare/product-owners
 /src/content/release-notes/workers-ai.yaml @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @shridhar-cf @superhighfives @zeke @cloudflare/product-owners
 /src/assets/images/workers-ai/ @aninibread @craigsdennis @ethulia @kflansburg @mattrothenberg @mchenco @rita3ko @shridhar-cf @superhighfives @zeke @cloudflare/product-owners
