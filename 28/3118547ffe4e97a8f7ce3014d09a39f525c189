@@ -1,0 +1,23 @@
+src/content/docs/rules/cloud-connector/create-api.mdx
+  s_71446ed0e1043d::t_3c11afb585d899 96
+src/content/docs/rules/cloud-connector/index.mdx
+  s_71446ed0e1043d::t_5f9d51622ea166 16,21
+src/content/docs/rules/cloud-connector/providers.mdx
+  s_71446ed0e1043d::t_e65c30a0382b4c 14,25,122-145
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "283118547ffe4e97a8f7ce3014d09a39f525c189",
+  "prompts": {},
+  "sessions": {
+    "s_71446ed0e1043d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_01459868fffe497ZjdMQ1oeYfg",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Matt Bullock <mbullock@cloudflare.com>"
+    }
+  }
+}

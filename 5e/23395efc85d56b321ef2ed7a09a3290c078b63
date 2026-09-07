@@ -1,0 +1,29 @@
+pnpm-lock.yaml
+  s_d161f87b820022::t_25a88ba71ff8d8 8,5041-5043,11521,12242
+pnpm-workspace.yaml
+  s_4418c5236c257c::t_58cf5d04925a6e 18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5e23395efc85d56b321ef2ed7a09a3290c078b63",
+  "prompts": {},
+  "sessions": {
+    "s_4418c5236c257c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb483-bcd4-7c01-a493-49206da8167c",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_d161f87b820022": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faa1d-271a-7160-954d-964de4f79c0f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

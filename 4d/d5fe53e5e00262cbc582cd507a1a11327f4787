@@ -1,0 +1,19 @@
+src/content/partials/cache/cache-reserve-intro.mdx
+  s_35ad26c921da57::t_7e0538bbc9db3f 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4dd5fe53e5e00262cbc582cd507a1a11327f4787",
+  "prompts": {},
+  "sessions": {
+    "s_35ad26c921da57": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_031f4aabdffeMd1nwKebQMloxw",
+        "model": "@cf/zai-org/glm-5.2"
+      },
+      "human_author": "mvm <vance@cloudflare.com>"
+    }
+  }
+}

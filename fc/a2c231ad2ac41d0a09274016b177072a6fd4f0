@@ -1,0 +1,101 @@
+src/content/docs/agent-setup/bionic.mdx
+  s_19e4691b7b894b::t_2282fd61444a7f 95,110
+src/content/docs/agent-setup/claude-code.mdx
+  s_19e4691b7b894b::t_54449d52070c04 130,132
+src/content/docs/agent-setup/codex.mdx
+  s_19e4691b7b894b::t_7dcdee8c2a0efd 129,131
+src/content/docs/agent-setup/cursor.mdx
+  s_19e4691b7b894b::t_2978515ec0f7ac 102,104
+src/content/docs/agent-setup/github-copilot.mdx
+  s_19e4691b7b894b::t_746a7108cef144 128,130
+src/content/docs/agent-setup/opencode.mdx
+  s_19e4691b7b894b::t_8a1d869aac613a 111,123,125
+src/content/docs/agent-setup/windsurf.mdx
+  s_19e4691b7b894b::t_91d5f030ebacfd 111,113
+src/content/docs/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app.mdx
+  s_19e4691b7b894b::t_629997963bef87 67
+src/content/docs/cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/cisco-email-security-mx.mdx
+  s_19e4691b7b894b::t_c675195038a494 39
+src/content/docs/cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/cisco-mx.mdx
+  s_19e4691b7b894b::t_2259ab7e10f133 34,84
+src/content/docs/cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/m365-email-security-mx/index.mdx
+  s_19e4691b7b894b::t_de94b1a19634d8 93,107
+src/content/docs/cloudflare-one/insights/dex/monitoring.mdx
+  s_19e4691b7b894b::t_1e40dee11fd36f 90
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/ansible.mdx
+  s_19e4691b7b894b::t_f9448d50cd3946 27,144,213,310
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/aws.mdx
+  s_19e4691b7b894b::t_57bf911296ba3d 78,85
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/azure.mdx
+  s_19e4691b7b894b::t_b24e07633432a0 111,118
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/google-cloud-platform.mdx
+  s_19e4691b7b894b::t_7046158aa934c7 69,76
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/kubernetes.mdx
+  s_19e4691b7b894b::t_a6e1c3a6366b70 29,164,321,348,374
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file.mdx
+  s_19e4691b7b894b::t_1fdefbdf8d500a 17,22,24,30,91,113,167
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/create-local-tunnel.mdx
+  s_19e4691b7b894b::t_ecd433afd9f0a0 30,48,85,115,126,139,143,151,163,194
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/update-cloudflared.mdx
+  s_19e4691b7b894b::t_691d74fa23cdb5 19,150,152,160,162
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access.mdx
+  s_19e4691b7b894b::t_2888e5a02b7862 553
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/index.mdx
+  s_19e4691b7b894b::t_6628e7352950f9 395
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-virtual-appliance.mdx
+  s_19e4691b7b894b::t_eb07a36520757e 152,373
+src/content/docs/cloudflare-one/troubleshooting/wan/routing-bgp.mdx
+  s_19e4691b7b894b::t_6aa25618dc1819 69,78,151,211-212,214-215
+src/content/docs/cloudflare-wan/configuration/appliance/configure-hardware-appliance/index.mdx
+  s_19e4691b7b894b::t_81f3c3728a9f42 411
+src/content/docs/cloudflare-wan/configuration/appliance/configure-virtual-appliance.mdx
+  s_19e4691b7b894b::t_59f9a2163c959e 200,424
+src/content/docs/learning-paths/data-center-protection/configure-tunnels-routes/configure-routes.mdx
+  s_19e4691b7b894b::t_cc2aa086aa453d 16,43,46,48,266
+src/content/docs/learning-paths/data-center-protection/configure-tunnels-routes/configure-tunnels.mdx
+  s_19e4691b7b894b::t_baaf7f23196314 49,53,59,63,68,96-98,107,120-122,147,150,217,405,409,425,431-432
+src/content/docs/pages/configuration/headers.mdx
+  s_19e4691b7b894b::t_341fec5f724469 26,76
+src/content/docs/pages/configuration/redirects.mdx
+  s_19e4691b7b894b::t_623e49898e8dd9 21,137
+src/content/docs/tunnel/advanced/local-management/configuration-file.mdx
+  s_19e4691b7b894b::t_e73df5e26296b2 15,20,22,79,101,155
+src/content/docs/tunnel/advanced/local-management/create-local-tunnel.mdx
+  s_19e4691b7b894b::t_3eb6fd9e15a765 32,50,87,117,128,141,159,182
+src/content/docs/tunnel/deployment-guides/ansible.mdx
+  s_19e4691b7b894b::t_0a26200f78609c 24,141,210,307
+src/content/docs/tunnel/deployment-guides/aws.mdx
+  s_19e4691b7b894b::t_3ba1f12daace94 56,63
+src/content/docs/tunnel/deployment-guides/azure.mdx
+  s_19e4691b7b894b::t_191632baabd26e 95,102
+src/content/docs/tunnel/deployment-guides/google-cloud-platform.mdx
+  s_19e4691b7b894b::t_6b2e2a7b53b177 56,63
+src/content/docs/tunnel/deployment-guides/kubernetes.mdx
+  s_19e4691b7b894b::t_8dd2ac684e11c5 28,163,320,347,373
+src/content/docs/tunnel/downloads/update-cloudflared.mdx
+  s_19e4691b7b894b::t_de6c17a9db2d6b 19,150,152,160,162
+src/content/docs/waf/detections/ai-security-for-apps/index.mdx
+  s_19e4691b7b894b::t_1aa29ad218f847 23
+src/content/docs/workers/static-assets/headers.mdx
+  s_19e4691b7b894b::t_59b4d11d00a7bd 100,132
+src/content/docs/workers/static-assets/redirects.mdx
+  s_19e4691b7b894b::t_d2d8667fd0279f 23,139
+src/content/docs/workers/wrangler/configuration.mdx
+  s_19e4691b7b894b::t_c7153b894145d4 98
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fca2c231ad2ac41d0a09274016b177072a6fd4f0",
+  "prompts": {},
+  "sessions": {
+    "s_19e4691b7b894b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc5fb3d1bffeXXPnqM5XAusTSS",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}

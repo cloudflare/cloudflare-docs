@@ -1,0 +1,23 @@
+src/components/HyperdriveDynamicWorkersDiagram.astro
+  s_517176ebbebd59::t_c2bb78efb61f0c 2-9,12-133,135-136,139-186,189-252,254-260,263-264,266-363,366-367,369,371-376,379-380,383-455,458-466,471-474,477-478,480-487,489-493,495-503,505-525,527-538,541-547,551-554
+src/components.ts
+  s_517176ebbebd59::t_755db5d4f65dc2 77
+src/content/docs/hyperdrive/concepts/dynamic-hyperdrive.mdx
+  s_517176ebbebd59::t_ac5902f5678bb4 12,29-33,37-58,60,62-70,77-84,90-92,94,96,98,100-106,109-115,117-136,142,144,146,157,160,167,173,176-180,183-195,202,204,206,210,213-219,228
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3c35e53f49963c1d8f4b58791133dc634611413b",
+  "prompts": {},
+  "sessions": {
+    "s_517176ebbebd59": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fffaab8dbffeAx1O26AFdDS2D2",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}
