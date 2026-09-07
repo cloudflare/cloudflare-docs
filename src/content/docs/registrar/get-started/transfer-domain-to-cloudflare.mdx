@@ -99,6 +99,17 @@ If your zone has been pending for more than 24 hours, verify that you updated th
 
 ---
 
+
+:::note[If your domain uses Google Workspace for email]
+When you add your domain to Cloudflare, Cloudflare imports the DNS records currently published by your existing DNS provider. Verify that the records required for Google Workspace are present after the import — specifically:
+
+- Five MX records pointing to Google's mail servers (starting with `aspmx.l.google.com`)
+- A TXT record for SPF containing `include:_spf.google.com`
+- TXT records for DKIM (typically named `google._domainkey`) and DMARC (`_dmarc`)
+
+If any of these records are missing, add them manually before transferring the registration. Refer to [Set up Google Workspace DNS records](/dns/manage-dns-records/how-to/set-up-google-workspace/).
+:::
+
 ## 2. Transfer your registration
 
 Once your domain is active on Cloudflare, you can transfer the registration. This moves your domain record from your current registrar to Cloudflare. You will go back and forth between your current registrar and Cloudflare during this process.
