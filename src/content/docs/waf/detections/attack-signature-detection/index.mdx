@@ -1,0 +1,63 @@
+---
+title: Attack Signature Detection
+pcx_content_type: overview
+description: Detect attack signature matches independently from mitigation and use the results to create scoped Security Rules.
+products:
+  - waf
+sidebar:
+  order: 8
+  group:
+    label: Attack Signature Detection
+---
+
+import { DirectoryListing } from "~/components";
+
+Attack Signature Detection evaluates requests against Cloudflare attack signatures. It records match metadata without applying an action by itself.
+
+:::note
+Attack Signature Detection is available in Early Access. Contact your Cloudflare account team to request access.
+:::
+
+Traditional WAF deployments combine detection and mitigation through managed rules. You may need to review matches before blocking traffic to reduce false positives.
+
+Attack Signature Detection separates these steps. It records confidence, category, and signature Ref metadata for matching requests. Review this data in **Security Analytics** > **Attack Analysis** before creating a [Security Rule](/security/rules/).
+
+After Cloudflare grants Early Access, Attack Signature Detection evaluates requests against signatures for attack techniques. These include SQL injection, cross-site scripting, remote code execution, and specific Common Vulnerabilities and Exposures (CVEs).
+
+Security Rules provide the mitigation layer. You can match confidence, category, or signature Ref values. You can also combine these values with properties such as hostname, path, and HTTP method.
+
+A signature match does not mean Cloudflare blocked the request. Inspect the request outcome and your deployed rules to determine the applied action.
+
+## How request evaluation works
+
+Attack Signature Detection uses the following request lifecycle:
+
+1. Cloudflare evaluates a request against attack signatures.
+2. Matching signatures populate confidence, category, and Ref fields.
+3. The match data becomes available in Security Analytics.
+4. A Security Rule can evaluate these fields and apply its action.
+
+Attack Signature Detection uses the same signature definitions as [Cloudflare Managed Rules](/waf/managed-rules/). It does not inherit your Managed Rules deployment configuration. Managed Rules actions and overrides do not create Security Rules based on detection fields.
+
+When no rule references an Attack Signature Detection field, detection does not add request latency. When a rule references a detection field, detection runs inline. Inline detection should have latency similar to Cloudflare Managed Rules evaluation.
+
+## Compare Attack Signature Detection and Managed Rules
+
+Attack Signature Detection and Managed Rules use one signature catalog. Cloudflare releases each new signature to both products at the same time.
+
+| Area           | Attack Signature Detection                                                                       | Cloudflare Managed Rules                                                              |
+| -------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| Signatures     | Uses the same signatures as Cloudflare Managed Rules.                                            | Uses the same signatures as Attack Signature Detection.                               |
+| Primary result | Populates confidence, category, and Ref metadata.                                                | Applies the configured managed ruleset actions.                                       |
+| Mitigation     | Requires a Security Rule that references a detection field.                                      | Uses Managed Rules actions, overrides, and deployment configuration.                  |
+| Analysis       | Shows signature-oriented data in **Security Analytics** > **Attack Analysis**.                   | Shows events produced by the deployed managed ruleset configuration.                  |
+| Identifier     | A signature Ref matches the corresponding Managed Rule public Rule ID.                           | A public Rule ID matches the corresponding signature Ref.                             |
+| Rule ordering  | A Custom Rule follows normal Custom Rules ordering. A terminating action stops later evaluation. | Managed Rules evaluate unless an earlier terminating action stops request processing. |
+
+The shared Ref and Rule ID help you compare detection results with your Managed Rules deployment. Equivalent signatures do not produce equivalent behavior. Attack Signature Detection produces metadata, while Managed Rules apply configured actions.
+
+Attack Signature Detection and Managed Rules have no special interaction. Normal phase and terminating-action behavior applies. Attack Signature Detection does not replace Managed Rules during Early Access.
+
+## Explore Attack Signature Detection
+
+<DirectoryListing />
