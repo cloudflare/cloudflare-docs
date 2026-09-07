@@ -24,10 +24,10 @@ R2 sinks support two output formats:
 
 ### JSON format
 
-Write data as newline-delimited JSON files:
+Write data as newline-delimited JSON files. JSON sinks support two compression modes: `uncompressed` (default) and `gzip`:
 
 ```bash
---format json
+--format json --compression gzip
 ```
 
 ### Parquet format

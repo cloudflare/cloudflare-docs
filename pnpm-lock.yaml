@@ -209,9 +209,6 @@ importers:
       lz-string:
         specifier: 1.5.0
         version: 1.5.0
-      marked:
-        specifier: 18.0.10
-        version: 18.0.10
       mdast-util-from-markdown:
         specifier: 2.0.3
         version: 2.0.3(supports-color@10.2.2)
@@ -269,18 +266,12 @@ importers:
       rehype:
         specifier: 13.0.2
         version: 13.0.2
-      remark:
-        specifier: 15.0.1
-        version: 15.0.1(supports-color@10.2.2)
       satteri:
         specifier: ^0.10.5
         version: 0.10.5
       sharp:
         specifier: 0.35.3
         version: 0.35.3(@types/node@26.2.0)
-      strip-markdown:
-        specifier: 6.0.0
-        version: 6.0.0
       svgo:
         specifier: 4.0.2
         version: 4.0.2
@@ -4376,11 +4367,6 @@ packages:
     engines: {node: '>= 20'}
     hasBin: true
 
-  marked@18.0.10:
-    resolution: {integrity: sha512-FJeH4bRpYoXiggcgriCGItKCSv3xkngJc4QCZ/rkQCogU3VYaLxYJoZl8Nw/b4+x7iij/pd+09mZ6A1dXzpL0A==}
-    engines: {node: '>= 20'}
-    hasBin: true
-
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -5074,9 +5060,6 @@ packages:
   remark-stringify@11.0.0:
     resolution: {integrity: sha512-1OSmLd3awB/t8qdoEOMazZkNsfVTeY4fTsgzcQFdXNq8ToTN4ZGwrMnlda4K6smTFKD+GRV6O48i6Z4iKgPPpw==}
 
-  remark@15.0.1:
-    resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
-
   request-light@0.5.8:
     resolution: {integrity: sha512-3Zjgh+8b5fhRJBQZoy+zbVKpAQGLyka0MPgW3zruTF4dFFJ8Fqcfu9YsAvi/rvdcaTeWG3MkbZv4WKxAn/84Lg==}
 
@@ -5339,9 +5322,6 @@ packages:
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
-
-  strip-markdown@6.0.0:
-    resolution: {integrity: sha512-mSa8FtUoX3ExJYDkjPUTC14xaBAn4Ik5GPQD45G5E2egAmeV3kHgVSTfIoSDggbF6Pk9stahVgqsLCNExv6jHw==}
 
   strnum@2.4.1:
     resolution: {integrity: sha512-M9eUSMT2dCB2cTNPG7UYj6KuK7RJR2SN2+yCV/fTW3xzTCS6EaGZ5pSMgDIjB7r8zSfTGk+dvvn9rTjpVS9Mwg==}
@@ -10470,8 +10450,6 @@ snapshots:
 
   marked@16.4.2: {}
 
-  marked@18.0.10: {}
-
   math-intrinsics@1.1.0: {}
 
   mdast-util-definitions@6.0.0:
@@ -11552,15 +11530,6 @@ snapshots:
       mdast-util-to-markdown: 2.1.2
       unified: 11.0.5
 
-  remark@15.0.1(supports-color@10.2.2):
-    dependencies:
-      '@types/mdast': 4.0.4
-      remark-parse: 11.0.0(supports-color@10.2.2)
-      remark-stringify: 11.0.0
-      unified: 11.0.5
-    transitivePeerDependencies:
-      - supports-color
-
   request-light@0.5.8: {}
 
   request-light@0.7.0: {}
@@ -11984,10 +11953,6 @@ snapshots:
       ansi-regex: 6.2.2
 
   strip-json-comments@3.1.1: {}
-
-  strip-markdown@6.0.0:
-    dependencies:
-      '@types/mdast': 4.0.4
 
   strnum@2.4.1:
     dependencies:

@@ -1,0 +1,83 @@
+---
+title: Set up a webinar
+description: Set up a RealtimeKit webinar with presenters and viewers, then manage requests to join the stage.
+pcx_content_type: how-to
+sidebar:
+  order: 11
+products:
+  - realtime
+---
+
+import { Steps, Details } from "~/components";
+
+In a RealtimeKit webinar, presenters publish audio and video from the [stage](/realtime/realtimekit/concepts/meeting/#stage). Viewers watch and can request to join the stage.
+
+This guide sets up a webinar using the default webinar [presets](/realtime/realtimekit/concepts/preset/) and renders it with [RealtimeKit UI Kit](/realtime/realtimekit/ui-kit/). To build a custom interface instead, use [RealtimeKit Core SDK](/realtime/realtimekit/core/) with [stage management](/realtime/realtimekit/core/stage-management/).
+
+## Webinar roles
+
+Every RealtimeKit app includes two default presets for webinars. Assign one of these presets to each participant, modify them, or create your own preset to fit your application.
+
+| Role      | Default preset      | Stage behavior                                 | Can accept stage requests |
+| --------- | ------------------- | ---------------------------------------------- | ------------------------- |
+| Presenter | `webinar_presenter` | Can join the stage and publish audio and video | Yes                       |
+| Viewer    | `webinar_viewer`    | Can request to join the stage                  | No                        |
+
+## Before you begin
+
+Before you set up a webinar, make sure that you have:
+
+- A [Cloudflare account](https://dash.cloudflare.com) with a RealtimeKit app.
+- An API token with Realtime Admin permissions. Keep it server-side. Do not expose it in frontend code.
+- A backend that can call the RealtimeKit REST API to create meetings and add participants.
+- A frontend application ready to integrate [RealtimeKit UI Kit](/realtime/realtimekit/ui-kit/).
+
+If you have not completed these requirements, refer to [Quickstart](/realtime/realtimekit/quickstart/).
+
+## Set up a webinar
+
+<Steps>
+1. In the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), go to **Presets** and review the default `webinar_presenter` and `webinar_viewer` presets. Both presets have **Meeting Type** set to **Video (WebRTC)** and **Manage Stage (Webinar)** turned on under **Configuration** > **Stage & Media**.
+2. Create a meeting using the [Create Meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/). Save the returned meeting `id` for the next step.
+3. Add each presenter and viewer to the meeting using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). Assign `webinar_presenter` to presenters and `webinar_viewer` to viewers.
+4. Deliver each participant's returned `authToken` only to the frontend session for that specific user.
+5. Initialize [RealtimeKit UI Kit](/realtime/realtimekit/ui-kit/) with the participant's `authToken`. UI Kit renders the webinar interface, including stage controls, based on the participant's preset.
+</Steps>
+
+<Details header="Configure presets with the API">
+
+If you manage presets programmatically instead of through the dashboard, use the [Create Preset API](/api/resources/realtime_kit/subresources/presets/methods/create/) with the following fields:
+
+- `config.view_type` set to `WEBINAR`.
+- `permissions.stage_access` set to `ALLOWED` for presenters, `CAN_REQUEST` for viewers who can request to join the stage, or `NOT_ALLOWED` for view-only viewers.
+- `permissions.can_accept_production_requests` set to `true` for participants who moderate stage requests.
+
+For the complete request schema, refer to [Presets](/api/resources/realtime_kit/subresources/presets/).
+
+</Details>
+
+## Manage stage requests
+
+A viewer whose preset has **Behaviour** set to **Can request to join** can request access to the stage from the UI Kit interface. A presenter whose preset has **Accept Requests** turned on receives the request and can accept or reject it.
+
+Once accepted, the viewer joins the stage and can publish audio and video like a presenter. RealtimeKit UI Kit handles this by default. To build a custom interface, implement the same behavior with the stage management APIs in [Stage Management](/realtime/realtimekit/core/stage-management/).
+
+## Verify the webinar
+
+<Steps>
+1. Join the meeting as a presenter and confirm that you can publish audio and video.
+2. Join the meeting as a viewer and confirm that you cannot publish audio or video by default.
+3. As the viewer, request to join the stage.
+4. As the presenter, accept the request and confirm that the viewer can now publish audio and video.
+</Steps>
+
+## Pricing
+
+Both presenters and viewers are billed as Audio/Video Participants. For detailed pricing information, refer to [Pricing](/realtime/realtimekit/pricing/).
+
+## Next steps
+
+- Customize the webinar interface with a [custom control bar](/realtime/realtimekit/ui-kit/custom-controlbar/) or [UI Kit addons](/realtime/realtimekit/ui-kit/addons/).
+- Review [video and simulcast recommendations](/realtime/realtimekit/best-practices/video-and-simulcast/#webinar-audience-is-view-only) for presenter and viewer media quality.
+- [Record the webinar](/realtime/realtimekit/recording-guide/) and store the recording in your own storage.
+- Use [webhooks](/realtime/realtimekit/webhooks/) to track webinar lifecycle events in your backend.

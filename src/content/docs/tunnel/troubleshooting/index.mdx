@@ -16,6 +16,8 @@ Use this page to diagnose and resolve common issues with Cloudflare Tunnel. Many
 
 For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
 
+If your tunnel is `Healthy` but an HTTPS route fails or redirects, refer to [Troubleshoot HTTPS origins](/tunnel/troubleshooting/https-origins/).
+
 ## Connection errors
 
 When `cloudflared` cannot reach the Cloudflare network, it [logs](/tunnel/monitoring/#logs) specific error messages that indicate whether the issue is DNS resolution, QUIC (UDP), or TCP connectivity.
@@ -144,10 +146,11 @@ Replace `198.41.200.43` with the IP shown in your [error message](#dialcontext-e
 		logsURL: "/tunnel/monitoring/#logs",
 		protocolURL: "/tunnel/routing/#supported-protocols",
 		configFileURL: "/tunnel/advanced/local-management/configuration-file/",
-		originServerNameURL: "/tunnel/configuration/#originservername",
-		caPoolURL: "/tunnel/configuration/#capool",
-		noTLSVerifyURL: "/tunnel/configuration/#notlsverify",
-		ulimitsURL: "/tunnel/configuration/#ulimits",
+		originServerNameURL: "/tunnel/advanced/origin-parameters/#originservername",
+		caPoolURL: "/tunnel/advanced/origin-parameters/#capool",
+		noTLSVerifyURL: "/tunnel/advanced/origin-parameters/#notlsverify",
+		httpsOriginURL: "/tunnel/troubleshooting/https-origins/",
+		ulimitsURL: "/tunnel/downloads/system-requirements/#ulimits-linux-and-macos",
 	}}
 />
 
