@@ -129,10 +129,6 @@ To test successfully, you must [finish setup](https://community.cloudflare.com/t
 
 ### Redirect loop when protecting Google apps with Access
 
-:::note
-This configuration is not supported. Refer to [Set up Google Workspace as an identity provider](#set-up-google-workspace-as-an-identity-provider) for more information.
-:::
-
 Using Google Workspace as your identity provider while also protecting a Google-hosted application with an Access policy creates a circular redirect loop: Access sends users to Google to authenticate, but Google itself requires Access authentication first.
 
 If you need to protect a Google-hosted application and use Google Workspace as your IdP for other applications, configure a second identity provider (for example, Okta or Microsoft Entra ID) specifically for the Access application protecting that Google-hosted app. Keep Google Workspace as the IdP for your other applications.
