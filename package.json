@@ -25,6 +25,7 @@
 		"preview": "astro preview",
 		"script:optimize-svgs": "tsx scripts/optimize-svgs.ts",
 		"script:fetch-github-contributors": "tsx bin/fetch-github-contributors.ts",
+		"codeowners:fill": "tsx bin/fill-codeowners-gaps.ts",
 		"start": "astro dev",
 		"sync": "astro sync",
 		"test": "vitest",
