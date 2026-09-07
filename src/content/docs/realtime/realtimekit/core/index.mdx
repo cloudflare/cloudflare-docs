@@ -187,38 +187,6 @@ Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/
     ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-	Initialize the RealtimeKit SDK by creating an instance of `RealtimeKitClient`.
-
-    ```dart
-    final meeting = RealtimeKitClient();
-    ```
-
-    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/).
-
-    ```dart
-    final meetingInfo = RtkMeetingInfo(
-                        authToken: authToken,
-                        enableAudio: false,
-                        enableVideo: false,
-                      );
-    ```
-
-    Initialize the connection by calling the `init()` method. This establishes a connection with the RealtimeKit meeting server.
-
-    ```dart
-    meeting.init(meetingInfo);
-    ```
-
-    Subscribe to the `RtkMeetingRoomEventListener` to receive callbacks for meeting events.
-
-    ```dart
-    meeting.addMeetingRoomEventListener(RoomStateNotifier());
-    ```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 	Initialize the RealtimeKit SDK using the `useRealtimeKitClient` hook.
 
@@ -407,7 +375,7 @@ interface Overrides {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 You can configure meeting defaults using `enableAudio` and `enableVideo` parameters.
 

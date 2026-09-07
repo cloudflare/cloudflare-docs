@@ -1,0 +1,31 @@
+---
+title: Fields
+pcx_content_type: reference
+description: Reference Schema Profile detection fields and usage.
+products:
+  - waf
+sidebar:
+  order: 6
+  label: Fields
+---
+
+import { Type } from "~/components";
+
+Schema Profile detections populate these fields after an applicable profile becomes available:
+
+| Field                                    | Type                    | Source                 | Meaning                                                        | Available in                        |
+| ---------------------------------------- | ----------------------- | ---------------------- | -------------------------------------------------------------- | ----------------------------------- |
+| `cf.schema_validation.learned.violated`  | <Type text="Boolean" /> | Learned Schema Profile | `true` when an evaluated request violates the learned profile. | Security Analytics and Custom Rules |
+| `cf.schema_validation.uploaded.violated` | <Type text="Boolean" /> | Uploaded schema        | `true` when an evaluated request violates the supplied schema. | Security Analytics and Custom Rules |
+
+## Availability
+
+Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is opening a closed beta to invited Enterprise customers without API Security. Interested customers can contact their account team to express interest. Closed-beta access does not imply future plan availability or pricing.
+
+## Evaluation
+
+Cloudflare evaluates requests after the corresponding profile becomes available. The profile must apply to the request operation.
+
+Requests without an applicable profile have **Not evaluated** status.
+
+For request statuses and investigation steps, refer to [Analyze profile detections](/waf/detections/application-profiles/analyze-profile-detections/).

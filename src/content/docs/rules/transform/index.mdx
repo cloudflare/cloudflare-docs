@@ -8,7 +8,7 @@ sidebar:
   order: 5
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 Transform Rules allow you to adjust the URI path, query string, and HTTP headers of requests and responses on the Cloudflare global network.
 
@@ -53,7 +53,11 @@ Cloudflare Transform Rules are available to all customers. Support for regular e
 
 This table outlines the Transform Rules features available with each customer plan:
 
-<FeatureTable id="rules.transform_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Active Transform Rules | 10 | 25 | 50 | 300 |
+| Regex support | No | No | Yes | Yes |
 
 A Cloudflare user must have the [Firewall role](/fundamentals/manage-members/roles/) or one of the Administrator roles to access Transform Rules.
 

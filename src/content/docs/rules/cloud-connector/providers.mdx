@@ -11,6 +11,7 @@ tags:
   - AWS
   - Azure
   - GCP
+  - OCI
 ---
 
 import { Render, Steps } from "~/components";
@@ -21,6 +22,7 @@ Cloud Connector currently supports the following cloud providers and services:
 - Amazon Web Services - S3
 - Google Cloud Platform - Cloud Storage
 - Microsoft Azure - Blob Storage
+- Oracle Cloud - Object Storage
 
 ## Cloudflare R2
 
@@ -115,5 +117,29 @@ For Azure Blog Storage, Cloud Connector supports only subdomain URLs like `<BUCK
 </Steps>
 
 If the blob container is not configured for public access, you must change the container settings. For details, refer to the [Azure Storage documentation](https://learn.microsoft.com/en-us/azure/storage/blobs/anonymous-read-access-configure?tabs=portal).
+
+<Render file="cloud-connector-limit-bucket-to-cloudflare-ips" product="rules" />
+
+## Oracle Cloud Infrastructure Object Storage
+
+Cloud Connector supports Oracle Cloud Infrastructure (OCI) Object Storage through the Amazon S3 Compatibility API.
+
+:::caution[Public buckets only]
+Cloud Connector does not authenticate requests to OCI. Your bucket must allow anonymous object reads. Private buckets and pre-authenticated request URLs are not supported.
+:::
+
+Enter an OCI hostname without a protocol, port, or path. Cloud Connector accepts the following formats:
+
+| Addressing style         | Hostname format                                                      | Request path                   |
+| ------------------------ | -------------------------------------------------------------------- | ------------------------------ |
+| Path style (traditional) | `<NAMESPACE>.compat.objectstorage.<REGION>.oraclecloud.com`          | `/<BUCKET_NAME>/<OBJECT_NAME>` |
+| Path style (dedicated)   | `<NAMESPACE>.compat.objectstorage.<REGION>.oci.customer-oci.com`     | `/<BUCKET_NAME>/<OBJECT_NAME>` |
+| Virtual-hosted style     | `<BUCKET_NAME>.vhcompat.objectstorage.<REGION>.oci.customer-oci.com` | `/<OBJECT_NAME>`               |
+
+For path-style endpoints, include the bucket name in the incoming request path. For example, `https://example.com/<BUCKET_NAME>/index.html` maps to the same path on the OCI endpoint.
+
+For virtual-hosted endpoints, the bucket name is part of the hostname. An incoming request to `https://example.com/index.html` maps to `/index.html` on that bucket. OCI requires virtual-hosted bucket names to use a regional scope and a DNS-compatible name that is unique within the region.
+
+For more information, refer to [Object Storage Dedicated Endpoints](https://docs.oracle.com/en-us/iaas/Content/Object/Concepts/dedicatedendpoints.htm), [Amazon S3 Compatibility API Hosted Style Support in Object Storage](https://docs.oracle.com/en-us/iaas/Content/Object/s3-virtual-style.htm), and [Changing an Object Storage Bucket's Visibility](https://docs.oracle.com/en-us/iaas/Content/Object/Tasks/managingbuckets_topic-To_change_the_visibility_of_a_bucket.htm).
 
 <Render file="cloud-connector-limit-bucket-to-cloudflare-ips" product="rules" />

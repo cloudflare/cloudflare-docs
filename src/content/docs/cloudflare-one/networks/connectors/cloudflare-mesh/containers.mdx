@@ -16,7 +16,7 @@ head:
     content: Run Cloudflare Mesh in containers
 ---
 
-import { DashButton, Details, Tabs, TabItem } from "~/components";
+import { DashButton, Details, Tabs, TabItem, Render } from "~/components";
 
 The [`cloudflare/mesh`](https://hub.docker.com/r/cloudflare/mesh) Docker image packages a Cloudflare Mesh node for Linux containers. It runs the Cloudflare One Client's `warp-svc` daemon headlessly in a minimal [Wolfi](https://wolfi.dev/)-based runtime.
 
@@ -368,6 +368,8 @@ Set `SRCNAT_ENABLED=false` only if the attached networks already have return rou
 
 ## High availability on Kubernetes
 
+<Render file="mesh/masque-required" product="cloudflare-one" />
+
 For [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) with CIDR routes:
 
 1. Use the same Mesh node token across multiple replicas.
@@ -378,6 +380,8 @@ Cloudflare operates replicas in active-passive mode. If the active replica goes 
 ## Hostname routes
 
 Containers support [hostname routing](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes). To resolve Kubernetes Services through a hostname route, make sure the hostname matches the cluster's actual DNS suffix. The default is `cluster.local`, producing Service names like `service.namespace.svc.cluster.local`.
+
+<Render file="mesh/masque-required" product="cloudflare-one" />
 
 ## Site-to-site networking
 

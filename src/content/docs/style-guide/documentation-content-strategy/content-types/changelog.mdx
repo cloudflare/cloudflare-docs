@@ -3,58 +3,73 @@ pcx_content_type: concept
 title: Changelog
 meta:
   title: Content type - Changelog
-description: Write changelog entries for product updates.
+description: Write changelog pages that record notable, dated product changes, the single type for release notes and other product updates.
+sidebar:
+  order: 11
 products:
   - style-guide
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Render, Type, MetaInfo } from "~/components";
 
-## Purpose
+A changelog logs notable, dated changes to a product. The tone is instructional and straightforward.
 
-The purpose of a changelog is to log or record notable changes, which then appear as part of the [Cloudflare changelog](/changelog/) and on product-specific changelog pages.
+This page covers how to write one. For the published updates themselves, refer to [Changelog](/changelog/).
 
-:::note[Disambiguation]
+## When to use it
 
-This page describes the content strategy for changelogs. For updates on Cloudflare products, refer to [Changelog](/changelog/).
+Write a changelog when you need to record notable, dated changes to a product as an ongoing feed. It is not:
 
-:::
+- **A blog post.** A changelog entry is a short, factual record of one change, whereas a blog post explains and promotes at length.
+- **The documentation of a change.** An entry records that something changed and links out, whereas the how-to, reference, or concept is where the change is actually documented.
 
-## Tone
+For the full comparison, refer to [Content types](/style-guide/documentation-content-strategy/content-types/).
 
-instructional, straightforward
+## Title & description
 
-## content_type
+- **Title**: the page title is Changelog.
+- **Description**: name the product and what the changelog tracks, such as recent changes, new features, and bug fixes.
+
+## Scaffold this page
+
+<Render
+	file="scaffold-with-recipe"
+	product="style-guide"
+	params={{ type: "changelog", recipe: "content-changelog" }}
+/>
+
+## Component guidance
+
+- [**ProductChangelog**](/style-guide/build-the-page/components/product-changelog/) renders a product's entries on the changelog page, pulling from the entries folder so the page stays current as entries are added.
+- **Entries** are the body: each dated MDX file in the changelog collection is one notable change, with its own title, description, and date.
+- **What does not fit:** long-form explanation or promotion. Keep an entry short and factual, and link to the how-to or concept that covers the change in depth.
+
+## Frontmatter
 
 ```yaml
 pcx_content_type: changelog
 products:
   - product-a
   - product-b
-  - product-c
 ```
 
-For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+For more details, refer to [`pcx_content_type`](/style-guide/build-the-page/frontmatter/custom-properties/#pcx_content_type).
 
 ## Ownership
 
-Product managers and engineers maintain changelogs manually or via an automated process that their team owns. PCX provides a review but does not own creating or writing changelogs.
+Product managers and engineers maintain changelogs manually or through an automated process that their team owns. PCX provides a review but does not own creating or writing changelogs.
 
-## Structure
+## Building a changelog
 
-When creating a changelog, you need an MDX page file and a corresponding folder of changelog entries.
-
-The combination of these files allows us to:
+A changelog needs an MDX page file and a corresponding folder of changelog entries. The combination of these files allows us to:
 
 - Render traditional changelog content on an [HTML page](/dns/changelog/).
 - Programmatically create an [RSS feed](/changelog/rss/dns.xml) with the changelog content.
 - Pull all our changelog content into a [Cloudflare-wide changelog](/changelog/).
 
-### Markdown file
+### Changelog page
 
-Your Markdown file needs to have several special values to pull in the changelog information. These values are highlighted in the sample page.
-
-For more information about the `ProductChangelog` component, refer to the [style guide](/style-guide/components/product-changelog/).
+The MDX page needs several special values to pull in the changelog information, highlighted in the sample page. For more information about the ProductChangelog component, refer to [ProductChangelog](/style-guide/build-the-page/components/product-changelog/).
 
 ```mdx title="/src/content/docs/dns/changelog.mdx"
 ---
@@ -74,9 +89,7 @@ import { ProductChangelog } from "~/components";
 
 ### Changelog entries
 
-Changelog entries live in a different location of our docs, [`/src/content/changelog/`](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelog).
-
-Each entry will be its own MDX file, similar to the following.
+Changelog entries live in a different location of our docs, [`/src/content/changelog/`](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelog). Each entry is its own MDX file, similar to the following.
 
 ````mdx title="src/content/changelog/dns/"
 ---
@@ -120,9 +133,9 @@ query Viewer {
 To learn more and get started, refer to the [DNS Analytics documentation](/dns/additional-options/analytics/#analytics).
 ````
 
-### Properties
+### Entry properties
 
-Each changelog entries has the following properties:
+Each changelog entry has the following properties:
 
 - `title` <Type text="string" /> <MetaInfo text="required" />
   - Shown in the title heading and on social media embeds.
@@ -136,7 +149,7 @@ Each changelog entries has the following properties:
   - The folder that your entry is in, such as `src/content/changelog/workers/2025-02-13-new-product-feature.mdx`, is inferred as part of this property. If you do not want to associate the entry with additional products, you can omit it from the frontmatter entirely.
   - If you wish to reference a product that does not exist in this collection, such as one that resides in the subpath of an existing product, you can create a "metadata only" entry:
 
-    ```yaml title="src/content/proucts/workers-observability.yaml"
+    ```yaml title="src/content/products/workers-observability.yaml"
     name: Workers Observability
 
     product:
@@ -149,3 +162,9 @@ Each changelog entries has the following properties:
 - `hidden` <Type text="Boolean" /> <MetaInfo text="(default: false) optional" />
   - If `true`, this page will be accessible from the direct link, but hidden from the main [changelog](/changelog/) page and all RSS feeds.
   - If `true`, will also add a `noindex` property so the page is not indexed by search crawlers.
+
+## Writing for AI and agents
+
+- **Dated, atomic entries.** Give each change its own dated entry with a title and description, because an agent extracts and orders changes by entry rather than by scanning prose.
+- **Literal dates and products.** Use `YYYY-MM-DD` dates and exact product names in frontmatter, so a reader or agent can filter and sort the feed reliably.
+- **Link out for depth.** Keep the entry to the change itself and link to the how-to or concept that explains it, because the changelog records what changed, not how to use it.

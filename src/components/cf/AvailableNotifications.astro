@@ -10,7 +10,7 @@
  */
 import { getEntry } from "astro:content";
 import { z } from "astro/zod";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 import AnchorHeading from "./AnchorHeading.astro";
 import Details from "./Details.astro";
 
@@ -62,22 +62,22 @@ const showProductHeadings = !product && !notificationFilter;
 				{(entries ?? []).map((notification) => (
 					<Details header={notification.name}>
 						<strong>Who is it for?</strong>
-						<p set:html={marked.parse(notification.audience)} />
+						<p set:html={renderMarkdown(notification.audience)} />
 
 						<strong>Other options / filters</strong>
-						<p set:html={marked.parse(notification.otherFilters)} />
+						<p set:html={renderMarkdown(notification.otherFilters)} />
 
 						<strong>Included with</strong>
-						<p set:html={marked.parse(notification.availability)} />
+						<p set:html={renderMarkdown(notification.availability)} />
 
 						<strong>What should you do if you receive one?</strong>
-						<p set:html={marked.parse(notification.nextSteps)} />
+						<p set:html={renderMarkdown(notification.nextSteps)} />
 
 						{notification.additional_information && (
 							<>
 								<strong>Additional information</strong>
 								<p
-									set:html={marked.parse(notification.additional_information)}
+									set:html={renderMarkdown(notification.additional_information)}
 								/>
 							</>
 						)}
@@ -85,7 +85,7 @@ const showProductHeadings = !product && !notificationFilter;
 						{notification.limitations && (
 							<>
 								<strong>Limitations</strong>
-								<p set:html={marked.parse(notification.limitations)} />
+								<p set:html={renderMarkdown(notification.limitations)} />
 							</>
 						)}
 					</Details>

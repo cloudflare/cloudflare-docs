@@ -27,7 +27,7 @@ The `provideRtkDesignSystem()` utility allows you to override the existing desig
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-react-native"]}>
 
 Each mobile platform exposes a design token system that controls colors, borders, typography, and spacing. You configure tokens before launching a meeting and the UI Kit applies them across all components.
 
@@ -79,16 +79,6 @@ import com.cloudflare.realtimekit.models.RtkMeetingInfo
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-import 'package:realtimekit_ui/realtimekit_ui.dart';
-import 'package:flutter/material.dart';
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```typescript
@@ -258,68 +248,6 @@ RealtimeKitUIBuilder.build(uiKitInfo).startMeeting()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Construct an `RtkDesignTokens` object and pass it to `RealtimeKitUIInfo` via the `designToken` parameter.
-
-Flutter supports two approaches for color configuration:
-
-- **Simple** — provide a single base color and the SDK auto-generates all shades
-- **Advanced** — provide an explicit `RtkColorSwatch` with all shade values
-
-**Simple color configuration:**
-
-```dart
-final designTokens = RtkDesignTokens(
-  colorToken: RtkColorToken(
-    backgroundColor: const Color(0xFF0B0B0B),
-    brandColor: const Color(0xFFF17F1F),
-    textOnBrand: Colors.white,
-    textOnBackground: Colors.white,
-  ),
-  borderRadius: RtkBorderRadius.rounded,
-  borderWidth: RtkBorderWidth.none,
-);
-
-final uiKitInfo = RealtimeKitUIInfo(meetingInfo, designToken: designTokens);
-final rtkUI = RealtimeKitUIBuilder.build(uiKitInfo: uiKitInfo);
-Navigator.push(context, MaterialPageRoute(builder: (_) => rtkUI));
-```
-
-**Advanced color configuration** — use `RtkColorSwatch` for precise control over each shade:
-
-```dart
-final designTokens = RtkDesignTokens(
-  colorToken: RtkColorToken(
-    brandColorSwatch: RtkColorSwatch(500, {
-      300: const Color(0xFFFF9A6C),
-      400: const Color(0xFFFF8552),
-      500: const Color(0xFFFF6B35),
-      600: const Color(0xFFE55A24),
-      700: const Color(0xFFCC4A14),
-    }),
-    backgroundColorSwatch: RtkColorSwatch(1000, {
-      600: const Color(0xFF666666),
-      700: const Color(0xFF4C4C4C),
-      800: const Color(0xFF333333),
-      900: const Color(0xFF1A1A1A),
-      1000: const Color(0xFF080808),
-    }),
-    textOnBrand: Colors.white,
-    textOnBackground: Colors.white,
-  ),
-  borderRadius: RtkBorderRadius.extrarounded,
-  borderWidth: RtkBorderWidth.thin,
-);
-```
-
-:::note
-You cannot mix `brandColor` and `brandColorSwatch` for the same color type. Use one approach or the other.
-:::
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Call `provideRtkDesignSystem()` with a `DesignTokens` object before or during rendering. Wrap your meeting components in `RtkUIProvider`.
@@ -399,19 +327,19 @@ These design tokens are stored and shared among components with the help of [CSS
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-react-native"]}>
 
 The token system covers colors, borders, typography, and spacing. The table below shows the default values across all mobile platforms.
 
-| Token              | Android   | Flutter   | iOS       | React Native |
-| ------------------ | --------- | --------- | --------- | ------------ |
-| Brand color        | `#2160FD` | `#2160FD` | `#0246FD` | `#2160FD`    |
-| Background         | `#080808` | `#080808` | `#050505` | `#080808`    |
-| Text on background | `#FFFFFF` | `#FFFFFF` | `#FFFFFF` | `#FFFFFF`    |
-| Text on brand      | `#111111` | —         | `#111111` | `#FFFFFF`    |
-| Danger             | `#FF2D2D` | `#FF2D2D` | `#FF2D2D` | `#FF2D2D`    |
-| Success            | `#83D017` | `#83D017` | `#83D017` | `#83D017`    |
-| Warning            | `#FFCD07` | `#FFCD07` | `#FFCD07` | `#FFCD07`    |
+| Token              | Android   | iOS       | React Native |
+| ------------------ | --------- | --------- | ------------ |
+| Brand color        | `#2160FD` | `#0246FD` | `#2160FD`    |
+| Background         | `#080808` | `#050505` | `#080808`    |
+| Text on background | `#FFFFFF` | `#FFFFFF` | `#FFFFFF`    |
+| Text on brand      | `#111111` | `#111111` | `#FFFFFF`    |
+| Danger             | `#FF2D2D` | `#FF2D2D` | `#FF2D2D`    |
+| Success            | `#83D017` | `#83D017` | `#83D017`    |
+| Warning            | `#FFCD07` | `#FFCD07` | `#FFCD07`    |
 
 </RTKCodeSnippet>
 
@@ -447,13 +375,6 @@ const designTokens = {
 Font customization is not available through the `RtkDesignTokens` API. The UI Kit uses the system font by default.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The Flutter UI Kit bundles the Inter font and uses it by default. Custom font configuration is not available through the `RtkDesignTokens` API.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Pass a `fontFamily` string to `provideRtkDesignSystem()` to use a custom font. You must load the font in your app before calling this function.
@@ -531,7 +452,7 @@ const designTokens = {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-react-native"]}>
 
 Brand color shades run from 300 (lightest) to 700 (darkest), with 500 as the primary shade. Background shades run from 600 (lightest) to 1000 (deepest).
 
@@ -643,7 +564,7 @@ provideRtkDesignSystem({
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android"]}>
 
 Spacing configuration is not available through the design token API on this platform.
 
@@ -677,7 +598,7 @@ const designTokens = {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-react-native"]}>
 
 All mobile platforms support the same border radius and border width options.
 
@@ -687,7 +608,7 @@ All mobile platforms support the same border radius and border width options.
 | `borderWidth`  | `none`, `thin`, `fat`                           |
 
 :::note
-Flutter and iOS use the enum value `extrarounded` (no hyphen). React Native uses the string `'extra-rounded'` (with hyphen).
+iOS uses the enum value `extrarounded` (no hyphen). React Native uses the string `extra-rounded` (with a hyphen).
 :::
 
 </RTKCodeSnippet>
@@ -705,21 +626,6 @@ val designTokens = RtkDesignTokens(
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Pass `borderRadius` and `borderWidth` to the `RtkDesignTokens` constructor.
-
-```dart
-final designTokens = RtkDesignTokens(
-  colorToken: colorToken,
-  borderRadius: RtkBorderRadius.rounded,
-  borderWidth: RtkBorderWidth.thin,
-);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Pass `borderRadius` and `borderWidth` to `provideRtkDesignSystem()`.

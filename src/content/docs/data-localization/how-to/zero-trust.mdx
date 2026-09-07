@@ -40,10 +40,6 @@ You are able to [log the payload of matched DLP rules](/cloudflare-one/data-loss
 
 [Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#data-privacy).
 
-### Network policies
-
-You are able to [configure SSH proxy and command logs](/cloudflare-one/traffic-policies/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
-
 ### DNS policies
 
 Regional Services controls where Cloudflare decrypts traffic. Because most DNS traffic is not encrypted, Gateway DNS (domain name filtering) cannot be regionalized using Regional Services.

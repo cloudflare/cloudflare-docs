@@ -1,0 +1,41 @@
+---
+title: Detect and control software package downloads with package registry security
+description: Gateway HTTP policies can now detect and control software package downloads across seven major package ecosystems using pkg.* selectors.
+products:
+  - gateway
+date: 2026-08-13
+---
+
+Cloudflare Gateway can now detect software package downloads and give you policy control over supply chain traffic. When a developer or CI/CD pipeline downloads a package through Gateway, the proxy identifies the registry protocol from the request URL and extracts the package ecosystem, name, version, and namespace. You can then write [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) using `pkg.*` selectors to allow or block package downloads.
+
+### Supported ecosystems
+
+Gateway detects package downloads for the following ecosystems:
+
+| Ecosystem | Namespace |
+| --------- | --------- |
+| npm | Scope (for example, `@babel`) |
+| PyPI | -- |
+| RubyGems | -- |
+| Cargo | -- |
+| Go | Module path |
+| Maven | Group ID |
+| NuGet | -- |
+
+### Selectors
+
+In the dashboard, select **Package Ecosystem** to access the package registry selectors. After selecting a single ecosystem, nested fields for package name, version, and namespace become available. Five `pkg.*` selectors are available for HTTP policies with the Allow and Block actions:
+
+| Selector | Description |
+| --- | --- |
+| `pkg.ecosystem` | The package ecosystem detected from the request URL. |
+| `pkg.name` | The package name extracted from the download URL. |
+| `pkg.version` | The package version, with support for ecosystem-aware comparison operators. |
+| `pkg.namespace` | The package namespace, when the ecosystem supports one. |
+| `pkg.purl` | The [Package URL (PURL)](https://github.com/package-url/purl-spec) derived from the detected coordinates. Available in the API only. |
+
+Detection is based on the registry protocol rather than the hostname, so it works the same way whether traffic goes to a public registry, a corporate proxy such as Artifactory or Nexus, or a self-hosted mirror.
+
+Package registry security requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on.
+
+For more information, refer to [Package registry security](/cloudflare-one/traffic-policies/http-policies/package-registry-security/).

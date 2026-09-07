@@ -54,7 +54,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://docs.x.ai/developers/rest-api-reference/inference/voice",
 	"terms": "https://x.ai/legal/terms-of-service",
@@ -65,6 +65,7 @@
 		"Turn Detection": "Server VAD"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-06-08 18:08:26",
 	"schema": {

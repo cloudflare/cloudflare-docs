@@ -59,6 +59,7 @@
 		"Resolutions": "720P, 1080P"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-06-24 01:06:13",
 	"schema": {

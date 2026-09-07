@@ -12,11 +12,18 @@ products:
   - security-center
 ---
 
-import { FeatureTable, Render } from "~/components"
+import { Render } from "~/components"
 
 List availability varies according to the list type and your Cloudflare plan and subscriptions.
 
-<FeatureTable id="global_configurations.lists" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of custom lists (any type) | 1 | 10 | 10 | 1,000 |
+| Max. number of list items (across all custom lists) | 10,000 | 10,000 | 10,000 | 500,000 |
+| IP lists | Yes | Yes | Yes | Yes |
+| Other custom lists (hostnames, ASNs) | No | No | No | Yes |
+| Managed IP Lists | No | No | No | Yes |
 
 Notes:
 

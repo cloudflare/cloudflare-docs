@@ -17,7 +17,7 @@ tags:
   - Middleware
 ---
 
-import { FeatureTable, GlossaryTooltip, Render, Card } from "~/components";
+import { GlossaryTooltip, Render, Card } from "~/components";
 
 Cloudflare Snippets allow you to run short pieces of JavaScript code on Cloudflare's network to customize how requests and responses are handled for your website or application. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and more.
 
@@ -48,7 +48,11 @@ If you have used the Cloudflare API to create a code snippet that is not associa
 
 ## Availability
 
-<FeatureTable id="rules.snippets" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | Yes | Yes | Yes |
+| Number of snippets | 0 | 25 | 50 | 300 |
+| Number of snippet subrequests | 0 | 2 | 3 | 5 |
 
 Each <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.
 

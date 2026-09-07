@@ -56,3 +56,7 @@ linuxPlatforms:
   bookworm-intel: 74636772
   jammy-intel: 74630568
   bookworm-arm: 73445502
+  almalinux9-intel: 77047688
+  almalinux9-arm: 76199809
+  almalinux10-arm: 75987979
+  almalinux10-intel: 77107580

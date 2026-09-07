@@ -1,41 +1,108 @@
 ---
 pcx_content_type: get-started
 title: DataChannels
-description: Send arbitrary real-time data between clients using Realtime SFU DataChannels.
+description: Send low-latency application data between clients with Realtime SFU DataChannels.
 sidebar:
   order: 8
 products:
   - realtime
 ---
 
-DataChannels are a way to send arbitrary data, not just audio or video data, between client in low latency. DataChannels are useful for scenarios like chat, game state, or any other data that doesn't need to be encoded as audio or video but still needs to be sent between clients in real time.
+import { Steps } from "~/components";
 
-While it is possible to send audio and video over DataChannels, it's not optimal because audio and video transfer includes media specific optimizations that DataChannels do not have, such as simulcast, forward error correction, better caching across the Cloudflare network for retransmissions.
+Use Realtime SFU DataChannels to send low-latency application data over WebRTC. Common payloads include chat messages, game state, sensor updates, and control events.
+
+Use Realtime SFU media tracks, rather than DataChannels, to send audio and video.
 
 ```mermaid
 graph LR
-    A[Publisher] -->|Arbitrary data| B[Cloudflare Realtime SFU]
-    B -->|Arbitrary data| C@{ shape: procs, label: "Subscribers"}
+    A[Publisher] -->|Application data| B[Cloudflare Realtime SFU]
+    B -->|Application data| C@{ shape: procs, label: "Subscribers"}
 ```
 
-DataChannels on Cloudflare Realtime can scale up to many subscribers per publisher, there is no limit to the number of subscribers per publisher.
+Each publisher can send a named DataChannel to multiple subscribers. By default, messages flow from the publisher to subscribers.
 
-### How to use DataChannels
+## Set up a DataChannel
 
-1. Create two Realtime sessions, one for the publisher and one for the subscribers.
-2. Create a DataChannel by calling /datachannels/new with the location set to "local" and the dataChannelName set to the name of the DataChannel.
-3. Create a DataChannel by calling /datachannels/new with the location set to "remote" and the sessionId set to the sessionId of the publisher.
-4. Use the DataChannel to send data from the publisher to the subscribers.
+<Steps>
+1. Create a Realtime session for the publisher and one for each subscriber.
+2. On each session, establish a DataChannel transport with `POST /apps/{appId}/sessions/{sessionId}/datachannels/establish`. Complete any required Session Description Protocol (SDP) exchange before creating channels.
+3. On the publisher session, create a named DataChannel with `POST /apps/{appId}/sessions/{sessionId}/datachannels/new` and set `location` to `"local"`.
+4. On each subscriber session, call the same endpoint with `location` set to `"remote"`. Set `sessionId` to the publisher session ID and use the same `dataChannelName`.
+5. In each client, call `createDataChannel()` with `negotiated: true` and the ID returned by the API.
+6. After the DataChannels open, send messages from the publisher.
+</Steps>
 
-### Subscriber acknowledgment gate (waitForAck)
+## Configure message delivery
 
-By default, a subscriber starts receiving messages as soon as it pulls a remote DataChannel. To avoid losing the first messages before your subscriber is ready to handle them, you can opt in to an acknowledgment gate for each subscriber.
+DataChannels use reliable, ordered delivery by default. Choose partial reliability or unordered delivery when recent data matters more than delayed data, such as game state or live sensor updates.
 
-- Set `waitForAck: true` when you create a remote DataChannel with the [HTTPS API](/realtime/sfu/https-api/). While the gate is closed, the SFU does not forward any messages to that subscriber on that DataChannel.
-- After the subscriber's DataChannel opens, have the subscriber send any message on it (for example, the string `"ack"`). The first message opens the gate, and the SFU starts forwarding messages to that subscriber.
-- The acknowledgment is consumed by the SFU. It is not forwarded to the publisher or to other subscribers. Without [`canReply`](#return-to-publisher-canreply), the channel stays publisher-to-subscriber only.
-- The acknowledgment must reach the SFU within 15 seconds of creating the remote DataChannel. If it does not, the SFU tears down the gated channel and forwards no messages; create the remote DataChannel again to retry.
-- `waitForAck` applies only to `location: "remote"` DataChannels and defaults to `false`, so existing behavior is unchanged.
+Set these optional fields when you create a DataChannel with the [HTTPS API](/realtime/sfu/https-api/):
+
+- `ordered` (`boolean`, default `true`): Set to `false` to allow messages to arrive out of order. A delayed message will not block later messages.
+- `maxRetransmits` (`integer`): Limits retransmission attempts after the first send. Set to `0` for no retransmissions, or omit for no retransmission limit.
+- `maxPacketLifeTime` (`integer`): Limits how long, in milliseconds, the transport attempts delivery. Omit for no lifetime limit.
+
+`maxRetransmits` and `maxPacketLifeTime` are mutually exclusive. Do not set both on the same channel.
+
+Ordering and retry behavior are independent. For reliable, unordered delivery, set `ordered: false` and omit both `maxRetransmits` and `maxPacketLifeTime`. Messages may arrive out of order, but the transport continues to retry failed deliveries.
+
+Use the same values on the publisher (`location: "local"`), each subscriber (`location: "remote"`), and each client's `createDataChannel()` call. Realtime DataChannels use negotiated IDs, so the browser does not receive these settings from the remote peer.
+
+Create an unreliable, unordered publisher channel:
+
+```json
+{
+	"dataChannels": [
+		{
+			"location": "local",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
+}
+```
+
+Then create the matching remote channel on the subscriber with the same reliability fields:
+
+```json
+{
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
+}
+```
+
+Create the matching browser DataChannel with the same settings. In this example, `pc` is the active `RTCPeerConnection`, and `resp` is the API response for the channel.
+
+```ts
+const dc = pc.createDataChannel("player-state", {
+	negotiated: true,
+	id: resp.dataChannels[0].id,
+	ordered: false,
+	maxRetransmits: 0,
+});
+```
+
+For partial reliability, choose a retransmission limit or packet lifetime based on how long the payload remains useful.
+
+## Wait for subscriber readiness (`waitForAck`)
+
+Set `waitForAck: true` on a remote DataChannel to delay delivery until the subscriber signals that it is ready.
+
+- `waitForAck` applies only to `location: "remote"` DataChannels and defaults to `false`.
+- While the gate is closed, the SFU holds delivery to that subscriber.
+- After the DataChannel opens, the subscriber sends any message, such as `"ack"`. The SFU consumes this first message, opens the gate, and starts forwarding publisher messages.
+- The acknowledgment must reach the SFU within 30 seconds after creating the remote DataChannel. Otherwise, the SFU tears down the gated channel. Create the remote DataChannel again to retry.
+
+Without [`canReply`](#return-to-publisher-canreply), later subscriber messages are not forwarded to the publisher.
 
 Create a remote DataChannel with the gate enabled by calling `POST /apps/{appId}/sessions/{sessionId}/datachannels/new` on the subscriber session:
 
@@ -44,7 +111,7 @@ Create a remote DataChannel with the gate enabled by calling `POST /apps/{appId}
 	"dataChannels": [
 		{
 			"location": "remote",
-			"sessionId": "<publisherSessionId>",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
 			"dataChannelName": "my-channel",
 			"waitForAck": true
 		}
@@ -52,10 +119,10 @@ Create a remote DataChannel with the gate enabled by calling `POST /apps/{appId}
 }
 ```
 
-Then, on the subscriber, send the acknowledgment once the DataChannel is open:
+Then, on the subscriber, send the acknowledgment once the DataChannel is open. This example assumes you have initialized `API_BASE`, `headers`, and `pc`, and defined a `waitForOpen()` helper.
 
 ```ts
-const resp = await fetch(
+const response = await fetch(
 	`${API_BASE}/sessions/${subscriberId}/datachannels/new`,
 	{
 		method: "POST",
@@ -71,43 +138,48 @@ const resp = await fetch(
 			],
 		}),
 	},
-).then((r) => r.json());
+);
+
+if (!response.ok) {
+	throw new Error(`Failed to create DataChannel: ${response.status}`);
+}
+
+const resp = await response.json();
+const channelId = resp.dataChannels?.[0]?.id;
+if (channelId === undefined) {
+	throw new Error("DataChannel response did not include an id");
+}
 
 const dc = pc.createDataChannel("my-channel-subscribed", {
 	negotiated: true,
-	id: resp.dataChannels[0].id,
+	id: channelId,
 });
 
 await waitForOpen(dc);
-dc.send("ack"); // The first frame opens the gate; later frames are your application data.
+dc.send("ack"); // The first message opens the gate.
 ```
 
-### Default direction (publisher to subscribers)
+## Return to publisher (canReply)
 
-By default, Cloudflare Realtime SFU DataChannels are one-way. The publisher sends, and every subscriber that pulled the channel receives. Subscribers cannot send data back to the publisher unless you opt in with [`canReply`](#return-to-publisher-canreply).
-
-### Return to publisher (canReply)
-
-`canReply` lets one subscriber send messages back to the publisher on the same remote DataChannel it pulled. Forward traffic (publisher to subscribers) does not change. The SFU admits reverse traffic only from the subscriber that holds `canReply`, and delivers those messages only to the publisher, not to other subscribers.
+Messages travel from the publisher to subscribers by default. Set `canReply: true` when one subscriber needs to respond on the same channel, such as an operator responding to a device that publishes telemetry.
 
 ```mermaid
 graph LR
-    P[Publisher] -->|forward| SFU[Cloudflare Realtime SFU]
-    SFU -->|forward| S1[Subscriber with canReply]
-    SFU -->|forward| S2[Other subscribers]
-    S1 -->|reverse| SFU
-    SFU -->|reverse| P
+    P[Publisher] -->|Publisher messages| SFU[Cloudflare Realtime SFU]
+    SFU -->|Publisher messages| S1[Subscriber with canReply]
+    SFU -->|Publisher messages| S2[Other subscribers]
+    S1 -->|Reply| SFU
+    SFU -->|Reply| P
 ```
 
-`canReply` follows these rules:
+`canReply` controls reply access as follows:
 
-- Set `canReply: true` when the subscriber creates a remote DataChannel with `POST .../datachannels/new`. You can also grant or revoke it later with `PUT .../datachannels/update` on that subscriber session.
-- `canReply` applies only to `location: "remote"` DataChannels and defaults to `false`, so existing pull behavior does not change.
-- At most one subscriber may hold `canReply` for a given publisher DataChannel at a time. Granting `canReply` to another subscriber replaces the previous holder. To revoke, set `canReply: false` on the subscriber that currently holds it.
-- The SFU does not forward messages from a non-admitted subscriber to the publisher.
-- The SFU does not fan out reverse messages to other subscribers.
+- `canReply` applies only to `location: "remote"` DataChannels and defaults to `false`.
+- At most one subscriber can have reply access for each publisher DataChannel. Granting access to another subscriber replaces the previous subscriber.
+- The SFU forwards replies only from the subscriber with access.
+- The publisher receives the replies. Other subscribers do not.
 
-#### Grant at pull time
+### Allow replies when subscribing
 
 Create the remote DataChannel on the subscriber session with `canReply: true`:
 
@@ -116,7 +188,7 @@ Create the remote DataChannel on the subscriber session with `canReply: true`:
 	"dataChannels": [
 		{
 			"location": "remote",
-			"sessionId": "<publisherSessionId>",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
 			"dataChannelName": "my-channel",
 			"canReply": true
 		}
@@ -126,21 +198,23 @@ Create the remote DataChannel on the subscriber session with `canReply: true`:
 
 Example flow:
 
-1. Publisher creates a local DataChannel named `my-channel`.
-2. Subscriber pulls it with `canReply: true` and opens the negotiated channel in the browser.
-3. Publisher sends on the channel; the subscriber receives (forward path).
-4. Subscriber sends on the same channel; the publisher receives (reverse path).
+<Steps>
+1. On the publisher, create a local DataChannel named `my-channel`.
+2. On the subscriber, pull the DataChannel with `canReply: true` and open the negotiated channel in the browser.
+3. From the publisher, send a message to the subscriber.
+4. From the subscriber, reply on the same channel. The publisher receives the reply.
+</Steps>
 
-#### Grant or revoke with update
+### Change reply access
 
-To change admission without recreating the pull, call `PUT /apps/{appId}/sessions/{subscriberSessionId}/datachannels/update`:
+To change reply access without recreating the remote DataChannel, call `PUT /apps/{appId}/sessions/{subscriberSessionId}/datachannels/update`:
 
 ```json
 {
 	"dataChannels": [
 		{
 			"location": "remote",
-			"sessionId": "<publisherSessionId>",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
 			"dataChannelName": "my-channel",
 			"canReply": true
 		}
@@ -150,38 +224,47 @@ To change admission without recreating the pull, call `PUT /apps/{appId}/session
 
 Use the same body with `"canReply": false` to revoke. The following table lists common patterns:
 
-| Goal                                      | Action                                                                                                                  |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Pull without reverse, then allow reverse  | Create remote without `canReply` (or `canReply: false`). Confirm reverse is blocked. Call update with `canReply: true`. |
-| Move reverse rights to another subscriber | On the new subscriber, call update with `canReply: true`. The previous holder loses reverse admission.                  |
-| Stop reverse traffic                      | On the current holder, call update with `canReply: false`.                                                              |
+| Goal                              | Action                                                                                                           |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Allow replies after subscribing   | Create the remote DataChannel without `canReply`, then update it with `canReply: true`.                          |
+| Move access to another subscriber | On the new subscriber, update the DataChannel with `canReply: true`. The previous subscriber loses reply access. |
+| Stop replies                      | On the subscriber with reply access, update the DataChannel with `canReply: false`.                              |
 
 ```ts
-// Subscriber already pulled "my-channel" without canReply.
-// Grant reverse admission later:
-await fetch(`${API_BASE}/sessions/${subscriberId}/datachannels/update`, {
-	method: "PUT",
-	headers,
-	body: JSON.stringify({
-		dataChannels: [
-			{
-				location: "remote",
-				sessionId: publisherId,
-				dataChannelName: "my-channel",
-				canReply: true,
-			},
-		],
-	}),
-});
+// The subscriber already pulled "my-channel" without canReply.
+// Allow replies later.
+const response = await fetch(
+	`${API_BASE}/sessions/${subscriberId}/datachannels/update`,
+	{
+		method: "PUT",
+		headers,
+		body: JSON.stringify({
+			dataChannels: [
+				{
+					location: "remote",
+					sessionId: publisherId,
+					dataChannelName: "my-channel",
+					canReply: true,
+				},
+			],
+		}),
+	},
+);
 
-// Same negotiated DataChannel instance; subscriber can now send and the publisher receives.
+if (!response.ok) {
+	throw new Error(`Failed to update DataChannel: ${response.status}`);
+}
+
+// The same negotiated DataChannel can now send replies to the publisher.
 dc.send(JSON.stringify({ type: "reply", body: "pong" }));
 ```
 
-#### Combine canReply and waitForAck
+### Combine acknowledgment and replies
 
-You can set both `canReply` and `waitForAck` on the same remote DataChannel. `waitForAck` still gates forward delivery to that subscriber until it sends its first message. That first message is consumed as the acknowledgment and is not forwarded. After the gate opens, further subscriber messages on an admitted `canReply` channel become reverse traffic to the publisher.
+You can set both `canReply` and `waitForAck` on the same remote DataChannel. The subscriber's first message opens the acknowledgment gate and is not forwarded. Later subscriber messages are forwarded to the publisher while that subscriber has reply access.
 
 ## Example
 
-An example of DataChannels in action can be found in the [Realtime Examples github repo](https://github.com/cloudflare/calls-examples/tree/main/echo-datachannels).
+Review the [DataChannel echo example](https://github.com/cloudflare/realtime-examples/tree/main/echo-datachannels) for complete transport, publishing, and subscription setup.
+
+The example places an app token in browser code for local testing. In production, keep the token on your backend.

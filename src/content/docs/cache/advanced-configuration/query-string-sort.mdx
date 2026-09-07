@@ -9,8 +9,6 @@ tags:
   - WordPress
 ---
 
-import { FeatureTable } from "~/components"
-
 **Query String Sort** increases cache-hit rates by first sorting query strings into a consistent order before checking the Cloudflare cache.
 
 By default, Cloudflare’s cache treats resources as distinct if their URL query strings are in a different order. For instance, these resources are cached separately:
@@ -28,7 +26,9 @@ would be sorted to:
 
 ## Availability
 
-<FeatureTable id="cache.query_string_sort" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | No | No | Yes |
 
 ***
 

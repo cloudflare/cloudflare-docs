@@ -6,19 +6,19 @@ products:
   - network
 ---
 
-import { FeatureTable, Render, TabItem, Tabs, DashButton } from "~/components";
+import { Render, TabItem, Tabs, DashButton } from "~/components";
 
 Cloudflare customers can use **Pseudo IPv4** if their origin web server only understands IPv4 formatted IP addresses (meaning it would not support Cloudflare's default [IPv6 compatibility](/network/ipv6-compatibility/)).
 
-<Render
-	file="note-ipv6-client-to-ipv4-origin"
-	product="network"
-	params={{ page: "pseudo-ipv4" }}
-/>
+:::note
+To allow IPv6-only clients to connect to IPv4-only origin web servers, keep [IPv6 compatibility](/network/ipv6-compatibility/) enabled and configure Pseudo IPv4.
+:::
 
 ## Availability
 
-<FeatureTable id="network.pseudo_ipv4" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
 
 ## Background
 

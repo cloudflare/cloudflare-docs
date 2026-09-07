@@ -62,6 +62,7 @@
 		"Output Formats": "jpg"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-06-18 15:48:19",
 	"schema": {

@@ -11,7 +11,7 @@ head:
     content: Origin Rules
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 Origin Rules allow you to change the origin server that Cloudflare sends a request to, or modify how the request reaches that server. This is useful when you need to route specific requests to a different backend, such as a third-party service or a server on a non-standard port. You can perform the following overrides:
 
@@ -41,7 +41,14 @@ Each origin rule includes a [filter expression](/ruleset-engine/rules-language/e
 
 ## Availability
 
-<FeatureTable id="rules.origin_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 10 | 25 | 50 | 300 |
+| Override Host header | No | No | No | Yes |
+| Override SNI | No | No | No | Yes |
+| Override DNS records | No | No | No | Yes |
+| Override destination port | Yes | Yes | Yes | Yes |
 
 ## Execution order
 

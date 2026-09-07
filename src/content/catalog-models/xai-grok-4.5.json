@@ -10182,7 +10182,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://docs.x.ai/developers/models/grok-4.5",
 	"terms": "https://x.ai/legal/terms-of-service-enterprise",
@@ -10195,6 +10195,7 @@
 	"request_formats": [
 		"chat-completions"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-07-21 21:32:03",
 	"schema": {

@@ -28,13 +28,19 @@ You can publish multiple applications on a single tunnel. For each application, 
 
 When you add a route through the dashboard, Cloudflare automatically creates a DNS record pointing the hostname to your tunnel subdomain (`<UUID>.cfargotunnel.com`).
 
+:::note
+Public hostname routes proxy traffic through Cloudflare. On Free, Pro, and Business plans, the [service-specific terms](https://www.cloudflare.com/service-specific-terms-application-services/#content-delivery-network-free-pro-or-business) require you to use a specific paid service to serve video and other large files.
+
+Refer to [Delivering videos with Cloudflare](/fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/) for more information. To transfer large files privately, use a [private network route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) instead.
+:::
+
 ## Supported protocols
 
 <Render
   file="tunnel/protocols-table"
   product="cloudflare-one"
   params={{
-    disableTlsVerificationURL: "/tunnel/configuration/#notlsverify",
+    disableTlsVerificationURL: "/tunnel/advanced/origin-parameters/#notlsverify",
     locallyManagedTunnelsURL: "/tunnel/advanced/local-management/configuration-file/#file-structure-for-published-applications"
   }}
 />

@@ -1,0 +1,55 @@
+---
+title: "WAF Release - 2026-08-17"
+description: Cloudflare WAF managed rulesets 2026-08-17 release
+date: 2026-08-17
+---
+
+import { RuleID } from "~/components";
+
+This release updates WordPress remote code execution rule metadata in the Cloudflare Managed Ruleset and Cloudflare Free Ruleset to identify CVE-2026-65640.
+
+**Key Findings**
+
+- CVE-2026-65640: A remote code execution vulnerability affecting WordPress core and plugin components. Remote, unauthenticated attackers can execute arbitrary system commands to gain unauthorized access or establish backdoors on host servers.
+
+**Impact**
+
+The WordPress changes update rule metadata only; detection behavior and actions remain unchanged.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="dcf635ab2e744e1a994443973590a4ad" />
+			</td>
+			<td>N/A</td>
+			<td>Wordpress - Remote Code Execution - CVE:CVE-2026-65640</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="6ad9f2049b094c608be0f8adcfe1a93c" />
+			</td>
+			<td>N/A</td>
+			<td>Wordpress - Remote Code Execution - CVE:CVE-2026-65640</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+	</tbody>
+</table>

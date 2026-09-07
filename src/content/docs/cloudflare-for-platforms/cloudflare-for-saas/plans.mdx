@@ -11,9 +11,26 @@ head:
 description: Learn what features and limits are part of various Cloudflare plans.
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
-<FeatureTable id="ssl.z_custom_hostnames" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Contact your account team |
+| Hostnames included | 100 | 100 | 100 | Custom |
+| Max hostnames | 50,000 | 50,000 | 50,000 | Unlimited, but contact sales if using over 50,000. |
+| Price per additional hostname | $0.10 | $0.10 | $0.10 | Custom pricing |
+| [Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/) | Yes | Yes | Yes | Yes |
+| [Custom origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/) | Yes | Yes | Yes | Yes |
+| [SNI Rewrite for Custom Origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) | No | No | No | Contact your account team |
+| [Custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/) | No | No | No | Yes |
+| [CSR support](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/) | No | No | No | Yes |
+| [Selectable CA](/ssl/reference/certificate-authorities/) | No | No | No | Yes |
+| Wildcard custom hostnames | No | No | No | Yes |
+| Non-SNI support for SaaS zone | No | Yes | Yes | Yes |
+| [mTLS support](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/) | No | No | No | Yes |
+| [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/) | WAF rules with current zone plan | WAF rules with current zone plan | WAF rules with current zone plan | Create and apply custom firewall rulesets. |
+| [Apex proxying/BYOIP](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/) | No | No | No | Paid add-on |
+| [Custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) | No | No | No | Paid add-on |
 
 ## Enterprise plan benefits
 

@@ -10,7 +10,7 @@ sidebar:
 description: Shared dictionaries reduce repeat-visitor transfer size by compressing each response against a version the browser already has cached.
 ---
 
-import { FeatureTable, TabItem, Tabs, CURL, DashButton } from "~/components";
+import { TabItem, Tabs, CURL, DashButton } from "~/components";
 
 Shared dictionaries ([RFC 9842](https://datatracker.ietf.org/doc/rfc9842/)) let your origin compress a response against a copy of the same — or a different — resource that the visitor's browser already has cached. Only the difference between the two resources travels over the wire.
 
@@ -24,7 +24,9 @@ For background on the other compression algorithms Cloudflare supports, refer to
 
 ## Availability
 
-<FeatureTable id="speed.shared_dictionaries" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes (beta) | Yes (beta) | Yes (beta) | Yes (beta) |
 
 ---
 

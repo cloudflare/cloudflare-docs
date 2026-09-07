@@ -301,7 +301,11 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 ### `abort`
 
-`abort` is used to forcibly reset a Durable Object. A JavaScript `Error` with the message passed as a parameter will be logged. This error is not able to be caught within the application code.
+Calling `abort` immediately resets a Durable Object. The runtime logs a JavaScript `Error` with the message passed to `abort`. Application code cannot catch this error.
+
+By default, an alarm interrupted by `abort` retries after the Durable Object resets. A Durable Object can run an alarm concurrently with another request, and that request can call `abort` while the alarm is still running.
+
+The default retry prevents an unrelated request from permanently canceling the alarm. Pass `{ retryAlarm: false }` on any abort call that should prevent an interrupted alarm from retrying, including abort calls outside the alarm handler.
 
 <Tabs>
 
@@ -317,6 +321,11 @@ export class MyDurableObject extends DurableObject {
   async sayHello() {
     // Error: Hello, World! will be logged
     this.ctx.abort("Hello, World!");
+  }
+
+  async alarm() {
+    // Reset this instance without retrying the alarm
+    this.ctx.abort("Alarm complete", { retryAlarm: false });
   }
 }
 ```
@@ -340,15 +349,11 @@ class MyDurableObject(DurableObject):
 
 </Tabs>
 
-:::caution[Not available in local development]
-
-`abort` is not available in local development with the `wrangler dev` CLI command.
-
-:::
-
 #### Parameters
 
-- An optional `string` .
+- An optional `string` containing the error message to log.
+- An optional `DurableObjectAbortOptions` object:
+  - `retryAlarm` <Type text="boolean" />: Controls whether an alarm interrupted by this abort retries. It defaults to `true`.
 
 #### Return values
 

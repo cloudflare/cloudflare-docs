@@ -17,6 +17,8 @@ import { DashButton, Tabs, TabItem, Render, Details } from "~/components";
 
 For production deployments, you can run multiple replicas of a Mesh node in active-passive mode. All replicas share the same node identity and advertise the same [routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/). If the active replica goes down, Cloudflare automatically promotes a standby replica.
 
+<Render file="mesh/masque-required" product="cloudflare-one" />
+
 ## When to use high availability
 
 High availability provides resilience for CIDR route prefixes advertised by a Mesh node. When the active replica disconnects, Cloudflare promotes a standby so that traffic to the advertised subnets continues to flow.
@@ -217,7 +219,7 @@ Get the `client_id` from the [connections endpoint](#view-replicas). Use the `id
 
 - High availability is set at node creation time and cannot be changed afterward.
 - You must install the client on at least two hosts for failover to work. A single replica means no redundancy.
-- High availability requires the MASQUE transport protocol. WireGuard does not support HA. Mesh nodes use MASQUE by default.
+- High availability requires that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol), the default protocol for the Cloudflare One Client. It does not work if the device profile uses WireGuard instead.
 
 ### Network configuration
 

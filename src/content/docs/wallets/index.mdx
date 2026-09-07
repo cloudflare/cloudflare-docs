@@ -1,0 +1,85 @@
+---
+title: Cloudflare Wallets
+pcx_content_type: overview
+description: Cloudflare Wallets will let accounts and their AI agents pay for APIs and content. Reserve a wallet handle to hold a human-readable name for your account.
+products:
+  - wallets
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Cloudflare Wallets docs
+---
+
+import {
+	CardGrid,
+	Description,
+	LinkButton,
+	LinkTitleCard,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+
+A programmable wallet that gives eligible Cloudflare accounts and AI agents a stable identity and a way to pay for APIs and content.
+
+</Description>
+
+:::note
+
+Cloudflare Wallet handle reservations are available today at [cloudflare.pay](https://cloudflare.pay/).
+
+:::
+
+Cloudflare Wallets will enable AI agents to easily purchase necessary APIs and content. At first, Cloudflare Wallets will be able to send, receive, and hold stablecoins.
+
+There will be two types of Cloudflare Wallets: Account Wallets and Virtual Wallets.
+
+Account Wallets are designed for humans who are owners and users of Cloudflare accounts. They will be able to add funds, delegate spend to virtual wallets managed by agents, and remove funds as needed. Account Wallets may also carry a [cloudflare.pay](https://cloudflare.pay/) stable identifier.
+
+Virtual Wallets, by contrast, are designed for agents and operate via API keys. Within a Virtual Wallet, an agent will be able to spend funds according to its permissions. Its maximum spend will be capped by the limit set by the owner of the Account Wallet. This framework gives agents freedom to act on behalf of users without constant manual approval while limiting an agent’s ability to overspend.
+
+For the full description of what Cloudflare Wallets, Account Wallets, and Virtual Wallets will do, refer to the [Cloudflare Wallets announcement](https://blog.cloudflare.com/wallets/).
+
+---
+
+## What is available today
+
+You can reserve one wallet handle for each Cloudflare account at [cloudflare.pay](https://cloudflare.pay/). A reserved handle:
+
+- Associates the name with your Cloudflare account
+- Publishes a page at `HANDLE.cloudflare.pay` showing only the handle
+- Registers your account to be notified when Cloudflare Wallets becomes available
+
+A reserved handle does not yet let you send, receive, or hold funds.
+
+
+---
+
+<CardGrid>
+
+<LinkTitleCard title="FAQ" href="/wallets/faq/" icon="document">
+	Answers to common questions about Cloudflare Wallet handle reservations.
+</LinkTitleCard>
+
+</CardGrid>
+
+---
+
+## Related products
+
+<RelatedProduct header="Agents" href="/agents/" product="agents">
+
+Build AI agents that can call tools, hold state, and pay for the services they use.
+
+</RelatedProduct>
+
+<RelatedProduct
+	header="Agentic Payments"
+	href="/agents/tools/payments/"
+	product="agents"
+>
+
+Charge for HTTP content and MCP tools, or pay for them from an agent, using the x402 protocol.
+
+</RelatedProduct>

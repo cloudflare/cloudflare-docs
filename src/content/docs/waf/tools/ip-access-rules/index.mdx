@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, FeatureTable } from "~/components";
+import { GlossaryTooltip } from "~/components";
 
 Use IP Access rules to <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip>, block, and challenge traffic based on the visitor's IP address, Autonomous System Number (ASN), or country.
 
@@ -48,7 +48,11 @@ When upgrading to custom rules, consider replacing the _Allow_ action supported 
 
 IP Access rules are available to all customers.
 
-<FeatureTable id="security.x_ip_access_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 50,000 | 50,000 | 50,000 | 50,000, but can purchase more |
+| Block by country | No | No | No | Yes |
 
 Each Cloudflare account can have a maximum of 50,000 rules. If you are an Enterprise customer and need more rules, contact your account team.
 

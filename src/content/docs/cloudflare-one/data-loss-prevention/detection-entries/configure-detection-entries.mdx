@@ -29,6 +29,12 @@ The Detection entries section includes dedicated views for different entry types
 
 You can add the same detection entry to multiple custom DLP profiles. When you delete a custom detection entry, Cloudflare lists the profiles that currently use it.
 
+## Test a detection entry
+
+To test whether a detection entry identifies sample content, add the entry to a [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile), then use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/). Test scan confirms whether the selected profile detects the sample. It does not test a Gateway policy or traffic flowing through Gateway.
+
+If the profile does not match the sample, review the detection entry configuration, the profile [match count](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#match-count), and [confidence threshold](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#confidence-thresholds).
+
 ## Predefined detection entries
 
 Predefined detection entries are Cloudflare-managed detections for specific types of sensitive content. You can review them from the **Predefined** view in **Detection entries** and add them directly to custom DLP profiles.

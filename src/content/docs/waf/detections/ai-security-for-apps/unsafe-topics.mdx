@@ -106,7 +106,7 @@ Both methods will update the same underlying topic list. Changes made in one are
 Update your custom topics list using a `PUT` request:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom-topics" \
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ai-security/custom-topics" \
   --request PUT \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --json '{
@@ -134,7 +134,7 @@ This request replaces your entire topic list. Include all topics you want to kee
 To retrieve your current topics, use a `GET` request:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom-topics" \
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ai-security/custom-topics" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 

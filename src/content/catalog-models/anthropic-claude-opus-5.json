@@ -2,7 +2,7 @@
 	"model_id": "anthropic/claude-opus-5",
 	"provider_id": "anthropic",
 	"name": "Claude Opus 5",
-	"description": "Claude Opus 5 is Anthropic's model for complex agentic coding and enterprise work, delivering intelligence close to Claude Fable 5 at half the price. It uses adaptive thinking to calibrate reasoning per task and supports a one million token context window at standard pricing.",
+	"description": "Claude Opus 5 is Anthropic's model for complex agentic coding and enterprise work, delivering intelligence close to Claude Fable 5 at half the price. It uses adaptive thinking to calibrate reasoning per task and supports a one million token context window at standard pricing. Unlike Fable 5, Opus 5 has no data retention requirements for general access.",
 	"task": "Text Generation",
 	"tags": [
 		"LLM",
@@ -160,6 +160,7 @@
 	"request_formats": [
 		"anthropic-messages"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-07-24 19:36:01",
 	"schema": {

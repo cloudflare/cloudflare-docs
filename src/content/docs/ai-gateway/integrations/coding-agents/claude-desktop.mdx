@@ -10,7 +10,7 @@ products:
 
 import { Steps } from "~/components";
 
-[Claude Desktop](https://claude.ai/download) can send third-party inference requests to a custom gateway. This configuration sends those requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/), authenticated with your Cloudflare gateway token. AI Gateway can supply the Anthropic credentials for you through [Unified Billing](/ai-gateway/features/unified-billing/) or a [stored provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/).
+By pointing [Claude Desktop](https://claude.ai/download) at AI Gateway instead of Anthropic directly, you get observability, caching, and centralized credentials for your Anthropic requests, without changing how you use Claude Desktop. Claude Desktop can send third-party inference requests to a custom gateway; this configuration sends those requests to AI Gateway's [Anthropic endpoint](/ai-gateway/usage/providers/anthropic/), authenticated with your Cloudflare gateway token. AI Gateway can supply the Anthropic credentials for you through [Unified Billing](/ai-gateway/features/unified-billing/) or a [stored provider key (BYOK)](/ai-gateway/configuration/bring-your-own-keys/).
 
 ## Prerequisites
 

@@ -1,21 +1,33 @@
 ---
-pcx_content_type: concept
 title: Prerequisites
-description: Document prerequisites clearly for readers.
+pcx_content_type: concept
+description: Document the tasks a reader must complete or the conditions they must meet before they can follow the steps on a page.
 products:
   - style-guide
 ---
 
 ## Definition
 
-Tasks that must be completed or conditions that must be met before a user can complete steps.
+Tasks that must be completed or conditions that must be met before a user can complete the steps on a page.
 
-## Used in
+## When to use it
 
-[How to](/style-guide/documentation-content-strategy/content-types/how-to/), [Tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/)
+Use prerequisites in [how-to](/style-guide/documentation-content-strategy/content-types/how-to/) and [tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/) pages, before the first step.
 
 ## Structure
 
-Usually a bulleted list.
+Write prerequisites as a bulleted list. If there is only one prerequisite task or condition, summarize it in a single sentence instead of a list.
 
-If only one prerequisite task or condition, summarize requirements in one sentence.
+## Example
+
+```md
+Before you begin, make sure that you have:
+
+- A Cloudflare account with your domain added.
+- An API token scoped to that domain.
+- Node.js 18 or later installed locally.
+```
+
+## Related
+
+For how to format the list itself, refer to [Lists](/style-guide/style-and-grammar/formatting/structure/lists/).

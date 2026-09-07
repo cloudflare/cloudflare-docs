@@ -11,7 +11,7 @@ head:
     content: Overview
 ---
 
-import { Description, Feature, FeatureTable, GlossaryTooltip, Plan, RelatedProduct } from "~/components"
+import { Description, Feature, GlossaryTooltip, Plan, RelatedProduct } from "~/components"
 
 <Description>
 
@@ -54,7 +54,20 @@ Deploy custom eBPF packet logic across Cloudflare's network to inspect and mitig
 
 <div style="font-size:87%">
 
-<FeatureTable id="security.ddos" />
+|  | Free | Pro | Business | Enterprise | Enterprise with Advanced DDoS Protection add-on |
+| - | - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes | Yes |
+| Standard, unmetered DDoS protection (layers 3-7) | Yes | Yes | Yes | Yes | Yes |
+| HTTP DDoS attack protection | Yes | Yes | Yes | Yes | Yes |
+| Network-layer (L3/4) DDoS attack protection | Yes | Yes | Yes | Yes | Yes |
+| Managed rules customization | Yes | Yes | Yes | Yes, with Log action | Expression fields & multi-rule support |
+| Proactive false positive detection for new rules | No | No | No | Yes | Yes |
+| Adaptive DDoS protection | Only error adaptive rules | Only error adaptive rules | Only error adaptive rules | Only error adaptive rules | All adaptive rules |
+| Traffic profiling signals for adaptive DDoS protection | Error rates only | Error rates only | Error rates & historical trends | Error rates & historical trends | Error rates & historical trends, client country, user agent, query string, ML-scores |
+| Advanced TCP Protection | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers |
+| Advanced DNS Protection | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers | Available to [Magic Transit](/magic-transit/) customers |
+| Number of ruleset overrides allowed | 1 | 1 | 1 | 1 | 10 |
+| Alerts | Yes | Yes | Yes | Yes | Advanced alerts with filtering |
 
 </div>
 
