@@ -129,7 +129,11 @@ To test successfully, you must [finish setup](https://community.cloudflare.com/t
 
 ### Redirect loop when protecting Google apps with Access
 
-As noted at the top of this page, using Google Workspace as your identity provider while also protecting a Google-hosted application with an Access policy creates a circular redirect loop: Access sends users to Google to authenticate, but Google itself requires Access authentication first. This configuration is not supported.
+:::note
+This configuration is not supported. See the [note above](#set-up-google-workspace-as-an-identity-provider) for details.
+:::
+
+Using Google Workspace as your identity provider while also protecting a Google-hosted application with an Access policy creates a circular redirect loop: Access sends users to Google to authenticate, but Google itself requires Access authentication first.
 
 If you need to protect a Google-hosted application and use Google Workspace as your IdP for other applications, configure a second identity provider (for example, Okta or Microsoft Entra ID) specifically for the Access application protecting that Google-hosted app. Keep Google Workspace as the IdP for your other applications.
 
@@ -137,10 +141,9 @@ If you need to protect a Google-hosted application and use Google Workspace as y
 
 Google Workspace group membership changes do not immediately propagate to Cloudflare Access. There are two delays to be aware of:
 
-- **Google sync delay.** Google Workspace can take up to 24 hours to reflect group changes via the Admin SDK API.
-- **Session cache.** Cloudflare caches identity information for the duration of a user's active session. A user who was added to or removed from a group will not see the policy change until their session expires or they re-authenticate.
+Google Workspace can take up to 24 hours to reflect group changes via the Admin SDK API. In addition, Cloudflare caches identity information for the duration of a user's active session, so a user who was added to or removed from a group will not see the policy change until their session expires or they re-authenticate.
 
-To force an immediate update for a specific user, go to **Zero Trust** > **My Team** > **Devices**, select the device, and choose **Revoke session**. This forces the user to re-authenticate and refreshes their cached group membership.
+To force an immediate update for a specific user, go to **Zero Trust** > **Team & Resources** > **Users**, select the user, choose **Action** > **Revoke**, and confirm. This invalidates the user's Access session token and forces re-authentication with refreshed group membership.
 
 ### Use multiple Google Workspace domains in Access policies
 
