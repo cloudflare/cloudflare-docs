@@ -1,0 +1,23 @@
+src/content/changelog/workers/2026-05-12-domains-tab.mdx
+  84dff175abac85ac 1-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "361638bf4c5b3bc47d7e0d42820b4b5fb37b7626",
+  "prompts": {
+    "84dff175abac85ac": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1dc4b173dffexXQYtBgTG90jS9",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "yomna",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 40,
+      "overriden_lines": 0
+    }
+  }
+}
