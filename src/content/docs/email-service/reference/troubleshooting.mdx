@@ -220,7 +220,7 @@ Cloudflare Email Routing (inbound) and Google Workspace cannot be active simulta
 
 **To switch to Google Workspace for inbound email:**
 
-Email Routing locks its MX and SPF records by default to prevent accidental changes. To switch providers without interrupting mail, unlock the records first, then add the Google Workspace records alongside them before turning off Email Routing.
+Email Routing locks its `MX` and `SPF` records by default to prevent accidental changes. To switch providers without interrupting mail, unlock the records first, then add the Google Workspace records alongside them before turning off Email Routing.
 
 1. Go to **Compute** > **Email Service** > **Email Routing**.
 
@@ -229,7 +229,8 @@ Email Routing locks its MX and SPF records by default to prevent accidental chan
 2. Select your domain, then open **Settings**.
 3. In the **DNS records** section, select **Unlock** for each locked record (MX and SPF).
 4. Go to **DNS** > **Records** and add the five Google Workspace MX records. Refer to [Set up Google Workspace DNS records](/dns/manage-dns-records/how-to/set-up-google-workspace/) for the complete record values.
-5. Return to **Compute** > **Email Service** > **Email Routing** and turn off Email Routing. Cloudflare removes its routing records automatically.
+5. In **DNS** > **Records**, update the SPF `TXT` record on the root domain to authorize Google's mail servers. Replace the Cloudflare-only value with `v=spf1 include:_spf.google.com ~all`. If you send from other services, merge all senders into a single SPF record.
+6. Return to **Compute** > **Email Service** > **Email Routing** and turn off Email Routing. Cloudflare removes its routing `MX`, `SPF`, and `DKIM` records automatically — your updated SPF record will remain.
 
 **To keep Email Routing while also using Google Workspace:**
 
