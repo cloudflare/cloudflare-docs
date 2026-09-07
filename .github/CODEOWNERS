@@ -7,7 +7,6 @@
 /.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhite @ahaywood @MohamedH1998
 /.github/CODEOWNERS @cloudflare/product-owners @cloudflare/content-engineering @kodster28
 /.github/actions/assign-pr/index.js @cloudflare/product-owners @cloudflare/content-engineering @kodster28
-/.github/labeler.yml @cloudflare/pcx-technical-writing
 /src/components/ @cloudflare/content-engineering @kodster28
 *.js @cloudflare/content-engineering @kodster28
 *.ts @cloudflare/content-engineering @kodster28
@@ -24,7 +23,7 @@ package.json @cloudflare/content-engineering
 
 # AI
 
-/src/content/docs/agent-lee/ @kczajkowski @Brayden @cloudflare/ax @cloudflare/product-owners
+/src/content/docs/agent-lee/ @kczajkowski @Brayden @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @rita3ko @irvinebroque @vy-ton @thomasgauvin @cloudflare/product-owners
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @shridhar-cf @adriandlam @mattrothenberg @ethulia @aninibread @kflansburg @cloudflare/product-owners

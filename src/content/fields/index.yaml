@@ -509,12 +509,6 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Indicates whether the request contained an API session authentication token, as defined by API Shield's saved [session identifiers](/api-shield/get-started/#session-identifiers).
 
-  - name: cf.api_gateway.request_violates_schema
-    data_type: Boolean
-    categories: [Request]
-    keywords: [request, api shield, client, visitor]
-    summary: This field is deprecated. Use [`cf.schema_validation.uploaded.violated`](/ruleset-engine/rules-language/fields/reference/cf.schema_validation.uploaded.violated/) instead.
-
   - name: cf.schema_validation.learned.violated
     data_type: Boolean
     categories: [Request]

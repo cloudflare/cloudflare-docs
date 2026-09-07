@@ -14,7 +14,7 @@
  * AnchorHeading is this app's port of the upstream component.
  */
 import { getEntry, type CollectionEntry } from "astro:content";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 import { entryToString } from "~/util/container";
 import { getReleaseNotes } from "~/util/release-notes";
 
@@ -106,7 +106,7 @@ if (!releaseNotes) {
 						</div>
 					);
 				} else {
-					description = marked.parse(entry.description as string);
+					description = renderMarkdown(entry.description as string);
 					return (
 						<>
 							<AnchorHeading depth={2} title={date} />
