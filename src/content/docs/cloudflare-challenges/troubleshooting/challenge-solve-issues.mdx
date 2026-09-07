@@ -39,7 +39,7 @@ This response is **expected** and does not mean the visitor was blocked or that 
 
 ## Failed subdomain network requests during Turnstile challenges
 
-When looking at browser developer tools or capturing a HAR for Turnstile, it is not uncommon to notice certain requests to specific subdomains failing due to DNS host lookup errors. These subdomains live under the parent domain of `challenges.cloudflare.com` and the requests are part of Turnstile's normal execution. That said, these errors should not be perceived as failure root causes, as they are **non-blocking** to visitors.
+When looking at browser developer tools or capturing a HAR for Turnstile, it is not uncommon to notice certain requests to specific subdomains failing due to DNS host lookup errors. These subdomains live under the parent domain of `challenges.cloudflare.com` and `dnstest.dev`. The requests to them are part of Turnstile's normal execution. That said, these errors should not be perceived as failure root causes, as they are **non-blocking** to visitors.
 
 Given that these DNS host lookup failures are **expected** and **non-fatal** for Turnstile's execution, avoid surfacing them as fatal execution errors, especially in the case of handler-based integrations of Turnstile such as WebView embeddings. For more fine-grained control, consider dropping network errors originating from requests to the `*.challenges.cloudflare.com` wildcard while preserving error visibility for the `challenges.cloudflare.com` apex.
 

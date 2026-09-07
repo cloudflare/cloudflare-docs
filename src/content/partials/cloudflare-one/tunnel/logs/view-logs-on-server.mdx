@@ -5,11 +5,12 @@ params:
   - runParametersURL
 ---
 
-If you have access to the origin server, you can use the <a href={props.loglevelURL}>`--loglevel` flag</a> to enable logging when you start the tunnel. By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can optionally use the <a href={props.logfileURL}>`--logfile` flag</a> to write your logs to a file.
+If you have access to the origin server, you can use the <a href={props.loglevelURL}>`--loglevel` flag</a> to enable logging when you start the tunnel. By default, `cloudflared` prints logs to stdout and does not store logs on the server.
 
-To enable logs, <a href={props.runParametersURL}>run the tunnel</a> using the `--loglevel info` and `--logfile <PATH>` flags. For example,
+For routine persistent logging, <a href={props.runParametersURL + "#log-directory"}>run the tunnel</a> with `--log-directory <PATH>`. This flag writes logs to `cloudflared.log` in the specified directory, rotates the file when it reaches 1 MB, and keeps up to five backups. It does not remove logs based on age.
 
 ```sh
-cloudflared tunnel --loglevel info --logfile cloudflared.log run <UUID>
+cloudflared tunnel --loglevel info --log-directory <PATH> run <UUID>
 ```
 
+Use the <a href={props.logfileURL}>`--logfile` flag</a> instead for short troubleshooting sessions or when another tool manages rotation. `cloudflared` does not rotate the file specified by `--logfile`. If you set both flags, `--logfile` takes precedence.

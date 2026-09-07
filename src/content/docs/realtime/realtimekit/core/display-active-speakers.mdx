@@ -177,30 +177,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Use `activeSpeaker` to show the most recently active participant in your UI.
-
-The Flutter SDK tracks active speakers through the `onActiveSpeakerChanged` event listener:
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onActiveSpeakerChanged(RtkRemoteParticipant? participant) {
-		if (participant != null) {
-			// Update your UI to display the new active speaker
-		}
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-Refer to [Display participant videos](/realtime/realtimekit/core/remote-participants/#display-participant-videos) to learn how to render the participant video in your UI.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Use `lastActiveSpeaker` to show the most recently active participant in your UI. Access the current active speaker with the `useRealtimeKitSelector` hook:
@@ -407,37 +383,6 @@ meeting.addParticipantsEventListener(self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Use the `active` list to show multiple participants with prominent audio activity, typically in a grid layout:
-
-```dart
-final activeParticipants = meeting.participants.active;
-
-// Render active participants in your grid
-for (var participant in activeParticipants) {
-	// Render participant video tile
-}
-```
-
-Refer to [Display participant videos](/realtime/realtimekit/core/remote-participants/#display-participant-videos) to learn how to render the participant video in your UI.
-
-The SDK emits an event when the set of active speakers changes. Listen to this event using `RtkParticipantsEventListener`:
-
-```dart
-class ParticipantsNotifier extends RtkParticipantsEventListener {
-	@override
-	void onActiveParticipantsChanged(List<RtkRemoteParticipant> active) {
-		// Update your grid UI with the new active participants
-	}
-}
-
-meeting.addParticipantsEventListener(ParticipantsNotifier());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Use the `active` map to show multiple participants with prominent audio activity, typically in a grid layout. Access the current active participants with the `useRealtimeKitSelector` hook:
@@ -513,13 +458,6 @@ Audio activity visualization is not supported on Android.
 Audio activity visualization is not supported on iOS.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Audio activity visualization is not supported on Flutter.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Audio activity visualization is not supported on React Native.

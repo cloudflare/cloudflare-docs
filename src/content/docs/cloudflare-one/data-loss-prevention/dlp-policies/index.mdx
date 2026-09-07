@@ -67,6 +67,8 @@ The request will be allowed or blocked according to your DLP policies. If the da
 
 Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application.
 
+If the request is not blocked as expected, use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/) to confirm that the profile detects your sample content on its own. A profile that matches in a test scan but not in traffic points to the policy, the traffic path, or TLS decryption.
+
 ## 4. View DLP logs
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Logs** > **HTTP request logs**.

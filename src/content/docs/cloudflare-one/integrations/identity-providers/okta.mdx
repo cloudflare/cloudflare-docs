@@ -99,6 +99,8 @@ The Okta integration allows you to synchronize IdP groups and automatically depr
 - The OIDC application you created when adding Okta as an identity provider. You can create this application via the [Okta App Catalog](#set-up-okta-as-an-oidc-provider-okta-app-catalog) or via a [Custom App Integration](#set-up-okta-as-an-oidc-provider-custom-app-integration).
 - A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM.
 
+<Render file="access/scim-policy-behavior" product="cloudflare-one" />
+
 :::note
 If you would like to only maintain one Okta app instance, Okta does support SAML and SCIM within the same application. Create a [generic SAML integration](/cloudflare-one/integrations/identity-providers/generic-saml/) and configure those values in the **Sign-On** field of your Okta SCIM application.
 :::
@@ -156,7 +158,7 @@ If you would like to only maintain one Okta app instance, Okta does support SAML
 16. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder and are the group memberships that will be added and removed upon membership change in Okta.
 
     :::note
-    Groups in this SCIM app Push Groups integration should match the groups in your base [OIDC app integration](/cloudflare-one/integrations/identity-providers/okta/#set-up-okta-as-an-oidc-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+    Groups in this SCIM app Push Groups integration should match the groups in your base [OIDC app integration](/cloudflare-one/integrations/identity-providers/okta/#set-up-okta-as-an-oidc-provider). Matching the groups keeps the Gateway identity synchronized with the groups that Okta returns when the user authenticates to Access.
     :::
 
 To verify the integration, select **View Logs** in the Okta SCIM application.
@@ -183,6 +185,6 @@ To verify the integration, select **View Logs** in the Okta SCIM application.
 
 If you see the error `Failed to fetch user/group information from the identity`, double-check your Okta configuration:
 
-- If your Okta tenant has more than 100 groups, ensure you include an Okta API token in the identity provider configuration. Cloudflare uses the token to retrieve groups from Okta for policy evaluation.
+- If your Okta tenant has more than 100 groups, include an Okta API token in the identity provider configuration. This setting is specific to Okta and is not part of SCIM. The token lets Cloudflare retrieve Okta group names for the policy builder. Access does not use the API token to evaluate a user's group membership during authentication.
 - If Okta returns more than 100 groups in a user's OIDC token, Okta may omit some group memberships from the token. This is an Okta token claim limitation, not a Cloudflare limit. If a required group is omitted, Cloudflare cannot evaluate policies that depend on that group. To avoid this, narrow the Okta groups claim filter so that only groups used in Cloudflare policies are included. For more information, refer to [Okta's group functions and dynamic allowlists documentation](https://support.okta.com/help/s/article/limitations-of-group-functions-dynamic-allowlists?language=en_US).
 - The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.

@@ -9,7 +9,6 @@ export type Platform =
 	| "web-angular"
 	| "mobile-android"
 	| "mobile-ios"
-	| "mobile-flutter"
 	| "mobile-react-native";
 export type Framework = {
 	id: string;
@@ -43,10 +42,6 @@ export const mobileFrameworks: Framework[] = [
 	{
 		id: "ios",
 		label: "iOS",
-	},
-	{
-		id: "flutter",
-		label: "Flutter",
 	},
 	{
 		id: "react-native",

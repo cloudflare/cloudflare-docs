@@ -140,6 +140,10 @@ function jsdOnload(){
 `result` = `success` or `error` only refers to the execution of JavaScript Detections. It does not indicate whether a visitor is a human or a bot.
 :::
 
+:::note
+When JavaScript Detections is invoked via the API rather than the zone-wide toggle, the result may appear as **Unknown** in Bot Analytics. This is a known limitation. The underlying signal is still factored into bot scoring.
+:::
+
 ## Considerations
 
 JavaScript Detections does not guarantee a specific bot score.
