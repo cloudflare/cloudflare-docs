@@ -5,9 +5,9 @@ description: Detect attack signature matches independently from mitigation and u
 products:
   - waf
 sidebar:
-  order: 8
+  order: 3
   group:
-    label: Attack Signature Detection
+    label: Attack Signature
 ---
 
 import { DirectoryListing } from "~/components";
@@ -20,13 +20,11 @@ Attack Signature Detection is available in Early Access. Contact your Cloudflare
 
 Traditional WAF deployments combine detection and mitigation through managed rules. You may need to review matches before blocking traffic to reduce false positives.
 
-Attack Signature Detection separates these steps. It records confidence, category, and signature Ref metadata for matching requests. Review this data in **Security Analytics** > **Attack Analysis** before creating a [Security Rule](/security/rules/).
-
-After Cloudflare grants Early Access, Attack Signature Detection evaluates requests against signatures for attack techniques. These include SQL injection, cross-site scripting, remote code execution, and specific Common Vulnerabilities and Exposures (CVEs).
-
-Security Rules provide the mitigation layer. You can match confidence, category, or signature Ref values. You can also combine these values with properties such as hostname, path, and HTTP method.
+Attack Signature Detection separates these steps. It records confidence, category, and signature Ref metadata for matching requests. Review this data in **Security Analytics** > **Attack Analysis** before creating a [Security Rule](/security/rules/). Security Rules provide the mitigation layer. You can match confidence, category, or signature Ref values. You can also combine these values with properties such as hostname, path, and HTTP method.
 
 A signature match does not mean Cloudflare blocked the request. Inspect the request outcome and your deployed rules to determine the applied action.
+
+Attack Signature Detection uses the same signature definitions as [Cloudflare Managed Rules](/waf/managed-rules/).
 
 ## How request evaluation works
 
@@ -37,7 +35,7 @@ Attack Signature Detection uses the following request lifecycle:
 3. The match data becomes available in Security Analytics.
 4. A Security Rule can evaluate these fields and apply its action.
 
-Attack Signature Detection uses the same signature definitions as [Cloudflare Managed Rules](/waf/managed-rules/). It does not inherit your Managed Rules deployment configuration. Managed Rules actions and overrides do not create Security Rules based on detection fields.
+Attack Signature Detection does not inherit your Managed Rules deployment configuration. Managed Rules actions and overrides do not create Security Rules based on detection fields.
 
 When no rule references an Attack Signature Detection field, detection does not add request latency. When a rule references a detection field, detection runs inline. Inline detection should have latency similar to Cloudflare Managed Rules evaluation.
 
