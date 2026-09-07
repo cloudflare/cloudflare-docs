@@ -1,7 +1,22 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 
 import { docsSidebarTransform, externalAppLinksTransform } from "./sidebar";
 import type { SidebarItem } from "@cloudflare/nimbus-docs/types";
+
+// The `product-availability` collection is a remote middlecache loader that
+// downloads over the network at test time. Stub it to keep the badge tests
+// hermetic and data-independent; everything else still reads real content.
+vi.mock("astro:content", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("astro:content")>();
+	return {
+		...actual,
+		getCollection: vi.fn(async (id: string, ...args: any[]) =>
+			id === "product-availability"
+				? []
+				: actual.getCollection(id as any, ...args),
+		),
+	};
+});
 
 const ARROW = " \u2197";
 
@@ -88,6 +103,7 @@ describe("docsSidebarTransform badges", () => {
 		const [item] = await runDocs([
 			link({ label: "API Gateway", href: "/api-gateway/" }),
 		]);
+		expect(item.type).toBe("link");
 		expect(item.badge).toBeUndefined();
 	});
 
