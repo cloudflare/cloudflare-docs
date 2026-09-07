@@ -1,0 +1,13 @@
+---
+title: Hyperdrive support for Python Workers
+description: Connect Python Workers to PostgreSQL and MySQL with Hyperdrive's connection pooling and query caching.
+products:
+  - workers
+date: 2026-09-08
+---
+
+[Python Workers](/workers/languages/python/) can now connect to PostgreSQL and MySQL through Hyperdrive. Python 3.14 adds outbound socket support, allowing Python database drivers to use Hyperdrive's connection pooling and query caching.
+
+Use `pg8000` for PostgreSQL or `PyMySQL` for MySQL, with connection details from `self.env.HYPERDRIVE`. Set your Worker's compatibility date to `2026-09-08` or later and include the `python_workers` compatibility flag.
+
+For setup, code examples, and limitations, refer to [Use Hyperdrive from Python Workers](/hyperdrive/examples/python-workers/).
