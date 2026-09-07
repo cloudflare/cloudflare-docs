@@ -19,7 +19,7 @@ To use your domain with [Google Workspace](https://workspace.google.com/), you m
 It also includes a [tip for applying records across multiple domains](#apply-records-to-multiple-domains).
 
 :::note
-All DNS records in this guide must use **DNS only** proxy status (grey cloud icon). Proxying MX or TXT records prevents Google from reading them correctly.
+MX and TXT records in Cloudflare are always DNS-only — the proxy option is not available for these record types. You do not need to change any proxy setting for the records in this guide.
 :::
 
 ---
@@ -57,7 +57,7 @@ To resolve it, contact the administrator of the previous Google Workspace accoun
 
 If external tools such as [DNSChecker.org](https://dnschecker.org) do not show your TXT record:
 
-- Confirm **Proxy status** is set to **DNS only** (grey cloud icon). Proxied TXT records are not visible externally.
+- Wait a few minutes for propagation. Use a tool such as [DNSChecker.org](https://dnschecker.org) to verify the record is resolving globally.
 - Confirm the record **Name** is `@`, not `www` or another value.
 - Wait a few minutes for propagation, then recheck.
 
