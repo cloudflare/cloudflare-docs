@@ -34,8 +34,7 @@ If you reach the limit, the API returns error `1445` with the message `Hit maxim
 
 If your use case involves short-lived or frequently rotated certificates — for example, one certificate per ephemeral device or session — the 100-certificate default can fill up quickly.
 
-- **Revoke certificates immediately** when a device or session ends. Revoking frees the quota slot right away.
-- **Use [BYOCA](/ssl/client-certificates/byo-ca/)** if you need to issue a large volume of certificates. With BYOCA, Cloudflare stores only your CA certificate, not individual issued certificates, so there is no per-certificate inventory limit.
+Revoke certificates immediately when a device or session ends — revoking frees the quota slot right away. If you need to issue a large volume of certificates, use [BYOCA](/ssl/client-certificates/byo-ca/) instead. With BYOCA, Cloudflare stores only your CA certificate, not individual issued certificates, so there is no per-certificate inventory limit.
 
 :::
 
