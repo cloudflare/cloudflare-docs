@@ -91,7 +91,7 @@ Users can turn individual servers on or off without disconnecting. For stateless
 
 ### Naming
 
-MCP server portals were previously referred to as **Agents Gateway** in some contexts. The API paths, Terraform resources, and internal codebases may still use `agents_gateway` or `agw` prefixes. The product name is **MCP server portals** and the dashboard navigation is **AI controls**.
+MCP server portals were previously referred to as **Agents Gateway** in some contexts. The API paths, Terraform resources, and internal codebases may still use `agents_gateway` or `agw` prefixes. The product name is **MCP server portals** and the dashboard navigation is **MCP Portals**.
 
 ## Prerequisites
 
@@ -105,7 +105,7 @@ Add individual MCP servers to Cloudflare Access to bring them under centralized 
 
 To add an MCP server:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Go to the **MCP servers** tab.
 3. Select **Add an MCP server**.
 4. Enter any name for the server.
@@ -129,7 +129,7 @@ Use manual OAuth credentials when the upstream provider does not support [OAuth 
 <Steps>
 
 1. Add the MCP server with **OAuth** as its authentication method.
-2. In **Zero Trust** > **Access controls** > **AI controls**, go to the **MCP servers** tab.
+2. In **Zero Trust** > **Access controls** > **MCP Portals**, go to the **MCP servers** tab.
 3. Find the server, select the three dots > **Edit**, and go to **Authentication**.
 4. Under **OAuth credentials**, select **Manual credentials**.
 5. Copy the displayed **Redirect URI to register at the upstream provider**. Add it to the OAuth application's allowed redirect URIs.
@@ -186,7 +186,7 @@ If `is_upstream` is `true`, use `status_code`, `mcp_code`, and `cause` to troubl
 
 To reauthenticate an MCP server in Cloudflare Access:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Go to the **MCP servers** tab.
 3. Select the server that you want to reauthenticate, then select **Edit**.
 4. Select **Authenticate server**.
@@ -205,7 +205,7 @@ Synchronization uses the admin credential, not individual user credentials. If t
 
 To manually refresh the MCP server in Zero Trust:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Go to the **MCP servers** tab and find the server that you want to refresh.
 3. Select the three dots > **Sync capabilities**.
 
@@ -243,7 +243,7 @@ If an upstream OAuth provider rejects the callback URL, check whether **Use the 
 
 To create an MCP server portal:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Select **Add MCP server portal**.
 3. Enter any name for the portal.
 4. Under **Custom domain**, select a domain for the portal URL. Domains must belong to an active zone in your Cloudflare account. You can optionally specify a subdomain.
@@ -355,7 +355,7 @@ Custom descriptions follow the same precedence. Set a description by including t
 
 To set an alias that applies to a specific portal:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Find the portal you want to configure, then select the three dots > **Edit**.
 3. Go to the **Servers** tab.
 4. Select the **Tools authorized** or **Prompts authorized** value for the server you want to configure (for example, `10/10`).
@@ -367,7 +367,7 @@ To set an alias that applies to a specific portal:
 
 To set an alias that applies across all portals using a server:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Go to the **MCP servers** tab.
 3. Find the server you want to configure, then select the three dots > **Edit**.
 4. Go to the **Tools** or **Prompts** tab.
@@ -806,7 +806,7 @@ Gateway routing supports [Streamable HTTP](https://spec.modelcontextprotocol.io/
 
 To route MCP server portal traffic through Gateway:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Find the portal you want to configure, then select the three dots > **Edit**.
 3. Under **Basic information**, turn on **Route traffic through Cloudflare Gateway**.
 4. Select **Save**.
@@ -1088,7 +1088,7 @@ When an admin adds a new upstream MCP server to a portal, the portal automatical
 
 Portal logs allow you to monitor user activity through an MCP server portal. You can view logs on a per-portal or per-server basis.
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Find the portal or server that you want to view logs for, then select the three dots > **Edit**.
 3. Select **Logs**.
 
