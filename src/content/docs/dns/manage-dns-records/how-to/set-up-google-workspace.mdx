@@ -1,0 +1,156 @@
+---
+pcx_content_type: how-to
+description: Add the DNS records required to verify and use your domain with Google Workspace.
+products:
+  - dns
+title: Set up Google Workspace DNS records
+sidebar:
+  order: 8
+---
+
+import { Details } from "~/components";
+
+To use your domain with [Google Workspace](https://workspace.google.com/), you must add specific DNS records in Cloudflare. This page explains how to add records for:
+
+- [Domain ownership verification](#verify-domain-ownership)
+- [Gmail delivery (MX records)](#add-mx-records)
+- [Email authentication (SPF, DKIM, and DMARC)](#add-email-authentication-records)
+
+It also includes a [tip for applying records across multiple domains](#apply-records-to-multiple-domains).
+
+:::note
+All DNS records in this guide must use **DNS only** proxy status (grey cloud icon). Proxying MX or TXT records prevents Google from reading them correctly.
+:::
+
+---
+
+## Verify domain ownership
+
+Google must confirm you control your domain before activating Google Workspace services for it.
+
+1. In [Google Admin console](https://admin.google.com), start the domain setup wizard and copy the TXT verification value Google provides. It looks similar to:
+
+   ```txt
+   google-site-verification=abc123XYZ
+   ```
+
+2. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain, then go to **DNS** > **Records**.
+3. Select **Add record** and enter:
+   - **Type**: `TXT`
+   - **Name**: `@` (the root of your domain)
+   - **Content**: the verification value copied from Google
+   - **Proxy status**: DNS only
+4. Select **Save**.
+5. Return to the Google Admin console and select **Verify**.
+
+Google typically verifies within a few minutes, though DNS propagation can take up to 48 hours.
+
+<Details header="Google says the domain is already in use">
+
+If Google displays a **"Domain already in use"** error, the domain was previously connected to a different Google Workspace account and was not fully released. This is a Google-side state, not a DNS issue in Cloudflare.
+
+To resolve it, contact the administrator of the previous Google Workspace account and ask them to remove the domain from that account. If you cannot reach them, contact [Google Workspace support](https://support.google.com/a/answer/6009548) to submit a domain claim.
+
+</Details>
+
+<Details header="TXT record is not visible in external DNS tools">
+
+If external tools such as [DNSChecker.org](https://dnschecker.org) do not show your TXT record:
+
+- Confirm **Proxy status** is set to **DNS only** (grey cloud icon). Proxied TXT records are not visible externally.
+- Confirm the record **Name** is `@`, not `www` or another value.
+- Wait a few minutes for propagation, then recheck.
+
+</Details>
+
+---
+
+## Add MX records
+
+MX records direct incoming email for your domain to Google's mail servers. Google Workspace requires five MX records.
+
+1. In the Cloudflare dashboard, go to **DNS** > **Records**.
+2. If your domain already has MX records pointing to a different mail provider, delete them.
+3. Add each of the records in this table:
+
+| Type | Name | Mail server | Priority |
+|------|------|-------------|----------|
+| MX | `@` | `aspmx.l.google.com` | `1` |
+| MX | `@` | `alt1.aspmx.l.google.com` | `5` |
+| MX | `@` | `alt2.aspmx.l.google.com` | `5` |
+| MX | `@` | `alt3.aspmx.l.google.com` | `10` |
+| MX | `@` | `alt4.aspmx.l.google.com` | `10` |
+
+Set **Proxy status** to **DNS only** for each record.
+
+:::caution[Cloudflare Email Routing conflict]
+Cloudflare Email Routing and Google Workspace MX records cannot coexist on the same domain — both require exclusive control of your MX records. If Email Routing is active on the domain, disable it before adding Google Workspace MX records.
+
+To disable Email Routing, go to **Email** > **Email Routing** in the Cloudflare dashboard and turn off routing for the domain.
+:::
+
+---
+
+## Add email authentication records
+
+SPF, DKIM, and DMARC records help receiving mail servers verify that messages from your domain are legitimate and protect against spoofing.
+
+### SPF
+
+SPF specifies which mail servers are authorized to send email for your domain.
+
+1. In **DNS** > **Records**, select **Add record** and enter:
+   - **Type**: `TXT`
+   - **Name**: `@`
+   - **Content**: `v=spf1 include:_spf.google.com ~all`
+   - **Proxy status**: DNS only
+2. If you also send email from other services alongside Google Workspace, add their `include:` entries to the same record. Do not create a second TXT record starting with `v=spf1`.
+
+:::caution
+Your domain must have exactly one SPF record. Multiple TXT records beginning with `v=spf1` cause SPF failures.
+:::
+
+### DKIM
+
+DKIM adds a cryptographic signature to outbound messages so recipients can confirm the messages were not altered in transit.
+
+1. In [Google Admin console](https://admin.google.com), go to **Apps** > **Google Workspace** > **Gmail** > **Authenticate email**.
+2. Select your domain and choose **Generate new record**. Select a **2048-bit** key length for stronger security.
+3. Copy the TXT record value Google displays. It starts with `v=DKIM1; k=rsa; p=...`.
+4. In Cloudflare **DNS** > **Records**, add a record:
+   - **Type**: `TXT`
+   - **Name**: the selector Google specifies, typically `google._domainkey`
+   - **Content**: the value copied from Google
+   - **Proxy status**: DNS only
+5. Return to Google Admin and select **Start authentication**.
+
+Allow a few minutes for propagation before Google confirms DKIM is active.
+
+### DMARC
+
+DMARC tells receiving servers how to handle messages that fail SPF or DKIM checks and where to send aggregate reports.
+
+1. In **DNS** > **Records**, add a record:
+   - **Type**: `TXT`
+   - **Name**: `_dmarc`
+   - **Content**: `v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com`
+   - **Proxy status**: DNS only
+
+Replace `dmarc@yourdomain.com` with an address where you want to receive DMARC reports.
+
+Start with `p=none` (monitoring mode) while you confirm your SPF and DKIM setup is working correctly. Once you have reviewed reports and confirmed that legitimate email is passing authentication, update the policy to `p=quarantine` or `p=reject`.
+
+---
+
+## Apply records to multiple domains
+
+If you manage many domains with the same Google Workspace account, you can use [import and export](/dns/manage-dns-records/how-to/import-and-export/) to apply common records efficiently rather than adding them one by one.
+
+1. Complete the full DNS setup manually on your first domain.
+2. In **DNS** > **Records**, select **Export** to download the zone as a BIND-format file.
+3. Open the exported file and remove records you do not want to replicate — for example, your website A/AAAA records. Keep only the MX, SPF, and DMARC entries.
+4. For each additional domain, go to **DNS** > **Records** > **Import** and upload the edited file.
+
+:::note
+Your DKIM record value is unique per domain. Generate a separate DKIM key in Google Admin for each domain and add it individually after the import.
+:::
