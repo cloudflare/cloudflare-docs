@@ -62,6 +62,31 @@ If these return an error, delete and recreate the custom hostname.
 
 ***
 
+
+## Conflicting `_acme-challenge` TXT records
+
+If certificate validation is stuck despite the correct CNAME or TXT records being in place, a conflicting `_acme-challenge` TXT record may be preventing the certificate authority from completing validation.
+
+### How to diagnose
+
+Run this command to check for unexpected values at the `_acme-challenge` hostname:
+
+```sh
+$ dig _acme-challenge.example.com TXT +short
+```
+
+If the output includes a hardcoded TXT value that does not match the current expected validation token — or appears alongside a CNAME target for delegated DCV — a conflicting record is present.
+
+### Common causes and remediation
+
+**Record from a prior Cloudflare certificate order** — Cloudflare adds `_acme-challenge` TXT records during certificate issuance. Records from a previous or abandoned order may persist and are not always visible in the Cloudflare dashboard. [Contact Cloudflare Support](/support/contacting-cloudflare-support/) to have them removed.
+
+**Record in a direct Cloudflare zone** — If your customer's domain is also present in a direct Cloudflare zone (for example, they proxy `example.com` through their own Cloudflare account), that zone may have an `_acme-challenge` TXT record from a Universal SSL or Advanced certificate order. When the certificate authority queries `_acme-challenge.example.com`, it resolves the record from the direct zone rather than following the delegated DCV CNAME.
+
+To resolve this, ask your customer to remove the `_acme-challenge` TXT record from their zone's DNS settings in the Cloudflare dashboard, then [trigger an immediate validation check](#immediate-validation-checks).
+
+***
+
 ## Immediate validation checks
 
 You can send a [PATCH request](/api/resources/custom_hostnames/methods/edit/) to request an immediate validation check on any certificate. The PATCH data should include the same `ssl` object as the original request.
