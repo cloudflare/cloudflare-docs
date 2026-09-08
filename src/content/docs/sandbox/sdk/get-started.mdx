@@ -1,0 +1,213 @@
+---
+title: Getting started
+description: Create your first Sandbox SDK Worker to execute Python code in isolated containers.
+pcx_content_type: get-started
+sidebar:
+  order: 2
+products:
+  - sandbox
+---
+
+import { Render, PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Build your first application with Sandbox SDK - a secure code execution environment. In this guide, you'll create a Worker that can execute Python code and work with files in isolated containers.
+
+:::note[What you're building]
+A simple API that can safely execute Python code and perform file operations in isolated sandbox environments.
+:::
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+### Ensure Docker is running locally
+
+Sandbox SDK uses [Docker](https://www.docker.com/) to build container images alongside your Worker.
+
+<Render product="containers" file="docker-setup" />
+
+## 1. Create a new project
+
+Create a new Sandbox SDK project:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-sandbox --template=cloudflare/sandbox-sdk/examples/minimal"}
+/>
+
+This creates a `my-sandbox` directory with everything you need:
+
+- `src/index.ts` - Worker with sandbox integration
+- `wrangler.jsonc` - Configuration for Workers and Containers
+- `Dockerfile` - Container environment definition
+
+```sh
+cd my-sandbox
+```
+
+## 2. Explore the template
+
+The template provides a minimal Worker that demonstrates core sandbox capabilities:
+
+```typescript
+import { getSandbox, proxyToSandbox, type Sandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+type Env = {
+	Sandbox: DurableObjectNamespace<Sandbox>;
+};
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Get or create a sandbox instance. For user-facing apps,
+		// derive this ID from the authenticated user.
+		const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+		// Execute Python code
+		if (url.pathname === "/run") {
+			const result = await sandbox.exec('python3 -c "print(2 + 2)"');
+			return Response.json({
+				output: result.stdout,
+				error: result.stderr,
+				exitCode: result.exitCode,
+				success: result.success,
+			});
+		}
+
+		// Work with files
+		if (url.pathname === "/file") {
+			await sandbox.writeFile("/workspace/hello.txt", "Hello, Sandbox!");
+			const file = await sandbox.readFile("/workspace/hello.txt");
+			return Response.json({
+				content: file.content,
+			});
+		}
+
+		return new Response("Try /run or /file");
+	},
+};
+```
+
+**Key concepts**:
+
+- `getSandbox()` - Gets or creates a sandbox instance by ID. Use a stable ID to reconnect to the same sandbox. In user-facing apps, scope IDs to a single user.
+- `sandbox.exec()` - Execute shell commands in the sandbox and capture stdout, stderr, and exit codes.
+- `sandbox.writeFile()` / `readFile()` - Write and read files in the sandbox filesystem.
+
+## 3. Test locally
+
+Start the development server:
+
+```sh
+npm run dev
+# If you expect to have multiple sandbox instances, you can increase `max_instances`.
+```
+
+:::note
+First run builds the Docker container (2-3 minutes). Subsequent runs are much faster due to caching.
+:::
+
+Test the endpoints:
+
+```sh
+# Execute Python code
+curl http://localhost:8787/run
+
+# File operations
+curl http://localhost:8787/file
+```
+
+You should see JSON responses with the command output and file contents.
+
+## 4. Deploy to production
+
+Deploy your Worker and container:
+
+```sh
+npx wrangler deploy
+```
+
+This will:
+
+1. Build your container image using Docker
+2. Push it to Cloudflare's Container Registry
+3. Deploy your Worker globally
+
+:::caution[Wait for provisioning]
+After the first deployment, wait several minutes before you expect sandbox requests to succeed. The Worker deploys immediately, but the container image still has to provision.
+:::
+
+Check deployment status:
+
+```sh
+npx wrangler containers list
+```
+
+## 5. Test your deployment
+
+Visit your Worker URL (shown in deploy output):
+
+```sh
+# Replace with your actual URL
+curl https://my-sandbox.YOUR_SUBDOMAIN.workers.dev/run
+```
+
+Your sandbox is now deployed and can execute code in isolated containers.
+
+## Understanding the configuration
+
+Your `wrangler.jsonc` connects three pieces together:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"instance_type": "lite",
+			"max_instances": 1,
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+- **containers** - Defines the [container image, instance type, and resource limits](/workers/wrangler/configuration/#containers) for your sandbox environment. If you expect to have multiple sandbox instances, you can increase `max_instances`.
+- **durable_objects** - You need not be familiar with [Durable Objects](/durable-objects) to use Sandbox SDK, but if you'd like, you can [learn more about Cloudflare Containers and Durable Objects](/containers/get-started/#each-container-is-backed-by-its-own-durable-object). This configuration creates a [binding](/workers/runtime-apis/bindings#what-is-a-binding) that makes the `Sandbox` Durable Object accessible in your Worker code.
+- **migrations** - Registers the `Sandbox` class, implemented by the Sandbox SDK, with [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage) (required once)
+
+For detailed configuration options including environment variables, secrets, and custom images, see the [Wrangler configuration reference](/sandbox/sdk/configuration/wrangler/).
+
+## Next steps
+
+Now that you have a working sandbox, explore more capabilities:
+
+- [Code interpreter with Workers AI](/sandbox/sdk/tutorials/workers-ai-code-interpreter/) - Build an AI-powered code execution system
+- [Execute commands](/sandbox/sdk/guides/execute-commands/) - Run shell commands and stream output
+- [Manage files](/sandbox/sdk/guides/manage-files/) - Work with files and directories
+- [Deploy a Sandbox application](/sandbox/sdk/guides/deploy/) - Deploy and keep package and image aligned
+- [Expose services](/sandbox/sdk/guides/expose-services/) - Get public URLs for services running in your sandbox
+- [Quick tunnels](/sandbox/sdk/api/tunnels/) - Zero-config `*.trycloudflare.com` URLs for development and `.workers.dev` deployments
+- [Configure preview URLs on a custom domain](/sandbox/sdk/guides/preview-urls-custom-domain/) - Wildcard DNS and TLS for `exposePort()`
+- [API reference](/sandbox/sdk/api/) - Complete API documentation
