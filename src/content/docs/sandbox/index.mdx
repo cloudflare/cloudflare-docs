@@ -1,6 +1,6 @@
 ---
 title: Sandboxes on Cloudflare
-description: Isolated execution on Cloudflare using Dynamic Workers and Containers. The Sandbox SDK remains available for existing applications.
+description: Execute untrusted or generated code in isolated Workers or Linux virtual machines.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -21,64 +21,162 @@ import {
 	LinkTitleCard,
 	Plan,
 	RelatedProduct,
+	LinkButton,
+	TypeScriptExample,
 } from "~/components";
 
 <Description>
 
-Run isolated workloads on Cloudflare
+Execute untrusted or generated code away from your application
 
 </Description>
 
 <Plan type="workers-paid" />
 
-A sandbox is an isolated environment for untrusted, generated, or user-provided work. Cloudflare provides two primitives for that work:
+A sandbox is an isolated place to run untrusted or generated work. The program you load there has its own memory and, when it needs them, its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
 
-- [Dynamic Workers](/dynamic-workers/) load JavaScript, TypeScript compiled to JavaScript, Python Workers, or WebAssembly in an isolate.
-- [Containers](/containers/) attached to a [Durable Object](/durable-objects/) run a full Linux environment.
+You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
-There is no separate Sandbox runtime or SKU. Pricing follows the primitive you use.
+Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the program that already handles your traffic.
 
-<CardGrid>
+---
 
-<LinkTitleCard title="Dynamic Workers" href="/dynamic-workers/" icon="rocket">
-	Load Worker code at runtime with explicit bindings, limits, and outbound
-	control.
-</LinkTitleCard>
+## Dynamic Workers
 
-<LinkTitleCard title="Containers" href="/containers/" icon="seti:docker">
-	Run a Linux image from a Durable Object. Use `this.ctx.container` for
-	lifecycle and processes.
-</LinkTitleCard>
+[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, TypeScript, Python, or WebAssembly. It starts in milliseconds.
 
-<LinkTitleCard
-	title="Sandbox SDK"
-	href="/sandbox/sdk/"
-	icon="open-book"
->
-	Existing `@cloudflare/sandbox` documentation for applications that already
-	use the package.
-</LinkTitleCard>
+That code cannot see your application's memory. It can use only the APIs and data you pass in, and it cannot reach the Internet unless you allow it.
 
-</CardGrid>
+The isolation comes from V8, the JavaScript engine in Chrome. V8 runs the code in an isolate: a sandbox that cannot read memory outside itself. The Workers platform adds a second layer around the process and exposes only the APIs you grant. For more information, refer to the [Workers security model](/workers/reference/security-model/).
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const worker = env.LOADER.load({
+			compatibilityDate: "$today",
+			mainModule: "src/index.js",
+			modules: {
+				"src/index.js": `
+					export default {
+						fetch() {
+							return new Response("Hello from a sandbox");
+						},
+					};
+				`,
+			},
+			globalOutbound: null,
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+<LinkButton variant="primary" href="/dynamic-workers/getting-started/">
+	Get started with Dynamic Workers
+</LinkButton>
+
+---
+
+## Containers
+
+[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can use any language or runtime, install packages, compile code, and keep long-running processes. Your Worker can start the instance and send it work.
+
+The instance does not share a process or a kernel with your Worker, so it cannot read your Worker's memory. Other instances or customers cannot reach it. HTTP traffic from the Internet reaches it only through your Worker.
+
+Each instance runs in Firecracker: a microVM with its own kernel and network. Your image is a Linux container inside that VM, and no other workload shares it.
+
+<TypeScriptExample>
+
+```ts
+import { Container, getContainer } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	defaultPort = 4000;
+	sleepAfter = "10m";
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { "session-id": sessionId } = await request.json();
+		const container = getContainer(env.MY_CONTAINER, sessionId);
+		return container.fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+<LinkButton variant="primary" href="/containers/get-started/">
+	Get started with Containers
+</LinkButton>
 
 ---
 
 ## Related products
 
-<RelatedProduct header="Dynamic Workers" href="/dynamic-workers/" product="dynamic-workers">
+<RelatedProduct header="Workers" href="/workers/" product="workers">
 
-Spin up isolated Workers on demand to execute code.
-
-</RelatedProduct>
-
-<RelatedProduct header="Containers" href="/containers/" product="containers">
-
-Run Linux container images alongside Workers.
+The serverless platform these sandbox environments run on.
 
 </RelatedProduct>
 
 <RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
 
-Stable identity and coordination for an attached container.
+Identity and coordination for an attached container.
 
 </RelatedProduct>
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run models on Cloudflare, then execute the code they generate in a sandbox.
+
+</RelatedProduct>
+
+---
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard title="Code Mode" href="/agents/tools/codemode/" icon="rocket">
+	Run model-generated JavaScript against typed tools in a sandbox.
+</LinkTitleCard>
+
+<LinkTitleCard title="Sandbox SDK" href="/sandbox/sdk/" icon="open-book">
+	TypeScript API for commands, files, and preview URLs on Containers.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Workers security model"
+	href="/workers/reference/security-model/"
+	icon="seti:lock"
+>
+	V8 isolates, process sandboxes, and the APIs a Worker can use.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Dynamic Workers pricing"
+	href="/dynamic-workers/pricing/"
+	icon="seti:shell"
+>
+	Requests, CPU time, and unique Dynamic Workers created per day.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Containers pricing"
+	href="/containers/platform/pricing/"
+	icon="seti:shell"
+>
+	vCPU, memory, disk, and egress for container instances.
+</LinkTitleCard>
+
+<LinkTitleCard title="Limits" href="/containers/platform/limits/" icon="error">
+	Container instance types, image size, and other platform limits.
+</LinkTitleCard>
+
+</CardGrid>
