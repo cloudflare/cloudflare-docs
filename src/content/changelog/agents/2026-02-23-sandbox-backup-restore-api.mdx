@@ -35,7 +35,7 @@ await env.KV.put(`backup:${userId}`, JSON.stringify(backup));
 await sandbox.restoreBackup(backup);
 ```
 
-Backups are stored in [R2](/r2) and can take advantage of [R2 object lifecycle rules](/sandbox/guides/backup-restore/#configure-r2-lifecycle-rules-for-automatic-cleanup) to ensure they do not persist forever.
+Backups are stored in [R2](/r2) and can take advantage of [R2 object lifecycle rules](/sandbox/sdk/guides/backup-restore/#configure-r2-lifecycle-rules-for-automatic-cleanup) to ensure they do not persist forever.
 
 Key capabilities:
 
@@ -48,4 +48,4 @@ Key capabilities:
 Backup and restore currently uses a FUSE overlay. Soon, native snapshotting at a lower level will be added to Containers and Sandboxes, improving speed and ergonomics. The current backup functionality provides a significant speed improvement over manually recreating a file system, but it will be further optimized in the future. The new snapshotting system will use a similar API, so changing to this system will be simple once it is available.
 :::
 
-To get started, refer to the [backup and restore guide](/sandbox/guides/backup-restore/) for setup instructions and usage patterns, or the [Backups API reference](/sandbox/api/backups/) for full method documentation.
+To get started, refer to the [backup and restore guide](/sandbox/sdk/guides/backup-restore/) for setup instructions and usage patterns, or the [Backups API reference](/sandbox/sdk/api/backups/) for full method documentation.

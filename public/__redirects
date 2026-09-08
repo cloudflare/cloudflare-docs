@@ -660,9 +660,10 @@
 /containers/wrangler-configuration/ /containers/reference/wrangler-configuration/ 301
 /containers/wrangler-commands/ /containers/reference/wrangler-commands/ 301
 # Sandbox
-/sandbox/platform/beta-info/ /sandbox/platform/ 301
-/sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
-/sandbox/guides/production-deployment/ /sandbox/guides/preview-urls-custom-domain/ 301
+/sandbox/platform/beta-info/ /sandbox/sdk/platform/ 301
+/sandbox/guides/openai-agents-sdk/ /sandbox/sdk/tutorials/openai-agents/ 301
+/sandbox/guides/production-deployment/ /sandbox/sdk/guides/preview-urls-custom-domain/ 301
+/sandbox/get-started/ /sandbox/sdk/get-started/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
@@ -2833,6 +2834,14 @@
 /browser-rendering/rest-api/* /browser-run/quick-actions/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-run/quick-actions/:splat 301
 /browser-rendering/* /browser-run/:splat 301
+/sandbox/1-0-preview/* /sandbox/ 301
+/sandbox/api/* /sandbox/sdk/api/:splat 301
+/sandbox/configuration/* /sandbox/sdk/configuration/:splat 301
+/sandbox/bridge/* /sandbox/sdk/bridge/:splat 301
+/sandbox/concepts/* /sandbox/sdk/concepts/:splat 301
+/sandbox/guides/* /sandbox/sdk/guides/:splat 301
+/sandbox/tutorials/* /sandbox/sdk/tutorials/:splat 301
+/sandbox/platform/* /sandbox/sdk/platform/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
