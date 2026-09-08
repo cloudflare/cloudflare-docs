@@ -75,7 +75,13 @@ Check whether the delegation CNAME is in place at the `_acme-challenge` hostname
 dig _acme-challenge.example.com CNAME +short
 ```
 
-- If this returns **nothing**, the delegation CNAME is missing. If a TXT query also returns a raw token string, a hardcoded `_acme-challenge` TXT record is present and is blocking certificate issuance — remove it before adding the delegation CNAME.
+- If this returns **nothing**, the delegation CNAME is missing. Run a TXT query to check whether a hardcoded record is also present:
+
+  ```sh
+  dig _acme-challenge.example.com TXT +short
+  ```
+
+  If this returns a raw token string, a hardcoded `_acme-challenge` TXT record is blocking certificate issuance — remove it before adding the delegation CNAME.
 - If this returns a **CNAME target** but certificate validation is still stuck, the conflict is likely a hardcoded `_acme-challenge` TXT record inside your customer's direct Cloudflare zone. Because resolvers follow the CNAME chain rather than exposing records at the source name, the only way to confirm this is to inspect the customer's zone directly: go to **DNS** > **Records** in the Cloudflare dashboard for their zone and look for any `_acme-challenge` TXT entries.
 
 ### Common causes and remediation
