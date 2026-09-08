@@ -15,6 +15,10 @@ import { DashButton } from "~/components";
 
 All fields listed in [Datasets](/logs/logpush/logpush-job/datasets/) for the [supported datasets](/log-explorer/manage-datasets/#supported-datasets) are viewable in Log Explorer.
 
+## Why is the `MatchedRules` field empty for some requests?
+
+`MatchedRules` is populated only by security and transformation rules (WAF, Rate Limiting, Transform Rules, Snippets). Cache rules do not populate this field. If you are investigating cache behavior, use the `Cache*` fields such as `CacheCacheStatus` instead.
+
 ## Why does my query not complete or time out?
 
 Log Explorer performs best when query parameters focus on narrower ranges of time. You may experience query timeouts when your query would return a large quantity of data. Consider refining your query to improve performance.
