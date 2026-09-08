@@ -24,7 +24,7 @@ Join the #python-workers channel in the [Cloudflare Developers Discord](https://
 
 Hyperdrive in Python Workers uses [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to establish database connections.
 While you can use any Python driver that works with TCP connections,
-we strongly recommend using the drivers listed below, as they have been tested and verified to work with Hyperdrive.
+we strongly recommend using the drivers in the tables below, as they have been tested and verified to work with Hyperdrive.
 
 ### PostgreSQL
 
@@ -128,9 +128,10 @@ Before you begin, [create a Python Worker](/workers/languages/python/#the-pywran
                ssl=None,
            )
            try:
-               with connection.cursor() as cursor:
-                   cursor.execute("SELECT 1")
-                   return Response.json({"result": cursor.fetchone()[0]})
+               cursor = await connection.cursor()
+               await cursor.execute("SELECT 1")
+               result = await cursor.fetchone()
+               return Response.json({"result": result[0]})
            finally:
                connection.close()
    ```
