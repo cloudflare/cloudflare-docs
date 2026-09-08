@@ -52,6 +52,18 @@ Update your Cache Rule expression to also match on the `PURGE` method, for examp
 
 For rules that match on fields which cannot be evaluated during purge (such as `cf.bot_management.score`), use [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), [purge by tag](/cache/how-to/purge-cache/purge-by-tags/), or [purge everything](/cache/how-to/purge-cache/purge-everything/).
 
+### Redirect responses
+
+If the URL you want to purge returns a redirect (301 or 302), single-file purge removes the cached redirect response — not the content at the redirect destination. The resource at the destination URL remains cached.
+
+To clear the destination content, purge the final destination URL directly. You can find it by checking the `Location` header in the response:
+
+```bash
+curl -v https://example.com/redirecting-path 2>&1 | grep -i location
+```
+
+Use the URL in the `Location` header for your purge request instead.
+
 ### Resources with special headers
 
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
