@@ -90,8 +90,8 @@ importers:
         specifier: 1.6.1
         version: 1.6.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@nanostores/react':
-        specifier: 1.1.0
-        version: 1.1.0(nanostores@1.5.3)(react@19.0.0)
+        specifier: 2.0.1
+        version: 2.0.1(nanostores@1.5.3)(react@19.0.0)
       '@octokit/auth-app':
         specifier: 8.3.1
         version: 8.3.1
@@ -1752,9 +1752,9 @@ packages:
   '@mermaid-js/parser@1.2.1':
     resolution: {integrity: sha512-n12NohV3mrUyUL2o93IgG/ifeW9FTyeJn3zDxkhwa8MJ9Fxg3HQMlA3RiGmD/3UnJvheztkjjQAjA2T4LmUcpw==}
 
-  '@nanostores/react@1.1.0':
-    resolution: {integrity: sha512-MbH35fjhcf7LAubYX5vhOChYUfTLzNLqH/mBGLVsHkcvjy0F8crO1WQwdmQ2xKbAmtpalDa2zBt3Hlg5kqr8iw==}
-    engines: {node: ^20.0.0 || >=22.0.0}
+  '@nanostores/react@2.0.1':
+    resolution: {integrity: sha512-txbZTd+7/hnO7FhtF8Pmr+cu0ThdCuCnOyEEh0DsEM2Hp9PfOa5EY4uj3wpZpypSzp5BuqDgf2AxVAKoUIWOFQ==}
+    engines: {node: ^22.0.0 || ^24.0.0 || >=26.0.0}
     peerDependencies:
       nanostores: ^1.2.0
       react: '>=18.0.0'
@@ -7394,7 +7394,7 @@ snapshots:
     dependencies:
       '@chevrotain/types': 11.1.2
 
-  '@nanostores/react@1.1.0(nanostores@1.5.3)(react@19.0.0)':
+  '@nanostores/react@2.0.1(nanostores@1.5.3)(react@19.0.0)':
     dependencies:
       nanostores: 1.5.3
       react: 19.0.0
