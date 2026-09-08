@@ -318,6 +318,7 @@ export interface ConnectorProps {
 	to: Point;
 	fromSide?: Side;
 	toSide?: Side;
+	midY?: number;
 	active?: boolean;
 	ghost?: boolean;
 	arrowhead?: boolean;
@@ -329,6 +330,7 @@ export function Connector({
 	to,
 	fromSide,
 	toSide,
+	midY,
 	active = false,
 	ghost = false,
 	arrowhead = false,
@@ -355,7 +357,9 @@ export function Connector({
 
 	const d = straight
 		? `M ${from.x},${from.y} L ${adjusted.x},${adjusted.y}`
-		: makePath(from, adjusted, fromSide, toSide);
+		: midY == null
+			? makePath(from, adjusted, fromSide, toSide)
+			: vhvPathAt(from, adjusted, midY);
 	// Arrow direction = the final segment's tangent, mirroring a marker's
 	// orient="auto": for a straight line that is from→end; for an elbow the
 	// approach is axis-aligned, so end←(pulled-back point).

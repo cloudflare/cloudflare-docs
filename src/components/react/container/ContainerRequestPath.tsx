@@ -35,7 +35,7 @@ const ROUTE_MS = 600;
 const BOOT_MS = 900;
 const ACTIVE_MS = 1100;
 
-const IDENTITIES = ["8X92", "8X97"] as const;
+const IDENTITIES = ["A", "B"] as const;
 type Identity = (typeof IDENTITIES)[number];
 
 type Phase = "idle" | "request" | "route" | "boot" | "active";
@@ -141,8 +141,8 @@ function RequestPathBody() {
 	const VIEW_W = colW * 2 + COL_GAP + MARGIN * 2;
 	const cx = VIEW_W / 2;
 	const colX: Record<Identity, number> = {
-		"8X92": MARGIN + colW / 2,
-		"8X97": VIEW_W - MARGIN - colW / 2,
+		A: MARGIN + colW / 2,
+		B: VIEW_W - MARGIN - colW / 2,
 	};
 
 	const stubTop = 16 + TOP_OFFSET;
@@ -208,7 +208,7 @@ function RequestPathBody() {
 				<Toolbar
 					status={
 						<span className="block text-center text-[11px] leading-4 font-medium tracking-wide text-balance text-neutral-600 normal-case dark:text-neutral-300">
-							Choose an instance to send a request
+							Choose an instance identity to send a request
 						</span>
 					}
 					className="grid grid-cols-1 items-center gap-2 px-2 py-2.5 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] [&>div]:col-start-1 [&>div]:row-start-2 [&>div]:ml-auto sm:[&>div]:col-start-3 sm:[&>div]:row-start-1 [&>span]:col-start-1 sm:[&>span]:col-start-2"

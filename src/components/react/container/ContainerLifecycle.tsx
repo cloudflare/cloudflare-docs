@@ -266,7 +266,7 @@ function LifecycleBody() {
 						<Caption x={doRect.l + DO_PAD_X} y={rowY(1)} size={DO_CAPTION_FS}>
 							vm
 						</Caption>
-						{rowValue(rowY(1), "8X92")}
+						{rowValue(rowY(1), "A")}
 
 						<Caption x={doRect.l + DO_PAD_X} y={rowY(2)} size={DO_CAPTION_FS}>
 							cpu

@@ -13,6 +13,7 @@ const ICON = {
 	strokeWidth: 1.6,
 	strokeLinecap: "round" as const,
 	strokeLinejoin: "round" as const,
+	className: "block shrink-0",
 	"aria-hidden": true,
 };
 
@@ -60,7 +61,7 @@ function CaretRightIcon() {
 
 function iconLabel(icon: ReactNode, text?: string) {
 	return (
-		<span className="inline-flex items-center gap-1">
+		<span className="inline-flex items-center gap-1 leading-none">
 			{icon}
 			{text}
 		</span>

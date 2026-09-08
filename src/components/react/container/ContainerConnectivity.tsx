@@ -85,7 +85,7 @@ const BADGE: Record<Phase, string> = { running: "running", stopped: "stopped" };
 type ArmFire =
 	| { arm: "cw"; dir: "down" | "up" }
 	| { arm: "wk"; dir: "down" | "up" }
-	| { arm: "store" };
+	| { arm: "store"; dir: "out" | "back" };
 
 type NodeKey = "client" | "worker" | "card" | "store";
 
@@ -105,6 +105,9 @@ const CONTAINER_ACTIVE_BEATS = new Set([
 	"run",
 	"outbound",
 	"persist",
+	"storage-return",
+	"handler-return",
+	"container-response",
 	"respond",
 ]);
 
@@ -163,11 +166,41 @@ const CYCLE: Step[] = [
 		beat: "persist",
 		phase: "running",
 		filled: 5,
-		fire: { arm: "store" },
+		fire: { arm: "store", dir: "out" },
 		focus: ["worker", "store"],
 		stage: 5,
-		title: "The Worker reaches persistent storage",
+		title: "The outbound handler reaches persistent storage",
 		ms: 1200,
+	},
+	{
+		beat: "storage-return",
+		phase: "running",
+		filled: 5,
+		fire: { arm: "store", dir: "back" },
+		focus: ["worker", "store"],
+		stage: 6,
+		title: "Persistent storage returns the result to the outbound handler",
+		ms: 1200,
+	},
+	{
+		beat: "handler-return",
+		phase: "running",
+		filled: 5,
+		fire: { arm: "wk", dir: "down" },
+		focus: ["worker", "card"],
+		stage: 7,
+		title: "The outbound handler returns its response to the container",
+		ms: 1100,
+	},
+	{
+		beat: "container-response",
+		phase: "running",
+		filled: 5,
+		fire: { arm: "wk", dir: "up" },
+		focus: ["card", "worker"],
+		stage: 8,
+		title: "The container completes its response to the Worker",
+		ms: 1100,
 	},
 	{
 		beat: "respond",
@@ -175,7 +208,7 @@ const CYCLE: Step[] = [
 		filled: 5,
 		fire: { arm: "cw", dir: "up" },
 		focus: ["worker", "client"],
-		stage: 6,
+		stage: 9,
 		title: "The Worker responds to the client",
 		ms: 1100,
 	},
@@ -184,7 +217,7 @@ const CYCLE: Step[] = [
 		phase: "stopped",
 		filled: 0,
 		focus: [],
-		stage: 7,
+		stage: 10,
 		title:
 			"The container goes inactive and its disk is gone — only persistent storage survives",
 		ms: 1600,
@@ -198,7 +231,7 @@ const stepAt = (i: number): Step =>
 export function ContainerConnectivity(_props: DiagramFallbackProps) {
 	return (
 		<Diagram
-			label="A configured request flow where the Worker routes an inbound request into a Container and handles configured outbound requests to persistent storage. The Container's local disk is temporary, while persistent storage remains available beyond its lifecycle. Step through with the Next and Previous controls."
+			label="A configured request flow where the Worker routes an inbound request into a Container, handles its outbound request to persistent storage, and returns the result to the Container before responding to the client. The Container's local disk is temporary, while persistent storage remains available beyond its lifecycle. Step through with the Next and Previous controls."
 			keyboard={false}
 		>
 			<ConnectivityBody />
@@ -309,7 +342,7 @@ function ConnectivityBody() {
 
 	const VIEW_H = store.b + MARGIN;
 
-	const storeFiring = fire?.arm === "store";
+	const storeDirection = fire?.arm === "store" ? fire.dir : null;
 	const hasFocus = step.focus.length > 0;
 	const lit = (k: NodeKey) => step.focus.includes(k);
 	const dim = (k: NodeKey) =>
@@ -322,6 +355,8 @@ function ConnectivityBody() {
 	const corridorX = (card.r + VIEW_W) / 2;
 	const bindPath = (endX: number) =>
 		`M ${worker.r} ${worker.cy} H ${corridorX} V ${store.cy} H ${endX}`;
+	const bindReturnPath = (endX: number) =>
+		`M ${store.r} ${store.cy} H ${corridorX} V ${worker.cy} H ${endX}`;
 
 	return (
 		<WeldCanvas
@@ -402,18 +437,39 @@ function ConnectivityBody() {
 				</g>
 			)}
 
-			{storeFiring && (
+			{storeDirection && (
 				<g key={step.beat} style={{ color: "var(--color-brand)" }}>
 					<path
-						d={bindPath(store.r + ARROW_OFFSET)}
+						d={
+							storeDirection === "out"
+								? bindPath(store.r + ARROW_OFFSET)
+								: bindReturnPath(worker.r + ARROW_OFFSET)
+						}
 						fill="none"
 						stroke="currentColor"
 						strokeWidth={2}
 						strokeLinecap="round"
 						strokeLinejoin="round"
 					/>
-					<Arrowhead x={store.r + ARROW_OFFSET} y={store.cy} angle={180} />
-					{!reduced && <PulseDot d={bindPath(store.r)} ms={step.ms} />}
+					<Arrowhead
+						x={
+							storeDirection === "out"
+								? store.r + ARROW_OFFSET
+								: worker.r + ARROW_OFFSET
+						}
+						y={storeDirection === "out" ? store.cy : worker.cy}
+						angle={180}
+					/>
+					{!reduced && (
+						<PulseDot
+							d={
+								storeDirection === "out"
+									? bindPath(store.r)
+									: bindReturnPath(worker.r)
+							}
+							ms={step.ms}
+						/>
+					)}
 				</g>
 			)}
 

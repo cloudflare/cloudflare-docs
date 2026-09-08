@@ -149,7 +149,7 @@ function IsolationBody() {
 				<g style={{ animation: weldEnter(ctx.reducedMotion, 280) }}>
 					<VMUnit
 						rect={vm}
-						metaId="8X92"
+						metaId="A"
 						headerActive={containerActive}
 						containerActive={containerActive}
 						fontSize={CONTAINER_FS}

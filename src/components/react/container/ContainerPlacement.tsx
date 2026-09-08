@@ -1,8 +1,8 @@
 "use client";
 
-// Container placement & routing (Concepts page). Instances run across
-// Cloudflare's network and requests are routed to an available instance.
-// Three locations are shown with a request control for each one.
+// Container placement & routing (Concepts page). The first request to a
+// location starts an instance there; later requests reuse the warm instance.
+// Bursts demonstrate additional requested instances being placed.
 import { useEffect, useRef, useState } from "react";
 import { Diagram, useDiagramOrDefault } from "@cloudflare/nimbus-docs/react";
 import {
@@ -73,8 +73,8 @@ const TOP = 18;
 const BOTTOM_MARGIN = 20;
 const REGION_DOCK_FRAC = 0.5;
 const PULSE_MS = 650;
+const STARTUP_MS = 400;
 
-const ones = (): Record<RegionId, number> => ({ us: 1, eu: 1, apac: 1 });
 const zeros = (): Record<RegionId, number> => ({ us: 0, eu: 0, apac: 0 });
 const falses = (): Record<RegionId, boolean> => ({
 	us: false,
@@ -156,7 +156,7 @@ function InstanceCard({
 export function ContainerPlacement(_props: DiagramFallbackProps) {
 	return (
 		<Diagram
-			label="Container instances in different locations, with requests routed to an available instance and a scheduler adding capacity during bursts"
+			label="Requests starting and reusing Container instances in different locations, with a scheduler placing new instances"
 			keyboard={false}
 		>
 			<PlacementBody />
@@ -169,21 +169,26 @@ function PlacementBody() {
 	const reduced = ctx.reducedMotion;
 	const glyphPlaying = ctx.playing && ctx.visible && ctx.tabVisible;
 
-	const [load, setLoad] = useState<Record<RegionId, number>>(ones);
+	const [load, setLoad] = useState<Record<RegionId, number>>(zeros);
 	const [pulse, setPulse] = useState<Record<RegionId, boolean>>(falses);
 	const [scaleFlash, setScaleFlash] =
+		useState<Record<RegionId, boolean>>(falses);
+	const [schedulerArrow, setSchedulerArrow] =
 		useState<Record<RegionId, boolean>>(falses);
 	const [status, setStatus] = useState("");
 	const [instanceHeaderFS, setInstanceHeaderFS] = useState(INSTANCE_HEADER_FS);
 	const [widenMobileNodes, setWidenMobileNodes] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
-	const countRef = useRef<Record<RegionId, number>>(ones());
+	const countRef = useRef<Record<RegionId, number>>(zeros());
 	const inflightRef = useRef<Record<RegionId, number>>(zeros());
 
 	const pulseTimers = useRef<
 		Partial<Record<RegionId, ReturnType<typeof setTimeout>>>
 	>({});
 	const scaleTimers = useRef<
+		Partial<Record<RegionId, ReturnType<typeof setTimeout>>>
+	>({});
+	const startupTimers = useRef<
 		Partial<Record<RegionId, ReturnType<typeof setTimeout>>>
 	>({});
 	const sleepTimers = useRef<
@@ -210,14 +215,42 @@ function PlacementBody() {
 		sleepTimers.current[id] = setTimeout(step, IDLE_MS);
 	};
 
-	const sendRequest = (i: number) => {
-		const id = regionAt(i);
-
+	const pulseRequest = (id: RegionId) => {
 		setPulse((p) => ({ ...p, [id]: true }));
 		if (pulseTimers.current[id]) clearTimeout(pulseTimers.current[id]);
 		pulseTimers.current[id] = setTimeout(() => {
 			setPulse((p) => ({ ...p, [id]: false }));
 		}, PULSE_MS);
+	};
+
+	const sendRequest = (i: number) => {
+		const id = regionAt(i);
+		const count = countRef.current[id];
+
+		if (count === 0) {
+			if (startupTimers.current[id]) return;
+			setScaleFlash((current) => ({ ...current, [id]: true }));
+			setStatus(`Scheduler is placing an instance in ${REGION_LABELS[id]}.`);
+			startupTimers.current[id] = setTimeout(
+				() => {
+					delete startupTimers.current[id];
+					setCount(id, 1);
+					setSchedulerArrow((current) => ({ ...current, [id]: true }));
+					pulseRequest(id);
+					setStatus(
+						`Scheduler placed and started an instance in ${REGION_LABELS[id]}.`,
+					);
+					scaleTimers.current[id] = setTimeout(() => {
+						setScaleFlash((current) => ({ ...current, [id]: false }));
+						setSchedulerArrow((current) => ({ ...current, [id]: false }));
+					}, PULSE_MS);
+				},
+				reduced ? 0 : STARTUP_MS,
+			);
+			return;
+		}
+
+		pulseRequest(id);
 
 		const inflight = inflightRef.current[id] + 1;
 		inflightRef.current[id] = inflight;
@@ -229,19 +262,20 @@ function PlacementBody() {
 		}, PROCESS_MS);
 		releaseTimers.current.push(release);
 
-		const count = countRef.current[id];
 		if (inflight > count * CONCURRENCY && count < MAX_INSTANCES) {
 			const next = count + 1;
 			setCount(id, next);
 			setScaleFlash((current) => ({ ...current, [id]: true }));
+			setSchedulerArrow((current) => ({ ...current, [id]: true }));
 			if (scaleTimers.current[id]) clearTimeout(scaleTimers.current[id]);
 			scaleTimers.current[id] = setTimeout(() => {
 				setScaleFlash((current) => ({ ...current, [id]: false }));
+				setSchedulerArrow((current) => ({ ...current, [id]: false }));
 			}, PULSE_MS);
 			setStatus(`${REGION_LABELS[id]} scaled out to ${next} instances.`);
 		} else {
 			setStatus(
-				`${REGION_LABELS[id]} handled a request on ${count} instance${count === 1 ? "" : "s"}.`,
+				`${REGION_LABELS[id]} routed the request to ${count} warm instance${count === 1 ? "" : "s"}.`,
 			);
 		}
 
@@ -249,7 +283,12 @@ function PlacementBody() {
 	};
 
 	const clearAllTimers = () => {
-		for (const timers of [pulseTimers, scaleTimers, sleepTimers]) {
+		for (const timers of [
+			pulseTimers,
+			scaleTimers,
+			startupTimers,
+			sleepTimers,
+		]) {
 			Object.values(timers.current).forEach((timer) => {
 				if (timer) clearTimeout(timer);
 			});
@@ -261,12 +300,13 @@ function PlacementBody() {
 
 	const handleReset = () => {
 		clearAllTimers();
-		countRef.current = ones();
+		countRef.current = zeros();
 		inflightRef.current = zeros();
-		setLoad(ones());
+		setLoad(zeros());
 		setPulse(falses());
 		setScaleFlash(falses());
-		setStatus("Reset — one instance per location.");
+		setSchedulerArrow(falses());
+		setStatus("Reset — no running instances.");
 	};
 
 	useEffect(() => clearAllTimers, []);
@@ -325,6 +365,7 @@ function PlacementBody() {
 		SCHEDULER_H,
 	);
 	const schedulerDocks = convergenceDocks(REGIONS.length);
+	const schedulerCorridorY = (instTop + INSTANCE_H + schedulerTop) / 2;
 	const anyScaling = REGIONS.some((id) => scaleFlash[id]);
 	const VIEW_H = schedulerRect.b + BOTTOM_MARGIN;
 
@@ -421,6 +462,19 @@ function PlacementBody() {
 					const id = regionAt(i);
 					const rI = instRects[i];
 					if (!rI) return null;
+					if (load[id] === 0) {
+						if (!scaleFlash[id]) return null;
+						return (
+							<Connector
+								key={`startup-${i}`}
+								from={edgePoint(rR, "bottom", REGION_DOCK_FRAC)}
+								to={edgePoint(schedulerRect, "top", schedulerDocks[i])}
+								midY={schedulerCorridorY}
+								arrowhead
+								active
+							/>
+						);
+					}
 					if (!pulse[id]) {
 						return (
 							<Connector
@@ -450,7 +504,7 @@ function PlacementBody() {
 						<g
 							key={`scheduler-${id}`}
 							style={{
-								opacity: scaleFlash[id] ? 1 : 0,
+								opacity: schedulerArrow[id] ? 1 : 0,
 								transition: reduced ? "none" : `opacity 160ms ${EASE_OUT}`,
 							}}
 						>
@@ -495,6 +549,7 @@ function PlacementBody() {
 				{visibleInstRects.map((rect, i) => {
 					const id = regionAt(i);
 					const active = pulse[id];
+					const running = load[id] > 0;
 					const extra = Math.max(0, Math.min(MAX_INSTANCES, load[id]) - 1);
 					const depths = Array.from(
 						{ length: MAX_INSTANCES - 1 },
@@ -531,14 +586,21 @@ function PlacementBody() {
 									</g>
 								);
 							})}
-							<InstanceCard
-								rect={rect}
-								active={active}
-								playing={glyphPlaying}
-								reduced={reduced}
-								headerH={INSTANCE_HEADER_H}
-								headerFS={instanceHeaderFS}
-							/>
+							<g
+								style={{
+									opacity: running ? 1 : 0,
+									transition: reduced ? "none" : `opacity 220ms ${EASE_OUT}`,
+								}}
+							>
+								<InstanceCard
+									rect={rect}
+									active={active}
+									playing={glyphPlaying}
+									reduced={reduced}
+									headerH={INSTANCE_HEADER_H}
+									headerFS={instanceHeaderFS}
+								/>
+							</g>
 						</g>
 					);
 				})}
