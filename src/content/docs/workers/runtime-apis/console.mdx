@@ -20,7 +20,7 @@ All methods noted as "✅ supported" have the following behavior:
 
 * They will be written to the console in local dev (`npx wrangler@latest dev`)
 * They will appear in real-time logs when tailing logs in the dashboard or running [`wrangler tail`](/workers/observability/logs/real-time-logs/#view-logs-using-wrangler-tail)
-* They will create entries in the `logs` field of [Tail Worker](/workers/observability/logs/tail-workers/) events and [Workers Trace Events](/logs/logpush/logpush-job/datasets/account/workers_trace_events/), which can be pushed to a destination of your choice via [Logpush](/workers/observability/logs/logpush/).
+* They will create entries in the `logs` field of [Tail Worker](/workers/observability/logs/tail-workers/) events and [Workers Trace Events](/logs/logpush/logpush-job/datasets/account/workers_trace_events/). You can use [Logpush](/workers/observability/logs/logpush/) to send Workers Trace Event Logs to a supported destination.
 
 All methods noted as "🟡 partial support" have the following behavior:
 
