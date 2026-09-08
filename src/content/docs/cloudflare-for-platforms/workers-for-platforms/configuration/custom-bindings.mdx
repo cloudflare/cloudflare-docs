@@ -1,0 +1,424 @@
+---
+title: Custom bindings
+pcx_content_type: how-to
+description: Intercept User Worker binding calls to log usage, enforce limits, and run platform-owned logic before operations reach a Cloudflare resource.
+sidebar:
+  order: 6
+products:
+  - cloudflare-for-platforms
+tags:
+  - Bindings
+---
+
+import {
+	WranglerConfig,
+	CustomBindingsDiagram,
+	Tabs,
+	TabItem,
+} from "~/components";
+
+Custom bindings let your platform intercept calls that User Workers make to Cloudflare resource bindings. Instead of calling the underlying resource directly, each operation first passes through logic in a Platform Worker that you control.
+
+For example, when a User Worker calls `env.BUCKET.put()`, your Platform Worker could:
+
+- Measure the size of the upload and record it for billing.
+- Check whether the customer has exceeded their storage limit.
+- Reject objects that do not meet your platform's requirements.
+- Forward allowed uploads to the underlying R2 bucket.
+
+From the User Worker's perspective, `BUCKET` still behaves like a normal R2 binding. The User Worker does not need to know about your interception logic or have direct access to the underlying resource.
+
+## Use cases
+
+Use custom bindings when you need to run platform-owned logic around resource operations:
+
+- **Log or meter usage** — Record operations, bytes, or other usage data for auditing and billing.
+- **Enforce limits** — Apply quotas or rate limits based on the customer or plan tier.
+- **Add custom logic** — Validate, transform, or reject operations according to your platform's requirements.
+- **Scope access per tenant** — Select the resource assigned to a customer and prevent access to other tenants' resources.
+- **Enforce resource policy** — Restrict which operations a User Worker can perform before they reach the resource.
+
+## Supported resources
+
+| Resource   | Status            |
+| ---------- | ----------------- |
+| [D1](/d1/) | Available         |
+| [R2](/r2/) | Not yet available |
+
+The conceptual examples below use R2 because its `get()` and `put()` operations make the interception pattern easy to understand. The runnable implementation uses D1, which is currently the supported resource.
+
+## How custom bindings work
+
+There are three parts to a custom binding:
+
+1. Define the platform-owned logic that handles intercepted resource operations.
+2. Give that logic the underlying resource and tenant-specific context it needs.
+3. Attach the custom binding so the User Worker can call the standard resource API.
+
+### Step 1: Define where intercepted calls are handled
+
+Your platform needs a trusted place to receive each resource operation before it reaches the underlying resource. Define this logic as methods on a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#the-workerentrypoint-class) exported by your Platform Worker.
+
+The method that Cloudflare invokes depends on the resource. Using R2 as a conceptual example, an upload made with `env.BUCKET.put()` would be handled by a `put()` method in your Platform Worker.
+
+Inside that method, you can run your own logic. For example, you could measure the upload, record usage, check the customer's storage quota, and either reject the operation or forward it to the real bucket.
+
+For D1, resource operations are passed to a `query()` method. Refer to the [D1 implementation](#d1-implementation) for runnable code.
+
+### Step 2: Provide the resource and tenant context
+
+The interception logic needs to know which resource and platform rules apply to the User Worker. Pass this trusted information through [`props`](/workers/runtime-apis/context/#props) when you configure the custom binding during the User Worker upload.
+
+For example, `props` could contain:
+
+- The underlying resource assigned to the customer.
+- A customer or tenant ID.
+- The customer's plan tier.
+- A rate limit or storage quota.
+
+The Platform Worker reads these values from `this.ctx.props`. The User Worker cannot read or modify them.
+
+Using the R2 example, your Platform Worker could receive the customer's bucket, tenant ID, and storage limit through `props`. Its `put()` method could then apply that customer's limits before forwarding the upload.
+
+### Step 3: Call the resource from the User Worker
+
+The User Worker uses the standard API for the resource. It does not call your Platform Worker directly.
+
+Using R2 as a conceptual example, the User Worker would call:
+
+```js
+await env.BUCKET.put("image.png", image);
+```
+
+The `binding_interface` configuration makes the binding expose the resource's native API. Cloudflare routes the operation to the corresponding method in your Platform Worker, where your custom logic runs.
+
+For D1, the User Worker continues to call methods such as `env.DB.prepare().bind().all()`. No changes are required to its database code.
+
+## D1 implementation
+
+D1 custom bindings use a `query()` method in the Platform Worker. Cloudflare translates the User Worker's standard D1 calls, such as `prepare()`, `bind()`, and `all()`, into a `query()` call.
+
+Your `query()` method can inspect the statements, record usage, enforce limits, or reject the operation. If the operation is allowed, it forwards the request to the D1 database provided through `this.ctx.props`.
+
+### Request flow
+
+1. The User Worker calls `env.DB.prepare().bind().all()` as it would with a normal D1 binding.
+2. Cloudflare sends the operation to the Platform Worker's `query()` method.
+3. The Platform Worker inspects the query and applies your custom logic.
+4. The Platform Worker either returns an error or forwards the query to `this.ctx.props.D1`.
+5. The result is returned to the User Worker through the standard D1 API.
+
+If the Platform Worker rejects the operation, the User Worker receives a `D1_ERROR`.
+
+<CustomBindingsDiagram />
+
+### Set up a D1 custom binding
+
+This procedure assumes that you already have a Workers for Platforms dispatch namespace and dynamic dispatch Worker. If you do not, complete the [Workers for Platforms get started guide](/cloudflare-for-platforms/workers-for-platforms/get-started/) first.
+
+#### 1. Create the Platform Worker
+
+Export a `WorkerEntrypoint` with a `query()` method. The custom D1 binding calls this method for every database operation the User Worker runs.
+
+Inside `query()`, write your policy. This example logs every query, then forwards it to the real D1 database.
+
+:::caution
+The `query()` parameter uses `params.queries` (an array of statements, each with a `.sql` field). A single `env.DB.prepare(...).all()` call arrives as one entry in `params.queries`.
+:::
+
+The TypeScript version imports types from `./binding-types`. Create that file using the definitions in the [TypeScript types](#typescript-types) section.
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js title="src/index.js"
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class D1CustomBinding extends WorkerEntrypoint {
+	async query(params) {
+		// Log every query for metering.
+		for (const stmt of params.queries) {
+			console.log(`Query: ${stmt.sql}`);
+		}
+
+		// Forward the query to the real D1 database.
+		return this.ctx.props.D1.query(params);
+	}
+}
+
+export default {
+	fetch() {
+		throw new Error("unimplemented");
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts title="src/index.ts"
+import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	D1BindingService,
+	QueryRequest,
+	QueryResponse,
+} from "./binding-types";
+
+interface Props {
+	D1: D1Database & D1BindingService;
+}
+
+export class D1CustomBinding
+	extends WorkerEntrypoint<Env, Props>
+	implements D1BindingService
+{
+	async query(params: QueryRequest): Promise<QueryResponse> {
+		// Log every query for metering.
+		for (const stmt of params.queries) {
+			console.log(`Query: ${stmt.sql}`);
+		}
+
+		// Forward the query to the real D1 database.
+		return this.ctx.props.D1.query(params);
+	}
+}
+
+export default {
+	fetch() {
+		throw new Error("unimplemented");
+	},
+};
+```
+
+</TabItem> </Tabs>
+
+The `Env` type is generated by running [`wrangler types`](/workers/wrangler/commands/#types). If your Platform Worker has no bindings of its own, `Env` is an empty interface.
+
+Add a Wrangler configuration for the Platform Worker:
+
+<WranglerConfig>
+
+```toml
+name = "custom-binding-platform-worker"
+main = "src/index.js"
+compatibility_date = "$today"
+```
+
+</WranglerConfig>
+
+Deploy the Platform Worker:
+
+```sh
+wrangler deploy
+```
+
+#### 2. Write the User Worker
+
+The User Worker calls `env.DB.prepare().bind().all()` as usual. Save this file as `worker.js` — the file name must match the `main_module` value used when you upload the User Worker.
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js title="worker.js"
+export default {
+	async fetch(request, env) {
+		const result = await env.DB.prepare(
+			"SELECT ContactName FROM Customers WHERE CompanyName = ?",
+		)
+			.bind("Bs Beverages")
+			.all();
+
+		return Response.json(result.results);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts title="worker.ts"
+interface Env {
+	DB: D1Database;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const result = await env.DB.prepare(
+			"SELECT ContactName FROM Customers WHERE CompanyName = ?",
+		)
+			.bind("Bs Beverages")
+			.all();
+
+		return Response.json(result.results);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+#### 3. Upload the User Worker with the custom binding
+
+Configure `env.DB` as a service binding to the Platform Worker, then add two fields that turn it into a custom D1 binding:
+
+- **`binding_interface: "d1"`** — makes the service binding present the full D1 API to the User Worker.
+- **`props.D1`** with the `$binding` syntax — passes a real D1 database to the Platform Worker so it can forward queries with `this.ctx.props.D1.query()`.
+
+The `compatibility_flags` array must include `d1_binding_jsrpc`.
+
+Upload with the [Workers for Platforms script upload API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/):
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE_NAME/scripts/user-worker" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F 'metadata={
+    "main_module": "worker.js",
+    "compatibility_date": "2025-01-01",
+    "compatibility_flags": ["d1_binding_jsrpc"],
+    "bindings": [
+      {
+        "type": "service",
+        "name": "DB",
+        "service": "custom-binding-platform-worker",
+        "entrypoint": "D1CustomBinding",
+        "binding_interface": "d1",
+        "props": {
+          "D1": {
+            "$binding": {
+              "type": "d1",
+              "database_id": "<YOUR_DATABASE_ID>"
+            }
+          }
+        }
+      }
+    ]
+  }' \
+  -F 'worker.js=@worker.js;type=application/javascript+module'
+```
+
+:::note
+The multipart field name (`worker.js`) becomes the module name and must match `main_module`. If your file on disk has a different name, change both the field name and `main_module` to match.
+
+`binding_interface` and the `$binding` props syntax are not available in Wrangler configuration files. Use the upload API shown here.
+
+Only `type: "d1"` is accepted inside `$binding`. Any other binding type returns a `400`.
+:::
+
+#### 4. Test the binding
+
+Send requests to the User Worker through your dispatch URL. To watch interception in real time, tail the Platform Worker in another terminal:
+
+```sh
+wrangler tail custom-binding-platform-worker
+```
+
+### D1 binding configuration reference
+
+The following JSON shows the complete binding metadata sent in the upload API request:
+
+```json
+{
+	"main_module": "worker.js",
+	"compatibility_date": "2025-01-01",
+	"compatibility_flags": ["d1_binding_jsrpc"],
+	"bindings": [
+		{
+			"type": "service",
+			"name": "DB",
+			"service": "custom-binding-platform-worker",
+			"entrypoint": "D1CustomBinding",
+			"binding_interface": "d1",
+			"props": {
+				"D1": {
+					"$binding": {
+						"type": "d1",
+						"database_id": "<YOUR_DATABASE_ID>"
+					}
+				}
+			}
+		}
+	]
+}
+```
+
+| Field               | Description                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
+| `type`              | Must be `service`. The binding is a service binding to your Platform Worker.                     |
+| `name`              | The binding name the User Worker sees (for example, `DB`).                                       |
+| `service`           | The name of your deployed Platform Worker.                                                       |
+| `entrypoint`        | The exported `WorkerEntrypoint` class name.                                                      |
+| `binding_interface` | Set to `"d1"` to present the D1 API to the User Worker.                                          |
+| `props`             | Trusted values passed to the Platform Worker. Use `$binding` to pass a live resource connection. |
+
+## TypeScript types
+
+:::note
+These types are not yet published to a package. Save them as `src/binding-types.ts` next to your Platform Worker and import from there, as shown in the [TypeScript tab in step 1](#1-create-the-platform-worker).
+:::
+
+```ts title="src/binding-types.ts"
+/**
+ * Interface a Platform Worker must implement when intercepting
+ * D1 binding requests.
+ */
+export interface D1BindingService {
+	/** Executes one or more SQL queries in a single transaction. */
+	query(params: QueryRequest): Promise<QueryResponse>;
+}
+
+export type D1Bookmark =
+	"first-primary" | "first-unconstrained" | (string & {});
+
+export type QueryRequest = {
+	/** SQL queries to execute in a single transaction. */
+	queries: QuerySql[];
+	/** Bookmark or routing constraint for database instance selection. */
+	bookmark?: D1Bookmark;
+};
+
+export type QueryResponse = RpcResponse<{
+	/** Result for each SQL query in the request, in request order. */
+	queryResults: QuerySqlResult[];
+	/** Session bookmark returned after executing the query batch. */
+	bookmark?: D1Bookmark;
+}>;
+
+export type QuerySql = {
+	/** SQL statement with optional placeholders bound from `params`. */
+	sql: string;
+	/** Positional parameters bound to placeholders in the SQL query. */
+	params?: unknown[];
+};
+
+export type QuerySqlResult = {
+	/** Metadata about the query execution. */
+	meta: D1Meta;
+	data: QuerySqlResultData;
+};
+
+/**
+ * Row data format returned by the binding service.
+ * This shape is an implementation detail and may change.
+ */
+export type QuerySqlResultData = {
+	kind: "raw";
+	columns: string[];
+	rows: unknown;
+};
+
+/** Success or failure envelope for binding RPC methods. */
+export type RpcResponse<T = unknown> =
+	{ success: true; results: T } | { success: false; error: Error };
+
+/** Metadata returned for a query result. */
+export type D1Meta = {
+	served_by_primary?: boolean;
+	served_by_region?: string;
+	served_by_colo?: string;
+	timings?: { sql_duration_ms: number };
+	duration: number;
+	rows_read: number;
+	rows_written: number;
+	changes: number;
+	last_row_id: number;
+	changed_db: boolean;
+	size_after: number;
+	total_attempts?: number;
+};
+```
