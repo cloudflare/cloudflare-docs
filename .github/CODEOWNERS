@@ -4,19 +4,19 @@
 
 # Repo-wide files
 
-*.astro @kodster28 @cloudflare/content-engineering
-*.js @kodster28 @cloudflare/content-engineering
-*.ts @kodster28 @cloudflare/content-engineering
-/.github/ @ahaywood @colbywhite @kodster28 @MohamedH1998 @mvvmm @cloudflare/content-engineering
-/.github/actions/assign-pr/index.js @kodster28 @cloudflare/product-owners @cloudflare/content-engineering
-/.github/CODEOWNERS @kodster28 @cloudflare/product-owners @cloudflare/content-engineering
+*.astro @cloudflare/content-engineering
+*.js @cloudflare/content-engineering
+*.ts @cloudflare/content-engineering
+/.github/ @ahaywood @colbywhite @MohamedH1998 @mvvmm @cloudflare/content-engineering
+/.github/actions/assign-pr/index.js @cloudflare/product-owners @cloudflare/content-engineering
+/.github/CODEOWNERS @cloudflare/product-owners @cloudflare/content-engineering
 /public/__redirects @cloudflare/product-owners @cloudflare/content-engineering
 /src/assets/images/ @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/components/ @kodster28 @cloudflare/content-engineering
+/src/components/ @cloudflare/content-engineering
 /src/content/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/scripts/analytics/search.ts @cloudflare/ai-search @cloudflare/content-engineering
 /src/scripts/webmcp.ts @cloudflare/ai-search @cloudflare/content-engineering
-/src/util/api.ts @kodster28 @cloudflare/content-engineering
+/src/util/api.ts @cloudflare/content-engineering
 /src/util/search.ts @cloudflare/ai-search @cloudflare/content-engineering
 package.json @cloudflare/content-engineering
 
@@ -69,10 +69,10 @@ package.json @cloudflare/content-engineering
 
 # ai
 
-/src/content/docs/ai/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
-/src/content/directory/ai.yaml @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
-/src/icons/ai.svg @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
-/src/pages/ai/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/content/docs/ai/ @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/content/directory/ai.yaml @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/icons/ai.svg @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/pages/ai/models/ @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 
 # ai-crawl-control
 
@@ -1063,12 +1063,12 @@ package.json @cloudflare/content-engineering
 
 # workers-ai
 
-/bin/fetch-catalog-models.ts @abhishekkankani @ethulia @kathayl @kflansburg @kodster28 @mattrothenberg @mchenco @palashgo @roerohan @shridhar-cf @superhighfives @thebongy @zeke @cloudflare/product-owners @cloudflare/content-engineering
-/src/components/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/bin/fetch-catalog-models.ts @abhishekkankani @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridhar-cf @superhighfives @thebongy @zeke @cloudflare/product-owners @cloudflare/content-engineering
+/src/components/models/ @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 /src/content/catalog-models/ @abhishekkankani @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridhar-cf @superhighfives @thebongy @zeke @cloudflare/product-owners @cloudflare/content-engineering
-/src/content/workers-ai-models/ @craigsdennis @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners
-/src/pages/workers-ai/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
-/src/util/models/ @ethulia @kflansburg @kodster28 @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/content/workers-ai-models/ @craigsdennis @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners
+/src/pages/workers-ai/models/ @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
+/src/util/models/ @ethulia @kflansburg @mchenco @shridhar-cf @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 /src/content/docs/workers-ai/ @aninibread @craigsdennis @ethulia @kflansburg @mattrothenberg @mchenco @rita3ko @shridhar-cf @superhighfives @zeke @cloudflare/product-owners
 /src/content/release-notes/workers-ai.yaml @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @shridhar-cf @superhighfives @zeke @cloudflare/product-owners
 /src/assets/images/workers-ai/ @aninibread @craigsdennis @ethulia @kflansburg @mattrothenberg @mchenco @rita3ko @shridhar-cf @superhighfives @zeke @cloudflare/product-owners
