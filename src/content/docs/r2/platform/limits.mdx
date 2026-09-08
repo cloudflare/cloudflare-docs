@@ -20,7 +20,7 @@ import { Render } from "~/components";
 | Object size                                                  | 5 TiB per object [^2]                             |
 | Maximum upload size [^3]                                     | 5 GiB (single-part) / 4.995 TiB (multi-part) [^4] |
 | Maximum upload parts                                         | 10,000                                            |
-| Maximum concurrent writes to the same object name (key)      | 1 per second [^5]                                 |
+| Supported write rate to the same object name (key)           | 1 write per second [^5]                           |
 
 [^1]: Bucket management operations include creating, deleting, listing, and configuring buckets. This limit does _not_ apply to reading or writing objects to a bucket.
 
@@ -30,7 +30,7 @@ import { Render } from "~/components";
 
 [^4]: The max upload size is 5 MiB less than 5 GiB, so 4.995 GiB.
 
-[^5]: Concurrent writes to the same object name (key) at a higher rate return HTTP 429 (rate limited) responses.
+[^5]: R2 supports one write per second to a given object name (key). Writes above this rate, including concurrent writes, may return HTTP `429` (rate limited) responses.
 
 Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storage units of measurement based on base-2. 1 GiB (gibibyte) is equivalent to 2<sup>30</sup> bytes (or 1024<sup>3</sup> bytes). This is distinct from 1 GB (gigabyte), which is 10<sup>9</sup> bytes (or 1000<sup>3</sup> bytes).
 
