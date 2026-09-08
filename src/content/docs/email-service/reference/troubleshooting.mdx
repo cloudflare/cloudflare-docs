@@ -220,18 +220,15 @@ Cloudflare Email Routing (inbound) and Google Workspace cannot be active simulta
 
 **To switch to Google Workspace for inbound email:**
 
-Email Routing locks its `MX` and `SPF` records by default to prevent accidental changes. To minimize mail disruption, unlock the records first, add the Google Workspace records alongside them, and complete all steps as quickly as possible. During DNS propagation, mail may be temporarily split between the two paths.
+Complete the following steps quickly to minimize the time during which both sets of `MX` records are active.
 
-1. Go to **Compute** > **Email Service** > **Email Routing**.
+1. In **DNS** > **Records**, add the five Google Workspace `MX` records. Refer to [Set up Google Workspace DNS records](/dns/manage-dns-records/how-to/set-up-google-workspace/) for the complete record values. The Cloudflare Email Routing `MX` records remain active until the next step.
+2. Return to **Compute** > **Email Service** > **Email Routing**.
 
    <DashButton url="/?to=/:account/email-service/routing" />
 
-2. Select your domain, then open **Settings**.
-3. In the **DNS records** section, select **Unlock** for each locked record (MX and SPF).
-4. Go to **DNS** > **Records** and add the five Google Workspace MX records. Refer to [Set up Google Workspace DNS records](/dns/manage-dns-records/how-to/set-up-google-workspace/) for the complete record values.
-5. In **DNS** > **Records**, update the `SPF` `TXT` record on the root domain to merge both providers while Email Routing is still active: `v=spf1 include:_spf.mx.cloudflare.net include:_spf.google.com ~all`. This helps forwarded mail pass `SPF` checks during the transition, provided the merged record stays within the [10 DNS lookup limit](/email-service/configuration/domains/#routing-records). If merging pushes you over the limit, consider flattening the record or removing non-essential `include:` entries.
-6. Return to **Compute** > **Email Service** > **Email Routing** and turn off Email Routing. Cloudflare removes the routing DNS records it still manages — `MX` and `DKIM`. Because you unlocked and edited the `SPF` record in steps 3 and 5, Email Routing no longer manages it; that record remains in place. Refer to [Remove a domain from Email Routing](/email-service/configuration/domains/#remove-a-domain-from-email-routing) for details.
-7. In **DNS** > **Records**, update your `SPF` `TXT` record on the root domain: remove the `include:_spf.mx.cloudflare.net` mechanism and confirm `include:_spf.google.com` is present. Keep any other existing `include:` entries for other services you send from. The resulting record should look similar to `v=spf1 include:_spf.google.com ~all` (plus any additional services).
+3. Select your domain, then open **Settings** and turn off Email Routing. Cloudflare removes all routing-related DNS records it manages (`MX`, `SPF`, and `DKIM`), as described in [Remove a domain from Email Routing](/email-service/configuration/domains/#remove-a-domain-from-email-routing).
+4. In **DNS** > **Records**, add a new `SPF` `TXT` record on the root domain. If you only send email through Google Workspace, use `v=spf1 include:_spf.google.com ~all`. If you send from other services, include them in the same record. Do not add more than one `SPF` record — having multiple `v=spf1` records on the same domain breaks `SPF` authentication.
 
 **To keep Email Routing while also using Google Workspace:**
 
