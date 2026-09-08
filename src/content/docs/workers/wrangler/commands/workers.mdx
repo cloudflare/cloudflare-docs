@@ -50,6 +50,8 @@ Start a local server for developing your Worker.
 wrangler dev [<SCRIPT>] [OPTIONS]
 ```
 
+By default, `wrangler dev` executes your Worker in a local `workerd` process, which is not a hardened sandbox. Only run code you trust. For more information, refer to [Local development security considerations](/workers/local-development/#security-considerations).
+
 :::note
 
 None of the options for this command are required. Many of these options can be set in your Wrangler file. Refer to the [Wrangler configuration](/workers/wrangler/configuration) documentation for more information.
@@ -122,7 +124,7 @@ None of the options for this command are required. Many of these options can be 
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Develop against remote resources and data stored on Cloudflare's network.
+  - Execute your Worker in a preview environment on Cloudflare. All bindings connect to remote resources.
 - `--tunnel` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Expose your local dev server over a Cloudflare Tunnel. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/).
 - `--tunnel-name` <Type text="string" /> <MetaInfo text="optional" />

@@ -9,6 +9,12 @@ products:
 
 import { WorkersArchitectureDiagram } from "~/components"
 
+:::note[Hosted Workers security model]
+
+This page describes Workers deployed on Cloudflare. Local `workerd` processes do not include every defense-in-depth protection described here. For local execution guidance, refer to [Local development security considerations](/workers/local-development/#security-considerations).
+
+:::
+
 This article includes an overview of Cloudflare security architecture, and then addresses two frequently asked about issues: V8 bugs and Spectre.
 
 Since the very start of the Workers project, security has been a high priority — there was a concern early on that when hosting a large number of tenants on shared infrastructure, side channels of various kinds would pose a threat. The Cloudflare Workers runtime is carefully designed to defend against side channel attacks.
