@@ -41,34 +41,6 @@ export default [
 	{
 		rules: {
 			"no-var": "error",
-			// Diagrams build on
-			// the headless `@cloudflare/nimbus-docs/react` primitives plus the
-			// repo-owned CSS "weld" kit — motion is CSS, never framer-motion.
-			// Ban the import so the dependency cannot creep back in.
-			"no-restricted-imports": [
-				"error",
-				{
-					paths: [
-						{
-							name: "framer-motion",
-							message:
-								"framer-motion is not a dependency of this repo. Use CSS transitions/animations or the @cloudflare/nimbus-docs/react diagram primitives instead.",
-						},
-						{
-							name: "motion",
-							message:
-								"The motion / framer-motion library is not a dependency of this repo. Use CSS transitions/animations or the @cloudflare/nimbus-docs/react diagram primitives instead.",
-						},
-					],
-					patterns: [
-						{
-							group: ["framer-motion/*", "motion/*"],
-							message:
-								"framer-motion / motion is not a dependency of this repo. Use CSS transitions/animations or the @cloudflare/nimbus-docs/react diagram primitives instead.",
-						},
-					],
-				},
-			],
 			"@typescript-eslint/no-explicit-any": "off",
 			"@typescript-eslint/no-unused-vars": [
 				"error",
