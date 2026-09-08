@@ -68,6 +68,36 @@ describe("Cloudflare Docs", () => {
 		});
 	});
 
+	describe(".well-known", () => {
+		it("api-catalog does not advertise a markdown service-doc yet", async () => {
+			const request = new Request("http://fakehost/.well-known/api-catalog");
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(200);
+			expect(response.headers.get("Content-Type")).toContain(
+				"application/linkset+json",
+			);
+
+			const catalog: any = await response.json();
+			const entry = (catalog.linkset as any[]).find(
+				(e) => e.anchor === "https://developers.cloudflare.com/api/",
+			);
+			expect(entry).toBeDefined();
+
+			const serviceDoc = entry["service-doc"] as any[];
+			expect(serviceDoc.some((d) => d.type === "text/markdown")).toBe(false);
+			expect(
+				serviceDoc.some((d) => String(d.href).endsWith("/api/index.md")),
+			).toBe(false);
+			expect(
+				serviceDoc.some(
+					(d) =>
+						d.type === "text/html" &&
+						d.href === "https://developers.cloudflare.com/api/",
+				),
+			).toBe(true);
+		});
+	});
+
 	describe("redirects", () => {
 		it("redirects requests with a trailing slash", async () => {
 			const request = new Request("http://fakehost/docs/");

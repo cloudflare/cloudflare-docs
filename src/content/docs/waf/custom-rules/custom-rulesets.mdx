@@ -11,7 +11,13 @@ sidebar:
 
 import { Render, APIRequest } from "~/components";
 
-<Render file="custom-rulesets/intro" product="waf" params={{ scope: "zone" }} />
+Custom rulesets are collections of custom rules that you can deploy at the zone or [account level](/waf/account/custom-rulesets/).
+
+Like [custom rules](/waf/custom-rules/), custom rulesets allow you to control incoming traffic by filtering requests.
+
+For example, you can apply a custom ruleset to all incoming requests of your zone or to a subset of incoming requests.
+
+At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan. For more details, refer to [Availability](/waf/custom-rules/#availability).
 
 :::tip[Use case: Different teams managing different sets of custom rules]
 Consider creating custom rulesets instead of managing individual custom rules at the zone level to allow different teams in your company to manage different sets of rules independently, including [via Terraform](/terraform/additional-configurations/waf-custom-rules/#create-and-deploy-a-custom-ruleset).
@@ -88,11 +94,9 @@ The following request creates a new custom ruleset at the zone level with two ru
 }
 ```
 
-<Render
-	file="custom-ruleset-zone-limitation"
-	params={{ skipLink: true }}
-	product="ruleset-engine"
-/>
+:::note
+Currently, zone-level custom rulesets are only available in the `http_request_firewall_custom` phase.
+:::
 
 ### 2. Deploy custom ruleset
 

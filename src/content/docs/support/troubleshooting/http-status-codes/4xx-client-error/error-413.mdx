@@ -26,8 +26,8 @@ The upload limit for the Cloudflare API depends on your plan. If you exceed this
 |  | Free | Pro | Business | Enterprise |
 | - | - | - | - | - |
 | Availability | Yes | Yes | Yes | Yes |
-| Max upload size | 100 MB | 100 MB | 200 MB | 500+ MB |
+| Max upload size | 100 MB | 100 MB | 200 MB | Up to 5 GB |
 
-Keep in mind, customers can reduce the **Maximum Upload Size** from the zone's **Network** page which can cause a `413`.
+Keep in mind, customers can adjust the **Maximum Upload Size** from the zone's **Network** page. Enterprise customers can self-serve any value up to 5 GB; uploads larger than 5 GB require additional configuration — contact your account team. Setting the limit below the size of an incoming request causes a `413`.
 
 If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/proxy-status/#dns-only-records), or [upgrade your plan](/billing/manage/change-plan/).

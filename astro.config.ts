@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import skills from "astro-skills";
@@ -281,9 +281,12 @@ export default defineConfig({
 	},
 	markdown,
 	image: {
-		service: {
-			entrypoint: "@astrojs/cloudflare/image-service",
-		},
+		// /cdn-cgi/image/ only exists on Cloudflare's edge, so dev serves
+		// originals directly; production keeps edge resizing.
+		service:
+			process.env.NODE_ENV === "production"
+				? { entrypoint: "@astrojs/cloudflare/image-service" }
+				: passthroughImageService(),
 	},
 	server: {
 		port: 1111,
