@@ -10,7 +10,7 @@ products:
   - agents
 ---
 
-import { Render } from "~/components";
+import { Steps } from "~/components";
 
 Remote, authorized connections are an evolving part of the [Model Context Protocol (MCP) specification](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization). Not all MCP clients support remote connections yet.
 
@@ -49,6 +49,28 @@ You should see the **List tools** button, which will list the tools that your MC
 ## Connect your remote MCP server to Cloudflare Workers AI Playground
 
 Visit the [Workers AI Playground](https://playground.ai.cloudflare.com/), enter your MCP server URL, and click "Connect". Once authenticated (if required), you should see your tools listed and they will be available to the AI model in the chat.
+
+## Connect your remote MCP server to FLUJO
+
+[FLUJO](https://github.com/mario-andreschak/FLUJO) connects directly to remote MCP servers using Streamable HTTP. This example uses Cloudflare's public [Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-ai-search), which does not require authentication.
+
+<Steps>
+
+1. [Install and open FLUJO](https://github.com/mario-andreschak/FLUJO#run-via-npx-npm-package).
+
+2. In **Connected Apps**, select **Connect App** > **I have connection details** > **At a remote URL**.
+
+3. In **Server URL**, enter `https://docs.mcp.cloudflare.com/mcp` and select **Connect**. FLUJO creates the server configuration and tests the connection.
+
+4. When the connection test passes, select **Update server**.
+
+5. In **Connected Apps**, select the new **docs-mcp-cloudflare-com** server card. In the **Tools** tab, select `search_cloudflare_documentation` from **Select tool**.
+
+6. In **query**, enter a documentation question, such as `How do I create a Cloudflare Worker with Wrangler?`, and select **Test tool**. FLUJO displays the returned documentation in **Result**.
+
+</Steps>
+
+To test your own public Streamable HTTP server, replace the example URL with your server's endpoint and select one of its tools.
 
 ## Connect your remote MCP server to Claude Desktop via a local proxy
 
