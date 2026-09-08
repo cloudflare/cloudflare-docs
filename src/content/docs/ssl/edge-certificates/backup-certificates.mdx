@@ -27,3 +27,21 @@ For additional details, refer to the [introductory blog post](https://blog.cloud
 ## Opt out
 
 Enterprise customers can request to opt out of backup certificates by opening a support case. Opting out removes the backup-certificate redundancy for your domain.
+
+## Troubleshooting
+
+### Backup certificate deleted after turning Universal SSL back on
+
+After you turn off and quickly turn Universal SSL back on, your domain may end up without a backup certificate.
+
+When Universal SSL is toggled off and on in quick succession, certificate processing jobs are not guaranteed to run in the order they were submitted. This race condition can cause a newly issued backup certificate to be deleted before it becomes active.
+
+To recover your backup certificate:
+
+1. Turn Universal SSL off again.
+2. Wait several minutes.
+3. Turn Universal SSL back on, then allow time for Cloudflare to issue a new backup certificate.
+
+If you need uninterrupted certificate coverage, consider ordering an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) certificate before toggling Universal SSL.
+
+For more troubleshooting help, refer to [Troubleshooting SSL errors](/ssl/troubleshooting/).
