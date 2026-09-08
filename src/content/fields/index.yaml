@@ -1257,6 +1257,51 @@ entries:
       # Check if requests to a specific endpoint contain any suspicious or infected content objects
       any(cf.waf.content_scan.obj_results[*] in {"suspicious" "infected"}) and http.request.uri.path eq "/upload"
 
+  - name: cf.waf.signature.request.categories
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, cloudflare, waf, attack signature, category]
+    plan_info_label: Early Access
+    summary: An array of categories associated with attack signatures that matched the request.
+    description: |-
+      Available to customers with [Attack Signature Detection](/waf/detections/attack-signature-detection/) in Security Analytics and Custom Rules.
+
+      Contact your Cloudflare account team to request Early Access.
+    example_value: |-
+      ["sqli", "cve-2025-55182"]
+    example_block: |-
+      any(cf.waf.signature.request.categories[*] eq "sqli")
+
+  - name: cf.waf.signature.request.confidence
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, cloudflare, waf, attack signature, confidence]
+    plan_info_label: Early Access
+    summary: An array of confidence values associated with attack signatures that matched the request.
+    description: |-
+      Supported values are `high` and `low`.
+
+      Available to customers with [Attack Signature Detection](/waf/detections/attack-signature-detection/) in Security Analytics and Custom Rules. Contact your Cloudflare account team to request Early Access.
+    example_value: |-
+      ["high"]
+    example_block: |-
+      any(cf.waf.signature.request.confidence[*] eq "high")
+
+  - name: cf.waf.signature.request.refs
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, cloudflare, waf, attack signature, ref, rule id]
+    plan_info_label: Early Access
+    summary: An array containing up to 10 Refs for attack signatures that matched the request.
+    description: |-
+      Each Ref is the same value as the corresponding Cloudflare Managed Rules public Rule ID.
+
+      Available to customers with [Attack Signature Detection](/waf/detections/attack-signature-detection/) in Security Analytics and Custom Rules. Contact your Cloudflare account team to request Early Access.
+    example_value: |-
+      ["d68f8101f6e14e25aefcaea69c530a29"]
+    example_block: |-
+      any(cf.waf.signature.request.refs[*] eq "d68f8101f6e14e25aefcaea69c530a29")
+
   - name: cf.waf.score
     data_type: Number
     categories: [Request]
