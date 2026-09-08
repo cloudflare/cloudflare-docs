@@ -11,6 +11,7 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 	PackageManagers,
+	Render,
 } from "~/components";
 
 Build an agent that can browse the web, inspect pages, capture screenshots, and debug frontend issues with [Browser Run](/browser-run/) tools. <InlineBadge preset="beta" />
@@ -287,7 +288,11 @@ Recent Wrangler releases support Browser Run in local development. `npx wrangler
 
 Use `cdpUrl` only when you intentionally want to connect to some other CDP-compatible browser endpoint, such as a tunnel or a manually managed Chrome instance.
 
+<Render file="local-development-security" product="workers" />
+
 ## Security considerations
+
+The following protections apply when this agent is deployed to Cloudflare:
 
 - LLM-generated code runs in **isolated Worker sandboxes** — each execution gets its own Worker instance
 - External network access (`fetch`, `connect`) is **blocked** in the sandbox at the runtime level

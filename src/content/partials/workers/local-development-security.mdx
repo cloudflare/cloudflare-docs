@@ -1,0 +1,13 @@
+---
+{}
+---
+
+:::caution[Local development is not a hardened sandbox]
+
+Miniflare starts a local [`workerd`](https://github.com/cloudflare/workerd#warning-workerd-is-not-a-hardened-sandbox) process. This applies to default local execution with `wrangler dev`, `vite dev`, `vite preview`, direct Miniflare use, and Miniflare-based testing tools. Setting `remote: true` on a binding changes which resource your code accesses, but your Worker code still executes locally. By contrast, legacy `wrangler dev --remote` executes your Worker code on Cloudflare.
+
+`workerd` attempts to restrict Worker code to configured resources. However, it does not provide suitable defense-in-depth protection against implementation bugs. The hosted Workers platform applies [additional layers of defense in depth](/workers/reference/security-model/).
+
+Only run code you trust during local development. To run untrusted or potentially malicious code locally, place the entire development process inside an appropriate secure sandbox, such as a virtual machine.
+
+:::
