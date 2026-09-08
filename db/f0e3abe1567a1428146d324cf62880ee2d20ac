@@ -1,0 +1,25 @@
+src/content/docs/cloudflare-one/access-controls/ai-controls/mcp-portals.mdx
+  s_193e81be9e81fd::t_bf94c98cbd4f08 110
+src/content/docs/reference-architecture/diagrams/ai/ai-vibe-coding-platform.mdx
+  s_193e81be9e81fd::t_2e6724e14056e5 55
+src/content/docs/workers/get-started/prompting.mdx
+  s_193e81be9e81fd::t_4d848b4d729341 21
+src/content/docs/workers/static-assets/migration-guides/migrate-from-pages.mdx
+  s_193e81be9e81fd::t_88475170b7c4c7 399
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dbf0e3abe1567a1428146d324cf62880ee2d20ac",
+  "prompts": {},
+  "sessions": {
+    "s_193e81be9e81fd": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019fa976-4d1d-7eb9-8ab0-ed7a0fb11a63",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
