@@ -1,0 +1,32 @@
+---
+title: Workers Builds supports Bun v2 lockfiles and updates default tools
+description: Workers Builds updates default runtimes and package managers, including Bun 1.4.2 support for v2 lockfiles.
+products:
+  - workers
+date: 2026-09-11
+---
+
+Workers Builds now supports Bun v2 lockfiles and uses updated default runtimes and package managers. Bun 1.4.2 can read both v1 and v2 lockfiles.
+
+The previous default, Bun 1.2.15, cannot read v2 lockfiles. This can stop builds before dependency installation begins. Bun 1.4.2 removes that blocker while remaining compatible with v1 lockfiles.
+
+Cloudflare normally provides three months' notice for Bun updates that may contain breaking changes. We are shipping this update without the ordinary notice period because it preserves compatibility with existing lockfiles and restores support for Bun's current lockfile format.
+
+The new defaults are:
+
+| Tool    | Default version |
+| ------- | --------------- |
+| Node.js | 24.20.0         |
+| npm     | 11.19.0         |
+| Yarn    | 4.18.0          |
+| pnpm    | 10.34.5         |
+| Go      | 1.27.1          |
+| Bun     | 1.4.2           |
+| Python  | 3.14.7          |
+| pip     | 26.2.1          |
+| pipx    | 1.17.2          |
+| Poetry  | 2.4.3           |
+| uv      | 0.12.10         |
+| Ruby    | 3.4.10          |
+
+Explicit version overrides continue to take priority over these defaults. To pin a version, refer to [Override default versions](/workers/ci-cd/builds/build-image/#overriding-default-versions).
