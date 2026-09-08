@@ -19,15 +19,15 @@ The table below enumerates each method, and the extent to which it is supported 
 All methods noted as "✅ supported" have the following behavior:
 
 * They will be written to the console in local dev (`npx wrangler@latest dev`)
-* They will appear in live logs, when tailing logs in the dashboard or running [`wrangler tail`](https://developers.cloudflare.com/workers/observability/log-from-workers/#use-wrangler-tail)
-* They will create entries in the `logs` field of [Tail Worker](https://developers.cloudflare.com/workers/observability/tail-workers/) events and [Workers Trace Events](https://developers.cloudflare.com/logs/logpush/logpush-job/datasets/account/workers_trace_events/), which can be pushed to a destination of your choice via [Logpush](https://developers.cloudflare.com/workers/observability/logpush/).
+* They will appear in real-time logs when tailing logs in the dashboard or running [`wrangler tail`](/workers/observability/logs/real-time-logs/#view-logs-using-wrangler-tail)
+* They will create entries in the `logs` field of [Tail Worker](/workers/observability/logs/tail-workers/) events and [Workers Trace Events](/logs/logpush/logpush-job/datasets/account/workers_trace_events/), which can be pushed to a destination of your choice via [Logpush](/workers/observability/logs/logpush/).
 
 All methods noted as "🟡 partial support" have the following behavior:
 
 * In both production and local development the method can be safely called, but will do nothing (no op)
 * In the [Workers Playground](https://workers.cloudflare.com/playground), Quick Editor in the Workers dashboard, and remote preview mode (`wrangler dev --remote`) calling the method will behave as expected, print to the console, etc.
 
-Refer to [Log from Workers](https://developers.cloudflare.com/workers/observability/log-from-workers/) for more on debugging and adding logs to Workers.
+Refer to [Logs](/workers/observability/logs/) for more information about debugging and adding logs to Workers.
 
 | Method                                                                                                         | Behavior                                                                                           |
 | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
