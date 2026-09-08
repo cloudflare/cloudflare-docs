@@ -1,0 +1,26 @@
+---
+title: Jurisdictional restrictions for Cloudflare Queues
+description: Create queues that store and process messages only within a specific jurisdiction, such as the EU, US, or FedRAMP-compliant data centers.
+products:
+  - queues
+date: 2026-09-08
+---
+
+You can now create [Cloudflare Queues](/queues/) with jurisdictional restrictions, ensuring that messages published to a queue are stored and processed only within a specific jurisdiction. This helps you comply with data residency requirements such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+
+To create a jurisdiction-restricted queue, pass a `jurisdiction` parameter when calling the [Create Queue](/api/resources/queues/methods/create/) endpoint:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/queues \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "queue_name": "my-eu-queue",
+    "jurisdiction": "eu"
+  }'
+```
+
+Supported jurisdictions are `eu` (European Union), `us` (United States), and `fedramp` (FedRAMP-compliant data centers). Jurisdiction can only be set when a queue is created and cannot be changed afterwards. The dashboard also displays jurisdictional metadata for queues that were created with these guarantees.
+
+For more information, refer to the [Queues documentation](/queues/).
