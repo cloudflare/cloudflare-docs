@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/product-compatibility.mdx
+  s_9f20ba95c945dd::t_a017ba71b7731f 25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7c82e84507757f0649648e84fe1a71c094bebd5b",
+  "prompts": {},
+  "sessions": {
+    "s_9f20ba95c945dd": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f7fadced9ffepTkGiHC3IRDsQO",
+        "model": "@cf/moonshotai/kimi-k2.7-code"
+      },
+      "human_author": "Matt Bullock <mbullock@cloudflare.com>"
+    }
+  }
+}
