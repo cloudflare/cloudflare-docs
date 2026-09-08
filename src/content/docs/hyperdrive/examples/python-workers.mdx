@@ -13,8 +13,8 @@ products:
 
 import { Steps, Tabs, TabItem, WranglerConfig } from "~/components";
 
-Hyperdrive can be used in [Python Workers](/workers/languages/python/).
-To achieve this, you need to set the compatibility date to `2026-09-08` or later.
+You can use Hyperdrive with [Python Workers](/workers/languages/python/).
+To achieve this, you need to set your compatibility date to `2026-09-08` or later.
 
 :::caution[Hyperdrive support in Python Workers is in beta.]
 Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know if you encounter any issues.
@@ -22,16 +22,16 @@ Join the #python-workers channel in the [Cloudflare Developers Discord](https://
 
 ## Supported drivers
 
-Hyperdrive in Python Workers use the [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases.
-Therefore, you can use any Python driver that works with TCP connections.
-However, we recommend using the drivers listed below, as they have been tested and verified to work with Hyperdrive.
+Hyperdrive in Python Workers uses [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to establish database connections.
+While you can use any Python driver that works with TCP connections,
+we strongly recommend using the drivers listed below, as they have been tested and verified to work with Hyperdrive.
 
 ### PostgreSQL
 
-| Driver                  | Documentation                                                             |
-| ----------------------- | ------------------------------------------------------------------------- |
-| `psycopg` (recommended) | [psycopg documentation](https://www.psycopg.org/psycopg3/docs/index.html) |
-| `pg8000`                | [pg8000 documentation](https://codeberg.org/tlocke/pg8000)                |
+| Driver                 | Documentation                                                             |
+| ---------------------- | ------------------------------------------------------------------------- |
+| `pg8000` (recommended) | [pg8000 documentation](https://codeberg.org/tlocke/pg8000)                |
+| `psycopg`              | [psycopg documentation](https://www.psycopg.org/psycopg3/docs/index.html) |
 
 ### MySQL
 
@@ -71,8 +71,7 @@ Before you begin, [create a Python Worker](/workers/languages/python/#the-pywran
    ```toml
    [project]
    dependencies = [
-	   "psycopg",
-	   "psycopg-c",
+	   "pg8000",
    ]
    ```
 
@@ -81,7 +80,6 @@ Before you begin, [create a Python Worker](/workers/languages/python/#the-pywran
 
    import pg8000
    from workers import Response, WorkerEntrypoint
-
 
    class Default(WorkerEntrypoint):
        async def fetch(self, request):
@@ -121,15 +119,13 @@ Before you begin, [create a Python Worker](/workers/languages/python/#the-pywran
    class Default(WorkerEntrypoint):
        async def fetch(self, request):
            hd = self.env.HYPERDRIVE
-           connection = aiomysql.connect(
+           connection = await aiomysql.connect(
                host=hd.host,
                port=int(hd.port),
                user=hd.user,
                password=hd.password,
-               database=hd.database,
-               unix_socket=False,
-               ssl_disabled=True,
-               autocommit=True,
+               db=hd.database,
+               ssl=None,
            )
            try:
                with connection.cursor() as cursor:
@@ -142,15 +138,11 @@ Before you begin, [create a Python Worker](/workers/languages/python/#the-pywran
    </TabItem>
    </Tabs>
 
-   The examples disable driver-side Transport Layer Security (TLS) only for the Worker-to-Hyperdrive connection. Hyperdrive establishes an encrypted connection to your origin database using its [TLS configuration](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/).
-
 3. Deploy your Worker:
 
    ```bash
    uv run pywrangler deploy
    ```
-
-   Open the deployed URL. The response is `{"result":1}`.
 
 </Steps>
 
@@ -158,16 +150,16 @@ Before you begin, [create a Python Worker](/workers/languages/python/#the-pywran
 
 ### Socket support
 
-The TCP socket support in Python Workers internally uses [`connect`](/workers/runtime-apis/tcp-sockets/#connect) API.
-While most of the standard library's socket operations are supported, some low-level socket operations may not work as expected.
+TCP socket support in Python Workers internally uses the [`connect`](/workers/runtime-apis/tcp-sockets/#connect) API.
+While most standard library socket operations are supported, some low-level operations might not work as expected.
 
 ### Concurrency and async safety
 
 Socket operations in Python Workers do not block the event loop.
-While Python's native socket operations are synchronous, the underlying TCP socket implementation in Python Workers is asynchronous.
-This means that multiple requests can be processed concurrently, while one request is waiting for a socket operation to complete.
+Although Python's native socket operations are synchronous, the underlying TCP socket implementation in Python Workers is asynchronous.
+This allows multiple requests to be processed concurrently while one request waits for a socket operation to complete.
 
-If you want to ensure each request that does synchronous database operations is serialized, use a lock to prevent concurrent access.
+To ensure synchronous database operations are serialized, use a lock to prevent concurrent access:
 
 ```python
 import asyncio
@@ -181,5 +173,5 @@ async with lock:
 
 ### SQLAlchemy support
 
-Only synchronous SQLAlchemy ORMs are supported in Python Workers.
-Async SQLAlchemy ORMs are not supported yet due to the lack of greenlet support in Python Workers.
+Currently, only synchronous SQLAlchemy ORMs are supported in Python Workers.
+Async SQLAlchemy ORMs are not yet supported due to a lack of greenlet support in the Python Workers environment.
