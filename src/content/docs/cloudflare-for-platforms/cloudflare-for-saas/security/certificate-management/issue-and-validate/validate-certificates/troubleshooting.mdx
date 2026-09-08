@@ -75,7 +75,7 @@ Check whether the delegation CNAME is in place at the `_acme-challenge` hostname
 dig _acme-challenge.example.com CNAME +short
 ```
 
-- If this returns **nothing**, the delegation CNAME is missing. Run a TXT query to check whether a hardcoded record is also present:
+- If this returns **nothing**, the delegation CNAME is missing. Run a `TXT` query to check whether a hardcoded record is also present:
 
   ```sh
   dig _acme-challenge.example.com TXT +short
