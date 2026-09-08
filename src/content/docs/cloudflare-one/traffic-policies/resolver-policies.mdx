@@ -101,6 +101,48 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
+## Send DNS queries sourced from dedicated egress IPs <Badge text="Closed beta" variant="caution"/>
+
+:::note
+Available in closed beta for Enterprise accounts with [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/). Contact your account team to request access.
+:::
+
+By default, DNS requests that Gateway sends to your custom resolvers use shared Cloudflare source IP addresses. If your upstream resolver restricts access by source IP, you can configure a resolver policy to send those requests from your [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) instead.
+
+### Prerequisites
+
+- Your account must have dedicated egress IPs provisioned.
+- The resolver policy must include at least one public resolver. Dedicated egress IPs cannot be used when all resolvers route through private networks.
+
+### Enable dedicated egress on a resolver policy
+
+1. In the [Cloudflare One dashboard](https://dash.cloudflare.com/one), go to **Traffic policies** > **Resolver policies**.
+2. Create or edit a resolver policy that uses custom DNS resolvers.
+3. Under the custom resolver configuration, turn on **Use dedicated egress IPs for DNS requests to custom resolvers**.
+4. Select a **Primary IPv4**, **IPv6**, and optionally a **Secondary IPv4** address from the available dedicated egress IPs.
+5. Save the policy.
+
+### API configuration
+
+To configure dedicated egress on a resolver policy via the API, add an `egress` object to `rule_settings`:
+
+```json
+{
+	"rule_settings": {
+		"dns_resolvers": {
+			"ipv4": [{ "ip": "198.51.100.1" }]
+		},
+		"egress": {
+			"ipv4": "104.30.133.232",
+			"ipv6": "2a09:bac0:1000:3ec::/64",
+			"ipv4_fallback": "104.30.134.156"
+		}
+	}
+}
+```
+
+The `egress` object uses the same schema as [egress policies](/cloudflare-one/traffic-policies/egress-policies/).
+
 ## Selectors
 
 ### Content Categories

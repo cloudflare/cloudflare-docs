@@ -6,6 +6,46 @@
 	"provider": {
 		"cloudflare-ai-gateway": {
 			"models": {
+				"workers-ai/@cf/deepseek-ai/deepseek-v4-flash-0731": {
+					"name": "DeepSeek V4 Flash",
+					"reasoning": true,
+					"tool_call": true,
+					"temperature": true,
+					"interleaved": {
+						"field": "reasoning_content",
+					},
+					"modalities": {
+						"input": ["text"],
+						"output": ["text"],
+					},
+					"limit": {
+						"context": 1048576,
+						"output": 64000,
+					},
+					"options": {
+						"parallel_tool_calls": true,
+					},
+				},
+				"workers-ai/@cf/zai-org/glm-4.7-flash": {
+					"name": "GLM-4.7-Flash",
+					"reasoning": true,
+					"tool_call": true,
+					"temperature": true,
+					"interleaved": {
+						"field": "reasoning_content",
+					},
+					"modalities": {
+						"input": ["text"],
+						"output": ["text"],
+					},
+					"limit": {
+						"context": 131072,
+						"output": 131072,
+					},
+					"options": {
+						"parallel_tool_calls": true,
+					},
+				},
 				"workers-ai/@cf/moonshotai/kimi-k2.5": {
 					"name": "Kimi K2.5",
 					"attachment": true,

@@ -1,0 +1,15 @@
+---
+title: Run Cursor Cloud Agents on Cloudflare via self-hosted machines
+description: Run Cursor Cloud Agents on Cloudflare, with each session in an isolated self-hosted machine backed by Cloudflare Containers.
+products:
+  - sandbox
+date: 2026-09-02
+---
+
+[Cursor self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted) let you run Cursor Cloud Agents on Cloudflare. Each assigned session runs in its own isolated environment backed by [Cloudflare Containers](/containers/).
+
+![Cursor Cloud Agents environment selector showing the cloudflare-pool self-hosted machine pool](~/assets/images/changelog/sandbox/cursor-cloud-agents-self-hosted-pool.png)
+
+Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, file edits, repository operations, and other tools inside infrastructure that you control. The open-source [Cursor Cloudflare Workers template](https://github.com/anysphere/cloudflare-workers) deploys the Worker, Durable Object namespace, container application, R2 bucket binding, and cron trigger used by the integration.
+
+To get started, refer to [Run Cursor Cloud Agents on Cloudflare via self-hosted machines](/sandbox/tutorials/cursor-cloud-agents/).
