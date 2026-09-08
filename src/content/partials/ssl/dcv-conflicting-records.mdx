@@ -13,18 +13,14 @@ _acme-challenge.example.com TXT <CERTIFICATE_VALIDATION_VALUE>
 
 This includes records that Cloudflare may have placed automatically during a previous certificate order or Universal SSL issuance. If your customer's domain is also present in a direct Cloudflare zone (for example, they proxy `example.com` through their own Cloudflare account), check that zone's DNS records for any `_acme-challenge` entries and remove them.
 
-To verify whether a conflicting TXT record is present, first check whether a delegation CNAME record exists at the `_acme-challenge` hostname:
+To check whether the delegation CNAME is in place, run:
 
 ```sh
 dig _acme-challenge.example.com CNAME +short
 ```
 
-If this returns a CNAME target, the delegated DCV record is in place. Then check whether a hardcoded TXT record also exists at this name:
+If this returns nothing, the delegation CNAME is not present — add it before proceeding.
 
-```sh
-dig _acme-challenge.example.com TXT +short
-```
-
-If the CNAME query returned nothing and the TXT query returns a raw token string, a hardcoded TXT record exists at `_acme-challenge.example.com` and is causing a conflict. Refer to [Troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#conflicting-_acme-challenge-txt-records) for remediation steps.
+If the CNAME is in place but certificate validation is still stuck, a conflicting `_acme-challenge` TXT record may exist inside your customer's direct Cloudflare zone. Because resolvers follow the CNAME chain rather than exposing records at the source name, the only way to confirm this is to inspect the customer's zone directly: go to **DNS** > **Records** in the Cloudflare dashboard for their zone and look for any `_acme-challenge` TXT entries. Refer to [Troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#conflicting-_acme-challenge-txt-records) for remediation steps.
 
 :::

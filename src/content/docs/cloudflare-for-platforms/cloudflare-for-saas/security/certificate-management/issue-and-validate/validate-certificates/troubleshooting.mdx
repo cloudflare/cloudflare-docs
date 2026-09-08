@@ -16,7 +16,7 @@ head:
 
 ## High-risk domains
 
-Occasionally, a domain will be flagged as "high risk" by Cloudflare's CA partners. Typically this is done only for domains with an Alexa ranking of 1-1,000 and domains that have been flagged for phishing or malware by Google's Safe Browsing service.
+Occasionally, a domain will be flagged as "high risk" by Cloudflare's CA partners. Typically this is done only for domains that have been flagged for phishing or malware by Google's Safe Browsing service.
 
 If a domain is flagged by the CA, you need to contact Support before validation can finish. The API call will return indicating the failure, along with a link to where the ticket can be filed.
 
@@ -69,17 +69,14 @@ If certificate validation is stuck despite the correct CNAME or TXT records bein
 
 ### How to diagnose
 
-Run these commands to check what type of records exist at the `_acme-challenge` hostname:
+Check whether the delegation CNAME is in place at the `_acme-challenge` hostname:
 
 ```sh
 dig _acme-challenge.example.com CNAME +short
 ```
 
-```sh
-dig _acme-challenge.example.com TXT +short
-```
-
-If the CNAME query returns empty and the TXT query returns a raw token string, a hardcoded TXT record exists directly at the `_acme-challenge` hostname and is preventing the delegated DCV CNAME from taking effect.
+- If this returns **nothing**, the delegation CNAME is missing. If a TXT query also returns a raw token string, a hardcoded `_acme-challenge` TXT record is present and is blocking certificate issuance — remove it before adding the delegation CNAME.
+- If this returns a **CNAME target** but certificate validation is still stuck, the conflict is likely a hardcoded `_acme-challenge` TXT record inside your customer's direct Cloudflare zone. Because resolvers follow the CNAME chain rather than exposing records at the source name, the only way to confirm this is to inspect the customer's zone directly: go to **DNS** > **Records** in the Cloudflare dashboard for their zone and look for any `_acme-challenge` TXT entries.
 
 ### Common causes and remediation
 
