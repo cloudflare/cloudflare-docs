@@ -166,12 +166,13 @@ To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/b
 
 ### Will I be charged for failed requests to my R2 bucket?
 
-Requests that fail at the authentication layer are not charged. This includes:
+Requests that fail during authentication or authorization are not charged. This includes:
 
 - HTTP 401 (`Unauthorized`) — missing or invalid credentials.
 - HTTP 403 when caused by an authentication failure such as `SignatureDoesNotMatch`, `ExpiredRequest`, or `RequestTimeTooSkewed`.
+- HTTP 403 (`AccessDenied`) when valid credentials do not have permission to perform the operation.
 
-Requests that pass authentication but fail for other reasons are counted and billed according to the operation's class. For example:
+Requests that pass authentication and authorization but fail for other reasons are counted and billed according to the operation's class. For example:
 
 - A `PutObject` returning HTTP 412 (`PreconditionFailed`) due to a conditional header like `If-None-Match` counts as a Class A operation.
 - A `PutObject` returning HTTP 400 (`BadDigest`) due to a mismatched `Content-MD5` counts as a Class A operation.
