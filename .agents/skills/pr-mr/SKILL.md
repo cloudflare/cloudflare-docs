@@ -1,40 +1,43 @@
 ---
 name: pr-mr
-description: Guides opening, creating, submitting, updating, and editing pull requests and merge requests for cloudflare-docs changes. Covers title conventions, branch naming, request body structure, and documentation checklist templates. Load when asked to open, create, submit, update, or edit a PR or MR, or write a title or description.
+description: Creates and updates pull requests and merge requests for cloudflare-docs changes. Covers title conventions, branch naming, request body structure, and documentation checklist templates. Load when asked to open, create, submit, update, or edit a PR or MR, or write a title or description.
 ---
 
-Use this skill to prepare request titles and descriptions and guide the request lifecycle. Use the process appropriate for the contributor's repository to perform repository actions.
+Use this skill to prepare, create, and update pull requests and merge requests. Use the process appropriate for the contributor's repository to perform repository actions.
 
 ## Editing an existing request
 
-When asked to update or edit an existing request description (or title), follow these rules strictly — then stop. Do not proceed to the "Creating a new request" steps below.
+When asked to update or edit an existing request description (or title), follow these rules strictly. Do not create a new request.
 
-1. **Always read the current request description first** before making any changes.
-2. **If the description is empty**, treat it as a new request body and follow the template and guidelines in the "Creating a new request" section below.
+1. **Always read the current request title, description, and target branch first** before making any changes.
+2. **If the description is empty**, treat it as a new request body and follow Steps 1–3 in the "Creating a new request" section below. Apply the result to the existing request; do not create another request.
 3. **Follow the existing format** — if the author has structured their description in a particular way, preserve that structure. Do not reformat, reorder, or restructure sections they wrote.
 4. **Only change what was asked** — make the minimum edit necessary to fulfill the request. Do not "improve" unrelated phrasing, fix grammar elsewhere, rewrite the summary, or modify checklist items that were not part of the request.
+5. Apply the requested title or description changes through the process appropriate for the contributor's repository.
 
 ## After pushing to a branch with an open request
 
 Whenever you push new commits to a branch that already has an open request, check whether its title and description still accurately describe what the branch now does. New commits often add scope the original description does not mention.
 
 1. Check whether the branch has an open request.
-2. Compare the title and body against the full branch diff (`git diff production...HEAD --stat`), not just the latest commit.
+2. Compare the title and body against the full branch diff (`git diff <base>...HEAD --stat`), using the request's target branch as `<base>`, not just the latest commit.
 3. If they are now inaccurate or incomplete, update them following the "Editing an existing request" rules above — preserve the author's structure and make the minimum edit needed to reflect the new changes. If they still describe the branch correctly, leave them unchanged.
 
 Do this proactively after a push; you do not need to be asked separately to keep the request in sync.
 
 ## Creating a new request
 
-Follow Steps 1–4 below only when creating a new request (or when an existing request has an empty description).
+Follow Steps 1–4 below only when creating a new request. For an existing request with an empty description, follow Steps 1–3 and update that request as described above.
 
 ## Step 1 — Gather context
 
 Run `--stat` first to understand the scope without blowing up context:
 
+Determine the request's target branch first. For an existing request, use its current target branch. For a new request, use `production` unless the user asked for a different base.
+
 ```bash
-git log --oneline production..HEAD
-git diff production...HEAD --stat
+git log --oneline <base>..HEAD
+git diff <base>...HEAD --stat
 git status
 ```
 
@@ -43,7 +46,7 @@ git status
 If the stat output shows more than ~20 files changed, do **not** run the full diff. Instead, read specific files that are unclear from the stat output. For smaller changesets (under ~20 files), the full diff is fine:
 
 ```bash
-git diff production...HEAD
+git diff <base>...HEAD
 ```
 
 ## Step 2 — Write the request title
@@ -179,12 +182,16 @@ Remove individual checklist items that genuinely do not apply. Do not leave unch
 - **Cross-product changes without explanation** — If the request touches files across multiple product areas, explain the connection. Unrelated-looking changes with no stated reason are a red flag for reviewers.
 - **Pruning the checklist wrong** — Remove individual items that do not apply. Do not delete the entire checklist section unless none of the items are relevant. Reviewers use the remaining items to quickly verify coverage.
 
-## Step 4 — Prepare the request
+## Step 4 — Create the request
 
 Build the request body by starting from the template read in Step 3 — replace the summary placeholder comment with the actual summary, remove checklist items that do not apply, and handle the screenshots section per the guidance above.
 
-Create all requests as drafts. The author should review the deploy preview before marking the request ready for review.
+Confirm that the branch and its commits are available to the hosting provider. If they must be pushed and the user has not authorized a push, ask for permission before pushing.
+
+Before creating a request, check for an existing open request with the same head branch and target `<base>`. If one exists, update or return that request instead of creating a duplicate.
+
+Create the pull request or merge request against the resolved `<base>` through the process appropriate for the contributor's repository. Create it as a draft when the hosting provider supports drafts. The author should review the deploy preview before marking a draft ready or requesting review for a request that cannot be drafted.
 
 ## Output
 
-Share the proposed title and body. Do not create, edit, or link to a pull request or merge request.
+Share the pull request or merge request URL and its draft or review status.
