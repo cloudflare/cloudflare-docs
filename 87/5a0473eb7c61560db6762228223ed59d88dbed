@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-09-03-cursor-origin-workers-builds.mdx
+  s_ebd1ee47e7f29a::t_e1fee7bd5f2523 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "875a0473eb7c61560db6762228223ed59d88dbed",
+  "prompts": {},
+  "sessions": {
+    "s_ebd1ee47e7f29a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fa5f8c0aaffe3Naa16nXvwWfA3",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/workers/configuration/cloudflare-access.mdx
+  s_d3fcc799e67fb8::t_2b9726a410cc6f 11,13,15-17,227-253
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7b873f7ea4d79f413cf0872b72340d95deba39eb",
+  "prompts": {},
+  "sessions": {
+    "s_d3fcc799e67fb8": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_06b2f98faffeT6yQ7YHgxJF3ad",
+        "model": "gpt-5.6"
+      },
+      "human_author": "chythra-w1 <chythra-w1@users.noreply.github.com>"
+    }
+  }
+}

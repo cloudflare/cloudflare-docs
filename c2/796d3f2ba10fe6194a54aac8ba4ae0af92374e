@@ -1,0 +1,35 @@
+src/content/changelog/agents/2026-07-27-agents-sdk-v0.20.0-mcp-sdk-v2.mdx
+  s_90de8aa6df6bc1::t_9b71f369088995 2-3,12,14,16,35,39,56,60,62
+src/content/docs/agents/model-context-protocol/guides/remote-mcp-server.mdx
+  s_90de8aa6df6bc1::t_3522189fea88e9 26-28,31
+src/content/docs/agents/model-context-protocol/protocol/authorization.mdx
+  s_eefe28a0275aa8::t_ca7ae27def2185 205
+src/content/docs/agents/model-context-protocol/protocol/tools.mdx
+  s_90de8aa6df6bc1::t_6936eab679961c 17,33,173
+src/content/docs/agents/model-context-protocol/protocol/transport.mdx
+  s_eefe28a0275aa8::t_fcff0e3d03141c 90,92,94,96,313,317,319
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c2796d3f2ba10fe6194a54aac8ba4ae0af92374e",
+  "prompts": {},
+  "sessions": {
+    "s_90de8aa6df6bc1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f93e8-0720-7778-a066-738c64cde4bc",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    },
+    "s_eefe28a0275aa8": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f7fed-c755-7b56-a459-1d14b58038b8",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

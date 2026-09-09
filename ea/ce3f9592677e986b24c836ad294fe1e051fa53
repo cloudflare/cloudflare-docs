@@ -1,0 +1,21 @@
+src/content/changelog/pages/2026-08-11-skip-superseded-builds.mdx
+  s_225c95b2d3b188::t_12bea65d110485 1-13
+src/content/changelog/workers/2026-07-24-skip-superseded-builds.mdx
+  s_225c95b2d3b188::t_e070674699db66 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "eace3f9592677e986b24c836ad294fe1e051fa53",
+  "prompts": {},
+  "sessions": {
+    "s_225c95b2d3b188": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff165-8cc5-7952-af1e-256d9488f270",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}
