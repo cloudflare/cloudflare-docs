@@ -830,6 +830,14 @@
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
 /durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
+# Email Service information architecture
+/email-service/local-development/ /email-service/guides/local-development/ 301
+/email-service/local-development/sending/ /email-service/guides/local-development/sending/ 301
+/email-service/local-development/routing/ /email-service/guides/local-development/routing/ 301
+/email-service/platform/email-routing-rest-api/ /email-service/api/email-routing-rest-api/ 301
+/email-service/platform/email-sending-rest-api/ /email-service/api/email-sending-rest-api/ 301
+/email-service/platform/event-subscriptions/ /email-service/reference/event-subscriptions/ 301
+
 # Email Routing -> Email Service (product merged)
 # Top-level
 /email-routing/ /email-service/ 301
@@ -860,7 +868,7 @@
 /email-routing/email-workers/reply-email-workers/ /email-service/api/route-emails/email-handler/#reply-to-emails 301
 /email-routing/email-workers/send-email-workers/ /email-service/api/send-emails/workers-api/ 301
 /email-routing/email-workers/runtime-api/ /email-service/api/route-emails/email-handler/ 301
-/email-routing/email-workers/local-development/ /email-service/local-development/routing/ 301
+/email-routing/email-workers/local-development/ /email-service/guides/local-development/routing/ 301
 
 # Troubleshooting
 /email-routing/troubleshooting/ /email-service/reference/troubleshooting/ 301
