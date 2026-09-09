@@ -13,12 +13,12 @@ import { DashButton } from "~/components"
 
 To maintain optimal site performance, Cloudflare strongly recommends using single-file (by URL) purging instead of a complete cache purge.
 
-Purging everything instantly clears all resources from your CDN cache in all Cloudflare data centers. Each new request for a purged resource returns to your origin server to validate the resource. If Cloudflare cannot validate the resource, Cloudflare fetches the latest version from the origin server and replaces the cached version.
+Purging everything instantly clears all resources from your CDN cache in all Cloudflare data centers. Each new request for a purged resource returns to your origin server to validate the resource. If the cached version is no longer valid, Cloudflare fetches the latest version from your origin server and caches it.
 
 :::caution
 When you purge everything, all cached content for your zone is removed at once. Every subsequent request must be served from your origin until the cache is repopulated. On high-traffic sites with many assets, this can cause a large spike in origin requests and may significantly slow down your site or overload your origin server.
 
-Before using purge everything, consider whether a more targeted method — such as [purge by URL](/cache/how-to/purge-cache/purge-by-single-file/), [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), or [purge by tag](/cache/how-to/purge-cache/purge-by-tags/) — can achieve the same result with less impact on your origin.
+Before using purge everything, consider whether a more targeted method — such as [purge by URL](/cache/how-to/purge-cache/purge-by-single-file/), [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), or [purge by tag](/cache/how-to/purge-cache/purge-by-tags/) — can achieve the same result with less impact on your origin. If your zone uses [Tiered Cache](/cache/how-to/tiered-cache/), cache repopulation also propagates across cache tiers, which can further increase origin load during this period.
 :::
 
 1. In the Cloudflare dashboard, go to the **Configuration** page.
