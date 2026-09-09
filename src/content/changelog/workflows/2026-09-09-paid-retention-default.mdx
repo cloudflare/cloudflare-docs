@@ -8,7 +8,7 @@ date: 2026-09-09 12:00:00 UTC
 
 import { TypeScriptExample } from "~/components";
 
-[Workflows](/workflows/) created on or after August 27, 2026, on the Workers Paid plan retain completed and errored instance state for seven days by default instead of 30 days. The maximum retention [limit](/workflows/reference/limits/) remains 30 days. 
+[Workflows](/workflows/) created on or after September 9, 2026, on the Workers Paid plan retain completed and errored instance state for seven days by default (previously 30 days). The seven day default helps to reduce storage costs by default. The maximum retention [limit](/workflows/reference/limits/) remains 30 days. 
 
 The retention period for existing Workflows is unchanged. The Workers Free plan retains its three-day default and limit.
 
@@ -19,7 +19,7 @@ To set the retention period for a Workflow instance, specify `successRetention`,
 ```ts
 const instance = await env.MY_WORKFLOW.create({
 	retention: {
-		successRetention: "1 day",
+		successRetention: "2 days",
 		errorRetention: "30 days",
 	},
 });
