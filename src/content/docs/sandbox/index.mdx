@@ -1,6 +1,6 @@
 ---
-title: Sandbox SDK
-description: Build secure, isolated code execution environments powered by Cloudflare Workers and Containers.
+title: Sandboxes on Cloudflare
+description: Execute untrusted or generated code in isolated Workers or Linux virtual machines.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -11,311 +11,129 @@ products:
   - sandbox
   - workers
   - containers
+  - dynamic-workers
+  - durable-objects
 ---
 
 import {
 	CardGrid,
 	Description,
-	Feature,
 	LinkTitleCard,
 	Plan,
 	RelatedProduct,
 	LinkButton,
-	Tabs,
-	TabItem,
+	TypeScriptExample,
 } from "~/components";
 
 <Description>
 
-Build secure, isolated code execution environments
+Execute untrusted or generated code away from your application
 
 </Description>
 
 <Plan type="workers-paid" />
 
-:::note[Sandbox SDK 1.0 preview]
-These pages document the current stable `@cloudflare/sandbox` package. The next major release is **Sandbox SDK 1.0**, available as a preview on `@cloudflare/sandbox@next`.
+A sandbox is an isolated place to run untrusted or generated work. The program you load there has its own memory and, when it needs them, its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
 
-We recommend starting new projects on the preview, and migrating existing apps when you can, so you are ready when 1.0 becomes the stable release. Refer to the [1.0 preview](/sandbox/1-0-preview/) section for install, concepts, API reference, and migration.
-:::
+You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
-The Sandbox SDK enables you to run untrusted code securely in isolated environments. Built on [Containers](/containers/), Sandbox SDK provides a simple API for executing commands, managing files, running background processes, and exposing services — all from your [Workers](/workers/) applications.
+Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the program that already handles your traffic.
 
-Sandboxes are ideal for building AI agents that need to execute code, interactive development environments, data analysis platforms, CI/CD systems, and any application that needs secure code execution at the edge. Each sandbox runs in its own isolated container with a full Linux environment, providing strong security boundaries while maintaining performance.
+---
 
-With Sandbox, you can execute Python scripts, run Node.js applications, analyze data, compile code, and perform complex computations — all with a simple TypeScript API and no infrastructure to manage.
+## Dynamic Workers
 
-<Tabs>
-  <TabItem label="Execute Commands">
-	```typescript
-	import { getSandbox } from '@cloudflare/sandbox';
+[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, TypeScript, Python, or WebAssembly. It starts in milliseconds.
 
-    export { Sandbox } from '@cloudflare/sandbox';
+That code cannot see your application's memory. It can use only the APIs and data you pass in, and it cannot reach the Internet unless you allow it.
 
-    export default {
-    	async fetch(request: Request, env: Env): Promise<Response> {
-    		const sandbox = getSandbox(env.Sandbox, 'user-123');
+The isolation comes from V8, the JavaScript engine in Chrome. V8 runs the code in an isolate: a sandbox that cannot read memory outside itself. The Workers platform adds a second layer around the process and exposes only the APIs you grant. For more information, refer to the [Workers security model](/workers/reference/security-model/).
 
-    		// Execute a command and get the result
-    		const result = await sandbox.exec('python --version');
+<TypeScriptExample>
 
-    		return Response.json({
-    			output: result.stdout,
-    			exitCode: result.exitCode,
-    			success: result.success
-    		});
-    	}
-    };
-    ```
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const worker = env.LOADER.load({
+			compatibilityDate: "$today",
+			mainModule: "src/index.js",
+			modules: {
+				"src/index.js": `
+					export default {
+						fetch() {
+							return new Response("Hello from a sandbox");
+						},
+					};
+				`,
+			},
+			globalOutbound: null,
+		});
 
-  </TabItem>
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
 
-    <TabItem label="Code interpreter">
-    ```typescript
-    import { getSandbox } from '@cloudflare/sandbox';
+</TypeScriptExample>
 
-    export { Sandbox } from '@cloudflare/sandbox';
-
-    export default {
-    	async fetch(request: Request, env: Env): Promise<Response> {
-    		const sandbox = getSandbox(env.Sandbox, 'user-123');
-
-    		// Create a Python execution context
-    		const ctx = await sandbox.createCodeContext({ language: 'python' });
-
-    		// Execute Python code with automatic result capture
-    		const result = await sandbox.runCode(`
-    import pandas as pd
-    data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
-    df = pd.DataFrame(data)
-    df['sales'].sum()  # Last expression is automatically returned
-    	`, { context: ctx });
-
-    			return Response.json({
-    				result: result.results?.[0]?.text,
-    				logs: result.logs
-    			});
-    		}
-    	};
-    	```
-    </TabItem>
-
-    <TabItem label="File Operations">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
-
-    	export { Sandbox } from '@cloudflare/sandbox';
-
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
-
-    			// Create a project structure
-    			await sandbox.mkdir('/workspace/project/src', { recursive: true });
-
-    			// Write files
-    			await sandbox.writeFile(
-    				'/workspace/project/package.json',
-    				JSON.stringify({ name: 'my-app', version: '1.0.0' })
-    			);
-
-    			// Read a file back
-    			const content = await sandbox.readFile('/workspace/project/package.json');
-
-    			return Response.json({ content });
-    		}
-    	};
-    	```
-    </TabItem>
-
-    <TabItem label="File watching">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
-
-    	export { Sandbox } from '@cloudflare/sandbox';
-
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
-
-    			// Watch for file changes in real-time
-    			const watcher = await sandbox.watch('/workspace/src', {
-    				include: ['*.js', '*.ts'],
-    				onEvent: (event) => {
-    					console.log(`${event.type}: ${event.path}`);
-    					if (event.type === 'modify') {
-    						// Trigger rebuild or hot reload
-    						console.log('Code changed, recompiling...');
-    					}
-    				},
-    				onError: (error) => {
-    					console.error('Watch error:', error);
-    				}
-    			});
-
-    			// Stop watching when done
-    			setTimeout(() => watcher.stop(), 60000);
-
-    			return Response.json({ message: 'File watcher started' });
-    		}
-    	};
-    	```
-    </TabItem>
-
-    <TabItem label="Terminal Access">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
-
-    	export { Sandbox } from '@cloudflare/sandbox';
-
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const url = new URL(request.url);
-
-    			// Terminal WebSocket connection
-    			if (url.pathname === '/ws/terminal') {
-    				const sandbox = getSandbox(env.Sandbox, 'user-123');
-    				return sandbox.terminal(request, { cols: 80, rows: 24 });
-    			}
-
-    			return Response.json({ message: 'Terminal endpoint' });
-    		}
-    	};
-    	```
-
-    	Connect browser terminals directly to sandbox shells via WebSocket. Learn more: [Browser terminals](/sandbox/guides/browser-terminals/).
-    </TabItem>
-
-    <TabItem label="WebSocket connections">
-    	```typescript
-    	import { getSandbox } from '@cloudflare/sandbox';
-
-    	export { Sandbox } from '@cloudflare/sandbox';
-
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			// Connect to WebSocket services in sandbox
-    			if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
-    				const sandbox = getSandbox(env.Sandbox, 'user-123');
-    				return await sandbox.wsConnect(request, 8080);
-    			}
-
-    			return Response.json({ message: 'WebSocket endpoint' });
-    		}
-    	};
-    	```
-
-    	Connect to WebSocket servers running in sandboxes. Learn more: [WebSocket Connections](/sandbox/guides/websocket-connections/).
-    </TabItem>
-
-</Tabs>
-
-<LinkButton variant="primary" href="/sandbox/get-started/">
-	Get started
-</LinkButton>
-<LinkButton variant="secondary" href="/sandbox/api/">
-	API Reference
+<LinkButton variant="primary" href="/dynamic-workers/getting-started/">
+	Get started with Dynamic Workers
 </LinkButton>
 
 ---
 
-## Features
+## Containers
 
-<Feature header="Deploy a Sandbox application" href="/sandbox/guides/deploy/" cta="Deploy a Sandbox app">
+[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can use any language or runtime, install packages, compile code, and keep long-running processes. Your Worker can start the instance and send it work.
 
-Deploy your Worker and keep the npm package and container image on the same release line.
+The instance does not share a process or a kernel with your Worker, so it cannot read your Worker's memory. Other instances or customers cannot reach it. HTTP traffic from the Internet reaches it only through your Worker.
 
-</Feature>
+Each instance runs in Firecracker: a microVM with its own kernel and network. Your image is a Linux container inside that VM, and no other workload shares it.
 
-<Feature header="Execute commands securely" href="/sandbox/guides/execute-commands/" cta="Learn about command execution">
+<TypeScriptExample>
 
-Run shell commands, Python scripts, Node.js applications, and more with streaming output support and automatic timeout handling.
+```ts
+import { Container, getContainer } from "@cloudflare/containers";
 
-</Feature>
+export class MyContainer extends Container {
+	defaultPort = 4000;
+	sleepAfter = "10m";
+}
 
-<Feature header="Manage files and processes" href="/sandbox/guides/manage-files/" cta="Learn about file operations">
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { "session-id": sessionId } = await request.json();
+		const container = getContainer(env.MY_CONTAINER, sessionId);
+		return container.fetch(request);
+	},
+};
+```
 
-Read, write, and manipulate files in the sandbox filesystem. Run background processes, monitor output, and manage long-running operations.
+</TypeScriptExample>
 
-</Feature>
-
-<Feature header="Expose services with preview URLs" href="/sandbox/guides/expose-services/" cta="Learn about preview URLs">
-
-Expose HTTP services running in your sandbox with automatically generated preview URLs, perfect for interactive development environments and application hosting.
-
-</Feature>
-
-<Feature header="Execute code directly" href="/sandbox/guides/code-execution/" cta="Learn about code execution">
-
-Execute Python and JavaScript code with rich outputs including charts, tables, and images. Maintain persistent state between executions for AI-generated code and interactive workflows.
-
-</Feature>
-
-<Feature header="Build interactive terminals" href="/sandbox/guides/browser-terminals/" cta="Learn about terminal UIs">
-
-Create browser-based terminal interfaces that connect directly to sandbox shells via WebSocket. Build collaborative terminals, interactive development environments, and real-time shell access with automatic reconnection.
-
-</Feature>
-
-<Feature header="Persistent storage with object storage" href="/sandbox/guides/mount-buckets/" cta="Learn about bucket mounting">
-
-Mount S3-compatible object storage (R2, S3, GCS, and more) as local filesystems. Access buckets using standard file operations with data that persists across sandbox lifecycles. Production deployment required.
-
-</Feature>
-
-<Feature header="Watch files for real-time changes" href="/sandbox/guides/file-watching/" cta="Learn about file watching">
-
-Monitor files and directories for changes using native filesystem events. Perfect for building hot reloading development servers, build automation systems, and configuration monitoring tools.
-
-</Feature>
-
-<Feature header="Handle outbound traffic" href="/sandbox/guides/outbound-traffic/" cta="Learn about outbound traffic">
-
-Block, allow, and intercept outbound HTTP from sandboxes. Keep credentials in your Worker by injecting authorization headers in outbound handlers.
-
-</Feature>
-
----
-
-## Use Cases
-
-Build powerful applications with Sandbox:
-
-### AI Code Execution
-
-Execute code generated by Large Language Models safely and reliably. Native integration with [Workers AI](/workers-ai/) models like GPT-OSS enables function calling with sandbox execution. Perfect for AI agents, code assistants, and autonomous systems that need to run untrusted code.
-
-### Data Analysis & Notebooks
-
-Create interactive data analysis environments with pandas, NumPy, and Matplotlib. Generate charts, tables, and visualizations with automatic rich output formatting.
-
-### Interactive Development Environments
-
-Build cloud IDEs, coding playgrounds, and collaborative development tools with full Linux environments and preview URLs.
-
-### CI/CD & Build Systems
-
-Run tests, compile code, and execute build pipelines in isolated environments with parallel execution and streaming logs.
+<LinkButton variant="primary" href="/containers/get-started/">
+	Get started with Containers
+</LinkButton>
 
 ---
 
 ## Related products
 
-<RelatedProduct header="Containers" href="/containers/" product="containers">
+<RelatedProduct header="Workers" href="/workers/" product="workers">
 
-Serverless container runtime that powers Sandbox, enabling you to run any containerized workload on the edge.
-
-</RelatedProduct>
-
-<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
-
-Run machine learning models and LLMs on the network. Combine with Sandbox for secure AI code execution workflows.
+The serverless platform these sandbox environments run on.
 
 </RelatedProduct>
 
 <RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
 
-Stateful coordination layer that enables Sandbox to maintain persistent environments with strong consistency.
+Identity and coordination for an attached container.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run models on Cloudflare, then execute the code they generate in a sandbox.
 
 </RelatedProduct>
 
@@ -323,83 +141,42 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 
 ## More resources
 
-## Coding agents
-
-Install [Cloudflare Skills](https://github.com/cloudflare/skills) for your agent ([Agent setup](/agent-setup/)). Use **`sandbox-stable`** with the main docs on this site while you are on the current stable package. Use **`sandbox-next`** for `@cloudflare/sandbox@next` (recommended for new projects). When you are ready to port an existing app, use **`sandbox-migrate-to-next`**.
-
 <CardGrid>
 
-<LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="open-book">
-	Explore complete examples including AI code execution, data analysis, and
-	interactive environments.
+<LinkTitleCard title="Code Mode" href="/agents/tools/codemode/" icon="rocket">
+	Run model-generated JavaScript against typed tools in a sandbox.
+</LinkTitleCard>
+
+<LinkTitleCard title="Sandbox SDK" href="/sandbox/sdk/" icon="open-book">
+	TypeScript API for commands, files, and preview URLs on Containers.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Deploy a Sandbox application"
-	href="/sandbox/guides/deploy/"
-	icon="document"
+	title="Workers security model"
+	href="/workers/reference/security-model/"
+	icon="seti:lock"
 >
-	Deploy and keep package and image aligned.
+	V8 isolates, process sandboxes, and the APIs a Worker can use.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="How-to Guides"
-	href="/sandbox/guides/"
-	icon="seti:notebook"
->
-	Learn how to solve specific problems and implement features with the Sandbox
-	SDK.
-</LinkTitleCard>
-
-<LinkTitleCard title="1.0 preview" href="/sandbox/1-0-preview/" icon="rocket">
-	Install `@cloudflare/sandbox@next` and prepare for the Sandbox SDK 1.0
-	release.
-</LinkTitleCard>
-
-<LinkTitleCard title="API reference" href="/sandbox/api/" icon="seti:json">
-	Explore the complete API documentation for the Sandbox SDK.
-</LinkTitleCard>
-
-<LinkTitleCard title="Concepts" href="/sandbox/concepts/" icon="seti:info">
-	Learn about the key concepts and architecture of the Sandbox SDK.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Configuration"
-	href="/sandbox/configuration/"
-	icon="setting"
->
-	Learn about the configuration options for the Sandbox SDK.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="GitHub Repository"
-	href="https://github.com/cloudflare/sandbox-sdk"
-	icon="github"
->
-	View the SDK source code, report issues, and contribute to the project.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Pricing"
-	href="/sandbox/platform/pricing/"
+	title="Dynamic Workers pricing"
+	href="/dynamic-workers/pricing/"
 	icon="seti:shell"
 >
-	Understand Sandbox pricing based on the underlying Containers platform.
-</LinkTitleCard>
-
-<LinkTitleCard title="Limits" href="/sandbox/platform/limits/" icon="error">
-	Learn about resource limits, quotas, and best practices for working within
-	them.
+	Requests, CPU time, and unique Dynamic Workers created per day.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Discord Community"
-	href="https://discord.cloudflare.com"
-	icon="discord"
+	title="Containers pricing"
+	href="/containers/platform/pricing/"
+	icon="seti:shell"
 >
-	Connect with the community on Discord. Ask questions, share what you're
-	building, and get help from other developers.
+	vCPU, memory, disk, and egress for container instances.
+</LinkTitleCard>
+
+<LinkTitleCard title="Limits" href="/containers/platform/limits/" icon="error">
+	Container instance types, image size, and other platform limits.
 </LinkTitleCard>
 
 </CardGrid>

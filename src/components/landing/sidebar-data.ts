@@ -97,7 +97,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Agents", "/agents/"),
 					link("Agent Memory", "/agent-memory/"),
 					link("Wallets", "/wallets/"),
-					link("Sandbox SDK", "/sandbox/"),
+					link("Sandboxes", "/sandbox/"),
 					link("Vectorize", "/vectorize/"),
 					link("AI Search", "/ai-search/"),
 					link("AI Crawl Control", "/ai-crawl-control/"),
