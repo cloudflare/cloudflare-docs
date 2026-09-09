@@ -1,0 +1,13 @@
+id: bRzmpp
+name: Insights
+
+entry:
+  title: Insights
+  group: Cloudflare One
+  url: /cloudflare-one/insights/
+  show: false
+
+meta:
+  title: Cloudflare One insights docs
+  description: Monitor and troubleshoot Cloudflare One with analytics, logs, and Digital Experience Monitoring
+  author: "@cloudflare"

@@ -1,0 +1,13 @@
+id: WiVrTR
+name: Networks
+
+entry:
+  title: Networks
+  group: Cloudflare One
+  url: /cloudflare-one/networks/
+  show: false
+
+meta:
+  title: Cloudflare One networks docs
+  description: Connect private networks, hosts, and branch sites to Cloudflare One
+  author: "@cloudflare"

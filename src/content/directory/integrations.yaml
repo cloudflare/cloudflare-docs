@@ -1,0 +1,13 @@
+id: GikHM7
+name: Integrations
+
+entry:
+  title: Integrations
+  group: Cloudflare One
+  url: /cloudflare-one/integrations/
+  show: false
+
+meta:
+  title: Cloudflare One integrations docs
+  description: Connect Cloudflare One to identity providers, SaaS applications, and endpoint security vendors
+  author: "@cloudflare"
