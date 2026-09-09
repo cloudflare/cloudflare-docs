@@ -62,7 +62,7 @@ from urllib.parse import urlparse
 class Default(WorkerEntrypoint):
 	async def fetch(self, request):
 		url = urlparse(request.url)
-		key = url.path.slice(1)
+		key = url.path[1:]
 		await self.env.MY_BUCKET.put(key, request.body)
 		return Response(f"Put {key} successfully!")
 ```
