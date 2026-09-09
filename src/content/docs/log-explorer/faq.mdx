@@ -67,7 +67,13 @@ Log Explorer uses Cloudflare Logpush and R2 behind the scenes to stream and stor
 
 ## Are Custom Dashboards based on R2 Log Explorer data, or on GraphQL?
 
-Custom Dashboards currently run on [GraphQL](/analytics/graphql-api/sampling/). Over time, this will evolve to include deeper integration between the two features, such as building charts directly from logs.
+Custom Dashboards use [GraphQL](/analytics/graphql-api/sampling/) for standard analytics datasets.
+
+Customers with Log Explorer can also select Log Explorer datasets to create charts from raw, unsampled log data. This is supported on all plans and account types, with no additional enablement required.
+
+You cannot turn a saved or active Log Explorer query directly into a Custom Dashboard chart.
+
+For more information, refer to [Custom dashboards](/analytics/custom-dashboards/).
 
 ## How can I track my Log Explorer usage?
 
