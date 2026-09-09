@@ -20,7 +20,7 @@ The detection entries available to Passive Detection depend on your [Zero Trust 
 
 Before you create a Data Loss Prevention (DLP) policy, you may not know which sensitive data types appear in your traffic or where they are going. Passive Detection gives you a place to start. It helps you answer those questions before you decide what to log or block.
 
-Passive Detection scans sampled Gateway HTTP request and response bodies and brings the findings into one dashboard. You can see which data types were found, trace where they appeared, and identify where a policy could help. Use what you learn to build a focused policy or review gaps in an existing one.
+Passive Detection scans a randomly sampled subset of Gateway HTTP request and response bodies and brings the findings into one dashboard. You can see which detection entries matched, trace where they appeared, and identify where a policy could help. Use what you learn to build a focused policy or review gaps in an existing one.
 
 Passive Detection works without a Gateway DLP policy. It does not change how Gateway handles traffic, and existing policies continue to apply.
 
@@ -65,13 +65,13 @@ The summary cards describe detections within your selected time range and traffi
 - **Unique traffic with detections**: HTTP bodies with at least one detection, counted once.
 - **Active entries**: Unique DLP entries matched in the selected scope.
 
-For example, one request body that matches two different entries contributes two detections and one body to **Unique traffic with detections**. These counts do not tell you how many individual sensitive values the body contains.
+For example, one request body that matches two different entries contributes two detections to **Total detections** and one body to **Unique traffic with detections**. These counts do not tell you how many individual sensitive values the body contains.
 
 Use **Detections by data type** to see which entries account for the most detections. Use **Policy coverage** to find entries that may need policy review.
 
 ### Find sensitive data
 
-Next, use the detection table to decide what to investigate. Compare entries, then inspect their profiles and destinations. The table contains one row per detection entry found in sampled traffic, rather than one row per profile. Entries without detections do not appear.
+Next, use the detection table to decide what to investigate. Compare entries, then inspect their profiles and destinations. The table contains one row per detection entry found in sampled traffic. Entries without detections do not appear.
 
 Use these fields to compare entries:
 
@@ -84,6 +84,8 @@ Use these fields to compare entries:
 | Confidence (H/M/L) | Observed detections grouped by high, medium, and low confidence.                                                                                               |
 | Policy coverage    | Whether matching profiles were selected for policy enforcement when the bodies were scanned. Refer to [Find policy coverage gaps](#find-policy-coverage-gaps). |
 | Last seen          | When the entry was most recently observed during the selected time range.                                                                                      |
+
+All times are reported in UTC.
 
 The same body can contribute confidence counts through more than one matching profile. Confidence counts can therefore add up to more than the number of detected bodies, even within a single confidence level.
 
@@ -101,21 +103,21 @@ For example, a detection associated with an unfamiliar file-sharing destination 
 Matched URLs can contain sensitive values in their paths or query strings. Review them before sharing results.
 :::
 
-The dashboard shows detection metadata, not the original request or response bodies.
+The dashboard shows detection metadata. Original request and response bodies are not stored.
 
 ### Find policy coverage gaps
 
-Policy coverage helps you find detections that may need a closer look. An HTTP body counts as covered when at least one matching DLP profile was selected for policy enforcement when it was scanned.
+Policy coverage helps you find detections that may need a closer look. A detection counts as covered when at least one matching DLP profile was selected for policy enforcement when the HTTP body was scanned.
 
 Coverage does not confirm that the complete Gateway policy matched or that Gateway logged or blocked the traffic. The dashboard groups coverage into three statuses:
 
-| Status         | Meaning                                                                                |
-| -------------- | -------------------------------------------------------------------------------------- |
-| Covered        | Every detected body had at least one matching profile selected for enforcement.        |
-| Partly covered | Some detected bodies had a matching profile selected for enforcement and some did not. |
-| Not covered    | No detected bodies had a matching profile selected for enforcement.                    |
+| Status         | Meaning                                                                           |
+| -------------- | --------------------------------------------------------------------------------- |
+| Covered        | Each detection had at least one matching profile selected for enforcement.        |
+| Partly covered | Some detections had a matching profile selected for enforcement and some did not. |
+| Not covered    | No detections had a matching profile selected for enforcement.                    |
 
-Start with entries that are **Not covered** or **Partly covered**, then review their destinations and the relevant policies. A coverage gap is a reason to investigate, not a recommendation to block every matching body.
+Start with entries that are **Not covered** or **Partly covered**, then review their destinations and the relevant policies. A coverage gap is a reason to investigate, not a recommendation to block every detection.
 
 ## Create a DLP policy
 
@@ -133,7 +135,7 @@ For an existing policy, use your findings to review its scope and detection sett
 
 ## Limitations
 
-- Passive Detection scans a sample of eligible Gateway HTTP traffic, not every request or response body.
+- Passive Detection scans a random sample of eligible Gateway HTTP traffic, not every request or response body.
 - The dashboard does not report total sampled traffic or detection rates.
 - Destinations are scoped to one detection entry. Passive Detection does not provide an account-wide destination inventory.
 - Results do not include user identity.
