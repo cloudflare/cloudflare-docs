@@ -3,7 +3,7 @@ name: pr-mr
 description: Guides opening, creating, submitting, updating, and editing pull requests and merge requests for cloudflare-docs changes. Covers title conventions, branch naming, request body structure, and documentation checklist templates. Load when asked to open, create, submit, update, or edit a PR or MR, or write a title or description.
 ---
 
-Use this skill to prepare and manage a pull request or merge request. Use the process appropriate for the contributor's repository to perform repository actions.
+Use this skill to prepare request titles and descriptions and guide the request lifecycle. Do not create, submit, or modify a pull request or merge request through an API or CLI; only draft proposed text for the contributor to apply through their repository's process.
 
 ## Editing an existing request
 
