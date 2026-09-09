@@ -224,7 +224,7 @@ from workers import Response, WorkerEntrypoint, env
 class Default(WorkerEntrypoint):
 	async def fetch(self, request):
 		# This works
-		mv_val = await env.KV.get("my-key")
+		my_val = await env.KV.get("my-key")
 		return Response(my_val)
 ```
 </TabItem></Tabs>
@@ -265,7 +265,7 @@ class Default(WorkerEntrypoint):
 # env is not an argument to say_hello...
 def say_hello():
 	my_name = get_name()
-	return f"Hello, {myName}"
+	return f"Hello, {my_name}"
 
 # ...nor is it an argument to getName
 def get_name():
