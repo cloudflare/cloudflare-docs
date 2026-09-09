@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-The Workers Vitest pool is currently in open beta. The following are issues Cloudflare is aware of and fixing:
+The Workers Vitest plugin has the following known issues:
 
 ### Coverage
 
@@ -45,7 +45,7 @@ beforeAll(async () => {
 
 #### Explicitly signal resource disposal
 
-When calling RPC methods of a Service Worker or Durable Object that return non-primitive values (such as objects or classes extending `RpcTarget`), use the `using` keyword to explicitly signal when resources can be disposed of. See [this example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc/test/unit.test.ts#L155) and refer to [explicit-resource-management](/workers/runtime-apis/rpc/lifecycle#explicit-resource-management) for more details.
+When calling RPC methods of a Service Worker or Durable Object that return non-primitive values (such as objects or classes extending `RpcTarget`), use the `using` keyword to explicitly signal when resources can be disposed of. See [this example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-plugin-examples/rpc/test/unit.test.ts#L155) and refer to [explicit-resource-management](/workers/runtime-apis/rpc/lifecycle#explicit-resource-management) for more details.
 
 ```ts
 using result = await stub.getCounter();
@@ -82,7 +82,7 @@ In this case, any exports from `@virtual-module` (such as `MyEntrypoint`) cannot
 To work around this, add the `additionalExports` option to your Vitest configuration:
 
 ```ts
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -104,7 +104,7 @@ The `additionalExports` option is a map where keys are the export names and valu
 If you encounter module resolution issues such as: `Error: Cannot use require() to import an ES Module` or `Error: No such module`, you can bundle these dependencies using the [deps.optimizer](https://vitest.dev/config/#deps-optimizer) option:
 
 ```ts
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -159,7 +159,7 @@ async function viteImport(file: string) {
 
 ```ts
 // File: vitest.config.ts
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({

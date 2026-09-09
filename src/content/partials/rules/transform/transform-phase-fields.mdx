@@ -1,6 +1,5 @@
 ---
-params:
-  - bulkRedirects
+{}
 ---
 
 - `cf.edge.server_ip`
@@ -59,23 +58,7 @@ params:
 - `ip.src.subdivision_1_iso_code`
 - `ip.src.subdivision_2_iso_code`
 - `ssl`
-
-{ props.bulkRedirects ? (
-
-  <>
-    <ul>
-      <li><code>cf.sequence.current_op</code></li>
-      <li><code>cf.sequence.msec_since_op</code></li>
-      <li><code>cf.sequence.previous_ops</code></li>
-    </ul>
-  </>
-) : (
-  <>
-    <ul>
-      <li><code>cf.worker.upstream_zone</code></li>
-    </ul>
-  </>
-)}
+- `cf.worker.upstream_zone`
 
 Refer to [Fields](/ruleset-engine/rules-language/fields/reference/) for reference information on these fields.
 

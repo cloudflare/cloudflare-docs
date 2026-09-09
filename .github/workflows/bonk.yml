@@ -37,8 +37,7 @@ jobs:
     if: |
       needs.check-codeowner.outputs.is-codeowner == 'true' &&
       github.event.sender.type != 'Bot' &&
-      contains(github.event.comment.body, '/bonk') &&
-      !contains(github.event.comment.body, '/bigbonk')
+      contains(github.event.comment.body, '/bonk')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -76,9 +75,9 @@ jobs:
           # Auto-approve tool calls in CI only, so Bonk doesn't get stuck on
           # approval prompts. This is intentionally not in opencode.jsonc so
           # local/interactive sessions keep their normal permission prompts.
-          OPENCODE_CONFIG_CONTENT: '{"permission":"allow"}'
+          OPENCODE_CONFIG_CONTENT: '{"permission":"allow","small_model":"cloudflare-ai-gateway/workers-ai/@cf/zai-org/glm-4.7-flash"}'
         with:
-          model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
+          model: "cloudflare-ai-gateway/workers-ai/@cf/deepseek-ai/deepseek-v4-flash-0731"
           opencode_version: "1.17.7"
           agent: docs
           mentions: "/bonk"

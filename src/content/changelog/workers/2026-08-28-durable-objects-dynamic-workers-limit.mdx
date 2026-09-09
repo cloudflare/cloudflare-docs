@@ -1,0 +1,14 @@
+---
+title: Durable Objects can use up to ten Dynamic Workers concurrently
+description: Each Durable Object can use up to ten Dynamic Workers with in-flight requests.
+products:
+  - workers
+  - durable-objects
+date: 2026-08-28
+---
+
+[Durable Objects](/durable-objects/) can have up to ten distinct [Dynamic Workers](/dynamic-workers/) with in-flight requests, increased from four. This limit applies across all concurrent requests to the same Durable Object because they share an input/output (I/O) context. Other Workers can have up to four distinct Dynamic Workers with in-flight requests per request.
+
+Multiple in-flight requests to the same Dynamic Worker count as one toward this limit.
+
+For more information, refer to [Dynamic Workers limits](/dynamic-workers/platform/limits/).

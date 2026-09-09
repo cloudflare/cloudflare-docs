@@ -12,6 +12,7 @@ import {
 	type LlmsIndex,
 	type LlmsSidebarOrderPart,
 } from "../../util/llms-delegation";
+import { formatPage, normalizeForIndexMd } from "../../util/llms-txt";
 import { isExternalRedirect, resolveRedirect } from "../../util/redirects";
 import { isDisallowedByRobots } from "../../util/robots";
 
@@ -69,6 +70,7 @@ export const getStaticPaths = (async () => {
 			return {
 				params: { product: urlPath },
 				props: { entry, pages, navigationPages },
+				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}`,
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);
@@ -107,28 +109,30 @@ export const getStaticPaths = (async () => {
 		};
 	});
 
-	return products.map((product) => ({
-		...product,
-		props: {
-			...product.props,
-			delegatedIndexes: getDelegatedIndexes(
-				`/${product.params.product}/`,
-				indexes,
-			),
-		},
-	}));
+	return products.map((product) => {
+		const productUrl = `/${product.params.product}/`;
+		const delegatedIndexes = getDelegatedIndexes(productUrl, indexes);
+		const cacheKey = isDelegatingLlmsIndex(productUrl)
+			? [
+					product.cacheKey,
+					product.props.navigationPages.map((page) => page.digest).join(","),
+					JSON.stringify(delegatedIndexes),
+				].join(":")
+			: product.cacheKey;
+
+		return {
+			...product,
+			cacheKey,
+			props: {
+				...product.props,
+				delegatedIndexes,
+			},
+		};
+	});
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
-
-function formatPage(base: string, e: Page) {
-	const path = e.data.external_link?.startsWith("/")
-		? resolveRedirect(e.data.external_link)
-		: resolveRedirect(`/${e.id}/`);
-	const line = `- [${e.data.title}](${base}${path}index.md)`;
-	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
-}
 
 function formatIndex(base: string, index: LlmsIndex) {
 	const line = `- [${index.title} documentation](${base}${index.url}llms.txt)`;
@@ -282,11 +286,13 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 	const rootPage = pages.find((e) => e.id === prefix);
 	const navigationRoot = navigationPages.some((e) => e.id === prefix);
 	const resolvedProductUrl = resolveRedirect(productUrl);
+	const { path: rootPath, fragment: rootFragment } =
+		normalizeForIndexMd(resolvedProductUrl);
 	const rootLink = rootPage
 		? formatPage(base, rootPage)
 		: isDelegatingLlmsIndex(productUrl) && navigationRoot
 			? undefined
-			: `- [${title}](${base}${resolvedProductUrl}index.md)`;
+			: `- [${title}](${base}${rootPath}index.md${rootFragment})`;
 
 	const sections = buildSections(
 		prefix,

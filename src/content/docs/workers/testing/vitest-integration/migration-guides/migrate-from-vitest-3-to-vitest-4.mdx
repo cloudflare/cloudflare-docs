@@ -2,7 +2,7 @@
 title: Migrate from Vitest 3 to Vitest 4
 pcx_content_type: how-to
 sidebar:
-  order: 1
+  order: 2
 head: []
 description: Migrate the Workers Vitest integration from v0.12.x (Vitest 3) to
   v0.13.x (Vitest 4), covering configuration and test file changes.
@@ -13,6 +13,12 @@ products:
 import { PackageManagers } from "~/components";
 
 `@cloudflare/vitest-pool-workers` v0.13.0 adds support for [Vitest 4](https://vitest.dev/blog/vitest-4). v0.12.x is the last version to support Vitest 3.x. It continues to work if you are not ready to migrate.
+
+:::note
+
+This guide applies to `@cloudflare/vitest-pool-workers` version 0.x. To migrate to version 1, refer to [Migrate to Vitest plugin](/workers/testing/vitest-integration/migration-guides/migrate-to-vitest-plugin/).
+
+:::
 
 Version 0.13.0 rearchitects the integration around a Vite plugin model. This change breaks the configuration API, but it also resolves a number of issues that were not fixable under the previous architecture:
 

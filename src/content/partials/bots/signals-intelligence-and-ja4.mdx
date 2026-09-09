@@ -3,8 +3,8 @@
 
 ---
 
-If you want to use JA4 fingerprints and Signals Intelligence, your Workers script must be able to handle the absence of any field in the array, including:
+If you want to use JA4 fingerprints and Signals Intelligence, your Workers script should be able to handle missing fields when Bot Management isn't able to calculate or populate JA4 Signals (for example, non-TLS traffic or when Bot Management is skipped). For Orange-to-Orange (O2O) scenarios where Bot Management is in effect, JA4 Signals correspond to the eyeball (end-user) connection and are preserved through the O2O chain, including O2O zone requests and any corresponding subrequests.
 
 * The possibility that the JA4 fingerprint could be missing.
-* The possibility that the `ja4Signals` array could be missing.
+* The possibility that the `ja4Signals` array could be missing (for example, if JA4 isn't available for the request).
 * Results with `NaN` or `Infinity` values will be excluded from the array.

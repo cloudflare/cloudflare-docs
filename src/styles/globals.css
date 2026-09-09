@@ -222,6 +222,11 @@
 	--color-primary-foreground: var(--nb-primary-foreground);
 	--color-primary-hover: var(--nb-primary-hover);
 
+	/* Diagram accent — the brand ink used by the vendored diagram kit
+	 * (src/components/react/container). Generates fill-brand /
+	 * stroke-brand / text-brand, mapped to the Cloudflare brand orange. */
+	--color-brand: var(--nb-primary);
+
 	--color-border: var(--nb-border);
 	--color-border-strong: var(--nb-border-strong);
 	--color-selected: var(--nb-selected);
@@ -277,6 +282,31 @@
 	-ms-overflow-style: none;
 	&::-webkit-scrollbar {
 		display: none;
+	}
+}
+
+/* Weld diagram kit motion (src/components/react/diagram-weld). */
+@keyframes weld-enter {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes weld-compute-pulse {
+	0%,
+	100% {
+		opacity: 0.25;
+	}
+	5% {
+		opacity: 1;
+	}
+	18% {
+		opacity: 0.25;
 	}
 }
 

@@ -1,0 +1,60 @@
+---
+title: Cards
+styleGuide:
+  component: Card
+description: Display content in styled card containers.
+products:
+  - style-guide
+---
+
+import { Render } from "~/components";
+
+Cards are a built-in component provided by [Nimbus](https://nimbus-docs.com/components/card/).
+
+## Cards
+
+```mdx
+import { Card } from "~/components";
+
+<Card title="Check this out" icon="puzzle">
+	Interesting content you want to highlight.
+</Card>
+```
+
+## List cards
+
+```mdx
+import { ListCard } from "~/components";
+
+<ListCard title="Links" icon="puzzle">
+
+- foo
+- bar
+- baz
+
+</ListCard>
+```
+
+## Link title cards
+
+```mdx
+import { LinkTitleCard } from "~/components";
+
+<LinkTitleCard
+	title="Check this out"
+	icon="puzzle"
+	href="/style-guide/build-the-page/components/cards/"
+>
+	Interesting content you want to highlight.
+</LinkTitleCard>
+```
+
+## Card icons
+
+<Render
+	file="icons"
+	product="style-guide"
+	params={{
+		component: "cards",
+	}}
+/>

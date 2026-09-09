@@ -5,6 +5,7 @@
 	"compatibility_date": "2025-06-02",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.preview.ts",
+	"workers_dev": false,
 	"rules": [
 		{ "type": "Text", "globs": ["**/__redirects"], "fallthrough": true }
 	],

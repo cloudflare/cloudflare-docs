@@ -10,7 +10,7 @@ products:
   - workers
 ---
 
-The Workers Vitest integration provides runtime helpers for writing tests. Some helpers are exported from the `cloudflare:workers` module, and others from the `cloudflare:test` module. Both modules are provided by the `@cloudflare/vitest-pool-workers` package, but can only be imported from test files that execute in the Workers runtime.
+The Workers Vitest integration provides runtime helpers for writing tests. Some helpers are exported from the `cloudflare:workers` module, and others from the `cloudflare:test` module. Both modules are provided by the `@cloudflare/vitest-plugin` package, but can only be imported from test files that execute in the Workers runtime.
 
 ## `cloudflare:workers` exports
 
@@ -325,7 +325,7 @@ The Workers Vitest integration provides runtime helpers for writing tests. Some 
 
 * <code>applyD1Migrations(db:D1Database, migrations:D1Migration\[], migrationTableName?:string)</code>: Promise\<void>
 
-  * Applies all un-applied [D1 migrations](/d1/reference/migrations/) stored in the `migrations` array to database `db`, recording migrations state in the `migrationsTableName` table. `migrationsTableName` defaults to `d1_migrations`. Call the [`readD1Migrations()`](/workers/testing/vitest-integration/configuration/#readd1migrationsmigrationspath) function from the `@cloudflare/vitest-pool-workers/config` package inside Node.js to get the `migrations` array. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/d1) for an example project using migrations.
+  * Applies all un-applied [D1 migrations](/d1/reference/migrations/) stored in the `migrations` array to database `db`, recording migrations state in the `migrationsTableName` table. `migrationsTableName` defaults to `d1_migrations`. Call the [`readD1Migrations()`](/workers/testing/vitest-integration/configuration/#readd1migrationsmigrationspath) function from the `@cloudflare/vitest-plugin/config` package inside Node.js to get the `migrations` array. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-plugin-examples/d1) for an example project using migrations.
 
 
 ### Workflows
@@ -343,7 +343,7 @@ This is accomplished by either:
 
 :::note[Version]
 
-Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
+Available in `@cloudflare/vitest-plugin` version **1.0.0** and later.
 
 :::
 
@@ -509,4 +509,3 @@ Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
         ```
 
       When targeting a step, use its `name`. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to specify the occurrence.
-    

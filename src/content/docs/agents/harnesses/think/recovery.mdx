@@ -10,17 +10,17 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Think wraps chat turns in recoverable [fibers](/agents/runtime/execution/durable-execution/) by default (`chatRecovery = true`). If the Durable Object is evicted mid-stream, Think reconstructs any buffered chunks, persists partial output, and schedules either a continuation of the assistant turn or a retry of the unanswered user turn.
+Think always wraps chat turns in recoverable [fibers](/agents/runtime/execution/durable-execution/). If the Durable Object is evicted mid-stream, Think reconstructs any buffered chunks. It persists partial output and schedules a continuation or retry.
 
 :::note
-This is on by default and works without configuration — most apps never touch this page. Read it when you want provider-specific recovery, a stall watchdog, or to tune the terminal experience after recovery gives up.
+Durable recovery works without configuration. Most apps never need to configure it. Use this page for provider-specific recovery, a stall watchdog, or terminal behavior.
 :::
 
-When `chatRecovery` is `true`, WebSocket turns, sub-agent `chat()` turns, durable `submitMessages()` executions, auto-continuations, `saveMessages()`, and `continueLastTurn()` are wrapped in `runFiber`.
+WebSocket turns, sub-agent `chat()` turns, durable `submitMessages()` executions, automatic continuations, `saveMessages()`, and `continueLastTurn()` are wrapped in `runFiber`.
 
 ## Bounded recovery
 
-A stream-stall watchdog abort (`chatStreamStallTimeoutMs`) is treated as just another interruption: when `chatRecovery` is on, a stall routes into this same bounded path — the settled partial is preserved and a continuation is scheduled — so a transient hang recovers automatically. A persistently hanging provider exhausts the budget and terminalizes through the **same** exhaustion handling as a deploy or eviction interruption: `onExhausted` fires, the `chat:recovery:exhausted` event is emitted, and the configured `terminalMessage` is shown (not a raw stall error).
+A stream-stall watchdog abort (`chatStreamStallTimeoutMs`) uses the same bounded recovery path. The SDK preserves the settled partial and schedules a continuation. A transient hang recovers automatically. A persistently hanging provider exhausts the budget through the same path as a deployment or eviction. The SDK calls `onExhausted`, emits `chat:recovery:exhausted`, and shows the configured `terminalMessage`.
 
 Configure bounded recovery by setting `chatRecovery` to an object:
 
@@ -116,9 +116,11 @@ onChatRecovery(ctx: ChatRecoveryContext): ChatRecoveryOptions {
 
 Use `ctx.createdAt` to skip stale recoveries. For example, if the interrupted turn is older than a few minutes, return `{ continue: false }` so the partial response is preserved without starting an old continuation.
 
+Durable bookkeeping remains active when automatic continuation is not appropriate. Return `{ continue: false }` to prevent another model call. For cancellation, side-effect, and cost controls, refer to [Control automatic continuation](/agents/communication-channels/chat/chat-agents/#control-automatic-continuation).
+
 ### Recovery budgets and limits
 
-Instead of `chatRecovery = true`, assign an object to tune how long recovery is allowed to run and when it is given up on. A turn that keeps making forward progress is never terminated by the framework on its own — duration is not a bound. Recovery is only sealed by one of the limits in the following table.
+Assign a `chatRecovery` object to tune recovery limits and terminal behavior. A progressing turn survives repeated interruptions while it stays within the `maxRecoveryWork` limit. The following options control when recovery stops:
 
 <TypeScriptExample>
 
@@ -127,7 +129,7 @@ export class MyAgent extends Think<Env> {
 	override chatRecovery = {
 		maxAttempts: 10,
 		noProgressTimeoutMs: 5 * 60 * 1000,
-		maxRecoveryWork: Infinity,
+		maxRecoveryWork: 1_000,
 		terminalMessage: "The assistant was interrupted and could not recover.",
 		// Consulted from the second recovery attempt onward. Return false to stop.
 		// Called as `config.shouldKeepRecovering(ctx)`, so it is NOT bound to the
@@ -150,12 +152,13 @@ export class MyAgent extends Think<Env> {
 | `maxAttempts`          | `10`              | Attempt cap. Resets on forward progress, so it catches a tight no-progress alarm loop, not a healthy long turn.                                                                     |
 | `stableTimeoutMs`      | `10_000`          | How long an attempt waits for the isolate to reach stable state before rescheduling.                                                                                                |
 | `noProgressTimeoutMs`  | `300_000` (5 min) | Primary stuck-turn bound: max time without forward progress before sealing. **Resets on every progress-bearing attempt.**                                                           |
-| `maxRecoveryWork`      | `Infinity`        | Runaway-loop guard: max produced content/tool units since the incident opened before a still-progressing turn is sealed. No cap by default.                                         |
+| `maxRecoveryWork`      | `1,000`           | Runaway-loop guard: maximum produced content/tool units before a still-progressing turn is sealed. Set a higher value or `Infinity` for a long agentic turn.                       |
+| `maxOomRetries`        | `3`               | Retry budget for Durable Object memory-limit resets. Set `0` to stop after the first memory-limit reset.                                                                            |
 | `shouldKeepRecovering` | —                 | Caller policy consulted from the second attempt onward. Return `false` to stop recovery. The hook point for a token/cost budget (`ctx.work` is a coarse segment count, not tokens). |
 | `terminalMessage`      | generic message   | Message shown to the user when recovery is given up on.                                                                                                                             |
 | `onExhausted`          | —                 | Called once when recovery is given up on. Inspect `ctx.reason`.                                                                                                                     |
 
-`ctx.reason` on the exhausted hook is one of: `no_progress_timeout` (stuck), `max_attempts_exceeded` (no-progress alarm loop), `work_budget_exceeded` (runaway), `recovery_aborted` (your `shouldKeepRecovering` returned `false`), or `stable_timeout` (extreme churn). Refer to [Stream recovery](/agents/communication-channels/chat/chat-agents/#stream-recovery) for the full shared reference — Think and `@cloudflare/ai-chat` use the same recovery configuration.
+`ctx.reason` on the exhausted hook is one of: `no_progress_timeout` (stuck), `max_attempts_exceeded` (no-progress alarm loop), `work_budget_exceeded` (runaway), `recovery_aborted` (your `shouldKeepRecovering` returned `false`), `out_of_memory` (memory-limit retry budget), or `stable_timeout` (extreme churn). Refer to [Stream recovery](/agents/communication-channels/chat/chat-agents/#stream-recovery) for the full shared reference. Think and `@cloudflare/ai-chat` use the same recovery configuration.
 
 ## Repairing interrupted tool calls
 

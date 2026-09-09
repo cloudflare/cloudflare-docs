@@ -11,15 +11,36 @@ tags:
   - Analytics
 ---
 
-import { Render } from "~/components";
+import { AnchorHeading } from "~/components";
 
-<Render file="analytics/overview"
-	product="networking-services"
-	params={{
-		productName: "Magic Transit",
-		networkAnalyticsURL: "/magic-transit/analytics/network-analytics/",
-		traceRoutes: "/magic-transit/analytics/traceroutes/",
-		graphQlTunnelBandwidthURL: "/magic-transit/analytics/query-bandwidth/",
-		graphQlTunnelHealthURL: "/magic-transit/analytics/query-tunnel-health/"
-		 }}
-/>
+Use these options to gather information at the start of your troubleshooting workflow. Then, use more detailed network data collection and analysis to identify the root cause.
+
+- Analyze network traffic over time in [Network Analytics](#network-analytics)
+- Perform more detailed troubleshooting with:
+  - [Traceroutes](#traceroutes)
+  - [Packet captures](#packet-captures)
+
+<AnchorHeading depth={2} title="Network Analytics" />
+
+Network Analytics provides detailed analytics on your Magic Transit traffic over time. You can filter data by traffic characteristics and review traffic trends over time.
+
+For details, refer to [Magic Transit Network Analytics](/magic-transit/analytics/network-analytics/).
+
+## Traceroutes
+
+Traceroutes provide a hop-by-hop breakdown of the Internet path network traffic follows from Cloudflare's network to your network.
+
+For details, refer to [Traceroutes](/magic-transit/analytics/traceroutes/).
+
+## Packet captures
+
+Packet captures allow you to analyze the raw packet data your network sends to and receives from Cloudflare's network.
+
+For details, refer to [packet captures](/cloudflare-network-firewall/packet-captures/).
+
+## Query analytics with GraphQL
+
+GraphQL Analytics provides a GraphQL API to query raw JSON data for your Magic Transit traffic analytics. You can ingest this data into a Security Information and Event Management (SIEM) tool or another platform for further analysis.
+
+- [Querying Magic Transit tunnel bandwidth analytics with GraphQL](/magic-transit/analytics/query-bandwidth/)
+- [Querying Magic Transit tunnel health check results with GraphQL](/magic-transit/analytics/query-tunnel-health/)

@@ -1,0 +1,26 @@
+releaseNotes: This hotfix resolves an issue where a small but noticeable
+  percentage of DNS queries fail across platforms.
+version: 2026.7.1377.0
+releaseDate: 2026-08-28T15:27:27.288Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/fedora43-intel/version/2026.7.1377.0
+packageSize: 75223742
+platformName: Linux
+linuxPlatforms:
+  fedora43-intel: 75223742
+  noble-intel: 72711962
+  trixie-intel: 72715622
+  jammy-intel: 72941226
+  bookworm-arm: 74653762
+  trixie-arm: 74931196
+  almalinux9-arm: 77400114
+  fedora43-arm: 77085096
+  fedora44-arm: 77133281
+  noble-arm: 75127802
+  fedora44-intel: 75232309
+  almalinux10-intel: 75210668
+  jammy-arm: 74626106
+  resolute-arm: 74893334
+  almalinux10-arm: 77103446
+  bookworm-intel: 72957142
+  almalinux9-intel: 75302706
+  resolute-intel: 72703368
