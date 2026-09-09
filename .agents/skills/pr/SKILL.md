@@ -1,9 +1,11 @@
 ---
 name: pr
-description: Creates and updates GitHub pull requests only for github.com/cloudflare/cloudflare-docs. Do not use for GitLab merge requests, internal mirrors, or repositories with a different origin. Load when asked to open, create, submit, update, or edit a PR, or write a PR title or description. Covers title conventions, branch naming, PR body structure, and the documentation checklist template.
+description: Creates and updates GitHub pull requests for github.com/cloudflare/cloudflare-docs and its GitHub forks. Do not use for GitLab merge requests, internal mirrors, or unrelated repositories. Load when asked to open, create, submit, update, or edit a PR, or write a PR title or description. Covers title conventions, branch naming, PR body structure, and the documentation checklist template.
 ---
 
-Use this skill only for pull requests in `github.com/cloudflare/cloudflare-docs`. Before using `gh` or a GitHub URL, run `git remote get-url origin` and confirm the result identifies `github.com/cloudflare/cloudflare-docs`; accept HTTPS or SSH URLs with or without a trailing `.git`. If the command fails, returns an empty result, or identifies any other repository, stop using this skill immediately and create the pull request or merge request for that origin.
+Use this skill only for pull requests targeting `github.com/cloudflare/cloudflare-docs`. Before using a GitHub URL or `gh` for PR operations, run `git remote get-url origin`. If the command fails or returns an empty result, stop using this skill immediately and create the pull request or merge request for that origin. If the result identifies `github.com/cloudflare/cloudflare-docs`, accept HTTPS or SSH URLs with or without a trailing `.git`.
+
+If `origin` identifies another GitHub repository, use `gh repo view --json parent --jq '.parent.nameWithOwner'` only to verify that it is a fork. If the command returns `cloudflare/cloudflare-docs`, the skill applies. Pass `--repo cloudflare/cloudflare-docs` to every `gh pr` command, and use `--head <fork-owner>:<branch>` when creating a PR. If the command fails or returns any other value, stop using this skill immediately and create the pull request or merge request for that origin.
 
 Use this skill when creating a GitHub pull request for changes to this repository, or when editing an existing PR's title or description.
 
