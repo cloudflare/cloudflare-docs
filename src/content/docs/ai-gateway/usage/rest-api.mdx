@@ -121,7 +121,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   }'
 ```
 
-To use prepaid AI Gateway credits for Workers AI, use the model-in-path endpoint shown above, set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**, and include its ID in the `cf-aig-gateway-id` header. Requests to frontier models billed with prepaid credits receive [higher rate limits](/workers-ai/platform/limits/#frontier-models).
+To use prepaid AI Gateway credits for Workers AI, use the model-in-path endpoint shown above, set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**, and include its ID in the `cf-aig-gateway-id` header. Requests to frontier models billed with prepaid credits receive [higher rate limits](/workers-ai/platform/limits/#paid-models).
 
 ### Background requests and webhooks
 
