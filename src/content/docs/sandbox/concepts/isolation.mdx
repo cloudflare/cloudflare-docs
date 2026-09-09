@@ -1,0 +1,55 @@
+---
+title: Isolation
+description: What a sandbox keeps apart, and where each Cloudflare environment draws that boundary.
+pcx_content_type: concept
+sidebar:
+  order: 1
+products:
+  - sandbox
+  - workers
+  - containers
+  - dynamic-workers
+reviewed: 2026-09-09
+---
+
+A sandbox is an isolated place to run untrusted or generated work. Isolation is the whole boundary around that work, not only secrets and egress.
+
+The program you load there has its own memory. When it needs them, it has its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
+
+Cloudflare provides two sandbox environments. Both start from a [Worker](/workers/), the program that already handles your traffic.
+
+## Dynamic Workers
+
+[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, TypeScript, Python, or WebAssembly.
+
+That code cannot see your application's memory. It can use only the APIs and data you pass in. It cannot reach the Internet unless you allow it.
+
+The isolation comes from V8, the JavaScript engine in Chrome. V8 runs the code in an isolate: a sandbox that cannot read memory outside itself. The Workers platform adds a second layer around the process and exposes only the APIs you grant.
+
+For more information, refer to the [Workers security model](/workers/reference/security-model/).
+
+## Containers
+
+[Containers](/containers/) run an image you provide. The instance is a full Linux environment. Your Worker starts the instance and sends it work.
+
+The instance does not share a process or a kernel with your Worker, so it cannot read your Worker's memory. Other instances or customers cannot reach it. HTTP traffic from the Internet reaches it only through your Worker.
+
+Each instance runs in Firecracker: a microVM with its own kernel and network. Your image is a Linux container inside that VM, and no other workload shares it.
+
+For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
+
+## What you still control
+
+Neither environment is a closed box by default.
+
+On Dynamic Workers, omit `globalOutbound` and the sandbox inherits the parent Worker's network access. Pass [bindings](/dynamic-workers/usage/bindings/) if the sandbox needs APIs or data.
+
+On Containers, `enableInternet` defaults to `true`. Set it to `false` when the workload should not reach the public Internet. For more information, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/).
+
+Isolation is the platform boundary. Access is the set of APIs, data, and network paths you add back.
+
+## Related pages
+
+- [Choose an environment](/sandbox/concepts/choose-an-environment/)
+- [Workers and sandboxes](/sandbox/concepts/workers/)
+- [Workers security model](/workers/reference/security-model/)

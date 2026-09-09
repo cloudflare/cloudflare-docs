@@ -1,0 +1,75 @@
+---
+title: Containers
+description: Deploy a Worker that starts a Linux container and proxies HTTP to it.
+pcx_content_type: get-started
+sidebar:
+  order: 2
+products:
+  - sandbox
+  - containers
+  - workers
+  - durable-objects
+reviewed: 2026-09-09
+---
+
+import { PackageManagers, Render, Steps } from "~/components";
+
+In this guide, you will deploy a Worker that starts a container and forwards HTTP to it. The container is a full Linux environment. Traffic from the Internet reaches it only through your Worker.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You also need [Docker](https://www.docker.com/) or another Docker-compatible engine. Wrangler uses it to build and push the image.
+
+<Render product="containers" file="docker-setup" />
+
+## Create and deploy the project
+
+<Steps>
+
+1. Create a Worker with the Containers starter template:
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args={"--template=cloudflare/templates/containers-template"}
+   />
+
+2. Change into the project directory, then deploy:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. Wait for the command to finish. The first image build and push usually take the longest.
+
+</Steps>
+
+:::note
+
+After the first deploy, wait several minutes before you expect container routes to succeed. The Worker URL may respond while Cloudflare is still provisioning containers.
+
+:::
+
+## Send a request
+
+Open the Worker URL. It looks like `https://hello-containers.<YOUR_WORKERS_SUBDOMAIN>.workers.dev`.
+
+- Requests to `/container/1` or `/container/2` route to specific instances. Each path after `/container/` maps to one container.
+- Requests to `/lb` load-balance across three instances.
+
+Read the response body. It should identify the instance that handled the request.
+
+If the Worker responds but container routes error, wait for provisioning. Then check [Containers](https://dash.cloudflare.com/?to=/:account/workers/containers) logs in the dashboard.
+
+## What happened
+
+Your [Worker](/workers/) received the request first. It chose a [Container](/containers/) instance with `getContainer()` and forwarded HTTP to that instance.
+
+The instance does not share a process or a kernel with the Worker. Other instances and customers cannot reach it. For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
+
+## Next steps
+
+- Run another process in the instance. Refer to [Run a Linux command](/sandbox/guides/run-a-linux-command/).
+- Block or intercept outbound HTTP. Refer to [Block the Internet](/sandbox/guides/block-the-internet/).
+- Read the template in depth on [Get started with Containers](/containers/get-started/).
+- Compare environments in [Choose an environment](/sandbox/concepts/choose-an-environment/).

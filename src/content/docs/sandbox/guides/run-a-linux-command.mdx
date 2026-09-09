@@ -1,0 +1,101 @@
+---
+title: Run a Linux command
+description: Start a process inside a running Container and read its output.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - sandbox
+  - containers
+  - workers
+  - durable-objects
+reviewed: 2026-09-09
+---
+
+import { Steps, TypeScriptExample } from "~/components";
+
+Run a command in a [Container](/containers/) instance and return stdout. Use this when the work needs a Linux process, not a Worker.
+
+Complete [Get started with Containers](/sandbox/get-started/containers/) first. Your image must include the executable you invoke.
+
+## Run the command from an RPC method
+
+`exec()` starts another process in a running instance. It does not start a stopped Container.
+
+<Steps>
+
+1. In the RPC method, check `this.ctx.container.running`.
+2. Call `await this.start()` when the instance is stopped.
+3. Pass the executable and arguments as an array. `exec()` does not start a shell.
+4. Read stdout and the exit code from the returned process.
+
+</Steps>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container, getContainer } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	async runVersion() {
+		if (!this.ctx.container.running) {
+			await this.start();
+		}
+
+		const process = await this.ctx.container.exec(["node", "--version"]);
+		const stdout = process.stdout
+			? await new Response(process.stdout).text()
+			: "";
+		const exitCode = await process.exitCode;
+
+		return { pid: process.pid, stdout, exitCode };
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const container = getContainer(env.MY_CONTAINER, "session-1");
+		const result = await container.runVersion();
+		return Response.json(result);
+	},
+};
+```
+
+</TypeScriptExample>
+
+Each array item is one argument. Pipes, redirects, and globbing do not run unless you invoke a shell.
+
+When the command needs a shell, use `["bash", "-lc", "<COMMAND>"]` if Bash exists in the image, or `["sh", "-c", "<COMMAND>"]` if it does not. Pass untrusted values as separate arguments. Do not interpolate them into the command string.
+
+## Run commands on start
+
+Override `onStart()` to run setup whenever the instance boots. `output()` buffers stdout and stderr as separate `ArrayBuffer` values.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	override async onStart() {
+		const process = await this.ctx.container.exec([
+			"node",
+			"scripts/prepare.js",
+		]);
+		const output = await process.output();
+		const decoder = new TextDecoder();
+
+		if (output.exitCode !== 0) {
+			throw new Error(
+				`Container preparation failed: ${decoder.decode(output.stderr)}`,
+			);
+		}
+
+		console.log(decoder.decode(output.stdout));
+	}
+}
+```
+
+</TypeScriptExample>
+
+For streaming, stdin, and process control, refer to [Execute commands](/containers/guides/execute-commands/).
