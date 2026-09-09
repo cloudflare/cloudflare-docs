@@ -1,5 +1,5 @@
 ---
-name: pr
+name: github-pr
 description: Creates and updates GitHub pull requests for github.com/cloudflare/cloudflare-docs and its GitHub forks. Do not use for GitLab merge requests, internal mirrors, or unrelated repositories. Load when asked to open, create, submit, update, or edit a PR, or write a PR title or description. Covers title conventions, branch naming, PR body structure, and the documentation checklist template.
 ---
 
