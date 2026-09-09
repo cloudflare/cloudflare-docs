@@ -62,7 +62,7 @@ Run the validation commands from `SKILL.md` (`check`, local `build`, `format`, p
 
 ## 8. Open a pull request
 
-When the change is ready, load the `pr` skill to draft the PR title and body (drafts only, `[Product]` title convention, body from the repo template).
+When the change is ready, load the `pr-mr` skill to draft the pull request or merge request title and body (drafts only, `[Product]` title convention, body from the repo template).
 
 ## Editing existing pages
 
