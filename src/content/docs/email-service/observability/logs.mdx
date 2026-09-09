@@ -1,17 +1,15 @@
 ---
-title: Email logs
-description: View and analyze Email Service sending and routing activity logs with authentication and delivery details.
-pcx_content_type: how-to
-summary: View and analyze email sending and routing activity logs with detailed authentication and delivery information
+title: Activity log
+description: Email Service activity statuses, authentication details, and message fields.
+pcx_content_type: reference
+summary: Email sending and routing statuses, authentication details, and message fields
 sidebar:
   order: 3
 products:
   - email-service
 ---
 
-Email Service provides comprehensive logging for both email sending and routing activities. Access detailed logs through the Cloudflare dashboard to monitor email flow, troubleshoot delivery issues, and analyze authentication status.
-
-## Activity log
+The Email Service Activity log lists sending and routing events. Each event includes delivery and authentication details.
 
 The Activity log allows you to sort through all email activities and check actions taken by Email Service. In the dashboard you can filter the Activity log to a time range between 30 minutes and 30 days, or specify a custom range.
 
@@ -19,7 +17,7 @@ The Activity log surfaces the same per-event data that is also available program
 
 For Email Routing, you can expand an individual email in the Activity log to inspect authentication results ([SPF](https://datatracker.ietf.org/doc/html/rfc7208), [DKIM](https://datatracker.ietf.org/doc/html/rfc6376), and [DMARC](https://datatracker.ietf.org/doc/html/rfc7489)).
 
-### Email sending logs
+## Email sending statuses
 
 For outbound emails sent through Email Service:
 
@@ -29,7 +27,7 @@ For outbound emails sent through Email Service:
 - **Rejected**: Email was not sent because the recipient is on your account's [suppression list](/email-service/concepts/suppressions/).
 - **Failed**: Email failed to send due to configuration or authentication issues.
 
-### Email routing logs
+## Email routing statuses
 
 For inbound emails processed through Email Routing:
 
@@ -40,7 +38,7 @@ For inbound emails processed through Email Routing:
 - **Delivery failed**: Email could not be delivered to the destination address.
 - **Error**: Email could not be processed due to an internal error.
 
-## Viewing email details
+## Email details
 
 Select any email in the Activity log to expand its details and view authentication and delivery information.
 
@@ -72,28 +70,3 @@ For sent emails, expand the email in the Activity log to open the **Preview** se
 - **Raw**: The full raw [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) message source.
 
 To make sent messages previewable, turn on [**Email preview**](/email-service/configuration/domains/#email-preview) for the sending domain. Previews cover messages sent while the setting is turned on and are retained for about seven days. New sending domains have **Email preview** turned on automatically.
-
-## Best practices for log monitoring
-
-### Regular review
-
-- Monitor logs daily during initial setup
-- Check weekly for ongoing operations
-- Review immediately after configuration changes
-
-### Key metrics to watch
-
-- Authentication failure rates
-- Bounce patterns and trends
-- Delivery success rates
-
-### Troubleshooting workflow
-
-1. Identify the issue: Use logs to pinpoint failure types
-2. Check authentication: Verify SPF, DKIM, DMARC configuration
-3. Adjust configuration: Make necessary DNS or routing changes
-4. Monitor improvement: Track metrics after changes
-
----
-
-Email logs provide the visibility needed to maintain high deliverability and properly route incoming emails. Use this data to optimize your email configuration and quickly resolve any delivery issues.
