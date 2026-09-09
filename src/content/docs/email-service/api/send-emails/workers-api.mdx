@@ -1,7 +1,7 @@
 ---
-title: Workers API
-description: Send emails directly from Cloudflare Workers using the Email Service binding and send() method.
-pcx_content_type: concept
+title: Email Sending Workers API
+description: Email Sending Workers API methods, types, binding, and errors.
+pcx_content_type: reference
 sidebar:
   order: 1
 products:
@@ -27,7 +27,7 @@ Configure a `send_email` binding in your Wrangler configuration file to enable e
 
 </WranglerConfig>
 
-You can restrict which senders and recipients a binding may use. Refer to [Configure send bindings](/email-service/configuration/send-bindings/) for the available restriction attributes and examples.
+You can restrict which senders and recipients a binding may use. Refer to [send bindings](/email-service/configuration/send-bindings/) for the available restriction attributes and examples.
 
 ## `send()` method
 
@@ -79,7 +79,7 @@ interface EmailSendResult {
 ```
 
 :::note[Local development with binary attachments]
-When using `wrangler dev` without [remote bindings](/workers/local-development/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations).
+When using `wrangler dev` without [remote bindings](/workers/local-development/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/guides/local-development/sending/#known-limitations).
 :::
 
 ### Basic usage
