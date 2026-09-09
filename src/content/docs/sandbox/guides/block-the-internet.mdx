@@ -1,0 +1,72 @@
+---
+title: Block the Internet
+description: Stop a Dynamic Worker or Container from reaching the public Internet.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+products:
+  - sandbox
+  - containers
+  - dynamic-workers
+  - workers
+reviewed: 2026-09-09
+---
+
+import { TypeScriptExample } from "~/components";
+
+Untrusted code should not inherit your application's network. Block outbound access, then add back the APIs the sandbox needs.
+
+## Dynamic Workers
+
+Set `globalOutbound` to `null` when you load the Worker. `fetch()` and `connect()` inside the sandbox throw.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const worker = env.LOADER.load({
+			compatibilityDate: "$today",
+			mainModule: "src/index.js",
+			modules: {
+				"src/index.js": `
+					export default {
+						fetch() {
+							return new Response("isolated");
+						},
+					};
+				`,
+			},
+			globalOutbound: null,
+		});
+
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+If you omit `globalOutbound`, the sandbox inherits the parent Worker's network access.
+
+You can still pass [bindings](/dynamic-workers/usage/bindings/) so the sandbox can call APIs you implement. To intercept `fetch()` instead of blocking it, refer to [Egress control](/dynamic-workers/usage/egress-control/).
+
+## Containers
+
+Set `enableInternet` to `false` on the `Container` subclass. The setting applies when the instance starts.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	enableInternet = false;
+}
+```
+
+</TypeScriptExample>
+
+When `enableInternet` is `false`, only traffic you later allow through `allowedHosts` or outbound handlers can leave the instance.
+
+To allow specific hosts, inject authorization headers, or intercept HTTPS, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/). Export `ContainerProxy` from your Worker entrypoint when you intercept outbound HTTP.

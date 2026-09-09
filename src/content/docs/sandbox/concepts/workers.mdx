@@ -1,0 +1,40 @@
+---
+title: Workers and sandboxes
+description: Why every sandbox starts from a Worker, and what that Worker decides.
+pcx_content_type: concept
+sidebar:
+  order: 3
+products:
+  - sandbox
+  - workers
+  - containers
+  - dynamic-workers
+  - durable-objects
+reviewed: 2026-09-09
+---
+
+A [Worker](/workers/) is the program that already handles your traffic. Both sandbox environments are accessible through that Worker. The untrusted work never faces the Internet on its own.
+
+## What the Worker does
+
+The Worker receives the request. It decides which sandbox to start, what code or image to load, and which APIs the sandbox may use. It then forwards work into the sandbox and returns the result.
+
+That split is the point of the model. Your application stays in the Worker. The untrusted or generated program runs somewhere else.
+
+## Dynamic Workers
+
+The Worker holds a [Worker Loader](/dynamic-workers/getting-started/#configure-worker-loader) binding. It calls `load()` or `get()` with the code to run. The returned stub is the sandbox. Calls into that stub execute in a new Worker, not in your application.
+
+You pass APIs and data in. You set `globalOutbound` when the sandbox should not inherit your network. For more information, refer to [Egress control](/dynamic-workers/usage/egress-control/).
+
+## Containers
+
+The Worker addresses a container through a [Durable Object](/durable-objects/). The [`Container` class](/containers/reference/container-class/) extends `DurableObject`. `getContainer()` returns the instance for an ID you choose.
+
+HTTP from the Internet always hits the Worker first. End users cannot open TCP or UDP to the instance. The Durable Object stores identity and state that should survive a container restart. The disk inside the instance is ephemeral.
+
+For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
+
+## What this means
+
+You do not operate a separate control plane to start a sandbox. You write Worker code. Isolation is a property of the environment you start, not a second product next to Workers.

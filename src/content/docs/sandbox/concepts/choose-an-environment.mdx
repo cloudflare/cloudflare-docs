@@ -1,0 +1,64 @@
+---
+title: Choose an environment
+description: When to use Dynamic Workers or Containers for isolated work.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - sandbox
+  - workers
+  - containers
+  - dynamic-workers
+reviewed: 2026-09-09
+---
+
+Use this page when you already understand what a sandbox is and need to pick an environment. For the isolation model, refer to [Isolation](/sandbox/concepts/isolation/).
+
+Both environments start from a [Worker](/workers/). Pricing follows the environment you run.
+
+## Use Dynamic Workers
+
+[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. Use them when the work is JavaScript, TypeScript, Python, or WebAssembly, and you want it to start in milliseconds.
+
+Typical work includes:
+
+- Model-generated JavaScript that should call only the APIs you pass in
+- User-uploaded Workers or automations
+- Short-lived previews and playgrounds
+- One-off tool execution from an agent
+
+The sandbox cannot see your application's memory. It cannot reach the Internet unless you allow it. Isolation comes from a V8 isolate, then the Workers process sandbox.
+
+Start with [Get started with Dynamic Workers](/sandbox/get-started/dynamic-workers/).
+
+## Use Containers
+
+[Containers](/containers/) run an image you provide. Use them when the work needs a full Linux environment.
+
+Typical work includes:
+
+- Languages and runtimes that are not Workers
+- Package installs, compilers, and native tools
+- Long-running processes
+- Existing images you already ship
+
+The instance does not share a process or a kernel with your Worker. HTTP from the Internet reaches it only through the Worker. Isolation comes from a Firecracker microVM. Your image is a Linux container inside that VM.
+
+Start with [Get started with Containers](/sandbox/get-started/containers/).
+
+## Use both
+
+Some products run JavaScript in a Dynamic Worker and Linux work in a Container.
+
+[Code Mode](/agents/tools/codemode/) runs model-generated JavaScript against typed tools. The [Agents sandbox tool](/agents/tools/sandbox/) runs commands in a Linux environment.
+
+You do not have to pick one environment for an entire application. Pick one per unit of work.
+
+## Existing Sandbox SDK apps
+
+[`@cloudflare/sandbox`](/sandbox/sdk/) is a TypeScript API on top of Containers. Use it if your application already depends on that package. New work should start from Dynamic Workers or Containers.
+
+## Related pages
+
+- [Compare environments](/sandbox/reference/compare-environments/)
+- [Workers and sandboxes](/sandbox/concepts/workers/)
