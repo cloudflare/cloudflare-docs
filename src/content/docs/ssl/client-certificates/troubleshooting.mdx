@@ -70,7 +70,7 @@ To review mTLS rules, consider the steps below. For further guidance refer to [C
 You can use [Cloudflare Workers](/workers/) to debug client certificate validation failures.
 
 :::caution
-Do not enable `global_fetch_strictly_public` for this Worker. When enabled, `fetch(request)` can invoke the Worker again instead of reaching the origin.
+Do not turn on `global_fetch_strictly_public` for this Worker. When turned on, `fetch(request)` can invoke the Worker again instead of reaching the origin.
 :::
 
 <Steps>
