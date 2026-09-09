@@ -15,6 +15,7 @@ import {
 	AvailableNotifications,
 	Render,
 	APIRequest,
+	CURL,
 	DashButton,
 	Steps,
 	Tabs,
@@ -23,7 +24,7 @@ import {
 
 You can provide automated systems with service tokens to authenticate against your Cloudflare One policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
-This section covers how to create, rotate, renew, disable, and revoke a service token.
+This section covers how to create, rotate, renew, disable, and revoke a service token. You can also configure Access to manage inactive service tokens automatically.
 
 ## Create a service token
 
@@ -169,6 +170,54 @@ resource "cloudflare_zero_trust_access_service_token" "example_service_token" {
 ```
 
 </TabItem> </Tabs>
+
+## Manage inactive service tokens
+
+You can configure Access to automatically disable or delete service tokens that are no longer in use. The setting applies to all service tokens in your Zero Trust account.
+
+Access considers a service token inactive when all of the following are true:
+
+- The token has not successfully authenticated with an Access application during the configured inactivity period.
+- The token is older than the configured inactivity period.
+- No Access policy rule directly references the token.
+
+You can set the inactivity period to a whole number from 30 to 365 days. Disabled tokens remain in your account and can be turned on again. Deleted tokens cannot be recovered.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+
+   <DashButton url="/?to=/:account/access-controls/settings" zeroTrust />
+
+2. Under **Clean up inactive service tokens**, turn on **Automatically clean up inactive service tokens**.
+3. Enter an **Inactivity period** from 30 to 365 days.
+4. Choose whether Access should disable or delete inactive tokens.
+5. Select **Save**.
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Send a `PATCH` request to update your Zero Trust organization. Set `action` to `disable` or `delete`:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
+	method="PATCH"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		service_token_inactivity: {
+			enabled: true,
+			inactivity_threshold_days: 90,
+			action: "disable",
+		},
+	}}
+/>
+
+To stop automatic cleanup, set `enabled` to `false`.
+
+</TabItem> </Tabs>
+
+Cleanup runs gradually in the background. An eligible token may not be disabled or deleted immediately.
 
 ## Turn a service token on or off
 
