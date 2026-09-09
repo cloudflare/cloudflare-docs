@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Email Service
-description: Send transactional emails and route incoming emails to Workers or email addresses with Cloudflare Email Service.
+description: Send transactional email and route incoming email with Cloudflare Email Service; arbitrary-recipient sending requires Workers Paid, while routing supports Workers Free and Paid.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -16,148 +16,29 @@ import {
 	LinkTitleCard,
 	Plan,
 	RelatedProduct,
-	Tabs,
-	TabItem,
 	LinkButton,
 } from "~/components";
 
 <Description>
 
-Send transactional emails and route incoming emails to Workers or email addresses
+Send transactional email and route incoming email with Cloudflare Email Service; arbitrary-recipient sending requires Workers Paid, while routing supports Workers Free and Paid
 
 </Description>
 
-Cloudflare Email Service provides powerful email capabilities:
+Cloudflare Email Service sends transactional email and handles incoming email.
 
-- **Email Sending** <Badge text="Beta" /> for outbound transactional emails
+- **Email Sending** <Badge text="Beta" /> sends outbound transactional emails.
   <Plan type="workers-paid" />
-- **Email Routing** for handling incoming emails with Workers or routing to email addresses
+- **Email Routing** processes incoming emails with Workers or forwards them to destination addresses.
   <Plan type="workers-all" />
 
 :::note
-Sending to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account is free on all plans, even when only Email Routing is configured.
+Sending to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account is free on Workers Free and Paid plans, even when only Email Routing is configured.
 :::
 
-Together, these two features make it possible for you to send and receive emails from your applications. For example, you can use Email Service for:
+Use Email Sending for account emails, order confirmations, and alerts. Use Email Routing to process or forward incoming messages.
 
-- Transactional emails (welcome messages, password resets, order confirmations)
-- Authentication flows (magic links, email verification, two-factor authentication)
-- Notifications and alerts
-- Custom email addresses (support@, contact@, orders@)
-- Emails as a mode of interaction for agents, such as send an email to create an issue in ticket tracking
-
-Access Email Service directly from Cloudflare Workers using [bindings](/email-service/api/send-emails/workers-api/), from any platform using the [REST API](/email-service/api/send-emails/rest-api/), or over [authenticated SMTP](/email-service/api/send-emails/smtp/):
-
-<Tabs>
-<TabItem label="Workers">
-
-Send emails with the `EMAIL` binding and handle incoming emails with the `email()` handler in `src/index.ts`:
-
-```ts
-interface Env {
-	EMAIL: SendEmail;
-}
-
-export default {
-	// Handle HTTP requests (Email Sending)
-	async fetch(request, env, ctx): Promise<Response> {
-		// Send a welcome email
-		await env.EMAIL.send({
-			to: "user@example.com",
-			from: "welcome@yourdomain.com",
-			subject: "Welcome to our service!",
-			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-			text: "Welcome! Thanks for signing up.",
-		});
-
-		return new Response("Email sent successfully");
-	},
-
-	// Handle incoming emails (Email Routing)
-	async email(message, env, ctx): Promise<void> {
-		// Forward to support team
-		if (message.to.includes("support@yourdomain.com")) {
-			await message.forward("team@yourdomain.com");
-		}
-
-		// Send auto-reply
-		await env.EMAIL.send({
-			to: message.from,
-			from: "noreply@yourdomain.com",
-			subject: "We received your message",
-			html: "<h1>Thank you!</h1><p>We'll get back to you soon.</p>",
-		});
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-Add the bindings to your Wrangler configuration file:
-
-```jsonc
-{
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "<ENTER_WORKER_NAME>",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-
-	// Email sending
-	"send_email": [
-		{
-			"name": "EMAIL"
-		}
-	],
-
-	// Email routing
-	"email": [
-		{
-			"name": "EMAIL_HANDLER"
-		}
-	]
-}
-```
-
-</TabItem>
-<TabItem label="API">
-
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "to": "user@example.com",
-    "from": "welcome@yourdomain.com",
-    "subject": "Welcome to our service!",
-    "html": "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-    "text": "Welcome! Thanks for signing up."
-  }'
-```
-
-Cloudflare also provides official SDKs for the REST API: [Node](/api/node/), [Python](/api/python/), and [Go](/api/go/).
-
-</TabItem>
-<TabItem label="SMTP">
-
-```sh
-cat > mail.txt <<EOF
-From: welcome@yourdomain.com
-To: user@example.com
-Subject: Welcome to our service!
-
-Thanks for signing up.
-EOF
-
-curl --ssl-reqd \
-  --url "smtps://smtp.mx.cloudflare.net:465" \
-  --user "api_token:<API_TOKEN>" \
-  --mail-from "welcome@yourdomain.com" \
-  --mail-rcpt "user@example.com" \
-  --upload-file mail.txt
-```
-
-</TabItem>
-</Tabs>
-
-See the full [API reference](/email-service/api/send-emails/) for the REST API, Workers binding, and SMTP.
+Send email through the [Workers binding](/email-service/api/send-emails/workers-api/), [REST API](/email-service/api/send-emails/rest-api/), or [authenticated SMTP](/email-service/api/send-emails/smtp/).
 
 <LinkButton href="/email-service/get-started/">Get started</LinkButton>
 
@@ -166,7 +47,7 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API, 
 ## Features
 
 <Feature header="Email Sending" href="/email-service/get-started/send-emails/">
-	Send transactional emails with high deliverability and global performance.
+	Send transactional emails from Workers or other applications.
 </Feature>
 
 <Feature header="Email Routing" href="/email-service/get-started/route-emails/">
@@ -174,14 +55,14 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API, 
 </Feature>
 
 <Feature header="Deliverability" href="/email-service/concepts/deliverability/">
-	Automatic IP reputation management and deliverability optimization.
+	Review email authentication and sender reputation factors.
 </Feature>
 
 <Feature
 	header="Analytics & Observability"
 	href="/email-service/observability/"
 >
-	Monitor email performance with comprehensive metrics and alerting.
+	Review sending and routing activity, metrics, and analytics.
 </Feature>
 
 <Feature header="API" href="/email-service/api/">
@@ -196,11 +77,11 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API, 
 ## Related products
 
 <RelatedProduct header="Workers" href="/workers/" product="workers">
-	Build serverless applications that can send emails directly from the edge.
+	Send and process email from Workers.
 </RelatedProduct>
 
 <RelatedProduct header="Queues" href="/queues/" product="queues">
-	Process email events asynchronously with Workers Queues integration.
+	Send Email Sending events to a queue.
 </RelatedProduct>
 
 <RelatedProduct
@@ -208,7 +89,7 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API, 
 	href="/analytics/"
 	product="analytics"
 >
-	Store and analyze custom email metrics with Workers Analytics Engine.
+	Store custom metrics from email Workers.
 </RelatedProduct>
 
 ---
@@ -222,7 +103,7 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API, 
 	href="/email-service/platform/limits/"
 	icon="document"
 >
-	Learn about Email Service limits and quotas.
+	Review Email Service limits and quotas.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -230,11 +111,11 @@ See the full [API reference](/email-service/api/send-emails/) for the REST API, 
 	href="/email-service/platform/pricing/"
 	icon="seti:shell"
 >
-	Understand Email Service pricing and plans.
+	Review Email Service pricing and plans.
 </LinkTitleCard>
 
 <LinkTitleCard title="Examples" href="/email-service/examples/" icon="document">
-	Explore practical examples and implementation patterns.
+	View Email Service code examples.
 </LinkTitleCard>
 
 <LinkTitleCard

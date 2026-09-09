@@ -1,7 +1,7 @@
 ---
 title: REST API
-description: Send emails from any application using the Email Service REST API with standard HTTP requests.
-pcx_content_type: concept
+description: Email Sending REST API requests, responses, authentication, and errors.
+pcx_content_type: reference
 sidebar:
   order: 2
 products:
@@ -22,7 +22,7 @@ Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-
 Authorization: Bearer <API_TOKEN>
 ```
 
-## Send an email
+## Request example
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
@@ -111,7 +111,7 @@ A successful response returns the delivery status for each recipient:
 The REST API returns recipient-grouped delivery status. The [Workers binding](/email-service/api/send-emails/workers-api/) returns a single `messageId` per `send()` call instead.
 :::
 
-## Error handling
+## Error responses
 
 The REST API returns standard Cloudflare API error responses. A failed request returns an `errors` array with numeric error codes and machine-readable messages:
 
@@ -152,9 +152,9 @@ REST API error codes:
 The REST API returns standard Cloudflare API numeric error codes, while the [Workers binding](/email-service/api/send-emails/workers-api/) throws errors with string codes (for example, `E_SENDER_NOT_VERIFIED`). Refer to the [Workers API error codes table](/email-service/api/send-emails/workers-api/#error-codes) for the string error codes.
 :::
 
-## Next steps
+## Related resources
 
 - Refer to the [Email Sending API reference](/api/resources/email_sending/methods/send/) for the full request and response schemas.
-- See the [Workers API](/email-service/api/send-emails/workers-api/) for sending emails directly from Cloudflare Workers using bindings.
+- See the [Email Sending Workers API](/email-service/api/send-emails/workers-api/) for sending emails directly from Cloudflare Workers using bindings.
 - See [SMTP](/email-service/api/send-emails/smtp/) for sending from any SMTP-capable application or mail client.
 - Review [email headers](/email-service/reference/headers/) for threading, list management, and custom tracking headers.
