@@ -107,6 +107,42 @@ const facetMatchMaps = Object.fromEntries(
 		</button>
 	</div>
 
+	<section
+		data-model-comparison
+		hidden
+		class="border-border bg-muted/20 mb-5 overflow-hidden rounded-lg border"
+		aria-labelledby="model-comparison-heading"
+	>
+		<div
+			class="border-border flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3"
+		>
+			<div>
+				<h2
+					id="model-comparison-heading"
+					class="text-foreground m-0 text-base font-semibold"
+				>
+					Compare models
+				</h2>
+				<p class="text-muted-foreground m-0 text-xs">
+					Compare up to three models.
+				</p>
+			</div>
+			<button
+				type="button"
+				data-model-comparison-clear
+				class="text-primary cursor-pointer text-sm underline-offset-2 hover:underline"
+			>
+				Clear comparison
+			</button>
+		</div>
+		<div class="overflow-x-auto">
+			<table class="m-0 w-full min-w-[640px] border-collapse text-sm">
+				<thead data-model-comparison-head></thead>
+				<tbody data-model-comparison-body></tbody>
+			</table>
+		</div>
+	</section>
+
 	{/* Empty state — toggled by the script. */}
 	<div
 		data-models-empty
@@ -138,7 +174,6 @@ const facetMatchMaps = Object.fromEntries(
 		LG_GRID_CLASS,
 		resolveCols,
 		cornersFor,
-		cellClass,
 		cornerSpansHTML,
 	} from "~/components/directory/grid";
 
@@ -162,6 +197,46 @@ const facetMatchMaps = Object.fromEntries(
 	const countEl = document.getElementById("model-count")!;
 	const countLabelEl = document.getElementById("model-count-label")!;
 	const clearBtn = document.getElementById("clear-filters")!;
+	const comparison = root.querySelector<HTMLElement>(
+		"[data-model-comparison]",
+	)!;
+	const comparisonHead = comparison.querySelector<HTMLTableSectionElement>(
+		"[data-model-comparison-head]",
+	)!;
+	const comparisonBody = comparison.querySelector<HTMLTableSectionElement>(
+		"[data-model-comparison-body]",
+	)!;
+	const comparisonClear = comparison.querySelector<HTMLButtonElement>(
+		"[data-model-comparison-clear]",
+	)!;
+	const compareButtons = Array.from(
+		root.querySelectorAll<HTMLButtonElement>("[data-model-compare]"),
+	);
+	const compareButtonEntries = compareButtons.flatMap((button) => {
+		const cell = button.closest<HTMLElement>("[data-models-cell]");
+		return cell === null ? [] : [{ button, cell }];
+	});
+	const compareButtonByCell = new Map(
+		compareButtonEntries.map(({ button, cell }) => [cell, button]),
+	);
+	const selectedModels: HTMLElement[] = [];
+	const indexedModels = Array.from(
+		grid.querySelectorAll<HTMLElement>("[data-models-cell]"),
+	).map((cell) => ({
+		cell,
+		marks: cell.querySelector<HTMLElement>("[data-corner-marks]"),
+		search: cell.dataset.search ?? cell.dataset.name ?? "",
+		facets: Object.fromEntries(
+			facetKeys.map((key) => [
+				key,
+				new Set(
+					(cell.dataset[datasetKey(key)] ?? "").split("|").filter(Boolean),
+				),
+			]),
+		) as Record<string, Set<string>>,
+		pinnedIndex: Number(cell.dataset.pinnedIndex ?? -1),
+		date: Number(cell.dataset.date ?? 0),
+	}));
 
 	const state = {
 		search: "",
@@ -169,10 +244,158 @@ const facetMatchMaps = Object.fromEntries(
 		sort: "newest" as SortOrder,
 	};
 
-	function relayout(): number {
-		const cells = Array.from(
-			grid.querySelectorAll<HTMLElement>("[data-models-cell]"),
+	function tableCell(tag: "th" | "td", text: string): HTMLTableCellElement {
+		const cell = document.createElement(tag);
+		cell.className =
+			"border-border whitespace-pre-line border-b border-r px-4 py-3 text-left align-top last:border-r-0";
+		cell.textContent = text;
+		return cell;
+	}
+
+	function updateCompareButton(
+		button: HTMLButtonElement,
+		cell: HTMLElement,
+	): void {
+		const selected = selectedModels.includes(cell);
+		const disabled = !selected && selectedModels.length >= 3;
+		if (button.ariaPressed !== String(selected))
+			button.ariaPressed = String(selected);
+		const text = selected ? "Selected" : "Compare";
+		if (button.textContent !== text) button.textContent = text;
+		if (button.disabled !== disabled) button.disabled = disabled;
+		button.setAttribute(
+			"aria-label",
+			`${selected ? "Remove" : "Add"} ${cell.dataset.modelLabel ?? "model"} ${selected ? "from" : "to"} comparison`,
 		);
+	}
+
+	function renderComparison(): void {
+		comparison.hidden = selectedModels.length === 0;
+		comparisonHead.replaceChildren();
+		comparisonBody.replaceChildren();
+
+		const header = document.createElement("tr");
+		const corner = tableCell("td", "");
+		corner.ariaHidden = "true";
+		header.append(corner);
+		for (const model of selectedModels) {
+			const cell = tableCell("th", "");
+			cell.scope = "col";
+			const link = document.createElement("a");
+			link.href = model.dataset.modelHref ?? "#";
+			link.className =
+				"text-primary font-semibold no-underline hover:underline";
+			link.textContent =
+				model.dataset.modelLabel ?? model.dataset.modelId ?? "Model";
+			cell.append(link);
+			header.append(cell);
+		}
+		comparisonHead.append(header);
+
+		const rows: Array<[string, (model: HTMLElement) => string]> = [
+			["Provider", (model) => model.dataset.modelProvider ?? "Not listed"],
+			["Task", (model) => model.dataset.modelTask ?? "Not listed"],
+			[
+				"Context window",
+				(model) =>
+					model.dataset.modelContext
+						? `${Number(model.dataset.modelContext).toLocaleString()} tokens`
+						: "Not listed",
+			],
+			[
+				"Maximum output",
+				(model) =>
+					model.dataset.modelOutput
+						? `${Number(model.dataset.modelOutput).toLocaleString()} tokens`
+						: "Not listed",
+			],
+			["Pricing", (model) => model.dataset.modelPricing || "Not listed"],
+			["Best for", (model) => model.dataset.modelTags || "Not listed"],
+			[
+				"Capabilities",
+				(model) => model.dataset.modelCapabilities || "Not listed",
+			],
+			[
+				"Delivery",
+				(model) =>
+					model.dataset.modelHosting === "hosted"
+						? "Cloudflare-hosted"
+						: "Third-party",
+			],
+			["Zero Data Retention", (model) => model.dataset.modelZdr ?? "No"],
+		];
+		for (const [label, value] of rows) {
+			const values = selectedModels.map(value);
+			if (values.every((entry) => entry === "Not listed")) continue;
+			const row = document.createElement("tr");
+			const heading = tableCell("th", label);
+			heading.scope = "row";
+			heading.classList.add("text-muted-foreground", "font-medium");
+			row.append(heading);
+			for (const entry of values) row.append(tableCell("td", entry));
+			comparisonBody.append(row);
+		}
+	}
+
+	for (const button of compareButtons) {
+		button.addEventListener("click", () => {
+			const cell = button.closest<HTMLElement>("[data-models-cell]");
+			if (cell === null) return;
+			const wasAtLimit = selectedModels.length >= 3;
+			const index = selectedModels.indexOf(cell);
+			if (index >= 0) selectedModels.splice(index, 1);
+			else if (selectedModels.length < 3) selectedModels.push(cell);
+			renderComparison();
+			updateCompareButton(button, cell);
+			if (wasAtLimit !== selectedModels.length >= 3) {
+				for (const entry of compareButtonEntries)
+					updateCompareButton(entry.button, entry.cell);
+			}
+		});
+	}
+	comparisonClear.addEventListener("click", () => {
+		const selected = [...selectedModels];
+		selectedModels.length = 0;
+		renderComparison();
+		for (const cell of selected) {
+			const button = compareButtonByCell.get(cell);
+			if (button) updateCompareButton(button, cell);
+		}
+		for (const entry of compareButtonEntries) {
+			if (entry.button.disabled) updateCompareButton(entry.button, entry.cell);
+		}
+		searchInput.focus();
+	});
+
+	function compareModels(
+		a: (typeof indexedModels)[number],
+		b: (typeof indexedModels)[number],
+		dir: number,
+	): number {
+		const aPinned = a.pinnedIndex >= 0;
+		const bPinned = b.pinnedIndex >= 0;
+		if (aPinned && !bPinned) return -1;
+		if (!aPinned && bPinned) return 1;
+		if (aPinned && bPinned) return a.pinnedIndex - b.pinnedIndex;
+		return a.date === b.date ? 0 : (a.date < b.date ? -1 : 1) * dir;
+	}
+
+	const sortedModels: Record<SortOrder, typeof indexedModels> = {
+		newest: [...indexedModels].sort((a, b) => compareModels(a, b, -1)),
+		oldest: [...indexedModels].sort((a, b) => compareModels(a, b, 1)),
+	};
+	let renderedSort: SortOrder | null = null;
+	let relayoutFrame = 0;
+
+	function scheduleRelayout(): void {
+		if (relayoutFrame !== 0) return;
+		relayoutFrame = requestAnimationFrame(() => {
+			relayoutFrame = 0;
+			relayout();
+		});
+	}
+
+	function relayout(): number {
 		// Split the query into whitespace-separated tokens; each must appear
 		// somewhere in the card's searchable text (name + shortName +
 		// description). This lets "happy horse" match a "HappyHorse" model
@@ -191,52 +414,43 @@ const facetMatchMaps = Object.fromEntries(
 			);
 		}
 
-		const matches = cells.filter((cell) => {
-			const haystack = cell.dataset.search ?? cell.dataset.name ?? "";
+		const orderedModels = sortedModels[state.sort];
+		const matches = orderedModels.filter((model) => {
 			const searchOk =
 				queryTokens.length === 0 ||
-				queryTokens.every((token) => haystack.includes(token));
+				queryTokens.every((token) => model.search.includes(token));
 			if (!searchOk) return false;
 			return facetKeys.every((key) => {
 				const chosen = selMatch[key];
 				if (chosen.length === 0) return true;
-				const vals = (cell.dataset[datasetKey(key)] ?? "")
-					.split("|")
-					.filter(Boolean);
-				return chosen.some((c) => vals.includes(c));
+				const values = model.facets[key];
+				return chosen.some((value) => values.has(value));
 			});
 		});
 
-		// Pinned-first sort; rest by date.
-		const dir = state.sort === "oldest" ? 1 : -1;
-		matches.sort((a, b) => {
-			const pa = Number(a.dataset.pinnedIndex ?? -1);
-			const pb = Number(b.dataset.pinnedIndex ?? -1);
-			const aPinned = pa >= 0;
-			const bPinned = pb >= 0;
-			if (aPinned && !bPinned) return -1;
-			if (!aPinned && bPinned) return 1;
-			if (aPinned && bPinned) return pa - pb;
-			const da = Number(a.dataset.date ?? 0);
-			const db = Number(b.dataset.date ?? 0);
-			return da === db ? 0 : (da < db ? -1 : 1) * dir;
-		});
-
 		const lgCols = resolveCols(matches.length);
-		grid.className = LG_GRID_CLASS[lgCols] ?? LG_GRID_CLASS[1];
+		const gridClass = LG_GRID_CLASS[lgCols] ?? LG_GRID_CLASS[1];
+		if (grid.className !== gridClass) grid.className = gridClass;
 		const cols =
 			typeof window !== "undefined" &&
 			window.matchMedia("(min-width: 1024px)").matches
 				? lgCols
 				: 1;
 
-		for (const cell of cells) cell.style.display = "none";
-		matches.forEach((cell, i) => {
-			cell.style.display = "";
-			cell.className = cellClass;
-			grid.appendChild(cell);
-			const marks = cell.querySelector<HTMLElement>("[data-corner-marks]");
-			if (marks) marks.innerHTML = cornerSpansHTML(cornersFor(i, cols));
+		if (renderedSort !== state.sort) {
+			for (const model of orderedModels) grid.appendChild(model.cell);
+			renderedSort = state.sort;
+		}
+		const visibleCells = new Set(matches.map((model) => model.cell));
+		for (const model of indexedModels) {
+			const display = visibleCells.has(model.cell) ? "" : "none";
+			if (model.cell.style.display !== display)
+				model.cell.style.display = display;
+		}
+		matches.forEach((model, i) => {
+			const markup = cornerSpansHTML(cornersFor(i, cols));
+			if (model.marks && model.marks.innerHTML !== markup)
+				model.marks.innerHTML = markup;
 		});
 
 		if (empty) empty.hidden = matches.length > 0;
@@ -287,7 +501,7 @@ const facetMatchMaps = Object.fromEntries(
 	// Event listeners.
 	searchInput.addEventListener("input", () => {
 		state.search = searchInput.value;
-		relayout();
+		scheduleRelayout();
 		syncUrl();
 	});
 

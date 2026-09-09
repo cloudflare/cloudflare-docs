@@ -29,6 +29,24 @@ const isTrue = (v: unknown): boolean => v === true || v === "true";
 const authorDisplayName = (author: string): string =>
 	authorData[author]?.name ?? author;
 
+function legacyPricing(value: unknown): Record<string, unknown> {
+	if (!Array.isArray(value)) return {};
+	return Object.fromEntries(
+		value.flatMap((entry) => {
+			if (
+				typeof entry !== "object" ||
+				entry === null ||
+				!("unit" in entry) ||
+				!("price" in entry) ||
+				typeof entry.unit !== "string"
+			) {
+				return [];
+			}
+			return [[entry.unit, entry.price]];
+		}),
+	);
+}
+
 function buildView(args: {
 	id: string;
 	name: string;
@@ -39,6 +57,7 @@ function buildView(args: {
 	hosting: "hosted" | "proxied";
 	task: string;
 	description: string;
+	tags: string[];
 	properties: Record<string, unknown>;
 	propertiesList: { property_id: string; value: unknown }[];
 	schema: { input: Record<string, unknown>; output: Record<string, unknown> };
@@ -46,6 +65,7 @@ function buildView(args: {
 	zdrComment?: string | null;
 	modelId?: string;
 	requestFormats?: string[] | null;
+	pricing?: Record<string, unknown>;
 	examples?: ModelExample[];
 	banner?: ModelBanner | null;
 	digest?: number | string;
@@ -68,6 +88,7 @@ function buildView(args: {
 		source: args.source,
 		task: args.task,
 		description: args.description,
+		tags: args.tags,
 		capabilities,
 		beta: isTrue(args.properties.beta),
 		createdAt: args.createdAt,
@@ -75,6 +96,7 @@ function buildView(args: {
 		propertiesList: args.propertiesList,
 		modelId: args.modelId,
 		requestFormats: args.requestFormats ?? null,
+		pricing: args.pricing,
 		examples: args.examples,
 		banner: args.banner ?? null,
 		schema: args.schema,
@@ -131,6 +153,7 @@ export function catalogToResolved(entry: CatalogEntry): ModelView {
 		hosting: "proxied",
 		task: model.task,
 		description: model.description,
+		tags: Array.isArray(model.tags) ? model.tags : [],
 		properties,
 		propertiesList,
 		schema,
@@ -139,6 +162,7 @@ export function catalogToResolved(entry: CatalogEntry): ModelView {
 		zdrComment: model.zdr_comment ?? null,
 		modelId: model.model_id,
 		requestFormats: (model.request_formats as string[] | undefined) ?? null,
+		pricing: (model.pricing as Record<string, unknown> | undefined) ?? {},
 		examples: (model.examples as ModelExample[] | undefined) ?? [],
 		banner: (model.banner as ModelBanner | null | undefined) ?? null,
 		digest: entry.digest,
@@ -168,6 +192,8 @@ export function legacyToResolved(entry: LegacyEntry): ModelView {
 		hosting: "hosted",
 		task: d.task.name,
 		description: d.description,
+		tags: Array.isArray(d.tags) ? d.tags : [],
+		pricing: legacyPricing(properties.price),
 		properties,
 		propertiesList,
 		schema: {

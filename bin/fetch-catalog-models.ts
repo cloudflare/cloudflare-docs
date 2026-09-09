@@ -25,6 +25,10 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import {
+	hasMoreCatalogModels,
+	mapConcurrentOrdered,
+} from "./catalog-import-utils";
 
 interface CatalogModel {
 	model_id: string;
@@ -80,8 +84,6 @@ interface CatalogModel {
 	private?: boolean;
 	created_at?: string;
 	updated_at?: string;
-	// Returned by the catalog API but not consumed by the docs site.
-	// Stripped before writing to disk.
 	pricing?: Record<string, unknown>;
 }
 
@@ -188,6 +190,7 @@ async function fetchModelList(
 	const modelIds: string[] = [];
 	let page = 1;
 	let hasMore = true;
+	let modelsSeen = 0;
 
 	console.log("Fetching model list from Unified Catalog API...");
 	console.log(`  Base URL: ${API_BASE_URL}`);
@@ -225,13 +228,14 @@ async function fetchModelList(
 		}
 
 		const { count, total_count } = data.result_info!;
+		modelsSeen += data.result.length;
 		const privateNote =
 			skippedPrivate > 0 ? ` (${skippedPrivate} private skipped)` : "";
 		console.log(
-			`  Page ${page}: ${count} models (${modelIds.length}/${total_count})${privateNote}`,
+			`  Page ${page}: ${count} models (${modelsSeen}/${total_count})${privateNote}`,
 		);
 
-		hasMore = modelIds.length < total_count;
+		hasMore = hasMoreCatalogModels(modelsSeen, total_count, data.result.length);
 		page++;
 	}
 
@@ -289,26 +293,20 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 	);
 
 	// Pass 2: fetch full details for each model
+	const results = await mapConcurrentOrdered(
+		modelIds,
+		CONCURRENCY,
+		(modelId) => fetchModelDetail(ACCOUNT_ID, API_TOKEN, modelId),
+		(fetched) =>
+			process.stdout.write(`\r  ${fetched}/${modelIds.length} models fetched`),
+	);
+
 	const models: CatalogModel[] = [];
 	const failed: string[] = [];
-
-	for (let i = 0; i < modelIds.length; i += CONCURRENCY) {
-		const batch = modelIds.slice(i, i + CONCURRENCY);
-		const results = await Promise.all(
-			batch.map((id) => fetchModelDetail(ACCOUNT_ID, API_TOKEN, id)),
-		);
-
-		for (let j = 0; j < results.length; j++) {
-			const result = results[j];
-			if (result) {
-				models.push(result);
-			} else {
-				failed.push(batch[j]);
-			}
-		}
-
-		const fetched = Math.min(i + CONCURRENCY, modelIds.length);
-		process.stdout.write(`\r  ${fetched}/${modelIds.length} models fetched`);
+	for (let index = 0; index < results.length; index++) {
+		const result = results[index];
+		if (result) models.push(result);
+		else failed.push(modelIds[index]);
 	}
 
 	console.log();
@@ -432,10 +430,6 @@ function writeModels(models: CatalogModel[]): void {
 		// Trim string fields that may have leading/trailing whitespace
 		model.name = model.name.trim();
 		model.description = model.description.trim();
-
-		// Drop the `pricing` field — it's returned by the catalog API but is
-		// not consumed by the docs site and isn't declared in the schema.
-		delete model.pricing;
 
 		// Strip credentials from any pre-signed URLs in the response.
 		const redacted = redactCredentialUrls(model);
