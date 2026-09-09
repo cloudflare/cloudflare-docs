@@ -1,7 +1,9 @@
 ---
 name: pr
-description: Creates and updates GitHub pull requests for cloudflare-docs changes. Load when asked to open, create, submit, update, or edit a PR, or write a PR title or description. Covers title conventions, branch naming, PR body structure, and the documentation checklist template.
+description: Creates and updates GitHub pull requests only for github.com/cloudflare/cloudflare-docs. Do not use for GitLab merge requests, internal mirrors, or repositories with a different origin. Load when asked to open, create, submit, update, or edit a PR, or write a PR title or description. Covers title conventions, branch naming, PR body structure, and the documentation checklist template.
 ---
+
+Use this skill only for pull requests in `github.com/cloudflare/cloudflare-docs`. Before using `gh` or a GitHub URL, confirm that `origin` points to that repository. If `origin` points elsewhere, stop and use the workflow configured for that environment.
 
 Use this skill when creating a GitHub pull request for changes to this repository, or when editing an existing PR's title or description.
 
