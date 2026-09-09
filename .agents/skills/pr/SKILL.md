@@ -1,5 +1,5 @@
 ---
-name: github-pr
+name: pr
 description: Drafts GitHub pull request titles and descriptions for cloudflare-docs changes. Do not use for GitLab merge requests or internal mirrors. Load when asked to write a PR title or description.
 ---
 
