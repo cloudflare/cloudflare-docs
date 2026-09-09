@@ -1,0 +1,224 @@
+---
+title: Configure Auth
+description: Configure Auth routes, return paths, OAuth requirements, and Auth instance selection.
+pcx_content_type: configuration
+sidebar:
+  order: 2
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { WranglerConfig } from "~/components";
+
+Your Worker owns its Auth route configuration. You can edit the same configuration through `cloudflare.config.ts`, `wrangler.jsonc`, or the Cloudflare dashboard.
+
+## Basic configuration
+
+The following configurations have identical behavior. They require a session for every request except `/health` and `/assets/*`.
+
+### `cloudflare.config.ts`
+
+```ts
+import { defineWorker } from "cf/config";
+
+export default defineWorker(() => ({
+	auth: {
+		defaultBehavior: "session_required",
+		routes: [
+			{
+				behavior: "public",
+				patterns: [
+					{ pathname: "/health" },
+					{ pathname: "/assets/*" },
+				],
+			},
+		],
+	},
+}));
+```
+
+### `wrangler.jsonc`
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"auth": {
+		"default_behavior": "session_required",
+		"routes": [
+			{
+				"behavior": "public",
+				"patterns": [
+					{ "pathname": "/health" },
+					{ "pathname": "/assets/*" }
+				]
+			}
+		]
+	}
+}
+```
+
+</WranglerConfig>
+
+When you omit `instanceId` or `instance_id`, Cloudflare provisions and attaches an Auth instance. You do not need to copy an ID for this setup.
+
+## Route behaviors
+
+Set `defaultBehavior` or `default_behavior` for requests that do not match a route rule. Auth supports these behaviors:
+
+| Behavior | Result |
+| - | - |
+| `session_required` | Auth requires a browser session and starts hosted sign-in when needed. |
+| `public` | Auth does not inspect credentials. The Worker receives `ctx.identity` as `null`. |
+| `optional_session` | Anonymous requests run. Signed-in requests receive `ctx.identity`. |
+| `api` | Auth requires a valid API credential for the configured resource and scopes. |
+| `mcp` | Auth provides Model Context Protocol (MCP) discovery and OAuth behavior. |
+
+Auth runs before Worker code for every behavior except the credential checks intentionally skipped by `public`.
+
+## Complete route example
+
+The following configurations also have identical behavior. They cover every route behavior and set allowed post-sign-in return paths.
+
+### `cloudflare.config.ts`
+
+```ts
+import { defineWorker } from "cf/config";
+
+export default defineWorker(() => ({
+	auth: {
+		defaultBehavior: "session_required",
+		returnPaths: ["/", "/account"],
+		routes: [
+			{
+				behavior: "public",
+				patterns: [
+					{ pathname: "/health" },
+					{ pathname: "/assets/*" },
+				],
+			},
+			{
+				behavior: "optional_session",
+				patterns: [{ pathname: "/blog/*" }],
+			},
+			{
+				behavior: "api",
+				patterns: [{ pathname: "/api/*" }],
+				methods: ["GET", "POST"],
+				resource: "https://api.example.com",
+				scopes: ["documents:read"],
+			},
+			{
+				behavior: "mcp",
+				patterns: [{ pathname: "/mcp" }],
+				methods: ["POST"],
+				resource: "https://mcp.example.com",
+				scopes: ["mcp:access"],
+			},
+		],
+	},
+}));
+```
+
+### `wrangler.jsonc`
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"auth": {
+		"default_behavior": "session_required",
+		"return_paths": ["/", "/account"],
+		"routes": [
+			{
+				"behavior": "public",
+				"patterns": [
+					{ "pathname": "/health" },
+					{ "pathname": "/assets/*" }
+				]
+			},
+			{
+				"behavior": "optional_session",
+				"patterns": [{ "pathname": "/blog/*" }]
+			},
+			{
+				"behavior": "api",
+				"patterns": [{ "pathname": "/api/*" }],
+				"methods": ["GET", "POST"],
+				"resource": "https://api.example.com",
+				"scopes": ["documents:read"]
+			},
+			{
+				"behavior": "mcp",
+				"patterns": [{ "pathname": "/mcp" }],
+				"methods": ["POST"],
+				"resource": "https://mcp.example.com",
+				"scopes": ["mcp:access"]
+			}
+		]
+	}
+}
+```
+
+</WranglerConfig>
+
+## Route matching
+
+Auth evaluates route groups in order. Each pattern can match a `pathname` and, when needed, a `hostname`. Patterns in one group are alternatives.
+
+The `methods` field applies to the whole group. If a path matches but its HTTP method does not, Auth returns `405 Method Not Allowed` before the Worker runs. If no path matches, Auth uses the default behavior.
+
+For `api` and `mcp` routes:
+
+- `resource` identifies the audience that the credential must target. If you omit it, Cloudflare manages a resource for the Worker across its attached domains.
+- `scopes` lists the scopes the credential must include. An MCP route uses `mcp:access` by default.
+- `methods` limits the HTTP methods that can use the route.
+
+Your Worker must still authorize specific records, tenant membership, MCP tools, and other application resources.
+
+## Return paths
+
+Auth returns a user to the original same-origin URL after hosted sign-in. If no valid original URL exists, Auth uses `/`.
+
+Use `returnPaths` or `return_paths` to narrow the allowed destinations. Each value must be an absolute path on the same origin, such as `/` or `/account`. Auth rejects absolute URLs, protocol-relative URLs, and another origin.
+
+## Select an existing Auth instance
+
+Set an instance ID when several Workers should share users, sessions, credentials, and hosted sign-in.
+
+### `cloudflare.config.ts`
+
+```ts
+import { defineWorker } from "cf/config";
+
+export default defineWorker(() => ({
+	auth: {
+		instanceId: "<AUTH_INSTANCE_ID>",
+		defaultBehavior: "session_required",
+	},
+}));
+```
+
+### `wrangler.jsonc`
+
+<WranglerConfig removeSchema>
+
+```jsonc
+{
+	"auth": {
+		"instance_id": "<AUTH_INSTANCE_ID>",
+		"default_behavior": "session_required"
+	}
+}
+```
+
+</WranglerConfig>
+
+The instance environment must match the Worker environment. Production Workers use production instances. Preview Workers use development instances.
+
+## Configuration updates
+
+The Dashboard and both configuration file formats edit the same active Auth configuration. The latest successful Dashboard save or deployment becomes active. A failed update leaves the previous configuration active.

@@ -16,6 +16,8 @@ Bindings allow your Worker to interact with resources on the Cloudflare Develope
 
 During local development, bindings connect to locally simulated resources by default. You can also configure them to connect to real, production resources using [remote bindings](/workers/local-development/#remote-bindings).
 
+Cloudflare Auth protects routes and provides trusted identity without a binding. Add the optional [`AUTH` binding](/workers/auth/bindings/) when your Worker needs explicit operations for an Auth instance.
+
 The following bindings are available today:
 
 <DirectoryListing />

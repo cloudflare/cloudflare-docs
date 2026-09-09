@@ -1,0 +1,72 @@
+---
+title: Cloudflare Auth
+description: Protect Worker routes with managed end-user authentication and read trusted identity from the Workers runtime.
+pcx_content_type: overview
+sidebar:
+  order: 8
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { DirectoryListing, TypeScriptExample } from "~/components";
+
+Cloudflare Auth authenticates your application's users before your Worker code runs. Add an `auth` block to your Worker configuration to require hosted passkey sign-in:
+
+```ts title="cloudflare.config.ts"
+import { defineWorker } from "cf/config";
+
+export default defineWorker(() => ({
+	auth: {
+		defaultBehavior: "session_required",
+	},
+}));
+```
+
+You do not need to create or copy an Auth instance ID. Cloudflare creates a production Auth instance and attaches it to the Worker when you deploy.
+
+Read the signed-in user from `ctx.identity`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const userId = ctx.identity?.user?.id;
+
+		if (!userId) {
+			return new Response("You must sign in.", { status: 401 });
+		}
+
+		return Response.json({ userId });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+An **Auth instance** owns users, sessions, passkeys, other credentials, and hosted sign-in. A Worker owns its route protection. Several Workers can select the same Auth instance when they need to share users and sessions.
+
+## Request flow
+
+Auth checks each request before the Worker starts:
+
+1. Cloudflare selects the matching Auth route rule.
+2. Auth signs in the user or validates the presented credential.
+3. Auth rejects unsuccessful requests before Worker code runs.
+4. The Worker receives successful identity through `ctx.identity`.
+5. Your application applies its own authorization rules.
+
+The optional [`AUTH` binding](/workers/auth/bindings/) provides explicit Auth operations. You do not need the binding to protect routes or read `ctx.identity`.
+
+## Authentication and authorization
+
+Auth identifies the caller. Your application still decides what that caller can do.
+
+Store roles, tenant membership, and object permissions in your application data. Key those records by the stable Auth user ID. Do not treat a successful sign-in as permission to access every application resource.
+
+## Get started
+
+Follow [Get started with Cloudflare Auth](/workers/auth/get-started/) to protect a Worker and register your first passkey.
+
+<DirectoryListing />

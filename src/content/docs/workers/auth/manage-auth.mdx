@@ -1,0 +1,80 @@
+---
+title: Manage Auth
+description: Manage Auth instances, attached Workers, signup access, users, sessions, and hosted sign-in settings in the Cloudflare dashboard.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { DashButton, Steps } from "~/components";
+
+Use the Cloudflare dashboard to manage an Auth instance and the Workers that use it.
+
+## Open an Auth instance
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Workers & Pages**.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Auth**.
+3. Select an Auth instance.
+
+</Steps>
+
+The instance view includes **Overview**, **Metrics**, **Users**, and **Settings**. The overview shows attached Worker environments and recent authentication activity.
+
+## Protect a Worker
+
+<Steps>
+
+1. In **Workers & Pages**, select your Worker.
+2. Select **Auth**.
+3. Select **Add authentication**.
+4. Create an Auth instance, or select an existing compatible instance.
+5. Choose the default route behavior.
+6. Add public, optional-session, API, or MCP route rules as needed.
+7. Select **Save changes**.
+
+</Steps>
+
+Saving the Dashboard form actively updates protection for that Worker environment. Auth checks requests before Worker code.
+
+You can also open an Auth instance and select **Attach Worker**. Several Workers can share one instance. Each Worker keeps its own route rules.
+
+## Control signup access
+
+Public passkey signup is the default. You can restrict new accounts to:
+
+- Invitations
+- Specific email addresses
+- Email domains
+
+To change access, open the instance and use its **Overview** or **Settings** controls for user sign-in. Existing users and sessions remain until you suspend the users or revoke their sessions.
+
+## Manage users and sessions
+
+Open **Users** to search and inspect the instance's users. Select a user to review active sessions, passkeys, and account state.
+
+You can revoke one session or all sessions for a user. Revocation affects future requests that use those sessions. Suspending a user blocks the user from signing in until you restore the account.
+
+## Update instance settings
+
+Open **Settings** to change instance-level settings such as:
+
+- Instance name
+- Signup access
+- Hosted sign-in settings
+- Session settings
+
+The Auth instance owns these settings, users, sessions, and credentials. Each attached Worker owns its route protection.
+
+## Configuration source of truth
+
+The Dashboard, `cloudflare.config.ts`, and `wrangler.jsonc` update the same Auth configuration. The latest successful update becomes active.
+
+For example, a deployment after a Dashboard save can replace the Dashboard route rules. A later Dashboard save can replace deployed route rules. Review the active configuration before each change.

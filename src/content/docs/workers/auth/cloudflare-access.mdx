@@ -1,0 +1,65 @@
+---
+title: Use Cloudflare Access with Auth
+description: Run workforce Access before end-user Auth and read both identities in a Worker.
+pcx_content_type: configuration
+sidebar:
+  order: 7
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { TypeScriptExample } from "~/components";
+
+Cloudflare Access and Cloudflare Auth answer different questions:
+
+| Product | Question | Runtime context |
+| - | - | - |
+| Cloudflare Access | May this workforce user reach the deployment? | `ctx.access` |
+| Cloudflare Auth | Who is this user inside the application? | `ctx.identity` |
+
+Use Access as the workforce gate for an internal deployment or Preview. Use Auth for the application's end users.
+
+## Request order
+
+When both products protect a Worker, Cloudflare runs them in this order:
+
+1. Workforce Access checks whether the requester may reach the deployment.
+2. End-user Auth identifies the requester as an application user.
+3. The Worker runs with one or both identity contexts.
+
+If Access denies the request, Auth does not show the application's sign-in page. If Access allows the request, Auth still applies the Worker's configured route behavior.
+
+For example, an employee can pass the Preview workforce policy and then sign in as a test application user.
+
+## Read both identities
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const workforce = await ctx.access?.getIdentity();
+		const applicationUserId = ctx.identity?.user?.id;
+
+		if (!workforce || !applicationUserId) {
+			return new Response("Unauthorized", { status: 401 });
+		}
+
+		return Response.json({
+			workforceEmail: workforce.email,
+			applicationUserId,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+`ctx.access` contains the workforce identity. `ctx.identity` contains the application identity. The two identities can represent different accounts.
+
+## Configure both products
+
+Configure workforce protection through [Cloudflare Access for Workers](/workers/configuration/cloudflare-access/). Configure application Auth through the Worker's [`auth` settings](/workers/auth/configuration/).
+
+Access policy does not replace Auth route protection. Auth sign-in does not grant workforce access. Your Worker must also apply application authorization for roles, tenant membership, and object access.

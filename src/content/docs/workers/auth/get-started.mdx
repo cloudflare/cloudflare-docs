@@ -1,0 +1,126 @@
+---
+title: Get started
+description: Protect a Worker, keep one route public, and sign in with a passkey.
+pcx_content_type: get-started
+sidebar:
+  order: 1
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { PackageManagers, Steps, TypeScriptExample, WranglerConfig } from "~/components";
+
+Add Auth to an existing Worker without creating an Auth instance first.
+
+## Prerequisites
+
+You need a Worker project and permission to deploy it.
+
+<Steps>
+
+1. Add Auth configuration.
+
+   Use the format that your Worker project already uses. Both examples require a session by default and keep `/health` public.
+
+   **`cloudflare.config.ts`**
+
+   ```ts
+   import { defineWorker } from "cf/config";
+
+   export default defineWorker(() => ({
+       auth: {
+           defaultBehavior: "session_required",
+           routes: [
+               {
+                   behavior: "public",
+                   patterns: [{ pathname: "/health" }],
+               },
+           ],
+       },
+   }));
+   ```
+
+   **`wrangler.jsonc`**
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+       "$schema": "node_modules/wrangler/config-schema.json",
+       "auth": {
+           "default_behavior": "session_required",
+           "routes": [
+               {
+                   "behavior": "public",
+                   "patterns": [{ "pathname": "/health" }]
+               }
+           ]
+       }
+   }
+   ```
+
+   </WranglerConfig>
+
+   Because the configuration omits an Auth instance ID, Cloudflare creates and attaches one during deployment. Public passkey signup is active by default.
+
+2. Read the signed-in user.
+
+   Replace your Worker handler with this example:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+       async fetch(request, env, ctx) {
+           const url = new URL(request.url);
+
+           if (url.pathname === "/health") {
+               return Response.json({ ok: true });
+           }
+
+           const userId = ctx.identity?.user?.id;
+
+           if (!userId) {
+               return new Response("You must sign in.", { status: 401 });
+           }
+
+           return Response.json({ userId });
+       },
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+3. Deploy the Worker.
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   Cloudflare creates a production Auth instance, applies the route protection, and activates both with the deployment.
+
+4. Register a passkey.
+
+   Open a protected Worker URL in a browser. The hosted sign-in page prompts you to create a passkey. Complete the browser or device prompt.
+
+   Auth creates the user and session, then returns you to the original same-origin URL. The Worker response contains the user's opaque Auth ID.
+
+5. Test the public route.
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/health
+   ```
+
+   ```json output
+   {
+       "ok": true
+   }
+   ```
+
+</Steps>
+
+## Next steps
+
+- [Configure route behaviors](/workers/auth/configuration/).
+- [Read runtime identity](/workers/auth/identity/).
+- [Manage the Auth instance](/workers/auth/manage-auth/).
+- [Add the optional `AUTH` binding](/workers/auth/bindings/).

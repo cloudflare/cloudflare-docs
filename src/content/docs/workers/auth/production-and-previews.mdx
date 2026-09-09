@@ -1,0 +1,76 @@
+---
+title: Production and Previews
+description: Keep production Auth data separate from Preview deployments while sharing development identity across named Previews.
+pcx_content_type: concept
+sidebar:
+  order: 6
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { WranglerConfig } from "~/components";
+
+Cloudflare Auth separates production identity from Preview identity.
+
+| Worker environment | Default Auth instance |
+| - | - |
+| Production | A production Auth instance for the Worker |
+| Named Previews | One shared development Auth instance for that Worker |
+
+When configuration omits an Auth instance ID, Cloudflare provisions the correct instance. You do not need to create or copy an ID.
+
+## Identity isolation
+
+Production users, sessions, passkeys, API keys, OAuth grants, and other credentials never copy into Preview. Preview sign-in creates separate development users and credentials.
+
+This separation prevents a Preview from using production identity data. It also lets testers register passkeys without changing production accounts.
+
+## Named Preview sharing
+
+Named Previews for one Worker share one development Auth instance by default. A user can sign in once and use the same Preview identity across those named Previews.
+
+A different Worker gets a different development Auth instance unless you explicitly select an existing one.
+
+## Share an instance between Workers
+
+Set the same `instanceId` or `instance_id` on several Workers when they should share identity. Share only between compatible environments:
+
+- Production Workers can share a production instance.
+- Preview Workers can share a development instance.
+
+The shared instance owns users, sessions, credentials, and hosted sign-in. Each Worker still owns its own route protection.
+
+Changing a Worker to another instance changes its identity realm. Existing users may need to register or sign in again on the new instance.
+
+## Configure an explicit Preview instance
+
+Use an explicit development instance ID when a set of Preview Workers should share identity or when one Preview needs its own identity boundary.
+
+In `cloudflare.config.ts`, set:
+
+```ts
+import { defineWorker } from "cf/config";
+
+export default defineWorker(() => ({
+	auth: {
+		instanceId: "<DEVELOPMENT_AUTH_INSTANCE_ID>",
+		defaultBehavior: "session_required",
+	},
+}));
+```
+
+In `wrangler.jsonc`, use the equivalent snake_case fields:
+
+<WranglerConfig removeSchema>
+
+```jsonc
+{
+	"auth": {
+		"instance_id": "<DEVELOPMENT_AUTH_INSTANCE_ID>",
+		"default_behavior": "session_required"
+	}
+}
+```
+
+</WranglerConfig>

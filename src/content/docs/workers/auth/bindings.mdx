@@ -1,0 +1,128 @@
+---
+title: AUTH binding
+description: Add the optional AUTH binding for hosted account pages, users, sessions, invitations, API keys, OAuth grants, and agents.
+pcx_content_type: reference
+sidebar:
+  order: 4
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+You do not need an `AUTH` binding to protect routes or read `ctx.identity`. Add it when Worker code needs explicit operations on an Auth instance.
+
+## Add the binding
+
+When you omit an instance ID from the binding, it uses the instance attached by the top-level `auth` configuration.
+
+### `cloudflare.config.ts`
+
+```ts
+import { bindings, defineWorker } from "cf/config";
+
+export default defineWorker(() => ({
+	auth: {
+		defaultBehavior: "session_required",
+	},
+	env: {
+		AUTH: bindings.auth(),
+	},
+}));
+```
+
+### `wrangler.jsonc`
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"auth": {
+		"default_behavior": "session_required"
+	},
+	"bindings": [
+		{
+			"name": "AUTH",
+			"type": "auth"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+To bind a different instance intentionally, pass `instanceId` to `bindings.auth()` or set `instance_id` on the JSON binding. Request authentication still uses the instance selected by the top-level `auth` block.
+
+## Open hosted account pages
+
+Return complete hosted responses from your Worker:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/account") {
+			return env.AUTH.account({ returnTo: "/" });
+		}
+
+		if (url.pathname === "/passkeys/new") {
+			return env.AUTH.startPasskeyEnrollment({ returnTo: "/account" });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Auth validates each `returnTo` value against the Worker's return-path policy.
+
+## Read a user and sessions
+
+Use the user ID from trusted runtime identity:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const userId = ctx.identity?.user?.id;
+
+		if (!userId) {
+			return new Response("You must sign in.", { status: 401 });
+		}
+
+		const user = await env.AUTH.user(ctx.identity.user.id);
+		const sessions = await env.AUTH.listSessions({
+			userId: ctx.identity.user.id,
+		});
+
+		return Response.json({ user, sessions });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Binding operations
+
+The binding provides instance data operations such as:
+
+| Task | Operation |
+| - | - |
+| Open hosted account settings | `account()` |
+| Enroll another passkey | `startPasskeyEnrollment()` |
+| Read one user | `user()` |
+| List a user's sessions | `listSessions()` |
+| Create an invitation | `createInvitation()` |
+| Create or revoke API keys | `createApiKey()` and `apiKey()` |
+| Read or revoke OAuth grants | `listAuthorizedApplications()` and `authorizedApplication()` |
+| Read registered agents | `listAgents()` |
+
+The binding grants the Worker operations on the full Auth instance. Check application authorization before you expose user, session, invitation, key, grant, or agent operations to a browser or API client.

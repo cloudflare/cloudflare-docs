@@ -1,0 +1,101 @@
+---
+title: Runtime identity
+description: Read the authenticated user and other trusted Auth facts from ctx.identity.
+pcx_content_type: reference
+sidebar:
+  order: 3
+products:
+  - workers
+reviewed: 2026-09-09
+---
+
+import { TypeScriptExample } from "~/components";
+
+Read the common user ID from `ctx.identity.user.id`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const userId = ctx.identity?.user?.id;
+
+		if (!userId) {
+			return new Response("You must sign in.", { status: 401 });
+		}
+
+		return Response.json({ userId });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+`ctx.identity` is `null` when Auth does not establish an identity. This includes `public` routes and anonymous requests to `optional_session` routes.
+
+## Identity shape
+
+The broader runtime shape supports users, OAuth clients, and registered agents:
+
+```ts
+interface AuthIdentity {
+	readonly subject: AuthSubject;
+	readonly actor: AuthSubject | null;
+	readonly oauthClientId: string | null;
+	readonly credential: {
+		readonly type: "session" | "oauth_access_token" | "api_key";
+		readonly id: string | null;
+	};
+	readonly scopes: readonly string[];
+	readonly authTime: string | null;
+	readonly user: { readonly id: string } | null;
+}
+
+interface AuthSubject {
+	readonly type: "user" | "oauth_client" | "agent";
+	readonly id: string;
+	readonly issuer: string | null;
+}
+```
+
+The runtime may add fields without changing these meanings.
+
+| Field | Description |
+| - | - |
+| `subject` | The user, OAuth client, or registered agent that the request represents. |
+| `actor` | The agent acting for a user, when applicable. |
+| `oauthClientId` | The OAuth client used for the request, when applicable. |
+| `credential` | The credential type and its opaque Auth ID. |
+| `scopes` | The OAuth or API scopes that Auth validated. |
+| `authTime` | The time of the authentication event, when known. |
+| `user` | The instance-local user ID for a user request. |
+
+Auth keeps raw credentials and profile data out of runtime identity. Use the optional [`AUTH` binding](/workers/auth/bindings/) when you need a user record or session details.
+
+## Apply application authorization
+
+Authentication does not grant access to every application resource. Look up roles, tenant membership, and object permissions in your own data.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		const userId = ctx.identity?.user?.id;
+
+		if (!userId) {
+			return new Response("Unauthorized", { status: 401 });
+		}
+
+		const document = await env.DOCUMENTS.get(request);
+
+		if (!(await document.canEdit(userId))) {
+			return new Response("Forbidden", { status: 403 });
+		}
+
+		return document.update(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
