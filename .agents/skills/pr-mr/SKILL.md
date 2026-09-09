@@ -1,9 +1,9 @@
 ---
 name: pr-mr
-description: Drafts pull request and merge request titles and descriptions for cloudflare-docs changes. Load when asked to write a PR or MR title or description.
+description: Guides opening, creating, submitting, updating, and editing pull requests and merge requests for cloudflare-docs changes. Covers title conventions, branch naming, request body structure, and documentation checklist templates. Load when asked to open, create, submit, update, or edit a PR or MR, or write a title or description.
 ---
 
-Use this skill to draft a pull request or merge request title or description. Do not use it to create, edit, or manage a request. The contributor must use the process appropriate for their repository.
+Use this skill to prepare and manage a pull request or merge request. Use the process appropriate for the contributor's repository to perform repository actions.
 
 ## Editing an existing request
 
