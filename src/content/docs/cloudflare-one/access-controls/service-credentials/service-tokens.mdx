@@ -23,7 +23,7 @@ import {
 
 You can provide automated systems with service tokens to authenticate against your Cloudflare One policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
-This section covers how to create, rotate, renew, disable, and revoke a service token.
+This section covers how to create, rotate, renew, disable, and revoke a service token. You can also configure Access to manage inactive service tokens automatically.
 
 ## Create a service token
 
@@ -169,6 +169,25 @@ resource "cloudflare_zero_trust_access_service_token" "example_service_token" {
 ```
 
 </TabItem> </Tabs>
+
+## Manage inactive service tokens
+
+You can configure Access to automatically disable or delete service tokens that are no longer in use. The setting applies to all service tokens in your Zero Trust account.
+
+To configure automatic service token cleanup:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
+2. Open the service token inactivity settings.
+3. Choose how long a service token can remain inactive. You can select a period from 30 to 365 days.
+4. Choose whether Access should disable or delete inactive tokens.
+5. Save your changes.
+
+Access checks service tokens once a day. A token is eligible for automatic cleanup when both of these conditions are true:
+
+- The token is older than the configured inactivity period.
+- The token has not successfully authenticated with an Access application during that period.
+
+Access does not automatically disable or delete a service token that is referenced by an Access policy rule. Disabled tokens remain in your account and can be turned on again. Deleted tokens cannot be recovered.
 
 ## Turn a service token on or off
 
