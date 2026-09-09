@@ -1,9 +1,19 @@
 ---
 name: pr-mr
-description: Creates and updates pull requests and merge requests for cloudflare-docs changes. Covers title conventions, branch naming, request body structure, and documentation checklist templates. Load when asked to open, create, submit, update, or edit a PR or MR, or write a title or description.
+description: Creates and updates pull requests and merge requests for cloudflare-docs changes. Covers title conventions, branch naming, request body structure, and documentation checklist templates. Load when asked to open, create, submit, update, or edit a PR or MR, or write a PR or MR title or description.
 ---
 
-Use this skill to prepare, create, and update pull requests and merge requests. Use the process appropriate for the contributor's repository to perform repository actions.
+Use this skill to prepare, create, and update pull requests and merge requests.
+
+## Repository operations
+
+Identify the hosting provider and target repository from the current repository's remotes and configuration. Do not assume a provider or hardcode a remote URL.
+
+Use the available integration or authenticated CLI for that provider to read, create, and update requests. If the syntax is uncertain, check the tool's help before running a command that changes remote state.
+
+When the provider tool supports reading a body from a file, write the complete Markdown body to a temporary file and use the file-input option instead of passing the body inline through the shell. This preserves backticks, newlines, and other Markdown formatting. Remove the temporary file afterward.
+
+If no provider integration or authenticated CLI is available, stop and explain the blocker instead of claiming that the request was created or updated.
 
 ## Editing an existing request
 
@@ -13,7 +23,7 @@ When asked to update or edit an existing request description (or title), follow 
 2. **If the description is empty**, treat it as a new request body and follow Steps 1–3 in the "Creating a new request" section below. Apply the result to the existing request; do not create another request.
 3. **Follow the existing format** — if the author has structured their description in a particular way, preserve that structure. Do not reformat, reorder, or restructure sections they wrote.
 4. **Only change what was asked** — make the minimum edit necessary to fulfill the request. Do not "improve" unrelated phrasing, fix grammar elsewhere, rewrite the summary, or modify checklist items that were not part of the request.
-5. Apply the requested title or description changes through the process appropriate for the contributor's repository.
+5. Apply the requested title or description changes using the provider tool selected under "Repository operations."
 
 ## After pushing to a branch with an open request
 
@@ -31,9 +41,7 @@ Follow Steps 1–4 below only when creating a new request. For an existing reque
 
 ## Step 1 — Gather context
 
-Run `--stat` first to understand the scope without blowing up context:
-
-Determine the request's target branch first. For an existing request, use its current target branch. For a new request, use `production` unless the user asked for a different base.
+Determine the request's target branch first; this is `<base>`. For an existing request, use its current target branch. For a new request, use `production` unless the user asked for a different base. Then run `--stat` to understand the scope without blowing up context:
 
 ```bash
 git log --oneline <base>..HEAD
@@ -190,7 +198,7 @@ Confirm that the branch and its commits are available to the hosting provider. I
 
 Before creating a request, check for an existing open request with the same head branch and target `<base>`. If one exists, update or return that request instead of creating a duplicate.
 
-Create the pull request or merge request against the resolved `<base>` through the process appropriate for the contributor's repository. Create it as a draft when the hosting provider supports drafts. The author should review the deploy preview before marking a draft ready or requesting review for a request that cannot be drafted.
+Create the pull request or merge request against the resolved `<base>` using the provider tool selected under "Repository operations." Create it as a draft when the hosting provider supports drafts. The author should review the deploy preview before marking a draft ready or requesting review for a request that cannot be drafted.
 
 ## Output
 
