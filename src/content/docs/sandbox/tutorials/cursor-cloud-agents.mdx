@@ -209,7 +209,7 @@ npx wrangler dev --test-scheduled
 In another terminal, invoke the scheduled route:
 
 ```sh
-curl "http://localhost:8787/__scheduled?cron=*/5+*+*+*+*"
+curl "http://localhost:8787/cdn-cgi/local/scheduled?cron=*/5+*+*+*+*"
 ```
 
 If you change the cron interval, update both `triggers.crons` in `wrangler.jsonc` and `CONTROLLER_RUN_BUDGET_MS` in `src/config.ts`.

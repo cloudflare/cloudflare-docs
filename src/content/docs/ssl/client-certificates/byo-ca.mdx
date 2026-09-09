@@ -31,6 +31,20 @@ Bring your own CA (BYOCA) is especially useful if you already have mTLS implemen
 If you exceed the CA certificate quota, the API returns error `1489` with the message "Hit maximum CA cert allocation." Contact your account team to request a quota increase.
 :::
 
+:::note[Cloudflare Access uses a separate quota]
+CAs uploaded through [Cloudflare Access](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) use a separate quota that is not counted against the five-CA limit. If you see error `12130` ("maximum number of certificates has been reached") in Access, this relates to the Access certificate quota, not the BYOCA CA quota.
+:::
+
+## When to use BYOCA
+
+BYOCA works well if:
+
+- You already have an internal CA and client certificates are installed on your devices.
+- You issue certificates at high volume or high churn — for example, one certificate per ephemeral virtual machine, container, or device. With BYOCA, Cloudflare stores only your CA certificate, not individual issued certificates, so there is no per-certificate quota.
+- You want full control over certificate validity periods, key types, and revocation through your own CA tooling.
+
+If you only have a small, stable set of devices or services to authenticate, the [Cloudflare-managed CA](/ssl/client-certificates/create-a-client-certificate/) is simpler to set up.
+
 ## CA certificate requirements
 
 When you upload your CA, Cloudflare validates the certificate according to certain requirements.

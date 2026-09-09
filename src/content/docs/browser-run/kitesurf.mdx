@@ -9,7 +9,7 @@ products:
   - browser-run
 ---
 
-[Kitesurf ↗](https://blog.cloudflare.com/kitesurf) is Cloudflare's stateless, highly scalable browser that runs entirely on top of [Workers](/workers/) and is designed for AI agents. Instead of shipping a full desktop browser engine like Chromium, Kitesurf focuses on what matters to an agent — token count, context windows, scalability, performance, and cost — while trading away features that only humans need, such as tabs, themes, extensions, and pixel-perfect rendering.
+[Kitesurf](https://blog.cloudflare.com/kitesurf) is Cloudflare's stateless, highly scalable browser that runs entirely on top of [Workers](/workers/) and is designed for AI agents. Instead of shipping a full desktop browser engine like Chromium, Kitesurf focuses on what matters to an agent — token count, context windows, scalability, performance, and cost — while trading away features that only humans need, such as tabs, themes, extensions, and pixel-perfect rendering.
 
 For common agentic tasks like screenshots and HTML extraction, Kitesurf uses significantly less CPU and memory than Chromium, which means you can run more sessions and scale better for bursty, AI-driven workloads.
 
@@ -25,7 +25,7 @@ Kitesurf is a good fit for:
 - Automations and applications that rely on one-shot [Quick Actions](/browser-run/quick-actions/), such as extracting content from a page or generating PDFs and screenshots for compatible sites.
 - Bursty, AI-driven workloads that benefit from an ephemeral, fully-isolated, stateless engine designed to exist only for the duration of a task.
 
-Kitesurf correctly renders pages such as [TodoMVC ↗](https://todomvc.com/) (vanilla, React, Vue, Angular, Preact), Wikipedia, Hacker News, the Cloudflare Blog, and much of the Cloudflare dashboard.
+Kitesurf correctly renders pages such as [TodoMVC](https://todomvc.com/) (vanilla, React, Vue, Angular, Preact), Wikipedia, Hacker News, the Cloudflare Blog, and much of the Cloudflare dashboard.
 
 ### What Kitesurf cannot do yet
 
@@ -37,7 +37,7 @@ Kitesurf is not yet the right option if you need to:
 
 For these cases, use Browser Run's default browser, which is powered by Chromium.
 
-The best way to know whether a specific site is compatible with Kitesurf is to try it — either through the [CDP endpoint](/browser-run/cdp/) and [Quick Actions](/browser-run/quick-actions/) or in the [public playground ↗](https://kitesurf.cloudflare.app/).
+The best way to know whether a specific site is compatible with Kitesurf is to try it — either through the [CDP endpoint](/browser-run/cdp/) and [Quick Actions](/browser-run/quick-actions/) or in the [public playground](https://kitesurf.cloudflare.app/).
 
 ## How to use Kitesurf
 
@@ -59,7 +59,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser
 
 ### Use Kitesurf with the CDP endpoint
 
-The [Browser Run CDP endpoint](/browser-run/cdp/) supports Kitesurf as an option, so your existing [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [chrome-remote-interface ↗](https://www.npmjs.com/package/chrome-remote-interface) setup already works. To opt in, add `browser=kitesurf` to the endpoint URL:
+The [Browser Run CDP endpoint](/browser-run/cdp/) supports Kitesurf as an option, so your existing [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [chrome-remote-interface](https://www.npmjs.com/package/chrome-remote-interface) setup already works. To opt in, add `browser=kitesurf` to the endpoint URL:
 
 ```txt
 wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?browser=kitesurf
@@ -91,13 +91,13 @@ Replace `<ACCOUNT_ID>` with your Cloudflare account ID and `<API_TOKEN>` with a 
 
 ### Try the Kitesurf playground
 
-To start exploring Kitesurf without writing any code, use the [public playground ↗](https://kitesurf.cloudflare.app/). Type in any URL to see how Kitesurf renders the page and interact with it.
+To start exploring Kitesurf without writing any code, use the [public playground](https://kitesurf.cloudflare.app/). Type in any URL to see how Kitesurf renders the page and interact with it.
 
-The playground injects Chrome DevTools into the UI, so you can inspect expanded DOM elements, read console messages, and watch network activity while Kitesurf renders a page. The [Memory panel ↗](https://developer.chrome.com/docs/devtools/memory) reports the WebAssembly footprint of each isolate, including frames, so you can see the resources each page consumes.
+The playground injects Chrome DevTools into the UI, so you can inspect expanded DOM elements, read console messages, and watch network activity while Kitesurf renders a page. The [Memory panel](https://developer.chrome.com/docs/devtools/memory) reports the WebAssembly footprint of each isolate, including frames, so you can see the resources each page consumes.
 
 ## Standards compliance
 
-Kitesurf is tested against the [Web Platform Tests (WPT) ↗](https://github.com/web-platform-tests/wpt), the shared suite used to measure conformance to [W3C ↗](https://www.w3.org/) standards. As of the latest run, Kitesurf passes over **235,000 subtests**, and coverage is expanding quickly.
+Kitesurf is tested against the [Web Platform Tests (WPT)](https://github.com/web-platform-tests/wpt), the shared suite used to measure conformance to [W3C](https://www.w3.org/) standards. As of the latest run, Kitesurf passes over **235,000 subtests**, and coverage is expanding quickly.
 
 The parts of a browser that matter most to agents have strong coverage:
 
@@ -113,14 +113,14 @@ The parts of a browser that matter most to agents have strong coverage:
 | URL       | 83%              |
 
 :::note
-These numbers are a snapshot and improve over time. WPT measures conformance to web standards, not a browser's ability to render and interact with every real-world website. The best way to confirm a specific site works is to try it in the [playground ↗](https://kitesurf.cloudflare.app/).
+These numbers are a snapshot and improve over time. WPT measures conformance to web standards, not a browser's ability to render and interact with every real-world website. The best way to confirm a specific site works is to try it in the [playground](https://kitesurf.cloudflare.app/).
 :::
 
 ## How Kitesurf compares to Chromium
 
 Kitesurf is designed to be lightweight and efficient. It uses less CPU and memory than Chromium for common agentic tasks, at the cost of slightly slower wall time and rendering that is not pixel-perfect.
 
-The table below shows the medians of five Browser Run [Quick Action](/browser-run/quick-actions/) runs across a [14-URL corpus ↗](https://kitesurf.cloudflare.app/corpus.txt), comparing Chromium (warm pool) with Kitesurf:
+The table below shows the medians of five Browser Run [Quick Action](/browser-run/quick-actions/) runs across a [14-URL corpus](https://kitesurf.cloudflare.app/corpus.txt), comparing Chromium (warm pool) with Kitesurf:
 
 | Metric                     | Kitesurf | Chromium (warm pool) | Kitesurf, relative          |
 | -------------------------- | -------- | -------------------- | --------------------------- |

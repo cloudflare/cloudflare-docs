@@ -128,7 +128,7 @@ None of the options for this command are required. Many of these options can be 
 - `--tunnel-name` <Type text="string" /> <MetaInfo text="optional" />
   - Use an existing named Cloudflare Tunnel. Combine with `--tunnel` to open it automatically at startup.
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*` or `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
+  - Exposes a `/cdn-cgi/local/scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/cdn-cgi/local/scheduled?cron=*+*+*+*+*`.
 - `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="(default: true if the terminal supports interactivity) optional" />
