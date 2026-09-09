@@ -388,7 +388,7 @@
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
-/analytics/dashboards/ /log-explorer/custom-dashboards/ 301
+/analytics/dashboards/ /analytics/custom-dashboards/ 301
 /analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
 /analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 
@@ -2279,12 +2279,12 @@
 /workers/runtime-apis/webassembly/rust/crates/ /workers/languages/rust/crates 301
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
-/workers/learning/logging-workers/ /workers/observability/logging/ 301
-/workers/observability/log-from-workers/ /workers/observability/logging/ 301
-/workers/platform/logpush/ /workers/observability/logging/logpush/ 301
-/workers/observability/logpush/ /workers/observability/logging/logpush/ 301
-/workers/platform/tail-workers/ /workers/observability/logging/tail-workers/ 301
-/workers/observability/tail-workers/ /workers/observability/logging/tail-workers/ 301
+/workers/learning/logging-workers/ /workers/observability/logs/ 301
+/workers/observability/log-from-workers/ /workers/observability/logs/ 301
+/workers/platform/logpush/ /workers/observability/logs/logpush/ 301
+/workers/observability/logpush/ /workers/observability/logs/logpush/ 301
+/workers/platform/tail-workers/ /workers/observability/logs/tail-workers/ 301
+/workers/observability/tail-workers/ /workers/observability/logs/tail-workers/ 301
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/configuration/routing/ 301
