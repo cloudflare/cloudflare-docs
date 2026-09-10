@@ -38,7 +38,7 @@ Once you turn on TLS decryption, you can create a DLP policy to inspect the cont
 <Steps>
 1. Select a time range that includes the traffic you want to investigate.
 2. Check **Traffic direction**. Remove the filter to include all traffic directions, or select _Unknown_ to check bodies without a recorded direction.
-3. Confirm that the expected detection entry is referenced by at least one DLP profile in the account. The entry can be enabled or disabled.
+3. Confirm that the expected detection entry is enabled in at least one DLP profile in the account.
 4. Confirm that traffic meets the [Gateway inspection prerequisites](/cloudflare-one/data-loss-prevention/passive-detection/#prerequisites), including HTTP filtering and TLS decryption for HTTPS.
 5. Check whether a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) or another routing configuration excludes the traffic from inspection.
 </Steps>
