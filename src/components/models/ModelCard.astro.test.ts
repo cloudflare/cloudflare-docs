@@ -25,8 +25,14 @@ const model: ModelCardData = {
 	propertiesList: [],
 };
 
-const truncationClass =
-	/\b(?:line-clamp-\S+|truncate|overflow-hidden|max-h-\S+)\b/;
+const truncationClasses = (className: string | undefined): string[] =>
+	(className ?? "")
+		.split(/\s+/)
+		.filter((token) =>
+			/^(?:line-clamp-|truncate$|overflow-(?:hidden|clip)$|max-h-|text-ellipsis$|whitespace-nowrap$)/.test(
+				token,
+			),
+		);
 
 describe("ModelCard", () => {
 	test("does not emit truncation classes for titles and descriptions", async () => {
@@ -39,10 +45,10 @@ describe("ModelCard", () => {
 		const description = root.querySelector("p");
 
 		expect(title?.textContent).toBe(model.shortName);
-		expect(title?.getAttribute("class")).not.toMatch(truncationClass);
+		expect(truncationClasses(title?.getAttribute("class"))).toEqual([]);
 		expect(title?.getAttribute("class")).toContain("min-w-0");
 		expect(title?.getAttribute("class")).toContain("break-words");
 		expect(description?.textContent).toBe(model.description);
-		expect(description?.getAttribute("class")).not.toMatch(truncationClass);
+		expect(truncationClasses(description?.getAttribute("class"))).toEqual([]);
 	});
 });
