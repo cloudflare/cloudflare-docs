@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-07-27-agents-sdk-v0.20.0-mcp-sdk-v2.mdx
+  s_90de8aa6df6bc1::t_9011f08bdf87da 2-3,7,12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "567eb26f4914fe3ef85b1a0537176d45eb8853ca",
+  "prompts": {},
+  "sessions": {
+    "s_90de8aa6df6bc1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f93e8-0720-7778-a066-738c64cde4bc",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

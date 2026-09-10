@@ -1,0 +1,19 @@
+src/components/agents.ts
+  s_02608a0b357dda::t_6d090b44cac1c7 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "778333e1ccc4380791ab30b76ced2b57cba5563d",
+  "prompts": {},
+  "sessions": {
+    "s_02608a0b357dda": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8c8ff1ff-012b-4bf2-a55e-58ab02d2195e",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

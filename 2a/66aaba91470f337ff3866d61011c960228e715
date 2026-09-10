@@ -1,0 +1,19 @@
+src/content/docs/realtime/sfu/datachannels.mdx
+  s_ee8d5c934c548f::t_6c0e2b17817a57 25,36,44-51,58-74,77-78,85,87,89-183
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2a66aaba91470f337ff3866d61011c960228e715",
+  "prompts": {},
+  "sessions": {
+    "s_ee8d5c934c548f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_074398c26ffeApp3teA6cNp692",
+        "model": "grok-4.5"
+      },
+      "human_author": "Harshith Pabbati <harshith@cloudflare.com>"
+    }
+  }
+}

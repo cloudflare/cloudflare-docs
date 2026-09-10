@@ -1,0 +1,21 @@
+src/content/docs/agent-setup/github-copilot.mdx
+  s_d9e14d6ba67bec::t_28b3f0a8de5724 54-57,89-90
+src/content/docs/agent-setup/visual-studio-code/index.mdx
+  s_d9e14d6ba67bec::t_a640893fa5f2b2 51,61,86-87,94-95,98-101,104-107,120-126,129-131,135-136,139-140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "59c9b78f6bdc1fa0430cc31b6421474e89779dd5",
+  "prompts": {},
+  "sessions": {
+    "s_d9e14d6ba67bec": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_15171e2ceffeuCZp5MfTpGlzEU",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Jeff Hochberg <jeffh@cloudflare.com>"
+    }
+  }
+}
