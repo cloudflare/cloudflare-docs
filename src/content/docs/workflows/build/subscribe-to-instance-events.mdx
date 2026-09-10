@@ -1,6 +1,6 @@
 ---
-title: Subscribe to events
-description: Use Cloudflare Workflows event subscriptions to receive historical and live instance events without polling status.
+title: Subscribe to instance events
+description: Use Cloudflare Workflows subscribe method to receive historical and live instance events without polling status.
 pcx_content_type: concept
 sidebar:
   order: 7
@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Use `WorkflowInstance.subscribe()` to receive events without polling [`status()`](/workflows/build/workers-api/#status). A subscription replays retained events, then waits for new events while the instance runs.
+Use `WorkflowInstance.subscribe()` to receive events without polling [`status()`](/workflows/build/workers-api/#status). A subscription first delivers events recorded before you subscribed. After delivering these retained events, the subscription waits for new events as the instance runs.
 
 You can subscribe immediately after creating an instance. To subscribe later, retrieve the instance with [`get()`](/workflows/build/workers-api/#get). Subscriptions remain available during the [instance retention period](/workflows/reference/limits/).
 
@@ -117,9 +117,9 @@ For steps marked as sensitive, the `step_completed` event sets `output` to `"[RE
 
 ## Dispose of a subscription
 
-A subscription holds a Workers RPC resource. Declare the subscription with `using` so the runtime disposes of it when the scope exits. This also releases the subscription if you stop reading before the instance ends.
+A subscription holds a Workers RPC resource. Disposing the subscription stops event delivery, clears its state, and releases its resources.
 
-If your code cannot use `using`, call `subscription[Symbol.dispose]()` in a `finally` block. For more information, refer to [RPC lifecycle](/workers/runtime-apis/rpc/lifecycle/).
+Declare the subscription with `using` for automatic disposal when the scope exits, or call `subscription[Symbol.dispose]()` in a `finally` block. For more information, refer to [RPC lifecycle](/workers/runtime-apis/rpc/lifecycle/).
 
 ## Event fields
 
