@@ -29,7 +29,7 @@ const truncationClasses = (className: string | undefined): string[] =>
 	(className ?? "")
 		.split(/\s+/)
 		.filter((token) =>
-			/^(?:line-clamp-|truncate$|overflow-(?:[xy]-)?(?:hidden|clip|ellipsis)$|max-h-|text-ellipsis$|whitespace-nowrap$)/.test(
+			/^(?:line-clamp-(?:[1-9]\d*|\[[^\]]+\])|truncate$|overflow-(?:[xy]-)?(?:hidden|clip|ellipsis)$|text-ellipsis$|whitespace-nowrap$)/.test(
 				token,
 			),
 		);
