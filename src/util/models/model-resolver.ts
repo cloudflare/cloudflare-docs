@@ -38,7 +38,10 @@ function legacyPricing(value: unknown): Record<string, unknown> {
 				entry === null ||
 				!("unit" in entry) ||
 				!("price" in entry) ||
-				typeof entry.unit !== "string"
+				typeof entry.unit !== "string" ||
+				typeof entry.price !== "number" ||
+				!Number.isFinite(entry.price) ||
+				entry.price < 0
 			) {
 				return [];
 			}
@@ -162,7 +165,7 @@ export function catalogToResolved(entry: CatalogEntry): ModelView {
 		zdrComment: model.zdr_comment ?? null,
 		modelId: model.model_id,
 		requestFormats: (model.request_formats as string[] | undefined) ?? null,
-		pricing: (model.pricing as Record<string, unknown> | undefined) ?? {},
+		pricing: model.pricing,
 		examples: (model.examples as ModelExample[] | undefined) ?? [],
 		banner: (model.banner as ModelBanner | null | undefined) ?? null,
 		digest: entry.digest,

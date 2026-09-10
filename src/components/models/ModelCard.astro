@@ -49,8 +49,8 @@ const contextWindow = formatCompactTokens(model.properties.context_window);
 const maxOutputTokens = formatCompactTokens(model.properties.max_output_tokens);
 const pricing = formatModelPricing(model.pricing);
 const decisionFacts = [
-	contextWindow ? `${contextWindow} context` : null,
-	maxOutputTokens ? `${maxOutputTokens} output` : null,
+	contextWindow ? `Context: ${contextWindow}` : null,
+	maxOutputTokens ? `Maximum output: ${maxOutputTokens}` : null,
 	pricing.length > 0 ? "Pricing listed" : null,
 ].filter((value): value is string => value !== null);
 ---

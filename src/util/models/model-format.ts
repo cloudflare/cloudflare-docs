@@ -3,7 +3,7 @@ const compactNumber = new Intl.NumberFormat("en-US", {
 	maximumFractionDigits: 1,
 });
 
-const currency = new Intl.NumberFormat("en-US", {
+export const modelCurrencyFormatter = new Intl.NumberFormat("en-US", {
 	style: "currency",
 	currency: "USD",
 	maximumFractionDigits: 10,
@@ -22,7 +22,7 @@ export function formatModelPricing(
 	return Object.entries(pricing ?? {}).flatMap(([label, value]) => {
 		const displayLabel = formatPricingLabel(label);
 		if (typeof value === "number" && Number.isFinite(value) && value >= 0) {
-			return [`${displayLabel}: ${currency.format(value)}`];
+			return [`${displayLabel}: ${modelCurrencyFormatter.format(value)}`];
 		}
 		if (typeof value === "string" && value.trim()) {
 			return [`${displayLabel}: ${value.trim()}`];

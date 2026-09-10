@@ -248,6 +248,13 @@ const facetMatchMaps = Object.fromEntries(
 		);
 	}
 
+	function formatTokenCount(value: string | undefined): string {
+		const count = Number(value);
+		return Number.isFinite(count) && count > 0
+			? `${count.toLocaleString()} tokens`
+			: "Not listed";
+	}
+
 	function renderComparison(): void {
 		comparison.hidden = selectedModels.length === 0;
 		comparisonHead.replaceChildren();
@@ -276,17 +283,11 @@ const facetMatchMaps = Object.fromEntries(
 			["Task", (model) => model.dataset.modelTask ?? "Not listed"],
 			[
 				"Context window",
-				(model) =>
-					model.dataset.modelContext
-						? `${Number(model.dataset.modelContext).toLocaleString()} tokens`
-						: "Not listed",
+				(model) => formatTokenCount(model.dataset.modelContext),
 			],
 			[
 				"Maximum output",
-				(model) =>
-					model.dataset.modelOutput
-						? `${Number(model.dataset.modelOutput).toLocaleString()} tokens`
-						: "Not listed",
+				(model) => formatTokenCount(model.dataset.modelOutput),
 			],
 			["Pricing", (model) => model.dataset.modelPricing || "Not listed"],
 			["Best for", (model) => model.dataset.modelTags || "Not listed"],
