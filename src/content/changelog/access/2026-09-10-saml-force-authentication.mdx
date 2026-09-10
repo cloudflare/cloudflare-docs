@@ -1,0 +1,13 @@
+---
+title: Require fresh authentication for SAML identity providers
+description: Configure Cloudflare Access to request fresh identity provider authentication for each SAML login.
+date: 2026-09-10
+products:
+  - access
+---
+
+Cloudflare Access can now request fresh authentication from a SAML identity provider for every login. Set `force_authn` to `true` in the identity provider configuration through the API, and Access will set `ForceAuthn` to `true` in signed and unsigned SAML authentication requests.
+
+This option is useful when an application requires users to reauthenticate at the identity provider instead of relying on an existing identity provider session. The default value is `false`.
+
+For configuration details, refer to [Require fresh authentication at the identity provider](/cloudflare-one/integrations/identity-providers/generic-saml/#require-fresh-authentication-at-the-identity-provider).
