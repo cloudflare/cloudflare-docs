@@ -1,0 +1,354 @@
+---
+title: Query Insights
+description: Find costly D1 queries and apply index recommendations.
+pcx_content_type: concept
+sidebar:
+  order: 7
+products:
+  - d1
+---
+
+import { PackageManagers, Steps, TabItem, Tabs } from "~/components";
+
+Query Insights gives you a look into all of your active database queries.
+
+Use Query Insights to find slow query patterns and reduce rows read. D1 also recommends indexes with measurable performance impact.
+
+Recommendations identify schema changes without manual workload analysis. You still review and apply each recommended change.
+
+## Access insights
+
+You can access Query Insights from the Cloudflare CLI (cf), Wrangler, or REST API.
+
+### Use the CLI
+
+Use the Cloudflare CLI (cf) or Wrangler to retrieve insights.
+
+<Tabs>
+<TabItem label="Cloudflare CLI (cf)">
+
+To retrieve all available insights for one database, run:
+
+```sh
+cf d1 insights <DATABASE_NAME>
+```
+
+To retrieve only index recommendations, run:
+
+```sh
+cf d1 insights <DATABASE_NAME> --filter recommendations
+```
+
+To retrieve recommendations across your account, omit the database name:
+
+```sh
+cf d1 insights --filter recommendations
+```
+
+Add `--json` to return the raw REST API response.
+
+</TabItem>
+<TabItem label="Wrangler">
+
+To retrieve all available insights for one database, run:
+
+```sh
+wrangler d1 insights <DATABASE_NAME>
+```
+
+To retrieve only index recommendations, run:
+
+```sh
+wrangler d1 insights <DATABASE_NAME> --filter recommendations
+```
+
+To retrieve recommendations across your account, omit the database name:
+
+```sh
+wrangler d1 insights --filter recommendations
+```
+
+Add `--json` to return the raw REST API response.
+
+</TabItem>
+</Tabs>
+
+The JSON response includes full SQL for impacted queries. Review this data before sharing it with an external service or agent.
+
+Query text includes any literals written directly into the statement. D1 does not capture values supplied through [bound parameters](/d1/worker-api/prepared-statements/#guidance).
+
+### Use the API
+
+Use the D1 REST API to retrieve stored insights programmatically. Refer to [Query the API](#query-the-api) for endpoints and response fields.
+
+## Review query metrics
+
+**Latency** measures how long D1 takes to run a query pattern. Use it to identify slow queries.
+
+**Query volume** counts how often D1 runs a query pattern. Use it to identify queries that make up most database traffic.
+
+**Rows read** measures how many rows a query pattern scans. High values can indicate a missing index or broad query.
+
+**Rows written** measures how many rows a query pattern changes. Use it to identify write-heavy query patterns.
+
+For database-level metrics, refer to [Metrics and analytics](/d1/observability/metrics-analytics/).
+
+## Review automated index recommendations
+
+An [index](/d1/best-practices/use-indexes/) helps D1 find rows without scanning an entire table. Fewer scanned rows can improve performance and reduce rows-read charges.
+
+Indexes also use storage and add work to database writes. Review each recommendation before changing your schema.
+
+D1 continuously evaluates active databases asynchronously, then stores recommendations that are later fetched by the dashboard, CLI, and API. It uses [Workers AI](/workers-ai/) to precompute recommendations where indexes provide the highest measurable impact.
+
+On-demand recommendation generation is not currently supported.
+
+Each recommendation includes a validated `CREATE INDEX` statement ready to apply.
+
+The statement and summary identify the target table and columns. Review both before changing your database schema.
+
+### Interpret a recommendation
+
+Recommendation payloads contain these fields:
+
+| Field                                                  | Description                                                |
+| ------------------------------------------------------ | ---------------------------------------------------------- |
+| `recommendations.generated_at`                         | RFC 3339 timestamp for the completed background evaluation |
+| `recommendations.insights[].summary`                   | Short description of the recommended change                |
+| `recommendations.insights[].reasoning`                 | Performance bottleneck that produced the recommendation    |
+| `recommendations.insights[].suggestions[].kind`        | Suggestion type, which is `index_creation`                 |
+| `recommendations.insights[].suggestions[].sql`         | Validated `CREATE INDEX` statement                         |
+| `recommendations.insights[].suggestions[].summary`     | Target table, columns, and expected benefit                |
+| `recommendations.insights[].suggestions[].cost_impact` | Aggregate measured cost for the impacted queries           |
+| `recommendations.insights[].impacted_queries`          | Query patterns affected by the suggested index             |
+
+Each `cost_impact` contains `rows_read`, `rows_written`, and `query_duration_ms`. These values come from query metrics, not Workers AI estimates.
+
+Each impacted query includes its full SQL and a SHA-256 identifier. The query `cost` contains the same three measured values.
+
+The following response recommends an index for `orders.customer_id`:
+
+```json
+{
+	"result": {
+		"recommendations": {
+			"generated_at": "<TIMESTAMP>",
+			"insights": [
+				{
+					"summary": "Create an index on orders.customer_id",
+					"reasoning": "The impacted queries filter orders by customer_id.",
+					"suggestions": [
+						{
+							"kind": "index_creation",
+							"sql": "CREATE INDEX idx_orders_customer_id ON orders(customer_id);",
+							"summary": "Create an index on orders.customer_id",
+							"cost_impact": {
+								"rows_read": 480000,
+								"rows_written": 0,
+								"query_duration_ms": 2400
+							}
+						}
+					],
+					"impacted_queries": [
+						{
+							"id": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+							"query": "SELECT * FROM orders WHERE customer_id = ?;",
+							"cost": {
+								"rows_read": 480000,
+								"rows_written": 0,
+								"query_duration_ms": 2400
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+Use the unmodified CLI JSON in an AI-agent workflow. Copy the prompt below, paste it into your agent, and replace the placeholder with the raw CLI JSON output.
+
+````txt
+You are a Database Engineer specializing in Cloudflare D1 (SQLite).
+
+Your task is to analyze the provided raw, unmodified CLI JSON report detailing query performance, costs, and index recommendations, and convert it into a production-ready Cloudflare D1 SQL migration script.
+
+### INPUT JSON DATA
+```json
+<INSERT_UNMODIFIED_CLI_JSON_HERE>
+```
+````
+
+### View recommendations in the dashboard
+
+Index recommendations are also visible in the Cloudflare dashboard under the **Queries** tab for a database.
+
+{/* Image placeholder: replace this comment with the dashboard screenshot once available. Place the image in src/assets/images/d1/. */}
+
+## Apply a recommendation
+
+Apply recommended SQL through a [D1 migration](/d1/reference/migrations/). This stores the schema change alongside your application code.
+
+<Steps>
+
+1. Review the suggested SQL, target table, columns, and impacted queries.
+2. From your Worker project directory, create a migration file:
+
+   <PackageManagers
+	   type="exec"
+	   pkg="wrangler"
+	   args={"d1 migrations create <DATABASE_NAME> add-query-insights-index"}
+   />
+
+3. Add the suggested `CREATE INDEX` statement to the generated file.
+
+   You can copy the statement from the dashboard. You can also append one reviewed recommendation from CLI JSON with `jq`.
+
+   The following commands export the first recommendation. Change the `insights` array index after reviewing another recommendation.
+
+   <Tabs>
+   <TabItem label="Cloudflare CLI (cf)">
+
+   ```sh
+   cf d1 insights <DATABASE_NAME> --filter recommendations --json | jq -r '.result.recommendations.insights[0].suggestions[0].sql' >> migrations/<MIGRATION_FILE>.sql
+   ```
+
+   </TabItem>
+   <TabItem label="Wrangler">
+
+   ```sh
+   wrangler d1 insights <DATABASE_NAME> --filter recommendations --json | jq -r '.result.recommendations.insights[0].suggestions[0].sql' >> migrations/<MIGRATION_FILE>.sql
+   ```
+
+   </TabItem>
+   </Tabs>
+
+   The migration should contain the recommended statement:
+
+   ```sql title="migrations/0001_add-query-insights-index.sql"
+   CREATE INDEX idx_orders_customer_id ON orders(customer_id);
+   ```
+
+4. Apply the migration to your local database:
+
+   <PackageManagers
+	   type="exec"
+	   pkg="wrangler"
+	   args={"d1 migrations apply <DATABASE_NAME> --local"}
+   />
+
+5. Test the impacted queries against your local database.
+6. Apply the migration to the corresponding remote environment:
+
+   <PackageManagers
+	   type="exec"
+	   pkg="wrangler"
+	   args={
+		   "d1 migrations apply <DATABASE_NAME> --remote --env <ENVIRONMENT>"
+	   }
+   />
+
+</Steps>
+
+Confirm that your Wrangler configuration maps the database name to the intended environment. Omit `--env` when the binding uses your top-level configuration.
+
+Repeat the local review and test process for each environment. Apply the migration remotely only after testing it against representative queries.
+
+## Query the API
+
+Create an [API token](/fundamentals/api/get-started/create-token/) with `D1:Read` permission. Use the API base URL `https://api.cloudflare.com/client/v4`.
+
+The optional `filter=recommendations` parameter returns only recommendation data. Omit `filter` to return every available insight category.
+
+### Query one database
+
+This endpoint returns stored insights for one database:
+
+```txt
+GET /accounts/{account_id}/d1/database/{database_id}/insights?filter=recommendations
+```
+
+The database endpoint returns one result object without cursor pagination.
+
+The following request uses account, database, and token environment variables:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/database/$DATABASE_ID/insights?filter=recommendations" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+### Query an account
+
+This endpoint returns stored insights across databases in one account:
+
+```txt
+GET /accounts/{account_id}/d1/insights?filter=recommendations&limit=20
+GET /accounts/{account_id}/d1/insights?filter=recommendations&limit=20&cursor=<OPAQUE_CURSOR>
+```
+
+The account endpoint accepts these query parameters:
+
+| Parameter | Required | Description                                                           |
+| --------- | -------- | --------------------------------------------------------------------- |
+| `filter`  | No       | Accepts `recommendations`; omit it to return all available categories |
+| `limit`   | No       | Accepts 1–100 results and defaults to `20`                            |
+| `cursor`  | No       | Accepts the opaque cursor from the preceding response                 |
+
+Do not parse or construct cursor values. Pass `result_info.cursor` unchanged to retrieve the next page.
+
+The following request retrieves the first 20 results:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights?filter=recommendations&limit=20" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+The response includes `result_info.count` and `result_info.cursor`. The `count` value reports results in the current page.
+
+Within each database, recommendations use descending `rows_read`, `query_duration_ms`, and `rows_written` order. Suggestion SQL breaks remaining ties.
+
+The account endpoint applies the same cost order across databases. Database identifiers break remaining ties.
+
+Ordering remains stable while recommendation data stays unchanged. Regenerated recommendations can change the order during pagination.
+
+The response includes every active database, even without recent query activity. Deleted databases are excluded.
+
+The following response shows both empty recommendation states:
+
+```json
+{
+	"result": [
+		{
+			"database_id": "<DATABASE_ID_1>",
+			"recommendations": {
+				"generated_at": null,
+				"insights": []
+			}
+		},
+		{
+			"database_id": "<DATABASE_ID_2>",
+			"recommendations": {
+				"generated_at": "<TIMESTAMP>",
+				"insights": []
+			}
+		}
+	],
+	"result_info": {
+		"count": 2,
+		"cursor": null
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+A `null` `generated_at` means no stored record exists. The record may never have been generated, may be missing, or may have expired.
+
+A timestamp with empty `insights` means D1 generated no recommendations. Databases without recommendations sort after databases with recommendations.
+
+An account without active databases returns an empty `result` array. It also returns `count: 0` and `cursor: null`.
