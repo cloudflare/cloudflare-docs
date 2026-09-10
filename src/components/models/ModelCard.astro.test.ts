@@ -29,7 +29,7 @@ const truncationClasses = (className: string | undefined): string[] =>
 	(className ?? "")
 		.split(/\s+/)
 		.filter((token) =>
-			/^(?:line-clamp-(?:[1-9]\d*|\[[^\]]+\])|truncate$|overflow-(?:[xy]-)?(?:hidden|clip|ellipsis)$|text-ellipsis$|whitespace-nowrap$)/.test(
+			/^(?:line-clamp-(?:[1-9]\d*|\[[^\]]+\])$|truncate$|overflow-(?:[xy]-)?(?:hidden|clip|ellipsis)$|text-ellipsis$|whitespace-nowrap$)/.test(
 				token,
 			),
 		);
@@ -52,5 +52,6 @@ describe("ModelCard", () => {
 		expect(title?.getAttribute("class")).toContain("break-words");
 		expect(description?.textContent).toBe(model.description);
 		expect(truncationClasses(description?.getAttribute("class"))).toEqual([]);
+		expect(description?.getAttribute("class")).toContain("break-words");
 	});
 });
