@@ -1,0 +1,46 @@
+---
+title: "WAF Release - 2026-09-10 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-09-10 emergency release
+date: 2026-09-10
+---
+
+import { RuleID } from "~/components";
+
+This update provides immediate defense against a high-severity, actively exploited zero-day vulnerability targeting Adobe Commerce and Magento Open Source storefronts. 
+
+**Key Findings**
+
+* Adobe Commerce and Magento RCE (CVE-2026-75650 / "StyleSmuggler"): Unauthenticated Remote Code Execution (RCE) vulnerability caused by improper neutralization of special elements in the platform's template engine. Unauthenticated attackers can inject arbitrary PHP payloads through style properties to execute system commands and deploy persistent malware. This vulnerability is being actively exploited in the wild.
+
+**Impact**
+
+This emergency rule provides immediate edge-level smitigation and virtual patching, origin applications must be urgently updated. We strongly recommend to apply the hotfix outlined in Adobe Security Bulletin <a href="https://experienceleague.adobe.com/en/docs/commerce-knowledge-base/kb/announcements/commerce-apsb26-146">APSB26-146</a> and immediately rotate all potentially exposed encryption keys, integration tokens, and system credentials, as patching alone does not remediate an existing compromise.
+
+
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f9a3026b0fdc4d63b7338346440f5c55" />
+			</td>
+			<td>N/A</td>
+			<td>Adobe Commerce - Remote Code Execution - CVE:CVE-2026-75650</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+	</tbody>
+</table>
