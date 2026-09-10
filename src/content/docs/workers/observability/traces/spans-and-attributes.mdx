@@ -147,6 +147,8 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 #### [`RPC Handler`](/workers/runtime-apis/rpc/)
 
+RPC traces include caller-side session spans and individual method-call spans. These spans cover Worker-to-Worker and Worker-to-Durable Object calls.
+
 - `cloudflare.jsrpc.method`
 
 #### [`Email Handler`](/email-service/api/route-emails/email-handler/)
