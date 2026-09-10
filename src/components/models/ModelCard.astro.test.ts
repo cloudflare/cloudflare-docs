@@ -43,7 +43,7 @@ describe("ModelCard", () => {
 		const root = parse(html);
 		const title = root.querySelector("h3");
 		const titleRow = title?.parentNode;
-		const description = root.querySelector("p");
+		const description = root.querySelector("a > p");
 
 		expect(title?.textContent).toBe(model.shortName);
 		expect(truncationClasses(titleRow?.getAttribute("class"))).toEqual([]);
