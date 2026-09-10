@@ -1,9 +1,10 @@
 ---
-title: Dynamic Workers
-description: Load untrusted JavaScript in a Dynamic Worker with no Internet access.
+title: Run JavaScript away from your Worker
+description: Start a sandbox from your Worker and run JavaScript inside it.
 pcx_content_type: get-started
 sidebar:
   order: 1
+  label: Run JavaScript
 products:
   - sandbox
   - dynamic-workers
@@ -19,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-In this guide, you will create a Worker that loads a second Worker at runtime. The second Worker returns a response. It cannot reach the Internet.
+In this guide, you will POST JavaScript your Worker did not ship and read the sandboxed execution result.
 
 ## Prerequisites
 
@@ -34,7 +35,7 @@ In this guide, you will create a Worker that loads a second Worker at runtime. T
    <PackageManagers
    	type="create"
    	pkg="cloudflare@latest"
-   	args={"sandbox-dynamic-worker"}
+   	args={"sandbox-dynamic-worker --category=hello-world --type=hello-world --lang=ts --no-deploy"}
    />
 
 2. Change into the project directory:
@@ -47,7 +48,7 @@ In this guide, you will create a Worker that loads a second Worker at runtime. T
 
 ## Add a Worker Loader binding
 
-Open your Wrangler configuration file and add a [Worker Loader](/dynamic-workers/getting-started/#configure-worker-loader) binding. The binding does not point at an external resource. It exposes the API that creates Dynamic Workers.
+Add a [Worker Loader](/dynamic-workers/getting-started/#configure-worker-loader) binding so your Worker can call `load()`.
 
 <WranglerConfig>
 
@@ -66,40 +67,55 @@ Open your Wrangler configuration file and add a [Worker Loader](/dynamic-workers
 
 </WranglerConfig>
 
-## Load isolated code
+## Run posted JavaScript in the sandbox
 
-Replace `src/index.ts` with a Worker that loads sandboxed code and forwards the request to it.
+Replace `src/index.ts`. The Worker reads `code` from the JSON body. That string becomes the body of `evaluate()`. A `return` statement is required.
+
+`load()` does not pass `env`. `globalOutbound: null` blocks `fetch()` and `connect()`.
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const worker = env.LOADER.load({
+		if (request.method !== "POST") {
+			return new Response("POST JSON with a code string", { status: 405 });
+		}
+
+		const { code } = (await request.json()) as { code?: string };
+
+		if (typeof code !== "string" || code.length === 0) {
+			return new Response("JSON body must include a code string", {
+				status: 400,
+			});
+		}
+
+		const sandbox = env.LOADER.load({
 			compatibilityDate: "$today",
-			mainModule: "src/index.js",
+			mainModule: "code.js",
 			modules: {
-				"src/index.js": `
-					export default {
-						fetch() {
-							return new Response("Hello from a sandbox");
-						},
-					};
+				"code.js": `
+					import { WorkerEntrypoint } from "cloudflare:workers";
+
+					export class Code extends WorkerEntrypoint {
+						evaluate() {
+							${code}
+						}
+					}
 				`,
 			},
 			globalOutbound: null,
 		});
 
-		return worker.getEntrypoint().fetch(request);
+		const result = await sandbox.getEntrypoint("Code").evaluate();
+		return Response.json({ result });
 	},
 };
 ```
 
 </TypeScriptExample>
 
-`globalOutbound: null` blocks `fetch()` and `connect()` inside the Dynamic Worker. For more information, refer to [Egress control](/dynamic-workers/usage/egress-control/).
-
-## Run the Worker
+## Confirm the sandbox ran the posted code
 
 <Steps>
 
@@ -107,15 +123,19 @@ export default {
 
    <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-2. Open the local URL printed in the terminal. The response body should be `Hello from a sandbox`.
+2. POST JavaScript to the URL Wrangler printed. The default is `http://localhost:8787`:
+
+   ```sh
+   curl http://localhost:8787 --request POST --json '{"code":"const users = [{ name: \"Ada\", role: \"admin\" }, { name: \"Grace\", role: \"user\" }]; return users.filter((u) => u.role === \"admin\").map((u) => u.name);"}'
+   ```
 
 </Steps>
 
-The string in `modules` is the untrusted program. It runs in a new [Dynamic Worker](/dynamic-workers/). That Worker has its own memory and no Internet access. A `fetch()` or `connect()` call inside it throws.
+The response body should be `{"result":["Ada"]}`.
 
 ## Next steps
 
-- Pass APIs and data into the sandbox with [bindings](/dynamic-workers/usage/bindings/).
-- Cache the same code across requests with [`get()`](/dynamic-workers/api-reference/#get).
-- Compare environments in [Choose an environment](/sandbox/concepts/choose-an-environment/).
-- Run Linux workloads on [Containers](/sandbox/get-started/containers/).
+- Pass APIs and data into the sandbox. Refer to [Bindings](/dynamic-workers/usage/bindings/).
+- Follow [Getting started](/dynamic-workers/getting-started/) in the Dynamic Workers docs for the Loader API.
+- Run a Linux environment from your Worker. Refer to [Containers](/sandbox/get-started/containers/).
+- Compare the two environments. Refer to [Choose an environment](/sandbox/concepts/choose-an-environment/).
