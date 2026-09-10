@@ -12,7 +12,7 @@ products:
 
 import { WranglerConfig, TypeScriptExample, Tabs, TabItem } from "~/components";
 
-Use the [`@cloudflare/vitest-pool-workers`](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) package to write tests for your Durable Objects. This integration runs your tests inside the Workers runtime, giving you direct access to Durable Object bindings and APIs.
+Use the [`@cloudflare/vitest-plugin`](https://www.npmjs.com/package/@cloudflare/vitest-plugin) package to write tests for your Durable Objects. This integration runs your tests inside the Workers runtime, giving you direct access to Durable Object bindings and APIs.
 
 ## Prerequisites
 
@@ -21,17 +21,17 @@ Install Vitest and the Workers Vitest integration as dev dependencies:
 <Tabs>
 <TabItem label="npm">
 ```sh
-npm i -D vitest@^4.1.0 @cloudflare/vitest-pool-workers
+npm i -D vitest@^4.1.0 @cloudflare/vitest-plugin
 ```
 </TabItem>
 <TabItem label="pnpm">
 ```sh
-pnpm add -D vitest@^4.1.0 @cloudflare/vitest-pool-workers
+pnpm add -D vitest@^4.1.0 @cloudflare/vitest-plugin
 ```
 </TabItem>
 <TabItem label="yarn">
 ```sh
-yarn add -D vitest@^4.1.0 @cloudflare/vitest-pool-workers
+yarn add -D vitest@^4.1.0 @cloudflare/vitest-plugin
 ```
 </TabItem>
 </Tabs>
@@ -124,7 +124,7 @@ export default {
 Create a `vitest.config.ts` file that uses the `cloudflareTest()` plugin:
 
 ```ts title="vitest.config.ts"
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -165,7 +165,7 @@ Create a `test/tsconfig.json` to configure TypeScript for your tests:
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"moduleResolution": "bundler",
-		"types": ["@cloudflare/vitest-pool-workers/types"]
+		"types": ["@cloudflare/vitest-plugin/types"]
 	},
 	"include": ["./**/*.ts", "../src/worker-configuration.d.ts"]
 }
@@ -643,5 +643,5 @@ Or add a script to your `package.json`:
 ## Related resources
 
 - [Workers Vitest integration](/workers/testing/vitest-integration/) - Full documentation for the Vitest integration
-- [Durable Objects testing recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/durable-objects) - Example from the Workers SDK
-- [RPC testing recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc) - Testing JSRPC with Durable Objects
+- [Durable Objects testing recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-plugin-examples/durable-objects) - Example from the Workers SDK
+- [RPC testing recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-plugin-examples/rpc) - Testing JSRPC with Durable Objects

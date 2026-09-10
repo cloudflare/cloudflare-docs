@@ -93,54 +93,6 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 | Destination IP | in       | `92.100.02.102` | And   | Allow  |
 | Email          | in       | `*@example.com` |       |        |
 
-### Audit SSH <Badge text="Deprecated" variant="caution"/>
-
-API value: `audit_ssh`
-
-<Details header="Available selectors">
-
-**Traffic**
-
-- [Application](#application)
-- [Destination Continent IP Geolocation](#destination-continent)
-- [Destination Country IP Geolocation](#destination-country)
-- [Destination IP](#destination-ip)
-- [Source Continent IP Geolocation](#source-continent)
-- [Source Country IP Geolocation](#source-country)
-- [Source Internal IP](#source-internal-ip)
-- [Source IP](#source-ip)
-- [Source Port](#source-port)
-- [Virtual Network](#virtual-network)
-
-**Identity**
-
-- [SAML Attributes](#users)
-- [User Email](#users)
-- [User Group Emails](#users)
-- [User Group IDs](#users)
-- [User Group Names](#users)
-- [User Name](#users)
-
-**Device Posture**
-
-- [Passed Device Posture Checks](#device-posture)
-
-</Details>
-
-:::caution
-Gateway no longer supports the Audit SSH action for new policies. To log your SSH traffic, Cloudflare recommends deploying [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) for your SSH server and configuring [SSH command logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs).
-:::
-
-Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:
-
-| Selector       | Operator | Value          | Action    |
-| -------------- | -------- | -------------- | --------- |
-| Destination IP | in       | `203.0.113.83` | Audit SSH |
-
-Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.
-
-For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/traffic-policies/network-policies/ssh-logging/).
-
 ### Block
 
 API value: `block`

@@ -1,0 +1,100 @@
+---
+title: Mock outbound requests
+pcx_content_type: how-to
+sidebar:
+  order: 4
+description: Mock outbound HTTP and WebSocket requests when testing Workers with the Vitest plugin.
+products:
+  - workers
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+Use [`@msw/cloudflare`](https://github.com/mswjs/cloudflare) to mock outbound HTTP and WebSocket requests with `@cloudflare/vitest-plugin`. The integration supports unit tests that call your Worker's exported handler and integration tests that call `exports.default.fetch()`.
+
+## Install dependencies
+
+Install Mock Service Worker (MSW) version 2.14 or later and the Cloudflare integration:
+
+<PackageManagers pkg="msw@^2.14.0 @msw/cloudflare" dev />
+
+## Create a network mock
+
+Create a shared network mock for your tests:
+
+<TypeScriptExample filename="test/network.ts">
+
+```ts
+import { setupNetwork } from "@msw/cloudflare";
+
+export const network = setupNetwork();
+```
+
+</TypeScriptExample>
+
+In a Vitest setup file, start the mock before tests, reset handlers after each test, and stop it after tests finish:
+
+<TypeScriptExample filename="test/setup.ts">
+
+```ts
+import { afterAll, afterEach, beforeAll } from "vitest";
+import { network } from "./network";
+
+beforeAll(() => network.enable());
+afterEach(() => network.resetHandlers());
+afterAll(() => network.disable());
+```
+
+</TypeScriptExample>
+
+Add the setup file to the `setupFiles` array in your Vitest configuration.
+
+## Mock an HTTP request
+
+Use `network.use()` and MSW request handlers to return a response for an outbound request. This example tests a Worker that requests a greeting from an external API:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(): Promise<Response> {
+		return fetch("https://api.example.com/greeting");
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+<TypeScriptExample filename="test/worker.test.ts">
+
+```ts
+import { createExecutionContext, waitOnExecutionContext } from "cloudflare:test";
+import { env } from "cloudflare:workers";
+import { http, HttpResponse } from "msw";
+import { expect, it } from "vitest";
+import worker from "../src";
+import { network } from "./network";
+
+it("mocks an outbound request", async () => {
+	network.use(
+		http.get("https://api.example.com/greeting", () => {
+			return HttpResponse.json({ message: "Hello" });
+		}),
+	);
+
+	const ctx = createExecutionContext();
+	const response = await worker.fetch(
+		new Request("https://example.com"),
+		env,
+		ctx,
+	);
+	await waitOnExecutionContext(ctx);
+	expect(await response.json()).toEqual({ message: "Hello" });
+});
+```
+
+</TypeScriptExample>
+
+## Mock an outbound WebSocket
+
+Use MSW's `ws.link()` API to mock a WebSocket connection created by your Worker. The [request-mocking fixture](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-plugin-examples/request-mocking) includes HTTP, `exports.default.fetch()`, and WebSocket examples.

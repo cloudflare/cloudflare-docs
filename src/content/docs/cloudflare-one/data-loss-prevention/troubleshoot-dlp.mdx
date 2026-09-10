@@ -14,6 +14,8 @@ import { Render } from "~/components";
 
 Use this guide to troubleshoot common issues with Data Loss Prevention (DLP).
 
+To check whether a profile detects specific content without sending traffic through Gateway, use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/).
+
 ## DLP policy does not trigger or block content
 
 DLP not inspecting or blocking content is the most common issue reported. If you have configured a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) but it fails to inspect or block traffic, the cause is almost always that the traffic is not being decrypted. To use DLP to scan the content of HTTPS requests, you must turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
