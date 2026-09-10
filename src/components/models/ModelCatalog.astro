@@ -334,7 +334,10 @@ const facetMatchMaps = Object.fromEntries(
 	}
 	comparisonClear.addEventListener("click", () => {
 		const selected = [...selectedModels];
-		const focusTarget = compareButtonByCell.get(selected[0]);
+		const visibleCell = selected.find((cell) => cell.style.display !== "none");
+		const focusTarget = visibleCell
+			? compareButtonByCell.get(visibleCell)
+			: searchInput;
 		selectedModels.length = 0;
 		renderComparison();
 		for (const cell of selected) {

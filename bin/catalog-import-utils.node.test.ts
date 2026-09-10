@@ -35,6 +35,7 @@ describe("catalog import utilities", () => {
 
 	it("stops dispatching and drains active work after a failure", async () => {
 		const started: number[] = [];
+		const finished: number[] = [];
 		let releaseActive!: () => void;
 		const active = new Promise<void>((resolve) => {
 			releaseActive = resolve;
@@ -43,13 +44,21 @@ describe("catalog import utilities", () => {
 			started.push(index);
 			if (index === 0) throw new Error("failed");
 			await active;
+			finished.push(index);
 			return index;
 		});
+		let settled = false;
+		void operation.then(
+			() => (settled = true),
+			() => (settled = true),
+		);
 
 		await new Promise((resolve) => setTimeout(resolve, 0));
 		expect(started).toEqual([0, 1]);
+		expect(settled).toBe(false);
 		releaseActive();
 		await expect(operation).rejects.toThrow("failed");
 		expect(started).toEqual([0, 1]);
+		expect(finished).toEqual([1]);
 	});
 });
