@@ -251,7 +251,7 @@ const facetMatchMaps = Object.fromEntries(
 	function formatTokenCount(value: string | undefined): string {
 		const count = Number(value);
 		return Number.isFinite(count) && count > 0
-			? `${count.toLocaleString()} tokens`
+			? `${count.toLocaleString("en-US")} tokens`
 			: "Not listed";
 	}
 
