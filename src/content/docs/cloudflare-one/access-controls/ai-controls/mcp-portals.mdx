@@ -124,7 +124,7 @@ Cloudflare Access will validate the server connection and retrieve a list of pro
 
 ### Connect a private MCP server
 
-MCP server portals can connect to an MCP server available only on your private network. The MCP server URL and its [OAuth protected resource metadata](https://www.rfc-editor.org/rfc/rfc9728.html) can use a private hostname. OAuth authorization and token endpoints must be reachable on the public Internet.
+MCP server portals can connect to an MCP server available only on your private network. The MCP server URL and its [OAuth protected resource metadata](https://www.rfc-editor.org/rfc/rfc9728.html) can use a private hostname. OAuth authorization server endpoints, such as the authorization and token endpoints, must be accessible on the public Internet. If Cloudflare automatically registers the OAuth client through Dynamic Client Registration (DCR), the registration endpoint must also be accessible on the public Internet.
 
 Before you add the server, connect its network to Cloudflare. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or another [Cloudflare One connector](/cloudflare-one/networks/connectors/). Configure a [private hostname route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) for the server. If the hostname uses an internal DNS server, also configure a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/).
 
@@ -135,7 +135,8 @@ To add the private MCP server:
 1. Follow the steps in [Add an MCP server](#add-an-mcp-server), and enter the private URL in **HTTP URL**.
 2. Turn on **Route traffic through Cloudflare Gateway**. Private server registration and capability synchronization require this setting.
 3. Select **Save and connect server**.
-4. Complete the upstream OAuth flow, if required. The authorization server must be publicly reachable even when the MCP server is private.
+4. Complete the upstream OAuth flow, if required.
+5. Wait for the server status to change to **Ready**. You can then add the server to a portal.
 
 </Steps>
 
