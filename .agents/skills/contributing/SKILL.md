@@ -9,6 +9,8 @@ This is the single skill to load for any change to the Cloudflare Docs repositor
 
 Do not guess at conventions. The references below are the source of truth for how this repo expects content to be written, structured, and validated.
 
+Canonical references override conflicting local patterns, especially for product section names, folders, and ordering.
+
 ## Ground rules
 
 These apply to every task below.
