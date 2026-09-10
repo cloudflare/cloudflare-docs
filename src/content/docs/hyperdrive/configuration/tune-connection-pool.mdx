@@ -67,10 +67,12 @@ curl --request PATCH \
 </TabItem>
 </Tabs>
 
-All Hyperdrive configurations have a minimum of 5 connections. The maximum connection count depends on your [Workers plan](/hyperdrive/platform/limits/).
+All Hyperdrive configurations have a minimum of 5 connections. Customers on a Workers Paid plan can set up to 1,500 connections per configuration.
 
 :::note
-The Hyperdrive connection pool limit is a "soft limit". This means that it is possible for Hyperdrive to make more connections to your database than this limit in the event of network failure to ensure high availability. We recommend that you set the Hyperdrive connection limit to be lower than the limit of your origin database to account for occasions where Hyperdrive needs to create more connections for resiliency.
+The Hyperdrive origin connection limit is the maximum number of database connections that Hyperdrive can make to your origin database.
+
+This is a soft limit. Set it lower than your origin database connection limit because Hyperdrive may create more connections if network disruptions prevent existing connections from being used.
 
 :::
 
@@ -82,7 +84,7 @@ You can request adjustments to Hyperdrive's origin connection limits. To request
 
 - **Start conservatively**: Begin with a lower connection count and gradually increase it based on your application's performance.
 - **Monitor database metrics**: Watch your database's connection usage and performance metrics to optimize the connection count.
-- **Consider database limits**: Ensure your configured connection count does not exceed your database's maximum connection limit.
+- **Consider database limits**: Set your configured connection count lower than your database's maximum connection limit.
 - **Account for multiple configurations**: If you have multiple Hyperdrive configurations connecting to the same database, consider the total connection count across all configurations.
 
 ## Related resources
