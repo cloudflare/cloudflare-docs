@@ -42,9 +42,11 @@ describe("ModelCard", () => {
 		});
 		const root = parse(html);
 		const title = root.querySelector("h3");
+		const titleRow = title?.parentNode;
 		const description = root.querySelector("p");
 
 		expect(title?.textContent).toBe(model.shortName);
+		expect(truncationClasses(titleRow?.getAttribute("class"))).toEqual([]);
 		expect(truncationClasses(title?.getAttribute("class"))).toEqual([]);
 		expect(title?.getAttribute("class")).toContain("min-w-0");
 		expect(title?.getAttribute("class")).toContain("break-words");
