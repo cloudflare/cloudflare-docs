@@ -151,7 +151,9 @@ Always register the redirect URI displayed in the dashboard. OAuth providers typ
 
 Cloudflare stores the client secret encrypted and does not return it through the dashboard or API. When editing the server, leave **Client secret** blank to keep the existing value. To rotate the secret, create or activate the replacement at the upstream provider, enter the new value, and save the server.
 
-Manual credentials require per-user authentication. Leave **Require user auth** enabled when you add the server to a portal. The server remains in **Waiting** status until the first user completes upstream OAuth. Cloudflare then retrieves the server's tools and prompts and changes its status to **Ready**.
+After you save manual OAuth credentials, authenticate the server with an admin account. Cloudflare immediately retrieves and stores the server's tools and prompts, then changes its status to **Ready**. If the server does not have an admin credential, it remains in **Waiting** status.
+
+Manual credentials require per-user authentication. Leave **Require user auth** enabled when you add the server to a portal so that each user signs in to the upstream server with their own account.
 
 ### MCP Apps
 
@@ -164,13 +166,13 @@ The MCP server status indicates the server's connection and tool and prompt sync
 | Status        | Description                                                                                                                                                                                         |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                              |
-| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                |
-| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                      |
+| Stale         | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                |
+| Waiting       | The server's tools and prompts are being synchronized. A server that requires OAuth also remains in this state when it does not have a stored admin credential.                      |
 | Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.              |
 
 #### Error details
 
-When an MCP server is in the **Error** or **Sync Required** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
+When an MCP server is in the **Error** or **Stale** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
 
 | Field         | Description                                                                                                            |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -195,12 +197,12 @@ You will be redirected to log in to your OAuth provider. The account used to aut
 
 ### Synchronize the MCP server
 
-For servers that use automatic OAuth registration, Cloudflare Access synchronizes tools and prompts approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
+For OAuth servers with a stored admin credential, Cloudflare Access synchronizes tools and prompts approximately every two hours. This includes servers that use automatic OAuth registration and servers configured with manual OAuth credentials. During synchronization, Cloudflare connects to the MCP server with the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the OAuth access token has expired, Cloudflare uses the stored refresh token and client secret to refresh it before connecting.
 
 Resources are not synchronized or stored. When an MCP client sends a `resources/list` request, the portal fetches resources live from the upstream servers. Servers that cannot connect or respond are omitted from the result.
 
 :::note
-Synchronization uses the admin credential, not individual user credentials. If the admin credential's refresh token has expired or been revoked, the [server status](#server-status) will change to **Sync Required** and you will need to [reauthenticate the server](#reauthenticate-the-mcp-server). This will not impact end users' ability to connect to the MCP server. It will impact the ability to fetch tool and prompt information or additions and removals.
+Synchronization uses the admin credential, not individual user credentials. If the admin credential cannot be refreshed, the [server status](#server-status) changes to **Stale** and you must [reauthenticate the server](#reauthenticate-the-mcp-server). Users who authenticate to the upstream server with their own accounts may still be able to use the stored tools and prompts, but Cloudflare cannot discover additions or removals until the admin reauthenticates.
 :::
 
 To manually refresh the MCP server in Zero Trust:
@@ -210,6 +212,8 @@ To manually refresh the MCP server in Zero Trust:
 3. Select the three dots > **Sync capabilities**.
 
 The MCP server page will show the updated list of tools and prompts. New tools and prompts are automatically enabled in the MCP server portal.
+
+If capability discovery fails for a reason other than expired credentials, the server changes to **Error** and you can retry the synchronization.
 
 You can also trigger a sync via the API. The sync endpoint returns the current server state after synchronization, including the updated [server status](#server-status), tool count, and [error details](#error-details) if the sync failed.
 
@@ -1134,8 +1138,7 @@ MCP server portals have the following known limitations:
 
 - **Only remote HTTP MCP servers are supported.** MCP servers that use [stdio transport only](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) (for example, `github/github-mcp-server`) do not expose a remote HTTP endpoint and cannot be added to an MCP server portal. To use a stdio-only server, you must self-host it behind an HTTP endpoint and authenticate with a [bearer token or custom headers](#create-an-mcp-server).
 - **Some MCP servers block proxy-based clients.** Certain MCP servers reject requests from proxy-based clients like MCP server portals, returning a `403` error on the registration endpoint. These servers are not compatible with MCP server portals until those providers add Cloudflare as a supported MCP client.
-- **Manual OAuth capabilities are captured during the first user authorization.** Servers configured with [manual OAuth credentials](#configure-manual-oauth-credentials) remain in **Waiting** status until a user completes upstream OAuth. Cloudflare stores the tools and prompts returned during that connection. Background and manual capability synchronization do not refresh them.
-- **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync Required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
+- **Admin OAuth credentials can require reauthorization.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. Cloudflare attempts to refresh expired access tokens. If the credential cannot be refreshed, the server changes to **Stale** and the admin must reauthenticate it.
 - **Each portal supports up to 80 MCP servers.**
 
 ## Policy limitations
@@ -1155,7 +1158,7 @@ Independent MFA, purpose justification, and temporary authentication will be enf
 ### After authenticating to the portal, my user receives the error `No allowed servers available, check your Zero Trust Policies`.
 
 1. An MCP portal and server must both have an attached Access policy. Ensure that all MCP servers assigned to the portal have their own associated policy.
-2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows **Error** or **Sync Required**, [reauthenticate the server](#reauthenticate-the-mcp-server).
+2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows **Error** or **Stale**, [reauthenticate the server](#reauthenticate-the-mcp-server).
 
 ### The portal URL does not prompt for authentication when it is added to an MCP client.
 
@@ -1188,7 +1191,7 @@ To resolve this, [reauthenticate the server](#reauthenticate-the-mcp-server) wit
 ### Tool calls fail with an `unauthorized` error.
 
 1. If the server uses per-user OAuth (**Require user auth** is turned on), the user's OAuth token may have expired. Ask the user to [reauthenticate the server](#reauthenticate-a-server) from their MCP client.
-2. If the server uses admin credentials, check the [server status](#server-status). A status of **Error** or **Sync Required** indicates the admin credential needs to be refreshed.
+2. If the server uses admin credentials, check the [server status](#server-status). A status of **Error** or **Stale** indicates the admin credential needs attention.
 3. If the user recently changed permissions on the upstream service (for example, revoked OAuth scopes), they will need to reauthenticate.
 
 ### OAuth authentication fails with a redirect URI error when connecting to an upstream MCP server.
