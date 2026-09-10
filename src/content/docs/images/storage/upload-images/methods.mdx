@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Methods
-description: Upload images to Cloudflare Images via the dashboard, API, or S3 import with Sourcing Kit.
+description: Upload images through the dashboard, API, Workers, or S3.
 sidebar:
   order: 1
 products:
@@ -15,7 +15,7 @@ If you have a [paid Images plan](/images/pricing#images-paid), you can upload an
 - Upload directly through the dashboard. This is primarily used for one-off uploads.
 - Upload using API endpoints.
 - Upload from a Worker using the [Images binding](/images/storage/binding/).
-- Import images from S3 using Sourcing Kit.
+- Import images from Amazon S3.
 
 ---
 
@@ -47,12 +47,12 @@ When uploading through the API, you can use the following features:
 
 ## Import from S3
 
-Sourcing Kit is a data migration service that lets you copy objects from your Amazon S3 bucket to your Images storage.
+Import from S3 lets you copy objects from an Amazon S3 bucket to your Images storage.
 
-With Sourcing Kit, you can:
+With Import from S3, you can:
 
 - Define repositories of images to bulk import.
 - Reuse existing sources and import only new images, skipping any other images that were already imported.
 - Define target paths and prefixes for imported images.
 
-Learn more about [Sourcing Kit](/images/storage/upload-images/sourcing-kit).
+For more information, refer to [Import from S3](/images/storage/upload-images/import-from-s3/).
