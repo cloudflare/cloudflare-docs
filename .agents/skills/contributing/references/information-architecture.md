@@ -93,8 +93,8 @@ When documenting a product that does not exist in the repo yet:
    ```
 
 2. Create the docs folder with an `index.mdx` (`pcx_content_type: overview`).
-3. Add a `get-started/` folder and a nonempty `platform/` folder.
-4. Add folders for applicable core sections in canonical order.
+3. Add a `get-started/` folder.
+4. Add folders for the remaining applicable core sections in canonical order, including a nonempty `platform/` folder.
 5. Add clearly named product-specific or category-shared sections only after the core sections.
 
 Changelog entries require the changelog folder name to match a directory entry's collection ID: the filename stem under `src/content/directory/`, not the six-character `id` field inside the YAML file.
