@@ -13,6 +13,7 @@ describe("model display formatting", () => {
 				"Input tokens (per 1M)": 1.25,
 				"per M output tokens": 2.5,
 				"per M cached input tokens": 0.25,
+				"cached output tokens (per 1m)": 0.5,
 				plan: "included",
 				metadata: { currency: "USD" },
 			}),
@@ -20,6 +21,7 @@ describe("model display formatting", () => {
 			"Input (per 1M tokens): $1.25",
 			"Output (per 1M tokens): $2.50",
 			"Cached input (per 1M tokens): $0.25",
+			"Cached output (per 1M tokens): $0.50",
 			"plan: included",
 		]);
 	});

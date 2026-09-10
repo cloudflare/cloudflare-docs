@@ -32,4 +32,24 @@ describe("catalog import utilities", () => {
 		expect(maxActive).toBe(2);
 		expect(completed).toEqual([1, 2, 3, 4]);
 	});
+
+	it("stops dispatching and drains active work after a failure", async () => {
+		const started: number[] = [];
+		let releaseActive!: () => void;
+		const active = new Promise<void>((resolve) => {
+			releaseActive = resolve;
+		});
+		const operation = mapConcurrentOrdered([0, 1, 2], 2, async (_, index) => {
+			started.push(index);
+			if (index === 0) throw new Error("failed");
+			await active;
+			return index;
+		});
+
+		await new Promise((resolve) => setTimeout(resolve, 0));
+		expect(started).toEqual([0, 1]);
+		releaseActive();
+		await expect(operation).rejects.toThrow("failed");
+		expect(started).toEqual([0, 1]);
+	});
 });

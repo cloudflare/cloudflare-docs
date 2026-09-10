@@ -39,7 +39,10 @@ function formatPricingLabel(label: string): string {
 		/^(cached )?(input|output) tokens \(per (?:1)?m\)$/.exec(lower);
 	if (tokenPrice) {
 		const direction = tokenPrice[2] === "input" ? "Input" : "Output";
-		return `${tokenPrice[1] ? "Cached input" : direction} (per 1M tokens)`;
+		const displayDirection = tokenPrice[1]
+			? `Cached ${direction.toLowerCase()}`
+			: direction;
+		return `${displayDirection} (per 1M tokens)`;
 	}
 	return normalized;
 }

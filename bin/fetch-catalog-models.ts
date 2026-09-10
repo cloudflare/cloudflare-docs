@@ -296,7 +296,14 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 	const results = await mapConcurrentOrdered(
 		modelIds,
 		CONCURRENCY,
-		(modelId) => fetchModelDetail(ACCOUNT_ID, API_TOKEN, modelId),
+		async (modelId) => {
+			try {
+				return await fetchModelDetail(ACCOUNT_ID, API_TOKEN, modelId);
+			} catch (error) {
+				console.error(`  Failed to fetch ${modelId}:`, error);
+				return null;
+			}
+		},
 		(fetched) =>
 			process.stdout.write(`\r  ${fetched}/${modelIds.length} models fetched`),
 	);

@@ -17,17 +17,25 @@ export async function mapConcurrentOrdered<T, R>(
 	const results = new Array<R>(values.length);
 	let nextIndex = 0;
 	let completed = 0;
+	let failed = false;
+	let firstError: unknown;
 
 	async function run(): Promise<void> {
-		while (nextIndex < values.length) {
+		while (!failed && nextIndex < values.length) {
 			const index = nextIndex++;
-			results[index] = await mapper(values[index], index);
-			onComplete?.(++completed);
+			try {
+				results[index] = await mapper(values[index], index);
+				onComplete?.(++completed);
+			} catch (error) {
+				if (!failed) firstError = error;
+				failed = true;
+			}
 		}
 	}
 
 	await Promise.all(
 		Array.from({ length: Math.min(concurrency, values.length) }, run),
 	);
+	if (failed) throw firstError;
 	return results;
 }

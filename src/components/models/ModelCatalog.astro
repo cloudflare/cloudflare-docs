@@ -355,6 +355,7 @@ const facetMatchMaps = Object.fromEntries(
 	}
 	comparisonClear.addEventListener("click", () => {
 		const selected = [...selectedModels];
+		const focusTarget = compareButtonByCell.get(selected[0]);
 		selectedModels.length = 0;
 		renderComparison();
 		for (const cell of selected) {
@@ -364,7 +365,7 @@ const facetMatchMaps = Object.fromEntries(
 		for (const entry of compareButtonEntries) {
 			if (entry.button.disabled) updateCompareButton(entry.button, entry.cell);
 		}
-		searchInput.focus();
+		focusTarget?.focus();
 	});
 
 	function compareModels(
@@ -396,6 +397,10 @@ const facetMatchMaps = Object.fromEntries(
 	}
 
 	function relayout(): number {
+		if (relayoutFrame !== 0) {
+			cancelAnimationFrame(relayoutFrame);
+			relayoutFrame = 0;
+		}
 		// Split the query into whitespace-separated tokens; each must appear
 		// somewhere in the card's searchable text (name + shortName +
 		// description). This lets "happy horse" match a "HappyHorse" model
@@ -501,7 +506,8 @@ const facetMatchMaps = Object.fromEntries(
 	// Event listeners.
 	searchInput.addEventListener("input", () => {
 		state.search = searchInput.value;
-		scheduleRelayout();
+		if (document.visibilityState === "hidden") relayout();
+		else scheduleRelayout();
 		syncUrl();
 	});
 
