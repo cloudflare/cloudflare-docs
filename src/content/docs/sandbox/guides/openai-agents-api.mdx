@@ -11,7 +11,7 @@ products:
 
 import { CURL, Details, Steps } from "~/components";
 
-[OpenAI Agents API](https://developers.openai.com/agents-api/) gives your application access to the Codex harness through an OpenAI-managed API. OpenAI manages sessions, orchestration, context compaction, and recovery while your application provides tools and Cloudflare Containers can provide the execution environment.
+[OpenAI Agents API](https://developers.openai.com/api/docs/guides/agents-api/overview) gives your application access to the Codex harness through an OpenAI-managed API. OpenAI manages sessions, orchestration, context compaction, and recovery while your application provides tools and Cloudflare Containers can provide the execution environment.
 
 Run self-hosted OpenAI Agents API sessions in Cloudflare Containers. Each session has a Durable Object backed by a container running `codex exec-server`. Signed OpenAI webhooks manage session orchestration.
 
@@ -361,6 +361,7 @@ For more information, refer to [Containers architecture](/containers/platform-de
 ## Related resources
 
 - [Cloudflare reference worker](https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents-api)
-- [OpenAI Python Cloudflare webhook example](https://github.com/OpenAI-Early-Access/agents-api-python-preview/tree/main/examples/self_hosted_sandbox/webhook_managed/cloudflare)
-- [OpenAI TypeScript Cloudflare webhook example](https://github.com/OpenAI-Early-Access/agents-api-typescript-preview/tree/main/examples/self_hosted_sandbox/webhook_managed/cloudflare)
+- [OpenAI Agents API documentation](https://developers.openai.com/api/docs/guides/agents-api/overview)
+- [OpenAI Python Cloudflare webhook example](https://github.com/OpenAI/agents-api-python-preview/tree/main/examples/self_hosted_sandbox/webhook_managed/cloudflare)
+- [OpenAI TypeScript Cloudflare webhook example](https://github.com/OpenAI/agents-api-typescript-preview/tree/main/examples/self_hosted_sandbox/webhook_managed/cloudflare)
 - [Cloudflare Containers](/containers/)
