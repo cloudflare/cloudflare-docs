@@ -28,7 +28,7 @@ Use [Geo steering](/load-balancing/understand-basics/traffic-steering/steering-p
 
 Pool sets are stored as an ordered array on the load balancer. Cloudflare evaluates them in array order and stops at the first pool set whose `match` succeeds. That pool set then supplies the pools, steering policy, weights, and fallback pool for the request.
 
-Pool sets are evaluated in array order, and the first matching pool set wins. A pool set matching a single data center does not automatically take priority over one matching a region. Order the array from most specific to least specific.
+A pool set matching a single data center does not automatically take priority over one matching a region. Order the array from most specific to least specific.
 
 Place a default pool set last by setting `match.default` to `true`. The `default` match applies to every request. Since pool sets use first-match wins, this pool set handles requests that did not match an earlier pool set:
 
