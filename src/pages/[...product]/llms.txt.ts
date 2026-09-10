@@ -7,7 +7,7 @@ import {
 	getDelegatedIndexes,
 	getLlmsSidebarOrderComparator,
 	isDelegatingIndexNavigationAlias,
-	isDelegatingLlmsIndex,
+	isInDelegatingLlmsTree,
 	isCoveredByDelegatedIndex,
 	type LlmsIndex,
 	type LlmsSidebarOrderPart,
@@ -112,7 +112,7 @@ export const getStaticPaths = (async () => {
 	return products.map((product) => {
 		const productUrl = `/${product.params.product}/`;
 		const delegatedIndexes = getDelegatedIndexes(productUrl, indexes);
-		const cacheKey = isDelegatingLlmsIndex(productUrl)
+		const cacheKey = isInDelegatingLlmsTree(productUrl)
 			? [
 					product.cacheKey,
 					product.props.navigationPages.map((page) => page.digest).join(","),
@@ -290,7 +290,7 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 		normalizeForIndexMd(resolvedProductUrl);
 	const rootLink = rootPage
 		? formatPage(base, rootPage)
-		: isDelegatingLlmsIndex(productUrl) && navigationRoot
+		: isInDelegatingLlmsTree(productUrl) && navigationRoot
 			? undefined
 			: `- [${title}](${base}${rootPath}index.md${rootFragment})`;
 

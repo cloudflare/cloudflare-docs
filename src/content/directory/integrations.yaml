@@ -3,7 +3,6 @@ name: Integrations
 
 entry:
   title: Integrations
-  group: Cloudflare One
   url: /cloudflare-one/integrations/
   show: false
 

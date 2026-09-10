@@ -3,7 +3,6 @@ name: Access controls
 
 entry:
   title: Access controls
-  group: Cloudflare One
   url: /cloudflare-one/access-controls/
   show: false
 

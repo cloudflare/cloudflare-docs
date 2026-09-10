@@ -3,7 +3,6 @@ name: Insights
 
 entry:
   title: Insights
-  group: Cloudflare One
   url: /cloudflare-one/insights/
   show: false
 

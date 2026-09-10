@@ -3,7 +3,6 @@ name: Networks
 
 entry:
   title: Networks
-  group: Cloudflare One
   url: /cloudflare-one/networks/
   show: false
 

@@ -7,6 +7,7 @@ import {
 	getDelegatedIndexes,
 	getLlmsSidebarOrderComparator,
 	isDelegatingIndexNavigationAlias,
+	isInDelegatingLlmsTree,
 	isCoveredByDelegatedIndex,
 	type LlmsIndex,
 } from "./llms-delegation";
@@ -90,6 +91,14 @@ describe("getDelegatedIndexes", () => {
 
 		expect([...ownership.keys()]).toEqual(pages);
 		expect([...ownership.values()]).toEqual(pages.map(() => 1));
+	});
+});
+
+describe("isInDelegatingLlmsTree", () => {
+	test("includes configured roots and descendants, but not unrelated indexes", () => {
+		expect(isInDelegatingLlmsTree("/cloudflare-one/")).toBe(true);
+		expect(isInDelegatingLlmsTree("/cloudflare-one/networks/")).toBe(true);
+		expect(isInDelegatingLlmsTree("/workers/")).toBe(false);
 	});
 });
 

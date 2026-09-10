@@ -83,8 +83,14 @@ export function compareLlmsSidebarOrderPath(
 	);
 }
 
-export function isDelegatingLlmsIndex(productUrl: string): boolean {
-	return DELEGATING_ROOTS.some((root) => productUrl.startsWith(root));
+function getDelegatingLlmsRoot(productUrl: string): string | undefined {
+	return DELEGATING_ROOTS.find((root) => productUrl.startsWith(root));
+}
+
+// Matches configured roots and their descendants. Link budgets apply only to
+// exact roots through getDelegatedIndexLinkBudget.
+export function isInDelegatingLlmsTree(productUrl: string): boolean {
+	return getDelegatingLlmsRoot(productUrl) !== undefined;
 }
 
 export function isDelegatingIndexNavigationAlias(
@@ -92,12 +98,15 @@ export function isDelegatingIndexNavigationAlias(
 	externalLink: string | undefined,
 	documentIds: ReadonlySet<string>,
 ): boolean {
-	if (!isDelegatingLlmsIndex(productUrl) || !externalLink?.startsWith("/")) {
+	const delegatingRoot = getDelegatingLlmsRoot(productUrl);
+	if (!delegatingRoot || !externalLink?.startsWith("/")) {
 		return false;
 	}
 
 	const targetId = externalLink.split(/[?#]/, 1)[0].replace(/^\/+|\/+$/g, "");
-	return targetId.startsWith("cloudflare-one/") && documentIds.has(targetId);
+	return (
+		targetId.startsWith(delegatingRoot.slice(1)) && documentIds.has(targetId)
+	);
 }
 
 export function getDelegatedIndexLinkBudget(
@@ -123,7 +132,7 @@ export function getDelegatedIndexes(
 	productUrl: string,
 	indexes: LlmsIndex[],
 ): LlmsIndex[] {
-	if (!isDelegatingLlmsIndex(productUrl)) {
+	if (!isInDelegatingLlmsTree(productUrl)) {
 		return [];
 	}
 
