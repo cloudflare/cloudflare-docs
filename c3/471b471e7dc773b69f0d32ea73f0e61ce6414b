@@ -1,0 +1,19 @@
+src/content/docs/r2/buckets/cors.mdx
+  s_19398ab523d556::t_d02b956657af3e 166-171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c3471b471e7dc773b69f0d32ea73f0e61ce6414b",
+  "prompts": {},
+  "sessions": {
+    "s_19398ab523d556": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f93422a85ffe7XWcci3SqRZI5b",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "rdimaio <riccardodimaio11@gmail.com>"
+    }
+  }
+}
