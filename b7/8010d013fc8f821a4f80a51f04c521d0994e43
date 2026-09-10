@@ -1,0 +1,30 @@
+src/content/docs/style-guide/components/pages-build-preset.mdx
+  s_f5db92bdddbd51::t_0ade045035b26a 14-15
+  s_f5db92bdddbd51::t_1e4f733960abca 11
+src/content/docs/pages/framework-guides/nextjs/index.mdx
+  s_f5db92bdddbd51::t_6b243cd3cba21a 14
+src/content/docs/workers/framework-guides/web-apps/nextjs.mdx
+  s_f5db92bdddbd51::t_b7ffb3f375568c 205-208
+  s_f5db92bdddbd51::t_6b243cd3cba21a 21,203
+  s_f5db92bdddbd51::t_1e4f733960abca 41-52
+src/content/docs/pages/framework-guides/nextjs/deploy-a-static-nextjs-site.mdx
+  s_f5db92bdddbd51::t_d2e4c09320a9ea 18
+src/content/docs/workers/framework-guides/web-apps/opennext.mdx
+  s_f5db92bdddbd51::t_59b17f2e5a70c6 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b78010d013fc8f821a4f80a51f04c521d0994e43",
+  "prompts": {},
+  "sessions": {
+    "s_f5db92bdddbd51": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fd3bd46d2ffedeFZFb3FIZ5968",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

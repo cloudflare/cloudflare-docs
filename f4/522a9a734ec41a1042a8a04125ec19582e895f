@@ -1,0 +1,19 @@
+src/components/RealtimeKitMeetingBlueprintDiagram.astro
+  s_9a6c5152ed78e5::t_37e35383af4fc4 2-3,5-43,47-68,70-78,80-93,95,102-115,117-128,131-135,137-140,143-148,150-157,161,163,165-174,177-179,182-184,187-192,195,197-198,200-218,221-225,228-236,238-239,242-245,248,250-254,257-265,268-277,279-280,283-285,288-292,295-300,303-304,306-314,317,319-322,325-342,344,347-358,361-368,370-374,376-384,386-390,393-395,398-400,404-406,409-410
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f4522a9a734ec41a1042a8a04125ec19582e895f",
+  "prompts": {},
+  "sessions": {
+    "s_9a6c5152ed78e5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ffea823e0ffeae8sMESeAMBFc8",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}

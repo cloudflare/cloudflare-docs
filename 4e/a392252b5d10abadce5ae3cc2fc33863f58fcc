@@ -1,0 +1,35 @@
+src/components/agent-setup/PlatformOption.astro
+  s_8045362b510a8c::t_897878b7f48251 1-17
+src/components/agent-setup/PlatformSelector.astro
+  s_8045362b510a8c::t_462f58e8f6f494 1-46
+src/components/agent-setup/platform-selector.client.ts
+  s_8045362b510a8c::t_b28101f9b8392a 1-104
+src/components/agent-setup/types.ts
+  s_8045362b510a8c::t_2cc3b074f2901b 4,23
+src/content/docs/agent-setup/claude-code.mdx
+  s_8045362b510a8c::t_60c4976becd1c9 12-13,35-36,40-41,45-46
+src/content/docs/agent-setup/codex.mdx
+  s_8045362b510a8c::t_7012650509445b 12-13,36-37,41-42,46-47,49
+src/content/docs/agent-setup/github-copilot.mdx
+  s_8045362b510a8c::t_803cdbdfdc0f6b 12-13,70-71,75-76,80-81
+src/content/docs/agent-setup/opencode.mdx
+  s_8045362b510a8c::t_a13114d7512851 147,166
+src/content/docs/agent-setup/visual-studio-code/index.mdx
+  s_8045362b510a8c::t_61ad66dd0b3622 10-11,35-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4ea392252b5d10abadce5ae3cc2fc33863f58fcc",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

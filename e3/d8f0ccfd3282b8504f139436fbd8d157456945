@@ -1,0 +1,19 @@
+src/content/changelog/realtime/2026-08-13-datachannels-reliability-ordering.mdx
+  s_da767a7b151901::t_47381e2f534dec 27-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e3d8f0ccfd3282b8504f139436fbd8d157456945",
+  "prompts": {},
+  "sessions": {
+    "s_da767a7b151901": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_003ae2be3ffegF40um8eK44e3P",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}
