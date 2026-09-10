@@ -1,0 +1,43 @@
+---
+title: Log classification
+description: Turn on log classification to analyze AI Gateway log content and generate conversation insights.
+pcx_content_type: reference
+sidebar:
+  order: 3.5
+  badge:
+    text: Beta
+    variant: caution
+products:
+  - ai-gateway
+---
+
+Log classification analyzes the content of AI Gateway logs to identify conversation characteristics and generate classification results, such as topic categories and intent labels. These results power AI Gateway analysis features and help you understand how AI is being used across your organization. Log classification is turned off by default and must be turned on for each gateway individually.
+
+## What Cloudflare processes
+
+When log classification is turned on, Cloudflare may process stored request and response content, including:
+
+- Prompts
+- Model responses
+- Request metadata
+- Identifiers used to associate related requests into a conversation
+
+Cloudflare uses this information to identify conversation characteristics and generate classification results for AI Gateway analysis features.
+
+Log classification is not required to use AI Gateway or standard log collection. Turning on this setting allows Cloudflare to analyze eligible logs for the selected gateway as described on this page. This setting is gateway-specific: turning it on for one gateway does not turn it on for other gateways in your account.
+
+## Requirements and behavior
+
+- **Collect logs** must also be turned on for the gateway.
+- Only activity recorded while both **Collect logs** and **Log classification** are turned on is eligible for classification.
+- Turning off **Collect logs** also turns off log classification.
+- Turning off **Log classification** prevents new gateway activity from being classified. Work already in progress and previously generated results remain subject to applicable retention and deletion policies.
+
+## Turn off log classification
+
+To stop new classification activity for a gateway:
+
+1. Go to **AI Gateway** > **Settings**.
+2. Turn off **Log classification**.
+
+You can continue collecting logs without turning on classification.
