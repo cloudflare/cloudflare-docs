@@ -56,7 +56,7 @@
 		"@astrojs/sitemap": "3.7.4",
 		"@base-ui/react": "1.8.0",
 		"@cloudflare/ai-search-snippet": "0.0.43",
-		"@cloudflare/nimbus-docs": "0.11.0",
+		"@cloudflare/nimbus-docs": "0.13.1",
 		"@cloudflare/vitest-pool-workers": "0.22.0",
 		"@cloudflare/workers-types": "5.20260910.1",
 		"@eslint/js": "9.39.4",
