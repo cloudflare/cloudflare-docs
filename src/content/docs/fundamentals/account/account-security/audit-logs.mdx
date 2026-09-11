@@ -229,11 +229,12 @@ Audit logs can be initiated either by users or the system. Understanding the typ
 
 #### User initiated Audit Logs
 
-Track actions performed directly by users through Cloudflare interfaces (dashboard or API). These logs capture who performed the action, when it occurred, and what resource was affected. User initiated actions can be performed by three actors:
+Track actions initiated by users through Cloudflare interfaces, including the dashboard and API. These logs capture who or what performed the action. They also record when it occurred and which resource was affected. User-initiated actions can have four actor types:
 
 - `actor_type="user"`: Action was performed by an individual user.
-- `actor_type="Cloudflare_admin"`: Action was performed by Cloudflare.
+- `actor_type="cloudflare_admin"`: Action was performed by Cloudflare.
 - `actor_type="account"`: Action was performed using an account API token. Refer to the [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/) documentation for more information.
+- `actor_type="delegated_service"`: Action was performed by a Cloudflare service acting on a user's behalf. The log does not identify the initiating user.
 
 #### System initiated Audit Logs
 
@@ -348,7 +349,7 @@ Use the following example to get a list of audit logs for a Cloudflare account.
 
 ### Actor
 
-The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action:
+The actor represents who or what performed the action. Its identity attributes depend on the actor type. These attributes can include a user ID, email address, and IP address. Actor types include `user`, `account`, `cloudflare_admin`, `delegated_service`, or `system`. An actor can also include the context used to initiate the action:
 
 - `api`: The action was performed through the API. The specific credential type was not recorded.
 - `api_key`: The action was authenticated with a Cloudflare Global API Key.
