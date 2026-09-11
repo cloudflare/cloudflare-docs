@@ -13,7 +13,7 @@ head:
     content: Connect client devices to Cloudflare Mesh
 ---
 
-import { Details, Render } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 Client devices — laptops, phones, and desktops — join your Mesh network by installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enrolling. Each device receives a [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips) and can immediately communicate with every other enrolled device and Mesh node.
 
@@ -33,17 +33,59 @@ Connect a laptop or phone to your Mesh network:
 
 <Render file="warp/enroll-ios-android" product="cloudflare-one" />
 
+### Headless Windows, macOS, and Linux devices
+
+Do not use interactive CLI enrollment on a device without a browser. Instead, [create a Service Auth enrollment policy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/#check-for-service-token). Configure the [`organization`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#organization), [`auth_client_id`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#auth_client_id), and [`auth_client_secret`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#auth_client_secret) managed deployment parameters.
+
+For platform-specific installation methods and configuration file locations, refer to [Managed deployment](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/). For a complete Linux example, refer to [Deploy the Cloudflare One Client on headless Linux machines](/cloudflare-one/tutorials/deploy-client-headless-linux/).
+
+This method works on [supported Windows, macOS, and Linux systems](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/). Service-token devices use the shared identity `non_identity@<team-name>.cloudflareaccess.com`. Policies based on identity provider users or groups do not apply to these devices. To assign device profiles, use the expression `identity.service_token_uuid == "<SERVICE_TOKEN_ID>"`, where `<SERVICE_TOKEN_ID>` is the service token resource UUID (`id`), not its `auth_client_id`. Place this [Service Token selector](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/#service-token) before broader OS or email profiles. Use the shared non-identity email only when all Service Auth devices should match the profile.
+
 After enrollment, the device receives a Mesh IP and connects to your Mesh network.
 
 ## 2. Verify connectivity
 
-Test that the device can reach a Mesh node or another client device:
+From a Windows, macOS, or Linux device, test TCP connectivity to a Mesh node or another client device. For example, test SSH:
+
+<Tabs syncKey="os">
+<TabItem label="macOS / Linux">
 
 ```sh
-ping <MESH-IP>
+nc -vz <MESH-IP> 22
 ```
 
-Replace `<MESH-IP>` with the Mesh IP of a node (visible on the [Mesh overview page](https://dash.cloudflare.com/?to=/:account/mesh)) or another enrolled device. Any TCP, UDP, or ICMP traffic works — you can SSH, connect to databases, call APIs, or run any protocol over Mesh IPs.
+</TabItem>
+<TabItem label="Windows (PowerShell)">
+
+```powershell
+Test-NetConnection <MESH-IP> -Port 22
+```
+
+</TabItem>
+</Tabs>
+
+Replace `<MESH-IP>` with the Mesh IP of a node (visible on the [Mesh overview page](https://dash.cloudflare.com/?to=/:account/mesh)) or another enrolled device. Replace port `22` with the port used by your service. You can test HTTP services from a mobile browser. If you turned on the ICMP Gateway proxy, you can also run `ping <MESH-IP>` as a diagnostic check.
+
+If the device profile routes `www.cloudflare.com` through WARP, verify the data path:
+
+<Tabs syncKey="os">
+<TabItem label="macOS / Linux">
+
+```sh
+curl --silent https://www.cloudflare.com/cdn-cgi/trace | grep '^warp=on$'
+```
+
+</TabItem>
+<TabItem label="Windows (PowerShell)">
+
+```powershell
+if (-not (curl.exe --silent https://www.cloudflare.com/cdn-cgi/trace | Select-String '^warp=on$')) { exit 1 }
+```
+
+</TabItem>
+</Tabs>
+
+In Include mode, expect `warp=off` for destinations that are not in the include list. Use the successful connection to an included Mesh IP as the data-path check. Do not rely only on the success message from `warp-cli`: Mesh connectivity requires Traffic and DNS mode. In DNS-only mode, use `warp-cli registration show` only to verify enrollment. DNS-only mode cannot carry Mesh traffic.
 
 ## What devices can reach
 
@@ -61,9 +103,7 @@ For client devices to reach Mesh IPs, the Mesh IP range must route through Cloud
 
 ### Exclude mode (default)
 
-In Exclude mode, the CGNAT range (`100.64.0.0/10`) is excluded from Cloudflare by default. Remove the CGNAT range from your exclude list so that Mesh IP traffic routes through Cloudflare.
-
-If you used the [Mesh setup wizard](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/#1-run-the-setup-wizard), the wizard creates a device profile in **Include mode** for Mesh nodes. However, your client devices may still use the default profile with Exclude mode. Verify that `100.96.0.0/12` (or your custom device IP range) is not in the exclude list.
+The Mesh setup wizard updates the default device profile to route the Mesh IP range through Cloudflare. If you did not use the wizard, or if another profile applies to the device, verify that `100.96.0.0/12` (or your custom device IP range) is not in the exclude list or contained by a broader exclusion.
 
 Depending on your Cloudflare networking configuration, you may need to remove additional IPs from your exclude list. For a list of IPs to check, refer to [Reserved IP addresses](/cloudflare-one/networks/routes/reserved-ips/).
 
