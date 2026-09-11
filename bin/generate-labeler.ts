@@ -49,15 +49,9 @@ function firstUrlSegment(url: string): string {
 }
 
 async function readDir(pathname: string): Promise<string[]> {
-	try {
-		return (
-			await readdir(path.join(rootDir, pathname), { withFileTypes: true })
-		)
-			.filter((entry) => entry.isDirectory())
-			.map((entry) => entry.name);
-	} catch {
-		return [];
-	}
+	return (await readdir(path.join(rootDir, pathname), { withFileTypes: true }))
+		.filter((entry) => entry.isDirectory())
+		.map((entry) => entry.name);
 }
 
 async function loadYaml(pathname: string): Promise<Record<string, unknown>> {
@@ -147,7 +141,7 @@ async function main() {
 	}
 
 	for (const [label, globs] of Object.entries(specialRules)) {
-		rules[label] = [globs];
+		rules[label] = [globs, ...(rules[label] ?? [])];
 	}
 
 	const sortedRules: Record<string, string[][]> = {};
@@ -186,6 +180,13 @@ async function main() {
 		.split("\n")
 		.map((line) => (line && /^[^\s#-]/.test(line) ? `\n${line}` : line))
 		.join("\n");
+
+	if (Object.keys(sortedRules).length === 0) {
+		throw new Error(
+			"No label rules generated; refusing to overwrite .github/labeler.yml",
+		);
+	}
+
 	await writeFile(path.join(rootDir, ".github/labeler.yml"), header + labeler, {
 		encoding: "utf-8",
 	});
