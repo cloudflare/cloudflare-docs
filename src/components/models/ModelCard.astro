@@ -91,7 +91,9 @@ const decisionFacts = [
 
 	<a
 		href={href}
-		class="group/card hover:bg-muted/30 focus-visible:outline-ring relative flex h-full min-w-0 flex-col p-5 pb-14 text-inherit! no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2"
+		class:list={[
+			"group/card hover:bg-muted/30 focus-visible:outline-ring relative flex h-full min-w-0 flex-col p-5 pb-16 text-inherit! no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2",
+		]}
 	>
 		{
 			isPinned && (
@@ -160,14 +162,12 @@ const decisionFacts = [
 		</div>
 
 		<p
-			class="text-muted-foreground mb-4 line-clamp-3 h-[4.5rem] min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]"
+			class="text-muted-foreground line-clamp-3 h-[4.5rem] min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]"
 		>
 			{model.description}
 		</p>
 
-		<div class="mt-auto">
-			<ModelBadges model={model} />
-		</div>
+		<ModelBadges model={model} />
 	</a>
 	<div
 		class="pointer-events-none absolute right-3 bottom-3 left-5 z-20 flex items-center justify-between gap-3"
