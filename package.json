@@ -119,7 +119,7 @@
 		"openapi-types": "12.1.3",
 		"parse-duration": "2.1.8",
 		"prettier": "3.9.6",
-		"prettier-plugin-astro": "0.14.1",
+		"prettier-plugin-astro": "1.0.0",
 		"prettier-plugin-tailwindcss": "0.8.1",
 		"pretty-bytes": "7.1.3",
 		"react": "19.0.0",
