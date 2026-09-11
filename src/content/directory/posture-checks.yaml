@@ -1,0 +1,12 @@
+id: aqqKyy
+name: Posture checks
+
+entry:
+  title: Posture checks
+  group: Cloudflare One
+  url: /cloudflare-one/reusable-components/posture-checks/
+
+meta:
+  title: Cloudflare One device posture docs
+  description: Require a managed or healthy device before granting access, using Cloudflare One Client and third-party signals
+  author: "@cloudflare"

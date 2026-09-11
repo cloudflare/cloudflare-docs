@@ -1,0 +1,21 @@
+---
+title: Azure Functions-based Microsoft Sentinel connector deprecation
+description: Cloudflare Enterprise customers must migrate to the Cloudflare for Microsoft Sentinel CCF connector by 2026-09-14.
+products:
+  - logpush-connectors
+date: 2026-08-26
+---
+
+Cloudflare Enterprise customers using the [Azure Functions-based Microsoft Sentinel connector](https://marketplace.microsoft.com/en-us/product/cloudflare.cloudflare_sentinel?tab=Overview) must migrate to the [Cloudflare for Microsoft Sentinel Codeless Connector Framework (CCF) connector](https://marketplace.microsoft.com/en-us/product/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview) by 2026-09-14.
+
+Microsoft is deprecating the Azure Monitor HTTP Data Collector API. Support for the API ends on 2026-09-14. As a result, Cloudflare will no longer maintain the Azure Functions-based connector after that date.
+
+To migrate, follow the [Microsoft Sentinel integration setup guide](/analytics/analytics-integrations/sentinel/).
+
+## Additional resources
+
+- [Download Cloudflare's CCF Sentinel Solution](https://marketplace.microsoft.com/en-us/product/azure-application/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview)
+- [Microsoft Sentinel data lake overview](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-lake-overview)
+- [About the CCF platform](https://learn.microsoft.com/en-us/azure/sentinel/create-codeless-connector)
+
+For more information, refer to Microsoft's [Azure Monitor HTTP Data Collector API deprecation notice](https://learn.microsoft.com/en-us/previous-versions/azure/azure-monitor/logs/data-collector-api?tabs=powershell).

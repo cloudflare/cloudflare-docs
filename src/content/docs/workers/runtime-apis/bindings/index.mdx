@@ -62,7 +62,7 @@ from urllib.parse import urlparse
 class Default(WorkerEntrypoint):
 	async def fetch(self, request):
 		url = urlparse(request.url)
-		key = url.path.slice(1)
+		key = url.path[1:]
 		await self.env.MY_BUCKET.put(key, request.body)
 		return Response(f"Put {key} successfully!")
 ```
@@ -119,7 +119,7 @@ Bindings are located on the `env` object, which can be accessed in several ways:
   };
   ```
 
-* It is as class property on [WorkerEntrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#bindings-env),
+* It is a class property on [WorkerEntrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#bindings-env),
   [DurableObject](/durable-objects/), and [Workflow](/workflows/):
 
   <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
@@ -146,7 +146,7 @@ Bindings are located on the `env` object, which can be accessed in several ways:
   <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
   ```js
   import { env } from "cloudflare:workers";
-  console.log(`Hi, ${env.Name}`);
+  console.log(`Hi, ${env.NAME}`);
   ```
   </TabItem> <TabItem label="Python" icon="seti:python">
   ```python
@@ -224,7 +224,7 @@ from workers import Response, WorkerEntrypoint, env
 class Default(WorkerEntrypoint):
 	async def fetch(self, request):
 		# This works
-		mv_val = await env.KV.get("my-key")
+		my_val = await env.KV.get("my-key")
 		return Response(my_val)
 ```
 </TabItem></Tabs>
@@ -265,7 +265,7 @@ class Default(WorkerEntrypoint):
 # env is not an argument to say_hello...
 def say_hello():
 	my_name = get_name()
-	return f"Hello, {myName}"
+	return f"Hello, {my_name}"
 
 # ...nor is it an argument to getName
 def get_name():

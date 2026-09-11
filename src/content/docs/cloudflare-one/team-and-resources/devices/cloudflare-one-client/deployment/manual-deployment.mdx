@@ -10,12 +10,20 @@ tags:
   - CLI
 ---
 
-import { Details, GlossaryTooltip, Render } from "~/components";
+import {
+	Details,
+	GlossaryTooltip,
+	Render,
+	Steps,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 If you plan to direct your users to manually download and configure the Cloudflare One Client (formerly WARP), users will need to connect the client to your organization's Cloudflare Zero Trust instance.
 
 ## Prerequisites
 
+- Complete [Zero Trust organization setup](/cloudflare-one/setup/#2-create-a-zero-trust-organization), including subscription activation.
 - [Set device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) to specify which users can connect.
 
 ## Windows, macOS, and Linux
@@ -30,50 +38,100 @@ The device is now protected by your organization's Zero Trust policies.
 
 To enroll your device using the terminal:
 
+<Steps>
+
 1. [Download](https://pkg.cloudflareclient.com/) and install the Cloudflare One Client package.
 
 2. Open a terminal window. Ensure that you are logged into the terminal as the current user and not as root.
 
-3. Enroll into Cloudflare Zero Trust using your organization's <GlossaryTooltip term="team name">team name</GlossaryTooltip>:
+3. (Optional) Validate your organization's <GlossaryTooltip term="team name">team name</GlossaryTooltip>:
+
+   <Tabs syncKey="os">
+   <TabItem label="macOS / Linux">
+
+   ```sh
+   curl --fail --silent --show-error \
+     "https://<YOUR_TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/certs" \
+     > /dev/null
+   ```
+
+   </TabItem>
+   <TabItem label="Windows (PowerShell)">
+
+   ```powershell
+   Invoke-WebRequest -UseBasicParsing "https://<YOUR_TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/certs" | Out-Null
+   ```
+
+   </TabItem>
+   </Tabs>
+
+   A successful request confirms that the team domain exists and is reachable. It does not confirm enrollment eligibility. Compare the value with the team name in your Zero Trust settings.
+
+4. Enroll into Cloudflare Zero Trust using your team name:
 
    ```sh
    warp-cli registration new <your-team-name>
    ```
 
-4. In the browser window that opens, complete the authentication steps required by your organization.
+5. In the browser window that opens, complete the authentication steps required by your organization.
 
    Once authenticated, you will see a success page and a dialog prompting you to open a link.
 
-5. Select **Open Link**.
+6. Select **Open Link**.
 
-6. Verify the registration in the terminal:
+7. Verify the registration in the terminal:
 
    ```sh
    warp-cli registration show
    ```
 
-<Details header="Troubleshoot missing registration">
+   <Details header="Troubleshoot missing registration">
 
-The registration process may take a few minutes to complete. If the registration continues to be missing, then manually copy the authentication token from the browser to the Cloudflare One Client:
+   The `warp-cli registration new` success message does not prove that organization enrollment completed. If the browser reports an invalid enrollment request while the CLI reports success, treat the enrollment as failed. Inspect the enrollment endpoint HTTP response in browser developer tools. You can also collect [diagnostic logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/) with `warp-diag`.
 
-1. On the success page, right-click and select **View Page Source**.
-2. Find the HTML metadata tag that contains the token. For example, `<meta http-equiv="refresh" content"=0;url=com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=yeooilknmasdlfnlnsadfojDSFJndf_kjnasdf..." />`
-3. Copy the URL field: `com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>`
-4. In the terminal, run the following command using the URL obtained in the previous step.
+   Do not open the bare `https://<YOUR_TEAM_NAME>.cloudflareaccess.com/warp` URL as a fallback. It does not contain the active enrollment session. If the registration continues to be missing, manually copy the authentication token from the browser to the Cloudflare One Client:
 
-   ```sh
-   warp-cli registration token "com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>"
-   ```
+   1. On the success page, right-click and select **View Page Source**.
+   2. Find the HTML metadata tag that contains the token. For example, `<meta http-equiv="refresh" content"=0;url=com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=yeooilknmasdlfnlnsadfojDSFJndf_kjnasdf..." />`
+   3. Copy the URL field: `com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>`
+   4. In the terminal, run the following command using the URL obtained in the previous step.
 
-If you get a `401` error, then the token has expired. Generate a new one by refreshing the web page and quickly grab the new token from the page source.
+      ```sh
+      warp-cli registration token "com.cloudflare.warp://<your-team-name>.cloudflareaccess.com/auth?token=<your-token>"
+      ```
 
-</Details>
+   If you get a `401` error, then the token has expired. Generate a new one by refreshing the web page and quickly grab the new token from the page source.
 
-7. If you did not configure the client to [auto-connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect), manually connect:
+   </Details>
+
+8. If you did not configure the client to [auto-connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect), manually connect:
 
    ```sh
    warp-cli connect
    ```
+
+9. If the device profile routes `www.cloudflare.com` through WARP, verify the data path:
+
+   <Tabs syncKey="os">
+   <TabItem label="macOS / Linux">
+
+   ```sh
+   curl --silent https://www.cloudflare.com/cdn-cgi/trace | grep '^warp=on$'
+   ```
+
+   </TabItem>
+   <TabItem label="Windows (PowerShell)">
+
+   ```powershell
+   if (-not (curl.exe --silent https://www.cloudflare.com/cdn-cgi/trace | Select-String '^warp=on$')) { exit 1 }
+   ```
+
+   </TabItem>
+   </Tabs>
+
+   In Include mode, expect `warp=off` for destinations that are not in the include list. Test an included destination instead. In DNS-only mode, use the registration output from step 7 to verify enrollment. DNS-only mode cannot carry network traffic.
+
+</Steps>
 
 The device is now protected by your organization's Zero Trust policies. For more information on all available commands, run `warp-cli --help`.
 

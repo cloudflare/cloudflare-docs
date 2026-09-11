@@ -46,6 +46,12 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) are available at GA. These Beta logs will expire on ~April 9, 2026. Logs generated after GA will be retained for the full 18 months. Older logs remain available in Audit Logs v1.
 :::
 
+## Customer Metadata Boundary
+
+Audit Logs v2 supports [Customer Metadata Boundary (CMB)](/data-localization/metadata-boundary/). The account-level CMB preference automatically applies to Audit Logs v2. For example, if you select `eu`, Audit Logs v2 uses the EU metadata boundary. You do not need to configure Audit Logs separately.
+
+To configure CMB in the Cloudflare dashboard or via the `/accounts/{account_id}/logs/control/cmb/config` API, refer to [Get started with Customer Metadata Boundary](/data-localization/metadata-boundary/get-started/). CMB is part of the Data Localization Suite. Contact your account team if CMB is not enabled for your account.
+
 ## Access Audit Logs
 
 You can retrieve audit logs using the Cloudflare dashboard, the API, or Logpush.
@@ -106,6 +112,23 @@ To access audit logs in the Cloudflare dashboard, go to **Manage Account** > **A
 
 :::note
 The Audit Logs v2 is shown by default. You can switch between Audit Logs v2 and v1 as needed.
+:::
+
+#### Account analytics
+
+The account-level Audit Logs v2 dashboard includes analytics for the selected time range. The **Actions over time** chart separates successful and failed actions. The summary cards show **Total actions**, **Unique actors**, **Products impacted**, and **Failure rate**.
+
+Select a summary card to view more details:
+
+- **Total actions**: Action types and authentication methods
+- **Unique actors**: Actors with the most actions
+- **Products impacted**: Products with the most actions
+- **Failure rate**: Failed actions and their HTTP status codes
+
+To focus the analytics and audit log table on a value, select **Filter** or **Exclude** from a detail panel. The analytics, table, filters, and time range remain synchronized.
+
+:::note
+Account analytics are available for account-level audit logs. They are not available for organization-level audit logs.
 :::
 
 ### Logpush

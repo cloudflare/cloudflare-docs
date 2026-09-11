@@ -8,4 +8,4 @@ entry:
   wrap: true
 
 meta:
-  description: Connect corporate devices to your Zero Trust organization
+  description: Send device traffic to Cloudflare and report device health for posture checks (formerly WARP)

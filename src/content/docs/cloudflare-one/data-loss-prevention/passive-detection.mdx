@@ -1,0 +1,146 @@
+---
+pcx_content_type: how-to
+description: Discover sensitive data in sampled Gateway HTTP traffic before you create a DLP policy.
+products:
+  - cloudflare-one
+  - dlp
+title: Passive Detection
+sidebar:
+  order: 5.5
+tags:
+  - Analytics
+  - Compliance
+---
+
+import { DashButton, Steps } from "~/components";
+
+:::note[Availability]
+The detection entries available to Passive Detection depend on your [Zero Trust plan](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/).
+:::
+
+Before you create a Data Loss Prevention (DLP) policy, you may not know which sensitive data types appear in your traffic or where they are going. Passive Detection gives you a place to start. It helps you answer those questions before you decide what to log or block.
+
+Passive Detection scans a randomly sampled subset of Gateway HTTP request and response bodies and brings the findings into one dashboard. You can see which detection entries matched, trace where they appeared, and identify where a policy could help. Use what you learn to build a focused policy or review gaps in an existing one.
+
+Passive Detection works without a Gateway DLP policy. It does not change how Gateway handles traffic, and existing policies continue to apply.
+
+## Get started
+
+### Prerequisites
+
+To collect Passive Detection results:
+
+- Route HTTP traffic through Cloudflare Gateway.
+- Turn on [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/).
+- Turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) for HTTPS traffic.
+- Make sure each detection entry you want to scan is enabled in at least one [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/) in your account. Passive Detection scans entries enabled in any profile in your account, not just profiles selected for a policy.
+
+For uploaded or downloaded files, refer to the [supported file types](/cloudflare-one/data-loss-prevention/#supported-file-types). Traffic that bypasses Gateway or matches a [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policy cannot produce findings.
+
+### View Passive Detection
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Zero Trust** > **Insights & Logs** > **Dashboards**.
+
+   <DashButton url="/?to=/:account/analytics/dashboards" zeroTrust />
+
+2. Select **Passive Detection**.
+3. Select a time range of 7, 30, or 90 days.
+4. (Optional) Select **Add filter** > **Traffic direction**, then select _Request_, _Response_, or _Unknown_.
+</Steps>
+
+Use **Request** to see data sent to destinations and **Response** to see data received from them. **Unknown** includes HTTP bodies without a recorded traffic direction. Remove the filter to include all traffic directions. Request and response bodies are counted separately.
+
+The selected time range and traffic direction also apply when you open an entry to investigate it.
+
+## Learn from the data
+
+Start with the account summary for the broad picture. From there, select a detection entry to see where it appeared, the matching profiles, and whether policy enforcement was applied.
+
+### Start with the account summary
+
+The summary cards describe detections within your selected time range and traffic direction:
+
+- **Total detections**: Each entry counts once per HTTP body.
+- **Unique traffic with detections**: HTTP bodies with at least one detection, counted once.
+- **Entries detected**: Unique DLP entries matched in the selected scope.
+
+For example, one request body that matches two different entries contributes two detections to **Total detections** and one body to **Unique traffic with detections**. These counts do not tell you how many individual sensitive values the body contains.
+
+Use **Detections by data type** to see which entries account for the most detections. Use **Policy coverage** to find entries that may need policy review.
+
+### Find sensitive data
+
+Next, use the detection table to decide what to investigate. Compare entries, then inspect their profiles and destinations. The table contains one row per detection entry found in sampled traffic. Entries without detections do not appear.
+
+Use these fields to compare entries:
+
+| Field              | Meaning                                                                                                                                                        |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Entry              | The DLP detection entry found in sampled traffic.                                                                                                              |
+| Profiles           | The profiles associated with the detection.                                                                                                                    |
+| Detections         | HTTP bodies where this entry was detected at least once. Multiple occurrences of the same entry in one body count once.                                        |
+| URL destinations   | The number of distinct destinations associated with the entry.                                                                                                 |
+| Confidence (H/M/L) | Observed detections grouped by high, medium, and low confidence.                                                                                               |
+| Policy coverage    | Whether matching profiles were selected for policy enforcement when the bodies were scanned. Refer to [Find policy coverage gaps](#find-policy-coverage-gaps). |
+| Last seen          | When the entry was most recently observed during the selected time range.                                                                                      |
+
+All times are reported in UTC.
+
+The same body can contribute confidence counts through more than one matching profile. Confidence counts can therefore add up to more than the number of detected bodies, even within a single confidence level.
+
+### Trace where data goes
+
+After you choose an entry, select it to see where it appeared. The detail view shows detections and confidence over time, followed by the destinations and applications associated with that entry.
+
+Destinations group URLs by host and a normalized path. For example, paths such as `/users/12345` can be grouped under `/users/{id}`. Each destination includes detection counts, confidence, traffic direction, and the last detection time.
+
+Expand a destination to review a selection of matched URLs, their detection counts, and when they were last observed. Use these details to check whether the activity involves an expected application or a destination that needs further investigation.
+
+For example, a detection associated with an unfamiliar file-sharing destination may warrant a closer look. Check whether that destination is approved for the data involved before deciding whether to create a policy.
+
+:::caution
+Matched URLs can contain sensitive values in their paths or query strings. Review them before sharing results.
+:::
+
+The dashboard shows detection metadata. Original request and response bodies are not stored.
+
+### Find policy coverage gaps
+
+Policy coverage helps you find detections that may need a closer look. A detection counts as covered when at least one matching DLP profile was selected for policy enforcement when the HTTP body was scanned.
+
+Coverage does not confirm that the complete Gateway policy matched or that Gateway logged or blocked the traffic. The dashboard groups coverage into three statuses:
+
+| Status         | Meaning                                                                           |
+| -------------- | --------------------------------------------------------------------------------- |
+| Covered        | Each detection had at least one matching profile selected for enforcement.        |
+| Partly covered | Some detections had a matching profile selected for enforcement and some did not. |
+| Not covered    | No detections had a matching profile selected for enforcement.                    |
+
+Start with entries that are **Not covered** or **Partly covered**, then review their destinations and the relevant policies. A coverage gap is a reason to investigate, not a recommendation to block every detection.
+
+## Create a DLP policy
+
+Once you understand what data was detected and where it appeared, turn those findings into a policy that fits your traffic. Focus on the data types and destinations that need protection, rather than applying the same action to every detection.
+
+<Steps>
+1. Choose a detection entry to act on. Review its destinations, confidence, and policy coverage to decide whether the activity is expected.
+2. Configure a [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/) with the detection entries you want the policy to match, or use an existing profile.
+3. (Optional) If Test scan is available for the profile, use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/) to confirm that it detects representative content. Test scan checks the profile on its own. It does not evaluate a Gateway policy.
+4. Create a [Gateway DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) to log or block matching traffic. Scope it to the relevant destinations, applications, or users.
+5. [Test the policy with Gateway traffic](/cloudflare-one/data-loss-prevention/dlp-policies/#3-test-dlp-policy) and confirm that it takes the expected action in [HTTP request logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/).
+</Steps>
+
+For an existing policy, use your findings to review its scope and detection settings. [Data security analytics](/cloudflare-one/insights/analytics/data-analytics/) shows activity from DLP policies after they are configured.
+
+## Limitations
+
+- Passive Detection scans a random sample of eligible Gateway HTTP traffic, not every request or response body.
+- Counts may be estimated for high-volume detections due to analytics sampling. They describe sampled traffic, not all eligible Gateway traffic.
+- The dashboard does not report total sampled traffic or detection rates.
+- Destinations are scoped to one detection entry. Passive Detection does not provide an account-wide destination inventory.
+- Results do not include user identity.
+
+An empty dashboard does not confirm that sensitive data is absent.
+
+For help with missing results, refer to [Troubleshoot DLP](/cloudflare-one/data-loss-prevention/troubleshoot-dlp/#passive-detection-shows-no-results).

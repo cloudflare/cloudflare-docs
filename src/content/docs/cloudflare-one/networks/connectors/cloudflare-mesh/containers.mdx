@@ -49,23 +49,36 @@ Before starting the container, create a Mesh node and copy its token.
 
 </TabItem> <TabItem label="API">
 
-Create a node via the [Cloudflare API](/api/resources/zero_trust/subresources/tunnels/subresources/warp_connector/methods/create/):
+With an API token that has either `Cloudflare One Connectors Write` or `Cloudflare One Connector: WARP Write` permission, create a node and retrieve its connector token:
 
-```sh
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/warp_connector" \
-  -H "Authorization: Bearer {api_token}" \
-  -H "Content-Type: application/json" \
-  -d '{"name": "k8s-gateway"}'
+```bash
+set -euo pipefail
+
+NODE_RESPONSE=$(
+	curl --fail-with-body --silent --show-error \
+		"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/warp_connector" \
+		--request POST \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+		--header "Content-Type: application/json" \
+		--data '{"name":"k8s-gateway"}'
+)
+
+jq -e '.success == true and (.result.id | type == "string")' \
+	<<< "$NODE_RESPONSE" > /dev/null
+NODE_ID=$(jq -r '.result.id' <<< "$NODE_RESPONSE")
+
+TOKEN_RESPONSE=$(
+	curl --fail-with-body --silent --show-error \
+		"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/warp_connector/$NODE_ID/token" \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+)
+
+MESH_NODE_TOKEN=$(jq -er \
+	'select(.success == true) | .result | select(type == "string" and length > 0)' \
+	<<< "$TOKEN_RESPONSE")
 ```
 
-Then retrieve the token:
-
-```sh
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/warp_connector/{node_id}/token" \
-  -H "Authorization: Bearer {api_token}"
-```
-
-The response contains the token string. Pass it to the container as `MESH_NODE_TOKEN`.
+Install `jq`, then set `ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` before running the commands. The commands stop on an HTTP or API error. Do not continue until they return zero and set `NODE_ID` and `MESH_NODE_TOKEN`. If token retrieval fails after node creation, retry only the token request with the existing `NODE_ID`. Do not rerun the node creation request. Pass `MESH_NODE_TOKEN` to the container.
 
 :::note
 Mesh nodes can also be managed with Terraform using the [`cloudflare_zero_trust_tunnel_warp_connector`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_warp_connector) resource. To manage node configuration, use [`cloudflare_zero_trust_tunnel_warp_connector_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_warp_connector_config).
@@ -73,7 +86,7 @@ Mesh nodes can also be managed with Terraform using the [`cloudflare_zero_trust_
 
 </TabItem> </Tabs>
 
-If this is your first Mesh node, the dashboard runs a [setup wizard](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/#what-the-wizard-configures) that configures your account for Mesh networking.
+If this is your first Mesh node, configure the [required account settings](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/#required-account-settings). You can use the dashboard wizard, APIs, or Terraform.
 
 :::caution
 Do not commit Mesh node tokens to source control. Use environment variables, `.env` files excluded from version control, or a secrets manager.
