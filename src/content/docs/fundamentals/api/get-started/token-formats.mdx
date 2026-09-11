@@ -9,7 +9,7 @@ products:
   - api
 ---
 
-Cloudflare API credentials use a prefixed, scannable format that makes them identifiable by credential scanning tools. Each credential type has a distinct prefix followed by 40 characters and a checksum.
+Cloudflare API keys and API tokens use a prefixed, scannable format that makes them identifiable by credential scanning tools. Each credential type in the following table has a distinct prefix followed by 40 characters and a checksum.
 
 | Credential type   | Description                                             | Format                           |
 | ----------------- | ------------------------------------------------------- | -------------------------------- |
@@ -17,7 +17,13 @@ Cloudflare API credentials use a prefixed, scannable format that makes them iden
 | User API Token    | Scoped token you create for specific permissions        | `cfut_[40 characters][checksum]` |
 | Account API Token | Token owned by the account, not tied to a specific user | `cfat_[40 characters][checksum]` |
 
-Existing tokens continue to work. Every new token you create or [roll](/fundamentals/api/how-to/roll-token/) uses the scannable format automatically.
+Existing credentials continue to work. New API keys and API tokens use the scannable format automatically. [Rolling an API token](/fundamentals/api/how-to/roll-token/) also replaces it with a token in the scannable format.
+
+## Wrangler OAuth access tokens
+
+When you authenticate with [`wrangler login`](/workers/wrangler/commands/general/#login), Wrangler receives a user OAuth access token that starts with `cfoat_`. Run [`wrangler auth token`](/workers/wrangler/commands/general/#auth-token) to retrieve the current token for use with another tool or script. The command automatically refreshes the token if it has expired.
+
+Treat the returned value as a secret. Do not commit it to source control or share it.
 
 ## Leaked token detection
 
