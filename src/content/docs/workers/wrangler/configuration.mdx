@@ -1470,14 +1470,14 @@ The files in this directory represent your vendored packages and is where the py
 may find that the files in this folder are too large and if your worker doesn't require them then they just grow your bundle size for
 no reason.
 
-To fix this, you can exclude certain files from being included. To do this use the `python_modules.excludes` option, for example:
+To fix this, you can exclude certain files from being included. To do this use the `python_modules.exclude` option, for example:
 
 <WranglerConfig>
 
 ```jsonc
 {
 	"python_modules": {
-		"excludes": ["**/*.pyc", "**/__pycache__"],
+		"exclude": ["**/*.pyc", "**/__pycache__"],
 	},
 }
 ```
@@ -1486,7 +1486,7 @@ To fix this, you can exclude certain files from being included. To do this use t
 
 This will exclude any .pyc files and `__pycache__` directories inside any subdirectory in `python_modules`.
 
-By default, `python_modules.excludes` is set to `["**/*.pyc"]`, so be sure to include this when setting it to a different value.
+By default, `python_modules.exclude` is set to `["**/*.pyc"]`, so be sure to include this when setting it to a different value.
 
 ## Local development settings
 
