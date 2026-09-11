@@ -1,0 +1,148 @@
+---
+title: Gradual deployments
+description: Deploy your Artifacts code with progressive rollouts using gradual deployments, built on Workflows
+pcx_content_type: how-to
+sidebar:
+  order: 6
+products:
+  - artifacts
+  - workflows
+---
+
+Gradual deployments allow developers to deploy their code via staged rollouts. For example, you can specify percentage-based rollouts with soak time at each step (i.e. progress the rollout by 10%, wait for five minutes, and then progress another 10%) to deploy safely in case you need to pause or rollback.
+
+You can configure gradual deployments at the Worker, project, or repository level through either a Cloudflare-managed plan or a Bring Your Own [Workflow](/workflows) (BYO-W) plan. Once gradual deployments are configured, every deployment will automatically follow your defined rollout plan.
+
+Cloudflare-managed plans are presets which include percentage-based rollouts, soak times, and threshold error rates for common use cases, i.e.
+
+### CLI
+
+1. Begin a gradual deployment with `cf grad-dep start`. 
+2. If your project has an existing `cloudflare.grad-dep.ts` file, a new gradual deployment will trigger. Otherwise, you will be prompted to select a rollout plan. 
+
+Select from the available plans (TBD) or choose `custom` to define your own logic via BYO-W. A `cloudflare.grad-dep.ts` file will be generated in your current directory (Worker, project, or monorepo).
+
+If `custom` is selected, you will be prompted for the following inputs:
+- Percentage-based rollout, i.e. [10%, 20%, 50%, 80%, 100%]
+- Soak time per step, i.e. [10 minutes, 10 minutes, 30 minutes, 30 minutes, 30 minutes]
+- Threshold for pause, rollback, and teriminate, i.e. 4xx errors at 5%
+
+You can edit your `cloudflare.grad-dep.ts` file directly for more customizable logic. For more information, refer to the BYO-W section below.
+
+3. You can query your rollout with `cf grad-dep status` and take action including `pause`, `terminate`, and `rollback`.
+
+### Dashboard
+
+1. Configure gradual deployments by navigating into **Workers** -> **Settings**
+2. Select from a Cloudflare-managed plan or choose `custom`.
+3. If `custom`, you can specify:
+
+- Percentage-based rollout, i.e. [10%, 20%, 50%, 80%, 100%]
+- Soak time per step, i.e. [10 minutes, 10 minutes, 30 minutes, 30 minutes, 30 minutes]
+- Threshold for pause, rollback, and teriminate, i.e. 4xx errors at 5%
+
+This will add a `cloudflare.grad-dep.ts` file to your project. 
+
+## BYO-W via API
+
+BYO-W allows you to orchestrate your gradual deployment with the built-in functionality of Cloudflare Workflows. Each step in your deployment corresponds to a [Workflow step](/workflows/build/workers-api/#workflowstep).
+
+In this example, we'll show you how to set up a custom rollout yourself. Here are the main components you'll work with:
+
+- **`GradDepWorkflow`** — the base class you extend. You define your deployment logic in its `rollout` method.
+- **`Version`** — an object representing the Worker version being deployed. Call `version.abort()` to roll back.
+- **`step.rollout`** — advances the deployment to a given percentage.
+- **`step.sleep`** — the soak time you wait between steps. See [step.sleep](/workflows/build/sleeping-and-retrying/#sleep-a-workflow).
+- **`step.health`** — a health check that queries [Workers Observability](/workers/observability/). If the query breaches its threshold, the deployment automatically pauses and rolls back.
+
+`step.rollout`, `step.sleep`, and `step.health` come from the [Workflow step](/workflows/build/workers-api/#workflowstep) API — the standard Workflows step API, extended with the gradual-deployment-specific `step.rollout` and `step.health` methods. To customize your deployment, you'll swap in your own values and queries for these pieces.
+
+Your `cloudflare.grad-dep.ts` file will be generated with the following skeleton:
+
+```ts
+import { GradDepWorkflow } from "cloudflare: grad-dep"; 
+import type { Version } from "cloudflare: grad-dep"; 
+import type { WorkflowStep } from "cloudflare:workers";
+
+export class MyGradDep extends GradDepWorkflow {
+  protected async rollout(version: Version, step: WorkflowStep): Promise<void> {
+// your rollout logic
+}
+}
+```
+
+First, define an array for your percentage-based rollout:
+
+```ts
+const PERCENTAGES = [25, 50, 75, 100];
+```
+
+Next, define how to advance your deployment via `step.rollout`:
+```ts
+await step.rollout(`rollout ${percentage}%`,
+percentage,
+{ rollback: (ctx) => version.abort(ctx.output) },
+      );
+```
+
+Then implement your soak time for that step in the rollout via `step.sleep`: 
+
+```ts
+await step.sleep(`wait ${percentage}%`, "5 minutes");
+```
+
+Finally, use `step.health` to query against Workers Observability. Define a query that specifies the metric and the threshold that should trip a rollback:
+
+```ts
+// Define what "healthy" means: roll back if the 4xx/5xx rate exceeds 5%
+const errorRateQuery = {
+  metric: "http.error_rate",
+  threshold: 0.05,
+  window: "5 minutes",
+};
+```
+
+Then pass it to `step.health`. If the query breaches its threshold, the deployment pauses and rolls back automatically:
+
+```ts
+await step.health(`check ${percentage}%`, errorRateQuery);
+```
+
+Putting these components together, a full `cloudflare.grad-dep.ts` file might look like this:
+
+```ts
+import { GradDepWorkflow, Version } from "@cloudflare/grad-dep";
+import type { WorkflowStep } from "cloudflare:workers";
+
+const PERCENTAGES = [10, 15, 30, 40, 50, 60, 70, 80, 90, 100];
+
+// Roll back if the 4xx/5xx rate exceeds 5% over a 5-minute window
+const errorRateQuery = {
+  metric: "http.error_rate",
+  threshold: 0.05,
+  window: "5 minutes",
+};
+
+export class DiscordGradDep extends GradDepWorkflow {
+  protected async rollout(version: Version, step: WorkflowStep): Promise<void> {
+    for (const percentage of PERCENTAGES) {
+      // Advance the rollout to the next percentage
+      await step.rollout(`rollout ${percentage}%`, percentage, {
+        rollback: (ctx) => version.abort(ctx.output),
+      });
+
+      // Soak: let the new version take traffic before checking
+      await step.sleep(`wait ${percentage}%`, "5 minutes");
+
+      // Check health; auto-pauses and rolls back if the threshold is breached
+      await step.health(`check ${percentage}%`, errorRateQuery);
+    }
+  }
+}
+```
+
+If your deployment requires human-in-the-loop intervention, for either normal progression or rollbacks, pauses, or termination, use [waitForEvent](/workflows/build/events-and-parameters/#wait-for-events).
+
+## Observability
+
+You can view the progression of your deployment in the [Workflows] tab of the dashboard. Each deployment is surfaced as a Workflow instance. 
