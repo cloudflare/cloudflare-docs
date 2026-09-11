@@ -126,7 +126,7 @@ Once you understand what data was detected and where it appeared, turn those fin
 <Steps>
 1. Choose a detection entry to act on. Review its destinations, confidence, and policy coverage to decide whether the activity is expected.
 2. Configure a [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/) with the detection entries you want the policy to match, or use an existing profile.
-3. (Optional) If Test scan is available for the profile, use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/) to confirm that it detects representative content. Test scan checks the profile on its own; it does not evaluate a Gateway policy.
+3. (Optional) If Test scan is available for the profile, use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/) to confirm that it detects representative content. Test scan checks the profile on its own. It does not evaluate a Gateway policy.
 4. Create a [Gateway DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) to log or block matching traffic. Scope it to the relevant destinations, applications, or users.
 5. [Test the policy with Gateway traffic](/cloudflare-one/data-loss-prevention/dlp-policies/#3-test-dlp-policy) and confirm that it takes the expected action in [HTTP request logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/).
 </Steps>
