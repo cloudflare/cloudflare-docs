@@ -1,0 +1,56 @@
+---
+title: Web Crypto adds ML-KEM and ML-DSA support
+description: The Workers runtime adds opt-in post-quantum algorithms and key encapsulation methods through a compatibility flag.
+products:
+  - workers
+date: 2026-09-28
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+The Workers Web Crypto API now supports ML-KEM-768, ML-KEM-1024, and all three ML-DSA parameter sets. ML-KEM establishes shared secrets, while ML-DSA signs and verifies data.
+
+The opt-in API also adds key encapsulation and decapsulation methods, `getPublicKey()`, `SubtleCrypto.supports()`, and JSON Web Keys (JWKs) with the `AKP` key type.
+
+Turn on the `webcrypto_modern_algorithms` compatibility flag to use these features:
+
+<WranglerConfig>
+
+```toml
+compatibility_date = "$today"
+compatibility_flags = ["webcrypto_modern_algorithms"]
+```
+
+</WranglerConfig>
+
+This example uses ML-KEM-768 to establish the same shared secret on both sides:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+const keyPair = await crypto.subtle.generateKey("ML-KEM-768", false, [
+	"encapsulateBits",
+	"decapsulateBits",
+]);
+
+if (!("publicKey" in keyPair)) {
+	throw new Error("Expected an ML-KEM key pair");
+}
+
+const { sharedKey, ciphertext } = await crypto.subtle.encapsulateBits(
+	"ML-KEM-768",
+	keyPair.publicKey,
+);
+
+const recoveredSharedKey = await crypto.subtle.decapsulateBits(
+	"ML-KEM-768",
+	keyPair.privateKey,
+	ciphertext,
+);
+```
+
+</TypeScriptExample>
+
+Workers implements a subset of the evolving [Modern Algorithms in the Web Cryptography API](https://wicg.github.io/webcrypto-modern-algos/) draft. ML-KEM-512 and the draft's other algorithms are not supported. The API may change as the draft evolves.
+
+For current algorithm and operation support, refer to [Web Crypto supported algorithms](/workers/runtime-apis/web-crypto/#supported-algorithms).
