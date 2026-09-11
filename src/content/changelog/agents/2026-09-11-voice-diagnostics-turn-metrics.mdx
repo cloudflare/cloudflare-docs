@@ -3,7 +3,7 @@ title: Inspect Voice Agent turn latency and outcomes
 description: "@cloudflare/voice v0.4.0 adds per-turn metrics and browser diagnostics for Voice Agents."
 products:
   - agents
-date: 2026-09-12
+date: 2026-09-11
 ---
 
 import { PackageManagers, TypeScriptExample } from "~/components";
@@ -16,7 +16,7 @@ client.addEventListener("turnmetrics", (turn) => {
 });
 ```
 
-### What is the Voice package?
+### About the Voice package
 
 The `@cloudflare/voice` package lets you build real-time voice agents with Cloudflare Agents. It streams microphone audio to an Agent over WebSocket, transcribes speech, runs your model through `onTurn()`, converts the response to speech, and streams audio back to the caller.
 
@@ -28,7 +28,7 @@ User speaks -> speech-to-text -> model -> text-to-speech -> audio
 
 Previously, the package's four aggregate metrics covered successful, non-empty speech turns. They did not show how failed, aborted, empty, or text turns ended.
 
-### What is new?
+### Turn metrics
 
 Each speech or text turn now produces a typed `VoiceTurnMetrics` summary with:
 
@@ -44,7 +44,7 @@ If an agent produces no audio, you can now distinguish between the model returni
 
 ### Additional diagnostics
 
-For local debugging, server lifecycle events can be forwarded to the browser console:
+For local debugging, you can forward server lifecycle events to the browser console:
 
 <TypeScriptExample>
 
