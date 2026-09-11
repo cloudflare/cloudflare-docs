@@ -70,7 +70,11 @@ Start your development server:
 npx wrangler dev
 ```
 
-Send a test email using the local endpoint. The request body must be a raw email message in [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) format, and the message must include a `Message-ID` header:
+To test through Local Explorer, press `e` in the `wrangler dev` terminal. In Local Explorer, go to **Email** > **Routing** and select **Send Test Email**. Compose the message, then select **Send Email**. Local Explorer delivers the message to the selected Worker `email()` handler.
+
+The **Routing** view lists messages delivered during the local session. Select a message to inspect its headers, body, attachments, and handler actions.
+
+You can also send a test email using the local endpoint. The request body must be a raw email message in [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) format, and the message must include a `Message-ID` header:
 
 ```bash
 curl --request POST 'http://localhost:8787/cdn-cgi/local/email' \
