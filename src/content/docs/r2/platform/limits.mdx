@@ -30,7 +30,7 @@ import { Render } from "~/components";
 
 [^4]: The max upload size is 5 MiB less than 5 GiB, so 4.995 GiB.
 
-[^5]: Concurrent writes to the same object name (key) at a higher rate return HTTP 429 (rate limited) responses.
+[^5]: Concurrent writes to the same object name (key) at a higher rate return [HTTP 429 (rate limited)](/support/troubleshooting/http-status-codes/4xx-client-error/error-429/#429-too-many-requests) responses.
 
 Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storage units of measurement based on base-2. 1 GiB (gibibyte) is equivalent to 2<sup>30</sup> bytes (or 1024<sup>3</sup> bytes). This is distinct from 1 GB (gigabyte), which is 10<sup>9</sup> bytes (or 1000<sup>3</sup> bytes).
 
@@ -40,7 +40,7 @@ Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storag
 
 Managed public bucket access through an `r2.dev` subdomain is not intended for production usage and has a variable rate limit applied to it. The `r2.dev` endpoint for your bucket is designed to enable testing.
 
-- If you exceed the rate limit (hundreds of requests/second), requests to your `r2.dev` endpoint will be temporarily throttled and you will receive a `429 Too Many Requests` response.
+- If you exceed the rate limit (hundreds of requests/second), requests to your `r2.dev` endpoint will be temporarily throttled and you will receive a `[429 Too Many Requests](/support/troubleshooting/http-status-codes/4xx-client-error/error-429/#429-too-many-requests)` response.
 - Bandwidth (throughput) may also be throttled when using the `r2.dev` endpoint.
 
 For production use cases, connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket. Custom domains allow you to serve content from a domain you control (for example, `assets.example.com`), configure fine-grained caching, set up redirect and rewrite rules, mutate content via [Cloudflare Workers](/workers/), and get detailed URL-level analytics for content served from your R2 bucket.
