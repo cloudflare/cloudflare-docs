@@ -64,6 +64,14 @@ curl --request POST \
 '
 ```
 
+### Fail fast when capacity is unavailable
+
+For synchronous Chat Completions, set `options.rejectIfBusy` in the top-level request body. This makes the request fail instead of waiting in a capacity queue.
+
+OpenAI clients that preserve custom fields can send this option. Clients that remove unknown fields do not apply it, so requests proceed normally.
+
+Refer to [Reject busy requests](/workers-ai/features/reject-if-busy/) for examples and error behavior.
+
 ### AI Gateway
 
 These endpoints are also compatible with [AI Gateway](/ai-gateway/usage/providers/workersai/#openai-compatible-endpoints).

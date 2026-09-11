@@ -1,0 +1,40 @@
+---
+title: Reject busy synchronous inference requests
+description: Fail synchronous inference requests instead of waiting for capacity.
+date: 2026-08-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+The `rejectIfBusy` option lets synchronous Workers AI inference requests fail when capacity is unavailable. Use it when your application should not wait in a capacity queue.
+
+Pass the option as the third argument to the Workers AI binding:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.AI.run(
+	"@cf/google/gemma-4-26b-a4b-it",
+	{
+		messages: [{ role: "user", content: "Explain capacity queues." }],
+	},
+	{ rejectIfBusy: true },
+);
+```
+
+</TypeScriptExample>
+
+For the native REST API, add the option to the request body:
+
+```bash
+curl --request POST \
+  --url "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/run/@cf/google/gemma-4-26b-a4b-it" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "messages": [{ "role": "user", "content": "Explain capacity queues." }],
+    "options": { "rejectIfBusy": true }
+  }'
+```
+
+Refer to [Reject busy requests](/workers-ai/features/reject-if-busy/) for OpenAI-compatible usage and error behavior.
