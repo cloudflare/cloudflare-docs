@@ -125,6 +125,8 @@ Declare the subscription with `using` for automatic disposal when the scope exit
 
 The public type definition shows the fields available on each event:
 
+<TypeScriptExample>
+
 ```ts
 type WorkflowInstanceEvent = {
 	instanceId: string;
@@ -202,6 +204,8 @@ type WorkflowInstanceEvent = {
 	| { type: "rollback_errored" }
 );
 ```
+
+</TypeScriptExample>
 
 The following sections describe when each event is emitted.
 
