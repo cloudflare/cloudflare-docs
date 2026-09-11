@@ -24,8 +24,8 @@ importers:
         specifier: 0.9.10
         version: 0.9.10(prettier-plugin-astro@0.14.1)(prettier@3.9.6)(typescript@5.9.3)
       '@astrojs/cloudflare':
-        specifier: 14.3.0
-        version: 14.3.0(@types/node@26.4.1)(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(wrangler@4.129.0(@cloudflare/workers-types@5.20260906.1))(yaml@2.9.0)
+        specifier: https://pkg.pr.new/@astrojs/cloudflare@17932
+        version: https://pkg.pr.new/@astrojs/cloudflare@17932(@types/node@26.4.1)(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(wrangler@4.129.0(@cloudflare/workers-types@5.20260906.1))(yaml@2.9.0)
       '@astrojs/markdown-remark':
         specifier: 7.3.0
         version: 7.3.0(supports-color@10.2.2)
@@ -34,7 +34,7 @@ importers:
         version: 0.4.0
       '@astrojs/mdx':
         specifier: ^8.0.0
-        version: 8.0.0(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.0)(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 8.0.0(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.0)(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@astrojs/react':
         specifier: ^6.0.5
         version: 6.0.5(@types/node@26.4.1)(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.13)(yaml@2.9.0)
@@ -52,7 +52,7 @@ importers:
         version: 0.0.43
       '@cloudflare/nimbus-docs':
         specifier: 0.11.0
-        version: 0.11.0(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)
+        version: 0.11.0(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)
       '@cloudflare/vitest-pool-workers':
         specifier: 0.22.0
         version: 0.22.0(@cloudflare/workers-types@5.20260906.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@types/node@26.4.1)(happy-dom@20.14.0)(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)))
@@ -141,11 +141,11 @@ importers:
         specifier: 8.69.0
         version: 8.69.0(eslint@9.35.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@5.9.3)
       astro:
-        specifier: 7.3.1
-        version: 7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+        specifier: https://pkg.pr.new/astro@17932
+        version: https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       astro-skills:
         specifier: 0.1.1
-        version: 0.1.1(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(typescript@5.9.3)
+        version: 0.1.1(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(typescript@5.9.3)
       cidr-tools:
         specifier: 13.0.1
         version: 13.0.1
@@ -372,8 +372,9 @@ packages:
     peerDependencies:
       typescript: ^5.0.0 || ^6.0.0
 
-  '@astrojs/cloudflare@14.3.0':
-    resolution: {integrity: sha512-sJZH33jpin7IM4NW0xREPSmqzxyNtzmdywMyXah8VID/MhvNwaOiu6Wwha97QNAKZQwZoPbgAblZjxqisyfDnA==}
+  '@astrojs/cloudflare@https://pkg.pr.new/@astrojs/cloudflare@17932':
+    resolution: {integrity: sha512-B+OLCa5cNsHKYXUgxwUsn8gp34OvDpXemERxY2XVxhAaMp+Lo1VjreJyTX9YigIQHCb7Hg2j5dQwwXOw5XAX9w==, tarball: https://pkg.pr.new/@astrojs/cloudflare@17932}
+    version: 14.3.0
     peerDependencies:
       astro: ^7.2.0
       wrangler: ^4.125.0
@@ -481,6 +482,7 @@ packages:
 
   '@astrojs/mdx@7.0.8':
     resolution: {integrity: sha512-RNuwq2ccTSi7NX9YqlR0noaWoVdOrZuJvdfWXotAzdhMVB0b0zEMLnNU+xar7le0GwTMlTObD/QAu8jeHA/3nA==}
+    version: 7.0.8
     engines: {node: '>=22.12.0'}
     peerDependencies:
       '@astrojs/markdown-satteri': ^0.3.1
@@ -491,6 +493,7 @@ packages:
 
   '@astrojs/mdx@8.0.0':
     resolution: {integrity: sha512-4I/z+VgUO0B9I/+yhzIEpLyBYQZNJsInmrtqClP4lqX9yvUpbuV72zfRTZ8VqJLKABETUE5CYOl+23va8nqxZg==}
+    version: 8.0.0
     engines: {node: '>=22.12.0'}
     peerDependencies:
       '@astrojs/markdown-remark': ^7.3.0
@@ -775,6 +778,7 @@ packages:
 
   '@cloudflare/nimbus-docs@0.11.0':
     resolution: {integrity: sha512-PF3ETVqsgp8ChBoRzqR/9dqpnAZVLd7EjYU1cCVSwPpgwXgIWeOZ7LTi+KTRIBKnA7fcTYjJGbDmS2zamLOv/A==}
+    version: 0.11.0
     engines: {node: '>=22.12.0'}
     hasBin: true
     peerDependencies:
@@ -2508,15 +2512,30 @@ packages:
 
   '@volar/language-server@2.4.28':
     resolution: {integrity: sha512-NqcLnE5gERKuS4PUFwlhMxf6vqYo7hXtbMFbViXcbVkbZ905AIVWhnSo0ZNBC2V127H1/2zP7RvVOVnyITFfBw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@volar/language-service@2.4.28':
     resolution: {integrity: sha512-Rh/wYCZJrI5vCwMk9xyw/Z+MsWxlJY1rmMZPsxUoJKfzIRjS/NF1NmnuEcrMbEVGja00aVpCsInJfixQTMdvLw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@volar/source-map@2.4.28':
     resolution: {integrity: sha512-yX2BDBqJkRXfKw8my8VarTyjv48QwxdJtvRgUpNE5erCsgEUdI2DsLbpa+rOQVAJYshY99szEcRDmyHbF10ggQ==}
 
   '@volar/typescript@2.4.28':
     resolution: {integrity: sha512-Ja6yvWrbis2QtN4ClAKreeUZPVYMARDYZl9LMEv1iQ1QdepB6wn0jTRxA9MftYmYa4DQ4k/DaSZpFPUfxl8giw==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   '@vscode/emmet-helper@2.11.0':
     resolution: {integrity: sha512-QLxjQR3imPZPQltfbWRnHU6JecWTF1QSWhx3GAKQpslx7y3Dp6sIIXhKjiUJ/BR9FX8PVthjr9PD6pNwOJfAzw==}
@@ -2650,12 +2669,14 @@ packages:
 
   astro-skills@0.1.1:
     resolution: {integrity: sha512-BS3XmG3OY6Uq9nOqc+DSH265220JxoG8mxMBXD+ZClcqDcuzm1Gll1wMI6U5bL/dr71ziyf+iAL8I0rNj1jisw==}
+    version: 0.1.1
     peerDependencies:
       astro: '*'
       typescript: ^5.9.3
 
-  astro@7.3.1:
-    resolution: {integrity: sha512-A/bJYHtc6n0UAdROY9W948fW6lX0pnUA+JWKW+IGCXRyDIGN2MsXC0OlS8onZGJjr+sv8htemwOc9W5PBRXCkw==}
+  astro@https://pkg.pr.new/astro@17932:
+    resolution: {integrity: sha512-U7uN2KPVMUutVvdmiVyi4l5N0W+iF4JXAjXZbwtFT2IUdtO9e8+zj2/jGbjh3fz/wO6wD49H8XpHjA9w2Qfv5Q==, tarball: https://pkg.pr.new/astro@17932}
+    version: 7.3.1
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     peerDependencies:
@@ -3155,9 +3176,6 @@ packages:
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
-
-  devalue@5.9.1:
-    resolution: {integrity: sha512-+17vil3EVQRzvtDJSFuTWEb8XJRvXqAiV3qZyQWD398QeXUa6CxsUyMdD1fxzEhUrd4FojitFz7lhIHBTlV4fw==}
 
   devalue@5.9.2:
     resolution: {integrity: sha512-po4PAY5c53tw5XMocSnf8A/5OHhbbUftpr93aEN6BBoAdntUmK7vu7wOATqvt7cXO7m1Cl4gMVn6p7n6n4mj0w==}
@@ -5289,11 +5307,6 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svgo@4.0.2:
-    resolution: {integrity: sha512-ekx94z1rRc5LDi6oSUaeRnYhd0UOJxdtQCL2rF8xpWxD3TPAsISWOrxezqGovqS38GRZOdpDfvQe3ts6F7nsng==}
-    engines: {node: '>=16'}
-    hasBin: true
-
   svgo@4.1.0:
     resolution: {integrity: sha512-bkxnTg1kSU0guhIBmibA6UUhrQmPVA1XsQLN+ylCd+UWzbnLkySOcXpyk1mrl05f+pcaCx2eHb+sp6BgMZWX+Q==}
     engines: {node: '>=16'}
@@ -5781,16 +5794,22 @@ packages:
     resolution: {integrity: sha512-9K2k72s4n7rV9s4bX0MyjbX9iBribvKZbBJKuEmTCZfeWJXs6Yh7bGpY4eoc7UufAjvpheBqwyZCOIPBvxCv0A==}
     peerDependencies:
       '@volar/language-service': ~2.4.0
+      typescript: '*'
     peerDependenciesMeta:
       '@volar/language-service':
+        optional: true
+      typescript:
         optional: true
 
   volar-service-typescript@0.0.71:
     resolution: {integrity: sha512-yTtM/BVT6hoyEYnDtaCyAtNhdNeS/mhTTABlBOdw3NNiRBUin3IznFJpgfjer4c6RYopiPjjQjc9VFhxVl1mLw==}
     peerDependencies:
       '@volar/language-service': ~2.4.0
+      typescript: '*'
     peerDependenciesMeta:
       '@volar/language-service':
+        optional: true
+      typescript:
         optional: true
 
   volar-service-yaml@0.0.71:
@@ -6078,12 +6097,12 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@14.3.0(@types/node@26.4.1)(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(wrangler@4.129.0(@cloudflare/workers-types@5.20260906.1))(yaml@2.9.0)':
+  '@astrojs/cloudflare@https://pkg.pr.new/@astrojs/cloudflare@17932(@types/node@26.4.1)(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(wrangler@4.129.0(@cloudflare/workers-types@5.20260906.1))(yaml@2.9.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.11.0
       '@astrojs/underscore-redirects': 1.0.4
       '@cloudflare/vite-plugin': 1.54.4(vite@8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(wrangler@4.129.0(@cloudflare/workers-types@5.20260906.1))
-      astro: 7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+      astro: https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       piccolore: 0.1.3
       vite: 8.2.2(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       wrangler: 4.129.0(@cloudflare/workers-types@5.20260906.1)
@@ -6190,17 +6209,17 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
       '@volar/kit': 2.4.28(typescript@5.9.3)
       '@volar/language-core': 2.4.28
-      '@volar/language-server': 2.4.28
-      '@volar/language-service': 2.4.28
+      '@volar/language-server': 2.4.28(typescript@5.9.3)
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
       muggle-string: 0.4.1
       tinyglobby: 0.2.17
-      volar-service-css: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-emmet: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-html: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-prettier: 0.0.71(@volar/language-service@2.4.28)(prettier@3.9.6)
-      volar-service-typescript: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-typescript-twoslash-queries: 0.0.71(@volar/language-service@2.4.28)
-      volar-service-yaml: 0.0.71(@volar/language-service@2.4.28)
+      volar-service-css: 0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))
+      volar-service-emmet: 0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))
+      volar-service-html: 0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))
+      volar-service-prettier: 0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))(prettier@3.9.6)
+      volar-service-typescript: 0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))(typescript@5.9.3)
+      volar-service-typescript-twoslash-queries: 0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))(typescript@5.9.3)
+      volar-service-yaml: 0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))
       vscode-html-languageservice: 5.6.2
       vscode-uri: 3.1.0
     optionalDependencies:
@@ -6272,13 +6291,13 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.10.5
 
-  '@astrojs/mdx@7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(supports-color@10.2.2)':
+  '@astrojs/mdx@7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(supports-color@10.2.2)':
     dependencies:
       '@astrojs/internal-helpers': 0.10.4
       '@astrojs/markdown-remark': 7.2.4(supports-color@10.2.2)
       '@mdx-js/mdx': 3.1.1(supports-color@10.2.2)
       acorn: 8.18.0
-      astro: 7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+      astro: https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       es-module-lexer: 2.3.2
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -6294,11 +6313,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@8.0.0(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.0)(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))':
+  '@astrojs/mdx@8.0.0(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.0)(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))':
     dependencies:
       '@astrojs/internal-helpers': 0.11.0
       '@astrojs/markdown-satteri': 0.4.0
-      astro: 7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+      astro: https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       es-module-lexer: 2.3.2
     optionalDependencies:
       '@astrojs/markdown-remark': 7.3.0(supports-color@10.2.2)
@@ -6592,10 +6611,10 @@ snapshots:
 
   '@cloudflare/kv-asset-handler@0.5.0': {}
 
-  '@cloudflare/nimbus-docs@0.11.0(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)':
+  '@cloudflare/nimbus-docs@0.11.0(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)':
     dependencies:
       '@astrojs/markdown-satteri': 0.3.8
-      '@astrojs/mdx': 7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(supports-color@10.2.2)
+      '@astrojs/mdx': 7.0.8(@astrojs/markdown-satteri@0.3.8)(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(supports-color@10.2.2)
       '@astrojs/sitemap': 3.7.4
       '@clack/prompts': 0.9.1
       '@iconify/tools': 5.0.14
@@ -6604,7 +6623,7 @@ snapshots:
       '@shikijs/transformers': 4.4.3
       '@shikijs/types': 4.4.3
       '@vercel/detect-agent': 1.2.3
-      astro: 7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+      astro: https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       clsx: 2.1.1
       giget: 3.3.1
       github-slugger: 2.0.0
@@ -8206,8 +8225,8 @@ snapshots:
 
   '@volar/kit@2.4.28(typescript@5.9.3)':
     dependencies:
-      '@volar/language-service': 2.4.28
-      '@volar/typescript': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
+      '@volar/typescript': 2.4.28(typescript@5.9.3)
       typesafe-path: 0.2.2
       typescript: 5.9.3
       vscode-languageserver-textdocument: 1.0.12
@@ -8217,32 +8236,38 @@ snapshots:
     dependencies:
       '@volar/source-map': 2.4.28
 
-  '@volar/language-server@2.4.28':
+  '@volar/language-server@2.4.28(typescript@5.9.3)':
     dependencies:
       '@volar/language-core': 2.4.28
-      '@volar/language-service': 2.4.28
-      '@volar/typescript': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
+      '@volar/typescript': 2.4.28(typescript@5.9.3)
       path-browserify: 1.0.1
       request-light: 0.7.0
       vscode-languageserver: 9.0.1
       vscode-languageserver-protocol: 3.18.2
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
+    optionalDependencies:
+      typescript: 5.9.3
 
-  '@volar/language-service@2.4.28':
+  '@volar/language-service@2.4.28(typescript@5.9.3)':
     dependencies:
       '@volar/language-core': 2.4.28
       vscode-languageserver-protocol: 3.18.2
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
+    optionalDependencies:
+      typescript: 5.9.3
 
   '@volar/source-map@2.4.28': {}
 
-  '@volar/typescript@2.4.28':
+  '@volar/typescript@2.4.28(typescript@5.9.3)':
     dependencies:
       '@volar/language-core': 2.4.28
       path-browserify: 1.0.1
       vscode-uri: 3.1.0
+    optionalDependencies:
+      typescript: 5.9.3
 
   '@vscode/emmet-helper@2.11.0':
     dependencies:
@@ -8403,9 +8428,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  astro-skills@0.1.1(astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(typescript@5.9.3):
+  astro-skills@0.1.1(astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))(typescript@5.9.3):
     dependencies:
-      astro: 7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+      astro: https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       p-limit: 6.2.0
       picomatch: 4.0.5
       tar: 7.5.21
@@ -8413,7 +8438,7 @@ snapshots:
       typescript: 5.9.3
       yaml: 2.9.0
 
-  astro@7.3.1(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0):
+  astro@https://pkg.pr.new/astro@17932(@astrojs/markdown-remark@7.3.0(supports-color@10.2.2))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.4.1)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0):
     dependencies:
       '@astrojs/compiler-rs': 0.4.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
       '@astrojs/internal-helpers': 0.11.0
@@ -8429,7 +8454,7 @@ snapshots:
       clsx: 2.1.1
       common-ancestor-path: 2.0.0
       cookie: 2.0.1
-      devalue: 5.9.1
+      devalue: 5.9.2
       diff: 9.0.0
       dset: 3.1.4
       es-module-lexer: 2.3.2
@@ -8441,7 +8466,7 @@ snapshots:
       github-slugger: 2.0.0
       html-escaper: 3.0.3
       http-cache-semantics: 4.2.0
-      js-yaml: 4.3.1
+      js-yaml: 4.3.2
       jsonc-parser: 3.3.1
       magic-string: 1.1.0
       magicast: 0.5.3
@@ -8452,13 +8477,13 @@ snapshots:
       p-queue: 9.3.3
       package-manager-detector: 1.8.0
       piccolore: 0.1.3
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       semver: 7.8.5
       shiki: 4.4.3
       smol-toml: 1.8.0
-      svgo: 4.0.2
+      svgo: 4.1.0
       tinyclip: 0.1.15
-      tinyexec: 1.3.0
+      tinyexec: 1.3.1
       tinyglobby: 0.2.17
       ultrahtml: 1.7.0
       unifont: 0.7.5
@@ -8999,8 +9024,6 @@ snapshots:
   destr@2.0.5: {}
 
   detect-libc@2.1.2: {}
-
-  devalue@5.9.1: {}
 
   devalue@5.9.2: {}
 
@@ -11822,16 +11845,6 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svgo@4.0.2:
-    dependencies:
-      commander: 11.1.0
-      css-select: 5.2.2
-      css-tree: 3.2.1
-      css-what: 6.2.2
-      csso: 5.0.5
-      picocolors: 1.1.1
-      sax: 1.6.1
-
   svgo@4.1.0:
     dependencies:
       commander: 11.1.0
@@ -12199,45 +12212,46 @@ snapshots:
     transitivePeerDependencies:
       - msw
 
-  volar-service-css@0.0.71(@volar/language-service@2.4.28):
+  volar-service-css@0.0.71(@volar/language-service@2.4.28(typescript@5.9.3)):
     dependencies:
       vscode-css-languageservice: 6.3.10
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
 
-  volar-service-emmet@0.0.71(@volar/language-service@2.4.28):
+  volar-service-emmet@0.0.71(@volar/language-service@2.4.28(typescript@5.9.3)):
     dependencies:
       '@emmetio/css-parser': 0.4.1
       '@emmetio/html-matcher': 1.3.0
       '@vscode/emmet-helper': 2.11.0
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
 
-  volar-service-html@0.0.71(@volar/language-service@2.4.28):
+  volar-service-html@0.0.71(@volar/language-service@2.4.28(typescript@5.9.3)):
     dependencies:
       vscode-html-languageservice: 5.6.2
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
 
-  volar-service-prettier@0.0.71(@volar/language-service@2.4.28)(prettier@3.9.6):
+  volar-service-prettier@0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))(prettier@3.9.6):
     dependencies:
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
       prettier: 3.9.6
 
-  volar-service-typescript-twoslash-queries@0.0.71(@volar/language-service@2.4.28):
+  volar-service-typescript-twoslash-queries@0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
+      typescript: 5.9.3
 
-  volar-service-typescript@0.0.71(@volar/language-service@2.4.28):
+  volar-service-typescript@0.0.71(@volar/language-service@2.4.28(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
       path-browserify: 1.0.1
       semver: 7.8.5
@@ -12246,14 +12260,15 @@ snapshots:
       vscode-nls: 5.2.0
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
+      typescript: 5.9.3
 
-  volar-service-yaml@0.0.71(@volar/language-service@2.4.28):
+  volar-service-yaml@0.0.71(@volar/language-service@2.4.28(typescript@5.9.3)):
     dependencies:
       vscode-uri: 3.1.0
       yaml-language-server: 1.23.0
     optionalDependencies:
-      '@volar/language-service': 2.4.28
+      '@volar/language-service': 2.4.28(typescript@5.9.3)
 
   vscode-css-languageservice@6.3.10:
     dependencies:

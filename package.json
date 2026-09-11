@@ -8,6 +8,7 @@
 		"prebuild": "pnpm run fetch:assets",
 		"build": "astro build",
 		"build:incremental": "INCREMENTAL_BUILD=true astro build",
+		"build:parallel": "PARALLEL_PRERENDER=true astro build",
 		"typegen:worker": "wrangler types ./worker/worker-configuration.d.ts",
 		"check": "pnpm run check:astro && pnpm run check:worker",
 		"check:astro": "astro check --minimumFailingSeverity=hint",
@@ -40,6 +41,7 @@
 		"lint": "eslint",
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets",
+		"prebuild:parallel": "pnpm run fetch:assets",
 		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
 	},
 	"devDependencies": {
@@ -47,7 +49,7 @@
 		"@actions/github": "9.1.1",
 		"@apidevtools/swagger-parser": "13.0.0",
 		"@astrojs/check": "0.9.10",
-		"@astrojs/cloudflare": "14.3.0",
+		"@astrojs/cloudflare": "https://pkg.pr.new/@astrojs/cloudflare@17932",
 		"@astrojs/markdown-remark": "7.3.0",
 		"@astrojs/markdown-satteri": "0.4.0",
 		"@astrojs/mdx": "^8.0.0",
@@ -86,7 +88,7 @@
 		"@types/react-dom": "19.0.4",
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.69.0",
-		"astro": "7.3.1",
+		"astro": "https://pkg.pr.new/astro@17932",
 		"astro-skills": "0.1.1",
 		"cidr-tools": "13.0.1",
 		"clsx": "2.1.1",
