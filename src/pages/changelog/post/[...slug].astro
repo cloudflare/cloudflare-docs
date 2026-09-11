@@ -24,6 +24,7 @@ export const getStaticPaths = (async () => {
 	return notes.map((note) => ({
 		params: { slug: note.id },
 		props: { note },
+		cacheKey: String(note.digest ?? note.id),
 	}));
 }) satisfies GetStaticPaths;
 

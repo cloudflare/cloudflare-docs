@@ -11,6 +11,7 @@ tags:
 ---
 
 import { Tabs, TabItem, Details, APIRequest, Render, GlossaryTooltip } from "~/components";
+import HostSelectorEgressDiagram from "~/components/cf/HostSelectorEgressDiagram.astro";
 
 <Details header="Feature availability">
 
@@ -34,7 +35,7 @@ Egress policies are evaluated at Layer 4 (https://www.cloudflare.com/learning/dd
 1. When Gateway receives a DNS query for a hostname that matches one of these selectors, it initially resolves the query to a temporary <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. By default, this IP is drawn from a Cloudflare-owned public range (`172.64.128.0/20` for IPv4, or `2606:4700:0cf1:4000::/64` for IPv6). You can [configure a custom IPv4 range](/cloudflare-one/networks/routes/configure-initial-resolved-ips/) if it conflicts with your existing network.
 2. When traffic arrives with this temporary destination IP, Gateway can identify which hostname the connection belongs to, apply the correct egress policy, then replace the temporary IP with the real destination IP before forwarding the traffic.
 
-![Example egress policy flow](~/assets/images/cloudflare-one/policies/host-selector-diagram.png)
+<HostSelectorEgressDiagram />
 
 These selectors require additional configuration before they work.
 

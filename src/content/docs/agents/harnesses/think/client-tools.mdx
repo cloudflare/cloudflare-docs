@@ -116,7 +116,7 @@ When a turn produces several client tool calls at once, Think waits for **all** 
 
 ## Survive restarts while waiting for a human
 
-A Durable Object can be evicted at any time, including while a turn is paused on an approval prompt or a client-side tool call. Because `Think` enables [`chatRecovery`](/agents/harnesses/think/recovery/) by default, the SDK treats such a turn as waiting on the human, not stuck. It parks the turn instead of failing it, and the user's eventual approval or tool result resumes the conversation.
+A Durable Object can be evicted at any time, including while a turn is paused on an approval prompt or a client-side tool call. [`Think` durable recovery](/agents/harnesses/think/recovery/) is always on. The SDK treats such a turn as waiting on the human, not stuck. It parks the turn instead of failing it. The user's eventual approval or tool result resumes the conversation.
 
 For which interactions are exempt from recovery budgets, refer to [Turns waiting on a human are not sealed](/agents/communication-channels/chat/chat-agents/#turns-waiting-on-a-human-are-not-sealed).
 

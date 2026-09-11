@@ -8,7 +8,7 @@
 /dns/reference/all-features/ /dns/ 301
 /ssl/reference/all-features/ /ssl/ 301
 /cache/plans/ /cache/ 301
-/style-guide/components/product-features/ /style-guide/components/ 301
+/style-guide/components/product-features/ /style-guide/build-the-page/components/ 301
 
 # Sandbox (claude-managed-agents moved to tutorials)
 /sandbox/claude-managed-agents/ /sandbox/tutorials/claude-managed-agents/ 301
@@ -388,7 +388,7 @@
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
-/analytics/dashboards/ /log-explorer/custom-dashboards/ 301
+/analytics/dashboards/ /analytics/custom-dashboards/ 301
 /analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
 /analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 
@@ -627,15 +627,71 @@
 /constellation/ /workers-ai/ 301
 # Containers
 /containers/beta-info/ /containers/faq/ 301
-/containers/image-management/ /containers/platform-details/image-management/ 301
-/containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
-/containers/architecture/ /containers/platform-details/architecture/ 301
-/containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
-/containers/container-package/ /containers/container-class/ 301
-/containers/platform-details/ /containers/platform-details/architecture/ 301
+/containers/container-package/ /containers/reference/container-class/ 301
+/containers/durable-object-methods/ /durable-objects/api/container/ 301
+# Containers IA rework: loose pages folded into core sections
+/containers/container-class/ /containers/reference/container-class/ 301
+/containers/local-dev/ /containers/guides/local-dev/ 301
+/containers/deploy/ /containers/guides/deploy/ 301
+/containers/execute-commands/ /containers/guides/execute-commands/ 301
+/containers/ssh/ /containers/guides/ssh/ 301
+/containers/pricing/ /containers/platform/pricing/ 301
+/containers/image-management/ /containers/guides/image-management/ 301
+/containers/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/architecture/ /containers/concepts/architecture/ 301
+# Containers IA rework: platform-details/ dissolved into core sections
+/containers/platform-details/architecture/ /containers/concepts/architecture/ 301
+/containers/platform-details/placement/ /containers/concepts/placement/ 301
+/containers/platform-details/outbound-traffic/ /containers/guides/outbound-traffic/ 301
+/containers/platform-details/workers-connections/ /containers/configuration/workers-connections/ 301
+/containers/platform-details/environment-variables/ /containers/configuration/environment-variables/ 301
+/containers/platform-details/rollouts/ /containers/configuration/rollouts/ 301
+/containers/platform-details/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/platform-details/limits/ /containers/platform/limits/ 301
+/containers/platform-details/image-management/ /containers/guides/image-management/ 301
+/containers/platform-details/durable-object-methods/ /durable-objects/api/container/ 301
+/containers/platform-details/ /containers/concepts/architecture/ 301
+# Containers IA rework: Configuration section + Local Development to Guides + Wrangler pages to Reference
+/containers/reference/local-dev/ /containers/guides/local-dev/ 301
+/containers/reference/environment-variables/ /containers/configuration/environment-variables/ 301
+/containers/reference/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/reference/rollouts/ /containers/configuration/rollouts/ 301
+/containers/concepts/workers-connections/ /containers/configuration/workers-connections/ 301
+/containers/wrangler-configuration/ /containers/reference/wrangler-configuration/ 301
+/containers/wrangler-commands/ /containers/reference/wrangler-commands/ 301
+# Cloudflare Tunnel IA rework
+/tunnel/setup/ /tunnel/get-started/ 301
+/tunnel/routing/ /tunnel/concepts/routing/ 301
+/tunnel/monitoring/ /tunnel/observability/ 301
+/tunnel/changelog/ /tunnel/platform/changelog/ 301
+/tunnel/downloads/system-requirements/ /tunnel/platform/system-requirements/ 301
+/tunnel/downloads/update-cloudflared/ /tunnel/guides/update-cloudflared/ 301
+/tunnel/deployment-guides/ /tunnel/guides/ 301
+/tunnel/deployment-guides/ansible/ /tunnel/guides/ansible/ 301
+/tunnel/deployment-guides/aws/ /tunnel/guides/aws/ 301
+/tunnel/deployment-guides/azure/ /tunnel/guides/azure/ 301
+/tunnel/deployment-guides/google-cloud-platform/ /tunnel/guides/google-cloud-platform/ 301
+/tunnel/deployment-guides/kubernetes/ /tunnel/guides/kubernetes/ 301
+/tunnel/deployment-guides/terraform/ /tunnel/guides/terraform/ 301
+/tunnel/advanced/ /tunnel/reference/ 301
+/tunnel/advanced/granular-permissions/ /tunnel/guides/granular-permissions/ 301
+/tunnel/advanced/origin-parameters/ /tunnel/reference/origin-parameters/ 301
+/tunnel/advanced/run-parameters/ /tunnel/reference/run-parameters/ 301
+/tunnel/advanced/tunnel-tokens/ /tunnel/reference/tunnel-tokens/ 301
+/tunnel/advanced/local-management/ /tunnel/features/locally-managed-tunnels/ 301
+/tunnel/advanced/local-management/create-local-tunnel/ /tunnel/features/locally-managed-tunnels/create-local-tunnel/ 301
+/tunnel/advanced/local-management/configuration-file/ /tunnel/features/locally-managed-tunnels/configuration-file/ 301
+/tunnel/advanced/local-management/local-tunnel-terms/ /tunnel/features/locally-managed-tunnels/local-tunnel-terms/ 301
+/tunnel/advanced/local-management/tunnel-permissions/ /tunnel/features/locally-managed-tunnels/tunnel-permissions/ 301
+/tunnel/advanced/local-management/tunnel-useful-commands/ /tunnel/features/locally-managed-tunnels/tunnel-useful-commands/ 301
+/tunnel/advanced/local-management/as-a-service/ /tunnel/features/locally-managed-tunnels/as-a-service/ 301
+/tunnel/advanced/local-management/as-a-service/linux/ /tunnel/features/locally-managed-tunnels/as-a-service/linux/ 301
+/tunnel/advanced/local-management/as-a-service/macos/ /tunnel/features/locally-managed-tunnels/as-a-service/macos/ 301
+/tunnel/advanced/local-management/as-a-service/windows/ /tunnel/features/locally-managed-tunnels/as-a-service/windows/ 301
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
+/sandbox/guides/openai-agents-api/ /sandbox/tutorials/openai-agents-api/ 301
 /sandbox/guides/production-deployment/ /sandbox/guides/preview-urls-custom-domain/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
@@ -1105,10 +1161,10 @@
 /images/cloudflare-images/serve-images/ /images/optimization/hosted-images/serve-uploaded-images/ 301
 /images/cloudflare-images/serve-images/adaptive-images-format/ /images/optimization/hosted-images/serve-uploaded-images/ 301
 /images/cloudflare-images/serve-images/browser-ttl/ /images/optimization/hosted-images/browser-ttl/ 301
-/images/cloudflare-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
-/images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
-/images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
-/images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
+/images/cloudflare-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
 /images/cloudflare-images/transform/ /images/optimization/transformations/overview/ 301
 /images/cloudflare-images/transform/blur-images/ /images/optimization/hosted-images/blur-variants/ 301
 /images/cloudflare-images/transform/delete-images/ /images/storage/manage-images/delete-images/ 301
@@ -1168,10 +1224,14 @@
 /images/upload-images/upload-dashboard/ /images/storage/upload-images/methods/ 301
 /images/upload-images/upload-file-worker/ /images/storage/upload-images/upload-file-worker/ 301
 /images/upload-images/upload-url/ /images/storage/upload-images/upload-url/ 301
-/images/upload-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
-/images/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
-/images/upload-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
-/images/upload-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
+/images/upload-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/upload-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/upload-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
+/images/storage/upload-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/storage/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/storage/upload-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/storage/upload-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
 
 # learning-paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/ /learning-paths/cybersafe/account-creation/ 301
@@ -1382,6 +1442,8 @@
 /cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-policies/http-policies/package-registry-security/ 301
 # CF1 packet filtering overview rename
 /cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
+# CF1 Audit SSH retired
+/cloudflare-one/traffic-policies/network-policies/ssh-logging/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/ 301
 # cross-product magic-firewall slug renames
 /learning-paths/data-center-protection/enable-magic-firewall/ /learning-paths/data-center-protection/enable-network-firewall/ 301
 /analytics/graphql-api/tutorials/querying-magic-firewall-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-samples/ 301
@@ -1786,16 +1848,31 @@
 /docs-guide/manage-content/redirects/process/ /style-guide/how-we-docs/redirects/ 301
 /docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
 /docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
-/style-guide/components/asides/ /style-guide/formatting/notes-and-other-notation-types/ 301
-/style-guide/components/checkbox/ /style-guide/formatting/structure/lists/ 301
-/style-guide/components/code/ /style-guide/formatting/code-block-guidelines/ 301
-/style-guide/components/compatibility-flag/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/asides/ /style-guide/style-and-grammar/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/checkbox/ /style-guide/style-and-grammar/formatting/structure/lists/ 301
+/style-guide/components/code/ /style-guide/style-and-grammar/formatting/code-block-guidelines/ 301
+/style-guide/components/compatibility-flag/ /style-guide/style-and-grammar/formatting/notes-and-other-notation-types/ 301
 /style-guide/components/flex/ /style-guide/how-we-docs/image-maintenance/ 301
-/style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
-/style-guide/components/github-code/ /style-guide/components/index/ 301
-/style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
-/style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
-/style-guide/components/workers-templates/ /style-guide/components/index/ 301
+/style-guide/components/footnotes/ /style-guide/style-and-grammar/formatting/footnotes/ 301
+/style-guide/components/github-code/ /style-guide/build-the-page/components/ 301
+/style-guide/components/last-reviewed/ /style-guide/build-the-page/frontmatter/custom-properties/#reviewed 301
+/style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/#mermaid-diagrams 301
+/style-guide/components/workers-templates/ /style-guide/build-the-page/components/ 301
+/style-guide/documentation-content-strategy/content-types/reference-architecture-diagram/ /style-guide/documentation-content-strategy/content-types/reference-architecture/#reference-architecture-diagrams 301
+/style-guide/documentation-content-strategy/content-types/solution-guide/ /style-guide/documentation-content-strategy/content-types/how-to/ 301
+/style-guide/documentation-content-strategy/content-types/implementation-guide/ /style-guide/documentation-content-strategy/content-types/how-to/ 301
+/style-guide/documentation-content-strategy/content-types/select-content-type/ /style-guide/documentation-content-strategy/content-types/ 301
+/style-guide/documentation-content-strategy/component-attributes/context/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/introduction/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/intended-audience/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/screenshots/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/diagrams/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/reference-diagram/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/tables/ /style-guide/style-and-grammar/formatting/structure/tables/ 301
+/style-guide/documentation-content-strategy/component-attributes/links/ /style-guide/style-and-grammar/formatting/structure/links/ 301
+/style-guide/documentation-content-strategy/writing-guidelines/ /style-guide/style-and-grammar/voice-and-tone/ 301
+/style-guide/documentation-content-strategy/accessibility/ /style-guide/style-and-grammar/accessibility/ 301
+/style-guide/how-we-docs/reviews/ /style-guide/contributions/#content-reviews 301
 /style-guide/ai-tooling/ /docs-for-agents/ 301
 
 # support
@@ -2236,12 +2313,12 @@
 /workers/runtime-apis/webassembly/rust/crates/ /workers/languages/rust/crates 301
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
-/workers/learning/logging-workers/ /workers/observability/logging/ 301
-/workers/observability/log-from-workers/ /workers/observability/logging/ 301
-/workers/platform/logpush/ /workers/observability/logging/logpush/ 301
-/workers/observability/logpush/ /workers/observability/logging/logpush/ 301
-/workers/platform/tail-workers/ /workers/observability/logging/tail-workers/ 301
-/workers/observability/tail-workers/ /workers/observability/logging/tail-workers/ 301
+/workers/learning/logging-workers/ /workers/observability/logs/ 301
+/workers/observability/log-from-workers/ /workers/observability/logs/ 301
+/workers/platform/logpush/ /workers/observability/logs/logpush/ 301
+/workers/observability/logpush/ /workers/observability/logs/logpush/ 301
+/workers/platform/tail-workers/ /workers/observability/logs/tail-workers/ 301
+/workers/observability/tail-workers/ /workers/observability/logs/tail-workers/ 301
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/configuration/routing/ 301
@@ -2727,6 +2804,7 @@
 /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
+/cloudflare-one/integrations/cloud-and-saas/findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
@@ -3014,3 +3092,7 @@
 
 # R2 Data Catalog promoted to a top-level product (was nested under R2)
 /r2/data-catalog/* /r2-data-catalog/:splat 301
+/style-guide/formatting/* /style-guide/style-and-grammar/formatting/:splat 301
+/style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
+/style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
+/style-guide/components/* /style-guide/build-the-page/components/:splat 301

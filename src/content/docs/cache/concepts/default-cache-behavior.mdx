@@ -89,9 +89,13 @@ Cloudflare’s CDN provides several cache customization options:
 |  | Free | Pro | Business | Enterprise |
 | - | - | - | - | - |
 | Availability | Yes | Yes | Yes | Yes |
-| Max upload size | 100 MB | 100 MB | 200 MB | 500+ MB |
+| Max upload size | 100 MB | 100 MB | 200 MB | Up to 5 GB |
 
-Customers can reduce the **Maximum Upload Size** from the zone's **Network** page.
+Customers can adjust the **Maximum Upload Size** from the zone's **Network** page. Enterprise customers can self-serve any value up to 5 GB. Uploads larger than 5 GB require additional configuration — contact your account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+:::note
+Very large uploads take longer to transfer. Requests that exceed the connection or read timeout can fail mid-upload before reaching the size limit — a failure that may look unrelated to **Maximum Upload Size**. If you raise the limit substantially, make sure your clients and origin allow enough time for the full transfer.
+:::
 
 If you require a larger upload, you can group requests into smaller chunks, upload the full resource through a [DNS-only (unproxied) DNS record](/dns/proxy-status/) or [upgrade your plan](/billing/manage/change-plan/).
 
@@ -100,7 +104,7 @@ If you require a larger upload, you can group requests into smaller chunks, uplo
 Cloudflare cacheable file limits:
 
 * Free, Pro and Business customers have a limit of 512 MB.
-* For Enterprise customers the default maximum cacheable file size is 5 GB. Contact your account team to request a limit increase.
+* For Enterprise customers the default maximum cacheable file size is 5 GB. Contact your account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to request a limit increase.
 
 ## When does Cloudflare cache successfully?
 

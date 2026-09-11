@@ -1,0 +1,13 @@
+---
+title: Grace periods for service token rotation
+description: Keep the previous service token secret active while you deploy its replacement.
+date: 2026-08-25
+products:
+  - access
+---
+
+Cloudflare Access administrators can now choose a grace period when rotating a service token secret. Both secrets remain valid during the grace period, giving administrators time to update services without interrupting authentication.
+
+The dashboard offers grace periods from one hour to 30 days. Administrators can also revoke the previous secret immediately. The API accepts an RFC 3339 expiration time for custom rotation schedules.
+
+For configuration instructions, refer to [Rotate service token secrets](/cloudflare-one/access-controls/service-credentials/service-tokens/#rotate-service-token-secrets).

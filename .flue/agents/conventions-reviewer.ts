@@ -32,7 +32,7 @@ import * as v from "valibot";
 import conventionsCheckSkill from "../.agents/skills/conventions-check/SKILL.md";
 import { useBotRole } from "../lib/bot-role";
 
-const MODEL = "cloudflare/@cf/moonshotai/kimi-k2.7-code";
+const MODEL = "cloudflare/@cf/deepseek-ai/deepseek-v4-flash-0731";
 
 /** Name of the data part the structured result is written to. */
 export const CONVENTIONS_REVIEW_DATA = "conventions_review";

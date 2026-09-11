@@ -284,11 +284,13 @@ Cloudflare now restricts configured [endpoint host headers](/load-balancing/addi
 
 ### Cause
 
-You will receive this error when you attempt to delete a pool that is referenced by a load balancer [geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) region.
+You will receive this error when you attempt to delete a pool that is referenced by a load balancer [geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) region, or by a [pool set](/load-balancing/understand-basics/traffic-steering/pool-sets/).
 
 ### Solution
 
-Remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+For a geo steering reference, remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+
+For a pool set reference, remove the pool from every pool set that references it, including any `overrides.pool_weights` and `overrides.fallback_pool` entries.
 
 ***
 

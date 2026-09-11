@@ -1,0 +1,24 @@
+---
+title: Buttons
+styleGuide:
+  component: LinkButton
+description: Add styled link buttons to documentation pages.
+products:
+  - style-guide
+---
+
+```mdx
+import { LinkButton } from "~/components";
+
+<LinkButton href="/style-guide/build-the-page/components/buttons/">Get started</LinkButton>
+<LinkButton
+	href="/style-guide/build-the-page/components/buttons/"
+	variant="secondary"
+	icon
+>
+	More information
+</LinkButton>
+<LinkButton href="/style-guide/build-the-page/components/buttons/" variant="minimal">
+	Other stuff
+</LinkButton>
+```

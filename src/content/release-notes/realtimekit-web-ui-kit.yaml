@@ -3,6 +3,19 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-08-24"
+    title: RealtimeKit Web UI Kit 2.0.2
+    description: |-
+      **Fixes**
+
+      - Restored Safari 16.x compatibility by incorporating an [upstream Stencil fix](https://github.com/stenciljs/core/pull/6236).
+      - Fixed `rtk-idle-screen` incorrectly displaying non-fatal `preJoinError` events, such as declining to share media, as fatal errors.
+      - Starting a recording while one is already in progress now displays a specific message instead of a generic internal error.
+
+      **New localization keys**
+
+      - `recording.error.already_recording` — "A recording is already in progress."
+
   - publish_date: "2026-07-17"
     title: RealtimeKit Web UI Kit 2.0.1
     description: |-

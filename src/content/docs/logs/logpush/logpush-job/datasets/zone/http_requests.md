@@ -9,6 +9,12 @@ sidebar:
 
 The descriptions below detail the fields available for `http_requests`.
 
+## AISecurityCustomTopicCategories
+
+Type: `object`
+
+Customer-defined AI Security topic labels and their relevance scores. A score of 1 indicates the highest relevance, and 99 indicates the lowest relevance.
+
 ## AISecurityInjectionScore
 
 Type: `int`
@@ -248,6 +254,12 @@ Client source port.
 Type: `int`
 
 The smoothed average of TCP round-trip time (SRTT). For the initial request on a connection, this is measured only during connection setup. For a subsequent request on the same connection, it is measured over the entire connection lifetime up until the time that request is received.
+
+## ClientTLSKeyExchangeGroup
+
+Type: `string`
+
+TLS key exchange group between the client and Cloudflare (for example, 'X25519MLKEM768'). 'UNK' means it could not be determined. 'NONE' means TLS was not used.
 
 ## ClientXRequestedWith
 
@@ -656,6 +668,18 @@ The full name of the most-recently matched variable.
 Type: `int`
 
 WAF score for an RCE attack.
+
+## WAFRequestSignatureCategories
+
+Type: `array[string]`
+
+List of attack signature categories matched for the request.
+
+## WAFRequestSignatureRefs
+
+Type: `array[string]`
+
+List of attack signature rule references (refs) matched for the request.
 
 ## WAFSQLiAttackScore
 

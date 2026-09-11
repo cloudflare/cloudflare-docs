@@ -11,12 +11,682 @@ tags:
   - IPsec
 ---
 
-import { Render } from "~/components";
+## Overview
 
-<Render file="cloudflare-wan/third-party/palo-alto"
-  product="networking-services"
-  params={{
-    mssClampingUrl: "/cloudflare-wan/reference/mtu-mss/#mss-clamping",
-    configureTunnelEndpointsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
-    configureStaticRoutesUrl: "/cloudflare-wan/configuration/how-to/configure-routes/"
-  }} />
+This guide provides step-by-step instructions for configuring Palo Alto Networks Next-Generation Firewall (NGFW) to establish IPsec VPN tunnels to Cloudflare WAN. The configuration has been validated by Cloudflare with the documented firmware release and is intended for network engineers who are familiar with Palo Alto Networks NGFW Firewalls administration and have an active Cloudflare WAN subscription.
+
+## Test Environment
+
+| **Field**                          | **Value**                                  |
+| ---------------------------------- | ------------------------------------------ |
+| Vendor                             | Palo Alto Networks                         |
+| Model                              | PA-440                                     |
+| Release                            | PAN-OS 11.2.8                              |
+| Date Tested                        | March 2026                                 |
+
+## IKE/IPsec Crypto & Relevant Settings
+
+| **Field**                          | **Value**                                  |
+| ---------------------------------- | ------------------------------------------ |
+| Traffic Selection Criteria         | Route-Based VPN                            |
+| Routing                            | Static                                     |
+| Redundant Tunnels                  | Yes                                        |
+| Tunnel Load Balancing              | Active/Active                              |
+| IKE Version                        | IKEv2                                      |
+| Authentication                     | Pre-Shared Key                             |
+| Anti-Replay Protection             | Disabled                                   |
+| NAT Traversal (NAT-T)              | Not Tested                                 |
+| NAT-T Port                         | Not Applicable                             |
+| Phase 1 - DH-Group                 | Group 20                                   |
+| Phase 1 - Encryption               | AES-256-CBC                                |
+| Phase 1 - Authentication/Integrity | SHA-256                                    |
+| Phase 2 - DH-Group                 | Group 20                                   |
+| Phase 2 - Transport                | ESP                                        |
+| Phase 2 - Encryption               | AES-256-CBC                                |
+
+## Cloudflare WAN and Palo Alto Networks NGFW - Configuration Settings
+
+- While following these steps, ensure you update all object names and IP addresses to match your environment.
+- Aligning these elements with your actual naming conventions and network scheme ensures the configuration works correctly in your production setup.
+- Use Find and Replace to parse the examples below, update the names and addresses accordingly, and maintain consistency.
+
+### Cloudflare WAN - Tunnel 01 of 02
+
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_01                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.0/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 162.159.135.1                                  |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
+
+- IKE Identity and Pre-shared Key (obtained after tunnel creation):
+
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `bf6c493d03<REDACTED>.ipsec.cloudflare.com`    |
+| Pre-shared key                       | Cloudflare-WAN-T1-PSK-1234!                    |
+
+### Cloudflare WAN - Tunnel 02 of 02
+
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_02                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.2/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 172.64.135.1                                   |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
+
+- IKE Identity and Pre-shared Key (obtained after tunnel creation):
+
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `0287844e9d<REDACTED>.ipsec.cloudflare.com`    |
+| Pre-shared key                       | Cloudflare-WAN-T2-PSK-1234!                    |
+
+## Customer Premise Equipment - Palo Alto Networks
+
+| **WAN Interface**                  | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ---------------------------------- | --------------------- | --------------------- |
+| WAN Interface                      | ethernet1/1           | ethernet1/1           |
+| IP Address                         | 203.0.113.100/24      | 203.0.113.100/24      |
+| Security Zone                      | untrust               | untrust               |
+
+| **Virtual Tunnel Interface (VTI)** | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ---------------------------------- | --------------------- | --------------------- |
+| Tunnel interface                   | tunnel.1              | tunnel.2              |
+| IP Address                         | 169.254.250.1/31      | 169.254.250.3/31      |
+| Security Zone                      | cloudflare            | cloudflare            |
+
+| **LAN Interface**                  | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ---------------------------------- | --------------------- | --------------------- |
+| LAN Interface                      | ethernet1/2           | ethernet1/2           |
+| IP Address                         | 192.168.125.1/24      | 192.168.125.1/24      |
+| Security Zone                      | trust                 | trust                 |
+
+### Palo Alto Networks NGFW Object Names
+
+| **Role**                           | **Label/Name**            | **Address**                 |
+| ---------------------------------- | ------------------------- | --------------------------- |
+| CPE Security Zone - Trust          | Zone                      | trust                       |
+| CPE Security Zone - Untrust        | Zone                      | untrust                     |
+| CPE Security Zone - Cloudflare WAN | Zone                      | cloudflare                  |
+| CPE IKE Crypto Profile Name        | IKE Crypto Profile        | ike-aes256cbc-sha256-dh20   |
+| CPE IPsec Crypto Profile Name      | IPsec Crypto Profile      | ipsec-aes256cbc-sha256-dh20 |
+
+## Assumptions
+
+This guide assumes the following apply:
+
+- Already configured [IPsec tunnels](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/) and [static routes](/cloudflare-wan/configuration/how-to/configure-routes/) in the Cloudflare dashboard
+- Used the Cloudflare Dashboard to obtain the Local Identifier (FQDN/hostname) and generate a Pre-Shared Key for each of the IPsec tunnels
+- Understand the importance of [MSS clamping](/cloudflare-wan/reference/mtu-mss/#mss-clamping) and adjusting it based on the traffic flows traversing the Cloudflare WAN IPsec Tunnels
+- Highly Available/Fault Tolerant Palo Alto Networks NGFW configurations, while possible, are out of scope.
+
+## High-Level Steps
+
+- Create Address Objects for:
+  - Virtual Tunnel Interfaces (2x) - Local (/31 netmask) and Remote (/32 netmask)
+  - Cloudflare Anycast IPs (2x)
+  - Local Subnet(s)
+  - Remote Cloudflare WAN Subnet(s)
+- Create Interface Management Profile
+- Create a Security Zone (Recommended)
+- Define Tunnel interfaces
+- Define IKE and IPsec Crypto Profiles
+- Add two IKE Gateways - one for each of the two Cloudflare IPsec Tunnels
+- Add two IPsec Tunnels - one for each of the two Cloudflare IPsec Tunnels
+- Define Security policy to permit traffic to/from Cloudflare WAN
+- Define Policy-Based Forwarding rules to selectively route traffic across the IPsec tunnels
+
+## Palo Alto Networks NGFW - Configuration
+
+There are examples for both the Command-Line Interface (CLI) and Web UI wherever possible.
+
+### Objects & Addressing
+
+Define Address Objects to represent the attribute/value pairs throughout the remainder of the configuration.
+
+#### CLI
+
+```txt
+set address cf_wan_anycast_01 ip-netmask 162.159.135.1
+set address cf_wan_anycast_02 ip-netmask 172.64.135.1
+set address cf-wan-ipsec-vti-01-local ip-netmask 169.254.250.1/31
+set address cf-wan-ipsec-vti-02-local ip-netmask 169.254.250.3/31
+set address cf-wan-ipsec-vti-01-remote ip-netmask 169.254.250.0/32
+set address cf-wan-ipsec-vti-02-remote ip-netmask 169.254.250.2/32
+set address lan-net-192-168-125-0--24 ip-netmask 192.168.125.0/24
+set address internet_203-0-113-100--24 ip-netmask 203.0.113.100/24
+```
+
+#### Web UI
+
+1. Go to **Objects** > **Addresses**.
+2. Select **Add**.
+3. Create objects of type `IP Netmask` for the following networks:
+   - `cf_wan_anycast_01` - specify 162.159.135.1 (or 162.159.135.1/32)
+   - `cf_wan_anycast_02` - specify 172.64.135.1 (or 172.64.135.1/32)
+   - `cf-wan-ipsec-vti-01-local` - specify 169.254.250.1/31
+   - `cf-wan-ipsec-vti-02-local` - specify 169.254.250.3/31
+   - `cf-wan-ipsec-vti-01-remote` - specify 169.254.250.0 (or 169.254.250.0/32)
+   - `cf-wan-ipsec-vti-02-remote` - specify 169.254.250.2 (or 169.254.250.2/32)
+
+### Interface Management Profile
+
+Allow the applicable network interfaces to respond to pings (ICMP Echo Request). This is required to ensure the Cloudflare WAN Tunnel Health Checks are able to verify reachability across the Virtual Tunnel Interfaces.
+
+#### CLI
+
+```txt
+set network profiles interface-management-profile allow_ping ping yes
+```
+
+#### Web UI
+
+1. Go to **Network** > **Network Profiles** > **Interface Mgmt**.
+2. Select **Add**.
+3. Name: `allow_ping`
+4. Select `Ping` under `Network Services`.
+5. Select **OK**.
+
+### Virtual Tunnel Interfaces (VTIs)
+
+Add two tunnel interfaces - one for each of the two Cloudflare IPsec tunnels.
+
+Note: The workflows for the CLI and Web UI can vary.
+
+#### CLI - Add Tunnel Interfaces
+
+Add two tunnel interfaces taking advantage of the Address objects and Interface Management Profile configured earlier.
+
+:::note
+If you want to assign the tunnel interfaces to a Security Zone in this step, the Security Zone must already exist. This example assumes the Security Zone is created in the next step.
+:::
+
+```txt
+set network interface tunnel units tunnel.1 ip cf-wan-ipsec-vti-01-local
+set network interface tunnel units tunnel.1 interface-management-profile allow_ping
+
+set network interface tunnel units tunnel.2 ip cf-wan-ipsec-vti-02-local
+set network interface tunnel units tunnel.2 interface-management-profile allow_ping
+```
+
+#### CLI - Assign Tunnel Interfaces to the Virtual Router
+
+Assign both `tunnel` interfaces to the default Virtual Router:
+
+```txt
+set network virtual-router default interface tunnel.1
+set network virtual-router default interface tunnel.2
+```
+
+#### CLI - Assign Tunnel Interfaces to Security Zone
+
+Create the `cloudflare` security zone if it does not already exist and bind `tunnel.1` and `tunnel.2` interfaces.
+
+```txt
+set zone cloudflare network layer3  [ tunnel.1 tunnel.2 ]
+```
+
+#### Web UI - Add Tunnel Interfaces
+
+1. Go to **Network** > **Interfaces** > **Tunnel**.
+2. Select **Add**.
+3. Enter 1 in the field to the right of "Interface Name".
+4. Config Tab > Virtual Router: `default`.
+5. Config Tab > Security Zone: `cloudflare` (or assign to `trust` based on your security policy).
+6. IPv4 Tab > Select `cf-wan-ipsec-vti-01-local` from the drop-down.
+7. Advanced tab > Management Profile: `allow_ping`.
+8. Select **OK**.
+
+Repeat steps for tunnel 2
+
+1. Go to **Network** > **Interfaces** > **Tunnel**.
+2. Select **Add**.
+3. Enter 2 in the field to the right of "Interface Name".
+4. Config Tab > Virtual Router: `default`.
+5. Config Tab > Security Zone: `cloudflare` (or assign to `trust` based on your security policy).
+6. IPv4 Tab > Select `cf-wan-ipsec-vti-02-local` from the drop-down.
+7. Advanced tab > Management Profile: `allow_ping`.
+8. Select **OK**.
+
+### IPsec Tunnel Configuration
+
+#### Phase 1 - IKE
+
+##### Define Cryptographic Settings
+
+Define an IKE Crypto Profile with the following settings:
+
+| **Attribute**   | **Value**   |
+| --------------- | ----------- |
+| hash            | sha256      |
+| dh-group        | group20     |
+| encryption      | aes-256-cbc |
+| lifetime hours  | 8           |
+
+###### CLI
+
+```txt
+set network ike crypto-profiles ike-crypto-profiles ike-aes256cbc-sha256-dh20 hash sha256
+set network ike crypto-profiles ike-crypto-profiles ike-aes256cbc-sha256-dh20 dh-group group20
+set network ike crypto-profiles ike-crypto-profiles ike-aes256cbc-sha256-dh20 encryption aes-256-cbc
+set network ike crypto-profiles ike-crypto-profiles ike-aes256cbc-sha256-dh20 lifetime hours 8
+```
+
+###### Web UI
+
+1. Go to **Network** > **Network Profiles** > **IKE Crypto**.
+2. Select **Add**.
+3. Name: `ike-aes256cbc-sha256-dh20`
+4. DH Group: `group20`
+5. Authentication: `sha256`
+6. Encryption: `aes-256-cbc`
+7. Timers - Key Lifetime: 8 hours
+
+##### Define IKE Gateway Objects
+
+Each tunnel will have its own Pre-Shared Key and Local ID (FQDN/hostname) - ensure you obtain/update the values from the Cloudflare Dashboard.
+
+###### CLI
+
+```txt
+set network ike gateway cf-wan-ike-gw-01 authentication pre-shared-key key "Cloudflare-WAN-T1-PSK-1234!"
+set network ike gateway cf-wan-ike-gw-01 protocol ikev2 pq-ppk enabled no
+set network ike gateway cf-wan-ike-gw-01 protocol ikev2 pq-ppk negotiation-mode preferred
+set network ike gateway cf-wan-ike-gw-01 protocol ikev2 pq-kem enable no
+set network ike gateway cf-wan-ike-gw-01 protocol ikev2 pq-kem block-vulnerable-cipher yes
+set network ike gateway cf-wan-ike-gw-01 protocol ikev2 ikev2-fragment enable no
+set network ike gateway cf-wan-ike-gw-01 protocol ikev2 dpd enable yes
+set network ike gateway cf-wan-ike-gw-01 protocol ikev2 ike-crypto-profile ike-aes256cbc-sha256-dh20
+set network ike gateway cf-wan-ike-gw-01 protocol ikev1 dpd enable yes
+set network ike gateway cf-wan-ike-gw-01 protocol version ikev2
+set network ike gateway cf-wan-ike-gw-01 local-address interface ethernet1/1 ip internet_203-0-113-100--24
+set network ike gateway cf-wan-ike-gw-01 protocol-common nat-traversal enable no
+set network ike gateway cf-wan-ike-gw-01 protocol-common fragmentation enable no
+set network ike gateway cf-wan-ike-gw-01 peer-address ip cf_wan_anycast_01
+set network ike gateway cf-wan-ike-gw-01 local-id type fqdn id "bf6c493d03<REDACTED>.ipsec.cloudflare.com"
+
+set network ike gateway cf-wan-ike-gw-02 authentication pre-shared-key key "Cloudflare-WAN-T2-PSK-1234!"
+set network ike gateway cf-wan-ike-gw-02 protocol ikev2 pq-ppk enabled no
+set network ike gateway cf-wan-ike-gw-02 protocol ikev2 pq-ppk negotiation-mode preferred
+set network ike gateway cf-wan-ike-gw-02 protocol ikev2 pq-kem enable no
+set network ike gateway cf-wan-ike-gw-02 protocol ikev2 pq-kem block-vulnerable-cipher yes
+set network ike gateway cf-wan-ike-gw-02 protocol ikev2 ikev2-fragment enable no
+set network ike gateway cf-wan-ike-gw-02 protocol ikev2 dpd enable yes
+set network ike gateway cf-wan-ike-gw-02 protocol ikev2 ike-crypto-profile ike-aes256cbc-sha256-dh20
+set network ike gateway cf-wan-ike-gw-02 protocol ikev1 dpd enable yes
+set network ike gateway cf-wan-ike-gw-02 protocol version ikev2
+set network ike gateway cf-wan-ike-gw-02 local-address interface ethernet1/1 ip internet_203-0-113-100--24
+set network ike gateway cf-wan-ike-gw-02 protocol-common nat-traversal enable no
+set network ike gateway cf-wan-ike-gw-02 protocol-common fragmentation enable no
+set network ike gateway cf-wan-ike-gw-02 peer-address ip cf_wan_anycast_02
+set network ike gateway cf-wan-ike-gw-02 local-id type fqdn id "0287844e9d<REDACTED>.ipsec.cloudflare.com"
+```
+
+##### Web UI
+
+1. Go to **Network** > **Network Profiles** > **IKE Gateways**.
+2. Select **Add**.
+3. Name: `cf-wan-ike-gw-01`
+4. Version: `IKEv2 only mode`
+5. Address Type: `IPv4`
+6. Interface: `ethernet1/1`
+7. Local IP Address: `internet_203-0-113-100--24`
+8. Peer IP Address Type: `IP`
+9. Authentication: `Pre-Shared Key`
+10. Enter Pre-shared key and confirm value (obtain from the Cloudflare Dashboard).
+11. Local Identification: `FQDN (hostname)` (obtain FQDN value for Tunnel 1 from the Cloudflare Dashboard).
+12. Advanced Options tab > General > IKE Crypto Profile: `ike-aes256cbc-sha256-dh20`.
+13. Select **OK**.
+
+Repeat steps for tunnel 2
+
+1. Go to **Network** > **Network Profiles** > **IKE Gateways**.
+2. Select **Add**.
+3. Name: `cf-wan-ike-gw-02`
+4. Version: `IKEv2 only mode`
+5. Address Type: `IPv4`
+6. Interface: `ethernet1/1`
+7. Local IP Address: `internet_203-0-113-100--24`
+8. Peer IP Address Type: `IP`
+9. Authentication: `Pre-Shared Key`
+10. Enter Pre-shared key and confirm value (obtain from the Cloudflare Dashboard).
+11. Local Identification: `FQDN (hostname)` (obtain FQDN value for Tunnel 2 from the Cloudflare Dashboard).
+12. Advanced Options tab > General > IKE Crypto Profile: `ike-aes256cbc-sha256-dh20`.
+13. Select **OK**.
+
+#### IPsec (Phase 2)
+
+##### Define Cryptographic Settings
+
+Define an IPsec Crypto Profile with the following settings:
+
+| **Attribute**      | **Value**   |
+| ------------------ | ----------- |
+| dh-group           | group20     |
+| esp encryption     | aes-256-cbc |
+| esp authentication | sha256      |
+| lifetime hours     | 8           |
+
+###### CLI
+
+```txt
+set network ike crypto-profiles ipsec-crypto-profiles ipsec-aes256cbc-sha256-dh20 esp authentication sha256
+set network ike crypto-profiles ipsec-crypto-profiles ipsec-aes256cbc-sha256-dh20 esp encryption aes-256-cbc
+set network ike crypto-profiles ipsec-crypto-profiles ipsec-aes256cbc-sha256-dh20 lifetime hours 8
+set network ike crypto-profiles ipsec-crypto-profiles ipsec-aes256cbc-sha256-dh20 dh-group group20
+```
+
+###### Web UI
+
+1. Go to **Network** > **Network Profiles** > **IPsec Crypto**.
+2. Select **Add**.
+3. Name: `ipsec-aes256cbc-sha256-dh20`
+4. IPsec Protocol: `ESP`
+5. Encryption: `aes-256-cbc`
+6. Authentication: `sha256`
+7. DH Group: `group20`
+8. Lifetime (Hours): `8`
+
+##### Define IPsec tunnel objects
+
+###### CLI - Define IPsec tunnels
+
+- Tunnel 1
+
+```txt
+set network tunnel ipsec cf-wan-ipsec-tun-01 auto-key ike-gateway cf-wan-ike-gw-01
+set network tunnel ipsec cf-wan-ipsec-tun-01 auto-key ipsec-crypto-profile ipsec-aes256cbc-sha256-dh20
+set network tunnel ipsec cf-wan-ipsec-tun-01 tunnel-monitor enable no
+set network tunnel ipsec cf-wan-ipsec-tun-01 tunnel-interface tunnel.1
+set network tunnel ipsec cf-wan-ipsec-tun-01 anti-replay no
+
+set network tunnel ipsec cf-wan-ipsec-tun-02 auto-key ike-gateway cf-wan-ike-gw-02
+set network tunnel ipsec cf-wan-ipsec-tun-02 auto-key ipsec-crypto-profile ipsec-aes256cbc-sha256-dh20
+set network tunnel ipsec cf-wan-ipsec-tun-02 tunnel-monitor enable no
+set network tunnel ipsec cf-wan-ipsec-tun-02 tunnel-interface tunnel.2
+set network tunnel ipsec cf-wan-ipsec-tun-02 anti-replay no
+```
+
+###### Web UI - Define IPsec Tunnels
+
+1. Go to **Network** > **IPsec Tunnels**.
+2. Select **Add**.
+3. Name: `cf-wan-ipsec-tun-01`
+4. Tunnel interface: `tunnel.1`
+5. Type: `Auto Key`
+6. Address Type: `IPv4`
+7. IKE Gateway: `cf-wan-ike-gw-01`
+8. IPsec Crypto Profile: `ipsec-aes256cbc-sha256-dh20`
+9. Show Advanced Options - check the box.
+10. Uncheck `Enable Replay Protection`.
+11. IPsec Mode: `Tunnel`
+
+Repeat steps for tunnel 2
+
+1. Go to **Network** > **IPsec Tunnels**.
+2. Select **Add**.
+3. Name: `cf-wan-ipsec-tun-02`
+4. Tunnel interface: `tunnel.2`
+5. Type: `Auto Key`
+6. Address Type: `IPv4`
+7. IKE Gateway: `cf-wan-ike-gw-02`
+8. IPsec Crypto Profile: `ipsec-aes256cbc-sha256-dh20`
+9. Show Advanced Options - check the box.
+10. Uncheck `Enable Replay Protection`.
+11. IPsec Mode: `Tunnel`
+
+### Commit Changes
+
+This is a good place to stop and perform a `Commit` to apply the configuration settings. You should be able to validate that tunnel connectivity is established.
+
+### IPSec Tunnel Verification
+
+#### Web UI - View IPsec Tunnel Status
+
+1. Go to **Network** > **IPsec Tunnels**.
+
+View the status of the red/green indicators - select **Tunnel Info** and **IKE Info** to obtain real-time status indicators.
+
+#### Web UI - View IPsec Log Details
+
+1. Go to **Monitor** > **Logs** > **System**.
+2. Add the following to the filter/search dialog across the top: `( subtype eq vpn )`
+
+This will provide valuable information as to IKE/IPsec Phase 1 and Phase 2 status and error messages.
+
+### Security Policy
+
+Palo Alto Networks NGFW automatically permits traffic originating from and destined to the same zone (intra-zone traffic). If you opted to add `tunnel.1` and `tunnel.2` into a separate Security Zone, you will require explicit firewall rules to allow traffic to flow from `trust` to `cloudflare` as well as from `cloudflare` to `trust`.
+
+### CLI - Add Security Policy from `trust` to `cloudflare`
+
+:::note
+Firewall rules added from the CLI will always be at the very bottom of the rulebase.
+:::
+
+Use the `move rulebase security rules` `<RULE_NAME>` `[after|before|top|bottom]` `<RULE_NAME - Desired position>`
+
+```txt
+set rulebase security rules trust-to-cloudflare to cloudflare
+set rulebase security rules trust-to-cloudflare from trust
+set rulebase security rules trust-to-cloudflare source any
+set rulebase security rules trust-to-cloudflare destination any
+set rulebase security rules trust-to-cloudflare application any
+set rulebase security rules trust-to-cloudflare service application-default
+set rulebase security rules trust-to-cloudflare action allow
+set rulebase security rules trust-to-cloudflare log-start no
+set rulebase security rules trust-to-cloudflare log-end yes
+set rulebase security rules trust-to-cloudflare rule-type universal
+```
+
+### Web UI - Add Security Policy from `trust` to `cloudflare`
+
+1. Go to **Policies** > **Security**.
+2. Select **Add**.
+3. General > Name: `trust-to-cloudflare`
+4. Rule Type: `universal (default)` or `interzone`
+5. Source > Source Zone: `trust`
+6. Destination > Destination Zone: `cloudflare`
+7. Application > `Any`
+8. Service/URL Category > `application-default`
+9. Actions > Action setting: `Allow`
+10. Log Setting: `Log at Session End`
+
+### CLI - Add Security Policy from `cloudflare` to `trust`
+
+:::note
+Firewall rules added from the CLI will always be at the very bottom of the rulebase.
+:::
+
+Use the `move rulebase security rules` `<RULE_NAME>` `[after|before|top|bottom]` `<RULE_NAME - Desired position>`
+
+```txt
+set rulebase security rules cloudflare-to-trust to trust
+set rulebase security rules cloudflare-to-trust from cloudflare
+set rulebase security rules cloudflare-to-trust source any
+set rulebase security rules cloudflare-to-trust destination any
+set rulebase security rules cloudflare-to-trust application any
+set rulebase security rules cloudflare-to-trust service application-default
+set rulebase security rules cloudflare-to-trust action allow
+set rulebase security rules cloudflare-to-trust log-start no
+set rulebase security rules cloudflare-to-trust log-end yes
+set rulebase security rules cloudflare-to-trust rule-type universal
+```
+
+### Web UI - Add Security Policy from `cloudflare` to `trust`
+
+1. Go to **Policies** > **Security**.
+2. Select **Add**.
+3. General > Name: `cloudflare-to-trust`
+4. Rule Type: `universal (default)` or `interzone`
+5. Source > Source Zone: `cloudflare`
+6. Destination > Destination Zone: `trust`
+7. Application > `Any`
+8. Service/URL Category > `application-default`
+9. Actions > Action setting: `Allow`
+10. Log Setting: `Log at Session End`
+
+## Policy Based Forwarding
+
+[Policy Based Forwarding](https://docs.paloaltonetworks.com/pan-os/11-1/pan-os-admin/policy/policy-based-forwarding) (aka Policy-Based Routing) allows you to apply additional matching criteria to specific traffic flows that will override routes defined within the Virtual Router.
+
+You may only want to direct traffic through Cloudflare WAN if destined for another Cloudflare WAN site, while Internet-bound traffic continues to get forwarded directly through local Internet breakout.
+
+The following example routes _ALL_ traffic from the LAN subnet behind NGFW (192.168.125.0/24) through the Cloudflare WAN IPsec tunnels. This lets you use the Cloudflare Secure Web Gateway functionality.
+
+You can route traffic to specific destinations simply by adding subnets to the Destination match criteria.
+
+Ensure any traffic flows processed by Policy Based Forwarding is exempted from NAT policies. Cloudflare Gateway will ensure NAT is applied to Internet bound traffic without the need for policy on local devices.
+
+### CLI - Add Policy Based Forwarding Rules
+
+- Tunnel 1
+
+```txt
+set rulebase pbf rules cf-wan-to-internet-01 action forward nexthop ip-address cf-wan-ipsec-vti-01-remote
+set rulebase pbf rules cf-wan-to-internet-01 action forward egress-interface tunnel.1
+set rulebase pbf rules cf-wan-to-internet-01 from zone trust
+set rulebase pbf rules cf-wan-to-internet-01 enforce-symmetric-return enabled no
+set rulebase pbf rules cf-wan-to-internet-01 source lan-net-192-168-125-0--24
+set rulebase pbf rules cf-wan-to-internet-01 destination any
+set rulebase pbf rules cf-wan-to-internet-01 source-user any
+set rulebase pbf rules cf-wan-to-internet-01 application any
+set rulebase pbf rules cf-wan-to-internet-01 service any
+```
+
+- Tunnel 2
+
+```txt
+set rulebase pbf rules cf-wan-to-internet-02 action forward nexthop ip-address cf-wan-ipsec-vti-02-remote
+set rulebase pbf rules cf-wan-to-internet-02 action forward egress-interface tunnel.2
+set rulebase pbf rules cf-wan-to-internet-02 from zone trust
+set rulebase pbf rules cf-wan-to-internet-02 enforce-symmetric-return enabled no
+set rulebase pbf rules cf-wan-to-internet-02 source lan-net-192-168-125-0--24
+set rulebase pbf rules cf-wan-to-internet-02 destination any
+set rulebase pbf rules cf-wan-to-internet-02 source-user any
+set rulebase pbf rules cf-wan-to-internet-02 application any
+set rulebase pbf rules cf-wan-to-internet-02 service any
+```
+
+### Web UI - Add Policy Based Forwarding Rules
+
+- Tunnel 1:
+
+1. Go to **Policies** > **Policy Based Forwarding**.
+2. Select **Add**.
+3. Name: `cf-wan-to-internet-01`
+4. Source Zone: `trust`
+5. Source Address: `lan-net-192-168-125-0--24`
+6. Destination/Application/Service - Any/Any/Any
+7. Forwarding > Action: Forward, Egress Interface: tunnel.1, Next Hop - IP Address: `cf-wan-ipsec-vti-01-remote`
+
+- Tunnel 2:
+
+1. Go to **Policies** > **Policy Based Forwarding**.
+2. Select **Add**.
+3. Name: `cf-wan-to-internet-02`
+4. Source Zone: `trust`
+5. Source Address: `lan-net-192-168-125-0--24`
+6. Destination/Application/Service - Any/Any/Any
+7. Forwarding > Action: Forward, Egress Interface: tunnel.2, Next Hop - IP Address: `cf-wan-ipsec-vti-02-remote`
+
+Commit changes, then test traffic from a host on the 192.168.125.0/24 subnet to ensure it is forwarded through the Cloudflare WAN IPsec Tunnels.
+
+:::note
+If you have Cloudflare One configured to perform [HTTPS traffic inspection](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), ensure that you [install the Root CA certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) prior to testing connectivity to any HTTPS-based sites, otherwise you will receive untrusted certificate warning messages.
+:::
+
+## Troubleshooting
+
+### Common issues
+
+- Always check IKE Phase 1 & IPsec Phase 2 negotiated successfully - look for "no proposal chosen" in logs
+- Verify Pre-Shared-Key and/or Local-Identity values are accurate and assigned to the correct tunnel
+- Use ping to determine reachability between the CPE and Cloudflare sides of the VTI
+  - Tunnel 1: CPE VTI to Cloudflare VTI: `ping source 169.254.250.1 169.254.250.0`
+  - Tunnel 2: CPE VTI to Cloudflare VTI: `ping source 169.254.250.3 169.254.250.2`
+
+### Quick Reference Guide
+
+#### Display IKE & IPsec Security Associations
+
+Use [show](https://docs.paloaltonetworks.com/network-security/ipsec-vpn/administration/troubleshooting/troubleshooting-site-to-site-vpn-issues-using-cli) commands to display Phase 1 and Phase 2 security associations:
+
+```txt
+admin@panfw01> show vpn ike-sa
+
+IKEv2 SAs
+Gateway ID      Peer-Address       Gateway Name       Role SN    Algorithm             Established     Expiration      Xt Child  ST
+----------      ------------       ------------       ---- --    ---------             -----------     ----------      -- -----  --
+1               162.159.135.1      cf-wan-ike-gw-01   Init 46    PSK/DH14/A256/SHA256  Mar.22 23:14:24 Mar.23 07:14:24 0  1      Established
+2               172.64.135.1       cf-wan-ike-gw-02   Init 45    PSK/DH14/A256/SHA256  Mar.22 23:05:02 Mar.23 07:05:02 0  1      Established
+```
+
+```txt
+IKEv2 IPSec Child SAs
+Gateway Name                   TnID     Tunnel                     ID       Parent   Role SPI(in)  SPI(out) MsgID    ST              
+------------                   ----     ------                     --       ------   ---- -------  -------- -----    --              
+cf-wan-ike-gw-01               1        cf-wan-ipsec-tun-01        452741   97       Init B7D055D3 4CB26B43 00000001 Mature           
+cf-wan-ike-gw-02               2        cf-wan-ipsec-tun-02        452742   98       Init B4629A07 165D416C 00000001 Mature           
+
+Show IKEv2 SA: Total 2 gateways found. 2 ike sa found.
+```
+
+#### Manually Initiate IKE & IPsec Security Associations
+
+Use [test](https://docs.paloaltonetworks.com/network-security/ipsec-vpn/administration/troubleshooting/troubleshooting-site-to-site-vpn-issues-using-cli) commands to force Phase 1 and Phase 2 security associations:
+
+```txt
+admin@panfw01> test vpn ike-sa gateway cf-wan-ike-gw-01 
+
+Start time: Mar.30 21:23:23
+Initiate 1 IKE SA.
+
+admin@panfw01> test vpn ike-sa gateway cf-wan-ike-gw-02
+
+Start time: Mar.30 21:23:24
+Initiate 1 IKE SA.
+```
+
+```txt
+admin@panfw01> test vpn ipsec-sa tunnel cf-wan-ipsec-tun-01 
+
+Start time: Mar.30 21:26:50
+Initiate 1 IPSec SA for tunnel cf-wan-ipsec-tun-01.
+
+admin@panfw01> test vpn ipsec-sa tunnel cf-wan-ipsec-tun-02
+
+Start time: Mar.30 21:26:52
+Initiate 1 IPSec SA for tunnel cf-wan-ipsec-tun-02.
+```
+
+### Palo Alto Networks Documentation
+
+- [Troubleshoot your IPSec VPN tunnel connection](https://docs.paloaltonetworks.com/network-security/ipsec-vpn/administration/troubleshooting/test-vpn-connectivity)
+
+- [Troubleshoot site-to-site VPN issues using CLI](https://docs.paloaltonetworks.com/network-security/ipsec-vpn/administration/troubleshooting/troubleshooting-site-to-site-vpn-issues-using-cli)
+
+### Palo Alto Networks Knowledge Base
+
+- [How to troubleshoot IPSec VPN connectivity issues](https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClivCAC)

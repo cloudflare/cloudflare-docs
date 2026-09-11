@@ -72,15 +72,6 @@ print("Stage object: \(meeting.stage)")
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-print("Stage object: ${meeting.stage}");
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -134,15 +125,6 @@ print("Stage status: \(meeting.stage.stageStatus)")
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-print("Stage status: ${meeting.stage.status}");
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -209,15 +191,6 @@ meeting.stage.join()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-meeting.stage.join();
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -269,15 +242,6 @@ meeting.stage.leave()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-meeting.stage.leave();
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -329,15 +293,6 @@ meeting.stage.grantAccess(userIds: userIds)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-meeting.stage.grantAccess(userIds);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -377,13 +332,6 @@ await meeting.stage.grantAccess(userIds);
 - `userIds` (`[String]`) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.map { $0.userId }`
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-- `userIds` (`List<String>`) - List of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.map((p) => p.userId).toList()`
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 - `userIds` (`string[]`) - Array of user IDs to grant stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
@@ -433,15 +381,6 @@ meeting.stage.denyAccess(userIds: userIds)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-meeting.stage.denyAccess(userIds);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -481,13 +420,6 @@ await meeting.stage.denyAccess(userIds);
 - `userIds` (`[String]`) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.map { $0.userId }`
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-- `userIds` (`List<String>`) - List of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.map((p) => p.userId).toList()`
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 - `userIds` (`string[]`) - Array of user IDs to deny stage access. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
@@ -537,15 +469,6 @@ meeting.stage.kick(userIds: userIds)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-meeting.stage.kick(userIds);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -585,13 +508,6 @@ await meeting.stage.kick(userIds);
 - `userIds` (`[String]`) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.map { $0.userId }`
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-- `userIds` (`List<String>`) - List of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.map((p) => p.userId).toList()`
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 - `userIds` (`string[]`) - Array of user IDs to remove from stage. You can retrieve user IDs using `meeting.participants.toArray().map(p => p.userId)`
@@ -647,15 +563,6 @@ meeting.stage.requestAccess()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-meeting.stage.requestAccess();
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -707,15 +614,6 @@ meeting.stage.cancelRequestAccess()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-meeting.stage.cancelRequestAccess();
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -796,23 +694,6 @@ extension WebinarViewModel: RtkStageEventListener {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class StageEventListener extends RtkStageEventListener {
-	@override
-	void onStageAccessRequestsUpdated(List<RtkRemoteParticipant> accessRequests) {
-		// Stage access requests list updated
-		print("Access requests updated: ${accessRequests.length}");
-	}
-}
-
-meeting.addStageEventListener(StageEventListener());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -891,23 +772,6 @@ extension WebinarViewModel: RtkStageEventListener {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class StageEventListener extends RtkStageEventListener {
-	@override
-	void onStageAccessRequestAccepted() {
-		// Host accepted the join stage request or invited user directly to stage
-		print("Access request accepted");
-	}
-}
-
-meeting.addStageEventListener(StageEventListener());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -977,23 +841,6 @@ extension WebinarViewModel: RtkStageEventListener {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class StageEventListener extends RtkStageEventListener {
-	@override
-	void onStageStatusUpdated(StageStatus oldStatus, StageStatus newStatus) {
-		// Local user's stage status changed
-		print("Status updated from $oldStatus to $newStatus");
-	}
-}
-
-meeting.addStageEventListener(StageEventListener());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -1063,23 +910,6 @@ extension WebinarViewModel: RtkStageEventListener {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class StageEventListener extends RtkStageEventListener {
-	@override
-	void onNewStageAccessRequest(RtkRemoteParticipant participant) {
-		// New participant requested to join the stage
-		print("New stage request from: ${participant.name}");
-	}
-}
-
-meeting.addStageEventListener(StageEventListener());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -1149,23 +979,6 @@ extension WebinarViewModel: RtkStageEventListener {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class StageEventListener extends RtkStageEventListener {
-	@override
-	void onStageAccessRequestAccepted() {
-		// Host accepted the join stage request or invited user directly to stage
-		print("Stage request approved");
-	}
-}
-
-meeting.addStageEventListener(StageEventListener());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -1235,23 +1048,6 @@ extension WebinarViewModel: RtkStageEventListener {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-class StageEventListener extends RtkStageEventListener {
-	@override
-	void onStageAccessRequestRejected() {
-		// Host rejected the join stage request
-		print("Stage request rejected");
-	}
-}
-
-meeting.addStageEventListener(StageEventListener());
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
