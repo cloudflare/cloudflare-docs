@@ -75,6 +75,12 @@ Instead of running the `wrangler d1 execute` command in your terminal every time
 
 * [GitHub](https://github.com/isaac-mcfadyen/d1-console)
 
+### D1 Migration Guard
+
+`d1-migration-guard` is a free, zero-dependency CLI that runs three safety checks against your D1 migrations before you run `wrangler d1 migrations apply`: migration filename ordering/duplicate-number detection, `wrangler.toml` `database_id` validation, and a pattern scan for destructive SQL (`DROP TABLE`, `DROP COLUMN`, unfiltered `DELETE`). It reads local files only and never calls `wrangler` or touches a live database.
+
+* [GitHub](https://github.com/MattBridges/d1-migration-guard)
+
 ### L1
 
 `L1` is a package that brings some Cloudflare Worker ecosystem bindings into PHP and Laravel via the Cloudflare API. It provides interaction with D1 via PDO, KV and Queues, with more services to add in the future, making PHP integration with Cloudflare a real breeze.
