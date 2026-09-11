@@ -1,0 +1,178 @@
+---
+title: Python Workers
+description: Connect Python Workers to PostgreSQL and MySQL with Hyperdrive.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+  badge:
+    text: Beta
+products:
+  - hyperdrive
+  - workers
+---
+
+import { Steps, Tabs, TabItem, WranglerConfig } from "~/components";
+
+You can use Hyperdrive with [Python Workers](/workers/languages/python/).
+To achieve this, you need to set your compatibility date to `2026-09-08` or later.
+
+:::caution[Hyperdrive support in Python Workers is in beta.]
+Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know if you encounter any issues.
+:::
+
+## Supported drivers
+
+Hyperdrive in Python Workers uses [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to establish database connections.
+While you can use any Python driver that works with TCP connections,
+we strongly recommend using the drivers in the tables below, as they have been tested and verified to work with Hyperdrive.
+
+### PostgreSQL
+
+| Driver                 | Documentation                                                             |
+| ---------------------- | ------------------------------------------------------------------------- |
+| `pg8000` (recommended) | [pg8000 documentation](https://codeberg.org/tlocke/pg8000)                |
+| `psycopg`              | [psycopg documentation](https://www.psycopg.org/psycopg3/docs/index.html) |
+
+### MySQL
+
+| Driver                   | Documentation                                                        |
+| ------------------------ | -------------------------------------------------------------------- |
+| `aiomysql` (recommended) | [aiomysql documentation](https://aiomysql.readthedocs.io/en/latest/) |
+| `pymysql`                | [pymysql documentation](https://pymysql.readthedocs.io/)             |
+
+## Connect to your database
+
+Before you begin, [create a Python Worker](/workers/languages/python/#the-pywrangler-cli-tool) and [create a Hyperdrive configuration](/hyperdrive/get-started/) for your database.
+
+<Steps>
+
+1. Add the Hyperdrive binding to your [Wrangler configuration](/workers/wrangler/configuration/). Replace `<HYPERDRIVE_CONFIG_ID>` with your configuration ID.
+
+   <WranglerConfig>
+
+   ```toml
+   name = "python-hyperdrive"
+   main = "src/main.py"
+   compatibility_date = "$today"
+   compatibility_flags = ["python_workers"]
+
+   [[hyperdrive]]
+   binding = "HYPERDRIVE"
+   id = "<HYPERDRIVE_CONFIG_ID>"
+   ```
+
+   </WranglerConfig>
+
+2. Install your driver and replace `src/main.py` with the corresponding example.
+
+   <Tabs>
+   <TabItem label="PostgreSQL">
+
+   ```toml
+   [project]
+   dependencies = [
+	   "pg8000",
+   ]
+   ```
+
+   ```python title="src/main.py"
+   from contextlib import closing
+
+   import pg8000
+   from workers import Response, WorkerEntrypoint
+
+   class Default(WorkerEntrypoint):
+       async def fetch(self, request):
+           hd = self.env.HYPERDRIVE
+           connection = pg8000.connect(
+               host=hd.host,
+               port=int(hd.port),
+               user=hd.user,
+               password=hd.password,
+               database=hd.database,
+               ssl_context=False,
+           )
+           try:
+               connection.autocommit = True
+               with closing(connection.cursor()) as cursor:
+                   cursor.execute("SELECT 1")
+                   return Response.json({"result": cursor.fetchone()[0]})
+           finally:
+               connection.close()
+   ```
+
+   </TabItem>
+   <TabItem label="MySQL">
+
+   ```toml
+   [project]
+   dependencies = [
+	   "aiomysql",
+   ]
+   ```
+
+   ```python title="src/main.py"
+   import aiomysql
+   from workers import Response, WorkerEntrypoint
+
+
+   class Default(WorkerEntrypoint):
+       async def fetch(self, request):
+           hd = self.env.HYPERDRIVE
+           connection = await aiomysql.connect(
+               host=hd.host,
+               port=int(hd.port),
+               user=hd.user,
+               password=hd.password,
+               db=hd.database,
+               ssl=None,
+           )
+           try:
+               cursor = await connection.cursor()
+               await cursor.execute("SELECT 1")
+               result = await cursor.fetchone()
+               return Response.json({"result": result[0]})
+           finally:
+               connection.close()
+   ```
+
+   </TabItem>
+   </Tabs>
+
+3. Deploy your Worker:
+
+   ```bash
+   uv run pywrangler deploy
+   ```
+
+</Steps>
+
+## Limitations and compatibility
+
+### Socket support
+
+TCP socket support in Python Workers internally uses the [`connect`](/workers/runtime-apis/tcp-sockets/#connect) API.
+While most standard library socket operations are supported, some low-level operations might not work as expected.
+
+### Concurrency and async safety
+
+Socket operations in Python Workers do not block the event loop.
+Although Python's native socket operations are synchronous, the underlying TCP socket implementation in Python Workers is asynchronous.
+This allows multiple requests to be processed concurrently while one request waits for a socket operation to complete.
+
+To ensure synchronous database operations are serialized, use a lock to prevent concurrent access:
+
+```python
+import asyncio
+
+lock = asyncio.Lock()
+
+async with lock:
+    # Your database operation here
+    synchronous_db_operation()
+```
+
+### SQLAlchemy support
+
+Currently, only synchronous SQLAlchemy ORMs are supported in Python Workers.
+Async SQLAlchemy ORMs are not yet supported due to a lack of greenlet support in the Python Workers environment.
