@@ -1,0 +1,24 @@
+---
+title: Configure Email Routing addresses with Wrangler
+description: Define inbound Email Routing rules in Wrangler configuration and reconcile them during Worker deployments.
+date: 2026-09-05
+---
+
+import { WranglerConfig } from "~/components";
+
+Wrangler 4.113.0 and later can manage the Email Routing rules that send inbound email to a Worker. Define literal recipient addresses or an apex-domain catch-all with the top-level `addresses` field:
+
+<WranglerConfig>
+
+```toml
+name = "my-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+addresses = ["support@example.com", "*@example.com"]
+```
+
+</WranglerConfig>
+
+When you deploy the Worker or its triggers, Wrangler shows the planned Email Routing changes and reconciles the managed rules. Purely additive changes apply automatically. Deletions and rule takeovers require confirmation in an interactive environment.
+
+Refer to [Email routing rules and addresses](/email-service/configuration/email-routing-addresses/#configure-rules-with-wrangler) for configuration and deployment details.
