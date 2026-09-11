@@ -94,7 +94,9 @@ Thanks for signing up.
 221 mx.cloudflare.net Cloudflare Email ESMTP Service closing transmission channel
 ```
 
-The `250 2.0.0 Ok` response after the message body includes the assigned Message-ID. Use it to correlate the submission with delivery logs in the dashboard.
+A `250 2.0.0 Ok` response after the message body normally includes the assigned Message-ID. Use it to correlate the submission with delivery logs in the dashboard.
+
+When **Drop suppressed recipients** is on and all recipients are suppressed, SMTP may return `250 2.0.0 Ok` without a Message-ID and deliver nothing. Refer to [Suppressed recipients](#suppressed-recipients).
 
 ## Examples
 
@@ -133,6 +135,20 @@ Cloudflare's SMTP server returns standard [RFC 5321](https://datatracker.ietf.or
 | `550 5.7.1`   | Sender or relay denied — usually the `MAIL FROM` domain is not onboarded. |
 | `552 5.3.4`   | Message exceeds the 5 MiB `SIZE` limit.                                   |
 | `554`         | Transaction failed — content rejected by policy.                          |
+
+## Suppressed recipients
+
+SMTP accepts a syntactically valid recipient with `250 2.1.5 Ok` during `RCPT TO`. Email Service checks the [suppression list](/email-service/concepts/suppressions/) for the account after receiving the message body.
+
+Behavior depends on the per-sending-domain [**Drop suppressed recipients** setting](/email-service/configuration/domains/#drop-suppressed-recipients). The setting is off by default.
+
+When the setting is off, any suppressed recipient causes SMTP to reject the entire message. When the setting is on, Email Service removes suppressed recipients and continues processing the remaining recipients.
+
+If all recipients are suppressed while dropping is on, SMTP may return `250 2.0.0 Ok` without a Message-ID. It delivers nothing in this case.
+
+Use [Email sending logs](/email-service/observability/logs/) to confirm delivery. Suppressed recipients appear with a **Rejected** result.
+
+Suppression produces a `message.rejected` event in [Email Sending event subscriptions](/email-service/platform/event-subscriptions/) with `rejection.reason` set to `suppressed`.
 
 ## Troubleshooting
 

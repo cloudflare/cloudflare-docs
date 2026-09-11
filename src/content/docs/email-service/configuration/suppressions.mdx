@@ -1,0 +1,71 @@
+---
+title: Manage suppressions
+description: Manage account-wide Email Sending suppression entries.
+pcx_content_type: how-to
+sidebar:
+  order: 6
+products:
+  - email-service
+---
+
+import { DashButton, Steps } from "~/components";
+
+Manage recipients that Email Service must not contact. For suppression triggers and expiration rules, refer to [Suppression lists](/email-service/concepts/suppressions/).
+
+The dashboard and API are account-scoped. Entries apply to every sending domain and subdomain in the account.
+
+## View suppressions
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Sending**.
+
+   <DashButton url="/?to=/:account/email-service/sending" />
+
+2. Select **Suppressions**.
+</Steps>
+
+The table displays each recipient, reason, creation time, and expiration. **Never** means the entry has no scheduled expiration.
+
+## Add a suppression
+
+<Steps>
+1. In **Suppressions**, enter the recipient email address.
+2. Select an expiration preset, a custom future time, or **Never**.
+3. Select **Add**.
+</Steps>
+
+Entries created in the dashboard have the `manual` reason. They apply to every sending domain in the account.
+
+## Import suppressions
+
+You can paste addresses or upload `.csv`, `.json`, or `.txt` files. Supported file contents are:
+
+- `.csv` or `.txt`: Put one entry on each line as `<EMAIL_ADDRESS>` or `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>`. Use an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp and omit the header row.
+- `.json`: Use an array of address strings or objects. Each object requires `email` and can include an RFC 3339 `expires_at` timestamp.
+
+<Steps>
+1. In **Suppressions**, select **Import**.
+2. Upload a supported file or paste the addresses.
+3. Choose a default expiration for entries that omit one.
+4. Select **Import**. Larger imports run in batches, so keep the dialog open until every batch finishes.
+</Steps>
+
+## Remove a suppression
+
+To remove a mutable entry, select **Delete** for that recipient. Read-only entries do not provide a delete action.
+
+Deleting an entry permits future delivery attempts. Verify that the recipient should receive mail before deleting an automatic suppression.
+
+## Use the API
+
+The [account Email Sending suppression management REST API](/api/resources/email_sending/subresources/suppressions/) supports listing, adding, importing, updating, and deleting entries. Requests require an [API token](/fundamentals/api/get-started/create-token/) with the **Email Sending: Edit** permission.
+
+API clients must use `read_only` to determine whether an entry is mutable. Do not infer mutability from the `reason` value.
+
+:::caution
+Deleting a hard-bounce or complaint suppression permits delivery attempts to an address that already failed or reported your mail as spam. Verify the recipient before deleting the entry.
+:::
+
+## Limits
+
+Each account can have one active entry per address. For page size, import, and rate limits, refer to [Suppression list limits](/email-service/platform/limits/#suppression-list-limits).
