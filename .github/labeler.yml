@@ -5,8 +5,11 @@
 #   src/content/partials/{slug}/**        shared content snippets
 #   src/assets/images/{slug}/**           product screenshots/diagrams
 #   src/content/release-notes/{slug}.yaml release notes
-#   src/content/{changelog,workers-ai-models,compatibility-flags,fields,catalog-models}
-#   public/{__redirects,_headers}
+#   src/content/changelog/**              changelog entries (product:changelog)
+#   src/content/changelog/{slug}/**       per-product changelog entries
+#   src/content/{workers-ai-models,compatibility-flags,fields,catalog-models}
+#
+# Regenerate with: pnpm run generate:labeler
 #
 # Rules referencing paths that do not exist are intentionally omitted.
 
@@ -16,16 +19,7 @@ product:1.1.1.1:
           - src/content/docs/1.1.1.1/**
           - src/content/partials/1.1.1.1/**
           - src/assets/images/1.1.1.1/**
-
-product:_headers:
-  - changed-files:
-      - any-glob-to-any-file:
-          - public/_headers
-
-product:_redirects:
-  - changed-files:
-      - any-glob-to-any-file:
-          - public/__redirects
+          - src/content/changelog/1.1.1.1/**
 
 product:agent-lee:
   - changed-files:
@@ -49,6 +43,7 @@ product:agents:
           - src/content/docs/agents/**
           - src/content/partials/agents/**
           - src/assets/images/agents/**
+          - src/content/changelog/agents/**
 
 product:ai:
   - changed-files:
@@ -61,6 +56,8 @@ product:ai-crawl-control:
           - src/content/docs/ai-crawl-control/**
           - src/content/partials/ai-crawl-control/**
           - src/assets/images/ai-crawl-control/**
+          - src/content/changelog/ai-crawl-control/**
+          - src/assets/images/changelog/ai-crawl-control/**
 
 product:ai-gateway:
   - changed-files:
@@ -68,6 +65,7 @@ product:ai-gateway:
           - src/content/docs/ai-gateway/**
           - src/content/partials/ai-gateway/**
           - src/assets/images/ai-gateway/**
+          - src/content/changelog/ai-gateway/**
           - src/content/catalog-models/**
 
 product:ai-search:
@@ -77,6 +75,7 @@ product:ai-search:
           - src/content/partials/ai-search/**
           - src/assets/images/ai-search/**
           - src/content/release-notes/ai-search.yaml
+          - src/content/changelog/ai-search/**
 
 product:analytics:
   - changed-files:
@@ -84,6 +83,8 @@ product:analytics:
           - src/content/docs/analytics/**
           - src/content/partials/analytics/**
           - src/assets/images/analytics/**
+          - src/content/changelog/analytics/**
+          - src/assets/images/changelog/analytics/**
 
 product:api-shield:
   - changed-files:
@@ -91,6 +92,8 @@ product:api-shield:
           - src/content/docs/api-shield/**
           - src/content/partials/api-shield/**
           - src/assets/images/api-shield/**
+          - src/content/changelog/api-shield/**
+          - src/assets/images/changelog/api-shield/**
 
 product:argo-smart-routing:
   - changed-files:
@@ -102,6 +105,8 @@ product:artifacts:
       - any-glob-to-any-file:
           - src/content/docs/artifacts/**
           - src/assets/images/artifacts/**
+          - src/content/changelog/artifacts/**
+          - src/assets/images/changelog/artifacts/**
 
 product:automatic-platform-optimization:
   - changed-files:
@@ -114,6 +119,8 @@ product:billing:
           - src/content/docs/billing/**
           - src/content/partials/billing/**
           - src/assets/images/billing/**
+          - src/content/changelog/billing/**
+          - src/assets/images/changelog/billing/**
 
 product:bots:
   - changed-files:
@@ -122,6 +129,8 @@ product:bots:
           - src/content/partials/bots/**
           - src/assets/images/bots/**
           - src/content/release-notes/bots.yaml
+          - src/content/changelog/bots/**
+          - src/assets/images/changelog/bots/**
 
 product:browser-run:
   - changed-files:
@@ -130,6 +139,8 @@ product:browser-run:
           - src/content/partials/browser-run/**
           - src/assets/images/browser-run/**
           - src/content/release-notes/browser-run.yaml
+          - src/content/changelog/browser-run/**
+          - src/assets/images/changelog/browser-run/**
 
 product:byoip:
   - changed-files:
@@ -144,12 +155,13 @@ product:cache:
           - src/content/docs/cache/**
           - src/content/partials/cache/**
           - src/assets/images/cache/**
+          - src/content/changelog/cache/**
 
 product:changelog:
   - changed-files:
       - any-glob-to-any-file:
-          - src/assets/images/changelog/**
           - src/content/changelog/**
+          - src/assets/images/changelog/**
 
 product:china-network:
   - changed-files:
@@ -177,6 +189,7 @@ product:cloudflare-challenges:
           - src/content/docs/cloudflare-challenges/**
           - src/content/partials/cloudflare-challenges/**
           - src/assets/images/cloudflare-challenges/**
+          - src/content/changelog/cloudflare-challenges/**
 
 product:cloudflare-for-platforms:
   - changed-files:
@@ -185,11 +198,15 @@ product:cloudflare-for-platforms:
           - src/content/partials/cloudflare-for-platforms/**
           - src/assets/images/cloudflare-for-platforms/**
           - src/content/release-notes/workers-for-platforms.yaml
+          - src/content/changelog/workers-for-platforms/**
+          - src/assets/images/changelog/workers-for-platforms/**
 
 product:cloudflare-network-firewall:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/cloudflare-network-firewall/**
+          - src/content/changelog/cloudflare-network-firewall/**
+          - src/assets/images/changelog/cloudflare-network-firewall/**
 
 product:cloudflare-one:
   - changed-files:
@@ -197,12 +214,31 @@ product:cloudflare-one:
           - src/content/docs/cloudflare-one/**
           - src/content/partials/cloudflare-one/**
           - src/assets/images/cloudflare-one/**
+          - src/content/changelog/access/**
+          - src/content/changelog/browser-isolation/**
+          - src/content/changelog/casb/**
+          - src/content/changelog/cloudflare-one/**
+          - src/content/changelog/cloudflare-one-client/**
+          - src/content/changelog/dex/**
+          - src/content/changelog/dlp/**
+          - src/content/changelog/email-security-cf1/**
+          - src/content/changelog/gateway/**
+          - src/content/changelog/mesh/**
+          - src/content/changelog/risk-score/**
+          - src/assets/images/changelog/access/**
+          - src/assets/images/changelog/browser-isolation/**
+          - src/assets/images/changelog/cloudflare-one/**
+          - src/assets/images/changelog/dex/**
+          - src/assets/images/changelog/dlp/**
+          - src/assets/images/changelog/gateway/**
 
 product:cloudflare-wan:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/cloudflare-wan/**
           - src/assets/images/cloudflare-wan/**
+          - src/content/changelog/cloudflare-wan/**
+          - src/assets/images/changelog/cloudflare-wan/**
 
 product:constellation:
   - changed-files:
@@ -215,6 +251,7 @@ product:containers:
           - src/content/docs/containers/**
           - src/content/partials/containers/**
           - src/assets/images/containers/**
+          - src/content/changelog/containers/**
 
 product:d1:
   - changed-files:
@@ -222,6 +259,8 @@ product:d1:
           - src/content/docs/d1/**
           - src/content/partials/d1/**
           - src/content/release-notes/d1.yaml
+          - src/content/changelog/d1/**
+          - src/assets/images/changelog/d1/**
 
 product:data-localization:
   - changed-files:
@@ -230,6 +269,7 @@ product:data-localization:
           - src/content/partials/data-localization/**
           - src/assets/images/data-localization/**
           - src/content/release-notes/data-localization.yaml
+          - src/content/changelog/data-localization/**
 
 product:ddos-protection:
   - changed-files:
@@ -253,6 +293,8 @@ product:dns:
           - src/content/docs/dns/**
           - src/content/partials/dns/**
           - src/assets/images/dns/**
+          - src/content/changelog/dns/**
+          - src/assets/images/changelog/dns/**
 
 product:docs-for-agents:
   - changed-files:
@@ -266,6 +308,8 @@ product:durable-objects:
           - src/content/partials/durable-objects/**
           - src/assets/images/durable-objects/**
           - src/content/release-notes/durable-objects.yaml
+          - src/content/changelog/durable-objects/**
+          - src/assets/images/changelog/durable-objects/**
 
 product:dynamic-workers:
   - changed-files:
@@ -284,6 +328,7 @@ product:email-security:
           - src/content/docs/email-security/**
           - src/content/partials/email-security/**
           - src/assets/images/email-security/**
+          - src/assets/images/changelog/email-security/**
 
 product:email-service:
   - changed-files:
@@ -291,6 +336,8 @@ product:email-service:
           - src/content/docs/email-service/**
           - src/content/partials/email-service/**
           - src/assets/images/email-service/**
+          - src/content/changelog/email-service/**
+          - src/assets/images/changelog/email-service/**
 
 product:firewall:
   - changed-files:
@@ -303,6 +350,7 @@ product:flagship:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/flagship/**
+          - src/content/changelog/flagship/**
 
 product:fundamentals:
   - changed-files:
@@ -311,6 +359,13 @@ product:fundamentals:
           - src/content/partials/fundamentals/**
           - src/assets/images/fundamentals/**
           - src/content/release-notes/api-deprecations.yaml
+          - src/content/changelog/audit-logs/**
+          - src/content/changelog/fundamentals/**
+          - src/content/changelog/go-sdk/**
+          - src/content/changelog/organizations/**
+          - src/content/changelog/sdk/**
+          - src/assets/images/changelog/audit-logs/**
+          - src/assets/images/changelog/fundamentals/**
 
 product:google-tag-gateway:
   - changed-files:
@@ -330,6 +385,7 @@ product:hyperdrive:
           - src/content/partials/hyperdrive/**
           - src/assets/images/hyperdrive/**
           - src/content/release-notes/hyperdrive.yaml
+          - src/content/changelog/hyperdrive/**
 
 product:images:
   - changed-files:
@@ -338,6 +394,7 @@ product:images:
           - src/content/partials/images/**
           - src/assets/images/images/**
           - src/content/release-notes/images.yaml
+          - src/content/changelog/images/**
 
 product:key-transparency:
   - changed-files:
@@ -350,6 +407,8 @@ product:kv:
           - src/content/docs/kv/**
           - src/assets/images/kv/**
           - src/content/release-notes/kv.yaml
+          - src/content/changelog/kv/**
+          - src/assets/images/changelog/kv/**
 
 product:learning-paths:
   - changed-files:
@@ -364,12 +423,16 @@ product:load-balancing:
           - src/content/docs/load-balancing/**
           - src/content/partials/load-balancing/**
           - src/assets/images/load-balancing/**
+          - src/content/changelog/load-balancing/**
+          - src/assets/images/changelog/load-balancing/**
 
 product:log-explorer:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/log-explorer/**
           - src/assets/images/log-explorer/**
+          - src/content/changelog/log-explorer/**
+          - src/assets/images/changelog/log-explorer/**
 
 product:logs:
   - changed-files:
@@ -377,12 +440,14 @@ product:logs:
           - src/content/docs/logs/**
           - src/content/partials/logs/**
           - src/assets/images/logs/**
+          - src/content/changelog/logs/**
 
 product:magic-transit:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/magic-transit/**
           - src/assets/images/magic-transit/**
+          - src/content/changelog/magic-transit/**
 
 product:migration-guides:
   - changed-files:
@@ -399,6 +464,7 @@ product:multi-cloud-networking:
       - any-glob-to-any-file:
           - src/content/docs/multi-cloud-networking/**
           - src/assets/images/multi-cloud-networking/**
+          - src/content/changelog/multi-cloud-networking/**
 
 product:network:
   - changed-files:
@@ -416,13 +482,16 @@ product:network-flow:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/network-flow/**
-          - src/content/partials/networking-services/mnm/**
           - src/assets/images/network-flow/**
+          - src/content/changelog/network-flow/**
+          - src/assets/images/changelog/network-flow/**
+          - src/content/partials/networking-services/mnm/**
 
 product:network-interconnect:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/network-interconnect/**
+          - src/content/changelog/network-interconnect/**
 
 product:notifications:
   - changed-files:
@@ -437,12 +506,14 @@ product:pages:
           - src/content/partials/pages/**
           - src/assets/images/pages/**
           - src/content/release-notes/pages.yaml
+          - src/content/changelog/pages/**
 
 product:pipelines:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/pipelines/**
           - src/assets/images/pipelines/**
+          - src/content/changelog/pipelines/**
 
 product:privacy-gateway:
   - changed-files:
@@ -458,6 +529,7 @@ product:privacy-proxy:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/privacy-proxy/**
+          - src/content/changelog/privacy-proxy/**
 
 product:pulumi:
   - changed-files:
@@ -471,6 +543,8 @@ product:queues:
           - src/content/partials/queues/**
           - src/assets/images/queues/**
           - src/content/release-notes/queues.yaml
+          - src/content/changelog/queues/**
+          - src/assets/images/changelog/queues/**
 
 product:r2:
   - changed-files:
@@ -479,18 +553,22 @@ product:r2:
           - src/content/partials/r2/**
           - src/assets/images/r2/**
           - src/content/release-notes/r2.yaml
+          - src/content/changelog/r2/**
+          - src/assets/images/changelog/r2/**
 
 product:r2-data-catalog:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/r2-data-catalog/**
           - src/assets/images/r2-data-catalog/**
+          - src/content/changelog/r2-data-catalog/**
 
 product:r2-sql:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/r2-sql/**
           - src/assets/images/r2-sql/**
+          - src/content/changelog/r2-sql/**
 
 product:radar:
   - changed-files:
@@ -498,6 +576,7 @@ product:radar:
           - src/content/docs/radar/**
           - src/assets/images/radar/**
           - src/content/release-notes/radar.yaml
+          - src/content/changelog/radar/**
 
 product:randomness-beacon:
   - changed-files:
@@ -523,6 +602,7 @@ product:realtime:
           - src/content/release-notes/realtimekit-web-core.yaml
           - src/content/release-notes/realtimekit-web-ui-kit.yaml
           - src/content/release-notes/realtimekit.yaml
+          - src/content/changelog/realtime/**
 
 product:reference-architecture:
   - changed-files:
@@ -537,11 +617,15 @@ product:registrar:
           - src/content/docs/registrar/**
           - src/content/partials/registrar/**
           - src/assets/images/registrar/**
+          - src/content/changelog/registrar/**
+          - src/assets/images/changelog/registrar/**
 
 product:resource-tagging:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/resource-tagging/**
+          - src/content/changelog/resource-tagging/**
+          - src/assets/images/changelog/resource-tagging/**
 
 product:rules:
   - changed-files:
@@ -550,6 +634,8 @@ product:rules:
           - src/content/partials/rules/**
           - src/assets/images/rules/**
           - src/content/release-notes/trace.yaml
+          - src/content/changelog/rules/**
+          - src/assets/images/changelog/rules/**
 
 product:ruleset-engine:
   - changed-files:
@@ -563,6 +649,8 @@ product:sandbox:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/sandbox/**
+          - src/content/changelog/sandbox/**
+          - src/assets/images/changelog/sandbox/**
 
 product:secrets-store:
   - changed-files:
@@ -573,12 +661,16 @@ product:security:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/security/**
+          - src/content/changelog/security-overview/**
+          - src/assets/images/changelog/security-overview/**
 
 product:security-center:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/security-center/**
           - src/content/partials/security-center/**
+          - src/content/changelog/security-center/**
+          - src/assets/images/changelog/security-center/**
 
 product:smart-shield:
   - changed-files:
@@ -600,6 +692,7 @@ product:speed:
           - src/content/docs/speed/**
           - src/content/partials/speed/**
           - src/assets/images/speed/**
+          - src/content/changelog/speed/**
 
 product:ssl:
   - changed-files:
@@ -607,6 +700,7 @@ product:ssl:
           - src/content/docs/ssl/**
           - src/content/partials/ssl/**
           - src/assets/images/ssl/**
+          - src/content/changelog/ssl/**
 
 product:stream:
   - changed-files:
@@ -615,6 +709,8 @@ product:stream:
           - src/content/partials/stream/**
           - src/assets/images/stream/**
           - src/content/release-notes/stream.yaml
+          - src/content/changelog/stream/**
+          - src/assets/images/changelog/stream/**
 
 product:style-guide:
   - changed-files:
@@ -629,6 +725,7 @@ product:support:
           - src/content/docs/support/**
           - src/content/partials/support/**
           - src/assets/images/support/**
+          - src/content/changelog/support/**
 
 product:tenant:
   - changed-files:
@@ -642,6 +739,7 @@ product:terraform:
       - any-glob-to-any-file:
           - src/content/docs/terraform/**
           - src/content/partials/terraform/**
+          - src/content/changelog/terraform/**
 
 product:time-services:
   - changed-files:
@@ -654,6 +752,8 @@ product:tunnel:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/tunnel/**
+          - src/content/changelog/tunnel/**
+          - src/assets/images/changelog/cloudflare-tunnel/**
 
 product:turnstile:
   - changed-files:
@@ -662,6 +762,7 @@ product:turnstile:
           - src/content/partials/turnstile/**
           - src/assets/images/turnstile/**
           - src/content/release-notes/turnstile.yaml
+          - src/content/changelog/turnstile/**
 
 product:use-cases:
   - changed-files:
@@ -676,6 +777,7 @@ product:vectorize:
           - src/content/partials/vectorize/**
           - src/assets/images/vectorize/**
           - src/content/release-notes/vectorize.yaml
+          - src/content/changelog/vectorize/**
 
 product:version-management:
   - changed-files:
@@ -691,6 +793,8 @@ product:waf:
           - src/content/docs/waf/**
           - src/content/partials/waf/**
           - src/assets/images/waf/**
+          - src/content/changelog/waf/**
+          - src/assets/images/changelog/waf/**
 
 product:waiting-room:
   - changed-files:
@@ -717,6 +821,8 @@ product:web-analytics:
           - src/content/partials/web-analytics/**
           - src/assets/images/web-analytics/**
           - src/content/release-notes/beacon-min-js.yaml
+          - src/content/changelog/web-analytics/**
+          - src/assets/images/changelog/web-analytics/**
 
 product:web3:
   - changed-files:
@@ -731,6 +837,9 @@ product:workers:
           - src/content/docs/workers/**
           - src/content/partials/workers/**
           - src/assets/images/workers/**
+          - src/content/release-notes/workers.yaml
+          - src/content/changelog/workers/**
+          - src/assets/images/changelog/workers/**
           - src/content/compatibility-flags/**
 
 product:workers-ai:
@@ -740,6 +849,7 @@ product:workers-ai:
           - src/content/partials/workers-ai/**
           - src/assets/images/workers-ai/**
           - src/content/release-notes/workers-ai.yaml
+          - src/content/changelog/workers-ai/**
           - src/content/workers-ai-models/**
 
 product:workers-vpc:
@@ -747,12 +857,17 @@ product:workers-vpc:
       - any-glob-to-any-file:
           - src/content/docs/workers-vpc/**
           - src/content/partials/workers-vpc/**
+          - src/content/changelog/workers-vpc/**
+          - src/assets/images/changelog/workers-vpc/**
 
 product:workflows:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/workflows/**
           - src/content/partials/workflows/**
+          - src/content/release-notes/workflows.yaml
+          - src/content/changelog/workflows/**
+          - src/assets/images/changelog/workflows/**
 
 product:zaraz:
   - changed-files:
@@ -760,3 +875,5 @@ product:zaraz:
           - src/content/docs/zaraz/**
           - src/content/partials/zaraz/**
           - src/assets/images/zaraz/**
+          - src/content/release-notes/zaraz.yaml
+          - src/content/changelog/zaraz/**
