@@ -1,0 +1,273 @@
+---
+pcx_content_type: reference
+description: Reference information for Zoom in Zero Trust integrations.
+products:
+  - cloudflare-one
+title: Zoom
+tags:
+  - Zoom
+rss: file
+head:
+  - tag: title
+    content: Zoom - CASB
+sidebar:
+  order: 20
+---
+
+import { Render, Steps } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Zoom",
+		integrationAccountType: "Zoom Account",
+	}}
+/>
+
+## Integration prerequisites
+
+- A Zoom account
+- Account Owner or Admin role in the Zoom account
+- A Cloudflare Zero Trust account (free plan supports up to 2 integrations)
+
+## Adding the app
+
+The Zoom integration connects through Cloudflare's pre-built OAuth application. No manual app setup in Zoom is required.
+
+<Steps>
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Cloud & SaaS findings** > **Integrations**.
+2. Select **Connect an integration** or **Add integration**.
+3. Browse the available integrations and select **Zoom**.
+4. Follow the step-by-step integration instructions in the UI. You will be redirected to Zoom to authorize the connection. The authorizing user must have an Account Owner or Admin role so that all required API scopes can be granted.
+5. To run your first scan, select **Save integration**.
+</Steps>
+
+After the first scan, CASB will automatically scan your Zoom account on a frequent basis to keep up with any changes.
+
+If you encounter issues during setup, refer to [Troubleshoot CASB integrations](/cloudflare-one/cloud-and-saas-findings/troubleshoot-casb/).
+
+## Usage
+
+### What CASB scans for
+
+The Zoom integration scans your Zoom account for security misconfigurations and data risks across account settings, user accounts, meetings, and recordings. Findings are grouped by category and ordered by severity level.
+
+Once CASB detects at least one finding, you can view and manage your findings in Cloudflare One under **Cloud & SaaS findings** > **Findings**.
+
+### Plan tier notes
+
+The following optional Zoom API scopes require a specific Zoom plan tier to produce findings:
+
+- Dashboard scopes (`dashboard:read:*`) — require a Zoom Business or higher plan
+- Cloud Recording scopes (`cloud_recording:read:*`) — require a Zoom Pro or higher plan
+- Master Account scopes (`account:read:*:master`) — require a Zoom Enterprise ISV or reseller Master Account
+
+If your Zoom account does not have the required tier for an optional scope, those scopes will produce no findings. This is expected behavior, not an error.
+
+## Integration permissions
+
+For the Zoom integration to function, Cloudflare CASB requires the following Zoom API scopes:
+
+- `account:read:sub_account:admin`
+- `account:read:settings:admin`
+- `account:read:lock_settings:admin`
+- `dashboard:read:list_meetings:admin`
+- `dashboard:read:meeting:admin`
+- `dashboard:read:list_meeting_participants_qos:admin`
+- `dashboard:read:meeting_quality_score:admin`
+- `group:read:list_groups:admin`
+- `group:read:group:admin`
+- `meeting:read:list_meetings:admin`
+- `meeting:read:meeting:admin`
+- `cloud_recording:read:list_user_recordings:admin`
+- `cloud_recording:read:list_recording_files:admin`
+- `cloud_recording:read:recording_settings:admin`
+- `report:read:list_users:admin`
+- `role:read:list_roles:admin`
+- `role:read:role:admin`
+- `user:read:list_users:admin`
+- `user:read:user:admin`
+- `user:read:settings:admin`
+
+If the integration is installed on a Zoom Master Account, the following additional scopes are required:
+
+- `account:read:settings:master`
+- `account:read:lock_settings:master`
+- `account:read:list_sub_accounts:master`
+- `account:read:sub_account:master`
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each scope, refer to the [Zoom API scopes reference](https://developers.zoom.us/docs/api/).
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{ integrationName: "Zoom", slugRelativePath: "zoom" }}
+/>
+
+### Content scanning
+
+| Finding type                                                             | FindingTypeID                          | Severity |
+| ------------------------------------------------------------------------ | -------------------------------------- | -------- |
+| Zoom: Meeting content has sensitive information with DLP Profile match   | `019ee18c-4853-7eeb-855f-67746af47aef` | Medium   |
+| Zoom: Recording content has sensitive information with DLP Profile match | `019ee17b-5d4c-7d7f-8ca4-5f6ffe1b7ff5` | Medium   |
+
+### Account security
+
+| Finding type                                                       | FindingTypeID                          | Severity |
+| ------------------------------------------------------------------ | -------------------------------------- | -------- |
+| Zoom: Account security settings are unlocked                       | `019e6b65-af26-72c7-bee0-07dc77757f41` | High     |
+| Zoom: Account two-factor authentication not enforced for all users | `019e6b65-a373-76cf-a3ee-03bc84031ede` | High     |
+| Require Two Factor Authentication Disabled                         | `a52ccd9b-e4a0-47e5-90d9-1cbc62cac274` | Critical |
+| Zoom: Account session lifetime exceeds policy                      | `019e6b65-aa52-7cfd-baa0-89de43a9a3d1` | Medium   |
+| New Sign-In Required For Inactive Zoom Client Users Disabled       | `bc5acfa5-8d71-4cdf-aa4c-6834bed52969` | Low      |
+| New Sign-In Required For Inactive Zoom Web Session Disabled        | `7406494b-1ebf-44fa-bc66-681b82943cbd` | Low      |
+
+### Account password policy
+
+| Finding type                                              | FindingTypeID                          | Severity |
+| --------------------------------------------------------- | -------------------------------------- | -------- |
+| Password Policy Enhanced Weak Password Detection Disabled | `d3d4fd13-e32f-4f5d-9e1f-e387473bbaff` | Critical |
+| Zoom: Account password policy is weak                     | `019e6b65-a6e3-7059-ad1b-6c99068722d1` | Medium   |
+| Password Policy Require Special Character Disabled        | `f452d1dd-7288-47ee-87c0-3b4dabef9871` | High     |
+| Password Policy Require Minimum Password Length Disabled  | `23634933-ee61-4a0b-a58a-1beff30ca5cd` | High     |
+| Password Policy Consecutive Characters Limit Disabled     | `69384e0f-1ec5-4f7f-a9bb-2d08c9f690aa` | Medium   |
+
+### Account meeting settings
+
+| Finding type                                                                 | FindingTypeID                          | Severity |
+| ---------------------------------------------------------------------------- | -------------------------------------- | -------- |
+| Zoom Account with End to End Encryption Disabled                             | `cb6ed5b0-c3a8-4f45-bee5-91e4d06ca8ac` | Critical |
+| Zoom Account with End to End Encryption Setting Unlocked                     | `be5f4529-bd34-4805-ad04-17d9a87bd181` | Critical |
+| Zoom Account with Enforce Login Setting Unlocked                             | `6ab84c16-de70-49cd-9f92-dd95f03d22d6` | High     |
+| Zoom Account with Enforce Login for Scheduling Meetings Disabled             | `aa93f105-5ef6-43e3-93ef-d99f32a42ee6` | High     |
+| Zoom Account with Waiting Room Disabled                                      | `62c8bd0f-7aa7-437f-b932-b3bf606ea432` | Medium   |
+| Zoom Account with Waiting Room Setting Unlocked                              | `0c2e0cf8-2d8b-4d7f-9c1c-936728b3b95d` | Medium   |
+| Zoom Account with Waiting Room for All Participants Not Set                  | `24dd0722-b624-46e3-a1ba-6e83bcd5f7f1` | Medium   |
+| Zoom Account with Remote Computer Control Allowed                            | `915726df-9806-4a06-95e4-7c885d475f89` | Medium   |
+| Zoom Account with Remote Computer Control Setting Unlocked                   | `15b0d52c-333e-4798-869f-5f9e2065d8a7` | Medium   |
+| Zoom Account Allows Users to Control Other User Cameras                      | `73d49510-9a28-48ac-b37a-6efd0bcff37d` | Medium   |
+| Zoom Account with Allow Users to Control Other User Cameras Setting Unlocked | `a57dca39-0f41-4467-936c-28e6b058be38` | Medium   |
+| Zoom Account with File Transfer Setting Unlocked                             | `1f3ca22b-f722-4203-8409-b1b4ec8aee5f` | Medium   |
+| Zoom Account with Alert on Guest Join Disabled                               | `2ed891a7-4f97-4ce7-98d1-92d479497cea` | Low      |
+| Zoom Account with Alert on Guest Join Setting Unlocked                       | `5226c0b1-ac05-444b-ae19-d933a48452f2` | Low      |
+| Zoom Account Allows Participants to Rename In-Meeting                        | `13b80a7f-07d4-4825-a04b-de1d0058b9c5` | Low      |
+| Zoom Account with Embed Password in Join Link Setting Unlocked               | `dca25958-888d-45ff-b9a7-2d3ba43061f3` | Low      |
+
+### Account meeting passwords
+
+| Finding type                                                                | FindingTypeID                          | Severity |
+| --------------------------------------------------------------------------- | -------------------------------------- | -------- |
+| Zoom Account with Require Password for Scheduled Meetings Disabled          | `014891c9-5d9e-403a-9c79-dc5cea9d658e` | High     |
+| Zoom Account with Require Password for Scheduling New Meetings Disabled     | `ec470c79-5e8a-4bb9-9e9f-41389ee2f9cd` | High     |
+| Zoom Account with Require Password for Scheduling Meetings Setting Unlocked | `90897bc7-ef29-4781-b970-a2f170281e02` | High     |
+| Zoom Account with Require Password for Instant Meetings Disabled            | `aca363ba-5675-44b8-8587-0894c6de242c` | High     |
+| Zoom Account with Require Password for Instant Meetings Setting Unlocked    | `fd5951d0-fccb-446d-b91c-9defcf10e9d7` | High     |
+| Zoom Account with Require Password for PMI Meetings Disabled                | `f51a46d4-ae75-4256-b06c-0d671c1693b3` | High     |
+| Zoom Account with Require Password for PMI Meetings Setting Unlocked        | `12e38ee7-9ebc-454e-854d-093ebf65aa85` | High     |
+
+### Account recording settings
+
+| Finding type                                                                    | FindingTypeID                          | Severity |
+| ------------------------------------------------------------------------------- | -------------------------------------- | -------- |
+| Public Cloud Recording Downloads Setting Enabled                                | `9fb646a3-b62f-40d3-bc2b-ef3cb0ae9a26` | Critical |
+| Require users to authenticate before viewing cloud recordings settings disabled | `b90f0acb-d34c-4d07-aca3-3cc6f979bb55` | Critical |
+| Public Cloud Recording Downloads Setting Unlocked                               | `1c685a0e-7493-4602-af6e-d8b923e69d87` | High     |
+| Cloud Recording Password Does Not Require Numbers                               | `221cb2ba-bd24-45a2-94ea-5cc1bb4c06e3` | High     |
+| Cloud Recording Password Only Allows Numeric Characters                         | `6c33640c-db74-4f77-8607-f919d36ad53d` | High     |
+| Cloud Recording Password Has a Minimum Length of Less than 9 Characters         | `a8ebbe07-7238-40a1-9048-184b4080b16d` | High     |
+| Cloud Recording Password Does Not Require Special Characters                    | `421b47c4-301f-4c8e-8c64-17cb8d2a85ac` | High     |
+| Cloud Recording Password Does Not Require Letters                               | `864dafc2-a4ce-4cce-ae3a-e1c7d5b9bbd5` | High     |
+| Require Users to Authenticate Before Viewing Cloud Recordings Setting Unlocked  | `a5bb236b-2cbe-4029-87f2-0945b084271f` | Medium   |
+| Host can delete cloud recordings unlocked                                       | `aa38d5af-59f6-4708-8da4-8c861c6ec571` | Low      |
+| Recording IP Address Access Control Setting Disabled                            | `b08dec0a-c908-4053-9cdf-702354666061` | Low      |
+| Recording IP Address Access Control Setting Unlocked                            | `cad4d24e-3ad6-4af2-acb4-22afc7f65851` | Low      |
+| Prevent hosts from accessing their cloud recordings setting unlocked            | `da619ab4-6c0c-4266-bd1c-b76c53b7852b` | Low      |
+| Auto delete cloud recordings after days setting unlocked                        | `0d5879d2-2f52-4a4c-9f42-afec0b27fa0a` | Low      |
+
+### User accounts
+
+| Finding type                                                | FindingTypeID                          | Severity |
+| ----------------------------------------------------------- | -------------------------------------- | -------- |
+| Zoom User not using SSO                                     | `f10eba44-b3be-44e1-a363-74c51e8ee18d` | High     |
+| Zoom User with insecure host key                            | `09ee2fda-4cbf-4bea-af0c-7ea37aec8218` | High     |
+| Zoom User email not verified                                | `7fec807a-8fd4-4390-bb44-b7446dc94617` | High     |
+| Zoom: User has unsafe override of account security settings | `019e6b65-95b7-72a7-aecb-456591ad288b` | High     |
+| Zoom: User is unverified                                    | `019e6b65-9c95-7de0-8763-0a8f982b87bf` | Medium   |
+| Zoom: Non-admin role with privileged access                 | `019e6b65-8d1e-7834-85b5-af1154fef477` | Medium   |
+| Zoom: User authenticates with a non-SSO login type          | `019e6b65-a004-7c34-98c4-103e9b6d1735` | Low      |
+| Zoom: User has not logged in for 90+ days                   | `019e6b65-9926-7a70-8257-a2aadd1377a3` | Low      |
+| Zoom User inactive for over 90 days                         | `7da16962-ddb1-4be3-b409-ea6ff32cdf91` | Low      |
+
+### User meeting settings
+
+| Finding type                                                     | FindingTypeID                          | Severity |
+| ---------------------------------------------------------------- | -------------------------------------- | -------- |
+| Zoom User with End to End Encryption Disabled                    | `a6037af0-6da8-4f33-89eb-b27f754f11f7` | Critical |
+| Zoom User with Require Password for Instant Meetings Disabled    | `56e69129-5695-4b5d-87c8-61ec379b8cd9` | High     |
+| Zoom User with Require Password for PMI Meetings Disabled        | `15b1e1a4-e4dd-4904-8cd4-ea79aedeb502` | High     |
+| Zoom User with Require Password for Scheduling Meetings Disabled | `7d8e1cee-9d53-4d2e-9689-4f7b5d72998d` | High     |
+| Zoom User Allows Other Users to Control Their Camera             | `d16f7e93-dbc9-4756-8e49-8cb34356f2a2` | Medium   |
+| Zoom User with Waiting Room Disabled                             | `eb3297bc-ac58-406c-8a1b-b8fa39349d28` | Medium   |
+| Zoom User with Waiting Room for All Participants Not Set         | `6ddce89a-ab01-4edc-b1cb-1d732072a57e` | Medium   |
+| Zoom User with Remote Computer Control Allowed                   | `8f7e1aea-6ff0-4a4b-a48c-c147318d8f2c` | Medium   |
+| Zoom User Allows Participants to Rename In-Meeting               | `3813256f-effe-4369-98f8-2d4df5494481` | Low      |
+
+### Meeting security
+
+| Finding type                                               | FindingTypeID                          | Severity |
+| ---------------------------------------------------------- | -------------------------------------- | -------- |
+| Zoom: Meeting without identity enforcement                 | `019e6b65-7f62-7b86-8d40-b1dadea58672` | High     |
+| Zoom: Meeting without password                             | `019e6b65-7881-7ed2-a620-201bba497d4e` | High     |
+| Zoom: Meeting recording not configured securely            | `019e6b65-8640-7be6-bfd8-2476350d056e` | High     |
+| Zoom: Meeting has external domain host or alternative host | `019e6b65-89af-7718-9400-86d99195510e` | Medium   |
+| Zoom: Meeting allows unsupervised participant access       | `019e6b65-7bf4-7050-8569-1eeed6db49e8` | Medium   |
+| Zoom meeting waiting room disabled                         | `7e826eca-994d-43b5-a918-d8b72d1ff186` | Medium   |
+| Zoom: Meeting uses Personal Meeting ID (PMI)               | `019e6b65-82d2-7025-91a8-ef9f460d63f1` | Low      |
+
+### Recording security
+
+| Finding type                                                                       | FindingTypeID                          | Severity |
+| ---------------------------------------------------------------------------------- | -------------------------------------- | -------- |
+| Zoom Cloud Recording Publicly Accessible                                           | `3018d9f5-3931-48a8-b107-39bd754f2a6f` | Critical |
+| Zoom User with require passcode to access shared cloud recordings setting disabled | `c763f2f8-733b-42bf-88d9-afcc7c756eef` | Critical |
+| Zoom Cloud Recording with no passcode                                              | `6c307678-2b50-433e-9cf2-a7d95498279a` | Critical |
+| Zoom Cloud Recording with empty passcode                                           | `5922f3a2-d633-47c9-9fbe-f85027a95e1a` | Critical |
+| Zoom Cloud Recording Passcode length is less than 8 characters                     | `87193ea3-6bc7-45ba-8e85-3c147b6ecb85` | Critical |
+| Zoom Cloud Recording with numeric passcode                                         | `2bed56d4-2f25-4aab-bac1-1a30c6301f34` | Critical |
+| Zoom Cloud Recording Passcode with no special characters                           | `7df598d5-01e5-42bb-9688-107a2ed378ad` | Critical |
+| Require users to authenticate before viewing cloud recordings setting disabled     | `e1d3fe5c-44bb-417f-919a-c83f9d8ddc12` | Critical |
+| Zoom: Shared recording without play passcode                                       | `019e6b65-af1a-7550-b82a-a154c7801ae2` | High     |
+
+## Removing the app
+
+Removing the Zoom integration is a two-part process. Both steps are required to fully disconnect Cloudflare CASB from your Zoom account.
+
+### Step 1: Remove from Zoom Marketplace
+
+<Steps>
+1. Log in to the [Zoom Marketplace](https://marketplace.zoom.us/) with your Zoom account.
+2. Go to **Manage** > **Added Apps**.
+3. Find the **Cloudflare CASB** app and select **Remove**.
+4. Confirm removal.
+</Steps>
+
+This revokes Zoom's OAuth grant and prevents Cloudflare from making further API calls to your Zoom account.
+
+### Step 2: Delete from Cloudflare One
+
+<Steps>
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Cloud & SaaS findings** > **Integrations**.
+2. Find the Zoom integration and select **Configure**.
+3. Select **Disenroll**.
+</Steps>
+
+:::caution
+Deleting an integration removes all OAuth data stored in Cloudflare. This action cannot be undone. To resume scanning, you will need to add the integration again. Deletion also permanently removes all CASB scan data and findings associated with this integration.
+:::
+
+### Data handling
+
+Removing the Cloudflare CASB app from the Zoom Marketplace does not automatically delete the integration or its stored data from Cloudflare. Similarly, deleting the integration from the Cloudflare One dashboard does not revoke the OAuth grant in Zoom. You must complete both steps to fully remove the connection and stop data retention on Cloudflare's side.
