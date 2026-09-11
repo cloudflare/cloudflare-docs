@@ -10,7 +10,15 @@ tags:
   - IPsec
 ---
 
-import { APIRequest, CURL, Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
+import {
+	APIRequest,
+	CURL,
+	DashButton,
+	Details,
+	GlossaryTooltip,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 Cloudflare assigns an IPv4 anycast address to your account for use as the tunnel destination for your network's routers. You can find this address in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space). To request additional endpoint addresses, contact your account team.
 
@@ -36,12 +44,12 @@ You can use GRE or IPsec tunnels to onboard your traffic to Cloudflare WAN, and 
 
 #### Choose between GRE and IPsec
 
-| Feature | GRE | IPsec |
-|---------|-----|-------|
-| Encryption | No | Yes |
-| Authentication | No | Pre-shared key (PSK) |
-| Setup complexity | Simpler | Requires PSK exchange |
-| Best for | Trusted networks, CNI connections | Internet-facing connections requiring encryption |
+| Feature          | GRE                               | IPsec                                            |
+| ---------------- | --------------------------------- | ------------------------------------------------ |
+| Encryption       | No                                | Yes                                              |
+| Authentication   | No                                | Pre-shared key (PSK)                             |
+| Setup complexity | Simpler                           | Requires PSK exchange                            |
+| Best for         | Trusted networks, CNI connections | Internet-facing connections requiring encryption |
 
 Refer to [Tunnels and encapsulation](/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/) to learn more about the technical requirements for both tunnel types.
 
@@ -67,9 +75,12 @@ Cloudflare Network Firewall rules apply to Internet Control Message Protocol (IC
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks**.
-2. Go to **Connectors** > **Cloudflare WAN**, and select **Create**.
-3. On the **Add Tunnel** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+1. Go to the **Connectors** page.
+
+   <DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. From the **IPsec/GRE tunnels** tab, select **Create a tunnel**.
+3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
 4. In **Name**, give your tunnel a descriptive name. This name must be unique, cannot contain spaces or special characters, and cannot be shared with other tunnels.
 5. _(Optional)_ Give your tunnel a description in **Description**.
 6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (`/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using a `/31` subnet, as it provides the most efficient use of IP address space.
