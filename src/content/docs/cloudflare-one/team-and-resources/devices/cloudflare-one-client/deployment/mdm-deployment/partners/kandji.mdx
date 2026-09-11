@@ -131,6 +131,8 @@ PROFILE_PAYLOAD_ID_PREFIX="io.kandji.cloudflare.C59FD67"
 ###################################### FUNCTIONS ##################################################
 ###################################################################################################
 
+autoload -Uz is-at-least
+
 return_installed_app_version() {
     # Return the currently installed application version
     #
@@ -201,23 +203,19 @@ else
             exit 0
         fi
 
-        # Get the currently install version
+        # Get the currently installed version.
         # Pass the APP_NAME variable from above to the return_installed_app_version function
-        # Removing the periods from the version number so that we can make a comparison.
-        installed_version="$(return_installed_app_version $APP_NAME | /usr/bin/sed 's/\.//g')"
+        installed_version="$(return_installed_app_version "$APP_NAME")"
 
-        # Removing the periods from the version number so that we can make a comparison.
-        enforced_version="$(echo $ENFORCED_VERSION | /usr/bin/sed 's/\.//g')"
-
-        # Check to see if the installed_version is less than the enforced_version. If it is then
-        # exit 1 to initiate the installation process.
-        if [[ "$installed_version" -lt "$enforced_version" ]]; then
-            echo "Installed app version $installed_version less than enforced version $ENFORCED_VERSION"
+        # Compare each numeric component of the installed and enforced versions. If the installed
+        # version does not meet the minimum, exit 1 to initiate the installation process.
+        if ! is-at-least "$ENFORCED_VERSION" "$installed_version"; then
+            echo "Installed app version $installed_version is less than enforced version $ENFORCED_VERSION"
             echo "Starting the app install process ..."
             exit 1
 
         else
-            echo "Enforced vers: $enforced_version"
+            echo "Enforced version: $ENFORCED_VERSION"
             echo "Installed app version: $installed_version"
             echo "Minimum app version enforcement met ..."
             echo "No need to run the installer ..."
