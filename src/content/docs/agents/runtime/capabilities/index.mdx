@@ -1,0 +1,297 @@
+---
+title: Capabilities
+description: Add contained storage and control-flow features to a Durable Object with composable Agents SDK capabilities.
+pcx_content_type: concept
+sidebar:
+  order: 1.5
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+A capability is a contained piece of logic that controls its own storage and control flow. It exposes a focused API and implements only the lifecycle hooks it needs.
+
+Capabilities use composition instead of another base class. You can attach them to a plain Durable Object or the [`Agent` class](/agents/runtime/lifecycle/agent-class/) through the same [Lifecycle](/agents/runtime/lifecycle/).
+
+:::caution[Experimental]
+
+Lifecycle capabilities may change between releases while the composition model stabilizes. Established APIs on the `Agent` class remain available.
+
+:::
+
+## Compose capabilities
+
+Construct one instance of each capability as a Durable Object field. Then register each instance with `Lifecycle.use()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Sessions } from "agents/sessions";
+import { Streams } from "agents/streams";
+
+export class ConversationObject extends DurableObject<Env> {
+	readonly sessions = new Sessions();
+	readonly streams = new Streams();
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.sessions)
+		.use(this.streams);
+}
+```
+
+</TypeScriptExample>
+
+Each new in-memory Durable Object instance recreates these capability objects. Lifecycle then runs each capability's startup hook. Capabilities use that hook to initialize or restore durable state.
+
+A capability controls any tables, keys, migrations, or platform state it needs. All capabilities share the host Durable Object storage, so each one namespaces its own data. Lifecycle owns shared coordination, including startup order and the physical Durable Object alarm. Host-specific bindings remain explicit constructor options.
+
+## MCP client
+
+Import `MCPClientManager` from `agents/mcp/client`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+
+export class ToolObject extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("tool-object", "1.0.0", {
+		env: this.env,
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
+}
+```
+
+</TypeScriptExample>
+
+`MCPClientManager` stores a catalog of Model Context Protocol (MCP) servers. It restores connections during startup and handles registered OAuth callbacks before the host request handler.
+
+Pass `env` when the catalog can contain Durable Object RPC servers. HTTP-only MCP connections do not require it. Use `listTools()` for raw tools or `getAITools()` for AI SDK tools.
+
+For server registration and authentication, refer to the [MCP client API](/agents/model-context-protocol/apis/client-api/).
+
+## Routed Agents
+
+Import `RoutedAgents` from `agents/routing`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { RoutedAgents } from "agents/routing";
+import type { ChatAgent } from "./chat-agent";
+
+export class UserHub extends DurableObject<Env> {
+	readonly chats = new RoutedAgents<ChatAgent, { title: string }>({
+		namespace: this.env.ChatAgent,
+		route: "chats",
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.chats);
+}
+```
+
+</TypeScriptExample>
+
+`RoutedAgents` lets a hub Durable Object manage independent top-level Agents. It stores public IDs and metadata without waking target Agents. Requests under `/{route}/{id}` forward to the selected target.
+
+The hub can extend `DurableObject` directly. Each target must extend `Agent`. Use `create()`, `list()`, `get()`, `setMetadata()`, and `delete()` to manage the catalog.
+
+## Scheduler
+
+Import `Scheduler` from `agents/schedules`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Scheduler } from "agents/schedules";
+
+export class ReminderObject extends DurableObject<Env> {
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			sendReminder: (payload: { message: string }) => {
+				console.log(payload.message);
+			},
+		},
+		retry: { maxAttempts: 3 },
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.scheduler);
+}
+```
+
+</TypeScriptExample>
+
+`Scheduler` runs typed callbacks after a delay, on a date, from a cron expression, or at a fixed interval. Register callbacks in the constructor so each Durable Object wake rebuilds the same dispatch map.
+
+Lifecycle stores each schedule as a job and manages the shared alarm. Create schedules with `set()` or `every()`. Use `list()` and `cancel()` to manage pending schedules.
+
+For timing modes and callback behavior, refer to [Schedule tasks](/agents/runtime/execution/schedule-tasks/).
+
+## Sessions
+
+Import `Sessions` from `agents/sessions`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Sessions } from "agents/sessions";
+
+export class SessionObject extends DurableObject<Env> {
+	readonly sessions = new Sessions({
+		reservedMetadataKeys: ["internal"],
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.sessions);
+	readonly session = this.sessions.session();
+}
+```
+
+</TypeScriptExample>
+
+`Sessions` stores durable conversation messages. Each session supports branches, compaction overlays, streamed reads, byte-budgeted history, attachments, and full-text search.
+
+One capability can hold several sessions by identifier. A Durable Object that represents one conversation can use the default empty identifier. `Sessions` stores messages only. Build model context separately with `agents/context`.
+
+## Streams
+
+Import `Streams` from `agents/streams`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Streams } from "agents/streams";
+
+export class StreamObject extends DurableObject<Env> {
+	readonly streams = new Streams({
+		maxChunkBytes: 64 * 1024,
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.streams);
+}
+```
+
+</TypeScriptExample>
+
+`Streams` stores durable incremental output with a monotonic cursor. Producers call `open()`, append JSON chunks, and finish with `close()` or `error()`.
+
+Consumers can replay stored chunks and then follow live output. Tags support operation lookups, while `sseResponse()` serves resumable Server-Sent Events (SSE). Streams require no alarm.
+
+## Tasks
+
+Import `Tasks` and `TaskStep` from `agents/tasks`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Tasks, type TaskStep } from "agents/tasks";
+
+export class ReportObject extends DurableObject<Env> {
+	readonly tasks = new Tasks({
+		definitions: {
+			"prepare-report@v1": async (input: { topic: string }, step: TaskStep) => {
+				const draft = await step.do("draft", () => ({
+					topic: input.topic,
+					status: "draft",
+				}));
+				await step.sleep("review-window", "10 minutes");
+				return { ...draft, status: "published" };
+			},
+		},
+		retries: { limit: 3, delay: "1 second" },
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.tasks);
+}
+```
+
+</TypeScriptExample>
+
+`Tasks` runs replayable background work. Completed `step.do()` calls return their journaled results after interruption. A durable sleep parks the run without holding the object open.
+
+Declare definitions in the constructor so recovery can find them after every wake. `run()` returns a durable receipt. Runs support idempotency keys, status inspection, cancellation, and retention.
+
+## WebSockets
+
+Import `WebSockets` from `agents/websockets`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+export class RoomObject extends DurableObject<Env> {
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onConnect: (connection) => connection.send("ready"),
+			onMessage: (connection, message) => connection.send(message),
+		},
+		getConnectionTags: () => ["chat"],
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+`WebSockets` claims upgrade requests and owns hibernating connections. It dispatches connection callbacks, stores connection state in hibernation attachments, and exposes connection lookup methods.
+
+Pass an `RpcTarget` through the `callables` option to expose remote methods over Cap'n Web. Without handlers or callables, this capability declines WebSocket upgrades.
+
+For connection behavior, refer to [WebSockets](/agents/runtime/communication/websockets/).
+
+## Build a capability
+
+Extend `LifecycleCapability` when application logic needs reusable lifecycle integration. Give every capability a stable, non-empty identifier:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	Lifecycle,
+	LifecycleCapability,
+	type CapabilityRequestContext,
+} from "agents/lifecycle";
+
+class HealthCheck extends LifecycleCapability {
+	constructor() {
+		super("health-check");
+	}
+
+	onStart(): void {
+		this.lifecycle.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS health_checks (
+				checked_at INTEGER NOT NULL
+			)
+		`);
+	}
+
+	onRequest({ request }: CapabilityRequestContext): Response | undefined {
+		if (!new URL(request.url).pathname.endsWith("/health")) return;
+		return Response.json({ ok: true });
+	}
+}
+
+export class HealthObject extends DurableObject<Env> {
+	readonly health = new HealthCheck();
+	readonly lifecycle = Lifecycle.install(this).use(this.health);
+}
+```
+
+</TypeScriptExample>
+
+Install custom capabilities with the same `use()` method. A capability receives Durable Object storage, capability-scoped jobs, events, and routing, socket access, readiness, and host callback services through `this.lifecycle`.
+
+Capability request hooks return a `Response` to claim a request. Other lifecycle hooks cover startup, WebSocket events, durable jobs, routed messages, memory-limit policy, and explicit disposal.
