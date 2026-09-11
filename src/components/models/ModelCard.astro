@@ -71,9 +71,9 @@ const decisionFacts = [
 	data-model-id={model.modelId ?? model.name}
 	data-model-label={model.displayName}
 	data-model-href={href}
-	data-model-provider={model.authorName}
+	data-model-provider={model.hosting === "hosted" ? "Workers AI" : "AI Gateway"}
+	data-model-author={model.authorName}
 	data-model-task={model.task}
-	data-model-hosting={model.hosting}
 	data-model-context={model.properties.context_window ?? ""}
 	data-model-output={model.properties.max_output_tokens ?? ""}
 	data-model-pricing={pricing.join("\n")}
@@ -167,24 +167,28 @@ const decisionFacts = [
 
 		<div class="mt-auto">
 			<ModelBadges model={model} />
-			{
-				decisionFacts.length > 0 && (
-					<ul class="text-muted-foreground mt-3 flex list-none flex-wrap gap-x-3 gap-y-1 p-0 text-xs">
-						{decisionFacts.map((fact) => (
-							<li class="m-0">{fact}</li>
-						))}
-					</ul>
-				)
-			}
 		</div>
 	</a>
-	<button
-		type="button"
-		data-model-compare
-		aria-label={`Add ${model.displayName} to comparison`}
-		aria-pressed="false"
-		class="border-border bg-background text-muted-foreground hover:border-primary hover:text-primary focus-visible:outline-ring absolute right-3 bottom-3 z-20 cursor-pointer rounded-md border px-2 py-1 text-xs font-medium focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+	<div
+		class="pointer-events-none absolute right-3 bottom-3 left-5 z-20 flex items-center justify-between gap-3"
 	>
-		Compare
-	</button>
+		{
+			decisionFacts.length > 0 && (
+				<ul class="text-muted-foreground flex min-w-0 list-none flex-wrap gap-x-3 gap-y-1 p-0 text-xs">
+					{decisionFacts.map((fact) => (
+						<li class="m-0">{fact}</li>
+					))}
+				</ul>
+			)
+		}
+		<button
+			type="button"
+			data-model-compare
+			aria-label={`Add ${model.displayName} to comparison`}
+			aria-pressed="false"
+			class="border-border bg-background text-muted-foreground hover:border-primary hover:text-primary focus-visible:outline-ring aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:hover:text-primary-foreground pointer-events-auto ml-auto shrink-0 cursor-pointer rounded-md border px-2 py-1 text-xs font-medium focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+		>
+			Compare
+		</button>
+	</div>
 </div>

@@ -3,6 +3,7 @@
 import ModelCard from "./ModelCard.astro";
 import { FilterDropdownWrapper } from "./FilterDropdownWrapper";
 import { SortSelectWrapper } from "./SortSelectWrapper";
+import { Dialog, DialogClose, DialogContent } from "~/components/ui/dialog";
 import { getFacets, type ModelCardData } from "~/util/models";
 import { resolveCols, LG_GRID_CLASS } from "~/components/directory/grid";
 
@@ -87,41 +88,49 @@ const facetMatchMaps = Object.fromEntries(
 		</button>
 	</div>
 
-	<section
+	<Dialog
+		id="model-comparison-dialog"
 		data-model-comparison
-		hidden
-		class="border-border bg-muted/20 mb-5 overflow-hidden rounded-lg border"
 		aria-labelledby="model-comparison-heading"
 	>
-		<div
-			class="border-border flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3"
-		>
-			<div>
-				<h2
-					id="model-comparison-heading"
-					class="text-foreground m-0 text-base font-semibold"
-				>
-					Compare models
-				</h2>
-				<p class="text-muted-foreground m-0 text-xs">
-					Compare up to three models.
-				</p>
-			</div>
-			<button
-				type="button"
-				data-model-comparison-clear
-				class="text-primary cursor-pointer text-sm underline-offset-2 hover:underline"
+		<DialogContent class="bg-background max-h-[85vh] max-w-6xl">
+			<div
+				class="border-border flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3"
 			>
-				Clear comparison
-			</button>
-		</div>
-		<div class="overflow-x-auto">
-			<table class="m-0 w-full min-w-[640px] border-collapse text-sm">
-				<thead data-model-comparison-head></thead>
-				<tbody data-model-comparison-body></tbody>
-			</table>
-		</div>
-	</section>
+				<div>
+					<h2
+						id="model-comparison-heading"
+						class="text-foreground m-0 text-base font-semibold"
+					>
+						Compare models
+					</h2>
+					<p class="text-muted-foreground m-0 text-xs">
+						Compare up to three models.
+					</p>
+				</div>
+				<DialogClose
+					class="border-border bg-background text-foreground hover:bg-muted focus-visible:outline-ring cursor-pointer rounded-md border px-3 py-1.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2"
+				>
+					Close
+				</DialogClose>
+			</div>
+			<div class="min-h-0 flex-1 overflow-auto">
+				<table class="m-0 w-full min-w-[640px] border-collapse text-sm">
+					<thead data-model-comparison-head></thead>
+					<tbody data-model-comparison-body></tbody>
+				</table>
+			</div>
+			<div class="border-border flex justify-end border-t px-4 py-3">
+				<button
+					type="button"
+					data-model-comparison-clear
+					class="text-primary cursor-pointer text-sm underline-offset-2 hover:underline"
+				>
+					Clear comparison
+				</button>
+			</div>
+		</DialogContent>
+	</Dialog>
 
 	<div
 		data-models-empty
@@ -143,6 +152,17 @@ const facetMatchMaps = Object.fromEntries(
 			}
 		</div>
 	</div>
+
+	<button
+		type="button"
+		data-model-comparison-trigger
+		hidden
+		aria-controls="model-comparison-dialog"
+		aria-haspopup="dialog"
+		class="bg-primary text-primary-foreground focus-visible:outline-ring fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-40 -translate-x-1/2 cursor-pointer rounded-lg px-5 py-3 text-sm font-semibold shadow-lg transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2"
+	>
+		Compare models
+	</button>
 </div>
 
 <div id="model-facet-data" data-facets={JSON.stringify(facetMatchMaps)}></div>
@@ -175,8 +195,11 @@ const facetMatchMaps = Object.fromEntries(
 	const countEl = document.getElementById("model-count")!;
 	const countLabelEl = document.getElementById("model-count-label")!;
 	const clearBtn = document.getElementById("clear-filters")!;
-	const comparison = root.querySelector<HTMLElement>(
+	const comparison = root.querySelector<HTMLDialogElement>(
 		"[data-model-comparison]",
+	)!;
+	const comparisonTrigger = root.querySelector<HTMLButtonElement>(
+		"[data-model-comparison-trigger]",
 	)!;
 	const comparisonHead = comparison.querySelector<HTMLTableSectionElement>(
 		"[data-model-comparison-head]",
@@ -256,7 +279,13 @@ const facetMatchMaps = Object.fromEntries(
 	}
 
 	function renderComparison(): void {
-		comparison.hidden = selectedModels.length === 0;
+		comparisonTrigger.hidden = selectedModels.length === 0;
+		root.style.paddingBottom =
+			selectedModels.length === 0
+				? ""
+				: "calc(5rem + env(safe-area-inset-bottom))";
+		comparisonTrigger.textContent = `Compare ${selectedModels.length} ${selectedModels.length === 1 ? "model" : "models"}`;
+		if (selectedModels.length === 0 && comparison.open) comparison.close();
 		comparisonHead.replaceChildren();
 		comparisonBody.replaceChildren();
 
@@ -280,6 +309,7 @@ const facetMatchMaps = Object.fromEntries(
 
 		const rows: Array<[string, (model: HTMLElement) => string]> = [
 			["Provider", (model) => model.dataset.modelProvider ?? "Not listed"],
+			["Author", (model) => model.dataset.modelAuthor ?? "Not listed"],
 			["Task", (model) => model.dataset.modelTask ?? "Not listed"],
 			[
 				"Context window",
@@ -295,13 +325,6 @@ const facetMatchMaps = Object.fromEntries(
 				"Capabilities",
 				(model) => model.dataset.modelCapabilities || "Not listed",
 			],
-			[
-				"Delivery",
-				(model) =>
-					model.dataset.modelHosting === "hosted"
-						? "Cloudflare-hosted"
-						: "Third-party",
-			],
 			["Zero Data Retention", (model) => model.dataset.modelZdr ?? "No"],
 		];
 		for (const [label, value] of rows) {
@@ -316,6 +339,10 @@ const facetMatchMaps = Object.fromEntries(
 			comparisonBody.append(row);
 		}
 	}
+
+	comparisonTrigger.addEventListener("click", () => {
+		if (selectedModels.length > 0) comparison.showModal();
+	});
 
 	for (const button of compareButtons) {
 		button.addEventListener("click", () => {
