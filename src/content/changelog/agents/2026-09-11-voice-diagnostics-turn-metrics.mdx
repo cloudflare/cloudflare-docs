@@ -61,13 +61,9 @@ const VoiceAgent = withVoice(Agent, {
 
 </TypeScriptExample>
 
-The browser console combines server events with local microphone, connection, and playback events. These events show landmarks such as model start, first model text, first audio, and playback start.
+The browser console combines server lifecycle events with local microphone, connection, and playback events, including model start, first model text, first audio, and playback start. Diagnostics are off by default, and their event names and fields can change.
 
-Diagnostic event names and fields can change. The SDK removes known content fields and does not read arbitrary provider responses. Do not put sensitive data in custom error messages.
-
-`VoiceClient` also exposes typed events for speech-to-text failures, connection errors, and model outcomes. Continuous speech-to-text providers can now report readiness and fatal errors, so a call does not appear ready before its provider connection opens.
-
-Browser diagnostics are off by default. Existing status values and pipeline metrics continue to work.
+`VoiceClient` also exposes typed events for speech-to-text failures, connection errors, and model outcomes. The SDK removes known content fields and does not read arbitrary provider responses, but custom error messages must not contain sensitive data.
 
 Install the release with a compatible Agents SDK version:
 
