@@ -39,12 +39,15 @@ const specialRules: Record<string, string[]> = {
 	"product:email-routing": ["src/content/partials/email-routing/**"],
 };
 
-// Image changelog folders whose names do not match a directory entry.
-const imageChangelogAliases: Record<string, string> = {
+// Changelog folders whose names do not match a directory entry.
+const changelogAliases: Record<string, string> = {
 	"cloudflare-tunnel": "tunnel",
 };
 
 function firstUrlSegment(url: string): string {
+	if (url.startsWith("http")) {
+		url = new URL(url).pathname;
+	}
 	return url.replace(/^\/+|\/+$/g, "").split("/")[0];
 }
 
@@ -73,14 +76,24 @@ async function changelogToProduct(
 			result.set(folder, alias);
 			continue;
 		}
-		const entry = await loadYaml(`src/content/directory/${folder}.yaml`);
+		let entry: Record<string, unknown>;
+		try {
+			entry = await loadYaml(`src/content/directory/${folder}.yaml`);
+		} catch {
+			console.warn(
+				`No directory entry for changelog folder "${folder}"; skipping.`,
+			);
+			continue;
+		}
 		const url =
 			((entry.entry as Record<string, unknown> | undefined)?.url as string) ??
 			"";
-		if (!url)
-			throw new Error(
-				`Missing entry.url in src/content/directory/${folder}.yaml`,
+		if (!url) {
+			console.warn(
+				`Missing entry.url in src/content/directory/${folder}.yaml; skipping.`,
 			);
+			continue;
+		}
 		result.set(folder, firstUrlSegment(url));
 	}
 	return result;
@@ -110,11 +123,11 @@ async function main() {
 	// Changelog folders -> product slug.
 	const changelogToSlug = await changelogToProduct(
 		await readDir("src/content/changelog"),
-		{},
+		changelogAliases,
 	);
 	const changelogImagesToSlug = await changelogToProduct(
 		await readDir("src/assets/images/changelog"),
-		imageChangelogAliases,
+		changelogAliases,
 	);
 
 	const rules: Record<string, string[][]> = {};
