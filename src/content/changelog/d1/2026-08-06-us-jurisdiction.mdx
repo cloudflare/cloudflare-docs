@@ -1,0 +1,20 @@
+---
+title: United States jurisdiction
+description: Create D1 databases that remain within the United States.
+products:
+  - d1
+date: 2026-08-06
+hidden: true
+---
+
+You can create D1 databases with the `us` jurisdiction. These databases run and persist data within the United States.
+
+Use this option for regional data residency requirements.
+
+To create a database with the `us` jurisdiction, run:
+
+```sh
+npx wrangler@latest d1 create db-with-us-jurisdiction --jurisdiction=us
+```
+
+For more information, refer to [D1 data location](/d1/configuration/data-location/).
