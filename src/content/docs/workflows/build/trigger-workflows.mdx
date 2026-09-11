@@ -248,6 +248,57 @@ Restarting an instance will immediately cancel any in-progress steps, erase any 
 
 To restart an instance from a specific step instead of the beginning, refer to [`restart`](/workflows/build/workers-api/#restart) in the Workers API reference.
 
+### Delete Workflow instances
+
+Deleting an instance removes its stored state. A running instance is terminated before its state is removed.
+
+Delete one instance by calling `delete()` on its handle:
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
+```
+
+</TypeScriptExample>
+
+If a Workflow deletes its own instance, execution stops during `await instance.delete()`. Code after the call does not run.
+
+Delete up to 100 instances in one call with `deleteBatch()`:
+
+<TypeScriptExample>
+
+```ts
+const result = await env.MY_WORKFLOW.deleteBatch([
+	"instance-abc",
+	"instance-def",
+]);
+
+console.log(result.deleted); // [{ id: "instance-abc" }, { id: "instance-def" }]
+console.log(result.errors); // Per-instance failures, if any
+```
+
+</TypeScriptExample>
+
+Missing IDs are returned as per-instance errors. Duplicate IDs are deleted once, and the result includes one entry for each input position.
+
+Wrangler accepts one or more instance IDs or a JSON file containing an array of IDs. You can combine positional IDs with `--filename`, up to 100 IDs total.
+
+```json title="instance-ids.json"
+["instance-abc", "instance-def"]
+```
+
+```sh
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID>
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> <INSTANCE_ID>
+npx wrangler workflows instances delete <WORKFLOW_NAME> --filename ./instance-ids.json
+# For local Workflow instances during wrangler dev:
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> --local
+```
+
+For the full APIs, refer to [`delete`](/workflows/build/workers-api/#delete) and [`deleteBatch`](/workflows/build/workers-api/#deletebatch).
+
 ### Trigger a Workflow from another Workflow
 
 You can create a new Workflow instance from within a step of another Workflow. The parent Workflow will not block waiting for the child Workflow to complete — it continues execution immediately after the child instance is successfully created.

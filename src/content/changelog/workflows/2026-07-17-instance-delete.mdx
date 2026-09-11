@@ -1,0 +1,48 @@
+---
+title: Delete Workflow instances individually or in batches
+description: Delete one or up to 100 Workflow instances and their stored state using a binding or Wrangler.
+products:
+  - workflows
+  - workers
+date: 2026-07-17 12:00:00 UTC
+---
+
+You can now delete one or up to 100 Workflow instances and their stored state via the [Workflows API](/workflows/build/workers-api/) or Wrangler CLI. After deletion, the stored state from those instances no longer counts toward your Workflows storage bill. Running instances are terminated before deletion.
+
+Delete one instance by calling [`delete()`](/workflows/build/workers-api/#delete) on its handle:
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
+```
+
+If a Workflow deletes its own instance, execution stops during `await instance.delete()`. Code after the call does not run.
+
+Delete multiple instances by calling [`deleteBatch()`](/workflows/build/workers-api/#deletebatch) on the Workflow binding:
+
+```ts
+const result = await env.MY_WORKFLOW.deleteBatch([
+	"instance-abc",
+	"instance-def",
+]);
+
+console.log(result.deleted);
+console.log(result.errors);
+```
+
+The batch result contains successfully deleted IDs and per-instance errors. IDs that do not exist are returned as errors. Duplicate IDs are deleted once, and the result includes one entry for each input position.
+
+Wrangler accepts positional instance IDs, a JSON file containing an array of IDs, or both, up to 100 IDs total. Use `--local` against a local `wrangler dev` session:
+
+```json title="instance-ids.json"
+["instance-abc", "instance-def"]
+```
+
+```sh
+npx wrangler workflows instances delete my-workflow <INSTANCE_ID>
+npx wrangler workflows instances delete my-workflow <INSTANCE_ID> <INSTANCE_ID>
+npx wrangler workflows instances delete my-workflow --filename ./instance-ids.json
+npx wrangler workflows instances delete my-workflow <INSTANCE_ID> --local
+```
+
+For more information, refer to [Delete Workflow instances](/workflows/build/trigger-workflows/#delete-workflow-instances), [`delete`](/workflows/build/workers-api/#delete), and [`deleteBatch`](/workflows/build/workers-api/#deletebatch).

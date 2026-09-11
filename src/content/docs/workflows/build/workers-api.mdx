@@ -509,6 +509,41 @@ Returns an array of `WorkflowInstance`.
 
 Unlike [`create`](/workflows/build/workers-api/#create), this operation is idempotent and will not fail if an ID is already in use. If an existing instance with the same ID is still within its [retention limit](/workflows/reference/limits/), it will be skipped and excluded from the returned array.
 
+### deleteBatch
+
+Delete up to 100 Workflow instances and their stored state.
+
+`deleteBatch(instanceIds: string[])` returns a `Promise<WorkflowBatchDeleteResult>`. The `instanceIds` argument contains the IDs of the Workflow instances to delete.
+
+<TypeScriptExample>
+
+```ts
+const result = await env.MY_WORKFLOW.deleteBatch([
+	"instance-abc",
+	"instance-def",
+]);
+```
+
+</TypeScriptExample>
+
+The operation returns successes and per-instance failures:
+
+```ts
+type WorkflowBatchDeleteResult = {
+	deleted: { id: string }[];
+	errors: {
+		id: string;
+		code: number;
+		message: string;
+	}[];
+};
+```
+
+- `deleted` contains the IDs that were deleted successfully.
+- `errors` contains failures identified by instance ID, with a stable error code and message.
+
+Duplicate IDs are deleted once, and the result includes one entry for each input position. An ID whose instance does not exist is included in `errors`. A running instance is terminated before its stored state is removed.
+
 ### get
 
 Get a specific Workflow instance by ID.
@@ -606,6 +641,10 @@ declare abstract class WorkflowInstance {
 	 * Restart the instance from the beginning, or from a specific step.
 	 */
 	public restart(options?: WorkflowInstanceRestartOptions): Promise<void>;
+	/**
+	 * Delete the instance and its stored state.
+	 */
+	public delete(): Promise<void>;
 	/**
 	 * Returns the current status of the instance.
 	 */
@@ -719,6 +758,23 @@ interface WorkflowInstanceTerminateOptions {
 	rollback?: boolean;
 }
 ```
+
+### delete
+
+Delete a Workflow instance and its stored state.
+
+- <code>delete(): Promise&lt;void&gt;</code>
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
+```
+
+</TypeScriptExample>
+
+If a Workflow deletes its own instance, execution stops during `await instance.delete()`. Code after the call does not run.
 
 ### sendEvent
 
