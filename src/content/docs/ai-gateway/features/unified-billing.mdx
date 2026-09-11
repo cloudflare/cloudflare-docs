@@ -74,7 +74,7 @@ The `cf-aig-byok-alias` header selects a non-default alias only on [direct provi
 
 Unified Billing works in two ways: through the AI binding or through the HTTP API. Both deduct credits from your account automatically without requiring provider API keys.
 
-To use credits for Workers AI, [configure the gateway's Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) as **Unified billing**. Workers AI requests routed through that gateway deduct from your prepaid credit balance in real time. In the AI binding, include the gateway ID in the third argument to `env.AI.run()`. For REST API requests, include the `cf-aig-gateway-id` header. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#frontier-models).
+To use credits for Workers AI, [configure the gateway's Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) as **Unified billing**. Workers AI requests routed through that gateway deduct from your prepaid credit balance in real time. In the AI binding, include the gateway ID in the third argument to `env.AI.run()`. For REST API requests, include the `cf-aig-gateway-id` header. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#paid-models).
 
 ### AI binding
 

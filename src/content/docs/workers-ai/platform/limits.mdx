@@ -51,23 +51,16 @@ Rate limits are default per task type, with some per-model limits defined as fol
 
 ### [Text Generation](/workers-ai/models/)
 
-- 300 requests per minute
-- [@hf/thebloke/mistral-7b-instruct-v0.1-awq](/workers-ai/models/mistral-7b-instruct-v0.1-awq/) is 400 requests per minute
-- [@cf/microsoft/phi-2](/workers-ai/models/phi-2/) is 720 requests per minute
-- [@cf/qwen/qwen1.5-0.5b-chat](/workers-ai/models/qwen1.5-0.5b-chat/) is 1500 requests per minute
-- [@cf/qwen/qwen1.5-1.8b-chat](/workers-ai/models/qwen1.5-1.8b-chat/) is 720 requests per minute
-- [@cf/qwen/qwen1.5-14b-chat-awq](/workers-ai/models/qwen1.5-14b-chat-awq/) is 150 requests per minute
-- [@cf/tinyllama/tinyllama-1.1b-chat-v1.0](/workers-ai/models/tinyllama-1.1b-chat-v1.0/) is 720 requests per minute
+- 300 requests per minute, unless the model requires the Workers Paid plan
 
-#### Frontier models
+#### Paid models
 
-The following limits apply per account, per model:
+The following limits apply per account, per model to any model that requires the [Workers Paid plan](/workers/platform/pricing/#workers) — each model page states whether it does. These models are the only models that do not receive the default limit:
 
-| Model                                                               | Standard Workers AI billing | Prepaid AI Gateway credits |
-| ------------------------------------------------------------------- | --------------------------- | -------------------------- |
-| [@cf/moonshotai/kimi-k2.6](/workers-ai/models/kimi-k2.6/)           | 20 requests per minute      | 50 requests per minute     |
-| [@cf/moonshotai/kimi-k2.7-code](/workers-ai/models/kimi-k2.7-code/) | 20 requests per minute      | 50 requests per minute     |
-| [@cf/zai-org/glm-5.2](/workers-ai/models/glm-5.2/)                  | 20 requests per minute      | 50 requests per minute     |
+| Billing                     | Rate limit             |
+| --------------------------- | ---------------------- |
+| Standard Workers AI billing | 20 requests per minute |
+| Prepaid AI Gateway credits  | 50 requests per minute |
 
 To receive the elevated limit, load [prepaid AI Gateway credits](/ai-gateway/features/unified-billing/) and set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**. These limits are designed for typical agentic and coding workloads, where requests to frontier models can take longer to complete.
 
