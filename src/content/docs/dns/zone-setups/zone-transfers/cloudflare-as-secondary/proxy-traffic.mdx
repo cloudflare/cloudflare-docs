@@ -23,6 +23,12 @@ Only A, AAAA, and CNAME records can be proxied.
 
 :::
 
+:::note
+
+For full traffic coverage through Cloudflare (required for Spectrum, WAF, CDN), use a hidden primary configuration where your primary DNS server is not listed at the registrar. If both your primary and Cloudflare nameservers are listed at the registrar, resolvers will split queries between them and ~50% of traffic will bypass Cloudflare.
+
+:::
+
 ## Prerequisites
 
 Before you set up Secondary DNS override, make sure that you have:
