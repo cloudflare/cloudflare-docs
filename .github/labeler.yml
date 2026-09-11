@@ -649,6 +649,7 @@ product:sandbox:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/sandbox/**
+          - src/assets/images/sandbox/**
           - src/content/changelog/sandbox/**
           - src/assets/images/changelog/sandbox/**
 
