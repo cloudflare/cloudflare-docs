@@ -268,6 +268,8 @@ const appVite = {
 	plugins: [tailwindcss(), componentsBarrelSideEffects, iconAlias],
 };
 
+const parallelPrerender = process.env.PARALLEL_PRERENDER === "true";
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
@@ -276,8 +278,10 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
+	...(parallelPrerender ? { build: { concurrency: 4 } } : {}),
 	experimental: {
 		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
+		parallelPrerender,
 	},
 	markdown,
 	image: {
