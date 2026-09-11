@@ -9,7 +9,9 @@ products:
 ---
 
 import {
+	CardGrid,
 	InlineBadge,
+	LinkCard,
 	TypeScriptExample,
 	WranglerConfig,
 	PackageManagers,
@@ -214,7 +216,7 @@ export class MyAgent extends VoiceAgent<Env> {
 
 ### `onTurn(transcript, context)`
 
-**Required.** Called when the user finishes speaking and the transcript is ready.
+**Required.** Called when the user finishes speaking and the transcript is ready. `context.messages` contains completed conversation history before this transcript. Append `transcript` exactly once when constructing an LLM message list.
 
 Return a `string`, `AsyncIterable<string>`, or `ReadableStream` for streaming responses.
 
@@ -272,11 +274,11 @@ export class MyAgent extends VoiceAgent<Env> {
 
 The `context` object provides:
 
-| Field        | Type                                       | Description                        |
-| ------------ | ------------------------------------------ | ---------------------------------- |
-| `connection` | `Connection`                               | The WebSocket connection           |
-| `messages`   | `Array<{ role: string; content: string }>` | Conversation history from SQLite   |
-| `signal`     | `AbortSignal`                              | Aborted on interrupt or disconnect |
+| Field        | Type                                       | Description                             |
+| ------------ | ------------------------------------------ | --------------------------------------- |
+| `connection` | `Connection`                               | The WebSocket connection                |
+| `messages`   | `Array<{ role: string; content: string }>` | Completed history before the transcript |
+| `signal`     | `AbortSignal`                              | Aborted on interrupt or disconnect      |
 
 ### Lifecycle hooks
 
@@ -607,11 +609,13 @@ export class CustomAgent extends VoiceAgent<Env> {
 
 ### Third-party providers
 
-| Package                        | Class           | Description             |
-| ------------------------------ | --------------- | ----------------------- |
-| `@cloudflare/voice-deepgram`   | `DeepgramSTT`   | Continuous STT          |
-| `@cloudflare/voice-elevenlabs` | `ElevenLabsTTS` | High-quality TTS        |
-| `@cloudflare/voice-twilio`     | `TwilioAdapter` | Telephony (phone calls) |
+| Package                        | Class                    | Description             |
+| ------------------------------ | ------------------------ | ----------------------- |
+| `@cloudflare/voice-deepgram`   | `DeepgramSTT`            | Continuous STT          |
+| `@cloudflare/voice-elevenlabs` | `ElevenLabsTTS`          | High-quality TTS        |
+| `@cloudflare/voice-telnyx`     | `TelnyxSTT`, `TelnyxTTS` | STT, TTS, and telephony |
+| `@cloudflare/voice-twilio`     | `TwilioAdapter`          | Telephony (phone calls) |
+| `@cloudflare/voice-plivo`      | `PlivoAdapter`           | Telephony (phone calls) |
 
 **ElevenLabs TTS:**
 
@@ -648,21 +652,99 @@ export class MyAgent extends VoiceAgent<Env> {
 
 </TypeScriptExample>
 
-## Telephony (Twilio)
+**Telnyx STT and TTS:**
 
-Connect phone calls to your voice agent using the Twilio adapter:
+Import from the `/stt` and `/tts` subpaths, which are server-safe:
 
-```sh
-npm install @cloudflare/voice-twilio
+<TypeScriptExample>
+
+```ts
+import { TelnyxSTT } from "@cloudflare/voice-telnyx/stt";
+import { TelnyxTTS } from "@cloudflare/voice-telnyx/tts";
+
+export class MyAgent extends VoiceAgent<Env> {
+	transcriber = new TelnyxSTT({
+		apiKey: this.env.TELNYX_API_KEY,
+		engine: "Telnyx", // or "Deepgram"
+		interimResults: true,
+	});
+	tts = new TelnyxTTS({
+		apiKey: this.env.TELNYX_API_KEY,
+		voice: "Telnyx.NaturalHD.astra",
+	});
+}
 ```
 
-The adapter bridges Twilio Media Streams to your VoiceAgent:
+</TypeScriptExample>
+
+`TelnyxTTS` defaults to `backend: "rest"`. Set `backend: "websocket"` for lower time-to-first-audio. That backend requires the Workers runtime.
+
+## Telephony
+
+Telephony connects phone calls to the same `withVoice` agent that serves your browser clients. The call shares that agent instance's conversation history, state, tools, and schedules, so one agent can answer the phone and the web.
+
+Providers take one of two approaches, which determines where call audio arrives and what you have to deploy:
+
+| Provider | Approach                           | Call audio arrives at | Best for                                       |
+| -------- | ---------------------------------- | --------------------- | ---------------------------------------------- |
+| Twilio   | Server-side adapter in your Worker | Your Worker           | Inbound numbers answered server-side           |
+| Plivo    | Server-side adapter in your Worker | Your Worker           | Inbound numbers answered server-side           |
+| Telnyx   | Browser WebRTC bridge              | The browser           | Softphone and click-to-call in an app you ship |
+
+### Server-side adapters (Twilio and Plivo)
+
+Install the adapter for your provider:
+
+<PackageManagers pkg="@cloudflare/voice-twilio" />
+
+<PackageManagers pkg="@cloudflare/voice-plivo" />
+
+The adapter terminates the provider's audio WebSocket in your Worker and converts between the provider's 8 kHz mulaw audio and the agent's 16 kHz PCM protocol:
 
 ```txt
-Phone → Twilio → WebSocket → TwilioAdapter → WebSocket → VoiceAgent
+Phone → provider → WebSocket → adapter → WebSocket → VoiceAgent
 ```
 
-`WorkersAITTS` returns MP3, which cannot be decoded to PCM in the Workers runtime. When using the Twilio adapter, use a TTS provider that outputs raw PCM (for example, ElevenLabs with `outputFormat: "pcm_16000"`).
+No browser is involved. Each adapter exposes a `handleRequest()` method that you call from your `fetch` handler for the provider's WebSocket path, and by default each call gets its own agent instance named after the provider's call identifier.
+
+Beyond that path, the two providers differ in what they need from you. Twilio is configured with TwiML that points at your Worker. Plivo needs a second route — an answer URL returning XML that tells Plivo where to open the audio WebSocket — plus an application that links your phone number to that answer URL.
+
+### Browser WebRTC bridge (Telnyx)
+
+<PackageManagers pkg="@cloudflare/voice-telnyx" />
+
+Telnyx bridges the PSTN call through WebRTC in the browser and reuses your existing voice client transport:
+
+```txt
+Phone ↔ Telnyx ↔ WebRTC ↔ browser bridge ↔ WebSocket → VoiceAgent
+```
+
+Because the browser holds the WebRTC session, it needs a short-lived Telnyx credential — never your API key. `TelnyxJWTEndpoint` mints those tokens server-side and requires an `authorize` callback, so a public route cannot mint credentials for arbitrary callers. Telephony needs `TELNYX_CREDENTIAL_CONNECTION_ID` alongside `TELNYX_API_KEY`.
+
+Telnyx also provides STT and TTS, so it can supply the whole pipeline. Refer to [Third-party providers](#third-party-providers) for those.
+
+### PCM output for telephony
+
+`WorkersAITTS` returns MP3, which cannot be decoded to PCM in the Workers runtime. With the Twilio or Plivo adapter, use a TTS provider that outputs raw PCM — for example ElevenLabs with `outputFormat: "pcm_16000"`, or a Workers AI model called with `encoding: "linear16"` and `container: "none"`.
+
+This constraint does not apply to Telnyx, where the browser decodes audio before playback.
+
+### Complete examples
+
+Each adapter ships a runnable example with the Worker routes, provider configuration, and deployment steps:
+
+<CardGrid>
+	<LinkCard
+		title="Plivo voice agent"
+		href="https://github.com/cloudflare/agents/tree/main/examples/plivo-voice-agent"
+		description="Answer inbound Plivo calls in a Worker, including the answer URL and application setup."
+	/>
+	<LinkCard
+		title="Telnyx voice agent"
+		href="https://github.com/cloudflare/agents/tree/main/examples/telnyx-voice-agent"
+		description="Bridge PSTN calls through the browser, including the JWT endpoint and client wiring."
+	/>
+</CardGrid>
 
 ## Text messages
 
@@ -759,11 +841,12 @@ const { metrics } = useVoiceAgent({ agent: "MyAgent" });
 
 ## Conversation history
 
-`withVoice` automatically persists conversation messages to SQLite. Access history in your `onTurn` via `context.messages`, or directly:
+`withVoice` automatically persists conversation messages to SQLite. In `onTurn()`, `context.messages` is a snapshot of the completed history before the current transcript. The pipeline persists the current transcript before invoking the hook. Therefore, a direct `getConversationHistory()` call inside `onTurn()` includes it.
 
 <TypeScriptExample>
 
 ```ts
+// Get stored history, including the current transcript during onTurn()
 const history = this.getConversationHistory(20);
 
 this.saveMessage("assistant", "Welcome! How can I help?");
