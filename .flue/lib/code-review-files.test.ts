@@ -223,18 +223,11 @@ describe("selectCodeReviewFiles", () => {
 		expect(result.map((f) => f.filename)).toEqual(["b.ts", "a.ts", "c.ts"]);
 	});
 
-	it("caps at maxFiles (default 20)", () => {
+	it("returns every eligible file", () => {
 		const files = Array.from({ length: 25 }, (_, i) =>
 			makeFile({ filename: `file-${i}.ts`, additions: i + 1 }),
 		);
-		expect(selectCodeReviewFiles(files)).toHaveLength(20);
-	});
-
-	it("respects custom maxFiles", () => {
-		const files = Array.from({ length: 10 }, (_, i) =>
-			makeFile({ filename: `file-${i}.ts`, additions: i + 1 }),
-		);
-		expect(selectCodeReviewFiles(files, 3)).toHaveLength(3);
+		expect(selectCodeReviewFiles(files)).toHaveLength(25);
 	});
 
 	it("includes normal source and MDX files", () => {

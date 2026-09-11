@@ -59,17 +59,20 @@ import {
 import { fetchFilesForDiffMode } from "./lib/diff-fetch";
 import {
 	selectCodeReviewFiles,
+	parseAddedLines,
+	mergeCodeReviewResults,
 	type CodeReviewPullRequest,
 } from "./lib/code-review-files";
 import {
 	selectStyleGuideFiles,
-	type StyleGuidePullRequest,
+	mergeStyleGuideResults,
 } from "./lib/style-guide-files";
-import { runCodeReview } from "./lib/run-code-review";
-import { runStyleGuide } from "./lib/run-style-guide";
 import { runConventionsReview } from "./lib/run-conventions-review";
 import { reconcileStream } from "./lib/run-reconcile";
 import { validateStream } from "./lib/run-review-validation";
+import type { PullRequestFile } from "./lib/github";
+import type { ReviewFileWorkflowParams } from "./orchestrators/review-file-workflow";
+export { ReviewFileWorkflow } from "./orchestrators/review-file-workflow";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface ReviewOrchestratorParams {
@@ -86,6 +89,7 @@ export interface ReviewOrchestratorParams {
 
 interface OrchestratorEnv {
 	DOCS_FLUE_BUCKET: R2Bucket;
+	REVIEW_FILE: Workflow<ReviewFileWorkflowParams>;
 	DOCS_FLUE_REVIEW_MODE?: string;
 	[key: string]: unknown;
 }
@@ -133,6 +137,127 @@ function emptyCodeResult(summary: string): CodeReviewResult {
 }
 function emptyStyleResult(summary: string): StyleGuideResult {
 	return { findings: [], summary, reviewedFiles: [] };
+}
+
+const FILE_REVIEW_WAVE_SIZE = 4;
+
+type FileReviewResult = {
+	stream: "code" | "style";
+	result: CodeReviewResult | StyleGuideResult;
+	failed: boolean;
+};
+
+async function reviewFilesInWaves({
+	step,
+	env,
+	runId,
+	prNumber,
+	headSha,
+	pullRequest,
+	codeFiles,
+	styleFiles,
+	repoAgentsMd,
+}: {
+	step: WorkflowStep;
+	env: OrchestratorEnv;
+	runId: string;
+	prNumber: number;
+	headSha: string;
+	pullRequest: CodeReviewPullRequest;
+	codeFiles: PullRequestFile[];
+	styleFiles: PullRequestFile[];
+	repoAgentsMd?: string;
+}): Promise<{ code: CodeReviewResult; style: StyleGuideResult }> {
+	const jobs: ReviewFileWorkflowParams[] = [
+		...codeFiles.map((file, index) => ({
+			parentInstanceId: runId,
+			eventType: `code-file-${index}`,
+			resultKey: `diffs/pr-${prNumber}/runs/${runId}/code-${index}.json`,
+			stream: "code" as const,
+			input: {
+				pullRequest,
+				filename: file.filename,
+				addedLines: file.patch ? parseAddedLines(file.patch) : [],
+				fileContent: "",
+				headSha,
+				...(repoAgentsMd ? { repoAgentsMd } : {}),
+			},
+		})),
+		...styleFiles.map((file, index) => ({
+			parentInstanceId: runId,
+			eventType: `style-file-${index}`,
+			resultKey: `diffs/pr-${prNumber}/runs/${runId}/style-${index}.json`,
+			stream: "style" as const,
+			input: {
+				pullRequest,
+				filename: file.filename,
+				addedLines: file.patch ? parseAddedLines(file.patch) : [],
+				headSha,
+			},
+		})),
+	];
+	const results: FileReviewResult[] = [];
+
+	for (let offset = 0; offset < jobs.length; offset += FILE_REVIEW_WAVE_SIZE) {
+		const wave = jobs.slice(offset, offset + FILE_REVIEW_WAVE_SIZE);
+		const waveNumber = offset / FILE_REVIEW_WAVE_SIZE;
+		await step.do(`launch-file-wave-${waveNumber}`, () =>
+			env.REVIEW_FILE.createBatch(
+				wave.map((job, index) => ({
+					id: `${runId}-file-${offset + index}`,
+					params: job,
+				})),
+			),
+		);
+
+		await Promise.all(
+			wave.map((job) =>
+				step
+					.waitForEvent(`wait-${job.eventType}`, {
+						type: job.eventType,
+						timeout: "15 minutes",
+					})
+					.catch(() => null),
+			),
+		);
+
+		const waveResults = await step.do(
+			`load-file-wave-${waveNumber}`,
+			async (): Promise<FileReviewResult[]> =>
+				Promise.all(
+					wave.map(async (job) => {
+						const object = await env.DOCS_FLUE_BUCKET.get(job.resultKey);
+						if (!object) {
+							return {
+								stream: job.stream,
+								failed: true,
+								result:
+									job.stream === "code"
+										? emptyCodeResult("Code review timed out for this file.")
+										: emptyStyleResult(
+												"Style-guide review timed out for this file.",
+											),
+							};
+						}
+						return JSON.parse(await object.text()) as FileReviewResult;
+					}),
+				),
+		);
+		results.push(...waveResults);
+	}
+
+	return {
+		code: mergeCodeReviewResults(
+			results
+				.filter((result) => result.stream === "code")
+				.map((result) => result.result as CodeReviewResult),
+		),
+		style: mergeStyleGuideResults(
+			results
+				.filter((result) => result.stream === "style")
+				.map((result) => result.result as StyleGuideResult),
+		),
+	};
 }
 
 export class ReviewOrchestrator extends WorkflowEntrypoint<
@@ -261,8 +386,6 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 			base: ctx.prMeta.base,
 			head: ctx.prMeta.head,
 		};
-		const stylePr: StyleGuidePullRequest = codePr;
-
 		// ── 3. Placeholder comment (comment mode only) ──────────────────────────
 		if (reviewMode === "comment") {
 			await step.do("placeholder-comment", async () => {
@@ -285,86 +408,68 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 			});
 		}
 
-		// ── 4. Run the three specialists (concurrent durable steps) ─────────────
-		const [code, style, conventions] = await Promise.all([
-			step.do<CodeSpecialistOutput>("code-review", async () => {
+		// ── 4. Select once, then run bounded per-file child Workflows ──────────
+		const filePlan = await step.do("select-file-reviews", async () => {
+			const token = await getInstallationToken(ghEnv);
+			const { files } = await fetchFilesForDiffMode(
+				token,
+				number,
+				ctx.diffMode,
+			);
+			const codeFiles = selectCodeReviewFiles(files);
+			return {
+				codeFiles,
+				styleFiles: selectStyleGuideFiles(files),
+				repoAgentsMd:
+					codeFiles.length > 0
+						? ((await getRepoFileContent(
+								token,
+								"AGENTS.md",
+								ctx.prMeta.base,
+							).catch(() => null)) ?? undefined)
+						: undefined,
+			};
+		});
+
+		const [fileSpecialists, conventions] = await Promise.all([
+			(async (): Promise<{
+				code: CodeSpecialistOutput;
+				style: StyleSpecialistOutput;
+			}> => {
 				try {
-					const token = await getInstallationToken(ghEnv);
-					const { files } = await fetchFilesForDiffMode(
-						token,
-						number,
-						ctx.diffMode,
-					);
-					const selected = selectCodeReviewFiles(files);
-					const repoAgentsMd =
-						selected.length > 0
-							? ((await getRepoFileContent(
-									token,
-									"AGENTS.md",
-									ctx.prMeta.base,
-								).catch(() => null)) ?? undefined)
-							: undefined;
-					const result = await runCodeReview({
-						token,
-						headSha,
-						repoAgentsMd,
+					const result = await reviewFilesInWaves({
+						step,
+						env,
+						runId,
 						prNumber: number,
+						headSha,
 						pullRequest: codePr,
-						files: selected,
-						runId,
-					});
-					return { ok: true, result };
-				} catch (err) {
-					console.error({
-						message: `Code review specialist failed (degraded): PR #${number} — ${err instanceof Error ? err.message : String(err)}`,
-						event: "review_orchestrator",
-						number,
-						runId,
-						action: "code_specialist_degraded",
+						codeFiles: filePlan.codeFiles,
+						styleFiles: filePlan.styleFiles,
+						repoAgentsMd: filePlan.repoAgentsMd,
 					});
 					return {
-						ok: false,
-						result: emptyCodeResult(
-							"Code review could not complete — prior findings carried forward.",
-						),
+						code: { ok: true, result: result.code },
+						style: { ok: true, result: result.style },
 					};
-				}
-			}),
-
-			step.do<StyleSpecialistOutput>("style-guide", async () => {
-				try {
-					const token = await getInstallationToken(ghEnv);
-					const { files } = await fetchFilesForDiffMode(
-						token,
-						number,
-						ctx.diffMode,
-					);
-					const selected = selectStyleGuideFiles(files);
-					const result = await runStyleGuide({
-						prNumber: number,
-						pullRequest: stylePr,
-						files: selected,
-						runId,
-						headSha,
-					});
-					return { ok: true, result };
 				} catch (err) {
-					console.error({
-						message: `Style-guide specialist failed (degraded): PR #${number} — ${err instanceof Error ? err.message : String(err)}`,
-						event: "review_orchestrator",
-						number,
-						runId,
-						action: "style_specialist_degraded",
-					});
+					console.error(`File review fan-out failed for PR #${number}`, err);
 					return {
-						ok: false,
-						result: emptyStyleResult(
-							"Style-guide review could not complete — prior findings carried forward.",
-						),
+						code: {
+							ok: false,
+							result: emptyCodeResult(
+								"Code review could not complete - prior findings carried forward.",
+							),
+						},
+						style: {
+							ok: false,
+							result: emptyStyleResult(
+								"Style-guide review could not complete - prior findings carried forward.",
+							),
+						},
 					};
 				}
-			}),
-
+			})(),
 			step.do<CodeSpecialistOutput>("conventions", async () => {
 				try {
 					const token = await getInstallationToken(ghEnv);
@@ -426,6 +531,7 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 				}
 			}),
 		]);
+		const { code, style } = fileSpecialists;
 
 		// ── 5. Reconcile each stream against prior findings + human comments ────
 		const reconciled = await step.do<ReconcileOutput>("reconcile", async () => {

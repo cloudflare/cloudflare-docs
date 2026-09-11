@@ -20,10 +20,9 @@ export interface StyleGuidePullRequest {
 	head: string;
 }
 
-// Only review docs/partials/changelog MDX, capped before fan-out.
+// Only review docs/partials/changelog MDX.
 export const STYLE_GUIDE_REVIEWABLE_PATH_RE =
 	/^src\/content\/(docs|partials|changelog)\/.+\.mdx$/;
-export const STYLE_GUIDE_MAX_FILES = 20;
 // Default fan-out concurrency; bounds how many per-file reads the driver awaits
 // at once (each file is its own agent instance / Durable Object).
 export const STYLE_GUIDE_CONCURRENCY = 2;
@@ -38,8 +37,8 @@ export type PullRequestFiles = Awaited<ReturnType<typeof getPullRequestFiles>>;
 
 /**
  * Select files eligible for style-guide review from the full PR file list.
- * Filters to reviewable MDX paths, requires additions and a patch, and caps
- * at STYLE_GUIDE_MAX_FILES (sorted largest-first).
+ * Filters to reviewable MDX paths, requires additions and a patch, sorted
+ * largest-first. The Workflow scheduler applies concurrency limits.
  */
 export function selectStyleGuideFiles(
 	files: PullRequestFiles,
@@ -51,8 +50,10 @@ export function selectStyleGuideFiles(
 				file.additions > 0 &&
 				file.patch,
 		)
-		.sort((a, b) => b.additions - a.additions)
-		.slice(0, STYLE_GUIDE_MAX_FILES);
+		.sort(
+			(a, b) =>
+				b.additions - a.additions || a.filename.localeCompare(b.filename),
+		);
 }
 
 /**

@@ -135,7 +135,7 @@ export default function ConventionsReviewer(_props: AgentProps): string {
 			input: ConventionsReviewSchema,
 			run: ({ data }) => {
 				writeReview(data);
-				return "Conventions review recorded.";
+				return { output: "Conventions review recorded.", terminate: true };
 			},
 		}),
 	);
