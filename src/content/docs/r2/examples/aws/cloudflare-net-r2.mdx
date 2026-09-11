@@ -1,0 +1,184 @@
+---
+title: Cloudflare.NET.R2
+description: Configure Cloudflare.NET.R2, a community .NET SDK, to work with Cloudflare R2 object storage.
+pcx_content_type: example
+reviewed: 2026-07-29
+products:
+  - r2
+---
+
+import { Render } from "~/components";
+
+:::note
+
+Cloudflare.NET.R2 is a community-maintained .NET SDK. For questions or issues, refer to the [GitHub repository](https://github.com/Alos-no/Cloudflare.NET).
+
+:::
+
+<Render file="keys" product="r2" />
+<br />
+
+This example uses the [Cloudflare.NET.R2](https://www.nuget.org/packages/Cloudflare.NET.R2) package, a community .NET SDK for R2 built on the S3-compatible API. It provides typed operations for uploads, downloads, presigned URLs, and batch deletes, configured through dependency injection and `appsettings.json`. Each operation returns Class A/B operation counts and bytes transferred, which you can use to track costs. Compared to [aws-sdk-net](/r2/examples/aws/aws-sdk-net/), it does not require manual endpoint construction or R2-specific workarounds such as `DisablePayloadSigning`.
+
+For full API documentation, refer to the [Cloudflare.NET.R2 documentation](https://alos.no/cfnet/articles/r2/index.html).
+
+## Install
+
+```sh
+dotnet add package Cloudflare.NET.R2
+```
+
+## Configure
+
+Add your account ID and R2 credentials to `appsettings.json`:
+
+```json
+{
+  "Cloudflare": {
+    "AccountId": "<ACCOUNT_ID>"
+  },
+  "R2": {
+    "AccessKeyId": "<ACCESS_KEY_ID>",
+    "SecretAccessKey": "<SECRET_ACCESS_KEY>"
+  }
+}
+```
+
+Register the R2 client in `Program.cs`:
+
+```csharp
+builder.Services.AddCloudflareR2Client(builder.Configuration);
+```
+
+Inject `IR2Client` into your services. The methods shown in the sections below are members of this class, so they access the client through the primary-constructor parameter `r2`:
+
+```csharp
+public class StorageService(IR2Client r2)
+{
+    // The example methods below belong to this class
+}
+```
+
+## List objects
+
+The `ListObjectsAsync` method returns all objects and handles pagination internally:
+
+```csharp
+public async Task ListObjectsAsync(string bucket)
+{
+    var result = await r2.ListObjectsAsync(bucket, prefix: null);
+
+    foreach (var obj in result.Data)
+    {
+        Console.WriteLine($"{obj.Key} ({obj.Size} bytes)");
+    }
+
+    Console.WriteLine($"List operations: {result.Metrics.ClassAOperations}");
+}
+```
+
+```sh output
+dog.png (24576 bytes)
+cat.png (32768 bytes)
+List operations: 1
+```
+
+You can filter by prefix:
+
+```csharp
+var result = await r2.ListObjectsAsync(bucket, prefix: "images/");
+```
+
+## Upload objects
+
+The `UploadAsync` method selects single-part or multipart upload based on file size:
+
+```csharp
+// Upload from file path
+public async Task UploadFileAsync(string bucket, string key, string filePath)
+{
+    var result = await r2.UploadAsync(bucket, key, filePath);
+    Console.WriteLine($"Uploaded {result.IngressBytes} bytes");
+}
+
+// Upload from stream
+public async Task UploadStreamAsync(string bucket, string key, Stream stream)
+{
+    var result = await r2.UploadAsync(bucket, key, stream);
+    Console.WriteLine($"Uploaded {result.IngressBytes} bytes");
+}
+```
+
+```sh output
+Uploaded 24576 bytes
+```
+
+To run a multipart upload explicitly:
+
+```csharp
+var result = await r2.UploadMultipartAsync(bucket, key, largeFileStream);
+```
+
+## Download objects
+
+```csharp
+// Download to file
+public async Task DownloadToFileAsync(string bucket, string key, string filePath)
+{
+    var result = await r2.DownloadFileAsync(bucket, key, downloadPath: filePath);
+    Console.WriteLine($"Downloaded {result.EgressBytes} bytes");
+}
+
+// Download to stream
+public async Task DownloadToStreamAsync(string bucket, string key, Stream outputStream)
+{
+    var result = await r2.DownloadFileAsync(bucket, key, outputStream: outputStream);
+    Console.WriteLine($"Downloaded {result.EgressBytes} bytes");
+}
+```
+
+## Generate presigned URLs
+
+Generate a presigned PUT URL for direct client uploads. The signature covers the declared content length and content type, so the upload fails if the client sends different values:
+
+```csharp
+public string GetPresignedUploadUrl(string bucket, string key, long fileSize, string contentType)
+{
+    return r2.CreatePresignedPutUrl(bucket, new PresignedPutRequest(
+        Key: key,
+        ExpiresAfter: TimeSpan.FromMinutes(15),
+        ContentLength: fileSize,
+        ContentType: contentType
+    ));
+}
+```
+
+```sh output
+https://<ACCOUNT_ID>.r2.cloudflarestorage.com/my-bucket/file.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...&X-Amz-Signature=...
+```
+
+For presigned multipart part URLs, refer to the [presigned URLs documentation](https://alos.no/cfnet/articles/r2/presigned-urls.html).
+
+## Delete objects
+
+```csharp
+public async Task DeleteAsync(string bucket)
+{
+    // Delete a single object (free operation)
+    await r2.DeleteObjectAsync(bucket, "file.txt");
+
+    // Batch delete (up to 1000 keys per request)
+    await r2.DeleteObjectsAsync(bucket, new[] { "file1.txt", "file2.txt" });
+}
+```
+
+## Bucket management
+
+To create, list, and delete buckets, use the companion REST API client (`Cloudflare.NET.Api`). Refer to the [bucket management documentation](https://alos.no/cfnet/articles/accounts/r2/buckets.html).
+
+## Related resources
+
+- [Cloudflare.NET.R2 documentation](https://alos.no/cfnet/articles/r2/index.html)
+- [Bucket management (REST API)](https://alos.no/cfnet/articles/accounts/r2/buckets.html)
+- [GitHub repository](https://github.com/Alos-no/Cloudflare.NET)
+- [NuGet package](https://www.nuget.org/packages/Cloudflare.NET.R2)
