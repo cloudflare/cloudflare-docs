@@ -94,7 +94,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 | Product                     | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --------------------------- | --------------- | ----------------- | -------------------------- |
-| Argo Smart Routing          | ✅              | ✘ [^9]            | ✘ [^10]                    |
+| Argo Smart Routing          | ✅              | ✅                | ✘ [^10]                    |
 | Static IP/BYOIP             | ⚫️             | ✅ [^26]          | ⚫️                        |
 | Cloudflare Network Firewall | ⚫️             | ⚫️               | ✅                         |
 | Network Flow                | ⚫️             | ⚫️               | 🚧 [^1]                    |
@@ -140,8 +140,6 @@ The tables below show whether each Cloudflare product is compatible with each DL
 [^7]: [Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 [^8]: Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
-
-[^9]: Argo cannot be used with Regional Services.
 
 [^10]: Argo cannot be used with Customer Metadata Boundary.
 
