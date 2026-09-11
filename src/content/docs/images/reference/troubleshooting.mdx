@@ -77,3 +77,16 @@ Image requests consists of two parts: running Worker code, and image processing.
 Because responses from Workers themselves are not cached at the edge, purging of _Worker URLs_ does nothing. Resized image variants are cached together under their source’s URL. When purging, use the (full-size) source image’s URL, rather than URLs of the Worker that requested resizing.
 
 If the origin server sends an `Etag` HTTP header, the resized images will have an `Etag` HTTP header that has a format `cf-<gibberish>:<etag of the original image>`. You can compare the second part with the `Etag` header of the source image URL to check if the resized image is up to date.
+
+### Purge when using URL rewrite rules
+
+If you use [URL rewrite rules](/images/optimization/transformations/rewrite-rules/) to send image requests through `/cdn-cgi/image/`, rewrite rules are also evaluated on purge requests. This can cause a single-file purge to return a success response without clearing the cached image.
+
+To resolve this, exclude purge requests from the rewrite rule by adding the following to the rule expression:
+
+```txt
+and (not (http.request.method eq "PURGE"))
+```
+
+
+If you cannot modify your rewrite rules, [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/) and [purge by cache tag](/cache/how-to/purge-cache/purge-by-tags/) are alternatives.
