@@ -1,0 +1,413 @@
+<figure
+	class="realtimekit-meeting-diagram not-content"
+	aria-label="A Meeting is a persistent, reusable virtual room with a stable identity and active or inactive status. A weekly standup can reuse the same Meeting each week while its schedule remains in an external app or calendar."
+>
+	<div class="rtmd-stage">
+		<div class="rtmd-comparison">
+			<div class="rtmd-group">
+				<span class="rtmd-group-label">Meeting abstraction</span>
+
+				<div class="rtmd-card">
+					<div class="rtmd-card-head">persistent room record</div>
+					<div class="rtmd-card-title">
+						<span class="rtmd-icon" aria-hidden="true">
+							<svg viewBox="0 0 20 20" fill="none">
+								<rect x="3.5" y="5" width="9.5" height="10" rx="2"></rect>
+								<path d="m13 8 3.5-2v8L13 12"></path>
+							</svg>
+						</span>
+						<span>
+							<strong>Meeting</strong>
+							<small>Reusable virtual room</small>
+						</span>
+					</div>
+
+					<dl class="rtmd-fields">
+						<div>
+							<dt>identity</dt>
+							<dd>Stable ID + title</dd>
+						</div>
+						<div>
+							<dt>status</dt>
+							<dd>ACTIVE or INACTIVE</dd>
+						</div>
+						<div>
+							<dt>reuse</dt>
+							<dd>Same Meeting over time</dd>
+						</div>
+					</dl>
+
+					<div class="rtmd-facts">
+						<span>No scheduled time</span>
+						<span>No start or end</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="rtmd-bridge" aria-hidden="true">
+				<svg viewBox="0 0 40 16" fill="none">
+					<path d="M1 8h36M31 2l6 6-6 6"></path>
+				</svg>
+			</div>
+
+			<div class="rtmd-group rtmd-example">
+				<span class="rtmd-group-label">Example</span>
+
+				<div class="rtmd-card">
+					<div class="rtmd-card-head">meeting_id: 7c9e...42a1</div>
+					<div class="rtmd-card-title">
+						<span class="rtmd-icon" aria-hidden="true">
+							<svg viewBox="0 0 20 20" fill="none">
+								<rect x="3.5" y="5" width="9.5" height="10" rx="2"></rect>
+								<path d="m13 8 3.5-2v8L13 12"></path>
+							</svg>
+						</span>
+						<span>
+							<strong>Weekly standup</strong>
+							<small>One reusable team room</small>
+						</span>
+					</div>
+
+					<dl class="rtmd-fields">
+						<div>
+							<dt>title</dt>
+							<dd>Weekly standup</dd>
+						</div>
+						<div>
+							<dt>status</dt>
+							<dd class="rtmd-active"><span></span>ACTIVE</dd>
+						</div>
+						<div>
+							<dt>reuse</dt>
+							<dd>Same Meeting every week</dd>
+						</div>
+					</dl>
+
+					<div class="rtmd-note">
+						<span class="rtmd-note-icon" aria-hidden="true">
+							<svg viewBox="0 0 16 16" fill="none">
+								<rect x="2.5" y="3.5" width="11" height="10" rx="1.5"></rect>
+								<path d="M5 2v3M11 2v3M2.5 7h11"></path>
+							</svg>
+						</span>
+						<span>Your app or calendar schedules it each week.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</figure>
+
+<style>
+	.realtimekit-meeting-diagram {
+		--rtmd-panel: #fbfbfb;
+		--rtmd-dot: rgb(0 0 0 / 8%);
+		--rtmd-card: #ffffff;
+		--rtmd-head: #f4f4f5;
+		--rtmd-border: #e3e3e6;
+		--rtmd-line: #c1c1c8;
+		--rtmd-text: #1a1a1c;
+		--rtmd-muted: #8a8a90;
+		--rtmd-accent: #f6821f;
+		--rtmd-accent-soft: rgb(246 130 31 / 14%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .realtimekit-meeting-diagram {
+		--rtmd-panel: #121213;
+		--rtmd-dot: rgb(255 255 255 / 9%);
+		--rtmd-card: #1b1b1d;
+		--rtmd-head: #242427;
+		--rtmd-border: #38383c;
+		--rtmd-line: #4d4d54;
+		--rtmd-text: #f3f3f5;
+		--rtmd-muted: #9a9aa2;
+	}
+
+	.rtmd-stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem;
+		border: 1px solid var(--rtmd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--rtmd-dot) 1px, transparent 1px),
+			var(--rtmd-panel);
+		background-size: 16px 16px;
+	}
+
+	.rtmd-comparison {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1fr);
+		align-items: stretch;
+		width: 100%;
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.rtmd-group {
+		position: relative;
+		box-sizing: border-box;
+		min-width: 0;
+		padding: 1.25rem 0.75rem 0.75rem;
+		border: 1px dashed var(--rtmd-border);
+		border-radius: 0.75rem;
+	}
+
+	.rtmd-group-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--rtmd-border);
+		border-radius: 9999px;
+		background: var(--rtmd-panel);
+		color: var(--rtmd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+	}
+
+	.rtmd-example {
+		border-color: var(--rtmd-accent);
+		background: var(--rtmd-accent-soft);
+	}
+
+	.rtmd-example .rtmd-group-label {
+		border-color: var(--rtmd-accent);
+		color: var(--rtmd-accent);
+	}
+
+	.rtmd-example .rtmd-card {
+		border-color: color-mix(
+			in srgb,
+			var(--rtmd-accent) 55%,
+			var(--rtmd-border)
+		);
+	}
+
+	.rtmd-card {
+		display: flex;
+		box-sizing: border-box;
+		height: 100%;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid var(--rtmd-border);
+		border-radius: 0.625rem;
+		background: var(--rtmd-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+	}
+
+	.rtmd-card-head {
+		overflow: hidden;
+		padding: 0.25rem 0.625rem;
+		border-bottom: 1px solid var(--rtmd-border);
+		background: var(--rtmd-head);
+		color: var(--rtmd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+		letter-spacing: 0.01em;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.rtmd-card-title {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.75rem;
+	}
+
+	.rtmd-card-title > span:last-child {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.rtmd-card-title strong {
+		color: var(--rtmd-text);
+		font-size: 0.875rem;
+		font-weight: 600;
+		line-height: 1.2;
+	}
+
+	.rtmd-card-title small {
+		color: var(--rtmd-muted);
+		font-size: 0.6875rem;
+		line-height: 1.3;
+	}
+
+	.rtmd-icon {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		color: var(--rtmd-accent);
+	}
+
+	.rtmd-icon svg,
+	.rtmd-note-icon svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtmd-fields {
+		margin: 0;
+		padding: 0 0.75rem;
+		border-top: 1px solid var(--rtmd-border);
+	}
+
+	.rtmd-fields > div {
+		display: grid;
+		grid-template-columns: minmax(4.25rem, 0.7fr) minmax(0, 1.3fr);
+		gap: 0.5rem;
+		align-items: center;
+		padding: 0.5rem 0;
+		border-bottom: 1px solid var(--rtmd-border);
+	}
+
+	.rtmd-fields dt,
+	.rtmd-fields dd {
+		margin: 0;
+	}
+
+	.rtmd-fields dt {
+		color: var(--rtmd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+	}
+
+	.rtmd-fields dd {
+		color: var(--rtmd-text);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		line-height: 1.3;
+		overflow-wrap: anywhere;
+	}
+
+	.rtmd-active {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.rtmd-active span {
+		width: 0.4rem;
+		height: 0.4rem;
+		border-radius: 50%;
+		background: var(--rtmd-accent);
+		box-shadow: 0 0 0 3px var(--rtmd-accent-soft);
+	}
+
+	.rtmd-facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-top: auto;
+		padding: 0.75rem;
+	}
+
+	.rtmd-facts span {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.2rem 0.5rem;
+		border: 1px solid var(--rtmd-border);
+		border-radius: 9999px;
+		background: var(--rtmd-head);
+		color: var(--rtmd-muted);
+		font-size: 0.625rem;
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	.rtmd-facts span::before {
+		content: "";
+		width: 0.3rem;
+		height: 0.3rem;
+		border-radius: 50%;
+		background: var(--rtmd-line);
+	}
+
+	.rtmd-note {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		margin: auto 0.75rem 0.75rem;
+		padding: 0.55rem 0.625rem;
+		border: 1px solid var(--rtmd-border);
+		border-radius: 0.5rem;
+		background: var(--rtmd-head);
+		color: var(--rtmd-muted);
+		font-size: 0.625rem;
+		line-height: 1.4;
+	}
+
+	.rtmd-note-icon {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 0.875rem;
+		height: 0.875rem;
+		color: var(--rtmd-muted);
+	}
+
+	.rtmd-bridge {
+		display: flex;
+		align-items: center;
+		color: var(--rtmd-line);
+	}
+
+	.rtmd-bridge svg {
+		display: block;
+		width: 100%;
+		height: 1rem;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	@container (max-width: 640px) {
+		.rtmd-comparison {
+			grid-template-columns: minmax(0, 1fr);
+			justify-content: center;
+			max-width: 360px;
+		}
+
+		.rtmd-bridge {
+			justify-content: center;
+			height: 2.5rem;
+		}
+
+		.rtmd-bridge svg {
+			width: 1rem;
+			transform: rotate(90deg);
+		}
+	}
+
+	@container (max-width: 380px) {
+		.rtmd-stage {
+			padding-inline: 0.75rem;
+		}
+
+		.rtmd-fields > div {
+			grid-template-columns: 4.25rem minmax(0, 1fr);
+		}
+	}
+</style>
