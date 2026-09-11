@@ -51,6 +51,7 @@ At a minimum, the `main_module` key is required to upload a Worker.
 - `assets` <Type text="object" /> <MetaInfo text="optional" />
   - [Asset](/workers/static-assets/) configuration for a Worker.
   - `config` <Type text="object" /> <MetaInfo text="optional" />
+    - [base_path](/workers/static-assets/routing/advanced/serving-a-subdirectory/) determines the URL path prefix where static assets are available.
     - [html_handling](/workers/static-assets/routing/advanced/html-handling/) determines the redirects and rewrites of requests for HTML content.
     - [not_found_handling](/workers/static-assets/#routing-behavior) determines the response when a request does not match a static asset.
   - `jwt` field provides a token authorizing assets to be attached to a Worker.
