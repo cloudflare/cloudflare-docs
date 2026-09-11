@@ -1,0 +1,21 @@
+---
+pcx_content_type: concept
+title: Import from S3
+description: Bulk import images from Amazon S3 into Cloudflare Images.
+sidebar:
+  order: 6
+products:
+  - images
+---
+
+Import from S3 lets you define one or more sources of images to bulk import from Amazon S3. You can reuse a source to import only new images into your Cloudflare Images account.
+
+Imports skip unsupported objects and files in the source. You can also target paths, define image prefixes, and view error logs.
+
+<span id="when-to-use-sourcing-kit"></span>
+
+## Check storage class support
+
+Use Import from S3 for buckets that contain images in non-archival storage classes. Import from S3 skips images in [archival storage classes](https://aws.amazon.com/s3/storage-classes/#Archive), which require a separate import.
+
+Import from S3 skips images stored using S3 Glacier tiers (not including Glacier Instant Retrieval) and logs them in the migration log. It also skips and logs images stored using S3 Intelligent Tiering in the Deep Archive tier.

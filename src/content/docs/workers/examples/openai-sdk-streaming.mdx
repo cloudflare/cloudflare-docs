@@ -56,7 +56,7 @@ export default {
 					stream: true,
 				});
 
-				// loop over the data as it is streamed and write to the writeable
+				// loop over the data as it is streamed and write to the writable
 				for await (const part of stream) {
 					writer.write(
 						textEncoder.encode(part.choices[0]?.delta?.content || ""),

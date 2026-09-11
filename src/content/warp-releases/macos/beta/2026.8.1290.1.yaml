@@ -1,0 +1,28 @@
+releaseNotes: |-
+  This beta release includes the following changes and improvements:
+
+  - Added support for routing non-RFC 1918 local IPv4 networks through the WARP tunnel when unrestricted LAN inclusion is enabled by policy or MDM.
+  - Improved DNS reliability on networks with lower MTUs by clamping the TCP maximum segment size (MSS) for DNS-over-HTTPS connections sent through the tunnel.
+  - Improved API reliability by retrying requests dropped when reusing pooled connections.
+  - Fixed Extra Logging failing to capture packets across all interfaces.
+  - Fixed an issue that could prevent remote diagnostics from completing.
+  - Fixed DNS connectivity checks failing on IPv6-only networks.
+  - Fixed the client service exiting when its route-monitoring socket was closed after sleep or wake.
+  - Fixed DNS enforcement checks making the client service unresponsive on systems with large routing tables.
+  - Fixed slow captive portal checks causing the client service to become unresponsive or restart while connecting.
+  - Fixed a race when switching tunnel protocols during key rotation that could prevent WireGuard from connecting.
+  - Fixed the client continuing to report 'No network' after a successful manual disconnect.
+  - Fixed a client UI crash that could occur when the daemon connection was reset during an IPC request.
+  - Fixed a startup crash when date formatting data for the system locale had not yet loaded.
+
+  **Known issues**
+
+  - None
+
+  For Zero Trust documentation, see: https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/  
+  For Consumer documentation, see: https://developers.cloudflare.com/warp-client/
+version: 2026.8.1290.1
+releaseDate: 2026-09-09T18:10:27.467Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.8.1290.1
+packageSize: 164961332
+platformName: macOS

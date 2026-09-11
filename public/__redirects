@@ -663,6 +663,7 @@
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
+/sandbox/guides/openai-agents-api/ /sandbox/tutorials/openai-agents-api/ 301
 /sandbox/guides/production-deployment/ /sandbox/guides/preview-urls-custom-domain/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
@@ -1132,10 +1133,10 @@
 /images/cloudflare-images/serve-images/ /images/optimization/hosted-images/serve-uploaded-images/ 301
 /images/cloudflare-images/serve-images/adaptive-images-format/ /images/optimization/hosted-images/serve-uploaded-images/ 301
 /images/cloudflare-images/serve-images/browser-ttl/ /images/optimization/hosted-images/browser-ttl/ 301
-/images/cloudflare-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
-/images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
-/images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
-/images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
+/images/cloudflare-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
 /images/cloudflare-images/transform/ /images/optimization/transformations/overview/ 301
 /images/cloudflare-images/transform/blur-images/ /images/optimization/hosted-images/blur-variants/ 301
 /images/cloudflare-images/transform/delete-images/ /images/storage/manage-images/delete-images/ 301
@@ -1195,10 +1196,14 @@
 /images/upload-images/upload-dashboard/ /images/storage/upload-images/methods/ 301
 /images/upload-images/upload-file-worker/ /images/storage/upload-images/upload-file-worker/ 301
 /images/upload-images/upload-url/ /images/storage/upload-images/upload-url/ 301
-/images/upload-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
-/images/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
-/images/upload-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
-/images/upload-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
+/images/upload-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/upload-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/upload-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
+/images/storage/upload-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/storage/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/storage/upload-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/storage/upload-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
 
 # learning-paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/ /learning-paths/cybersafe/account-creation/ 301
