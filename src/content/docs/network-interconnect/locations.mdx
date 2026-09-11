@@ -16,10 +16,10 @@ The following facilities offer Cloudflare Network Interconnect (CNI) for private
 
 Each site supports one or more CNI dataplane versions:
 
-| Dataplane | MTU | Routing | Peering |
+| Dataplane | MTU | Private Transit/WAN Routing | Public Peering with PoP |
 | --- | --- | --- | --- |
-| v1 | Unidirectional 1500B | Static routes | Yes |
-| v2 | Bidirectional 1500B | Static routes. Overlay BGP is closed beta. | No |
+| v1 | 1500B from Cloudflare to customer.<br />Customer to Cloudflare must tunnel in GRE. | Static routes | BGP peering required. Customer must have assigned v4/v6 public address space. |
+| v2 | Bidirectional 1500B | Static routes. Overlay BGP is closed beta. | Not supported |
 
 For more information, refer to [Cloudflare Network Interconnect](/network-interconnect/#dataplane-versions).
 
