@@ -24,3 +24,5 @@ Settings in AI Gateway can be configured at two levels: **Request** and **Gatewa
    Act as the default if no headers are set at the request level.
 
 This hierarchy ensures consistent behavior, prioritizing the most specific configurations. Use request-level headers for fine-tuned control, and gateway settings for general defaults.
+
+Some restrictive settings are additive. The `cf-aig-no-wholesale` header can require provider credentials for a third-party provider request, but it cannot turn off **Require provider credentials** when that gateway setting is on.

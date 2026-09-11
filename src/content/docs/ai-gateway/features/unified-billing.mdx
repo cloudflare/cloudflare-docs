@@ -11,7 +11,7 @@ products:
   - ai-gateway
 ---
 
-import { DashButton, Render, TabItem, Tabs } from "~/components";
+import { DashButton, Render, Steps, TabItem, Tabs } from "~/components";
 
 Unified Billing allows users to call Workers AI and connect to various AI providers (such as OpenAI, Anthropic, and Google AI Studio) and receive a single Cloudflare bill. To use Unified Billing, you must purchase and load credits into your Cloudflare account in the Cloudflare dashboard, which you can then spend with AI Gateway.
 
@@ -69,6 +69,32 @@ On requests routed through Unified Billing endpoints (for example, `env.AI.run()
 
 The `cf-aig-byok-alias` header selects a non-default alias only on [direct provider-passthrough](/ai-gateway/usage/providers/) requests.
 :::
+
+## Require provider credentials
+
+Turn on **Require provider credentials** to prevent Unified Billing fallback for third-party providers. Third-party provider requests must use credentials supplied with the request or stored on the gateway. Requests without applicable credentials return an HTTP `400` response instead of using Cloudflare-managed credentials.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **AI** > **AI Gateway**.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+2. Select your gateway.
+3. Go to **Settings** and turn on **Require provider credentials**.
+4. Confirm the change.
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Send a [`PUT` request](/api/resources/ai_gateway/methods/update/) to update the gateway. Include `byok_only: true` in the request body.
+
+</TabItem> </Tabs>
+
+To require provider credentials for one third-party provider request, set the `cf-aig-no-wholesale` header to `true`. This header can prevent Unified Billing fallback but cannot relax the gateway setting. If **Require provider credentials** is on, setting the header to `false` has no effect.
+
+Workers AI requests do not use provider credentials. This setting does not block these requests. They use standard Workers AI account billing, not AI Gateway Unified Billing.
 
 ## Use Unified Billing
 
