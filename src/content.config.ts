@@ -417,6 +417,7 @@ export const collections = {
 			// Capabilities
 			context_length: z.number().nullable(),
 			max_output_tokens: z.number().nullable(),
+			pricing: z.record(z.string(), z.unknown()).default({}),
 			supports_async: z.boolean(),
 
 			// Zero Data Retention (optional — older API rows omit it).
