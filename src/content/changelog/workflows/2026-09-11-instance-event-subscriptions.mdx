@@ -9,11 +9,11 @@ date: 2026-09-11 12:00:00 UTC
 
 import { TypeScriptExample } from "~/components";
 
-You can now stream Workflow instance events via `WorkflowInstance.subscribe()` and the `GET /subscribe` API endpoint. Workers and HTTP clients can react to [workflow](workflows/build/events-and-parameters/) and [step](/workflows/build/step-context/#workflowstepcontext) events, including attempts, sleeps, waits, and rollbacks, without polling for instance status.
+You can now stream Workflow instance events via `WorkflowInstance.subscribe()` and the `GET /subscribe` API endpoint. Workers and HTTP clients can react to [workflow](/workflows/build/events-and-parameters/) and [step](/workflows/build/step-context/#workflowstepcontext) events, including attempts, sleeps, waits, and rollbacks, without polling for instance status.
 
 A subscription first streams the entire event history of the Workflow instance. After streaming past events, the subscription waits for new events as the instance runs. You can use `filter` to receive only specific event types or `cursor` to start a subscription at a specific event.
 
-Use `.subscribe()` to update Workflow status in user-facing dashboards, send notifications when steps complete or trigger follow-up work for specific events.
+Use `.subscribe()` to update Workflow status in user-facing dashboards, send notifications when steps complete, or trigger follow-up work for specific events.
 
 <TypeScriptExample>
 
