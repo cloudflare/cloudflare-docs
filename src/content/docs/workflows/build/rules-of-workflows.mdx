@@ -104,6 +104,7 @@ Otherwise, your entire Workflow might not be as durable as you might think, and 
 - 🔴 Do not call separate services in the same step (unless you need it to prove idempotency).
 - 🔴 Do not make too many service calls in the same step (unless you need it to prove idempotency).
 - 🔴 Do not do too much CPU-intensive work inside a single step - sometimes the engine may have to restart, and it will start over from the beginning of that step.
+- 🔴 Avoid nested steps, particularly `step.sleep()` or `step.waitForEvent()` within a `step.do()`.
 
 <TypeScriptExample filename="index.ts">
 
@@ -406,7 +407,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 </TypeScriptExample>
 
-To ensure consistency, we suggest to surround the `Promise.race()` or `Promise.any()` within a `step.do()`, as this will ensure caching consistency across multiple passages.
+To ensure consistency, we suggest to surround the `Promise.race()` or `Promise.any()` within a single `step.do()`, as this will ensure caching consistency across multiple passages. Avoid nesting `step.do()` calls inside the race — use plain async functions so that only the outer step is cached.
 
 <TypeScriptExample filename="index.ts">
 
@@ -416,23 +417,24 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// ✅ Good: The `Promise.race` is surrounded by a `step.do`, ensuring deterministic caching behavior.
-		const race_return = await step.do("Promise step", async () => {
+		// ✅ Good: The `Promise.race` is surrounded by a single `step.do`, ensuring deterministic
+		// caching behavior, and it does not nest `step.do` calls inside the race.
+		const race_return = await step.do("race step", async () => {
 			return await Promise.race([
-				step.do("Promise first race", async () => {
+				(async () => {
 					await sleep(1000);
 					return "first";
-				}),
-				step.do("Promise second race", async () => {
+				})(),
+				(async () => {
 					return "second";
-				}),
+				})(),
 			]);
 		});
 
 		await step.sleep("Sleep step", "2 hours");
 
 		return await step.do("Another step", async () => {
-			// This step will return `second` because the `Promise.race` was surround by the `step.do` method.
+			// This step will return `second` because the `Promise.race` was surrounded by the `step.do` method.
 			return race_return;
 		});
 	}
