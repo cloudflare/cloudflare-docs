@@ -69,7 +69,6 @@
 		"@iconify-json/vscode-icons": "1.2.77",
 		"@iconify/utils": "3.1.7",
 		"@marsidev/react-turnstile": "1.6.1",
-		"@nanostores/react": "1.1.0",
 		"@octokit/auth-app": "8.3.1",
 		"@octokit/webhooks-types": "7.6.1",
 		"@phosphor-icons/core": "2.1.1",
