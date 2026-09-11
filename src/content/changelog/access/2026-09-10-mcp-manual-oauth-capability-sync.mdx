@@ -1,0 +1,13 @@
+---
+title: Capability synchronization for manually registered MCP OAuth clients
+description: Discover and refresh MCP tools and prompts with stored administrator OAuth credentials.
+date: 2026-09-10
+products:
+  - access
+---
+
+MCP server portals now use stored administrator OAuth credentials to discover and synchronize tools and prompts for manually registered OAuth clients. After an administrator authorizes the upstream server, Cloudflare immediately stores its capabilities and marks the server as ready. A portal user no longer needs to connect first.
+
+Administrators can run **Sync capabilities** on demand, and Cloudflare includes these servers in periodic background synchronization. If an access token expires, Cloudflare attempts to refresh it with the stored refresh token and client secret. Servers that cannot refresh their credentials change to **Stale** and require administrator reauthorization.
+
+For more information, refer to [Synchronize the MCP server](/cloudflare-one/access-controls/ai-controls/mcp-portals/#synchronize-the-mcp-server).
