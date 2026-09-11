@@ -338,7 +338,7 @@ Configure the [Wasm Coredump Service](https://github.com/cloudflare/wasm-coredum
 
 By using [`passThroughOnException()`](/workers/runtime-apis/context/#passthroughonexception), a Workers application can forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
-`ctx.passThroughOnException()` forwards requests for unhandled exceptions in your Worker code, not for errors from the origin `fetch()`. When proxying requests to an origin, wrap `fetch(request)` in `try...catch` and return a `5xx` response on failure. If the origin `fetch()` throws after consuming the request body, `passThroughOnException()` cannot replay the body.
+`ctx.passThroughOnException()` forwards requests for unhandled exceptions in your Worker code, not for errors from the origin `fetch()`. When proxying requests to an origin, wrap `fetch(request)` in `[try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)` and return a `5xx` response on failure. If the origin `fetch()` throws after consuming the request body, `passThroughOnException()` cannot replay the body.
 
 <Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
