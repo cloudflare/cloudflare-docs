@@ -50,27 +50,15 @@ You should see the **List tools** button, which will list the tools that your MC
 
 Visit the [Workers AI Playground](https://playground.ai.cloudflare.com/), enter your MCP server URL, and click "Connect". Once authenticated (if required), you should see your tools listed and they will be available to the AI model in the chat.
 
-## Connect your remote MCP server to Claude Desktop via a local proxy
+## Connect your remote MCP server to Claude Code
 
-You can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop to your remote MCP server. This lets you test what an interaction with your remote MCP server will be like with a real-world MCP client.
+Add the remote server directly to Claude Code using Streamable HTTP:
 
-1. Open Claude Desktop and navigate to Settings -> Developer -> Edit Config. This opens the configuration file that controls which MCP servers Claude can access.
-2. Replace the content with a configuration like this:
-
-```json
-{
-	"mcpServers": {
-		"my-server": {
-			"command": "npx",
-			"args": ["mcp-remote", "http://my-mcp-server.my-account.workers.dev/mcp"]
-		}
-	}
-}
+```sh
+claude mcp add --transport http my-server https://my-mcp-server.my-account.workers.dev/mcp
 ```
 
-3. Save the file and restart Claude Desktop (command/ctrl + R). When Claude restarts, a browser window will open showing your OAuth login page. Complete the authorization flow to grant Claude access to your MCP server.
-
-Once authenticated, you'll be able to see your tools by clicking the tools icon in the bottom right corner of Claude's interface.
+Run `claude mcp list` to verify the connection. If the server requires authentication, complete the authorization flow in your browser.
 
 ## Connect your remote MCP server to Cursor
 

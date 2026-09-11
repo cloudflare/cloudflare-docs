@@ -117,9 +117,8 @@ import { LinkCard } from "~/components";
 
 <TroubleshootingList>
 	<TroubleshootingItem issue="MCP server connection fails or times out">
-		Run `claude mcp list` to verify the server is registered. Try removing and
-		re-adding: `claude mcp remove cloudflare` then re-add it. Ensure you have
-		`npx` and `mcp-remote` available.
+		Run `claude mcp list` to verify the server is registered. If you installed
+		the Cloudflare plugin, run `/reload-plugins` to reload its MCP configuration.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Claude cannot authenticate with Cloudflare">
 		The MCP server uses OAuth. When prompted, complete the authorization flow in
