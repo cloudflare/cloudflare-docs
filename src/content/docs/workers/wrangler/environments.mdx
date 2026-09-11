@@ -134,17 +134,21 @@ In the example below, we have two Workers, both with a `staging` environment. `w
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker-b",
-	"services": {
-		"binding": "<BINDING_NAME>",
-		"service": "worker-a",
-	},
+	"services": [
+		{
+			"binding": "<BINDING_NAME>",
+			"service": "worker-a",
+		},
+	],
 	// Note how `service = "worker-a-staging"`
 	"env": {
 		"staging": {
-			"service": {
-				"binding": "<BINDING_NAME>",
-				"service": "worker-a-staging",
-			},
+			"services": [
+				{
+					"binding": "<BINDING_NAME>",
+					"service": "worker-a-staging",
+				},
+			],
 		},
 	},
 }
