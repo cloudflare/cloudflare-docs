@@ -1,6 +1,6 @@
 ---
 title: Log classification
-description: Turn on log classification to analyze AI Gateway log content and generate conversation insights.
+description: Classify AI Gateway traffic by task and assess whether each model matches the task requirements.
 pcx_content_type: reference
 sidebar:
   order: 3.5
@@ -11,7 +11,21 @@ products:
   - ai-gateway
 ---
 
-Log classification analyzes the content of AI Gateway logs to identify conversation characteristics and generate classification results, such as topic categories and intent labels. These results power AI Gateway analysis features and help you understand how AI is being used across your organization. Log classification is turned off by default and must be turned on for each gateway individually.
+import { DashButton, Steps } from "~/components";
+
+Log classification analyzes the request and response content stored in AI Gateway logs. It classifies eligible traffic by task and assesses whether the model used matches the task requirements.
+
+These results power **Task and model analysis** in [User Insights](/ai-gateway/observability/user-insights/). Log classification is turned off by default. You must turn it on for each gateway individually.
+
+## Classification results
+
+### Tasks by model
+
+AI Gateway assigns task classifications such as debugging, code planning, code Q&A, text drafting, and coding. The **Tasks by model** chart shows how token usage and estimated spend are distributed across these classifications for each model.
+
+### Model fit
+
+AI Gateway compares the task requirements with the capabilities of the model used. It classifies model fit as **Overkill**, **Appropriate**, **Underpowered**, or **Could not assess**. You can compare these results by token usage or estimated spend.
 
 ## What Cloudflare processes
 
@@ -22,7 +36,7 @@ When log classification is turned on, Cloudflare may process stored request and 
 - Request metadata
 - Identifiers used to associate related requests into a conversation
 
-Cloudflare uses this information to identify conversation characteristics and generate classification results for AI Gateway analysis features.
+Cloudflare uses this information to generate task and model-fit classifications for AI Gateway analysis features.
 
 Log classification is not required to use AI Gateway or standard log collection. Turning on this setting allows Cloudflare to analyze eligible logs for the selected gateway as described on this page. This setting is gateway-specific: turning it on for one gateway does not turn it on for other gateways in your account.
 
@@ -33,11 +47,22 @@ Log classification is not required to use AI Gateway or standard log collection.
 - Turning off **Collect logs** also turns off log classification.
 - Turning off **Log classification** prevents new gateway activity from being classified. Work already in progress and previously generated results remain subject to applicable retention and deletion policies.
 
+## Turn on log classification
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **AI Gateway**.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+2. Select a gateway, then go to **Settings**.
+3. Turn on **Collect logs**.
+4. Turn on **Log classification**.
+
+</Steps>
+
 ## Turn off log classification
 
-To stop new classification activity for a gateway:
-
-1. Go to **AI Gateway** > **Settings**.
-2. Turn off **Log classification**.
+To stop classifying new activity, go to your gateway's **Settings** and turn off **Log classification**.
 
 You can continue collecting logs without turning on classification.
