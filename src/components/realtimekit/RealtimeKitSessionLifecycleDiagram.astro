@@ -1,0 +1,338 @@
+<figure
+	class="realtimekit-session-lifecycle-diagram not-content"
+	aria-label="After the Setup screen, a peer chooses to Join. Without waitlisting, the peer enters the Meeting screen and later sees the Ended screen. If waitlisted, the peer sees the Waitlist screen, then either enters the Meeting screen when admitted or sees the Rejected screen."
+>
+	<div class="rtsl-stage">
+		<div class="rtsl-entry">
+			<div class="rtsl-screen">
+				<div class="rtsl-screen-head">SDK initialized</div>
+				<strong>Setup screen</strong>
+				<small>Preview audio and video</small>
+			</div>
+
+			<div class="rtsl-join" aria-hidden="true">
+				<span>Join</span>
+				<svg class="rtsl-arrow-wide" viewBox="0 0 48 16" fill="none">
+					<path d="M1 8h44M39 2l6 6-6 6"></path>
+				</svg>
+				<svg class="rtsl-arrow-narrow" viewBox="0 0 16 40" fill="none">
+					<path d="M8 1v36M2 31l6 6 6-6"></path>
+				</svg>
+			</div>
+
+			<section class="rtsl-routes">
+				<span class="rtsl-routes-label">After Join</span>
+
+				<div class="rtsl-route rtsl-direct-route">
+					<span class="rtsl-route-label">No waitlist</span>
+					<div class="rtsl-route-arrow" aria-hidden="true">
+						<svg viewBox="0 0 34 16" fill="none">
+							<path d="M1 8h30M25 2l6 6-6 6"></path>
+						</svg>
+					</div>
+
+					<div class="rtsl-screen rtsl-meeting-screen">
+						<div class="rtsl-screen-head">in session</div>
+						<strong>Meeting screen</strong>
+						<small>Stage</small>
+					</div>
+
+					<div class="rtsl-exit" aria-hidden="true">
+						<span>Exit</span>
+						<svg viewBox="0 0 34 16" fill="none">
+							<path d="M1 8h30M25 2l6 6-6 6"></path>
+						</svg>
+					</div>
+
+					<div class="rtsl-screen">
+						<div class="rtsl-screen-head">peer session ended</div>
+						<strong>Ended screen</strong>
+						<small>Left, kicked out, or Meeting ended</small>
+					</div>
+				</div>
+
+				<div class="rtsl-route rtsl-waitlist-route">
+					<span class="rtsl-route-label">Waitlisted</span>
+					<div class="rtsl-route-arrow" aria-hidden="true">
+						<svg viewBox="0 0 34 16" fill="none">
+							<path d="M1 8h30M25 2l6 6-6 6"></path>
+						</svg>
+					</div>
+
+					<div class="rtsl-screen rtsl-waitlist-screen">
+						<div class="rtsl-screen-head">awaiting admission</div>
+						<strong>Waitlist screen</strong>
+						<small>The peer waits for a decision</small>
+					</div>
+
+					<div class="rtsl-outcomes">
+						<div>
+							<span>Admitted</span><strong>&rarr; Meeting screen</strong>
+						</div>
+						<div>
+							<span>Rejected</span><strong>&rarr; Rejected screen</strong>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</figure>
+
+<style>
+	.realtimekit-session-lifecycle-diagram {
+		--rtsl-panel: #fbfbfb;
+		--rtsl-dot: rgb(0 0 0 / 8%);
+		--rtsl-card: #ffffff;
+		--rtsl-head: #f4f4f5;
+		--rtsl-border: #e3e3e6;
+		--rtsl-line: #c1c1c8;
+		--rtsl-text: #1a1a1c;
+		--rtsl-muted: #8a8a90;
+		--rtsl-accent: #f6821f;
+		--rtsl-accent-soft: rgb(246 130 31 / 14%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .realtimekit-session-lifecycle-diagram {
+		--rtsl-panel: #121213;
+		--rtsl-dot: rgb(255 255 255 / 9%);
+		--rtsl-card: #1b1b1d;
+		--rtsl-head: #242427;
+		--rtsl-border: #38383c;
+		--rtsl-line: #4d4d54;
+		--rtsl-text: #f3f3f5;
+		--rtsl-muted: #9a9aa2;
+	}
+
+	.rtsl-stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem;
+		border: 1px solid var(--rtsl-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--rtsl-dot) 1px, transparent 1px),
+			var(--rtsl-panel);
+		background-size: 16px 16px;
+	}
+
+	.rtsl-entry {
+		display: grid;
+		grid-template-columns: minmax(7.5rem, 0.8fr) 3.25rem minmax(0, 2.2fr);
+		align-items: center;
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.rtsl-screen {
+		display: flex;
+		box-sizing: border-box;
+		min-width: 0;
+		min-height: 5.5rem;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid var(--rtsl-border);
+		border-radius: 0.625rem;
+		background: var(--rtsl-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		text-align: left;
+	}
+
+	.rtsl-screen-head {
+		overflow: hidden;
+		padding: 0.25rem 0.625rem;
+		border-bottom: 1px solid var(--rtsl-border);
+		background: var(--rtsl-head);
+		color: var(--rtsl-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.rtsl-screen > strong {
+		padding: 0.65rem 0.65rem 0;
+		color: var(--rtsl-text);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.25;
+	}
+
+	.rtsl-screen > small {
+		padding: 0.15rem 0.65rem 0.65rem;
+		color: var(--rtsl-muted);
+		font-size: 0.625rem;
+		line-height: 1.3;
+	}
+
+	.rtsl-join,
+	.rtsl-route-arrow,
+	.rtsl-exit {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.25rem;
+		color: var(--rtsl-line);
+	}
+
+	.rtsl-join span,
+	.rtsl-exit span,
+	.rtsl-route-label {
+		color: var(--rtsl-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5rem;
+	}
+
+	.rtsl-join svg,
+	.rtsl-route-arrow svg,
+	.rtsl-exit svg {
+		display: block;
+		width: 100%;
+		height: 1rem;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtsl-arrow-narrow {
+		display: none !important;
+	}
+
+	.rtsl-routes {
+		position: relative;
+		min-width: 0;
+		padding: 1.35rem 0.7rem 0.7rem;
+		border: 1px dashed var(--rtsl-border);
+		border-radius: 0.75rem;
+	}
+
+	.rtsl-routes-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--rtsl-border);
+		border-radius: 9999px;
+		background: var(--rtsl-panel);
+		color: var(--rtsl-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+	}
+
+	.rtsl-route {
+		display: grid;
+		grid-template-columns: 4rem 1.75rem minmax(0, 0.9fr) minmax(0, 1.1fr);
+		align-items: center;
+		min-width: 0;
+	}
+
+	.rtsl-direct-route {
+		grid-template-columns: 4rem 1.75rem minmax(0, 1fr) 2.25rem minmax(0, 1fr);
+		padding-bottom: 0.7rem;
+		border-bottom: 1px solid var(--rtsl-border);
+	}
+
+	.rtsl-waitlist-route {
+		padding-top: 0.7rem;
+	}
+
+	.rtsl-route-label {
+		text-align: center;
+	}
+
+	.rtsl-meeting-screen,
+	.rtsl-waitlist-screen {
+		border-color: var(--rtsl-accent);
+	}
+
+	.rtsl-meeting-screen {
+		background: var(--rtsl-accent-soft);
+	}
+
+	.rtsl-outcomes {
+		display: grid;
+		min-width: 0;
+		margin-left: 0.75rem;
+	}
+
+	.rtsl-outcomes div {
+		display: grid;
+		grid-template-columns: minmax(3.8rem, 0.7fr) minmax(0, 1.3fr);
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.45rem 0;
+		border-bottom: 1px solid var(--rtsl-border);
+	}
+
+	.rtsl-outcomes div:last-child {
+		border-bottom: 0;
+	}
+
+	.rtsl-outcomes span {
+		color: var(--rtsl-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5rem;
+	}
+
+	.rtsl-outcomes strong {
+		color: var(--rtsl-text);
+		font-size: 0.625rem;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	@container (max-width: 640px) {
+		.rtsl-entry {
+			grid-template-columns: minmax(0, 1fr);
+			max-width: 420px;
+		}
+
+		.rtsl-entry > .rtsl-screen {
+			width: min(100%, 220px);
+			margin: 0 auto;
+		}
+
+		.rtsl-join {
+			height: 3.5rem;
+			flex-direction: row;
+		}
+
+		.rtsl-arrow-wide {
+			display: none !important;
+		}
+
+		.rtsl-arrow-narrow {
+			display: block !important;
+			width: 1rem !important;
+			height: 2.5rem !important;
+		}
+
+		.rtsl-route {
+			grid-template-columns: 3.5rem 1.25rem minmax(0, 0.9fr) minmax(0, 1.1fr);
+		}
+
+		.rtsl-direct-route {
+			grid-template-columns: 3.5rem 1.25rem minmax(0, 1fr) 1.5rem minmax(
+					0,
+					1fr
+				);
+		}
+
+		.rtsl-outcomes {
+			margin-left: 0.45rem;
+		}
+	}
+</style>
