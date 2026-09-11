@@ -35,7 +35,7 @@ For example, `http://localhost:80` uses HTTP for the local connection, while `ht
 
 The connection between Cloudflare and `cloudflared` is encrypted independently of the zone SSL/TLS mode. `cloudflared` validates the local origin certificate through origin parameters.
 
-The zone SSL/TLS mode does not change the `Service URL`. Configure the local protocol in the route, then configure certificate validation with [`originServerName`](/tunnel/advanced/origin-parameters/#originservername) and the other [origin parameters](/tunnel/advanced/origin-parameters/).
+The zone SSL/TLS mode does not change the `Service URL`. Configure the local protocol in the route, then configure certificate validation with [`originServerName`](/tunnel/reference/origin-parameters/#originservername) and the other [origin parameters](/tunnel/reference/origin-parameters/).
 
 If `originServerName` is empty, `cloudflared` expects the certificate to cover the host in the `Service URL`. For a service URL that uses `localhost`, set `originServerName` to the hostname covered by the certificate. This value also supplies the Server Name Indication (SNI) for the TLS connection.
 
@@ -161,7 +161,7 @@ Run these checks from the public Internet and from the same host as `cloudflared
 
    A proxied record may return Cloudflare addresses instead of the `CNAME` target. Use the dashboard to verify the target in that case.
 
-   Cloudflare does not silently fall back from a Tunnel to an `A` or `AAAA` record. If the tunnel stops, the DNS record remains and visitors receive a [`1016` error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1016/). Refer to [Tunnel DNS records](/tunnel/routing/#dns-records) for more information. If traffic appears to go directly to the origin, check whether the exact hostname has an `A` or `AAAA` record instead of the expected CNAME, or whether an explicit load balancer or another route serves it.
+   Cloudflare does not silently fall back from a Tunnel to an `A` or `AAAA` record. If the tunnel stops, the DNS record remains and visitors receive a [`1016` error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1016/). Refer to [Tunnel DNS records](/tunnel/concepts/routing/#dns-records) for more information. If traffic appears to go directly to the origin, check whether the exact hostname has an `A` or `AAAA` record instead of the expected CNAME, or whether an explicit load balancer or another route serves it.
 
 2. **Inspect redirect headers and statuses.** From a client, request the public hostname and follow a limited number of redirects:
 
@@ -186,7 +186,7 @@ Run these checks from the public Internet and from the same host as `cloudflared
 
    Confirm that the certificate includes `app.example.com` and that the output contains `Verify return code: 0 (ok)`. When the service URL uses `localhost` but the certificate covers `app.example.com`, set **Origin Server Name** to `app.example.com`.
 
-4. **Stream Tunnel logs.** If the **Live logs** tab is available in the tunnel detail page, open it and select **Live**. You can also use [remote log streaming](/tunnel/monitoring/#remote-log-streaming) or run this command from an authenticated machine:
+4. **Stream Tunnel logs.** If the **Live logs** tab is available in the tunnel detail page, open it and select **Live**. You can also use [remote log streaming](/tunnel/observability/#remote-log-streaming) or run this command from an authenticated machine:
 
    ```sh
    cloudflared tail <TUNNEL_UUID>
@@ -195,4 +195,4 @@ Run these checks from the public Internet and from the same host as `cloudflared
    Look for `connection refused`, malformed HTTP responses, `x509` errors, and TLS handshake errors. These messages identify failures between `cloudflared` and the local origin, even when the Tunnel status remains `Healthy`.
 </Steps>
 
-For protocol details, refer to [supported Tunnel protocols](/tunnel/routing/#supported-protocols). For all origin settings, refer to [Tunnel origin parameters](/tunnel/advanced/origin-parameters/).
+For protocol details, refer to [supported Tunnel protocols](/tunnel/concepts/routing/#supported-protocols). For all origin settings, refer to [Tunnel origin parameters](/tunnel/reference/origin-parameters/).
