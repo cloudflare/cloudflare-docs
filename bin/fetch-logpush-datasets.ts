@@ -20,7 +20,8 @@ const EXTRACTED_DIR = join(".tmp", "logpush-datasets-extracted");
 
 // --soft: warn and continue on failure instead of exiting non-zero.
 //         Used by the predev hook so a network failure doesn't block local development.
-// --force: re-fetch even if the generated dataset pages already exist.
+// --force: re-fetch even if the generated dataset pages exist, including a
+//         fresh download of the archive from middlecache.
 const soft = process.argv.includes("--soft");
 const force = process.argv.includes("--force");
 
@@ -72,6 +73,14 @@ if (hasGeneratedPages && !force) {
 	process.exit(0);
 }
 
+const archivePath = join(".tmp", ...ARCHIVE_DOT_TMP_PATH.split("/"));
+
+if (force) {
+	// --force means re-fetch from middlecache: drop the cached archive so
+	// downloadToDotTempIfNotPresent actually downloads rather than reusing it.
+	fs.rmSync(archivePath, { force: true });
+}
+
 console.log("Fetching Logpush dataset pages from middlecache");
 
 try {
@@ -82,8 +91,6 @@ try {
 } catch (err) {
 	fail(`fetch failed: ${err}`);
 }
-
-const archivePath = join(".tmp", ...ARCHIVE_DOT_TMP_PATH.split("/"));
 
 // Remove any stale extracted content so we never sync pages from an old run.
 fs.rmSync(EXTRACTED_DIR, { recursive: true, force: true });
