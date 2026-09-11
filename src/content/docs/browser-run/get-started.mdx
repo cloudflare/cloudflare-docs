@@ -8,7 +8,7 @@ products:
   - browser-run
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, CURL } from "~/components";
 
 Cloudflare Browser Run (formerly Browser Rendering) allows you to programmatically control a headless browser, enabling you to do things like take screenshots, generate PDFs, and perform automated browser tasks. This guide will help you choose the right integration method and get you started with your first project.
 
@@ -52,6 +52,52 @@ Check out the full list of [Quick Actions endpoints](/browser-run/quick-actions/
 
 ## Browser Sessions
 
+Browser Sessions give you full control over a headless browser. You can connect from anywhere using the REST API, or from a Cloudflare Worker using a browser binding.
+
+<Tabs> <TabItem label="REST API">
+
+### Prerequisites
+
+- Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
+- Create a [Cloudflare API Token](/fundamentals/api/get-started/create-token/) with `Browser Rendering - Edit` permissions.
+
+### Create a browser session
+
+A single API call gives you a live browser session you can see and interact with:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser"
+	method="POST"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
+	query={{
+		keep_alive: "600000",
+		targets: "true",
+	}}
+/>
+
+```json title="Response" {5}
+{
+	"sessionId": "1909cef7-23e8-4394-bc31-27404bf4348f",
+	"targets": [
+		{
+			"devtoolsFrontendUrl": "https://live.browser.run/ui/inspector?wss=..."
+		}
+	]
+}
+```
+
+Copy the `devtoolsFrontendUrl` and open it in your browser. You now have a real browser session running on Cloudflare that you can interact with directly: enter a URL, click around, and inspect the page.
+
+You can drive browser sessions programmatically using [CDP](/browser-run/cdp/), [Puppeteer](/browser-run/cdp/puppeteer/), or [Playwright](/browser-run/cdp/playwright/) from any environment. Browser sessions also support:
+
+- **[Live View](/browser-run/features/live-view/)**: See and interact with a remote session in real time, useful for debugging automation scripts or monitoring browser activity.
+- **[Session Recording](/browser-run/features/session-recording/)**: Record browser sessions for playback, so you can review what happened during an automation run.
+- **[Human in the Loop](/browser-run/features/human-in-the-loop/)**: Pause automation and hand control to a human for tasks that require manual intervention, like solving CAPTCHAs or completing login flows.
+
+</TabItem> <TabItem label="Workers binding">
+
 ### Prerequisites
 
 <Render file="prereqs" product="workers" />
@@ -62,6 +108,8 @@ Check out the full list of [Quick Actions endpoints](/browser-run/quick-actions/
 	file="example-workers-binding-screenshots-from-web"
 	product="browser-run"
 />
+
+</TabItem> </Tabs>
 
 ## Next steps
 
