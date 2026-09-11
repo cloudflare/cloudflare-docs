@@ -105,7 +105,26 @@ As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/cer
 
 Consider the following solutions:
 
-- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
+- Use the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to retrieve the current `ssl.method`, `ssl.type`, and complete `ssl.settings` object. Then use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set `certificate_authority` to an empty string (`""`). Reuse the current method, type, and settings. This sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
+
+  For example, the following response values must remain unchanged when you update `certificate_authority`:
+
+  ```json
+  {
+    "method": "txt",
+    "type": "dv",
+    "settings": {
+      "ciphers": [
+        "ECDHE-ECDSA-AES128-GCM-SHA256",
+        "ECDHE-RSA-AES128-GCM-SHA256"
+      ],
+      "early_hints": "on",
+      "http2": "on",
+      "min_tls_version": "1.2",
+      "tls_1_3": "on"
+    }
+  }
+  ```
 
   <Details header="Example API call">
 
@@ -119,14 +138,24 @@ Consider the following solutions:
     "ssl": {
         "method": "txt",
         "type": "dv",
-        "certificate_authority": ""
+        "certificate_authority": "",
+        "settings": {
+            "ciphers": [
+                "ECDHE-ECDSA-AES128-GCM-SHA256",
+                "ECDHE-RSA-AES128-GCM-SHA256"
+            ],
+            "early_hints": "on",
+            "http2": "on",
+            "min_tls_version": "1.2",
+            "tls_1_3": "on"
+        }
     }
   }'
   ```
 
   </Details>
 
-- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames. In your API call, make sure to also include `method` and `type` in the `ssl` object.
+- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames. In your API call, include the current `method`, `type`, and complete `settings` object.
 - If you are using a custom certificate for your custom hostname, refer to the [custom certificates troubleshooting](/ssl/edge-certificates/custom-certificates/troubleshooting/#lets-encrypt-chain-update).
 
 ## Custom hostname fails to verify because the zone is held

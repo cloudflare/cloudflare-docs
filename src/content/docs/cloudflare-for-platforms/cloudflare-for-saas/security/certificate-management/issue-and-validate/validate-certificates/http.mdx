@@ -23,9 +23,11 @@ You choose one certificate validation method when you [create a custom hostname]
 
 ## Non-wildcard custom hostnames
 
-If your custom hostname does not include a wildcard, Cloudflare attempts to complete DCV through [HTTP validation](#http-automatic) after the hostname points to your SaaS target, even if you have selected **TXT** for your validation method.
+Eligible non-wildcard custom hostnames can use [automatic HTTP validation](#http-automatic) after the hostname points to your SaaS target.
 
 This HTTP validation should succeed as long as your customer's hostname points to your SaaS target and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#certificate-authority-authorization-caa-records) blocking your chosen certificate authority.
+
+During renewal, Cloudflare may use HTTP validation even if you selected TXT for initial issuance. Hostnames with properly configured [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) remain TXT-based. For more information, refer to [Renew certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/renew-certificates/).
 
 ## Wildcard custom hostnames
 
