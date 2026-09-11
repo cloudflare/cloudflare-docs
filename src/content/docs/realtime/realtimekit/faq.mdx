@@ -312,6 +312,8 @@ Creating meetings and participant tokens does not incur charges.
 
 For composite recordings, a recorder joins the meeting as a hidden virtual participant and records its view. For more information, refer to the [recording guides](/realtime/realtimekit/recording-guide/).
 
+After the final participant leaves, the recorder remains active for the meeting's <a href="/api/resources/realtime_kit/subresources/meetings/methods/create/#(resource)%20realtime_kit.meetings%20%3E%20(method)%20create%20%3E%20(params)%200%20%3E%20(param)%20session_keep_alive_time_in_secs%20%3E%20(schema)"><code>session_keep_alive_time_in_secs</code></a>. The default is 60 seconds, and the maximum is 600 seconds.
+
 RealtimeKit does not charge participant minutes for the recorder. Instead, it charges export minutes for the recorded duration. Refer to [RealtimeKit pricing](/realtime/realtimekit/pricing/) for current rates.
 
 <br/>
@@ -326,14 +328,12 @@ When someone starts recording during an active session:
 
 - If recording starts at 4:20 p.m. and the final participant leaves at 5:00 p.m., it stops at 5:01 p.m. by default. RealtimeKit charges 41 export minutes.
 - If recording starts at 4:20 p.m. and someone calls <a href="/realtime/realtimekit/core/end-a-session/"><code>kickAll()</code></a> at 5:00 p.m., recording stops immediately. RealtimeKit charges 40 export minutes.
-
-<br/>
-After the final participant leaves, the recorder remains active for the meeting's <a href="/api/resources/realtime_kit/subresources/meetings/methods/create/#(resource)%20realtime_kit.meetings%20%3E%20(method)%20create%20%3E%20(params)%200%20%3E%20(param)%20session_keep_alive_time_in_secs%20%3E%20(schema)"><code>session_keep_alive_time_in_secs</code></a>. The default is 60 seconds, and the maximum is 600 seconds.
+- If a meeting and recording start at 4:20 p.m., the meeting uses a two-minute keep-alive period, and all participants close their tabs at 5:00 p.m., recording stops at 5:02 p.m. RealtimeKit charges 42 export minutes.
 
 <br/>
 This keep-alive period helps workflows that must preserve a single recording across brief disconnections. For example, an education technology (EdTech) application might record a timed take-home assignment in a one-participant meeting. If the participant loses their network connection and rejoins before the keep-alive period expires, the recorder continues the same recording. The recording contains an empty gap during the disconnection, but the application does not need to combine two separate recordings.
 
 <br/>
-The keep-alive period is included in the export charges. To avoid this extra time, explicitly end the session by calling <a href="/realtime/realtimekit/core/end-a-session/"><code>kickAll()</code></a> or the [Kick all participants API](/api/resources/realtime_kit/subresources/active-session/methods/kick_all_participants/).
+The export charges include the keep-alive period. To avoid this extra time, explicitly end the session by calling <a href="/realtime/realtimekit/core/end-a-session/"><code>kickAll()</code></a> or the [Kick all participants API](/api/resources/realtime_kit/subresources/active-session/methods/kick_all_participants/).
 
 </Details>
