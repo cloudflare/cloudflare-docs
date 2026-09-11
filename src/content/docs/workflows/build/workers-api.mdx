@@ -154,7 +154,6 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
   - `name` - the name of the step.
   - `duration` - the duration to sleep for, as a `number` in milliseconds or as a `WorkflowDuration`-compatible string.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
-
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
@@ -610,6 +609,12 @@ declare abstract class WorkflowInstance {
 	 * Returns the current status of the instance.
 	 */
 	public status(): Promise<InstanceStatus>;
+	/**
+	 * Subscribe to events from this Workflow instance.
+	 */
+	public subscribe(
+		options?: WorkflowInstanceSubscribeOptions,
+	): Promise<WorkflowInstanceSubscription>;
 }
 ```
 
@@ -759,6 +764,55 @@ export default {
 You can call `sendEvent` multiple times, setting the value of the `type` property to match the specific `waitForEvent` calls in your Workflow.
 
 This allows you to wait for multiple events at once, or use `Promise.race` to wait for multiple events and allow the first event to progress the Workflow.
+
+### subscribe
+
+Subscribe to historical and live execution events from a Workflow instance.
+
+- <code>subscribe(options?: WorkflowInstanceSubscribeOptions): Promise&lt;WorkflowInstanceSubscription&gt;</code>
+  - `options` - optional properties that set the starting cursor and filter event types.
+
+The returned subscription provides a `next()` method. Each call returns the next matching `WorkflowInstanceEvent` or waits for one. The subscription ends when the instance completes, errors, or terminates.
+
+#### WorkflowInstanceSubscribeOptions
+
+```ts
+interface WorkflowInstanceSubscribeOptions {
+	/**
+	 * The event ID after which to start.
+	 */
+	cursor?: number;
+	/**
+	 * Emit only events with one of these types.
+	 */
+	filter?: WorkflowInstanceEventType[];
+}
+
+type WorkflowInstanceEventType = WorkflowInstanceEvent["type"];
+```
+
+Call `subscribe()` without options to receive all events. Use `cursor` and `filter` to control which events the subscription returns:
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("abc-123");
+
+// Subscribe to all events.
+using allEvents = await instance.subscribe();
+
+// Subscribe to events after event ID 100.
+using eventsAfterCursor = await instance.subscribe({ cursor: 100 });
+
+// Subscribe to selected event types.
+using filteredEvents = await instance.subscribe({
+	filter: ["workflow_completed", "workflow_errored"],
+});
+```
+
+</TypeScriptExample>
+
+For event types, filtering behavior, and cursor usage, refer to [Subscribe to events](/workflows/build/subscribe-to-instance-events/).
 
 ### InstanceStatus
 
