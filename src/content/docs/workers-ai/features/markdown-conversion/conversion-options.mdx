@@ -57,7 +57,7 @@ This option works on a _best-effort_ basis: it is not guaranteed that the result
 }
 ```
 
-- `hostname`: string to use as a host when resolving relative links inside the HTML.
+- `hostname`: absolute base URL used to resolve relative links in the HTML. Include the scheme and, when applicable, the page path — for example, `https://example.com/docs/page`. A bare hostname such as `example.com` is not sufficient.
 
 - `cssSelector`: string containing a CSS selector pattern to pick specific elements from your HTML. Refer to [how HTML is processed](/workers-ai/features/markdown-conversion/how-it-works/#html) for more details.
 

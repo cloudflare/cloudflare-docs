@@ -23,12 +23,9 @@ When we detect an HTML file, a series of things happen to the HTML content befor
 - If the `cssSelector` option is:
   - present, then only those elements that match the selector are kept for further processing;
   - missing, then elements such as `<header>`, `<footer>` and `<head>` are removed from the text.
-- If a base URL was obtained previously, relative links in the remaining HTML are resolved to fully qualified URLs
+- If a base URL was obtained previously, relative links in the remaining HTML are resolved to fully qualified URLs.
 
-<sup>1</sup> The host can also be set per request, using the HTML conversion
-options. Refer to [Conversion
-Options](/workers-ai/features/markdown-conversion/conversion-options/#html) for
-more details.
+<sup>1</sup> You can also set the base URL for each request with the HTML conversion options. Refer to [Conversion Options](/workers-ai/features/markdown-conversion/conversion-options/#html) for more details.
 
 ### Images
 
