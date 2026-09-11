@@ -25,13 +25,13 @@ For more information, refer to [Cloudflare Network Interconnect](/network-interc
 
 ## Available locations
 
-On this page, **diversity** means that a site has two Cloudflare connectivity devices of the same type for the listed dataplane version, providing separate paths into Cloudflare's network. This reduces exposure to a single device or upstream-path failure.
+On this page, **device-level diversity** means that a site supports CNI connections for the listed dataplane version on two physically separate Cloudflare connectivity devices of the same type, with separate paths into Cloudflare's network.
 
-### Diverse CNI available
+### Locations with device-level diversity
 
 Values show whether a dataplane is available through one or two connectivity devices. `—` means the dataplane is not offered.
 
-\* Site has diversity being built out. Contact your account team.
+\* Device-level diversity is being built out at this site. Contact your account team.
 
 <Tabs>
 
@@ -109,9 +109,9 @@ Values show whether a dataplane is available through one or two connectivity dev
 
 </Tabs>
 
-### Non-diverse locations
+### Locations without device-level diversity
 
-These sites do not offer two same-type connectivity devices with diverse upstream connectivity. `✓` means the dataplane is offered; `—` means it is not offered.
+These sites offer CNI without device-level diversity for the listed dataplanes. `✓` means the dataplane is offered; `—` means it is not offered.
 
 <Tabs>
 
