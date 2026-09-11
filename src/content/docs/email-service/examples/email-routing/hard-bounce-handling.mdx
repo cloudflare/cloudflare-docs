@@ -1,7 +1,7 @@
 ---
-title: Handle hard bounce emails
-description: Detect and process hard bounce notifications in Email Service to maintain sender reputation.
-pcx_content_type: how-to
+title: Hard bounce handling
+description: Detect hard bounce notifications and store recipients in Workers KV.
+pcx_content_type: example
 summary: Detect and handle hard bounce emails to maintain sender reputation and manage undeliverable addresses
 sidebar:
   order: 4
@@ -11,9 +11,9 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-Handle hard bounce notifications to automatically remove invalid email addresses from your mailing lists and maintain good sender reputation.
+This example detects hard bounce notifications and stores recipient addresses in Workers KV.
 
-## What are hard bounces?
+## Identify hard bounces
 
 Hard bounces occur when an email cannot be delivered due to permanent reasons:
 
@@ -22,7 +22,7 @@ Hard bounces occur when an email cannot be delivered due to permanent reasons:
 - Mailbox full: The recipient's mailbox has exceeded storage limits
 - Email blocked: The recipient's server permanently rejects emails
 
-## Configuration
+## Configure bindings
 
 Configure your worker to handle bounce notifications:
 
@@ -44,7 +44,7 @@ Configure your worker to handle bounce notifications:
 
 </WranglerConfig>
 
-## Hard bounce detection
+## Detect hard bounces
 
 ```javascript
 import * as PostalMime from "postal-mime";
@@ -187,7 +187,7 @@ async function handleHardBounce(bounceInfo, env) {
 }
 ```
 
-## Testing hard bounce handling
+## Test the handler
 
 Create a test bounce notification:
 
@@ -222,7 +222,7 @@ Message-ID: <original123@yourdomain.com>
 Welcome! Thanks for signing up.'
 ```
 
-## Checking suppression list
+## Check the suppression list
 
 Add a utility function to check if an email is suppressed before sending:
 
