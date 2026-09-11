@@ -1,0 +1,249 @@
+---
+title: Module registry
+pcx_content_type: reference
+description: Reference for the new Workers module registry, which provides import.meta support, URL-based specifier resolution, lazy compilation, and more.
+products:
+  - workers
+sidebar:
+  order: 5
+---
+
+import { WranglerConfig } from "~/components";
+
+The Workers runtime uses a module registry to resolve import specifiers, compile modules, and hand them to V8 for linking and execution. A new module registry implementation is available behind the `new_module_registry` [compatibility flag](/workers/configuration/compatibility-flags/).
+
+The new registry resolves specifiers as URLs rather than filesystem-style paths. This enables `import.meta` support, more predictable resolution behavior, consistent errors, and performance improvements through lazy compilation and shared caching.
+
+:::note
+
+The `new_module_registry` flag does not have a default-on date yet. You must add it explicitly to opt in. Existing Workers continue to use the original registry.
+
+:::
+
+## Turn on the new module registry
+
+Add the `new_module_registry` compatibility flag to your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_flags": ["new_module_registry"]
+}
+```
+
+</WranglerConfig>
+
+## `import.meta`
+
+The new registry adds support for `import.meta.url`, `import.meta.main`, and `import.meta.resolve()`.
+
+### `import.meta.url`
+
+Returns the URL of the current module as a string.
+
+```js
+console.log(import.meta.url);
+// "file:///bundle/index.js"
+```
+
+### `import.meta.main`
+
+Returns `true` only for the module configured as your Worker's entrypoint. Every other module returns `false`.
+
+```js
+export default {
+	async fetch(request) {
+		return new Response(`main: ${import.meta.main}`);
+		// "main: true" for the entrypoint module
+	},
+};
+```
+
+### `import.meta.resolve()`
+
+Resolves a specifier against the current module without importing it. This is a pure string transform that does not check whether the resolved URL corresponds to a real module.
+
+```js
+import.meta.resolve("./utils.js"); // "file:///bundle/utils.js"
+import.meta.resolve("./a/../utils.js"); // "file:///bundle/utils.js"
+import.meta.resolve("fs"); // "node:fs"
+```
+
+`import.meta.resolve()` normalizes percent-encoding the same way `new URL()` does. It collapses dot segments but does not decode characters that are already percent-encoded. For example, `import.meta.resolve('%66oo.js')` resolves to `file:///bundle/%66oo.js`, not `file:///bundle/foo.js`.
+
+A `TypeError` is thrown for a specifier that cannot be parsed as a URL.
+
+## Specifiers are URLs
+
+Module specifiers are resolved as URLs using `new URL(specifier, base)`. This applies uniformly to all modules, though it matters most for modules that survive bundling: `node:` imports, Wasm/text/binary modules, and anything running without Wrangler's default bundler.
+
+Full URLs work as specifiers:
+
+```js
+import { helper } from "file:///bundle/utils.js";
+```
+
+### Query strings and fragments
+
+A specifier with a different query string or fragment is treated as a distinct module instance, following the same module-identity rules browsers use. Each instance gets its own `import.meta.url` and its own copy of top-level state.
+
+```js
+// counter.js
+let n = 0;
+export function increment() {
+	return ++n;
+}
+```
+
+```js
+import { increment as incA } from "./counter.js?a";
+import { increment as incB } from "./counter.js?b";
+
+incA(); // 1
+incA(); // 2
+incB(); // 1 — separate instance with its own copy of `n`
+```
+
+Importing the same specifier with the same query string returns the same instance. This does not provide a way to force re-evaluation on every import.
+
+## `node:` imports resolve consistently
+
+All paths to a `node:` built-in return the same module instance: static `import`, dynamic `import()`, `require()`, and `process.getBuiltinModule()`.
+
+```js
+import { default as processA } from "node:process";
+
+const viaImport = await import("node:process");
+const viaBuiltin = process.getBuiltinModule("node:process");
+
+viaImport.default === processA; // true
+viaBuiltin === processA; // true
+```
+
+A given built-in is a true singleton, including any module-level state, regardless of how your code reaches it.
+
+## Import attributes
+
+The new registry validates [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with) correctly. `json` is the only supported attribute type:
+
+```js
+import data from "./config.json" with { type: "json" };
+```
+
+### Unsupported attribute types
+
+The `text` and `bytes` attribute types are recognized but not yet supported. They track the [Import Text](https://github.com/tc39/proposal-import-text) and [Import Bytes](https://github.com/tc39/proposal-import-bytes) TC39 proposals, which have not yet reached Stage 4. Using them produces a specific error:
+
+```js
+import msg from "./message.txt" with { type: "text" };
+// TypeError: Import attribute type "text" is not yet supported
+```
+
+### Unknown attribute keys
+
+Any attribute key other than `type` throws an error:
+
+```js
+import data from "./config.json" with { type: "json", cache: "no" };
+// TypeError: Unsupported import attribute: "cache"
+```
+
+### Type mismatches
+
+If the specified type does not match the actual module type, an error is thrown:
+
+```js
+import data from "./utils.js" with { type: "json" };
+// TypeError: Module "./utils.js" is not of type "json"
+```
+
+## `require(esm)`
+
+When `require()` is called on an ES module, the registry follows Node.js [`require(esm)`](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) behavior:
+
+- If the module has a string-named export called `'module.exports'`, that value is returned. This is Node.js' mechanism for letting an ES module control what `require()` returns.
+- Otherwise, `require()` returns the module's namespace object.
+- For workerd `node:` built-ins, `require()` returns the default export directly so that patterns like `require('node:buffer').Buffer` work as expected.
+
+```js
+// utils.mjs
+const impl = { hello: "world" };
+export { impl as "module.exports" };
+export default "not this";
+```
+
+```js
+import { createRequire } from "node:module";
+
+const myRequire = createRequire(import.meta.url);
+myRequire("./utils.mjs"); // { hello: "world" }
+```
+
+### Top-level `await` restriction
+
+If a module or any module in its import graph uses top-level `await`, `require()` throws an error. This matches Node.js' [`ERR_REQUIRE_ASYNC_MODULE`](https://nodejs.org/api/errors.html#err_require_async_module) restriction. Use `import()` for modules that rely on top-level `await`.
+
+```js
+// async-init.mjs
+await Promise.resolve();
+export const ready = true;
+```
+
+```js
+myRequire("./async-init.mjs");
+// Error: Top-level await is not supported in this context
+// for module: file:///bundle/async-init.mjs
+```
+
+### Bundler compatibility
+
+If a required module sets a truthy `__cjsUnwrapDefault` export (a marker used by some bundlers), the default export is returned. This ensures existing prebuilt bundles continue to work.
+
+## Error handling
+
+All module resolution errors use consistent classes and messages regardless of whether the failure occurs through a static `import`, dynamic `import()`, or `require()`:
+
+| Error                       | Class       | Example message                                |
+| --------------------------- | ----------- | ---------------------------------------------- |
+| Module not found            | `Error`     | `Module not found: file:///bundle/nope.js`     |
+| Invalid specifier           | `TypeError` | `Invalid module specifier: https://`           |
+| Circular dependency         | `Error`     | (V8 circular dependency error)                 |
+| Unsupported import attribute | `TypeError` | `Unsupported import attribute: "cache"`        |
+
+## Lazy compilation and shared caches
+
+The new registry includes two performance improvements:
+
+### Lazy compilation
+
+Modules are not compiled until they are first imported. In the original registry, all modules in a Worker's bundle are compiled at startup regardless of whether they are ever used. With the new registry, a WebAssembly module that is only used on a rarely-hit route does not add to cold start time for other routes.
+
+### Shared compiled code
+
+Cloudflare runs multiple V8 isolate replicas of a Worker to spread load across CPU cores. The original registry compiles the bundle independently in each replica. The new registry produces compiled V8 bytecode once and shares it across all replicas of that Worker. The first replica to import a given module pays the full compilation cost. Subsequent replicas use the cached result. This applies to both JavaScript and WebAssembly modules.
+
+## WebAssembly source phase imports
+
+You can import the compiled-but-not-instantiated form of a WebAssembly module using [source phase imports](https://github.com/nicolo-ribaudo/tc39-proposal-esm-integration/blob/main/proposals/source-phase-imports.md):
+
+```js
+import source wasmModule from "./add.wasm";
+
+export default {
+	async fetch() {
+		const instance = await WebAssembly.instantiate(wasmModule, {});
+		return new Response(String(instance.exports.add(1, 2)));
+	},
+};
+```
+
+Source phase imports can also be used dynamically:
+
+```js
+const wasmModule = await import.source("./add.wasm");
+```
+
+Both forms return a `WebAssembly.Module` directly. Source phase imports are only supported for WebAssembly modules. Using them on any other module type throws a `SyntaxError`.
+
+For more information on using WebAssembly in Workers, refer to [Wasm in JavaScript](/workers/runtime-apis/webassembly/javascript/).
