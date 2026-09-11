@@ -1,0 +1,23 @@
+src/content/docs/agents/index.mdx
+  s_b8d701ee3a6b35::t_c478ce16aef465 14,28
+src/content/docs/agents/runtime/index.mdx
+  s_b8d701ee3a6b35::t_21b9cef090ecf2 12
+src/content/docs/agents/runtime/lifecycle/index.mdx
+  s_b8d701ee3a6b35::t_c977cbdbe2e0be 2-4,8-11,14,16-233
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3d68343a525521d5ee8d6666ea2970a554f8f3e8",
+  "prompts": {},
+  "sessions": {
+    "s_b8d701ee3a6b35": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0901a-f402-734c-8810-7a23aeae6886",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
