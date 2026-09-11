@@ -8,6 +8,7 @@ import YAML from "yaml";
 import {
 	downloadToDotTempIfNotPresent,
 	extractTarGz,
+	getDotTmpPath,
 } from "../src/util/custom-loaders";
 
 const MIDDLECACHE_BASE_URL = `${(
@@ -73,7 +74,10 @@ if (hasGeneratedPages && !force) {
 	process.exit(0);
 }
 
-const archivePath = join(".tmp", ...ARCHIVE_DOT_TMP_PATH.split("/"));
+// Resolve the cache path the same way downloadToDotTempIfNotPresent does
+// (repo-root `.tmp`, not cwd-relative) so the --force eviction always targets
+// the file the downloader will reuse.
+const archivePath = join(getDotTmpPath(), ...ARCHIVE_DOT_TMP_PATH.split("/"));
 
 if (force) {
 	// --force means re-fetch from middlecache: drop the cached archive so
