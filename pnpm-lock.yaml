@@ -320,6 +320,9 @@ importers:
       wrangler:
         specifier: 4.129.0
         version: 4.129.0(@cloudflare/workers-types@5.20260906.1)
+      yaml:
+        specifier: 2.9.0
+        version: 2.9.0
       zod:
         specifier: 4.5.4
         version: 4.5.4

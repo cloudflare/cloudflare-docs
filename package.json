@@ -40,7 +40,7 @@
 		"lint": "eslint",
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets",
-		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
+		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts && tsx bin/fetch-logpush-datasets.ts"
 	},
 	"devDependencies": {
 		"@actions/core": "3.0.1",
@@ -146,6 +146,7 @@
 		"vite": "^8.2.2",
 		"vitest": "4.1.11",
 		"wrangler": "4.129.0",
+		"yaml": "2.9.0",
 		"zod": "4.5.4"
 	},
 	"lint-staged": {
