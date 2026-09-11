@@ -44,7 +44,7 @@ import * as codeOwnersUtils from "codeowners-utils";
 			// The result can be accessed through the `m`-variable.
 			m.forEach((match, groupIndex) => {
 				if (groupIndex === 1) {
-					links.push(match);
+					links.push(match.toLowerCase());
 				}
 			});
 		}
