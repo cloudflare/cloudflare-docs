@@ -9,13 +9,81 @@ sidebar:
 
 import { Details } from "~/components";
 
-<Details header="How can I generate the Cloudflare API Token?">
+### API token
+
+<Details header="How can I generate a Cloudflare API token?">
 
 To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloudflare.com).
 
-Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a new token via the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
-When configuring permissions, ensure that **Realtime** / **Realtime Admin** permissions are selected.
-Configure any additional [access policies and restrictions](/fundamentals/api/reference/permissions/) as needed for your use case.
+Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a token from the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens). When configuring permissions, select **Realtime** > **Realtime Admin**. Configure additional [access policies and restrictions](/fundamentals/api/reference/permissions/) for your use case.
+
+Cloudflare API tokens authenticate requests to Cloudflare APIs. Use these tokens only in your backend. Never expose an API token to your frontend or share it with an end user.
+
+</Details>
+
+### Auth tokens
+
+<Details header="How do I generate an auth token for a participant?">
+
+Your backend generates an auth token by adding the user as a participant to a meeting with the [Add Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) API endpoint. The API response includes a `token` field for that participant.
+
+You can send this token to your frontend for the intended participant. The token is tied to that participant and meeting. It does not grant access to other meetings.
+
+If you need a new token after the previous token expires, use the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint. For more information, refer to [Participant tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
+
+</Details>
+
+<Details header="How long is an auth token valid?">
+
+An auth token is a JSON Web Token (JWT) that is valid for 100 days. It contains `meetingId` and `participantId` fields that tie the token to a specific participant in a specific meeting. The token does not grant access to other meetings. If you need a new token after the previous token expires, use the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint. For more information, refer to [Participant tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
+
+</Details>
+
+<Details header="Can I refresh an auth token before it expires?">
+
+Yes. You can call the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint before the current token expires. Refreshing an auth token generates a new token without invalidating an existing token. Each token remains valid and expires independently at its own expiration time.
+
+</Details>
+
+<Details header="Can the auth token lifespan be configured?">
+
+No. The auth token APIs do not support custom start or expiration dates. Tokens created through the [Add Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) or [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) flow become valid when issued and expire 100 days later.
+
+If you need scheduled access, implement time-based access controls in your own system. RealtimeKit SDKs do not manage scheduling or duration logic.
+
+</Details>
+
+<Details header="Does generating a new auth token invalidate the previous token?">
+
+No. Generating a new token, including through the refresh flow, does not invalidate an existing token. Each token remains valid and expires independently at its own expiration time.
+
+</Details>
+
+<Details header="Does deleting a participant revoke all previously issued tokens?">
+
+Yes. The [Delete Participant](/api/resources/realtime_kit/subresources/meetings/methods/delete_meeting_participant/) endpoint immediately revokes all tokens issued to that participant for the meeting.
+
+Before deleting the participant, use the [Kick Participants](/api/resources/realtime_kit/subresources/active-session/methods/kick_participants/) endpoint to safely remove the participant from any active session. Then, delete the participant to revoke their tokens.
+
+</Details>
+
+<Details header="What happens if a participant uses an expired or invalidated auth token?">
+
+The participant cannot join the meeting. The RealtimeKit UI and Core SDK report that the token is invalid.
+
+Because RealtimeKit rejects the participant before they enter the meeting stage, they are not billed.
+
+</Details>
+
+<Details header="Can a participant with a valid auth token join an inactive meeting?">
+
+No. A participant cannot join a meeting with an `INACTIVE` status, even if their auth token is valid and has not expired.
+
+</Details>
+
+<Details header="Does the SDK cache participant auth tokens?">
+
+No. RealtimeKit SDKs do not cache participant auth tokens or store them in browser or device storage.
 
 </Details>
 
@@ -36,10 +104,9 @@ A common approach is:
 
 <Details header="How do I prevent participants from joining a meeting after a specific date or time?">
 
-You can disable the meeting at the required time by setting its status to `INACTIVE` using a `PATCH` request to the
-[Update Meeting](/api/resources/realtime_kit/subresources/meetings/methods/update_meeting_by_id/) endpoint.
+At the required time, first call the [Kick All Participants](/api/resources/realtime_kit/subresources/active-session/methods/kick_all_participants/) endpoint if the meeting has an active session. This removes all participants and properly ends the session.
 
-This prevents participants from joining the meeting and prevents any new Sessions from starting.
+Then, call the [Update Meeting](/api/resources/realtime_kit/subresources/meetings/methods/update_meeting_by_id/) endpoint to set the meeting status to `INACTIVE`. This prevents participants from joining the meeting and prevents new sessions from starting.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{APP_ID}/meetings/{MEETING_ID} \
@@ -52,19 +119,6 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{AP
 </Details>
 
 ### Participants
-
-<Details header="How do I generate an auth token for a participant?">
-	Your backend generates an authentication token by adding the user as a
-	participant to a meeting with the [Add
-	Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/)
-	API endpoint. The API response includes a `token` field, which is the
-	authentication token for that participant in that meeting. If you need a new
-	token for an existing participant after the previous token has expired, use
-	the [Refresh Participant
-	Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/)
-	endpoint. For more details, see [Participant
-	tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
-</Details>
 
 <Details header="Can the same user join from multiple devices or browser tabs?">
 	Yes. A single participant can be represented by multiple peers if the user
