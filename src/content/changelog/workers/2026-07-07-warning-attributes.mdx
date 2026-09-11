@@ -1,0 +1,18 @@
+---
+title: Workers tracing now surfaces warning attributes on spans
+description: Workers tracing attaches `cloudflare.warning.type` and `cloudflare.warning.message` attributes to spans when a non-fatal telemetry error condition is encountered, such as a span that was never closed.
+products:
+  - workers
+date: 2026-07-07
+---
+
+Workers tracing may now attach warning attributes to a span when a non-fatal error condition is encountered while recording telemetry for that span. These are diagnostic indicators about the span's telemetry state — for example, a span that was created but never closed before its parent invocation span ended.
+
+When a warning is present, both attributes are set together:
+
+- `cloudflare.warning.type` — A closed-set identifier indicating the type of warning condition. The currently defined value is `span_not_ended`, which indicates the span was still open when its parent invocation span closed and was force-closed by Workers tracing.
+- `cloudflare.warning.message` — A free-form, human-readable explanation of the warning condition.
+
+Use these attributes to detect instrumentation issues in your Workers, such as spans that are started but never ended.
+
+For more information, refer to [Warning attributes](/workers/observability/traces/spans-and-attributes/#warning-attributes).
