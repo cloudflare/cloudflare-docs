@@ -1,0 +1,14 @@
+---
+title: Private MCP server support for MCP server portals
+description: MCP server portals can now connect to MCP servers available only on your private network.
+date: 2026-09-08
+products:
+  - cloudflare-one
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) can now connect to MCP servers available only on your private network. The portal uses Cloudflare Gateway to reach private hostnames and IP addresses without exposing the MCP server to the public Internet.
+
+Connect the server network to Cloudflare with Cloudflare Tunnel or another Cloudflare One connector. Configure a private hostname or CIDR route, then turn on **Route traffic through Cloudflare Gateway** when you add the server. OAuth authorization server endpoints, such as the authorization and token endpoints, must be accessible on the public Internet. If Cloudflare automatically registers the OAuth client through Dynamic Client Registration (DCR), the registration endpoint must also be accessible on the public Internet.
+
+For setup instructions, refer to [Connect a private MCP server](/cloudflare-one/access-controls/ai-controls/mcp-portals/#connect-a-private-mcp-server).
