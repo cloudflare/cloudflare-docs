@@ -1,0 +1,49 @@
+---
+pcx_content_type: how-to
+description: Traffic profiles in Zero Trust.
+products:
+  - cloudflare-one
+title: Traffic profiles
+sidebar:
+  order: 5
+---
+
+With Cloudflare One, you can create a traffic profile to define a selector or a group of selectors once and reference it across multiple [Gateway policies](/cloudflare-one/traffic-policies/). When you update a traffic profile, every policy that references it uses the updated selectors.
+
+A traffic profile holds one or more selectors from a single section, such as traffic, identity, or device posture. Use a traffic profile to represent a business definition, such as a set of approved destination ports, and reuse it wherever it applies.
+
+## Create a traffic profile
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Reusable components** > **Traffic profiles**.
+2. Select **Create traffic profile**.
+3. Enter a name for the profile. To describe the profile, enter a description.
+4. Add one or more selectors. Combine them with And or Or logic.
+5. Select **Save**.
+
+## Reference a traffic profile in a policy
+
+When you reference a traffic profile in a policy, the profile's selectors combine with the policy's own selectors using And. You can reference more than one traffic profile in a single policy.
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**.
+2. Create or edit a policy.
+3. In the policy builder, add the traffic profile you want to reference.
+4. Select **Save**.
+
+## Edit a traffic profile
+
+Edit a traffic profile to change its name, description, or selectors. Every policy that references it uses the updated selectors.
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Reusable components** > **Traffic profiles**.
+2. Locate the traffic profile you want to edit.
+3. Select the profile, then update its name, description, or selectors.
+4. Confirm the change. The update applies to every policy that references the profile.
+
+## Delete a traffic profile
+
+You can delete a traffic profile that no policy references. If one or more policies reference the profile, you must detach it from those policies first.
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Reusable components** > **Traffic profiles**.
+2. Locate the traffic profile you want to delete.
+3. Select the profile, then select **Delete**.
+4. If the profile is in use, review the affected policies, then select **Detach**. Cloudflare One replaces the reference in each policy with the profile's current selectors, so no policy behavior changes.
+5. Select **Delete**.
