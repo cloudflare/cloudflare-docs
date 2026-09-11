@@ -1,0 +1,105 @@
+---
+title: Agents SDK v0.23.0 adds composable Durable Object capabilities
+description: Agents SDK v0.23.0 lets developers compose durable agent features on the platform Durable Object class through Lifecycle capabilities.
+products:
+  - agents
+  - workers
+date: 2026-09-11
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+[Agents SDK v0.23.0](https://github.com/cloudflare/agents/releases/tag/agents%400.23.0) expands the set of durable features that you can compose without extending the `Agent` class. The `agents/lifecycle` entry point connects contained capabilities to any Cloudflare Durable Object.
+
+A capability owns its storage and control flow. Lifecycle coordinates startup, request dispatch, WebSocket events, durable jobs, alarms, and cleanup across every installed capability.
+
+Lifecycle and these capabilities are replatforming the `Agent` class and [Think harness](/agents/harnesses/think/). The same durable implementations can now power framework internals and plain Durable Objects. Developers can combine these building blocks into rich agent experiences without adopting a complete framework.
+
+The Lifecycle entry point and directly installed capability APIs are experimental. Established APIs on `Agent` remain available.
+
+The following example attaches all public Lifecycle capabilities available in `agents@0.23.0` to a plain Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+import { RoutedAgents } from "agents/routing";
+import { Scheduler } from "agents/schedules";
+import { Sessions } from "agents/sessions";
+import { Streams } from "agents/streams";
+import { Tasks, type TaskStep } from "agents/tasks";
+import { WebSockets } from "agents/websockets";
+import type { ChatAgent } from "./chat-agent";
+
+export class AgentHost extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("agent-host", "1.0.0", {
+		env: this.env,
+	});
+
+	readonly chats = new RoutedAgents<ChatAgent, { title: string }>({
+		namespace: this.env.ChatAgent,
+		route: "chats",
+	});
+
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			remind: (payload: { message: string }) => console.log(payload.message),
+		},
+	});
+
+	readonly sessions = new Sessions({
+		reservedMetadataKeys: ["internal"],
+	});
+
+	readonly streams = new Streams({ maxChunkBytes: 64 * 1024 });
+
+	readonly tasks = new Tasks({
+		definitions: {
+			"research@v1": async (input: { topic: string }, step: TaskStep) =>
+				step.do("search", () => ({
+					topic: input.topic,
+					results: [],
+				})),
+		},
+	});
+
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onMessage: (connection, message) => connection.send(message),
+		},
+	});
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.mcp)
+		.use(this.chats)
+		.use(this.scheduler)
+		.use(this.sessions)
+		.use(this.streams)
+		.use(this.tasks)
+		.use(this.webSockets, { fallback: true });
+}
+```
+
+</TypeScriptExample>
+
+Most applications install only the capabilities they need. The fallback option keeps the WebSocket catch-all after other request and upgrade middleware.
+
+Each capability has a focused role:
+
+- `MCPClientManager` restores persisted Model Context Protocol (MCP) server registrations and reconnects clients.
+- `RoutedAgents` manages and routes to independent top-level Agents.
+- `Scheduler` runs delayed, dated, cron, and interval callbacks.
+- `Sessions` stores branching conversation history and attachments.
+- `Streams` persists replayable incremental output.
+- `Tasks` runs journaled work that survives process loss.
+- `WebSockets` owns hibernating connections and remote callables.
+
+Lifecycle also provides a shared durable job queue. Capabilities schedule future work without competing for the Durable Object's single alarm.
+
+Install this release with your package manager:
+
+<PackageManagers pkg="agents@0.23.0" />
+
+For the runtime model and custom hooks, refer to [Durable Object lifecycle](/agents/runtime/lifecycle/). For capability imports and options, refer to [Capabilities](/agents/runtime/capabilities/).
