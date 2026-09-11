@@ -61,22 +61,24 @@ Members and User Groups need `Workers Routes Write`, scoped to each affected zon
 
 API tokens need _Zone_ > _Workers Routes_ > _Write_, scoped to each affected zone.
 
+After a Route or Custom Domain is configured, you can deploy new Worker versions with only `Editor` access, as long as the deployment does not add, update, or remove that connection.
+
 ## Wrangler
 
 Wrangler authorizes commands using the Workers permissions of the authenticated member or API token.
 
 Here are examples of the scope required to run Wrangler commands:
 
-| Action                                                  | Wrangler command                                       | Minimum role required                                                        |
-| ------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------- |
-| Tail logs for a Worker                                  | `wrangler tail`                                        | `Metadata Read-Only` for that Worker                                         |
-| Deploy an existing Worker                               | `wrangler deploy`                                      | `Editor` for that Worker                                                     |
-| Deploy an existing Worker with Routes or Custom Domains | `wrangler deploy`                                      | `Editor` for that Worker, plus `Workers Routes Write` for each affected zone |
-| Create a new Worker                                     | `wrangler deploy` for a Worker that does not exist yet | Product-level `Admin`                                                        |
-| Upload a version                                        | `wrangler versions upload`                             | `Editor` for that Worker                                                     |
-| Deploy a version                                        | `wrangler versions deploy`                             | `Editor` for that Worker                                                     |
-| Roll back a deployment                                  | `wrangler rollback`                                    | `Editor` for that Worker                                                     |
-| Manage secrets for an existing Worker                   | `wrangler secret put`, `wrangler secret delete`        | `Editor` for that Worker                                                     |
+| Action                                            | Wrangler command                                       | Minimum role required                                                        |
+| ------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Tail logs for a Worker                            | `wrangler tail`                                        | `Metadata Read-Only` for that Worker                                         |
+| Deploy an existing Worker                         | `wrangler deploy`                                      | `Editor` for that Worker                                                     |
+| Change Routes or Custom Domains during deployment | `wrangler deploy`                                      | `Editor` for that Worker, plus `Workers Routes Write` for each affected zone |
+| Create a new Worker                               | `wrangler deploy` for a Worker that does not exist yet | Product-level `Admin`                                                        |
+| Upload a version                                  | `wrangler versions upload`                             | `Editor` for that Worker                                                     |
+| Deploy a version                                  | `wrangler versions deploy`                             | `Editor` for that Worker                                                     |
+| Roll back a deployment                            | `wrangler rollback`                                    | `Editor` for that Worker                                                     |
+| Manage secrets for an existing Worker             | `wrangler secret put`, `wrangler secret delete`        | `Editor` for that Worker                                                     |
 
 ## Legacy Workers permissions
 
@@ -124,14 +126,12 @@ Permissions on bound resources are only required if you need to access those res
 - API tokens do not support platform-level Developer Platform permissions.
 - Creating a new Worker requires Workers Admin because per-Worker permissions can only apply to Workers that already exist.
 - Custom Domains do not currently support per-Worker roles. Support is planned.
-- Durable Objects permissions are inherited from Workers roles and are not assigned separately.
-- KV-backed Durable Objects do not support granular authorization for analytics. If access is scoped to an individual Worker, metrics and other observability data for its KV-backed Durable Objects are unavailable.
 - Legacy Workers permissions may appear in older configuration or API references, but new documentation should use the replacement Workers roles.
 
 ## Related resources
 
 - [Roles and permissions overview](/workers/authorization/)
-- Durable Objects roles and permissions — coming soon
+- [Durable Objects roles and permissions](/workers/authorization/durable-objects/)
 - [R2 roles and permissions](/r2/api/tokens/#permissions)
 - [Roles](/fundamentals/manage-members/roles/)
 - [Role scopes](/fundamentals/manage-members/scope/)
