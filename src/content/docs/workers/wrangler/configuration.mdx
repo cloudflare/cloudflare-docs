@@ -259,6 +259,9 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `secrets_store_secrets` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Secrets Store bindings that your worker should be bound to. Refer to [Secrets Store](/secrets-store/).
 
+- `flagship` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of Flagship apps that your Worker should be bound to. Refer to [Flagship](#flagship).
+
 ## Types of routes
 
 There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and [`workers.dev`](/workers/configuration/routing/workers-dev/).
@@ -748,6 +751,36 @@ Example:
 Example:
 
 <Render file="envvar-example" product="workers" />
+
+### Flagship
+
+[Flagship](/flagship/) is Cloudflare's feature flag service. Bind a Flagship app to evaluate flags from your Worker.
+
+- `binding` <Type text="string" /> <MetaInfo text="required" />
+  - The binding name used to refer to the Flagship app. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables).
+
+- `app_id` <Type text="string" /> <MetaInfo text="optional" />
+  - The ID of the Flagship app.
+
+- `remote` <Type text="boolean" /> <MetaInfo text="optional" />
+  - During local development, Flagship bindings use a [local flag store](/flagship/configuration/#local-development) by default. Set `remote` to `true` to evaluate against the remote app instead.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"flagship": [
+		{
+			"binding": "FLAGS",
+			"app_id": "<APP_ID>",
+		},
+	],
+}
+```
+
+</WranglerConfig>
 
 ### Hyperdrive
 
