@@ -31,239 +31,196 @@ For more information, refer to [Cloudflare Network Interconnect](/network-interc
 
 ## Available locations
 
-On this page, **device-level diversity** means that a site supports CNI connections for the listed dataplane version on two physically separate Cloudflare connectivity devices of the same type, with separate paths into Cloudflare's network.
+On this page, **device-level diversity** means that two physically separate Cloudflare connectivity devices of the same type can use paths through two distinct Cloudflare edge routers. The devices can be in one facility or in separate facilities within one metro.
 
-### Locations with device-level diversity
+Counts are per facility and capped at two. `2 devices` means that two or more devices are present. A note in the cell states when the devices do not form a valid pair within that facility.
 
-Values show whether a dataplane is available through one or two connectivity devices. `—` means the dataplane is not offered.
+Cross-site annotations appear only when a metro has exceptions. For metros with multiple facilities offering the same dataplane, no annotation means that every combination of those facilities contains a valid pair. Exception notes list valid partner facilities or state that no valid cross-site pair exists.
 
-\* Device-level diversity is being built out at this site. Contact your account team.
-
-<Tabs>
-
-<TabItem label="North America">
-
-| Metro | Site | v1 | v2 |
-| --- | --- | --- | --- |
-| **ATL** Atlanta, GA | Digital Realty ATL1 | 1 | 2 |
-| **ATL** Atlanta, GA | Equinix AT1 | 2 | 2\* |
-| **CMH** Columbus, OH | Cologix COL3 | 2 | — |
-| **DEN** Denver, CO | CoreSite DE1 | 2 | 2 |
-| **DFW** Dallas, TX | Equinix DA6 | 2 | 2 |
-| **IAD** Ashburn, VA | Equinix DC2 | 2 | 2 |
-| **LAX** Los Angeles, CA | CoreSite LA1 | 2\* | 2 |
-| **MCI** Kansas City, MO | Netrality KC (1102 Grand) | 2 | 2 |
-| **MIA** Miami, FL | Equinix MI1 | 2 | 2 |
-| **MSP** Minneapolis, MN | Cologix MIN1 | 2 | — |
-| **ORD** Chicago, IL | Equinix CH2 | 2 | 2 |
-| **SEA** Seattle, WA | Digital Realty SEA10 | 2 | 2\* |
-| **SJC** San Jose, CA | Equinix SV5 | 2 | 2 |
-| **YYZ** Toronto, ON | Equinix TR1 | 2 | 2 |
-
-</TabItem>
-
-<TabItem label="South America">
-
-| Metro | Site | v1 | v2 |
-| --- | --- | --- | --- |
-| **GIG** Rio de Janeiro | Equinix RJ2 | 2 | 2 |
-| **GRU** São Paulo | Equinix SP2 | 2 | 2 |
-
-</TabItem>
-
-<TabItem label="Europe and Africa">
-
-#### Europe
-
-| Metro | Site | v1 | v2 |
-| --- | --- | --- | --- |
-| **AMS** Amsterdam | Equinix AM1 | 2 | 2 |
-| **ARN** Stockholm | Equinix SK1 | 2 | 2 |
-| **CDG** Paris | Equinix PA2 | 2 | 2 |
-| **DUB** Dublin | Equinix DB2 | 2 | 2 |
-| **FRA** Frankfurt | Equinix FR5 | 2 | 2 |
-| **IST** Istanbul | Equinix IL2 | 1 | 2 |
-| **IST** Istanbul | Turkcell/Superonline Istanbul | 1 | 2 |
-| **MAD** Madrid | Digital Realty MAD2 | 2 | 2 |
-| **MRS** Marseille | Digital Realty MRS1 | 2 | — |
-| **MXP** Milan | Retelit Via Caldera | 2 | 2 |
-| **VIE** Vienna | Digital Realty VIE1 | 2 | 2 |
-| **WAW** Warsaw | Equinix WA1 | 2 | 2 |
-
-#### Africa
-
-| Metro | Site | v1 | v2 |
-| --- | --- | --- | --- |
-| **JNB** Johannesburg | Digital Realty (Teraco) JB1 | 2 | 2 |
-
-</TabItem>
-
-<TabItem label="Asia Pacific">
-
-| Metro | Site | v1 | v2 |
-| --- | --- | --- | --- |
-| **AKL** Auckland | DataCentre220 | 1 | 2 |
-| **BOM** Mumbai | Equinix MB1 | 2 | 2\* |
-| **HKG** Hong Kong | Equinix HK2 | 2 | 2 |
-| **ICN** Seoul | KINX Dogok IDC | 2 | 2 |
-| **KIX** Osaka | Equinix OS1 | 2 | 2 |
-| **MEL** Melbourne | NextDC (M1) | 1 | 2 |
-| **SIN** Singapore | Equinix SG1 | 2 | 2 |
-| **SYD** Sydney | Equinix SY2 | 2 | 2 |
-
-</TabItem>
-
-</Tabs>
-
-### Locations without device-level diversity
-
-These sites offer CNI without device-level diversity for the listed dataplanes. `✓` means the dataplane is offered; `—` means it is not offered.
+Contact your account team to confirm availability for your design. `—` means that the dataplane is not offered.
 
 <Tabs>
 
 <TabItem label="North America">
 
-| Metro | Site | v1 | v2 |
+| Metro | Facility | v1 | v2 |
 | --- | --- | --- | --- |
-| **ABQ** Albuquerque, NM | H5 Data Centers Albuquerque | ✓ | — |
-| **BNA** Nashville, TN | H5 Data Centers NAS1 | ✓ | — |
-| **BOS** Boston, MA | Markley Group One Summer Street Boston | ✓ | ✓ |
-| **BUF** Buffalo, NY | H5 Data Centers BUF2 | ✓ | — |
-| **CLT** Charlotte, NC | Digital Realty CLT10 | ✓ | — |
-| **DTW** Detroit, MI | EdgeConneX DET01 | ✓ | — |
-| **EWR** Newark, NJ | Digital Realty JFK10 | ✓ | ✓ |
-| **EWR** Newark, NJ | Equinix NY1 | ✓ | ✓ |
-| **HNL** Honolulu, HI | 1547 DRFortress | ✓ | — |
-| **IAD** Ashburn, VA | CoreSite VA1 | — | ✓ |
-| **IAD** Ashburn, VA | CoreSite VA2 | — | ✓ |
-| **IAH** Houston, TX | EdgeConneX HOU01 | ✓ | ✓ |
-| **IND** Indianapolis, IN | Netrality Indy Telcom Center 701 W. Henry | ✓ | — |
-| **JAX** Jacksonville, FL | EdgeConneX JAX01 | ✓ | — |
-| **LAS** Las Vegas, NV | EdgeConneX LAS01 | ✓ | ✓ |
-| **LAX** Los Angeles, CA | Equinix LA1 | ✓ | ✓ |
-| **MEM** Memphis, TN | EdgeConneX MEM01 | ✓ | — |
-| **MEX** Mexico City | Kio Networks Santa Fe II - MEX2 | ✓ | — |
-| **OKC** Oklahoma City, OK | Rack59 Data Center | ✓ | — |
-| **OMA** Omaha, NE | 1623 Farnam | ✓ | ✓ |
-| **ORF** Norfolk, VA | EdgeConneX NOR01 | ✓ | — |
-| **PDX** Portland, OR | EdgeConneX EDCPOR01 | ✓ | ✓ |
-| **PHL** Philadelphia, PA | Netrality-PHL | ✓ | ✓ |
-| **PHX** Phoenix, AZ | EdgeConneX EDCPHX01 | ✓ | ✓ |
-| **PIT** Pittsburgh, PA | Databank PIT1 | ✓ | — |
-| **PIT** Pittsburgh, PA | EdgeConneX PIT01 | ✓ | — |
-| **QRO** Queretaro | Kio Networks QRO1 | ✓ | — |
-| **RDU** Raleigh-Durham, NC | CyrusOne DUR1 | ✓ | — |
-| **RIC** Richmond, VA | EdgeConneX RIC01 | ✓ | — |
-| **SAT** San Antonio, TX | H5 Data Centers San Antonio | ✓ | — |
-| **SEA** Seattle, WA | Equinix SE3 | ✓ | — |
-| **SLC** Salt Lake City, UT | EdgeConneX SLC01 | ✓ | — |
-| **SMF** Sacramento, CA | EdgeConneX SAC01 | ✓ | — |
-| **STL** St. Louis, MO | Netrality Properties St. Louis | ✓ | ✓ |
-| **TLH** Tallahassee, FL | EdgeConneX TAL01 | ✓ | — |
-| **TPA** Tampa, FL | H5 Data Centers TPA1 | ✓ | — |
-| **YUL** Montréal, QC | Cologix MTL3 | ✓ | — |
-| **YUL** Montréal, QC | Cologix MTL7 | ✓ | — |
-| **YVR** Vancouver, BC | Cologix VAN2 | ✓ | — |
-| **YWG** Winnipeg, MB | Les.net YWG2 | ✓ | — |
-| **YXE** Saskatoon, SK | VDC Virtual Data Corp 121RD | ✓ | — |
-| **YYC** Calgary, AB | DataHive | ✓ | — |
+| **ABQ** Albuquerque, NM | H5 Data Centers Albuquerque | 1 device | — |
+| **ATL** Atlanta, GA | Digital Realty ATL1 | 1 device | 2 devices |
+| **ATL** Atlanta, GA | Equinix AT1 | 2 devices | 2 devices<br />No valid pair within this facility |
+| **BNA** Nashville, TN | H5 Data Centers NAS1 | 1 device | — |
+| **BOS** Boston, MA | Markley Group One Summer Street Boston | 1 device | 1 device |
+| **BUF** Buffalo, NY | H5 Data Centers BUF2 | 1 device | — |
+| **CLT** Charlotte, NC | Digital Realty CLT10 | 1 device | — |
+| **CMH** Columbus, OH | Cologix COL3 | 2 devices | — |
+| **DEN** Denver, CO | CoreSite DE1 | 2 devices | 2 devices |
+| **DFW** Dallas, TX | Equinix DA6 | 2 devices | 2 devices |
+| **DTW** Detroit, MI | EdgeConneX DET01 | 1 device | — |
+| **EWR** Newark, NJ | Digital Realty JFK10 | 2 devices<br />No valid pair within this facility | 1 device |
+| **EWR** Newark, NJ | Equinix NY1 | 2 devices<br />No valid pair within this facility | 1 device |
+| **HNL** Honolulu, HI | 1547 DRFortress | 1 device | — |
+| **IAD** Ashburn, VA | CoreSite VA1 | — | 1 device<br />Cross-site: Equinix DC2 only |
+| **IAD** Ashburn, VA | CoreSite VA2 | — | 1 device<br />No valid cross-site pair in IAD |
+| **IAD** Ashburn, VA | Equinix DC2 | 2 devices | 2 devices<br />Cross-site: CoreSite VA1 only |
+| **IAH** Houston, TX | EdgeConneX HOU01 | 1 device | 1 device |
+| **IND** Indianapolis, IN | Netrality Indy Telcom Center 701 W. Henry | 1 device | — |
+| **JAX** Jacksonville, FL | EdgeConneX JAX01 | 1 device | — |
+| **LAS** Las Vegas, NV | EdgeConneX LAS01 | 1 device | 1 device |
+| **LAX** Los Angeles, CA | CoreSite LA1 | 2 devices | 2 devices |
+| **LAX** Los Angeles, CA | Equinix LA1 | 2 devices<br />No valid pair within this facility | 1 device |
+| **MCI** Kansas City, MO | Netrality KC (1102 Grand) | 2 devices | 2 devices |
+| **MEM** Memphis, TN | EdgeConneX MEM01 | 1 device | — |
+| **MEX** Mexico City | Kio Networks Santa Fe II - MEX2 | 1 device | — |
+| **MIA** Miami, FL | Equinix MI1 | 2 devices | 2 devices |
+| **MSP** Minneapolis, MN | Cologix MIN1 | 2 devices | — |
+| **OKC** Oklahoma City, OK | Rack59 Data Center | 1 device | — |
+| **OMA** Omaha, NE | 1623 Farnam | 1 device | 2 devices<br />No valid pair within this facility |
+| **ORD** Chicago, IL | Equinix CH2 | 2 devices | 2 devices |
+| **ORF** Norfolk, VA | EdgeConneX NOR01 | 1 device | — |
+| **PDX** Portland, OR | EdgeConneX EDCPOR01 | 1 device | 1 device |
+| **PHL** Philadelphia, PA | Netrality-PHL | 1 device | 1 device |
+| **PHX** Phoenix, AZ | EdgeConneX EDCPHX01 | 1 device | 2 devices<br />No valid pair within this facility |
+| **PIT** Pittsburgh, PA | Databank PIT1 | 1 device<br />No valid cross-site pair in PIT | — |
+| **PIT** Pittsburgh, PA | EdgeConneX PIT01 | 1 device<br />No valid cross-site pair in PIT | — |
+| **QRO** Queretaro | Kio Networks QRO1 | 1 device | — |
+| **RDU** Raleigh-Durham, NC | CyrusOne DUR1 | 1 device | — |
+| **RIC** Richmond, VA | EdgeConneX RIC01 | 1 device | — |
+| **SAT** San Antonio, TX | H5 Data Centers San Antonio | 1 device | — |
+| **SEA** Seattle, WA | Digital Realty SEA10 | 2 devices<br />No valid cross-site pair in SEA | 2 devices |
+| **SEA** Seattle, WA | Equinix SE3 | 1 device<br />No valid cross-site pair in SEA | — |
+| **SJC** San Jose, CA | Equinix SV5 | 2 devices | 2 devices |
+| **SLC** Salt Lake City, UT | EdgeConneX SLC01 | 1 device | — |
+| **SMF** Sacramento, CA | EdgeConneX SAC01 | 1 device | — |
+| **STL** St. Louis, MO | Netrality Properties St. Louis | 1 device | 2 devices<br />No valid pair within this facility |
+| **TLH** Tallahassee, FL | EdgeConneX TAL01 | 1 device | — |
+| **TPA** Tampa, FL | H5 Data Centers TPA1 | 1 device | — |
+| **YUL** Montréal, QC | Cologix MTL3 | 1 device<br />No valid cross-site pair in YUL | — |
+| **YUL** Montréal, QC | Cologix MTL7 | 1 device<br />No valid cross-site pair in YUL | — |
+| **YVR** Vancouver, BC | Cologix VAN2 | 1 device | — |
+| **YWG** Winnipeg, MB | Les.net YWG2 | 1 device | — |
+| **YXE** Saskatoon, SK | VDC Virtual Data Corp 121RD | 1 device | — |
+| **YYC** Calgary, AB | DataHive | 1 device | — |
+| **YYZ** Toronto, ON | Equinix TR1 | 2 devices | 2 devices |
 
 </TabItem>
 
 <TabItem label="South America">
 
-| Metro | Site | v1 | v2 |
+| Metro | Facility | v1 | v2 |
 | --- | --- | --- | --- |
-| **ARI** Arica | Telxius Arica CLS | ✓ | — |
-| **BOG** Bogotá | Equinix BG2 | ✓ | — |
-| **CWB** Curitiba | BRFibra CommCorp IDC Curitiba CTA1 | ✓ | ✓ |
-| **CWB** Curitiba | Cirion Curitiba | ✓ | — |
-| **EZE** Buenos Aires | SyT Suipacha 128 (CABASE) | ✓ | — |
-| **FOR** Fortaleza | BRFibra Commcorp FLA1 | ✓ | ✓ |
-| **LIM** Lima | Cirion Lima | ✓ | — |
-| **LIM** Lima | Telxius Lurin CLS | ✓ | — |
-| **POA** Porto Alegre | BRFibra Commcorp IDC PAE1 | ✓ | ✓ |
-| **SCL** Santiago | Cirion Santiago (SAN1) | ✓ | ✓ |
-| **SCL** Santiago | Telxius Valparaiso CLS | ✓ | ✓ |
-| **SSA** Salvador | Telxius Salvador CLS | ✓ | — |
+| **ARI** Arica | Telxius Arica CLS | 1 device | — |
+| **BOG** Bogotá | Equinix BG2 | 1 device | — |
+| **CWB** Curitiba | BRFibra CommCorp IDC Curitiba CTA1 | 1 device | 1 device |
+| **CWB** Curitiba | Cirion Curitiba | 1 device | — |
+| **EZE** Buenos Aires | SyT Suipacha 128 (CABASE) | 1 device | — |
+| **FOR** Fortaleza | BRFibra Commcorp FLA1 | 1 device | 1 device |
+| **GIG** Rio de Janeiro | Equinix RJ2 | 2 devices | 2 devices |
+| **GRU** São Paulo | Equinix SP2 | 2 devices | 2 devices |
+| **LIM** Lima | Cirion Lima | 1 device | — |
+| **LIM** Lima | Telxius Lurin CLS | 1 device | — |
+| **POA** Porto Alegre | BRFibra Commcorp IDC PAE1 | 1 device | 1 device |
+| **SCL** Santiago | Cirion Santiago (SAN1) | 1 device | 2 devices<br />No valid pair within this facility |
+| **SCL** Santiago | Telxius Valparaiso CLS | 1 device | 2 devices<br />No valid pair within this facility |
+| **SSA** Salvador | Telxius Salvador CLS | 1 device | — |
 
 </TabItem>
 
 <TabItem label="Europe and Africa">
 
-#### Europe
+### Europe
 
-| Metro | Site | v1 | v2 |
+| Metro | Facility | v1 | v2 |
 | --- | --- | --- | --- |
-| **AMS** Amsterdam | Digital Realty AMS9 | ✓ | — |
-| **AMS** Amsterdam | Maincubes AMS01 | ✓ | ✓ |
-| **ATH** Athens | Digital Realty (Lamda Hellix) ATH 1/2/3 | ✓ | ✓ |
-| **BCN** Barcelona | Equinix BA1 | ✓ | ✓ |
-| **BEG** Belgrade | BeotelNet ISP | ✓ | — |
-| **BRU** Brussels | Digital Realty BRU1 | ✓ | — |
-| **BUD** Budapest | T-Systems Dataplex Budapest | ✓ | — |
-| **CDG** Paris | Telehouse Paris Voltaire TH2 | ✓ | — |
-| **CPH** Copenhagen | GlobalConnect Taastrup 1 | ✓ | — |
-| **DME** Moscow | IXcellerate MOS1 | ✓ | — |
-| **DUS** Düsseldorf | Digital Realty DUS2 | ✓ | ✓ |
-| **FCO** Rome | NAMEX/Cineca | ✓ | — |
-| **GOT** Gothenburg | Slakthusgatan 5 - Gothenburg SE | ✓ | — |
-| **GVA** Geneva | Equinix GV2 | ✓ | ✓ |
-| **HAM** Hamburg | Portus IPHH HH2 | ✓ | — |
-| **HEL** Helsinki | Equinix HE3 | ✓ | ✓ |
-| **IST** Istanbul | Radore Istanbul | ✓ | — |
-| **KBP** Kyiv | NewTelco Kiev / NewTelco Ukraine Ltd | ✓ | — |
-| **KEF** Reykjavík | Verne Global | ✓ | — |
-| **KIV** Chișinău | Trabia Network | ✓ | — |
-| **LED** Saint Petersburg | Borovaya 57 | ✓ | — |
-| **LHR** London | Equinix LD8 | ✓ | ✓ |
-| **LHR** London | Telehouse North 2 | ✓ | ✓ |
-| **LIS** Lisbon | Equinix LS1 | ✓ | ✓ |
-| **LUX** Luxembourg City | LuxConnect DC1.1 | ✓ | — |
-| **MAN** Manchester | Equinix MA1 | ✓ | ✓ |
-| **MUC** Munich | Equinix MU1 | ✓ | ✓ |
-| **OSL** Oslo | Stack EMEA (Digiplex) Oslo Ulvenveien OSL1 | ✓ | — |
-| **OTP** Bucharest | NXDATA 1 | ✓ | — |
-| **PMO** Palermo | TI Sparkle Sicily Hub | ✓ | — |
-| **PRG** Prague | CE Colo Prague | ✓ | ✓ |
-| **RIX** Riga | LVRTC | ✓ | — |
-| **SKG** Thessaloniki | Synapsecom | ✓ | — |
-| **SOF** Sofia | TELEPOINT Sofia | ✓ | ✓ |
-| **TLL** Tallinn | CITIC Telecom Tallinn | ✓ | — |
-| **TXL** Berlin | CarrierColo Berlin Lützow (I/P/B/ site B) | ✓ | — |
-| **VNO** Vilnius | Data Logistics Center J13 | ✓ | — |
-| **ZAG** Zagreb | Digital Realty ZAG1 | ✓ | — |
-| **ZRH** Zurich | Equinix ZH4 | ✓ | ✓ |
+| **AMS** Amsterdam | Digital Realty AMS9 | 1 device<br />Cross-site: Equinix AM1 only | — |
+| **AMS** Amsterdam | Equinix AM1 | 2 devices<br />Cross-site: Digital Realty AMS9 or Maincubes AMS01 | 2 devices |
+| **AMS** Amsterdam | Maincubes AMS01 | 1 device<br />Cross-site: Equinix AM1 only | 1 device |
+| **ARN** Stockholm | Equinix SK1 | 2 devices | 2 devices |
+| **ATH** Athens | Digital Realty (Lamda Hellix) ATH 1/2/3 | 1 device | 1 device |
+| **BCN** Barcelona | Equinix BA1 | 1 device | 1 device |
+| **BEG** Belgrade | BeotelNet ISP | 1 device | — |
+| **BRU** Brussels | Digital Realty BRU1 | 1 device | — |
+| **BUD** Budapest | T-Systems Dataplex Budapest | 1 device | — |
+| **CDG** Paris | Equinix PA2 | 2 devices | 2 devices |
+| **CDG** Paris | Telehouse Paris Voltaire TH2 | 1 device | — |
+| **CPH** Copenhagen | GlobalConnect Taastrup 1 | 1 device | — |
+| **DME** Moscow | IXcellerate MOS1 | 1 device | — |
+| **DUB** Dublin | Equinix DB2 | 2 devices | 2 devices |
+| **DUS** Düsseldorf | Digital Realty DUS2 | 1 device | 1 device |
+| **FCO** Rome | NAMEX/Cineca | 1 device | — |
+| **FRA** Frankfurt | Equinix FR5 | 2 devices | 2 devices |
+| **GOT** Gothenburg | Slakthusgatan 5 - Gothenburg SE | 1 device | — |
+| **GVA** Geneva | Equinix GV2 | 1 device | 1 device |
+| **HAM** Hamburg | Portus IPHH HH2 | 1 device | — |
+| **HEL** Helsinki | Equinix HE3 | 1 device | 1 device |
+| **IST** Istanbul | Equinix IL2 | 1 device | 2 devices |
+| **IST** Istanbul | Radore Istanbul | 1 device | — |
+| **IST** Istanbul | Turkcell/Superonline Istanbul | 1 device | 2 devices |
+| **KBP** Kyiv | NewTelco Kiev / NewTelco Ukraine Ltd | 1 device | — |
+| **KEF** Reykjavík | Verne Global | 1 device | — |
+| **KIV** Chișinău | Trabia Network | 1 device | — |
+| **LED** Saint Petersburg | Borovaya 57 | 1 device | — |
+| **LHR** London | Equinix LD8 | 2 devices<br />No valid pair within this facility | 1 device |
+| **LHR** London | Telehouse North 2 | 1 device | 1 device |
+| **LIS** Lisbon | Equinix LS1 | 1 device | 1 device |
+| **LUX** Luxembourg City | LuxConnect DC1.1 | 1 device | — |
+| **MAD** Madrid | Digital Realty MAD2 | 2 devices | 2 devices |
+| **MAN** Manchester | Equinix MA1 | 1 device | 1 device |
+| **MRS** Marseille | Digital Realty MRS1 | 2 devices | — |
+| **MUC** Munich | Equinix MU1 | 1 device | 1 device |
+| **MXP** Milan | Retelit Via Caldera | 2 devices | 2 devices |
+| **OSL** Oslo | Stack EMEA (Digiplex) Oslo Ulvenveien OSL1 | 1 device | — |
+| **OTP** Bucharest | NXDATA 1 | 1 device | — |
+| **PMO** Palermo | TI Sparkle Sicily Hub | 1 device | — |
+| **PRG** Prague | CE Colo Prague | 1 device | 2 devices<br />No valid pair within this facility |
+| **RIX** Riga | LVRTC | 1 device | — |
+| **SKG** Thessaloniki | Synapsecom | 1 device | — |
+| **SOF** Sofia | TELEPOINT Sofia | 1 device | 1 device |
+| **TLL** Tallinn | CITIC Telecom Tallinn | 1 device | — |
+| **TXL** Berlin | CarrierColo Berlin Lützow (I/P/B/ site B) | 1 device | — |
+| **VIE** Vienna | Digital Realty VIE1 | 2 devices | 2 devices |
+| **VNO** Vilnius | Data Logistics Center J13 | 1 device | — |
+| **WAW** Warsaw | Equinix WA1 | 2 devices | 2 devices |
+| **ZAG** Zagreb | Digital Realty ZAG1 | 1 device | — |
+| **ZRH** Zurich | Equinix ZH4 | 1 device | 1 device |
 
-#### Africa
+### Africa
 
-| Metro | Site | v1 | v2 |
+| Metro | Facility | v1 | v2 |
 | --- | --- | --- | --- |
-| **CPT** Cape Town | Digital Realty (Teraco) CT1 | ✓ | ✓ |
-| **DUR** Durban | Digital Realty (Teraco) DB1 | ✓ | ✓ |
-| **LOS** Lagos | Equinix LG1 LG2 (MainOne MDX-i) | ✓ | — |
+| **CPT** Cape Town | Digital Realty (Teraco) CT1 | 1 device | 1 device |
+| **DUR** Durban | Digital Realty (Teraco) DB1 | 1 device | 1 device |
+| **JNB** Johannesburg | Digital Realty (Teraco) JB1 | 2 devices | 2 devices |
+| **LOS** Lagos | Equinix LG1 LG2 (MainOne MDX-i) | 1 device | — |
 
 </TabItem>
 
 <TabItem label="Asia Pacific">
 
-| Metro | Site | v1 | v2 |
+| Metro | Facility | v1 | v2 |
 | --- | --- | --- | --- |
-| **ADL** Adelaide | YourDC Hawthorn | ✓ | — |
-| **BLR** Bangalore | Nxtra Data Bangalore | ✓ | — |
-| **BNE** Brisbane | NEXTDC B1 | ✓ | — |
-| **CBR** Canberra | NextDC C1 | ✓ | — |
-| **CGK** Jakarta | NTT Comm JKT2 | ✓ | ✓ |
-| **DEL** New Delhi | Sify Greenfort Noida | ✓ | ✓ |
-| **HKG** Hong Kong | China Mobile GNC Hong Kong | ✓ | — |
-| **HYD** Hyderabad | Nxtra Data Hyderabad | ✓ | ✓ |
-| **JHB** Johor Bahru | TM ONE IPDC Johor | ✓ | — |
-| **KUL** Kuala Lumpur | Menara AIMS | ✓ | — |
-| **MAA** Chennai | Nxtra Data Chennai | ✓ | ✓ |
-| **NRT** Tokyo | AT Tokyo CC1 | ✓ | ✓ |
-| **NRT** Tokyo | Equinix TY2 | ✓ | ✓ |
-| **PER** Perth | Vocus Communications | ✓ | — |
-| **TPE** Taipei | Chief LY Building Taipei | ✓ | — |
+| **ADL** Adelaide | YourDC Hawthorn | 1 device | — |
+| **AKL** Auckland | DataCentre220 | 1 device | 2 devices |
+| **BLR** Bangalore | Nxtra Data Bangalore | 1 device | — |
+| **BNE** Brisbane | NEXTDC B1 | 1 device | — |
+| **BOM** Mumbai | Equinix MB1 | 2 devices | 2 devices |
+| **CBR** Canberra | NextDC C1 | 1 device | — |
+| **CGK** Jakarta | NTT Comm JKT2 | 1 device | 2 devices<br />No valid pair within this facility |
+| **DEL** New Delhi | Sify Greenfort Noida | 1 device | 1 device |
+| **HKG** Hong Kong | China Mobile GNC Hong Kong | 1 device | — |
+| **HKG** Hong Kong | Equinix HK2 | 2 devices | 2 devices |
+| **HYD** Hyderabad | Nxtra Data Hyderabad | 1 device | 1 device |
+| **ICN** Seoul | KINX Dogok IDC | 2 devices | 2 devices |
+| **JHB** Johor Bahru | TM ONE IPDC Johor | 1 device | — |
+| **KIX** Osaka | Equinix OS1 | 2 devices | 2 devices |
+| **KUL** Kuala Lumpur | Menara AIMS | 1 device | — |
+| **MAA** Chennai | Nxtra Data Chennai | 1 device | 1 device |
+| **MEL** Melbourne | NextDC (M1) | 1 device | 2 devices |
+| **NRT** Tokyo | AT Tokyo CC1 | 1 device | 1 device |
+| **NRT** Tokyo | Equinix TY2 | 2 devices<br />No valid pair within this facility | 1 device |
+| **PER** Perth | Vocus Communications | 1 device | — |
+| **SIN** Singapore | Equinix SG1 | 2 devices | 2 devices |
+| **SYD** Sydney | Equinix SY2 | 2 devices | 2 devices |
+| **TPE** Taipei | Chief LY Building Taipei | 1 device | — |
 
 </TabItem>
 
