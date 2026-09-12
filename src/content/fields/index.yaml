@@ -959,7 +959,7 @@ entries:
     example_value: |-
       "7zIpdDU5pvFPPBI2/PCzqbaXnRA="
 
-  - name: cf.tls_ciphers_sha1
+  - name: cf.tls_client_ciphers_sha1
     data_type: String
     categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
