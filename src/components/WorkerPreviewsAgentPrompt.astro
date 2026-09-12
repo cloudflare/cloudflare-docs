@@ -1,0 +1,95 @@
+---
+const prompt = `Inspect this Worker project and configure Cloudflare Workers Previews.
+
+1. Read the Wrangler configuration file and identify vars, secrets, bindings, Durable Objects, Workflows, service bindings, queues, routes, cron triggers, observability, limits, placement, and any env sections.
+2. Add or update a \`previews\` block for every binding or runtime setting that the Preview needs. Do not assume production bindings are available in Previews.
+3. Do not point Previews at production KV, D1, R2, Hyperdrive, Vectorize, Queue, Workflow, or external resources unless I explicitly ask for that.
+4. If the Worker uses same-Worker Durable Objects, keep the class in the same Worker so Previews get isolated DO state. If the code reads a Durable Object binding from \`env\`, declare that binding in \`previews\`.
+5. Warn me if service bindings, Workflows, queue consumers, cron triggers, or routes need staging resources or alternate test paths with current Preview behavior.
+6. If I use GitHub Actions, add a minimal workflow that runs \`wrangler preview --json\`, posts the Preview URL to the PR, and deletes the Preview when the PR closes. Prefer \`cloudflare/wrangler-action\` when it is enough.
+7. Show the \`gh secret set\` commands needed for \`CLOUDFLARE_API_TOKEN\` and \`CLOUDFLARE_ACCOUNT_ID\`.
+8. After editing, summarize which production resources are isolated, which are shared, and which current Preview behaviors still affect this app.`;
+---
+
+<aside
+	class="border-primary/70 bg-primary/5 not-prose my-8 overflow-hidden rounded-2xl border"
+	aria-label="Agent setup prompt"
+>
+	<div class="flex items-start justify-between gap-4 p-5 sm:p-6">
+		<div class="min-w-0">
+			<p
+				class="text-muted-foreground mb-3 text-xs font-semibold tracking-[0.18em] uppercase"
+			>
+				For coding agents
+			</p>
+			<p
+				class="text-foreground m-0 font-mono text-lg leading-relaxed sm:text-xl"
+			>
+				Configure Worker Previews for this project...
+			</p>
+			<p class="text-muted-foreground mt-3 mb-0 text-sm leading-relaxed">
+				Copy this prompt into your coding agent to configure Previews from an
+				existing Worker project.
+			</p>
+		</div>
+
+		<button
+			class="border-border bg-background hover:bg-muted focus-visible:outline-primary inline-flex shrink-0 cursor-copy items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+			type="button"
+			data-worker-previews-agent-prompt
+		>
+			<svg
+				aria-hidden="true"
+				class="h-4 w-4"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+				<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+				></path>
+			</svg>
+			<span data-copy-label>Copy</span>
+		</button>
+	</div>
+
+	<template data-worker-previews-agent-prompt-text>{prompt}</template>
+</aside>
+
+<script>
+	function bindWorkerPreviewsAgentPrompt() {
+		document
+			.querySelectorAll<HTMLButtonElement>(
+				"[data-worker-previews-agent-prompt]",
+			)
+			.forEach((button) => {
+				if (button.dataset.bound === "true") return;
+				button.dataset.bound = "true";
+
+				button.addEventListener("click", async () => {
+					const prompt = button
+						.closest("aside")
+						?.querySelector<HTMLTemplateElement>(
+							"[data-worker-previews-agent-prompt-text]",
+						)?.content.textContent;
+					if (!prompt) return;
+
+					await navigator.clipboard.writeText(prompt.trim());
+					const label = button.querySelector("[data-copy-label]");
+					if (!label) return;
+
+					const previousLabel = label.textContent;
+					label.textContent = "Copied";
+					setTimeout(() => {
+						label.textContent = previousLabel;
+					}, 1500);
+				});
+			});
+	}
+
+	bindWorkerPreviewsAgentPrompt();
+	document.addEventListener("astro:page-load", bindWorkerPreviewsAgentPrompt);
+</script>

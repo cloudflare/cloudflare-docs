@@ -465,7 +465,7 @@ The top-level "Safe to remove from `exports`" line in the reconciliation output 
 
 If `exports` is only declared at the top level, named environments inherit the same value. Each environment maintains its own provisioned namespaces, so tombstones apply only within the environment they are declared in.
 
-[Preview deployments](/workers/versions-and-deployments/preview-urls/) and [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/) follow the same rules. Cross-dispatch-namespace transfers are not supported — the source and target Workers in a `transferred` / `expecting-transfer` pair must both live in the same dispatch-namespace context (or both be outside any dispatch namespace).
+[Previews](/workers/previews/) and [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/) follow the same rules. Cross-dispatch-namespace transfers are not supported — the source and target Workers in a `transferred` / `expecting-transfer` pair must both live in the same dispatch-namespace context (or both be outside any dispatch namespace).
 
 ## `exports` configuration reference
 

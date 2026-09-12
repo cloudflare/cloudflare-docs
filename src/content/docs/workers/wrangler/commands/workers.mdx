@@ -258,6 +258,83 @@ None of the options for this command are required. Also, many can be set in your
 
 ---
 
+## `preview`
+
+Create a Preview deployment of the current Worker for branch and pull request work. Use [`wrangler deploy`](#deploy) for production.
+
+```txt
+wrangler preview [<SCRIPT>] [OPTIONS]
+```
+
+:::note
+
+None of the options for this command are required. Also, many can be set in your Wrangler file or in your [Previews Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration). Refer to the [Wrangler configuration](/workers/wrangler/configuration/) documentation for more information.
+
+:::
+
+- `SCRIPT` <Type text="string" />
+  - The path to an entry point for your Worker. Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - Name of the Preview. Defaults to the current git branch.
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - A tag for this Preview deployment.
+- `--message` <Type text="string" /> <MetaInfo text="optional" />
+  - A descriptive message for this Preview deployment.
+- `--json` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Return machine-readable output.
+- `--ignore-base-config` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Only use settings from your Wrangler file, ignoring the Preview base config configured in the Cloudflare dashboard.
+- `--worker-name` <Type text="string" /> <MetaInfo text="optional" />
+  - Name of the Worker to target. Defaults to the name in your local Wrangler file.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+For example:
+
+```sh
+npx wrangler preview --name feature-branch
+```
+
+Other Preview branches are not affected.
+
+---
+
+<WranglerCommand command="preview delete" />
+
+---
+
+<WranglerCommand command="preview secret put" />
+
+---
+
+<WranglerCommand command="preview secret delete" />
+
+---
+
+<WranglerCommand command="preview secret list" />
+
+---
+
+<WranglerCommand command="preview secret bulk" />
+
+---
+
+<WranglerCommand command="preview base-config secret put" />
+
+---
+
+<WranglerCommand command="preview base-config secret delete" />
+
+---
+
+<WranglerCommand command="preview base-config secret list" />
+
+---
+
+<WranglerCommand command="preview base-config secret bulk" />
+
+---
+
 ## `delete`
 
 Delete your Worker and all associated Cloudflare developer platform resources.
