@@ -1,0 +1,150 @@
+---
+title: Vibe + Cloudflare
+description: Use Mistral Vibe with Cloudflare Skills, the Cloudflare docs MCP server, and Wrangler to build and deploy Cloudflare projects.
+template: splash
+pcx_content_type: how-to
+products:
+  - agent-setup
+---
+
+import { PackageManagers, Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="vibe" />
+
+## Quick start
+
+<Steps>
+	1. **Install Vibe**
+
+		Install the Vibe command-line interface (CLI) on macOS or Linux. For other installation methods, refer to the [Vibe installation guide](https://docs.mistral.ai/vibe/code/cli/install-setup).
+
+		```bash
+		curl -LsSf https://mistral.ai/vibe/install.sh | bash
+		```
+
+	2. **Set up Vibe**
+
+		Complete the setup flow and sign in with your Mistral account or API key.
+
+		```bash
+		vibe --setup
+		```
+
+	3. **Install Cloudflare Skills**
+
+		From your project root, install Cloudflare Skills for the current project. Vibe discovers project Skills from `.agents/skills/`.
+
+		<PackageManagers
+			type="dlx"
+			pkg="skills"
+			args="add cloudflare/skills --skill '*' --yes"
+		/>
+
+	4. **Add the Cloudflare docs MCP server**
+
+		In `~/.vibe/config.toml`, add the Cloudflare docs Model Context Protocol (MCP) server. Preserve existing settings, and update the entry if `cloudflare-docs` is already configured:
+
+		```toml
+		[[mcp_servers]]
+		name = "cloudflare-docs"
+		transport = "streamable-http"
+		url = "https://docs.mcp.cloudflare.com/mcp"
+		```
+
+		If Vibe is already running, enter `/reload` to load the updated configuration.
+
+	5. **Launch Vibe**
+
+		Start Vibe from your project root. If the project already exists, use the directory that contains `wrangler.jsonc`.
+
+		```bash
+		vibe
+		```
+
+	6. **Try a prompt**
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess docsOnlyMcp />
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Cloudflare docs MCP server gives Vibe access to current Cloudflare documentation without authentication.
+- Store project-specific instructions in `AGENTS.md`. Vibe loads instructions from the project root and relevant subdirectories.
+- Use Vibe's `plan` agent to inspect a project before making changes.
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		Use all three. Skills provide Cloudflare guidance for architecture and
+		implementation. The Cloudflare docs MCP server provides current product
+		documentation. Wrangler handles local development, deployments, and
+		Workers-specific commands.
+	</FAQItem>
+	<FAQItem question="Does the Cloudflare docs MCP server require authentication?">
+		No. The Cloudflare docs MCP server is public and does not require
+		authentication.
+	</FAQItem>
+	<FAQItem question="Can I use another model provider with Vibe?">
+		Yes. Vibe supports Mistral-hosted models, compatible API providers, and local
+		models. Configure models and providers in <code>~/.vibe/config.toml</code>.
+	</FAQItem>
+	<FAQItem question="Is Vibe open source?">
+		The Vibe CLI is open source under the Apache 2.0 license. The source is
+		available at <a href="https://github.com/mistralai/mistral-vibe" target="_blank" rel="noopener noreferrer">github.com/mistralai/mistral-vibe</a>.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server not connecting">
+		Confirm that the <code>cloudflare-docs</code> entry in
+		<code>~/.vibe/config.toml</code> matches the configuration in the quick start.
+		Run <code>/reload</code>, then run <code>/mcp status</code> to check the server.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Cloudflare Skills are not available">
+		Run <code>/reload</code> to reload Vibe configuration and Skills. If the Skills
+		still do not load, confirm that the installer wrote them to the project's
+		<code>.agents/skills/</code> directory.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Point Vibe to <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for a
+		directory of all products, or use
+		<code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code> for a
+		product-specific index.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="vibe" />

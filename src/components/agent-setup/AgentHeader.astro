@@ -9,6 +9,7 @@
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { AGENTS } from "./agents";
 import CapabilityBadge from "./CapabilityBadge.astro";
+import { getAgentIconSource } from "./types";
 
 interface Props {
 	slug: string;
@@ -21,6 +22,9 @@ const agent = AGENTS.find((a) => a.slug === slug);
 if (!agent) {
 	throw new Error(`[AgentHeader] No agent found for slug="${slug}"`);
 }
+
+const lightIconSrc = getAgentIconSource(agent.icon, agent.iconFile, "light");
+const darkIconSrc = getAgentIconSource(agent.icon, agent.iconFile, "dark");
 
 const externalLinks = [
 	agent.links.skills && {
@@ -54,14 +58,14 @@ const externalLinks = [
 			class="border-border bg-muted flex size-14 shrink-0 items-center justify-center rounded-lg border"
 		>
 			<img
-				src={`/icons/agents/${agent.icon}/light.svg`}
+				src={lightIconSrc}
 				alt=""
 				width="32"
 				height="32"
 				class="block size-8 dark:hidden"
 			/>
 			<img
-				src={`/icons/agents/${agent.icon}/dark.svg`}
+				src={darkIconSrc}
 				alt=""
 				width="32"
 				height="32"
