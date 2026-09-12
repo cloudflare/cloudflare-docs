@@ -1,0 +1,47 @@
+---
+interface Props {
+	label?: string;
+	urlParam?: string;
+}
+
+const { label = "Workflow:", urlParam } = Astro.props;
+---
+
+<div class="my-4" data-agent-workflow-selector data-url-param={urlParam}>
+	<div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+		<span class="text-muted-foreground text-sm">{label}</span>
+		<div
+			class="flex flex-wrap items-center gap-2"
+			role="radiogroup"
+			aria-label={label.replace(/:$/, "")}
+			data-agent-workflow-options
+		>
+		</div>
+	</div>
+	<div data-agent-workflow-panels>
+		<slot />
+	</div>
+</div>
+
+<script>
+	import "./workflow-selector.client";
+</script>
+
+<style>
+	[data-agent-workflow-option] {
+		display: none;
+	}
+
+	[data-agent-workflow-option]:first-child {
+		display: block;
+	}
+
+	[data-agent-workflow-selector][data-ready] [data-agent-workflow-option] {
+		display: none;
+	}
+
+	[data-agent-workflow-selector][data-ready]
+		[data-agent-workflow-option][data-active] {
+		display: block;
+	}
+</style>

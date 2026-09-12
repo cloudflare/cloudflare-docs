@@ -89,7 +89,7 @@ async () => {
 
 Authentication stays in the host request callback. The generated code receives a request function, not the credential.
 
-The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/) uses this pattern to expose the Cloudflare API through `search` and `execute`. For the design rationale and context savings, refer to [Code Mode: give agents an entire API in 1,000 tokens](https://blog.cloudflare.com/code-mode-mcp/).
+The [Cloudflare MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/) uses this pattern to expose the Cloudflare API through `search` and `execute`. For the design rationale and context savings, refer to [Code Mode: give agents an entire API in 1,000 tokens](https://blog.cloudflare.com/code-mode-mcp/).
 
 To implement this pattern, refer to [Build a search and execute MCP server](/agents/model-context-protocol/guides/build-codemode-openapi-mcp-server/).
 

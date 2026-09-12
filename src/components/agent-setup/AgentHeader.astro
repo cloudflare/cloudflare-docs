@@ -28,12 +28,8 @@ const externalLinks = [
 		href: agent.links.skills,
 	},
 	agent.links.mcp_server && {
-		label: "Cloudflare Code Mode API MCP",
+		label: "Cloudflare MCP server",
 		href: agent.links.mcp_server,
-	},
-	agent.links.mcp_server_domain && {
-		label: "Cloudflare Domain Specific MCPs",
-		href: agent.links.mcp_server_domain,
 	},
 	agent.links.cli && { label: "CLI", href: agent.links.cli },
 	agent.links.docs && { label: `${agent.name} Docs`, href: agent.links.docs },
