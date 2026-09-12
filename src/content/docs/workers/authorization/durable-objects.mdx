@@ -1,0 +1,37 @@
+---
+title: Durable Objects roles and permissions
+description: Learn how Workers roles control access to Durable Objects observability data and Data Studio.
+pcx_content_type: reference
+sidebar:
+  label: Durable Objects
+  order: 2
+products:
+  - workers
+  - durable-objects
+---
+
+Durable Objects do not have separate roles or permissions. Access to a Durable Object is determined by your access to the Worker that implements it.
+
+To give a member, User Group, or API token access to a Durable Object, assign the appropriate Workers role at either the individual Worker scope or the Workers product scope. Refer to [Workers roles and permissions](/workers/authorization/workers/) for available roles and scopes.
+
+## Observability access
+
+`Metadata Read-Only` access to the implementing Worker includes Durable Object metrics, logs, and traces, but does not include access to data stored in the Durable Object.
+
+SQLite-backed Durable Objects support granular authorization for analytics.
+
+:::note
+
+Metrics and analytics for KV-backed Durable Objects are not yet available with granular authorization.
+
+:::
+
+## Data Studio access
+
+[Durable Objects Data Studio](/durable-objects/observability/data-studio/) can query and modify data stored in SQLite-backed Durable Objects. Accessing Data Studio requires at least `Editor` access to the Worker that implements the Durable Object.
+
+## Related resources
+
+- [Workers roles and permissions](/workers/authorization/workers/)
+- [Durable Objects metrics and analytics](/durable-objects/observability/metrics-and-analytics/)
+- [Durable Objects Data Studio](/durable-objects/observability/data-studio/)
