@@ -162,6 +162,38 @@ export const AGENTS: AgentData[] = [
 		},
 	},
 	{
+		name: "Vibe",
+		vendor: "Mistral AI",
+		slug: "vibe",
+		icon: "vibe",
+		iconFile: "icon.png",
+		description:
+			"Coding agent for terminal, IDE, and cloud workflows that reads files, runs commands, writes code, and opens pull requests. Made by Mistral AI.",
+		capabilities: {
+			ide: true,
+			terminal: true,
+			standalone: true,
+			cloud: true,
+			extension: true,
+			open_source: true,
+		},
+		features: [
+			"Project-aware context",
+			"File and shell tools",
+			"Skills and MCP servers",
+			"Subagent task delegation",
+		],
+		pricing_model: "hybrid",
+		model_flexibility: "multi_provider",
+		context_approach: "project_memory",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			cli: "https://docs.mistral.ai/vibe/code/cli/install-setup",
+			docs: "https://docs.mistral.ai/vibe/code/overview",
+			website: "https://mistral.ai/products/vibe/code/",
+		},
+	},
+	{
 		name: "Windsurf",
 		vendor: "Cognition",
 		slug: "windsurf",

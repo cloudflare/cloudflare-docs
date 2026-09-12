@@ -12,7 +12,12 @@ const { agent } = Astro.props;
 
 <a href={`/agent-setup/${agent.slug}/`} class="agent-setup-card">
 	<div class="agent-setup-card-header">
-		<AgentIcon icon={agent.icon} name={agent.name} size={36} />
+		<AgentIcon
+			icon={agent.icon}
+			iconFile={agent.iconFile}
+			name={agent.name}
+			size={36}
+		/>
 		<div>
 			<div class="agent-setup-card-title">{agent.name}</div>
 			<div class="agent-setup-card-vendor">{agent.vendor}</div>

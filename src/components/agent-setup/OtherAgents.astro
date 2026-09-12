@@ -9,6 +9,7 @@
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import CornerMarks from "~/components/CornerMarks.astro";
 import { AGENTS } from "./agents";
+import { getAgentIconSource } from "./types";
 
 interface Props {
 	currentSlug: string;
@@ -32,14 +33,14 @@ const others = AGENTS.filter((a) => a.slug !== currentSlug);
 						<div class="mb-5 flex items-center gap-3">
 							<span class="border-border bg-muted flex size-10 shrink-0 items-center justify-center rounded-md border">
 								<img
-									src={`/icons/agents/${agent.icon}/light.svg`}
+									src={getAgentIconSource(agent.icon, agent.iconFile, "light")}
 									alt=""
 									width="24"
 									height="24"
 									class="block size-6 dark:hidden"
 								/>
 								<img
-									src={`/icons/agents/${agent.icon}/dark.svg`}
+									src={getAgentIconSource(agent.icon, agent.iconFile, "dark")}
 									alt=""
 									width="24"
 									height="24"

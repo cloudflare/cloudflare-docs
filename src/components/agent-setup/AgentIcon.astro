@@ -1,13 +1,16 @@
 ---
+import { getAgentIconSource } from "./types";
+
 interface Props {
 	icon: string;
+	iconFile?: string;
 	name: string;
 	size?: number;
 }
 
-const { icon, name, size = 36 } = Astro.props;
-const lightSrc = `/icons/agents/${icon}/light.svg`;
-const darkSrc = `/icons/agents/${icon}/dark.svg`;
+const { icon, iconFile, name, size = 36 } = Astro.props;
+const lightSrc = getAgentIconSource(icon, iconFile, "light");
+const darkSrc = getAgentIconSource(icon, iconFile, "dark");
 ---
 
 <span
