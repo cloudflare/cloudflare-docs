@@ -111,7 +111,7 @@ export default function RebaseConflictResolver(_props: AgentProps): string {
 			input: ConflictResolutionFromModelSchema,
 			run: ({ data }) => {
 				writeResolution(data);
-				return "Conflict resolution recorded.";
+				return { output: "Conflict resolution recorded.", terminate: true };
 			},
 		}),
 	);

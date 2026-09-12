@@ -119,7 +119,7 @@ export default function DependabotReviewer(_props: AgentProps): string {
 			input: DependabotReviewResultSchema,
 			run: ({ data }) => {
 				writeReview(data);
-				return "Dependabot review recorded.";
+				return { output: "Dependabot review recorded.", terminate: true };
 			},
 		}),
 	);
