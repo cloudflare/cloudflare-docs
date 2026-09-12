@@ -43,9 +43,11 @@ There is a limit on how quickly you can create new [stubs](/durable-objects/api/
 
 ### Durable Object reset because its code was updated.
 
-Reset in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
+This error occurs when a code update is applied before a Durable Object reaches hibernation. This includes an `immediate` code update strategy and `deferred` deployments whose `max_delay` is reached before the object hibernates.
 
-Refer to [Global Uniqueness](/durable-objects/platform/known-issues/#global-uniqueness).
+Reset in error messages refers to in-memory state. Any durable state already persisted with `ctx.storage` is not affected. Make operations retryable and persist important state so a forced update can safely restart the object.
+
+Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) and [Global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness).
 
 ### Durable Object storage operation exceeded timeout which caused object to be reset.
 
