@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { Details } from "~/components";
+import { Details, PackageManagers } from "~/components";
 
 The Workers Vitest integration provides additional configuration on top of Vitest's usual options using the `cloudflareTest()` Vite plugin.
 
@@ -35,6 +35,20 @@ export default defineConfig({
 Custom Vitest `environment`s or `runner`s are not supported when using the Workers Vitest integration.
 
 :::
+
+## Code coverage
+
+The Workers Vitest integration supports Vitest's V8 and Istanbul coverage providers for tests that run locally. Vitest uses V8 by default.
+
+To collect V8 coverage, install the provider that matches your Vitest version:
+
+<PackageManagers pkg="@vitest/coverage-v8@^4.1.0" dev />
+
+Then, run Vitest with coverage enabled:
+
+<PackageManagers type="exec" pkg="vitest" args="run --coverage" />
+
+The Workers Vitest integration automatically applies the compatibility settings required for local V8 coverage. For coverage options, refer to the [Vitest coverage documentation](https://v4.vitest.dev/guide/coverage).
 
 ## APIs
 

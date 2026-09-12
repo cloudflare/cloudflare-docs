@@ -11,10 +11,6 @@ products:
 
 The Workers Vitest plugin has the following known issues:
 
-### Coverage
-
-Native code coverage via [V8](https://v8.dev/blog/javascript-code-coverage) is not supported. You must use instrumented code coverage via [Istanbul](https://istanbul.js.org/) instead. Refer to the [Vitest Coverage documentation](https://vitest.dev/guide/coverage) for setup instructions.
-
 ### Fake timers
 
 Vitest's [fake timers](https://vitest.dev/guide/mocking.html#timers) do not apply to KV, R2 and cache simulators. For example, you cannot expire a KV key by advancing fake time.
