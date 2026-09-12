@@ -94,8 +94,12 @@ Durable Objects will occasionally shut down and objects are restarted, which wil
 When a Durable Object is shut down, the object instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
 
 - **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage.  If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
-- **WebSocket connections**: WebSocket requests are terminated automatically during shutdown. This is so that the new instance can take over the connection as soon as possible.
+- **WebSocket connections**: When an object restarts, all of its WebSocket connections close and clients must reconnect. This includes connections that were [hibernating](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Evicting an idle object into hibernation does not close its connections.
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
+
+Closing WebSocket connections promptly allows every client to reconnect to the new instance together. If connections stayed open, some clients would remain attached to the previous instance while others connected to the new one.
+
+Code that uses a [`DurableObjectStub`](/durable-objects/api/stub/) after a shutdown receives `Connection closed: this Durable Object instance is no longer active. Reconnect or retry the request.` A WebSocket closed by a shutdown reports `Durable Object connection closed because the object was reset.` Refer to [Troubleshooting](/durable-objects/observability/troubleshooting/) to handle both.
 
 It is important to ensure that any services using Durable Objects are designed to handle the possibility of a Durable Object being shut down.
 
