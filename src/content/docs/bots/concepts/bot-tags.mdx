@@ -38,12 +38,14 @@ The following values are **examples** of what may be present in the `BotTags` lo
 - apple
 - yandex
 
-## Enable bot tags
+When matching the Ruleset Engine field, use uppercase tag values such as `API`, `GOOGLE`, or `BING`.
 
-To enable bot tags, include the `BotTags` log field when using our [Logpush service](/logs/logpush/).
+## Use bot tags
 
-## Limitations
+To include bot tags in logs, add the `BotTags` field when using [Logpush](/logs/logpush/).
 
-Currently, bot tags are only available in log fields.
+To match bot tags in Ruleset Engine expressions, use the [`cf.bot_management.tags`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.tags/) field. For example:
 
-Future work will add more values and extend bot tags to other Cloudflare products.
+```txt
+any(cf.bot_management.tags[*] eq "API")
+```
