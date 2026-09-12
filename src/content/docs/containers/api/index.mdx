@@ -1,0 +1,106 @@
+---
+pcx_content_type: navigation
+title: API
+description: Choose between the Durable Object Container API and the higher-level Container class.
+sidebar:
+  order: 6
+products:
+  - containers
+  - durable-objects
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+Containers provide two APIs for managing a container from a Durable Object. Both APIs address the same container runtime.
+
+For new applications, use the Durable Object Container API when you need direct lifecycle control. Use the `Container` class when you prefer built-in lifecycle helpers.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Durable Object Container API"
+	href="/containers/api/durable-object-container/"
+	icon="seti:typescript"
+>
+	Start, stop, monitor, and connect to a container through `ctx.container`.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Container class"
+	href="/containers/api/container-class/"
+	icon="seti:typescript"
+>
+	Use a higher-level class built on Durable Objects, with routing, readiness
+	checks, lifecycle hooks, and scheduling.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Choose an API
+
+### Durable Object Container API
+
+The Durable Object Container API exposes the container runtime through `ctx.container`. Choose it when you need direct control over startup, shutdown, networking, or resource usage. You can add readiness checks, custom request routing, or lifecycle policies when your application needs them.
+
+### Container class
+
+The `Container` class builds on Durable Objects and the runtime API. Choose it when you prefer built-in request proxying, readiness checks, lifecycle hooks, and scheduling. These helpers reduce application code, but some features use Durable Object storage and alarms.
+
+The following table compares both options:
+
+| Requirement                | Durable Object Container API                                                                                                                                                                       | `Container` class                                                                                                                                                                                                                                        |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Start and stop a container | [`start()`](/containers/api/durable-object-container/#start), [`signal()`](/containers/api/durable-object-container/#signal), and [`destroy()`](/containers/api/durable-object-container/#destroy) | [`start()`](/containers/api/container-class/#start), [`stop()`](/containers/api/container-class/#stop), and [`destroy()`](/containers/api/container-class/#destroy)                                                                                      |
+| Send and proxy traffic     | [`getTcpPort(port).fetch()`](/containers/api/durable-object-container/#gettcpport) and [`getTcpPort(port).connect()`](/containers/api/durable-object-container/#gettcpport)                        | [`fetch()`](/containers/api/container-class/#fetch) and [`containerFetch()`](/containers/api/container-class/#containerfetch)                                                                                                                            |
+| Execute another process    | [`exec()`](/containers/api/durable-object-container/#exec)                                                                                                                                         | [`ctx.container.exec()`](/containers/api/container-class/#execute-commands)                                                                                                                                                                              |
+| Check port readiness       | Use [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport) in application code                                                                                                     | [`startAndWaitForPorts()`](/containers/api/container-class/#startandwaitforports) and [`waitForPort()`](/containers/api/container-class/#waitforport)                                                                                                    |
+| Handle concurrent starts   | Coordinate calls to [`start()`](/containers/api/durable-object-container/#start) when needed                                                                                                       | Handled by [`start()`](/containers/api/container-class/#start) and [`startAndWaitForPorts()`](/containers/api/container-class/#startandwaitforports)                                                                                                     |
+| Run lifecycle hooks        | [`monitor()`](/containers/api/durable-object-container/#monitor) and application code                                                                                                              | [`onStart()`](/containers/api/container-class/#onstart), [`onStop()`](/containers/api/container-class/#onstop), [`onError()`](/containers/api/container-class/#onerror), and [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) |
+| Stop inactive containers   | [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout)                                                                                                         | [`sleepAfter`](/containers/api/container-class/#sleepafter) and [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired)                                                                                                              |
+| Schedule callbacks         | [`ctx.storage.setAlarm()`](/durable-objects/api/alarms/#setalarm) (Durable Object API)                                                                                                             | [`schedule()`](/containers/api/container-class/#schedule)                                                                                                                                                                                                |
+
+Use the Durable Object Container API for latency-sensitive workloads or workloads that need a smaller storage footprint.
+
+## Use the Durable Object Container API
+
+The Durable Object Container API is available through `ctx.container` of the Durable Object. It exposes the container runtime without adding lifecycle policy.
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyContainer extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(() =>
+			ctx.container.setInactivityTimeout(10 * 60 * 1000),
+		);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		if (!this.ctx.container.running) {
+			this.ctx.container.start({ enableInternet: true });
+		}
+
+		return this.ctx.container.getTcpPort(8080).fetch(request);
+	}
+}
+```
+
+The `running` property does not indicate port readiness. Check the required port before routing the first request if your process needs time to start.
+
+For all methods, refer to the [Durable Object Container API](/containers/api/durable-object-container/).
+
+## Use the Container class
+
+The [`Container` class](https://github.com/cloudflare/containers) extends `DurableObject`. It adds default routing, readiness checks, lifecycle hooks, activity tracking, and scheduled callbacks.
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "10m";
+}
+```
+
+These helpers reduce application code. They also add lifecycle state and scheduled work to the Durable Object. For all properties and methods, refer to the [Container class API](/containers/api/container-class/).

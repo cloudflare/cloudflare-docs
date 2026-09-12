@@ -15,6 +15,8 @@ In this example, each container runs a small webserver written in Go.
 
 This example Worker should give you a sense for simple Container use, and provide a starting point for more complex use cases.
 
+This guide uses the higher-level `Container` class. You can also manage containers directly through `ctx.container`. To compare both options, refer to [Containers APIs](/containers/api/).
+
 ## Prerequisites
 
 ### Ensure Docker is running locally
@@ -72,7 +74,7 @@ Now that you've deployed your first container, let's explain what is happening i
 
 ### Configuration
 
-Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the configuration for both your Worker and your container:
+Your [Wrangler configuration file](/containers/configuration/wrangler/) defines the configuration for both your Worker and your container:
 
 <WranglerConfig>
 
@@ -171,7 +173,7 @@ This defines basic configuration for the container:
 
 The `Container` class itself extends [`DurableObject`](/durable-objects/), so your subclass has access to the full Durable Object API. The Durable Object handles routing, lifecycle, and persistent state, while the container process runs your image inside a Linux VM. This means you can use [`this.ctx.storage`](/durable-objects/api/sqlite-storage-api/) to persist data that survives container restarts and resides close to the container itself.
 
-Refer to the [Container class reference](/containers/reference/container-class/) and the [low-level Durable Object container API](/durable-objects/api/container/) for more details.
+For all properties and methods, refer to the [Container class API](/containers/api/container-class/).
 
 #### Routing to Containers
 

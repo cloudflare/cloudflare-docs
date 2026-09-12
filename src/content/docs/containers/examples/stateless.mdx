@@ -10,7 +10,66 @@ products:
   - containers
 ---
 
-To simply proxy requests to one of multiple instances of a container, you can use the `getRandom` function:
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
+
+To proxy requests across a fixed number of Container instances, select an instance name and forward the request through its Durable Object.
+
+<Tabs>
+	<TabItem label="Durable Object Container API">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const INSTANCE_COUNT = 3;
+
+interface Env {
+	BACKEND: DurableObjectNamespace<Backend>;
+}
+
+export class Backend extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		ctx.blockConcurrencyWhile(async () => {
+			const container = ctx.container!;
+			await container.setInactivityTimeout(2 * 60 * 60 * 1000);
+
+			if (!container.running) {
+				container.start();
+			}
+
+			const port = container.getTcpPort(8080);
+			let lastError: unknown;
+			for (let attempt = 0; attempt < 50; attempt++) {
+				try {
+					await port.fetch("http://container/");
+					return;
+				} catch (error) {
+					lastError = error;
+					await scheduler.wait(100);
+				}
+			}
+			throw lastError;
+		});
+	}
+
+	fetch(request: Request): Promise<Response> {
+		return this.ctx.container!.getTcpPort(8080).fetch(request);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const index = Math.floor(Math.random() * INSTANCE_COUNT);
+		return env.BACKEND.getByName(`instance-${index}`).fetch(request);
+	},
+};
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
 
 ```ts
 import { Container, getRandom } from "@cloudflare/containers";
@@ -30,9 +89,11 @@ export default {
 };
 ```
 
+	</TabItem>
+</Tabs>
+
 :::note
-This example uses `getRandom`, which randomly selects one of a fixed number of Container
-instances for each request.
+Both examples randomly select one of a fixed number of Container instances for each request. The `Container` class provides `getRandom()` as a helper.
 
 In the future, we will provide improved latency-aware load balancing and autoscaling.
 

@@ -11,8 +11,76 @@ products:
   - workers
 ---
 
-When a Container starts, stops, becomes idle, and errors, it can trigger code execution in a Worker
-that has defined status hooks on the `Container` class. Refer to the [Container class lifecycle hooks](/containers/reference/container-class/#lifecycle-hooks) for more details.
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
+
+Use `monitor()` with the Durable Object Container API to run code after the Container exits or errors. The `Container` class adds named lifecycle hooks and an inactivity callback.
+
+<Tabs>
+	<TabItem label="Durable Object Container API">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+export class MyContainer extends DurableObject<Env> {
+	private ready: Promise<void> | undefined;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(() =>
+			ctx.container!.setInactivityTimeout(5 * 60 * 1000),
+		);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			this.ready = undefined;
+		}
+		this.ready ??= this.startAndMonitor().catch((error: unknown) => {
+			this.ready = undefined;
+			throw error;
+		});
+		await this.ready;
+
+		return container.getTcpPort(4000).fetch(request);
+	}
+
+	private async startAndMonitor(): Promise<void> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			container.start();
+		}
+
+		this.ctx.waitUntil(
+			container
+				.monitor()
+				.then(() => console.log("Container stopped"))
+				.catch((error: unknown) => console.error("Container error:", error)),
+		);
+
+		const port = container.getTcpPort(4000);
+		let lastError: unknown;
+		for (let attempt = 0; attempt < 50; attempt++) {
+			try {
+				await port.fetch("http://container/");
+				console.log("Container successfully started");
+				return;
+			} catch (error) {
+				lastError = error;
+				await scheduler.wait(100);
+			}
+		}
+		throw lastError;
+	}
+}
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
 
 ```ts
 import { Container } from "@cloudflare/containers";
@@ -45,3 +113,8 @@ export class MyContainer extends Container {
 	}
 }
 ```
+
+	</TabItem>
+</Tabs>
+
+The `monitor()` promise in the raw API does not include an exit code or stop reason. The `setInactivityTimeout()` method does not invoke a callback when the timeout expires. Use the [`Container` class lifecycle hooks](/containers/api/container-class/#lifecycle-hooks) when you need those higher-level events.
