@@ -855,8 +855,8 @@ package.json @cloudflare/content-engineering
 
 # spectrum
 
-/src/content/docs/spectrum/ @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/content/partials/spectrum/ @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/spectrum/ @alpdot @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/partials/spectrum/ @alpdot @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/assets/images/spectrum/ @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/directory/spectrum.yaml @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/glossary/spectrum.yaml @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
