@@ -8,5 +8,8 @@ params:
 - [FTS5 module](https://www.sqlite.org/fts5.html) for full-text search (including `fts5vocab`).
 - [JSON extension](https://www.sqlite.org/json1.html) for JSON functions and operators.
 - [Math functions](https://sqlite.org/lang_mathfunc.html).
+- [R\*Tree module](https://www.sqlite.org/rtree.html) for spatial and range indexes, with the `rtree_i32` variant for integer coordinates.
 
-Refer to the [source code](https://github.com/cloudflare/workerd/blob/4c42a4a9d3390c88e9bd977091c9d3395a6cd665/src/workerd/util/sqlite.c%2B%2B#L269) for the full list of supported functions.
+Of the functions the R\*Tree module provides, only `rtreecheck()` is available. Custom geometry callbacks and the Geopoly module are not supported.
+
+Refer to the [source code](https://github.com/cloudflare/workerd/blob/343766b542f2fa30a08e6b31f50d6466710fa0e7/src/workerd/util/sqlite.c%2B%2B#L363) for the full list of supported functions.
