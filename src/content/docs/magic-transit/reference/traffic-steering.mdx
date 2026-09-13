@@ -53,10 +53,10 @@ The priority value for static routes is directly configured as part of the route
 
 | Prefix | NextHop | Priority |
 | ----- | ----- | ----- |
-| `10.10.10.100/24` | `TUNNEL_1_IAD` | `200` |
-| `10.10.10.100/24` | `TUNNEL_2_IAD` | `200` |
-| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` |
-| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` |
+| `203.0.113.0/24` | `TUNNEL_1_IAD` | `200` |
+| `203.0.113.0/24` | `TUNNEL_2_IAD` | `200` |
+| `203.0.113.0/24` | `TUNNEL_3_ATL` | `100` |
+| `203.0.113.0/24` | `TUNNEL_4_ATL` | `100` |
 
 In this example, tunnels with priority of `100` are preferred to tunnels with priority of `200` because lower numbers have greater priority.
 
@@ -66,10 +66,10 @@ In the following example, `TUNNEL_2_IAD` is likely to receive twice as much traf
 
 | Prefix | NextHop | Priority | Weight |
 | ----- | ----- | ----- | ----- |
-| `10.10.10.100/24` | `TUNNEL_1_IAD` | `100` | `64` |
-| `10.10.10.100/24` | `TUNNEL_2_IAD` | `100` | `128` |
-| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` | `192` |
-| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `255` |
+| `203.0.113.0/24` | `TUNNEL_1_IAD` | `100` | `64` |
+| `203.0.113.0/24` | `TUNNEL_2_IAD` | `100` | `128` |
+| `203.0.113.0/24` | `TUNNEL_3_ATL` | `100` | `192` |
+| `203.0.113.0/24` | `TUNNEL_4_ATL` | `100` | `255` |
 
 Aside from priority, scoping static routes to specific geographic regions also impacts how traffic is steered. Refer to [Scoping routes to specific regions](#scoping-routes-to-specific-regions) for more details.
 
@@ -172,12 +172,12 @@ The following table exemplifies how to use geographic scoping for routes:
 
 | Prefix | NextHop | Priority | Region code |
 | ----- | ----- | ----- | ----- |
-| `10.10.10.100/24` | `TUNNEL_1_IAD` | `100` | `AFR` |
-| `10.10.10.100/24` | `TUNNEL_2_IAD` | `100` | `EEUR` |
-| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` | `ENAM` |
-| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `ME` |
-| `10.10.10.100/24` | `TUNNEL_5_ATL` | `100` | `WNAM` |
-| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `ENAM` |
+| `203.0.113.0/24` | `TUNNEL_1_IAD` | `100` | `AFR` |
+| `203.0.113.0/24` | `TUNNEL_2_IAD` | `100` | `EEUR` |
+| `203.0.113.0/24` | `TUNNEL_3_ATL` | `100` | `ENAM` |
+| `203.0.113.0/24` | `TUNNEL_4_ATL` | `100` | `ME` |
+| `203.0.113.0/24` | `TUNNEL_5_ATL` | `100` | `WNAM` |
+| `203.0.113.0/24` | `TUNNEL_4_ATL` | `100` | `ENAM` |
 
 When there are multiple routes to the same prefix with equal priority, and those routes are assigned to different geographic regions (like WNAM and ENAM), traffic entering the network in a specific region — for example, WNAM — egresses through the route associated with that same region.
 
@@ -211,8 +211,8 @@ You must provide your prefixes and the tunnels that should be mapped to for Clou
 
 | Prefix            | NextHop        |
 | ----------------- | -------------- |
-| `103.21.244.0/29` | `TUNNEL_1_IAD` |
-| `103.21.244.8/29` | `TUNNEL_2_ATL` |
+| `203.0.113.0/29` | `TUNNEL_1_IAD` |
+| `203.0.113.8/29` | `TUNNEL_2_ATL` |
 
 The minimum advertising prefix is `/24`, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, Cloudflare can route prefixes within that `/24` to different tunnel endpoints. For example, you can send `x.x.x.0/29` to Data Center 1 and `x.x.x.8/29` to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.
 
