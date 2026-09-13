@@ -63,5 +63,6 @@ tools/relevant_changed_files.txt
 .flue/node_modules/
 .flue/vitest-results.json
 
-# nimbus-docs generated lint report (.nimbus/routes.json is a committed manifest)
+# nimbus-docs generated files
 .nimbus/lint.json
+.nimbus/routes.json

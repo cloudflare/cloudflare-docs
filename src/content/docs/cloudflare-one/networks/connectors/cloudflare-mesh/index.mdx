@@ -62,6 +62,16 @@ flowchart LR
 
 All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and access rules apply to every connection.
 
+## Protocol requirement
+
+Cloudflare Mesh requires that the [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) of each Mesh node is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol), the default protocol for the Cloudflare One Client. Most deployments do not need to change anything.
+
+If a Mesh node's device profile uses WireGuard instead, the following capabilities will not work:
+
+- [Hostname routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes)
+- [IPv6 CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#manage-cidr-routes)
+- [High availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/)
+
 ## Mesh IPs
 
 Every participant is assigned a private IP from the `100.96.0.0/12` range. In other parts of the Cloudflare One documentation, these addresses are referred to as [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).

@@ -1,5 +1,5 @@
 ---
-import { Icon as AstroIcon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 interface Props {
 	autoPlay?: boolean;
@@ -22,7 +22,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 				<span class="stage-label">Artifacts repo changes</span>
 				<div class="node-card source-card">
 					<span class="node-icon" aria-hidden="true">
-						<AstroIcon name="artifacts" />
+						<Icon name="artifacts" />
 					</span>
 					<span class="node-name">Repository changes</span>
 				</div>
@@ -100,7 +100,7 @@ const { autoPlay = true, loop = true } = Astro.props;
 			<div class="deployment-stage">
 				<div class="deployment-card" data-step="7" aria-label="Deploy Worker">
 					<span class="deployment-icon" aria-hidden="true">
-						<AstroIcon name="workers" />
+						<Icon name="workers" />
 					</span>
 					<span class="deployment-name">Deploy Worker</span>
 				</div>

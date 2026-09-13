@@ -176,7 +176,7 @@ export default {
 
 Specifying props dynamically is permitted in this case because the caller is the same Worker, and thus can be presumed to be trusted to specify any props. The ability to customize props is particularly useful when the resulting binding is to be passed to another Worker over RPC or used in the `env` of a [dynamically-loaded worker](/workers/runtime-apis/bindings/worker-loader/).
 
-Note that `props` values specified in this way are allowed to contain any "persistently" serializable type. This includes all basic [structured clonable data types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). It also includes Service Bindings themselves: you can place a Service Binding into the `props` of another Service Binding.
+Note that `props` values specified in this way are allowed to contain any "persistently" serializable type. This includes all basic [structured cloneable data types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). It also includes Service Bindings themselves: you can place a Service Binding into the `props` of another Service Binding.
 
 ### TypeScript types for `ctx.exports` and `ctx.props`
 
@@ -207,6 +207,10 @@ For full API details, refer to [Custom spans](/workers/observability/traces/cust
 ## `waitUntil`
 
 `ctx.waitUntil()` extends the lifetime of your Worker, allowing you to perform work without blocking returning a response, and that may continue after a response is returned. It accepts a `Promise`, which the Workers runtime will continue executing, even after a response has been returned by the Worker's [handler](/workers/runtime-apis/handlers/).
+
+:::caution[Background work needs `await` or `waitUntil()`]
+An async call that is neither awaited nor passed to `ctx.waitUntil()` can be canceled when the invocation ends — dropping logs, leaving writes unfinished, or failing silently.
+:::
 
 Use `ctx.waitUntil()` for work that can run after the response is sent, such as logging, analytics, or cache writes, as long as the work can finish within the `waitUntil()` time limit. If the client is still receiving the response, including a streamed response body, the Worker invocation remains active without `ctx.waitUntil()`. If your response depends on the work, `await` the work before returning the response or stream the response as the work completes.
 

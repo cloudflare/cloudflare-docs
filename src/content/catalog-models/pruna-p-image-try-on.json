@@ -98,6 +98,7 @@
 		"Output Formats": "jpg, png, webp"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": {
 		"id": "97503cbc-cf25-4782-b55e-03aa37f6c7e3",
 		"title": "70% off P-Image-Try-On",

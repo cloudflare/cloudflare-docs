@@ -1,0 +1,45 @@
+---
+title: Analyze profile detections
+pcx_content_type: how-to
+description: Investigate profile conformance and sampled violation details.
+products:
+  - waf
+sidebar:
+  order: 4
+---
+
+import { DashButton, Steps } from "~/components";
+
+Use **Profile Analysis** in [Security Analytics](/waf/analytics/security-analytics/) to investigate profile detections.
+
+## Understand request statuses
+
+Profile Analysis classifies requests with these statuses:
+
+- **Conforms:** The evaluated request matched its applicable profile.
+- **Violates:** The evaluated request did not match its applicable profile.
+- **Not evaluated:** No applicable profile is available, or the profile does not apply.
+
+## Review detections
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Security** > **Analytics**.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Open **Profile Analysis** and select a profile.
+3. Review conformance trends over your selected time range.
+4. Inspect sampled violations for the request component and affected field.
+5. Review each sampled violation reason before configuring mitigation.
+6. Filter by `cf.schema_validation.learned.violated` or `cf.schema_validation.uploaded.violated` to inspect the corresponding source.
+
+</Steps>
+
+## Interpret violations
+
+A non-conforming request is not necessarily malicious. Releases, new clients, and valid edge cases can produce violations.
+
+Cloudflare runs an **always-on detection** after a profile becomes available. Detection does not block requests by itself.
+
+After reviewing representative traffic, refer to [Enforce profiles with Custom Rules](/waf/detections/application-profiles/enforce-profiles-with-custom-rules/).

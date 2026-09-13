@@ -8,15 +8,15 @@ tags:
   - Private networks
 sidebar:
   order: 2
-  badge:
-    text: Beta
 ---
 
-import { Render, Details, GlossaryTooltip } from "~/components";
+import { Render, Details, GlossaryTooltip, TunnelHostnameRoutingDiagram } from "~/components";
 
 Instead of managing static IP lists and routes, you can connect users to private HTTP and non-HTTP applications using their hostnames (for example, `wiki.internal.local`). Private hostname routes are especially useful when the application has an unknown or ephemeral IP, which often occurs when infrastructure is provisioned by a third-party cloud provider.
 
-When a user requests a private hostname, Cloudflare Gateway assigns an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> from a CGNAT range to route the traffic through your tunnel to the correct private IP address. For a deep dive into the architecture and packet flow, refer to our [announcement blog post](https://blog.cloudflare.com/tunnel-hostname-routing/).
+<TunnelHostnameRoutingDiagram />
+
+When a user requests a private hostname, Cloudflare Gateway assigns an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> to route the traffic through your tunnel to the correct private IP address. By default, this IP is drawn from a Cloudflare-owned public IPv4 range (`172.64.128.0/20`) rather than Carrier-Grade NAT (CGNAT) space, so it does not trigger [Google Chrome's Local Network Access restrictions](#google-chrome-restricts-access-to-private-hostnames). You can also [configure a custom range](/cloudflare-one/networks/routes/configure-initial-resolved-ips/) if it conflicts with your existing network. For a deep dive into the architecture and packet flow, refer to our [announcement blog post](https://blog.cloudflare.com/tunnel-hostname-routing/).
 
 ## Supported on-ramps/off-ramps
 
@@ -173,7 +173,7 @@ If you cannot connect, verify the following:
 
    Non-authoritative answer:
    Name:	wiki.internal.local
-   Address: 100.80.200.48
+   Address: 172.64.128.48
    ```
 
    The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
@@ -189,8 +189,8 @@ If you cannot connect, verify the following:
    ```
 
    ```sh output
-   * Trying 100.80.200.48:80...
-   * Connected to wiki.internal.local (100.80.200.48) port 80
+   * Trying 172.64.128.48:80...
+   * Connected to wiki.internal.local (172.64.128.48) port 80
    ...
    ```
 

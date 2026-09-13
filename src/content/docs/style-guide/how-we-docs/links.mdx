@@ -1,24 +1,20 @@
 ---
 pcx_content_type: how-to
-title: Links
+title: Link maintenance
 meta:
-  title: Links | How we docs
-description: Write and format links in documentation.
+  title: Link maintenance | How we docs
+description: How we keep links healthy with build checks, external link auditing, and background anchor link audits.
 products:
   - style-guide
 ---
 
-import { Render } from "~/components";
-
-Though [links](/style-guide/documentation-content-strategy/component-attributes/links/) are an important part of documentation, they also have their own maintenance cost.
+Though [links](/style-guide/style-and-grammar/formatting/structure/links/) are an important part of documentation, they also have their own maintenance cost.
 
 We have a few strategies we use to make link maintenance easier.
 
 ## Link types
 
-<Render file="link-types" product="style-guide" />
-
-For each type of link, we think through a few different aspects of the experience.
+Documentation uses three [types of links](/style-guide/style-and-grammar/formatting/structure/links/#types-of-links): external, internal, and anchor. For each type, we think through a few different aspects of the experience.
 
 - **External**:
   - _Source of truth_: Another site.
@@ -58,6 +54,6 @@ We use an external SEO tool to help flag these broken external links for us, add
 
 ### Anchor links
 
-Anchor links do not have as dramatic as consequences of being wrong as internal links. If you have a broken anchor link, a customer will either need to manually scroll to the header or - in some cases - go to another page.
+Anchor links do not have as dramatic as consequences of being wrong as internal links. If you have a broken anchor link, a customer will either need to manually scroll to the header or, in some cases, go to another page.
 
 Because of these characteristics, we run [periodic, background checks](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/anchor-link-audit.yml) to flag broken anchor links, using the `htmltest` library.

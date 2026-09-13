@@ -12,6 +12,12 @@ sidebar:
 
 import { AvailableNotifications, Render, Example } from "~/components";
 
+:::note[Availability]
+Access mTLS is available with Enterprise and pay-as-you-go Zero Trust plans. It is not included in the Free plan. Free customers can use [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) to authenticate automated systems.
+
+This page covers Access mTLS for Service Auth policies. [Zone-level mTLS](/api-shield/security/mtls/) is a separate feature with different plan availability.
+:::
+
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) requires both the client and the server to present certificates during the TLS handshake. In the Cloudflare Access implementation, the CA you upload is used to verify the client certificate (server certificate verification is handled by standard TLS). Access mTLS serves two purposes:
 
 - **Authenticate devices that do not use an identity provider** — Automated systems and IoT devices can prove their identity by presenting a client certificate instead of logging in through an IdP.
@@ -37,11 +43,25 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 
 ### Add mTLS to your Access application
 
-<Render
-	file="access/add-mtls-cert"
-	product="cloudflare-one"
-	params={{ product: "access" }}
-/>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Mutual TLS**.
+
+2. Select **Add mTLS Certificate**.
+
+3. Enter any name for the root CA.
+
+4. In **Certificate content**, paste the contents of your root CA.
+
+	If the client certificate is directly signed by the root CA, you only need to upload the root. If the client certificate is signed by an intermediate certificate, you must upload the entire CA chain (intermediate and root). For example:
+	```txt
+	-----BEGIN CERTIFICATE-----
+	<intermediate.pem>
+	-----END CERTIFICATE-----
+	-----BEGIN CERTIFICATE-----
+	<rootCA.pem>
+	-----END CERTIFICATE-----
+	```
+
+	Do not include any SSL/TLS server certificates; Access only uses the CA chain to verify the connection between the user's device and Cloudflare.
 
 5. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 

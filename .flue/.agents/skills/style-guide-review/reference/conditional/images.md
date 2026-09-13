@@ -11,6 +11,8 @@ description: Rules for image syntax and asset paths in MDX content.
 
 - If a Markdown image uses empty alt text `![](...)` for a non-decorative content image → **suggestion**: add descriptive alt text per the style guide.
 
+- If an added line uses a reference-style image link (`![Alt text][n]` that points to a `[n]: ~/assets/images/...` definition line) → **warning**: convert to inline image syntax `![Alt text](~/assets/images/{product}/file.png)`. Astro's asset pipeline resolves the `~/assets/images/` alias only for inline image syntax; reference-style definitions render as broken page-relative URLs. Exception: reference-style image links inside fenced code blocks or application code examples.
+
 ## Examples
 
 Correct:
@@ -27,4 +29,9 @@ Incorrect:
 
 ```mdx
 ![Precursor mode selector](/images/precursor/precursor-rules.png)
+```
+
+```mdx
+![Precursor mode selector][1]
+[1]: ~/assets/images/precursor/precursor-rules.png
 ```

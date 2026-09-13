@@ -8,7 +8,16 @@ sidebar:
   order: 4
 ---
 
-import { Render, Aside, Tabs, TabItem, Steps } from "~/components";
+import {
+	Aside,
+	Tabs,
+	TabItem,
+	Steps,
+	Card,
+	Code,
+	GlossaryTooltip,
+	DashButton,
+} from "~/components";
 
 ## Register a virtual appliance and generate a license key
 
@@ -56,35 +65,473 @@ This is also available via Terraform.
 
 </TabItem> </Tabs>
 
-<Render file="mconn/configure-connectors"
-  product="networking-services"
-  params={{
-  magicWord: "virtual",
-  productName: "Cloudflare One Appliance",
-  productNameVirtual: "Cloudflare One Virtual Appliance",
-  maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
-  dashName: "Cloudflare WAN",
-  wan: "needs to correspond to the virtual network interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
-  lan: "needs to correspond to the virtual LAN interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
-  noConnectorShows: "For a Virtual Appliance to appear you need to: <br /><ul><li><strong>VMware:</strong> Have already obtained your OVA package and license keys if you are installing on VMware.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul>\nFor details, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.\n",
-  networkSegmentationURL: "/cloudflare-wan/configuration/appliance/network-options/network-segmentation/",
-  dhcpServerURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/",
-  dhcpRelayURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-relay/",
-  reserveIpAddressesURL: "/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-static-address-reservation/",
-  shippedLanguage: "Cloudflare One Virtual Appliance is deactivated after you install it",
-  hardSoftConn: "You need to install two Virtual Appliances before you can set up a site in high availability.",
-  hcConfigsURL: "/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations",
-  ipsecTunnelsRefURL: "/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
-  trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/",
-  vlanIdURL: "/cloudflare-wan/configuration/appliance/reference/#vlan-id",
-  healthCheckFrequencyURL: "/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/",
-  routedSubnetsURL: "/cloudflare-wan/configuration/appliance/network-options/routed-subnets/",
-  interruptWindowURL: "/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/",
-  tunnelHealthChecksURL: "/cloudflare-wan/reference/tunnel-health-checks/",
-  wanSettingsURL: "/cloudflare-wan/configuration/appliance/reference/#wan-settings",
-  sitesURL: "/cloudflare-wan/configuration/common-settings/sites/",
-  networkOptionsURL: "/cloudflare-wan/configuration/appliance/network-options/",
-  maintenanceURL: "/cloudflare-wan/configuration/appliance/maintenance/",
-  referenceInformationURL: "/cloudflare-wan/configuration/appliance/reference/",
-  troubleshootingURL: "/cloudflare-wan/configuration/appliance/troubleshooting/"
-  }} />
+Cloudflare One Virtual Appliance is a virtual device alternative to the hardware based Cloudflare One Appliance. These two versions of Cloudflare One Appliance are identical otherwise.
+
+Currently, you can set up Cloudflare One Virtual Appliance on VMware ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.
+
+In this page you will find instructions on how to configure Cloudflare One Appliance. This guide provides a step-by-step guide for Cloudflare One Appliance initial setup. You can either return here after setting up your Cloudflare One Appliance, or refer to the [Maintenance](/cloudflare-wan/configuration/appliance/maintenance/) section where you will find instructions on how to update your settings.
+
+## Prerequisites
+
+Before you can install Cloudflare One Virtual Appliance, you need an Enterprise account with Cloudflare WAN. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with Cloudflare One Virtual Appliance. This includes:
+
+- Intel x86 CPU architecture
+- ESXi hypervisor 7.0U1 or higher
+- 4 virtual CPUs per virtual appliance (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
+- 8 GB of RAM per virtual appliance
+- 8 GB of disk per virtual appliance
+- One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)
+- One or more vSwitch port group or VLAN that will be the internal LAN
+
+For details on installing ESXi and configuring a virtual machine, refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html).
+
+For details on installing Virtual environment and configuring a virtual machine, refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started).
+
+---
+
+## Before you begin
+
+There are a couple of decisions you need to make when installing your Cloudflare One Virtual Appliance. Review the following topics for more information.
+
+### Determine the need for a high availability configuration
+
+You can install up to two instances of Cloudflare One Virtual Appliance for redundancy at each of your sites. If one of your devices fails, traffic will fail over to the other, ensuring that you never lose connectivity to that site.
+
+In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
+
+You must decide the type of configuration you want for your site from the beginning: no redundancy or with redundancy. You cannot add redundancy after finishing the configuration of your dashboard settings. If, at a later stage, you decide to enable redundancy, you will need to delete your Cloudflare One Virtual Appliance device in the Cloudflare dashboard, and start again.
+
+<Card title="Do you need a high availability configuration?" icon="information">
+
+- If you need a high availability configuration for your premises, refer to
+  [About high availability configurations](#about-high-availability-configurations) for details
+  and learn how to configure your Cloudflare One Virtual Appliance device in this mode.
+- If you do not need a high availability configuration for you premises, check if you need a [DHCP or a static IP setup](#decide-on-dhcp-vs-static-ip-connections) before proceeding to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
+
+</Card>
+
+:::caution
+You cannot enable high availability for an existing Cloudflare One Virtual Appliance on-ramp. To add high availability to an existing Cloudflare One Virtual Appliance on-ramp in the Cloudflare dashboard, you need to delete the on-ramp and start again. Plan accordingly to create a high availability configuration from the start if needed.
+:::
+
+### Decide on DHCP vs static IP connections
+
+Cloudflare One Virtual Appliance uses a DHCP connection at first boot to download your settings and go through the activation process. However, if you need to use a static IP in your Cloudflare One Virtual Appliance, and this is a fresh install:
+
+1. Connect the machine with your Cloudflare One Virtual Appliance VM to a DHCP port with access to the Internet.
+2. Follow the [setup flow](#set-up-cloudflare-dashboard) and activate your Cloudflare One Virtual Appliance device.
+3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
+
+---
+
+## Configure a virtual machine
+
+Select the appropriate tab to configure Cloudflare One Virtual Appliance on VMware ESXi or Proxmox Virtual Environment.
+
+<Tabs> <TabItem label="VMware ESXi">
+
+**1. Obtain the VMware image**
+
+Download the Cloudflare One Virtual Appliance OVA image from [https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova](https://assets.magic-wan-connector.cloudflare.com/stable/mconn.ova). You can also download it from the dashboard when you register a virtual appliance, in the **Add an appliance** > **Virtual appliance** step. The OVA image includes the files required to install and configure the virtual machine (VM) for Cloudflare One Virtual Appliance with the appropriate settings. For details, refer to [VMware VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html).
+
+This image can be deployed multiple times to create several instances of a Cloudflare One Virtual Appliance, in different locations or on the same ESXi host.
+
+You consume one license key for each instance created. Generate a license key for each instance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key). For example, to deploy 10 Cloudflare One Virtual Appliances, generate 10 license keys.
+
+**2. Deploy the Cloudflare One Virtual Appliance on VMware**
+
+The following instructions assume you already have VMware ESXi hypervisor installed with sufficient resources. For details, refer to [Prerequisites](#prerequisites).
+
+1. When setting up your VMware ESXi, you need to create port groups for Cloudflare One Virtual Appliance. Go to **Networking** > **Port groups**, and prepare your vSwitch port groups and/or VLANs for your desired network topology. For example, a simple deployment typically has:
+	- A WAN port group where the Cloudflare One Virtual Appliance will get an IP address (static or DHCP) that has access to the Internet.
+	- A LAN port group, where the Cloudflare One Virtual Appliance will act as default router, and possibly DHCP server.
+	- A null, or unused, port group for allocating unused virtual interfaces in the Cloudflare One Virtual Appliance. You can, for example, create a null port group with the name of <code>Null port group</code>, and a **VLAN ID** of <code>999</code>.
+
+:::note[VLAN tagging]
+Cloudflare One Virtual Appliance supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
+
+Use VLAN ID <code>0</code> when:
+
+- Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.
+- Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.
+
+You can also configure subinterfaces on the Cloudflare One Virtual Appliance by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).
+
+Refer to [VMware's documentation](https://kb.vmware.com/s/article/1003825) for more information.
+:::
+
+2. Extract the files in the OVA image you downloaded. For example:
+
+<Code lang="sh" code="tar -xvf mconn.ova" />
+
+Take note of the folder where you are extracting the files to, as you will need to refer to that folder when creating the VM.
+
+3. Go to **Virtual Machines** > **Create/Register VM** wizard to start deploying the Cloudflare One Virtual Appliance.
+
+4. Select **Deploy a virtual machine from an OVF or OVA file** > **Next**.
+
+5. Choose a descriptive name for your virtual machine.
+
+6. Upload the files you have extracted from the OVA image. These include <code>mconn.ovf</code>, <code>mconn.nvram</code>, and <code>mconn.vmdk</code>.
+
+7. Select where you want to save the files extracted from the OVA image > **Next**.
+
+8. In **Networking mappings**, select assignments for your desired topology according to the port groups you set up previously:
+	1. For example, map <code>eno1</code> port to <code>VM Network</code> to create your WAN, and <code>eno2</code> to <code>LAN0</code> to act as your LAN port.
+	2. Allocate any unused ports to the <code>null</code> port group.
+	3. Take note of your configuration. You will need this information to configure your network in the Cloudflare dashboard.
+
+9. In **Disk provisioning**, select **Thin**.
+
+10. Before completing the deployment wizard, disable **Power on automatically**. This is important so that you can configure the license key prior to boot.
+
+11. Configure the virtual machine with the license key you generated:
+	1. Select the Cloudflare One Virtual Appliance's VM > **Settings**.
+	2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
+	3. Select **Add parameter** to add your license key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
+		- **Key**: <code>guestinfo.cloudflare.identity</code>
+		- **Value** `<YOUR_LICENSE_KEY>`
+
+:::note
+You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. Generate a new key for every new Cloudflare One Virtual Appliance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key).
+:::
+
+12. Select **Save** to finish configuring your Cloudflare One Virtual Appliance.
+13. Continue setup in your <a href="#set-up-cloudflare-dashboard">Cloudflare dashboard.</a>
+
+</TabItem> <TabItem label="Proxmox Virtual Environment (beta)">
+
+**1. Obtain the Cloudflare One Virtual Appliance script**
+
+Download the Cloudflare One Virtual Appliance helper script for Proxmox to your Proxmox server. The script sets up and configures a Proxmox virtual machine with the appropriate settings for Cloudflare One Virtual Appliance. For details on system requirements, refer to [Prerequisites](#prerequisites).
+
+The script can be deployed multiple times to create several instances of a Cloudflare One Virtual Appliance, in different locations or on the same Proxmox host. You consume one license key for each instance created. Generate a license key for each instance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key). For example, to deploy 10 Cloudflare One Virtual Appliances, generate 10 license keys.
+
+<Code lang="sh" code="curl -OL https://assets.magic-wan-connector.cloudflare.com/stable/proxmox_mconn_vm.sh" />
+
+**2. Deploy the Cloudflare One Virtual Appliance on Proxmox**
+
+The following instructions assume you already have Proxmox Virtual Environment installed with sufficient resources. For details, refer to [Prerequisites](#prerequisites).
+
+1. In the terminal prompt of your Proxmox server, run the script with elevated privileges:
+
+<Code lang="sh" code="bash ./proxmox_mconn_vm.sh" />
+
+2. You will be prompted to create a new Cloudflare One Virtual Appliance. Select **yes** to proceed.
+3. Enter your license key.
+
+:::note
+You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. Generate a new key for every new Cloudflare One Virtual Appliance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key).
+:::
+
+The script applies default settings and configures the virtual machine for Cloudflare One Virtual Appliance. After the script finishes, adjust the VM for your environment. The new VM has all network interface cards (NICs) on the same bridge, and only the first NIC has an active link.
+
+4. In the **Hardware settings** for the new VM, select the NIC you want to use with Cloudflare One Virtual Appliance.
+5. Select the network bridge that corresponds to the physical NIC on your host machine. This bridge allows the network adapter in the virtual machine to communicate through the NIC in the host, as if it were directly connected to the physical network.
+6. (Optional) Configure your VLAN setting if needed.
+
+:::note[VLAN tagging]
+Cloudflare One Virtual Appliance supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
+
+Use VLAN ID <code>0</code> when:
+
+- Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.
+- Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.
+
+You can also configure subinterfaces on the Cloudflare One Virtual Appliance by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).
+
+Refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information.
+:::
+
+7. Make sure the hardware settings match the minimum requirements for running Cloudflare One Virtual Appliance. Make changes to the RAM and CPU if needed.
+8. Continue setup in your [Cloudflare dashboard](#set-up-cloudflare-dashboard).
+
+</TabItem> <TabItem label="libvirt/KVM (beta)">
+
+**1. Obtain the Cloudflare One Virtual Appliance script**
+
+Download the Cloudflare One Virtual Appliance helper script for libvirt/KVM to your host. The script deploys the virtual machine with the appropriate settings for Cloudflare One Virtual Appliance. For details on system requirements, refer to [Prerequisites](#prerequisites).
+
+The deployment assumes the use of libvirt. The virtual machine manager graphical interface is not required. The VM uses the `OVMF_CODE.fd` file from the `ovmf` package on Debian or Ubuntu.
+
+The script can be deployed multiple times to create several instances of a Cloudflare One Virtual Appliance, in different locations or on the same host. You consume one license key for each instance created. Generate a license key for each instance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key). For example, to deploy 10 Cloudflare One Virtual Appliances, generate 10 license keys.
+
+<Code lang="sh" code="curl -OL https://assets.magic-wan-connector.cloudflare.com/stable/libvirt_mconn_vm.sh" />
+
+**2. Deploy the Cloudflare One Virtual Appliance on libvirt/KVM**
+
+The following instructions assume you already have libvirt installed with sufficient resources. For details, refer to [Prerequisites](#prerequisites).
+
+1. In the terminal prompt of your host, run the script with elevated privileges. The script takes one optional argument, the name of the VM. If you do not provide a name, the VM defaults to `vmconn`:
+
+<Code lang="sh" code="sudo bash ./libvirt_mconn_vm.sh" />
+
+2. When prompted, enter a name for the VM. This name is used for the VM definition, the disk name, and the nvram file name. If the name already exists, the script exits with an error and you must use a different name.
+3. Select the storage pool for the VM disk.
+4. Choose whether to enable the graphics console in addition to the serial console.
+5. Enter your license key.
+
+:::note
+You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. Generate a new key for every new Cloudflare One Virtual Appliance from the [Connectors page](/cloudflare-wan/configuration/appliance/configure-virtual-appliance/#register-a-virtual-appliance-and-generate-a-license-key).
+:::
+
+The script deploys the virtual machine with the appropriate settings. NICs are named based on the defined PCI path of each NIC. Changing the PCI path of a NIC breaks functionality. NICs are configured in an inactive state with the `default` network source.
+
+6. Configure the NICs for your environment. Configure the WAN-associated NICs as macvtap devices to avoid potential connectivity issues.
+7. Continue setup in your [Cloudflare dashboard](#set-up-cloudflare-dashboard).
+
+</TabItem> </Tabs>
+
+---
+
+## Set up Cloudflare dashboard
+
+### Create a new profile
+
+You need to create a profile for your appliance before connecting it to the Internet.
+
+To create a profile:
+
+1. Go to the **Connectors** page.
+
+   <DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Profiles** > **Create a new profile**.
+3. In **Name**, enter a descriptive name for your Cloudflare One Virtual Appliance. Optionally, you can also add a description for it.
+4. You need to decide if you want to turn on high availability for the Cloudflare One Virtual Appliance. For details, refer to [About high availability configurations](#about-high-availability-configurations).
+5. Select **Create and continue**.
+6. Select **Add Appliance**. This will display a list of devices associated with your account. For a Virtual Appliance to appear you need to: <br /><ul><li><strong>VMware:</strong> Have already obtained your OVA package and license keys if you are installing on VMware.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul> For details, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.
+7. If you have more than one Cloudflare One Virtual Appliance, choose the one that corresponds to the on-ramp you are creating. Cloudflare One Virtual Appliance devices are identified by a serial number, also known as a service tag. Use this information to choose the right Cloudflare One Virtual Appliance. <br /> Select **Add Appliance** when you are ready to proceed.
+8. Cloudflare One Virtual Appliance will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the Cloudflare One Virtual Appliance software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/) for more details on how to define when the Cloudflare One Virtual Appliance can update its systems.
+9. Select **Continue** to proceed to creating your WAN and LAN networks.
+
+### Create a WAN
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+When you have more than one anycast IP configured in your account (set up during your Cloudflare WAN (formerly Magic WAN) onboarding), Cloudflare One Virtual Appliance will automatically create at most two tunnels per WAN port. This improves reliability and performance, and requires no additional configuration on your part.
+
+1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows Cloudflare One Virtual Appliance to load balance traffic over WANs of equal priority. It also allows Cloudflare One Virtual Appliance to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/cloudflare-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>. Refer to [WAN settings](/cloudflare-wan/configuration/appliance/reference/#wan-settings) for more details.
+   :::note
+   This is not the same as a high availability (HA) configuration. HA configurations need two Cloudflare One Virtual Appliance devices to work. For details, refer to [About high availability configurations](#about-high-availability-configurations).
+   :::
+2. In **Interface name**, enter a descriptive name for your WAN.
+3. **Interface number** needs to correspond to the virtual network interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.
+4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/cloudflare-wan/configuration/appliance/reference/#vlan-id).
+5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. For details on how Cloudflare calculates priorities, refer to [Traffic steering](/cloudflare-wan/reference/traffic-steering/).
+6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. For details, refer to [Update tunnel health checks frequency](/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/).
+7. **Addressing**: Select **DHCP**. This is needed the first time you set up your Cloudflare One Virtual Appliance to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
+	1. Continue the set up flow to activate your Cloudflare One Virtual Appliance.
+	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
+8. Select **Save** when you are finished.
+
+</TabItem> <TabItem label="API">
+
+:::note
+You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
+:::
+
+Make a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/wans/methods/create/) to create a WAN.
+
+The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode.
+
+Example:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/wans \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+	"name": "<YOUR_WAN_NAME>",
+	"physport": 1,
+	"priority": 0,
+	"vlan_tag": 0
+}'
+```
+
+</TabItem> </Tabs>
+
+### Create a LAN
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In **LAN configuration**, select **Create**.
+2. Enter a descriptive name for your LAN in **Interface name**.
+3. **Interface number** needs to correspond to the virtual LAN interface on the Virtual Appliance instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.
+4. In **VLAN ID**, specify a [VLAN ID](/cloudflare-wan/configuration/appliance/reference/#vlan-id) to create virtual LANs.
+5. In **Static addressing** > **Static address** give your Cloudflare One Virtual Appliance's LAN interface its IP address. You can also enable the following options if they suit your use case:
+   - **This is a DHCP server**: If your Cloudflare One Virtual Appliance is a [DHCP server](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/).
+   - **This is a DHCP relay**: If your Cloudflare One Virtual Appliance is a [DHCP relay](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-relay/).
+6. (Optional) In **Directly attached subnet** > **Static NAT prefix**, enter a CIDR prefix to enable NAT (network address translation). The prefix you enter here should be the same size as the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
+7. (Optional) If your LAN contains additional subnets behind a layer 3 router, select **Add routed subnet** under **Routed subnets** to add them:
+   - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
+   - **Next hop**: The address of the L3 router to which the Cloudflare One Virtual Appliance should forward packets for this subnet.
+   - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> For details, refer to [Routed subnets](/cloudflare-wan/configuration/appliance/network-options/routed-subnets/).
+8. Select **Save**.
+9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Cloudflare One Virtual Appliance, once it boots up.
+
+</TabItem> <TabItem label="API">
+
+:::note
+You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
+:::
+
+Make a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/create/) to create a LAN.
+
+Example:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+	"name": "<YOUR_LAN_NAME>",
+	"physport": 2,
+	"static_addressing": {
+		"address": "172.16.14.0/24"
+	},
+	"vlan_tag": 0
+}'
+```
+
+</TabItem> </Tabs>
+
+#### Network segmentation
+
+After setting up your LANs, you can configure your Cloudflare One Virtual Appliance to enable communication between them without traffic leaving your premises. For details, refer to [Network segmentation](/cloudflare-wan/configuration/appliance/network-options/network-segmentation/).
+
+#### DHCP options
+
+Cloudflare One Virtual Appliance supports different types of DHCP configurations. Cloudflare One Virtual Appliance can:
+
+- Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
+- Act as a [DHCP server](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-server/).
+- Use [DHCP relay](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Cloudflare One Virtual Appliance is in.
+- [Reserve IP addresses](/cloudflare-wan/configuration/appliance/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
+
+### Add your Cloudflare One Virtual Appliance to a site
+
+After finishing your Cloudflare One Virtual Appliance configuration, you need to add it to a site. Sites represent the local network of a data center, office, or other physical location, and combine all on-ramps available there. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that Cloudflare notifies you when there are issues with the site's on-ramps.
+
+Refer to [Set up a site](/cloudflare-wan/configuration/common-settings/sites/) for more information.
+
+## Activate appliance
+
+Cloudflare One Virtual Appliance is deactivated after you install it, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#set-up-cloudflare-dashboard).
+
+When the Cloudflare One Virtual Appliance is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Cloudflare One Virtual Appliance can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.
+
+<Aside type="caution">
+	Remember to connect Cloudflare One Virtual Appliance through a route that
+	supports DHCP for its first connection to the Internet. Otherwise, Cloudflare
+	One Virtual Appliance will not work.
+</Aside>
+
+When you are ready to connect your Cloudflare One Virtual Appliance to the Cloudflare network:
+
+1. Go to the **Connectors** page.
+
+   <DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Appliances**.
+3. Find the Cloudflare One Virtual Appliance you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right Cloudflare One Virtual Appliance you want to activate.
+4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
+5. The **Interrupt window** is the time period when the Cloudflare One Virtual Appliance software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. For details on defining when the Cloudflare One Virtual Appliance can update its systems, refer to [Interrupt window](/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window/).
+6. Select **Update**.
+
+## Boot your Virtual Appliance
+
+### Default password to access Virtual Appliance
+
+Your Virtual Appliance's default password is the last seven characters of your license key, all uppercase, plus an <code>!</code> (exclamation mark).
+
+For example, if your license key is <code>mconn-abcdefghijklmnopqrstuvwxyz</code>, your default password will be <code>TUVWXYZ!</code>.
+
+---
+
+## WAN with a static IP address
+
+After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your Cloudflare One Virtual Appliance on a network configuration with a static IP, follow these steps:
+
+<Aside type="caution">
+	Make sure you complete the setup workflow and activate your Cloudflare One
+	Virtual Appliance before changing the WAN settings to a static IP.
+</Aside>
+
+1. Connect the machine where you installed the VM with Cloudflare One Virtual Appliance to a DHCP port with access to the Internet.
+2. [Create a new profile](#create-a-new-profile) in the dashboard.
+3. Create a [DHCP WAN](#create-a-wan).
+4. [Activate](#activate-appliance) and boot your Cloudflare One Virtual Appliance.
+5. Wait 60 seconds.
+6. Make changes to the [WAN settings](#create-a-wan) in the dashboard to a static IP set up.
+7. Wait 60 seconds again.
+8. Modify your [Port Groups](#configure-a-virtual-machine) as needed to change the source from which the WAN port obtains its IP address.
+9. Reboot your virtual machine.
+
+---
+
+## About high availability configurations
+
+You need to install two Virtual Appliances before you can set up a site in high availability. When you set up a site in high availability, the WANs and LANs in your Cloudflare One Virtual Appliance have the same configuration but are replicated on two nodes. In case of failure of one of the devices, the other device becomes the active node, taking over the configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+
+Because Cloudflare One Virtual Appliances in high availability configurations share a single site, you need to set up:
+
+- **Static address**: The IP for the primary node in your site.
+- **Secondary static address**: The IP for the secondary node in your site.
+- **Virtual static address**: The IP that the LAN south of the Cloudflare One Virtual Appliance device will forward traffic to, which is the LAN's gateway IP.
+
+Make sure all IPs are part of the same subnet.
+
+For detailed information about the expected behavior of high availability configurations, refer to the [High availability configurations](/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations) reference page.
+
+### Create a high availability configuration
+
+You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again.
+
+To set up a high availability configuration:
+
+1. Follow the steps in [Create a new profile](#create-a-new-profile) up until step 4.
+2. After naming your site, select **Turn on high availability**.
+3. Select **Create and continue**.
+4. Select **Add Appliance**.
+5. From the list, choose your first Cloudflare One Virtual Appliance > **Add Appliance**.
+6. Back on the previous screen, select **Add secondary appliance**.
+7. From the list, choose your second Cloudflare One Virtual Appliance > **Add Appliance**.
+8. Select **Continue** to create a WAN. If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
+9. To create a LAN, follow the steps in [Create a LAN](#create-a-lan) up until step 4.
+10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
+11. In **Secondary static address**, enter the IP for the secondary node in your site. For example, `192.168.10.2/24`.
+12. In **Virtual static address**, enter the IP that the LAN south of the Cloudflare One Virtual Appliance device will forward traffic to. For example, `192.168.10.3/24`.
+13. Select **Save**.
+14. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node's health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node's probing link should be connected over a switch, and cannot be a direct connection.
+15. Follow the instructions in [Activate appliance](#activate-appliance) to finish setting up your Appliances.
+
+---
+
+## IPsec tunnels and static routes
+
+Cloudflare One Virtual Appliance automatically creates [IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels) and [static routes](/cloudflare-wan/reference/traffic-steering/) for you. You cannot configure these manually.
+
+To check the IPsec tunnels and static routes created by your Cloudflare One Virtual Appliance:
+
+1. Go to the **Connectors** page.
+
+   <DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. The **IPsec/GRE tunnels** tab shows a list of all the IPsec tunnels created by your Cloudflare One Virtual Appliance.
+3. Go to the **Routes** page.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+4. Here you can inspect the static routes created by your Cloudflare One Virtual Appliance.
+
+---
+
+## Next steps
+
+- [Network options](/cloudflare-wan/configuration/appliance/network-options/)
+- [Maintenance](/cloudflare-wan/configuration/appliance/maintenance/)
+- [Reference information](/cloudflare-wan/configuration/appliance/reference/)
+- [Troubleshooting](/cloudflare-wan/configuration/appliance/troubleshooting/)

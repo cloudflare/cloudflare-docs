@@ -1,0 +1,15 @@
+---
+title: Per-zone post-quantum visibility in Logpush and Log Explorer
+description: The http_requests dataset now includes ClientTLSKeyExchangeGroup, exposing the TLS key exchange negotiated on every client-to-Cloudflare connection.
+products:
+  - logs
+  - log-explorer
+date: 2026-08-20
+---
+
+[Cloudflare Radar](https://radar.cloudflare.com/post-quantum) publishes global statistics on post-quantum key agreement adoption across all Cloudflare traffic, but until now customers had no way to see the same measurement scoped to their own zones. This is now possible because the [`http_requests`](/logs/logpush/logpush-job/datasets/zone/http_requests/) Logpush dataset — also queryable in [Log Explorer](/log-explorer/) — includes a new `ClientTLSKeyExchangeGroup` field.
+
+The field reports the TLS key exchange group negotiated on the client-to-Cloudflare connection, by group name. Post-quantum connections appear as `X25519MLKEM768`, and classical connections appear as `X25519`, `P-256`, or another named group. A value of `UNK` means the group could not be determined, and `NONE` means TLS was not used.
+
+With this field, you can build per-zone reports showing what percentage of your inbound HTTPS traffic is protected by post-quantum key agreement, break the number down by hostname, path, user agent, or country, and push the data into your SIEM via any [Logpush destination](/logs/logpush/logpush-job/enable-destinations/).
+

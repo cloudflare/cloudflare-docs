@@ -1,0 +1,38 @@
+---
+title: Traffic Source selector in Gateway policies
+description: Gateway HTTP and Network policies now support a Traffic Source selector to match traffic based on how it reaches Cloudflare.
+products:
+  - gateway
+  - cloudflare-one
+date: 2026-08-12
+---
+
+Gateway [HTTP](/cloudflare-one/traffic-policies/http-policies/) and [Network](/cloudflare-one/traffic-policies/network-policies/) policies now include a **Traffic Source** selector that identifies how traffic reaches Cloudflare. This allows administrators to write policies that target specific on-ramp methods - for example, applying different rules to traffic arriving via the Cloudflare One Client compared to traffic routed through an MCP portal or a proxy endpoint.
+
+### Available traffic source values
+
+| UI name                       | API value          | Description                                                                      |
+| ----------------------------- | ------------------ | -------------------------------------------------------------------------------- |
+| Device client                 | `device_client`    | Traffic from the [Cloudflare One Client (WARP)](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) |
+| Mesh                          | `mesh`             | Traffic from a [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) connector |
+| Cloudflare WAN                | `cloudflare_wan`   | Traffic from [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (Magic WAN) |
+| Clientless RDP                | `clientless_rdp`   | Traffic from a clientless RDP session                                            |
+| Proxy endpoint                | `proxy_endpoint`   | Traffic from a [proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) (PAC file) |
+| Clientless Browser Isolation  | `agentless_biso`   | Traffic from [clientless Browser Isolation](/cloudflare-one/remote-browser-isolation/) |
+| MCP portal                    | `mcp_portal`       | Traffic from an [MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/) |
+
+The selector uses the `net.onramp.type` API field in both HTTP and Network policies.
+
+| UI name        | API example                                |
+| -------------- | ------------------------------------------ |
+| Traffic Source | `net.onramp.type == "device_client"`       |
+
+### Browser Isolation selector
+
+A **Browser Isolation** selector is also available in Network and HTTP policies. This selector identifies whether the current session is running inside [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/), allowing administrators to apply different policy behavior to isolated traffic.
+
+| UI name             | API example                    |
+| ------------------- | ------------------------------ |
+| Browser Isolation   | `net.is_isolated == true`      |
+
+For more information, refer to [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).

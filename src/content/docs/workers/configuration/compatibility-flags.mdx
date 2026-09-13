@@ -50,29 +50,31 @@ Compatibility flags can be set when uploading a Worker using the [Workers Script
 ## Node.js compatibility flag
 
 :::note
-[The `nodejs_compat` flag](/workers/runtime-apis/nodejs/) also enables `nodejs_compat_v2` as long as your compatibility date is 2024-09-23 or later. The v2 flag improves runtime Node.js compatibility by bundling additional polyfills and globals into your Worker. However, this improvement increases bundle size.
+[The `nodejs_compat` flag](/workers/runtime-apis/nodejs/) also enables `nodejs_compat_v2` for compatibility dates from `2024-09-23` through `2026-08-03`. The v2 flag improves Node.js compatibility by bundling additional polyfills and globals into your Worker. However, this improvement increases bundle size.
 
-If your compatibility date is 2024-09-22 or before and you want to enable v2, add the `nodejs_compat_v2` in addition to the `nodejs_compat` flag.
-If your compatibility date is after 2024-09-23, but you want to disable v2 to avoid increasing your bundle size, add the `no_nodejs_compat_v2` in addition to the `nodejs_compat flag`.
+For compatibility dates through `2024-09-22`, add `nodejs_compat_v2` alongside `nodejs_compat` to turn on v2. For compatibility dates from `2024-09-23` through `2026-08-03`, add `no_nodejs_compat_v2` alongside `nodejs_compat` to use v1 only.
 :::
 
-A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/):
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs/), with no need to add polyfills to your own code.
 
 <Render file="nodejs_compat" product="workers" />
+
+For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. These flags are not used for these compatibility dates because the compatibility date enables the same behavior. Wrangler, Miniflare, the Cloudflare Vite plugin, and the Workers Vitest plugin ignore these redundant flags when starting the runtime. Existing projects do not need to remove them when updating their compatibility date. Omit them from new configurations.
+
+To turn off Node.js compatibility completely for a compatibility date of `2026-08-04` or later, remove `nodejs_compat` and `nodejs_compat_v2` if present. Then add both of the following flags:
 
 <WranglerConfig>
 
 ```jsonc
 {
 	"compatibility_flags": [
-		"nodejs_compat"
+		"no_nodejs_compat",
+		"no_nodejs_compat_v2"
 	]
 }
 ```
 
 </WranglerConfig>
-
-As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
 

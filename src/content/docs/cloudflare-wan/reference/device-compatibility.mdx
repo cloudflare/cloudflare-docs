@@ -8,31 +8,41 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { GlossaryTooltip } from "~/components";
 
-<Render file="cloudflare-wan/reference/device-compatibility"
-  product="networking-services"
-  params={{
-    supportedConfigurationParametersUrl: "/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
-    arubaEdgeconnectUrl: "/cloudflare-wan/configuration/third-party/aruba-edgeconnect/",
-    ciscoIosXeUrl: "/cloudflare-wan/configuration/third-party/cisco-ios-xe/",
-    ciscoMerakiStaticUrl: "/cloudflare-wan/configuration/third-party/cisco-meraki-static/",
-    ciscoSdWanUrl: "/cloudflare-wan/configuration/third-party/viptela/",
-    fortinetUrl: "/cloudflare-wan/configuration/third-party/fortinet/",
-    fitelnetUrl: "/cloudflare-wan/configuration/third-party/fitelnet/",
-    juniperUrl: "/cloudflare-wan/configuration/third-party/juniper/",
-    paloAltoUrl: "/cloudflare-wan/configuration/third-party/palo-alto/",
-    pfsenseUrl: "/cloudflare-wan/configuration/third-party/pfsense/",
-    sonicwallUrl: "/cloudflare-wan/configuration/third-party/sonicwall/",
-    sophosFirewallUrl: "/cloudflare-wan/configuration/third-party/sophos-firewall/",
-    strongswanUrl: "/cloudflare-wan/configuration/third-party/strongswan/",
-    ubiquitiUrl: "/cloudflare-wan/configuration/third-party/ubiquiti/",
-    velocloudUrl: "/cloudflare-wan/configuration/third-party/velocloud/",
-    vyosUrl: "/cloudflare-wan/configuration/third-party/vyos/",
-    yamahaUrl: "/cloudflare-wan/configuration/third-party/yamaha/",
-    alibabaCloudUrl: "/cloudflare-wan/configuration/third-party/alibaba-cloud/",
-    awsUrl: "/cloudflare-wan/configuration/third-party/aws/",
-    azureUrl: "/cloudflare-wan/configuration/third-party/azure/",
-    googleUrl: "/cloudflare-wan/configuration/third-party/google/",
-    oracleUrl: "/cloudflare-wan/configuration/third-party/oracle/"
-  }} />
+Cloudflare WAN (formerly Magic WAN) is compatible with any device that supports <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> with the [supported configuration parameters](/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters) or supports <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>.
+
+The matrix below includes example devices and links to the integration guides.
+
+| Appliance | GRE tunnel | IPsec tunnel |
+| --- | --- | --- |
+| [Aruba EdgeConnect](/cloudflare-wan/configuration/third-party/aruba-edgeconnect/) |✅ | ✅ |
+| Cisco ASA | Compatibility on roadmap | Specifications compatible[^1] |
+| [Cisco IOS XE](/cloudflare-wan/configuration/third-party/cisco-ios-xe/) | ✅ | ✅ |
+| [Cisco Meraki MX (static routing)](/cloudflare-wan/configuration/third-party/cisco-meraki-static/) | - | ✅ |
+| [Cisco SD-WAN](/cloudflare-wan/configuration/third-party/viptela/)  | ✅ | ✅ |
+| [Fortinet](/cloudflare-wan/configuration/third-party/fortinet/)| Specifications compatible[^1] | ✅ |
+| [Furukawa Electric FITELnet](/cloudflare-wan/configuration/third-party/fitelnet/) | - | ✅ |
+| [HPE Juniper Networking SRX Series Firewalls](/cloudflare-wan/configuration/third-party/juniper/) | Specifications compatible[^1] | ✅ |
+| [Palo Alto Networks Next-Generation Firewall](/cloudflare-wan/configuration/third-party/palo-alto/) | Specifications compatible[^1] | ✅ |
+| [pfSense](/cloudflare-wan/configuration/third-party/pfsense/)| ✅ | ✅ |
+| Prisma SD-WAN (Palo Alto) | Specifications compatible[^1] | Specifications compatible[^1] |
+| Riverbed  | Specifications compatible[^1] | Specifications compatible[^1] |
+| [SonicWall](/cloudflare-wan/configuration/third-party/sonicwall/)| - | ✅ |
+| [Sophos Firewall](/cloudflare-wan/configuration/third-party/sophos-firewall/) | ✅ | ✅ |
+| [strongSwan](/cloudflare-wan/configuration/third-party/strongswan/) | - | ✅ |
+| [Ubiquiti](/cloudflare-wan/configuration/third-party/ubiquiti/) | - | ✅ |
+| [Velocloud](/cloudflare-wan/configuration/third-party/velocloud/) | - | ✅ |
+| Versa  | Specifications compatible[^1] | Compatibility on roadmap |
+| [VyOS](/cloudflare-wan/configuration/third-party/vyos/)| ✅ | ✅ |
+| [Yamaha RTX Router](/cloudflare-wan/configuration/third-party/yamaha/) | - | ✅ |
+
+| VPN | GRE tunnel | IPsec tunnel |
+| --- | --- | --- |
+| [Alibaba Cloud VPN Gateway](/cloudflare-wan/configuration/third-party/alibaba-cloud/) | - | ✅ |
+| [Amazon AWS Transit Gateway](/cloudflare-wan/configuration/third-party/aws/)          | - | ✅ |
+| [Azure VPN Gateway](/cloudflare-wan/configuration/third-party/azure/)                 | - | ✅ |
+| [GCP Cloud VPN](/cloudflare-wan/configuration/third-party/google/)                    | - | ✅ |
+| [Oracle Cloud](/cloudflare-wan/configuration/third-party/oracle/) 										| - | ✅ |
+
+[^1]: Specifications compatible per vendor documentation

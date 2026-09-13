@@ -27,15 +27,14 @@ import {
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6              |
 | [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker     |
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
-| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB          |
+| [Worker size](#worker-size)                                                      | 64 MiB       | 64 MiB         |
 | [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
-| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500            |
+| [Number of Workers](#number-of-workers)                                         | 100          | 500[^1]        |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
 | Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000        |
 | Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB         |
 
-<sup>1</sup> If you reach this limit, consider using [Workers for
-Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+[^1]: If you need a higher Worker limit, use [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 <Render file="limits_increase" product="workers" />
 
@@ -57,9 +56,9 @@ Request body size limits depend on your Cloudflare account plan, not your Worker
 | Free            | 100 MB                    |
 | Pro             | 100 MB                    |
 | Business        | 200 MB                    |
-| Enterprise      | 500 MB (by default)       |
+| Enterprise      | Up to 5 GB (self-serve)   |
 
-Enterprise customers can contact their account team or [Cloudflare Support](/support/contacting-cloudflare-support/) for a higher request body limit.
+Enterprise customers can adjust the maximum request body size up to 5 GB themselves from the zone's **Network** page (**Maximum Upload Size**). For limits above 5 GB, contact your account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 Cloudflare does not enforce response body size limits. [CDN cache limits](/cache/concepts/default-cache-behavior/) apply: 512 MB for Free, Pro, and Business plans, and 5 GB for Enterprise.
 
@@ -136,7 +135,8 @@ To resolve a memory limit error:
 
 1. **Stream request and response bodies** — Use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) or [`node:stream`](/workers/runtime-apis/nodejs/streams/) instead of buffering entire payloads in memory.
 2. **Avoid large in-memory objects** — Store large data in [KV](/kv/), [R2](/r2/), or [D1](/d1/) instead of holding it in Worker memory.
-3. **Profile memory usage** — Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to identify leaks and high-memory allocations.
+3. **Update Zod** — If your Worker uses Zod, use [version 4.5.0 or later](https://github.com/colinhacks/zod/releases/tag/v4.5.0). Earlier versions use substantially more memory per schema.
+4. **Profile memory usage** — Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to identify leaks and high-memory allocations.
 
 To view memory errors in the dashboard:
 
@@ -260,19 +260,21 @@ The runtime measures simultaneous open connections from the top-level request. W
 
 | Limit                    | Workers Free | Workers Paid |
 | ------------------------ | ------------ | ------------ |
-| After compression (gzip) | 3 MB         | 10 MB        |
-| Before compression       | 64 MB        | 64 MB        |
+| Worker size (uncompressed) | 64 MiB     | 64 MiB       |
 
-Larger Worker bundles can impact startup time. To check your compressed bundle size:
+There is no compressed size limit. Only the uncompressed bundle size counts.
+
+Larger Worker bundles can impact startup time. To check your Worker bundle size:
 
 ```sh
 wrangler deploy --outdir bundled/ --dry-run
 ```
 
 ```sh output
-# Output will resemble the below:
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
+
+The `Total Upload` value is your uncompressed bundle size. The `gzip` value is shown for reference but is not a limit.
 
 To reduce Worker size:
 
@@ -304,9 +306,7 @@ To reduce startup time, avoid expensive work in global scope. Move initializatio
 
 | Limit               | Workers Free | Workers Paid |
 | ------------------- | ------------ | ------------ |
-| Workers per account | 100          | 500          |
-
-If you need more than 500 Workers, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+| Workers per account | 100          | 500[^1]      |
 
 ---
 

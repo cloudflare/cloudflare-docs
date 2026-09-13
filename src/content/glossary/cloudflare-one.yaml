@@ -121,7 +121,7 @@ entries:
 
   - term: initial resolved IP
     general_definition: |-
-      a unique, ephemeral IP address that Gateway assigns to DNS queries when filtering network traffic by hostname. The IP is randomly selected from the `100.80.0.0/16` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range.
+      a unique, ephemeral IP address that Gateway assigns to DNS queries when filtering network traffic by hostname. The IP is randomly selected from an IPv4 range (`172.64.128.0/20` by default, configurable per account) or an IPv6 range (`2606:4700:0cf1:4000::/64`, not configurable).
 
   - term: JSON web token
     general_definition: |-

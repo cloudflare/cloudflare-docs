@@ -1,0 +1,37 @@
+---
+title: MCP protocol detection and AI Security dashboard
+description: Cloudflare Gateway now detects Model Context Protocol (MCP) traffic and surfaces MCP usage data in a new AI Security dashboard.
+products:
+  - gateway
+  - cloudflare-one
+date: 2026-08-12
+---
+
+Cloudflare Gateway now automatically detects [Model Context Protocol (MCP)](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) traffic flowing through your network. MCP is the standard protocol used by AI agents to connect to external tools and data sources. Gateway identifies MCP requests by inspecting protocol-specific headers and payload characteristics.
+
+### MCP policy selector
+
+A new **Is MCP** selector (`experimental.is_mcp`) is available in [HTTP policies](/cloudflare-one/traffic-policies/http-policies/#is-mcp). Use this selector to build Gateway rules that allow, block, or isolate MCP traffic.
+
+This selector is currently in beta and may change before general availability.
+
+For example, the following policy blocks MCP traffic that does not arrive through an approved [MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/):
+
+| Selector       | Operator | Value        | Logic | Action |
+| -------------- | -------- | ------------ | ----- | ------ |
+| Is MCP         | is       | _True_       | And   | Block  |
+| Traffic Source  | is not   | _MCP portal_ |       |        |
+
+![Example Gateway policy that blocks MCP traffic not arriving through an MCP portal](~/assets/images/changelog/gateway/gateway-block-unknown-mcp.png)
+
+### AI security report
+
+A new **AI security report** dashboard under **Insights & Logs > Dashboards** provides visibility into MCP usage across your organization. The dashboard includes:
+
+- Total MCP request volume, unique users, and unique MCP servers
+- A timeseries chart of unique MCP servers observed over time
+- A summary of Gateway policies that target MCP traffic
+
+![AI security report dashboard showing MCP detection data including total MCP requests, users, servers, and Gateway policies for MCP](~/assets/images/changelog/gateway/gateway-mcp-dashboard.png)
+
+For more information, refer to [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).

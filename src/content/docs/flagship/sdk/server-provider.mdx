@@ -53,7 +53,7 @@ export default {
 
 </TabItem> <TabItem label="With app ID">
 
-Use an app ID, account ID, and an API token when running outside of a Worker (for example, in Node.js). Generate an [API token](/fundamentals/api/get-started/create-token/) from your Cloudflare account with Flagship read permissions.
+Use an app ID, account ID, and an API token when running outside of a Worker (for example, in Node.js). Generate an [API token](/flagship/api-tokens/) from your Cloudflare account with Flagship Evaluate or Flagship App Evaluate permission.
 
 <TypeScriptExample>
 
@@ -83,18 +83,18 @@ const showNewCheckout = await client.getBooleanValue("new-checkout", false, {
 
 ## Configuration options
 
-| Option         | Type          | Required | Description                                                                                                                              |
-| -------------- | ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `binding`      | `Flagship`    | No       | The Flagship binding from `env.FLAGS`. Use this inside a Worker for best performance. The binding handles authentication automatically.  |
-| `appId`        | `string`      | No       | The Flagship app ID from the Cloudflare dashboard. Required when not using a binding.                                                    |
-| `accountId`    | `string`      | No       | Your Cloudflare account ID. Required when using `appId`.                                                                                 |
-| `authToken`    | `string`      | No       | A Cloudflare [API token](/fundamentals/api/get-started/create-token/) with Flagship read permissions. Required when not using a binding. |
-| `fetchOptions` | `RequestInit` | No       | Custom fetch options applied to HTTP requests.                                                                                           |
-| `timeout`      | `number`      | No       | Request timeout in milliseconds. Defaults to `5000`.                                                                                     |
-| `retries`      | `number`      | No       | Retry attempts on transient errors. Defaults to `1` and is capped at `10`.                                                               |
-| `retryDelay`   | `number`      | No       | Delay between retries in milliseconds. Defaults to `1000` and is capped at `30000`.                                                      |
-| `cacheTtl`     | `number`      | No       | Cache TTL in milliseconds. Enables response caching when greater than `0`.                                                               |
-| `cacheMaxSize` | `number`      | No       | Maximum cached entries. Defaults to `1000` when `cacheTtl` is set.                                                                       |
+| Option         | Type          | Required | Description                                                                                                                                    |
+| -------------- | ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `binding`      | `Flagship`    | No       | The Flagship binding from `env.FLAGS`. Use this inside a Worker for best performance. The binding handles authentication automatically.        |
+| `appId`        | `string`      | No       | The Flagship app ID from the Cloudflare dashboard. Required when not using a binding.                                                          |
+| `accountId`    | `string`      | No       | Your Cloudflare account ID. Required when using `appId`.                                                                                       |
+| `authToken`    | `string`      | No       | A Cloudflare [API token](/flagship/api-tokens/) with Flagship Evaluate or Flagship App Evaluate permission. Required when not using a binding. |
+| `fetchOptions` | `RequestInit` | No       | Custom fetch options applied to HTTP requests.                                                                                                 |
+| `timeout`      | `number`      | No       | Request timeout in milliseconds. Defaults to `5000`.                                                                                           |
+| `retries`      | `number`      | No       | Retry attempts on transient errors. Defaults to `1` and is capped at `10`.                                                                     |
+| `retryDelay`   | `number`      | No       | Delay between retries in milliseconds. Defaults to `1000` and is capped at `30000`.                                                            |
+| `cacheTtl`     | `number`      | No       | Cache TTL in milliseconds. Enables response caching when greater than `0`.                                                                     |
+| `cacheMaxSize` | `number`      | No       | Maximum cached entries. Defaults to `1000` when `cacheTtl` is set.                                                                             |
 
 Provide either `binding` or `appId`, `accountId`, and `authToken`.
 

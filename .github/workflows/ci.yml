@@ -7,12 +7,30 @@ on:
     paths-ignore:
       - ".flue/**"
       - ".github/workflows/flue-ci.yml"
+      - ".github/workflows/flue-deploy.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  typos:
+    name: Typos
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Check for typos
+        uses: crate-ci/typos@d43b6c087ac471e2ea7b8af622ff15f05c0c365b # v1.50.1
+        with:
+          files: src/content/docs src/content/partials src/content/changelog
+          config: ./_typos.toml
+
   pre-build:
     name: Pre Build
     runs-on: ubuntu-latest
@@ -130,14 +148,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Restore Astro assets from cache
+      - name: Restore Astro cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
-            node_modules/.astro/assets
-          key: astro-assets-${{ hashFiles('src/assets/**') }}
+            node_modules/.astro
+          key: astro-cache-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.event.pull_request.head.sha || github.sha }}
           restore-keys: |
-            astro-assets-
+            astro-cache-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            astro-cache-${{ runner.os }}-
 
       - name: Build
         id: build

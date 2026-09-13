@@ -12,6 +12,8 @@ import { DirectoryListing, Render } from "~/components";
 
 <Render file="dex/intro" product="cloudflare-one" />
 
+Enrolled devices automatically send device-state telemetry to DEX. Synthetic tests are optional checks that administrators create to monitor specific public or private endpoints.
+
 DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/) (CMB) for the EU (European Union). When CMB is configured for the EU, customer logs are stored exclusively in the EU region.
 
 <Render file="analytics/observability-tools-note" product="cloudflare-one" />
@@ -21,7 +23,7 @@ DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localizat
 If a user notifies that “the connection is not working” or “performance is slow,” DEX allows you to:
 
 - Use [device monitoring](/cloudflare-one/insights/dex/monitoring/) to check device health and endpoint connectivity.
-- Test network health and application responsiveness with [synthetic tests](/cloudflare-one/insights/dex/tests/) — automated connectivity checks that run periodically from user devices.
+- Optionally, test network health and application responsiveness with [synthetic tests](/cloudflare-one/insights/dex/tests/) that run periodically from user devices.
 - Identify whether problems originate from the device (such as [issues with the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/troubleshooting-guide/)), the network, or Cloudflare.
 
 ## Troubleshooting other Cloudflare One features
@@ -38,7 +40,7 @@ To start using DEX for device, network, and application monitoring:
 
 1. [Create a Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
 2. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and sign in to register your device to the organization.
-3. Create [tests](/cloudflare-one/insights/dex/tests/) to verify device connectivity to applications and networks.
+3. (Optional) Create [tests](/cloudflare-one/insights/dex/tests/) to verify device connectivity to applications and networks.
 4. [Monitor](/cloudflare-one/insights/dex/monitoring/) device and network health across your fleet using real-time and historical metrics.
 5. Use [diagnostics](/cloudflare-one/insights/dex/diagnostics/) to run speed tests and collect remote captures from user devices.
 6. Set up [notifications](/cloudflare-one/insights/dex/notifications/) to get alerts when degraded connectivity or application performance is detected.

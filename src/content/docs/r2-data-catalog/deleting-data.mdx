@@ -86,8 +86,8 @@ spark.sql("DROP NAMESPACE r2dc.namespace_name CASCADE")
 # This can be done with a loop over all tables in the namespace
 tables = spark.sql("SHOW TABLES IN r2dc.namespace_name").collect()
 for row in tables:
-	table_name = row['tableName']
-  spark.sql(f"DROP TABLE r2dc.namespace_name.{table_name} PURGE")
+    table_name = row['tableName']
+    spark.sql(f"DROP TABLE r2dc.namespace_name.{table_name} PURGE")
 spark.sql("DROP NAMESPACE r2dc.namespace_name CASCADE")
 ```
 

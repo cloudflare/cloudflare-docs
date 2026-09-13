@@ -19,11 +19,11 @@ import { defineConfig, type Plugin } from "vite";
 const fluePlugin = flue();
 const flueCustomizer = flueWorkerConfig();
 
-// When running evals, redirect the style-guide agent's import of
-// `makeReadRepoFileTool` to an eval-only mock that returns synthetic file
-// content instead of calling the GitHub API. This keeps production agent and
-// tool code free of eval-specific branches. Only the style-guide agent's
-// import is redirected — other agents that import from the same module
+// When running evals, redirect the style-guide and review-validator agents'
+// import of `makeReadRepoFileTool` to an eval-only mock that returns synthetic
+// file content instead of calling the GitHub API. This keeps production agent
+// and tool code free of eval-specific branches. Only these two agents'
+// imports are redirected — other agents that import from the same module
 // (code-review, dependabot) keep using the real implementation.
 const evalRepoFileMock: Plugin = {
 	name: "flue-eval-repo-file-mock",
@@ -31,10 +31,11 @@ const evalRepoFileMock: Plugin = {
 	resolveId(source, importer) {
 		if (process.env.DOCS_FLUE_AGENT_EVALS !== "1") return null;
 		if (!importer) return null;
-		// Only redirect the style-guide agent's import of github-repo-tools.
+		// Only redirect the style-guide and review-validator agents' imports.
 		if (
 			source.endsWith("/lib/github-repo-tools") &&
-			path.basename(importer) === "style-guide-file.ts"
+			(path.basename(importer) === "style-guide-file.ts" ||
+				path.basename(importer) === "review-validator.ts")
 		) {
 			return this.resolve("/evals/mocks/github-repo-tools", importer, {
 				skipSelf: true,

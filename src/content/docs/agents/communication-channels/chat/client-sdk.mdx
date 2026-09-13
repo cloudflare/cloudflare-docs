@@ -322,22 +322,25 @@ const result = await agent.stub.processData({ input: "test" });
 
 ### Streaming responses
 
-For methods that return `StreamingResponse`, handle chunks as they arrive:
+Mark a callable method as streaming. The framework passes a `StreamingResponse` as its first argument:
 
 <TypeScriptExample>
 
 ```ts
-// Agent-side:
+// Agent-side
+import { Agent, callable, type StreamingResponse } from "agents";
+
 class MyAgent extends Agent {
 	@callable({ streaming: true })
 	async generateText(stream: StreamingResponse, prompt: string) {
 		for await (const chunk of llm.stream(prompt)) {
-			await stream.write(chunk);
+			stream.send(chunk);
 		}
+		stream.end();
 	}
 }
 
-// Client-side:
+// Client-side
 await agent.call("generateText", [prompt], {
 	onChunk: (chunk) => {
 		// Called for each chunk

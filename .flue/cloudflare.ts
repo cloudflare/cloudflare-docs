@@ -69,6 +69,7 @@ import { runCodeReview } from "./lib/run-code-review";
 import { runStyleGuide } from "./lib/run-style-guide";
 import { runConventionsReview } from "./lib/run-conventions-review";
 import { reconcileStream } from "./lib/run-reconcile";
+import { validateStream } from "./lib/run-review-validation";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface ReviewOrchestratorParams {
@@ -538,16 +539,6 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 							"Conventions check could not complete — prior findings carried forward.",
 					};
 
-			// Persist the reconciled findings for the next incremental review.
-			await bucket.put(
-				`diffs/pr-${number}/review-${headSha}.json`,
-				JSON.stringify({
-					code: reconciledCode.active,
-					style: reconciledStyle.active,
-					conventions: reconciledConventions.active,
-				}),
-			);
-
 			return {
 				code: reconciledCode,
 				style: reconciledStyle,
@@ -557,6 +548,103 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 				conventionsOk: conventions.ok,
 			};
 		});
+
+		// ── 5b. Validate findings: suppress false positives before publishing ──
+		const validated = await step.do<ReconcileOutput>(
+			"validate-findings",
+			async () => {
+				const token = await getInstallationToken(ghEnv);
+
+				// Fetch changed files and PR template for validation context.
+				const [files, prTemplate] = await Promise.all([
+					getPullRequestFiles(token, number),
+					getRepoFileContent(
+						token,
+						".github/pull_request_template.md",
+						ctx.prMeta.base,
+					).catch(() => null),
+				]);
+				const changedFiles = files.map((f) => ({
+					filename: f.filename,
+					status: f.status,
+					additions: f.additions,
+					deletions: f.deletions,
+				}));
+
+				const pullRequest = {
+					number,
+					title: ctx.prMeta.title,
+					base: ctx.prMeta.base,
+					head: ctx.prMeta.head,
+				};
+
+				// Validate each stream's active findings concurrently. Degraded
+				// streams (ok:false) skip validation — their findings are carried
+				// forward from a previous review and may reference files that have
+				// since changed, so validating them at the current head SHA could
+				// produce incorrect suppressions.
+				const streams = [
+					{
+						key: "code",
+						result: reconciled.code,
+						ok: reconciled.codeOk,
+					},
+					{
+						key: "conventions",
+						result: reconciled.conventions,
+						ok: reconciled.conventionsOk,
+					},
+					{
+						key: "style",
+						result: reconciled.style,
+						ok: reconciled.styleOk,
+					},
+				] as const;
+
+				const validatedResults = await Promise.all(
+					streams.map(async (stream) => {
+						if (!stream.ok || stream.result.active.length === 0) {
+							return stream.result;
+						}
+						const validatedActive = await validateStream({
+							streamLabel: stream.key,
+							pullRequest,
+							headSha,
+							findings: stream.result.active,
+							prBody: ctx.prMeta.body,
+							prTemplate: prTemplate ?? "",
+							changedFiles,
+							instanceId: `${runId}:val:${stream.key}`,
+							runId,
+						});
+						return { ...stream.result, active: validatedActive };
+					}),
+				);
+
+				const validatedCode = validatedResults[0];
+				const validatedConventions = validatedResults[1];
+				const validatedStyle = validatedResults[2];
+
+				// Persist the validated findings for the next incremental review.
+				await bucket.put(
+					`diffs/pr-${number}/review-${headSha}.json`,
+					JSON.stringify({
+						code: validatedCode.active,
+						style: validatedStyle.active,
+						conventions: validatedConventions.active,
+					}),
+				);
+
+				return {
+					code: validatedCode,
+					style: validatedStyle,
+					conventions: validatedConventions,
+					codeOk: reconciled.codeOk,
+					styleOk: reconciled.styleOk,
+					conventionsOk: reconciled.conventionsOk,
+				};
+			},
+		);
 
 		// ── 6. Publish: head-guard, idempotency-guard, render, post/log ─────────
 		const published = await step.do("publish", async () => {
@@ -587,17 +675,17 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 				}
 			}
 
-			const bothFailed = !reconciled.codeOk && !reconciled.styleOk;
+			const bothFailed = !validated.codeOk && !validated.styleOk;
 			const commentBody = bothFailed
 				? renderFailureComment(headSha)
 				: renderComment(
 						{
-							code: reconciled.code,
-							style: reconciled.style,
-							conventions: reconciled.conventions,
-							codeFailed: !reconciled.codeOk,
-							styleFailed: !reconciled.styleOk,
-							conventionsFailed: !reconciled.conventionsOk,
+							code: validated.code,
+							style: validated.style,
+							conventions: validated.conventions,
+							codeFailed: !validated.codeOk,
+							styleFailed: !validated.styleOk,
+							conventionsFailed: !validated.conventionsOk,
 						},
 						headSha,
 						forceFullReview,
@@ -605,9 +693,9 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 					);
 
 			const totalActive =
-				reconciled.code.active.length +
-				reconciled.style.active.length +
-				reconciled.conventions.active.length;
+				validated.code.active.length +
+				validated.style.active.length +
+				validated.conventions.active.length;
 
 			if (reviewMode === "log") {
 				console.log({
@@ -656,8 +744,8 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 		if (
 			published.finalized &&
 			!bypassReviewLimit &&
-			reconciled.codeOk &&
-			reconciled.styleOk
+			validated.codeOk &&
+			validated.styleOk
 		) {
 			await step.do("mark-auto-review", async () => {
 				try {
@@ -679,9 +767,9 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 			finalized: published.finalized === true,
 			headSha,
 			diffMode: ctx.diffMode.type,
-			codeOk: reconciled.codeOk,
-			styleOk: reconciled.styleOk,
-			conventionsOk: reconciled.conventionsOk,
+			codeOk: validated.codeOk,
+			styleOk: validated.styleOk,
+			conventionsOk: validated.conventionsOk,
 		};
 	}
 }

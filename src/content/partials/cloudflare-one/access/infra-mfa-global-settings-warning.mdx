@@ -1,0 +1,9 @@
+---
+{}
+---
+
+**PIV and FIDO2 key authenticators only work with infrastructure applications.**
+
+Non-infrastructure applications: If PIV and FIDO2 keys are the only allowed MFA methods in your global settings, users cannot log in to non-infrastructure applications. To fix this, add at least one other authenticator type to your global settings (for example, TOTP or biometrics), or configure custom MFA settings for non-infrastructure applications.
+
+Infrastructure applications: If MFA is globally required but your global settings do not include the infrastructure authenticator you want to use, users cannot access infrastructure applications that require MFA. To fix this, add the authenticator to your global MFA settings, or disable MFA for the specific application or policy.

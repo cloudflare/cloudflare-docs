@@ -11,7 +11,7 @@ tags:
   - SAML
 ---
 
-import { Details, InlineBadge, Render } from "~/components";
+import { Badge, Details, InlineBadge, Render } from "~/components";
 
 :::note
 To use HTTP policies, install a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/).
@@ -460,6 +460,14 @@ The phase of an HTTP request. You can use this selector to specify whether to sc
 When combining this selector with the [Download and Upload File Types selectors](#download-and-upload-file-types), ensure you use the matching phase together. For example, use the `download` body phase with the Download File Types selector. If body phase and file type selector logic do not match, the policy may not filter traffic as intended.
 :::
 
+### Browser Isolation <Badge text="Beta" variant="caution"/>
+
+Whether the current session is running inside [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/). Use this selector to apply different policy behavior to isolated and non-isolated traffic.
+
+| UI name           | API example              |
+| ----------------- | ------------------------ |
+| Browser Isolation | `net.is_isolated == true` |
+
 ### Content Categories
 
 <Render
@@ -635,6 +643,21 @@ Use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention
 | ----------- | -------------------------------------------------------------------- |
 | DLP Profile | `any(dlp.profiles[*] in {\"a0cabf16-7491-4c9a-ac02-f64cabc66394\"})` |
 
+### Is MCP <Badge text="Beta" variant="caution"/>
+
+Whether the HTTP request was identified as [Model Context Protocol (MCP)](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) traffic. Gateway detects MCP traffic by inspecting protocol-specific headers and payload characteristics. Use this selector to build policies that allow, block, or isolate MCP traffic across your network.
+
+| UI name | API example                   |
+| ------- | ----------------------------- |
+| Is MCP  | `experimental.is_mcp == true` |
+
+For example, the following policy blocks MCP traffic that does not arrive through an [MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/):
+
+| Selector       | Operator | Value        | Logic | Action |
+| -------------- | -------- | ------------ | ----- | ------ |
+| Is MCP         | is       | _True_       | And   | Block  |
+| Traffic Source  | is not   | _MCP portal_ |       |        |
+
 ### Host
 
 <Render
@@ -658,6 +681,46 @@ The HTTP response status code received by the traffic.
 | UI name | API example                          |
 | ------- | ------------------------------------ |
 | URL     | `http.response.status_code == "200"` |
+
+### Package Ecosystem
+
+The package registry ecosystem detected from the HTTP request URL. For more information, refer to [Package registry security](/cloudflare-one/traffic-policies/http-policies/package-registry-security/).
+
+| UI name           | API example              |
+| ----------------- | ------------------------ |
+| Package Ecosystem | `pkg.ecosystem == "npm"` |
+
+### Package Name
+
+The name of the package detected from the HTTP request URL.
+
+| UI name      | API example             |
+| ------------ | ----------------------- |
+| Package Name | `pkg.name == "lodash"` |
+
+### Package Namespace
+
+The namespace of the package, when the ecosystem supports one. For npm, this is the scope. For Maven, this is the group ID. For Go, this is the module path.
+
+| UI name           | API example                  |
+| ----------------- | ---------------------------- |
+| Package Namespace | `pkg.namespace == "@babel"` |
+
+### Package URL (PURL)
+
+The [Package URL](https://github.com/package-url/purl-spec) derived from the detected package coordinates.
+
+| UI name     | API example                              |
+| ----------- | ---------------------------------------- |
+| Package URL | `pkg.purl == "pkg:npm/lodash@4.17.21"` |
+
+### Package Version
+
+The version of the package detected from the HTTP request URL. Supports exact match and ecosystem-aware version comparison operators. For more information on version comparison semantics, refer to [Package registry security](/cloudflare-one/traffic-policies/http-policies/package-registry-security/#version-comparison-operators).
+
+| UI name         | API example                 |
+| --------------- | --------------------------- |
+| Package Version | `pkg.version == "4.17.21"` |
 
 ### Proxy Endpoint
 
@@ -694,6 +757,16 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.src_ip" }}
 />
+
+### Traffic Source <Badge text="Beta" variant="caution"/>
+
+The method used to on-ramp traffic to Cloudflare. Use this selector to apply policies based on how traffic reaches Gateway.
+
+| UI name        | API example                          |
+| -------------- | ------------------------------------ |
+| Traffic Source  | `net.onramp.type == "device_client"` |
+
+Available values: `device_client` (Device client), `mesh` (Mesh), `cloudflare_wan` (Cloudflare WAN), `clientless_rdp` (Clientless RDP), `proxy_endpoint` (Proxy endpoint), `agentless_biso` (Clientless Browser Isolation), `mcp_portal` (MCP portal).
 
 ### URL
 

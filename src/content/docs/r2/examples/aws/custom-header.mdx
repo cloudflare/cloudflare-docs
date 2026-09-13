@@ -45,35 +45,36 @@ print(response)
 `aws-sdk-js-v3` allows the customization of request behavior through the use of its [middleware stack](https://aws.amazon.com/blogs/developer/middleware-stack-modular-aws-sdk-js/). This example adds a middleware to the client which adds a header to every `PutObject` request being made.
 
 ```ts
-import {
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { HttpRequest } from "@smithy/core/protocols";
 
 const client = new S3Client({
-  region: "auto", // Required by SDK but not used by R2
-  endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  // Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
-  credentials: {
-    accessKeyId: ACCESS_KEY_ID,
-    secretAccessKey: SECRET_ACCESS_KEY,
-  },
+	region: "auto", // Required by SDK but not used by R2
+	endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	credentials: {
+		accessKeyId: ACCESS_KEY_ID,
+		secretAccessKey: SECRET_ACCESS_KEY,
+	},
 });
 
 client.middlewareStack.add(
-  (next, context) => async (args) => {
-      const r = args.request as RequestInit
-      r.headers["cf-create-bucket-if-missing"] = "true";
+	(next) => async (args) => {
+		const request = args.request;
 
-      return await next(args)
-    },
-  { step: 'build', name: 'customHeaders' },
-)
+		if (HttpRequest.isInstance(request)) {
+			request.headers["cf-create-bucket-if-missing"] = "true";
+		}
+
+		return next(args);
+	},
+	{ step: "build", name: "customHeaders" },
+);
 
 const command = new PutObjectCommand({
-  Bucket: "my-bucket",
-  Key: "my_key",
-  Body: "my_data"
+	Bucket: "my-bucket",
+	Key: "my_key",
+	Body: "my_data",
 });
 
 const response = await client.send(command);
@@ -127,44 +128,39 @@ print(response)
 Here we again configure the header we would like to set by creating a middleware, but this time we add the middleware to the request itself instead of to the whole client.
 
 ```ts
-import {
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { HttpRequest } from "@smithy/core/protocols";
 
 const client = new S3Client({
-  region: "auto", // Required by SDK but not used by R2
-  // Provide your Cloudflare account ID
-  endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  // Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
-  credentials: {
-    accessKeyId: ACCESS_KEY_ID,
-    secretAccessKey: SECRET_ACCESS_KEY,
-  },
+	region: "auto", // Required by SDK but not used by R2
+	// Provide your Cloudflare account ID
+	endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+	// Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+	credentials: {
+		accessKeyId: ACCESS_KEY_ID,
+		secretAccessKey: SECRET_ACCESS_KEY,
+	},
 });
 
 const command = new PutObjectCommand({
-  Bucket: "my-bucket",
-  Key: "my_key",
-  Body: "my_data"
+	Bucket: "my-bucket",
+	Key: "my_key",
+	Body: "my_data",
 });
 
-const headers = { 'If-Match': '"29d911f495d1ba7cb3a4d7d15e63236a"' }
+const headers = { "If-Match": '"29d911f495d1ba7cb3a4d7d15e63236a"' };
 command.middlewareStack.add(
-  (next) =>
-    (args) => {
-      const r = args.request as RequestInit
+	(next) => (args) => {
+		const request = args.request;
 
-      Object.entries(headers).forEach(
-        ([k, v]: [key: string, value: string]): void => {
-          r.headers[k] = v
-        },
-      )
+		if (HttpRequest.isInstance(request)) {
+			Object.assign(request.headers, headers);
+		}
 
-      return next(args)
-    },
-  { step: 'build', name: 'customHeaders' },
-)
+		return next(args);
+	},
+	{ step: "build", name: "customHeaders" },
+);
 const response = await client.send(command);
 
 console.log(response);

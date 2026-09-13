@@ -39,6 +39,7 @@ const RAW_IMG_SHA = "eval-style-raw-img";
 const IMAGES_PATH_SHA = "eval-style-images-path";
 const CORRECT_IMG_SHA = "eval-style-correct-img";
 const FENCED_IMG_SHA = "eval-style-fenced-img";
+const REF_IMG_SHA = "eval-style-ref-img";
 
 describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a full URL for an internal link", async ({ run }) => {
@@ -260,6 +261,89 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 	});
 
+	it("flags a reference-style image link with an unresolved ~/ alias", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: REF_IMG_SHA,
+			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
+			addedLines: [
+				{
+					line: 8,
+					content: "![Precursor mode selector][1]",
+				},
+				{
+					line: 10,
+					content:
+						"[1]: ~/assets/images/cloudflare-challenges/precursor-rules.png",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const refFinding = (findings ?? []).filter(
+			(f) =>
+				f.rule?.toLowerCase().includes("image") ||
+				f.rule?.toLowerCase().includes("reference") ||
+				f.rule?.toLowerCase().includes("inline") ||
+				f.evidence?.includes("[1]"),
+		);
+		expect(refFinding.length).toBeGreaterThan(0);
+		expect(refFinding[0].severity).toBe("warning");
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("does not flag a reference-style image link inside a fenced code block", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/workers/example.mdx",
+			addedLines: [
+				{
+					line: 7,
+					content: "```mdx",
+				},
+				{
+					line: 8,
+					content: "![Example][1]",
+				},
+				{
+					line: 9,
+					content: "[1]: ~/assets/images/example/example.png",
+				},
+				{
+					line: 10,
+					content: "```",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const imgFindings = (findings ?? []).filter(
+			(f) =>
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("img") ||
+					f.rule?.toLowerCase().includes("image") ||
+					f.rule?.toLowerCase().includes("reference") ||
+					f.evidence?.includes("[1]")),
+		);
+		expect(imgFindings).toHaveLength(0);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
 	it("passes on correct Markdown image syntax with ~/assets/images/", async ({
 		run,
 	}) => {
@@ -301,12 +385,24 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 			filename: "src/content/docs/workers/example.mdx",
 			addedLines: [
 				{
-					line: 10,
+					line: 7,
 					content: "```html",
 				},
 				{
+					line: 8,
+					content: '<div class="gallery">',
+				},
+				{
+					line: 9,
+					content: '  <img src="/static/logo.png" alt="Company Logo" />',
+				},
+				{
+					line: 10,
+					content: '  <img src="/static/banner.png" alt="Banner" />',
+				},
+				{
 					line: 11,
-					content: '<img src="/static/logo.png" alt="Logo" />',
+					content: "</div>",
 				},
 				{
 					line: 12,
@@ -325,6 +421,75 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 				f.evidence?.includes("<img"),
 		);
 		expect(imgFindings).toHaveLength(0);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("flags a barrel-exported component imported via a deep path", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/workers/example.mdx",
+			addedLines: [
+				{
+					line: 3,
+					content: 'import Tabs from "~/components/ui/tabs/Tabs.astro";',
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const importFinding = (findings ?? []).find(
+			(f) =>
+				f.rule?.toLowerCase().includes("import") ||
+				f.rule?.toLowerCase().includes("component") ||
+				f.rule?.toLowerCase().includes("barrel") ||
+				f.evidence?.includes("~/components/ui/"),
+		);
+		expect(importFinding).toBeDefined();
+		expect(importFinding!.severity).toBe("warning");
+		expect(importFinding!.path).toBe("src/content/docs/workers/example.mdx");
+		expect(importFinding!.line).toBe(3);
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("does not flag a page-specific wrapper component imported via a deep path", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/ai/models/index.mdx",
+			addedLines: [
+				{
+					line: 15,
+					content:
+						'import BaseSchemaProperties from "~/components/BaseSchemaProperties.astro";',
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const importWarnings = (findings ?? []).filter(
+			(f) =>
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("import") ||
+					f.rule?.toLowerCase().includes("component") ||
+					f.rule?.toLowerCase().includes("barrel") ||
+					f.evidence?.includes("~/components/BaseSchemaProperties")),
+		);
+		expect(importWarnings).toHaveLength(0);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_style_guide",

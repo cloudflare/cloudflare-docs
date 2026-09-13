@@ -3,12 +3,11 @@
 
 ---
 
-Cloudflare adds CAA records automatically in the following situations:
+Cloudflare adds CAA records automatically when you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) and add any CAA records to your zone. These records make sure Cloudflare can still issue Universal certificates on your behalf.
 
-- When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) and add any CAA records to your zone.
-- When you have [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) and add any CAA records to your zone.
-
-These records make sure Cloudflare can still issue Universal certificates on your behalf.
+:::note
+This does not apply to [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/). Advanced certificates are dedicated (not shared), so Cloudflare does not add CAA records automatically for them.
+:::
 
 :::note[Subdomain zones caveat]
 CAA records are inherited. This means that, if you are using a [subdomain setup](/dns/zone-setups/subdomain-setup/) -  with `subdomain.example.com` on Cloudflare but `example.com` on a different DNS provider -, you should make sure that the parent domain (`example.com`) either has CAA records that allow [Cloudflare's partner CAs](/ssl/reference/certificate-authorities/), or has no CAA records at all.

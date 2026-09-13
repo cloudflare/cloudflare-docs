@@ -69,7 +69,7 @@ Limits on the number, length, and character set of `Cache-Tag` values are the sa
 
 ### Purge rate limits
 
-`ctx.cache.purge()` uses the same rate-limiting system as the zone purge API. Refer to [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits) for the rates that apply to your account.
+`ctx.cache.purge()` uses the same rate-limiting system as the zone purge API. However, because Workers Caching is associated with the Worker rather than the zone, Workers Caching always uses the **Free tier limits** described in [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits), regardless of your account or zone plan.
 
 ## Relationship to other caches
 

@@ -13,9 +13,11 @@ head:
     content: Managed Rules
 ---
 
-import { FeatureTable, Render, RuleID } from "~/components";
+import { Render, RuleID } from "~/components";
 
 <Render file="waf-managed-rules-intro" product="waf" />
+
+[Attack Signature Detection](/waf/detections/attack-signature-detection/#compare-attack-signature-detection-and-managed-rules) uses the same signatures as Cloudflare Managed Rules. It records match metadata without applying an action by itself.
 
 ## Available managed rulesets
 
@@ -35,7 +37,14 @@ The following managed rulesets run in a response phase:
 
 The managed rulesets you can deploy depend on your Cloudflare plan.
 
-<FeatureTable id="security.waf_a_managed_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Free Managed Ruleset | Yes | Yes | Yes | Yes |
+| Cloudflare Managed Ruleset | No | Yes | Yes | Yes |
+| Cloudflare OWASP Core Ruleset | No | Yes | Yes | Yes |
+| Cloudflare Exposed Credentials Check (deprecated) | No | Yes | Yes | Yes |
+| Cloudflare Sensitive Data Detection | No | No | No | Yes |
 
 <Render
 	file="managed-ruleset-config-options"
@@ -48,7 +57,7 @@ The managed rulesets you can deploy depend on your Cloudflare plan.
 
 ## Interaction with other app security features
 
-<Render file="app-security-interoperability" product="waf" />
+<Render file="app-security-interoperability" product="waf" params={{ botsFeatureName: "Super Bot Fight Mode" }} />
 
 ## Important remarks
 
@@ -81,4 +90,3 @@ This means a rule with a terminal action (such as Block or Managed Challenge) in
 ### WAF exceptions
 
 WAF exceptions (skip rules) are rules with a `skip` action deployed to the `http_request_firewall_managed` phase entry-point ruleset. They are evaluated in list order within the entry-point ruleset — a skip rule only bypasses `execute` rules listed after it. Place exceptions before the managed ruleset execute rules they are intended to skip. For more information, refer to [WAF exceptions](/waf/managed-rules/waf-exceptions/).
-

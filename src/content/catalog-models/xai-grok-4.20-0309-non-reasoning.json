@@ -7431,7 +7431,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://x.ai/",
 	"terms": "https://x.ai/legal/terms-of-service",
@@ -7443,6 +7443,7 @@
 	"request_formats": [
 		"chat-completions"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-22 17:54:01",
 	"schema": {

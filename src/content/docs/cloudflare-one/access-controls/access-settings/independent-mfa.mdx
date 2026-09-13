@@ -24,6 +24,7 @@ Because you can [configure MFA at the application and policy level](/cloudflare-
 | Security key                       | Hardware security keys that support the [WebAuthn](https://www.w3.org/TR/webauthn-2/) standard. Users can enroll multiple security keys.                                                                                                                                                                    |
 | Biometrics                         | Built-in device authenticators that use [WebAuthn](https://www.w3.org/TR/webauthn-2/), including Apple Touch ID, Apple Face ID, and Windows Hello. Users can enroll multiple biometrics.                                                                                                                    |
 | Personal Identity Verification (PIV) key (infrastructure apps only) | YubiKey PIV keys used for public key authentication during SSH connections. Requires YubiKey firmware 4.3 or later. This method is only available for [infrastructure applications](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/). Users can enroll multiple PIV keys. |
+| FIDO2 key (infrastructure apps only) | YubiKey FIDO2 keys used for public key authentication during SSH connections. This method is only available for [infrastructure applications](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) and is separate from the browser-based WebAuthn security key method. |
 
 ## Turn on independent MFA
 
@@ -73,6 +74,9 @@ Before you can [enforce independent MFA on applications and policies](/cloudflar
    - `biometrics` — Biometrics (Touch ID, Face ID, Windows Hello).
    - `security_key` — Security keys (hardware keys that support WebAuthn).
    - `piv_key` — PIV keys (YubiKeys).
+   - `ssh_fido2_key` — FIDO2 keys for SSH connections to infrastructure applications.
+
+   `piv_key` and `ssh_fido2_key` apply only to SSH connections to infrastructure applications. If allowed at the organization level, these MFA methods will only apply to infrastructure applications. They will not be available for other application types.
 
    Set `session_duration` to a duration string (for example, `30m`, `1h`, `24h`). To require MFA on every access, use `0m`.
 
@@ -100,14 +104,24 @@ If you plan to use PIV keys for [MFA for infrastructure applications](/cloudflar
 4. Select **Save**.
 
 :::note
-<Render file="access/piv-key-global-settings-warning" product="cloudflare-one" />
+
+<Render
+	file="access/infra-mfa-global-settings-warning"
+	product="cloudflare-one"
+/>
 :::
 
 ## Restrict authenticators by AAGUID
 
 An [AAGUID](https://fidoalliance.org/specs/fido-v2.0-id-20180227/fido-registry-v2.0-id-20180227.html#authenticator-attestation-guid) (Authenticator Attestation GUID) is a 128-bit identifier that indicates the make and model of a [WebAuthn](https://www.w3.org/TR/webauthn-2/) authenticator. By restricting enrollment to a specific set of AAGUIDs, you can require that users only enroll approved hardware, such as FIPS-validated security keys or company-issued devices.
 
-AAGUID restrictions apply at enrollment time only. Access verifies the AAGUID when a user registers an authenticator, not when they authenticate. As a result, AAGUID restrictions are configured at the organization level.
+Access checks the AAGUID when a user registers an authenticator. Because enrollment applies to the entire organization, you configure AAGUID restrictions at the organization level.
+
+For FIDO2 keys, Access also checks the AAGUID each time the user connects to an infrastructure application. If you remove a FIDO2 key from the allowed list, that key stops working even if the user enrolled it earlier.
+
+PIV keys do not present an AAGUID, so these restrictions do not apply to them.
+
+When `required_aaguids` is unset, Access does not enforce AAGUID restrictions.
 
 :::caution
 Some authenticators do not send an AAGUID during WebAuthn registration, such as YubiKey 4 and earlier models using U2F (CTAP1). Users cannot enroll these authenticators when AAGUID restrictions are turned on. Before turning on AAGUID restrictions, confirm that your required authenticators are in the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata/).
@@ -171,7 +185,7 @@ You can look up AAGUIDs for common authenticators in the [FIDO Alliance Metadata
 3. Select an existing [AAGUID list](#1-create-an-aaguid-list).
 4. Select **Save**.
 
-After you save, only authenticators whose AAGUIDs appear in the list can be enrolled. Users with previously enrolled authenticators outside the list can continue to use them until they are [deleted by an administrator](#delete-a-user-authenticator).
+After you save, only authenticators whose AAGUIDs appear in the list can be enrolled. Users with previously enrolled security keys or biometrics outside the list can continue to use them until they are [deleted by an administrator](#delete-a-user-authenticator). A previously enrolled FIDO2 key outside the list stops working on the next connection. To remove the restriction, unset the AAGUID list.
 
 </TabItem>
 <TabItem label="API">
@@ -376,7 +390,50 @@ To enroll an authenticator:
         PIV key enrollment requires additional client-side setup and is only used for [MFA with infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications). For full instructions, refer to [Enroll a PIV key for infrastructure apps](#enroll-a-piv-key-for-infrastructure-apps).
         </Details>
 
+        <Details header="FIDO2 key (infrastructure applications only)">
+        FIDO2 key enrollment requires additional client-side setup and is only used for [MFA with infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications). This method is separate from browser-based security key enrollment. For full instructions, refer to [Enroll a FIDO2 key for infrastructure apps](#enroll-a-fido2-key-for-infrastructure-apps).
+        </Details>
+
 You can now use these authenticators to log in to your organization's applications.
+
+### Enroll a FIDO2 key for infrastructure apps
+
+Before users can enroll, turn on the **FIDO2 key** authenticator in your organization's [global MFA settings](#turn-on-independent-mfa).
+
+The App Launcher generates the enrollment command for your account. Do not construct the enrollment command manually.
+
+:::note
+On macOS, install OpenSSH with Homebrew before you run the command. The `ssh-keygen` included with macOS does not support FIDO2 keys. On Linux, use an OpenSSH build that includes `libfido2` support.
+:::
+
+1. Go to your organization's App Launcher at `<your-team-name>.cloudflareaccess.com`.
+2. Log in with your identity provider or a one-time PIN (OTP).
+3. Go to **Account** > **MFA devices** > **Add an MFA device** > **FIDO2 key**.
+4. Select the tab for your operating system.
+5. Copy the enrollment command shown in the App Launcher.
+6. Run the command in a local terminal on the device you use for SSH.
+7. Follow the prompts, then copy the JSON output.
+8. Return to the App Launcher and paste the JSON into the enrollment field.
+9. Complete the enrollment.
+
+#### Configure your SSH client for a FIDO2 key
+
+The command creates the identity at `~/.ssh/id_ed25519_sk_cf`.
+
+Add the following configuration to your `~/.ssh/config` file:
+
+```txt
+Host *
+  IdentityFile ~/.ssh/id_ed25519_sk_cf
+```
+
+Alternatively, supply the identity when you connect:
+
+```sh
+ssh -i ~/.ssh/id_ed25519_sk_cf <username>@<target IP>
+```
+
+For more information on how OpenSSH uses FIDO2 hardware keys, refer to Yubico's [Securing SSH with FIDO2](https://developers.yubico.com/SSH/Securing_SSH_with_FIDO2.html).
 
 ### Enroll a PIV key for infrastructure apps
 

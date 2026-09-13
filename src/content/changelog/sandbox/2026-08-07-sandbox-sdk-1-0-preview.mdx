@@ -1,0 +1,41 @@
+---
+title: Sandbox SDK 1.0 preview on @next
+description: Preview a thinner Sandbox SDK on Cloudflare Containers — one process handle API, no sessions or transport selection, interpreter as an extension.
+products:
+  - sandbox
+date: 2026-08-07
+---
+
+import { PackageManagers } from "~/components";
+
+**Sandbox SDK 1.0** is available to preview under the npm `@next` tag. For existing applications, the current stable package remains published on the 0.12.x line.
+
+Sandbox SDK first shipped to provide a rich library for running untrusted and agent-driven work on [Cloudflare Containers](/containers/). Since then, both Sandbox and Containers have matured. This preview is a thinner SDK built on a richer Cloudflare Containers foundation.
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+## What this preview is
+
+- **A single execution interface** — `sandbox.exec()` takes an argument list, returns when the process **starts**, and gives you a handle for output, logs, waits, and signals. Both short commands and long-running services use the same API.
+- **Removed session execution** — the SDK no longer maintains shell state between executions. Each launch is independent. Pass `cwd` and `env` when you need them, or put multi-step shell syntax in one explicit shell command.
+- **RPC as the only transport** — the SDK talks to the container exclusively over RPC. Remove `SANDBOX_TRANSPORT`, `transport` on `getSandbox()`, and `setTransport()`.
+- **Improved PTY and terminal interface** — interactive PTYs use `createTerminal` / `connect`, not the older session-shaped helpers.
+- **Code interpreter as an extension** — configure the code interpreter on your `Sandbox` subclass so you only ship what you need.
+
+Start new projects on `@next`. Migrate existing apps when you can so you are ready when 1.0 becomes stable. Deploy the Worker package and container image from the **same** `@next` line.
+
+Coding agents: install [Cloudflare Skills](https://github.com/cloudflare/skills) ([Agent setup](/agent-setup/)). Use **`sandbox-next`** for `@next` (recommended for new projects), **`sandbox-stable`** for the current stable package, and **`sandbox-migrate-to-next`** when you are ready to port. Stable-package deprecated-API cleanup is in the [2026 deprecation guide](/sandbox/guides/2026-deprecation/).
+
+The main [Sandbox documentation](/sandbox/) still describes today's stable package. Preview docs:
+
+- [1.0 preview](/sandbox/1-0-preview/)
+- [Get started](/sandbox/1-0-preview/get-started/)
+- [Migrate](/sandbox/1-0-preview/migrate/)
+- [Processes](/sandbox/1-0-preview/processes/) · [Terminals](/sandbox/1-0-preview/terminals/) · [Errors](/sandbox/1-0-preview/errors/)
+- [API reference](/sandbox/1-0-preview/api/)
+
+The self-deployed Sandbox bridge is not currently part of this preview. We are working on bringing it in line with the latest code. Until then, use the [stable bridge](/sandbox/bridge/) with the matching stable package and container image.
+
+## Timeline for 1.0
+
+Further Cloudflare Containers features will let us keep reducing the size of the Sandbox SDK. We aim to ship Sandbox SDK 1.0 once those are in. In the meantime we continue to support and maintain the 1.0 preview (`@next`) alongside the current stable release.

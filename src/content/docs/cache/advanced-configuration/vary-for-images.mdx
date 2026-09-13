@@ -7,7 +7,7 @@ products:
 
 ---
 
-import { Details, FeatureTable, APIRequest } from "~/components"
+import { Details, APIRequest } from "~/components"
 
 The `Vary` HTTP response header tells Cloudflare that an origin can serve different versions of the same resource depending on the request headers. For images, this allows your origin to serve modern formats like WebP or AVIF to browsers that support them, while continuing to serve JPEG or PNG to others.
 
@@ -19,7 +19,9 @@ Vary for images is available for Pro, Business, and Enterprise customers.
 
 ## Availability
 
-<FeatureTable id="cache.vary_for_images" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | Yes | Yes | Yes |
 
 ## File extensions
 

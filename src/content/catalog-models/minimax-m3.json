@@ -342,6 +342,7 @@
 		"chat-completions",
 		"anthropic-messages"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-06-01 20:11:36",
 	"schema": {

@@ -2,12 +2,15 @@
 	"model_id": "bytedance/seedance-2.5",
 	"provider_id": "bytedance",
 	"name": "Seedance 2.5",
-	"description": "ByteDance's audio-video generation model for creating 30-second videos with reference control and editing capabilities. It supports extended storytelling, audio and visual editing, white-model control, and green-screen editing.",
+	"description": "ByteDance's next-generation video model with a unified multimodal reference-to-video architecture. Generates video from text, up to 30 reference images, 10 reference videos, and 10 reference audio clips \u2014 including audio-only input with no image or video required. Supports first/last-frame image-to-video, video editing, video extension, intelligent duration (including automatic selection), and adaptive aspect ratio.",
 	"task": "Text-to-Video",
 	"tags": [
 		"Video Generation",
+		"Image-to-Video",
+		"Reference Images",
+		"Reference Videos",
+		"Reference Audio",
 		"Audio Generation",
-		"Video Editing",
 		"Multimodal"
 	],
 	"context_length": null,
@@ -15,22 +18,143 @@
 	"schema_version": "1.0.0",
 	"examples": [
 		{
-			"name": "Text to Video",
-			"description": "Generate an audio-video clip from a text prompt.",
+			"name": "Simple Video",
+			"description": "Basic text-to-video with default settings (adaptive aspect ratio, 720p)",
 			"input": {
-				"prompt": "A rain-soaked city street at night. A cyclist passes glowing storefronts as distant traffic and rainfall create a quiet urban soundtrack."
+				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
+				"duration": 5,
+				"generate_audio": false,
+				"resolution": "720p"
 			},
-			"output": {},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/simple-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/simple-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.5',\n  {\n    prompt:\n      'A rain-soaked city street at night. A cyclist passes glowing storefronts as distant traffic and rainfall create a quiet urban soundtrack.',\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.5',\n  {\n    prompt: 'A golden retriever running through a field of sunflowers on a sunny day',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.5\",\n  \"input\": {\n    \"prompt\": \"A rain-soaked city street at night. A cyclist passes glowing storefronts as distant traffic and rainfall create a quiet urban soundtrack.\"\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.5\",\n  \"input\": {\n    \"prompt\": \"A golden retriever running through a field of sunflowers on a sunny day\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Cinematic Wide Shot",
+			"description": "Longer cinematic video with an explicit 16:9 aspect ratio",
+			"input": {
+				"prompt": "A dramatic drone shot flying through misty mountain peaks at sunrise, cinematic lighting with volumetric fog",
+				"aspect_ratio": "16:9",
+				"duration": 12,
+				"generate_audio": false,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/cinematic-wide-shot.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/cinematic-wide-shot.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.5',\n  {\n    prompt:\n      'A dramatic drone shot flying through misty mountain peaks at sunrise, cinematic lighting with volumetric fog',\n    aspect_ratio: '16:9',\n    duration: 12,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.5\",\n  \"input\": {\n    \"prompt\": \"A dramatic drone shot flying through misty mountain peaks at sunrise, cinematic lighting with volumetric fog\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 12,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "First and Last Frame",
+			"description": "Generate a video that transitions between a given first-frame and last-frame image",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"last_frame_image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic2.jpg",
+				"prompt": "The character slowly turns to face the camera and smiles",
+				"duration": 5,
+				"generate_audio": false,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/first-and-last-frame.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/first-and-last-frame.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.5',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    last_frame_image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic2.jpg',\n    prompt: 'The character slowly turns to face the camera and smiles',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.5\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"last_frame_image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic2.jpg\",\n    \"prompt\": \"The character slowly turns to face the camera and smiles\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Portrait Video with MOV Output",
+			"description": "Vertical video for social media, encoded as mov for higher color fidelity",
+			"input": {
+				"prompt": "Abstract ink drops spreading through water, vivid colors mixing in slow motion",
+				"aspect_ratio": "9:16",
+				"duration": 5,
+				"generate_audio": false,
+				"resolution": "720p",
+				"output_format": "mov"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/portrait-video-with-mov-output.mov"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/portrait-video-with-mov-output.mov"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.5',\n  {\n    prompt: 'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    aspect_ratio: '9:16',\n    duration: 5,\n    resolution: '720p',\n    output_format: 'mov',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.5\",\n  \"input\": {\n    \"prompt\": \"Abstract ink drops spreading through water, vivid colors mixing in slow motion\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\",\n    \"output_format\": \"mov\"\n  }\n}'"
 				}
 			]
 		}
@@ -40,16 +164,169 @@
 	"supports_async": false,
 	"zdr": false,
 	"zdr_comment": null,
-	"external_info": "https://seed.bytedance.com/en/seedance2_5",
+	"external_info": null,
 	"terms": null,
 	"cover_image_url": null,
 	"metadata": {
+		"Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 21:9, adaptive",
 		"Max Duration": "30 seconds",
-		"Extensions": "Up to 2",
-		"Audio-Video Generation": "Yes",
-		"Reference Control": "Yes",
-		"Editing": "Audio, visual, white-model, and green-screen"
+		"Max Reference Images": "30",
+		"Max Reference Videos": "10",
+		"Max Reference Audio Clips": "10",
+		"Native Audio": "Yes",
+		"Resolutions": "480p, 720p"
 	},
 	"request_formats": null,
-	"banner": null
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-08-07 19:10:41",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate. Optional when at least one reference image, video, or audio clip is provided (Seedance 2.5 supports audio-only input).",
+					"type": "string",
+					"maxLength": 2000
+				},
+				"image": {
+					"description": "First-frame reference image (HTTP(S) URL or base64 data URI) for image-to-video",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Last-frame reference image (HTTP(S) URL or base64 data URI). Requires a first-frame image to also be given.",
+					"type": "string"
+				},
+				"reference_images": {
+					"description": "Reference images (0-30, HTTP(S) URLs or base64 data URIs) to guide multimodal video generation, editing, or extension.",
+					"maxItems": 30,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"reference_videos": {
+					"description": "Reference videos (0-10, HTTP(S) URLs or base64 data URIs) for style/motion guidance, video editing, or video extension. Total duration of all reference videos must not exceed 30 seconds.",
+					"maxItems": 10,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"reference_audios": {
+					"description": "Reference audio clips (0-10, HTTP(S) URLs or base64 data:audio/... URIs). Supports audio-only input (no image or video required). Total duration of all audio clips must not exceed 30 seconds.",
+					"maxItems": 10,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"duration": {
+					"description": "Generated video duration in seconds. Supported range: 4-30, or -1 for automatic selection. For multimodal reference-to-video requests that edit an input reference video, only -1 is supported and the output duration is kept close to the input.",
+					"default": 5,
+					"anyOf": [
+						{
+							"type": "number",
+							"const": -1
+						},
+						{
+							"type": "integer",
+							"minimum": 4,
+							"maximum": 30
+						}
+					]
+				},
+				"resolution": {
+					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p"
+					]
+				},
+				"aspect_ratio": {
+					"description": "Video aspect ratio. \"adaptive\" automatically matches the aspect ratio of the provided reference image or video when applicable. First/last-frame generation always uses \"adaptive\"; any supplied value is overridden.",
+					"default": "adaptive",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"4:3",
+						"1:1",
+						"3:4",
+						"9:16",
+						"21:9",
+						"adaptive"
+					]
+				},
+				"fps": {
+					"description": "Frame rate (frames per second)",
+					"default": 24,
+					"type": "number",
+					"const": 24
+				},
+				"camera_fixed": {
+					"description": "Whether to fix camera position. Not currently supported by the provider; has no effect.",
+					"default": false,
+					"type": "boolean"
+				},
+				"generate_audio": {
+					"description": "Whether to generate audio with the video",
+					"type": "boolean"
+				},
+				"watermark": {
+					"description": "Whether to add a watermark to the output video",
+					"default": false,
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed. Passing this does not error, but reproducibility is not guaranteed and is not documented by the provider.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"output_format": {
+					"description": "Output video container format. \"mp4\" offers the best compatibility and smaller file size; \"mov\" preserves higher color fidelity for professional post-production workflows at the cost of a larger file.",
+					"default": "mp4",
+					"type": "string",
+					"enum": [
+						"mp4",
+						"mov"
+					]
+				},
+				"use_virtual_avatar": {
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
+					"default": false,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"duration",
+				"resolution",
+				"aspect_ratio",
+				"fps",
+				"camera_fixed",
+				"watermark",
+				"output_format",
+				"use_virtual_avatar"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
 }

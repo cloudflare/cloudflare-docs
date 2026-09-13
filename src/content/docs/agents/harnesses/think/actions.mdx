@@ -242,7 +242,7 @@ A built-in `ReplyAttachment` covers `email_draft`, `card`, and `voice_note`; any
 | Field             | Type                                                         | Required | Default       | Description                                                                             |
 | ----------------- | ------------------------------------------------------------ | -------- | ------------- | --------------------------------------------------------------------------------------- |
 | `description`     | `string`                                                     | Yes      | —             | Tool description shown to the model.                                                    |
-| `inputSchema`     | `FlexibleSchema` (Zod or AI SDK `jsonSchema`)                | Yes      | —             | Validates and types the `execute` input.                                                |
+| `inputSchema`     | `FlexibleSchema` (Zod, Valibot or AI SDK `jsonSchema`)       | Yes      | —             | Validates and types the `execute` input.                                                |
 | `execute`         | `(input, ctx) => Output \| Promise<Output>`                  | Yes      | —             | The action body. Receives validated input and an `ActionContext`.                       |
 | `name`            | `string`                                                     | No       | map key       | Overrides the tool name.                                                                |
 | `idempotencyKey`  | `string \| ({ input, ctx }) => string`                       | No       | per tool call | Stable key for ledger replay. Use a domain identifier.                                  |

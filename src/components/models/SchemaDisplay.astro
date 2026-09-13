@@ -171,6 +171,7 @@ function collectRows(
 		let isNullable = false;
 		let nullableType: string | undefined;
 		let nullableChildDescription: string | undefined;
+		let nullableChildEnumValues: unknown[] | undefined;
 		if ((hasOneOf || hasAnyOf) && reg.children?.length === 2) {
 			const childTypes = reg.children.map((c) =>
 				String((c as RegularNode).primaryType ?? ""),
@@ -183,6 +184,10 @@ function collectRows(
 				nullableType = childTypes[nonNullIndex];
 				nullableChildDescription = nonNullChild.annotations?.description as
 					string | undefined;
+				nullableChildEnumValues =
+					(nonNullChild.validations?.enum as unknown[]) ??
+					((nonNullChild.fragment as Record<string, unknown>)
+						?.enum as unknown[]);
 				isNullable = true;
 			}
 		}
@@ -207,7 +212,8 @@ function collectRows(
 		// Check both validations and fragment for enum (different schema parsers put it in different places)
 		const enumValues = (
 			(reg.validations?.enum as unknown[]) ??
-			((reg.fragment as Record<string, unknown>)?.enum as unknown[])
+			((reg.fragment as Record<string, unknown>)?.enum as unknown[]) ??
+			nullableChildEnumValues
 		)?.map(String);
 
 		// Collect all metadata from fragment and validations

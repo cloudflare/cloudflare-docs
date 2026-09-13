@@ -14,25 +14,25 @@ This page details which R2 location or jurisdiction is recommended based on your
 You have the following inputs to control the physical location where objects in your R2 buckets are stored (for more information refer to [data location](/r2/reference/data-location/)):
 
 - [**Location hints**](/r2/reference/data-location/#location-hints): Specify a geophrical area (for example, Asia-Pacific or Western Europe). R2 makes a best effort to place your bucket in or near that location to optimize performance. You can confirm bucket placement after creation by navigating to the **Settings** tab of your bucket and referring to the **Bucket details** section.
-- [**Jurisdictions**](/r2/reference/data-location/#jurisdictional-restrictions): Enforce that data is both stored and processed within a specific jurisdiction (for example, the EU or FedRAMP environment). Use jurisdictions when you need to ensure data is stored and processed within a jurisdiction to meet data residency requirements, including local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+- [**Jurisdictions**](/r2/reference/data-location/#jurisdictional-restrictions): Enforce that data is both stored and processed within a specific jurisdiction (for example, US, EU, or FedRAMP environments). Use jurisdictions when you need to ensure data is stored and processed within a jurisdiction to meet data residency requirements, including local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
 ## North and South America (Commercial)
 
-| Snowflake region name        | Cloud | Region ID        | Recommended R2 location |
-| ---------------------------- | ----- | ---------------- | ----------------------- |
-| Canada (Central)             | AWS   | `ca-central-1`   | Location hint: `enam`   |
-| South America (Sao Paulo)    | AWS   | `sa-east-1`      | Location hint: `enam`   |
-| US West (Oregon)             | AWS   | `us-west-2`      | Location hint: `wnam`   |
-| US East (Ohio)               | AWS   | `us-east-2`      | Location hint: `enam`   |
-| US East (N. Virginia)        | AWS   | `us-east-1`      | Location hint: `enam`   |
-| US Central1 (Iowa)           | GCP   | `us-central1`    | Location hint: `enam`   |
-| US East4 (N. Virginia)       | GCP   | `us-east4`       | Location hint: `enam`   |
-| Canada Central (Toronto)     | Azure | `canadacentral`  | Location hint: `enam`   |
-| Central US (Iowa)            | Azure | `centralus`      | Location hint: `enam`   |
-| East US 2 (Virginia)         | Azure | `eastus2`        | Location hint: `enam`   |
-| Mexico Central (Mexico City) | Azure | `mexicocentral`  | Location hint: `wnam`   |
-| South Central US (Texas)     | Azure | `southcentralus` | Location hint: `enam`   |
-| West US 2 (Washington)       | Azure | `westus2`        | Location hint: `wnam`   |
+| Snowflake region name        | Cloud | Region ID        | Recommended R2 location               |
+| ---------------------------- | ----- | ---------------- | ------------------------------------- |
+| Canada (Central)             | AWS   | `ca-central-1`   | Location hint: `enam`                 |
+| South America (Sao Paulo)    | AWS   | `sa-east-1`      | Location hint: `enam`                 |
+| US West (Oregon)             | AWS   | `us-west-2`      | Jurisdiction: `us` or hint: `wnam`    |
+| US East (Ohio)               | AWS   | `us-east-2`      | Jurisdiction: `us` or hint: `enam`    |
+| US East (N. Virginia)        | AWS   | `us-east-1`      | Jurisdiction: `us` or hint: `enam`    |
+| US Central1 (Iowa)           | GCP   | `us-central1`    | Jurisdiction: `us` or hint: `enam`    |
+| US East4 (N. Virginia)       | GCP   | `us-east4`       | Jurisdiction: `us` or hint: `enam`    |
+| Canada Central (Toronto)     | Azure | `canadacentral`  | Location hint: `enam`                 |
+| Central US (Iowa)            | Azure | `centralus`      | Jurisdiction: `us` or hint: `enam`    |
+| East US 2 (Virginia)         | Azure | `eastus2`        | Jurisdiction: `us` or hint: `enam`    |
+| Mexico Central (Mexico City) | Azure | `mexicocentral`  | Location hint: `wnam`                 |
+| South Central US (Texas)     | Azure | `southcentralus` | Jurisdiction: `us` or hint: `enam`    |
+| West US 2 (Washington)       | Azure | `westus2`        | Jurisdiction: `us` or hint: `wnam`    |
 
 ## U.S. Government
 

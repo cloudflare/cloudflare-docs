@@ -75,13 +75,11 @@ To complete the following procedure, you will need to:
 
 ## Firewall configuration
 
-<Render
-	file="tunnel/deployment-guides/deploy-aws-firewall"
-	product="cloudflare-one"
-	params={{
-		tunnelFirewallURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation",
-		hostnameAnchor: "#3-connect-using-a-public-hostname",
-		privateIpAnchor: "#4-connect-using-a-private-ip",
-	}}
-/>
+To secure your AWS instance, you can configure your [Security Group rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html) to deny all inbound traffic and allow only outbound traffic to the <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation">Cloudflare Tunnel IP addresses</a>. All Security Group rules are Allow rules; traffic that does not match a rule is blocked. Therefore, you can delete all inbound rules and leave only the relevant outbound rules.
+
+:::note
+
+If you delete the inbound rule for port `22`, you will be unable to SSH back into the instance.
+:::
+
+After configuring your Security Group rules, verify that you can still access the service through Cloudflare Tunnel via its <a href="#3-connect-using-a-public-hostname">public hostname</a> or <a href="#4-connect-using-a-private-ip">private IP</a>. The service should no longer be accessible from outside Cloudflare Tunnel -- for example, if you go to `http://ec2-44-202-59-16.compute-1.amazonaws.com` the test page should no longer load.
