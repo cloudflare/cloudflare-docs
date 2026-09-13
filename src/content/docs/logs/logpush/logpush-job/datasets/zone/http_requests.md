@@ -259,7 +259,7 @@ The smoothed average of TCP round-trip time (SRTT). For the initial request on a
 
 Type: `string`
 
-TLS key exchange group between the client and Cloudflare (for example, 'X25519MLKEM768'). 'UNK' means it could not be determined. 'NONE' means TLS was not used.
+TLS key exchange group between the client and Cloudflare (for example, 'X25519MLKEM768'). 'UNK' means it could not be determined. 'NONE' means either RSA key exchange was used OR TLS was not used.
 
 ## ClientXRequestedWith
 
