@@ -8,14 +8,7 @@ sidebar:
   order: 4
 ---
 
-import {
-	Markdown,
-	Render,
-	Steps,
-	Tabs,
-	TabItem,
-	DashButton,
-} from "~/components";
+import { Steps, DashButton } from "~/components";
 
 API Shield Routing allows you to expose a single external API that routes requests to different back-end services, even when those services use different paths or hostnames than your zone.
 
@@ -30,57 +23,30 @@ You must add Source Endpoints to Endpoint Management through established methods
 
 To create a route, you will need the operation ID of the Source Endpoint. To find the operation ID in the dashboard:
 
-<Tabs syncKey="dashNewNav">
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-            1. In the Cloudflare dashboard, go to the **Web Assets** page.
+<Steps>
+1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
-                <DashButton url="/?to=/:account/:zone/security/web-assets" />
-            2. Filter the endpoints to find your **Source Endpoint**.
-            3. Expand the row for your Source Endpoint and note the **operation ID** field.
-            4. Select the copy icon to copy the operation ID to your clipboard.
-        </Steps>
-    </TabItem>
-    <TabItem label="Old dashboard">
-        <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Select **Security** > **API Shield**.
-            3. Filter the endpoints to find your **Source Endpoint**.
-            4. Expand the row for your Source Endpoint and note the **operation ID** field.
-            5. Select the copy icon to copy the operation ID to your clipboard.
-        </Steps>
-    </TabItem>
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+2. Filter the endpoints to find your **Source Endpoint**.
+3. Expand the row for your Source Endpoint and note the **operation ID** field.
+4. Select the copy icon to copy the operation ID to your clipboard.
 
-</Tabs>
+</Steps>
 
 Once your Source Endpoints are added to Endpoint Management, use the following steps to create and verify routes on any given operation ID:
 
 ### Create a route
 
-<Tabs syncKey="dashNewNav">
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-            1. In the Cloudflare dashboard, go to the **Web Assets** page.
+<Steps>
+1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
-                <DashButton url="/?to=/:account/:zone/security/web-assets" />
-            2. In **Endpoints**, select an existing endpoint and expand its details.
-            3. Under **Routing**, select **Create route**.
-            4. Enter the target URL or IP address to route your endpoint to.
-            5. Select **Deploy route**.
-        </Steps>
-    </TabItem>
-    <TabItem label="Old dashboard">
-        <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Go to **Security** > **API Shield**.
-            3. In **Endpoint Management**, select an existing endpoint and expand its details.
-            4. Under **Routing**, select **Create route**.
-            5. Enter the target URL or IP address to route your endpoint to.
-            6. Select **Deploy route**.
-        </Steps>
-    </TabItem>
+   <DashButton url="/?to=/:account/:zone/security/web-assets" />
+2. In **Endpoints**, select an existing endpoint and expand its details.
+3. Under **Routing**, select **Create route**.
+4. Enter the target URL or IP address to route your endpoint to.
+5. Select **Deploy route**.
 
-</Tabs>
+</Steps>
 
 :::note
 You can reorder path variables if they are present. For example, you can route `/api/{var1}/users/{var2}` to `/{var2}/users/{var1}`. Segments of the path that are not variables may be added or omitted entirely.

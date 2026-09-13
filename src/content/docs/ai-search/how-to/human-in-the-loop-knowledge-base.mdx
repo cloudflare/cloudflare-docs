@@ -49,10 +49,9 @@ Create a new project named `kb-agent` by running:
 <PackageManagers type="create" pkg="cloudflare@latest" args={"kb-agent"} />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "TypeScript",
 	}}

@@ -1,0 +1,149 @@
+---
+title: Integrations
+pcx_content_type: integration-guide
+sidebar:
+  order: 5
+head: []
+description: Use createTestHarness with Mock Service Worker and Playwright.
+products:
+  - workers
+---
+
+import { TypeScriptExample } from "~/components";
+
+You can use `createTestHarness()` with existing tools in the Node.js ecosystem. The examples on this page show common integration patterns that you can adapt to your test setup.
+
+## Mock Service Worker
+
+If your Worker makes outbound `fetch()` requests, you can use [Mock Service Worker (MSW)](https://mswjs.io/) to intercept them and return predictable responses. MSW provides reusable request handlers that can be shared across tests.
+
+For example, you can start MSW before the tests, reject unhandled requests, and reset handlers after each test:
+
+<TypeScriptExample>
+
+```ts
+import { afterAll, afterEach, beforeAll, test } from "vitest";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+import { createTestHarness } from "wrangler";
+
+const network = setupServer();
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+beforeAll(async () => {
+	network.listen({ onUnhandledRequest: "error" });
+	await server.listen();
+});
+
+afterEach(async () => {
+	network.resetHandlers();
+	await server.reset();
+});
+
+afterAll(async () => {
+	network.close();
+	await server.close();
+});
+
+test("loads a user profile", async ({ expect }) => {
+	network.use(
+		http.get("http://identity.example.com/profile/:id", ({ params }) => {
+			return HttpResponse.json({ id: params.id, name: "Ada" });
+		}),
+	);
+
+	const worker = server.getWorker();
+	const response = await worker.fetch("/users/123");
+	expect(await response.json()).toEqual({ id: "123", name: "Ada" });
+});
+```
+
+</TypeScriptExample>
+
+## Playwright
+
+If you are building a web application and want to verify user flows in a real browser, use [Playwright](https://playwright.dev/) with the test harness. Playwright can navigate pages, interact with the user interface, and verify the behavior of your Workers project end to end.
+
+A Playwright fixture can start a test server with `createTestHarness()` before browser tests. If you want to mock outbound `fetch()` requests, you can also use [MSW](#mock-service-worker) to intercept them at the same time.
+
+The following fixture sets the Playwright `baseURL`, exposes MSW and the test harness to tests, and resets storage state after each test.
+
+<TypeScriptExample filename="tests/playwright.test.ts">
+
+```ts
+import { test as base, expect } from "@playwright/test";
+import { http, HttpResponse } from "msw";
+import { setupServer, type SetupServerApi } from "msw/node";
+import { createTestHarness, type TestHarness } from "wrangler";
+
+type TestFixtures = {
+	reset: void;
+};
+
+type WorkerFixtures = {
+	network: SetupServerApi;
+	server: TestHarness;
+};
+
+const test = base.extend<TestFixtures, WorkerFixtures>({
+	network: [
+		async ({}, use) => {
+			const network = setupServer();
+			network.listen({ onUnhandledRequest: "error" });
+			await use(network);
+			network.close();
+		},
+		{ scope: "worker" },
+	],
+
+	server: [
+		async ({}, use) => {
+			const server = createTestHarness({
+				workers: [
+					{ configPath: "./dist/web_worker/wrangler.json" },
+					{ configPath: "./dist/api_worker/wrangler.json" },
+				],
+			});
+
+			await server.listen();
+			await use(server);
+			await server.close();
+		},
+		{ scope: "worker" },
+	],
+
+	baseURL: async ({ server }, use) => {
+		const { url } = await server.listen();
+		await use(url.href);
+	},
+
+	reset: [
+		async ({ network, server }, use, testInfo) => {
+			await use();
+
+			if (testInfo.status !== testInfo.expectedStatus) {
+				server.debug();
+			}
+
+			network.resetHandlers();
+			await server.reset();
+		},
+		{ auto: true },
+	],
+});
+
+test("renders a user profile", async ({ page, network }) => {
+	network.use(
+		http.get("http://identity.example.com/profile/:id", ({ params }) => {
+			return HttpResponse.json({ id: params.id, name: "Ada" });
+		}),
+	);
+
+	await page.goto("/users/123");
+	await expect(page.getByText("Profile: Ada")).toBeVisible();
+});
+```
+
+</TypeScriptExample>

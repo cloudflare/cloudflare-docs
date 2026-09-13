@@ -10,6 +10,11 @@
 		"parent": ["Networking", "Routes"]
 	},
 	{
+		"deeplink": "/?to=/:account/ip-addresses/address-space/custom-ips",
+		"name": "Custom IPs",
+		"parent": ["Networking", "IP addresses", "Address space"]
+	},
+	{
 		"deeplink": "/?to=/:account/data-catalog/overview",
 		"name": "R2 Data Catalog",
 		"parent": ["Storage & databases", "R2 object storage"]
@@ -45,8 +50,18 @@
 		"parent": ["Domain registration"]
 	},
 	{
+		"deeplink": "/?to=/:account/images/hosted/import",
+		"name": "Import from S3",
+		"parent": ["Media", "Images", "Hosted images"]
+	},
+	{
 		"deeplink": "/?to=/:account/:zone/speed/origin-analytics",
 		"name": "Origin Analytics",
 		"parent": ["Speed"]
+	},
+	{
+		"deeplink": "/?to=/:account/r2/:bucket/settings",
+		"name": "Bucket settings",
+		"parent": ["Storage & databases", "R2 object storage"]
 	}
 ]

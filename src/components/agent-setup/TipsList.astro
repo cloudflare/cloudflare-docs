@@ -22,31 +22,14 @@
 	}
 
 	.agent-setup-tips-wrap :global(ul > li) {
-		position: relative;
-		padding: 0.625rem 0 0.625rem 1.5rem;
+		padding: 0.625rem 0;
 		font-size: 0.875rem;
 		line-height: 1.6;
-		border-bottom: 1px solid var(--color-cl1-gray-9);
+		border-bottom: 1px solid var(--color-border);
 		margin: 0;
 	}
 
-	:root[data-mode="dark"] .agent-setup-tips-wrap :global(ul > li) {
-		border-bottom-color: var(--color-cl1-gray-2);
-	}
-
-	.agent-setup-tips-wrap :global(ul > li::before) {
-		content: "→";
-		position: absolute;
-		left: 0;
-		color: var(--color-cl1-orange-5);
-	}
-
-	:root[data-mode="dark"] .agent-setup-tips-wrap :global(ul > li::before) {
-		color: var(--color-cl1-orange-6);
-	}
-
-	/* Ensure li::marker dot doesn't render alongside our arrow. */
-	.agent-setup-tips-wrap :global(ul > li)::marker {
-		content: "";
+	.agent-setup-tips-wrap :global(ul > li:last-child) {
+		border-bottom: none;
 	}
 </style>

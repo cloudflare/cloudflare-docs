@@ -1,0 +1,84 @@
+---
+---
+
+import { Aside, DashButton, Tabs, TabItem } from "~/components";
+
+You can restart, reboot, or shut down a Cloudflare One Appliance (formerly Magic WAN Connector) from the dashboard or via API. Operations are asynchronous — the appliance executes them the next time it checks in.
+
+| Operation    | Effect                                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| **Restart**  | Restart managed services. Purges temporary and (optionally) persistent state.                                             |
+| **Reboot**   | Power cycle the appliance. Optionally, purge persistent state. Re-applies configuration starting from scratch.            |
+| **Shutdown** | Power off the appliance. Optionally, purge persistent state. The machine will be offline until manually powered on again. |
+
+<Aside type="caution">
+	Operations may disrupt service. Only one operation can be pending at a time.
+</Aside>
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. Go to the **Connectors** page.
+
+<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Appliances**.
+3. Find the Cloudflare One Appliance you want to manage > **Edit**.
+4. Scroll down to the **Operations** section.
+5. Select **Restart**, **Reboot**, or **Shutdown**.
+6. In the confirmation dialog:
+   - Check **I understand this operation may disrupt service** (required).
+   - Optionally, check **Purge persistent state** to clear persistent data in addition to temporary state.
+7. Select **Confirm**.
+
+The operation is submitted and runs when the appliance next checks in. A banner shows the pending operation status until the appliance executes it.
+
+</TabItem>
+<TabItem label="API">
+
+Send a `POST` request to the interrupts endpoint with one of the following actions:
+
+**Restart managed services:**
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/connectors/{connector_id}/interrupts" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"restart": {"purge": false}}'
+```
+
+**Reboot (power cycle):**
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/connectors/{connector_id}/interrupts" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"reboot": {"purge": false}}'
+```
+
+**Shut down:**
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/connectors/{connector_id}/interrupts" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{"shutdown": {"purge": false}}'
+```
+
+Set `"purge": true` to also purge persistent state.
+
+The response includes a `submitted_at` timestamp. To check whether the appliance has executed the operation, poll the list endpoint:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/connectors/{connector_id}/interrupts" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+When `triggered_at` is populated in the response, the appliance has executed the operation.
+
+<Aside type="note">
+Only one operation can be pending at a time. If an operation is already pending, the API returns a `409 Conflict` response.
+</Aside>
+
+</TabItem>
+</Tabs>

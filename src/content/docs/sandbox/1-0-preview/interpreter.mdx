@@ -1,0 +1,80 @@
+---
+title: Code interpreter
+pcx_content_type: how-to
+sidebar:
+  order: 7
+description: Run Python, JavaScript, or TypeScript in a sandbox with the interpreter extension on @cloudflare/sandbox@next.
+products:
+  - sandbox
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page uses the interpreter extension on `@cloudflare/sandbox@next`. On today's stable package, interpreter methods live on `Sandbox` — refer to [Use code interpreter](/sandbox/guides/code-execution/).
+:::
+
+On `@next`, the code interpreter is an opt-in extension, not methods on bare `Sandbox`. Method names match the stable interpreter. You attach once, then call `sandbox.interpreter.*`. `runCode` returns plain serializable data across the Worker and Durable Object boundary.
+
+Signatures and types: [Interpreter API](/sandbox/1-0-preview/api/interpreter/).
+
+## Attach
+
+<TypeScriptExample>
+```ts
+import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
+import { withInterpreter } from "@cloudflare/sandbox/interpreter";
+
+export class Sandbox extends BaseSandbox<Env> {
+	interpreter = withInterpreter(this);
+}
+```
+</TypeScriptExample>
+
+Export that class from your Worker. The sidecar provisions on first use.
+
+## Image
+
+| Language | Image |
+| -------- | ----- |
+| JavaScript / TypeScript | Default sandbox image (or any variant with a JS runtime) |
+| Python | **`-python`** image variant |
+
+Use the same preview Worker package and container image line. Refer to [Dockerfile](/sandbox/configuration/dockerfile/).
+
+## Run code
+
+A **context** keeps variables and imports until you delete it or the container is replaced.
+
+<TypeScriptExample>
+```ts
+const sandbox = getSandbox(env.Sandbox, "user-123");
+
+const context = await sandbox.interpreter.createCodeContext({
+	language: "python",
+	cwd: "/workspace",
+});
+
+await sandbox.interpreter.runCode("x = 2", { context });
+const result = await sandbox.interpreter.runCode("x * 21", { context });
+
+if (result.error) {
+	console.error(result.error.name, result.error.message);
+} else {
+	console.log(result.results, result.logs.stdout);
+}
+```
+</TypeScriptExample>
+
+If you omit `context`, `runCode` uses a default context for the language (default language: `python`). Languages: `python`, `javascript`, `typescript`.
+
+For result fields, streaming (`runCodeStream`), and list/delete context methods, refer to the [Interpreter API](/sandbox/1-0-preview/api/interpreter/).
+
+Contexts exist only in the **current container**. After stop or replace, create new ones. Refer to [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+
+## Related
+
+- [Interpreter API](/sandbox/1-0-preview/api/interpreter/)
+- [Extensions](/sandbox/1-0-preview/extensions/)
+- [Migrate](/sandbox/1-0-preview/migrate/)
+- Stable guide: [Use code interpreter](/sandbox/guides/code-execution/)

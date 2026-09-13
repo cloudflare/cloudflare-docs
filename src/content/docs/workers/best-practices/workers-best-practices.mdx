@@ -916,11 +916,11 @@ async function handleRequest(request: Request, env: Env): Promise<object> {
 
 ## Development and testing
 
-### Test with @cloudflare/vitest-pool-workers
+### Test with @cloudflare/vitest-plugin
 
-The [`@cloudflare/vitest-pool-workers`](/workers/testing/vitest-integration/) package runs your tests inside the Workers runtime, giving you access to real bindings (KV, R2, D1, Durable Objects) during tests. This catches issues that Node.js-based tests miss, like unsupported APIs or missing compatibility flags.
+The [`@cloudflare/vitest-plugin`](/workers/testing/vitest-integration/) package runs your tests inside the Workers runtime, giving you access to real bindings (KV, R2, D1, Durable Objects) during tests. This catches issues that Node.js-based tests miss, like unsupported APIs or missing compatibility flags.
 
-One known pitfall: the Vitest pool automatically injects `nodejs_compat`, so tests pass even if your Wrangler configuration does not have the flag. Always confirm your `wrangler.jsonc` includes `nodejs_compat` if your code depends on Node.js built-in modules.
+One known pitfall: the Vitest plugin automatically injects `nodejs_compat`, so tests pass even if your Wrangler configuration does not have the flag. Always confirm your `wrangler.jsonc` includes `nodejs_compat` if your code depends on Node.js built-in modules.
 
 <TypeScriptExample filename="test/index.test.ts">
 

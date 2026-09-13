@@ -1,6 +1,6 @@
 ---
 title: Realtime SFU
-description: Build real-time serverless video, audio, and data applications with Cloudflare Realtime SFU.
+description: Build custom audio, video, and data applications from WebRTC primitives with Cloudflare Realtime SFU.
 pcx_content_type: overview
 sidebar:
   order: 2
@@ -11,27 +11,79 @@ products:
   - realtime
 ---
 
-import { Description, LinkButton } from "~/components";
+import { CardGrid, Description, LinkButton, LinkTitleCard } from "~/components";
 
 <Description>
 
-Build real-time serverless video, audio and data applications.
+Compose real-time audio, video, and data applications from WebRTC primitives.
 
 </Description>
 
-Cloudflare Realtime SFU is infrastructure for real-time audio/video/data applications. It allows you to build real-time apps without worrying about scaling or regions. It can act as a selective forwarding unit (WebRTC SFU), as a fanout delivery system for broadcasting (WebRTC CDN) or anything in between.
+Cloudflare Realtime SFU routes WebRTC media tracks and DataChannels between browser, native, server, and external media endpoints. Your application controls who publishes, who subscribes, and how participants discover each other.
 
 Cloudflare Realtime SFU runs on [Cloudflare's global cloud network](https://www.cloudflare.com/network/) in hundreds of cities worldwide.
 
-<LinkButton variant="primary" href="/realtime/sfu/get-started/">
-	Get started
+## What you can build
+
+<CardGrid>
+	<LinkTitleCard
+		title="Custom calls and rooms"
+		href="/realtime/sfu/example-architecture/"
+		icon="ph:video-camera"
+	>
+		Build your own signaling, presence, permissions, and user interface.
+	</LinkTitleCard>
+	<LinkTitleCard
+		title="Interactive broadcasts"
+		href="/realtime/sfu/sessions-tracks/"
+		icon="ph:broadcast"
+	>
+		Publish media once and choose which sessions receive each track.
+	</LinkTitleCard>
+	<LinkTitleCard
+		title="Cloud gaming and device control"
+		href="/realtime/sfu/datachannels/"
+		icon="ph:game-controller"
+	>
+		Send media downstream and low-latency control data upstream.
+	</LinkTitleCard>
+	<LinkTitleCard
+		title="AI and media processing"
+		href="/realtime/sfu/media-transport-adapters/"
+		icon="ph:waveform"
+	>
+		Connect WebRTC tracks to AI services and external media systems.
+	</LinkTitleCard>
+</CardGrid>
+
+## Application architecture
+
+Each client creates a WebRTC PeerConnection. Your backend stores the application
+secret and uses the Realtime SFU API to create the corresponding session. It
+also authenticates users, authorizes publish and subscribe operations, and
+shares session or track identifiers through your application state.
+
+Realtime SFU forwards the selected media or data. It does not define rooms,
+participants, roles, or presence for your application.
+
+## Explore examples
+
+Use the [Realtime Examples repository](https://github.com/cloudflare/realtime-examples)
+to choose a starting point for what you want to build. Each example identifies
+its status, credential boundary, and known limitations.
+
+<LinkButton
+	variant="primary"
+	href="https://github.com/cloudflare/realtime-examples"
+>
+	Browse Realtime examples
+</LinkButton>
+<LinkButton variant="secondary" href="/realtime/sfu/get-started/">
+	Create an SFU application
 </LinkButton>
 <LinkButton
 	variant="secondary"
 	href="https://dash.cloudflare.com/?to=/:account/calls"
 >
 	Realtime dashboard
-</LinkButton>
-<LinkButton variant="secondary" href="https://github.com/cloudflare/orange">
-	Orange Meets demo app
 </LinkButton>

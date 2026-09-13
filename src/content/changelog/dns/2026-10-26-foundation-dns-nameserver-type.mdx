@@ -1,0 +1,31 @@
+---
+title: Advanced Nameservers use a nameserver type
+pcx_content_type: changelog
+description: DNS settings now use the Advanced Nameservers type instead of the Foundation DNS setting.
+date: 2026-10-26
+---
+
+Starting today, the [DNS settings endpoints](/api/resources/dns/subresources/settings/) gradually begin to represent Advanced Nameservers with `nameservers.type: "cloudflare.advanced"`. The rollout is expected to take seven days. Previously, the API used the `"foundation_dns": true` setting for this configuration.
+
+Before the rollout reaches an account, the endpoints continue to return `nameservers.type: "cloudflare.standard"` for Advanced Nameservers. The endpoints accept `nameservers.type: "cloudflare.advanced"` in `PATCH` requests for entitled accounts throughout the rollout. The zone settings JSON for [`/zones/{zone_id}/dns_settings`](/api/resources/dns/subresources/settings/subresources/zone/) is:
+
+```json
+{
+  "nameservers": {
+    "type": "cloudflare.advanced"
+  },
+  "foundation_dns": true
+}
+```
+
+Cloudflare will make an equivalent change to [`/accounts/{account_id}/dns_settings`](/api/resources/dns/subresources/settings/subresources/account/) at the same time.
+
+The `foundation_dns` boolean remains available as a deprecated compatibility alias in zone and account-default settings. Use `nameservers.type: "cloudflare.advanced"` for new writes.
+
+You can continue to read and write `foundation_dns` during this transition. If a `PATCH` request includes both values, they must match. The API rejects conflicting values.
+
+Update clients that treat `nameservers.type` as a closed enum to recognize the `"cloudflare.advanced"` value.
+
+This API update does not change your Foundation DNS subscription or whether Advanced Nameservers are enabled on your zones. It does not require a zone migration.
+
+In a future API change, Cloudflare will remove the `foundation_dns` parameter from the API endpoint. After migrating to `nameservers.type`, remove handling for the boolean from your client.

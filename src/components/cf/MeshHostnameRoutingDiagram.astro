@@ -1,5 +1,5 @@
 ---
-import { Icon as AstroIcon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 ---
 
 <figure
@@ -11,7 +11,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card client-card">
 				<div class="node-header">
 					<span class="node-icon client-icon" aria-hidden="true"
-						><AstroIcon name="warp-client" /></span
+						><Icon name="warp-client" /></span
 					>
 					<a
 						class="node-title"
@@ -34,7 +34,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card gateway-card">
 				<div class="node-header">
 					<span class="node-icon gateway-icon" aria-hidden="true"
-						><AstroIcon name="gateway" /></span
+						><Icon name="gateway" /></span
 					>
 					<a class="node-title" href="/cloudflare-one/traffic-policies/"
 						>Cloudflare Gateway</a
@@ -45,7 +45,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 					IP.
 				</p>
 				<div class="pill-row">
-					<span class="token-pill"><code>100.80.0.0/16</code></span>
+					<span class="token-pill"><code>172.64.128.0/20</code></span>
 				</div>
 			</div>
 		</li>
@@ -63,7 +63,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card mesh-card">
 				<div class="node-header">
 					<span class="node-icon mesh-icon" aria-hidden="true"
-						><AstroIcon name="cloudflare-mesh" /></span
+						><Icon name="cloudflare-mesh" /></span
 					>
 					<a
 						class="node-title"
@@ -85,7 +85,7 @@ import { Icon as AstroIcon } from "astro-icon/components";
 			<div class="node-card host-card">
 				<div class="node-header">
 					<span class="node-icon host-icon" aria-hidden="true"
-						><AstroIcon name="dns" /></span
+						><Icon name="dns" /></span
 					>
 					<span class="node-title">Private host</span>
 				</div>

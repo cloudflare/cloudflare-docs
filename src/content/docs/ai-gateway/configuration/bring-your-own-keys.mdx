@@ -143,6 +143,10 @@ Each API key can be assigned an alias to identify it. When you add a key, you ca
 
 When making requests, AI Gateway uses the key with the `default` alias by default. To use a different key, include the `cf-aig-byok-alias` header with the alias of the key you want to use.
 
+:::note
+The `cf-aig-byok-alias` header applies to [direct provider-passthrough](/ai-gateway/usage/providers/) requests. On requests routed through [Unified Billing](/ai-gateway/features/unified-billing/) endpoints (for example, `env.AI.run()` or `/ai/v1/chat/completions`), only the `default` alias is consulted — if the `default` key is missing, the request falls through to Unified Billing. See [Credential precedence](/ai-gateway/features/unified-billing/#credential-precedence) for the full order.
+:::
+
 ### Example: Using a specific key alias
 
 If you have multiple OpenAI keys configured with different aliases (for example, `default`, `production`, and `testing`), you can specify which one to use:

@@ -224,6 +224,24 @@ For more information, refer to the [OpenAI documentation](https://help.openai.co
 
 </Details>
 
+<Details header="Claude">
+
+| Selector    | Operator | Value    | Action | Untrusted certificate action |
+| ----------- | -------- | -------- | ------ | ---------------------------- |
+| Application | in       | _Claude_ | Allow  | Block                        |
+
+| Custom header name          | Custom header value      |
+| --------------------------- | ------------------------ |
+| `anthropic-allowed-org-ids` | Your organization's UUID |
+
+To allow access from multiple organizations, enter a comma-separated list of UUIDs with no spaces (for example, `<org-uuid-1>,<org-uuid-2>`).
+
+You can find your organization UUID in **Settings** > **Account** > **Organization ID** on [claude.ai](https://claude.ai/settings/account).
+
+For more information, refer to the [Claude documentation](https://support.claude.com/en/articles/13198485-enforce-network-level-access-control-with-tenant-restrictions).
+
+</Details>
+
 ### Forward user identity to upstream services
 
 You can use dynamic header values to forward user identity information to your upstream applications without requiring those applications to integrate with Cloudflare Access directly.

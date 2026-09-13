@@ -26,6 +26,7 @@ import {
 	reference,
 } from "astro:content";
 import ResourcesBySelectorReact from "./ResourcesBySelector";
+import { getDirectoryEntryBySection } from "~/util/directory";
 
 type Props = z.input<typeof props>;
 
@@ -85,8 +86,8 @@ const filteredResources = [...docs, ...videos, ...learningPaths].filter(
 const resources = await Promise.all(
 	filteredResources.map(async (resource) => {
 		if (resource.collection === "docs") {
-			const currentSection = resource.id.split("/")[0].replaceAll(".", "");
-			const currentProduct = await getEntry("directory", currentSection);
+			const currentSection = resource.id.split("/")[0];
+			const currentProduct = await getDirectoryEntryBySection(currentSection);
 			if (currentProduct) {
 				// [D4] default to [] before pushing (docs.products is optional,
 				// no .default([])).

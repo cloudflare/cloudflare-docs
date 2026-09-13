@@ -1,0 +1,55 @@
+---
+pcx_content_type: overview
+title: Integration test harness
+description: Write integration tests for Cloudflare Workers with the createTestHarness API in Wrangler.
+sidebar:
+  order: 16
+products:
+  - workers
+---
+
+import { CardGrid, LinkCard, LinkButton } from "~/components";
+
+[`createTestHarness()`](/workers/wrangler/api/#createtestharness) is a Wrangler API for integration testing from any Node.js test runner. It runs one or more Workers from [Wrangler](/workers/wrangler/) projects or Vite projects that use the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+<LinkButton href="/workers/testing/test-harness/get-started/">
+	Get started
+</LinkButton>
+<LinkButton
+	variant="secondary"
+	href="https://github.com/cloudflare/workers-sdk/tree/main/fixtures/create-test-harness-example"
+>
+	View complete example
+</LinkButton>
+
+## Features
+
+- Runs production build output from Wrangler or the Cloudflare Vite plugin
+- Dispatches requests and events to one or more Workers
+- Provides access to bindings and local storage from tests
+- Captures logs and diagnostic output from the Workers runtime
+
+## Guides
+
+<CardGrid>
+	<LinkCard
+		title="Configure the test harness"
+		description="Configure Workers, test values, lifecycle hooks, and failure diagnostics."
+		href="/workers/testing/test-harness/configure/"
+	/>
+	<LinkCard
+		title="Prepare test state"
+		description="Seed storage, mock outbound requests, and replace bindings."
+		href="/workers/testing/test-harness/prepare-test-state/"
+	/>
+	<LinkCard
+		title="Interact with Workers"
+		description="Test routes, dispatch events, control Workflows, and assert logs."
+		href="/workers/testing/test-harness/interact-with-workers/"
+	/>
+	<LinkCard
+		title="Integrations"
+		description="Use the test harness with MSW and Playwright."
+		href="/workers/testing/test-harness/integrations/"
+	/>
+</CardGrid>

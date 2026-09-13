@@ -57,6 +57,8 @@ Self-hosted applications can also protect a Cloudflare Worker directly by name, 
 
 This is the safest and most straightforward way to put authentication in front of a Worker. Instead of configuring individual routes on the Worker and managing authentication at the route level, you link the entire Worker (and optionally its preview deployments) to an Access application. Any request to the Worker on any route passes through Access first.
 
+For Workers-specific setup instructions, refer to [Cloudflare Access for Workers](/workers/configuration/cloudflare-access/).
+
 ### CLI access with cloudflared
 
 Self-hosted applications support client-side `cloudflared` authentication. Users can install `cloudflared` on their device and run `cloudflared access login <hostname>` from the command line to authenticate through your Access policies without the Cloudflare One Client installed. This is useful for SSH sessions, API calls, and other command-line workflows where a browser-based login flow is impractical.

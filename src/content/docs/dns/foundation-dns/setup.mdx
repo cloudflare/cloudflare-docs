@@ -97,7 +97,9 @@ To enable advanced nameservers on an existing zone:
    	path="/zones/{zone_id}/dns_settings"
    	method="PATCH"
    	json={{
-   		foundation_dns: true,
+		nameservers: {
+			type: "cloudflare.advanced",
+		},
    	}}
    />
 

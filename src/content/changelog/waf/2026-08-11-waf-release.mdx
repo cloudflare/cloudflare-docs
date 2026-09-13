@@ -1,0 +1,67 @@
+---
+title: "WAF Release - 2026-08-11"
+description: Cloudflare WAF managed rulesets 2026-08-11 release
+date: 2026-08-11
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new protection for a remote code execution vulnerability in vBulletin and improves two existing detections.
+
+**Key Findings**
+
+- A new detection provides protection against vBulletin CVE-2026-61511.
+- Two existing detections have been improved to strengthen coverage.
+
+**Impact**
+
+Successful exploitation of CVE-2026-61511 may lead to remote code execution on affected vBulletin systems, potentially resulting in unauthorized access, data exposure, service disruption, and broader compromise of the hosting environment. Administrators are strongly encouraged to apply vendor updates and recommended mitigations.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="1b0775f0f092483387cfb23f94f3006b" />
+			</td>
+			<td>N/A</td>
+			<td>vBulletin - Remote Code Execution - CVE:CVE-2026-61511</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="784d3824b6cf419db6af0b64098b749e" />
+			</td>
+			<td>N/A</td>
+			<td>Version Control - Information Disclosure - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This rule is merged into the original rule "Version Control - Information Disclosure" (ID: <RuleID id="23548ee2b36547a1be09bb2c0550c529" />)</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="a561c9138b46470ca6db96edd56225d8" />
+			</td>
+			<td>N/A</td>
+			<td>vBulletin - Code Injection - Invalid image format - CVE:CVE-2019-17132 - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This rule is merged into the original rule "vBulletin - Code Injection - Invalid image format - CVE:CVE-2019-17132" (ID: <RuleID id="5137834eb8634842852273a08fe9f1c7" />)</td>
+		</tr>
+	</tbody>
+</table>

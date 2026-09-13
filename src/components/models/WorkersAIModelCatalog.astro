@@ -1,0 +1,16 @@
+---
+import { Aside } from "~/components";
+import ModelCatalog from "~/components/models/ModelCatalog.astro";
+import { getLegacyModels, toModelCardData } from "~/util/models";
+
+const models = (await getLegacyModels()).map(toModelCardData);
+---
+
+<Aside
+	type="tip"
+	title="Looking for more models, including external providers?"
+>
+	Check out the <a href="/ai/models/">unified AI model catalog</a>.
+</Aside>
+
+<ModelCatalog models={models} basePath="/workers-ai/models" />

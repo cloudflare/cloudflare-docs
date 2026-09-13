@@ -22,6 +22,7 @@ const STYLE_GUIDE_COMPONENTS_DIR = path.join(
 	"content",
 	"docs",
 	"style-guide",
+	"build-the-page",
 	"components",
 );
 const AGENT_REFERENCE = path.join(".agents", "references", "components.md");

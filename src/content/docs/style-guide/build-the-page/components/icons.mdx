@@ -1,0 +1,45 @@
+---
+title: Icons
+description: Browse available product and UI icons.
+products:
+  - style-guide
+---
+
+import { Render } from "~/components";
+
+There are two icon components which pull from two different icon sets.
+
+## Icon
+
+The `Icon` component from Nimbus is available as a standalone component.
+
+Primarily, this is used for Cloudflare product icons which are stored in `/src/icons/*.svg`.
+
+```mdx
+import { Icon } from "~/components";
+
+<Icon name="workers" class="text-5xl text-orange-400" />
+```
+
+## Card and LinkCard
+
+Components like `Card` and `LinkCard` accept a plain `icon` string prop — any [iconify](https://icon-sets.iconify.design/) icon name.
+
+```mdx
+import { Card, LinkCard } from "~/components";
+
+<Card title="Example" icon="ph:rocket-launch" />
+<LinkCard title="Example" href="/workers/" icon="ph:rocket-launch" />
+```
+
+Content authored before the Nimbus migration may still use Starlight-style icon names (for example `icon="seti:shell"`). These are automatically mapped to an equivalent iconify icon at build time. New content should use iconify names directly.
+
+## Icon library
+
+<Render
+	file="icons"
+	product="style-guide"
+	params={{
+		component: "cards or tabs",
+	}}
+/>

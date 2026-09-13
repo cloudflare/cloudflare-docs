@@ -1,0 +1,21 @@
+releaseNotes: |-
+  This beta release includes the following changes and improvements:
+
+  - Improved connection reliability: the client now swaps protocol order after repeated connectivity-check failures, which helps when HTTP/3 is blocked after the QUIC handshake.
+  - Fixed issue where a certificate error could be incorrectly displayed right after the connection is established.
+  - A [DNS search domain](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#dns-search-suffixes) parsing failure no longer prevents connection.
+  - Fixed a [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol) issue where the tunnel could stall while uploading at a high rate.
+  - Fixed being unable to [switch organizations](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/switch-organizations/) when the client was stuck in the "Device not in organization" state.
+  - Fixed the Home Screen dropdown popup not anchoring correctly.
+  - Fixed a crash during dialog dismissal.
+  - Increased tolerance for configurations with a large number of [local domain fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) resolver IPs, so DNS resolution behaves correctly even when more fallback resolvers are configured than recommended.
+  - Fixed the WARP client stealing window focus (for example, during reauth).
+  - Fixed a client crash when connecting to a captive portal over Wi-Fi.
+  - Fixed the system tray icon showing "disconnected" while the UI showed "connected".
+  - A successful re-authentication will cause the [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) to be re-evaluated.
+  - Improved [dashboard-managed client updates](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/client-version-assignments/) by running the updater only when needed.
+version: 2026.7.1210.1
+releaseDate: 2026-07-31T13:55:38.138Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.7.1210.1
+packageSize: 152664529
+platformName: macOS

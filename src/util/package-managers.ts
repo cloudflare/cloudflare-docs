@@ -1,12 +1,6 @@
 export type Manager = "npm" | "yarn" | "pnpm" | "bun";
 export type CommandType =
-	| "add"
-	| "create"
-	| "dlx"
-	| "exec"
-	| "install"
-	| "remove"
-	| "run";
+	"add" | "create" | "dlx" | "exec" | "install" | "remove" | "run";
 
 export interface CommandOptions {
 	args?: string;

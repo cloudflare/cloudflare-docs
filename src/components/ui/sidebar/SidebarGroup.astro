@@ -15,7 +15,7 @@
  *     without an `index.mdx`, where the group is a pure visual section
  *     divider over its children.
  */
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { cn } from "@/lib/cn";
 import type { HTMLAttributes } from "astro/types";
 import {
@@ -32,7 +32,7 @@ interface Props extends HTMLAttributes<"div"> {
 	items: SidebarItem[];
 	collapsed?: boolean;
 	badge?: SidebarBadge;
-	/** Optional leading icon (astro-icon name, e.g. a product glyph). */
+	/** Optional leading icon (Icon component name, e.g. a product glyph). */
 	icon?: string;
 	/** Landing-page URL when the group has an `index.mdx`. Renders the label as a link. */
 	indexHref?: string;

@@ -15,7 +15,7 @@
 			id="404-search-link"
 			class="cursor-pointer border-none bg-transparent p-0 font-[inherit] text-blue-500 underline hover:no-underline dark:text-orange-500"
 			>search</button
-		> or try our LLM-friendly
+		> or try our LLM-friendly{" "}
 		<a
 			href="/llms.txt"
 			class="text-blue-500 underline hover:no-underline dark:text-orange-500"
@@ -27,7 +27,6 @@
 <script>
 	import { openGlobalSearch } from "../util/search";
 
-	// Gates the Cmd+K override so it goes inert after a soft-nav off the 404.
 	function on404Page(): boolean {
 		return document.getElementById("404-search-link") !== null;
 	}
@@ -50,17 +49,29 @@
 	wire404();
 	document.addEventListener("astro:page-load", wire404);
 
-	// Capture-phase + stopPropagation beats DocSearch's own (bubble-phase) Cmd+K
-	// so the query is prefilled instead of opening an empty modal.
 	if (!document.documentElement.hasAttribute("data-404-search-key")) {
 		document.documentElement.setAttribute("data-404-search-key", "true");
 		document.addEventListener(
+			"click",
+			(event) => {
+				const trigger =
+					event.target instanceof Element
+						? event.target.closest("[data-search-trigger]")
+						: null;
+				if (!on404Page() || !trigger) return;
+				event.preventDefault();
+				event.stopPropagation();
+				openGlobalSearch(currentQuery());
+			},
+			{ capture: true },
+		);
+		document.addEventListener(
 			"keydown",
 			(keyboardEvent) => {
-				if (!on404Page()) return;
 				if (
+					on404Page() &&
 					(keyboardEvent.metaKey || keyboardEvent.ctrlKey) &&
-					keyboardEvent.key === "k"
+					keyboardEvent.key.toLowerCase() === "k"
 				) {
 					keyboardEvent.preventDefault();
 					keyboardEvent.stopPropagation();

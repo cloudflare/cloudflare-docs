@@ -1,0 +1,52 @@
+---
+title: "Browser Run adds a Playground to the Cloudflare dashboard"
+description: "Run screenshots, PDFs, data extraction, and AI extraction against a live browser from the dashboard, then copy the generated code."
+products:
+  - browser-run
+date: 2026-07-31
+---
+
+import { DashButton } from "~/components";
+
+[Browser Run](/browser-run/) now includes a Playground in the Cloudflare dashboard. Use it to try Quick Actions against a live browser without creating a Worker, installing an SDK, or deploying code first.
+
+The Playground helps you test a target URL or raw HTML input, tune viewport and page-load settings, preview the output, and copy working code for the same request.
+
+![Browser Run Playground in the Cloudflare dashboard showing a generated screenshot preview and output settings](/images/browser-run/playground.png)
+
+With the Playground, you can:
+
+- Capture visuals as [screenshots](/browser-run/quick-actions/screenshot-endpoint/) or [PDFs](/browser-run/quick-actions/pdf-endpoint/).
+- Generate multiple output formats in one request with the [snapshot endpoint](/browser-run/quick-actions/snapshot/).
+- Extract [HTML](/browser-run/quick-actions/content-endpoint/), [Markdown](/browser-run/quick-actions/markdown-endpoint/), [links](/browser-run/quick-actions/links-endpoint/), or [scraped data](/browser-run/quick-actions/scrape-endpoint/).
+- Extract [structured data with AI](/browser-run/quick-actions/json-endpoint/) using a prompt and optional JSON Schema.
+
+You can also configure desktop, laptop, tablet, mobile, or custom viewport sizes, set browser scale, choose page-load conditions, set timeouts, and wait for selectors before running a request.
+
+Select **Show Code** to generate the same request as cURL, TypeScript SDK, Python, or Workers Binding code. For example, a screenshot request can be copied as a Workers Binding call:
+
+```ts
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("screenshot", {
+			url: "https://developers.cloudflare.com",
+			viewport: {
+				width: 1920,
+				height: 1080,
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+Requests made in the Playground incur [Browser Run charges](/browser-run/pricing/). AI extraction also incurs Workers AI charges.
+
+To try the Playground, go to **Browser Run** in the Cloudflare dashboard and select **Playground**.
+
+<DashButton url="/?to=/:account/workers/browser-run" />
+
+For more information, refer to the [Quick Actions documentation](/browser-run/quick-actions/).

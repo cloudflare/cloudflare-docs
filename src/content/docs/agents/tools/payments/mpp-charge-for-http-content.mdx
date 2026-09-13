@@ -78,31 +78,7 @@ For full configuration options, proxy modes, and Bot Management examples, refer 
 
 ## Custom Worker endpoints
 
-For more control, add MPP middleware directly to your Worker using Hono:
-
-```ts
-import { Hono } from "hono";
-import { Mppx, tempo } from "mppx/hono";
-
-const app = new Hono();
-
-const mppx = Mppx.create({
-	methods: [
-		tempo({
-			currency: "0x20c0000000000000000000000000000000000000",
-			recipient: "0xYourWalletAddress",
-		}),
-	],
-});
-
-app.get("/premium", mppx.charge({ amount: "0.10" }), (c) =>
-	c.json({ data: "Thanks for paying!" }),
-);
-
-export default app;
-```
-
-Refer to the [Hono middleware reference](https://mpp.dev/sdk/typescript/middlewares/hono) for the full API, including session payments and payer identification.
+To add MPP middleware directly to a Worker, refer to [Accept payments with MPP](/agents/tools/payments/mpp/accept-payments/#charge-for-a-worker-route).
 
 ## Related
 

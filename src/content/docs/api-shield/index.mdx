@@ -11,11 +11,15 @@ head:
     content: Overview
 ---
 
-import { Description, Feature, Plan, RelatedProduct, Render } from "~/components"
+import {
+	Description,
+	Feature,
+	Plan,
+	RelatedProduct,
+	Render,
+} from "~/components";
 
-<Description>
-Identify and address your API vulnerabilities.
-</Description>
+<Description>Identify and address your API vulnerabilities.</Description>
 
 <Plan type="ent-add-on" />
 
@@ -29,7 +33,7 @@ As APIs have become more prevalent, however, so have their problems:
 
 - Many companies have [thousands of APIs](/api-shield/security/api-discovery/), including ones they do not even know about.
 - To support a large base of users, many APIs are protected by a negative security model that makes them vulnerable to credential-stuffing attacks and automated scanning tools.
-- With so many endpoints and users, it’s difficult to recognize brute-force attacks against [specific endpoints](/api-shield/security/volumetric-abuse-detection/).
+- With so many endpoints and users, it is difficult to recognize brute-force attacks against [specific endpoints](/api-shield/security/volumetric-abuse-detection/).
 - Sophisticated attacks are even harder to recognize, often because even development teams are unaware of common and uncommon [usage patterns](/api-shield/security/sequence-analytics/).
 
 Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
@@ -37,18 +41,31 @@ Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
 ## Features
 
 <Feature header="Security features" href="/api-shield/security/">
-Secure your APIs using API Shield's security features.
+	Secure your APIs using API Shield's security features.
 </Feature>
 
-<Feature header="Management, monitoring, and more" href="/api-shield/management-and-monitoring/">
-Monitor the health of your API endpoints.
+<Feature
+	header="Management, monitoring, and more"
+	href="/api-shield/management-and-monitoring/"
+>
+	Monitor the health of your API endpoints.
 </Feature>
+
+## Use Schema Profiles
+
+[Application Profiles](/waf/detections/application-profiles/) provides a shared detection, analytics, and mitigation model. Schema Profile is its only current profile type.
+
+API Shield provides two Schema Profile sources. [Schema Learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/) learns from traffic, while [Schema Validation](/api-shield/security/schema-validation/) uses uploaded OpenAPI schemas.
+
+Use API Shield for API inventory, OpenAPI governance, profile export, automation, and higher-scale API workflows. Use the WAF Application Profiles pages for Profile Analysis and Custom Rule enforcement.
 
 ## Availability
 
-Cloudflare API Security products are available to Enterprise customers only, though anyone can set up [Mutual TLS](/api-shield/security/mtls/) with a Cloudflare-managed certificate authority.
+Cloudflare API Security products are available to Enterprise customers only. Anyone can set up [Mutual TLS](/api-shield/security/mtls/) with a Cloudflare-managed certificate authority.
 
-The full API Shield security suite is available as an Enterprise-only paid add-on, but all customers can access [Endpoint Management](/api-shield/management-and-monitoring/) and [Schema validation](/api-shield/security/schema-validation/) functionalities.
+The full API Shield security suite is available as an Enterprise paid add-on. Refer to [API Shield plans](/api-shield/plans/) for feature-specific availability.
+
+Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is opening a closed beta to invited Enterprise customers without API Security. Interested customers can contact their account team to express interest. Closed beta access does not imply future plan availability or pricing.
 
 :::note
 API Shield currently does not work for JDCloud customers.
@@ -56,6 +73,11 @@ API Shield currently does not work for JDCloud customers.
 
 ## Related products
 
-<RelatedProduct header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">
-Cloudflare DDoS protection secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised.
+<RelatedProduct
+	header="DDoS Protection"
+	href="/ddos-protection/"
+	product="ddos-protection"
+>
+	Cloudflare DDoS protection secures websites, applications, and entire networks
+	while ensuring the performance of legitimate traffic is not compromised.
 </RelatedProduct>

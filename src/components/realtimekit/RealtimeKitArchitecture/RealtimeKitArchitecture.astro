@@ -1,0 +1,448 @@
+<figure
+	class="rtk-architecture not-content"
+	aria-labelledby="rtk-architecture-caption"
+>
+	<div class="rtka-stage">
+		<div class="rtka-system">
+			<div class="rtka-boundary rtka-boundary--app">
+				<span class="rtka-boundary-label">Your application</span>
+
+				<div class="rtka-card">
+					<div class="rtka-card-head">server</div>
+					<div class="rtka-card-body">
+						<span class="rtka-icon" aria-hidden="true">
+							<svg viewBox="0 0 20 20" fill="none">
+								<rect x="3" y="3.5" width="14" height="5" rx="1.5"></rect>
+								<rect x="3" y="11.5" width="14" height="5" rx="1.5"></rect>
+								<path d="M6 6h.01M6 14h.01M9 6h5M9 14h5"></path>
+							</svg>
+						</span>
+						<span class="rtka-copy">
+							<strong>Application backend</strong>
+							<small>Owns users, scheduling, and business logic.</small>
+						</span>
+					</div>
+				</div>
+
+				<div class="rtka-handoff">
+					<span>Participant auth token</span>
+					<svg viewBox="0 0 16 24" fill="none" aria-hidden="true">
+						<path d="M8 1v20M4.5 17.5 8 21l3.5-3.5"></path>
+					</svg>
+				</div>
+
+				<div class="rtka-card">
+					<div class="rtka-card-head">client</div>
+					<div class="rtka-card-body">
+						<span class="rtka-icon" aria-hidden="true">
+							<svg viewBox="0 0 20 20" fill="none">
+								<rect x="2.5" y="4" width="11" height="8.5" rx="1.5"></rect>
+								<path d="M5 16h6M8 12.5V16"></path>
+								<rect x="14.5" y="7" width="3" height="7.5" rx="0.75"></rect>
+							</svg>
+						</span>
+						<span class="rtka-copy">
+							<strong>Web or mobile app</strong>
+							<small>
+								Uses prebuilt UI Kit components or integrates the Core SDK into
+								a custom interface.
+							</small>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="rtka-bridges">
+				<div class="rtka-bridge">
+					<span class="rtka-bridge-label">REST API</span>
+					<span class="rtka-line" aria-hidden="true"></span>
+					<small>Cloudflare API token</small>
+				</div>
+
+				<div aria-hidden="true"></div>
+
+				<div class="rtka-bridge">
+					<span class="rtka-bridge-label">SDK connection</span>
+					<span class="rtka-line" aria-hidden="true"></span>
+					<small>Realtime media</small>
+				</div>
+			</div>
+
+			<div class="rtka-boundary rtka-boundary--rtk">
+				<span class="rtka-boundary-label">RealtimeKit</span>
+
+				<div class="rtka-card">
+					<div class="rtka-card-head">management</div>
+					<div class="rtka-card-body">
+						<span class="rtka-icon" aria-hidden="true">
+							<svg viewBox="0 0 20 20" fill="none">
+								<path d="m7 4-4 6 4 6M13 4l4 6-4 6M11.5 3.5l-3 13"></path>
+							</svg>
+						</span>
+						<span class="rtka-copy">
+							<strong>REST API</strong>
+							<small>
+								Creates Meetings, adds Participants, and returns participant
+								auth tokens.
+							</small>
+						</span>
+					</div>
+				</div>
+
+				<div aria-hidden="true"></div>
+
+				<div class="rtka-card">
+					<div class="rtka-card-head">sessions + media</div>
+					<div class="rtka-card-body">
+						<span class="rtka-icon" aria-hidden="true">
+							<svg viewBox="0 0 20 20" fill="none">
+								<circle cx="10" cy="10" r="7"></circle>
+								<path
+									d="M3 10h14M10 3c2 2 3 4.25 3 7s-1 5-3 7M10 3c-2 2-3 4.25-3 7s1 5 3 7"
+								></path>
+							</svg>
+						</span>
+						<span class="rtka-copy">
+							<strong>Managed realtime network</strong>
+							<small>Routes realtime media between participants.</small>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<figcaption id="rtk-architecture-caption">
+		Your backend creates Meetings and adds Participants through the RealtimeKit
+		REST API, then passes participant auth tokens to the client SDK. RealtimeKit
+		manages session state and routes realtime media between participants.
+	</figcaption>
+</figure>
+
+<style>
+	.rtk-architecture {
+		--rtka-panel: #fbfbfb;
+		--rtka-dot: rgb(0 0 0 / 8%);
+		--rtka-card: #ffffff;
+		--rtka-head: #f4f4f5;
+		--rtka-border: #e3e3e6;
+		--rtka-line: #c1c1c8;
+		--rtka-joint: #ffffff;
+		--rtka-text: #1a1a1c;
+		--rtka-muted: #8a8a90;
+		--rtka-accent: #f6821f;
+		--rtka-accent-soft: rgb(246 130 31 / 14%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .rtk-architecture {
+		--rtka-panel: #121213;
+		--rtka-dot: rgb(255 255 255 / 9%);
+		--rtka-card: #1b1b1d;
+		--rtka-head: #242427;
+		--rtka-border: #38383c;
+		--rtka-line: #4d4d54;
+		--rtka-joint: #1b1b1d;
+		--rtka-text: #f3f3f5;
+		--rtka-muted: #9a9aa2;
+	}
+
+	.rtka-stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem;
+		border: 1px solid var(--rtka-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--rtka-dot) 1px, transparent 1px),
+			var(--rtka-panel);
+		background-size: 16px 16px;
+	}
+
+	.rtka-system {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.5fr) minmax(0, 1fr);
+		align-items: stretch;
+		width: 100%;
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.rtka-boundary,
+	.rtka-bridges {
+		display: grid;
+		grid-template-rows: minmax(8.5rem, 1fr) 3.75rem minmax(8.5rem, 1fr);
+		gap: 0.65rem;
+	}
+
+	.rtka-boundary {
+		position: relative;
+		box-sizing: border-box;
+		min-width: 0;
+		padding: 1.25rem 0.75rem 0.75rem;
+		border: 1px dashed var(--rtka-border);
+		border-radius: 0.75rem;
+	}
+
+	.rtka-boundary--rtk {
+		border-color: var(--rtka-accent);
+		background: var(--rtka-accent-soft);
+	}
+
+	.rtka-boundary-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--rtka-border);
+		border-radius: 9999px;
+		background: var(--rtka-panel);
+		color: var(--rtka-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+	}
+
+	.rtka-boundary--rtk .rtka-boundary-label {
+		border-color: var(--rtka-accent);
+		color: var(--rtka-accent);
+	}
+
+	.rtka-card {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid var(--rtka-border);
+		border-radius: 0.625rem;
+		background: var(--rtka-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+	}
+
+	.rtka-boundary--rtk .rtka-card {
+		border-color: color-mix(
+			in srgb,
+			var(--rtka-accent) 55%,
+			var(--rtka-border)
+		);
+	}
+
+	.rtka-card-head {
+		padding: 0.25rem 0.625rem;
+		border-bottom: 1px solid var(--rtka-border);
+		background: var(--rtka-head);
+		color: var(--rtka-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+		letter-spacing: 0.01em;
+	}
+
+	.rtka-card-body {
+		display: flex;
+		min-height: 0;
+		flex: 1;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.75rem;
+	}
+
+	.rtka-icon {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		color: var(--rtka-muted);
+	}
+
+	.rtka-boundary--rtk .rtka-icon {
+		color: var(--rtka-accent);
+	}
+
+	.rtka-icon svg,
+	.rtka-handoff svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtka-copy {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.rtka-copy strong {
+		color: var(--rtka-text);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.25;
+	}
+
+	.rtka-copy small {
+		color: var(--rtka-muted);
+		font-size: 0.625rem;
+		line-height: 1.4;
+	}
+
+	.rtka-handoff {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		flex-direction: column;
+		color: var(--rtka-muted);
+	}
+
+	.rtka-handoff span {
+		padding: 0.15rem 0.45rem;
+		border: 1px solid var(--rtka-border);
+		border-radius: 9999px;
+		background: var(--rtka-head);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+		white-space: nowrap;
+	}
+
+	.rtka-handoff svg {
+		width: 1rem;
+		height: 1.5rem;
+	}
+
+	.rtka-bridge {
+		display: flex;
+		min-width: 0;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.rtka-bridge-label {
+		color: var(--rtka-text);
+		font-size: 0.625rem;
+		font-weight: 600;
+		line-height: 1.2;
+		text-align: center;
+	}
+
+	.rtka-bridge small {
+		color: var(--rtka-muted);
+		font-size: 0.5625rem;
+		line-height: 1.2;
+		text-align: center;
+		white-space: nowrap;
+	}
+
+	.rtka-line {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 2px;
+		background: var(--rtka-line);
+	}
+
+	.rtka-line::before,
+	.rtka-line::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		width: 9px;
+		height: 9px;
+		box-sizing: border-box;
+		border: 2px solid var(--rtka-line);
+		border-radius: 50%;
+		background: var(--rtka-joint);
+		transform: translateY(-50%);
+		z-index: 2;
+	}
+
+	.rtka-line::before {
+		left: -4px;
+	}
+
+	.rtka-line::after {
+		right: -4px;
+		border-color: var(--rtka-accent);
+	}
+
+	figcaption {
+		max-width: 42rem;
+		margin: 0.65rem auto 0;
+		color: var(--rtka-muted);
+		font-size: 0.75rem;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	@container (max-width: 40rem) {
+		.rtka-stage {
+			padding-inline: 0.75rem;
+		}
+
+		.rtka-system {
+			grid-template-columns: minmax(0, 1fr);
+			justify-content: center;
+			max-width: 360px;
+		}
+
+		.rtka-boundary,
+		.rtka-bridges {
+			grid-template-rows: auto;
+		}
+
+		.rtka-bridges {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.75rem;
+			padding: 1.25rem 0;
+		}
+
+		.rtka-bridges > div:nth-child(2) {
+			display: none;
+		}
+
+		.rtka-line {
+			width: 2px;
+			height: 1.5rem;
+		}
+
+		.rtka-line::before,
+		.rtka-line::after {
+			left: 50%;
+			right: auto;
+			transform: translateX(-50%);
+		}
+
+		.rtka-line::before {
+			top: -4px;
+		}
+
+		.rtka-line::after {
+			top: auto;
+			bottom: -4px;
+		}
+
+		.rtka-boundary {
+			gap: 0.65rem;
+		}
+	}
+
+	@container (max-width: 380px) {
+		.rtka-bridges {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

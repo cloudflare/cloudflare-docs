@@ -98,6 +98,12 @@ namespace = "support"
 
 </WranglerConfig>
 
+## Namespace public endpoints
+
+A namespace can expose its own public `/search`, `/chat/completions`, and `/mcp` endpoints. One URL then searches across the instances you choose in that namespace and merges the results.
+
+Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/).
+
 ## Namespaces and instance uniqueness
 
 An instance name must be unique within a namespace. This means you can have an instance named `docs` in both the `blog` and `support` namespaces without conflict.

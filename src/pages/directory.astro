@@ -8,8 +8,7 @@
  * grouped, sorted product list) is unchanged.
  */
 import { getCollection, type CollectionEntry } from "astro:content";
-// @ts-expect-error virtual module provided by astro-icon
-import iconCollection from "virtual:astro-icon";
+import iconCollection from "virtual:nimbus/icons";
 import { getIconData, iconToSVG } from "@iconify/utils";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Header from "~/components/Header.astro";

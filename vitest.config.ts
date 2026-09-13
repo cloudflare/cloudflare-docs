@@ -14,6 +14,26 @@ export default defineConfig({
 				test: {
 					name: "Workers",
 					include: ["**/*.worker.test.ts"],
+					exclude: ["**/*.preview.worker.test.ts"],
+					deps: {
+						optimizer: {
+							ssr: {
+								enabled: true,
+								include: ["node-html-parser", "yaml"],
+							},
+						},
+					},
+				},
+			}),
+			defineConfig({
+				plugins: [
+					cloudflareTest({
+						wrangler: { configPath: "./wrangler.preview.test.json" },
+					}),
+				],
+				test: {
+					name: "Workers (Preview)",
+					include: ["**/*.preview.worker.test.ts"],
 					deps: {
 						optimizer: {
 							ssr: {

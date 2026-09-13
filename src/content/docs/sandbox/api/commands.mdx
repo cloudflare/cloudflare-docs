@@ -12,6 +12,12 @@ import { Details, TypeScriptExample } from "~/components";
 
 Execute commands and manage background processes in the sandbox's isolated container environment.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents today's stable `@cloudflare/sandbox` package (`exec` with string commands and buffered results, plus `startProcess` / `execStream`).
+
+**Sandbox SDK 1.0** (preview on `@cloudflare/sandbox@next`) makes `exec()` argv-only and returns a process handle. Start new work on the preview when you can. Refer to [Process execution](/sandbox/1-0-preview/processes/), the [Processes API](/sandbox/1-0-preview/api/processes/), or [migrate to the preview](/sandbox/1-0-preview/migrate/).
+:::
+
 ## Methods
 
 ### `exec()`

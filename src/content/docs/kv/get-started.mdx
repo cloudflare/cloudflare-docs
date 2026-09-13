@@ -11,7 +11,7 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, Steps, FileTree, Details, Tabs, TabItem, WranglerConfig, GitHubCode, DashButton } from "~/components";
+import { Render, PackageManagers, Steps, FileTree, Details, Tabs, TabItem, WranglerConfig, TypeScriptExample, DashButton } from "~/components";
 
 Workers KV provides low-latency, high-throughput global storage to your [Cloudflare Workers](/workers/) applications. Workers KV is ideal for storing user configuration data, routing data, A/B testing configurations and authentication tokens, and is well suited for read-heavy workloads.
 
@@ -55,10 +55,9 @@ Create a new Worker to read and write to your KV namespace.
     <PackageManagers type="create" pkg="cloudflare@latest" args={"kv-tutorial"} />
 
     <Render
-    	file="c3-post-run-steps"
+    	file="c3-post-run-steps-hello-world"
     	product="workers"
     	params={{
-    	category: "hello-world",
     	type: "Worker only",
     	lang: "TypeScript",
     	}}
@@ -375,14 +374,38 @@ Also refer to [KV binding docs](/kv/concepts/kv-bindings/#use-kv-bindings-when-d
 
 Your Worker code should look like this:
 
-<GitHubCode
-    repo="cloudflare/docs-examples"
-    file="kv/kv-get-started/src/index.ts"
-    commit="6bf670924bda2684697e141a8b77fc9a98e7d286"
-    lang="ts"
-		lines="1-26"
-    useTypeScriptExample={true}
-/>
+<TypeScriptExample>
+
+```ts
+export interface Env {
+  USERS_NOTIFICATION_CONFIG: KVNamespace;
+}
+
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    try {
+      await env.USERS_NOTIFICATION_CONFIG.put("user_2", "disabled");
+      const value = await env.USERS_NOTIFICATION_CONFIG.get("user_2");
+      if (value === null) {
+        return new Response("Value not found", { status: 404 });
+      }
+      return new Response(value);
+    } catch (err) {
+      console.error(`KV returned error:`, err);
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "An unknown error occurred when accessing KV storage";
+      return new Response(errorMessage, {
+        status: 500,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
 
 The code above:
 
@@ -402,14 +425,38 @@ The code above:
 3. Select **Edit Code**.
 4. Clear the contents of the `workers.js` file, then paste the following code.
 
-	<GitHubCode
-			repo="cloudflare/docs-examples"
-			file="kv/kv-get-started/src/index.ts"
-			commit="6bf670924bda2684697e141a8b77fc9a98e7d286"
-			lang="ts"
-			lines="1-26"
-			useTypeScriptExample={true}
-	/>
+	<TypeScriptExample>
+
+	```ts
+	export interface Env {
+	  USERS_NOTIFICATION_CONFIG: KVNamespace;
+	}
+
+	export default {
+	  async fetch(request, env, ctx): Promise<Response> {
+	    try {
+	      await env.USERS_NOTIFICATION_CONFIG.put("user_2", "disabled");
+	      const value = await env.USERS_NOTIFICATION_CONFIG.get("user_2");
+	      if (value === null) {
+	        return new Response("Value not found", { status: 404 });
+	      }
+	      return new Response(value);
+	    } catch (err) {
+	      console.error(`KV returned error:`, err);
+	      const errorMessage =
+	        err instanceof Error
+	          ? err.message
+	          : "An unknown error occurred when accessing KV storage";
+	      return new Response(errorMessage, {
+	        status: 500,
+	        headers: { "Content-Type": "text/plain" },
+	      });
+	    }
+	  },
+	} satisfies ExportedHandler<Env>;
+	```
+
+	</TypeScriptExample>
 
 	The code above:
 

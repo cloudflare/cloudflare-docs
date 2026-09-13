@@ -1,0 +1,27 @@
+---
+title: Create multiple Cloudflare Tunnel and Cloudflare Mesh routes at once
+description: The Routes page now supports adding multiple destinations and queuing up several Cloudflare Tunnel and Cloudflare Mesh routes before creating them in a single action.
+products:
+  - tunnel
+  - cloudflare-one
+  - cloudflare-wan
+date: 2026-09-02
+---
+
+import { DashButton } from "~/components";
+
+You can now create multiple [Cloudflare Tunnel](/tunnel/) and [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) routes from the Routes page in a single action, instead of submitting one route at a time.
+
+![Creating multiple Cloudflare Tunnel and Cloudflare Mesh routes at once from the Routes page](~/assets/images/changelog/cloudflare-one/2026-09-01-tunnel-mesh-bulk.gif)
+
+When creating a route, you can now:
+
+- **Add multiple destinations at once** — Enter a comma-separated list of CIDR ranges or hostnames to create several routes of the same type and connector together.
+- **Queue up multiple routes** — Select **Add another** to stage additional routes, including different types or connectors, before creating them all in one action.
+- **Retry only what failed** — If some routes in a batch fail (for example, an invalid CIDR), the routes that were created successfully are removed from the form automatically, so you only need to fix and resubmit the ones that failed.
+
+The same Routes UI already supports bulk creation for [Cloudflare WAN](/cloudflare-wan/) static routes, so you can add multiple WAN destinations or queue up several WAN routes before creating them together as well.
+
+<DashButton url="/?to=/:account/magic-networks/routes" />
+
+For setup steps, refer to [Add routes](/cloudflare-one/networks/routes/add-routes/).

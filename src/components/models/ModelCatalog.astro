@@ -1,22 +1,9 @@
 ---
-/**
- * ModelCatalog — filterable AI model catalog, rendered inside the docs layout.
- *
- * The toolbar (search + Task Types / Capabilities / Providers? / Authors
- * multi-selects + sort) and the "We found N models" count/clear live in a
- * React island (ModelFilters.tsx) built on base-ui, so the dropdowns match
- * production's UX while tracking Nimbus design tokens. The island is the
- * controller: it filters, pinned-first sorts, and re-flows the grid below it.
- *
- * The card grid itself stays server-rendered here (better for SEO than a
- * fully-client catalog, and preserves the Directory corner-mark grid). The
- * host page resolves the model slice (`getLegacyModels` / `getResolvedModels`
- * → `toModelCardData`) and passes it in; `basePath` selects the per-model URL
- * prefix + card href slug form. The Providers facet is computed internally and
- * appears only when the slice spans more than one `hosting` value.
- */
+/** Renders the filterable model catalog and comparison table. */
 import ModelCard from "./ModelCard.astro";
-import ModelFilters from "./ModelFilters.tsx";
+import { FilterDropdownWrapper } from "./FilterDropdownWrapper";
+import { SortSelectWrapper } from "./SortSelectWrapper";
+import { Dialog, DialogClose, DialogContent } from "~/components/ui/dialog";
 import { getFacets, type ModelCardData } from "~/util/models";
 import { resolveCols, LG_GRID_CLASS } from "~/components/directory/grid";
 
@@ -28,13 +15,123 @@ interface Props {
 const { models, basePath = "/ai/models" } = Astro.props;
 const facets = getFacets(models);
 const cols = resolveCols(models.length);
+
+// Maps filter values to card facet values.
+const facetMatchMaps = Object.fromEntries(
+	facets.map((f) => [
+		f.key,
+		Object.fromEntries(f.options.map((o) => [o.value, o.match])),
+	]),
+);
 ---
 
 <div data-models class="not-prose">
-	{/* Toolbar + count/clear (base-ui island; drives the grid below). */}
-	<ModelFilters facets={facets} total={models.length} client:load />
+	<div
+		class="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center"
+	>
+		<div class="relative flex-1 md:min-w-[300px]">
+			<svg
+				class="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+				stroke-width="2"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+			</svg>
+			<input
+				id="model-search"
+				type="text"
+				class="border-border bg-card text-foreground placeholder:text-muted-foreground hover:border-border-strong focus-visible:outline-ring h-10 w-full rounded-lg border pr-3 pl-9 text-sm focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-offset-2"
+				placeholder="Search models"
+				aria-label="Search models"
+			/>
+		</div>
 
-	{/* Empty state — toggled by the island. */}
+		<div class="flex flex-wrap items-center gap-2">
+			{
+				facets.map((facet) => (
+					<FilterDropdownWrapper
+						label={facet.label}
+						filterKey={facet.key}
+						items={facet.options.map((o) => ({
+							value: o.value,
+							label: o.label,
+						}))}
+						client:load
+					/>
+				))
+			}
+			<SortSelectWrapper client:load />
+		</div>
+	</div>
+
+	<div class="text-muted-foreground mb-4 flex items-center gap-3 text-sm">
+		<span aria-live="polite">
+			We found{" "}
+			<span id="model-count" class="text-foreground font-semibold">
+				{models.length}
+			</span>{" "}
+			<span id="model-count-label">
+				{models.length === 1 ? "model" : "models"}
+			</span>
+		</span>
+		<button
+			id="clear-filters"
+			type="button"
+			class="text-primary hidden cursor-pointer underline-offset-2 hover:underline"
+		>
+			Clear filters
+		</button>
+	</div>
+
+	<Dialog
+		id="model-comparison-dialog"
+		data-model-comparison
+		aria-labelledby="model-comparison-heading"
+	>
+		<DialogContent class="bg-background max-h-[85vh] max-w-6xl">
+			<div
+				class="border-border flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3"
+			>
+				<div>
+					<h2
+						id="model-comparison-heading"
+						class="text-foreground m-0 text-base font-semibold"
+					>
+						Compare models
+					</h2>
+					<p class="text-muted-foreground m-0 text-xs">
+						Compare up to three models.
+					</p>
+				</div>
+				<DialogClose
+					class="border-border bg-background text-foreground hover:bg-muted focus-visible:outline-ring cursor-pointer rounded-md border px-3 py-1.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2"
+				>
+					Close
+				</DialogClose>
+			</div>
+			<div class="min-h-0 flex-1 overflow-auto">
+				<table class="m-0 w-full min-w-[640px] border-collapse text-sm">
+					<thead data-model-comparison-head></thead>
+					<tbody data-model-comparison-body></tbody>
+				</table>
+			</div>
+			<div class="border-border flex justify-end border-t px-4 py-3">
+				<button
+					type="button"
+					data-model-comparison-clear
+					class="text-primary cursor-pointer text-sm underline-offset-2 hover:underline"
+				>
+					Clear comparison
+				</button>
+			</div>
+		</DialogContent>
+	</Dialog>
+
 	<div
 		data-models-empty
 		hidden
@@ -46,7 +143,6 @@ const cols = resolveCols(models.length);
 		</p>
 	</div>
 
-	{/* Grid (server-rendered; island reflows it). */}
 	<div class="border-border relative w-full border-t border-l">
 		<div data-models-grid class={LG_GRID_CLASS[cols]}>
 			{
@@ -56,4 +152,395 @@ const cols = resolveCols(models.length);
 			}
 		</div>
 	</div>
+
+	<button
+		type="button"
+		data-model-comparison-trigger
+		hidden
+		aria-controls="model-comparison-dialog"
+		aria-haspopup="dialog"
+		class="bg-primary text-primary-foreground focus-visible:outline-ring fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-40 -translate-x-1/2 cursor-pointer rounded-lg px-5 py-3 text-sm font-semibold shadow-lg transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2"
+	>
+		Compare models
+	</button>
 </div>
+
+<div id="model-facet-data" data-facets={JSON.stringify(facetMatchMaps)}></div>
+
+<script>
+	import {
+		LG_GRID_CLASS,
+		resolveCols,
+		cornersFor,
+		cornerSpansHTML,
+	} from "~/components/directory/grid";
+
+	type SortOrder = "newest" | "oldest";
+
+	// Reads facet match data embedded at build time.
+	const facetMatchMaps = JSON.parse(
+		document.getElementById("model-facet-data")!.dataset.facets!,
+	) as Record<string, Record<string, string>>;
+	const facetKeys = Object.keys(facetMatchMaps);
+
+	const datasetKey = (key: string): string =>
+		`facet${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+
+	const root = document.querySelector<HTMLElement>("[data-models]")!;
+	const grid = root.querySelector<HTMLElement>("[data-models-grid]")!;
+	const empty = root.querySelector<HTMLElement>("[data-models-empty]")!;
+	const searchInput = document.getElementById(
+		"model-search",
+	) as HTMLInputElement;
+	const countEl = document.getElementById("model-count")!;
+	const countLabelEl = document.getElementById("model-count-label")!;
+	const clearBtn = document.getElementById("clear-filters")!;
+	const comparison = root.querySelector<HTMLDialogElement>(
+		"[data-model-comparison]",
+	)!;
+	const comparisonTrigger = root.querySelector<HTMLButtonElement>(
+		"[data-model-comparison-trigger]",
+	)!;
+	const comparisonHead = comparison.querySelector<HTMLTableSectionElement>(
+		"[data-model-comparison-head]",
+	)!;
+	const comparisonBody = comparison.querySelector<HTMLTableSectionElement>(
+		"[data-model-comparison-body]",
+	)!;
+	const comparisonClear = comparison.querySelector<HTMLButtonElement>(
+		"[data-model-comparison-clear]",
+	)!;
+	const compareButtons = Array.from(
+		root.querySelectorAll<HTMLButtonElement>("[data-model-compare]"),
+	);
+	const compareButtonEntries = compareButtons.flatMap((button) => {
+		const cell = button.closest<HTMLElement>("[data-models-cell]");
+		return cell === null ? [] : [{ button, cell }];
+	});
+	const compareButtonByCell = new Map(
+		compareButtonEntries.map(({ button, cell }) => [cell, button]),
+	);
+	const selectedModels: HTMLElement[] = [];
+	const indexedModels = Array.from(
+		grid.querySelectorAll<HTMLElement>("[data-models-cell]"),
+	).map((cell) => ({
+		cell,
+		marks: cell.querySelector<HTMLElement>("[data-corner-marks]"),
+		layoutSignature: "",
+		search: cell.dataset.search ?? cell.dataset.name ?? "",
+		facets: Object.fromEntries(
+			facetKeys.map((key) => [
+				key,
+				new Set(
+					(cell.dataset[datasetKey(key)] ?? "").split("|").filter(Boolean),
+				),
+			]),
+		) as Record<string, Set<string>>,
+		pinnedIndex: Number(cell.dataset.pinnedIndex ?? -1),
+		date: Number(cell.dataset.date ?? 0),
+	}));
+
+	const state = {
+		search: "",
+		selected: {} as Record<string, string[]>,
+		sort: "newest" as SortOrder,
+	};
+
+	function tableCell(tag: "th" | "td", text: string): HTMLTableCellElement {
+		const cell = document.createElement(tag);
+		cell.className =
+			"border-border whitespace-pre-line border-b border-r px-4 py-3 text-left align-top last:border-r-0";
+		cell.textContent = text;
+		return cell;
+	}
+
+	function updateCompareButton(
+		button: HTMLButtonElement,
+		cell: HTMLElement,
+	): void {
+		const selected = selectedModels.includes(cell);
+		const disabled = !selected && selectedModels.length >= 3;
+		if (button.ariaPressed !== String(selected))
+			button.ariaPressed = String(selected);
+		const text = selected ? "Selected" : "Compare";
+		if (button.textContent !== text) button.textContent = text;
+		if (button.disabled !== disabled) button.disabled = disabled;
+		button.setAttribute(
+			"aria-label",
+			`${selected ? "Remove" : "Add"} ${cell.dataset.modelLabel ?? "model"} ${selected ? "from" : "to"} comparison`,
+		);
+	}
+
+	function formatTokenCount(value: string | undefined): string {
+		const count = Number(value);
+		return Number.isFinite(count) && count > 0
+			? `${count.toLocaleString("en-US")} tokens`
+			: "Not listed";
+	}
+
+	function renderComparison(): void {
+		comparisonTrigger.hidden = selectedModels.length === 0;
+		root.style.paddingBottom =
+			selectedModels.length === 0
+				? ""
+				: "calc(5rem + env(safe-area-inset-bottom))";
+		comparisonTrigger.textContent = `Compare ${selectedModels.length} ${selectedModels.length === 1 ? "model" : "models"}`;
+		if (selectedModels.length === 0 && comparison.open) comparison.close();
+		comparisonHead.replaceChildren();
+		comparisonBody.replaceChildren();
+
+		const header = document.createElement("tr");
+		const corner = tableCell("td", "");
+		corner.ariaHidden = "true";
+		header.append(corner);
+		for (const model of selectedModels) {
+			const cell = tableCell("th", "");
+			cell.scope = "col";
+			const link = document.createElement("a");
+			link.href = model.dataset.modelHref ?? "#";
+			link.className =
+				"text-primary font-semibold no-underline hover:underline";
+			link.textContent =
+				model.dataset.modelLabel ?? model.dataset.modelId ?? "Model";
+			cell.append(link);
+			header.append(cell);
+		}
+		comparisonHead.append(header);
+
+		const rows: Array<[string, (model: HTMLElement) => string]> = [
+			["Provider", (model) => model.dataset.modelProvider ?? "Not listed"],
+			["Author", (model) => model.dataset.modelAuthor ?? "Not listed"],
+			["Task", (model) => model.dataset.modelTask ?? "Not listed"],
+			[
+				"Context window",
+				(model) => formatTokenCount(model.dataset.modelContext),
+			],
+			[
+				"Maximum output",
+				(model) => formatTokenCount(model.dataset.modelOutput),
+			],
+			["Pricing", (model) => model.dataset.modelPricing || "Not listed"],
+			["Best for", (model) => model.dataset.modelTags || "Not listed"],
+			[
+				"Capabilities",
+				(model) => model.dataset.modelCapabilities || "Not listed",
+			],
+			["Zero Data Retention", (model) => model.dataset.modelZdr ?? "No"],
+		];
+		for (const [label, value] of rows) {
+			const values = selectedModels.map(value);
+			if (values.every((entry) => entry === "Not listed")) continue;
+			const row = document.createElement("tr");
+			const heading = tableCell("th", label);
+			heading.scope = "row";
+			heading.classList.add("text-muted-foreground", "font-medium");
+			row.append(heading);
+			for (const entry of values) row.append(tableCell("td", entry));
+			comparisonBody.append(row);
+		}
+	}
+
+	comparisonTrigger.addEventListener("click", () => {
+		if (selectedModels.length > 0) comparison.showModal();
+	});
+
+	for (const button of compareButtons) {
+		button.addEventListener("click", () => {
+			const cell = button.closest<HTMLElement>("[data-models-cell]");
+			if (cell === null) return;
+			const wasAtLimit = selectedModels.length >= 3;
+			const index = selectedModels.indexOf(cell);
+			if (index >= 0) selectedModels.splice(index, 1);
+			else if (selectedModels.length < 3) selectedModels.push(cell);
+			renderComparison();
+			updateCompareButton(button, cell);
+			if (wasAtLimit !== selectedModels.length >= 3) {
+				for (const entry of compareButtonEntries)
+					updateCompareButton(entry.button, entry.cell);
+			}
+		});
+	}
+	comparisonClear.addEventListener("click", () => {
+		const selected = [...selectedModels];
+		const visibleCell = selected.find((cell) => cell.style.display !== "none");
+		const focusTarget = visibleCell
+			? compareButtonByCell.get(visibleCell)
+			: searchInput;
+		selectedModels.length = 0;
+		renderComparison();
+		for (const cell of selected) {
+			const button = compareButtonByCell.get(cell);
+			if (button) updateCompareButton(button, cell);
+		}
+		for (const entry of compareButtonEntries) {
+			if (entry.button.disabled) updateCompareButton(entry.button, entry.cell);
+		}
+		focusTarget?.focus();
+	});
+
+	function compareModels(
+		a: (typeof indexedModels)[number],
+		b: (typeof indexedModels)[number],
+		dir: number,
+	): number {
+		const aPinned = a.pinnedIndex >= 0;
+		const bPinned = b.pinnedIndex >= 0;
+		if (aPinned && !bPinned) return -1;
+		if (!aPinned && bPinned) return 1;
+		if (aPinned && bPinned) return a.pinnedIndex - b.pinnedIndex;
+		return a.date === b.date ? 0 : (a.date < b.date ? -1 : 1) * dir;
+	}
+
+	const sortedModels: Record<SortOrder, typeof indexedModels> = {
+		newest: [...indexedModels].sort((a, b) => compareModels(a, b, -1)),
+		oldest: [...indexedModels].sort((a, b) => compareModels(a, b, 1)),
+	};
+	let renderedSort: SortOrder | null = null;
+	let relayoutFrame = 0;
+
+	function scheduleRelayout(): void {
+		if (relayoutFrame !== 0) return;
+		relayoutFrame = requestAnimationFrame(() => {
+			relayoutFrame = 0;
+			relayout();
+		});
+	}
+
+	function relayout(): number {
+		if (relayoutFrame !== 0) {
+			cancelAnimationFrame(relayoutFrame);
+			relayoutFrame = 0;
+		}
+		// Every search token must appear in the card text.
+		const queryTokens = state.search
+			.trim()
+			.toLowerCase()
+			.split(/\s+/)
+			.filter(Boolean);
+
+		// Converts selected filters to card facet values.
+		const selMatch: Record<string, string[]> = {};
+		for (const key of facetKeys) {
+			selMatch[key] = (state.selected[key] ?? []).map(
+				(v) => facetMatchMaps[key]?.[v] ?? v,
+			);
+		}
+
+		const orderedModels = sortedModels[state.sort];
+		const matches = orderedModels.filter((model) => {
+			const searchOk =
+				queryTokens.length === 0 ||
+				queryTokens.every((token) => model.search.includes(token));
+			if (!searchOk) return false;
+			return facetKeys.every((key) => {
+				const chosen = selMatch[key];
+				if (chosen.length === 0) return true;
+				const values = model.facets[key];
+				return chosen.some((value) => values.has(value));
+			});
+		});
+
+		const lgCols = resolveCols(matches.length);
+		const gridClass = LG_GRID_CLASS[lgCols] ?? LG_GRID_CLASS[1];
+		if (grid.className !== gridClass) grid.className = gridClass;
+		const cols =
+			typeof window !== "undefined" &&
+			window.matchMedia("(min-width: 1024px)").matches
+				? lgCols
+				: 1;
+
+		if (renderedSort !== state.sort) {
+			for (const model of orderedModels) grid.appendChild(model.cell);
+			renderedSort = state.sort;
+		}
+		const visibleCells = new Set(matches.map((model) => model.cell));
+		for (const model of indexedModels) {
+			const display = visibleCells.has(model.cell) ? "" : "none";
+			if (model.cell.style.display !== display)
+				model.cell.style.display = display;
+		}
+		matches.forEach((model, i) => {
+			const layoutSignature = `${i}:${cols}`;
+			if (!model.marks || model.layoutSignature === layoutSignature) return;
+			model.marks.innerHTML = cornerSpansHTML(cornersFor(i, cols));
+			model.layoutSignature = layoutSignature;
+		});
+
+		if (empty) empty.hidden = matches.length > 0;
+
+		countEl.textContent = String(matches.length);
+		countLabelEl.textContent = matches.length === 1 ? "model" : "models";
+
+		const hasActive = facetKeys.some(
+			(k) => (state.selected[k] ?? []).length > 0,
+		);
+		clearBtn.classList.toggle("hidden", !hasActive);
+
+		return matches.length;
+	}
+
+	function syncUrl() {
+		const params = new URLSearchParams();
+		if (state.search.trim()) params.set("search", state.search);
+		for (const key of facetKeys)
+			for (const v of state.selected[key] ?? []) params.append(key, v);
+		if (state.sort !== "newest") params.set("sort", state.sort);
+
+		const newUrl =
+			params.toString() === ""
+				? window.location.pathname
+				: `${window.location.pathname}?${params.toString()}`;
+
+		if (newUrl !== window.location.pathname + window.location.search) {
+			history.pushState(null, "", newUrl);
+		}
+	}
+
+	const initParams = new URLSearchParams(window.location.search);
+	const initSearch = initParams.get("search") ?? "";
+	if (initSearch) {
+		searchInput.value = initSearch;
+		state.search = initSearch;
+	}
+	const initSort = initParams.get("sort");
+	if (initSort === "oldest" || initSort === "newest") {
+		state.sort = initSort;
+	}
+	// Dropdowns initialize from the URL and dispatch filter events.
+
+	searchInput.addEventListener("input", () => {
+		state.search = searchInput.value;
+		if (document.visibilityState === "hidden") relayout();
+		else scheduleRelayout();
+		syncUrl();
+	});
+
+	document.addEventListener("model-catalog-filter", (e: Event) => {
+		const { key, value } = (e as CustomEvent<{ key: string; value: string[] }>)
+			.detail;
+		state.selected[key] = value;
+		relayout();
+		syncUrl();
+	});
+
+	document.addEventListener("model-catalog-sort", (e: Event) => {
+		const { value } = (e as CustomEvent<{ value: SortOrder }>).detail;
+		state.sort = value;
+		relayout();
+		syncUrl();
+	});
+
+	clearBtn.addEventListener("click", () => {
+		state.selected = {};
+		document.dispatchEvent(new CustomEvent("model-catalog-clear"));
+		relayout();
+		syncUrl();
+	});
+
+	// Reflows corner marks when the desktop breakpoint changes.
+	window
+		.matchMedia("(min-width: 1024px)")
+		.addEventListener("change", () => relayout());
+
+	relayout();
+</script>

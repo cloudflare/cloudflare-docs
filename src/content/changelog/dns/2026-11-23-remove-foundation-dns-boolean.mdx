@@ -1,0 +1,24 @@
+---
+title: DNS settings endpoints remove deprecated Foundation DNS boolean
+pcx_content_type: changelog
+description: Advanced Nameservers now use only the cloudflare.advanced nameserver type in DNS settings.
+date: 2026-11-23
+---
+
+Starting today, the [DNS settings endpoints](/api/resources/dns/subresources/settings/) no longer return or accept the deprecated `foundation_dns` boolean for zone settings or account defaults. The rollout is expected to take seven days. Use `nameservers.type: "cloudflare.advanced"` to configure Advanced Nameservers.
+
+Update clients that still read or write `foundation_dns`. Remove handling for the boolean and use the nameserver type instead. The zone settings JSON for [`/zones/{zone_id}/dns_settings`](/api/resources/dns/subresources/settings/subresources/zone/) is:
+
+```json
+{
+  "nameservers": {
+    "type": "cloudflare.advanced"
+  }
+}
+```
+
+Cloudflare will make an equivalent change to [`/accounts/{account_id}/dns_settings`](/api/resources/dns/subresources/settings/subresources/account/) at the same time.
+
+`PATCH` requests that include `foundation_dns` will be rejected.
+
+This API update does not change your Foundation DNS subscription or whether Advanced Nameservers are enabled on your zones. It does not require a zone migration.

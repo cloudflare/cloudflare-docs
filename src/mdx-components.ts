@@ -33,7 +33,6 @@ import YouTube from "./components/cf/YouTube.astro";
 import Example from "./components/cf/Example.astro";
 import Markdown from "./components/cf/Markdown.astro";
 import CURL from "./components/cf/CURL.astro";
-import GitHubCode from "./components/cf/GitHubCode.astro";
 import Width from "./components/cf/Width.astro";
 import RuleID from "./components/cf/RuleID.astro";
 import PublicStats from "./components/cf/PublicStats.astro";
@@ -41,7 +40,6 @@ import RSSButton from "./components/cf/RSSButton.astro";
 import GlossaryDefinition from "./components/cf/GlossaryDefinition.astro";
 import WranglerCommand from "./components/cf/WranglerCommand.astro";
 import AnchorHeading from "./components/cf/AnchorHeading.astro";
-import FeatureTable from "./components/cf/FeatureTable.astro";
 import PagesBuildPreset from "./components/cf/PagesBuildPreset.astro";
 import AvailableNotifications from "./components/cf/AvailableNotifications.astro";
 import Stream from "./components/cf/Stream.astro";
@@ -63,9 +61,7 @@ export const components = {
 	DirectoryListing,
 	Example,
 	Feature,
-	FeatureTable,
 	FileTree,
-	GitHubCode,
 	Glossary,
 	GlossaryDefinition,
 	GlossaryTooltip,

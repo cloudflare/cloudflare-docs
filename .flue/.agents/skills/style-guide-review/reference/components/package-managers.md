@@ -5,7 +5,7 @@ description: Rules for the PackageManagers component used for install/exec comma
 
 ## Rules
 
-- If a code block contains only `npm install`, `yarn add`, `pnpm add`, or `npx` commands → **warning**: use `<PackageManagers>` instead of a bare code fence.
+- If a code block contains only `npm install`, `yarn add`, `pnpm add`, `bun add`, or `npx` commands → **warning**: use `<PackageManagers>` instead of a bare code fence.
 
 ## Example
 

@@ -11,7 +11,7 @@
  * ui/badge; starlight-package-managers → our PackageManagers port.
  * ExtraFlagDetails slot machinery dropped (unused by Queues content).
  */
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 import { experimental_getWranglerCommands } from "wrangler";
 import { Badge } from "../ui/badge";
 import { PackageManagers } from "../ui/package-managers";
@@ -75,9 +75,9 @@ const Heading = `h${headingLevel}` as "h2";
 		</>
 	)
 }
-<Fragment set:html={marked.parse(description)} />
+<Fragment set:html={renderMarkdown(description)} />
 
-{epilogue && <Fragment set:html={marked.parse(epilogue)} />}
+{epilogue && <Fragment set:html={renderMarkdown(epilogue)} />}
 
 <PackageManagers
 	pkg="wrangler"

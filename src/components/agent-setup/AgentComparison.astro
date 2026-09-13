@@ -1,4 +1,6 @@
 ---
+import CornerMarks from "~/components/CornerMarks.astro";
+import { Badge } from "@/components/ui/badge";
 import type { AgentData } from "./types";
 import { capabilityLabels, capabilityTooltips } from "./definitions";
 
@@ -61,121 +63,152 @@ const rows: RowData[] = sorted.map((agent) => {
 	return { agent, sortKeys };
 });
 
-const checkIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="check" aria-label="Yes"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="dash" aria-label="No"><path d="M4 8H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+// Capability columns rendered as check / dash indicators, in table order.
+const CAP_COLUMNS: (keyof AgentData["capabilities"])[] = [
+	"terminal",
+	"ide",
+	"extension",
+	"cloud",
+];
+
+// Value columns rendered as Nimbus badges, in table order.
+const VALUE_COLUMNS: (keyof AgentData)[] = [
+	"pricing_model",
+	"model_flexibility",
+	"context_approach",
+];
+
+// Each distinct value maps to its own Badge tone (no danger/red), so the
+// same value always shares a color and no two values share one.
+type BadgeVariant =
+	"default" | "info" | "success" | "warning" | "cyan" | "orange" | "steel";
+const VALUE_VARIANT: Record<string, BadgeVariant> = {
+	subscription: "info",
+	hybrid: "warning",
+	byok: "cyan",
+	locked: "default",
+	multi_provider: "success",
+	project_memory: "orange",
+	indexed_codebase: "steel",
+	session: "default",
+};
+
+const checkIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Yes" style="display:inline-block;vertical-align:middle"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="No" style="display:inline-block;vertical-align:middle"><path d="M4 8H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 ---
 
 <div class="not-content">
-	<div class="agent-table-scroll">
-		<table
-			class="agent-setup-table agent-setup-table--sticky-first"
-			data-agent-table
-		>
-			<thead>
-				<tr>
-					{
-						COLUMNS.map((col, i) => (
-							<th
-								data-align={col.align ?? "center"}
-								aria-sort={i === 0 ? "ascending" : "none"}
-							>
-								<button
-									type="button"
-									class:list={["agent-table-sort", { "is-active": i === 0 }]}
-									data-sort-key={col.key}
+	<div class="border-border relative border">
+		<CornerMarks />
+		<div class="overflow-x-auto">
+			<table
+				class="w-full min-w-[900px] border-collapse text-sm"
+				data-agent-table
+			>
+				<thead>
+					<tr class="bg-muted">
+						{
+							COLUMNS.map((col, i) => (
+								<th
+									class:list={[
+										"border-border border-b p-0 align-middle",
+										i === 0 &&
+											"border-border bg-muted sticky left-0 z-20 border-r",
+									]}
+									data-align={col.align ?? "center"}
+									aria-sort={i === 0 ? "ascending" : "none"}
 								>
-									<span>{col.label}</span>
-									<span
-										class="agent-table-sort-indicator"
-										aria-hidden="true"
-										data-indicator
+									<button
+										type="button"
+										class:list={[
+											"text-muted-foreground hover:text-foreground data-[active=true]:text-primary flex w-full items-center gap-1.5 px-3 py-3 font-mono text-xs tracking-wider uppercase transition-colors",
+											col.align === "left" ? "justify-start" : "justify-center",
+										]}
+										data-sort-key={col.key}
+										data-active={i === 0 ? "true" : "false"}
 									>
-										{i === 0 ? "↑" : ""}
-									</span>
-								</button>
-							</th>
+										<span>{col.label}</span>
+										<span
+											class="text-primary text-[0.7rem]"
+											aria-hidden="true"
+											data-indicator
+										>
+											{i === 0 ? "↑" : ""}
+										</span>
+									</button>
+								</th>
+							))
+						}
+					</tr>
+				</thead>
+				<tbody data-agent-tbody>
+					{
+						rows.map(({ agent, sortKeys }) => (
+							<tr
+								class="group/row border-border hover:bg-muted/50 border-b transition-colors last:border-b-0"
+								data-sort-keys={JSON.stringify(sortKeys)}
+							>
+								<td
+									class="border-border bg-background group-hover/row:bg-muted/50 sticky left-0 z-10 border-r px-3 py-3 text-left align-middle"
+									data-align="left"
+								>
+									<a
+										href={`/agent-setup/${agent.slug}/`}
+										class="text-foreground hover:text-primary font-medium no-underline transition-colors"
+									>
+										{agent.name}
+									</a>
+								</td>
+
+								{CAP_COLUMNS.map((cap) => (
+									<td
+										class:list={[
+											"px-3 py-3 text-center align-middle",
+											agent.capabilities[cap]
+												? "agent-check"
+												: "text-muted-foreground/40",
+										]}
+										set:html={agent.capabilities[cap] ? checkIcon : dashIcon}
+									/>
+								))}
+
+								{VALUE_COLUMNS.map((key) => {
+									const value = agent[key] as string | undefined;
+									return (
+										<td class="px-3 py-3 text-center align-middle">
+											{value ? (
+												<Badge
+													text={capabilityLabels[value] ?? value}
+													variant={VALUE_VARIANT[value] ?? "default"}
+													size="small"
+													data-agent-tooltip={capabilityTooltips[value] ?? ""}
+												/>
+											) : (
+												<span class="text-muted-foreground/40">—</span>
+											)}
+										</td>
+									);
+								})}
+
+								<td
+									class:list={[
+										"px-3 py-3 text-center align-middle",
+										agent.capabilities.open_source
+											? "agent-check"
+											: "text-muted-foreground/40",
+									]}
+									set:html={
+										agent.capabilities.open_source ? checkIcon : dashIcon
+									}
+								/>
+							</tr>
 						))
 					}
-				</tr>
-			</thead>
-			<tbody data-agent-tbody>
-				{
-					rows.map(({ agent, sortKeys }) => (
-						<tr data-sort-keys={JSON.stringify(sortKeys)}>
-							<td data-align="left">
-								<a
-									href={`/agent-setup/${agent.slug}/`}
-									class="agent-table-name"
-								>
-									{agent.name}
-								</a>
-							</td>
-							<td
-								set:html={agent.capabilities.terminal ? checkIcon : dashIcon}
-							/>
-							<td set:html={agent.capabilities.ide ? checkIcon : dashIcon} />
-							<td
-								set:html={agent.capabilities.extension ? checkIcon : dashIcon}
-							/>
-							<td set:html={agent.capabilities.cloud ? checkIcon : dashIcon} />
-							<td>
-								{agent.pricing_model ? (
-									<span
-										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.pricing_model.replace("_", "-")}`}
-										data-agent-tooltip={
-											capabilityTooltips[agent.pricing_model] ?? ""
-										}
-									>
-										{capabilityLabels[
-											agent.pricing_model as keyof typeof capabilityLabels
-										] ?? agent.pricing_model}
-									</span>
-								) : (
-									<span class="agent-table-dim">—</span>
-								)}
-							</td>
-							<td>
-								{agent.model_flexibility ? (
-									<span
-										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.model_flexibility.replace("_", "-")}`}
-										data-agent-tooltip={
-											capabilityTooltips[agent.model_flexibility] ?? ""
-										}
-									>
-										{capabilityLabels[
-											agent.model_flexibility as keyof typeof capabilityLabels
-										] ?? agent.model_flexibility}
-									</span>
-								) : (
-									<span class="agent-table-dim">—</span>
-								)}
-							</td>
-							<td>
-								{agent.context_approach ? (
-									<span
-										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.context_approach.replace("_", "-")}`}
-										data-agent-tooltip={
-											capabilityTooltips[agent.context_approach] ?? ""
-										}
-									>
-										{capabilityLabels[
-											agent.context_approach as keyof typeof capabilityLabels
-										] ?? agent.context_approach}
-									</span>
-								) : (
-									<span class="agent-table-dim">—</span>
-								)}
-							</td>
-							<td
-								set:html={agent.capabilities.open_source ? checkIcon : dashIcon}
-							/>
-						</tr>
-					))
-				}
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	<p class="agent-table-footnote">
+	<p class="text-muted-foreground mt-3 text-center text-xs">
 		Every agent listed supports Skills and MCP.
 	</p>
 </div>
@@ -188,6 +221,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 		.forEach((el) => {
 			const content = el.dataset.agentTooltip;
 			if (!content) return;
+			el.style.cursor = "help";
 			addTooltip(el, content, { maxWidth: 280, delay: [150, 0] });
 		});
 
@@ -199,7 +233,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 
 			const rows = Array.from(tbody.querySelectorAll("tr"));
 			const buttons = Array.from(
-				table.querySelectorAll<HTMLButtonElement>(".agent-table-sort"),
+				table.querySelectorAll<HTMLButtonElement>("[data-sort-key]"),
 			);
 
 			let currentKey = "name";
@@ -220,7 +254,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 			const updateHeaders = (key: string, dir: "asc" | "desc") => {
 				buttons.forEach((btn) => {
 					const isActive = btn.dataset.sortKey === key;
-					btn.classList.toggle("is-active", isActive);
+					btn.dataset.active = String(isActive);
 					const indicator = btn.querySelector<HTMLElement>("[data-indicator]");
 					if (indicator) {
 						indicator.textContent = isActive ? (dir === "asc" ? "↑" : "↓") : "";

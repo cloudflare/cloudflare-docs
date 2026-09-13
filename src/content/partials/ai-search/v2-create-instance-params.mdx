@@ -28,42 +28,44 @@ Additional parameters for the data source.
 
 - `prefix` <Type text="string" /> <MetaInfo text="optional" />
   - For R2 sources, limits indexing to objects with this key prefix.
-
 - `r2_jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction for the R2 bucket, for example `eu`.
-
 - `include_items` <Type text="array" /> <MetaInfo text="optional" />
   - Glob patterns for paths to include in indexing. For example: `["/blog/**", "/docs/**/*.html"]`.
-
 - `exclude_items` <Type text="array" /> <MetaInfo text="optional" />
   - Glob patterns for paths to exclude from indexing. For example: `["/admin/**", "/private/**"]`.
-
 - `web_crawler` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for web crawler sources.
-
   - `parse_type` <Type text="string" /> <MetaInfo text="optional" />
-    - The parsing method. Valid value: `sitemap`.
-
+    - How pages are discovered. Valid values: `sitemap` (reads XML sitemaps), `discover` (starts at the source URL and, by default, uses both sitemaps and links found on crawled pages). Defaults to `sitemap`. Refer to [Parse types](/ai-search/configuration/data-source/website/parse-types/).
   - `parse_options` <Type text="object" /> <MetaInfo text="optional" />
     - `include_headers` <Type text="object" /> <MetaInfo text="optional" />
       - Custom HTTP headers to include when crawling.
-
     - `include_images` <Type text="boolean" /> <MetaInfo text="optional" />
       - Whether to include images in the index.
-
     - `specific_sitemaps` <Type text="array" /> <MetaInfo text="optional" />
-      - Specific sitemap URLs to crawl. For example: `["https://example.com/sitemap.xml"]`.
-
+      - Specific sitemap URLs to crawl. For example: `["https://example.com/sitemap.xml"]`. Only valid when `parse_type` is `sitemap`.
     - `use_browser_rendering` <Type text="boolean" /> <MetaInfo text="optional" />
       - Use Browser Run (formerly Browser Rendering) to crawl JavaScript-rendered pages.
-
+  - `discover_options` <Type text="object" /> <MetaInfo text="optional" />
+    - Crawl settings that apply when `parse_type` is `discover`.
+    - `source` <Type text="string" /> <MetaInfo text="optional" />
+      - Where the crawler looks for candidate URLs. Valid values: `all`, `sitemaps`, `links`. Defaults to `all`.
+    - `limit` <Type text="number" /> <MetaInfo text="optional" />
+      - Maximum number of pages to crawl. Valid values: `1` to `100000`. Defaults to `100000`.
+    - `depth` <Type text="number" /> <MetaInfo text="optional" />
+      - Maximum number of link hops to follow from the source URL. Valid values: `1` to `100000`. Defaults to `5`.
+    - `max_age` <Type text="number" /> <MetaInfo text="optional" />
+      - How long, in seconds, the crawler reuses cached page content before it re-fetches from the origin. Valid values: `0` to `604800`. Defaults to `86400`.
+    - `include_external_links` <Type text="boolean" /> <MetaInfo text="optional" />
+      - Whether to follow links that point to other domains. Defaults to `false`.
+    - `include_subdomains` <Type text="boolean" /> <MetaInfo text="optional" />
+      - Whether to follow links that point to subdomains of the source URL. Defaults to `false`.
   - `store_options` <Type text="object" /> <MetaInfo text="optional" />
     - `storage_type` <Type text="string" /> <MetaInfo text="optional" />
       - The storage type. Valid value: `r2`.
-
     - `storage_id` <Type text="string" /> <MetaInfo text="optional" />
       - The storage bucket ID.
-
     - `r2_jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
       - The jurisdiction for the storage bucket.
 
@@ -75,7 +77,6 @@ Configures which indexing methods are enabled for the instance. Determines wheth
 
 - `vector` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enable vector-based semantic search. Defaults to `true`.
-
 - `keyword` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enable keyword-based search. Defaults to `false`.
 
@@ -104,7 +105,6 @@ Default retrieval configuration for the instance. These defaults can be overridd
 
 - `keyword_match_mode` <Type text="string" /> <MetaInfo text="optional" />
   - Controls how keyword (BM25) matching selects candidate documents. `and` requires all terms to match. `or` requires any term to match. Defaults to `and`.
-
 - `boost_by` <Type text="array" /> <MetaInfo text="optional" />
   - Default boost fields applied to all search queries. Maximum 3 items. Each item has:
     - `field` <Type text="string" /> <MetaInfo text="required" /> - The metadata field name to boost by. Maximum 64 characters.
@@ -214,7 +214,6 @@ Custom metadata fields to extract and index from documents.
 
 - `field_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the metadata field.
-
 - `data_type` <Type text="string" /> <MetaInfo text="required" />
   - The data type of the field. Valid values: `text`, `number`, `boolean`, `datetime`.
 

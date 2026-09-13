@@ -16,7 +16,7 @@ description: Always load for any MDX file with added content lines.
 - If prose uses `etc.` → **suggestion**: replace with a complete list or `and so on`.
 - If prose uses LLM-filler phrases (`Note that`, `It is worth noting that`, `It is important to note that`, `Please note that`, `Keep in mind that`) → **suggestion**: remove the filler and state the fact directly.
 - If prose uses passive voice where active voice would be clearer → **suggestion**: rewrite in active voice.
-- If a list or sentence has three or more items without an Oxford comma before `and` or `or` → **suggestion**: add the serial comma.
+- If a sentence has a list of three or more items joined by `and` or `or`, and the comma is **missing** before the final conjunction → **suggestion**: add the serial comma. Before flagging, verify the comma is actually absent. The serial comma goes immediately before the final top-level `and`/`or` that separates the last item from the earlier items. Do not flag if the comma is already present. Example to NOT flag: `shared with the wrong audience, exposed in client code or a screenshare, or need to be refreshed` — the comma before the final `or` is already there. Example to flag: `Workers, KV and D1` — no comma before `and`.
 - If prose uses a semicolon to join two independent clauses → **suggestion**: break into two sentences.
 
 ---

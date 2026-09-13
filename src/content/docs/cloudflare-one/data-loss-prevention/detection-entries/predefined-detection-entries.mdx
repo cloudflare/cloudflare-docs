@@ -28,12 +28,11 @@ You can add any predefined detection entry directly to a custom [DLP profile](/c
 | Amazon AWS Secret Access Key | Detects potential Amazon AWS secret access keys such as `<AWS_SECRET_ACCESS_KEY>`. |
 | American Express Card Number | Detects American Express credit card numbers such as "378282246310005". |
 | American Express Text | Detects mentions of the American Express brand name such as "American Express". |
-| AU Passport Number | Detects Australian passport numbers such as "L1234567". |
 | Australia Address | Detects Australian street addresses with state and postcode such as "100 George St, Sydney NSW 2000". |
 | Australia Business (ABN) | Detects Australian Business Numbers (ABN) such as "51 824 753 556". |
 | Australia Company (ACN) | Detects Australian Company Numbers (ACN) such as "001 000 004". |
 | Australia Medicare | Detects Australian Medicare card numbers such as "2000000006". |
-| Australia Passport | Detects Australian passport numbers such as "L1234567". |
+| Australia Passport Number | Detects Australian passport numbers such as "L1234567". |
 | Australia Tax File Number | Detects Australian Tax File Numbers (TFN) such as "85 655 734". |
 | Austria SSN (SV-Nummer) | Detects Austrian social security numbers (SV-Nummer) such as "1018 010180". |
 | Austria Tax ID | Detects Austrian tax identification numbers (Steuernummer) such as "12 345/6789". |
@@ -59,6 +58,7 @@ You can add any predefined detection entry directly to a custom [DLP profile](/c
 | Cloudflare User API Key | Detects Cloudflare user API keys such as `cfk_<USER_API_KEY>`. |
 | Cloudflare User API Token | Detects Cloudflare user API tokens such as `cfut_<USER_API_TOKEN>`. |
 | Croatia Personal ID (OIB) | Detects Croatian personal identification numbers (OIB) such as "10000000005". |
+| CVV Card Number (labeled) | Detects credit card CVV/CVC verification codes in context of the "cvv" keyword, such as "cvv: 033". |
 | Denmark Tax (CPR) | Detects Danish personal identification numbers (CPR-nummer) such as "010180-0008". |
 | Diners Club Card Number | Detects Diners Club credit card numbers such as "30121690374838". |
 | Discord Webhook | Detects Discord webhook URLs such as a webhook URL under `discord.com/api/webhooks/`. |
@@ -74,7 +74,6 @@ You can add any predefined detection entry directly to a custom [DLP profile](/c
 | France Tax ID (SPI) | Detects French tax identification numbers (Numéro fiscal SPI) such as "1234567890123". |
 | France VAT | Detects French VAT numbers such as "FR12000000000". |
 | Full Name | Detects personal full names. |
-| Generic CVV Card Number | Detects credit card CVV/CVC verification codes in context of the "cvv" keyword, such as "cvv: 033". |
 | Germany Tax ID | Detects German tax identification numbers (Steueridentifikationsnummer) such as "10000000005". |
 | Germany VAT | Detects German VAT numbers (USt-IdNr) such as "DE100000003". |
 | GitHub PAT | Detects GitHub personal access tokens such as a token beginning with `ghp_`. |
@@ -96,10 +95,10 @@ You can add any predefined detection entry directly to a custom [DLP profile](/c
 | Ireland Tax (PPS) | Detects Irish Personal Public Service numbers (PPS) such as "1234567FA". |
 | Ireland VAT | Detects Ireland VAT numbers such as "IE1234567T". |
 | Italy Fiscal Code | Detects Italian fiscal codes (Codice Fiscale) such as "BNZVCN32S10E573Z". |
-| Japan Address | Detects Japanese postal addresses identified by a postal code marker such as "〒100-0001". |
+| Japan Postal Code | Detects a Japanese postal code preceded by the 〒 marker, such as "〒100-0001". Free-form addresses without a 〒 postal-code marker are not matched. |
 | Japan My Number (Corp) | Detects Japanese corporate My Number identifiers (Hojin Bango) such as "7000012050002". |
 | Japan My Number (Person) | Detects Japanese individual My Number identifiers (Kojin Bango) such as "100000000005". |
-| Japan Names (Kanji) | Detects Japanese personal names written in kanji and labeled in context such as "氏名: 田中太郎". |
+| Japan Names (Kanji, labeled) | Detects a kanji personal name only when it immediately follows an inline label such as 氏名, 名前, or Name — for example "氏名: 田中太郎". Bare kanji names with no preceding label (for example a standalone name or one in a spreadsheet column) are not matched. |
 | Japan Passport | Detects Japanese passport numbers such as "TZ1234567". |
 | Java | Detects Java source code. |
 | JavaScript | Detects JavaScript source code. |
@@ -159,6 +158,5 @@ You can add any predefined detection entry directly to a custom [DLP profile](/c
 | US Mailing Address | Detects US mailing addresses such as "100 First St, Chicago, IL 60601". |
 | US Passport Number | Detects US passport numbers such as "A12345678". |
 | US Phone Number | Detects US phone numbers such as "555-555-5555". |
-| US Physical Address | Detects US street addresses with state and ZIP code such as "100 First St, Chicago, IL 60601". |
 | Visa Card Number | Detects Visa credit card numbers such as "4111 1111 1111 1111". |
 | Visa Text | Detects mentions of the Visa brand name such as "Visa". |

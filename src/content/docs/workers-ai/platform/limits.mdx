@@ -59,6 +59,18 @@ Rate limits are default per task type, with some per-model limits defined as fol
 - [@cf/qwen/qwen1.5-14b-chat-awq](/workers-ai/models/qwen1.5-14b-chat-awq/) is 150 requests per minute
 - [@cf/tinyllama/tinyllama-1.1b-chat-v1.0](/workers-ai/models/tinyllama-1.1b-chat-v1.0/) is 720 requests per minute
 
+#### Frontier models
+
+The following limits apply per account, per model:
+
+| Model                                                               | Standard Workers AI billing | Prepaid AI Gateway credits |
+| ------------------------------------------------------------------- | --------------------------- | -------------------------- |
+| [@cf/moonshotai/kimi-k2.6](/workers-ai/models/kimi-k2.6/)           | 20 requests per minute      | 50 requests per minute     |
+| [@cf/moonshotai/kimi-k2.7-code](/workers-ai/models/kimi-k2.7-code/) | 20 requests per minute      | 50 requests per minute     |
+| [@cf/zai-org/glm-5.2](/workers-ai/models/glm-5.2/)                  | 20 requests per minute      | 50 requests per minute     |
+
+To receive the elevated limit, load [prepaid AI Gateway credits](/ai-gateway/features/unified-billing/) and set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**. These limits are designed for typical agentic and coding workloads, where requests to frontier models can take longer to complete.
+
 ### [Text-to-Image](/workers-ai/models/)
 
 - 720 requests per minute

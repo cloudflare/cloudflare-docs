@@ -33,6 +33,8 @@ Code Mode is experimental and may have breaking changes. Use caution in producti
 
 You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side method for authenticating API requests.
 
+`openApiMcpServer()` currently returns an SDK v1 server. Serve it through the explicit legacy `createLegacyMcpHandler` API.
+
 ## Publish the service
 
 <Steps>
@@ -64,7 +66,7 @@ You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side 
    ```ts
    import { DynamicWorkerExecutor } from "@cloudflare/codemode";
    import { openApiMcpServer } from "@cloudflare/codemode/mcp";
-   import { createMcpHandler } from "agents/mcp";
+   import { createLegacyMcpHandler } from "agents/mcp";
 
    const SPEC_URL = "https://api.example.com/openapi.json";
    const API_ORIGIN = "https://api.example.com";
@@ -125,21 +127,19 @@ You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side 
    								: JSON.stringify(options.body),
    				});
 
-   				if (response.status === 204) return null;
-
-   				const responseType = response.headers.get("Content-Type") ?? "";
-   				const result = responseType.includes("application/json")
-   					? await response.json()
-   					: await response.text();
-
    				if (!response.ok) {
    					throw new Error(`API request failed: ${response.status}`);
    				}
-   				return result;
+   				if (response.status === 204) return null;
+
+   				const responseType = response.headers.get("Content-Type") ?? "";
+   				return responseType.includes("application/json")
+   					? await response.json()
+   					: await response.text();
    			},
    		});
 
-   		return createMcpHandler(server, { route: "/mcp" })(
+   		return createLegacyMcpHandler(server, { route: "/mcp" })(
    			request,
    			env,
    			ctx,

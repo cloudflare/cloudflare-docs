@@ -1,0 +1,289 @@
+---
+title: Terminals
+pcx_content_type: reference
+sidebar:
+  order: 2
+description: Reference for createTerminal, Terminal handles, output streams, connect, and control methods in the Sandbox SDK 1.0 preview.
+products:
+  - sandbox
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents the terminal API on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable `sandbox.terminal()` helper, refer to [Terminal](/sandbox/api/terminal/).
+:::
+
+Create and control interactive PTY terminals in the current container for a sandbox.
+
+For the mental model and browser connect walkthrough, refer to [Terminals](/sandbox/1-0-preview/terminals/).
+
+## `createTerminal()`
+
+Start a terminal from **argv** (usually a shell). Resolves when the terminal resource is created. Same rules as process `exec`: no implicit shell wrapping, and argv entries are not shell-escaped.
+
+```ts
+createTerminal(options: CreateTerminalOptions): Promise<Terminal>
+```
+
+### `CreateTerminalOptions`
+
+| Field        | Type                     | Description                                                                 |
+| ------------ | ------------------------ | --------------------------------------------------------------------------- |
+| `command`    | `SandboxCommand`         | Argv to run under the PTY. Required. Example: `['bash']` or `['/bin/bash']`. |
+| `cwd`        | `string`                 | Working directory for the terminal process.                                 |
+| `env`        | `Record<string, string>` | Environment overlay for this terminal. Does not mutate later launches.      |
+| `cols`       | `number`                 | Initial width in columns.                                                   |
+| `rows`       | `number`                 | Initial height in rows.                                                     |
+| `bufferSize` | `number`                 | Output buffer sizing for replay (when supported by the runtime).            |
+
+`SandboxCommand` is the same argv type as process `exec`: `readonly [executable: string, ...args: string[]]`.
+
+### Returns
+
+`Promise<Terminal>` — a handle for the terminal in the **current container**.
+
+<TypeScriptExample>
+```ts
+const terminal = await sandbox.createTerminal({
+	command: ["bash"],
+	cwd: "/workspace",
+	env: { TERM: "xterm-256color" },
+	cols: 120,
+	rows: 40,
+});
+
+console.log(terminal.id);
+```
+</TypeScriptExample>
+
+## `getTerminal()`
+
+Return a handle for a terminal in the **current container**, or `null`.
+
+Does not start a container if none is running. Returns `null` when no container is up, when the terminal ID is unknown in the current container, or when that terminal belonged to a previous container for the same sandbox ID.
+
+```ts
+getTerminal(id: string): Promise<Terminal | null>
+```
+
+## `listTerminals()`
+
+List terminals in the current container for this sandbox. Does not start a container if none is running. Returns an empty list when no container is up.
+
+```ts
+listTerminals(): Promise<Terminal[]>
+```
+
+## `Terminal`
+
+| Member                   | Description                                                                 |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `id`                     | Terminal ID in the current container.                                       |
+| `getSnapshot()`          | Current snapshot (`running` / `exited` / `error`).                          |
+| `write(data)`            | Write bytes to the PTY (stdin).                                             |
+| `resize(cols, rows)`     | Resize the PTY.                                                             |
+| `output(options?)`       | Cursor-based output event stream.                                           |
+| `waitForExit(options?)`  | Wait until the terminal completes.                                          |
+| `interrupt()`            | Send an interrupt to the terminal session (for example Ctrl-C semantics).   |
+| `terminate()`            | End the terminal resource.                                                  |
+| `connect(request, opts?)` | Accept a browser WebSocket upgrade and attach it to this terminal.        |
+
+### `getSnapshot()`
+
+```ts
+interface TerminalSnapshot {
+	id: string;
+	pid?: number;
+	command: SandboxCommand;
+	cwd?: string;
+	status: "running" | "exited" | "error";
+	exit?: ProcessExit;
+	error?: ProcessFailure;
+}
+```
+
+### `write()`
+
+```ts
+write(data: Uint8Array): Promise<void>
+```
+
+Write bytes to the PTY. Browser keystrokes normally arrive through `connect()` instead.
+
+### `resize()`
+
+```ts
+resize(cols: number, rows: number): Promise<void>
+```
+
+### `output()`
+
+```ts
+output(options?: TerminalOutputOptions): Promise<ReadableStream<TerminalOutputEvent>>
+```
+
+#### `TerminalOutputOptions`
+
+| Field     | Type          | Description                                      |
+| --------- | ------------- | ------------------------------------------------ |
+| `since`   | `string`      | Opaque cursor; resume after a previous event.    |
+| `replay`  | `boolean`     | Include buffered history when resuming.          |
+| `follow`  | `boolean`     | Keep the stream open for live output.            |
+| `signal`  | `AbortSignal` | Cancel this subscription only. The terminal keeps running. |
+
+#### `TerminalOutputEvent`
+
+```ts
+type TerminalOutputEvent =
+	| {
+			type: "data";
+			terminalId: string;
+			cursor: string;
+			timestamp: string;
+			data: Uint8Array;
+	  }
+	| {
+			type: "terminal";
+			terminalId: string;
+			cursor: string;
+			timestamp: string;
+			state: "exited";
+			exit: ProcessExit;
+	  }
+	| {
+			type: "terminal";
+			terminalId: string;
+			cursor: string;
+			timestamp: string;
+			state: "error";
+			error: ProcessFailure;
+	  }
+	| {
+			type: "truncated";
+			terminalId: string;
+			cursor?: string;
+			timestamp: string;
+	  };
+```
+
+Retain the latest `cursor` from delivered events if you reconnect or call `output({ since, replay: true })` later on the **same** terminal in the **same** container.
+
+### `waitForExit()`
+
+```ts
+waitForExit(options?: {
+	timeout?: number;
+	signal?: AbortSignal;
+}): Promise<ProcessExit>
+```
+
+Local `timeout` / `signal` cancel only the wait. They do not terminate the terminal. Call `terminate()` or `interrupt()` when you intend to stop it.
+
+### `interrupt()` and `terminate()`
+
+```ts
+interrupt(): Promise<void>
+terminate(): Promise<void>
+```
+
+These are terminal control operations. They are not the same as process `kill(signal)` on an `exec` handle.
+
+### `connect()`
+
+Attach a browser (or other) WebSocket upgrade request to this terminal.
+
+```ts
+connect(
+	request: Request,
+	options?: {
+		cursor?: string;
+		cols?: number;
+		rows?: number;
+	},
+): Promise<Response>
+```
+
+- `request` must be a WebSocket upgrade request.
+- `cursor` resumes output replay after a previous disconnect when the client has one.
+- `cols` / `rows` set the PTY size for this attachment when provided.
+
+Returns the WebSocket upgrade `Response` your Worker should return to the client.
+
+<TypeScriptExample>
+```ts
+const url = new URL(request.url);
+const terminalId = url.searchParams.get("terminalId");
+if (!terminalId) {
+	return new Response("terminalId is required", { status: 400 });
+}
+
+const terminal = await sandbox.getTerminal(terminalId);
+if (!terminal) {
+	return new Response("Terminal not found", { status: 404 });
+}
+
+return terminal.connect(request, {
+	cursor: url.searchParams.get("cursor") ?? undefined,
+	cols: 120,
+	rows: 40,
+});
+```
+</TypeScriptExample>
+
+For the full Worker + xterm.js path, refer to [Terminals](/sandbox/1-0-preview/terminals/#browser-connect).
+
+## Client helper: `@cloudflare/sandbox/xterm`
+
+`SandboxAddon` integrates [xterm.js](https://xtermjs.org/) with preview terminals.
+
+<TypeScriptExample>
+```ts
+import { SandboxAddon } from "@cloudflare/sandbox/xterm";
+
+const addon = new SandboxAddon({
+	// `origin` is already a WebSocket origin (`wss://` or `ws://`).
+	getWebSocketUrl: ({ sandboxId, terminalId, cursor, origin }) => {
+		const params = new URLSearchParams({ sandboxId });
+		if (terminalId) params.set("terminalId", terminalId);
+		if (cursor) params.set("cursor", cursor);
+		return `${origin}/ws/terminal?${params}`;
+	},
+	reconnect: true,
+	onStateChange: (state, error) => {
+		/* update UI */
+	},
+});
+```
+</TypeScriptExample>
+
+| Item | Preview detail |
+| ---- | -------------- |
+| Connection target | `{ sandboxId, terminalId? }` |
+| `getWebSocketUrl` params | `sandboxId`, `terminalId?`, `cursor?`, `origin` |
+| Properties | `state`, `sandboxId`, `terminalId` |
+
+`@xterm/xterm` is an optional peer dependency of the preview package.
+
+## Common errors
+
+| Situation | Class / outcome |
+| --------- | --------------- |
+| Unknown terminal ID in the current container | `TerminalNotFoundError` |
+| `getTerminal` / `listTerminals` while no container is running | `null` / `[]` (not an error; does not start a container) |
+| Handle or terminal ID from a previous container | `StaleTerminalHandleError` |
+| Invalid working directory at create | `InvalidTerminalCwdError` |
+| Invalid output cursor | `InvalidTerminalCursorError` |
+| Control operation failed | `TerminalControlError` |
+
+Recovery guidance: [Errors and recovery](/sandbox/1-0-preview/errors/). Full catalog: [Errors API](/sandbox/1-0-preview/api/errors/). Lifetime: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives).
+
+## Related
+
+- [Terminals](/sandbox/1-0-preview/terminals/)
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Errors API](/sandbox/1-0-preview/api/errors/)
+- [Processes API](/sandbox/1-0-preview/api/processes/)
+- [API reference](/sandbox/1-0-preview/api/)
+- [Migrate](/sandbox/1-0-preview/migrate/)
+- Stable: [Terminal](/sandbox/api/terminal/)

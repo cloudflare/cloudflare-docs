@@ -16,7 +16,7 @@ head:
 
 ## High-risk domains
 
-Occasionally, a domain will be flagged as “high risk” by Cloudflare’s CA partners. Typically this is done only for domains with an Alexa ranking of 1-1,000 and domains that have been flagged for phishing or malware by Google’s Safe Browsing service.
+Cloudflare's CA partners occasionally flag a domain as "high risk" — typically only for domains that Google's Safe Browsing service has flagged for phishing or malware.
 
 If a domain is flagged by the CA, you need to contact Support before validation can finish. The API call will return indicating the failure, along with a link to where the ticket can be filed.
 
@@ -59,6 +59,38 @@ If a certificate issuance times out, the error message will indicate where the t
 To fix this error, send a [PATCH request](/api/resources/custom_hostnames/methods/edit/) through the API or select **Refresh** for the specific custom hostname in the dashboard. If using the API, make sure that the `--data` field contains an `ssl` object with the same `method` and `type` as the original request.
 
 If these return an error, delete and recreate the custom hostname.
+
+***
+
+
+## Conflicting `_acme-challenge` TXT records
+
+If certificate validation is stuck despite the correct CNAME or TXT records being in place, a conflicting `_acme-challenge` TXT record may be preventing the certificate authority from completing validation.
+
+### How to diagnose
+
+Check whether the delegation CNAME is in place at the `_acme-challenge` hostname:
+
+```sh
+dig _acme-challenge.example.com CNAME +short
+```
+
+- If this returns **nothing**, the delegation CNAME is missing. Run a `TXT` query to check whether a hardcoded record is also present:
+
+  ```sh
+  dig _acme-challenge.example.com TXT +short
+  ```
+
+  If this returns a raw token string, a hardcoded `_acme-challenge` TXT record is blocking certificate issuance — remove it before adding the delegation CNAME.
+- If this returns a **CNAME target** but certificate validation is still stuck, the conflict is likely a hardcoded `_acme-challenge` TXT record inside your customer's direct Cloudflare zone. Because resolvers follow the CNAME chain rather than exposing records at the source name, the only way to confirm this is to inspect the customer's zone directly: go to **DNS** > **Records** in the Cloudflare dashboard for their zone and look for any `_acme-challenge` TXT entries.
+
+### Common causes and remediation
+
+**Record from a prior Cloudflare certificate order** — Cloudflare adds `_acme-challenge` TXT records during certificate issuance. Records from a previous or abandoned order may persist and are not always visible in the Cloudflare dashboard. [Contact Cloudflare Support](/support/contacting-cloudflare-support/) to have them removed.
+
+**Record in a direct Cloudflare zone** — If your customer's domain is also present in a direct Cloudflare zone (for example, they proxy `example.com` through their own Cloudflare account), that zone may have an `_acme-challenge` TXT record from a Universal SSL or Advanced certificate order. When the certificate authority queries `_acme-challenge.example.com`, it resolves the record from the direct zone rather than following the delegated DCV CNAME.
+
+To resolve this, ask your customer to remove the `_acme-challenge` TXT record from their zone's DNS settings in the Cloudflare dashboard, then [trigger an immediate validation check](#immediate-validation-checks).
 
 ***
 

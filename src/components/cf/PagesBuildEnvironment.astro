@@ -7,7 +7,7 @@
  */
 import { getCollection, type CollectionEntry } from "astro:content";
 import { Tabs, TabItem } from "../ui/tabs";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 
 type VersionWithBuildEnvironment =
 	CollectionEntry<"pages-build-environment"> & {
@@ -37,7 +37,7 @@ const versions = (await getCollection("pages-build-environment")).filter(
 								<strong>Build environment</strong>
 							</td>
 							<td
-								set:html={marked.parse(
+								set:html={renderMarkdown(
 									version.data.build_environment.operating_system,
 								)}
 							/>

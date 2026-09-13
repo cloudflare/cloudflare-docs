@@ -30,6 +30,12 @@
 		"when": "Patch changes frontmatter fields at the top of the file."
 	},
 	{
+		"id": "images",
+		"file": "reference/conditional/images.md",
+		"load": "conditional",
+		"when": "Patch contains image syntax (![), <img, /images/, public/images, ~/assets/images, or common image file extensions."
+	},
+	{
 		"id": "component-anchor-heading",
 		"file": "reference/components/anchor-heading.md",
 		"load": "component",
@@ -72,13 +78,6 @@
 		"when": "Patch contains `<FileTree` or imports `FileTree`."
 	},
 	{
-		"id": "component-github-code",
-		"file": "reference/components/github-code.md",
-		"load": "component",
-		"componentNames": ["GitHubCode"],
-		"when": "Patch contains `<GitHubCode` or imports `GitHubCode`."
-	},
-	{
 		"id": "component-markdown",
 		"file": "reference/components/markdown.md",
 		"load": "component",
@@ -96,7 +95,7 @@
 		"id": "component-steps",
 		"file": "reference/components/steps.md",
 		"load": "component",
-		"componentNames": ["Steps"],
+		"componentNames": ["Steps", "Step"],
 		"when": "Patch contains `<Steps` or imports `Steps`."
 	},
 	{

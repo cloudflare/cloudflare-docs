@@ -1,6 +1,6 @@
 # Cloudflare Docs — Component Reference
 
-Full usage details for MDX components available in this repository. All components are imported from `~/components`. Imports must appear after the frontmatter block.
+Full usage details for MDX components available in this repository. Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`. Page-specific wrapper components or one-off components may use deep paths instead of adding to the barrel. Imports must appear after the frontmatter block.
 
 ---
 
@@ -54,9 +54,10 @@ Props:
 
 - `filename` — optional, must end in `.ts`. The JS tab shows the `.js` equivalent.
 - `playground` — boolean. Adds "Run Worker in Playground" button to the JS tab.
-- `code` — object. Expressive Code options (e.g. `collapse: "1-2"`). Apply to both tabs.
+- `omitTabs` — boolean. Renders the TypeScript block without the JS/TS tab wrapper (useful for inline snippets).
+- `code` — object. Astro `Code` component props (e.g. `{ collapse: "1-2" }`). Apply to both tabs.
 
-Note: Expressive Code fence options (`collapse={1-2}`, etc.) cannot be set on the fence directly — pass them via the `code` prop instead.
+Note: Code fence options (`collapse={1-2}`, etc.) cannot be set on the fence directly — pass them via the `code` prop instead.
 
 ---
 
@@ -91,7 +92,7 @@ database_id = "<unique-ID-for-your-database>"
 
 ## PackageManagers
 
-Shows a command across npm, yarn, and pnpm in synced tabs. **Required for package install/exec commands** — do not use bare `sh` fences for these.
+Shows a command across npm, yarn, pnpm, and bun in synced tabs. **Required for package install/exec commands** — do not use bare `sh` fences for these.
 
 ```mdx
 import { PackageManagers } from "~/components";
@@ -132,7 +133,7 @@ Do not nest tabs inside tabs — restructure into separate headings instead. The
 
 ## Steps
 
-Wraps a numbered Markdown list to render as a visual step-by-step procedure. Use for all multi-step procedures in how-to and tutorial pages.
+Wraps a numbered Markdown list to render as a visual step-by-step procedure. Use for all multi-step procedures in how-to and tutorial pages. Alternatively, use `<Step>` children instead of a numbered list:
 
 ```mdx
 import { Steps } from "~/components";
@@ -141,6 +142,19 @@ import { Steps } from "~/components";
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **DNS** > **Records**.
 3. Select **Add record**.
+</Steps>
+```
+
+```mdx
+import { Steps, Step } from "~/components";
+
+<Steps>
+	<Step title="Install">
+		Run <code>npm install</code>.
+	</Step>
+	<Step title="Configure">
+		Edit <code>config.json</code>.
+	</Step>
 </Steps>
 ```
 
@@ -177,14 +191,11 @@ import { Plan } from "~/components";
 <Plan type="paid" />        <!-- Paid plans only -->
 <Plan type="pro" />         <!-- Pro and above -->
 <Plan type="business" />    <!-- Business and above -->
+<Plan type="enterprise" />  <!-- Enterprise-only -->
 <Plan type="add-on" />      <!-- Available as add-on -->
 <Plan type="ent-add-on" />  <!-- Enterprise add-on -->
 <Plan type="workers-all" /> <!-- All Workers plans -->
 <Plan type="workers-paid" /><!-- Workers paid plans -->
-
-<!-- Pull availability from a product's index.json: -->
-
-<Plan id="web3.ethereum.properties.availability.summary" />
 ```
 
 ---
@@ -299,43 +310,6 @@ Props: `url` (required, must exist in `src/content/dash-routes/index.json` — b
 
 ---
 
-## GitHubCode
-
-Fetches and displays a file from a Cloudflare GitHub repository. Use a full 40-character commit hash — never a branch name — so the content stays stable as the repo evolves.
-
-```mdx
-import { GitHubCode } from "~/components";
-
-<GitHubCode
-	repo="cloudflare/workers-rs"
-	file="templates/hello-world/src/lib.rs"
-	commit="ab3951b5c95329a600a7baa9f9bb1a7a95f1aeaa"
-	lang="rs"
-/>
-
-<!-- TypeScript with auto-generated JS tab: -->
-
-<GitHubCode
-	repo="cloudflare/workflows-starter"
-	file="src/index.ts"
-	commit="a844e629ec80968118d4b116d4b26f5dcb107137"
-	lang="ts"
-	useTypeScriptExample={true}
-/>
-
-<!-- Filter by line range: -->
-
-<GitHubCode repo="..." file="..." commit="..." lang="..." lines="1-3" />
-
-<!-- Filter by tag (source must wrap content in <docs-tag name="..."> comments): -->
-
-<GitHubCode repo="..." file="..." commit="..." lang="..." tag="no-logging" />
-```
-
-Props: `repo` (`cloudflare/<name>`), `file` (path within repo), `commit` (40-char hash), `lang`, `useTypeScriptExample` (boolean), `lines` (range string), `tag` (string), `code` (Expressive Code options).
-
----
-
 ## DirectoryListing
 
 Auto-generates a listing of child pages. Used in `navigation` and `overview` pages.
@@ -360,7 +334,7 @@ import { Badge } from "~/components";
 <Badge text="Deprecated" variant="danger" />
 ```
 
-Variants: `note` (blue), `tip` (purple), `caution` (orange), `danger` (red), `success` (green).
+Variants: `note` (blue), `tip` (purple), `caution` (orange), `danger` (red), `success` (green), `default`, `info`, `warning`, `cyan`, `orange`, `steel`.
 
 Can also be added to the sidebar via frontmatter without importing:
 
@@ -375,26 +349,30 @@ sidebar:
 
 ## Card / LinkTitleCard / ListCard
 
-Nimbus components for styled card containers. Used on overview and navigation pages.
+Nimbus components for styled card containers. Used on overview and navigation pages. Pass `icon` as an Iconify icon name (e.g. `ph:rocket-launch`).
 
 ```mdx
 import { Card, LinkTitleCard, ListCard } from "~/components";
 
 <!-- Informational card with icon -->
 
-<Card title="Check this out" icon="puzzle">
+<Card title="Check this out" icon="ph:puzzle-piece">
 	Interesting content you want to highlight.
 </Card>
 
 <!-- Card that links to another page -->
 
-<LinkTitleCard title="Get started" icon="rocket" href="/workers/get-started/">
+<LinkTitleCard
+	title="Get started"
+	icon="ph:rocket-launch"
+	href="/workers/get-started/"
+>
 	Deploy your first Worker in minutes.
 </LinkTitleCard>
 
 <!-- Card with a list of links -->
 
-<ListCard title="Resources" icon="open-book">
+<ListCard title="Resources" icon="ph:book-open">
 	- [Docs](/workers/) - [API reference](/api/)
 </ListCard>
 ```
@@ -433,7 +411,7 @@ import { Stream } from "~/components";
 <Stream file="warp-1-basics" />
 ```
 
-Props: `id` (required unless using `file`), `title` (required unless using `file`), `thumbnail` (timestamp or URL), `chapters` (record of label → timestamp), `expandChapters` (boolean), `showMoreVideos` (boolean, default `true`), `file` (collection entry name — mutually exclusive with `id`/`title`/`thumbnail`/`chapters`).
+Props: `id` (required unless using `file`), `title` (required unless using `file`), `thumbnail` (timestamp or URL), `chapters` (record of label → timestamp), `expandChapters` (boolean), `showMoreVideos` (boolean, default `false`), `file` (collection entry name — mutually exclusive with `id`/`title`/`thumbnail`/`chapters`).
 
 ---
 
@@ -469,7 +447,7 @@ import { APIRequest } from "~/components";
 />
 ```
 
-Props: `path` (required), `method` (required), `parameters` (URL path + query substitutions), `json` (JSON body), `form` (FormData body), `roles` (API token roles filter — `true` shows all, `false` hides, string filters by substring), `code` (Expressive Code options).
+Props: `path` (required), `method` (required), `parameters` (URL path + query substitutions), `json` (JSON body), `form` (FormData body), `roles` (API token roles filter — `true` shows all, `false` hides, string filters by substring), `code` (Astro `Code` options).
 
 ---
 
@@ -488,7 +466,7 @@ import { CURL } from "~/components";
 />
 ```
 
-Props: `url` (required), `method` (default `GET`), `headers`, `json`, `form`, `query`, `code` (Expressive Code options).
+Props: `url` (required), `method` (default `GET`), `headers`, `json`, `form`, `query`, `code` (Astro `Code` options).
 
 ---
 
@@ -508,21 +486,6 @@ import { WranglerCommand } from "~/components";
 	command="deploy"
 	description={"Deploy a [Worker](/workers/)"}
 />
-```
-
-Use `ExtraFlagDetails` as a child to add or replace help text for specific flags:
-
-```mdx
-import { WranglerCommand, ExtraFlagDetails } from "~/components";
-
-<WranglerCommand command="deploy">
-	<ExtraFlagDetails key="dry-run">
-		Additional detail appended to the flag's help text.
-	</ExtraFlagDetails>
-	<ExtraFlagDetails key="compatibility-date" mode="replace">
-		Custom text that replaces the flag's help text entirely.
-	</ExtraFlagDetails>
-</WranglerCommand>
 ```
 
 Props: `command` (required), `headingLevel` (default `2`), `description` (overrides Wrangler default).
@@ -567,7 +530,7 @@ import { AnchorHeading } from "~/components";
 />
 ```
 
-Props: `title` (required, heading text), `slug` (required, custom anchor ID), `depth` (heading level, e.g. `2` for H2).
+Props: `title` (required, heading text), `slug` (optional, custom anchor ID — defaults to slugified `title`), `depth` (heading level, e.g. `2` for H2).
 
 ---
 
@@ -579,7 +542,7 @@ Renders a styled link button. Useful for primary CTAs on overview and get-starte
 import { LinkButton } from "~/components";
 
 <LinkButton href="/workers/get-started/">Get started</LinkButton>
-<LinkButton href="/workers/get-started/" variant="secondary" icon="external">
+<LinkButton href="/workers/get-started/" variant="secondary" icon>
 	More information
 </LinkButton>
 <LinkButton href="/workers/get-started/" variant="minimal">
@@ -587,13 +550,13 @@ import { LinkButton } from "~/components";
 </LinkButton>
 ```
 
-Variants: `primary` (default), `secondary`, `minimal`.
+Variants: `primary` (default), `secondary`, `minimal` (maps to `ghost`). Pass `icon` as a boolean to append a caret-right that nudges on hover.
 
 ---
 
 ## LinkCard / CardGrid
 
-Nimbus component. Renders a card with a title, description, and link. Use `CardGrid` to display multiple cards in a grid layout.
+Nimbus component. Renders a card with a title, description, and link. Use `CardGrid` to display multiple cards in a grid layout. Pass `icon` as an Iconify icon name.
 
 ```mdx
 import { LinkCard, CardGrid } from "~/components";
@@ -668,35 +631,6 @@ Props: `header` (required, product name), `href` (required), `product` (required
 
 ---
 
-## FeatureTable
-
-Renders a feature availability table by plan, sourced from `src/content/plans/index.json`. Use `id` in dot notation: `<product>.<feature>`.
-
-```mdx
-import { FeatureTable } from "~/components";
-
-<FeatureTable id="analytics.logpush" />
-<FeatureTable id="analytics.logpush" skipAvailability="true" />
-```
-
-Props: `id` (required, dot-notation path into `src/content/plans/`), `skipAvailability` (boolean string `"true"`/`"false"`, default `"false"`).
-
----
-
-## ProductFeatures
-
-Renders a full feature list for a product grouping, sourced from `src/content/plans/index.json`.
-
-```mdx
-import { ProductFeatures } from "~/components";
-
-<ProductFeatures id="dns" />
-```
-
-Props: `id` (required, product key in `src/content/plans/`).
-
----
-
 ## ProductChangelog
 
 Embeds changelog entries for a product inline on a docs page.
@@ -708,7 +642,7 @@ import { ProductChangelog } from "~/components";
 <ProductChangelog area="platform" />
 ```
 
-Props: `product` and `area` are mutually exclusive. `hideEntry` (string, hides a specific entry by name). `scheduled` (boolean, default `false` — set `true` for WAF scheduled changelogs).
+Props: `product` and `area` are mutually exclusive. `hideEntry` (string, hides a specific entry by id). `publish_future_dated_entry` (boolean, default `false` — set `true` to show future-dated entries, e.g. for WAF scheduled changelogs). `numberOfEntries` (number, limits the number of entries shown).
 
 ---
 
@@ -755,7 +689,7 @@ import { ResourcesBySelector } from "~/components";
 />
 ```
 
-Props: `directory` (required, relative to `src/content/docs/`), `types` (array of `pcx_content_type` values), `filterables` (frontmatter properties to show as filter dropdowns), `products` (pre-filter by product), `showDescriptions` (boolean, default `true`), `showLastUpdated` (boolean, default `false`).
+Props: `directory` (optional, relative to `src/content/docs/`), `types` (array of `pcx_content_type` values), `filterables` (frontmatter properties to show as filter dropdowns), `products` (pre-filter by product), `showDescriptions` (boolean, default `true`), `showLastUpdated` (boolean, default `false`).
 
 ---
 
@@ -817,7 +751,7 @@ import { RuleID } from "~/components";
 Interactive calculator for subtracting IP ranges from a base CIDR block. Used in Magic Transit and networking docs.
 
 ```mdx
-import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+import { SubtractIPCalculator } from "~/components";
 
 <SubtractIPCalculator client:load />
 
@@ -829,7 +763,7 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 />
 ```
 
-Note: imports directly from the `.tsx` file path, not from `~/components`.
+Note: requires the `client:load` directive for client-side interactivity.
 
 ---
 

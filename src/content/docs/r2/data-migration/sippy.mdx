@@ -49,9 +49,9 @@ Before getting started, you will need:
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
-2. Select the bucket you'd like to migrate objects to.
+2. Select the bucket you would like to migrate objects to.
 3. Switch to the **Settings** tab, then scroll down to the **On Demand Migration** card.
-4. Select **Enable** and enter details for the AWS / GCS bucket you'd like to migrate objects from. The credentials you enter must have permissions to read from this bucket. Cloudflare also recommends scoping your credentials to only allow reads from this bucket.
+4. Select **Enable** and enter details for the bucket you would like to migrate objects from. The credentials you enter must have permissions to read from this bucket. Cloudflare also recommends scoping your credentials to only allow reads from this bucket.
 5. Select **Enable**.
 </Steps>
 
@@ -133,6 +133,8 @@ Cloudflare currently supports copying data from the following cloud object stora
 
 - Amazon S3
 - Google Cloud Storage (GCS)
+- Azure Blob Storage
+- S3-compatible storage providers
 
 ## R2 API interactions
 
@@ -193,6 +195,37 @@ To create credentials with the correct permissions:
 </Steps>
 
 You can now use this JSON key file when enabling Sippy via Wrangler or API.
+
+### Azure Blob Storage
+
+To copy objects from Azure Blob Storage, Sippy requires the name of your Azure Storage account, the container to copy from, and either an account key or a shared access signature (SAS) token. Provide exactly one of the two credential types. Sippy needs read and list permissions on the container.
+
+To use an account key:
+
+<Steps>
+1. Log in to the Azure portal and go to your storage account.
+2. Under **Security + networking**, select **Access keys**.
+3. Copy your storage account name and one of the listed keys.
+</Steps>
+
+To use a SAS token instead, Cloudflare recommends scoping it to only the container you are migrating:
+
+<Steps>
+1. Log in to the Azure portal and go to your storage account.
+2. Under **Data storage**, select **Containers**, then open the container you want to migrate from.
+3. Select **Shared access tokens**, grant **Read** and **List** permissions, then select **Generate SAS token and URL**.
+4. Copy the generated SAS token.
+</Steps>
+
+You can now use the account name, container name, and either the account key or SAS token when enabling Sippy.
+
+### S3-compatible storage
+
+To copy objects from an S3-compatible storage provider, Sippy requires the S3 API endpoint URL for your bucket, along with an Access Key ID and Secret Access Key that can read from it. Cloudflare recommends scoping these credentials to only allow reads from the bucket you are migrating.
+
+Refer to the documentation for your storage provider to find the S3 API endpoint for your bucket and to create read-only access credentials.
+
+You can now use the bucket URL, Access Key ID, and Secret Access Key when enabling Sippy.
 
 ## Caveats
 

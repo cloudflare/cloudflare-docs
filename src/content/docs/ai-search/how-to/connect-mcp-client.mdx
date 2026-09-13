@@ -57,7 +57,7 @@ Your instance's public endpoint serves the MCP endpoint.
 5. Copy the endpoint host. Your MCP URL is that host followed by `/mcp`:
 
    ```txt
-   https://<INSTANCE_ID>.search.ai.cloudflare.com/mcp
+   https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/mcp
    ```
 
 </Steps>
@@ -82,7 +82,7 @@ Add the MCP URL to your client as a remote MCP server. Many clients use an `mcpS
 {
 	"mcpServers": {
 		"ai-search": {
-			"url": "https://<INSTANCE_ID>.search.ai.cloudflare.com/mcp"
+			"url": "https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/mcp"
 		}
 	}
 }
@@ -94,11 +94,15 @@ To test the endpoint directly or build your own client, refer to [MCP](/ai-searc
 
 ## Security considerations
 
-The public endpoint does not require authentication, so anyone with the URL can query your indexed content. To control access:
+The public endpoint does not require authentication, so anyone with the URL can query your indexed content.
 
-- Enable rate limiting under **Settings** > **Public Endpoint**.
-- Restrict allowed origins with CORS rules.
+To require authentication, add a [custom domain](/ai-search/configuration/retrieval/public-endpoint/custom-domains/) and protect it with [Cloudflare Access](/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/). MCP clients then authenticate with an Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) sent as request headers.
+
+If you keep the endpoint open:
+
 - Only index content that is safe to expose publicly.
+- Enable rate limiting under **Settings** > **Public Endpoint**.
+- Restrict allowed origins under **Authorized hosts**. This only affects browser clients.
 
 Refer to [Public endpoint settings](/ai-search/configuration/retrieval/public-endpoint/) for details.
 
@@ -114,6 +118,12 @@ Refer to [Public endpoint settings](/ai-search/configuration/retrieval/public-en
 	title="Public endpoint settings"
 	href="/ai-search/configuration/retrieval/public-endpoint/"
 	description="Rate limiting, CORS, and tool description."
+/>
+
+<LinkCard
+	title="Cloudflare Access"
+	href="/ai-search/configuration/retrieval/public-endpoint/cloudflare-access/"
+	description="Require MCP clients to authenticate before they can search."
 />
 
 <LinkCard

@@ -5,7 +5,6 @@
  */
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { getEntry } from "astro:content";
 import { differenceInCalendarDays } from "date-fns";
 import { config } from "virtual:nimbus/config";
 import {
@@ -22,6 +21,7 @@ import {
 	resolveSocialImagePath,
 } from "~/util/page-head";
 import { stripMarkdownDescription } from "~/util/description";
+import { getDirectoryEntryBySection } from "~/util/directory";
 
 const PRODUCTION_GENERATOR = "Nimbus v0.2.2";
 
@@ -86,11 +86,11 @@ const versionAlternates =
 			}))
 		: [];
 
-// Section slug (first path segment, dots stripped) — matches production.
-const currentSection = pathname.split("/")[1]?.replaceAll(".", "") ?? "";
+// Section slug (first path segment) — matches production.
+const currentSection = pathname.split("/")[1] ?? "";
 const sectionProduct =
 	currentSection && currentSection !== "changelog"
-		? await getEntry("directory", currentSection)
+		? await getDirectoryEntryBySection(currentSection)
 		: undefined;
 const product = meta?.product ?? sectionProduct?.data.entry?.title;
 // productGroup (which honours meta.productGroup) drives the pcx_content_group
@@ -118,7 +118,7 @@ const resolvedDescription = description;
 const structuredDescription = resolvedDescription
 	? meta?.descriptionDerived
 		? resolvedDescription
-		: await stripMarkdownDescription(resolvedDescription)
+		: stripMarkdownDescription(resolvedDescription)
 	: undefined;
 
 // canonical honours meta.canonical + version pointer and %40-encodes `@`;
@@ -160,6 +160,7 @@ const rawContentType =
 	meta?.contentType ?? inferContentType(pathname, currentSection) ?? "";
 const { contentType, isChangelog, schemaType } =
 	classifyContentType(rawContentType);
+const resolvedSchemaType = pathname === "/" ? "WebPage" : schemaType;
 
 const reviewed = meta?.reviewed ? new Date(meta.reviewed) : null;
 const daysSince = (d: Date | null | undefined) =>
@@ -172,7 +173,7 @@ const datePublished = meta?.datePublished
 	: undefined;
 
 const jsonLd = buildStructuredData({
-	schemaType,
+	schemaType: resolvedSchemaType,
 	canonical,
 	fullTitle,
 	description: structuredDescription,
@@ -288,7 +289,11 @@ const hasRssAlternate = headExtras.some(
 	)
 }
 
-{!noindex && jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+{
+	!noindex && jsonLd && (
+		<script type="application/ld+json" set:html={jsonLd} is:inline />
+	)
+}
 
 {
 	headExtras.map(({ tag: Tag, attrs = {}, content }) =>

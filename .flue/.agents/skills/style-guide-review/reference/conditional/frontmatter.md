@@ -9,17 +9,13 @@ description: Rules for MDX page frontmatter fields.
 
 ## pcx_content_type
 
-Valid values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
+Valid values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `glossary`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
 
 - If `pcx_content_type` value is not in the above list → **warning**: use a valid value.
 
 ## reviewed Date
 
 - Do not flag a stale or missing `reviewed:` date — this is explicitly excluded from review.
-
-## Tags
-
-- If a tag value is not in the site's allowlist (`src/schemas/tags.ts`) → **warning**: use only validated tags. Common valid tags include `JavaScript`, `Workers`, `TypeScript`, `Python`, `Rust`, `Go`.
 
 ## Sidebar
 

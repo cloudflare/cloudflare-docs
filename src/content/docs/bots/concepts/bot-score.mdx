@@ -81,3 +81,11 @@ A bot score of 0 means Bot Management did not evaluate the request. This applies
 ### Notes on detection
 
 <Render file="bots-cookie" product="bots" />
+
+:::note
+
+Requests with a missing or empty `User-Agent` header are immediately assigned a bot score of **1** by the Heuristics engine. This is expected behavior and a common false-positive trigger for traffic from [Zero Trust](/cloudflare-one/) (WARP) or corporate proxy environments that suppress or strip the `User-Agent` header.
+
+If you are seeing unexpected score-1 traffic from known corporate users, check whether a proxy is removing the header. You can use the [`cf.bot_management.corporate_proxy`](/bots/reference/bot-management-variables/#corporate-proxy) field or an IP allowlist to exempt that traffic from bot-based actions.
+
+:::

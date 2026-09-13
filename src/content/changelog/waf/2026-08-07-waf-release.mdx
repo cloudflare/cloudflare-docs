@@ -1,0 +1,66 @@
+---
+title: "WAF Release - 2026-08-07"
+description: Cloudflare WAF managed rulesets 2026-08-07 release
+date: 2026-08-07
+---
+
+import { RuleID } from "~/components";
+
+This release updates WordPress XSS rule metadata in the Cloudflare Managed Ruleset and Cloudflare Free Ruleset to identify XSS2Shell (CVE-2026-64638). It also disables the Command Injection - Obfuscation rule.
+
+**Key Findings**
+
+- CVE-2026-64638: A pre-authentication reflected cross-site scripting vulnerability affecting the WordPress login screen. Exploitation requires social engineering and explicit interaction by the target user. Under additional conditions, it may be escalated to remote code execution.
+
+**Impact**
+
+The WordPress changes update rule metadata only; detection behavior and actions remain unchanged.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d3852d0891634686a46114069c6dff1c" />
+			</td>
+			<td>N/A</td>
+			<td>Wordpress - XSS - CVE:CVE-2026-64638</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="5bdf578fff504b8cbe3b7f699ab5ed95" />
+			</td>
+			<td>N/A</td>
+			<td>Wordpress - XSS - CVE:CVE-2026-64638</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="95a84ab1645a49c685648c17761e7a4c" />
+			</td>
+			<td>N/A</td>
+			<td>Command Injection - Obfuscation</td>
+			<td>Block</td>
+			<td>Disabled</td>
+			<td>Detection logic has been deprecated</td>
+		</tr>
+	</tbody>
+</table>

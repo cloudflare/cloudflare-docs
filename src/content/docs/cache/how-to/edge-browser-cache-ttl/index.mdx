@@ -7,13 +7,14 @@ products:
 
 ---
 
-import { FeatureTable } from "~/components"
-
 ## Edge Cache TTL
 
 Edge Cache TTL (Time to Live) specifies the maximum time to cache a resource in the Cloudflare global network. Edge Cache TTL is not visible in response headers and the minimum Edge Cache TTL depends on plan type.
 
-<FeatureTable id="cache.edge_cache_ttl" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Minimum Edge Cache TTL | 2 hours | 1 hour | 1 second | 1 second |
 
 For more information on how to set up Edge Cache TTL, refer to [Cache rules](/cache/how-to/cache-rules/settings/#edge-ttl).
 
@@ -34,6 +35,11 @@ Unless specifically set in a cache rule, Cloudflare does not override or insert 
 * Purging Cloudflare’s cache does not affect assets stored by a visitor’s browser. 
   :::
 
-<FeatureTable id="cache.browser_cache_ttl" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Minimum Browser Cache TTL (Page Rules) | 2 minutes | 2 minutes | 2 minutes | 30 seconds |
+| Minimum Browser Cache TTL | 1 second | 1 second | 1 second | 1 second |
+| Default Browser Cache TTL | 4 hours | 4 hours | 4 hours | 4 hours |
 
 For more information on setting the Browser Cache TTL, refer to [Set Browser Cache TTL](/cache/how-to/edge-browser-cache-ttl/set-browser-ttl/).

@@ -47,8 +47,7 @@ export function extractReviewedAt(body: string | null): string | null {
  * correct resolution logic.
  */
 export type DiffMode =
-	| { type: "full" }
-	| { type: "incremental"; fromSha: string; toSha: string };
+	{ type: "full" } | { type: "incremental"; fromSha: string; toSha: string };
 
 /**
  * Partition a flat comment list into the most recent bot review comment and

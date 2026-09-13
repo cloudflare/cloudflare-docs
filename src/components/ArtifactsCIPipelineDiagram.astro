@@ -1,0 +1,790 @@
+---
+interface Props {
+	autoPlay?: boolean;
+	loop?: boolean;
+}
+
+const { autoPlay = true, loop = false } = Astro.props;
+---
+
+<figure
+	class="artifacts-ci-pipeline-diagram not-content"
+	aria-label="A three-stage build pipeline installs and caches dependencies, runs lint, type-check, and test runners in parallel, and then builds the project. If a check attempt fails, the check retries and the build does not start. After all checks pass, the build runs npm run build."
+>
+	<cfdocs-artifacts-ci-pipeline-diagram
+		data-autoplay={String(autoPlay)}
+		data-loop={String(loop)}
+		data-phase="complete"
+		aria-hidden="true"
+	>
+		<section class="pipeline-group">
+			<header class="pipeline-header">
+				<span class="group-label">Build pipeline</span>
+				<span class="pipeline-status">Pipeline complete</span>
+			</header>
+
+			<div class="stage-card" data-stage="install">
+				<span class="step-number">1</span>
+				<span class="stage-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+						<path d="M4 7.5 12 3l8 4.5-8 4.5-8-4.5Z"></path>
+						<path d="m4 12 8 4.5 8-4.5M4 16.5l8 4.5 8-4.5"></path>
+					</svg>
+				</span>
+				<span class="stage-copy">
+					<span class="stage-name">Install and cache dependencies</span>
+					<span class="stage-description">Restore cache or run npm ci</span>
+				</span>
+				<span class="stage-state">Complete</span>
+			</div>
+
+			<div class="stage-connector" data-connector="install-checks">
+				<span class="connector-line"></span>
+				<svg viewBox="0 0 12 8" aria-hidden="true">
+					<path d="M1 1l5 5 5-5"></path>
+				</svg>
+			</div>
+
+			<div class="stage-card checks-stage" data-stage="checks">
+				<div class="checks-heading">
+					<span class="step-number">2</span>
+					<span class="stage-copy">
+						<span class="stage-name">Run checks in parallel</span>
+						<span class="stage-description">All checks must pass</span>
+					</span>
+					<span class="stage-state">Complete</span>
+				</div>
+
+				<div class="checks-grid">
+					<div class="check-card" data-check="lint">
+						<span class="check-indicator" aria-hidden="true"></span>
+						<span>Lint</span>
+					</div>
+					<div class="check-card" data-check="typecheck">
+						<span class="check-indicator" aria-hidden="true"></span>
+						<span>Type-check</span>
+					</div>
+					<div class="check-card" data-check="test">
+						<span class="check-indicator" aria-hidden="true"></span>
+						<span>Test</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="retry-sequence">
+				<div class="retry-state" data-retry-state="failed">
+					<svg class="retry-indicator" viewBox="0 0 16 16" aria-hidden="true">
+						<path d="m4 4 8 8M12 4l-8 8"></path>
+					</svg>
+					<span>Check failed</span>
+				</div>
+				<svg
+					class="retry-arrow"
+					data-retry-arrow="failed-retry"
+					viewBox="0 0 12 8"
+					aria-hidden="true"
+				>
+					<path d="M1 1l5 5 5-5"></path>
+				</svg>
+				<div class="retry-state" data-retry-state="retrying">
+					<svg
+						class="retry-icon"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						aria-hidden="true"
+					>
+						<path d="M20 7v5h-5"></path>
+						<path d="M4 17v-5h5"></path>
+						<path
+							d="M6.1 8.4A7 7 0 0 1 18.7 7L20 12M4 12l1.3 5A7 7 0 0 0 17.9 15.6"
+						></path>
+					</svg>
+					<span>Retrying</span>
+				</div>
+				<svg
+					class="retry-arrow"
+					data-retry-arrow="retry-passed"
+					viewBox="0 0 12 8"
+					aria-hidden="true"
+				>
+					<path d="M1 1l5 5 5-5"></path>
+				</svg>
+				<div class="retry-state" data-retry-state="passed">
+					<svg class="retry-indicator" viewBox="0 0 16 16" aria-hidden="true">
+						<path d="m3 8 3 3 7-7"></path>
+					</svg>
+					<span>All checks passed</span>
+				</div>
+			</div>
+
+			<div class="stage-connector" data-connector="checks-build">
+				<span class="connector-line"></span>
+				<span class="connector-label">Start build</span>
+				<svg viewBox="0 0 12 8" aria-hidden="true">
+					<path d="M1 1l5 5 5-5"></path>
+				</svg>
+			</div>
+
+			<div class="stage-card" data-stage="build">
+				<span class="step-number">3</span>
+				<span class="stage-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+						<path d="m7 8-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"></path>
+					</svg>
+				</span>
+				<span class="stage-copy">
+					<span class="stage-name">Run build</span>
+					<span class="stage-description">npm run build</span>
+				</span>
+				<span class="stage-state">Complete</span>
+			</div>
+		</section>
+	</cfdocs-artifacts-ci-pipeline-diagram>
+</figure>
+
+<style>
+	.artifacts-ci-pipeline-diagram {
+		margin: 1.5rem 0;
+	}
+
+	cfdocs-artifacts-ci-pipeline-diagram {
+		--diagram-surface: rgb(255 255 255);
+		--diagram-group: rgb(250 250 250);
+		--diagram-border: rgb(229 229 229);
+		--diagram-line: rgb(212 212 212);
+		--diagram-text: rgb(23 23 23);
+		--diagram-muted: rgb(115 115 115);
+		--diagram-accent: rgb(249 115 22);
+		--diagram-accent-soft: rgb(249 115 22 / 10%);
+		--diagram-error: rgb(220 38 38);
+		--diagram-error-soft: rgb(220 38 38 / 9%);
+		display: block;
+		width: min(100%, 560px);
+		margin: 0 auto;
+	}
+
+	:root[data-theme="dark"] cfdocs-artifacts-ci-pipeline-diagram {
+		--diagram-surface: rgb(23 23 23);
+		--diagram-group: rgb(18 18 18);
+		--diagram-border: rgb(64 64 64);
+		--diagram-line: rgb(64 64 64);
+		--diagram-text: rgb(245 245 245);
+		--diagram-muted: rgb(163 163 163);
+		--diagram-error: rgb(248 113 113);
+		--diagram-error-soft: rgb(248 113 113 / 10%);
+	}
+
+	.pipeline-group {
+		padding: 1rem;
+		background: var(--diagram-group);
+		border: 1px dashed var(--diagram-line);
+		border-radius: 0.75rem;
+	}
+
+	.pipeline-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.group-label {
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--diagram-text);
+	}
+
+	.pipeline-status,
+	.stage-state {
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	}
+
+	.pipeline-status {
+		font-size: 0.625rem;
+		color: var(--diagram-muted);
+	}
+
+	.stage-card,
+	.check-card,
+	.retry-state {
+		background: var(--diagram-surface);
+		border: 1px solid var(--diagram-border);
+		border-radius: 0.5rem;
+		transition:
+			border-color 0.3s ease,
+			box-shadow 0.3s ease,
+			background-color 0.3s ease,
+			opacity 0.3s ease;
+	}
+
+	.stage-card {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.75rem;
+	}
+
+	.step-number {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.25rem;
+		height: 1.25rem;
+		flex-shrink: 0;
+		border-radius: 999px;
+		background: var(--diagram-border);
+		font-size: 0.625rem;
+		font-weight: 600;
+		color: var(--diagram-muted);
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
+	}
+
+	.stage-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.25rem;
+		height: 1.25rem;
+		flex-shrink: 0;
+		color: var(--diagram-muted);
+		transition: color 0.3s ease;
+	}
+
+	.stage-icon svg,
+	.retry-icon {
+		width: 100%;
+		height: 100%;
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.stage-copy {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: 0.125rem;
+		min-width: 0;
+	}
+
+	.stage-name,
+	.check-card {
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-weight: 500;
+		color: var(--diagram-text);
+	}
+
+	.stage-name {
+		font-size: 0.75rem;
+	}
+
+	.stage-description {
+		font-size: 0.625rem;
+		color: var(--diagram-muted);
+	}
+
+	.stage-state {
+		flex-shrink: 0;
+		font-size: 0.5625rem;
+		color: var(--diagram-muted);
+	}
+
+	.stage-card.is-running {
+		border-color: var(--diagram-accent);
+		box-shadow: 0 0 0 3px var(--diagram-accent-soft);
+	}
+
+	.stage-card.is-running > .step-number,
+	.stage-card.is-running .checks-heading .step-number {
+		background: var(--diagram-accent);
+		color: white;
+	}
+
+	.stage-card.is-running > .stage-icon,
+	.stage-card.is-running > .stage-state,
+	.stage-card.is-running .checks-heading > .stage-state {
+		color: var(--diagram-accent);
+	}
+
+	.stage-card.is-complete > .step-number,
+	.stage-card.is-complete .checks-heading .step-number {
+		background: var(--diagram-text);
+		color: var(--diagram-surface);
+	}
+
+	.stage-card.is-complete > .stage-state,
+	.stage-card.is-complete .checks-heading > .stage-state {
+		color: var(--diagram-text);
+	}
+
+	.stage-card.is-failed {
+		border-color: var(--diagram-error);
+		box-shadow: 0 0 0 3px var(--diagram-error-soft);
+	}
+
+	.stage-card.is-failed .checks-heading .step-number {
+		background: var(--diagram-error);
+		color: white;
+	}
+
+	.stage-card.is-failed .checks-heading > .stage-state {
+		color: var(--diagram-error);
+	}
+
+	.stage-card.is-blocked {
+		opacity: 0.55;
+	}
+
+	.stage-connector {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		height: 42px;
+	}
+
+	.connector-line {
+		width: 2px;
+		height: 35px;
+		background: var(--diagram-line);
+		transition: background-color 0.3s ease;
+	}
+
+	.stage-connector > svg {
+		position: absolute;
+		bottom: 0;
+		width: 12px;
+		height: 8px;
+		fill: none;
+		stroke: var(--diagram-line);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: stroke 0.3s ease;
+	}
+
+	.stage-connector.is-active .connector-line {
+		background: var(--diagram-accent);
+	}
+
+	.stage-connector.is-active > svg {
+		stroke: var(--diagram-accent);
+	}
+
+	.connector-label {
+		position: absolute;
+		top: 11px;
+		left: calc(50% + 10px);
+		font-size: 0.5625rem;
+		color: var(--diagram-muted);
+		white-space: nowrap;
+	}
+
+	.checks-stage {
+		display: block;
+	}
+
+	.checks-heading {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+	}
+
+	.checks-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.5rem;
+		margin-top: 0.625rem;
+		padding-left: 1.875rem;
+	}
+
+	.check-card {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		min-width: 0;
+		padding: 0.4375rem 0.5rem;
+		font-size: 0.625rem;
+	}
+
+	.check-indicator {
+		width: 0.4375rem;
+		height: 0.4375rem;
+		flex-shrink: 0;
+		border-radius: 999px;
+		background: var(--diagram-line);
+		transition:
+			background-color 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+
+	.check-card.is-running {
+		border-color: var(--diagram-accent);
+	}
+
+	.check-card.is-running .check-indicator {
+		background: var(--diagram-accent);
+		box-shadow: 0 0 0 3px var(--diagram-accent-soft);
+	}
+
+	.check-card.is-complete .check-indicator {
+		background: var(--diagram-text);
+	}
+
+	.check-card.is-failed {
+		border-color: var(--diagram-error);
+		background: var(--diagram-error-soft);
+	}
+
+	.check-card.is-failed .check-indicator {
+		background: var(--diagram-error);
+	}
+
+	.retry-sequence {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(
+				0,
+				1.25fr
+			);
+		align-items: center;
+		gap: 0.375rem;
+		margin: 0.5rem 0;
+	}
+
+	.retry-state {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.375rem;
+		min-width: 0;
+		padding: 0.5rem;
+		opacity: 0.6;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+		font-weight: 500;
+		color: var(--diagram-muted);
+	}
+
+	.retry-icon {
+		width: 1rem;
+		height: 1rem;
+		flex-shrink: 0;
+	}
+
+	.retry-state.is-failed {
+		opacity: 1;
+		border-color: var(--diagram-error);
+		background: var(--diagram-error-soft);
+		color: var(--diagram-error);
+	}
+
+	.retry-state.is-current {
+		box-shadow: 0 0 0 3px var(--diagram-accent-soft);
+	}
+
+	.retry-state.is-retrying,
+	.retry-state.is-passed {
+		opacity: 1;
+		border-color: var(--diagram-accent);
+		background: var(--diagram-accent-soft);
+		color: var(--diagram-accent);
+	}
+
+	.retry-state.is-complete {
+		opacity: 1;
+	}
+
+	.retry-indicator {
+		width: 0.875rem;
+		height: 0.875rem;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.retry-arrow {
+		width: 10px;
+		height: 7px;
+		transform: rotate(-90deg);
+		fill: none;
+		stroke: var(--diagram-line);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.retry-arrow.is-active {
+		stroke: var(--diagram-accent);
+	}
+
+	@keyframes retry-spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.retry-state.is-retrying .retry-icon {
+		animation: retry-spin 1.2s linear infinite;
+	}
+
+	@media (max-width: 30rem) {
+		.pipeline-group {
+			padding: 0.75rem;
+		}
+
+		.stage-card {
+			padding-inline: 0.625rem;
+		}
+
+		.stage-description {
+			display: none;
+		}
+
+		.checks-grid {
+			padding-left: 0;
+		}
+
+		.retry-sequence {
+			gap: 0.25rem;
+		}
+
+		.retry-state {
+			padding-inline: 0.375rem;
+		}
+
+		.connector-label {
+			display: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		cfdocs-artifacts-ci-pipeline-diagram * {
+			transition: none !important;
+			animation: none !important;
+		}
+	}
+</style>
+
+<script>
+	type StageState = "blocked" | "complete" | "failed" | "pending" | "running";
+	type CheckState = "complete" | "failed" | "pending" | "running";
+
+	class ArtifactsCIPipelineDiagramElement extends HTMLElement {
+		private static readonly PHASES = [
+			{ name: "install", duration: 1200 },
+			{ name: "checks", duration: 1400 },
+			{ name: "failed", duration: 1200 },
+			{ name: "retry", duration: 1400 },
+			{ name: "checks-complete", duration: 900 },
+			{ name: "build", duration: 1400 },
+			{ name: "complete", duration: 2200 },
+		] as const;
+
+		private phaseIndex = 0;
+		private timeout: number | undefined;
+		private observer: IntersectionObserver | undefined;
+
+		connectedCallback() {
+			const reducedMotion = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+
+			if (reducedMotion || this.dataset.autoplay !== "true") {
+				this.renderPhase("complete");
+				return;
+			}
+
+			this.renderPhase("idle");
+			this.observer = new IntersectionObserver(
+				(entries) => {
+					if (!entries.some((entry) => entry.isIntersecting)) return;
+					this.observer?.disconnect();
+					this.timeout = window.setTimeout(() => this.advance(), 400);
+				},
+				{ threshold: 0.25 },
+			);
+			this.observer.observe(this);
+		}
+
+		disconnectedCallback() {
+			this.observer?.disconnect();
+			if (this.timeout !== undefined) window.clearTimeout(this.timeout);
+		}
+
+		private advance() {
+			const phase = ArtifactsCIPipelineDiagramElement.PHASES[this.phaseIndex];
+			this.renderPhase(phase.name);
+			this.phaseIndex += 1;
+
+			if (this.phaseIndex >= ArtifactsCIPipelineDiagramElement.PHASES.length) {
+				if (this.dataset.loop !== "true") return;
+				this.phaseIndex = 0;
+			}
+
+			this.timeout = window.setTimeout(() => this.advance(), phase.duration);
+		}
+
+		private renderPhase(phase: string) {
+			this.dataset.phase = phase;
+			this.querySelectorAll<HTMLElement>(
+				".stage-card, .check-card, .stage-connector, .retry-state, .retry-arrow",
+			).forEach((element) => {
+				element.classList.remove(
+					"is-active",
+					"is-blocked",
+					"is-complete",
+					"is-failed",
+					"is-current",
+					"is-passed",
+					"is-pending",
+					"is-retrying",
+					"is-running",
+				);
+			});
+
+			const status = this.querySelector<HTMLElement>(".pipeline-status");
+			if (!status) return;
+
+			switch (phase) {
+				case "idle":
+					status.textContent = "Waiting to start";
+					this.setStage("install", "pending", "Waiting");
+					this.setStage("checks", "pending", "Waiting");
+					this.setChecks("pending");
+					this.setStage("build", "blocked", "Waiting");
+					break;
+				case "install":
+					status.textContent = "Installing dependencies";
+					this.setStage("install", "running", "Running");
+					this.setStage("checks", "pending", "Waiting");
+					this.setChecks("pending");
+					this.setStage("build", "blocked", "Waiting");
+					break;
+				case "checks":
+					status.textContent = "Running checks";
+					this.setStage("install", "complete", "Complete");
+					this.activateConnector("install-checks");
+					this.setStage("checks", "running", "Running");
+					this.setChecks("running");
+					this.setStage("build", "blocked", "Waiting");
+					break;
+				case "failed":
+					status.textContent = "Check attempt failed";
+					this.setStage("install", "complete", "Complete");
+					this.activateConnector("install-checks");
+					this.setStage("checks", "failed", "Failed");
+					this.setCheck("lint", "complete");
+					this.setCheck("typecheck", "complete");
+					this.setCheck("test", "failed");
+					this.setStage("build", "blocked", "Not started");
+					this.setRetryState("failed", "is-failed", "is-current");
+					break;
+				case "retry":
+					status.textContent = "Retrying failed check";
+					this.setStage("install", "complete", "Complete");
+					this.activateConnector("install-checks");
+					this.setStage("checks", "running", "Retrying");
+					this.setCheck("lint", "complete");
+					this.setCheck("typecheck", "complete");
+					this.setCheck("test", "running");
+					this.setStage("build", "blocked", "Not started");
+					this.setRetryState("failed", "is-complete");
+					this.activateRetryArrow("failed-retry");
+					this.setRetryState("retrying", "is-retrying", "is-current");
+					break;
+				case "checks-complete":
+					status.textContent = "All checks passed";
+					this.setStage("install", "complete", "Complete");
+					this.activateConnector("install-checks");
+					this.setStage("checks", "complete", "Complete");
+					this.setChecks("complete");
+					this.setStage("build", "blocked", "Waiting");
+					this.showSuccessfulRetry();
+					break;
+				case "build":
+					status.textContent = "Building project";
+					this.setStage("install", "complete", "Complete");
+					this.activateConnector("install-checks");
+					this.setStage("checks", "complete", "Complete");
+					this.setChecks("complete");
+					this.activateConnector("checks-build");
+					this.setStage("build", "running", "Running");
+					this.showSuccessfulRetry();
+					break;
+				case "complete":
+					status.textContent = "Pipeline complete";
+					this.setStage("install", "complete", "Complete");
+					this.activateConnector("install-checks");
+					this.setStage("checks", "complete", "Complete");
+					this.setChecks("complete");
+					this.activateConnector("checks-build");
+					this.setStage("build", "complete", "Complete");
+					this.showSuccessfulRetry();
+			}
+		}
+
+		private setStage(name: string, state: StageState, label: string) {
+			const stage = this.querySelector<HTMLElement>(`[data-stage="${name}"]`);
+			if (!stage) return;
+			stage.classList.add(`is-${state}`);
+			const status = stage.querySelector<HTMLElement>(".stage-state");
+			if (status) status.textContent = label;
+		}
+
+		private setChecks(state: CheckState) {
+			this.querySelectorAll<HTMLElement>("[data-check]").forEach((check) => {
+				check.classList.add(`is-${state}`);
+			});
+		}
+
+		private setCheck(name: string, state: CheckState) {
+			this.querySelector(`[data-check="${name}"]`)?.classList.add(
+				`is-${state}`,
+			);
+		}
+
+		private activateConnector(name: string) {
+			this.querySelector(`[data-connector="${name}"]`)?.classList.add(
+				"is-active",
+			);
+		}
+
+		private setRetryState(name: string, ...classes: string[]) {
+			this.querySelector(`[data-retry-state="${name}"]`)?.classList.add(
+				...classes,
+			);
+		}
+
+		private activateRetryArrow(name: string) {
+			this.querySelector(`[data-retry-arrow="${name}"]`)?.classList.add(
+				"is-active",
+			);
+		}
+
+		private showSuccessfulRetry() {
+			this.setRetryState("failed", "is-complete");
+			this.activateRetryArrow("failed-retry");
+			this.setRetryState("retrying", "is-complete");
+			this.activateRetryArrow("retry-passed");
+			this.setRetryState("passed", "is-passed", "is-current");
+		}
+	}
+
+	if (!customElements.get("cfdocs-artifacts-ci-pipeline-diagram")) {
+		customElements.define(
+			"cfdocs-artifacts-ci-pipeline-diagram",
+			ArtifactsCIPipelineDiagramElement,
+		);
+	}
+</script>

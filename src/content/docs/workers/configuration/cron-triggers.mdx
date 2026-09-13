@@ -193,17 +193,17 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers locally
 
-Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/general/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This exposes a `/cdn-cgi/handler/scheduled` route, which can be used to test using an HTTP request. If you are using the Cloudflare Vite Plugin, ensure that you use the correct vite port for the following commands (Vite defaults to 5173).
+Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/general/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This exposes a `/cdn-cgi/local/scheduled` route, which can be used to test using an HTTP request. If you are using the Cloudflare Vite Plugin, ensure that you use the correct vite port for the following commands (Vite defaults to 5173).
 
 ```sh
-curl "http://localhost:8787/cdn-cgi/handler/scheduled"
+curl "http://localhost:8787/cdn-cgi/local/scheduled"
 ```
 
 By default, the endpoint returns the scheduled handler outcome as text. To return the
 structured scheduled handler result as JSON, pass `?format=json`.
 
 ```sh
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?format=json"
+curl "http://localhost:8787/cdn-cgi/local/scheduled?format=json"
 ```
 
 ```json
@@ -219,13 +219,13 @@ The `noRetry` field is `true` when the scheduled handler calls
 To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+curl "http://localhost:8787/cdn-cgi/local/scheduled?cron=*+*+*+*+*"
 ```
 
 Optionally, you can also pass a `time` query parameter to override `controller.scheduledTime` in your scheduled event listener.
 
 ```sh
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*&time=1745856238000"
+curl "http://localhost:8787/cdn-cgi/local/scheduled?cron=*+*+*+*+*&time=1745856238000"
 ```
 
 ## View past events

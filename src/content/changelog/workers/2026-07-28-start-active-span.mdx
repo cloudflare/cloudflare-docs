@@ -1,0 +1,58 @@
+---
+title: Workers tracing — write custom spans with new startActiveSpan() and span.end() runtime APIs
+description: Use tracing.startActiveSpan() and span.end() to instrument operations that outlive a single callback, such as stream pipelines.
+products:
+  - workers
+date: 2026-07-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+The Workers runtime now provides built-in `tracing.startActiveSpan()` and `span.end()` APIs, allowing you to write custom spans for operations that last beyond a single callback — for example, instrumenting a stream pipeline where the span should stay open until the stream is fully consumed.
+
+This augments the [existing API for writing custom spans](/changelog/post/2026-06-16-custom-spans/), `tracing.enterSpan()`, which automatically ends a span when its callback is returned. With `startActiveSpan()`, the span remains open after the callback returns, and you call `span.end()` when the work is complete:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { tracing } from "cloudflare:workers";
+
+const encoder = new TextEncoder();
+
+export default {
+	fetch(): Response {
+		return tracing.startActiveSpan("stream-response", (span) => {
+			let timer: ReturnType<typeof setTimeout> | undefined;
+
+			const body = new ReadableStream<Uint8Array>({
+				start(controller) {
+					controller.enqueue(encoder.encode("Starting...\n"));
+
+					timer = setTimeout(() => {
+						controller.enqueue(encoder.encode("Complete.\n"));
+						controller.close();
+
+						span.setAttribute("stream.status", "complete");
+						span.end();
+					}, 1000);
+				},
+
+				cancel() {
+					if (timer !== undefined) clearTimeout(timer);
+
+					span.setAttribute("stream.status", "cancelled");
+					span.end();
+				},
+			});
+
+			return new Response(body, {
+				headers: { "content-type": "text/plain" },
+			});
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+For more details, refer to the [custom spans documentation](/workers/observability/traces/custom-spans/).

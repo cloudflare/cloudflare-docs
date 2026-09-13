@@ -12,6 +12,7 @@ import {
 	cornerSpansHTML,
 	cornersFor,
 } from "~/components/directory/grid";
+import PhosphorIcon from "~/components/react/PhosphorIcon";
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
@@ -35,45 +36,6 @@ interface Props {
 	showDescriptions: boolean;
 	showLastUpdated: boolean;
 	filterPlacement: string;
-}
-
-// Phosphor glyphs, inlined because astro-icon's <Icon> is Astro-only and this
-// is a React island. viewBox + currentColor mirror the `ph:` set used elsewhere.
-function IconSearch({ className }: { className?: string }) {
-	return (
-		<svg
-			viewBox="0 0 256 256"
-			fill="currentColor"
-			aria-hidden
-			className={className}
-		>
-			<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
-		</svg>
-	);
-}
-function IconX({ className }: { className?: string }) {
-	return (
-		<svg
-			viewBox="0 0 256 256"
-			fill="currentColor"
-			aria-hidden
-			className={className}
-		>
-			<path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" />
-		</svg>
-	);
-}
-function IconCheck({ className }: { className?: string }) {
-	return (
-		<svg
-			viewBox="0 0 256 256"
-			fill="currentColor"
-			aria-hidden
-			className={className}
-		>
-			<path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z" />
-		</svg>
-	);
 }
 
 const FACET_LABELS: Record<string, string> = {
@@ -357,7 +319,10 @@ export default function ResourcesBySelector({
 				<aside className="hidden md:block">
 					{/* Search */}
 					<div className="relative mb-6">
-						<IconSearch className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+						<PhosphorIcon
+							name="magnifying-glass"
+							className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+						/>
 						<input
 							ref={searchRef}
 							type="text"
@@ -381,7 +346,7 @@ export default function ResourcesBySelector({
 								onClick={() => setLeftFilters({ ...leftFilters, search: "" })}
 								className="text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-ring absolute top-1/2 right-1.5 grid size-7 -translate-y-1/2 place-items-center rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
 							>
-								<IconX className="size-3.5" />
+								<PhosphorIcon name="x" className="size-3.5" />
 							</button>
 						)}
 					</div>
@@ -427,7 +392,10 @@ export default function ResourcesBySelector({
 														}
 													/>
 													<span className="bg-background ring-border peer-checked:bg-foreground peer-checked:ring-foreground peer-hover:ring-border-strong peer-focus-visible:ring-ring mt-0.5 grid size-4 shrink-0 place-items-center rounded-sm ring-1 transition-[background-color,box-shadow] ring-inset peer-focus-visible:ring-2">
-														<IconCheck className="text-background size-3 opacity-0 transition-opacity group-has-[:checked]/checkbox:opacity-100" />
+														<PhosphorIcon
+															name="check-bold"
+															className="text-background size-3 opacity-0 transition-opacity group-has-[:checked]/checkbox:opacity-100"
+														/>
 													</span>
 													<span className="text-foreground text-sm leading-snug select-none">
 														{filterField === "pcx_content_type"

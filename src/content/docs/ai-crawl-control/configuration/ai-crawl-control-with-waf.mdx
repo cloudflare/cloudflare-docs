@@ -9,7 +9,7 @@ products:
   - ai-crawl-control
 ---
 
-import { GlossaryTooltip, Example, Steps, Tabs, TabItem, DashButton } from "~/components";
+import { GlossaryTooltip, Steps, DashButton } from "~/components";
 
 AI Crawl Control works alongside other Cloudflare products, such as Cloudflare [Web Application Firewall (WAF)](/waf/). WAF checks incoming web and API requests, and filters undesired traffic based on rules. [WAF custom rules](/waf/custom-rules/) allow you to perform certain actions such as enforcing <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip>.
 
@@ -92,8 +92,6 @@ You may have both of the following features enabled:
 
 In this scenario, you have two custom rules, each directing a different logic for handling AI crawlers. To resolve this issue:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 1. In the Cloudflare dashboard, go to the **Security rules** page.
 
@@ -104,22 +102,11 @@ In this scenario, you have two custom rules, each directing a different logic fo
 4. Drag the rule you wish to prioritize to the top, or modify your custom rule to ensure it does not conflict with your AI Crawl Control configurations.
 </Steps>
 
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **WAF** > **Custom rules** tab.
-3. Identify your WAF custom rule and the AI Crawl Control rule.
-4. Drag the rule you wish to prioritize to the top, or modify your WAF custom rule to ensure it does not conflict with your AI Crawl Control configurations.
-</Steps>
-
-</TabItem> </Tabs>
-
 ## Extending the AI Crawl Control WAF rule
 
 For most use cases, managing crawlers directly in AI Crawl Control is recommended. However, the underlying WAF rule supports additional customization for scenarios the dashboard does not cover.
 
-The AI Crawl Control rule is named **AI Crawl Control** and can be found under **Security** > **WAF** > **Custom rules**.
+The AI Crawl Control rule is named **AI Crawl Control** and can be found under **Security** > **Security rules**. Filter by **Custom rules** to find it.
 
 Common additions include:
 
@@ -132,4 +119,3 @@ Any additions you make are preserved when you subsequently update crawler action
 :::caution
 Changes made directly to the WAF rule are not reflected back in the AI Crawl Control dashboard. Use the **Crawlers** tab as your primary interface, and reserve direct WAF edits for cases where the dashboard does not cover your requirements.
 :::
-

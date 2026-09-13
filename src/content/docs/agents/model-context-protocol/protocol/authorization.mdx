@@ -178,9 +178,9 @@ Remember — [authentication is different from authorization](https://www.cloud
 
 When a user authenticates through the OAuth Provider, their identity information is available inside your tools. How you access it depends on whether you use `McpAgent` or `createMcpHandler`.
 
-### With McpAgent
+### With `McpAgent` during migration
 
-The third type parameter on `McpAgent` defines the shape of the authentication context. Access it via `this.props` inside `init()` and tool handlers.
+This pattern applies only to existing deprecated `McpAgent` routes. The third type parameter defines the authentication context shape. Access it through `this.props` inside `init()` and tool handlers.
 
 ```ts
 import { McpAgent } from "agents/mcp";
@@ -202,28 +202,45 @@ export class MyMCP extends McpAgent<Env, unknown, AuthContext> {
 }
 ```
 
-### With createMcpHandler
+### With stateless `createMcpHandler`
 
-Use `getMcpAuthContext()` to access the same information from within a tool handler. This uses `AsyncLocalStorage` under the hood.
+A compatible Workers OAuth Provider supplies standard token metadata at `context.http.authInfo`. Use `getMcpAuthContext()` for existing application props.
 
 ```ts
-import { createMcpHandler, getMcpAuthContext } from "agents/mcp";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { createMcpHandler, getMcpAuthContext } from "agents/mcp/server";
+import { McpServer } from "@modelcontextprotocol/server";
 
 function createServer() {
 	const server = new McpServer({ name: "Auth Demo", version: "1.0.0" });
 
-	server.tool("whoami", "Get the current user", {}, async () => {
-		const auth = getMcpAuthContext();
-		const name = (auth?.props?.name as string) ?? "anonymous";
-		return {
-			content: [{ type: "text", text: `Hello, ${name}!` }],
-		};
-	});
+	server.registerTool(
+		"whoami",
+		{ description: "Get the current user", inputSchema: {} },
+		async (_args, context) => {
+			const auth = getMcpAuthContext();
+			const name = (auth?.props.name as string) ?? "anonymous";
+			return {
+				content: [
+					{
+						type: "text",
+						text: `${name}: ${context.http?.authInfo?.clientId}`,
+					},
+				],
+			};
+		},
+	);
 
 	return server;
 }
+
+export default {
+	fetch(request, env, ctx) {
+		return createMcpHandler(createServer)(request, env, ctx);
+	},
+} satisfies ExportedHandler;
 ```
+
+Do not log or return the raw access token.
 
 ## Permission-based tool access
 

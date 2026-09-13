@@ -1,0 +1,1017 @@
+{
+	"model_id": "assemblyai/universal-3.5-pro",
+	"provider_id": "assemblyai",
+	"name": "AssemblyAI Universal-3.5 Pro",
+	"description": "AssemblyAI's Universal-3.5 Pro speech recognition model for fast, high-accuracy transcription.",
+	"task": "Automatic Speech Recognition",
+	"tags": [
+		"Speech-to-Text",
+		"Transcription",
+		"Multilingual"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Basic Transcription",
+			"description": "Transcribe an audio file with default settings",
+			"input": {
+				"audio_url": "https://cdn.openai.com/API/docs/audio/alloy.wav"
+			},
+			"output": {
+				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years."
+			},
+			"raw_response": {
+				"id": "93b8082d-22c2-4dd0-adf6-0037d2c7027a",
+				"language_model": "assemblyai_default",
+				"acoustic_model": "assemblyai_default",
+				"language_code": "en",
+				"speech_understanding": null,
+				"translated_texts": null,
+				"status": "completed",
+				"audio_url": "https://cdn.openai.com/API/docs/audio/alloy.wav",
+				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years.",
+				"words": [
+					{
+						"text": "The",
+						"start": 32,
+						"end": 129,
+						"confidence": 0.95348084,
+						"speaker": null
+					},
+					{
+						"text": "sun",
+						"start": 129,
+						"end": 404,
+						"confidence": 0.97099674,
+						"speaker": null
+					},
+					{
+						"text": "rises",
+						"start": 420,
+						"end": 809,
+						"confidence": 0.9999746,
+						"speaker": null
+					},
+					{
+						"text": "in",
+						"start": 841,
+						"end": 922,
+						"confidence": 0.999997,
+						"speaker": null
+					},
+					{
+						"text": "the",
+						"start": 922,
+						"end": 1068,
+						"confidence": 0.99999905,
+						"speaker": null
+					},
+					{
+						"text": "east",
+						"start": 1149,
+						"end": 1456,
+						"confidence": 0.9853527,
+						"speaker": null
+					},
+					{
+						"text": "and",
+						"start": 1570,
+						"end": 1634,
+						"confidence": 0.999203,
+						"speaker": null
+					},
+					{
+						"text": "sets",
+						"start": 1715,
+						"end": 2055,
+						"confidence": 0.999995,
+						"speaker": null
+					},
+					{
+						"text": "in",
+						"start": 2055,
+						"end": 2104,
+						"confidence": 0.99999857,
+						"speaker": null
+					},
+					{
+						"text": "the",
+						"start": 2120,
+						"end": 2217,
+						"confidence": 0.9999993,
+						"speaker": null
+					},
+					{
+						"text": "west.",
+						"start": 2217,
+						"end": 2638,
+						"confidence": 0.9959912,
+						"speaker": null
+					},
+					{
+						"text": "This",
+						"start": 3107,
+						"end": 3221,
+						"confidence": 0.9999709,
+						"speaker": null
+					},
+					{
+						"text": "simple",
+						"start": 3269,
+						"end": 3560,
+						"confidence": 0.9999976,
+						"speaker": null
+					},
+					{
+						"text": "fact",
+						"start": 3593,
+						"end": 3997,
+						"confidence": 0.999998,
+						"speaker": null
+					},
+					{
+						"text": "has",
+						"start": 3997,
+						"end": 4175,
+						"confidence": 0.999995,
+						"speaker": null
+					},
+					{
+						"text": "been",
+						"start": 4224,
+						"end": 4289,
+						"confidence": 0.9999974,
+						"speaker": null
+					},
+					{
+						"text": "observed",
+						"start": 4337,
+						"end": 4807,
+						"confidence": 0.9999957,
+						"speaker": null
+					},
+					{
+						"text": "by",
+						"start": 4807,
+						"end": 4952,
+						"confidence": 0.999998,
+						"speaker": null
+					},
+					{
+						"text": "humans",
+						"start": 4969,
+						"end": 5422,
+						"confidence": 0.99999607,
+						"speaker": null
+					},
+					{
+						"text": "for",
+						"start": 5422,
+						"end": 5519,
+						"confidence": 0.99999416,
+						"speaker": null
+					},
+					{
+						"text": "thousands",
+						"start": 5616,
+						"end": 6118,
+						"confidence": 0.9999938,
+						"speaker": null
+					},
+					{
+						"text": "of",
+						"start": 6118,
+						"end": 6231,
+						"confidence": 0.9999945,
+						"speaker": null
+					},
+					{
+						"text": "years.",
+						"start": 6328,
+						"end": 6636,
+						"confidence": 0.9984148,
+						"speaker": null
+					}
+				],
+				"utterances": null,
+				"confidence": 0.9957971,
+				"audio_duration": 7,
+				"punctuate": true,
+				"format_text": true,
+				"webhook_url": null,
+				"webhook_status_code": null,
+				"webhook_auth": false,
+				"webhook_auth_header_name": null,
+				"speed_boost": false,
+				"auto_highlights_result": null,
+				"auto_highlights": false,
+				"audio_start_from": null,
+				"audio_end_at": null,
+				"word_boost": [],
+				"boost_param": null,
+				"prompt": null,
+				"keyterms_prompt": [],
+				"filter_profanity": false,
+				"redact_pii": false,
+				"redact_pii_audio": false,
+				"redact_pii_audio_quality": null,
+				"redact_pii_audio_options": null,
+				"redact_pii_policies": null,
+				"redact_pii_sub": null,
+				"redact_static_entities": null,
+				"speaker_labels": false,
+				"speaker_options": null,
+				"content_safety": false,
+				"iab_categories": false,
+				"content_safety_labels": {
+					"status": "unavailable",
+					"results": [],
+					"summary": {}
+				},
+				"iab_categories_result": {
+					"status": "unavailable",
+					"results": [],
+					"summary": {}
+				},
+				"language_detection": true,
+				"language_detection_options": null,
+				"language_detection_results": null,
+				"language_confidence_threshold": null,
+				"language_confidence": 0.9998,
+				"custom_spelling": null,
+				"throttled": false,
+				"auto_chapters": false,
+				"summarization": false,
+				"summary_type": null,
+				"summary_model": null,
+				"custom_topics": false,
+				"topics": [],
+				"speech_threshold": null,
+				"speech_model": null,
+				"speech_models": [
+					"universal-3-5-pro"
+				],
+				"speech_model_used": "universal-3-5-pro",
+				"temperature": null,
+				"remove_audio_tags": "all",
+				"chapters": null,
+				"disfluencies": false,
+				"entity_detection": false,
+				"sentiment_analysis": false,
+				"sentiment_analysis_results": null,
+				"entities": null,
+				"speakers_expected": null,
+				"summary": null,
+				"custom_topics_results": null,
+				"is_deleted": null,
+				"multichannel": null,
+				"project_id": 1747096,
+				"token_id": 1768830
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'assemblyai/universal-3.5-pro',\n  { audio_url: 'https://cdn.openai.com/API/docs/audio/alloy.wav' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"assemblyai/universal-3.5-pro\",\n  \"input\": {\n    \"audio_url\": \"https://cdn.openai.com/API/docs/audio/alloy.wav\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Language and Keyterms",
+			"description": "Transcribe with an explicit language and domain terms",
+			"input": {
+				"audio_url": "https://cdn.openai.com/API/docs/audio/echo.wav",
+				"language_code": "en",
+				"keyterms_prompt": [
+					"Kubernetes",
+					"microservices",
+					"containerization",
+					"load balancer"
+				]
+			},
+			"output": {
+				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans."
+			},
+			"raw_response": {
+				"id": "7f184aba-4a6d-49fa-b47a-f2ec47e67878",
+				"language_model": "assemblyai_default",
+				"acoustic_model": "assemblyai_default",
+				"language_code": "en_us",
+				"speech_understanding": null,
+				"translated_texts": null,
+				"status": "completed",
+				"audio_url": "https://cdn.openai.com/API/docs/audio/echo.wav",
+				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans.",
+				"words": [
+					{
+						"text": "In",
+						"start": 32,
+						"end": 80,
+						"confidence": 0.99823916,
+						"speaker": null
+					},
+					{
+						"text": "the",
+						"start": 177,
+						"end": 241,
+						"confidence": 0.9997907,
+						"speaker": null
+					},
+					{
+						"text": "heart",
+						"start": 258,
+						"end": 500,
+						"confidence": 0.9998222,
+						"speaker": null
+					},
+					{
+						"text": "of",
+						"start": 500,
+						"end": 548,
+						"confidence": 0.9999982,
+						"speaker": null
+					},
+					{
+						"text": "the",
+						"start": 596,
+						"end": 677,
+						"confidence": 0.99993014,
+						"speaker": null
+					},
+					{
+						"text": "city,",
+						"start": 677,
+						"end": 967,
+						"confidence": 0.9999535,
+						"speaker": null
+					},
+					{
+						"text": "there",
+						"start": 1322,
+						"end": 1435,
+						"confidence": 0.99998367,
+						"speaker": null
+					},
+					{
+						"text": "is",
+						"start": 1467,
+						"end": 1516,
+						"confidence": 0.9989073,
+						"speaker": null
+					},
+					{
+						"text": "a",
+						"start": 1564,
+						"end": 1596,
+						"confidence": 0.99998987,
+						"speaker": null
+					},
+					{
+						"text": "large",
+						"start": 1709,
+						"end": 2016,
+						"confidence": 0.99996316,
+						"speaker": null
+					},
+					{
+						"text": "park",
+						"start": 2129,
+						"end": 2467,
+						"confidence": 0.99998546,
+						"speaker": null
+					},
+					{
+						"text": "where",
+						"start": 2693,
+						"end": 2838,
+						"confidence": 0.99389255,
+						"speaker": null
+					},
+					{
+						"text": "people",
+						"start": 2854,
+						"end": 3145,
+						"confidence": 0.99998343,
+						"speaker": null
+					},
+					{
+						"text": "go",
+						"start": 3177,
+						"end": 3338,
+						"confidence": 0.9999392,
+						"speaker": null
+					},
+					{
+						"text": "to",
+						"start": 3338,
+						"end": 3467,
+						"confidence": 0.9999963,
+						"speaker": null
+					},
+					{
+						"text": "relax",
+						"start": 3500,
+						"end": 4064,
+						"confidence": 0.99998176,
+						"speaker": null
+					},
+					{
+						"text": "and",
+						"start": 4064,
+						"end": 4161,
+						"confidence": 0.99998665,
+						"speaker": null
+					},
+					{
+						"text": "enjoy",
+						"start": 4161,
+						"end": 4484,
+						"confidence": 0.9999976,
+						"speaker": null
+					},
+					{
+						"text": "nature.",
+						"start": 4484,
+						"end": 4887,
+						"confidence": 0.9999689,
+						"speaker": null
+					},
+					{
+						"text": "The",
+						"start": 5597,
+						"end": 5758,
+						"confidence": 0.9997563,
+						"speaker": null
+					},
+					{
+						"text": "park",
+						"start": 5758,
+						"end": 6016,
+						"confidence": 0.99999034,
+						"speaker": null
+					},
+					{
+						"text": "has",
+						"start": 6064,
+						"end": 6177,
+						"confidence": 0.99998844,
+						"speaker": null
+					},
+					{
+						"text": "a",
+						"start": 6177,
+						"end": 6242,
+						"confidence": 0.9999819,
+						"speaker": null
+					},
+					{
+						"text": "beautiful",
+						"start": 6322,
+						"end": 6774,
+						"confidence": 0.9999924,
+						"speaker": null
+					},
+					{
+						"text": "pond",
+						"start": 6790,
+						"end": 7193,
+						"confidence": 0.99999106,
+						"speaker": null
+					},
+					{
+						"text": "with",
+						"start": 7193,
+						"end": 7355,
+						"confidence": 0.9997123,
+						"speaker": null
+					},
+					{
+						"text": "ducks",
+						"start": 7371,
+						"end": 7806,
+						"confidence": 0.9999808,
+						"speaker": null
+					},
+					{
+						"text": "and",
+						"start": 7855,
+						"end": 7919,
+						"confidence": 0.9999771,
+						"speaker": null
+					},
+					{
+						"text": "swans.",
+						"start": 7935,
+						"end": 8629,
+						"confidence": 0.99828225,
+						"speaker": null
+					}
+				],
+				"utterances": null,
+				"confidence": 0.9995849,
+				"audio_duration": 9,
+				"punctuate": true,
+				"format_text": true,
+				"webhook_url": null,
+				"webhook_status_code": null,
+				"webhook_auth": false,
+				"webhook_auth_header_name": null,
+				"speed_boost": false,
+				"auto_highlights_result": null,
+				"auto_highlights": false,
+				"audio_start_from": null,
+				"audio_end_at": null,
+				"word_boost": [],
+				"boost_param": null,
+				"prompt": null,
+				"keyterms_prompt": [
+					"Kubernetes",
+					"microservices",
+					"containerization",
+					"load balancer"
+				],
+				"filter_profanity": false,
+				"redact_pii": false,
+				"redact_pii_audio": false,
+				"redact_pii_audio_quality": null,
+				"redact_pii_audio_options": null,
+				"redact_pii_policies": null,
+				"redact_pii_sub": null,
+				"redact_static_entities": null,
+				"speaker_labels": false,
+				"speaker_options": null,
+				"content_safety": false,
+				"iab_categories": false,
+				"content_safety_labels": {
+					"status": "unavailable",
+					"results": [],
+					"summary": {}
+				},
+				"iab_categories_result": {
+					"status": "unavailable",
+					"results": [],
+					"summary": {}
+				},
+				"language_detection": false,
+				"language_detection_options": null,
+				"language_detection_results": null,
+				"language_confidence_threshold": null,
+				"language_confidence": null,
+				"custom_spelling": null,
+				"throttled": false,
+				"auto_chapters": false,
+				"summarization": false,
+				"summary_type": null,
+				"summary_model": null,
+				"custom_topics": false,
+				"topics": [],
+				"speech_threshold": null,
+				"speech_model": null,
+				"speech_models": [
+					"universal-3-5-pro"
+				],
+				"speech_model_used": "universal-3-5-pro",
+				"temperature": null,
+				"remove_audio_tags": "all",
+				"chapters": null,
+				"disfluencies": false,
+				"entity_detection": false,
+				"sentiment_analysis": false,
+				"sentiment_analysis_results": null,
+				"entities": null,
+				"speakers_expected": null,
+				"summary": null,
+				"custom_topics_results": null,
+				"is_deleted": null,
+				"multichannel": null,
+				"project_id": 1747096,
+				"token_id": 1768830
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'assemblyai/universal-3.5-pro',\n  {\n    audio_url: 'https://cdn.openai.com/API/docs/audio/echo.wav',\n    language_code: 'en',\n    keyterms_prompt: ['Kubernetes', 'microservices', 'containerization', 'load balancer'],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"assemblyai/universal-3.5-pro\",\n  \"input\": {\n    \"audio_url\": \"https://cdn.openai.com/API/docs/audio/echo.wav\",\n    \"language_code\": \"en\",\n    \"keyterms_prompt\": [\n      \"Kubernetes\",\n      \"microservices\",\n      \"containerization\",\n      \"load balancer\"\n    ]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.assemblyai.com/docs/getting-started/universal-3-5-pro",
+	"terms": "https://www.assemblyai.com/legal/terms-of-service",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/assemblyai/universal-3.5-pro.png",
+	"metadata": {
+		"Languages": "18",
+		"Input": "Pre-recorded audio and video"
+	},
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-08-25 14:29:37",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio_url": {
+					"description": "The URL of the audio or video file to transcribe, or a data URI.",
+					"type": "string"
+				},
+				"audio_start_from": {
+					"description": "Timestamp in milliseconds at which to begin transcription.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 9007199254740991
+				},
+				"audio_end_at": {
+					"description": "Timestamp in milliseconds at which to stop transcription.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 9007199254740991
+				},
+				"language_code": {
+					"description": "Language code of the audio.",
+					"type": "string"
+				},
+				"language_detection": {
+					"description": "Whether to automatically detect the language.",
+					"type": "boolean"
+				},
+				"language_detection_options": {
+					"type": "object",
+					"properties": {
+						"expected_languages": {
+							"description": "Languages expected in the audio.",
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"fallback_language": {
+							"description": "Fallback language when detection is uncertain.",
+							"type": "string"
+						},
+						"code_switching": {
+							"description": "Whether to detect switching between languages.",
+							"type": "boolean"
+						},
+						"code_switching_confidence_threshold": {
+							"description": "Minimum confidence for code-switching detection.",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"localization": {
+							"description": "Regional language variants to use when rendering text.",
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					"additionalProperties": false
+				},
+				"prompt": {
+					"description": "Natural-language instructions for transcription style.",
+					"type": "string"
+				},
+				"keyterms_prompt": {
+					"description": "Words or phrases to prioritize during transcription.",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"temperature": {
+					"description": "Controls transcription randomness from 0 to 1.",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"punctuate": {
+					"description": "Whether to add punctuation.",
+					"type": "boolean"
+				},
+				"format_text": {
+					"description": "Whether to apply text formatting.",
+					"type": "boolean"
+				},
+				"disfluencies": {
+					"description": "Whether to include filler words such as um and uh.",
+					"type": "boolean"
+				},
+				"filter_profanity": {
+					"description": "Whether to filter profanity.",
+					"type": "boolean"
+				},
+				"speaker_labels": {
+					"description": "Whether to identify speakers in the transcript.",
+					"type": "boolean"
+				},
+				"speakers_expected": {
+					"description": "Expected number of speakers.",
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991
+				},
+				"speaker_options": {
+					"type": "object",
+					"properties": {
+						"min_speakers_expected": {
+							"description": "Minimum number of speakers to identify.",
+							"type": "integer",
+							"exclusiveMinimum": 0,
+							"maximum": 9007199254740991
+						},
+						"max_speakers_expected": {
+							"description": "Maximum number of speakers to identify.",
+							"type": "integer",
+							"exclusiveMinimum": 0,
+							"maximum": 9007199254740991
+						}
+					},
+					"additionalProperties": false
+				},
+				"multichannel": {
+					"description": "Whether to transcribe each audio channel separately.",
+					"type": "boolean"
+				},
+				"custom_spelling": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"from": {
+								"description": "Words or phrases to replace.",
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							},
+							"to": {
+								"description": "Replacement word or phrase.",
+								"type": "string"
+							}
+						},
+						"required": [
+							"from",
+							"to"
+						],
+						"additionalProperties": false
+					}
+				},
+				"auto_highlights": {
+					"description": "Whether to extract key phrases.",
+					"type": "boolean"
+				},
+				"content_safety": {
+					"description": "Whether to detect sensitive content.",
+					"type": "boolean"
+				},
+				"content_safety_confidence": {
+					"description": "Content safety confidence threshold from 25 to 100.",
+					"type": "integer",
+					"minimum": 25,
+					"maximum": 100
+				},
+				"iab_categories": {
+					"description": "Whether to classify topics using IAB categories.",
+					"type": "boolean"
+				},
+				"entity_detection": {
+					"description": "Whether to detect named entities.",
+					"type": "boolean"
+				},
+				"sentiment_analysis": {
+					"description": "Whether to analyze sentence sentiment.",
+					"type": "boolean"
+				},
+				"domain": {
+					"description": "Domain-specific model for medical terminology.",
+					"type": "string",
+					"const": "medical-v1"
+				},
+				"speech_threshold": {
+					"description": "Minimum fraction of speech required for transcription.",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"redact_pii": {
+					"description": "Whether to redact personally identifiable information.",
+					"type": "boolean"
+				},
+				"redact_pii_audio": {
+					"description": "Whether to generate an audio file with spoken PII redacted.",
+					"type": "boolean"
+				},
+				"redact_pii_audio_quality": {
+					"description": "Format of the redacted audio file.",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"wav"
+					]
+				},
+				"redact_pii_audio_options": {
+					"type": "object",
+					"properties": {
+						"return_redacted_no_speech_audio": {
+							"description": "Whether to return redacted audio when no speech is detected.",
+							"type": "boolean"
+						},
+						"override_audio_redaction_method": {
+							"description": "Replace redacted speech with silence instead of a beep.",
+							"type": "string",
+							"const": "silence"
+						}
+					},
+					"additionalProperties": false
+				},
+				"redact_pii_policies": {
+					"description": "PII categories to redact.",
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"redact_pii_sub": {
+					"description": "Replacement strategy for redacted PII.",
+					"type": "string",
+					"enum": [
+						"entity_name",
+						"hash"
+					]
+				},
+				"redact_pii_return_unredacted": {
+					"description": "Whether to include unredacted fields alongside the redacted transcript.",
+					"type": "boolean"
+				},
+				"redact_static_entities": {
+					"description": "User-defined terms to redact, grouped by label.",
+					"type": "object",
+					"propertyNames": {
+						"type": "string"
+					},
+					"additionalProperties": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"required": [
+				"audio_url"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The transcribed text.",
+					"type": "string"
+				},
+				"words": {
+					"description": "Word-level timestamps and confidence scores.",
+					"anyOf": [
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"text": {
+										"type": "string"
+									},
+									"start": {
+										"type": "number"
+									},
+									"end": {
+										"type": "number"
+									},
+									"confidence": {
+										"type": "number"
+									},
+									"speaker": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"text",
+									"start",
+									"end",
+									"confidence"
+								],
+								"additionalProperties": false
+							}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"utterances": {
+					"description": "Speaker-separated utterances (when speaker_labels is enabled).",
+					"anyOf": [
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"text": {
+										"type": "string"
+									},
+									"start": {
+										"type": "number"
+									},
+									"end": {
+										"type": "number"
+									},
+									"confidence": {
+										"type": "number"
+									},
+									"speaker": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"text",
+									"start",
+									"end",
+									"confidence",
+									"speaker"
+								],
+								"additionalProperties": false
+							}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"confidence": {
+					"description": "Overall confidence score for the transcription.",
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"language_code": {
+					"description": "Detected or specified language code.",
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"language_confidence": {
+					"description": "Confidence score for language detection.",
+					"anyOf": [
+						{
+							"type": "number"
+						},
+						{
+							"type": "null"
+						}
+					]
+				}
+			},
+			"required": [
+				"text"
+			],
+			"additionalProperties": false
+		}
+	}
+}

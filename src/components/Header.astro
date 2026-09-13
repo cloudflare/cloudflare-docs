@@ -1,9 +1,9 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { Button } from "./ui/button";
 import { LinkButton } from "./ui/link-button";
 import { ThemeToggle } from "./ui/theme-toggle";
-import { DocSearch } from "./ui/search";
+import { Search } from "./ui/search";
 import { config } from "virtual:nimbus/config";
 import { getSidebarSections } from "@cloudflare/nimbus-docs";
 import { CloudflareWordmark } from "@/components/icons/CloudflareWordmark";
@@ -51,10 +51,15 @@ const navLinks = [
 ];
 ---
 
-<header
-	class="border-border bg-card/80 sticky top-0 z-30 border-b backdrop-blur-lg"
->
-	<div class="mx-auto flex h-14 items-center justify-between px-4 lg:px-6">
+<header class="border-border sticky top-0 z-30 border-b">
+	<div
+		aria-hidden="true"
+		class="bg-card/80 pointer-events-none absolute inset-0 backdrop-blur-lg"
+	>
+	</div>
+	<div
+		class="relative mx-auto flex h-14 items-center justify-between px-4 lg:px-6"
+	>
 		<div class="flex items-center gap-3">
 			<a
 				href="/"
@@ -105,8 +110,21 @@ const navLinks = [
 			}
 		</div>
 
-		<div class="flex items-center gap-2">
-			{config.search !== false && <DocSearch />}
+		<div class="flex items-center gap-2" data-header-actions>
+			<script is:inline>
+				try {
+					const isLoggedIn = document.cookie.split(";").some((cookie) => {
+						return cookie.trim() === "__cf_logged_in=1";
+					});
+
+					if (isLoggedIn) {
+						document.currentScript?.parentElement?.classList.add("logged-in");
+					}
+				} catch {
+					/* ignore - keeps logged out state */
+				}
+			</script>
+			{config.search !== false && <Search />}
 			{
 				config.github && (
 					<LinkButton
@@ -135,7 +153,8 @@ const navLinks = [
 				class="hidden md:inline-flex"
 				id="header-login-button"
 			>
-				Log in
+				<span data-auth="logged-out">Log in</span>
+				<span data-auth="logged-in">Dashboard</span>
 			</LinkButton>
 
 			{
@@ -153,3 +172,19 @@ const navLinks = [
 		</div>
 	</div>
 </header>
+
+<style is:global>
+	#header-login-button [data-auth="logged-in"] {
+		display: none;
+	}
+
+	[data-header-actions].logged-in
+		#header-login-button
+		[data-auth="logged-out"] {
+		display: none;
+	}
+
+	[data-header-actions].logged-in #header-login-button [data-auth="logged-in"] {
+		display: inline;
+	}
+</style>

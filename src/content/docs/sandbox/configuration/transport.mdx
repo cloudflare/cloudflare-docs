@@ -14,6 +14,12 @@ import { WranglerConfig } from "~/components";
 
 Configure how the Sandbox SDK communicates with containers using transport modes.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents transport selection on today's stable `@cloudflare/sandbox` package.
+
+**Sandbox SDK 1.0** (preview on `@next`) uses a single RPC control channel. Remove `SANDBOX_TRANSPORT`, the `transport` option on `getSandbox()`, and `setTransport()`. Refer to [Migrate to the 1.0 preview](/sandbox/1-0-preview/migrate/#remove-transport-selection).
+:::
+
 ## Overview
 
 The Sandbox SDK supports three transport modes for communication between the Durable Object and the container:
@@ -21,7 +27,6 @@ The Sandbox SDK supports three transport modes for communication between the Dur
 - **HTTP transport** (default) - Each SDK operation makes a separate HTTP request to the container.
 - **NEW: RPC transport** - All SDK operations are multiplexed over a single persistent WebSocket connection. Will replace HTTP as the default transport in future. Available since 0.9.1.
 - **Deprecated: WebSocket transport** - All SDK operations are multiplexed over a single persistent WebSocket. Superseded by RPC transport which uses an improved protocol.
-
 
 ## When to use RPC transport
 
@@ -112,11 +117,13 @@ No application code changes are needed. The SDK automatically uses the configure
 ### Connection lifecycle
 
 **HTTP transport:**
+
 - Creates a new HTTP request for each SDK operation
 - No persistent connection
 - Each request is independent and stateless
 
 **RPC transport:**
+
 - Establishes a WebSocket connection on the first SDK operation
 - Maintains the persistent connection for all subsequent operations
 - Connection is closed when the sandbox sleeps or is evicted
@@ -136,6 +143,7 @@ Your code remains identical regardless of transport mode.
 All transports provide identical error handling behavior. The SDK automatically retries on transient errors (like 503 responses) with exponential backoff.
 
 WebSocket-specific behavior:
+
 - Connection failures trigger automatic reconnection
 - The SDK transparently handles WebSocket disconnections
 - In-flight operations are not lost during reconnection
@@ -153,7 +161,6 @@ Switching between transports requires no code changes.
 :::caution[Requires staged deployment]
 Using the `rpc` transport requires version 0.9.1 or newer. If you are using an older version of the Sandbox SDK upgrade and deploy your application with the newer `@cloudflare/sandbox` and image first. Otherwise there will be issues with newer SDK clients attempting to connect to older sandboxes that do not support the new transport.
 :::
-
 
 Add `SANDBOX_TRANSPORT` to your `wrangler.jsonc`:
 

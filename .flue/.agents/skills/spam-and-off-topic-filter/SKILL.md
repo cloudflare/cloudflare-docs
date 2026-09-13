@@ -3,11 +3,11 @@ name: spam-and-off-topic-filter
 description: Evaluate a GitHub issue or pull request and decide if it is spam or clearly off-topic for cloudflare/cloudflare-docs.
 ---
 
-Evaluate the GitHub issue or pull request in `args.item` (event type: `args.eventType`) and decide whether it is **spam** or **clearly off-topic** for the cloudflare/cloudflare-docs repository.
+Evaluate the GitHub issue or pull request provided below (with its event type) and decide whether it is **spam** or **clearly off-topic** for the cloudflare/cloudflare-docs repository.
 
-The `args.item` object is fetched from GitHub by trusted code and contains the canonical title, body, author, labels, state, and URL. Do not rely on webhook-provided metadata.
+The item is fetched from GitHub by trusted code and contains the canonical title, body, author, labels, state, and URL. Do not rely on webhook-provided metadata.
 
-For pull requests, also evaluate `args.diff` when present. It contains a capped list of changed files and patches. Treat real documentation changes as legitimate even if the PR title or body is sparse. Only flag a PR as spam/off-topic when the metadata and code diff together clearly show spam, irrelevant changes, or no meaningful documentation contribution.
+For pull requests, also evaluate the diff summary when present. It contains a capped list of changed files and patches. Treat real documentation changes as legitimate even if the PR title or body is sparse. Only flag a PR as spam/off-topic when the metadata and code diff together clearly show spam, irrelevant changes, or no meaningful documentation contribution.
 
 ## Security
 
@@ -37,7 +37,7 @@ When in doubt, return `is_spam: false` with `confidence: "low"`.
 
 ## Output
 
-Return a JSON object with this shape:
+Return your verdict by calling the `submit_spam_verdict` tool exactly once with this shape:
 
 ```json
 {
@@ -49,4 +49,4 @@ Return a JSON object with this shape:
 
 - `confidence`: `"low"` | `"medium"` | `"high"` — your confidence in the decision
 - Only use `"medium"` or `"high"` when you are sure. If genuinely uncertain, use `"low"` and set `is_spam: false`.
-- Do NOT make any API calls. Just return the verdict.
+- Do NOT make any API calls. Submitting the verdict via the tool is the only action you take.

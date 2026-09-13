@@ -12,7 +12,7 @@ products:
 
 The REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with all AI Gateway features — logging, caching, rate limiting, and more — applied automatically.
 
-No provider SDKs or API keys are needed. Authentication and billing are handled through your Cloudflare account. Third-party models are billed via [Unified Billing](/ai-gateway/features/unified-billing/), while Workers AI models follow [Workers AI pricing](/workers-ai/platform/pricing/).
+No provider SDKs or API keys are needed. Authentication and billing are handled through your Cloudflare account. Third-party models are billed via [Unified Billing](/ai-gateway/features/unified-billing/). Workers AI models can use prepaid AI Gateway credits or [Workers AI billing](/workers-ai/platform/pricing/).
 
 ## Endpoints
 
@@ -31,10 +31,14 @@ The `/ai/v1/messages` endpoint strictly uses Anthropic's API schema and supports
 
 ## Authentication
 
-Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has `AI Gateway` permission. Pass it in the `Authorization` header.
+Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has the **Account** > **Workers AI** > **Read** permission. Pass it in the `Authorization` header.
+
+All `/accounts/{account_id}/ai/*` endpoints require the Workers AI permission. This applies to third-party models and to Workers AI (`@cf/`) models. A token that holds only an `AI Gateway` permission returns `401` with error code `10000`.
+
+The `AI Gateway` permissions apply to the `/accounts/{account_id}/ai-gateway/*` endpoints, which manage gateway configuration, logs, and routes.
 
 :::note
-Ensure your Cloudflare account has [sufficient credits loaded](/ai-gateway/features/unified-billing/#load-credits) before calling third-party models.
+Ensure your Cloudflare account has [sufficient credits loaded](/ai-gateway/features/unified-billing/#load-credits) before calling third-party models or using prepaid credits for Workers AI.
 :::
 
 ## Model naming
@@ -105,6 +109,7 @@ The existing Workers AI endpoint with the model ID in the URL path also continue
 # and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/moonshotai/kimi-k2.6" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "cf-aig-gateway-id: default" \
   --header "Content-Type: application/json" \
   --data '{
     "messages": [
@@ -115,6 +120,64 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
     ]
   }'
 ```
+
+To use prepaid AI Gateway credits for Workers AI, use the model-in-path endpoint shown above, set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing**, and include its ID in the `cf-aig-gateway-id` header. Requests to frontier models billed with prepaid credits receive [higher rate limits](/workers-ai/platform/limits/#frontier-models).
+
+### Background requests and webhooks
+
+By default, `/ai/run` requests are synchronous — the connection stays open until the model finishes and the result comes back in the response. For long-running models — such as image, video, or audio generation — or when you do not want to hold a connection open, run the request in the background and have AI Gateway notify a webhook when it completes.
+
+Set `background` to `true` and provide a `webhookUrl`. Both are fields of the `options` object in the `/ai/run` body, alongside `model` and `input`.
+
+`webhookUrl` can only be provided when `background` is `true`. Providing a `webhookUrl` without `background: true` returns a `400` error.
+
+```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "google/nano-banana",
+    "input": {
+      "prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
+      "aspect_ratio": "16:9"
+    },
+    "options": {
+      "background": true,
+      "webhookUrl": "https://example.com/my-webhook"
+    }
+  }'
+```
+
+A background request returns immediately while the model runs. The result is delivered to your webhook when the run completes.
+
+#### Webhook payload
+
+When the run completes, AI Gateway sends a single `POST` request to your `webhookUrl` with the run outcome:
+
+```json
+{
+	"id": "<run-id>",
+	"state": "<run-state>",
+	"result": {},
+	"error": null,
+	"provider": "google",
+	"model": "google/nano-banana",
+	"usage": {}
+}
+```
+
+Webhook delivery is best-effort and is not retried. The destination must be an HTTPS URL that does not resolve to a private network address.
+
+#### Webhook format
+
+Use the optional `webhookFormat` field in the `options` object to control the shape of the webhook body. The default is `raw`. `webhookFormat` can only be provided when `webhookUrl` is present. Otherwise, the request returns a `400` error.
+
+| Format | Description                                                                                                                   |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| `raw`  | Sends the payload as-is (default).                                                                                            |
+| `chat` | Wraps the payload in `{ "text": "<prettified JSON>" }`, matching the incoming-webhook body accepted by Google Chat and Slack. |
 
 ## `/ai/v1/chat/completions` — OpenAI compatible
 

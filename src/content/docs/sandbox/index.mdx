@@ -33,6 +33,12 @@ Build secure, isolated code execution environments
 
 <Plan type="workers-paid" />
 
+:::note[Sandbox SDK 1.0 preview]
+These pages document the current stable `@cloudflare/sandbox` package. The next major release is **Sandbox SDK 1.0**, available as a preview on `@cloudflare/sandbox@next`.
+
+We recommend starting new projects on the preview, and migrating existing apps when you can, so you are ready when 1.0 becomes the stable release. Refer to the [1.0 preview](/sandbox/1-0-preview/) section for install, concepts, API reference, and migration.
+:::
+
 The Sandbox SDK enables you to run untrusted code securely in isolated environments. Built on [Containers](/containers/), Sandbox SDK provides a simple API for executing commands, managing files, running background processes, and exposing services — all from your [Workers](/workers/) applications.
 
 Sandboxes are ideal for building AI agents that need to execute code, interactive development environments, data analysis platforms, CI/CD systems, and any application that needs secure code execution at the edge. Each sandbox runs in its own isolated container with a full Linux environment, providing strong security boundaries while maintaining performance.
@@ -215,6 +221,12 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
 
 ## Features
 
+<Feature header="Deploy a Sandbox application" href="/sandbox/guides/deploy/" cta="Deploy a Sandbox app">
+
+Deploy your Worker and keep the npm package and container image on the same release line.
+
+</Feature>
+
 <Feature header="Execute commands securely" href="/sandbox/guides/execute-commands/" cta="Learn about command execution">
 
 Run shell commands, Python scripts, Node.js applications, and more with streaming output support and automatic timeout handling.
@@ -257,9 +269,9 @@ Monitor files and directories for changes using native filesystem events. Perfec
 
 </Feature>
 
-<Feature header="Proxy external API requests securely" href="/sandbox/guides/proxy-requests/" cta="Learn about request proxying">
+<Feature header="Handle outbound traffic" href="/sandbox/guides/outbound-traffic/" cta="Learn about outbound traffic">
 
-Keep credentials in your Worker while allowing sandboxes to access external APIs. A Worker proxy validates short-lived JWT tokens from the sandbox and injects real credentials at request time.
+Block, allow, and intercept outbound HTTP from sandboxes. Keep credentials in your Worker by injecting authorization headers in outbound handlers.
 
 </Feature>
 
@@ -311,11 +323,23 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 
 ## More resources
 
+## Coding agents
+
+Install [Cloudflare Skills](https://github.com/cloudflare/skills) for your agent ([Agent setup](/agent-setup/)). Use **`sandbox-stable`** with the main docs on this site while you are on the current stable package. Use **`sandbox-next`** for `@cloudflare/sandbox@next` (recommended for new projects). When you are ready to port an existing app, use **`sandbox-migrate-to-next`**.
+
 <CardGrid>
 
 <LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="open-book">
 	Explore complete examples including AI code execution, data analysis, and
 	interactive environments.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Deploy a Sandbox application"
+	href="/sandbox/guides/deploy/"
+	icon="document"
+>
+	Deploy and keep package and image aligned.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -325,6 +349,11 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 >
 	Learn how to solve specific problems and implement features with the Sandbox
 	SDK.
+</LinkTitleCard>
+
+<LinkTitleCard title="1.0 preview" href="/sandbox/1-0-preview/" icon="rocket">
+	Install `@cloudflare/sandbox@next` and prepare for the Sandbox SDK 1.0
+	release.
 </LinkTitleCard>
 
 <LinkTitleCard title="API reference" href="/sandbox/api/" icon="seti:json">

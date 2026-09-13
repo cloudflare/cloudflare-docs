@@ -1,0 +1,76 @@
+---
+title: API reference
+pcx_content_type: navigation
+sidebar:
+  order: 8
+description: API reference for @cloudflare/sandbox@next — processes, terminals, errors, and related preview surfaces.
+products:
+  - sandbox
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This section documents APIs on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For today's stable package, refer to [API reference](/sandbox/api/).
+:::
+
+Reference for the preview public surface. Start with the mental model pages when you need *why*. Use these pages for signatures and types.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Processes"
+	href="/sandbox/1-0-preview/api/processes/"
+	icon="seti:shell"
+>
+	`exec`, process handles, logs, waits, and kill.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Terminals"
+	href="/sandbox/1-0-preview/api/terminals/"
+	icon="terminal"
+>
+	`createTerminal`, handles, output, connect, interrupt, and terminate.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Errors"
+	href="/sandbox/1-0-preview/api/errors/"
+	icon="error"
+>
+	Error classes, codes, and recommended fixes.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Interpreter"
+	href="/sandbox/1-0-preview/api/interpreter/"
+	icon="seti:python"
+>
+	`withInterpreter`, contexts, `runCode`, and results.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Other API surfaces
+
+Files, mounts, backups, ports, tunnels, and related options remain available. Use the main reference for signatures:
+
+- [Files](/sandbox/api/files/) and [file watching](/sandbox/api/file-watching/)
+- [Storage](/sandbox/api/storage/) and [backups](/sandbox/api/backups/)
+- [Ports](/sandbox/api/ports/) and [tunnels](/sandbox/api/tunnels/)
+- [Lifecycle](/sandbox/api/lifecycle/) and [sandbox options](/sandbox/configuration/sandbox-options/)
+- [Outbound traffic](/sandbox/guides/outbound-traffic/)
+
+Where those pages still describe sessions or transport selection, that guidance does not apply on `@next`.
+
+## Related concepts and guides
+
+- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
+- [Process execution](/sandbox/1-0-preview/processes/)
+- [Terminals](/sandbox/1-0-preview/terminals/)
+- [Environment variables](/sandbox/1-0-preview/environment/)
+- [Code interpreter](/sandbox/1-0-preview/interpreter/)
+- [Errors and recovery](/sandbox/1-0-preview/errors/)
+- [Troubleshooting](/sandbox/1-0-preview/troubleshooting/)
+- [Migrate](/sandbox/1-0-preview/migrate/)

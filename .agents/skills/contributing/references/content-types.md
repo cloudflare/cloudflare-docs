@@ -21,7 +21,7 @@ When unsure, look at sibling pages in the same product area and match the type t
 | Land on a page that only routes to child pages             | `navigation`                     |
 | Announce a product change                                  | `changelog` (see `changelog.md`) |
 
-Other valid values exist for specialized content: `design-guide`, `integration-guide`, `implementation-guide`, `learning-unit`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `video`. Use them only when a page clearly fits — otherwise prefer the common types above.
+Other valid values exist for specialized content: `design-guide`, `glossary`, `integration-guide`, `implementation-guide`, `learning-unit`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `video`. Use them only when a page clearly fits — otherwise prefer the common types above.
 
 ## Required frontmatter
 

@@ -8,23 +8,20 @@ sidebar:
   order: 11
 ---
 
-import { Render } from "~/components"
+import { GlossaryTooltip } from "~/components"
 
-<Render
-	file="magic-transit/cloudflare-ips"
-	product="networking-services"
-	params={{
-		mtLpCreateTunnel: "/magic-transit/how-to/configure-tunnel-endpoints/",
-		mtLpStaticRoute: "/magic-transit/how-to/configure-routes/#configure-static-routes",
-		mtLpBgpPeering: "/magic-transit/how-to/configure-routes/#configure-bgp-routes"
-		}} />
+To use Magic Transit, you need to own a publicly routable IP address block with a minimum size of `/24`. If you do not own a `/24` address block, you can use Magic Transit with a Cloudflare-owned IP address. This option is helpful if you do not meet the `/24` prefix length requirements or want to protect a smaller network.
+
+To protect your network with a Cloudflare IP address, contact your account manager. After you receive your IP address:
+
+- [Create a tunnel](/magic-transit/how-to/configure-tunnel-endpoints/).
+- [Set up static routes](/magic-transit/how-to/configure-routes/#configure-static-routes) or [BGP peering (beta)](/magic-transit/how-to/configure-routes/#configure-bgp-routes).
+- [Configure health checks](/magic-transit/network-health/run-endpoint-health-checks/).
+- Confirm you properly configured [tunnel](/magic-transit/network-health/update-tunnel-health-checks-frequency/) and endpoint health checks.
+- Update your infrastructure at your own pace to use the allocated Cloudflare IPs.
+
+When you use a Cloudflare-owned IP space, you do not need a <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>. When using Cloudflare-leased IPs, Cloudflare automatically enables [Magic Transit Egress](/magic-transit/reference/egress/), which routes your egress traffic to Cloudflare instead of the Internet. Set up policy-based routing on your end to ensure return traffic routes properly.
 
 ## Check your Cloudflare IPs
 
-<Render
-  file="check-leased-ips"
-	product="byoip"
-	params={{
-		product: "Anycast IPs for Magic Transit"
-	}}
-/>
+You can find your leased Anycast IPs for Magic Transit on the dashboard under [**Address space** > **Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).

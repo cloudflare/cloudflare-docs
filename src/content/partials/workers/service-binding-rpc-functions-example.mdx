@@ -2,7 +2,7 @@
 {}
 ---
 
-import { WranglerConfig, TypeScriptExample } from "~/components";
+import { WranglerConfig, TypeScriptExample, TabItem, Tabs } from "~/components";
 
 Consider the following two Workers, connected via a [Service Binding](/workers/runtime-apis/bindings/service-bindings/rpc). The counter service provides the RPC method `newCounter()`, which returns a function:
 
@@ -18,7 +18,9 @@ Consider the following two Workers, connected via a [Service Binding](/workers/r
 
 </WranglerConfig>
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -40,6 +42,28 @@ export default class extends WorkerEntrypoint {
 
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello from counter-service")
+
+    async def new_counter(self):
+        value = 0
+        def increment(amount=0):
+            nonlocal value
+            value += amount
+            return value
+        return increment
+```
+
+</TabItem>
+
+</Tabs>
+
 This function can then be called by the client Worker:
 
 <WranglerConfig>
@@ -60,7 +84,9 @@ This function can then be called by the client Worker:
 
 </WranglerConfig>
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 export default {
@@ -76,6 +102,25 @@ export default {
 ```
 
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        counter = await self.env.COUNTER_SERVICE.new_counter()
+        await counter(2)  # returns 2
+        await counter(1)  # returns 3
+        count = await counter(-5)  # returns -2
+
+        return Response(str(count))
+```
+
+</TabItem>
+
+</Tabs>
 
 :::note
 

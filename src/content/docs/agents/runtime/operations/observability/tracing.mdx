@@ -1,0 +1,289 @@
+---
+title: Tracing
+description: Trace model calls, tool runs, and approvals with Workers traces.
+pcx_content_type: concept
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
+
+Agent tracing helps you understand what an agent did at every turn, including its model calls, tool runs, and approval requests. Use traces to investigate unexpected behavior, find slow operations, and review token usage.
+
+Agent activity appears alongside runtime events such as fetch calls, KV reads, and D1 queries in [Workers traces](/workers/observability/traces/).
+
+## Enable tracing
+
+Enable tracing in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[observability.traces]
+enabled = true
+```
+
+</WranglerConfig>
+
+## View agent activity
+
+Open the [Agents tab](https://dash.cloudflare.com/?to=/:account/agents) in the Cloudflare Dashboard to see traced agents and subagents. The overview shows each agent's model, session count, runs, and total token usage.
+
+A session is a conversation made up of one or more turns. A turn is one request to an agent and its response.
+
+![Agents dashboard showing agents with session, run, and token totals](~/assets/images/workers-observability/agent_overview.png)
+
+Select an agent to see its traces. Each trace includes its duration, token breakdown, and status.
+
+![Agent details showing recent traces and token totals](~/assets/images/workers-observability/agent_tracing_turn_view.png)
+
+There are two ways to follow what an agent did: **Session replay** and **Trace**.
+
+**Session replay** shows the recorded conversation across turns, including messages, reasoning, tool calls, and subagent activity. What appears depends on your [payload recording settings](/agents/runtime/operations/observability/tracing/#payload-privacy).
+
+![Session replay showing messages, reasoning, and subagent tool calls](~/assets/images/workers-observability/agent_tracing_session_replay.png)
+
+**Trace** is a waterfall of the operations performed during one turn. It shows when each operation started, how long it took, and which operation called it.
+
+![Trace waterfall showing nested agent, model, tool, and D1 spans](~/assets/images/workers-observability/agent_tracing_waterfall.png)
+
+## Trace structure
+
+Each turn produces a trace made of spans, one for each timed operation:
+
+```txt
+invoke_agent {agent class}
+├── chat {model}
+└── execute_tool {tool}
+    └── tool_approval {tool}
+```
+
+The `invoke_agent` span covers the turn. Model calls, tool runs, and approvals appear as nested spans. Subagent work appears under the operation that invoked it.
+
+:::note
+Approval spans represent lifecycle events within a Worker invocation. They do not measure the time a person waits before responding across invocations.
+:::
+
+### Agent identity
+
+Agent spans use three fields to identify the work shown in the dashboard:
+
+- **Agent name** identifies the logical agent implementation. Use a shared name such as `booking-agent`.
+- **Agent ID** identifies the stable agent instance or resource, such as `booking-agent-production`.
+- **Conversation ID** identifies the current conversation or session.
+
+Do not derive the agent name from a request, conversation, or user identifier. This creates too many distinct agent names in the dashboard.
+
+### Payload privacy
+
+Message and tool payloads can contain personally identifiable information. Only record payloads that are safe to store. Each integration controls payload recording differently, so configure it in the relevant [Framework setup](/agents/runtime/operations/observability/tracing/#framework-setup) section.
+
+Think and `wrapAISDK()` use `storeMessages` to record input and output messages on `chat` spans. They use `storeTools` to record arguments and results on `execute_tool` spans.
+
+## Framework setup
+
+Tracing and payload controls depend on the integration. Think and Flue instrument turns automatically. Direct AI SDK calls and custom harnesses need additional setup.
+
+### Think
+
+Think automatically instruments your agent and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
+
+#### Store payloads
+
+Think does not store message or tool payloads by default. To record them, override the properties on the agent class:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	override storeMessages = true;
+	override storeTools = true;
+}
+```
+
+</TypeScriptExample>
+
+### Flue
+
+[Flue v2+](https://flueframework.com/blog/flue-2/) also automatically instruments your agent and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
+
+#### Exclude payloads
+
+Flue stores messages, system instructions, tool definitions, arguments, and results by default. To stop recording them, set content to false:
+
+<TypeScriptExample>
+
+```ts
+import { instrument } from "@flue/runtime";
+import { createCloudflareTracing } from "@flue/runtime/cloudflare";
+
+instrument(createCloudflareTracing({ content: false }));
+```
+
+</TypeScriptExample>
+
+### AI SDK
+
+For direct [AI SDK](https://sdk.vercel.ai/) calls, wrap the namespace once:
+
+<TypeScriptExample>
+
+```ts
+import * as ai from "ai";
+import { wrapAISDK } from "agents/observability/ai";
+
+const tracedAI = wrapAISDK(ai);
+```
+
+</TypeScriptExample>
+
+`wrapAISDK()` supports AI SDK v6 and v7. It instruments `generateText`, `streamText`, `generateObject`, and `streamObject`, creating the `invoke_agent` parent before model and tool work begins.
+
+Unlike Think, a direct AI SDK call has no Agent instance from which to infer dashboard identity. Supply the [agent identity fields](/agents/runtime/operations/observability/tracing/#agent-identity) on each call.
+
+Only include context that is safe to store. Do not include credentials, tokens, user input, or other secrets.
+
+#### AI SDK v7
+
+Use native AI SDK v7 telemetry fields to supply identity. You can include additional scalar context, such as a tenant or route, to make traces easier to query:
+
+<TypeScriptExample>
+
+```ts
+await tracedAI.generateText({
+	model,
+	prompt: "Find an available appointment",
+	runtimeContext: {
+		agentId: "booking-agent-production",
+		conversationId: "conversation-123",
+		tenantId: "tenant-42",
+	},
+	telemetry: {
+		functionId: "booking-agent",
+		includeRuntimeContext: {
+			agentId: true,
+			conversationId: true,
+			tenantId: true,
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+This maps `functionId`, `agentId`, and `conversationId` to `gen_ai.agent.name`, `gen_ai.agent.id`, and `gen_ai.conversation.id`. Other included scalar values use the `cloudflare.agents.runtime_context.*` namespace.
+
+#### AI SDK v6
+
+AI SDK v6 uses `experimental_telemetry.metadata` for the same identity and additional span data:
+
+<TypeScriptExample>
+
+```ts
+await tracedAI.generateText({
+	model,
+	prompt: "Find an available appointment",
+	experimental_telemetry: {
+		functionId: "booking-agent",
+		metadata: {
+			agentId: "booking-agent-production",
+			conversationId: "conversation-123",
+			tenantId: "tenant-42",
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+Additional scalar metadata uses the `cloudflare.agents.metadata.*` namespace.
+
+#### Store payloads
+
+`wrapAISDK()` does not store message or tool payloads by default. To record them with AI SDK v6 or v7, pass storage options when wrapping the namespace:
+
+<TypeScriptExample>
+
+```ts
+import * as ai from "ai";
+import { wrapAISDK } from "agents/observability/ai";
+
+const tracedAI = wrapAISDK(ai, {
+	storeMessages: true,
+	storeTools: true,
+});
+```
+
+</TypeScriptExample>
+
+### Custom harnesses
+
+If your agent does not use one of our currently supported frameworks, instrument it with the [Workers custom spans API](/workers/observability/traces/custom-spans/). Create an `invoke_agent` span for each turn, with `chat` spans for model calls, `execute_tool` spans for tool runs, and `tool_approval` spans for approvals.
+
+For span names, attributes, and implementation examples, refer to the [OpenTelemetry GenAI reference implementations](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/reference/README.md). Adapt these examples to the Workers custom spans API.
+
+:::note
+Workers does not yet support the [OpenTelemetry API](https://opentelemetry.io/) directly. Cloudflare is working to add support so libraries and agent frameworks that emit OpenTelemetry spans can integrate without manual custom-span instrumentation.
+:::
+
+#### Add agent identity
+
+Add these attributes to both the `invoke_agent` and `chat` spans so the Agents dashboard can associate the telemetry with the agent and conversation:
+
+| Attribute                | `invoke_agent` span                             | `chat` span                                  |
+| ------------------------ | ----------------------------------------------- | -------------------------------------------- |
+| `gen_ai.operation.name`  | `invoke_agent`                                  | `chat`                                       |
+| `gen_ai.agent.name`      | A shared agent name, such as `booking-agent`    | The same agent name                          |
+| `gen_ai.agent.id`        | A stable identifier for the agent instance      | The same agent ID                            |
+| `gen_ai.conversation.id` | The conversation, session, or thread identifier | The same conversation, session, or thread ID |
+
+#### Store payloads
+
+For custom spans, add payload attributes manually. Use `gen_ai.input.messages`, `gen_ai.output.messages`, and `gen_ai.system_instructions` on model spans. Use `gen_ai.tool.call.arguments` and `gen_ai.tool.call.result` on tool spans. The custom spans API accepts scalar attribute values, so serialize structured payloads with `JSON.stringify()`. These values are recorded whenever the invocation is sampled. Only add payloads that are safe to store.
+
+## Exporting traces
+
+Span attributes follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai), so any tool that reads OpenTelemetry data can consume them. To send traces to an external destination, [configure an OpenTelemetry Protocol (OTLP) endpoint](/workers/observability/exporting-opentelemetry-data/) in Workers Observability.
+
+## Pricing
+
+Agent traces use [Workers tracing](/workers/observability/traces/) and follow Workers Observability pricing.
+
+The Agents view shows your agent's operations. The full Worker trace may include additional spans from SDK internals and other Worker-level operations. To inspect the full trace, select **View in Observability**.
+
+Every span counts as one observability event, including spans not shown in the Agents view. Tracing is free while in beta. Beginning October 1, 2026, tracing will be included in existing Workers Observability pricing:
+
+| Tier         | Included events                                     | Retention |
+| ------------ | --------------------------------------------------- | --------- |
+| Workers Free | 200,000 per day                                     | 3 days    |
+| Workers Paid | 20 million per month ($0.60 per additional million) | 7 days    |
+
+## Limitations
+
+- Use agent traces for debugging and observability. Traces are not a complete or lossless record of a conversation.
+- Payload data is subject to span size limits. Long messages, reasoning, tool arguments, and results may be truncated. These limits may change.
+- Session replay does not display images.
+
+## Next steps
+
+<LinkCard
+	title="Diagnostics channels"
+	href="/agents/runtime/operations/observability/diagnostics-channels/"
+	description="Subscribe to structured agent events for state changes, schedules, workflows, and more."
+/>
+
+<LinkCard
+	title="Configuration"
+	href="/agents/runtime/operations/configuration/"
+	description="wrangler.jsonc setup and deployment."
+/>
+
+<LinkCard
+	title="Agents API"
+	href="/agents/runtime/agents-api/"
+	description="Complete API reference for the Agents SDK."
+/>

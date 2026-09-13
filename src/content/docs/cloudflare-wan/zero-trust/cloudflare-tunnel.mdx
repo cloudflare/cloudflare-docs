@@ -6,17 +6,80 @@ products:
   - cloudflare-wan
 ---
 
-import { Render } from "~/components";
+Cloudflare WAN (formerly Magic WAN) can work together with [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to provide easy access between your networks and applications.
 
-<Render
-	file="cloudflare-wan/zero-trust/tunnel"
-	product="networking-services"
-	params={{
-		gatewayURL: "/cloudflare-one/traffic-policies/",
-		greIpsecURL: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
-		warpURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/",
-		tracerouteURL: "/cloudflare-wan/configuration/how-to/traceroute/",
-		trafficSteeringURL: "/cloudflare-wan/reference/traffic-steering/#route-evaluation-with-zero-trust-connections",
-		arrURL: "/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta"
-	}}
-/>
+By default, [Cloudflare Gateway](/cloudflare-one/traffic-policies/) proxies and filters TCP, UDP, and ICMP traffic routed through IPsec/GRE tunnels and destined to routes behind Cloudflare Tunnel.
+
+## Route evaluation and precedence
+
+Cloudflare evaluates private network routes using longest-prefix-match. A prefix combines a base IP address with a prefix length that indicates how many bits define the network portion (for example, `192.168.0.0/24`). When multiple routes could match a destination IP, Cloudflare selects the route with the longest prefix (most specific match).
+
+For example, if you have routes for both `10.0.0.0/16` and `10.0.1.0/24`, traffic destined for `10.0.1.50` matches the `/24` route because it is more specific.
+
+### Route uniqueness
+
+Within a [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/), each prefix can only appear once in the Zero Trust routing table. You cannot create two Zero Trust routes with the same prefix pointing to different tunnels in the same virtual network.
+
+To route the same prefix to different destinations, use separate [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/).
+
+### Reserved IP ranges
+
+Cloudflare reserves the following IP ranges for Zero Trust services:
+
+| IP range | Purpose |
+| --- | --- |
+| `100.64.0.0/12` | [Cloudflare Source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) |
+| `100.96.0.0/12` | [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) |
+| `172.64.128.0/20` | [Initial resolved IPs](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) |
+| `100.112.0.0/16` | [Private Load Balancers](/load-balancing/private-network/) |
+
+Do not configure routes that overlap with these reserved ranges.
+
+### Interaction with WAN routes
+
+If your account also uses WAN connections (IPsec, GRE, and CNI), route selection behavior depends on your routing mode.
+
+For more information, refer to [Route evaluation with Zero Trust connections](/cloudflare-wan/reference/traffic-steering/#route-evaluation-with-zero-trust-connections).
+
+## Interaction with other route selection mechanisms
+
+Longest-prefix-match routing is the default route selection method. Other mechanisms can bypass or augment route evaluation.
+
+### Automatic Return Routing (ARR)
+
+[Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta) bypasses route lookup for return traffic.
+
+When ARR is enabled:
+
+1. Cloudflare tags each flow with the source connection (tunnel or interconnect) when the flow is established.
+2. For return traffic, Cloudflare routes packets back to the tagged source connection directly, bypassing the routing table.
+3. This allows multiple sites to use identical private IP ranges without NAT or VRF configuration.
+
+ARR requires Unified Routing mode. For more information, refer to [Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta).
+
+### Hostname Routes (Initial resolved IPs)
+
+[Hostname-based routing](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) uses Gateway DNS to resolve hostnames to Initial resolved IPs, which then map to specific next hops.
+
+When Hostname Routes are enabled:
+
+1. Gateway DNS resolves the hostname to an Initial resolved IP (from `172.64.128.0/20` by default).
+2. The client sends traffic to the Initial resolved IP.
+3. Cloudflare looks up the Initial resolved IP to determine the real destination IP and the assigned next hop (specific tunnel or interconnect).
+4. Traffic is forwarded to the assigned next hop, bypassing route evaluation for next-hop selection.
+
+This enables hostname-based policies for non-HTTP traffic without requiring you to know destination IPs in advance.
+
+## Test `cloudflared` tunnel integration
+
+To verify that a `cloudflared` tunnel works correctly with your Cloudflare WAN connection:
+
+1. From a host behind your customer premises equipment, open a browser.
+2. Browse to an IP address or hostname that is reachable through a Cloudflare Tunnel private network route, such as the example destination `10.1.2.3`.
+3. Confirm that the application loads as expected. If it does, Cloudflare Tunnel is handling the traffic as configured.
+
+:::note[Run <code>traceroute</code>]
+If you connect through [GRE](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/), [IPsec](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/), [CNI](/network-interconnect/), or [WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and want to run `traceroute` to an endpoint behind a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), you need to change some settings.
+
+Refer to [Run `traceroute`](/cloudflare-wan/configuration/how-to/traceroute/) for more information.
+:::

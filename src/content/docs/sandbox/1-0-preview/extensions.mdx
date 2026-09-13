@@ -1,0 +1,54 @@
+---
+title: Extensions
+pcx_content_type: how-to
+sidebar:
+  order: 8
+description: Attach optional Sandbox capabilities on @cloudflare/sandbox@next.
+products:
+  - sandbox
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents extensions on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0.
+:::
+
+Extensions add optional capabilities to your `Sandbox` subclass as nested namespaces (for example `sandbox.interpreter.*`). They are not free-floating globals on every app.
+
+## Attach pattern
+
+<TypeScriptExample>
+```ts
+import { Sandbox as BaseSandbox } from "@cloudflare/sandbox";
+import { withInterpreter } from "@cloudflare/sandbox/interpreter";
+
+export class Sandbox extends BaseSandbox<Env> {
+	interpreter = withInterpreter(this);
+}
+```
+</TypeScriptExample>
+
+Export that class from your Worker. Call extension methods through the nested property from application code.
+
+## First-party extensions
+
+The following first-party extensions are available on the preview package:
+
+| Extension | Package | Docs |
+| --------- | ------- | ---- |
+| Code interpreter | `@cloudflare/sandbox/interpreter` | [Code interpreter](/sandbox/1-0-preview/interpreter/), [Interpreter API](/sandbox/1-0-preview/api/interpreter/) |
+| OpenCode | `@cloudflare/sandbox/opencode` | Confirm exports in your installed `@next` version (for example `withOpenCode` and client/proxy helpers). |
+
+For the interpreter, attach once, then use the same method names as the stable package (`createCodeContext`, `runCode`, and related calls) on `sandbox.interpreter`. Python needs the **`-python`** image variant. For the full how-to, refer to [Code interpreter](/sandbox/1-0-preview/interpreter/).
+
+## Custom extensions
+
+Application-defined extensions are experimental. Helpers exist under `@cloudflare/sandbox/extensions`, but preview documentation does not yet cover authoring or publishing a custom extension. Prefer the first-party extensions in the table, or keep any custom code inside your application until a supported authoring guide ships.
+
+## Related
+
+- [Code interpreter](/sandbox/1-0-preview/interpreter/)
+- [Interpreter API](/sandbox/1-0-preview/api/interpreter/)
+- [API reference](/sandbox/1-0-preview/api/)
+- [Migrate](/sandbox/1-0-preview/migrate/)

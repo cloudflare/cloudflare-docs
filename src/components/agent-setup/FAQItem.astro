@@ -6,6 +6,7 @@
 //     The first time Claude calls a Cloudflare tool, you'll be redirected
 //     to authorize via OAuth and choose what permissions to grant.
 //   </FAQItem>
+import Accordion from "./Accordion.astro";
 
 interface Props {
 	question: string;
@@ -14,9 +15,6 @@ interface Props {
 const { question } = Astro.props;
 ---
 
-<details class="agent-setup-faq-item">
-	<summary>{question}</summary>
-	<div class="agent-setup-faq-answer">
-		<slot />
-	</div>
-</details>
+<Accordion title={question}>
+	<slot />
+</Accordion>

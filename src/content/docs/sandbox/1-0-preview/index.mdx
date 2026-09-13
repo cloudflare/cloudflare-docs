@@ -1,0 +1,229 @@
+---
+title: 1.0 preview
+pcx_content_type: overview
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Overview
+description: Install @cloudflare/sandbox@next — a thinner Sandbox SDK on Cloudflare Containers — and migrate when you are ready for Sandbox SDK 1.0.
+products:
+  - sandbox
+---
+
+import { CardGrid, LinkTitleCard, PackageManagers, TypeScriptExample } from "~/components";
+
+**Sandbox SDK 1.0** is the next major release of the SDK. It is available now as a preview on the npm `@next` tag. The current stable package remains published for existing apps.
+
+Sandbox still runs isolated work on [Cloudflare Containers](/containers/). The 1.0 preview is a **thinner** SDK on that foundation: one process handle for short and long-running work, no session-based command state, no transport picker, terminals as first-class PTYs, and the code interpreter as an opt-in extension.
+
+We recommend that **new projects** start on `@cloudflare/sandbox@next` and follow this section. **Existing apps** should migrate when you can, so you are ready when 1.0 becomes the stable release. Follow [Migrate](/sandbox/1-0-preview/migrate/).
+
+The main [Sandbox documentation](/sandbox/) still documents today's stable package. Use **this** section for preview APIs and the migration path.
+
+:::note[Self-deployed bridge]
+The self-deployed Sandbox bridge is not part of the 1.0 preview. Use the [stable bridge](/sandbox/bridge/) with the matching stable package and container image.
+:::
+
+## Install the preview
+
+<PackageManagers pkg="@cloudflare/sandbox@next" />
+
+Deploy the Worker package and the sandbox container image from the **same** preview line. Do not mix a preview Worker package with a stable container image (or the reverse). For ongoing deploys, refer to [Deploy a Sandbox application](/sandbox/guides/deploy/). For a breaking cutover, refer to [Migrate](/sandbox/1-0-preview/migrate/).
+
+## What 1.0 is aiming at
+
+The stable package grew several ways to run commands (`exec`, `startProcess`, `execStream`), optional session state across launches, and selectable transports between the Durable Object and the container. That surface worked, but it duplicated ideas and hid how sandboxes actually behave on containers.
+
+The preview collapses that toward a smaller contract:
+
+| You want… | In the preview |
+| --------- | -------------- |
+| Run a program | `exec(argv)` → process handle when **launch** succeeds |
+| See output or wait for readiness | `output()`, `logs()`, `waitForExit()`, `waitForLog()`, `waitForPort()` on the handle |
+| Stop a process | `kill(signal?)` (numeric signal; default `15`) |
+| Keep shell state across many interactive steps | A [terminal](/sandbox/1-0-preview/terminals/) (PTY), not a hidden default session |
+| Run Python / JS cells | [Code interpreter](/sandbox/1-0-preview/interpreter/) extension on your `Sandbox` subclass |
+| Talk to the container control plane | Always RPC — no transport setting |
+
+Procedures: [Migrate](/sandbox/1-0-preview/migrate/). Mental model: [Process execution](/sandbox/1-0-preview/processes/) and [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/).
+
+## What changes from the stable package
+
+### Command execution
+
+**Stable:** `sandbox.exec(string)` resolves when the command **finishes** with buffered output. Long-running services and streaming use separate APIs (`startProcess`, `execStream`).
+
+**Preview:** `sandbox.exec()` takes **argv** and resolves when the process **starts**. The same handle covers short commands and long-running services.
+
+<TypeScriptExample>
+```ts
+// Current stable package
+const result = await sandbox.exec("npm test");
+console.log(result.stdout, result.exitCode);
+
+// 1.0 preview
+const process = await sandbox.exec(["npm", "test"]);
+const result = await process.output({ encoding: "utf8" });
+console.log(result.stdout, result.exitCode);
+```
+</TypeScriptExample>
+
+Shell features such as pipes and `&&` need an explicit shell, for example `['/bin/bash', '-lc', 'cd app && npm test']`. Pass `cwd` and `env` on each `exec()` when the process needs them. Details: [Process execution](/sandbox/1-0-preview/processes/), [Processes API](/sandbox/1-0-preview/api/processes/).
+
+### Sessions
+
+**Stable:** a default session can preserve working directory and environment variables across `exec()` calls. Apps can also create named sessions with `createSession()`.
+
+**Preview:** no session execution on the SDK. Each `exec()` is independent. Pass `cwd` and `env` on each launch, or put multi-step shell syntax in one explicit shell argv. Isolate end users with **separate sandboxes**, not sessions inside one sandbox. Environment model: [Environment variables](/sandbox/1-0-preview/environment/).
+
+### Terminals
+
+**Stable:** browser shells often use `sandbox.terminal(request)` with session helpers and xterm `sessionId`.
+
+**Preview:** terminals are PTY resources — `createTerminal`, `getTerminal`, `listTerminals`, and `terminal.connect(request)`. The xterm helper uses `terminalId`. Refer to [Terminals](/sandbox/1-0-preview/terminals/).
+
+### Code interpreter
+
+**Stable:** interpreter methods live on `Sandbox`.
+
+**Preview:** attach the interpreter on your subclass, then call `sandbox.interpreter.*`. Refer to [Code interpreter](/sandbox/1-0-preview/interpreter/).
+
+### Transport configuration
+
+**Stable:** apps can select HTTP, WebSocket, or RPC between the Durable Object and the container.
+
+**Preview:** the SDK always uses RPC. Remove `SANDBOX_TRANSPORT`, the `transport` option on `getSandbox()`, and `setTransport()`. No replacement setting is required.
+
+## Same platform model, clearer handles
+
+This is **not** a new container product. You still address a sandbox with a stable **sandbox ID**:
+
+<TypeScriptExample>
+```ts
+const sandbox = getSandbox(env.Sandbox, "user-123");
+```
+</TypeScriptExample>
+
+That sandbox runs in a **container**. The ID is stable. The container instance behind it is not always the same one. Processes and terminals you start exist only in the **current** container. When that container stops or is replaced, those processes and terminals are gone — old handles fail closed instead of quietly attaching to a new container for the same sandbox ID.
+
+Container stop and replace already happened on the stable line. The preview makes process and terminal APIs honest about that lifetime. Full model: [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/). Process detail: [How long a process lives](/sandbox/1-0-preview/processes/#how-long-a-process-lives). Recovery: [Errors and recovery](/sandbox/1-0-preview/errors/).
+
+## What usually stays the same
+
+These remain available. Use the main Sandbox documentation for signatures, and ignore session or transport options where those pages still mention them:
+
+- [Files](/sandbox/api/files/) and [file watching](/sandbox/api/file-watching/)
+- [Storage](/sandbox/api/storage/) and [backups](/sandbox/api/backups/)
+- [Ports](/sandbox/api/ports/) and [tunnels](/sandbox/api/tunnels/)
+- [Lifecycle options](/sandbox/api/lifecycle/) and [sandbox options](/sandbox/configuration/sandbox-options/) (except removed session/transport fields)
+- [Outbound traffic](/sandbox/guides/outbound-traffic/) (credential injection and egress policy)
+
+For process environment on `@next`, use [Environment variables](/sandbox/1-0-preview/environment/) in this section.
+
+## Start here
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/sandbox/1-0-preview/get-started/"
+	icon="rocket"
+>
+	Install `@next` and run your first process handle.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Migrate from stable"
+	href="/sandbox/1-0-preview/migrate/"
+	icon="open-book"
+>
+	Update an existing app, including deploy cutover on `@next`.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Sandbox lifecycle"
+	href="/sandbox/1-0-preview/lifecycle/"
+	icon="document"
+>
+	Sandbox ID, container, stop, replace, and what your app should store.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Process execution"
+	href="/sandbox/1-0-preview/processes/"
+	icon="seti:shell"
+>
+	How `exec()` works, process handles, and how long processes live.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Terminals"
+	href="/sandbox/1-0-preview/terminals/"
+	icon="terminal"
+>
+	Interactive PTYs, lifetime, and browser connect.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Errors and recovery"
+	href="/sandbox/1-0-preview/errors/"
+	icon="error"
+>
+	How to retry, inspect, and relaunch after common failures.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Environment variables"
+	href="/sandbox/1-0-preview/environment/"
+	icon="document"
+>
+	`setEnvVars`, per-launch `env`, and how processes get their environment.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Code interpreter"
+	href="/sandbox/1-0-preview/interpreter/"
+	icon="seti:python"
+>
+	Attach the interpreter extension and run Python or JS/TS.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="API reference"
+	href="/sandbox/1-0-preview/api/"
+	icon="setting"
+>
+	Process, terminal, error, and interpreter signatures for `@next`.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Extensions"
+	href="/sandbox/1-0-preview/extensions/"
+	icon="puzzle"
+>
+	Attach the code interpreter and other optional capabilities.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Troubleshooting"
+	href="/sandbox/1-0-preview/troubleshooting/"
+	icon="error"
+>
+	Common `@next` failures and where to fix them.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Coding agents
+
+Install [Cloudflare Skills](https://github.com/cloudflare/skills) for your agent ([Agent setup](/agent-setup/)). Use **`sandbox-next`** for work on `@next` (recommended for new projects). Existing apps on the current stable package should use **`sandbox-stable`** until you are ready to move, then **`sandbox-migrate-to-next`**. Deprecated-API cleanup while staying on stable is covered in the [2026 deprecation guide](/sandbox/guides/2026-deprecation/) and **`sandbox-stable`**.
+
+## Stable documentation
+
+While you remain on the current stable package, use the main docs:
+
+- [Get started](/sandbox/get-started/)
+- [Commands](/sandbox/api/commands/)
+- [Sessions](/sandbox/concepts/sessions/)
+- [2026 deprecation migration](/sandbox/guides/2026-deprecation/)

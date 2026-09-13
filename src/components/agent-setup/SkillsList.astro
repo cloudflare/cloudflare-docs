@@ -7,12 +7,14 @@ const skills = await getCollection("skills-manifest");
 skills.sort((a, b) => a.id.localeCompare(b.id));
 ---
 
-<ul class="agent-simple-list">
+<ul class="not-content m-0 flex list-none flex-col gap-3 p-0">
 	{
 		skills.map((s) => (
-			<li class="agent-simple-item">
-				<span class="agent-simple-name">{s.data.name}</span>
-				<span class="agent-simple-desc">{s.data.description}</span>
+			<li class="flex flex-col gap-0.5">
+				<span class="text-foreground text-sm font-medium">{s.data.name}</span>
+				<span class="text-muted-foreground text-sm leading-relaxed">
+					{s.data.description}
+				</span>
 			</li>
 		))
 	}

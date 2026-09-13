@@ -468,6 +468,21 @@ Assigns a unique identifier to the device for the [device UUID posture check](/c
 
 **Value:** UUID for the device (for example, `496c6124-db89-4735-bc4e-7f759109a6f1`).
 
+### `use_in_app_webview`
+
+:::note
+Only valid for Android and ChromeOS.
+:::
+
+Uses an in-app WebView for Zero Trust authentication instead of the default system browser. This setting is required when Always-on VPN with Lockdown mode is enabled.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+- `false` — (default) Uses the default system browser for Zero Trust authentication.
+- `true` — Uses an in-app WebView for Zero Trust authentication.
+
 ### `warp_tunnel_protocol`
 
 Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. For more information, refer to [Device tunnel protocol](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol).

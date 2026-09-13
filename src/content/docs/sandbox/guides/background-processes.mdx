@@ -12,6 +12,12 @@ import { TypeScriptExample } from "~/components";
 
 This guide shows you how to start, monitor, and manage long-running background processes in the sandbox.
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents `startProcess` and related helpers on today's stable `@cloudflare/sandbox` package.
+
+In the **1.0 preview** (`@next`), long-running work uses the same `exec(argv)` process handle as short commands. Refer to [Process execution](/sandbox/1-0-preview/processes/) or [migrate to the preview](/sandbox/1-0-preview/migrate/).
+:::
+
 ## When to use background processes
 
 Use `startProcess()` instead of `exec()` when:

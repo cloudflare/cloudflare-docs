@@ -1,7 +1,7 @@
 // AI coding agents shown on the landing page, plus the prompt they copy.
 
 export const AGENT_SETUP_PROMPT =
-	"Fetch https://developers.cloudflare.com/agent-setup/prompt.md";
+	"Fetch and execute the appropriate instructions to set me up for Cloudflare from https://developers.cloudflare.com/agent-setup/prompt.md";
 
 // Each id maps to /icons/agents/{id}/{light,dark}.svg.
 export const AGENTS = [

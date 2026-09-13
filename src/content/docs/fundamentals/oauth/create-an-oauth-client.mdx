@@ -30,8 +30,9 @@ To create an OAuth client, you must have one of these roles for the associated a
 				- Redirect URLs
 			6. Optional: Add non-required fields.
 			7. Select **Continue** and define the scopes required for your client.
-			8. Select **Create client**.
-			9. Save your **Client ID** and **Client Secret** in a secure location.
+			8. Optional: In **Choose optional scopes**, turn off **Required** for each scope you want to make optional. All scopes are required by default.
+			9. Select **Create client**.
+			10. Save your **Client ID** and **Client Secret** in a secure location.
 		</Steps>
 
 		<DashButton url="/?to=/:account/oauth-clients" />
@@ -47,7 +48,8 @@ To create an OAuth client, you must have one of these roles for the associated a
 				"client_name": "Cloudflare OAuth Client",
 				"grant_types": ["authorization_code"],
 				"redirect_uris": ["https://example.com/oauth/callback"],
-				"scopes": ["workers-platform.read"],
+				"scopes": ["workers-platform.read", "workers-platform.write"],
+				"optional_scopes": ["workers-platform.read"],
 				"post_logout_redirect_uris": ["https://example.com/logout"],
 				"response_types": ["code"],
 				"token_endpoint_auth_method": "client_secret_basic",
@@ -71,7 +73,11 @@ OAuth scope names correspond to Cloudflare API token permission names. Use the C
 
 <Tabs syncKey="dashPlusAPI">
 	<TabItem label="Dashboard">
-		When you create or edit an OAuth client, all available scopes are displayed. Search for and select the scopes required for your client.
+		When you create or edit an OAuth client, select at least one scope. All selected scopes are required by default.
+
+		In **Choose optional scopes**, turn off **Required** for each scope you want to make optional.
+
+		Required scopes must be granted on the consent screen, while optional scopes can be declined by the user.
 	</TabItem>
 	<TabItem label="API">
 		Fetch the available scopes from the API. Use the scope ID when you create a client through the API.
@@ -81,6 +87,8 @@ OAuth scope names correspond to Cloudflare API token permission names. Use the C
 			-H "Content-Type: application/json" \
 			-H "Authorization: Bearer $API_TOKEN"
 		```
+		
+		To mark scopes as optional, include them in the `optional_scopes` of the request. This must be a subset of the `scopes` for the client. Optional scopes may be declined by the user during authorization.
 	</TabItem>
 </Tabs>
 

@@ -10,6 +10,12 @@ products:
 
 import { WranglerConfig } from "~/components";
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents environment configuration on today's stable `@cloudflare/sandbox` package.
+
+For `@cloudflare/sandbox@next`, refer to [Environment variables](/sandbox/1-0-preview/environment/) in the 1.0 preview section.
+:::
+
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
 
 ## SDK configuration variables
@@ -20,22 +26,22 @@ These environment variables configure how the Sandbox SDK behaves. Set these as 
 
 | | |
 |---|---|
-| **Type** | `"http"` \| `"websocket"` |
+| **Type** | `"http"` \| `"websocket"` \| `"rpc"` |
 | **Default** | `"http"` |
 
-Controls the transport protocol for SDK-to-container communication. WebSocket transport multiplexes all operations over a single persistent connection, avoiding [subrequest limits](/workers/platform/limits/#subrequests) when performing many SDK operations per request.
+Controls the transport protocol for SDK-to-container communication. RPC transport multiplexes all operations over a single persistent connection, avoiding [subrequest limits](/workers/platform/limits/#subrequests) when performing many SDK operations per request.
 
 <WranglerConfig>
 ```jsonc
 {
 	"vars": {
-		"SANDBOX_TRANSPORT": "websocket"
+		"SANDBOX_TRANSPORT": "rpc"
 	}
 }
 ```
 </WranglerConfig>
 
-See [Transport modes](/sandbox/configuration/transport/) for a complete guide including when to use each transport, performance considerations, and migration instructions.
+For a complete guide including valid transport modes, performance considerations, and migration instructions, refer to [Transport modes](/sandbox/configuration/transport/).
 
 ### COMMAND_TIMEOUT_MS
 
@@ -276,7 +282,7 @@ await Promise.all([
 
 ### Configure transport mode
 
-Set `SANDBOX_TRANSPORT` in your Worker's `vars` to switch between HTTP and WebSocket transport. See [Transport modes](/sandbox/configuration/transport/) for details on when and how to configure each transport.
+Set `SANDBOX_TRANSPORT` in your Worker's `vars` to switch between HTTP, WebSocket, and RPC transport. For details on when and how to configure each transport, refer to [Transport modes](/sandbox/configuration/transport/).
 
 ### Bucket mounting credentials
 
@@ -373,9 +379,9 @@ await sandbox.exec("node app.js", {
 
 ## Related resources
 
-- [Transport modes](/sandbox/configuration/transport/) - Configure HTTP vs WebSocket transport
+- [Transport modes](/sandbox/configuration/transport/) - Configure HTTP, WebSocket, and RPC transport
 - [Wrangler configuration](/sandbox/configuration/wrangler/) - Setting Worker-level environment
 - [Secrets](/workers/configuration/secrets/) - Managing sensitive data
 - [Sessions API](/sandbox/api/sessions/) - Session-level environment variables
 - [Security model](/sandbox/concepts/security/) - Understanding data isolation
-- [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) - Keep credentials out of the sandbox entirely using a Worker proxy
+- [Handle outbound traffic](/sandbox/guides/outbound-traffic/) - Keep credentials out of the sandbox entirely using outbound handlers

@@ -1,0 +1,130 @@
+---
+title: Environment variables
+pcx_content_type: concept
+sidebar:
+  order: 6
+description: How processes and terminals get environment variables in the Sandbox SDK 1.0 preview.
+products:
+  - sandbox
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::note[Path to Sandbox SDK 1.0]
+This page documents environment variables on `@cloudflare/sandbox@next`, the preview of Sandbox SDK 1.0. For the current stable package, refer to [Environment variables](/sandbox/configuration/environment-variables/).
+:::
+
+Each `exec()` and `createTerminal()` starts an independent process. Shell `export` in one process does not apply to the next launch. Configure process environment with the container image, `setEnvVars`, and per-launch `env`.
+
+Use environment variables for **non-secret** configuration (paths, feature flags, `NODE_ENV`, and similar). Do not put live API keys or other long-lived credentials into the sandbox. To call external services that need credentials, use [outbound traffic handlers](/sandbox/guides/outbound-traffic/) so secrets stay in the Worker.
+
+## How a process gets its environment
+
+When a process starts, the runtime builds its environment from:
+
+1. The **container** environment (image `ENV` and defaults).
+2. Names from **`setEnvVars`**, when you use `exec()` (described in the next section).
+3. The **`env` option** on that launch, if you pass one.
+
+Later launches do not keep overlays from earlier launches. A command that runs `export FOO=bar` inside one process does not change the next `exec()`.
+
+Worker bindings in your `fetch` handler are not process environment variables. Only values you pass through `setEnvVars` or launch `env` appear inside the process (and those should not be long-lived secrets).
+
+## `setEnvVars()`
+
+```ts
+setEnvVars(envVars: Record<string, string | undefined>): Promise<void>
+```
+
+| Value | Effect |
+| ----- | ------ |
+| string | Set this environment variable for later `exec()` launches |
+| `undefined` | Remove a previously stored variable |
+
+On each `exec()`, the SDK merges stored names into that process’s environment at launch.
+
+Stored names live in the sandbox Durable Object’s memory. They are not written to the container filesystem and are not part of a backup. After the Durable Object is evicted or replaced, call `setEnvVars` again if you still need those names, or pass `env` on each `exec()`.
+
+<TypeScriptExample>
+```ts
+const sandbox = getSandbox(env.Sandbox, "user-123");
+
+await sandbox.setEnvVars({
+	NODE_ENV: "production",
+	APP_HOME: "/workspace/app",
+	LOG_LEVEL: "info",
+});
+
+const migrate = await sandbox.exec(["python", "migrate.py"], {
+	cwd: "/workspace/app",
+});
+await migrate.output({ encoding: "utf8" });
+
+const seed = await sandbox.exec(["python", "seed.py"], {
+	cwd: "/workspace/app",
+});
+await seed.output({ encoding: "utf8" });
+
+await sandbox.setEnvVars({
+	LOG_LEVEL: "debug",
+	TEMP_FLAG: undefined,
+});
+```
+</TypeScriptExample>
+
+## `env` on `exec()`
+
+<TypeScriptExample>
+```ts
+const process = await sandbox.exec(["node", "app.js"], {
+	cwd: "/workspace/app",
+	env: {
+		NODE_ENV: "production",
+		PORT: "3000",
+	},
+});
+```
+</TypeScriptExample>
+
+| Behavior | Detail |
+| -------- | ------ |
+| Scope | This launch only |
+| Merge order | Container environment, then `setEnvVars`, then this `env` |
+| Side effects | Does not update `setEnvVars` storage |
+
+Omit `env` when sandbox-wide names (and the container environment) are enough.
+
+## `env` on `createTerminal()`
+
+<TypeScriptExample>
+```ts
+const terminal = await sandbox.createTerminal({
+	command: ["bash"],
+	cwd: "/workspace",
+	env: {
+		TERM: "xterm-256color",
+		APP_HOME: "/workspace/app",
+	},
+});
+```
+</TypeScriptExample>
+
+The terminal’s launch `env` overlays the container environment for that terminal only. Pass the names the terminal needs on `createTerminal`.
+
+Inside an interactive shell, `export` applies for the life of that terminal. It does not apply to later `exec()` calls. Refer to [Terminals](/sandbox/1-0-preview/terminals/).
+
+## External APIs and credentials
+
+Code inside the sandbox should not hold live provider credentials. Keep secrets in the Worker and intercept outbound HTTP(S) with `outboundByHost` (and related policy such as `enableInternet` / `allowedHosts`). The sandbox can send ordinary requests—or placeholders client libraries require—while the Worker attaches real credentials before the request leaves your account.
+
+Refer to [Handle outbound traffic](/sandbox/guides/outbound-traffic/), including securely injecting credentials. For Workers bindings (KV, R2, and similar) reached by hostname from the sandbox, refer to [Connect to Workers bindings](/sandbox/guides/workers-connections/).
+
+## Related
+
+- [Handle outbound traffic](/sandbox/guides/outbound-traffic/)
+- [Connect to Workers bindings](/sandbox/guides/workers-connections/)
+- [Process execution](/sandbox/1-0-preview/processes/)
+- [Processes API](/sandbox/1-0-preview/api/processes/)
+- [Terminals](/sandbox/1-0-preview/terminals/)
+- [Sandbox lifecycle](/sandbox/1-0-preview/lifecycle/)
+- [Migrate](/sandbox/1-0-preview/migrate/)

@@ -20,27 +20,85 @@ If you wish to have a customized layout for your recording application, Realtime
 - Customized background for your recording
 - Portrait layout, and so on and so forth
 
-Let's dive in to understand the steps involved in creating a custom appearance for your RealtimeKit recording app.
+## How the recorder works
 
-The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit) or [Core SDK](/realtime/realtimekit/core). The `RealtimeKitRecording` class is used for managing the recording functionality within the SDK.
+When you call [Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/), RealtimeKit launches a Cloudflare container, opens a Chrome browser inside it, and loads the recording app URL. If you do not provide a custom URL in the [`url` parameter](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/), RealtimeKit's internal recording app is used.
 
-## Constructor
+### URL parameters
+
+Before loading your custom recording app in the Chrome browser, RealtimeKit appends the `authToken` and `config` query parameters to the URL. For example, if you provide this URL in the [Start Recording](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API:
+
+```txt
+https://example.com/my-custom-recorder
+```
+
+RealtimeKit loads the app with the following parameters:
+
+```txt
+https://example.com/my-custom-recorder?authToken=AUTH_TOKEN_CREATED_BY_REALTIMEKIT&config=CONFIG_CREATED_BY_REALTIMEKIT
+```
+
+The placeholder values represent parameters supplied by RealtimeKit. Do not add `authToken` or `config` yourself to the URL submitted to the Start Recording API. Your app must read both parameters from the URL.
+
+### Auth token
+
+RealtimeKit generates the `authToken` automatically for the meeting whose recording you start. It generates this token with the `recorder_preset_v2` preset. If you have not created a `recorder_preset_v2` preset, RealtimeKit uses a global preset with the same name that is managed by RealtimeKit and is not visible in your account.
+
+Your custom recording app **must** accept this `authToken` and use it to initialize the RealtimeKit SDK to get `meeting` object.
+
+### Config parameter
+
+Any configuration that you provide in the Start Recording API, such as watermark settings, is passed to the recording app through the `config` query parameter. The default recording app reads and applies this configuration automatically.
+
+If you use a custom recording app, you are responsible for reading and applying `config`. Whatever your app produces in the browser is recorded as-is. RealtimeKit does not apply any additional layout, watermark, or other processing to the output of a custom recording app.
+
+### Recording preset flags
+
+The `hidden_participant` flag controls only the recorder's visibility. When enabled, it hides the recorder from other participants in the meeting.
+
+The `is_recorder` flag identifies the participant as a recorder and ensures that recording works correctly. If you create a custom `recorder_preset_v2` preset to customize colors or the look and feel of the recording, you must keep `is_recorder` enabled. Removing `is_recorder` can cause the recording to fail. Removing `hidden_participant` can cause the recorder to be visible to other participants.
+
+### Local testing
+
+Local testing lets you view the recording app UI. Opening the recording app URL directly on your local machine does not start a recording.
+
+For local testing only, create any preset with `hidden_participant: true`, then pass an auth token created with that preset in the `authToken` query parameter when you open the local recording app URL. This lets you see the look and feel of the recorder UI. Do not include a local testing token as the `authToken` in the URL submitted to the Start Recording API. In an actual recording, RealtimeKit generates and passes the recorder token automatically.
+
+To speed up development, use a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to expose your local recording app. For example, if your app is running on port `1111`, start a [Quick Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) with:
+
+```sh
+cloudflared tunnel --url http://localhost:1111
+```
+
+Replace `1111` with the port used by your local app. `cloudflared` prints a public `trycloudflare.com` URL. You can use this URL as the custom recording app URL when starting a recording, so the Cloudflare container can load your local app.
+
+You might see a WebSocket error in the browser console while testing locally because your browser cannot connect to `localhost:8080`. You can ignore this error during local testing. The recorder runs with this port inside the hosting Cloudflare container, and the WebSocket connection is how the recording app tells the container to record the rendered webpage.
+
+### Examples
+
+Refer to the [recording SDK app examples](https://github.com/cloudflare/realtimekit-web-examples/tree/main/recording-sdk-app-examples) for sample implementations, including a [recording with watermark example](https://github.com/cloudflare/realtimekit-web-examples/tree/main/recording-sdk-app-examples/react-examples/recording-with-watermark).
+
+## Recording SDK reference
+
+The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit/) or [Core SDK](/realtime/realtimekit/core/). The [`@cloudflare/realtimekit-recording-sdk` package](https://www.npmjs.com/package/@cloudflare/realtimekit-recording-sdk) provides the `RealtimeKitRecording` class for managing recording functionality.
+
+### Constructor
 
 `constructor(options)`
 
 Creates an instance of the `RealtimeKitRecording` class.
 
-### Parameters
+#### Constructor parameters
 
-`options (object)`: The options object.
+`options (object)`: The options object. All constructor options are optional. If you omit an option, RealtimeKit uses its default value.
 
-| **options (object)**            | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `options.waitTimeMs (number)`   | The time (in milliseconds) to wait after all peers have left before leaving the meeting. This option is ignored if `autoStop` is set to true.                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `options.autoStart (boolean)`   | Set to true if you want to manually call the `startRecording` function. By default, the `autoStart` parameter is set to `true`. If you wish to delay the start of the recording, you can set the value of this parameter to `false`. In that case, you can manually call the `startRecording()` function later. Note that there is a timeout of 2 minutes associated with the `startRecording()` method. If this method is not called within 2 minutes of the WebSocket connection being established, the recording process will encounter an error. |
-| `options.autoStop (boolean)`    | Set to true if you want to disable automatic peer leave and manually call the `stopRecording` function.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `options.scanInterval (number)` | The interval (in milliseconds) between scans for automatic peer leave.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `options.devMode (boolean)`     | Set to true to enable development mode, which enables logs and disables certain functionality. Also you must ensure that this is set this to true when testing your recording-app locally.                                                                                                                                                                                                                                                                                                                                                           |
+| **options (object)**            | **Description**                                                                                                                                                                                                                                                                        |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options.waitTimeMs (number)`   | The time (in milliseconds) to wait after all peers have left before stopping the recording. This option applies when `autoStop` is set to true.                                                                                                                                        |
+| `options.autoStart (boolean)`   | Defaults to `true`, so recording starts automatically when `init()` is called. Set it to `false` only when you want to start recording manually with `startRecording()`. When set to `false`, you must call `startRecording()` within 2 minutes of the WebSocket connection being established, or the recording process will encounter an error. |
+| `options.autoStop (boolean)`    | Defaults to `true`, so recording stops automatically after all peers have left. Set it to `false` only when you want to stop recording manually with `stopRecording()`.                                                                                                              |
+| `options.scanInterval (number)` | The interval (in milliseconds) between scans for automatic peer leave.                                                                                                                                                                                                                 |
+| `options.devMode (boolean)`     | Set to true to enable development mode, which enables logs and disables certain functionality. Also you must ensure that this is set this to true when testing your recording-app locally.                                                                                             |
 
 ### Methods
 
@@ -54,13 +112,13 @@ Initiates the SDK by providing a `RealtimeKitClient` object. Call this after cre
 startRecording();
 ```
 
-Manually starts the recording. Ensure that `autoStart` is passed as true in the constructor options.
+In most cases, leave `autoStart` set to `true` (the default) so the recording starts automatically. To start the recording manually, set `autoStart` to `false` in the constructor options before calling this method.
 
 ```js
 stopRecording();
 ```
 
-Manually stops the recording. Ensure that `autoStop` is passed as true in the constructor options.
+You usually do not need to call this method because `autoStop` defaults to `true`. To stop the recording manually, set `autoStop` to `false` in the constructor options before calling this method.
 
 ```js
 cleanup();
@@ -68,7 +126,7 @@ cleanup();
 
 Performs cleanup tasks after leaving the meeting, such as clearing added listeners and closing WebSocket connections.
 
-## Usage Example
+## Create a custom recording app
 
 Perform the following steps to create the recording app for your RealtimeKit meetings.
 
@@ -81,7 +139,7 @@ npm i @cloudflare/realtimekit-recording-sdk
 ### Step 2: Import the `RealtimeKitRecording` object
 
 ```js
-import { RealtimeKitRecording } from '@cloudflare/realtimekit-recording-sdk';
+import { RealtimeKitRecording } from "@cloudflare/realtimekit-recording-sdk";
 ```
 
 ### Step 3: Create the `RealtimeKitRecording` object
@@ -95,25 +153,23 @@ const recordingSdk = new RealtimeKitRecording(options);
 Call `init` after creating the meeting object and before `joinRoom` is called.
 
 ```js
-// Call this after you have called initMeeting
-await recordingSdk.init();
+// Call this after you have initialized the RealtimeKit SDK and have the meeting object
+await recordingSdk.init(meeting);
 ```
 
 ### (Optional) Step 5: Manually start the recording
 
-To manually start the recording, call the `startRecording()` function. For example, you want to start a recording after you have loaded your UI content in the app and `autoStart` is not set to true. In such cases, you can manually call the `startRecording()` function when you are ready to begin the recording.
+To manually start the recording, set `autoStart` to `false` in the `RealtimeKitRecording` constructor options. Then call `startRecording()` after you have loaded your UI content and are ready to begin recording.
 
 ```js
-// This throws an exception if autoStart is set to false.
 await recordingSdk.startRecording();
 ```
 
 ### (Optional) Step 6: Manually stop the recording
 
-To manually stop the recording, use `stopRecording`.
+To manually stop the recording, set `autoStop` to `false` in the `RealtimeKitRecording` constructor options. Then call `stopRecording()` when you are ready to stop recording.
 
 ```js
-// This throws an exception if autoStop is set to false.
 await recordingSdk.stopRecording();
 ```
 
@@ -125,12 +181,4 @@ Once you've created the app, deploy it using a platform like [Cloudflare Workers
 
 ### Step 8: Specify the custom URL
 
-In the [Start Recording a Meeting](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, provide the custom URL (obtained from the previous step) to indicate the location of your deployed app.
-
-<head>
-  <title>Create Custom Recording App Using Recording SDKs Guide</title>
-  <meta
-    name="description"
-    content="Learn how to create a recording app using RealtimeKit's SDKs. Follow our guide for effective app creation and integration."
-  />
-</head>
+In the [Start Recording a Meeting](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, provide the custom URL (obtained from the previous step) to indicate the location of your deployed app. Do not append an `authToken` to this URL. RealtimeKit adds the generated `authToken` and `config` parameters when it loads the app.

@@ -12,6 +12,12 @@ import { TypeScriptExample } from "~/components";
 
 Create shell sessions within a sandbox. Each session maintains its own shell state, environment variables, and working directory, while sharing the sandbox filesystem and process space. For more information, refer to [Session management](/sandbox/concepts/sessions/).
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents today's stable `@cloudflare/sandbox` package.
+
+**Sandbox SDK 1.0** (preview on `@next`) removes core session execution APIs (`createSession`, `ExecutionSession`, default sessions). Pass `cwd` and `env` on each `exec`, or use one explicit shell argv script. Refer to [Process execution](/sandbox/1-0-preview/processes/) or [migrate](/sandbox/1-0-preview/migrate/#drop-session-apis).
+:::
+
 :::note
 By default, for backwards compatibility, every sandbox has a default session that maintains shell state. It is recommended to set `enableDefaultSession` to `false` on `getSandbox()` so operations without an explicit `sessionId` run in isolation. Create additional sessions for separate workflows inside the same user workspace, such as development and runtime processes using the `createSession()` method. Use separate sandboxes for separate users. For sandbox-level operations like creating containers or destroying the entire sandbox, refer to the [Lifecycle API](/sandbox/api/lifecycle/).
 :::

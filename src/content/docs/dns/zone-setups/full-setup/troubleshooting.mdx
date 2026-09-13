@@ -13,6 +13,10 @@ head:
 
 If you see unexpected results when [changing your nameservers](/dns/zone-setups/full-setup/setup/), review the following troubleshooting questions.
 
+:::note
+If your zone is still in **Pending Nameserver Update** status, refer to [Zone stuck in Pending Nameserver Update](/dns/zone-setups/troubleshooting/pending-nameservers/) for a step-by-step check of the delegation at your registrar.
+:::
+
 ## Is a DS record present at your registrar?
 
 You need to remove any pre-Cloudflare **DS** records at your registrar to update your authoritative nameservers. This will disable DNSSEC and allow Cloudflare to resolve your domain name.

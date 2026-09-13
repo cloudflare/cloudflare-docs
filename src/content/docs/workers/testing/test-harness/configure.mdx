@@ -1,0 +1,193 @@
+---
+title: Configure the test harness
+pcx_content_type: configuration
+sidebar:
+  order: 2
+head: []
+description: Configure Workers, test values, and lifecycle options for createTestHarness.
+products:
+  - workers
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+`createTestHarness()` runs one or more Workers in a single local server. Each Worker can come from a Wrangler project or a Vite project that uses the Cloudflare Vite plugin.
+
+## Configure Worker projects
+
+Point each entry in the `workers` array to the Wrangler configuration file for a project:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+```
+
+</TypeScriptExample>
+
+For Workers built by the [Cloudflare Vite plugin](/workers/vite-plugin/), run `vite build` first so tests use the production build output:
+
+<PackageManagers type="exec" pkg="vite" args="build" />
+
+The generated Wrangler configuration works like any other `configPath`. Each Worker is configured independently, so one harness can run both project types:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		// Wrangler project
+		{ configPath: "./workers/api/wrangler.jsonc" },
+		// Vite project (built output from the Cloudflare Vite plugin)
+		{ configPath: "./dist/web_worker/wrangler.json" },
+	],
+});
+```
+
+</TypeScriptExample>
+
+## Select a Wrangler environment
+
+By default, the test harness loads the top-level Wrangler configuration. Set `env` if you want to load a specific environment from the configuration.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc", env: "test" }],
+});
+```
+
+</TypeScriptExample>
+
+## Override variables and secrets
+
+You can override `vars` and `secrets` for each Worker in the harness if you want to avoid creating a separate Wrangler environment for testing.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{
+			configPath: "./wrangler.jsonc",
+			vars: { API_HOST: "http://identity.example.com" },
+			secrets: { API_TOKEN: "test-token" },
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+## Configure the harness after setup
+
+If part of the Worker configuration depends on the test setup, you can call `createTestHarness()` without options and configure the harness with `server.update()` before starting the server.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness();
+let upstream: { url: string; close(): Promise<void> };
+
+beforeAll(async () => {
+	upstream = await startLocalApi();
+
+	await server.update({
+		workers: [
+			{
+				configPath: "./wrangler.jsonc",
+				vars: { API_HOST: upstream.url },
+			},
+		],
+	});
+
+	await server.listen();
+});
+
+afterAll(async () => {
+	await server.close();
+	await upstream.close();
+});
+```
+
+</TypeScriptExample>
+
+## Reset the harness between tests
+
+When reusing a server across tests, call `server.reset()` after each test. It recreates local storage and restores Workers to the options used when the current session started.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+afterEach(async () => {
+	await server.reset();
+});
+```
+
+</TypeScriptExample>
+
+After a reset, apply any required schema migrations and seed data again. For examples, refer to [Prepare test state](/workers/testing/test-harness/prepare-test-state/).
+
+## Print debug output when tests fail
+
+`server.debug()` prints the server timeline and captured Workers runtime logs. Call it when a test throws an exception or fails and you need more information to debug it.
+
+The following example uses a cleanup hook from Vitest:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+afterEach(({ task }) => {
+	if (task.result?.state === "fail") {
+		server.debug();
+	}
+});
+```
+
+</TypeScriptExample>
+
+## Specify types for Worker handles
+
+`server.getWorker()` accepts types for the Worker environment and module exports. You can define these types manually. But to keep them aligned with your Worker, you can generate the env type from the Wrangler configuration and derive the exports from its source module.
+
+Give each Worker a distinct environment interface so the generated declarations can be used together:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="types ./workers/api/worker-configuration.d.ts --config ./workers/api/wrangler.jsonc --env-interface ApiEnv"
+/>
+
+Repeat this command for each Worker and include the generated files in the TypeScript configuration for your tests:
+
+```json
+{
+	"include": ["./workers/*/worker-configuration.d.ts", "./tests/**/*.ts"]
+}
+```
+
+Pass the generated environment interface to `server.getWorker()`. Use `typeof import()` to derive the Worker exports from its source module:
+
+<TypeScriptExample>
+
+```ts
+const apiWorker = server.getWorker<
+	ApiEnv,
+	typeof import("../workers/api/index")
+>("api-worker");
+```
+
+</TypeScriptExample>
+
+In this example, `ApiEnv` comes from `worker-configuration.d.ts`. The module type includes the default export and its RPC methods. Re-run [`wrangler types`](/workers/languages/typescript/#generate-types) when the Worker configuration changes.

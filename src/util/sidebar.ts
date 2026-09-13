@@ -9,6 +9,7 @@ import type {
 	SidebarItem,
 	SidebarTransform,
 } from "@cloudflare/nimbus-docs/types";
+import { getDirectoryEntryBySection } from "~/util/directory";
 
 export const sectionTitleResolver: SectionTitleResolver = async ({
 	sectionSlug,
@@ -20,7 +21,7 @@ export const sectionTitleResolver: SectionTitleResolver = async ({
 		return entry ? { rail: `${entry.data.title} (Learning Paths)` } : undefined;
 	}
 
-	const entry = await getEntry("directory", sectionSlug);
+	const entry = await getDirectoryEntryBySection(sectionSlug);
 	return entry ? { rail: entry.data.entry?.title } : undefined;
 };
 
@@ -28,7 +29,7 @@ export const sectionTitleResolver: SectionTitleResolver = async ({
 const sectionTitleCache = new Map<string, string | undefined>();
 async function directoryTitle(seg0: string): Promise<string | undefined> {
 	if (sectionTitleCache.has(seg0)) return sectionTitleCache.get(seg0);
-	const entry = await getEntry("directory", seg0);
+	const entry = await getDirectoryEntryBySection(seg0);
 	const title = entry?.data.entry?.title;
 	sectionTitleCache.set(seg0, title);
 	return title;
@@ -105,7 +106,7 @@ export const agentResourcesTransform: SidebarTransform = async ({
 }) => {
 	if (!sectionSlug || NO_LLM_RESOURCES.has(sectionSlug)) return tree;
 
-	const product = await getEntry("directory", sectionSlug);
+	const product = await getDirectoryEntryBySection(sectionSlug);
 	if (!product) return tree;
 
 	const baseUrl = product.data.entry?.url ?? `/${sectionSlug}/`;
@@ -260,7 +261,7 @@ function inferBadgeVariant(badge: SidebarBadge): SidebarBadge {
 // Fixed badge for external-app links by URL shape (`/api` → "API", MCP server
 // repo → "MCP"). Takes precedence over authored/auto-Beta badges.
 function getExternalBadge(href: string): SidebarBadge | undefined {
-	if (href.startsWith("/api")) return { text: "API", variant: "note" };
+	if (isExternalAppHref(href)) return { text: "API", variant: "note" };
 	if (href.includes("/mcp-server-cloudflare"))
 		return { text: "MCP", variant: "note" };
 	return undefined;
@@ -268,6 +269,9 @@ function getExternalBadge(href: string): SidebarBadge | undefined {
 
 // URL → "Beta" badge, from directory entries whose product-availability is
 // "beta". Built once per build (the collections don't change mid-build).
+// Realtime is an umbrella for features with independent availability stages.
+const AUTO_BETA_BADGE_EXCLUSIONS = new Set(["/realtime/"]);
+
 let betaBadgeUrlsPromise: Promise<Map<string, SidebarBadge>> | undefined;
 function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
 	betaBadgeUrlsPromise ??= (async () => {
@@ -278,11 +282,13 @@ function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
 		const map = new Map<string, SidebarBadge>();
 		for (const dirEntry of directory) {
 			const avail = productAvailability.find((e) => e.id === dirEntry.data.id);
+			const url = dirEntry.data.entry?.url;
 			if (
 				avail?.data.availability?.toLowerCase() === "beta" &&
-				dirEntry.data.entry?.url
+				url &&
+				!AUTO_BETA_BADGE_EXCLUSIONS.has(url)
 			) {
-				map.set(dirEntry.data.entry.url, { text: "Beta", variant: "caution" });
+				map.set(url, { text: "Beta", variant: "caution" });
 			}
 		}
 		return map;
@@ -315,8 +321,11 @@ function applyBadges(
 // Isolate learning paths + agent resources + external-app re-marking + badges.
 // Runs before nimbus-docs' overview-leaf pass, so group badges still see `indexHref`.
 export const docsSidebarTransform: SidebarTransform = async (ctx) => {
-	const tree = isolateLearningPath(ctx.tree, ctx.currentSlug);
-	const withAgentResources = await agentResourcesTransform({ ...ctx, tree });
+	const isolated = isolateLearningPath(ctx.tree, ctx.currentSlug);
+	const withAgentResources = await agentResourcesTransform({
+		...ctx,
+		tree: isolated,
+	});
 	const withExternal = markExternalAppLinks(withAgentResources);
 	const withRedirects = markInternalRedirects(withExternal);
 	const betaUrls = await getBetaBadgeUrls();

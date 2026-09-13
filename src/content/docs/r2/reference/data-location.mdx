@@ -94,13 +94,9 @@ To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), yo
 {
 	"r2_buckets": [
 		{
-			"bindings": [
-				{
-					"binding": "MY_BUCKET",
-					"bucket_name": "<YOUR_BUCKET_NAME>",
-					"jurisdiction": "<JURISDICTION>"
-				}
-			]
+			"binding": "MY_BUCKET",
+			"bucket_name": "<YOUR_BUCKET_NAME>",
+			"jurisdiction": "<JURISDICTION>"
 		}
 	]
 }
@@ -125,7 +121,7 @@ import { S3Client, CreateBucketCommand } from "@aws-sdk/client-s3";
 const S3 = new S3Client({
 	endpoint: "https://<account_id>.eu.r2.cloudflarestorage.com",
 	credentials: {
-		accessKeyId: "<access_key_id",
+		accessKeyId: "<access_key_id>",
 		secretAccessKey: "<access_key_secret>",
 	},
 	region: "auto",
@@ -147,6 +143,7 @@ The following jurisdictions are supported:
 | ------------ | ------------------------ |
 | eu           | European Union           |
 | fedramp      | FedRAMP                  |
+| us           | United States            |
 
 :::note
 

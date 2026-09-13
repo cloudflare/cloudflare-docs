@@ -8,7 +8,7 @@ sidebar:
   order: 13
 ---
 
-import { FeatureTable, TabItem, Tabs, APIRequest, Render, DashButton } from "~/components";
+import { TabItem, Tabs, APIRequest, Render, DashButton } from "~/components";
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
@@ -22,7 +22,10 @@ If you are looking to restrict cipher suites, refer to [Customize cipher suites]
 
 ## Availability
 
-<FeatureTable id="ssl.minimum_tls" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Per-hostname | Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) | Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) | Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) | Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) |
 
 It is not possible to configure minimum TLS version for [Cloudflare Pages](/pages/) hostnames.
 

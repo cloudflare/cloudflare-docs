@@ -132,6 +132,23 @@ tag = "v1"
 
 </WranglerConfig>
 
+### Tracing
+
+Think uses `wrapAISDK()` internally to instrument model turns, tool calls, and approval lifecycle segments. You do not need to wrap the AI SDK or configure an adapter. To send `invoke_agent`, `chat`, `execute_tool`, and `tool_approval` spans to Workers Observability, turn on Workers traces:
+
+<WranglerConfig>
+
+```toml
+[observability.traces]
+enabled = true
+```
+
+</WranglerConfig>
+
+Traces appear in the Agents view in the Cloudflare Dashboard. You can inspect conversations and trace timelines. To turn tracing off, set `observability.traces.enabled` to `false`. You do not need to change the Think agent class.
+
+For span attributes, payload controls, exporting traces, and direct AI SDK v6 or v7 setup, refer to [Tracing](/agents/runtime/operations/observability/tracing/).
+
 ## Think vs AIChatAgent
 
 Both Think and [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/) extend `Agent` and speak the same `cf_agent_chat_*` WebSocket protocol. They serve different goals.
@@ -230,7 +247,7 @@ Key behaviors:
 
 - **Blocking modes cannot nest.** Calling `wait`/`stream`/`continuation` (or the equivalent shortcut) from _inside_ an active turn — for example, from a tool's `execute` — throws, because it would deadlock the turn queue. From inside a turn, use `runTurn({ mode: "submit" })` (durable, runs after the current turn frees the queue) or [`addMessages()`](#add-messages-without-a-turn) (transcript only, no inference).
 - **`submit` is idempotent.** Pass `submissionId` and/or `idempotencyKey`; re-submitting a known key returns the existing record with `accepted: false` instead of starting a second turn. See [Programmatic submissions](/agents/harnesses/think/programmatic-submissions/).
-- **Recovery-safe.** When `chatRecovery` is enabled, the `wait`, `stream`, and drained `submit` paths all run inference inside a recovery fiber, so an interrupted turn resumes after eviction.
+- **Recovery-safe.** The `wait`, `stream`, and drained `submit` paths run inference inside a recovery fiber, so an interrupted turn resumes after eviction.
 
 `runTurn` is exported alongside its option and result types: `RunTurnOptions`, `RunTurnWait`, `RunTurnSubmit`, `RunTurnStream`, `TurnInputMessages`, and `TurnResult`.
 

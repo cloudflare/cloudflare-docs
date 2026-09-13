@@ -10,8 +10,14 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
+:::note[Coming soon: Sandbox SDK 1.0]
+This page documents ports and preview URLs on today's stable `@cloudflare/sandbox` package.
+
+Examples that use `startProcess` are stable-only. On **`@next`**, start services with `exec(argv)` then `waitForPort` / expose or tunnels — [Process execution](/sandbox/1-0-preview/processes/) and [Migrate](/sandbox/1-0-preview/migrate/).
+:::
+
 :::note[Production requires custom domain]
-Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/).
+Preview URLs require a custom domain with wildcard DNS routing in production. See [Configure preview URLs on a custom domain](/sandbox/guides/preview-urls-custom-domain/).
 :::
 
 :::note[Prefer `sandbox.tunnels` for public URLs]

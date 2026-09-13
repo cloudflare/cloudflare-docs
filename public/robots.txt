@@ -32,7 +32,6 @@ Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 Allow: /
 Disallow: /client-ip-geolocation
-Disallow: /plans/
 Disallow: /constellation
 Disallow: /cdn-cgi/
 Disallow: /email-security/

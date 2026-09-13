@@ -106,7 +106,9 @@ The following four properties are nested under the `recording` object.
 
 ## Manage live inputs
 
-You can update live inputs by making a `PUT` request:
+### Update a live input
+
+Update a live input by making a `PUT` request:
 
 ```bash title="Request"
 curl --request PUT \
@@ -114,6 +116,44 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{i
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
 ```
+
+### Enable or disable a live input
+
+Live inputs are enabled by default. When a live input is disabled, it rejects incoming RTMPS and SRT connections. Use this to temporarily pause a live input without deleting it, terminate active broadcasts, and prevent new broadcasts from starting on a specific input.
+
+To disable a live input, set `enabled` to `false`:
+
+```bash title="Request"
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"enabled": false}'
+```
+
+To enable the live input again, set `enabled` to `true`:
+
+```bash title="Request"
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"enabled": true}'
+```
+
+### Rotate broadcast keys
+
+Rotate the broadcast credentials for a live input when credentials may have been shared with the wrong audience, exposed in client code or a screenshare, or need to be refreshed as part of your security process. Rotating keys does not change the live input ID or its other configuration.
+
+When keys are rotated, old credentials are revoked, broadcasts using stale credentials are disconnected, and refreshed credentials are returned in the API response.
+
+```bash title="Request"
+curl --request POST \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id}/rotate_keys \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+Live input responses include `keysRotatedAt`, which indicates when the live input keys were last rotated. This field is omitted for live inputs whose keys have never been rotated.
+
+### Delete a live input
 
 Delete a live input by making a `DELETE` request:
 
