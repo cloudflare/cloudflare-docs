@@ -1,19 +1,9 @@
 /**
- * Rebase conflict resolution — trusted domain logic (D6).
+ * Trusted conflict detection and Git tree construction.
  *
- * Ported near-verbatim from the 0.11 `workflows/rebase.ts` helpers
- * `resolveConflictsWithAI` and `applyResolution`. All the deterministic parts —
- * conflict detection, the four-case rename read/write path mapping, the
- * file-cap / binary / conflict-cap short-circuits, and the Git Data API tree
- * build with production-moved and PR-branch-moved guards — stay in ordinary
- * TypeScript exactly as they were in production.
- *
- * The only change: the inline `session.skill("rebase-conflict", …)` call is
- * lifted out behind a `runAgent` callback so the AI round trip lives in the 2.0
- * agent + driver (`agents/rebase-conflict-resolver.ts`,
- * `lib/run-rebase-conflict.ts`). `resolveConflictsWithAI` prepares the three
- * versions of each conflicting file, hands them to `runAgent`, then applies the
- * same high-confidence completeness downgrade the workflow relied on.
+ * The Workflow checkpoints preparation, AI resolution, and application
+ * separately. Safety guards refuse incomplete compare results, binary or
+ * ambiguous conflicts, unexpected write paths, and branches that moved.
  */
 import * as v from "valibot";
 import {
@@ -84,12 +74,7 @@ export interface RebaseConflictAgentInput {
 	conflictFiles: ConflictFileForAgent[];
 }
 
-/** Runs the AI conflict resolver; returns null on any failure (→ low-confidence fallback). */
-export type RunConflictAgent = (
-	input: RebaseConflictAgentInput,
-) => Promise<ConflictResolutionData | null>;
-
-/** The full result of {@link resolveConflictsWithAI}, incl. apply metadata. */
+/** Prepared conflict metadata and the eventual resolution, incl. apply metadata. */
 export type ResolvedConflicts = ConflictResolution & {
 	allPrFiles: PrFileEntry[];
 	conflictCandidateSet: ReadonlySet<string>;
@@ -107,8 +92,15 @@ export type ResolvedConflicts = ConflictResolution & {
 	productionRefSha: string;
 };
 
+export function isDeleteModifyConflict(file: ConflictFileForAgent): boolean {
+	return (
+		file.baseVersion !== null &&
+		(file.prVersion === null) !== (file.productionVersion === null)
+	);
+}
+
 /**
- * Use an AI agent to resolve conflicts between the PR branch and production.
+ * Prepare input for an AI agent to resolve conflicts between the PR branch and production.
  *
  * Strategy:
  *   1. Compare production...prHead to get the merge base and the commits on
@@ -122,11 +114,10 @@ export type ResolvedConflicts = ConflictResolution & {
  * Also returns allPrFiles so that applyResolution can include non-conflicting
  * PR changes in the final tree (preventing them from being silently dropped).
  */
-export async function resolveConflictsWithAI(
+export async function prepareConflicts(
 	token: string,
 	pr: GitHubPullRequest,
-	runAgent: RunConflictAgent,
-): Promise<ResolvedConflicts> {
+): Promise<ResolvedConflicts & { agentInput?: RebaseConflictAgentInput }> {
 	// Get the merge base and current production HEAD in parallel.
 	const [prVsProduction, productionRef] = await Promise.all([
 		compareCommits(token, "production", pr.head.sha),
@@ -420,11 +411,7 @@ export async function resolveConflictsWithAI(
 	// intentionally removed. baseVersion !== null with exactly one side null
 	// means one side deleted while the other modified. Mutual deletes
 	// (both null) are not a conflict.
-	const deleteModifyConflicts = conflictFiles.filter(
-		(f) =>
-			f.baseVersion !== null &&
-			(f.prVersion === null) !== (f.productionVersion === null),
-	);
+	const deleteModifyConflicts = conflictFiles.filter(isDeleteModifyConflict);
 	if (deleteModifyConflicts.length > 0) {
 		return {
 			confidence: "low",
@@ -450,10 +437,9 @@ export async function resolveConflictsWithAI(
 		productionRefSha: productionRef.sha,
 	};
 
-	// ── Run the AI agent (lifted behind the runAgent callback) ────────────────
-	const data = await runAgent({
+	const agentInput: RebaseConflictAgentInput = {
 		prTitle: pr.title,
-		prDescription: pr.body ?? null,
+		prDescription: pr.body,
 		prHeadSha: pr.head.sha,
 		mergeBaseSha,
 		productionHeadSha: productionRef.sha,
@@ -462,40 +448,51 @@ export async function resolveConflictsWithAI(
 			message: c.message.split("\n")[0],
 		})),
 		conflictFiles,
-	});
-
-	if (!data) return lowConfidenceFallback;
-
-	let confidence: ConflictResolution["confidence"] = data.confidence;
-	let reason = data.reason;
-	const validatedFiles = data.files;
-
-	// If the agent claimed high confidence but omitted conflict candidates,
-	// downgrade to medium so the user gets a clear halted-confidence status
-	// instead of a cryptic failure from the completeness check in applyResolution.
-	if (confidence === "high") {
-		const resolvedPaths = new Set(validatedFiles.map((f) => f.path));
-		const missingCandidates = conflictCandidates.filter((candidate) => {
-			const writePath = conflictWritePathMap.get(candidate) ?? candidate;
-			return !resolvedPaths.has(candidate) && !resolvedPaths.has(writePath);
-		});
-		if (missingCandidates.length > 0) {
-			confidence = "medium";
-			const originalReason = reason ? ` Agent reason: "${reason}"` : "";
-			reason = `Agent claimed high confidence but omitted ${missingCandidates.length} conflict candidate(s): ${missingCandidates.join(", ")}.${originalReason} Please resolve manually.`;
-		}
-	}
-
-	return {
-		confidence,
-		reason,
-		files: validatedFiles,
-		allPrFiles: prFiles,
-		conflictCandidateSet: new Set(conflictCandidates),
-		conflictWritePathMap,
-		mergeBaseSha,
-		productionRefSha: productionRef.sha,
 	};
+	if (new TextEncoder().encode(JSON.stringify(agentInput)).byteLength > 350_000)
+		return {
+			...lowConfidenceFallback,
+			reason:
+				"Conflicting source exceeds the safe AI input budget. Please resolve conflicts manually.",
+		};
+	return { ...lowConfidenceFallback, agentInput };
+}
+
+export function finalizeResolution(
+	prepared: ResolvedConflicts,
+	data: ConflictResolutionData,
+): ResolvedConflicts {
+	const paths = new Set(data.files.map((file) => file.path));
+	const normalized = data.files.map(
+		(file) => prepared.conflictWritePathMap.get(file.path) ?? file.path,
+	);
+	const allowed = new Set(
+		[...prepared.conflictCandidateSet].map(
+			(path) => prepared.conflictWritePathMap.get(path) ?? path,
+		),
+	);
+	if (
+		normalized.some((path) => !allowed.has(path)) ||
+		new Set(normalized).size !== normalized.length
+	)
+		return {
+			...prepared,
+			confidence: "low",
+			reason:
+				"AI returned unexpected or duplicate write paths. Please resolve manually.",
+		};
+	const missing = [...prepared.conflictCandidateSet].filter(
+		(path) =>
+			!paths.has(path) &&
+			!paths.has(prepared.conflictWritePathMap.get(path) ?? path),
+	);
+	if (data.confidence === "high" && missing.length)
+		return {
+			...prepared,
+			confidence: "medium",
+			reason: `Agent omitted conflict candidates: ${missing.join(", ")}. Please resolve manually.`,
+		};
+	return { ...prepared, ...data };
 }
 
 /**
@@ -510,6 +507,8 @@ export async function applyResolution(
 	pr: GitHubPullRequest,
 	resolution: ResolvedConflicts,
 ): Promise<void> {
+	if (resolution.confidence !== "high")
+		throw new Error("Only high-confidence resolutions may be applied.");
 	if (resolution.files.length === 0) {
 		throw new Error("No resolved files to apply.");
 	}
@@ -675,7 +674,7 @@ export async function applyResolution(
 
 	// Guard against a concurrent push to the PR branch during the AI resolution.
 	const currentPr = await getPullRequest(token, pr.number);
-	if (currentPr.head.sha !== pr.head.sha) {
+	if (currentPr.state !== "open" || currentPr.head.sha !== pr.head.sha) {
 		throw new Error(
 			`PR branch moved during AI resolution (was ${pr.head.sha.slice(0, 7)}, now ${currentPr.head.sha.slice(0, 7)}). Please retry /rebase.`,
 		);

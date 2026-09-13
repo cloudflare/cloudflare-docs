@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.dev.vars*
+!.dev.vars.example

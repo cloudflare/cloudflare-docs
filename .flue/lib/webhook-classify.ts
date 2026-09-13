@@ -19,9 +19,11 @@ export type WebhookCommand =
 	| "full-review"
 	| "ignore-review-limit"
 	| "disable-auto-review"
+	| "enable-auto-review"
 	| "rebase";
 
 export interface WebhookClassification {
+	headSha?: string;
 	eventType: string;
 	action: string | undefined;
 	number: number | undefined;
@@ -71,6 +73,8 @@ function commandFromComment(
 			return "ignore-review-limit";
 		case "/disable-auto-review":
 			return "disable-auto-review";
+		case "/enable-auto-review":
+			return "enable-auto-review";
 		case "/rebase":
 			return "rebase";
 		default:
@@ -123,6 +127,7 @@ export function classifyWebhook(
 		string | undefined;
 
 	return {
+		headSha: asRecord(pullRequest?.head)?.sha as string | undefined,
 		eventType,
 		action,
 		number,
@@ -144,6 +149,8 @@ export function classifyWebhook(
 export function isActionable(c: WebhookClassification): boolean {
 	if (c.number === undefined) return false;
 	return (
+		(c.eventType === "pull_request" &&
+			["closed", "converted_to_draft"].includes(c.action ?? "")) ||
 		c.isDependabotReviewEvent ||
 		c.isSpamFilterEvent ||
 		c.isCodeReviewEvent ||

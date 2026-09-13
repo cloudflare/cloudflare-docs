@@ -6,12 +6,13 @@
  * addLabels, postComment) remain in the workflow so they're easy to audit.
  */
 import * as v from "valibot";
-import { getIssue, getPullRequest, getPullRequestFiles } from "./github";
+import { getIssue, getPullRequest, getPullRequestFileSample } from "./github";
 
 // ── Schema ─────────────────────────────────────────────────────────────────────
 
 export const SpamVerdictSchema = v.object({
 	is_spam: v.boolean(),
+	category: v.optional(v.picklist(["spam", "off-topic", "legitimate"])),
 	confidence: v.picklist(["low", "medium", "high"]),
 	reason: v.string(),
 });
@@ -115,7 +116,7 @@ export async function getPullRequestDiffSummary(
 	token: string,
 	pullRequestNumber: number,
 ): Promise<PullRequestDiffSummary> {
-	const files = await getPullRequestFiles(token, pullRequestNumber);
+	const files = await getPullRequestFileSample(token, pullRequestNumber);
 	return {
 		truncated: files.length > MAX_PR_FILES,
 		files: files.slice(0, MAX_PR_FILES).map((file) => {

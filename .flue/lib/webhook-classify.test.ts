@@ -83,6 +83,7 @@ describe("classifyWebhook — slash commands", () => {
 		["/full-review", "full-review"],
 		["/ignore-review-limit", "ignore-review-limit"],
 		["/disable-auto-review", "disable-auto-review"],
+		["/enable-auto-review", "enable-auto-review"],
 		["/rebase", "rebase"],
 	])("recognizes %s", (body, expected) => {
 		const c = classifyWebhook("issue_comment", base(body));
@@ -111,5 +112,30 @@ describe("classifyWebhook — slash commands", () => {
 			comment: { id: 1, body: "/review" },
 		});
 		expect(c.command).toBeNull();
+	});
+});
+
+describe("supersession events", () => {
+	it.each(["closed", "converted_to_draft"])(
+		"admits %s for cancellation",
+		(action) => {
+			expect(
+				isActionable(
+					classifyWebhook("pull_request", {
+						action,
+						pull_request: { number: 42 },
+					}),
+				),
+			).toBe(true);
+		},
+	);
+	it("retains the webhook head for stale-delivery checks", () => {
+		const sha = "a".repeat(40);
+		expect(
+			classifyWebhook("pull_request", {
+				action: "synchronize",
+				pull_request: { number: 42, head: { sha } },
+			}).headSha,
+		).toBe(sha);
 	});
 });

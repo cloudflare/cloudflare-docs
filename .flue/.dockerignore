@@ -1,0 +1,4 @@
+**
+!Dockerfile
+!bin/
+!bin/snapshot.py

@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
-	getIssueOrPullRequestLabel,
 	getIssueOrPullRequestNumber,
 	getIssueOrPullRequestTitle,
-	getIssueOrPullRequestUrl,
-	truncateLogValue,
 } from "./github-webhook";
 
 // ── getIssueOrPullRequestNumber ────────────────────────────────────────────────
@@ -39,70 +36,6 @@ describe("getIssueOrPullRequestNumber", () => {
 	});
 });
 
-// ── getIssueOrPullRequestUrl ───────────────────────────────────────────────────
-
-describe("getIssueOrPullRequestUrl", () => {
-	it("extracts html_url from issues event", () => {
-		expect(
-			getIssueOrPullRequestUrl(
-				"issues",
-				{
-					issue: { html_url: "https://github.com/org/repo/issues/1" },
-				},
-				1,
-			),
-		).toBe("https://github.com/org/repo/issues/1");
-	});
-
-	it("falls back to constructed URL for issues when html_url absent", () => {
-		expect(getIssueOrPullRequestUrl("issues", {}, 5)).toBe(
-			"https://github.com/cloudflare/cloudflare-docs/issues/5",
-		);
-	});
-
-	it("extracts html_url from pull_request event", () => {
-		expect(
-			getIssueOrPullRequestUrl(
-				"pull_request",
-				{
-					pull_request: { html_url: "https://github.com/org/repo/pull/2" },
-				},
-				2,
-			),
-		).toBe("https://github.com/org/repo/pull/2");
-	});
-
-	it("falls back to constructed URL for PRs when html_url absent", () => {
-		expect(getIssueOrPullRequestUrl("pull_request", {}, 10)).toBe(
-			"https://github.com/cloudflare/cloudflare-docs/pull/10",
-		);
-	});
-
-	it("returns undefined for unknown event type", () => {
-		expect(getIssueOrPullRequestUrl("push", {}, 1)).toBeUndefined();
-	});
-});
-
-// ── getIssueOrPullRequestLabel ─────────────────────────────────────────────────
-
-describe("getIssueOrPullRequestLabel", () => {
-	it("returns 'PR' for pull_request", () => {
-		expect(getIssueOrPullRequestLabel("pull_request")).toBe("PR");
-	});
-
-	it("returns 'Issue' for issues", () => {
-		expect(getIssueOrPullRequestLabel("issues")).toBe("Issue");
-	});
-
-	it("returns 'PR' for issue_comment", () => {
-		expect(getIssueOrPullRequestLabel("issue_comment")).toBe("PR");
-	});
-
-	it("returns generic label for unknown event type", () => {
-		expect(getIssueOrPullRequestLabel("push")).toBe("GitHub webhook");
-	});
-});
-
 // ── getIssueOrPullRequestTitle ─────────────────────────────────────────────────
 
 describe("getIssueOrPullRequestTitle", () => {
@@ -130,30 +63,5 @@ describe("getIssueOrPullRequestTitle", () => {
 
 	it("returns undefined for unknown event type", () => {
 		expect(getIssueOrPullRequestTitle("push", {})).toBeUndefined();
-	});
-});
-
-// ── truncateLogValue ───────────────────────────────────────────────────────────
-
-describe("truncateLogValue", () => {
-	it("returns short strings unchanged", () => {
-		expect(truncateLogValue("hello")).toBe("hello");
-	});
-
-	it("returns strings of exactly 100 chars unchanged", () => {
-		const s = "a".repeat(100);
-		expect(truncateLogValue(s)).toBe(s);
-	});
-
-	it("truncates strings longer than 100 chars with ellipsis", () => {
-		const s = "a".repeat(101);
-		const result = truncateLogValue(s);
-		expect(result).toHaveLength(100);
-		expect(result.endsWith("...")).toBe(true);
-	});
-
-	it("truncates to 97 chars + '...' for long strings", () => {
-		const s = "x".repeat(200);
-		expect(truncateLogValue(s)).toBe("x".repeat(97) + "...");
 	});
 });

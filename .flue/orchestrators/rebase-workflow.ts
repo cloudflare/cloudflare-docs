@@ -1,52 +1,28 @@
-/**
- * RebaseWorkflow — durable /rebase pipeline (D6).
- *
- * Cloudflare `WorkflowEntrypoint` that replaces the 0.11 `workflows/rebase.ts`.
- * Re-exported from `cloudflare.ts` (picked up by `export * from cloudflare.ts`);
- * bound as `REBASE` in `wrangler.jsonc`. Kicked from `pipeline-entry.ts` for the
- * `/rebase` codeowner command.
- *
- * Flow (each phase is a durable step with its own error handling, mirroring
- * ReviewOrchestrator):
- *   1. prepare  — token, fetch PR, validate base==production + not a fork, post
- *      the "in progress" status. Terminal halts (wrong base / fork) post their
- *      status and swap 👀→👎 here.
- *   2. attempt  — GitHub update-branch (rebase). Clean → complete; conflict →
- *      step 3; API error → failed.
- *   3. resolve  — AI-assisted conflict resolution (`resolveConflictsWithAI`
- *      driving the rebase-conflict-resolver agent) + `applyResolution` on high
- *      confidence. Medium/low → halted-confidence.
- *   4. trigger  — on any successful rebase, kick a fresh full review via
- *      `REVIEW_ORCHESTRATOR.create({ forceFullReview, bypassReviewLimit })`.
- *
- * All GitHub side-effects (comments, reactions, refs, commits) stay in trusted
- * TS; the agent only reasons and submits (D5).
- */
-import { WorkflowEntrypoint } from "cloudflare:workers";
-import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
-import type { ReviewOrchestratorParams } from "../cloudflare";
 import {
-	addReactionToComment,
+	WorkflowEntrypoint,
+	type WorkflowEvent,
+	type WorkflowStep,
+} from "cloudflare:workers";
+import { agentStep } from "../lib/agent-step";
+import {
 	getInstallationToken,
-	getIssueComments,
 	getPullRequest,
-	pollForBranchUpdate,
-	removeReactionFromComment,
 	updatePullRequestBranch,
-	type GitHubIssueComment,
+	pollForBranchUpdate,
+	findBotComment,
+	compareCommits,
+	postComment,
+	updateIssueComment,
+	addReactionToComment,
 } from "../lib/github";
-import { partitionComments, type RebaseStatus } from "../lib/code-review-state";
 import {
-	postOrUpdateComment,
-	renderRebaseStatusUpdate,
-} from "../lib/code-review-render";
-import {
+	prepareConflicts,
+	finalizeResolution,
 	applyResolution,
-	resolveConflictsWithAI,
+	ConflictResolutionFromModelSchema,
 } from "../lib/rebase-conflict";
-import { runRebaseConflictAgent } from "../lib/run-rebase-conflict";
+import { escapeMarkdown } from "../lib/review-domain";
 
-/** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface RebaseParams {
 	prNumber: number;
 	triggerCommentId: number;
@@ -54,392 +30,184 @@ export interface RebaseParams {
 	senderLogin: string;
 }
 
-interface RebaseEnv {
-	REVIEW_ORCHESTRATOR: Workflow<ReviewOrchestratorParams>;
-	[key: string]: unknown;
-}
-
-/** Locate the shared code-review bot comment on the PR (holds the rebase status line). */
-async function findBotComment(
-	token: string,
-	prNumber: number,
-): Promise<GitHubIssueComment | null> {
-	const { botComment } = partitionComments(
-		await getIssueComments(token, prNumber),
-	);
-	return botComment;
-}
-
-/** Post/update the rebase status line into the shared bot comment. */
-async function postRebaseStatus(
-	token: string,
-	prNumber: number,
-	status: RebaseStatus,
-	detail: string | undefined,
-	senderLogin: string,
-): Promise<void> {
-	const botComment = await findBotComment(token, prNumber);
-	const body = renderRebaseStatusUpdate(
-		status,
-		detail,
-		senderLogin,
-		botComment?.body ?? null,
-	);
-	await postOrUpdateComment(token, prNumber, botComment, body);
-}
-
-/**
- * Replace the 👀 reaction on the trigger comment with a result indicator.
- * success true → 👍 (rebase completed); false → 👎 (halted or failed).
- */
-async function swapReaction(
-	token: string,
-	commentId: number,
-	eyesReactionId: number | null,
-	success: boolean,
-): Promise<void> {
-	if (eyesReactionId) {
-		await removeReactionFromComment(token, commentId, eyesReactionId).catch(
-			(err) => {
-				console.log({
-					message: `Rebase: failed to remove 👀 reaction on comment ${commentId}: ${err instanceof Error ? err.message : String(err)}`,
-					event: "rebase_workflow",
-					action: "remove_reaction_failed",
-				});
-			},
-		);
-	}
-	await addReactionToComment(token, commentId, success ? "+1" : "-1").catch(
-		(err) => {
-			console.log({
-				message: `Rebase: failed to add ${success ? "👍" : "👎"} reaction on comment ${commentId}: ${err instanceof Error ? err.message : String(err)}`,
-				event: "rebase_workflow",
-				action: "add_reaction_failed",
+/** Branch mutations have their own steps and never replay a model request. */
+export class RebaseWorkflow extends WorkflowEntrypoint<Env, RebaseParams> {
+	async run(event: WorkflowEvent<RebaseParams>, step: WorkflowStep) {
+		const { prNumber, triggerCommentId } = event.payload;
+		try {
+			const pr = await step.do("prepare", async () => {
+				const pr = await getPullRequest(
+					await getInstallationToken(this.env),
+					prNumber,
+				);
+				if (pr.state !== "open") throw new Error("The pull request is closed.");
+				if (pr.base.ref !== "production")
+					throw new Error("Rebase requires production as the target branch.");
+				if (pr.head.repo?.full_name !== pr.base.repo.full_name)
+					throw new Error("Fork branches must be rebased by their owner.");
+				return pr;
 			});
-		},
-	);
-}
-
-type PrepareResult =
-	| { phase: "token-error" }
-	| { phase: "halt"; reason: string }
-	| { phase: "proceed"; priorSha: string };
-
-type AttemptResult =
-	| { outcome: "clean"; async: boolean; priorSha: string }
-	| { outcome: "conflict" }
-	| { outcome: "error"; message: string };
-
-export class RebaseWorkflow extends WorkflowEntrypoint<
-	RebaseEnv,
-	RebaseParams
-> {
-	async run(
-		event: Readonly<WorkflowEvent<RebaseParams>>,
-		step: WorkflowStep,
-	): Promise<Record<string, unknown>> {
-		const env = this.env;
-		const { prNumber, triggerCommentId, triggerEyesReactionId, senderLogin } =
-			event.payload;
-		const ghEnv = env as unknown as Record<string, string>;
-
-		// ── 1. Prepare: token, fetch PR, validate, post in-progress ─────────────
-		const prep = await step.do<PrepareResult>("prepare", async () => {
-			let token: string;
-			try {
-				token = await getInstallationToken(ghEnv);
-			} catch (err) {
+			if (this.env.DOCS_FLUE_REVIEW_MODE !== "comment") {
 				console.log({
-					message: `Rebase: failed to acquire token for PR #${prNumber}: ${err instanceof Error ? err.message : String(err)}`,
-					event: "rebase_workflow",
-					number: prNumber,
-					action: "token_acquisition_failed",
+					event: "rebase_preview",
+					prNumber,
+					headSha: pr.head.sha,
 				});
-				// 👀 cannot be cleaned up without a token — return early.
-				return { phase: "token-error" };
+				return { applied: false, preview: true };
 			}
-
-			const pr = await getPullRequest(token, prNumber);
-
-			// Validate: must target production, must not be a fork.
-			if (pr.base.ref !== "production") {
-				await postRebaseStatus(
-					token,
-					prNumber,
-					"halted-wrong-base",
-					pr.base.ref,
-					senderLogin,
-				);
-				await swapReaction(
-					token,
-					triggerCommentId,
-					triggerEyesReactionId,
-					false,
-				);
-				return { phase: "halt", reason: "wrong_base" };
-			}
-
-			// head.repo can be null when the fork has been deleted — treat as fork.
-			const isFork = (pr.head.repo?.full_name ?? "") !== pr.base.repo.full_name;
-			if (isFork) {
-				await postRebaseStatus(
-					token,
-					prNumber,
-					"halted-fork",
-					undefined,
-					senderLogin,
-				);
-				await swapReaction(
-					token,
-					triggerCommentId,
-					triggerEyesReactionId,
-					false,
-				);
-				return { phase: "halt", reason: "fork" };
-			}
-
-			await postRebaseStatus(
-				token,
-				prNumber,
-				"in-progress",
-				undefined,
-				senderLogin,
+			await step.do("pending", () =>
+				this.report(prNumber, "Updating the branch…"),
 			);
-
-			return { phase: "proceed", priorSha: pr.head.sha };
-		});
-
-		if (prep.phase === "token-error") {
-			return { acted: false, reason: "token_error" };
-		}
-		if (prep.phase === "halt") {
-			return { acted: false, reason: prep.reason };
-		}
-
-		// ── 2. Attempt the rebase via the update-branch API ─────────────────────
-		const attempt = await step.do<AttemptResult>("attempt", async () => {
-			const token = await getInstallationToken(ghEnv);
-			try {
-				const result = await updatePullRequestBranch(
-					token,
-					prNumber,
-					"rebase",
-					prep.priorSha,
-				);
-				if (result.ok) {
-					return {
-						outcome: "clean",
-						async: result.async === true,
-						priorSha: prep.priorSha,
-					};
-				}
-				// 422 conflict — fall through to AI resolution.
-				return { outcome: "conflict" };
-			} catch (err) {
-				return {
-					outcome: "error",
-					message: err instanceof Error ? err.message : String(err),
-				};
-			}
-		});
-
-		if (attempt.outcome === "error") {
-			await step.do("attempt-failed", async () => {
-				const token = await getInstallationToken(ghEnv);
-				await postRebaseStatus(
-					token,
-					prNumber,
-					"failed",
-					attempt.message,
-					senderLogin,
-				);
-				await swapReaction(
-					token,
-					triggerCommentId,
-					triggerEyesReactionId,
-					false,
-				);
-				return { posted: true };
-			});
-			return { acted: false, reason: "api_error", error: attempt.message };
-		}
-
-		// ── 3a. Clean rebase ─────────────────────────────────────────────────────
-		if (attempt.outcome === "clean") {
-			await step.do("finish-clean", async () => {
-				const token = await getInstallationToken(ghEnv);
-				// Async (202): poll until the head SHA changes. Timeout is treated as
-				// success — the subsequent full review runs against the current head.
-				if (attempt.async) {
-					await pollForBranchUpdate(token, prNumber, attempt.priorSha).catch(
-						(err) => {
-							console.log({
-								message: `Rebase: branch update poll failed for PR #${prNumber}: ${err instanceof Error ? err.message : String(err)}`,
-								event: "rebase_workflow",
-								number: prNumber,
-								action: "poll_branch_update_failed",
-							});
+			const attempt = await step.do(
+				"update-branch",
+				{ retries: { limit: 0, delay: "1 second" } },
+				async () =>
+					updatePullRequestBranch(
+						await getInstallationToken(this.env),
+						prNumber,
+						"rebase",
+						pr.head.sha,
+					),
+			);
+			if (attempt.ok) {
+				if (attempt.async)
+					await step.do(
+						"wait-for-update",
+						{ timeout: "3 minutes" },
+						async () => {
+							const sha = await pollForBranchUpdate(
+								await getInstallationToken(this.env),
+								prNumber,
+								pr.head.sha,
+							);
+							if (!sha)
+								throw new Error(
+									"GitHub has not confirmed the branch update. Check the branch before retrying.",
+								);
+							return sha;
 						},
 					);
-				}
-				await postRebaseStatus(
+			} else {
+				const prepared = await step.do(
+					"conflicts",
+					{ timeout: "3 minutes" },
+					async () => {
+						const result = await prepareConflicts(
+							await getInstallationToken(this.env),
+							pr,
+						);
+						return {
+							...result,
+							conflictCandidateSet: [...result.conflictCandidateSet],
+							conflictWritePathMap: [...result.conflictWritePathMap],
+						};
+					},
+				);
+				if (!prepared.agentInput) throw new Error(prepared.reason);
+				const outcome = await agentStep(
+					step,
+					"resolve",
+					"rebase",
+					`${event.instanceId}:resolve`,
+					prepared.agentInput,
+					"conflict_resolution",
+					ConflictResolutionFromModelSchema,
+				);
+				if (!outcome.ok)
+					throw new Error(
+						"AI conflict resolution did not complete. No resolution was applied.",
+					);
+				const resolution = finalizeResolution(
+					{
+						...prepared,
+						conflictCandidateSet: new Set(prepared.conflictCandidateSet),
+						conflictWritePathMap: new Map(prepared.conflictWritePathMap),
+					},
+					outcome.value,
+				);
+				if (resolution.confidence !== "high")
+					throw new Error(
+						resolution.reason || "The resolution needs human review.",
+					);
+				await step.do(
+					"apply-resolution",
+					{ timeout: "3 minutes", retries: { limit: 0, delay: "1 second" } },
+					async () => {
+						await applyResolution(
+							await getInstallationToken(this.env),
+							pr,
+							resolution,
+						);
+						return true;
+					},
+				);
+			}
+			await step.do("confirm-base", async () => {
+				const token = await getInstallationToken(this.env);
+				const current = await getPullRequest(token, prNumber);
+				const comparison = await compareCommits(
 					token,
+					pr.base.sha,
+					current.head.sha,
+				);
+				if (comparison.mergeBaseSha !== pr.base.sha)
+					throw new Error(
+						"The branch changed, but GitHub has not confirmed that the requested base was incorporated.",
+					);
+				return true;
+			});
+			await step.do("complete", () =>
+				this.report(prNumber, "Branch update completed."),
+			);
+			await step.do("review", async () => {
+				const current = await getPullRequest(
+					await getInstallationToken(this.env),
 					prNumber,
-					"complete",
-					undefined,
-					senderLogin,
 				);
-				await swapReaction(
-					token,
-					triggerCommentId,
-					triggerEyesReactionId,
-					true,
-				);
-				return { posted: true };
+				return this.env.REVIEW_COORDINATOR.getByName(`pr-${prNumber}`).request({
+					number: prNumber,
+					runId: `${event.instanceId}-review`,
+					headSha: current.head.sha,
+					baseSha: current.base.sha,
+					baseRef: current.base.ref,
+					title: current.title,
+					body: current.body ?? "",
+					author: current.user?.login ?? "",
+					moderate: false,
+					force: true,
+				});
 			});
-
-			await this.triggerFullReview(step, env, prNumber, "rebase_complete");
-			console.log({
-				message: `Rebase complete for PR #${prNumber}`,
-				event: "rebase_workflow",
-				number: prNumber,
-				action: "rebase_complete",
-			});
-			return { acted: true, reason: "rebase_complete" };
-		}
-
-		// ── 3b. Conflict: AI-assisted resolution + apply ────────────────────────
-		const resolve = await step.do<{
-			result: "applied" | "halted" | "failed";
-			confidence?: string;
-			reason?: string;
-			error?: string;
-		}>("resolve-and-apply", async () => {
-			const token = await getInstallationToken(ghEnv);
-			try {
-				const pr = await getPullRequest(token, prNumber);
-				const resolution = await resolveConflictsWithAI(token, pr, (input) =>
-					runRebaseConflictAgent(
-						input,
-						`${event.instanceId}:rebase-conflict:${pr.head.sha}`,
+			await step.do("reaction", () =>
+				getInstallationToken(this.env).then((token) =>
+					addReactionToComment(token, triggerCommentId, "+1"),
+				),
+			);
+			return { applied: true };
+		} catch (error) {
+			console.error({ event: "rebase_failed", prNumber, error: String(error) });
+			if (this.env.DOCS_FLUE_REVIEW_MODE === "comment")
+				await step.do("failure", () =>
+					this.report(
+						prNumber,
+						`Branch update needs attention: ${error instanceof Error ? error.message : "Unknown failure"}`,
 					),
 				);
-
-				if (resolution.confidence === "high") {
-					await applyResolution(token, pr, resolution);
-					await postRebaseStatus(
-						token,
-						prNumber,
-						"complete",
-						undefined,
-						senderLogin,
-					).catch(() => {});
-					await swapReaction(
-						token,
-						triggerCommentId,
-						triggerEyesReactionId,
-						true,
-					).catch(() => {});
-					return { result: "applied" };
-				}
-
-				// Medium/low confidence — stop and explain.
-				await postRebaseStatus(
-					token,
-					prNumber,
-					"halted-confidence",
-					resolution.reason,
-					senderLogin,
-				);
-				await swapReaction(
-					token,
-					triggerCommentId,
-					triggerEyesReactionId,
-					false,
-				);
-				return {
-					result: "halted",
-					confidence: resolution.confidence,
-					reason: resolution.reason,
-				};
-			} catch (err) {
-				const message = err instanceof Error ? err.message : String(err);
-				await postRebaseStatus(
-					token,
-					prNumber,
-					"failed",
-					`AI conflict resolution failed: ${message}`,
-					senderLogin,
-				).catch(() => {});
-				await swapReaction(
-					token,
-					triggerCommentId,
-					triggerEyesReactionId,
-					false,
-				).catch(() => {});
-				return { result: "failed", error: message };
-			}
-		});
-
-		if (resolve.result === "applied") {
-			await this.triggerFullReview(step, env, prNumber, "ai_rebase_complete");
-			console.log({
-				message: `AI rebase complete for PR #${prNumber}`,
-				event: "rebase_workflow",
-				number: prNumber,
-				action: "ai_rebase_complete",
-			});
-			return { acted: true, reason: "ai_rebase_complete" };
+			throw error;
 		}
-
-		if (resolve.result === "failed") {
-			return {
-				acted: false,
-				reason: "ai_resolution_error",
-				error: resolve.error,
-			};
-		}
-
-		return {
-			acted: false,
-			reason:
-				resolve.confidence === "medium"
-					? "medium_confidence"
-					: "low_confidence",
-			confidence: resolve.confidence,
-		};
 	}
 
-	/**
-	 * Kick a fresh full review after a successful rebase. The rebase changes the
-	 * head SHA so an incremental review would be wrong; force a full re-review and
-	 * bypass the auto-review limit. Non-fatal — the rebase already succeeded.
-	 */
-	private async triggerFullReview(
-		step: WorkflowStep,
-		env: RebaseEnv,
-		prNumber: number,
-		context: string,
-	): Promise<void> {
-		await step.do(`trigger-review-${context}`, async () => {
-			try {
-				await env.REVIEW_ORCHESTRATOR.create({
-					params: {
-						number: prNumber,
-						forceFullReview: true,
-						bypassReviewLimit: true,
-					},
-				});
-				return { triggered: true };
-			} catch (err) {
-				console.log({
-					message: `Could not trigger full review after ${context} for PR #${prNumber}: ${err instanceof Error ? err.message : String(err)}`,
-					event: "rebase_workflow",
-					number: prNumber,
-					action: "review_trigger_failed",
-				});
-				return { triggered: false };
-			}
-		});
+	private async report(number: number, message: string): Promise<void> {
+		const token = await getInstallationToken(this.env);
+		const marker = "<!-- docs-flue-rebase -->";
+		const body = `${marker}\n## Branch update\n\n${escapeMarkdown(message)}`;
+		const existing = await findBotComment(
+			token,
+			number,
+			Number(this.env.DOCS_FLUE_GITHUB_APP_ID),
+			marker,
+		);
+		if (existing && (await updateIssueComment(token, existing.id, body)))
+			return;
+		await postComment(token, number, body);
 	}
 }

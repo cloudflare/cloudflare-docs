@@ -4,4 +4,7 @@ import { defineConfig } from "@flue/runtime/config";
 // explicit for clarity. The source root is `.flue/` (auto-discovered).
 export default defineConfig({
 	target: "cloudflare",
+	agents: "agents/*.ts",
+	// Workers AI uses our binding provider in app.ts; omit unused API providers.
+	providers: [],
 });

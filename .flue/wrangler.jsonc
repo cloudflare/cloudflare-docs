@@ -1,9 +1,25 @@
 {
 	"$schema": "../node_modules/wrangler/config-schema.json",
 	"name": "cloudflare-docs-flue",
+	"main": "./cloudflare.ts",
 	"account_id": "b54f07a6c269ecca2fa60f1ae4920c99",
-	"compatibility_date": "2026-04-01",
+	"compatibility_date": "2026-09-13",
 	"compatibility_flags": ["nodejs_compat"],
+	"vars": {
+		"DOCS_FLUE_REVIEW_MODE": "log",
+		"DOCS_FLUE_REVIEW_MODEL": "cloudflare/@cf/deepseek-ai/deepseek-v4-flash-0731",
+		"DOCS_FLUE_VALIDATION_MODEL": "cloudflare/@cf/zai-org/glm-5.3",
+		"DOCS_FLUE_ENABLE_EVAL_ROUTES": "0",
+	},
+	"durable_objects": {
+		"bindings": [
+			{ "name": "Sandbox", "class_name": "Sandbox" },
+			{ "name": "REVIEW_COORDINATOR", "class_name": "ReviewCoordinator" },
+		],
+	},
+	"containers": [
+		{ "class_name": "Sandbox", "image": "./Dockerfile", "max_instances": 20 },
+	],
 	"ai": {
 		"binding": "AI",
 	},
@@ -22,11 +38,6 @@
 			"name": "cloudflare-docs-flue-review-orchestrator",
 			"binding": "REVIEW_ORCHESTRATOR",
 			"class_name": "ReviewOrchestrator",
-		},
-		{
-			"name": "cloudflare-docs-flue-dependabot-review",
-			"binding": "DEPENDABOT_REVIEW",
-			"class_name": "DependabotReviewWorkflow",
 		},
 		{
 			"name": "cloudflare-docs-flue-rebase",
@@ -167,6 +178,20 @@
 			// false-positive findings from the specialist agents.
 			"tag": "v11",
 			"new_sqlite_classes": ["FlueReviewValidatorAgent"],
+		},
+		{
+			"tag": "v12",
+			"new_sqlite_classes": [
+				"Sandbox",
+				"ReviewCoordinator",
+				"FlueReviewChunkAgent",
+				"FlueReconcileFindingsAgent",
+			],
+			"deleted_classes": [
+				"FlueCodeReviewFileAgent",
+				"FlueStyleGuideFileAgent",
+				"FlueReconcileReviewerAgent",
+			],
 		},
 	],
 	// Explicitly empty crons list so wrangler clears any previously registered

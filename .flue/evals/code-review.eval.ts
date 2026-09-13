@@ -1,15 +1,16 @@
 import { expect } from "vitest";
 import { describeEval, toolCalls } from "vitest-evals";
 import { createFlueAgentHarness } from "./harness";
-import type { CodeReviewFileInput } from "../agents/code-review-file";
+import { reviewChunkFixture, type ReviewFixture } from "./review-fixture";
 
 const baseUrl = process.env.FLUE_BASE_URL ?? "http://localhost:5173";
 const token = process.env.DOCS_FLUE_INTERNAL_TOKEN;
 
-const harness = createFlueAgentHarness<CodeReviewFileInput>({
+const harness = createFlueAgentHarness<ReviewFixture>({
 	baseUrl,
-	agentName: "code-review-file",
-	dataKey: "code_review_file",
+	prepareInput: reviewChunkFixture,
+	agentName: "review-chunk",
+	dataKey: "review",
 	message: "Review the changed lines of this file and submit your findings.",
 	token,
 });
@@ -71,9 +72,7 @@ describeEval("code review file", { harness }, (it) => {
 			/(promise|reject|unhandled|await|error|fire|discard|floating|ignored)/,
 		);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_code_review",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("passes on a file with proper error handling", async ({ run }) => {
@@ -140,8 +139,6 @@ describeEval("code review file", { harness }, (it) => {
 		);
 		expect(falsePositive).toHaveLength(0);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_code_review",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 });

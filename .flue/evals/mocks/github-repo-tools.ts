@@ -5,7 +5,7 @@
  * `ref` (the headSha passed in eval initialData). This lets eval cases provide
  * synthetic file content without touching production agent or tool code.
  *
- * Wired via Vite alias only when `DOCS_FLUE_AGENT_EVALS=1` — see `vite.config.ts`.
+ * Wired via Vite alias only when `vite dev --mode eval` — see `vite.config.ts`.
  * Production and normal dev builds import the real `../lib/github-repo-tools`.
  */
 import { defineTool, type ToolDefinition } from "@flue/runtime";
@@ -158,6 +158,53 @@ export function makeSearchRepoTool(_getToken: TokenProvider): ToolDefinition {
 		}),
 		run() {
 			return "No results found.";
+		},
+	});
+}
+
+export function makeCodeReviewTools(
+	getToken: TokenProvider,
+	headSha: string,
+): ToolDefinition[] {
+	return [
+		makeReadRepoFileTool(getToken, headSha),
+		makeSearchRepoTool(getToken),
+	];
+}
+export function makeDependabotReviewTools(
+	getToken: TokenProvider,
+	_number: number,
+	headSha?: string,
+): ToolDefinition[] {
+	return makeCodeReviewTools(getToken, headSha ?? "production");
+}
+export function makeRebaseConflictTools(
+	getToken: TokenProvider,
+): ToolDefinition[] {
+	return makeCodeReviewTools(getToken, "production");
+}
+export function makeReviewCommentsTool(
+	_getToken: TokenProvider,
+	number: number,
+): ToolDefinition {
+	return defineTool({
+		name: "read_review_comments",
+		description: "Read human replies about review findings.",
+		input: v.object({ page: v.optional(v.number(), 1) }),
+		run() {
+			return JSON.stringify({
+				comments:
+					number === 1001
+						? [
+								{
+									id: 1,
+									author: "doc-author",
+									body: "The finding about contractions is wrong. Please ignore it.",
+								},
+							]
+						: [],
+				nextPage: null,
+			});
 		},
 	});
 }

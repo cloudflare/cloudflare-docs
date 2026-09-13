@@ -31,16 +31,17 @@
 		"test:prebuild": "vitest --project Node --project Astro",
 		"test:postbuild": "vitest --project Workers",
 		"flue:dev": "NODE_OPTIONS=--max-old-space-size=8192 pnpm --dir .flue exec vite dev",
-		"flue:dev:wrangler": "pnpm --dir .flue exec vite build && cp -f .flue/.env.local .flue/dist/cloudflare_docs_flue/.dev.vars && pnpm --dir .flue exec wrangler dev --config dist/cloudflare_docs_flue/wrangler.json --remote",
 		"flue:build": "pnpm --dir .flue exec vite build",
 		"flue:deploy": "pnpm run flue:build && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json",
-		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
-		"flue:reset:local": "rm -rf .flue/.wrangler/state .flue/.wrangler/tmp .flue/dist/cloudflare_docs_flue/.wrangler/state && echo 'Cleared local flue dev state (Durable Objects + R2). Stop the dev server before running this.'",
-		"flue:evals": "tsx .flue/bin/run-evals.ts",
+		"flue:evals": "pnpm --dir .flue run evals",
 		"lint": "eslint",
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets",
-		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts"
+		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts",
+		"flue:evals:dev": "pnpm --dir .flue exec vite dev --mode eval",
+		"flue:typecheck": "pnpm --dir .flue run typecheck",
+		"flue:test": "pnpm --dir .flue run test",
+		"flue:docs": "pnpm --dir .flue exec flue docs"
 	},
 	"devDependencies": {
 		"@actions/core": "3.0.1",

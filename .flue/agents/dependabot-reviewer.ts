@@ -1,41 +1,10 @@
 "use agent";
 
-/**
- * Dependabot reviewer (Flue 2.0 agent).
- *
- * Migrated from the `session.skill("dependabot-review", …)` call in the 0.11
- * `workflows/dependabot-review.ts`. Analyzes every bumped package in a
- * Dependabot PR — what changed upstream, how this repo uses it, and whether any
- * action beyond merging is needed — and returns a structured review.
- *
- * Trusted code owns the round trip: `DependabotReviewWorkflow`
- * (`orchestrators/dependabot-review-workflow.ts`) fetches the PR, parses the
- * packages, dispatches this agent via `lib/run-dependabot-review.ts`, then
- * renders and posts the comment itself. The agent only reasons and submits.
- *
- * Per-run GitHub token is minted in-DO from env (not seeded via initialData);
- * the GitHub-API-backed tools (`makeDependabotReviewTools`) are built inside
- * the render from it, fixed length so the hook order is stable (the
- * `code-review-file` mechanism).
- *
- * Structured output (D5): the model's only way to return a result is the
- * `submit_dependabot_review` tool (typed by `DependabotReviewResultSchema`) →
- * `useDataWriter`; `useAgentFinish` enforces the call.
- *
- * The dependabot-review skill still describes its inputs as `args.*`; the prompt
- * maps the concrete dispatch values onto those names so the skill text stays
- * coherent (same interim approach as conventions-reviewer / reconcile-reviewer).
- */
+import { env } from "cloudflare:workers";
+import { useResult } from "../lib/agent-output";
+import { AGENT_TIMEOUT_MS } from "../lib/review-domain";
 import type { AgentProps } from "@flue/runtime";
-import {
-	defineTool,
-	useAgentFinish,
-	useDataWriter,
-	useInitialData,
-	useModel,
-	useSkill,
-	useTool,
-} from "@flue/runtime";
+import { useInitialData, useModel, useSkill, useTool } from "@flue/runtime";
 import dependabotSkill from "../.agents/skills/dependabot-review/SKILL.md";
 import { useBotRole } from "../lib/bot-role";
 import {
@@ -55,6 +24,7 @@ const SUBMIT_TOOL = "submit_dependabot_review";
 
 /** Input handed to the agent at dispatch time as `initialData`. */
 export interface DependabotReviewInput {
+	headSha?: string;
 	prNumber: number;
 	prTitle: string;
 	prBody: string;
@@ -91,7 +61,7 @@ function buildPrompt(input: DependabotReviewInput): string {
 }
 
 export default function DependabotReviewer(_props: AgentProps): string {
-	useModel(MODEL);
+	useModel(env.DOCS_FLUE_REVIEW_MODEL || MODEL);
 	useSkill(dependabotSkill);
 	useBotRole();
 
@@ -103,40 +73,16 @@ export default function DependabotReviewer(_props: AgentProps): string {
 	for (const tool of makeDependabotReviewTools(
 		getGitHubToken,
 		input.prNumber,
+		input.headSha,
 	)) {
 		useTool(tool);
 	}
 
-	const writeReview = useDataWriter(DEPENDABOT_REVIEW_DATA, {
-		schema: DependabotReviewResultSchema,
-	});
-
-	useTool(
-		defineTool({
-			name: SUBMIT_TOOL,
-			description:
-				"Submit the completed Dependabot review. Call exactly once with the overall summary, recommendation, and one packageReviews entry per bumped package. This is the only way to return your result.",
-			input: DependabotReviewResultSchema,
-			run: ({ data }) => {
-				writeReview(data);
-				return "Dependabot review recorded.";
-			},
-		}),
-	);
-
-	useAgentFinish(({ response, append }) => {
-		const submitted = response.toolCalls.some(
-			(call) => call.tool === SUBMIT_TOOL && !call.isError,
-		);
-		if (submitted) return;
-		append({
-			kind: "signal",
-			type: "reminder",
-			body: `You ended without calling ${SUBMIT_TOOL} — nothing was recorded. Call it now with the summary, recommendation, and per-package reviews.`,
-		});
-	});
+	useResult(DEPENDABOT_REVIEW_DATA, DependabotReviewResultSchema);
 
 	return buildPrompt(input);
 }
 
 DependabotReviewer.agentName = "dependabot-reviewer";
+
+DependabotReviewer.durability = { maxAttempts: 5, timeoutMs: AGENT_TIMEOUT_MS };

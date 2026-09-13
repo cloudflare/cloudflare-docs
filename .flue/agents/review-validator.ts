@@ -1,27 +1,10 @@
 "use agent";
 
-/**
- * Review validator (Flue 2.0 agent).
- *
- * Receives active findings from the reconcile step and validates each one
- * by reading the actual repo file content at the PR head SHA. Suppresses
- * false positives — does not add new findings. Uses a more capable model
- * (GLM-5.2) than the specialist agents for higher-fidelity validation.
- *
- * Structured output: the model's only way to return a result is the
- * `submit_review_validation` tool (typed by `ReviewValidationSchema`) →
- * `useDataWriter`; `useAgentFinish` enforces the call.
- */
+import { env } from "cloudflare:workers";
+import { useResult } from "../lib/agent-output";
+import { AGENT_TIMEOUT_MS } from "../lib/review-domain";
 import type { AgentProps } from "@flue/runtime";
-import {
-	defineTool,
-	useAgentFinish,
-	useDataWriter,
-	useInitialData,
-	useModel,
-	useSkill,
-	useTool,
-} from "@flue/runtime";
+import { useInitialData, useModel, useSkill, useTool } from "@flue/runtime";
 import * as v from "valibot";
 import reviewValidationSkill from "../.agents/skills/review-validation/SKILL.md";
 import { useBotRole } from "../lib/bot-role";
@@ -30,7 +13,10 @@ import {
 	makeSearchRepoTool,
 } from "../lib/github-repo-tools";
 import { getGitHubToken } from "../lib/token-provider";
-import type { ReconcileFinding } from "./reconcile-reviewer";
+import type { Finding } from "../lib/review-domain";
+type ReconcileFinding = Omit<Finding, "category"> & {
+	category?: Finding["category"];
+};
 
 const MODEL = "cloudflare/@cf/zai-org/glm-5.2";
 
@@ -41,6 +27,8 @@ const SUBMIT_TOOL = "submit_review_validation";
 
 /** Input handed to the agent at dispatch time as `initialData`. */
 export interface ReviewValidatorInput {
+	baseSha?: string;
+	prBaseSha?: string;
 	pullRequest: { number: number; title: string; base: string; head: string };
 	headSha: string;
 	streamLabel: string;
@@ -50,8 +38,8 @@ export interface ReviewValidatorInput {
 	changedFiles: Array<{
 		filename: string;
 		status: string;
-		additions: number;
-		deletions: number;
+		additions?: number;
+		deletions?: number;
 	}>;
 }
 
@@ -60,7 +48,7 @@ export const ReviewValidationSchema = v.object({
 	decisions: v.array(
 		v.object({
 			id: v.string(),
-			verdict: v.picklist(["valid", "invalid"]),
+			verdict: v.picklist(["valid", "invalid", "unverified"]),
 			reason: v.string(),
 		}),
 	),
@@ -76,12 +64,14 @@ function buildPrompt(input: ReviewValidatorInput): string {
 			? input.changedFiles
 					.map(
 						(f) =>
-							`- ${f.filename} [${f.status}] +${f.additions}/-${f.deletions}`,
+							`- ${f.filename} [${f.status}]${f.additions === undefined || f.deletions === undefined ? "" : ` +${f.additions}/-${f.deletions}`}`,
 					)
 					.join("\n")
 			: "(none)";
 
 	return [
+		`For side:base findings, inspect deleted lines at ${input.baseSha ?? input.headSha}; for side:head, inspect ${input.headSha}.`,
+		`The full PR comparison base is ${input.prBaseSha ?? input.baseSha ?? input.pullRequest.base}. Suppress issues inherited unchanged from this base (including changes brought in by merging upstream).`,
 		`Validate the following review findings for the "${input.streamLabel}" stream.`,
 		"Apply the review-validation skill's rules. Use read_repo_file to read the",
 		"actual file content at the PR head and verify each finding.",
@@ -103,13 +93,13 @@ function buildPrompt(input: ReviewValidatorInput): string {
 		changedFiles,
 		"",
 		`When finished, call ${SUBMIT_TOOL} exactly once with a decision for each`,
-		'finding. Default to "valid" when uncertain; only mark "invalid" for',
+		'finding. Use "unverified" when evidence cannot be checked; only mark "invalid" for',
 		"clear false positives with a specific reason.",
 	].join("\n");
 }
 
 export default function ReviewValidator(_props: AgentProps): string {
-	useModel(MODEL);
+	useModel(env.DOCS_FLUE_VALIDATION_MODEL || MODEL);
 	useSkill(reviewValidationSkill);
 	useBotRole();
 
@@ -118,59 +108,19 @@ export default function ReviewValidator(_props: AgentProps): string {
 	useTool(makeReadRepoFileTool(getGitHubToken, input.headSha));
 	useTool(makeSearchRepoTool(getGitHubToken));
 
-	const writeResult = useDataWriter(REVIEW_VALIDATION_DATA, {
-		schema: ReviewValidationSchema,
-	});
-
-	useTool(
-		defineTool({
-			name: SUBMIT_TOOL,
-			description:
-				"Submit the validation result. Call exactly once with a decision (valid or invalid) for each finding and a one-line summary. This is the only way to return your result.",
-			input: ReviewValidationSchema,
-			run: ({ data }) => {
-				const findingIds = new Set(input.findings.map((f) => f.id));
-				const seenIds = new Set<string>();
-
-				if (data.decisions.length !== input.findings.length) {
-					throw new Error(
-						`Expected ${input.findings.length} decisions (one per finding), got ${data.decisions.length}. Submit exactly one decision for each finding.`,
-					);
-				}
-
-				for (const d of data.decisions) {
-					if (!findingIds.has(d.id)) {
-						throw new Error(
-							`Decision id "${d.id}" does not match any finding. Valid ids: ${[...findingIds].join(", ")}.`,
-						);
-					}
-					if (seenIds.has(d.id)) {
-						throw new Error(
-							`Duplicate decision for finding "${d.id}". Each finding must have exactly one decision.`,
-						);
-					}
-					seenIds.add(d.id);
-				}
-
-				writeResult(data);
-				return "Validation recorded.";
-			},
-		}),
-	);
-
-	useAgentFinish(({ response, append }) => {
-		const submitted = response.toolCalls.some(
-			(call) => call.tool === SUBMIT_TOOL && !call.isError,
-		);
-		if (submitted) return;
-		append({
-			kind: "signal",
-			type: "reminder",
-			body: `You ended without calling ${SUBMIT_TOOL} — nothing was recorded. Call it now with a decision for each finding and a summary.`,
-		});
+	useResult(REVIEW_VALIDATION_DATA, ReviewValidationSchema, (data) => {
+		const expected = new Set(input.findings.map((finding) => finding.id));
+		if (
+			data.decisions.length !== expected.size ||
+			new Set(data.decisions.map((d) => d.id)).size !== expected.size ||
+			data.decisions.some((d) => !expected.has(d.id))
+		)
+			throw new Error("Submit exactly one decision per finding ID.");
 	});
 
 	return buildPrompt(input);
 }
 
 ReviewValidator.agentName = "review-validator";
+
+ReviewValidator.durability = { maxAttempts: 5, timeoutMs: AGENT_TIMEOUT_MS };

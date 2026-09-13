@@ -11,6 +11,7 @@ export interface FlueAgentHarnessOptions {
 	message: string;
 	token?: string;
 	headers?: Record<string, string>;
+	prepareInput?: (input: unknown) => unknown;
 }
 
 interface TextPart {
@@ -134,7 +135,9 @@ export function createFlueAgentHarness<TInput = unknown>(
 				body: JSON.stringify({
 					kind: "user",
 					body: options.message,
-					initialData: input,
+					initialData: options.prepareInput
+						? options.prepareInput(input)
+						: input,
 				}),
 				signal,
 			});
@@ -147,7 +150,7 @@ export function createFlueAgentHarness<TInput = unknown>(
 			}
 
 			// Poll history until the submission settles
-			const deadline = Date.now() + 120_000;
+			const deadline = Date.now() + 13 * 60_000;
 			let history: ConversationHistory | undefined;
 			let terminal: { submissionId: string; outcome: string } | undefined;
 			let lastHistoryError: string | undefined;

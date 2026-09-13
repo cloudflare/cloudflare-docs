@@ -2,6 +2,32 @@ import { createAppAuth } from "@octokit/auth-app";
 
 const REPO = "cloudflare/cloudflare-docs";
 
+function githubFetch(
+	url: string,
+	options: RequestInit = {},
+): Promise<Response> {
+	return fetch(url, {
+		...options,
+		signal: AbortSignal.any([
+			...(options.signal ? [options.signal] : []),
+			AbortSignal.timeout(30_000),
+		]),
+	});
+}
+
+export async function getPullRequestFileSample(
+	token: string,
+	number: number,
+): Promise<PullRequestFile[]> {
+	const response = await githubFetch(
+		`https://api.github.com/repos/${REPO}/pulls/${number}/files?per_page=26`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!response.ok)
+		throw new Error(`GitHub file sample returned ${response.status}`);
+	return response.json<PullRequestFile[]>();
+}
+
 export interface PullRequestFile {
 	filename: string;
 	status: string;
@@ -48,16 +74,32 @@ export interface GitHubPullRequest {
 	head: { ref: string; sha: string; repo: { full_name: string } | null };
 }
 
-export async function getInstallationToken(
-	env: Record<string, string>,
-): Promise<string> {
-	const auth = createAppAuth({
-		appId: env.DOCS_FLUE_GITHUB_APP_ID,
-		privateKey: env.DOCS_FLUE_GITHUB_APP_PRIVATE_KEY,
-		installationId: Number(env.DOCS_FLUE_GITHUB_INSTALLATION_ID),
-	});
+let appAuth:
+	{ key: string; authenticate: ReturnType<typeof createAppAuth> } | undefined;
 
-	const { token } = await auth({ type: "installation" });
+export async function getInstallationToken(env: {
+	DOCS_FLUE_GITHUB_APP_ID?: string;
+	DOCS_FLUE_GITHUB_APP_PRIVATE_KEY?: string;
+	DOCS_FLUE_GITHUB_INSTALLATION_ID?: string;
+}): Promise<string> {
+	if (
+		!env.DOCS_FLUE_GITHUB_APP_ID ||
+		!env.DOCS_FLUE_GITHUB_APP_PRIVATE_KEY ||
+		!env.DOCS_FLUE_GITHUB_INSTALLATION_ID
+	)
+		throw new Error("Missing GitHub App credentials");
+	const key = `${env.DOCS_FLUE_GITHUB_APP_ID}:${env.DOCS_FLUE_GITHUB_INSTALLATION_ID}:${env.DOCS_FLUE_GITHUB_APP_PRIVATE_KEY}`;
+	if (!appAuth || appAuth.key !== key)
+		appAuth = {
+			key,
+			authenticate: createAppAuth({
+				appId: env.DOCS_FLUE_GITHUB_APP_ID,
+				privateKey: env.DOCS_FLUE_GITHUB_APP_PRIVATE_KEY,
+				installationId: Number(env.DOCS_FLUE_GITHUB_INSTALLATION_ID),
+			}),
+		};
+
+	const { token } = await appAuth.authenticate({ type: "installation" });
 	return token;
 }
 
@@ -93,37 +135,11 @@ function encodeRef(ref: string): string {
 	return ref.split("/").map(encodeURIComponent).join("/");
 }
 
-/**
- * Fetch every page of a GitHub list endpoint whose response body is a JSON
- * array, following `Link: rel="next"` pagination. `firstUrl` should already
- * include `per_page=100`. `context` is used only for error messages.
- */
-async function fetchAllPages<T>(
-	token: string,
-	firstUrl: string,
-	context: string,
-): Promise<T[]> {
-	const items: T[] = [];
-	let url: string | null = firstUrl;
-	while (url) {
-		const res: Response = await fetch(url, { headers: apiHeaders(token) });
-		if (!res.ok) {
-			throw new Error(
-				`Failed to ${context} (HTTP ${res.status}): ${await res.text()}`,
-			);
-		}
-		const page = (await res.json()) as T[];
-		items.push(...page);
-		url = parseNextLink(res.headers.get("Link"));
-	}
-	return items;
-}
-
 export async function closeIssue(
 	token: string,
 	issueNumber: number,
 ): Promise<void> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/issues/${issueNumber}`,
 		{
 			method: "PATCH",
@@ -142,8 +158,8 @@ export async function postComment(
 	token: string,
 	issueNumber: number,
 	body: string,
-): Promise<void> {
-	const res = await fetch(
+): Promise<number> {
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments`,
 		{
 			method: "POST",
@@ -156,13 +172,14 @@ export async function postComment(
 			`Failed to post comment on ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
 		);
 	}
+	return ((await res.json()) as { id: number }).id;
 }
 
 export async function getIssue(
 	token: string,
 	issueNumber: number,
 ): Promise<GitHubIssue> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/issues/${issueNumber}`,
 		{
 			headers: apiHeaders(token),
@@ -180,7 +197,7 @@ export async function getPullRequest(
 	token: string,
 	pullNumber: number,
 ): Promise<GitHubPullRequest> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}`,
 		{
 			headers: apiHeaders(token),
@@ -209,7 +226,7 @@ export async function getRepoFileContent(
 ): Promise<string | null> {
 	// Encode each path segment but preserve the slashes the contents API needs.
 	const encodedPath = path.split("/").map(encodeURIComponent).join("/");
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`,
 		{ headers: apiHeaders(token), signal },
 	);
@@ -224,7 +241,9 @@ export async function getRepoFileContent(
 		content?: string;
 	};
 	if (data.encoding !== "base64" || typeof data.content !== "string") {
-		return null;
+		throw new Error(
+			`File ${path}@${ref} cannot be read through the contents API; it is not treated as absent.`,
+		);
 	}
 	// atob yields a Latin-1 byte string; decode those bytes as UTF-8 so
 	// non-ASCII content (e.g. em dashes in AGENTS.md) is not mojibake.
@@ -233,26 +252,12 @@ export async function getRepoFileContent(
 	return new TextDecoder().decode(bytes);
 }
 
-export async function getPullRequestFiles(
-	token: string,
-	pullNumber: number,
-): Promise<PullRequestFile[]> {
-	// Paginate: the PR files endpoint returns at most 100 files per page. A PR
-	// with more than 100 changed files would otherwise be silently truncated,
-	// which breaks the net-diff containment check in fetchFilesForDiffMode.
-	return fetchAllPages<PullRequestFile>(
-		token,
-		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/files?per_page=100`,
-		`get PR files for ${pullNumber}`,
-	);
-}
-
 export async function addLabels(
 	token: string,
 	issueNumber: number,
 	labels: string[],
 ): Promise<void> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/labels`,
 		{
 			method: "POST",
@@ -268,6 +273,8 @@ export async function addLabels(
 }
 
 export interface GitHubIssueComment {
+	author_association?: string;
+	performed_via_github_app?: { id: number } | null;
 	id: number;
 	body: string | null;
 	created_at: string;
@@ -275,33 +282,69 @@ export interface GitHubIssueComment {
 	user: GitHubUser | null;
 }
 
-export async function getIssueComments(
+export async function findBotComment(
 	token: string,
-	issueNumber: number,
-): Promise<GitHubIssueComment[]> {
-	// Fetch newest comments first so recent human replies aren't missed on
-	// busy PRs that exceed the 100-comment page limit.
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100&direction=desc`,
-		{ headers: apiHeaders(token) },
-	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to get comments for ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
+	number: number,
+	appId: number,
+	marker: string,
+): Promise<GitHubIssueComment | undefined> {
+	let page = 1;
+	while (true) {
+		const response = await githubFetch(
+			`https://api.github.com/repos/${REPO}/issues/${number}/comments?per_page=100&page=${page}`,
+			{ headers: apiHeaders(token) },
 		);
+		if (!response.ok)
+			throw new Error(`GitHub comments returned ${response.status}`);
+		const comments = await response.json<GitHubIssueComment[]>();
+		const found = comments.find(
+			(comment) =>
+				comment.performed_via_github_app?.id === appId &&
+				comment.body?.includes(marker),
+		);
+		if (found) return found;
+		if (!parseNextLink(response.headers.get("Link"))) return undefined;
+		page++;
 	}
-	// Reverse so callers get oldest-first order (consistent with previous behavior
-	// and safe for findLast() / botComment detection).
-	const comments = (await res.json()) as GitHubIssueComment[];
-	return comments.reverse();
+}
+
+export async function hasReviewReplies(
+	token: string,
+	number: number,
+	author: string,
+	since: string,
+): Promise<boolean> {
+	let page = 1;
+	while (true) {
+		const response = await githubFetch(
+			`https://api.github.com/repos/${REPO}/issues/${number}/comments?per_page=100&page=${page}&since=${encodeURIComponent(since)}`,
+			{ headers: apiHeaders(token) },
+		);
+		if (!response.ok)
+			throw new Error(`GitHub replies returned ${response.status}`);
+		const comments = await response.json<GitHubIssueComment[]>();
+		if (
+			comments.some(
+				(comment) =>
+					comment.user?.type !== "Bot" &&
+					(comment.user?.login === author ||
+						["OWNER", "MEMBER", "COLLABORATOR"].includes(
+							comment.author_association ?? "",
+						)),
+			)
+		)
+			return true;
+		if (!parseNextLink(response.headers.get("Link"))) return false;
+		page++;
+	}
 }
 
 export async function updateIssueComment(
 	token: string,
 	commentId: number,
 	body: string,
-): Promise<void> {
-	const res = await fetch(
+): Promise<boolean> {
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
 		{
 			method: "PATCH",
@@ -309,11 +352,16 @@ export async function updateIssueComment(
 			body: JSON.stringify({ body }),
 		},
 	);
+	if (res.status === 404) {
+		await res.body?.cancel();
+		return false;
+	}
 	if (!res.ok) {
 		throw new Error(
 			`Failed to update comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
 		);
 	}
+	return true;
 }
 
 /**
@@ -366,7 +414,9 @@ async function fetchComparePages(
 		`https://api.github.com/repos/${REPO}/compare/${encodeRef(base)}...${encodeRef(head)}?per_page=100`;
 
 	while (url) {
-		const res: Response = await fetch(url, { headers: apiHeaders(token) });
+		const res: Response = await githubFetch(url, {
+			headers: apiHeaders(token),
+		});
 		if (res.status === 404) return null;
 		if (!res.ok) {
 			throw new Error(
@@ -428,7 +478,7 @@ export async function addReactionToComment(
 	reaction:
 		"+1" | "-1" | "laugh" | "confused" | "heart" | "hooray" | "rocket" | "eyes",
 ): Promise<number | null> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}/reactions`,
 		{
 			method: "POST",
@@ -446,26 +496,6 @@ export async function addReactionToComment(
 	return data.id;
 }
 
-export async function removeReactionFromComment(
-	token: string,
-	commentId: number,
-	reactionId: number,
-): Promise<void> {
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}/reactions/${reactionId}`,
-		{
-			method: "DELETE",
-			headers: apiHeaders(token),
-		},
-	);
-	// 204 = success, 404 = already gone — both are fine
-	if (!res.ok && res.status !== 404) {
-		throw new Error(
-			`Failed to remove reaction ${reactionId} from comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
-}
-
 /**
  * Check whether `username` is a codeowner in .github/CODEOWNERS on the
  * production branch. Always reads from the production branch so ad-hoc
@@ -481,7 +511,7 @@ export async function isCodeOwner(
 	username: string,
 ): Promise<boolean> {
 	// Fetch CODEOWNERS from the production branch via the GitHub contents API
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/contents/.github/CODEOWNERS?ref=production`,
 		{ headers: apiHeaders(installationToken) },
 	);
@@ -495,9 +525,13 @@ export async function isCodeOwner(
 	// Extract all @mentions from non-comment lines
 	const mentions = new Set<string>();
 	for (const line of content.split("\n")) {
-		const trimmed = line.trim();
+		const trimmed = line.split("#", 1)[0].trim();
 		if (!trimmed || trimmed.startsWith("#")) continue;
-		for (const match of trimmed.matchAll(/@([\w.-]+\/[\w.-]+|[\w.-]+)/g)) {
+		for (const match of trimmed
+			.split(/\s+/)
+			.slice(1)
+			.join(" ")
+			.matchAll(/@([\w.-]+\/[\w.-]+|[\w.-]+)/g)) {
 			mentions.add(match[1]);
 		}
 	}
@@ -506,11 +540,15 @@ export async function isCodeOwner(
 		if (mention.includes("/")) {
 			// Team mention: @org/team — check membership using org token (needs read:org)
 			const [org, team] = mention.split("/");
-			const memberRes = await fetch(
+			const memberRes = await githubFetch(
 				`https://api.github.com/orgs/${org}/teams/${team}/memberships/${username}`,
 				{ headers: apiHeaders(orgToken) },
 			);
-			if (memberRes.ok) return true;
+			if (
+				memberRes.ok &&
+				(await memberRes.json<{ state: string }>()).state === "active"
+			)
+				return true;
 		} else {
 			// Direct user mention
 			if (mention.toLowerCase() === username.toLowerCase()) return true;
@@ -549,7 +587,7 @@ export async function updatePullRequestBranch(
 	updateMethod: "merge" | "rebase",
 	expectedHeadSha?: string,
 ): Promise<UpdateBranchResult> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/update-branch`,
 		{
 			method: "PUT",
@@ -588,9 +626,9 @@ export async function updatePullRequestBranch(
  *
  * **Limitation:** any push to the PR branch while polling (e.g. a concurrent
  * force-push by the author) will also change the head SHA and be treated as
- * completion of the async rebase. This is an accepted race condition — a
+ * completion of the async rebase. The caller must verify base ancestry after the poll; a
  * concurrent push invalidates the rebase anyway, and the subsequent
- * /full-review will run against whatever head SHA is current.
+ * incremental review will run against whatever head SHA is current.
  */
 export async function pollForBranchUpdate(
 	token: string,
@@ -604,7 +642,7 @@ export async function pollForBranchUpdate(
 		try {
 			// Inline the fetch so we can inspect the HTTP status and distinguish
 			// permanent failures (401/403/404) from transient ones (429/5xx/network).
-			const res = await fetch(
+			const res = await githubFetch(
 				`https://api.github.com/repos/${REPO}/pulls/${pullNumber}`,
 				{ headers: apiHeaders(token) },
 			);
@@ -693,7 +731,7 @@ export interface GitRef {
 }
 
 export async function getRef(token: string, branch: string): Promise<GitRef> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodeRef(branch)}`,
 		{ headers: apiHeaders(token) },
 	);
@@ -717,7 +755,7 @@ export async function getGitCommit(
 	token: string,
 	sha: string,
 ): Promise<GitCommit> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/git/commits/${sha}`,
 		{ headers: apiHeaders(token) },
 	);
@@ -752,7 +790,7 @@ export async function getTree(
 	token: string,
 	treeSha: string,
 ): Promise<GitTreeEntry[]> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/git/trees/${treeSha}?recursive=1`,
 		{ headers: apiHeaders(token) },
 	);
@@ -781,11 +819,14 @@ export async function createBlob(
 	token: string,
 	content: string,
 ): Promise<string> {
-	const res = await fetch(`https://api.github.com/repos/${REPO}/git/blobs`, {
-		method: "POST",
-		headers: apiHeaders(token),
-		body: JSON.stringify({ content, encoding: "utf-8" }),
-	});
+	const res = await githubFetch(
+		`https://api.github.com/repos/${REPO}/git/blobs`,
+		{
+			method: "POST",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ content, encoding: "utf-8" }),
+		},
+	);
 	if (!res.ok) {
 		throw new Error(
 			`Failed to create blob (HTTP ${res.status}): ${await res.text()}`,
@@ -814,11 +855,14 @@ export async function createTree(
 	baseTreeSha: string,
 	updates: TreeUpdate[],
 ): Promise<string> {
-	const res = await fetch(`https://api.github.com/repos/${REPO}/git/trees`, {
-		method: "POST",
-		headers: apiHeaders(token),
-		body: JSON.stringify({ base_tree: baseTreeSha, tree: updates }),
-	});
+	const res = await githubFetch(
+		`https://api.github.com/repos/${REPO}/git/trees`,
+		{
+			method: "POST",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ base_tree: baseTreeSha, tree: updates }),
+		},
+	);
 	if (!res.ok) {
 		throw new Error(
 			`Failed to create tree (HTTP ${res.status}): ${await res.text()}`,
@@ -838,11 +882,14 @@ export async function createGitCommit(
 	treeSha: string,
 	parentShas: string[],
 ): Promise<string> {
-	const res = await fetch(`https://api.github.com/repos/${REPO}/git/commits`, {
-		method: "POST",
-		headers: apiHeaders(token),
-		body: JSON.stringify({ message, tree: treeSha, parents: parentShas }),
-	});
+	const res = await githubFetch(
+		`https://api.github.com/repos/${REPO}/git/commits`,
+		{
+			method: "POST",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ message, tree: treeSha, parents: parentShas }),
+		},
+	);
 	if (!res.ok) {
 		throw new Error(
 			`Failed to create commit (HTTP ${res.status}): ${await res.text()}`,
@@ -866,7 +913,7 @@ export async function updateRef(
 	branch: string,
 	sha: string,
 ): Promise<void> {
-	const res = await fetch(
+	const res = await githubFetch(
 		`https://api.github.com/repos/${REPO}/git/refs/heads/${encodeRef(branch)}`,
 		{
 			method: "PATCH",
@@ -918,38 +965,6 @@ export async function compareCommits(
 	}
 
 	return { mergeBaseSha, commits };
-}
-
-export interface CommitPullRequest {
-	number: number;
-	title: string;
-	body: string | null;
-	state: string;
-	html_url: string;
-}
-
-/**
- * Return the pull requests associated with a specific commit SHA.
- * Uses the GitHub commit-pulls API (requires `application/vnd.github+json`).
- * Returns an empty array if the commit has no associated PRs.
- */
-export async function getCommitPullRequests(
-	token: string,
-	commitSha: string,
-): Promise<CommitPullRequest[]> {
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/commits/${commitSha}/pulls`,
-		{ headers: apiHeaders(token) },
-	);
-	if (!res.ok) {
-		// 422 means the commit is not in the repo — return empty rather than throw.
-		if (res.status === 422) return [];
-		throw new Error(
-			`Failed to get PRs for commit ${commitSha} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
-	const data = (await res.json()) as CommitPullRequest[];
-	return data;
 }
 
 export async function verifyGitHubSignature(

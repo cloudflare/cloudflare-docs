@@ -1,15 +1,16 @@
 import { expect } from "vitest";
 import { describeEval, toolCalls } from "vitest-evals";
 import { createFlueAgentHarness } from "./harness";
-import type { StyleGuideFileInput } from "../agents/style-guide-file";
+import { reviewChunkFixture, type ReviewFixture } from "./review-fixture";
 
 const baseUrl = process.env.FLUE_BASE_URL ?? "http://localhost:5173";
 const token = process.env.DOCS_FLUE_INTERNAL_TOKEN;
 
-const harness = createFlueAgentHarness<StyleGuideFileInput>({
+const harness = createFlueAgentHarness<ReviewFixture>({
 	baseUrl,
-	agentName: "style-guide-file",
-	dataKey: "style_guide_file",
+	prepareInput: reviewChunkFixture,
+	agentName: "review-chunk",
+	dataKey: "review",
 	message:
 		"Review the added lines of this file against the style guide and submit your findings.",
 	token,
@@ -71,9 +72,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		expect(linkFinding!.path).toBe("src/content/docs/workers/example.mdx");
 		expect(linkFinding!.line).toBe(42);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("passes on a clean root-relative link", async ({ run }) => {
@@ -95,9 +94,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		// Assert no warnings (the severity that matters); suggestions are noise.
 		const warnings = (findings ?? []).filter((f) => f?.severity === "warning");
 		expect(warnings).toHaveLength(0);
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("does not flag an Oxford comma when the serial comma is already present before final or", async ({
@@ -126,9 +123,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(oxfordFindings).toHaveLength(0);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("flags a missing Oxford comma before final and", async ({ run }) => {
@@ -154,9 +149,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(oxfordFindings.length).toBeGreaterThan(0);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("flags a body H1 heading", async ({ run }) => {
@@ -186,9 +179,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		expect(h1Finding!.path).toBe("src/content/docs/workers/example.mdx");
 		expect(h1Finding!.line).toBe(15);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("flags a raw <img> tag for a content image", async ({ run }) => {
@@ -222,9 +213,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(imgFinding!.line).toBe(50);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("flags a Markdown image using /images/ instead of ~/assets/images/", async ({
@@ -256,9 +245,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		expect(pathFinding.length).toBeGreaterThan(0);
 		expect(pathFinding[0].severity).toBe("warning");
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("flags a reference-style image link with an unresolved ~/ alias", async ({
@@ -294,9 +281,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		expect(refFinding.length).toBeGreaterThan(0);
 		expect(refFinding[0].severity).toBe("warning");
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("does not flag a reference-style image link inside a fenced code block", async ({
@@ -339,9 +324,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(imgFindings).toHaveLength(0);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("passes on correct Markdown image syntax with ~/assets/images/", async ({
@@ -373,9 +356,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(imageWarnings).toHaveLength(0);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("does not flag <img> inside a fenced HTML code block", async ({ run }) => {
@@ -422,9 +403,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(imgFindings).toHaveLength(0);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("flags a barrel-exported component imported via a deep path", async ({
@@ -457,9 +436,7 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		expect(importFinding!.path).toBe("src/content/docs/workers/example.mdx");
 		expect(importFinding!.line).toBe(3);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 
 	it("does not flag a page-specific wrapper component imported via a deep path", async ({
@@ -491,8 +468,6 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(importWarnings).toHaveLength(0);
 
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_style_guide",
-		);
+		expect(toolCalls(result).map((c) => c.name)).toContain("submit_review");
 	});
 });

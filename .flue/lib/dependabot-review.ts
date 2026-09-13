@@ -5,12 +5,6 @@
  * management for the dependabot-review workflow.
  */
 import * as v from "valibot";
-import {
-	getIssueComments,
-	postComment,
-	updateIssueComment,
-	type GitHubIssueComment,
-} from "./github";
 
 // ── Marker ────────────────────────────────────────────────────────────────────
 
@@ -29,7 +23,7 @@ export interface DependabotPackage {
 // ── Schema ────────────────────────────────────────────────────────────────────
 
 export const DependabotReviewResultSchema = v.object({
-	summary: v.string(),
+	summary: v.pipe(v.string(), v.maxLength(2000)),
 	recommendation: v.picklist(["merge", "merge-verify", "investigate"]),
 	packageReviews: v.array(
 		v.object({
@@ -94,112 +88,4 @@ export function parseDependabotPackages(body: string): DependabotPackage[] {
 	}
 
 	return packages;
-}
-
-// ── Comment rendering ─────────────────────────────────────────────────────────
-
-/** Render the final Dependabot review comment from the skill result. */
-export function renderComment(
-	result: DependabotReviewResult,
-	prNumber: number,
-): string {
-	const recLabel = {
-		merge: "✅ Merge",
-		"merge-verify": "✅ Merge + spot-check",
-		investigate: "⚠️ Investigate before merging",
-	}[result.recommendation];
-
-	const impactEmoji: Record<string, string> = {
-		None: "⬜",
-		"Very Low": "🟢",
-		Low: "🟡",
-		Medium: "🟠",
-		High: "🔴",
-	};
-
-	const lines: string[] = [
-		BOT_COMMENT_MARKER,
-		`<!-- pr: ${prNumber} -->`,
-		`<!-- updated-at: ${new Date().toISOString()} -->`,
-		"",
-		"## Dependabot review",
-		"",
-	];
-
-	// Summary table (always visible)
-	lines.push("| Package | Impact | Recommendation |");
-	lines.push("|---------|--------|----------------|");
-	for (const pkg of result.packageReviews) {
-		const emoji = impactEmoji[pkg.impact] ?? "⬜";
-		const pkgRec =
-			pkg.impact === "High" || pkg.impact === "Medium"
-				? "⚠️ Verify"
-				: "✅ Merge";
-		lines.push(
-			`| \`${pkg.name}\` ${pkg.from} → ${pkg.to} | ${emoji} ${pkg.impact} | ${pkgRec} |`,
-		);
-	}
-	lines.push("");
-	lines.push(`**Overall:** ${recLabel}`);
-	if (result.summary) {
-		lines.push("");
-		lines.push(result.summary);
-	}
-	lines.push("");
-
-	// Per-package detail blocks (collapsed)
-	lines.push("<details>");
-	lines.push("<summary>Package details</summary>");
-	lines.push("<br/>");
-	lines.push("");
-	for (const pkg of result.packageReviews) {
-		const emoji = impactEmoji[pkg.impact] ?? "⬜";
-		lines.push(`### \`${pkg.name}\`: ${pkg.from} → ${pkg.to}`);
-		lines.push("");
-		lines.push(`**Type:** ${pkg.type}`);
-		lines.push(`**Dependency type:** ${pkg.dependencyType}`);
-		lines.push("");
-		if (pkg.whatChanged.length > 0) {
-			lines.push("**What changed**");
-			for (const change of pkg.whatChanged) {
-				lines.push(`- ${change}`);
-			}
-			lines.push("");
-		}
-		lines.push("**Usage in this repo**");
-		lines.push(pkg.repoUsage);
-		lines.push("");
-		lines.push(`**Impact:** ${emoji} ${pkg.impact} — ${pkg.impactReason}`);
-		lines.push("");
-		lines.push("---");
-		lines.push("");
-	}
-	lines.push("</details>");
-
-	return lines.join("\n");
-}
-
-// ── GitHub comment helpers ────────────────────────────────────────────────────
-
-/** Find the most recent bot review comment on a PR, or null. */
-export async function findExistingBotComment(
-	token: string,
-	prNumber: number,
-): Promise<GitHubIssueComment | null> {
-	const comments = await getIssueComments(token, prNumber);
-	return comments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ?? null;
-}
-
-/** Create or update the bot review comment on a PR. */
-export async function postOrUpdateComment(
-	token: string,
-	prNumber: number,
-	existing: GitHubIssueComment | null,
-	body: string,
-): Promise<void> {
-	if (existing) {
-		await updateIssueComment(token, existing.id, body);
-	} else {
-		await postComment(token, prNumber, body);
-	}
 }
