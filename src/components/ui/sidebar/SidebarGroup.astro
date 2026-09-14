@@ -74,51 +74,17 @@ const isOpen = Boolean(
 	data-nb-sidebar-group
 	{...attrs}
 >
-	{
-		indexHref ? (
-			<div
-				data-nb-state={isOpen ? "open" : "closed"}
-				data-nb-sidebar-group-label
-				data-nb-active={hasActive ? "" : undefined}
-				data-nb-current={indexIsCurrent ? "" : undefined}
-			>
-				<a
-					href={indexHref}
-					aria-current={indexIsCurrent ? "page" : undefined}
-					data-nb-sidebar-group-link
-				>
-					<span data-nb-sidebar-group-text>
-						{icon && (
-							<Icon
-								name={icon}
-								class="text-muted-foreground h-4 w-4 shrink-0"
-							/>
-						)}
-						<span class="break-words">{label}</span>
-						{badge &&
-							(typeof badge === "string" ? (
-								<Badge text={badge} />
-							) : (
-								<Badge text={badge.text} variant={badge.variant} />
-							))}
-					</span>
-				</a>
-				<CollapsibleTrigger
-					class="w-auto"
-					data-nb-sidebar-group-toggle
-					data-nb-state={isOpen ? "open" : "closed"}
-					aria-expanded={isOpen ? "true" : "false"}
-					aria-label={`Toggle ${label} section`}
-				>
-					<span data-nb-caret aria-hidden="true" />
-				</CollapsibleTrigger>
-			</div>
-		) : (
-			<CollapsibleTrigger
-				data-nb-sidebar-group-label
-				data-nb-active={hasActive ? "" : undefined}
-				data-nb-state={isOpen ? "open" : "closed"}
-				aria-expanded={isOpen ? "true" : "false"}
+	{indexHref ? (
+		<div
+			data-nb-state={isOpen ? "open" : "closed"}
+			data-nb-sidebar-group-label
+			data-nb-active={hasActive ? "" : undefined}
+			data-nb-current={indexIsCurrent ? "" : undefined}
+		>
+			<a
+				href={indexHref}
+				aria-current={indexIsCurrent ? "page" : undefined}
+				data-nb-sidebar-group-link
 			>
 				<span data-nb-sidebar-group-text>
 					{icon && (
@@ -132,44 +98,71 @@ const isOpen = Boolean(
 							<Badge text={badge.text} variant={badge.variant} />
 						))}
 				</span>
+			</a>
+			<CollapsibleTrigger
+				class="w-auto"
+				data-nb-sidebar-group-toggle
+				data-nb-state={isOpen ? "open" : "closed"}
+				aria-expanded={isOpen ? "true" : "false"}
+				aria-label={`Toggle ${label} section`}
+			>
 				<span data-nb-caret aria-hidden="true" />
 			</CollapsibleTrigger>
-		)
-	}
+		</div>
+	) : (
+		<CollapsibleTrigger
+			data-nb-sidebar-group-label
+			data-nb-active={hasActive ? "" : undefined}
+			data-nb-state={isOpen ? "open" : "closed"}
+			aria-expanded={isOpen ? "true" : "false"}
+		>
+			<span data-nb-sidebar-group-text>
+				{icon && (
+					<Icon name={icon} class="text-muted-foreground h-4 w-4 shrink-0" />
+				)}
+				<span class="break-words">{label}</span>
+				{badge &&
+					(typeof badge === "string" ? (
+						<Badge text={badge} />
+					) : (
+						<Badge text={badge.text} variant={badge.variant} />
+					))}
+			</span>
+			<span data-nb-caret aria-hidden="true" />
+		</CollapsibleTrigger>
+	)}
 
 	<CollapsibleContent data-nb-state={isOpen ? "open" : "closed"}>
 		<ul data-nb-sidebar-sublist>
-			{
-				items.map((item) => (
-					<li>
-						{item.type === "group" ? (
-							<Astro.self
-								label={item.label}
-								items={item.children}
-								collapsed={item.collapsed}
-								badge={item.badge}
-								indexHref={item.indexHref}
-								indexIsCurrent={item.indexIsCurrent}
-							/>
-						) : item.type === "external" ? (
-							<SidebarLink
-								label={item.label}
-								href={item.href}
-								badge={item.badge}
-								target="_blank"
-								rel="noopener"
-							/>
-						) : (
-							<SidebarLink
-								label={item.label}
-								href={item.href}
-								isCurrent={item.isCurrent}
-								badge={item.badge}
-							/>
-						)}
-					</li>
-				))
-			}
+			{items.map((item) => (
+				<li>
+					{item.type === "group" ? (
+						<Astro.self
+							label={item.label}
+							items={item.children}
+							collapsed={item.collapsed}
+							badge={item.badge}
+							indexHref={item.indexHref}
+							indexIsCurrent={item.indexIsCurrent}
+						/>
+					) : item.type === "external" ? (
+						<SidebarLink
+							label={item.label}
+							href={item.href}
+							badge={item.badge}
+							target="_blank"
+							rel="noopener"
+						/>
+					) : (
+						<SidebarLink
+							label={item.label}
+							href={item.href}
+							isCurrent={item.isCurrent}
+							badge={item.badge}
+						/>
+					)}
+				</li>
+			))}
 		</ul>
 	</CollapsibleContent>
 </Collapsible>
