@@ -1,9 +1,8 @@
 {
 	"$schema": "../node_modules/wrangler/config-schema.json",
 	"name": "cloudflare-docs-flue",
-	"main": "./cloudflare.ts",
 	"account_id": "b54f07a6c269ecca2fa60f1ae4920c99",
-	"compatibility_date": "2026-09-13",
+	"compatibility_date": "2026-07-28",
 	"compatibility_flags": ["nodejs_compat"],
 	"vars": {
 		"DOCS_FLUE_REVIEW_MODE": "log",
