@@ -1,0 +1,24 @@
+---
+title: Create additional Free accounts
+description: Users can create additional Free accounts through the dashboard and API. Organization Super Administrators can create Free accounts within Enterprise Organizations.
+products:
+  - fundamentals
+date: 2026-09-15
+---
+
+You can create additional Free accounts in the dashboard or with user-owned API tokens and OAuth access tokens. Organization Super Administrators can also create up to five Free accounts within an Enterprise Organization.
+
+API requests use explicit account placement and idempotency. Set the `standalone` field to `true`, omit `unit`, and send exactly one `Idempotency-Key` header. Reuse the same key when retrying the same request.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts" \
+	--request POST \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--header "Idempotency-Key: $IDEMPOTENCY_KEY" \
+	--data '{"name":"Example account","type":"standard","standalone":true}'
+```
+
+User-owned API tokens require the **User Details Read** permission. OAuth access tokens require the `user-details.read` scope. Account-owned API tokens cannot create accounts. API tokens and OAuth access tokens cannot create accounts within an Organization.
+
+For eligibility requirements, authentication, and retry guidance, refer to [Create account](/fundamentals/account/create-account/). For Enterprise Organization behavior, refer to [Create new accounts](/fundamentals/organizations/for-enterprise/#create-new-accounts).
