@@ -546,7 +546,7 @@ main();
 
 ## Cloudflare REST API
 
-Open a terminal or create a shell script to upload a Worker and manage versions and deployments with curl. Workers scripts are JavaScript [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), but we also support [Python Workers](/workers/languages/python/) (open beta) and [Rust Workers](/workers/languages/rust/).
+Open a terminal or create a shell script to upload a Worker and manage versions and deployments with curl. Workers scripts are JavaScript [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), but we also support [Python Workers](/workers/languages/python/) and [Rust Workers](/workers/languages/rust/).
 
 :::note[Warning]
 
@@ -814,7 +814,7 @@ EOF
 
 ### Python Workers
 
-[Python Workers](/workers/languages/python/) (open beta) have their own special `text/x-python` content type and `python_workers` compatibility flag for uploading using the multipart/form-data API.
+[Python Workers](/workers/languages/python/) have their own special `text/x-python` content type and `python_workers` compatibility flag for uploading using the multipart/form-data API.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/scripts/my-hello-world-script \
