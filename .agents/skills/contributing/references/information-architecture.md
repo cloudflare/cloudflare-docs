@@ -17,7 +17,7 @@ Rules:
 
 - Filenames are lowercase with dashes: `get-started.mdx`, `create-api-token.mdx`.
 - Every folder must have an `index.mdx`.
-- Only `.mdx`, `.json`, `.yml`, `.yaml`, `.txt` are allowed under `src/content/`. Images must not go there.
+- Only `.mdx`, `.md`, `.json`, `.yml`, `.yaml`, `.txt` are allowed under `src/content/`. Images must not go there.
 
 ## Follow the canonical product structure
 
