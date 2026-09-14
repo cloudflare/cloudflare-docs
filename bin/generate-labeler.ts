@@ -45,7 +45,7 @@ const changelogAliases: Record<string, string> = {
 };
 
 function firstUrlSegment(url: string): string {
-	if (url.startsWith("http")) {
+	if (url.startsWith("http") && URL.canParse(url)) {
 		url = new URL(url).pathname;
 	}
 	return url.replace(/^\/+|\/+$/g, "").split("/")[0];
@@ -79,7 +79,10 @@ async function changelogToProduct(
 		let entry: Record<string, unknown>;
 		try {
 			entry = await loadYaml(`src/content/directory/${folder}.yaml`);
-		} catch {
+		} catch (error) {
+			if ((error as NodeJS.ErrnoException)?.code !== "ENOENT") {
+				throw error;
+			}
 			console.warn(
 				`No directory entry for changelog folder "${folder}"; skipping.`,
 			);
