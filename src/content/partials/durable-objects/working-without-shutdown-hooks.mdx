@@ -2,27 +2,33 @@
 {}
 ---
 
-import { Badge } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 Durable Objects may shut down at any time due to deployments, inactivity, or runtime decisions. Design your application to write state incrementally rather than relying only on a shutdown notification.
 
-Durable Objects provide a best-effort [`preShutdown()`](/durable-objects/api/base/#preshutdown) handler <Badge text="Beta" variant="caution" size="small" /> that runs before some shutdowns, such as eviction after inactivity or a code update. Use `preShutdown()` to reduce how often you checkpoint state, not to replace incremental writes. Cloudflare cannot guarantee `preShutdown()` runs in every case, and external software should not rely too heavily on it.
+Use the best-effort [`[shutdown]()`](/durable-objects/api/base/#shutdown) hook for clean shutdown logic. The hook runs before idle eviction and code-update resets, but it is not guaranteed to run.
 
-Instead of relying only on a shutdown handler, regularly write to storage to recover gracefully from shutdowns.
+Persist important changes during normal request processing. SQLite storage operations such as `sql.exec()` are synchronous, while key-value storage operations are strongly consistent and complete asynchronously.
 
-For example, if you are processing a stream of data and need to save your progress, write your position to storage as you go rather than waiting to persist it at the end:
+For example, persist each event as it arrives rather than buffering events in memory until shutdown:
 
-```js
-// Good: Write progress as you go
-async processData(data) {
-  data.forEach(async (item, index) => {
-    await this.processItem(item);
-    // Save progress frequently
-    await this.ctx.storage.put("lastProcessedIndex", index);
-  });
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject, shutdown } from "cloudflare:workers";
+
+export class EventRecorder extends DurableObject<Env> {
+	async recordEvent(eventId: string, payload: string) {
+		await this.ctx.storage.put(`event:${eventId}`, payload);
+	}
+
+	async [shutdown](info) {
+		// Record shutdown metadata, but do not rely on this write for progress.
+		await this.ctx.storage.put("lastShutdownReason", info.reason);
+	}
 }
 ```
+</TypeScriptExample>
 
-While this may feel unintuitive, Durable Object storage writes are fast and synchronous, so you can persist state with minimal performance concerns.
+This approach ensures that recorded events survive an unexpected shutdown. Refer to [`[shutdown]()`](/durable-objects/api/base/#shutdown) for hook details.
 
-This approach ensures your Durable Object can safely resume from any point, even if it shuts down unexpectedly. Refer to [`preShutdown`](/durable-objects/api/base/#preshutdown) for details on the best-effort shutdown handler.
+```

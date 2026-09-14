@@ -8,7 +8,7 @@ products:
   - durable-objects
 ---
 
-import { Render, Badge } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 This section describes the lifecycle of a [Durable Object](/durable-objects/concepts/what-are-durable-objects/).
 
@@ -93,8 +93,8 @@ Durable Objects will occasionally shut down and objects are restarted, which wil
 
 When a Durable Object is shut down, the object instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
 
-- **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage.  If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
-- **WebSocket connections**: WebSocket requests are terminated automatically during shutdown. This is so that the new instance can take over the connection as soon as possible.
+- **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage. If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
+- **WebSocket connections**: Standard WebSocket connections are terminated during shutdown. WebSockets accepted with the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/) remain connected when an object is evicted due to inactivity.
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
 
 It is important to ensure that any services using Durable Objects are designed to handle the possibility of a Durable Object being shut down.
@@ -105,15 +105,51 @@ When your Durable Object code is updated, your Worker and Durable Objects are re
 
 ### Shutdown notifications
 
-A Durable Object class can define a [`preShutdown()`](/durable-objects/api/base/#preshutdown) handler <Badge text="Beta" variant="caution" size="small" /> to run best-effort cleanup work, such as a final checkpoint to storage, before a shutdown. Cloudflare invokes `preShutdown()` for some, but not all, of the shutdown causes listed above:
+A Durable Object can define a [`[shutdown]()`](/durable-objects/api/base/#shutdown) hook. Use it for best-effort clean shutdown logic and final checkpoints.
 
-| Shutdown cause | `preShutdown()` invoked |
-| --- | --- |
-| Lack of requests to an object (eviction due to inactivity) | Yes |
-| New Worker deployment with a code update | Yes |
-| Cloudflare updates to the Workers runtime system | No |
-| Workers runtime decisions on where to host objects | No |
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject, shutdown } from "cloudflare:workers";
 
-`preShutdown()` is not guaranteed to run, even for the causes marked "Yes" above — for example, the object may shut down unexpectedly before the handler completes. Design your Durable Object to write important state incrementally, and use `preShutdown()` only to reduce how often you need to checkpoint, not as a substitute for durable writes.
+export class Counter extends DurableObject<Env> {
+	async [shutdown](info) {
+		console.log(`Shutting down: ${info.reason}`);
+		await this.ctx.storage.put("lastShutdown", Date.now());
+	}
+}
+```
+</TypeScriptExample>
 
-<Render file="working-without-shutdown-hooks" product="durable-objects" />
+:::note[Beta]
+Shutdown hooks are in Beta.
+:::
+
+The runtime invokes the hook for these shutdown causes:
+
+| Shutdown cause                                             | `[shutdown]()` invoked |
+| ---------------------------------------------------------- | ---------------------- |
+| Lack of requests to an object (eviction due to inactivity) | Yes                    |
+| New Worker deployment with a code update                   | Yes                    |
+| Runtime process reload or drain                            | No                     |
+| `ctx.abort()`                                              | No                     |
+| Broken input or output gate                                | No                     |
+| CPU or memory limit termination                            | No                     |
+| Supervisor session loss or crash                           | No                     |
+
+For runtime process reloads and drains, in-flight requests retain the existing drain behavior described above, but `[shutdown]()` is not invoked.
+
+`[shutdown]()` is not guaranteed to run. Persist important changes incrementally. SQLite storage operations such as `sql.exec()` are synchronous, while key-value storage operations are strongly consistent and complete asynchronously. Use the hook for best-effort clean shutdown work that differs from regular request handling.
+
+Once the hook starts, the shutdown is committed. The instance receives no new events. A racing request waits for teardown and storage flush, then reaches the successor instance.
+
+During code updates, existing in-flight events may continue while the hook awaits. Account for concurrent changes when checkpointing state.
+
+The runtime awaits the hook for up to 10 seconds. It drains issued storage writes after resolution, rejection, or timeout, then continues shutdown without retrying the hook.
+
+The hook runs before hibernatable WebSockets are hibernated. This ordering permits a final `ws.send()` call. During Beta, the hook runs on root actors, but not actor facets.
+
+The symbol is not exposed on a Durable Object stub, so callers cannot invoke it over RPC. For the complete contract, refer to [`[shutdown]()`](/durable-objects/api/base/#shutdown).
+
+When [Workers tracing](/workers/observability/traces/) is enabled, the shutdown invocation produces a span with a `cloudflare.handler_type` value of `shutdown`.
+
+For an example that combines regular checkpoints with a final shutdown checkpoint, refer to [Design for unexpected shutdowns](/durable-objects/best-practices/rules-of-durable-objects/#design-for-unexpected-shutdowns).

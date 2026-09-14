@@ -1443,54 +1443,53 @@ export class ChatRoom extends DurableObject<Env> {
 
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
 
-Use [`preShutdown()`](/durable-objects/api/base/#preshutdown) to reduce how often you checkpoint buffered state, such as batched agent messages or metrics, not to replace incremental writes:
+Use [`[shutdown]()`](/durable-objects/api/base/#shutdown) for a final best-effort checkpoint. Combine it with relaxed count-based or time-based checkpoints during normal requests.
+
+The following counter accepts the loss of increments since the previous checkpoint after an unexpected shutdown. It checkpoints every 100 increments and again during clean shutdown:
 
 <TypeScriptExample filename="index.ts">
 ```ts
-import { DurableObject } from "cloudflare:workers";
+import { DurableObject, shutdown } from "cloudflare:workers";
 
 export interface Env {
-	AGENT: DurableObjectNamespace<Agent>;
+	COUNTER: DurableObjectNamespace<Counter>;
 }
 
-export class Agent extends DurableObject<Env> {
-	conversation: string[] = [];
-	dirty = false;
+export class Counter extends DurableObject<Env> {
+	private count: number;
 
-	// ✅ Good: Buffer in memory, flush periodically and on shutdown
-	async addMessage(message: string) {
-		this.conversation.push(message);
-		this.dirty = true;
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS counter (id INTEGER PRIMARY KEY, value INTEGER NOT NULL)"
+		);
+		this.ctx.storage.sql.exec(
+			"INSERT OR IGNORE INTO counter (id, value) VALUES (1, 0)"
+		);
+		this.count = this.ctx.storage.sql
+			.exec<{ value: number }>("SELECT value FROM counter WHERE id = 1")
+			.one().value;
+	}
 
-		// Checkpoint on a relaxed interval, not on every message
-		if (!(await this.ctx.storage.getAlarm())) {
-			await this.ctx.storage.setAlarm(Date.now() + 30_000);
+	increment() {
+		this.count++;
+		if (this.count % 100 === 0) {
+			this.checkpoint();
 		}
+		return this.count;
 	}
 
-	async alarm() {
-		await this.checkpoint();
+	async [shutdown](info) {
+		console.log(`Shutting down: ${info.reason}`);
+		this.checkpoint();
+		await this.ctx.storage.put("lastShutdownReason", info.reason);
 	}
 
-	// preShutdown() is best-effort and may not run, so the periodic
-	// alarm above still owns durability. This handler only shortens
-	// the gap before eviction.
-	async preShutdown() {
-		await this.checkpoint();
-	}
-
-	private async checkpoint() {
-		if (this.dirty) {
-			await this.ctx.storage.put("conversation", this.conversation);
-			this.dirty = false;
-		}
-	}
-
-	// 🔴 Bad: Relying on preShutdown() as the only durability mechanism
-	async addMessageRisky(message: string) {
-		this.conversation.push(message);
-		// No periodic checkpoint — data written since the last checkpoint
-		// may be lost if the object shuts down unexpectedly.
+	private checkpoint() {
+		this.ctx.storage.sql.exec(
+			"UPDATE counter SET value = ? WHERE id = 1",
+			this.count
+		);
 	}
 }
 ```
