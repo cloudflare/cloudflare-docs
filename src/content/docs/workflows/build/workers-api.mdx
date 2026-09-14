@@ -328,7 +328,7 @@ Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workf
 
 ## Default instance retention
 
-By default, the state of a finished Workflow instance is retained for the maximum [retention period](/workflows/reference/limits/) available on your account. To retain instances for a shorter period, configure `default_retention` on the Workflow binding in your Wrangler configuration:
+By default, the state of a finished Workflow instance is retained for the maximum [retention period](/workflows/reference/limits/) available on a free account, or a default of 7 days on a Workers Paid plan. To retain instances for a shorter period, configure `default_retention` on the Workflow binding in your Wrangler configuration:
 
 <WranglerConfig>
 
