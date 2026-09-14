@@ -63,7 +63,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 <TipsList>
 
 - Use a **Code Project** for local Cloudflare source files. Use a **Work Project** for research, writing, and document tasks.
-- Use the Cloudflare API MCP server for account resources and domain-specific servers for focused workflows.
+- Use the Cloudflare MCP server for account resources and current developer documentation.
 - Review Bionic diffs and command output before keeping changes.
 
 </TipsList>
@@ -72,7 +72,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <FAQList>
 	<FAQItem question="Should I use the MCP server, Wrangler CLI, or both?">
-		Use both. The Cloudflare API MCP server handles Cloudflare account operations,
+		Use both. The Cloudflare MCP server handles Cloudflare account operations,
 		such as DNS, WAF, R2, and Zero Trust. Wrangler handles local development,
 		deployments, and migrations. In a Code Project, Bionic can run local shell
 		commands, including Wrangler commands.
@@ -88,10 +88,10 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		deployment command for that project.
 	</FAQItem>
 	<FAQItem question="What does Code Mode mean for MCP?">
-		Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints
-		into about 1,000 tokens. Instead of exposing every endpoint as a separate tool,
-		it exposes <code>search()</code> and <code>execute()</code>. Bionic writes
-		JavaScript to call them. For more information, refer to
+		Code Mode is how the Cloudflare MCP server fits all 2,500+ API endpoints
+		into about 1,100 tokens. It exposes <code>docs</code>, <code>search()</code>, and
+		<code>execute()</code>. Bionic writes JavaScript to call the API tools. For more
+		information, refer to
 		<a href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a>.
 	</FAQItem>
 </FAQList>
@@ -104,9 +104,8 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		Remove and re-add the remote MCP server in Bionic, then try connecting again.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Add the Cloudflare documentation MCP server at
-		<code>https://docs.mcp.cloudflare.com/mcp</code> so Bionic can retrieve current
-		documentation. Alternatively, point Bionic to
+		Enable the <a href="https://github.com/cloudflare/mcp" target="_blank" rel="noopener noreferrer">Cloudflare MCP server</a> so Bionic can retrieve current
+		documentation. You can also point Bionic to
 		<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for a directory of
 		all products, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
 		for a product-specific index.

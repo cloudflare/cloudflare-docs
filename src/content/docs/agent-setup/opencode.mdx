@@ -1,6 +1,6 @@
 ---
 title: OpenCode + Cloudflare
-description: "Open-source terminal agent with a rich TUI that works with 75+ LLMs. Made by Anomaly."
+description: "Open-source coding agent available as a terminal interface and desktop app. It works with 75+ LLMs. Made by Anomaly."
 template: splash
 pcx_content_type: how-to
 products:
@@ -9,6 +9,8 @@ products:
 
 import { Steps } from "~/components";
 import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import WorkflowOption from "~/components/agent-setup/WorkflowOption.astro";
+import WorkflowSelector from "~/components/agent-setup/WorkflowSelector.astro";
 import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
 import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
 import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
@@ -24,51 +26,90 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Quick start
 
-<Steps>
-	1. **Install OpenCode**
+<WorkflowSelector urlParam="view">
+	<WorkflowOption label="Terminal" value="terminal">
+		<Steps>
+			1. **Install OpenCode**
 
-		Install OpenCode. For npm, Homebrew, Bun, Scoop, or Windows options, see the [OpenCode install guide](https://opencode.ai/docs/).
+				Install OpenCode with its native installation script.
 
-		```bash
-		curl -fsSL https://opencode.ai/install | bash
-		```
+				```sh
+				curl -fsSL https://opencode.ai/install | bash
+				```
 
-	2. **Install Cloudflare Skills**
+			2. **Install Cloudflare Skills**
 
-		```bash
-		npx skills add https://github.com/cloudflare/skills
-		```
+				```sh
+				npx skills add https://github.com/cloudflare/skills
+				```
 
-	3. **Add Cloudflare MCP servers**
+			3. **Add the Cloudflare MCP server**
 
-		Add MCP servers to `.opencode.jsonc`. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
+				Add the servers to `opencode.json` in your project root. OpenCode uses the same configuration in its terminal and desktop apps.
 
-		```json
-		{
-		  "mcp": {
-		    "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-bindings": { "type": "remote", "url": "https://bindings.mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-builds": { "type": "remote", "url": "https://builds.mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-observability": { "type": "remote", "url": "https://observability.mcp.cloudflare.com/mcp", "enabled": true }
-		  }
-		}
-		```
+				```json
+				{
+				  "$schema": "https://opencode.ai/config.json",
+				  "mcp": {
+				    "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true }
+				  }
+				}
+				```
 
-	4. **Launch OpenCode**
+			4. **Launch OpenCode**
 
-		Start OpenCode from the root of your project, where `wrangler.jsonc` lives (if it already exists).
+				Start OpenCode from your project root.
 
-		```bash
-		opencode
-		```
+				```sh
+				opencode
+				```
 
-	5. **Try a prompt**
+			5. **Try a prompt**
 
-		For example:
+				For example:
 
-		<RandomPrompt />
-</Steps>
+				<RandomPrompt />
+		</Steps>
+	</WorkflowOption>
+	<WorkflowOption label="Desktop app" value="desktop">
+		<Steps>
+			1. **Install OpenCode Desktop**
+
+				Download and install [OpenCode Desktop](https://opencode.ai/download) for your operating system.
+
+			2. **Install Cloudflare Skills**
+
+				In a system terminal, install the Skills before opening your project.
+
+				```sh
+				npx skills add https://github.com/cloudflare/skills
+				```
+
+			3. **Add the Cloudflare MCP server**
+
+				Create `opencode.json` in your project root.
+
+				```json
+				{
+				  "$schema": "https://opencode.ai/config.json",
+				  "mcp": {
+				    "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true }
+				  }
+				}
+				```
+
+			4. **Open your project**
+
+				Open OpenCode Desktop and add your Cloudflare project folder. The app loads the Skills and MCP configuration for the first session.
+
+			5. **Try a prompt**
+
+				For example:
+
+				<RandomPrompt />
+		</Steps>
+	</WorkflowOption>
+</WorkflowSelector>
 
 ## Cloudflare platform access
 
@@ -82,7 +123,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TipsList>
 
-- The Cloudflare API MCP server uses Code Mode — OpenCode writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens.
+- The Cloudflare MCP server uses Code Mode so OpenCode can use JavaScript to reach any of 2,500+ endpoints and current developer documentation in approximately 1,100 tokens.
 - OpenCode supports 75+ LLMs — you can use Cloudflare Workers AI as the model provider for a fully Cloudflare-native workflow.
 - Use OpenCode's plan agent (Tab key) to break down complex Workers projects before coding — pair it with `/cloudflare:build-agent` or `/cloudflare:build-mcp` slash commands.
 
@@ -94,7 +135,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
 		All three. Skills provide persistent Cloudflare expertise so OpenCode knows
 		when to reach for Durable Objects vs KV, how to structure a Workers project,
-		and when to call CLI vs API. The Cloudflare API MCP server handles platform
+		and when to call CLI vs API. The Cloudflare MCP server handles platform
 		operations (DNS, WAF, Zero Trust, R2 buckets). Wrangler handles local dev,
 		deploys, and Workers-specific commands. The bundled `wrangler` Skill teaches
 		OpenCode which to use.
@@ -105,10 +146,18 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	</FAQItem>
 	<FAQItem question="Can I use Workers AI as the model provider in OpenCode?">
 		Yes. OpenCode supports 75+ model providers, including Cloudflare Workers AI.
-		Configure your model in `.opencode.jsonc`.
+		Configure your model in `opencode.json`.
 	</FAQItem>
 	<FAQItem question="Is OpenCode open source?">
-		Yes. OpenCode is fully open source and available at <a href="https://github.com/anomalyco/opencode" target="_blank" rel="noopener noreferrer">github.com/anomalyco/opencode</a>.
+		Yes. OpenCode is fully open source and available at{" "}
+		<a
+			href="https://github.com/anomalyco/opencode"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			github.com/anomalyco/opencode
+		</a>
+		.
 	</FAQItem>
 </FAQList>
 
@@ -116,11 +165,11 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TroubleshootingList>
 	<TroubleshootingItem issue="MCP server connection fails">
-		Verify the MCP configuration in `.opencode.jsonc` uses `"type": "remote"`
+		Verify the MCP configuration in `opencode.json` uses `"type": "remote"`
 		with the correct URL. Run `opencode mcp list` to check connected servers.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
+		Enable the <a href="https://github.com/cloudflare/mcp" target="_blank" rel="noopener noreferrer">Cloudflare MCP server</a> so the agent can fetch
 		current documentation at runtime. If you prefer not to use the MCP server, point
 		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
 		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>

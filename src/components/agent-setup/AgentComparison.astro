@@ -19,8 +19,8 @@ interface ColumnDef {
 const COLUMNS: ColumnDef[] = [
 	{ key: "name", label: "Agent", align: "left" },
 	{ key: "terminal", label: "Terminal" },
-	{ key: "ide", label: "IDE" },
-	{ key: "extension", label: "Extension" },
+	{ key: "desktop", label: "Desktop app" },
+	{ key: "extension", label: "IDE extension" },
 	{ key: "cloud", label: "Cloud" },
 	{ key: "pricing_model", label: "Pricing" },
 	{ key: "model_flexibility", label: "Model" },
@@ -33,7 +33,7 @@ function sortValue(agent: AgentData, key: string): string {
 		case "name":
 			return agent.name.toLowerCase();
 		case "terminal":
-		case "ide":
+		case "desktop":
 		case "extension":
 		case "cloud":
 		case "open_source":
@@ -66,7 +66,7 @@ const rows: RowData[] = sorted.map((agent) => {
 // Capability columns rendered as check / dash indicators, in table order.
 const CAP_COLUMNS: (keyof AgentData["capabilities"])[] = [
 	"terminal",
-	"ide",
+	"desktop",
 	"extension",
 	"cloud",
 ];
@@ -209,7 +209,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" ar
 		</div>
 	</div>
 	<p class="text-muted-foreground mt-3 text-center text-xs">
-		Every agent listed supports Skills and MCP.
+		Every agent listed supports Cloudflare Skills, MCP servers, or both.
 	</p>
 </div>
 

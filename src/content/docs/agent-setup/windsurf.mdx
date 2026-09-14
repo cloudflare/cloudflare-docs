@@ -1,6 +1,6 @@
 ---
 title: Windsurf + Cloudflare
-description: "Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Cognition."
+description: "AI coding desktop app with Cascade context and Flows for multi-step tasks. Made by Cognition."
 template: splash
 pcx_content_type: how-to
 products:
@@ -35,18 +35,14 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		npx skills add https://github.com/cloudflare/skills
 		```
 
-	3. **Configure Cloudflare MCP servers**
+	3. **Configure the Cloudflare MCP server**
 
-		Add the Cloudflare API and docs servers to `~/.codeium/windsurf/mcp_config.json`. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
+		Add the Cloudflare MCP server to `~/.codeium/windsurf/mcp_config.json`. For more information, refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
 
 		```json
 		{
 		  "mcpServers": {
-		    "cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" },
-		    "cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" },
-		    "cloudflare-bindings": { "serverUrl": "https://bindings.mcp.cloudflare.com/mcp" },
-		    "cloudflare-builds": { "serverUrl": "https://builds.mcp.cloudflare.com/mcp" },
-		    "cloudflare-observability": { "serverUrl": "https://observability.mcp.cloudflare.com/mcp" }
+		    "cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" }
 		  }
 		}
 		```
@@ -70,9 +66,8 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TipsList>
 
-- The Cloudflare API MCP server uses Code Mode — Cascade writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens.
+- The Cloudflare MCP server uses Code Mode so Cascade can use JavaScript to reach any of 2,500+ endpoints and current developer documentation in approximately 1,100 tokens.
 - Use `@`-mention to include your `wrangler.jsonc` in Cascade prompts — Cascade uses this to understand your current bindings when generating code.
-- Add the observability MCP server to let Cascade automatically check Workers logs and debug deployments without leaving the IDE.
 
 </TipsList>
 
@@ -88,7 +83,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	</FAQItem>
 	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
 		All three complement each other. Cloudflare Skills teach Cascade the
-		patterns and conventions for Workers development. The Cloudflare API MCP
+		patterns and conventions for Workers development. The Cloudflare MCP
 		server handles platform operations (DNS, WAF, Zero Trust, R2 buckets).
 		Wrangler in Windsurf's integrated terminal covers local dev and deploys.
 		Cascade coordinates between them naturally.
@@ -108,8 +103,8 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		changes. Ensure the MCP server URL ends with `/mcp`.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
-		current documentation at runtime. If you prefer not to use the MCP server, point
+		Enable the <a href="https://github.com/cloudflare/mcp" target="_blank" rel="noopener noreferrer">Cloudflare MCP server</a> so the agent can fetch
+		current documentation at runtime. You can also point
 		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
 		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
 		for a product-specific index.

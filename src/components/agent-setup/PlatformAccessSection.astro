@@ -33,30 +33,14 @@ import SkillsList from "./SkillsList.astro";
 		</PlatformAccessDetails>
 
 		<PlatformAccessDetails header="MCP servers">
-			<p class="text-foreground font-medium">
-				Live access to the Cloudflare API, docs, and observability.
-			</p>
 			<p>
-				MCP servers provide typed tools to call into Cloudflare at runtime.
-				There are two options: <a
-					href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a
-				> — a single server that covers the entire Cloudflare API (2,500+ endpoints
-				in ~1,000 tokens) — or a set of focused, domain-specific servers hosted in
-				the{" "}
+				MCP lets your agent inspect and update Cloudflare resources and search
+				current developer documentation. There are two ways to connect to
+				Cloudflare through MCP:{" "}
 				<a
-					href="https://github.com/cloudflare/mcp-server-cloudflare"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					cloudflare/mcp-server-cloudflare
-				</a>{" "}
-				repo. The full catalog is also in the{" "}
-				<a
-					href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/"
-				>
-					MCP servers for Cloudflare
-				</a>{" "}
-				docs.
+					href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-mcp-server"
+					>Code Mode</a
+				> and individual product servers.
 			</p>
 			<McpServerList />
 		</PlatformAccessDetails>
