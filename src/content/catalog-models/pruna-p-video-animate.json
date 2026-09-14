@@ -12,6 +12,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"@720p (per second)": 0.03,
+		"@1080p (per second)": 0.06,
+		"Default (per second)": 0.03
+	},
 	"examples": [
 		{
 			"name": "Motion Transfer",

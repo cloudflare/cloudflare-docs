@@ -16,6 +16,12 @@
 	"context_length": 64000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 1.87,
+		"Output tokens (per 1M)": 4.68,
+		"Cached input tokens (per 1M)": 0.374,
+		"Cache creation tokens (per 1M)": 1.87
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -381,13 +387,9 @@
 					"type": "string"
 				},
 				"stop_reason": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"usage": {
@@ -397,6 +399,12 @@
 							"type": "number"
 						},
 						"output_tokens": {
+							"type": "number"
+						},
+						"cache_creation_input_tokens": {
+							"type": "number"
+						},
+						"cache_read_input_tokens": {
 							"type": "number"
 						}
 					},
