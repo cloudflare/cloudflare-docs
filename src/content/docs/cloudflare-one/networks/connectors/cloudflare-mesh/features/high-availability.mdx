@@ -7,7 +7,7 @@ products:
 tags:
   - Private networks
 sidebar:
-  order: 5
+  order: 2
 head:
   - tag: title
     content: High availability for Cloudflare Mesh nodes
@@ -15,7 +15,7 @@ head:
 
 import { DashButton, Tabs, TabItem, Render, Details } from "~/components";
 
-For production deployments, you can run multiple replicas of a Mesh node in active-passive mode. All replicas share the same node identity and advertise the same [routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/). If the active replica goes down, Cloudflare automatically promotes a standby replica.
+For production deployments, you can run multiple replicas of a Mesh node in active-passive mode. All replicas share the same node identity and advertise the same [routes](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/). If the active replica goes down, Cloudflare automatically promotes a standby replica.
 
 <Render file="mesh/masque-required" product="cloudflare-one" />
 

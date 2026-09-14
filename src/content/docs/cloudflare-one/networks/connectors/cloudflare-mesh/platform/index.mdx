@@ -1,0 +1,20 @@
+---
+pcx_content_type: reference
+title: Platform
+description: Review Cloudflare Mesh availability and platform requirements.
+products:
+  - mesh
+sidebar:
+  order: 6
+---
+
+Cloudflare Mesh is available in beta to Cloudflare One accounts, including accounts on the Free plan.
+
+## Platform requirements
+
+- Mesh nodes require a [supported Linux distribution](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#linux) or the [`cloudflare/mesh` container image](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/run-mesh-in-containers/).
+- Client devices can use any [operating system supported by the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/).
+- Mesh nodes must use the MASQUE device tunnel protocol. Hostname routes, IPv6 CIDR routes, and high availability do not work with WireGuard.
+- Using Cloudflare Mesh with Cloudflare WAN requires [Unified Routing mode](/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta).
+
+For deployment recommendations and interoperability constraints, refer to [Best practices](/cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/).

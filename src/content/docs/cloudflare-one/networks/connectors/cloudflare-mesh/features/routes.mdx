@@ -7,7 +7,7 @@ products:
 tags:
   - Private networks
 sidebar:
-  order: 4
+  order: 1
 head:
   - tag: title
     content: Configure routes for Cloudflare Mesh
@@ -15,7 +15,7 @@ head:
 
 import { DashButton, Tabs, TabItem, APIRequest, GlossaryTooltip, Render, MeshHostnameRoutingDiagram } from "~/components";
 
-By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips). To make other devices on the subnet behind the node reachable — servers, databases, printers, IoT devices that cannot run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) — add a route to the node. A Mesh node supports two types of routes:
+By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/concepts/#mesh-ips). To make other devices on the subnet behind the node reachable — servers, databases, printers, IoT devices that cannot run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) — add a route to the node. A Mesh node supports two types of routes:
 
 - **CIDR routes** — forward traffic for an IP range — private (for example, `10.0.0.0/24`) or public — through the node.
 - **Hostname routes** — attract traffic for a hostname to the node instead of an IP. This works for a **private** hostname (for example, `wiki.internal.local`), which is useful when the application has an unknown or ephemeral IP, as well as a **public** hostname (for example, `www.example.com`), which routes that hostname's traffic through the node and egresses via the node's public IP.
@@ -187,7 +187,7 @@ For this to work:
 - **Destination**: `10.0.0.0/24` → **Next hop**: `192.168.1.1` (local Mesh node)
 - **Destination**: `100.96.0.0/12` → **Next hop**: `192.168.1.1`
 
-For production site-to-site deployments, consider enabling [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) on each node. HA provides failover for the CIDR routes advertised by a node — if the active replica goes down, Cloudflare promotes a standby so traffic to the subnet continues to flow.
+For production site-to-site deployments, consider enabling [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/) on each node. HA provides failover for the CIDR routes advertised by a node — if the active replica goes down, Cloudflare promotes a standby so traffic to the subnet continues to flow.
 
 ## DNS filtering
 

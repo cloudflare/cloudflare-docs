@@ -157,7 +157,7 @@ sudo warp-cli --accept-tos status
 
 Successful enrollment creates a device in **Zero Trust** > **Team & Resources** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`. Verify that `status` reports `Connected`. A command completion or HTTP redirect alone does not prove registration or connectivity.
 
-The registration and status commands verify enrollment and the connection to Cloudflare. To verify end-to-end traffic, connect to an included destination using the protocol you intend to use. For Cloudflare Mesh, follow [Verify connectivity](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/#2-verify-connectivity).
+The registration and status commands verify enrollment and the connection to Cloudflare. To verify end-to-end traffic, connect to an included destination using the protocol you intend to use. For Cloudflare Mesh, follow [Verify connectivity](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/#2-verify-connectivity).
 
 If the client reports `Registration Missing due to: Does not exist in API`, or the `warp-svc` logs show an HTTP `400` enrollment response, enrollment failed. Confirm that the service token policy uses the _Service Auth_ action, the policy is attached to device enrollment permissions, and the MDM team name and token values are correct. After correcting or confirming the configuration, restart the service and repeat both verification commands:
 

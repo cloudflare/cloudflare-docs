@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: get-started
 description: Get started in Zero Trust networking.
 title: Get started
 products:
@@ -7,7 +7,7 @@ products:
 tags:
   - Private networks
 sidebar:
-  order: 2
+  order: 1
 head:
   - tag: title
     content: Get started with Cloudflare Mesh
@@ -38,10 +38,10 @@ Set up Cloudflare Mesh so your devices and servers can reach each other by priva
   </Details>
 
   :::note[Mesh nodes are optional]
-  Client-to-client connectivity works without any Mesh nodes. Two enrolled laptops can reach each other directly by Mesh IP. Mesh nodes are for running the client in headless mode on a server — either to make that server reachable by its Mesh IP, or to [route traffic to a private subnet](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) behind it. Configure the [required account settings](#required-account-settings) before connecting participants. You can use the dashboard wizard, APIs, or Terraform.
+  Client-to-client connectivity works without any Mesh nodes. Two enrolled laptops can reach each other directly by Mesh IP. Mesh nodes are for running the client in headless mode on a server — either to make that server reachable by its Mesh IP, or to [route traffic to a private subnet](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/) behind it. Configure the [required account settings](#required-account-settings) before connecting participants. You can use the dashboard wizard, APIs, or Terraform.
   :::
 
-Cloudflare Mesh requires that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/networks/connectors/cloudflare-mesh/#protocol-requirement). Hostname routes, IPv6 CIDR routes, and high availability do not work if the device profile uses WireGuard instead.
+Cloudflare Mesh requires that the Mesh node's [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) is configured to use [MASQUE](/cloudflare-one/networks/connectors/cloudflare-mesh/concepts/#protocol-requirement). Hostname routes, IPv6 CIDR routes, and high availability do not work if the device profile uses WireGuard instead.
 
 ## Choose a participant type
 
@@ -50,7 +50,7 @@ Choose an enrollment method based on what you want to connect:
 | Goal | Participant type | Enrollment method | Browser required |
 | --- | --- | --- | --- |
 | Run a service or route a subnet from Linux | [Mesh node](#1-configure-mesh) | Connector token | No |
-| Connect an unattended Windows, macOS, or Linux device | [Headless client device](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/#headless-windows-macos-and-linux-devices) | Service token and managed deployment parameters | No |
+| Connect an unattended Windows, macOS, or Linux device | [Headless client device](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/#headless-windows-macos-and-linux-devices) | Service token and managed deployment parameters | No |
 | Connect a user device with identity | [Client device](#2-connect-a-client-device) | Interactive identity provider enrollment | Yes |
 
 ## 1. Configure Mesh
@@ -258,15 +258,15 @@ If your account already has a Cloudflare One deployment, the setup wizard will n
   - Run `warp-cli connect`.
   - If your private network uses a firewall to restrict Internet traffic, ensure that it allows the [WARP ports and IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
   - Review your [WARP daemon logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/) for information about why the connection is failing.
-- **Client device cannot reach Mesh IPs** — Verify that your Split Tunnel configuration routes the Mesh IP range (`100.96.0.0/12`) through Cloudflare. For details, refer to [Connect client devices](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/).
+- **Client device cannot reach Mesh IPs** — Verify that your Split Tunnel configuration routes the Mesh IP range (`100.96.0.0/12`) through Cloudflare. For details, refer to [Connect client devices](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/).
 - **Windows firewall blocks Mesh traffic** — Windows Firewall blocks inbound traffic from `100.96.0.0/12` by default. Add a firewall rule that allows incoming requests from this range for your desired protocols and ports.
 
 For general client issues, refer to [Troubleshoot the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/).
 
 ## Next steps
 
-- [**Connect client devices**](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/) — Platform-specific installation details, Split Tunnel configuration, and firewall considerations.
-- [**Run in Docker / Kubernetes**](/cloudflare-one/networks/connectors/cloudflare-mesh/containers/) — Deploy a Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD pipelines.
-- [**Add routes**](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) — Make an entire subnet behind your node reachable (databases, printers, other servers).
-- [**Enable high availability**](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) — Run multiple replicas for production resilience.
-- [**Tips and best practices**](/cloudflare-one/networks/connectors/cloudflare-mesh/tips/) — Cloud VPC configuration, updating the client, running alongside cloudflared.
+- [**Connect client devices**](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/) — Platform-specific installation details, Split Tunnel configuration, and firewall considerations.
+- [**Run in Docker / Kubernetes**](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/run-mesh-in-containers/) — Deploy a Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD pipelines.
+- [**Add routes**](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/) — Make an entire subnet behind your node reachable (databases, printers, other servers).
+- [**Enable high availability**](/cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/) — Run multiple replicas for production resilience.
+- [**Tips and best practices**](/cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/) — Cloud VPC configuration, updating the client, running alongside cloudflared.
