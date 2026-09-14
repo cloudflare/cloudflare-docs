@@ -126,7 +126,7 @@ Cloudflare Access will validate the server connection and retrieve a list of pro
 
 MCP server portals can connect to an MCP server available only on your private network. The MCP server URL and its [OAuth protected resource metadata](https://www.rfc-editor.org/rfc/rfc9728.html) can use a private hostname. OAuth authorization server endpoints, such as the authorization and token endpoints, must be accessible on the public Internet. If Cloudflare automatically registers the OAuth client through Dynamic Client Registration (DCR), the registration endpoint must also be accessible on the public Internet.
 
-Before you add the server, connect its network to Cloudflare. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or another [Cloudflare One connector](/cloudflare-one/networks/connectors/). Configure a [private hostname route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) for the server. If the hostname uses an internal DNS server, also configure a [resolver policy](/cloudflare-one/traffic-policies/resolver-policies/).
+Before you add the server, connect its network to Cloudflare. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or another [Cloudflare One connector](/cloudflare-one/networks/connectors/). Configure a [private hostname route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) for the server.
 
 To add the private MCP server:
 
