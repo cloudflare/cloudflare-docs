@@ -33,10 +33,15 @@ the SDK cannot join the meeting on behalf of that participant. As long as a part
 
 ### Token validity and refresh
 
-Participant authentication tokens are time bound and eventually expire. When a token expires, you do not need to create a new participant for the same user in the meeting.
+Participant authentication tokens are JSON Web Tokens (JWTs). The `meetingId` and `participantId` fields scope each token to one participant in one meeting.
 
-Instead, your backend can call the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) API endpoint.
-This endpoint issues a new authentication token for the existing participant record, keeping details such as the participant `id` and preset the same.
+A token becomes valid when issued and expires 100 days later. You cannot configure custom start or expiration dates. If you need scheduled access, enforce the schedule in your own system because RealtimeKit SDKs do not manage scheduling or duration logic.
+
+Your backend can call the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint before or after a token expires. The new token uses the existing participant record, including its participant `id` and preset. Refreshing does not invalidate previously issued tokens. Each token remains valid until its own expiration time.
+
+To revoke all tokens for a participant in a meeting, call the [Delete Participant](/api/resources/realtime_kit/subresources/meetings/methods/delete_meeting_participant/) endpoint. First, use the [Kick Participants](/api/resources/realtime_kit/subresources/active-session/methods/kick_participants/) endpoint to safely remove the participant from any active session.
+
+A participant cannot join a meeting with an expired or revoked token. The RealtimeKit UI and Core SDK report the token as invalid. RealtimeKit rejects the participant before they enter the [meeting stage](/realtime/realtimekit/core/stage-management/), so they are not billed.
 
 ### Custom participant identifier
 

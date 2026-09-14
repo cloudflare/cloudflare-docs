@@ -6,7 +6,7 @@
  * beta → Batch → request formats → partner → realtime → unit price →
  * dashboard pricing link.
  */
-import type { ModelView } from "~/util/models";
+import { modelCurrencyFormatter, type ModelView } from "~/util/models";
 
 interface Props {
 	model: ModelView;
@@ -15,11 +15,6 @@ interface Props {
 const { model } = Astro.props;
 
 const nf = new Intl.NumberFormat("en-US");
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-	style: "currency",
-	currency: "USD",
-	maximumFractionDigits: 10,
-});
 
 // Flatten the property list into a lookup (values are strings).
 const properties: Record<string, any> = {};
@@ -194,7 +189,9 @@ const price = Array.isArray(properties.price)
 						<td>Unit Pricing</td>
 						<td>
 							{price
-								.map((p) => `${currencyFormatter.format(p.price)} ${p.unit}`)
+								.map(
+									(p) => `${modelCurrencyFormatter.format(p.price)} ${p.unit}`,
+								)
 								.join(", ")}
 						</td>
 					</tr>
