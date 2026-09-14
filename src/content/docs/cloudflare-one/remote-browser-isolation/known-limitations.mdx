@@ -28,7 +28,7 @@ Our Network Vector Rendering (NVR) technology sends drawing instructions to the 
 
 ## Single active window
 
-Browser Isolation supports one active window at a time. All tabs and windows in the same local browser (for example, all Chrome tabs) share a single isolated session. Within that session, only the tab or window currently in focus is actively rendered and processed by the remote browser. Background tabs and windows are suspended until you switch to them.
+Browser Isolation supports one active window at a time. All tabs and windows in the same local browser (for example, all Chrome tabs) share a single isolated session. Within that session, the remote browser actively renders and processes only the tab or window currently in focus. Browser Isolation deactivates background tabs and windows until you switch to them.
 
 This means that workflows requiring simultaneous activity across multiple windows are unavailable.
 
