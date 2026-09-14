@@ -40,7 +40,7 @@
 		"lint": "eslint",
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets",
-"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts && tsx bin/fetch-logpush-datasets.ts",
+		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts && tsx bin/fetch-logpush-datasets.ts",
 		"fetch:logpush": "tsx bin/fetch-logpush-datasets.ts --force",
 		"generate:labeler": "tsx bin/generate-labeler.ts"
 	},
