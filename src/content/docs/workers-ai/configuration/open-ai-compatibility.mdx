@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: OpenAI compatible API endpoints
-description: Use the OpenAI SDK to call Workers AI models through compatible API endpoints.
+description: Use the OpenAI SDK with Workers AI Chat Completions, embeddings, and supported GPT-OSS Responses requests.
 sidebar:
   order: 3
 products:
@@ -14,13 +14,13 @@ import { Render } from "~/components";
 
 ## Usage
 
-### Workers AI
+### Chat Completions and embeddings
 
-Normally, Workers AI requires you to specify the model name in the cURL endpoint or within the `env.AI.run` function.
+Most Workers AI text generation models support the OpenAI Chat Completions API. Embedding models support the OpenAI Embeddings API.
 
-With OpenAI compatible endpoints, you can leverage the [openai-node sdk](https://github.com/openai/openai-node) to make calls to Workers AI. This allows you to use Workers AI by simply changing the base URL and the model name.
+Use the [OpenAI JavaScript SDK](https://github.com/openai/openai-node) by setting the Workers AI base URL, API token, and model name.
 
-```js title="OpenAI SDK Example"
+```js title="OpenAI SDK example"
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -28,16 +28,9 @@ const openai = new OpenAI({
 	baseURL: `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/v1`,
 });
 
-// Use chat completions
 const chatCompletion = await openai.chat.completions.create({
 	messages: [{ role: "user", content: "Make some robot noises" }],
 	model: "@cf/meta/llama-3.1-8b-instruct",
-});
-
-// Use responses
-const response = await openai.responses.create({
-	model: "@cf/openai/gpt-oss-120b",
-	input: "Talk to me about open source",
 });
 
 const embeddings = await openai.embeddings.create({
@@ -62,6 +55,24 @@ curl --request POST \
       ]
     }
 '
+```
+
+### Responses API for GPT-OSS
+
+The Responses API is supported only by the [`@cf/openai/gpt-oss-120b`](/workers-ai/models/gpt-oss-120b/) and [`@cf/openai/gpt-oss-20b`](/workers-ai/models/gpt-oss-20b/) models. Responses requests must be non-streaming, only `stream: false` is supported.
+
+```js title="GPT-OSS Responses API example"
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+	apiKey: env.CLOUDFLARE_API_KEY,
+	baseURL: `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/v1`,
+});
+
+const response = await openai.responses.create({
+	model: "@cf/openai/gpt-oss-120b",
+	input: "Talk to me about open source",
+});
 ```
 
 ### AI Gateway
