@@ -24,7 +24,11 @@ A target represents a single resource in your infrastructure (such as a server, 
 If the target IP does not appear in the dropdown, go to **Networking** > **Routes** and confirm that the IP routes through Cloudflare Tunnel.
 :::
 5. In the dropdown menu, select the IP address and [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
-6. Select **Add target**.
+6. (Optional) In **Tags**, add key-value tags to organize your target. For example, use `environment`, `team`, or `region` to group targets and match them later in [target criteria](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#target-criteria).
+   :::note
+   Each tag key can only appear once on a target. For example, a single target can have `environment:production` or `environment:staging`, but not both.
+   :::
+7. Select **Add target**.
 </TabItem>
 <TabItem label="API">
 
@@ -45,8 +49,14 @@ Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero
         virtual_network_id: "c77b744e-acc8-428f-9257-6878c046ed55",
       },
     },
+    tags: {
+      environment: "production",
+      team: "platform",
+    },
   }}
 />
+
+The `tags` field is optional. Use [Resource Tagging](/resource-tagging/) to manage tags. Each key can only appear once per target.
 
 </TabItem>
 <TabItem label="Terraform">
@@ -76,6 +86,8 @@ The following example requires Cloudflare provider version `>=4.45.0`.
 			}
 	}
 	```
+
+	To manage tags with Terraform, use the [`cloudflare_resource_tag`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/resource_tag) resource.
 
 </TabItem>
 </Tabs>
