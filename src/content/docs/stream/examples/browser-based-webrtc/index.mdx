@@ -1,0 +1,301 @@
+---
+summary: Broadcast your webcam to Cloudflare Stream with WHIP and play it back
+  with WHEP, using native browser WebRTC and no third-party libraries.
+pcx_content_type: example
+title: First WebRTC broadcast in the browser
+difficulty: Intermediate
+description:
+  Broadcast your webcam to Cloudflare Stream with WHIP and play it back
+  with WHEP, using native browser WebRTC and no third-party libraries.
+products:
+  - stream
+---
+
+import { DashButton } from "~/components";
+
+This tutorial shows how to broadcast ultra-low latency live video from a browser to Cloudflare Stream using [WHIP](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html) and play it back in a browser using [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). Both the broadcaster and the player use the browser's built-in [WebRTC](/stream/webrtc-beta/) APIs — there are no libraries to install and no external applications.
+
+By the end, you will have a basic HTML page that captures your camera and microphone, streams it to a live input, and plays the same stream back with sub-second latency. You should be able to complete this walkthrough in less than 15 minutes.
+
+WHIP and WHEP are simple HTTP-based signaling protocols for WebRTC. In both cases, this code creates an [`RTCPeerConnection`](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection), generates a local session description (SDP offer), sends that offer to a Cloudflare URL with a single HTTP `POST`, and applies the SDP answer that Cloudflare returns. Because the whole exchange is one request and response, you do not need a signaling server of your own.
+
+### Before you start
+
+To follow this tutorial, you will need:
+
+- Any of the following, so you can create a live input:
+  - A paid Stream subscription.
+  - A Pro or Business zone plan — these include 100 minutes of video storage and 10,000 minutes of video delivery.
+  - An enterprise contract with Stream enabled.
+- A modern browser with a camera and microphone.
+- To serve your page over `https` or from `localhost`.
+	- _Why?_ Browsers only allow [`getUserMedia()`](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) in a [secure context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts). Opening an HTML file directly with a `file://` URL will _not_ work.
+	- Deploy to Cloudflare [Workers](/workers/) or [Pages](/pages/) to get started quickly, for free.
+
+## 1. Create a live input
+
+Every broadcast targets a live input. Create one using either option:
+
+- Use the **Live inputs** page of the Cloudflare dashboard, then look under the Broadcast and Playback tabs to get the WebRTC URLs.
+
+  <DashButton url="/?to=/:account/stream/inputs" />
+
+- Make a `POST` request to the [`/live_inputs` API endpoint](/api/resources/stream/subresources/live_inputs/methods/create/).
+
+The response includes two URLs you will use in this tutorial:
+
+```json title="API response from a POST request to /live_inputs" {5,8}
+{
+  "uid": "1a553f11a88915d093d45eda660d2f8c",
+  ...
+  "webRTC": {
+    "url": "https://customer-<CODE>.cloudflarestream.com/<SECRET>/webRTC/publish"
+  },
+  "webRTCPlayback": {
+    "url": "https://customer-<CODE>.cloudflarestream.com/<INPUT_UID>/webRTC/play"
+  },
+  ...
+}
+```
+
+- `webRTC.url` is the **WHIP** endpoint you broadcast to. _The broadcast secret is part of this URL,_ so treat it like a stream key and share it only with the person broadcasting.
+- `webRTCPlayback.url` is the **WHEP** endpoint viewers play from, unless you have enabled signed URLs on the input (not covered here).
+
+Copy both URLs. You will paste them into the code below.
+
+## 2. Broadcast with WHIP
+
+This broadcast script captures local media, adds it to an `RTCPeerConnection` as send-only tracks, and posts the resulting SDP offer to the WHIP URL.
+
+Starting with a basic HTML page, add a `<video>` element to preview the local camera:
+
+```html
+<video id="broadcast-preview" autoplay muted playsinline></video>
+```
+
+Then add this script to broadcast:
+
+```javascript title="broadcast.js"
+// Paste the webRTC.url value from your live input.
+const WHIP_URL = "<WHIP_URL_FROM_YOUR_LIVE_INPUT>";
+
+async function startBroadcast() {
+	// 1. Capture the camera and microphone.
+	const media = await navigator.mediaDevices.getUserMedia({
+		video: true,
+		audio: true,
+	});
+	document.getElementById("broadcast-preview").srcObject = media;
+
+	// 2. Create the peer connection and add each track as send-only.
+	const pc = new RTCPeerConnection();
+	media.getTracks().forEach((track) => {
+		pc.addTransceiver(track, { direction: "sendonly" });
+	});
+
+	// 3. Create the SDP offer and set it as the local description.
+	const offer = await pc.createOffer();
+	await pc.setLocalDescription(offer);
+
+	// 4. POST the offer to the WHIP endpoint.
+	const response = await fetch(WHIP_URL, {
+		method: "POST",
+		headers: { "Content-Type": "application/sdp" },
+		body: offer.sdp,
+	});
+	if (!response.ok) {
+		throw new Error(`WHIP request failed: ${response.status}`);
+	}
+
+	// 5. Apply the SDP answer returned by Cloudflare.
+	const answer = await response.text();
+	await pc.setRemoteDescription({ type: "answer", sdp: answer });
+
+	// The Location header identifies this session, used to stop it later.
+	const sessionUrl = new URL(
+		response.headers.get("Location"),
+		WHIP_URL,
+	).toString();
+
+	return { pc, sessionUrl };
+}
+
+startBroadcast().catch(console.error);
+```
+
+Once you call `startBroadcast()` and grant camera and microphone permission, the browser negotiates a connection and begins sending live video and audio to Cloudflare over WebRTC. You do not need to select a codec — the browser will negotiate a [supported codec](/stream/webrtc-beta/#supported-codecs) automatically.
+
+This script does not cover selecting between multiple camera or audio sources and will use the default provided by the browser.
+
+## 3. Play back with WHEP
+
+The player script is the reverse of the broadcaster. Instead of adding local tracks, it adds receive-only transceivers, posts an offer to the WHEP URL, and attaches the incoming media to a `<video>` element.
+
+Starting with a basic HTML page, add a `<video>` element for playback:
+
+```html
+<video id="playback-video" autoplay playsinline controls></video>
+```
+
+Then add this script to play:
+
+```javascript title="playback.js"
+// Paste the webRTCPlayback.url value from your live input.
+const WHEP_URL = "<WHEP_URL_FROM_YOUR_LIVE_INPUT>";
+
+async function startPlayback() {
+	const pc = new RTCPeerConnection();
+
+	// 1. Ask to receive one audio track and one video track.
+	pc.addTransceiver("video", { direction: "recvonly" });
+	pc.addTransceiver("audio", { direction: "recvonly" });
+
+	// 2. Attach incoming media to the video element as it arrives.
+	const stream = new MediaStream();
+	document.getElementById("playback-video").srcObject = stream;
+	pc.ontrack = (event) => stream.addTrack(event.track);
+
+	// 3. Create the SDP offer and set it as the local description.
+	const offer = await pc.createOffer();
+	await pc.setLocalDescription(offer);
+
+	// 4. POST the offer to the WHEP endpoint.
+	const response = await fetch(WHEP_URL, {
+		method: "POST",
+		headers: { "Content-Type": "application/sdp" },
+		body: offer.sdp,
+	});
+	if (!response.ok) {
+		throw new Error(`WHEP request failed: ${response.status}`);
+	}
+
+	// 5. Apply the SDP answer returned by Cloudflare.
+	const answer = await response.text();
+	await pc.setRemoteDescription({ type: "answer", sdp: answer });
+
+	const sessionUrl = new URL(
+		response.headers.get("Location"),
+		WHEP_URL,
+	).toString();
+
+	return { pc, sessionUrl };
+}
+
+startPlayback().catch(console.error);
+```
+
+While the broadcaster is live, the player connects and shows the stream with less than 500 milliseconds of latency.
+
+## 4. Stop the broadcast
+
+WebRTC sessions end automatically when the page closes or the connection drops, but you should end them explicitly when the user is done. Send an HTTP `DELETE` to the session URL from the `Location` header, then close the peer connection:
+
+```javascript title="stop.js"
+async function stop({ pc, sessionUrl }) {
+	if (sessionUrl) {
+		await fetch(sessionUrl, { method: "DELETE" });
+	}
+	pc.close();
+}
+```
+
+This applies to both WHIP and WHEP sessions — pass the object returned by `startBroadcast()` or `startPlayback()`.
+
+## 5. Full working example
+
+The following single file combines everything above. Replace the two placeholder URLs with the `webRTC.url` and `webRTCPlayback.url` values from your live input. Then serve the file over `https` (with Workers or Pages) or `localhost` and open it in a browser.
+
+```html title="index.html"
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Cloudflare Stream WHIP/WHEP example</title>
+	</head>
+	<body>
+		<h2>Broadcast (WHIP)</h2>
+		<video id="broadcast-preview" autoplay muted playsinline></video>
+		<button id="broadcast-btn">Start broadcasting</button>
+
+		<h2>Playback (WHEP)</h2>
+		<video id="playback-video" autoplay playsinline controls></video>
+		<button id="playback-btn">Start playback</button>
+
+		<script type="module">
+			const WHIP_URL = "<WHIP_URL_FROM_YOUR_LIVE_INPUT>";
+			const WHEP_URL = "<WHEP_URL_FROM_YOUR_LIVE_INPUT>";
+
+			async function negotiate(pc, url) {
+				const offer = await pc.createOffer();
+				await pc.setLocalDescription(offer);
+
+				const response = await fetch(url, {
+					method: "POST",
+					headers: { "Content-Type": "application/sdp" },
+					body: offer.sdp,
+				});
+				if (!response.ok) {
+					throw new Error(`Request failed: ${response.status}`);
+				}
+
+				const answer = await response.text();
+				await pc.setRemoteDescription({ type: "answer", sdp: answer });
+				return new URL(response.headers.get("Location"), url).toString();
+			}
+
+			document
+				.getElementById("broadcast-btn")
+				.addEventListener("click", async () => {
+					const media = await navigator.mediaDevices.getUserMedia({
+						video: true,
+						audio: true,
+					});
+					document.getElementById("broadcast-preview").srcObject = media;
+
+					const pc = new RTCPeerConnection();
+					media
+						.getTracks()
+						.forEach((track) =>
+							pc.addTransceiver(track, { direction: "sendonly" }),
+						);
+
+					await negotiate(pc, WHIP_URL);
+				});
+
+			document
+				.getElementById("playback-btn")
+				.addEventListener("click", async () => {
+					const pc = new RTCPeerConnection();
+					pc.addTransceiver("video", { direction: "recvonly" });
+					pc.addTransceiver("audio", { direction: "recvonly" });
+
+					const stream = new MediaStream();
+					document.getElementById("playback-video").srcObject = stream;
+					pc.ontrack = (event) => stream.addTrack(event.track);
+
+					await negotiate(pc, WHEP_URL);
+				});
+		</script>
+	</body>
+</html>
+```
+
+## Debugging
+
+If a broadcast or playback session does not connect, your browser's built-in WebRTC tools show the SDP exchange and ICE connection state:
+
+- **Chrome**: Navigate to `chrome://webrtc-internals` to view detailed logs and graphs.
+- **Firefox**: Navigate to `about:webrtc` to view information about WebRTC sessions.
+- **Safari**: From the inspector, open the settings tab (cogwheel icon), and set WebRTC logging to "Verbose" in the dropdown menu.
+
+Common issues:
+
+- **`getUserMedia` throws an error or returns nothing** — confirm the page is served securely and that you granted camera and microphone permission.
+- **The `POST` fails** — confirm you pasted the correct URL. Use `webRTC.url` for broadcasting and `webRTCPlayback.url` for playback.
+- **Playback stays black** — confirm a broadcaster is actively live on the same input and that signed URLs are not enabled.
+
+## Next steps
+
+- Review the [WebRTC reference](/stream/webrtc-beta/) for supported codecs, protocol conformance, and limitations.
+- Broadcast from other software with the [OBS and FFmpeg instructions](/stream/webrtc-beta/#step-2-go-live-using-whip).
+- Use a maintained [WHIP or WHEP client library](/stream/webrtc-beta/#supported-whip-and-whep-clients) instead of writing signaling yourself.

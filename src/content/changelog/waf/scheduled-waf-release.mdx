@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-09-01
-description: WAF managed ruleset changes scheduled for 2026-09-01
-date: 2026-08-25
+title: WAF Release - Scheduled changes for 2026-09-15
+description: WAF managed ruleset changes scheduled for 2026-09-15
+date: 2026-09-08
 publish_future_dated_entry: true
 ---
 
@@ -21,14 +21,40 @@ import { RuleID } from "~/components";
 	</thead>
 	<tbody>
 		<tr>
-			<td>2026-08-25</td>
-			<td>2026-09-01</td>
+			<td>2026-09-08</td>
+			<td>2026-09-15</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="d2d75b2f0614405f9fab0354bcfa0966" />
+				<RuleID id="b2170b7b1a2c4b8eba0b498eca453d31" />
 			</td>
-			<td>SQLi - WHERE Comparison With WITH Clause</td>
+			<td>SSRF - Cloud - 3</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>2026-09-08</td>
+			<td>2026-09-15</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="02c818297e6d42aaa55e67f5e540f17f" />
+			</td>
+			<td>Version Control - Information Disclosure - Beta</td>
+			<td>
+				This rule will be merged into the original rule "Version Control - Information Disclosure" (ID:{" "}<RuleID id="23548ee2b36547a1be09bb2c0550c529" />).
+			</td>
+		</tr>
+		<tr>
+			<td>2026-09-08</td>
+			<td>2026-09-15</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="93793848937f4f988f1dfdabba458b4b" />
+			</td>
+			<td>Command Injection - Generic 10</td>
 			<td>
 				This is a new detection.
 			</td>

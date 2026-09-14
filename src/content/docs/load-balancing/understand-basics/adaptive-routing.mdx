@@ -22,6 +22,8 @@ When there are no healthy endpoints in the same pool, failover across pools exte
 When using [geo-steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/), failover across pools only considers pools within the same geographic grouping. If your NA pool becomes unhealthy, traffic will **not** automatically fail over to your EU pool — it will go to the global fallback pool instead.
 
 To enable cross-region failover, include the desired fallback pool as an additional pool within each region's pool list.
+
+Alternatively, [pool sets](/load-balancing/understand-basics/traffic-steering/pool-sets/) accept a fallback pool for each location, so traffic that exhausts the pools for one location fails over to a pool you choose for that location instead of the global fallback pool.
 :::
 
 ### Enable failover across pools

@@ -17,9 +17,9 @@ import {
 	getEntry,
 	type CollectionEntry,
 } from "astro:content";
-import { config } from "virtual:nimbus/config";
 import { entryToString } from "~/util/container";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
+import { absolutizeUrls } from "~/util/rss";
 import { sub } from "date-fns";
 
 export const slugifyArea = (value: string) =>
@@ -94,9 +94,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				publish_future_dated_entry: false,
 			},
 			rendered: {
-				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
-					async: false,
-				}),
+				html: renderMarkdown([prefix, releaseNotes].join("\n\n")),
 			},
 		};
 	});
@@ -164,18 +162,6 @@ export const changelogProductIds: string[] = [
 		),
 	),
 ];
-
-const SITE_ORIGIN = new URL(config.site).origin;
-
-// Rewrite root-relative URLs (href="/..", src="/..") to absolute so feed
-// readers resolve them. Leaves protocol-relative (`//`) and absolute URLs
-// untouched.
-function absolutizeUrls(html: string): string {
-	return html.replace(
-		/\b(href|src)="\/(?!\/)/g,
-		(_match, attr) => `${attr}="${SITE_ORIGIN}/`,
-	);
-}
 
 type GetRSSItemsOptions = {
 	notes: Array<CollectionEntry<"changelog">>;
