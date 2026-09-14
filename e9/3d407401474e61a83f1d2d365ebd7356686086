@@ -1,0 +1,19 @@
+src/content/docs/hyperdrive/concepts/dynamic-hyperdrive.mdx
+  s_9b5466968404f5::t_60d8eccf5f0861 134,147-152,182,246,301
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e93d407401474e61a83f1d2d365ebd7356686086",
+  "prompts": {},
+  "sessions": {
+    "s_9b5466968404f5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fe5bce0e3ffepUf8XyWCdAU3e4",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

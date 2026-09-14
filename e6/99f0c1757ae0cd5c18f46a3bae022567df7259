@@ -1,0 +1,33 @@
+src/components/PreviewsResourcesDiagram.astro
+  s_ffa10e044ef21c::t_3507231978a283 61,69,86,91,113,121,136,144,159,168,175-176,185-186
+src/components/WorkerPreviewsAgentPrompt.astro
+  s_ffa10e044ef21c::t_df3e98393f1d18 2,28
+src/content/docs/workers/previews/automation-examples.mdx
+  s_ffa10e044ef21c::t_d0a2629098af16 3-4,11,13,17,21,24,29,31,33,38,45-48,51,53,55-67,70-100,102-139,150-151,157,159,161,163-167,169-177,180,193,195
+src/content/docs/workers/previews/configuration.mdx
+  s_ffa10e044ef21c::t_3be451f673a0ef 17-18,31-32,53,66,68,70-84,86,88,90,96-98,101-108,116-130
+src/content/docs/workers/previews/custom-domains.mdx
+  s_ffa10e044ef21c::t_c5f63a94459b32 13,18,20,24-26,29,42-44,46-50,54-56,58,64-66,86-90,93-113,115-124,127-130,136
+src/content/docs/workers/previews/get-started.mdx
+  s_ffa10e044ef21c::t_82f1f1c9139854 4,11-17,19,21,23-27,33,48,56,71,78,95,97,99,103-104,111-114,119,124-127,129,133,137-173,178-179
+src/content/docs/workers/wrangler/commands/workers.mdx
+  s_ffa10e044ef21c::t_6968cd14cfe1ff 245,263,266,269-276,278-283,285-290,302,306,310,314,318,322,326,330,334
+src/content/docs/workers/wrangler/environments.mdx
+  s_ffa10e044ef21c::t_303f76b3e7e896 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e699f0c1757ae0cd5c18f46a3bae022567df7259",
+  "prompts": {},
+  "sessions": {
+    "s_ffa10e044ef21c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_faadd2415ffewU8wnnf9vSaek1",
+        "model": "gpt-5.5"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}
