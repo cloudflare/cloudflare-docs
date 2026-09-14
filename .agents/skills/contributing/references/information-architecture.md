@@ -56,7 +56,7 @@ After editing, run:
 pnpm exec tsm bin/validate-redirects.ts
 ```
 
-Adding redirects for renamed/moved files is also a documentation-checklist item on the PR (see the `pr` skill).
+Adding redirects for renamed/moved files is also a documentation-checklist item on the pull request or merge request (see the `pr-mr` skill).
 
 ## New product
 

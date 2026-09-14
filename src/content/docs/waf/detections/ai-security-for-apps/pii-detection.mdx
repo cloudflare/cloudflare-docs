@@ -14,10 +14,10 @@ import { Details } from "~/components";
 
 AI Security for Apps (formerly Firewall for AI) can detect personally identifiable information (PII) in incoming LLM prompts. There are two approaches to PII detection, and you can use them together for layered protection:
 
-- [Fuzzy detection (AI-powered)](#fuzzy-pii-detection) — AI Security for Apps uses an AI model to identify common PII types in the prompt content. This approach catches PII even when it appears in natural language or unexpected formats.
+- [AI-based detection](#ai-based-pii-detection) — AI Security for Apps uses an AI model to identify common PII types in the prompt content. This approach catches PII even when it appears in natural language or unexpected formats.
 - [Exact detection (regex)](#exact-pii-detection-regex) — You write a WAF custom rule with a regular expression on the raw request body. This approach is ideal for organization-specific identifiers with a known, predictable format.
 
-## Fuzzy PII detection
+## AI-based PII detection
 
 When AI Security for Apps is enabled and a request arrives at a `cf-llm` labeled endpoint, it scans the prompt for PII and populates two fields:
 
@@ -59,7 +59,7 @@ The `cf.llm.prompt.pii_detected` field returns `true` when any PII category is d
 
 Instead, build rules against `cf.llm.prompt.pii_categories` and list only the categories that matter for your use case. For example, a customer support chatbot may need to block credit card numbers and SSNs but can safely ignore person names and dates. Start with the narrowest set of categories, monitor matches in [Security Analytics](/waf/analytics/security-analytics/), and expand only as needed.
 
-### Example rules — fuzzy detection
+### Example rules — AI-based detection
 
 #### Block any request containing PII
 
@@ -101,7 +101,7 @@ Create two [custom rules](/waf/custom-rules/create-dashboard/):
 
 If you need to detect **custom PII formats** specific to your organization — such as internal employee IDs, patient record numbers, or proprietary account identifiers — you can create a WAF [custom rule](/waf/custom-rules/) using a regex match on the raw body ([`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/) field).
 
-This approach complements fuzzy detection by covering formats the AI model does not natively recognize.
+This approach complements AI-based detection by matching predefined patterns, including organization-specific identifiers.
 
 ### Example: Detect employee IDs
 
@@ -154,7 +154,7 @@ Expression when using the editor:<br/>
 
 ## Combine both approaches
 
-You can use fuzzy and exact detection together for layered protection:
+You can use AI-based and exact detection together for layered protection:
 
 `(cf.llm.prompt.pii_detected or http.request.body.raw matches "EMP-[0-9]{6}")`
 

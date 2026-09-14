@@ -39,6 +39,7 @@ const RAW_IMG_SHA = "eval-style-raw-img";
 const IMAGES_PATH_SHA = "eval-style-images-path";
 const CORRECT_IMG_SHA = "eval-style-correct-img";
 const FENCED_IMG_SHA = "eval-style-fenced-img";
+const REF_IMG_SHA = "eval-style-ref-img";
 
 describeEval("style-guide reviewer", { harness }, (it) => {
 	it("flags a full URL for an internal link", async ({ run }) => {
@@ -254,6 +255,89 @@ describeEval("style-guide reviewer", { harness }, (it) => {
 		);
 		expect(pathFinding.length).toBeGreaterThan(0);
 		expect(pathFinding[0].severity).toBe("warning");
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("flags a reference-style image link with an unresolved ~/ alias", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: REF_IMG_SHA,
+			filename: "src/content/docs/cloudflare-challenges/precursor.mdx",
+			addedLines: [
+				{
+					line: 8,
+					content: "![Precursor mode selector][1]",
+				},
+				{
+					line: 10,
+					content:
+						"[1]: ~/assets/images/cloudflare-challenges/precursor-rules.png",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const refFinding = (findings ?? []).filter(
+			(f) =>
+				f.rule?.toLowerCase().includes("image") ||
+				f.rule?.toLowerCase().includes("reference") ||
+				f.rule?.toLowerCase().includes("inline") ||
+				f.evidence?.includes("[1]"),
+		);
+		expect(refFinding.length).toBeGreaterThan(0);
+		expect(refFinding[0].severity).toBe("warning");
+
+		expect(toolCalls(result).map((c) => c.name)).toContain(
+			"submit_style_guide",
+		);
+	});
+
+	it("does not flag a reference-style image link inside a fenced code block", async ({
+		run,
+	}) => {
+		const result = await run({
+			pullRequest: PR,
+			headSha: HEAD_SHA,
+			filename: "src/content/docs/workers/example.mdx",
+			addedLines: [
+				{
+					line: 7,
+					content: "```mdx",
+				},
+				{
+					line: 8,
+					content: "![Example][1]",
+				},
+				{
+					line: 9,
+					content: "[1]: ~/assets/images/example/example.png",
+				},
+				{
+					line: 10,
+					content: "```",
+				},
+			],
+		});
+
+		const findings = (result.output as { findings?: Finding[] })?.findings;
+		expect(findings).toBeDefined();
+
+		const imgFindings = (findings ?? []).filter(
+			(f) =>
+				f.severity === "warning" &&
+				(f.rule?.toLowerCase().includes("img") ||
+					f.rule?.toLowerCase().includes("image") ||
+					f.rule?.toLowerCase().includes("reference") ||
+					f.evidence?.includes("[1]")),
+		);
+		expect(imgFindings).toHaveLength(0);
 
 		expect(toolCalls(result).map((c) => c.name)).toContain(
 			"submit_style_guide",

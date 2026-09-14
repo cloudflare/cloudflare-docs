@@ -17,6 +17,8 @@ import { Render, RuleID } from "~/components";
 
 <Render file="waf-managed-rules-intro" product="waf" />
 
+[Attack Signature Detection](/waf/detections/attack-signature-detection/#compare-attack-signature-detection-and-managed-rules) uses the same signatures as Cloudflare Managed Rules. It records match metadata without applying an action by itself.
+
 ## Available managed rulesets
 
 - [**Cloudflare Managed Ruleset**](/waf/managed-rules/reference/cloudflare-managed-ruleset/): Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. It covers known attack techniques and zero-day vulnerabilities (newly discovered flaws with no available patch). The ruleset is updated frequently to address new threats and reduce false positives (legitimate requests incorrectly flagged).<br/>Ruleset ID: <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />
@@ -55,7 +57,7 @@ The managed rulesets you can deploy depend on your Cloudflare plan.
 
 ## Interaction with other app security features
 
-<Render file="app-security-interoperability" product="waf" />
+<Render file="app-security-interoperability" product="waf" params={{ botsFeatureName: "Super Bot Fight Mode" }} />
 
 ## Important remarks
 
@@ -88,4 +90,3 @@ This means a rule with a terminal action (such as Block or Managed Challenge) in
 ### WAF exceptions
 
 WAF exceptions (skip rules) are rules with a `skip` action deployed to the `http_request_firewall_managed` phase entry-point ruleset. They are evaluated in list order within the entry-point ruleset — a skip rule only bypasses `execute` rules listed after it. Place exceptions before the managed ruleset execute rules they are intended to skip. For more information, refer to [WAF exceptions](/waf/managed-rules/waf-exceptions/).
-

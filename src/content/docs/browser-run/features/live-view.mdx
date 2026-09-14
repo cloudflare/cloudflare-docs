@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Live View
-description: View and interact with remote Browser Run sessions in real time using the hosted DevTools UI or native Chrome DevTools.
+description: Watch and control active Browser Run sessions from the dashboard, a generated Live View URL, or Chrome DevTools.
 sidebar:
   order: 1
   badge: Beta
@@ -9,15 +9,17 @@ products:
   - browser-run
 ---
 
-import { CURL, DashButton } from "~/components";
+import { CURL, DashButton, TypeScriptExample } from "~/components";
 
 Live View lets you see and interact with a remote Browser Run session in real time. This is useful for debugging automation scripts, monitoring what a browser is doing, or manually stepping in when a task requires human intervention (see [Human in the Loop](/browser-run/features/human-in-the-loop/)).
 
-Live View is available for any [Browser Session](/browser-run/#integration-methods), including sessions created with [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or the [CDP](/browser-run/cdp/) endpoints.
+Live View is available for any [Browser Session](/browser-run/#integration-methods), including sessions created with [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/) endpoints.
 
-## How to access Live View
+A browser session is one remote Chrome instance. A session can contain multiple tabs. CDP calls each debuggable item a target, and a page target usually represents one browser tab. Live View connects to a page target.
 
-There are three ways to access Live View: through the Cloudflare dashboard, via the hosted user interface (UI) at `live.browser.run`, or using native Chrome DevTools.
+## Access Live View
+
+Open Live View from the Cloudflare dashboard or with a generated `devtoolsFrontendUrl`. A generated URL opens Cloudflare's hosted interface in any browser. Chrome users can instead open the connection in Chrome DevTools.
 
 ### Cloudflare dashboard
 
@@ -29,35 +31,37 @@ In the Cloudflare dashboard, go to the **Browser Run** page and select the **Liv
 Sessions created from the dashboard default to a five-minute inactivity timeout (`keep_alive`), compared to the one-minute default when creating sessions through the API. You can adjust the timeout up to 10 minutes — in the dashboard, use the timeout field when creating a session, or in the API and Workers Bindings, use the [`keep_alive` option](/browser-run/puppeteer/#keep-alive).
 :::
 
-### Hosted UI (any browser)
+### Generated URL (any browser)
 
-When you create a session or list targets through the [CDP](/browser-run/cdp/) endpoints, the API response includes a `devtoolsFrontendUrl` for each target (tab). Open this URL in any browser to load the DevTools UI hosted at `live.browser.run`, which streams the remote session to your browser.
+When you create a session with `targets=true` or list a session's targets, the API response includes a `devtoolsFrontendUrl` for each page target. Open this URL in any browser to watch or control that tab through Cloudflare's hosted interface. The generated URL uses `live.browser.run`; you do not visit that hostname directly.
 
-The hosted UI supports two viewing modes, controlled by the `mode` parameter in the URL:
+The hosted UI supports three viewing modes, controlled by the `mode` parameter in the URL:
 
-| Mode      | URL pattern                                              | Description                                                 |
-| --------- | -------------------------------------------------------- | ----------------------------------------------------------- |
-| Tab       | `https://live.browser.run/ui/view?mode=tab&wss=...`      | Standalone page view                                        |
-| Full      | `https://live.browser.run/ui/view?mode=full&wss=...`     | Multi-tab page view                                         |
-| Inspector | `https://live.browser.run/ui/view?mode=devtools&wss=...` | DevTools inspector panel (Elements, Console, Network, etc.) |
+| Mode       | URL pattern                                              | Description                                                            |
+| ---------- | -------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `tab`      | `https://live.browser.run/ui/view?mode=tab&wss=...`      | Shows and controls one selected page without DevTools panels           |
+| `full`     | `https://live.browser.run/ui/view?mode=full&wss=...`     | Shows the browser interface and its open page tabs                     |
+| `devtools` | `https://live.browser.run/ui/view?mode=devtools&wss=...` | Opens DevTools panels for one page, including Elements and the Console |
 
 ### Native Chrome DevTools (Chrome only)
 
-Because Browser Run speaks standard CDP, you can connect Chrome's built-in DevTools directly to a remote session. Replace the `https://live.browser.run/ui/inspector?wss=` prefix in the `devtoolsFrontendUrl` with the `devtools://` protocol:
+Browser Run supports CDP, the protocol that powers Chrome DevTools. If a generated `devtoolsFrontendUrl` starts with `https://live.browser.run/ui/inspector?wss=`, replace that prefix with `devtools://devtools/bundled/inspector.html?wss=`:
 
 ```txt
 devtools://devtools/bundled/inspector.html?wss=live.browser.run/api/devtools/browser/SESSION_ID/page/TARGET_ID?jwt=...
 ```
 
-Paste this URL into Chrome's address bar to connect native DevTools to the remote browser session. You will get the same DevTools interface you use for local debugging. The `devtools://` protocol is Chrome-only and limited to inspector viewing mode.
+Paste the updated URL into Chrome's address bar. Chrome opens its built-in DevTools interface for the remote tab. The `devtools://` protocol works only in Chrome and supports only the `devtools` viewing mode.
 
 :::caution[URL validity]
-The `devtoolsFrontendUrl` is valid for five minutes by default. You can change this by setting the `expiresInMs` parameter when sending the `Cloudflare.getLiveView` CDP command (max 1 hour). If you do not open the URL within this timeframe, list the targets again or send a new `Cloudflare.getLiveView` command to get a fresh URL. Once the DevTools connection is established, it remains active as long as the browser session is alive.
+The `devtoolsFrontendUrl` is valid for five minutes by default. This is the deadline for starting a connection, not the duration of an established connection or browser session. Set `expiresInMs` when generating a custom URL to change the deadline, up to one hour. If the URL expires before you connect, generate a new one. An established connection remains active while the browser session is alive.
 :::
+
+The API examples in the following sections assume `$ACCOUNT_ID` is set and `$CLOUDFLARE_API_TOKEN` has Browser Rendering Write permission.
 
 ## View a new session
 
-1. Create a browser session with `targets=true` to include target URLs in the response:
+1. Create a browser session with `targets=true` to include its current page targets and generated Live View URLs in the response:
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser"
@@ -89,13 +93,15 @@ The `devtoolsFrontendUrl` is valid for five minutes by default. You can change t
 }
 ```
 
-2. Copy the `devtoolsFrontendUrl` from `targets[0]` and open it in your browser. You now have a live, interactive view of the remote browser session.
+The `targets[].devtoolsFrontendUrl` opens the hosted interface for a page. The `targets[].webSocketDebuggerUrl` connects a CDP client to that page. The top-level `webSocketDebuggerUrl` connects a CDP client to the browser session.
+
+2. Find the page target you want by its `title` or `url`. Copy its `devtoolsFrontendUrl` and open it in your browser. A new session initially contains an `about:blank` page.
 
 ## View an existing session
 
 If you have a running session and want to connect to it:
 
-1. List your active sessions:
+1. List your active sessions and copy the ID of the session you want to view:
 
    <CURL
    	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/session"
@@ -133,11 +139,32 @@ If you have a running session and want to connect to it:
 
 ## Generate a Live View URL
 
-Listing targets returns a `devtoolsFrontendUrl` for every tab, using [default settings](#live-view-parameters). To pick a viewing mode, extend the expiry, or restrict what the recipient can do, generate a custom Live View URL using either the REST API or CDP.
+Listing targets returns a default `devtoolsFrontendUrl` for every page target. Generate a custom URL to change its viewing mode, connection deadline, or viewer permissions.
+
+### Set parameters
+
+The following optional parameters configure generated links:
+
+| Parameter     | Type     | Default                                 | Description                                                                                               |
+| ------------- | -------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `mode`        | `string` | `devtools`                              | Viewing mode: `devtools`, `tab`, or `full`                                                                |
+| `expiresInMs` | `number` | `300,000` (five minutes)                | Deadline for starting a connection, in milliseconds. Minimum `60,000` and maximum `3,600,000`             |
+| `targetId`    | `string` | Current CDP target or first page target | Page target to view                                                                                       |
+| `guardrails`  | `object` | —                                       | REST API only. Viewer restrictions for this connection. Set `{ "mode": "readonly" }` to block interaction |
+
+The REST API response includes `id`, `options`, `devtoolsFrontendUrl`, and `webSocketDebuggerUrl`. Open the frontend URL in a browser or use the WebSocket URL with a CDP client. The `Cloudflare.getLiveView` CDP command returns `devtoolsFrontendUrl`.
+
+:::caution[Treat Live View URLs as credentials]
+A Live View URL contains a signed `jwt` value. Anyone with the complete URL can access the permitted connection. Share it only through trusted channels. A read-only link still exposes visible page data.
+
+Generate Live View URLs from trusted server-side code. Never expose `$CLOUDFLARE_API_TOKEN` in browser code.
+:::
+
+A read-only Live View guardrail applies only to the generated connection. Other connections and automation scripts can still control the session. Session [guardrails](/browser-run/features/guardrails/) restrict HTTP and HTTPS destinations for the entire session and remain active for every Live View connection.
 
 ### REST API
 
-Use the `live_view` endpoint to generate a Live View URL:
+Use the [Live View endpoint](/api/resources/browser_rendering/subresources/devtools/subresources/browser/subresources/live_view/methods/create/) to generate a URL:
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/live_view"
@@ -151,20 +178,9 @@ Use the `live_view` endpoint to generate a Live View URL:
 	}}
 />
 
-#### Live View parameters
+#### Share a view-only link
 
-| Parameter    | Type     | Default              | Description                                                            |
-| ------------ | -------- | -------------------- | ---------------------------------------------------------------------- |
-| `mode`       | `string` | `devtools`           | Viewing mode: `devtools`, `tab`, or `full`.                            |
-| `expiresInMs`| `number` | `300000` (5 minutes) | How long the URL stays valid, in milliseconds. Maximum is 1 hour.      |
-| `targetId`   | `string` | First active target  | Target (tab) to view.                                                  |
-| `guardrails` | `object` | None                 | Restrictions for the viewer. Set `{ "mode": "readonly" }` for view-only. |
-
-All parameters are **optional**. The response contains a `devtoolsFrontendUrl` to open in a browser or embed in an iframe, and a `webSocketDebuggerUrl` for programmatic CDP access.
-
-### Share a view-only link
-
-To let someone watch a session without interacting with it, set `guardrails` to `{ "mode": "readonly" }`:
+To block viewer interaction, set `guardrails` to `{ "mode": "readonly" }`:
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/live_view"
@@ -178,45 +194,33 @@ To let someone watch a session without interacting with it, set `guardrails` to 
 	}}
 />
 
-The returned link streams the session and lets the viewer inspect the page, but blocks navigation, input, and JavaScript evaluation. Navigation controls are turned off, and the browser tab title is prefixed with `READ ONLY - ` so the recipient knows the session is not interactive.
+The link streams the session but blocks navigation, input, and JavaScript evaluation. The tab title starts with `READ ONLY - `.
 
 :::caution
-A view-only link is for humans, not automation. Puppeteer and Playwright cannot drive a read-only connection, because the commands they rely on to open pages and run scripts are blocked.
+A view-only link is for humans, not automation. Puppeteer and Playwright cannot drive a read-only connection because the required commands are blocked.
 :::
 
 ### CDP
 
-When using Puppeteer, Playwright, or a direct WebSocket connection, you can generate a Live View URL using the `Cloudflare.getLiveView` CDP command:
+CDP is Chrome's remote debugging protocol. `Cloudflare.getLiveView` is a Cloudflare extension that generates a Live View URL over an existing CDP connection. This Puppeteer example generates a URL for the current page:
 
-```js
-// Create a CDP session from your page
-const cdp = await page.createCDPSession();
+<TypeScriptExample>
 
-// Get all targets
-const { targetInfos } = await cdp.send("Target.getTargets");
+```ts
+import type { Page } from "@cloudflare/puppeteer";
 
-// Find a specific target (for example, a page with a specific URL)
-// or if there's only one page, just grab the first one
-const target =
-	targetInfos.find((t) => t.type === "page" && t.url.includes("example.com")) ||
-	targetInfos[0];
+export async function getLiveViewUrl(page: Page): Promise<string> {
+	const cdp = await page.createCDPSession();
 
-if (!target) {
-	throw new Error("Target not found");
+	const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
+		mode: "tab",
+		expiresInMs: 300000,
+	});
+
+	return devtoolsFrontendUrl;
 }
-
-const targetId = target.targetId;
-console.log(`Selected target: ${targetId}`);
-
-// Get the Live View URL for the selected target
-const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView", {
-	targetId, // use the target ID from above, this is optional, if omitted the current target will be used
-	mode: "tab", // Options: "devtools", "tab", or "full"
-	expiresInMs: 300000, // optional, default is 5 minutes (max 1 hour)
-	guardrails: { mode: "readonly" }, // optional, returns a view-only URL
-});
-
-console.log(`Live View URL: ${devtoolsFrontendUrl}`);
 ```
 
-If you want to use Live View as part of a human operator handoff, refer to [Human in the Loop](/browser-run/features/human-in-the-loop/) for the full workflow and parameter details.
+</TypeScriptExample>
+
+To use Live View for a human operator handoff, refer to the [Human in the Loop workflow](/browser-run/features/human-in-the-loop/#cloudflaregetliveview).

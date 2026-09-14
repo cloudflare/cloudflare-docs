@@ -11,6 +11,7 @@ interface Props {
 	href: string;
 	cta?: string;
 	category?: Category;
+	headingLevel?: 3 | 4;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
 	href,
 	cta = "Get started",
 	category,
+	headingLevel,
 } = Astro.props;
 
 const CATEGORY_COLOR: Record<Category, string> = {
@@ -33,6 +35,9 @@ const CATEGORY_COLOR: Record<Category, string> = {
 
 // Per-card accent (category colour or brand), consumed by the hover rule.
 const cardColor = category ? CATEGORY_COLOR[category] : "var(--color-primary)";
+
+// Cards can be used in different contexts; let callers opt into semantic headings.
+const ScenarioTag = headingLevel === 4 ? "h4" : headingLevel === 3 ? "h3" : "p";
 ---
 
 <a
@@ -57,9 +62,11 @@ const cardColor = category ? CATEGORY_COLOR[category] : "var(--color-primary)";
 		</span>
 	</div>
 
-	<p class="text-foreground mb-2 text-base leading-snug font-medium md:text-lg">
+	<ScenarioTag
+		class="text-foreground mb-2 text-base leading-snug font-medium md:text-lg"
+	>
 		{scenario}
-	</p>
+	</ScenarioTag>
 	<p
 		class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed md:text-base"
 	>

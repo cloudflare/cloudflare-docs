@@ -110,7 +110,7 @@ import {
 ;
 ```
 
-Refer to https://developers.cloudflare.com/style-guide/components/ for full component documentation and https://developers.cloudflare.com/style-guide/formatting/code-block-guidelines/ for code block formatting.
+Refer to https://developers.cloudflare.com/style-guide/build-the-page/components/ for full component documentation and https://developers.cloudflare.com/style-guide/style-and-grammar/formatting/code-block-guidelines/ for code block formatting.
 
 ### Placeholders in code
 
@@ -158,7 +158,7 @@ Other commonly used components:
 - `Plan` / `InlineBadge` — plan or status badges
 - `DirectoryListing` — auto-generated list of sub-pages
 
-Refer to https://developers.cloudflare.com/style-guide/components/ for full component documentation. When in doubt, check how existing pages in the same product area use components and follow that pattern.
+Refer to https://developers.cloudflare.com/style-guide/build-the-page/components/ for full component documentation. When in doubt, check how existing pages in the same product area use components and follow that pattern.
 
 ## Pull Request Descriptions
 

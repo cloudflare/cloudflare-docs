@@ -110,7 +110,20 @@ const navLinks = [
 			}
 		</div>
 
-		<div class="flex items-center gap-2">
+		<div class="flex items-center gap-2" data-header-actions>
+			<script is:inline>
+				try {
+					const isLoggedIn = document.cookie.split(";").some((cookie) => {
+						return cookie.trim() === "__cf_logged_in=1";
+					});
+
+					if (isLoggedIn) {
+						document.currentScript?.parentElement?.classList.add("logged-in");
+					}
+				} catch {
+					/* ignore - keeps logged out state */
+				}
+			</script>
 			{config.search !== false && <Search />}
 			{
 				config.github && (
@@ -140,7 +153,8 @@ const navLinks = [
 				class="hidden md:inline-flex"
 				id="header-login-button"
 			>
-				Log in
+				<span data-auth="logged-out">Log in</span>
+				<span data-auth="logged-in">Dashboard</span>
 			</LinkButton>
 
 			{
@@ -158,3 +172,19 @@ const navLinks = [
 		</div>
 	</div>
 </header>
+
+<style is:global>
+	#header-login-button [data-auth="logged-in"] {
+		display: none;
+	}
+
+	[data-header-actions].logged-in
+		#header-login-button
+		[data-auth="logged-out"] {
+		display: none;
+	}
+
+	[data-header-actions].logged-in #header-login-button [data-auth="logged-in"] {
+		display: inline;
+	}
+</style>

@@ -1,0 +1,37 @@
+---
+title: Prevent Durable Object alarm retries when using `ctx.abort()`
+description: Prevent a Durable Object alarm from retrying when ctx.abort() resets the object.
+products:
+  - durable-objects
+date: 2026-08-25
+---
+
+import { TypeScriptExample } from "~/components";
+
+By default, an alarm interrupted by `ctx.abort()` retries after the Durable Object resets. Pass `{ retryAlarm: false }` when the alarm should stop instead:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class CleanupTask extends DurableObject {
+	async alarm(): Promise<void> {
+		await this.ctx.storage.deleteAll();
+
+		this.ctx.abort("Cleanup complete", { retryAlarm: false });
+	}
+}
+```
+
+</TypeScriptExample>
+
+For example, an alarm that deletes its storage can use this option to avoid repeating the cleanup or re-running the Durable Object constructor.
+
+Alarms can run concurrently with other requests to the same Durable Object. If another request calls `ctx.abort()` while an alarm is running, the `retryAlarm` option on that call also controls whether the alarm retries.
+
+The default retry prevents an unrelated request from permanently canceling the alarm. Set `retryAlarm: false` on every abort path that should stop an in-progress alarm, not only on calls from the alarm handler. Existing calls to `ctx.abort()` keep retrying alarms.
+
+For local development, `retryAlarm` requires Wrangler 4.126.0 or later.
+
+For more information, refer to [`ctx.abort()`](/durable-objects/api/state/#abort).

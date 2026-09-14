@@ -233,7 +233,7 @@ You can manage Organizations programmatically using the [Cloudflare Organization
 You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
 
 :::note
-The Terraform provider currently requires **API Keys** for authentication with Organization resources. API Token support is not yet fully available for all Organization operations.
+To manage Organization resources through their full Terraform lifecycle, configure the provider with a [Global API key](/fundamentals/api/get-started/keys/) and the registered account email. User API Tokens support only some Organization operations. Refer to [API authentication](/fundamentals/organizations/limitations/#api-authentication).
 :::
 
 If you encounter errors during setup or management, refer to [Troubleshooting](/fundamentals/organizations/limitations/#troubleshooting).

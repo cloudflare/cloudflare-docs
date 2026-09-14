@@ -1,32 +1,43 @@
 /**
  * OpenAPI schema loader for the APIRequest component.
  *
- * CF source: cloudflare-docs/src/util/api.ts — 1:1 port.
- *
- * Fetches the Cloudflare API OpenAPI document from the gh-code worker at a
- * PINNED commit and dereferences all `$ref`s. Memoized at module scope so the
- * fetch + deref run
- * once per build, not per component instance.
- *
- * Reproducibility (migration WS9): the COMMIT below MUST match upstream's pin
- * for byte-parity. Bumping it is a manual step — keep it in lockstep with
- * cloudflare-docs/src/util/api.ts.
+ * The schema is fetched by `bin/fetch-openapi.ts` from the `prebuild` and
+ * `prebuild:incremental` hooks (see package.json). `getSchema` reads the local
+ * copy and fails loudly if it is missing, so a build invoked without the
+ * pre-step is caught early instead of silently downloading mid-render. The
+ * dereferenced result is memoized so the deref runs once per build, not per
+ * component instance.
  */
 import SwaggerParser from "@apidevtools/swagger-parser";
 import type { OpenAPI } from "openapi-types";
+import { readFile } from "node:fs/promises";
+import { getOpenApiJsonPath } from "./openapi-schema";
 
-const COMMIT = "2ac8369e9b63dccacee1a2284e95bb819f05b307";
-let schema: OpenAPI.Document | undefined;
+let schemaPromise: Promise<OpenAPI.Document> | undefined;
 
-export const getSchema = async () => {
-	if (!schema) {
-		const response = await fetch(
-			`https://gh-code.developers.cloudflare.com/cloudflare/api-schemas/${COMMIT}/openapi.json`,
+const loadSchema = async (): Promise<OpenAPI.Document> => {
+	const openapiFile = getOpenApiJsonPath();
+
+	let raw: string;
+	try {
+		raw = await readFile(openapiFile, "utf8");
+	} catch (cause) {
+		throw new Error(
+			`OpenAPI schema not found at ${openapiFile}. Run \`pnpm run build\` (or \`pnpm run build:incremental\`) so the prebuild hook fetches it first.`,
+			{ cause },
 		);
-		const obj = await response.json();
-
-		schema = await SwaggerParser.dereference(obj);
 	}
 
-	return schema;
+	return await SwaggerParser.dereference(JSON.parse(raw));
+};
+
+/**
+ * Load (and cache) the Cloudflare API OpenAPI document. Prerender renders
+ * pages in parallel, so this is single-flighted to avoid duplicate derefs.
+ */
+export const getSchema = (): Promise<OpenAPI.Document> => {
+	if (!schemaPromise) {
+		schemaPromise = loadSchema();
+	}
+	return schemaPromise;
 };

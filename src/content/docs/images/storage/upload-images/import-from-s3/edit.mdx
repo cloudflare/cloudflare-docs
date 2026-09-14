@@ -1,0 +1,42 @@
+---
+pcx_content_type: how-to
+title: Edit sources
+description: Manage sources and import jobs in Cloudflare Images.
+sidebar:
+  order: 2
+products:
+  - images
+---
+
+import { DashButton, Steps } from "~/components";
+
+The **Import from S3** page lists your import jobs and sources. From this page, you can edit sources or abort running jobs.
+
+## Edit source details
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Hosted Images** > **Import from S3**.
+
+   <DashButton url="/?to=/:account/images/hosted/import" />
+
+2. Next to your source, select the menu icon.
+3. To rename or delete the source, select **Rename source** or **Delete source**.
+
+</Steps>
+
+## Abort import jobs
+
+While Cloudflare Images is still running a job to import images into your account, you can abort it before it finishes.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Hosted Images** > **Import from S3**.
+
+   <DashButton url="/?to=/:account/images/hosted/import" />
+
+2. In **Import jobs**, select the menu button next to the job you want to abort, then select **View**.
+3. In the import summary sidebar, select **Abort**.
+4. To confirm that you want to abort the import job, select **Abort** in the dialog box.
+
+</Steps>

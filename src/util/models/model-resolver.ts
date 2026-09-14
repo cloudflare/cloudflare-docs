@@ -48,6 +48,7 @@ function buildView(args: {
 	requestFormats?: string[] | null;
 	examples?: ModelExample[];
 	banner?: ModelBanner | null;
+	digest?: number | string;
 }): ModelView {
 	const author = getModelAuthor(args.name);
 	const capabilities = args.propertiesList
@@ -78,6 +79,7 @@ function buildView(args: {
 		banner: args.banner ?? null,
 		schema: args.schema,
 		zdrComment: args.zdrComment ?? null,
+		digest: args.digest,
 	};
 }
 
@@ -139,6 +141,7 @@ export function catalogToResolved(entry: CatalogEntry): ModelView {
 		requestFormats: (model.request_formats as string[] | undefined) ?? null,
 		examples: (model.examples as ModelExample[] | undefined) ?? [],
 		banner: (model.banner as ModelBanner | null | undefined) ?? null,
+		digest: entry.digest,
 	});
 }
 
@@ -172,6 +175,7 @@ export function legacyToResolved(entry: LegacyEntry): ModelView {
 			output: (schema.output ?? {}) as Record<string, unknown>,
 		},
 		createdAt: typeof d.created_at === "string" ? d.created_at : undefined,
+		digest: entry.digest,
 	});
 }
 

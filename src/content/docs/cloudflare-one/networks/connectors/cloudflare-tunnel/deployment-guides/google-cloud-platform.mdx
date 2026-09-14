@@ -66,13 +66,11 @@ To complete the following procedure, you will need to:
 
 ## Firewall configuration
 
-<Render
-	file="tunnel/deployment-guides/deploy-gcp-firewall"
-	product="cloudflare-one"
-	params={{
-		tunnelFirewallURL:
-			"/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation",
-		hostnameAnchor: "#3-connect-using-a-public-hostname",
-		privateIpAnchor: "#4-connect-using-a-private-ip",
-	}}
-/>
+To secure your VM instance, you can [configure your VPC firewall rules](https://cloud.google.com/firewall/docs/using-firewalls) to deny all ingress traffic and allow only egress traffic to the <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation">Cloudflare Tunnel IP addresses</a>. Since GCP denies ingress traffic by [default](https://cloud.google.com/firewall/docs/firewalls#default_firewall_rules), you can delete all ingress rules and leave only the relevant egress rules.
+
+:::note
+
+If you delete the default `allow-ssh` rule, you will be unable to SSH back into the VM.
+:::
+
+After configuring your VPC firewall rules, verify that you can still access the service through Cloudflare Tunnel via its <a href="#3-connect-using-a-public-hostname">public hostname</a> or <a href="#4-connect-using-a-private-ip">private IP</a>. The service should no longer be accessible from outside Cloudflare Tunnel -- for example, if you go to `http://<EXTERNAL IP>` the test page should no longer load.

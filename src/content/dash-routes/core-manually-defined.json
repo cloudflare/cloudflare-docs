@@ -50,8 +50,18 @@
 		"parent": ["Domain registration"]
 	},
 	{
+		"deeplink": "/?to=/:account/images/hosted/import",
+		"name": "Import from S3",
+		"parent": ["Media", "Images", "Hosted images"]
+	},
+	{
 		"deeplink": "/?to=/:account/:zone/speed/origin-analytics",
 		"name": "Origin Analytics",
 		"parent": ["Speed"]
+	},
+	{
+		"deeplink": "/?to=/:account/r2/:bucket/settings",
+		"name": "Bucket settings",
+		"parent": ["Storage & databases", "R2 object storage"]
 	}
 ]

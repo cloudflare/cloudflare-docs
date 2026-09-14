@@ -1,0 +1,122 @@
+{
+	"model_id": "alibaba/wan-3.0",
+	"provider_id": "alibaba",
+	"name": "Wan 3.0 Video",
+	"description": "Alibaba's Wan 3.0 text-to-video model. Generates cinematic videos from text prompts with adaptive aspect ratio, 480P, 720P, or 1080P resolution, and configurable duration.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Text-to-Video",
+		"Video Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Adaptive 480P Text-to-Video",
+			"description": "Generate a 5-second 480P video with adaptive aspect ratio",
+			"input": {
+				"prompt": "A kitten running across a rooftop under the moonlight, city neon lights flickering in the distance, cinematic quality, smooth camera movement.",
+				"resolution": "480P",
+				"ratio": "adaptive",
+				"duration": 5
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/alibaba/wan-3.0/adaptive-480p-text-to-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/alibaba/wan-3.0/adaptive-480p-text-to-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-3.0',\n  {\n    prompt:\n      'A kitten running across a rooftop under the moonlight, city neon lights flickering in the distance, cinematic quality, smooth camera movement.',\n    resolution: '480P',\n    ratio: 'adaptive',\n    duration: 5,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"alibaba/wan-3.0\",\n  \"input\": {\n    \"prompt\": \"A kitten running across a rooftop under the moonlight, city neon lights flickering in the distance, cinematic quality, smooth camera movement.\",\n    \"resolution\": \"480P\",\n    \"ratio\": \"adaptive\",\n    \"duration\": 5\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.alibabacloud.com/help/en/model-studio/models",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/wan-3.0.png",
+	"metadata": {
+		"Aspect Ratio": "Adaptive",
+		"Duration": "1-15 seconds",
+		"Resolutions": "480P, 720P, 1080P"
+	},
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-08-25 16:36:31",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 2500
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"480P",
+						"720P",
+						"1080P"
+					]
+				},
+				"ratio": {
+					"type": "string",
+					"enum": [
+						"adaptive",
+						"16:9",
+						"9:16",
+						"1:1",
+						"4:3",
+						"3:4"
+					]
+				},
+				"duration": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 15
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

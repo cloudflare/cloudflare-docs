@@ -79,3 +79,8 @@ export { default as SubtractIPCalculator } from "./components/react/SubtractIPCa
 export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
 export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";
+export { ContainerConnectivity } from "./components/react/container/ContainerConnectivity";
+export { ContainerIsolation } from "./components/react/container/ContainerIsolation";
+export { ContainerRequestPath } from "./components/react/container/ContainerRequestPath";
+export { ContainerLifecycle } from "./components/react/container/ContainerLifecycle";
+export { ContainerPlacement } from "./components/react/container/ContainerPlacement";

@@ -1,12 +1,34 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 
-import { externalAppLinksTransform } from "./sidebar";
+import { docsSidebarTransform, externalAppLinksTransform } from "./sidebar";
 import type { SidebarItem } from "@cloudflare/nimbus-docs/types";
+
+// The `product-availability` collection is a remote middlecache loader that
+// downloads over the network at test time. Stub it to keep the badge tests
+// hermetic and data-independent; everything else still reads real content.
+vi.mock("astro:content", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("astro:content")>();
+	return {
+		...actual,
+		getCollection: vi.fn(async (id: string, ...args: any[]) =>
+			id === "product-availability"
+				? []
+				: actual.getCollection(id as any, ...args),
+		),
+	};
+});
 
 const ARROW = " \u2197";
 
 const run = (tree: SidebarItem[]) =>
 	externalAppLinksTransform({
+		tree,
+		sectionSlug: "test",
+		currentSlug: "test/page",
+	});
+
+const runDocs = (tree: SidebarItem[]) =>
+	docsSidebarTransform({
 		tree,
 		sectionSlug: "test",
 		currentSlug: "test/page",
@@ -65,5 +87,31 @@ describe("externalAppLinksTransform", () => {
 		];
 		const [item] = await run(await run(input));
 		expect(item.label).toBe(`Redirect${ARROW}`);
+	});
+});
+
+describe("docsSidebarTransform badges", () => {
+	test("does not badge /api-shield/ links as API", async () => {
+		const [item] = await runDocs([
+			link({ label: "API Shield", href: "/api-shield/" }),
+		]);
+		expect(item.type).toBe("link");
+		expect(item.badge).toBeUndefined();
+	});
+
+	test("does not badge /api-gateway/ links as API", async () => {
+		const [item] = await runDocs([
+			link({ label: "API Gateway", href: "/api-gateway/" }),
+		]);
+		expect(item.type).toBe("link");
+		expect(item.badge).toBeUndefined();
+	});
+
+	test("badges the /api/ OpenAPI reference as API", async () => {
+		const [item] = await runDocs([link({ label: "API", href: "/api/" })]);
+		expect(item).toMatchObject({
+			type: "external",
+			badge: { text: "API", variant: "note" },
+		});
 	});
 });

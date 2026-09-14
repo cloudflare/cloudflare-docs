@@ -1,0 +1,24 @@
+---
+{}
+---
+
+import { WranglerConfig } from "~/components";
+
+### Add the Worker entrypoint to your configuration
+
+Update your Wrangler configuration file to add a `main` field that points to your Worker entrypoint:
+
+<WranglerConfig>
+
+```toml
+name = "my-app"
+compatibility_date = "$today"
+main = "./worker/index.ts"
+
+[assets]
+not_found_handling = "single-page-application"
+```
+
+</WranglerConfig>
+
+The `main` field specifies the entry file for your Worker code.

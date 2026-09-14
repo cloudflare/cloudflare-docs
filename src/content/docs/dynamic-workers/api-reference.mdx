@@ -71,6 +71,7 @@ A module's content can also be specified as an object, in order to specify its t
 - `{py: string}`: A [Python module](/workers/languages/python/). See warning below.
 - `{text: string}`: An importable string value.
 - `{data: ArrayBuffer}`: An importable `ArrayBuffer` value.
+- `{wasm: ArrayBuffer}`: A compiled WebAssembly (Wasm) module.
 - `{json: object}`: An importable object. The value must be JSON-serializable. However, note that value is provided as a parsed object, and is delivered as a parsed object; neither side actually sees the JSON serialization.
 
 :::caution[Warning]

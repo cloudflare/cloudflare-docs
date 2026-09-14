@@ -47,7 +47,7 @@ import {
 import { makeRebaseConflictTools } from "../lib/github-repo-tools";
 import { getGitHubToken } from "../lib/token-provider";
 
-const MODEL = "cloudflare/@cf/moonshotai/kimi-k2.7-code";
+const MODEL = "cloudflare/@cf/deepseek-ai/deepseek-v4-flash-0731";
 
 /** Name of the data part the structured result is written to. */
 export const CONFLICT_RESOLUTION_DATA = "conflict_resolution";

@@ -1,7 +1,7 @@
 ---
 // CF source: src/components/WARPRelease.astro. Select + Download restyled for nimbus.
 import Details from "./Details.astro";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 import { z } from "astro/zod";
 import prettyBytes from "pretty-bytes";
 import { warpReleasesSchema } from "~/schemas";
@@ -104,7 +104,7 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 			<span>
 				<h4>Release notes</h4>
 			</span>
-			<Fragment set:html={marked.parse(release.releaseNotes)} />
+			<Fragment set:html={renderMarkdown(release.releaseNotes)} />
 		</p>
 	</warp-download>
 </Details>

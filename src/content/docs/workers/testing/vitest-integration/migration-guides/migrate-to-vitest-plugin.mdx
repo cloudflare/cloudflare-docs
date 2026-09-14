@@ -1,0 +1,48 @@
+---
+title: Migrate to Vitest plugin
+pcx_content_type: how-to
+sidebar:
+  order: 1
+description: "Migrate from @cloudflare/vitest-pool-workers to @cloudflare/vitest-plugin."
+products:
+  - workers
+---
+
+import { PackageManagers } from "~/components";
+
+`@cloudflare/vitest-plugin` replaces `@cloudflare/vitest-pool-workers`. The package API and Vitest configuration are unchanged.
+
+## Run the codemod
+
+To update your project automatically, run the following command from the project root:
+
+<PackageManagers
+	type="exec"
+	pkg="@cloudflare/codemods"
+	args="vitest:pool-workers-to-vitest-plugin"
+/>
+
+Use `--dry-run` to preview the changes. Use `--files <glob>` to limit the files the codemod updates.
+
+The codemod updates your dependency, imports, and test TypeScript configuration.
+
+## Update manually
+
+If you cannot run the codemod, update the package name in your `package.json`, imports, and test `tsconfig.json`:
+
+```diff
+- "@cloudflare/vitest-pool-workers": "^0.16.0"
++ "@cloudflare/vitest-plugin": "^1.0.0"
+
+- import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
++ import { cloudflareTest } from "@cloudflare/vitest-plugin";
+
+- "types": ["@cloudflare/vitest-pool-workers/types"]
++ "types": ["@cloudflare/vitest-plugin/types"]
+```
+
+The same rename applies to subpath imports, including `@cloudflare/vitest-plugin/config`.
+
+## Update request mocking
+
+To mock outbound requests, use [`@msw/cloudflare`](https://github.com/mswjs/cloudflare). For setup instructions, refer to [Mock outbound requests](/workers/testing/vitest-integration/mock-outbound-requests/).
