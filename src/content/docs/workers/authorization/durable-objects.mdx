@@ -16,15 +16,7 @@ To give a member, User Group, or API token access to a Durable Object, assign th
 
 ## Observability access
 
-`Metadata Read-Only` access to the implementing Worker includes Durable Object metrics, logs, and traces, but does not include access to data stored in the Durable Object.
-
-SQLite-backed Durable Objects support granular authorization for analytics.
-
-:::note
-
-Metrics and analytics for KV-backed Durable Objects are not yet available with granular authorization.
-
-:::
+`Metadata Read-Only` access to the implementing Worker includes Durable Object metrics, logs, and traces without granting access to data stored in the Durable Object. Granular authorization supports analytics for both SQLite-backed and KV-backed Durable Objects, with one current exception: the **Total KV storage** metric is unavailable for KV-backed Durable Objects.
 
 ## Data Studio access
 

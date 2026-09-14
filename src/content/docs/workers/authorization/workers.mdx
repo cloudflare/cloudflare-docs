@@ -86,21 +86,19 @@ These legacy permissions and roles are being replaced by the new Workers roles. 
 
 These legacy permissions and roles were account-level. To preserve the same behavior, assign the replacement role at the scope shown below. Use per-Worker scopes only when you intentionally want to limit access to selected Workers.
 
-| Legacy permission or role             | Replaced by                                                                               |
-| ------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Workers Platform (Read-only)          | `Content Read-Only` at the Developer Platform scope                                       |
-| Workers Platform Admin                | `Admin` at the Developer Platform scope                                                   |
-| Workers Platform Metadata (Read-Only) | `Metadata Read-Only` at the Developer Platform scope                                      |
-| Workers CI Read                       | `Content Read-Only` at the Workers product scope                                          |
-| Workers CI Edit                       | `Editor` at the Workers product scope                                                     |
-| Workers Observability Read            | `Metadata Read-Only` at the Workers product scope                                         |
-| Workers Observability Edit            | `Editor` at the Workers product scope                                                     |
-| Workers Observability Telemetry Edit  | `Editor` at the Workers product scope                                                     |
-| Workers Routes Read                   | `Metadata Read-Only` at the Workers product scope                                         |
-| Workers Routes Edit                   | `Editor` at the Workers product scope, plus `Workers Routes Write` for each affected zone |
-| Workers Tail Read                     | `Metadata Read-Only` at the Workers product scope                                         |
-| Workers Scripts Read                  | `Content Read-Only` at the Workers product scope                                          |
-| Workers Scripts Edit                  | `Editor` at the Workers product scope                                                     |
+| Legacy permission or role             | Replaced by                                          |
+| ------------------------------------- | ---------------------------------------------------- |
+| Workers Platform (Read-only)          | `Content Read-Only` at the Developer Platform scope  |
+| Workers Platform Admin                | `Admin` at the Developer Platform scope              |
+| Workers Platform Metadata (Read-Only) | `Metadata Read-Only` at the Developer Platform scope |
+| Workers CI Read                       | `Content Read-Only` at the Workers product scope     |
+| Workers CI Edit                       | `Editor` at the Workers product scope                |
+| Workers Observability Read            | `Metadata Read-Only` at the Workers product scope    |
+| Workers Observability Edit            | `Editor` at the Workers product scope                |
+| Workers Observability Telemetry Edit  | `Editor` at the Workers product scope                |
+| Workers Tail Read                     | `Metadata Read-Only` at the Workers product scope    |
+| Workers Scripts Read                  | `Content Read-Only` at the Workers product scope     |
+| Workers Scripts Edit                  | `Editor` at the Workers product scope                |
 
 ## Cloudflare Pages
 
