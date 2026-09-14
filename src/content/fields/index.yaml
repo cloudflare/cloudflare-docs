@@ -1173,6 +1173,28 @@ entries:
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
 
+  - name: cf.waf.content_scan.truncated
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request body exceeded the size limit for content scanning and was truncated before scanning.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+      When this field is true, the scan results may be incomplete. Refer to [Size limit](/waf/detections/malicious-uploads/#size-limit).
+    example_block: |-
+      # Block requests to a specific endpoint whose content was not fully scanned
+      cf.waf.content_scan.truncated and http.request.uri.path eq "/upload"
+
   - name: cf.waf.content_scan.num_obj
     data_type: Integer
     categories: [Request]
