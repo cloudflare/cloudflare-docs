@@ -96,7 +96,7 @@ For Cloudflare to cache an origin `206 Partial Content` response, the response m
 | `Content-Range` | Include a concrete range. Its start must match Cloudflare's request. Its end must match the requested end or the end of the file, whichever comes first. Include the complete file size. |
 | `Content-Length` | Include a numeric value equal to the returned interval length. |
 | `Transfer-Encoding` | Omit this header. |
-| `ETag` | Optional. If present, its presence and exact value must remain consistent across fills for the same cached representation. |
+| `ETag` | Optional. If present, its presence and exact value must remain consistent across responses for the same cached representation. |
 
 The complete file size must also remain consistent across responses. Violations can prevent caching or end responses served to the client early.
 
