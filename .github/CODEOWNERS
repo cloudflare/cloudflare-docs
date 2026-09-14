@@ -97,13 +97,13 @@ package.json @cloudflare/content-engineering
 # ai-search
 
 /src/components/ui/search/ @cloudflare/ai-search @cloudflare/content-engineering
-/src/content/changelog/ai-search/ @aninibread @irvinebroque @mchenco @rita3ko @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/docs/ai-search/ @aninibread @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
-/src/content/release-notes/ai-search.yaml @aninibread @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
-/src/assets/images/ai-search/ @aninibread @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
-/src/content/partials/ai-search/ @aninibread @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
-/src/content/directory/ai-search.yaml @aninibread @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
-/src/icons/ai-search.svg @aninibread @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
+/src/content/changelog/ai-search/ @celso @irvinebroque @mchenco @rita3ko @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/ai-search/ @celso @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
+/src/content/release-notes/ai-search.yaml @celso @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
+/src/assets/images/ai-search/ @celso @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
+/src/content/partials/ai-search/ @celso @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
+/src/content/directory/ai-search.yaml @celso @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
+/src/icons/ai-search.svg @celso @G4brym @irvinebroque @mchenco @rita3ko @cloudflare/product-owners
 
 # always-online
 
@@ -855,8 +855,8 @@ package.json @cloudflare/content-engineering
 
 # spectrum
 
-/src/content/docs/spectrum/ @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/content/partials/spectrum/ @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/spectrum/ @alpdot @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/partials/spectrum/ @alpdot @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/assets/images/spectrum/ @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/directory/spectrum.yaml @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/glossary/spectrum.yaml @cansu @steve-cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners

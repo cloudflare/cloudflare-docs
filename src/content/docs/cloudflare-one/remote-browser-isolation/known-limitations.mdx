@@ -37,6 +37,14 @@ Our Network Vector Rendering (NVR) technology sends drawing instructions to the 
 | Other Chromium-based browsers (Opera, Brave) | ✅            |
 | Internet Explorer 11 and below               | ❌            |
 
+### iOS
+
+On iOS, Apple WebKit requires direct user interaction before the local browser can pass keyboard input into the remote browser. This means users should tap twice to begin entering text in an isolated session.
+
+The first tap focuses the text field. The second tap starts text entry.
+
+Browser Isolation shows an inline prompt over the focused text field when this interaction is required. If the text field is too small to display the full prompt, Browser Isolation displays a keyboard icon in the center of the field instead.
+
 ### Brave
 
 Browser Isolation uses [WebRTC](/cloudflare-one/remote-browser-isolation/network-dependencies/#webrtc-channel) for low-latency communication between the local and remote browser. Brave's WebRTC IP Handling Policy can impact how Cloudflare RBI loads and functions. If the WebRTC IP Handling Policy is configured to **Disable Non-Proxied UDP**, RBI may fail to load correctly because Brave blocks the UDP connections that WebRTC requires.
