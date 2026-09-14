@@ -94,7 +94,7 @@ Send a [`PUT` request](/api/resources/ai_gateway/methods/update/) to update the 
 
 To require provider credentials for one third-party provider request, set the `cf-aig-no-wholesale` header to `true`. This header can prevent Unified Billing fallback but cannot relax the gateway setting. If **Require provider credentials** is on, setting the header to `false` has no effect.
 
-Workers AI requests do not use provider credentials. This setting does not block these requests. They use standard Workers AI account billing, not AI Gateway Unified Billing.
+Workers AI requests do not use provider credentials. This setting does not block these requests or change the gateway's configured Workers AI billing mode.
 
 ## Use Unified Billing
 
