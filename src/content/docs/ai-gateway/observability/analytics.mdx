@@ -19,6 +19,29 @@ view the following analytics:
 - **Errors**: Monitor the number of errors across the gateway, helping to identify and troubleshoot issues.
 - **Cached Responses**: View the percentage of responses served from cache, which can help reduce costs and improve speed.
 
+## Counting basis
+
+The same word can count different things. A retry, a fallback, and a cache hit each change
+what "requests", "tokens", and "cost" mean in the dashboard and in GraphQL analytics. The
+table below makes the counting unit explicit per event shape, so reports can name their
+denominator instead of inheriting one by accident.
+
+| Event shape | Log rows | Provider attempts | Requests metric | Tokens and cost |
+| --- | --- | --- | --- | --- |
+| Client request, no retry | 1 | 1 | 1 request | Attributed to the provider attempt |
+| Client request, gateway retry after provider failure | 2 | 2 | 1 request | Token totals reflect both attempts; cost is the sum of what providers billed |
+| Fallback across providers | 1 row per provider attempt | 1 per provider | 1 request | Tokens and cost attributed per provider attempt |
+| Cache hit, no provider call | 1 | 0 | Counted as a served request; distinct from provider-handled requests | No provider tokens; cost contribution is zero unless you price cache serving separately |
+
+Two rules keep these numbers auditable:
+
+- **Attempts and requests are separate grains.** Reliability reporting reads attempts; demand and customer-value reporting read requests. A single mixed number cannot safely serve both.
+- **If a metric's counting basis is not stated, treat it as not yet defined** rather than assuming one. Metrics not listed above are pending explicit definition; where behavior is described here from the outside, it is labeled as observed rather than guaranteed, and should be confirmed against the backend before being relied on for billing or enforcement.
+
+When alerts or budgets key off a metric, check which basis that metric uses. A budget drawn
+on served requests will throttle traffic that a provider-cost budget would not, and vice
+versa; the two cannot share a column by accident.
+
 ## View analytics
 
 <Tabs> <TabItem label="Dashboard">
