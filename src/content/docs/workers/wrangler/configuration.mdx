@@ -1184,7 +1184,7 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
   - How long to retain the state of instances of this Workflow after they finish. Applied to instances that do not set their own [`retention`](/workflows/build/workers-api/#workflowinstancecreateoptions) when they are created.
   - `success_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that complete successfully or are terminated, as a duration string such as `"3 days"` or a whole number of milliseconds.
   - `error_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that end in an errored state, as a duration string such as `"7 days"` or a whole number of milliseconds.
-  - Retention is capped at the [retention limit](/workflows/reference/limits/) for your account.
+  - Retention is capped at the [retention limit](/workflows/reference/limits/) according to your account plan.
 
 Example:
 
