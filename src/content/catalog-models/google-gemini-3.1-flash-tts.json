@@ -8,6 +8,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input text tokens (per 1M)": 0.75,
+		"Input audio tokens (per 1M)": 3,
+		"output_text_tokens": 4.5,
+		"output_audio_tokens": 12
+	},
 	"examples": [
 		{
 			"name": "Simple Text-to-Speech",

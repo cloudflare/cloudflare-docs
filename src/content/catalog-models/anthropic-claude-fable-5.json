@@ -14,6 +14,12 @@
 	"context_length": 1000000,
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 10,
+		"Output tokens (per 1M)": 50,
+		"Cached input tokens (per 1M)": 1,
+		"Cache creation tokens (per 1M)": 12.5
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -637,13 +643,9 @@
 					"type": "string"
 				},
 				"stop_reason": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"usage": {

@@ -12,6 +12,11 @@
 	"context_length": 2000000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 2,
+		"Output tokens (per 1M)": 6,
+		"Cached input tokens (per 1M)": 0.2
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -7456,7 +7461,7 @@
 					"maxItems": 500,
 					"type": "array",
 					"items": {
-						"anyOf": [
+						"oneOf": [
 							{
 								"type": "object",
 								"properties": {
@@ -7569,13 +7574,9 @@
 										"const": "assistant"
 									},
 									"content": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"tool_calls": {
@@ -7650,13 +7651,9 @@
 					}
 				},
 				"deferred": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"frequency_penalty": {
@@ -7672,13 +7669,9 @@
 					]
 				},
 				"logprobs": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"max_completion_tokens": {
@@ -7718,13 +7711,9 @@
 					]
 				},
 				"parallel_tool_calls": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"presence_penalty": {
@@ -7824,13 +7813,9 @@
 					"type": "object",
 					"properties": {
 						"from_date": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						},
 						"max_search_results": {
@@ -7861,13 +7846,9 @@
 							]
 						},
 						"return_citations": {
-							"anyOf": [
-								{
-									"type": "boolean"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"boolean",
+								"null"
 							]
 						},
 						"sources": {
@@ -7883,13 +7864,9 @@
 							]
 						},
 						"to_date": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						}
 					},
@@ -7922,13 +7899,9 @@
 					]
 				},
 				"stream": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"stream_options": {
@@ -8064,26 +8037,18 @@
 					]
 				},
 				"user": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"web_search_options": {
 					"type": "object",
 					"properties": {
 						"search_context_size": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						}
 					},
@@ -8121,13 +8086,9 @@
 								"type": "number"
 							},
 							"finish_reason": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									}
+								"type": [
+									"string",
+									"null"
 								]
 							},
 							"message": {
@@ -8137,33 +8098,21 @@
 										"type": "string"
 									},
 									"content": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"reasoning_content": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"refusal": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"tool_calls": {
@@ -8275,13 +8224,9 @@
 					]
 				},
 				"system_fingerprint": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"usage": {

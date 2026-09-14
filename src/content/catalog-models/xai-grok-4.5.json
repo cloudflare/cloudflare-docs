@@ -15,6 +15,14 @@
 	"context_length": 500000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input <200k (per 1M)": 2,
+		"Cached input <200k (per 1M)": 0.3,
+		"Output <200k (per 1M)": 6,
+		"Input >=200k (per 1M)": 4,
+		"Cached input >=200k (per 1M)": 0.6,
+		"Output >=200k (per 1M)": 12
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -10208,7 +10216,7 @@
 					"maxItems": 500,
 					"type": "array",
 					"items": {
-						"anyOf": [
+						"oneOf": [
 							{
 								"type": "object",
 								"properties": {
@@ -10320,13 +10328,9 @@
 										"const": "assistant"
 									},
 									"content": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"tool_calls": {
@@ -10437,23 +10441,15 @@
 					]
 				},
 				"parallel_tool_calls": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"prompt_cache_key": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"reasoning_effort": {
@@ -10542,13 +10538,9 @@
 					"type": "object",
 					"properties": {
 						"from_date": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						},
 						"max_search_results": {
@@ -10579,13 +10571,9 @@
 							]
 						},
 						"return_citations": {
-							"anyOf": [
-								{
-									"type": "boolean"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"boolean",
+								"null"
 							]
 						},
 						"sources": {
@@ -10601,13 +10589,9 @@
 							]
 						},
 						"to_date": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						}
 					},
@@ -10633,13 +10617,9 @@
 					]
 				},
 				"stream": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"stream_options": {
@@ -10763,13 +10743,9 @@
 					]
 				},
 				"user": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"web_search_options": {
@@ -10783,13 +10759,9 @@
 							"additionalProperties": {}
 						},
 						"search_context_size": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						},
 						"user_location": {
@@ -10834,13 +10806,9 @@
 								"type": "number"
 							},
 							"finish_reason": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									}
+								"type": [
+									"string",
+									"null"
 								]
 							},
 							"message": {
@@ -10850,33 +10818,21 @@
 										"type": "string"
 									},
 									"content": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"reasoning_content": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"refusal": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"tool_calls": {
@@ -10995,13 +10951,9 @@
 					]
 				},
 				"system_fingerprint": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"usage": {
