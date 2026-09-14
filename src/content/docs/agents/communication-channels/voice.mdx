@@ -707,7 +707,7 @@ Phone → provider → WebSocket → adapter → WebSocket → VoiceAgent
 
 No browser is involved. Each adapter exposes a `handleRequest()` method that you call from your `fetch` handler for the provider's WebSocket path, and by default each call gets its own agent instance named after the provider's call identifier.
 
-Beyond that path, the two providers differ in what they need from you. Twilio is configured with TwiML that points at your Worker. Plivo needs a second route — an answer URL returning XML that tells Plivo where to open the audio WebSocket — plus an application that links your phone number to that answer URL.
+Beyond that path, the two providers differ in what they need from you. Twilio is configured with TwiML that points at your Worker. Plivo needs your auth ID, auth token, and phone number — deploying automatically provisions the Plivo application and points its answer URL at your Worker, so neither needs manual setup in the Plivo console.
 
 ### Browser WebRTC bridge (Telnyx)
 
