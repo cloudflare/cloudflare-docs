@@ -427,10 +427,10 @@ package.json @cloudflare/content-engineering
 
 # dynamic-workers
 
-/src/content/docs/dynamic-workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/assets/images/dynamic-workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/content/directory/dynamic-workers.yaml @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/icons/dynamic-workers.svg @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/docs/dynamic-workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/assets/images/dynamic-workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/directory/dynamic-workers.yaml @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/icons/dynamic-workers.svg @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 
 # email-security
 
@@ -643,16 +643,16 @@ package.json @cloudflare/content-engineering
 
 # pages
 
-/src/assets/images/pages/ @aninibread @GregBrimble @MattieTK @scottbuscemi @WalshyDev @cloudflare/workers-docs @cloudflare/product-owners
+/src/assets/images/pages/ @aninibread @GregBrimble @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
 /src/content/directory/pages.yaml @scottbuscemi @cloudflare/product-owners
-/src/content/docs/pages/ @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/workers-docs @cloudflare/product-owners
+/src/content/docs/pages/ @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
 /src/content/docs/pages/framework-guides/ @aninibread @GregBrimble @MattieTK @scottbuscemi @cloudflare/wrangler @cloudflare/product-owners
 /src/content/pages-framework-presets/ @scottbuscemi @cloudflare/product-owners
 /src/content/partials/pages/ @irvinebroque @MattieTK @rita3ko @scottbuscemi @vy-ton @cloudflare/product-owners
-/src/content/release-notes/pages.yaml @aninibread @GregBrimble @MattieTK @scottbuscemi @WalshyDev @cloudflare/workers-docs @cloudflare/product-owners
-/src/content/changelog/pages/ @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/workers-docs @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/icons/pages.svg @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/workers-docs @cloudflare/product-owners
-/public/images/pages/ @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/workers-docs @cloudflare/product-owners
+/src/content/release-notes/pages.yaml @aninibread @GregBrimble @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
+/src/content/changelog/pages/ @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/icons/pages.svg @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
+/public/images/pages/ @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
 
 # pipelines
 
@@ -706,15 +706,15 @@ package.json @cloudflare/content-engineering
 
 # r2
 
-/src/content/docs/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/workers-docs @cloudflare/product-owners
+/src/content/docs/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
 /src/content/partials/r2/ @helloimalastair @irvinebroque @rdimaio @rita3ko @vy-ton @cloudflare/product-owners
-/src/content/release-notes/r2.yaml @helloimalastair @rdimaio @cloudflare/workers-docs @cloudflare/product-owners
-/src/assets/images/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/workers-docs @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/workers-docs @cloudflare/product-owners
-/src/content/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/workers-docs @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/r2.yaml @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/workers-docs @cloudflare/product-owners
-/src/icons/r2.svg @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/workers-docs @cloudflare/product-owners
-/public/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/workers-docs @cloudflare/product-owners
+/src/content/release-notes/r2.yaml @helloimalastair @rdimaio @cloudflare/product-owners
+/src/assets/images/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
+/src/content/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/r2.yaml @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
+/src/icons/r2.svg @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
+/public/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
 
 # r2-data-catalog
 
@@ -1040,26 +1040,26 @@ package.json @cloudflare/content-engineering
 # workers
 
 /public/workers/prompts/ @jahands @MattieTK @Maximo-Guk @cloudflare/product-owners
-/src/assets/images/workers/ @GregBrimble @irvinebroque @MattieTK @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/assets/images/workers/ci-cd/builds/ @GregBrimble @irvinebroque @MattieTK @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/assets/images/workers/ @GregBrimble @irvinebroque @MattieTK @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/assets/images/workers/ci-cd/builds/ @GregBrimble @irvinebroque @MattieTK @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 /src/content/compatibility-flags/ @GregBrimble @irvinebroque @MattieTK @mikenomitch @cloudflare/product-owners
-/src/content/docs/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/docs/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/ @aninibread @ericclemmons @GregBrimble @irvinebroque @MattieTK @vy-ton @yomna-shousha @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/builds/ @aninibread @ericclemmons @GregBrimble @irvinebroque @MattieTK @scottbuscemi @vy-ton @yomna-shousha @cloudflare/product-owners
-/src/content/docs/workers/framework-guides/automatic-configuration.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/content/docs/workers/framework-guides/web-apps/nextjs.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/content/docs/workers/framework-guides/web-apps/opennext.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/docs/workers/framework-guides/automatic-configuration.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/docs/workers/framework-guides/web-apps/nextjs.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/docs/workers/framework-guides/web-apps/opennext.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @vy-ton @cloudflare/product-owners
 /src/content/docs/workers/static-assets @GregBrimble @irvinebroque @MattieTK @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners
 /src/content/docs/workers/wrangler/ @irvinebroque @MattieTK @vy-ton @cloudflare/wrangler @cloudflare/product-owners
-/src/content/partials/workers/ @GregBrimble @irvinebroque @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/content/release-notes/workers.yaml @aninibread @GregBrimble @irvinebroque @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/workers-docs @cloudflare/product-owners
-/src/assets/images/changelog/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/changelog/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/workers.yaml @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/content/glossary/workers.yaml @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/icons/workers.svg @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/public/images/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-docs @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/partials/workers/ @GregBrimble @irvinebroque @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/release-notes/workers.yaml @aninibread @GregBrimble @irvinebroque @MattieTK @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners
+/src/assets/images/changelog/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/workers.yaml @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/content/glossary/workers.yaml @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/src/icons/workers.svg @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
+/public/images/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 
 # workers-ai
 
