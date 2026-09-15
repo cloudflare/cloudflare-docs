@@ -23,6 +23,18 @@ This device posture attribute will check for all versions of WARP, including the
 
 Cloudflare One enables you to restrict access to your applications to devices running the Cloudflare One Client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare One.
 
+## Check result per client mode
+
+The check result depends on the [client mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) configured on the device.
+
+| Client mode          | Result   | Reason                                                        |
+| -------------------- | -------- | ------------------------------------------------------------- |
+| Traffic and DNS mode | ✅ Pass  | An active Cloudflare One Client tunnel is established                          |
+| Traffic only mode    | ✅ Pass  | An active Cloudflare One Client tunnel is established                          |
+| DNS only mode        | ❌ Fail  | No Cloudflare One Client tunnel is established; only DNS is forwarded          |
+| Local proxy mode     | ⚠️ Partial | The Cloudflare One Client is running and authenticated, and traffic explicitly routed through the local SOCKS/HTTP proxy on port `40000` is tunneled through Cloudflare. Traffic not routed through the proxy bypasses the client and fails the check. |
+| Posture only mode    | ❌ Fail  | The client is enrolled and collects posture data, but does not establish a Cloudflare One Client tunnel |
+
 ## Prerequisites
 
 - <Render
