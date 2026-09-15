@@ -213,6 +213,8 @@ const integrations = [
 				features: { smartPunctuation: false },
 				hastPlugins,
 			}),
+			// Match Render.astro: `file` is relative to `src/content/partials/<product>/`.
+			// The revision invalidates prepared Markdown assets; bump it if this mapping changes.
 			partialResolver: {
 				revision: "partial-resolver-v1",
 				resolve: ({ file, product }) => (product ? `${product}/${file}` : file),
