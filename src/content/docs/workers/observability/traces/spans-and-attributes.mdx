@@ -169,13 +169,13 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 Workers tracing emits these spans for RPC calls between Workers and from Workers to Durable Objects.
 
-#### `jsRpcSession`
+#### RPC session
 
 A caller-side span that covers the lifetime of an RPC session. Calls that reuse the session appear under this span.
 
 This span has no additional RPC-specific attributes.
 
-#### `jsRpcCall`
+#### RPC call
 
 A caller-side or callee-side span for an individual method call or property access.
 
