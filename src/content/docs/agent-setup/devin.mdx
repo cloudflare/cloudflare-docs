@@ -1,6 +1,6 @@
 ---
-title: Windsurf + Cloudflare
-description: "Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Cognition."
+title: Devin + Cloudflare
+description: "A full IDE with an agent manager built in — the command center for managing all your agents in one place. Made by Cognition."
 template: splash
 pcx_content_type: how-to
 products:
@@ -20,14 +20,14 @@ import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.as
 import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
 import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
-<AgentHeader slug="windsurf" />
+<AgentHeader slug="devin" />
 
 ## Quick start
 
 <Steps>
-	1. **Download Windsurf**
+	1. **Download Devin Desktop**
 
-		Download Windsurf for macOS, Windows, or Linux from the [Windsurf downloads page](https://windsurf.com/download).
+		Download Devin Desktop for macOS, Windows, or Linux from the [Devin Desktop downloads page](https://devin.ai/download).
 
 	2. **Install Cloudflare Skills**
 
@@ -79,18 +79,18 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 ## FAQ
 
 <FAQList>
-	<FAQItem question="Does Windsurf support Cloudflare Skills?">
-		Yes. Windsurf supports Agent Skills in Cascade. Install the Cloudflare
+	<FAQItem question="Does Devin Desktop support Cloudflare Skills?">
+		Yes. Devin Desktop supports Agent Skills in Cascade. Install the Cloudflare
 		Skills bundle from [cloudflare/skills](https://github.com/cloudflare/skills)
-		— see the [Windsurf Cascade Skills
-		documentation](https://docs.windsurf.com/windsurf/cascade/skills) for where
+		— refer to the [Devin Desktop Cascade Skills
+		documentation](https://docs.devin.ai/desktop/cascade/skills) for where
 		Cascade discovers and loads Skills.
 	</FAQItem>
 	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
 		All three complement each other. Cloudflare Skills teach Cascade the
 		patterns and conventions for Workers development. The Cloudflare API MCP
 		server handles platform operations (DNS, WAF, Zero Trust, R2 buckets).
-		Wrangler in Windsurf's integrated terminal covers local dev and deploys.
+		Wrangler in Devin Desktop's integrated terminal covers local dev and deploys.
 		Cascade coordinates between them naturally.
 	</FAQItem>
 	<FAQItem question="Can Cascade deploy to Cloudflare?">
@@ -104,7 +104,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TroubleshootingList>
 	<TroubleshootingItem issue="MCP server not connecting">
-		Verify your `mcp_config.json` configuration. Restart Windsurf after making
+		Verify your `mcp_config.json` configuration. Restart Devin Desktop after making
 		changes. Ensure the MCP server URL ends with `/mcp`.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
@@ -122,4 +122,4 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Other agents
 
-<OtherAgents currentSlug="windsurf" />
+<OtherAgents currentSlug="devin" />
