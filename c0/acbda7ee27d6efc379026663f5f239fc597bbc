@@ -1,0 +1,331 @@
+.github/CODEOWNERS
+  s_d950b151a507d8::t_331b5899e3cc66 21,40-45,126,130,245-246,343
+.nimbus/routes.json
+  s_d950b151a507d8::t_737827e4c5a168 350-353,5272-5288
+pnpm-lock.yaml
+  s_d950b151a507d8::t_daeb3207c99d89 32-34,751-752,756,771-772,783-784,795-796,807-808,819-820,4246-4247,4780-4783,5691-5692,5881,6021,6390,6394,6396,6398-6399,6402,6427,6433,6439,6445,6451,10109,10450,10455,11094-11100,12097,12099-12103
+public/__redirects
+  s_d950b151a507d8::t_2d7f01ca1a1d5b 316,436-437,3004-3006
+src/components/PageHead.astro
+  s_d950b151a507d8::t_6c6f510c4d290c 24,89-90,93
+src/components/cf/ResourcesBySelector.astro
+  s_d950b151a507d8::t_1124744c3cac00 29,89-90
+src/components/landing/sidebar-data.ts
+  s_d950b151a507d8::t_551826419e0223 112
+src/components/models/ModelCard.astro
+  s_d950b151a507d8::t_0b7a0ac6b1cd46 51-54
+src/components/models/ModelCatalog.astro
+  s_d950b151a507d8::t_63cdc684220685 176-184,195-199
+src/components/react/PhosphorIcon.tsx
+  s_d950b151a507d8::t_2d116371f09b9a 1-6,8-15,17,19-21,25,27,30
+src/content/changelog/ai-gateway/2026-08-07-workers-ai-unified-billing.mdx
+  s_d950b151a507d8::t_d6cd7c6b35d1b0 1-50
+src/content/changelog/ai-search/2025-11-19-add-extra-headers-for-website-crawling.mdx
+  s_d950b151a507d8::t_9f3bc453e5f3ee 9,13-14,30,32
+src/content/changelog/ai-search/2026-02-09-indexing-improvements.mdx
+  s_d950b151a507d8::t_823913ba86240a 21,29
+src/content/changelog/ai-search/2026-03-23-ai-search-public-endpoint-and-snippets.mdx
+  s_d950b151a507d8::t_a9d76464eede33 31,35,41,48
+src/content/changelog/ai-search/2026-03-23-custom-metadata-filtering.mdx
+  s_d950b151a507d8::t_73aaaca14f4a5c 36
+src/content/changelog/ai-search/2026-04-09-ai-search-content-selectors.mdx
+  s_d950b151a507d8::t_52695ecb1dbd2b 9,40
+src/content/changelog/ai-search/2026-08-06-public-endpoint-custom-domains-and-namespaces.mdx
+  s_d950b151a507d8::t_d5812887b970f0 1-59
+src/content/changelog/browser-run/2026-08-06-kitesurf.mdx
+  s_d950b151a507d8::t_773830bdceef6b 1-27
+src/content/changelog/logs/2026-04-20-pipelines-logpush-destination.mdx
+  s_d950b151a507d8::t_e8381a6d1bc646 12
+src/content/changelog/mesh/2026-08-07-mesh-container-image.mdx
+  s_d950b151a507d8::t_863321c9fcc1e2 1-27
+src/content/changelog/pipelines/2025-09-25-pipelines-sql.mdx
+  s_d950b151a507d8::t_acc4c726cf9446 39
+src/content/changelog/pipelines/2026-02-24-typed-bindings-setup-improvements-error-metrics.mdx
+  s_d950b151a507d8::t_1234bd9d98f450 77
+src/content/changelog/pipelines/2026-04-27-terraform-support.mdx
+  s_d950b151a507d8::t_22133aa1611352 9
+src/content/changelog/pipelines/2026-08-03-pipelines-billing-enabled.mdx
+  s_d950b151a507d8::t_10fdcee519f591 16
+src/content/changelog/r2-data-catalog/2025-04-10-r2-data-catalog-beta.mdx
+  s_d950b151a507d8::t_2c21f6be358fcd 9,11,21
+src/content/changelog/r2-data-catalog/2025-09-25-data-catalog-compaction.mdx
+  s_d950b151a507d8::t_cbdabbfb36fab8 12,26
+src/content/changelog/r2-data-catalog/2025-10-06-data-catalog-table-compaction.mdx
+  s_d950b151a507d8::t_9e37f149028f11 10,23
+src/content/changelog/r2-data-catalog/2025-12-18-r2-data-catalog-snapshot-expiration.mdx
+  s_d950b151a507d8::t_30e9cc3f207ea1 9,36,38
+src/content/changelog/r2-data-catalog/2026-04-22-snapshot-expiration-cleans-data-files.mdx
+  s_d950b151a507d8::t_12acddadaf589d 9,22
+src/content/changelog/r2-data-catalog/2026-05-11-r2-data-catalog-pricing-announced.mdx
+  s_d950b151a507d8::t_11904d752c5625 9,20
+src/content/changelog/r2-data-catalog/2026-05-12-r2-data-catalog-graphql-analytics.mdx
+  s_d950b151a507d8::t_eb4cef160b6a6a 9,18
+src/content/changelog/r2-data-catalog/2026-05-28-r2-data-catalog-dashboard.mdx
+  s_d950b151a507d8::t_36bec062947239 9,13,17,20
+src/content/changelog/r2-data-catalog/2026-07-06-r2-data-catalog-delete-warnings.mdx
+  s_d950b151a507d8::t_4f1145e54b2a0c 9,17,28
+src/content/changelog/r2-data-catalog/2026-07-09-r2-data-catalog-read-only-tokens.mdx
+  s_d950b151a507d8::t_2e2641359ae012 9,16,20
+src/content/changelog/r2-data-catalog/2026-07-13-r2-data-catalog-manifest-optimization.mdx
+  s_d950b151a507d8::t_dbe73c43fea32a 9,17
+src/content/changelog/r2-data-catalog/2026-08-03-r2-data-catalog-billing-enabled.mdx
+  s_d950b151a507d8::t_99a8f9f01cc71d 9,14,29
+src/content/changelog/r2-sql/2025-09-25-announcing-r2-sql-open-beta.mdx
+  s_d950b151a507d8::t_2ba617053d3930 12
+src/content/changelog/r2-sql/2025-12-12-aggregation-support-and-more.mdx
+  s_d950b151a507d8::t_a42657b50aaff8 14
+src/content/changelog/r2-sql/2026-03-23-expanded-sql-functions-expressions-complex-types.mdx
+  s_d950b151a507d8::t_d7172f290204b2 9
+src/content/changelog/r2-sql/2026-04-20-r2-sql-json-functions-explain-format.mdx
+  s_d950b151a507d8::t_ca12b3fdd94cd4 9,11
+src/content/changelog/r2-sql/2026-05-11-r2-sql-pricing-announced.mdx
+  s_d950b151a507d8::t_6a000efbc32071 9,15
+src/content/changelog/r2-sql/2026-05-14-joins-subqueries-multi-table-queries.mdx
+  s_d950b151a507d8::t_e3a298c9169783 9
+src/content/changelog/r2-sql/2026-06-05-union-intersect-except-select-distinct.mdx
+  s_d950b151a507d8::t_53d843166639fa 9
+src/content/changelog/r2-sql/2026-06-21-window-functions-distinct-set-operations.mdx
+  s_d950b151a507d8::t_0abc7cabc603aa 11
+src/content/changelog/r2-sql/2026-07-08-query-r2-sql-from-dashboard.mdx
+  s_d950b151a507d8::t_d8b5a8f41d2523 11
+src/content/changelog/r2-sql/2026-08-03-r2-sql-billing-enabled.mdx
+  s_d950b151a507d8::t_c649c9264a4b29 15
+src/content/changelog/radar/2026-08-07-radar-as-connectivity-upstreams.mdx
+  s_d950b151a507d8::t_8a4dc659695fdf 1-34
+src/content/changelog/radar/2026-08-07-radar-researcher-and-webmcp.mdx
+  s_d950b151a507d8::t_b347dc03ac1c04 1-21
+src/content/changelog/stream/2025-03-06-media-transformations.mdx
+  s_d950b151a507d8::t_0be3dc5a16ccc1 37,42
+src/content/directory/r2-data-catalog.yaml
+  s_d950b151a507d8::t_64acf3b10ce49b 6
+src/content/docs/agents/tools/payments/index.mdx
+  s_d950b151a507d8::t_9923ec2e03c30e 8,20,24,34-35,39,41,43,53,56-65
+src/content/docs/agents/tools/payments/mpp-charge-for-http-content.mdx
+  s_d950b151a507d8::t_83d2ad5377919e 81
+src/content/docs/agents/tools/payments/mpp/accept-payments.mdx
+  s_d950b151a507d8::t_ee5009619c3a13 1-182
+src/content/docs/agents/tools/payments/mpp/index.mdx
+  s_d950b151a507d8::t_ed653a148eaf53 8,15,17,21-25,27,31-35,37,41,43,47-54,60,62,66-68
+src/content/docs/agents/tools/payments/mpp/pay-from-agents-sdk.mdx
+  s_d950b151a507d8::t_b07a918e6f2a80 1-157
+src/content/docs/ai-gateway/configuration/manage-gateway.mdx
+  s_d950b151a507d8::t_34f520b1faf67e 27-33,55-68
+src/content/docs/ai-gateway/features/dynamic-routing/index.mdx
+  s_d950b151a507d8::t_e67247014aa425 63-69
+src/content/docs/ai-gateway/features/dynamic-routing/usage.mdx
+  s_d950b151a507d8::t_ce8c85ac3da3a5 4
+src/content/docs/ai-gateway/features/unified-billing.mdx
+  s_d950b151a507d8::t_a7c7b9ad74a052 16,28,77
+src/content/docs/ai-gateway/get-started.mdx
+  s_d950b151a507d8::t_d4a7c8e8379364 52-53,70
+src/content/docs/ai-gateway/usage/chat-completion.mdx
+  s_d950b151a507d8::t_7200a4f9b79b5f 21-26
+src/content/docs/ai-gateway/usage/providers/workersai.mdx
+  s_d950b151a507d8::t_7bd8f5c0e8cba2 15
+src/content/docs/ai-gateway/usage/rest-api.mdx
+  s_d950b151a507d8::t_1e49c269fc4a52 15,34-38,41,112,124-125
+src/content/docs/ai-gateway/usage/worker-binding-methods.mdx
+  s_d950b151a507d8::t_ba24f55e794069 67-68,101-102,104-108
+src/content/docs/ai-search/api/search/mcp.mdx
+  s_d950b151a507d8::t_7ff3addf9b68e3 26-35,51,66-79
+src/content/docs/ai-search/api/search/public-endpoint.mdx
+  s_d950b151a507d8::t_73596d6ce9735b 15,30-64,70,89,105,108-109
+src/content/docs/ai-search/concepts/namespaces.mdx
+  s_d950b151a507d8::t_d2ac562b826e52 101-106
+src/content/docs/ai-search/configuration/data-source/index.mdx
+  s_d950b151a507d8::t_f18c4977bec5b5 21-22
+src/content/docs/ai-search/configuration/data-source/website/authentication-headers.mdx
+  s_d950b151a507d8::t_8f98f9d0ddf22f 1-74
+src/content/docs/ai-search/configuration/data-source/website/content-selectors.mdx
+  s_d950b151a507d8::t_5ecc610641ae99 1-116
+src/content/docs/ai-search/configuration/data-source/website/custom-metadata.mdx
+  s_d950b151a507d8::t_7a674f26a4b221 1-67
+src/content/docs/ai-search/configuration/data-source/website/index.mdx
+  s_d950b151a507d8::t_20717d9d2f9bef 1-111
+src/content/docs/ai-search/configuration/data-source/website/parse-types.mdx
+  s_d950b151a507d8::t_aab2e21aa28cd9 2-4,6,13,15-18,20-38,41,43,45,52,68,108,157,166-172,174-187,191-193,195-199,203-295,297,299,301
+src/content/docs/ai-search/configuration/index.mdx
+  s_d950b151a507d8::t_f4925c36473942 36-49
+src/content/docs/ai-search/configuration/indexing/metadata.mdx
+  s_d950b151a507d8::t_a96ec39f74a874 61
+src/content/docs/ai-search/configuration/retrieval/public-endpoint/cloudflare-access.mdx
+  s_d950b151a507d8::t_ee459087255f18 1-198
+src/content/docs/ai-search/configuration/retrieval/public-endpoint/custom-domains.mdx
+  s_d950b151a507d8::t_311f3a139ebbd6 1-159
+src/content/docs/ai-search/configuration/retrieval/public-endpoint/embed-search-snippets.mdx
+  s_d950b151a507d8::t_0e7bb9d7acab6c 6,52,57,65,84,89,122,160,224-225
+src/content/docs/ai-search/configuration/retrieval/public-endpoint/index.mdx
+  s_d950b151a507d8::t_602b313521568d 11,15-16,19,31,33-36,41-45,53,59-60,82-88,105-113,118-140
+src/content/docs/ai-search/configuration/retrieval/public-endpoint/namespace.mdx
+  s_d950b151a507d8::t_9d27803f91de35 1-132
+src/content/docs/ai-search/how-to/add-search-to-your-website.mdx
+  s_d950b151a507d8::t_35546277325add 20,30,69,75,81,84,91,99,103,107,164,174
+src/content/docs/ai-search/how-to/connect-mcp-client.mdx
+  s_d950b151a507d8::t_d535f64bd0d285 60,85,97-101,104-105,123-128
+src/content/docs/ai-search/platform/limits-pricing.mdx
+  s_d950b151a507d8::t_9dd944824ee9d7 15-22,24-30,40-41
+src/content/docs/ai-search/troubleshooting/api-error-codes.mdx
+  s_d950b151a507d8::t_d5077f9e820544 59-93,99-109,212-214,220-240
+src/content/docs/ai-search/troubleshooting/indexing-error-codes.mdx
+  s_d950b151a507d8::t_443dfec29f67e7 64-65,70-72,74-76,83,87,135
+src/content/docs/api-shield/security/api-discovery.mdx
+  s_d950b151a507d8::t_dc2135d8c5754f 49,51,53,55,57-58,60-64,66
+src/content/docs/browser-run/kitesurf.mdx
+  s_d950b151a507d8::t_87633e3158ffe3 1-130
+src/content/docs/cache/concepts/cache-responses.mdx
+  s_d950b151a507d8::t_6af1c1d57a2987 29,57-62,70-71,90,93-94
+src/content/docs/cache/troubleshooting/investigating-uncached-responses.mdx
+  s_d950b151a507d8::t_ebc9ec041ce8c7 1-94
+src/content/docs/cloudflare-one/integrations/service-providers/kolide.mdx
+  s_d950b151a507d8::t_c583dd63545f9c 65,69
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/containers.mdx
+  s_d950b151a507d8::t_579775404fe5db 1-431
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/get-started.mdx
+  s_d950b151a507d8::t_932317c232d778 123
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/index.mdx
+  s_d950b151a507d8::t_10b611277e40b6 115-119
+src/content/docs/fundamentals/reference/cloudflare-site-crawling.mdx
+  s_d950b151a507d8::t_ce7e345241db50 55
+src/content/docs/logs/logpush/logpush-job/enable-destinations/pipelines.mdx
+  s_d950b151a507d8::t_44e36a8f2ed1a7 14,16,39
+src/content/docs/pipelines/examples/bluesky-firehose-fanout.mdx
+  s_d950b151a507d8::t_839b60a57d17b1 24,101
+src/content/docs/pipelines/getting-started.mdx
+  s_d950b151a507d8::t_3a39060255e57f 102,311
+src/content/docs/pipelines/index.mdx
+  s_d950b151a507d8::t_5168335e13484f 33
+src/content/docs/pipelines/platform/pricing.mdx
+  s_d950b151a507d8::t_396a0c9edccc0f 19
+src/content/docs/pipelines/reference/terraform.mdx
+  s_d950b151a507d8::t_9b2ae25e498519 15
+src/content/docs/pipelines/sinks/available-sinks/r2-data-catalog.mdx
+  s_d950b151a507d8::t_eb4c2c6c5a2513 11,81
+src/content/docs/pipelines/sinks/index.mdx
+  s_d950b151a507d8::t_8736a95ff10843 14
+src/content/docs/pipelines/streams/logpush.mdx
+  s_d950b151a507d8::t_5ed9693bad9da8 13
+src/content/docs/r2-data-catalog/config-examples/duckdb.mdx
+  s_d950b151a507d8::t_77505deafdd70f 7,15
+src/content/docs/r2-data-catalog/config-examples/index.mdx
+  s_d950b151a507d8::t_95d321626ae47d 11,16
+src/content/docs/r2-data-catalog/config-examples/pyiceberg.mdx
+  s_d950b151a507d8::t_a8b763337e44f1 7,15
+src/content/docs/r2-data-catalog/config-examples/snowflake.mdx
+  s_d950b151a507d8::t_0437f5bf2e0aec 7,15
+src/content/docs/r2-data-catalog/config-examples/spark-python.mdx
+  s_d950b151a507d8::t_34c374b4fb080c 7,15
+src/content/docs/r2-data-catalog/config-examples/spark-scala.mdx
+  s_d950b151a507d8::t_49bc773f58a2db 7,17
+src/content/docs/r2-data-catalog/config-examples/starrocks.mdx
+  s_d950b151a507d8::t_e4845324a4b1e0 7,15
+src/content/docs/r2-data-catalog/config-examples/trino.mdx
+  s_d950b151a507d8::t_85b3040cbd2658 7,17
+src/content/docs/r2-data-catalog/deleting-data.mdx
+  s_d950b151a507d8::t_d095edfa364c8b 6,26,41,51,185,209,214-215
+src/content/docs/r2-data-catalog/get-started.mdx
+  s_d950b151a507d8::t_d856336790507e 9,27,93,277,283
+src/content/docs/r2-data-catalog/index.mdx
+  s_d950b151a507d8::t_b61c91a8da18ac 11,20,24,38,48,54,60
+src/content/docs/r2-data-catalog/manage-catalogs.mdx
+  s_d950b151a507d8::t_aad39e5ef56db3 6,26-27,43,89,356,362
+src/content/docs/r2-data-catalog/observability/index.mdx
+  s_d950b151a507d8::t_6c4771a877caa9 9
+src/content/docs/r2-data-catalog/observability/metrics.mdx
+  s_d950b151a507d8::t_bdac2e77ebb797 8,57
+src/content/docs/r2-data-catalog/platform/index.mdx
+  s_d950b151a507d8::t_e367f7c65937f6 10
+src/content/docs/r2-data-catalog/platform/pricing.mdx
+  s_d950b151a507d8::t_2f59898f51e473 8,14,38,51
+src/content/docs/r2-data-catalog/table-maintenance.mdx
+  s_d950b151a507d8::t_e605ecd0d20c21 6,36,59
+src/content/docs/r2-sql/get-started.mdx
+  s_d950b151a507d8::t_5330a5b02b0780 23,344,350
+src/content/docs/r2-sql/index.mdx
+  s_d950b151a507d8::t_f2372991ae2092 36
+src/content/docs/r2-sql/platform/pricing.mdx
+  s_d950b151a507d8::t_cdafed262a1b72 18
+src/content/docs/r2-sql/query-data.mdx
+  s_d950b151a507d8::t_ef3fe5f0537768 13,17,124
+src/content/docs/r2-sql/sql-reference/index.mdx
+  s_d950b151a507d8::t_3ddea866e68071 19
+src/content/docs/r2/api/tokens.mdx
+  s_d950b151a507d8::t_a3673070621963 69
+src/content/docs/r2/examples/aws/aws-sdk-php.mdx
+  s_d950b151a507d8::t_12dc9b5b9870d2 22
+src/content/docs/r2/examples/aws/custom-header.mdx
+  s_d950b151a507d8::t_97fc6ee7991004 39,74,121,147
+src/content/docs/r2/index.mdx
+  s_d950b151a507d8::t_dc0be53d2bad03 80-85
+src/content/docs/r2/objects/download-objects.mdx
+  s_d950b151a507d8::t_09c15a374db68d 32-34,114
+src/content/docs/r2/pricing.mdx
+  s_d950b151a507d8::t_9b70fb21ea2731 102
+src/content/docs/r2/r2-data-catalog.mdx
+  s_d950b151a507d8::t_4c939fbb20cedb 1-13
+src/content/docs/r2/r2-sql.mdx
+  s_d950b151a507d8::t_c66946426418c2 6,13
+src/content/docs/realtime/realtimekit/faq.mdx
+  s_d950b151a507d8::t_ca66ab9e911298 187-198
+src/content/docs/realtime/realtimekit/recording-guide/create-record-app-using-sdks.mdx
+  s_d950b151a507d8::t_89e85b9a70963b 23,25,27-85,91,93,95-101,115,121,129,142,156-157,162,170,184
+src/content/docs/sandbox/concepts/architecture.mdx
+  s_d950b151a507d8::t_f07d7f1ca43902 96,108,110,112,118,124-128,145,147-150,152
+src/content/docs/sandbox/concepts/security.mdx
+  s_d950b151a507d8::t_f66f5fe21603f3 124,132,140-141,153,155,159-160,163,165
+src/content/docs/sandbox/configuration/environment-variables.mdx
+  s_d950b151a507d8::t_2393c2ab989499 23,26,32,38,279,376,381
+src/content/docs/sandbox/configuration/index.mdx
+  s_d950b151a507d8::t_122b0334cfc16b 48
+src/content/docs/sandbox/configuration/wrangler.mdx
+  s_d950b151a507d8::t_2eb05e8998e2e8 144
+src/content/docs/sandbox/guides/git-workflows.mdx
+  s_d950b151a507d8::t_4a91f1da8c998e 57
+src/content/docs/sandbox/guides/proxy-requests.mdx
+  s_d950b151a507d8::t_2e506457d0fd9e 2-3,6-7,10,13-14
+src/content/docs/sandbox/index.mdx
+  s_d950b151a507d8::t_cd6b7d7c5a34f1 260,262
+src/content/docs/sandbox/platform/limits.mdx
+  s_d950b151a507d8::t_fe09401f0b22a3 36,38,44,50,52,65
+src/content/docs/workers-ai/platform/ai-gateway.mdx
+  s_d950b151a507d8::t_84fa90b4cfcb55 4
+src/content/docs/workers-ai/platform/limits.mdx
+  s_d950b151a507d8::t_4ebffeb12c8be6 62-73
+src/content/docs/workers-ai/platform/pricing.mdx
+  s_d950b151a507d8::t_95aea8055e01aa 29,32-37
+src/content/docs/workers/wrangler/commands/workers.mdx
+  s_d950b151a507d8::t_767fe3eaf8c5a8 242,244
+src/content/partials/ai-gateway/create-gateway.mdx
+  s_d950b151a507d8::t_cdb0886db3b902 16-19
+src/content/partials/ai-search/v2-create-instance-params.mdx
+  s_d950b151a507d8::t_19b9df636ffb77 40,47,50-63
+src/content/partials/workers-ai/workers-paid-only-note.mdx
+  s_d950b151a507d8::t_bedaffbb2e87ee 5,7
+src/content/release-notes/ai-search.yaml
+  s_d950b151a507d8::t_3ff91b1b1013c5 6-13,78
+src/content/release-notes/radar.yaml
+  s_d950b151a507d8::t_05da7eb51959db 6-13
+src/pages/[...slug].astro
+  s_d950b151a507d8::t_4fab137ce83df8 3,5,17,26,109
+src/util/directory.ts
+  s_d950b151a507d8::t_23709bb88e4c00 8,12-49
+src/util/rendered-toc.ts
+  s_d950b151a507d8::t_9f1042725df880 3-4,73-81
+src/util/sidebar.ts
+  s_d950b151a507d8::t_2aa698b8853898 12,24,32,109
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c0acbda7ee27d6efc379026663f5f239fc597bbc",
+  "prompts": {},
+  "sessions": {
+    "s_d950b151a507d8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd831-75d8-7ab3-921f-1a840fec0cb0",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

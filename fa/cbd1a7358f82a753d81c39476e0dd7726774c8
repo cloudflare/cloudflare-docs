@@ -1,0 +1,33 @@
+public/__redirects
+  s_0d464b420d404e::t_0b03436ef91e95 2190-2191,2348
+src/content/docs/workers/ci-cd/builds/configuration.mdx
+  s_0d464b420d404e::t_623964c35c9259 79
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_0d464b420d404e::t_e1d9cb553904b4 101
+src/content/docs/workers/configuration/compare-preview-workflows.mdx
+  s_0d464b420d404e::t_f723f04224c928 59
+src/content/docs/workers/configuration/routing/workers-dev.mdx
+  s_0d464b420d404e::t_0e541b5f200010 29,64
+src/content/docs/workers/versions-and-deployments/version-urls.mdx
+  s_0d464b420d404e::t_d20277169f190a 15,50
+src/content/docs/workers/wrangler/configuration.mdx
+  s_0d464b420d404e::t_3a760be611c586 168
+src/content/docs/workers/wrangler/environments.mdx
+  s_0d464b420d404e::t_8834bf909a463b 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "facbd1a7358f82a753d81c39476e0dd7726774c8",
+  "prompts": {},
+  "sessions": {
+    "s_0d464b420d404e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fd616996effe0BpL6UofmCGqJA",
+        "model": "gpt-5.5"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}

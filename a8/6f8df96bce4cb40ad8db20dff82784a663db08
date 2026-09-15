@@ -1,0 +1,21 @@
+src/content/docs/flagship/api-tokens.mdx
+  s_033aa2fc8e53a7::t_63791d7a88e5cf 1-84
+src/content/docs/flagship/sdk/server-provider.mdx
+  s_033aa2fc8e53a7::t_ebd1780d84a068 56,86-97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a86f8df96bce4cb40ad8db20dff82784a663db08",
+  "prompts": {},
+  "sessions": {
+    "s_033aa2fc8e53a7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0067ec847ffe4CwhmE6fOuDHzj",
+        "model": "grok-4.6"
+      },
+      "human_author": "Rohan Mukherjee <rmukherjee@cloudflare.com>"
+    }
+  }
+}
