@@ -1,6 +1,10 @@
 import { describe, expect, test } from "vitest";
 
-import { formatPage, normalizeForIndexMd } from "./llms-txt";
+import {
+	formatPage,
+	formatWorkersAiModel,
+	normalizeForIndexMd,
+} from "./llms-txt";
 
 // Mirrors the module-default resolveRedirect passthrough for tests that
 // don't care about __redirects.
@@ -117,5 +121,18 @@ describe("formatPage", () => {
 			expect(out).not.toMatch(/[a-z]index\.md/);
 			expect(out).not.toMatch(/#[a-z0-9-]*index\.md/);
 		}
+	});
+});
+
+describe("formatWorkersAiModel", () => {
+	test("links a generated model page using its short slug", () => {
+		expect(
+			formatWorkersAiModel("https://example.com", {
+				name: "@cf/meta/llama-3.1-8b-instruct",
+				description: "A text generation\n\nmodel.",
+			}),
+		).toBe(
+			"- [@cf/meta/llama-3.1-8b-instruct](https://example.com/workers-ai/models/llama-3.1-8b-instruct/index.md): A text generation model.",
+		);
 	});
 });

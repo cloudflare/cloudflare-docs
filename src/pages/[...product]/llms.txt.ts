@@ -12,9 +12,14 @@ import {
 	type LlmsIndex,
 	type LlmsSidebarOrderPart,
 } from "../../util/llms-delegation";
-import { formatPage, normalizeForIndexMd } from "../../util/llms-txt";
+import {
+	formatPage,
+	formatWorkersAiModel,
+	normalizeForIndexMd,
+} from "../../util/llms-txt";
 import { isExternalRedirect, resolveRedirect } from "../../util/redirects";
 import { isDisallowedByRobots } from "../../util/robots";
+import { getLegacyModels } from "../../util/models";
 
 const DIRECTORY_PROSE_THRESHOLD = 250;
 
@@ -30,6 +35,7 @@ function isDirectoryOnlyPage(body: string): boolean {
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 	const docs = await getCollection("docs");
+	const workersAiModels = await getLegacyModels();
 	const documentIds = new Set(docs.map((page) => page.id));
 
 	const mapped = directory
@@ -67,10 +73,15 @@ export const getStaticPaths = (async () => {
 
 			if (pages.length === 0) return null;
 
+			const models =
+				productUrl === "/workers-ai/"
+					? workersAiModels.toSorted((a, b) => a.name.localeCompare(b.name))
+					: [];
+
 			return {
 				params: { product: urlPath },
-				props: { entry, pages, navigationPages },
-				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}`,
+				props: { entry, pages, navigationPages, models },
+				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest).join(",")}`,
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);
@@ -273,7 +284,7 @@ function buildSections(
 
 export const GET: APIRoute<Props> = async ({ props, url }) => {
 	const base = url.origin;
-	const { entry, pages, navigationPages, delegatedIndexes } = props;
+	const { entry, pages, navigationPages, delegatedIndexes, models } = props;
 	const title = entry.data.entry?.title ?? entry.data.name ?? entry.id;
 	const productUrl = entry.data.entry?.url ?? `/${entry.id}/`;
 	const description = entry.data.meta?.description;
@@ -332,6 +343,11 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 				} else {
 					lines.push(
 						...section.children.map((child) => formatPage(base, child)),
+					);
+				}
+				if (section.id === `${prefix}/models`) {
+					lines.push(
+						...models.map((model) => formatWorkersAiModel(base, model)),
 					);
 				}
 				return `${heading}\n\n${lines.join("\n")}`;
