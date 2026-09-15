@@ -1,0 +1,96 @@
+---
+title: Asset retention
+pcx_content_type: concept
+sidebar:
+  order: 7
+description: Keep assets from recently deployed Worker versions reachable to prevent version skew breakage for SPAs and static sites.
+products:
+  - workers
+---
+
+import { Aside, WranglerConfig } from "~/components";
+
+When you deploy a new version of your Worker, the previous version's static assets are normally no longer reachable. This causes **version skew**: a browser that loaded HTML from the old version tries to fetch a content-hashed asset (for example, `index-a1b2c3d4.js`) that no longer exists, resulting in a 404 error and a broken page.
+
+Asset retention solves this by keeping assets from recently deployed versions reachable alongside the current version's assets.
+
+## Enable asset retention
+
+Add `retention` to the `assets` section of your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"assets": {
+		"directory": "./public",
+		"retention": { "enabled": true },
+	},
+}
+```
+
+</WranglerConfig>
+
+The value is an object (rather than a bare boolean) so that future fields such as a retention window or per-asset exclusion can be added without a breaking change.
+
+## How it works
+
+When asset retention is enabled, Cloudflare keeps track of assets from your recently deployed versions. A request for any asset path that existed in any of those versions is served, even if the path does not exist in the latest version.
+
+The retention window covers up to the **last 24 hours of deployments** or the **last 10 versions**, whichever is reached first. Assets outside that window are no longer reachable.
+
+## Key behaviors
+
+### Enabling is retroactive
+
+Turning on asset retention does not start a clock. It **immediately** makes every asset path from the last 24 hours of deployments reachable, **including paths that were deleted in that period**.
+
+If you previously deployed a version containing a file you intended to remove, enabling retention makes that file reachable again from the moment the setting takes effect.
+
+<Aside type="caution">
+Review your recent deployment history before enabling asset retention. Any asset present in a version deployed within the last 24 hours becomes reachable again instantly, not from the next deploy.
+</Aside>
+
+### Deleted assets stay reachable
+
+Assets from previous versions remain reachable for the duration of the retention window. This includes HTML pages, not only content-hashed scripts and stylesheets.
+
+### The retention window is not a guarantee of expiry
+
+The 24-hour and 10-version caps are evaluated only when a recompute runs. On a Worker that stops deploying, the caps never fire and retained assets remain reachable indefinitely. Do not rely on the retention window as a deletion mechanism.
+
+### Forward resolution is not offered
+
+An old version cannot resolve assets that were added in a version deployed after it. Rolling back to an earlier version does not give it access to assets from newer versions.
+
+## Removing a retained asset
+
+The only way to remove a specific retained asset is to **delete the version** that introduced it. Version deletion is irreversible.
+
+After deleting a version, propagation takes time:
+
+1. The set of retained assets must be recalculated without the deleted version.
+2. Cached entries take at least 60 seconds to expire.
+3. The updated configuration must be re-pushed to the serving infrastructure.
+
+The combined effect is that a deleted asset may remain briefly reachable after version deletion. It is not instant.
+
+Other limits on version deletion:
+
+- There is no bulk deletion endpoint. Removing a path that appears in five versions requires five separate deletion calls.
+- Live versions (those currently receiving traffic in a deployment) cannot be deleted. You must complete or roll back a gradual deployment first.
+- The per-version preview URL continues serving the deleted version's assets regardless of deletion.
+
+## Configuration interactions
+
+Several configurations can affect or silently disable asset retention:
+
+- **`run_worker_first`** covering asset paths can prevent retention from working because requests are routed to the Worker script before consulting asset manifests.
+- **Changing the `base` path** between versions means asset path hashes will not match across versions, preventing cross-version asset resolution.
+- **Static routing to the user Worker** can similarly prevent the asset serving layer from looking up retained assets.
+
+## Related resources
+
+- [Wrangler configuration: Assets](/workers/wrangler/configuration/#assets) for the full list of `assets` configuration options.
+- [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) for routing users to consistent versions during gradual rollouts.
+- [Static assets overview](/workers/static-assets/) for general information about hosting static files on Workers.
