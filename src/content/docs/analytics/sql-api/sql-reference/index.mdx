@@ -1,0 +1,45 @@
+---
+pcx_content_type: reference
+title: SQL language reference
+description: Reference for the SQL syntax supported by the SQL API.
+sidebar:
+  order: 5
+---
+
+The SQL API supports a read-only subset of SQL for analytics queries. SQL keywords and function names are case-insensitive. Dataset and field names are case-sensitive.
+
+Every query must read one schema-qualified dataset and must include an account or zone filter and a lower time bound. For example:
+
+```sql
+SELECT
+  clientRequestHTTPHost AS host,
+  COUNT(*) AS requests
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+GROUP BY clientRequestHTTPHost
+ORDER BY requests DESC
+LIMIT 10
+```
+
+## Reference
+
+- [Statements and clauses](/analytics/sql-api/sql-reference/statements/)
+- [Operators](/analytics/sql-api/sql-reference/operators/)
+- [Functions](/analytics/sql-api/sql-reference/functions/)
+- [Data types and literals](/analytics/sql-api/sql-reference/data-types/)
+
+## Unsupported features
+
+The SQL API does not support arbitrary ClickHouse SQL. Unsupported features include:
+
+- Data modification or definition statements, including `INSERT`, `UPDATE`, `DELETE`, `CREATE`, `ALTER`, and `DROP`.
+- Joins, unions, common table expressions, and general subqueries.
+- Window functions.
+- `DISTINCT`.
+- `OFFSET` and `FETCH`.
+- `EXPLAIN`, `ANALYZE`, `DESCRIBE`, `VALUES`, and `UNNEST`.
+- `CASE`, `LIKE`, `IS NULL`, and user-authored casts.
+- Aggregate `FILTER`, aggregate `DISTINCT`, and aggregate-local `ORDER BY` clauses.
+
+The API returns an HTTP `422` response when a statement contains unsupported syntax.

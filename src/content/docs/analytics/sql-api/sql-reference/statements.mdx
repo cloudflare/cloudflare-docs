@@ -1,0 +1,121 @@
+---
+pcx_content_type: reference
+title: Statements and clauses
+description: SQL statements and clauses supported by the SQL API.
+sidebar:
+  order: 1
+---
+
+## SELECT
+
+The SQL API accepts one `SELECT` statement per request.
+
+```sql
+SELECT select_expression [, ...]
+FROM schema.dataset
+[WHERE predicate]
+[GROUP BY expression [, ...]]
+[HAVING aggregate_predicate]
+[ORDER BY expression [ASC | DESC] [, ...]]
+[LIMIT non_negative_integer]
+```
+
+Use a schema-qualified dataset name, such as `events.httpRequests`. Bare dataset names are not supported.
+
+Use `AS` to set result field names:
+
+```sql
+SELECT
+  clientRequestHTTPHost AS host,
+  edgeResponseStatus AS status
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' DAY
+LIMIT 100
+```
+
+`SELECT *` returns every field that is available to the caller. Explicit field lists provide a more stable response when a dataset gains fields.
+
+## WHERE
+
+Use `WHERE` to set tenancy, time, and data filters.
+
+```sql
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' DAY
+  AND edgeResponseStatus >= 500
+```
+
+Every query requires an account or zone tenancy predicate. Supported tenancy forms are:
+
+```sql
+accountTag = '<ACCOUNT_TAG>'
+zoneTag = '<ZONE_TAG>'
+zoneTag IN ('<ZONE_TAG_1>', '<ZONE_TAG_2>')
+```
+
+A query can select only one account. Tenancy predicates must be top-level conditions joined with `AND`. Do not place `accountTag` or `zoneTag` inside `OR`, `NOT`, or `NOT IN` expressions.
+
+Every query also requires a lower bound on the dataset timestamp field. Use `>`, `>=`, or `BETWEEN` to provide the lower bound. The timestamp field name varies by dataset.
+
+## GROUP BY
+
+Use `GROUP BY` with aggregate functions to return one row for each unique group.
+
+```sql
+SELECT edgeResponseStatus AS status, COUNT(*) AS requests
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+GROUP BY edgeResponseStatus
+```
+
+## HAVING
+
+Use `HAVING` to filter grouped results. A `HAVING` expression must reference an aggregate function.
+
+```sql
+SELECT clientRequestHTTPHost AS host, COUNT(*) AS requests
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+GROUP BY clientRequestHTTPHost
+HAVING COUNT(*) > 100
+```
+
+## ORDER BY
+
+Use `ORDER BY` to sort results in ascending (`ASC`) or descending (`DESC`) order. `ASC` is the default.
+
+Every query that uses `ORDER BY` must also use `LIMIT`.
+
+```sql
+ORDER BY requests DESC
+LIMIT 10
+```
+
+`NULLS FIRST` and `NULLS LAST` are not supported.
+
+## LIMIT
+
+`LIMIT` accepts a non-negative integer literal. Parameters and expressions are not supported as limit values.
+
+```sql
+LIMIT 100
+```
+
+## Derived table projection
+
+The SQL API supports one restricted derived table when the outer query only projects expressions from the inner query:
+
+```sql
+SELECT value
+FROM (
+  SELECT COUNT(*) AS value
+  FROM events.httpRequests
+  WHERE accountTag = '<ACCOUNT_TAG>'
+    AND timestamp >= NOW() - INTERVAL '1' HOUR
+)
+```
+
+The outer query cannot add filtering, grouping, aggregation, ordering, or a limit. Derived table aliases and nested derived tables are not supported.

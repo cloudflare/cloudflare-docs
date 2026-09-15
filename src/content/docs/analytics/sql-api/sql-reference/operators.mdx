@@ -1,0 +1,69 @@
+---
+pcx_content_type: reference
+title: Operators
+description: SQL operators supported by the SQL API.
+sidebar:
+  order: 2
+---
+
+## Arithmetic operators
+
+| Operator  | Description    | Example                    |
+| --------- | -------------- | -------------------------- |
+| `+`       | Addition       | `requests + 1`             |
+| `-`       | Subtraction    | `bytes - cachedBytes`      |
+| `*`       | Multiplication | `requests * 100`           |
+| `/`       | Division       | `bytes / requests`         |
+| `%`       | Modulo         | `edgeResponseStatus % 100` |
+| unary `-` | Negation       | `-1`                       |
+
+The field types in a dataset determine which arithmetic operations are valid.
+
+## Comparison operators
+
+| Operator     | Description              |
+| ------------ | ------------------------ |
+| `=`          | Equal to                 |
+| `!=` or `<>` | Not equal to             |
+| `<`          | Less than                |
+| `<=`         | Less than or equal to    |
+| `>`          | Greater than             |
+| `>=`         | Greater than or equal to |
+
+## Logical operators
+
+| Operator | Description                     |
+| -------- | ------------------------------- |
+| `AND`    | Both predicates are true.       |
+| `OR`     | At least one predicate is true. |
+| `NOT`    | Negates a predicate.            |
+
+Parentheses control evaluation order:
+
+```sql
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+  AND (edgeResponseStatus = 429 OR edgeResponseStatus >= 500)
+```
+
+Tenancy predicates are an exception. Keep `accountTag` and `zoneTag` predicates at the top level and join them with `AND`.
+
+## IN
+
+Use `IN` or `NOT IN` to compare a scalar expression with a non-empty list:
+
+```sql
+edgeResponseStatus IN (403, 404, 429)
+```
+
+`NOT IN` is not supported for account or zone tenancy predicates.
+
+## BETWEEN
+
+Use `BETWEEN` to set an inclusive range on a dataset timestamp field:
+
+```sql
+timestamp BETWEEN '2026-09-15T00:00:00Z' AND '2026-09-15T01:00:00Z'
+```
+
+General-purpose `BETWEEN` expressions on other fields are not supported.

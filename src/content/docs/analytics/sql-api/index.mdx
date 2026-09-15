@@ -1,0 +1,37 @@
+---
+pcx_content_type: overview
+title: SQL API
+description: Query Cloudflare analytics data using SQL.
+sidebar:
+  order: 7
+---
+
+The SQL API lets you query Cloudflare analytics and observability datasets with SQL. Use the API to select fields, filter events, calculate aggregates, group results, and integrate analytics data with your applications.
+
+The SQL API provides a query endpoint:
+
+```txt
+https://api.cloudflare.com/client/v4/analytics/sql
+```
+
+Send one `SELECT` statement in each `POST` request. The API validates the statement against the available datasets and supported SQL language before it executes the query.
+
+Use the [introspection endpoint](/analytics/sql-api/datasets/#discover-datasets) to discover dataset names, descriptions, columns, and data types.
+
+The SQL API supports a deliberately limited SQL dialect. It does not pass arbitrary SQL through to the underlying data store. For the complete language surface, refer to the [SQL language reference](/analytics/sql-api/sql-reference/).
+
+## Query scope
+
+Every query must include:
+
+- An account or zone scope, supplied in the SQL statement or request body, that identifies the data you are authorized to query.
+- A lower time bound that limits how far back the query reads.
+- One schema-qualified dataset, such as `events.httpRequests`.
+
+Dataset and field availability depends on your Cloudflare plan and permissions. The API authorizes every account or zone named by a query.
+
+## Get started
+
+Refer to [Get started](/analytics/sql-api/get-started/) to create an API token and run your first query.
+
+To query datasets from a Cloudflare Worker without managing an API token, use the [Workers binding](/analytics/sql-api/workers-binding/).
