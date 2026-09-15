@@ -1,0 +1,22 @@
+---
+title: Subscribe to Workers events with Queues
+description: Workers is now an event source for Queues event subscriptions, publishing events when Workers, versions, and deployments are created, updated, or deleted.
+products:
+  - queues
+  - workers
+date: 2026-08-14
+---
+
+You can now subscribe to **Workers events** with [Queues event subscriptions](/queues/event-subscriptions/), joining existing sources like R2, Workers KV, and Workers AI.
+
+Cloudflare publishes a message to your queue whenever a Worker, version, or deployment changes, so you can build audit logging, deploy notifications, and automated post-deploy checks without polling the API.
+
+| Event                | Triggered when                               |
+| -------------------- | -------------------------------------------- |
+| `worker.created`     | A Worker is created                          |
+| `worker.updated`     | A Worker's unversioned configuration changes |
+| `worker.deleted`     | A Worker is deleted                          |
+| `version.created`    | A new version of the Worker is created       |
+| `version.deleted`    | A version is deleted                         |
+| `deployment.created` | A deployment is created and rolled out       |
+| `deployment.deleted` | A deployment is deleted                      |
