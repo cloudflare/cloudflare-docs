@@ -1,0 +1,77 @@
+---
+pcx_content_type: overview
+description: Connect services and devices with post-quantum encrypted private networking through Cloudflare.
+title: Cloudflare Mesh
+products:
+  - mesh
+tags:
+  - Private networks
+sidebar:
+  group:
+    badge: Beta
+  label: Overview
+  order: 1
+head:
+  - tag: title
+    content: Cloudflare Mesh - Private networking
+---
+
+import { CardGrid, Description, LinkTitleCard } from "~/components";
+
+<Description>
+	Connect services and devices with post-quantum encrypted private networking
+	through Cloudflare.
+</Description>
+
+Cloudflare Mesh gives every enrolled server, laptop, and phone a private Mesh IP. Participants can communicate by IP over TCP, UDP, or ICMP, including device-to-device connections that do not require customer-managed networking infrastructure.
+
+Mesh nodes run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) in headless mode on Linux. They can also advertise routes to make private subnets and hostnames reachable from other Mesh participants.
+
+![The Mesh network map in the Cloudflare dashboard showing nodes and devices connected through Cloudflare](~/assets/images/cloudflare-one/connections/mesh-network-map.gif)
+
+:::note
+Cloudflare Mesh was previously known as WARP Connector and peer-to-peer connectivity. Existing WARP Connectors are now called Mesh nodes. Existing deployments continue to work without migration.
+:::
+
+<span id="how-it-works"></span>
+<span id="protocol-requirement"></span>
+<span id="mesh-ips"></span>
+
+For details about how Mesh works, protocol requirements, and Mesh IP assignment, refer to [Concepts](/mesh/concepts/).
+
+## Use cases
+
+- Connect enrolled devices to each other by private IP.
+- Provide bidirectional connectivity between servers, cloud networks, and sites.
+- Route traffic to devices that cannot run the Cloudflare One Client.
+- Preserve long-lived TCP connections for databases, replication, ERP systems, and remote administration.
+
+## Get started
+
+<CardGrid>
+
+<LinkTitleCard title="Set up Cloudflare Mesh" href="/mesh/get-started/">
+	Configure your account and connect your first participant.
+</LinkTitleCard>
+
+<LinkTitleCard title="Understand Mesh" href="/mesh/concepts/">
+	Learn how participants, Mesh IPs, routing, and policies work.
+</LinkTitleCard>
+
+<LinkTitleCard title="Explore features" href="/mesh/features/">
+	Configure routes and high availability for Mesh nodes.
+</LinkTitleCard>
+
+<LinkTitleCard title="Follow a guide" href="/mesh/guides/">
+	Connect client devices or deploy Mesh in containers.
+</LinkTitleCard>
+
+</CardGrid>
+
+<span id="mesh-vs-tunnel"></span>
+
+## Mesh vs. Cloudflare Tunnel
+
+Use Mesh when participants need bidirectional private IP connectivity or when a workload requires stable, long-lived connections. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) when you want to publish specific applications, hostnames, or IP routes through an outbound-only connector.
+
+For a detailed comparison, refer to [How Cloudflare Mesh works](/mesh/concepts/#mesh-vs-tunnel).

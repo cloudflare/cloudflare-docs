@@ -1,13 +1,13 @@
 ---
 pcx_content_type: how-to
-description: Connect client devices in Zero Trust networking.
+description: Connect laptops, phones, and desktops to Cloudflare Mesh and verify private network connectivity.
 title: Connect client devices
 products:
   - mesh
 tags:
   - Private networks
 sidebar:
-  order: 3
+  order: 1
 head:
   - tag: title
     content: Connect client devices to Cloudflare Mesh
@@ -15,11 +15,11 @@ head:
 
 import { Render, TabItem, Tabs } from "~/components";
 
-Client devices — laptops, phones, and desktops — join your Mesh network by installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enrolling. Each device receives a [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips) and can immediately communicate with every other enrolled device and Mesh node.
+Client devices — laptops, phones, and desktops — join your Mesh network by installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enrolling. Each device receives a [Mesh IP](/mesh/concepts/#mesh-ips) and can immediately communicate with every other enrolled device and Mesh node.
 
 ## Prerequisites
 
-- [Device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) are configured for your account. The Mesh [setup wizard](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) handles this automatically.
+- [Device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) are configured for your account. The Mesh [setup wizard](/mesh/get-started/) handles this automatically.
 
 ## 1. Enroll the Cloudflare One Client
 
@@ -93,7 +93,7 @@ Once connected, a client device can:
 
 - **Other client devices** — Reach any enrolled device by its Mesh IP. No Mesh nodes involved.
 - **Mesh nodes** — Reach any online node by its Mesh IP. SSH, database connections, API calls all work.
-- **Subnets behind nodes** — Access hosts on private networks that a node advertises via [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) (for example, printers, databases, or servers that cannot run the client).
+- **Subnets behind nodes** — Access hosts on private networks that a node advertises via [CIDR routes](/mesh/features/routes/) (for example, printers, databases, or servers that cannot run the client).
 
 All traffic is subject to your [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), so you can control which users and devices can reach specific resources.
 
@@ -112,9 +112,9 @@ Depending on your Cloudflare networking configuration, you may need to remove ad
 In Include mode, add the following to your include list:
 
 - `100.96.0.0/12` — Mesh IPs (device IPs)
-- Any CIDR routes you have [configured for your Mesh nodes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/)
+- Any CIDR routes you have [configured for your Mesh nodes](/mesh/features/routes/)
 
-The IPv4 range used for [hostname routing](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes) (`172.64.128.0/20`; requires MASQUE) and all Cloudflare One IPv6 ranges are [automatically routed through Cloudflare](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges) and do not need to be added manually.
+The IPv4 range used for [hostname routing](/mesh/features/routes/#hostname-routes) (`172.64.128.0/20`; requires MASQUE) and all Cloudflare One IPv6 ranges are [automatically routed through Cloudflare](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges) and do not need to be added manually.
 
 ## Firewall considerations
 
