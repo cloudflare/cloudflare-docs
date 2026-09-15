@@ -34,6 +34,38 @@ export const AGENTS: AgentData[] = [
 		},
 	},
 	{
+		name: "Droid",
+		vendor: "Factory",
+		slug: "droid",
+		icon: "factory",
+		description:
+			"Model-agnostic coding agent that plans, edits files, runs commands, and automates CI, from the terminal, desktop app, or cloud. Made by Factory.",
+		capabilities: {
+			ide: false,
+			terminal: true,
+			standalone: true,
+			cloud: true,
+			extension: true,
+			open_source: false,
+		},
+		features: [
+			"Auto model routing (Claude, GPT, Gemini)",
+			"Desktop and web apps with cloud sessions",
+			"Missions for long-running autonomous work",
+			"Droid Shield 2.0 security guardrails",
+		],
+		pricing_model: "hybrid",
+		model_flexibility: "multi_provider",
+		context_approach: "project_memory",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
+			docs: "https://docs.factory.ai/cli/getting-started/overview",
+			website: "https://factory.ai",
+		},
+	},
+	{
 		name: "Codex",
 		vendor: "OpenAI",
 		slug: "codex",
